@@ -196,7 +196,7 @@ class _WordListsState extends State<WordLists> {
                     // header with tools
                     DragTarget<TreeNode<WordListsData>>(
                       hitTestBehavior: HitTestBehavior.opaque,
-                      onWillAccept: (data) {
+                      onWillAcceptWithDetails: (data) {
                         // start animation to the top of the list
                         if(scrollController.offset > 60) {
                           scrollController.animateTo(0,
@@ -212,7 +212,10 @@ class _WordListsState extends State<WordLists> {
                         scrollController.position.hold(() { });
                         itemDraggingOverToolbar = false;
                       },
-                      onAccept: (data) {
+                      onAcceptWithDetails: (details) {
+
+                        TreeNode<WordListsData> data = details.data;
+
                         itemDraggingOverToolbar = false;
                         final oldParent = data.parent!;
                         oldParent.removeChild(data);
@@ -339,8 +342,8 @@ class _WordListsState extends State<WordLists> {
                                               if(wordListListypes.contains(node.value.type)){
                                                 node.value.wordIds = await widget.wordLists.getEntryIDsOfWordList(node.id);
 
-                                                // ignore:, use_build_context_synchronously 
                                                 Navigator.push(
+                                                  // ignore: use_build_context_synchronously
                                                   context, 
                                                   MaterialPageRoute(builder: (context) => 
                                                     WordListScreen(
@@ -390,7 +393,9 @@ class _WordListsState extends State<WordLists> {
                                         if(wordListUserTypes.contains(childrenDFS[i].value.type))
                                           // ... add a divider in which lists can be dragged (easier reorder)
                                           DragTarget<TreeNode<WordListsData>>(
-                                            onWillAccept: (TreeNode<WordListsData>? data) {
+                                            onWillAcceptWithDetails: (details) {
+
+                                              TreeNode<WordListsData> data = details.data;
                                       
                                               // do no allow self drags
                                               if(data == null) return false;
@@ -399,7 +404,9 @@ class _WordListsState extends State<WordLists> {
                                               setState(() {});
                                               return true;
                                             },
-                                            onAccept: (data) {
+                                            onAcceptWithDetails: (details) {
+
+                                              TreeNode<WordListsData> data = details.data;
                                       
                                               // do nothing on self drag
                                               if(i == childrenDFS.indexOf(data)-1) {
@@ -489,7 +496,7 @@ class _WordListsState extends State<WordLists> {
                     duration: Duration(milliseconds: hoveringAnimationColorDuration),
                     opacity: draggingWordListNode ? 1.0 : 0.0,
                     child: DragTarget<TreeNode<WordListsData>>(
-                      onWillAccept: (data) {
+                      onWillAcceptWithDetails: (data) {
                   
                         itemDraggingOverBottom = true;
                   
@@ -507,7 +514,10 @@ class _WordListsState extends State<WordLists> {
                         itemDraggingOverBottom = false;
                         scrollController.position.hold(() { });
                       },
-                      onAccept: (data) {
+                      onAcceptWithDetails: (details) {
+
+                        TreeNode<WordListsData> data = details.data;
+
                         final oldParent = data.parent!;
                         oldParent.removeChild(data);
                         currentRoot.addChild(data);

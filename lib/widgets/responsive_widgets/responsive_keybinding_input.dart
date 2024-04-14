@@ -72,7 +72,7 @@ class _ResponsiveKeybindingInputState extends State<ResponsiveKeybindingInput> {
         onKeyEvent: (KeyEvent e) {
           
           // only register key down events
-          if(e.runtimeType == RawKeyUpEvent) return;
+          if(e.runtimeType == KeyUpEvent) return;
     
           if(currentKeys.length < widget.maxKeyCount){
             currentKeys.add(e.logicalKey);

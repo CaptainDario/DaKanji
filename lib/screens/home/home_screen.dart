@@ -84,10 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
       await showRatePopup();
     }
     if(GetIt.I<UserData>().showOnboarding){
-      // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
-        context, "/${Screens.onboarding.name}", (route) => false
-      );
+        // ignore: use_build_context_synchronously
+        context,
+        "/${Screens.onboarding.name}", (route) => false);
     }
     else {
       // if there is a deep link at app start handle it

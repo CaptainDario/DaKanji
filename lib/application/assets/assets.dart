@@ -96,8 +96,9 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
   }
   catch (e){
     if(askToDownload) {
-      // ignore: use_build_context_synchronously
+      
       await downloadPopup(
+        // ignore: use_build_context_synchronously
         context: context,
         btnOkOnPress: () {}
       ).show();
@@ -109,8 +110,8 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
         break;
       }
       catch (e){
-        // ignore: use_build_context_synchronously
         await AwesomeDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           headerAnimationLoop: false,
           desc: LocaleKeys.HomeScreen_download_failed_popup_text.tr(),

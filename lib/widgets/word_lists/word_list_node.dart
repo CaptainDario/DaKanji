@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'dart:ffi';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -164,25 +167,25 @@ class _WordListNodeState extends State<WordListNode> {
         onDraggableCanceled: (velocity, offset) => setState(() => {}),
         // make tile droppable
         child: DragTarget<TreeNode<WordListsData>>(
-          onWillAccept: (data) {
+          onWillAcceptWithDetails: (data) {
             // do not allow dropping ...
-            if(data == null ||
-              wordListDefaultTypes.contains(widget.node.value.type) // .. in a non-user-entry
-            ) {
+            if(wordListDefaultTypes.contains(widget.node.value.type)){ // .. in a non-user-entry
               return false;
             }
     
             // mark this widget as accepting the element
             setState(() {itemDraggingOverThis = true;});
 
-            widget.onWillDragAccept?.call(widget.node, data);
+            widget.onWillDragAccept?.call(widget.node, data.data);
     
             return true;
           },
           onLeave: (data) {
             setState(() {itemDraggingOverThis = false;});
           },
-          onAccept: (TreeNode<WordListsData> data) {
+          onAcceptWithDetails: (DragTargetDetails details) {
+
+            TreeNode<WordListsData> data = details.data;
 
             // dragging the tile in itself should do nothing
             if(data == widget.node){
@@ -451,12 +454,16 @@ class _WordListNodeState extends State<WordListNode> {
   void toPDFPressed() async {
 
     // let the user select a folder
-    String? path = await FilePicker.platform.getDirectoryPath();
+    String? path = await FilePicker.platform.saveFile(
+      fileName: widget.node.value.name,
+      allowedExtensions: ["pdf"],
+      //bytes: pdfBytes
+    );
     if(path == null) return;
 
     // show loadign indicator
-    // ignore: use_build_context_synchronously
-    loadingPopup(
+    await loadingPopup(
+      // ignore: use_build_context_synchronously
       context,
       waitingInfo: Text(LocaleKeys.WordListsScreen_export_pdf_progress.tr())
     ).show();
@@ -465,15 +472,18 @@ class _WordListNodeState extends State<WordListNode> {
     pw.Document pdf = await pdfPortraitFromWordListNode(
       await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(widget.node.id),
       widget.node.value.name);
+    Uint8List pdfBytes = await pdf.save();
 
     // close loading indicator
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
 
     // write PDF to file
-    File f = File(p.join(path, "${widget.node.value.name}.pdf"));
-    f.createSync();
-    f.writeAsBytesSync(await pdf.save());
+    if(g_desktopPlatform){
+      File f = File(p.join(path, "${widget.node.value.name}.pdf"));
+      f.createSync();
+      f.writeAsBytesSync(pdfBytes);
+    }
 
   }
 
@@ -486,8 +496,8 @@ class _WordListNodeState extends State<WordListNode> {
     if (path == null) return;
 
     // show loadign indicator
-    // ignore: use_build_context_synchronously
     loadingPopup(
+      // ignore: use_build_context_synchronously
       context,
       waitingInfo: Text(LocaleKeys.WordListsScreen_export_csv_progress.tr())
     ).show();
@@ -514,8 +524,8 @@ class _WordListNodeState extends State<WordListNode> {
     if(path == null) return;
 
     // show loadign indicator
-    // ignore: use_build_context_synchronously
     loadingPopup(
+      // ignore: use_build_context_synchronously
       context,
       waitingInfo: Text(LocaleKeys.WordListsScreen_export_images_progress.tr())
     ).show();

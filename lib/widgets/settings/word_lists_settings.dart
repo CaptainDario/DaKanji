@@ -295,8 +295,8 @@ class _WordListSettingsState extends State<WordListSettings> {
           }
         }
 
-        // ignore: use_build_context_synchronously
         await AwesomeDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           dialogType: DialogType.noHeader,
           dismissOnTouchOutside: false,

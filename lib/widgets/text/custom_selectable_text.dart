@@ -555,17 +555,6 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     return Focus(
       focusNode: focuseNode,
       canRequestFocus: true,
-      onKey: (node, event) {
-        KeyEventResult result = KeyEventResult.ignored;
-        // Activates all key bindings that match, returns handled if any handle it.
-        for (final ShortcutActivator activator in bindings.keys) {
-          if (activator.accepts(event, RawKeyboard.instance)) {
-            bindings[activator]!.call();
-            result = KeyEventResult.handled;
-          }
-        }
-        return result;
-      },
       child: GestureDetector(
         onTapDown: onTap,
         onTapUp: (details) {isTapped = false;},
