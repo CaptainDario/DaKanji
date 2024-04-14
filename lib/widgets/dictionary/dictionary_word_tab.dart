@@ -41,9 +41,9 @@ class DictionaryWordTab extends StatefulWidget {
   const DictionaryWordTab(
     this.entry,
     {
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
 
   @override

@@ -34,9 +34,9 @@ class DictionaryScreen extends StatefulWidget {
     this.initialSearch,
     {
       this.initialEntryId,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   @override
   State<DictionaryScreen> createState() => _DictionaryScreenState();

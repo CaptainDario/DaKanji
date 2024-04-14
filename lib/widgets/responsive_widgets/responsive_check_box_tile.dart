@@ -13,9 +13,9 @@ class ResponsiveCheckBoxTile extends StatefulWidget {
       this.autoSizeGroup,
       this.onTileTapped,
       this.onLeadingIconPressed,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   /// leading text
   final String text;

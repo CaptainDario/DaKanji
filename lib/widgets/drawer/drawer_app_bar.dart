@@ -12,11 +12,11 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 class DrawerAppBar extends StatelessWidget {
   const DrawerAppBar({
-    Key? key,
+    super.key,
     required AnimationController drawerController,
     required this.currentScreen,
     required this.height,
-  }) : _drawerController = drawerController, super(key: key);
+  }) : _drawerController = drawerController;
 
   /// controller to open and close the drawer
   final AnimationController _drawerController;

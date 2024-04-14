@@ -10,9 +10,9 @@ class ResponsiveInputFieldTile extends StatefulWidget {
       this.onChanged,
       this.onLeadingIconPressed,
       this.hintText,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   /// Is the Input field enabled
   final bool enabled;

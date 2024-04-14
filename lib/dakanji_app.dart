@@ -24,7 +24,7 @@ import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 /// The starting widget of the app
 class DaKanjiApp extends StatefulWidget {
 
-  const DaKanjiApp({Key? key}) : super(key: key);
+  const DaKanjiApp({super.key});
 
   @override
   State<DaKanjiApp> createState() => _DaKanjiAppState();

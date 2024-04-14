@@ -28,8 +28,8 @@ class KanjiBufferWidget extends StatefulWidget {
     this.canvasSize, 
     this.canvasSizePercentageToUse, 
     {
-      Key? key
-    }) : super(key: key);
+      super.key
+    });
 
   @override
   State<KanjiBufferWidget> createState() => _KanjiBufferWidgetState();

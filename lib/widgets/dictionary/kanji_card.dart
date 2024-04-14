@@ -34,9 +34,9 @@ class DictionaryScreenKanjiCard extends StatefulWidget {
     this.kanjidic2entry,
     this.targetLanguages,
     {
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
 
   @override

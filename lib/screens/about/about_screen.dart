@@ -41,7 +41,7 @@ class AboutScreen extends StatelessWidget {
     "GITHUB_RELEASES_PAGE" : g_GithubReleasesPage,
   });
 
-  AboutScreen(this.openedByDrawer, {Key? key}) : super(key: key);
+  AboutScreen(this.openedByDrawer, {super.key});
   
   @override
   Widget build(BuildContext context) {

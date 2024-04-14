@@ -20,9 +20,9 @@ class DictionaryKanjiTab extends StatefulWidget {
   const DictionaryKanjiTab(
     this.entry,
     {
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   @override
   State<DictionaryKanjiTab> createState() => _DictionaryKanjiTabState();

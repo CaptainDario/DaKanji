@@ -12,8 +12,8 @@ class ResponsiveKeybindingInput extends StatefulWidget {
     required this.defaultKeyBinding,
     this.onChanged,
     this.maxKeyCount = 3,
-    Key? key
-  }) : super(key: key);
+    super.key
+  });
 
   ///the key binding which should be used on instantiation
   final Set<LogicalKeyboardKey> keyBinding;

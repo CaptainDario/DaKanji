@@ -12,9 +12,9 @@ class ResponsiveHeaderTile extends StatelessWidget {
     {
       required this.children,
       this.autoSizeGroup,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   /// the text of the heading
   final String text;

@@ -22,9 +22,9 @@ class ResponsiveIconTile extends StatefulWidget {
       required this.icon,
       this.autoSizeGroup,
       this.onTilePressed,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
 
   @override

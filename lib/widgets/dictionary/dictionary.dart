@@ -50,9 +50,9 @@ class Dictionary extends StatefulWidget {
       this.includeDrawButton = true,
       this.isExpanded = false,
       this.allowDeconjugation=true,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   @override
   State<Dictionary> createState() => _DictionaryState();

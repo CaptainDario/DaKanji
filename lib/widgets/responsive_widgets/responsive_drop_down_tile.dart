@@ -21,9 +21,9 @@ class ResponsiveDropDownTile extends StatefulWidget {
       this.onTap,
       this.onChanged,
       this.autoSizeGroup,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   /// the description of this settings
   final String text;

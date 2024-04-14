@@ -45,8 +45,8 @@ class DrawingCanvas extends StatefulWidget {
       this.onFinishedDrawing,
       this.onDeletedLastStroke,
       this.onDeletedAllStrokes,
-      Key? key, 
-    }) : super(key: key);
+      super.key, 
+    });
 
   @override
   State<DrawingCanvas> createState() => _DrawingCanvasState();

@@ -46,8 +46,8 @@ class DrawScreen extends StatefulWidget {
     this.searchPostfix,
     this.includeHeroes, 
     this.includeTutorial, 
-    {Key? key}
-  ) : super(key: key);
+    {super.key}
+  );
 
   @override
   State<DrawScreen> createState() => _DrawScreenState();

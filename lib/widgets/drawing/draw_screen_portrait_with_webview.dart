@@ -29,7 +29,7 @@ class DrawScreenPortraitWithWebview extends StatelessWidget {
     this.clearButton,
     this.canvasSize,
     this.webView,
-    {Key? key}) : super(key: key);
+    {super.key});
 
   @override
   Widget build(BuildContext context) {

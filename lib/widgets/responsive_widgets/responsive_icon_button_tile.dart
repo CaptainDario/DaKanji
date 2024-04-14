@@ -22,9 +22,9 @@ class ResponsiveIconButtonTile extends StatefulWidget {
       required this.icon,
       this.onButtonPressed,
       this.autoSizeGroup,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   @override
   State<ResponsiveIconButtonTile> createState() => _ResponsiveIconButtonTileState();

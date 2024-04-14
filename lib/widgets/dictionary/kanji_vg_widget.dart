@@ -46,9 +46,9 @@ class KanjiVGWidget extends StatefulWidget {
     {
       this.borderAround = true,
       this.colorize = false,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   @override
   State<KanjiVGWidget> createState() => _KanjiVGWidgetState();

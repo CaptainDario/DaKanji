@@ -45,9 +45,9 @@ class DaKanjiDrawer extends StatefulWidget{
       required this.child,
       this.useBackArrowAppBar = false,
       this.drawerClosed = true,
-      Key? key, 
+      super.key, 
     }
-  ) : super(key: key);
+  );
 
   @override
   DaKanjiDrawerState createState() => DaKanjiDrawerState();

@@ -29,9 +29,9 @@ class DictionaryExampleTab extends StatefulWidget {
   const DictionaryExampleTab(
     this.entry,
     {
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   @override
   State<DictionaryExampleTab> createState() => _DictionaryExampleTabState();

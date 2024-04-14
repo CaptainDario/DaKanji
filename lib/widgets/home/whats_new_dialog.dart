@@ -16,8 +16,8 @@ import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
 
 class WhatsNewDialogue extends StatefulWidget {
   const WhatsNewDialogue(
-    {Key? key}
-  ) : super(key: key);
+    {super.key}
+  );
 
   @override
   State<WhatsNewDialogue> createState() => _WhatsNewDialogueState();

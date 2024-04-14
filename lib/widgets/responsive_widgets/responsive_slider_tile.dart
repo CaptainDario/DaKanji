@@ -46,9 +46,9 @@ class ResponsiveSliderTile extends StatefulWidget {
       this.onChanged,
       this.onChangeEnd,
       this.onLeadingIconPressed,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   @override
   State<ResponsiveSliderTile> createState() => _ResponsiveSliderTileState();

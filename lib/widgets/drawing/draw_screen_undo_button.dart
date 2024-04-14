@@ -14,8 +14,8 @@ class DrawScreenUndoButton extends StatelessWidget {
   const DrawScreenUndoButton(
     this.canvasSize,
     this.includeTutorial,
-    {Key? key}
-  ) : super(key: key);
+    {super.key}
+  );
 
   /// the size of the DrawingCanvas
   final double canvasSize;

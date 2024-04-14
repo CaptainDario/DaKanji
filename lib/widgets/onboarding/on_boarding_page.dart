@@ -51,8 +51,8 @@ class OnBoardingPage extends StatefulWidget {
     this.liquidController,
     this.swipeAnimation,
     {
-      Key? key
-    }) : super(key: key);
+      super.key
+    });
 
   @override
   State<OnBoardingPage> createState() => _OnBoardingPageState();

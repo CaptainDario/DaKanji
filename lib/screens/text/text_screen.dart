@@ -51,8 +51,8 @@ class TextScreen extends StatefulWidget {
     {
       this.useBackArrowAppBar = false,
       this.initialText,
-      Key? key
-    }) : super(key: key);
+      super.key
+    });
 
   @override
   State<TextScreen> createState() => _TextScreenState();

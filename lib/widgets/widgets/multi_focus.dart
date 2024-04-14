@@ -8,8 +8,8 @@ class MultiFocus extends StatelessWidget {
   const MultiFocus({
     required this.focusNodes,
     required this.child,
-    Key? key
-    }) : super(key: key);
+    super.key
+    });
 
   /// all focusNodes which should be wrapped around the child
   final List<FocusNode>? focusNodes;

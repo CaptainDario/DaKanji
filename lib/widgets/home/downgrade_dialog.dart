@@ -9,8 +9,8 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 
 class DowngradeDialog extends StatefulWidget {
   const DowngradeDialog(
-    {Key? key}
-  ) : super(key: key);
+    {super.key}
+  );
 
   @override
   State<DowngradeDialog> createState() => _DowngradeDialogState();

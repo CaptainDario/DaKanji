@@ -42,8 +42,8 @@ class TextAnalysisPopup extends StatefulWidget {
       this.onMovedViaHeader,
       this.onResizedViaCorner,
       this.onInitialized,
-      Key? key
-    }) : super(key: key);
+      super.key
+    });
   
 
   @override
