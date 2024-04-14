@@ -3,6 +3,7 @@
 ## v3.4.0+77b4 - 仮名 (.04.2024)
 
 * Changed: Anki manual platform sections are collapsed
+* Updated: Anki setup instructions
 * Added: Settings localization
 * Updated flutter to 3.19 and some dependencies
 
