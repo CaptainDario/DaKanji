@@ -54,7 +54,9 @@ class ManualAnki extends StatelessWidget {
     return Expanded(
       child: SingleChildScrollView(
         child: Theme(
-          data: ThemeData(dividerColor: Colors.transparent),
+          data: Theme.of(context).copyWith(
+            dividerColor: Colors.transparent
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
