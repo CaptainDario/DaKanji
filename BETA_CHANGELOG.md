@@ -11,6 +11,7 @@
     * Unneccesary new lines
 * Fixed:
   * Anki card template
+  * When opening and closing the search on the kanji page the animation status is reset
 
 ## v3.4.0+77b4 - 仮名 (14.04.2024)
 
