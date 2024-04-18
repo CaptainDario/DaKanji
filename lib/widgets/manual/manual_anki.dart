@@ -53,95 +53,98 @@ class ManualAnki extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            Text(LocaleKeys.ManualScreen_anki_setup_title.tr(), style: heading_1,),
-
-            const SizedBox(height: 10),
-
-            Text(LocaleKeys.ManualScreen_anki_setup_intro.tr()),
-
-            const SizedBox(height: 15),
-            
-            ExpansionTile(
-              title: Text(LocaleKeys.ManualScreen_anki_setup_android_title.tr(), style: heading_2,),
-              initiallyExpanded: Platform.isAndroid,
-              children: [
-                MarkdownBody(
-                  data: LocaleKeys.ManualScreen_anki_setup_android_text.tr(),
-                  onTapLink: (String text, String? href, String title)
-                    => handleUrlTap(text, href, title, useExternal: true)
-                ),
-                const SizedBox(height: 5,)
-              ]
-            ),
-
-            const SizedBox(height: 15),
-
-            ExpansionTile(
-              title: Text(LocaleKeys.ManualScreen_anki_setup_desktop_title.tr(), style: heading_2,),
-              initiallyExpanded: g_desktopPlatform,
-              children: [
-                MarkdownBody(
-                  data: LocaleKeys.ManualScreen_anki_setup_desktop_text.tr(),
-                  onTapLink: handleUrlTap
-                ),
-                const SizedBox(height: 5),
-              ],
-            ),
-
-            const SizedBox(height: 15),
-            
-            ExpansionTile(
-              title: Text(LocaleKeys.ManualScreen_anki_setup_ios_title.tr(), style: heading_2,),
-              initiallyExpanded: Platform.isIOS,
-              children: [
-                MarkdownBody(
-                  data: LocaleKeys.ManualScreen_anki_setup_ios_text.tr(),
-                  onTapLink: handleUrlTap
-                ),
-                const SizedBox(height: 5),
-              ],
-            ),
-
-            const SizedBox(height: 15),
-
-            Text(LocaleKeys.ManualScreen_anki_setup_general_title.tr(), style: heading_2,),
-            const SizedBox(height: 5),
-            MarkdownBody(
-              data: LocaleKeys.ManualScreen_anki_setup_general_text.tr(),
-              onTapLink: handleUrlTap
-            ),
-
-            const SizedBox(height: 15),
-
-            Text(LocaleKeys.ManualScreen_anki_connection_test_title.tr(), style: heading_2,),
-            const SizedBox(height: 5),
-            MarkdownBody(
-              data: LocaleKeys.ManualScreen_anki_connection_test_text.tr(),
-              onTapLink: handleUrlTap
-            ),
-
-            const SizedBox(height: 30),
-            // test anki setup button
-            Center(
-              child: ElevatedButton(
-                onPressed: () async {
-                  bool success = await GetIt.I<Anki>().testAnkiSetup(context);
-
-                  if(success){
-                    GetIt.I<UserData>().ankiSetup = true;
-                    await GetIt.I<UserData>().save();
-                  }
-                },
-                child: Text(
-                  LocaleKeys.ManualScreen_anki_test_connection.tr(),
-                ),
+        child: Theme(
+          data: ThemeData(dividerColor: Colors.transparent),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+          
+              Text(LocaleKeys.ManualScreen_anki_setup_title.tr(), style: heading_1,),
+          
+              const SizedBox(height: 10),
+          
+              Text(LocaleKeys.ManualScreen_anki_setup_intro.tr()),
+          
+              const SizedBox(height: 15),
+              
+              ExpansionTile(
+                title: Text(LocaleKeys.ManualScreen_anki_setup_android_title.tr(), style: heading_2,),
+                initiallyExpanded: Platform.isAndroid,
+                children: [
+                  MarkdownBody(
+                    data: LocaleKeys.ManualScreen_anki_setup_android_text.tr(),
+                    onTapLink: (String text, String? href, String title)
+                      => handleUrlTap(text, href, title, useExternal: true)
+                  ),
+                  const SizedBox(height: 5,)
+                ]
               ),
-            )
-          ],
+          
+              const SizedBox(height: 15),
+          
+              ExpansionTile(
+                title: Text(LocaleKeys.ManualScreen_anki_setup_desktop_title.tr(), style: heading_2,),
+                initiallyExpanded: g_desktopPlatform,
+                children: [
+                  MarkdownBody(
+                    data: LocaleKeys.ManualScreen_anki_setup_desktop_text.tr(),
+                    onTapLink: handleUrlTap
+                  ),
+                  const SizedBox(height: 5),
+                ],
+              ),
+          
+              const SizedBox(height: 15),
+              
+              ExpansionTile(
+                title: Text(LocaleKeys.ManualScreen_anki_setup_ios_title.tr(), style: heading_2,),
+                initiallyExpanded: Platform.isIOS,
+                children: [
+                  MarkdownBody(
+                    data: LocaleKeys.ManualScreen_anki_setup_ios_text.tr(),
+                    onTapLink: handleUrlTap
+                  ),
+                  const SizedBox(height: 5),
+                ],
+              ),
+          
+              const SizedBox(height: 15),
+          
+              Text(LocaleKeys.ManualScreen_anki_setup_general_title.tr(), style: heading_2,),
+              const SizedBox(height: 5),
+              MarkdownBody(
+                data: LocaleKeys.ManualScreen_anki_setup_general_text.tr(),
+                onTapLink: handleUrlTap
+              ),
+          
+              const SizedBox(height: 15),
+          
+              Text(LocaleKeys.ManualScreen_anki_connection_test_title.tr(), style: heading_2,),
+              const SizedBox(height: 5),
+              MarkdownBody(
+                data: LocaleKeys.ManualScreen_anki_connection_test_text.tr(),
+                onTapLink: handleUrlTap
+              ),
+          
+              const SizedBox(height: 30),
+              // test anki setup button
+              Center(
+                child: ElevatedButton(
+                  onPressed: () async {
+                    bool success = await GetIt.I<Anki>().testAnkiSetup(context);
+          
+                    if(success){
+                      GetIt.I<UserData>().ankiSetup = true;
+                      await GetIt.I<UserData>().save();
+                    }
+                  },
+                  child: Text(
+                    LocaleKeys.ManualScreen_anki_test_connection.tr(),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -2,6 +2,8 @@
 
 ## v3.4.0+78b5 - 仮名 (19.04.2024)
 
+* Improvments:
+  * Removed grey lines from Anki manual
 * Added:
   * Anki:
     * Back side also shows front side
