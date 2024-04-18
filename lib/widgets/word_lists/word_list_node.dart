@@ -453,15 +453,11 @@ class _WordListNodeState extends State<WordListNode> {
   void toPDFPressed() async {
 
     // let the user select a folder
-    String? path = await FilePicker.platform.saveFile(
-      fileName: widget.node.value.name,
-      allowedExtensions: ["pdf"],
-      //bytes: pdfBytes
-    );
+    String? path = await FilePicker.platform.getDirectoryPath();
     if(path == null) return;
 
-    // show loadign indicator
-    await loadingPopup(
+    // show loading indicator
+    loadingPopup(
       // ignore: use_build_context_synchronously
       context,
       waitingInfo: Text(LocaleKeys.WordListsScreen_export_pdf_progress.tr())
@@ -478,11 +474,9 @@ class _WordListNodeState extends State<WordListNode> {
     Navigator.of(context).pop();
 
     // write PDF to file
-    if(g_desktopPlatform){
-      File f = File(p.join(path, "${widget.node.value.name}.pdf"));
-      f.createSync();
-      f.writeAsBytesSync(pdfBytes);
-    }
+    File f = File(p.join(path, "${widget.node.value.name}.pdf"));
+    f.createSync();
+    f.writeAsBytesSync(pdfBytes);
 
   }
 
