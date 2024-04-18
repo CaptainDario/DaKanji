@@ -59,6 +59,10 @@ const String ankiDataStyling =
 /// The template for the front of DaKanji Anki notes
 const String ankiDataFrontTemplate =
 """
+{{FrontSide}}
+
+<hr id=answer>
+
 <div class="translations">
 	{{$ankiDataFieldTranslation}}
 </div>
@@ -68,6 +72,8 @@ const String ankiDataFrontTemplate =
   <img src="{{$ankiDataFieldImage}}">
 {{/$ankiDataFieldImage}}
 <br>
+{{#$ankiDataFieldFrontNote}}
+	{{$ankiDataFieldFrontNote}}
 {{/$ankiDataFieldFrontNote}}
 """;
 
@@ -83,6 +89,19 @@ const String ankiDataBackTemplate =
 		{{$ankiDataFieldKana}}
 	{{/$ankiDataFieldKanji}}
 </a>
+{{#$ankiDataFieldAudio}}
+	{{$ankiDataFieldAudio}}
+{{/$ankiDataFieldAudio}}
 <br>
+{{#$ankiDataFieldExample}}
+	{{$ankiDataFieldExample}}
+{{/$ankiDataFieldExample}}
+<br>
+{{#$ankiDataFieldImage}}
+	{{$ankiDataFieldImage}}
+{{/$ankiDataFieldImage}}
+<br>
+{{#$ankiDataFieldBackNote}}
+	{{$ankiDataFieldBackNote}}
 {{/$ankiDataFieldBackNote}}
 """;
