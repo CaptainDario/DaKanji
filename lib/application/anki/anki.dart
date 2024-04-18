@@ -237,34 +237,39 @@ class Anki {
   Future<bool> testAnkiSetup(BuildContext context) async {
 
     bool setupCorrect = false;
+    String errorMessage = "";
 
     // anki correctly installed
     bool ankiAvailable = await GetIt.I<Anki>().checkAnkiAvailable();
-    // DaKanji note type
-    await GetIt.I<Anki>().addDaKanjiModel();
-    bool dakanjiNoteTypeAvailable = await GetIt.I<Anki>().daKanjiModelExists();
-    // deck selected
-    String? selectedDeck = GetIt.I<Settings>().anki.defaultDeck;
-    // selected deck available
-    bool selectedDeckAvailable = (await GetIt.I<Anki>().getDeckNames())
-      .contains(selectedDeck);
-
-    String errorMessage = "";
     if(!ankiAvailable) {
       errorMessage = LocaleKeys.ManualScreen_anki_test_connection_not_installed.tr();
     }
-    else if(!dakanjiNoteTypeAvailable) {
-      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_note_type_not_available.tr();
+
+    // DaKanji note type
+    if(errorMessage == ""){
+      await GetIt.I<Anki>().addDaKanjiModel();
+      bool dakanjiNoteTypeAvailable = await GetIt.I<Anki>().daKanjiModelExists();
+      if(!dakanjiNoteTypeAvailable) {
+        errorMessage = LocaleKeys.ManualScreen_anki_test_connection_note_type_not_available.tr();
+      }
     }
-    else if(selectedDeck == null || selectedDeck == ""){
-      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_no_deck_selected.tr();
-    }
-    else if(!selectedDeckAvailable){
-      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_deck_not_in_anki.tr();
-    }
-    else {
-      setupCorrect = true;
-      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_success.tr();
+
+    // deck selected
+    if(errorMessage == ""){
+      String? selectedDeck = GetIt.I<Settings>().anki.defaultDeck;
+      if(selectedDeck == null || selectedDeck == ""){
+        errorMessage = LocaleKeys.ManualScreen_anki_test_connection_no_deck_selected.tr();
+      }
+      bool selectedDeckAvailable = (await GetIt.I<Anki>().getDeckNames())
+        .contains(selectedDeck);
+      if(!selectedDeckAvailable){
+        errorMessage = LocaleKeys.ManualScreen_anki_test_connection_deck_not_in_anki.tr();
+      }
+      // setup is correct
+      else {
+        setupCorrect = true;
+        errorMessage = LocaleKeys.ManualScreen_anki_test_connection_success.tr();
+      }
     }
 
     // ignore: use_build_context_synchronously

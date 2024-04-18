@@ -72,6 +72,8 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
           },
           leadingButtonIcon: Icons.replay_outlined,
           leadingButtonPressed: () async {
+
+            // first check if anki is available and show a snackbar accordingly            
             bool ankiAvailable = await GetIt.I<Anki>().checkAnkiAvailable();
             // ignore: use_build_context_synchronously
             ScaffoldMessenger.of(context).showSnackBar(
