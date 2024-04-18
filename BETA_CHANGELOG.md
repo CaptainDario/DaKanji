@@ -1,6 +1,16 @@
 # DaKanji Beta - changelog
 
-## v3.4.0+77b4 - 仮名 (.04.2024)
+## v3.4.0+78b5 - 仮名 (19.04.2024)
+
+* Added:
+  * Anki:
+    * Back side also shows front side
+    * Separator line between front and back content
+    * Unneccesary new lines
+* Fixed:
+  * Anki card template
+
+## v3.4.0+77b4 - 仮名 (14.04.2024)
 
 * Changed: Anki manual platform sections are collapsed
 * Updated: Anki setup instructions
