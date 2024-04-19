@@ -166,12 +166,12 @@ class _WordListsState extends State<WordLists> {
           }
           // apply filter
           if(searchTextEditingController.text.isNotEmpty){
-              childrenDFS = childrenDFS
-                // only search in non defaults
-                .where((e) => !wordListDefaultTypes.contains(e.value.type))
-                // apply filter
-                .where((e) => e.value.name.contains(searchTextEditingController.text))
-                .toList();
+            childrenDFS = childrenDFS
+              // only search in non defaults
+              .where((e) => !wordListDefaultTypes.contains(e.value.type))
+              // apply filter
+              .where((e) => e.value.name.contains(searchTextEditingController.text))
+              .toList();
           }
           animateListTilesIn();
         }
@@ -394,12 +394,6 @@ class _WordListsState extends State<WordLists> {
                                           // ... add a divider in which lists can be dragged (easier reorder)
                                           DragTarget<TreeNode<WordListsData>>(
                                             onWillAcceptWithDetails: (details) {
-
-                                              TreeNode<WordListsData> data = details.data;
-                                      
-                                              // do no allow self drags
-                                              if(data == null) return false;
-                                      
                                               draggingOverDividerIndex = i;
                                               setState(() {});
                                               return true;
@@ -631,7 +625,7 @@ class _WordListsState extends State<WordLists> {
           setState(() {});
         }
       }
-      // if the same amount exists, do nothing ?
+      // if the same amount exists, do nothing
       else if(animateListTileIn.length == childrenDFS.length){
         
       }

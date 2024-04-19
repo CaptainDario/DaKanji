@@ -49,13 +49,13 @@ class _WordListScreenState extends State<WordListScreen> {
   /// is this a default list
   bool isDefault = false;
   /// all entries of this list
-  late Stream<Iterable<JMdict>> entriesStream;
+  Stream<Iterable<JMdict>>? entriesStream;
 
   /// [FocusNode] of the search field
   FocusNode searchInputFocusNode = FocusNode();
   /// The [TextEditingController] to handle the search inputs
   TextEditingController searchTextEditingController = TextEditingController();
-  ///
+  /// Should the list be animated (slide in)
   bool animate = true;
   /// The current sorting order
   WordListSorting currentSorting = WordListSorting.dateDesc;
@@ -64,7 +64,9 @@ class _WordListScreenState extends State<WordListScreen> {
   @override
   void initState() {
 
-    initStream();
+    Future.delayed(
+      const Duration(milliseconds: 200),
+      () => setState(() {initStream();}));
 
     super.initState();
   }
@@ -77,10 +79,8 @@ class _WordListScreenState extends State<WordListScreen> {
 
     // is this a default list
     if(widget.node.value.type == WordListNodeType.wordListDefault) {
-
       isDefault = true;
       idStream = const Stream.empty();
-
     }    
     // user list
     else{
@@ -91,7 +91,7 @@ class _WordListScreenState extends State<WordListScreen> {
   }
 
   /// Initializes the stream from which the elements of this word list are read
-  void initStream(){
+  void initStream() {
 
     String searchTerm = searchTextEditingController.text;
     entriesStream = getStream()
@@ -114,8 +114,7 @@ class _WordListScreenState extends State<WordListScreen> {
       // get all entries from the dictionary
       .map((e) {
         return GetIt.I<Isars>().dictionary.jmdict
-          .getAllSync(
-            e.map((e) => e.item2).toList())
+          .getAllSync(e.map((e) => e.item2).toList())
           .whereNotNull();
       })
       // apply search term
@@ -145,12 +144,12 @@ class _WordListScreenState extends State<WordListScreen> {
 
         return event;
       });
-
   }
 
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -246,16 +245,20 @@ class _WordListScreenState extends State<WordListScreen> {
         body: StreamBuilder<Iterable<JMdict>>(
           stream: entriesStream,
           builder: (context, snapshot) {
-
-            if(snapshot.data == null || !snapshot.hasData || snapshot.data!.isEmpty){
+        
+            // stream didnt return anything yet
+            if (snapshot.data == null || !snapshot.hasData){
+              return const SizedBox();
+            }
+            // stream returned empty list
+            if(snapshot.data!.isEmpty){
               return Center(
                 child: Text(LocaleKeys.WordListsScreen_no_entries.tr()),
               );
             }
-
+        
             return SearchResultList(
-              //key: searchResultListKey,
-              searchResults: snapshot.data!.whereNotNull().toList(),
+              searchResults: snapshot.data!.toList(),
               alwaysAnimateIn: animate,
               onDismissed: isDefault 
                 ? null
