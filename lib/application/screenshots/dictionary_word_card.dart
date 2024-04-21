@@ -21,7 +21,8 @@ Future<File> dictionaryWordCardToImage(
 
   await ScreenshotController().captureFromLongWidget(
     DictionaryWordCardScreenshot(entry, includeConjugation),
-    delay: const Duration(milliseconds: 50)
+    delay: const Duration(milliseconds: 50),
+    pixelRatio: 3
   ).then((value) async {
     Directory tmp = await getTemporaryDirectory();
     f = File("${tmp.path}/$fileName")..createSync();

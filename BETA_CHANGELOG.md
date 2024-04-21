@@ -5,6 +5,8 @@
 * Improvments:
   * Removed grey lines from Anki manual
   * Small stutter when opening a word list
+  * Dictionary
+    * Share image: improved sharpness
   * Anki
     * Removed empty lines at the end of notes
     * Increased Kanji font size
