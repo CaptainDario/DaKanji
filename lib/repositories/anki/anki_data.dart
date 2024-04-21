@@ -54,15 +54,17 @@ const String ankiDataStyling =
 .translations {
   text-align: left;
 }
+.kanji{
+	font-size: 32px;
+}
+.furigana{
+	font-size: 16px;
+}
 """;
 
 /// The template for the front of DaKanji Anki notes
 const String ankiDataFrontTemplate =
 """
-{{FrontSide}}
-
-<hr id=answer>
-
 <div class="translations">
 	{{$ankiDataFieldTranslation}}
 </div>
@@ -80,9 +82,13 @@ const String ankiDataFrontTemplate =
 /// The template for the back of DaKanji Anki notes
 const String ankiDataBackTemplate =
 """
+{{FrontSide}}
+
+<hr id=answer>
+
 <a href="{{$ankiDataFieldDaKanjiLink}}">
 	{{#$ankiDataFieldKanji}}
-		<ruby>{{$ankiDataFieldKanji}}<rp>(</rp><rt>{{$ankiDataFieldKana}}</rt><br>
+		<ruby class="kanji">{{$ankiDataFieldKanji}}<rp>(</rp><rt class="furigana">{{$ankiDataFieldKana}}</rt><br>
 	{{/$ankiDataFieldKanji}}
 
 	{{^$ankiDataFieldKanji}}

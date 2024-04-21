@@ -5,7 +5,9 @@
 * Improvments:
   * Removed grey lines from Anki manual
   * Small stutter when opening a word list
-  * Removed empty lines at the end of an anki note
+  * Anki
+    * Removed empty lines at the end of notes
+    * Increased Kanji font size
 * Added:
   * Anki:
     * Back side also shows front side
@@ -13,6 +15,7 @@
     * Unneccesary new lines
 * Fixed:
   * Anki card template
+  * Opening the radical picker while the virtual keyboard is open
   * Long anki deck names make all settings small
   * When opening and closing the search on the kanji page the animation status is reset
   * Permission to connect with anki is requested multiple times and causes exceptions
