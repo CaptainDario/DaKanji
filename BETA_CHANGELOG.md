@@ -12,6 +12,7 @@
     * Unneccesary new lines
 * Fixed:
   * Anki card template
+  * Long anki deck names make all settings small
   * When opening and closing the search on the kanji page the animation status is reset
   * Permission to connect with anki is requested multiple times and causes exceptions
 

@@ -13,6 +13,7 @@ import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_drop_down_tile.dart';
@@ -56,6 +57,7 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
         // the default deck to add cards to
         ResponsiveDropDownTile(
           text: LocaleKeys.SettingsScreen_anki_default_deck.tr(),
+          autoSizeGroup: AutoSizeGroup(),
           value: widget.settings.anki.defaultDeck,
           items: widget.settings.anki.availableDecks.contains(widget.settings.anki.defaultDeck) ||
             widget.settings.anki.defaultDeck == null
