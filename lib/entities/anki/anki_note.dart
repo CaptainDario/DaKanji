@@ -60,9 +60,10 @@ class AnkiNote{
         translation += "<div class=\"language\">${isoToLanguage[isoToiso639_2T[langs[i]]]}</div>";
       }
       for (var j = 0; j < translations[i].length; j++){
-        translation += "${j+1}: ${translations[i][j]}<br>";
+        translation += "${j+1}: ${translations[i][j]}";
+        translation += j < translations[i].length-1 ? '<br>' : '';
       }
-      translation += "<br>";
+      translation += i < translations.length-1 ? '<br>' : '';
     }
 
     return {

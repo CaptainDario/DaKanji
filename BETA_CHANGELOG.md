@@ -5,6 +5,7 @@
 * Improvments:
   * Removed grey lines from Anki manual
   * Small stutter when opening a word list
+  * Removed empty lines at the end of an anki note
 * Added:
   * Anki:
     * Back side also shows front side
