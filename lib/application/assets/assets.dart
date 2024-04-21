@@ -22,49 +22,49 @@ import 'package:da_kanji_mobile/widgets/downloads/download_popup.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 
 /// Download the audio files from the github release matching this version
-  void downloadAudio(BuildContext context){
+void downloadAudio(BuildContext context) async {
 
-    downloadPopup(
-      context: context,
-      dismissable: true,
-      btnOkOnPress: () async {
-        downloadAssetFromGithubRelease(
-          File(g_DakanjiPathManager.audiosDirectory.path),
-          g_GithubApiDependenciesRelase,
-        ).then((value) {
-          Navigator.of(context).pop();
-        });
-        AwesomeDialog(
-          context: context,
-          headerAnimationLoop: false,
-          dismissOnTouchOutside: false,
-          customHeader: Image.asset("assets/images/dakanji/icon.png"),
-          dialogType: DialogType.noHeader,
-          body: StreamBuilder(
-            stream: g_initAppInfoStream.stream,
-            builder: (context, snapshot) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height / 4,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const DaKanjiLoadingIndicator(),
-                      const SizedBox(height: 8,),
-                      Text(
-                        snapshot.data ?? ""
-                      ),
-                    ],
-                  ),
+  await downloadPopup(
+    context: context,
+    dismissable: true,
+    btnOkOnPress: () async {
+      downloadAssetFromGithubRelease(
+        File(g_DakanjiPathManager.audiosDirectory.path),
+        g_GithubApiDependenciesRelase,
+      ).then((value) {
+        Navigator.of(context).pop();
+      });
+      AwesomeDialog(
+        context: context,
+        headerAnimationLoop: false,
+        dismissOnTouchOutside: false,
+        customHeader: Image.asset("assets/images/dakanji/icon.png"),
+        dialogType: DialogType.noHeader,
+        body: StreamBuilder(
+          stream: g_initAppInfoStream.stream,
+          builder: (context, snapshot) {
+            return SizedBox(
+              height: MediaQuery.of(context).size.height / 4,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const DaKanjiLoadingIndicator(),
+                    const SizedBox(height: 8,),
+                    Text(
+                      snapshot.data ?? ""
+                    ),
+                  ],
                 ),
-              );
-            }
-          )
-        ).show();
-      }
-    ).show();
+              ),
+            );
+          }
+        )
+      ).show();
+    }
+  ).show();
 
-  }
+}
 
 /// Tries to copy `asset` from assets and if that fails,
 /// downloads it from `url` (github). `path` is the destination folder inside of
