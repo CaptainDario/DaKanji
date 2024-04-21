@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: prefer_single_quotes
+// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters
 
 import 'dart:ui';
 
@@ -208,7 +208,7 @@ class CodegenLoader extends AssetLoader{
     "title": "崩し字"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "要开始使用 DaKanji 和 Anki，您需要按下面的按钮。它将检查您的设置是否正确。\n\n如果收到成功信息，DaKanji 和 Anki 就连接上了，你就可以开始使用 DaKanji 和 Anki 了。\n如果没有成功信息，DaKanji 将无法向 Anki 发送卡片，因此请确保按下下面的按钮并收到成功信息。你也可以在设置→Anki中检查设置是否成功。",
+    "anki_connection_test_text": "要开始使用 DaKanji 和 Anki，您需要按下面的按钮。它将检查您的设置是否正确。\n\n如果收到成功信息，DaKanji 和 Anki 就连接上了，你就可以开始使用 DaKanji 和 Anki 了。\n如果没有成功信息，DaKanji 将无法向 Anki 发送卡片。因此，请确保按了下面的按钮并收到成功信息。你也可以在设置 → Anki中检查设置是否成功。",
     "anki_connection_test_title": "测试设置",
     "anki_setup_android_text": "你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki)，并在被要求时授予DaKanji与Anki互动的权限。",
     "anki_setup_android_title": "安卓",
@@ -224,7 +224,7 @@ class CodegenLoader extends AssetLoader{
     "anki_test_connection_deck_not_in_anki": "您选择的卡组在 Anki 中不可用！",
     "anki_test_connection_fail": "你没有连接到Anki!😢",
     "anki_test_connection_no_deck_selected": "如果您没有选择要添加卡牌的卡组，请在设置中进行选择！",
-    "anki_test_connection_not_installed": "Anki 安装不正确！",
+    "anki_test_connection_not_installed": "Anki 安装不正确或未授予权限！",
     "anki_test_connection_note_type_not_available": "Anki 中没有大汉字注音类型！",
     "anki_test_connection_success": "你已连接到Anki!🎉",
     "anki_title": "Anki",
@@ -646,7 +646,7 @@ static const Map<String,dynamic> ja = {
     "title": "崩し字"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "大漢字と杏樹を使い始めるには、下のボタンを押してください。設定が正しいかどうかチェックされます。\n\n成功のメッセージが表示されれば、大漢字とAnkiは接続されたことになります。\n成功メッセージが表示されない場合、大漢字からAnkiにカードを送信することができませんので、下のボタンを押して成功メッセージが表示されたことを確認してください。設定が成功したかどうかは、設定→Ankiでも確認できます。",
+    "anki_connection_test_text": "大漢字と杏樹を使い始めるには、下のボタンを押してください。設定が正しいかどうかチェックされます。\n\n成功のメッセージが表示されれば、大漢字とAnkiは接続され、大漢字とAnkiを使い始めることができます。\n成功メッセージが表示されない場合、大漢字はAnkiにカードを送信することができません。以下のボタンを押して、成功メッセージが表示されたことを確認してください。設定が成功したかどうかは、設定→Ankiでも確認できます。",
     "anki_connection_test_title": "テスト設定",
     "anki_setup_android_text": "[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki)をインストールし、DakanjiにAnkiとの同期を求めるメッセージが表示されましたら、許可してください。",
     "anki_setup_android_title": "Android",
@@ -662,7 +662,7 @@ static const Map<String,dynamic> ja = {
     "anki_test_connection_deck_not_in_anki": "選択したデッキはAnkiでは使用できません",
     "anki_test_connection_fail": "Ankiに接続されていません！😢",
     "anki_test_connection_no_deck_selected": "カードを追加するデッキが選択されていません",
-    "anki_test_connection_not_installed": "Ankiが正しくインストールされていません！",
+    "anki_test_connection_not_installed": "Ankiが正しくインストールされていないか、権限が付与されていません！",
     "anki_test_connection_note_type_not_available": "DakanjiのノートタイプはAnkiでは使用できません！",
     "anki_test_connection_success": "Ankiに接続されました！🎉",
     "anki_title": "Anki",
@@ -1114,7 +1114,7 @@ static const Map<String,dynamic> de = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Um DaKanji und Anki zu verwenden, müssen Sie auf die Schaltfläche unten klicken. Es wird geprüft, ob Ihre Einstellungen korrekt sind.\n\nWenn du eine Erfolgsmeldung erhältst, sind DaKanji und Anki miteinander verbunden und du kannst DaKanji mit Anki verwenden.\nOhne eine Erfolgsmeldung kann DaKanji keine Karten an Anki senden. Vergewissere dich daher, dass du die Schaltfläche unten drückst und eine Erfolgsmeldung erhältst. Du kannst auch unter Einstellungen → Anki überprüfen, ob die Einrichtung erfolgreich war.",
+    "anki_connection_test_text": "Um DaKanji und Anki zu verwenden, müssen Sie auf die Schaltfläche unten klicken. Es wird geprüft, ob Ihre Einstellungen korrekt sind.\n\nWenn du eine Erfolgsmeldung erhältst, sind DaKanji und Anki verbunden und du kannst DaKanji mit Anki verwenden.\nOhne eine Erfolgsmeldung ist DaKanji nicht in der Lage, Karten an Anki zu senden. Vergewissere dich daher, dass du den Knopf unten drückst und eine Erfolgsmeldung erhältst. Du kannst auch unter Einstellungen → Anki überprüfen, ob die Einrichtung erfolgreich war.",
     "anki_connection_test_title": "Test setup",
     "anki_setup_android_text": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
     "anki_setup_android_title": "Android",
@@ -1130,7 +1130,7 @@ static const Map<String,dynamic> de = {
     "anki_test_connection_deck_not_in_anki": "Das von dir ausgewählte Deck ist in Anki nicht verfügbar!",
     "anki_test_connection_fail": "Du bist nicht mit Anki verbunde! 😢",
     "anki_test_connection_no_deck_selected": "Sie haben noch kein Deck ausgewählt, zu dem Karten hinzugefügt werden sollen, tun Sie dies bitte in den Einstellungen!",
-    "anki_test_connection_not_installed": "Anki ist nicht richtig installiert!",
+    "anki_test_connection_not_installed": "Anki ist nicht richtig installiert oder es wurden keine Berechtigungen erteilt!",
     "anki_test_connection_note_type_not_available": "Der Notentyp DaKanji ist in Anki nicht verfügbar!",
     "anki_test_connection_success": "Du bist mit Anki verbunden! 🎉",
     "anki_title": "Anki",
@@ -1544,7 +1544,7 @@ static const Map<String,dynamic> ru = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Чтобы начать использовать DaKanji и Anki, вам нужно нажать кнопку ниже. Она проверит правильность ваших настроек.\n\nЕсли вы получите сообщение об успехе, DaKanji и Anki подключены, и вы можете начать использовать DaKanji с Anki.\nБез сообщения об успехе DaKanji не сможет отправлять карточки в Anki, поэтому убедитесь, что вы нажали кнопку ниже и получили сообщение об успехе. Вы также можете проверить успешность настройки в разделе Настройки → Anki.",
+    "anki_connection_test_text": "Чтобы начать использовать DaKanji и Anki, вам нужно нажать кнопку ниже. Она проверит правильность ваших настроек.\n\nЕсли вы получите сообщение об успехе, значит, DaKanji и Anki подключены и вы можете начать использовать DaKanji с Anki.\nБез сообщения об успехе DaKanji не сможет отправлять карточки в Anki. Поэтому убедитесь, что вы нажали кнопку ниже и получили сообщение об успехе. Вы также можете проверить успешность настройки в разделе Настройки → Anki.",
     "anki_connection_test_title": "Испытательная установка",
     "anki_setup_android_text": "Вам необходимо установить [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) и при запросе предоставить DaKanji разрешение на взаимодействие с Anki.",
     "anki_setup_android_title": "Android",
@@ -1560,7 +1560,7 @@ static const Map<String,dynamic> ru = {
     "anki_test_connection_deck_not_in_anki": "Выбранная вами колода недоступна в Anki!",
     "anki_test_connection_fail": "Вы не подключены к Anki! 😢",
     "anki_test_connection_no_deck_selected": "Если у вас не выбрана колода, в которую должны быть добавлены карты, сделайте это в настройках!",
-    "anki_test_connection_not_installed": "Anki не установлен должным образом!",
+    "anki_test_connection_not_installed": "Anki не установлен должным образом или не предоставлены права!",
     "anki_test_connection_note_type_not_available": "Тип нот DaKanji недоступен в Anki!",
     "anki_test_connection_success": "Вы подключены к Anki! 🎉",
     "anki_title": "Anki",
@@ -1995,7 +1995,7 @@ static const Map<String,dynamic> pl = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Aby rozpocząć korzystanie z DaKanji i Anki, należy nacisnąć poniższy przycisk. Sprawdzi on, czy konfiguracja jest prawidłowa.\n\nJeśli otrzymasz wiadomość o powodzeniu, DaKanji i Anki są połączone i możesz zacząć używać DaKanji z Anki.\nBez komunikatu o powodzeniu DaKanji nie będzie w stanie wysyłać kart do Anki, dlatego upewnij się, że nacisnąłeś poniższy przycisk i otrzymałeś komunikat o powodzeniu. Możesz również sprawdzić, czy konfiguracja przebiegła pomyślnie w ustawieniach → Anki.",
+    "anki_connection_test_text": "Aby rozpocząć korzystanie z DaKanji i Anki, należy nacisnąć poniższy przycisk. Sprawdzi on, czy konfiguracja jest prawidłowa.\n\nJeśli otrzymasz wiadomość o powodzeniu, DaKanji i Anki są połączone i możesz zacząć używać DaKanji z Anki.\nBez komunikatu o powodzeniu DaKanji nie będzie w stanie wysyłać kart do Anki. Dlatego upewnij się, że nacisnąłeś poniższy przycisk i otrzymałeś wiadomość o powodzeniu. Możesz również sprawdzić, czy konfiguracja przebiegła pomyślnie w ustawieniach → Anki.",
     "anki_connection_test_title": "Konfiguracja testowa",
     "anki_setup_android_text": "Musisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcję z Anki.",
     "anki_setup_android_title": "Android",
@@ -2011,7 +2011,7 @@ static const Map<String,dynamic> pl = {
     "anki_test_connection_deck_not_in_anki": "Wybrana talia nie jest dostępna w Anki!",
     "anki_test_connection_fail": "Nie jesteś połączony z Anki! 😢",
     "anki_test_connection_no_deck_selected": "Nie masz wybranej talii, do której karty powinny zostać dodane, zrób to w ustawieniach!",
-    "anki_test_connection_not_installed": "Anki nie jest poprawnie zainstalowane!",
+    "anki_test_connection_not_installed": "Anki nie jest poprawnie zainstalowane lub uprawnienia nie zostały przyznane!",
     "anki_test_connection_note_type_not_available": "Typ notatki DaKanji nie jest dostępny w Anki!",
     "anki_test_connection_success": "Jesteś podłączony do Anki! 🎉",
     "anki_title": "Anki",
@@ -2463,7 +2463,7 @@ static const Map<String,dynamic> en = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.\nWithout a success message, DaKanji will not be able to send cards to Anki therefore, ensure that you press the button below and that you got a success message. You can also check if the setup was successful in settings → Anki.",
+    "anki_connection_test_text": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.\nWithout a success message, DaKanji will not be able to send cards to Anki. Therefore, ensure that you press the button below and that you got a success message. You can also check if the setup was successful in settings → Anki.",
     "anki_connection_test_title": "Test setup",
     "anki_setup_android_text": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installed and when asked grant DaKanji permission to interact with Anki.",
     "anki_setup_android_title": "Android",
@@ -2479,7 +2479,7 @@ static const Map<String,dynamic> en = {
     "anki_test_connection_deck_not_in_anki": "The deck you have selected is not available in Anki!",
     "anki_test_connection_fail": "You are not connected to Anki! 😢",
     "anki_test_connection_no_deck_selected": "You do not have a deck selected to which cards should be added, please do so in the settings!",
-    "anki_test_connection_not_installed": "Anki is not installed properly!",
+    "anki_test_connection_not_installed": "Anki is not installed properly or permissions have not been granted!",
     "anki_test_connection_note_type_not_available": "The DaKanji note type is not available in Anki!",
     "anki_test_connection_success": "You are connected to Anki! 🎉",
     "anki_title": "Anki",
@@ -2893,7 +2893,7 @@ static const Map<String,dynamic> it = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Per iniziare a utilizzare DaKanji e Anki è necessario premere il pulsante sottostante. Verrà controllato se la configurazione è corretta.\n\nSe viene visualizzato un messaggio di successo, DaKanji e Anki sono connessi e si può iniziare a usare DaKanji con Anki.\nSenza un messaggio di successo, DaKanji non sarà in grado di inviare le schede ad Anki, quindi assicuratevi di aver premuto il pulsante sottostante e di aver ricevuto un messaggio di successo. È anche possibile verificare se la configurazione è avvenuta con successo in Impostazioni → Anki.",
+    "anki_connection_test_text": "Per iniziare a utilizzare DaKanji e Anki è necessario premere il pulsante sottostante. Verrà controllato se la configurazione è corretta.\n\nSe viene visualizzato un messaggio di successo, DaKanji e Anki sono connessi e si può iniziare a usare DaKanji con Anki.\nSenza un messaggio di successo, DaKanji non sarà in grado di inviare le schede ad Anki. Pertanto, assicurarsi di aver premuto il pulsante sottostante e di aver ricevuto un messaggio di successo. È anche possibile verificare se l'impostazione è avvenuta con successo in Impostazioni → Anki.",
     "anki_connection_test_title": "Configurazione del test",
     "anki_setup_android_text": "È necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) e, quando viene richiesto, concedere a DaKanji il permesso di interagire con Anki.",
     "anki_setup_android_title": "Android",
@@ -2909,7 +2909,7 @@ static const Map<String,dynamic> it = {
     "anki_test_connection_deck_not_in_anki": "Il mazzo selezionato non è disponibile in Anki!",
     "anki_test_connection_fail": "Non sei connesso ad Anki! 😢",
     "anki_test_connection_no_deck_selected": "Se non avete selezionato un mazzo a cui aggiungere le carte, fatelo nelle impostazioni!",
-    "anki_test_connection_not_installed": "Anki non è installato correttamente!",
+    "anki_test_connection_not_installed": "Anki non è installato correttamente o le autorizzazioni non sono state concesse!",
     "anki_test_connection_note_type_not_available": "Il tipo di nota DaKanji non è disponibile in Anki!",
     "anki_test_connection_success": "Sei connesso ad Anki! 🎉",
     "anki_title": "Anki",
@@ -3309,7 +3309,7 @@ static const Map<String,dynamic> fr = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Pour commencer à utiliser DaKanji et Anki, vous devez appuyer sur le bouton ci-dessous. Il vérifiera que votre configuration est correcte.\n\nSi vous obtenez un message de succès, DaKanji et Anki sont connectés et vous pouvez commencer à utiliser DaKanji avec Anki.\nSans message de succès, DaKanji ne pourra pas envoyer de cartes à Anki. Assurez-vous donc que vous avez appuyé sur le bouton ci-dessous et que vous avez obtenu un message de succès. Vous pouvez également vérifier si la configuration a réussi dans les paramètres → Anki.",
+    "anki_connection_test_text": "Pour commencer à utiliser DaKanji et Anki, vous devez appuyer sur le bouton ci-dessous. Il vérifiera que votre configuration est correcte.\n\nSi vous obtenez un message de succès, DaKanji et Anki sont connectés et vous pouvez commencer à utiliser DaKanji avec Anki.\nSans message de succès, DaKanji ne pourra pas envoyer de cartes à Anki. Assurez-vous donc que vous avez appuyé sur le bouton ci-dessous et que vous avez reçu un message de succès. Vous pouvez également vérifier si la configuration a réussi dans Paramètres → Anki.",
     "anki_connection_test_title": "Configuration du test",
     "anki_setup_android_text": "Vous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) et, lorsque cela vous est demandé, donner à DaKanji la permission d'interagir avec Anki.",
     "anki_setup_android_title": "Android",
@@ -3325,7 +3325,7 @@ static const Map<String,dynamic> fr = {
     "anki_test_connection_deck_not_in_anki": "Le jeu que vous avez sélectionné n'est pas disponible dans Anki !",
     "anki_test_connection_fail": "Vous n'êtes pas connecté à Anki ! 😢",
     "anki_test_connection_no_deck_selected": "Vous n'avez pas sélectionné de jeu de cartes auquel ajouter des cartes, veuillez le faire dans les paramètres !",
-    "anki_test_connection_not_installed": "Anki n'est pas installé correctement !",
+    "anki_test_connection_not_installed": "Anki n'est pas installé correctement ou les autorisations n'ont pas été accordées !",
     "anki_test_connection_note_type_not_available": "Le type de note DaKanji n'est pas disponible dans Anki !",
     "anki_test_connection_success": "Vous êtes connecté à Anki ! 🎉",
     "anki_title": "Anki",
@@ -3725,7 +3725,7 @@ static const Map<String,dynamic> es = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Para empezar a utilizar DaKanji y Anki tienes que pulsar el botón de abajo. Comprobará si tu configuración es correcta.\n\nSi recibes un mensaje de éxito, DaKanji y Anki están conectados y puedes empezar a usar DaKanji con Anki.\nSin un mensaje de éxito, DaKanji no será capaz de enviar tarjetas a Anki, por lo tanto, asegúrate de que pulsas el botón de abajo y que recibes un mensaje de éxito. También puedes comprobar si la configuración se ha realizado correctamente en ajustes → Anki.",
+    "anki_connection_test_text": "Para empezar a utilizar DaKanji y Anki tienes que pulsar el botón de abajo. Comprobará si tu configuración es correcta.\n\nSi recibes un mensaje de éxito, DaKanji y Anki están conectados y puedes empezar a usar DaKanji con Anki.\nSin un mensaje de éxito, DaKanji no será capaz de enviar tarjetas a Anki. Por lo tanto, asegúrate de que pulsas el botón de abajo y que recibes un mensaje de éxito. También puedes comprobar si la configuración se ha realizado correctamente en ajustes → Anki.",
     "anki_connection_test_title": "Configuración de la prueba",
     "anki_setup_android_text": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
     "anki_setup_android_title": "Android",
@@ -3741,7 +3741,7 @@ static const Map<String,dynamic> es = {
     "anki_test_connection_deck_not_in_anki": "¡El mazo que has seleccionado no está disponible en Anki!",
     "anki_test_connection_fail": "¡No estás conectado a Anki! 😢",
     "anki_test_connection_no_deck_selected": "Si no tienes seleccionada una baraja a la que añadir cartas, ¡hazlo en los ajustes!",
-    "anki_test_connection_not_installed": "¡Anki no está instalado correctamente!",
+    "anki_test_connection_not_installed": "Anki no está instalado correctamente o no se han concedido los permisos necesarios.",
     "anki_test_connection_note_type_not_available": "¡El tipo de nota DaKanji no está disponible en Anki!",
     "anki_test_connection_success": "¡Estás conectado a Anki! 🎉",
     "anki_title": "Anki",
