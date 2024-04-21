@@ -217,15 +217,15 @@ class Anki {
   }
 
   /// Checks if Anki is available on the current platform
-  Future<bool> checkAnkiAvailable(){
+  Future<bool> checkAnkiAvailable() async {
     if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
-      return ankiDesktop!.checkAnkiConnectAvailable();
+      return await ankiDesktop!.checkAnkiConnectAvailable();
     }
     else if(Platform.isIOS) {
-      return ankiiOS!.checkAnkiMobileRunning();
+      return await ankiiOS!.checkAnkiMobileRunning();
     }
     else if(Platform.isAndroid) {
-      return ankiAndroid!.checkAnkidroidAvailable();
+      return await ankiAndroid!.checkAnkidroidAvailable();
     }
     else {
       throw Exception("Unsupported platform");
@@ -253,23 +253,26 @@ class Anki {
         errorMessage = LocaleKeys.ManualScreen_anki_test_connection_note_type_not_available.tr();
       }
     }
-
-    // deck selected
+    // a deck has been selected
+    String? selectedDeck;
     if(errorMessage == ""){
-      String? selectedDeck = GetIt.I<Settings>().anki.defaultDeck;
+      selectedDeck = GetIt.I<Settings>().anki.defaultDeck;
       if(selectedDeck == null || selectedDeck == ""){
         errorMessage = LocaleKeys.ManualScreen_anki_test_connection_no_deck_selected.tr();
       }
+    }
+    // the selected deck is in anki
+    if(errorMessage == ""){
       bool selectedDeckAvailable = (await GetIt.I<Anki>().getDeckNames())
         .contains(selectedDeck);
       if(!selectedDeckAvailable){
         errorMessage = LocaleKeys.ManualScreen_anki_test_connection_deck_not_in_anki.tr();
       }
-      // setup is correct
-      else {
-        setupCorrect = true;
-        errorMessage = LocaleKeys.ManualScreen_anki_test_connection_success.tr();
-      }
+    }
+    // setup is correct
+    if(errorMessage == "") {
+      setupCorrect = true;
+      errorMessage = LocaleKeys.ManualScreen_anki_test_connection_success.tr();
     }
 
     // ignore: use_build_context_synchronously
