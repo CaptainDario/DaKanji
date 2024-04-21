@@ -477,9 +477,10 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   Future showRadicalPopup() async {
 
     radicalPopupOpen = true;
-
+    
     await AwesomeDialog(
       context: widget.context,
+      isDense: true,
       dialogType: DialogType.noHeader,
       bodyHeaderDistance: 0,
       alignment: Alignment.bottomCenter,

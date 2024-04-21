@@ -275,6 +275,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                   ..translate(_moveDrawer.value * _screenWidth/2)
                   ..rotateY(pi/4 * _moveDrawer.value),
                 child: Scaffold(
+                  resizeToAvoidBottomInset: false,
                   // the top app bar
                   appBar: widget.useBackArrowAppBar
                     ? AppBar()

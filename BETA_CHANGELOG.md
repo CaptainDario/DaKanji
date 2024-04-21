@@ -17,7 +17,7 @@
     * Unneccesary new lines
 * Fixed:
   * Anki card template
-  * Opening the radical picker while the virtual keyboard is open
+  * Opening the radical/filter popup while the virtual keyboard is open
   * Long anki deck names make all settings small
   * When opening and closing the search on the kanji page the animation status is reset
   * Permission to connect with anki is requested multiple times and causes exceptions
