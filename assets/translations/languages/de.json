@@ -230,7 +230,7 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Um DaKanji und Anki zu verwenden, m\u00fcssen Sie auf die Schaltfl\u00e4che unten klicken. Es wird gepr\u00fcft, ob Ihre Einstellungen korrekt sind.\n\nWenn du eine Erfolgsmeldung erh\u00e4ltst, sind DaKanji und Anki miteinander verbunden und du kannst DaKanji mit Anki verwenden.\nOhne eine Erfolgsmeldung kann DaKanji keine Karten an Anki senden. Vergewissere dich daher, dass du die Schaltfl\u00e4che unten dr\u00fcckst und eine Erfolgsmeldung erh\u00e4ltst. Du kannst auch unter Einstellungen \u2192 Anki \u00fcberpr\u00fcfen, ob die Einrichtung erfolgreich war.",
+    "anki_connection_test_text": "Um DaKanji und Anki zu verwenden, m\u00fcssen Sie auf die Schaltfl\u00e4che unten klicken. Es wird gepr\u00fcft, ob Ihre Einstellungen korrekt sind.\n\nWenn du eine Erfolgsmeldung erh\u00e4ltst, sind DaKanji und Anki verbunden und du kannst DaKanji mit Anki verwenden.\nOhne eine Erfolgsmeldung ist DaKanji nicht in der Lage, Karten an Anki zu senden. Vergewissere dich daher, dass du den Knopf unten dr\u00fcckst und eine Erfolgsmeldung erh\u00e4ltst. Du kannst auch unter Einstellungen \u2192 Anki \u00fcberpr\u00fcfen, ob die Einrichtung erfolgreich war.",
     "anki_connection_test_title": "Test setup",
     "anki_setup_android_text": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
     "anki_setup_android_title": "Android",
@@ -246,7 +246,7 @@
     "anki_test_connection_deck_not_in_anki": "Das von dir ausgew\u00e4hlte Deck ist in Anki nicht verf\u00fcgbar!",
     "anki_test_connection_fail": "Du bist nicht mit Anki verbunde! \ud83d\ude22",
     "anki_test_connection_no_deck_selected": "Sie haben noch kein Deck ausgew\u00e4hlt, zu dem Karten hinzugef\u00fcgt werden sollen, tun Sie dies bitte in den Einstellungen!",
-    "anki_test_connection_not_installed": "Anki ist nicht richtig installiert!",
+    "anki_test_connection_not_installed": "Anki ist nicht richtig installiert oder es wurden keine Berechtigungen erteilt!",
     "anki_test_connection_note_type_not_available": "Der Notentyp DaKanji ist in Anki nicht verf\u00fcgbar!",
     "anki_test_connection_success": "Du bist mit Anki verbunden! \ud83c\udf89",
     "anki_title": "Anki",

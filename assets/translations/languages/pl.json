@@ -230,7 +230,7 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Aby rozpocz\u0105\u0107 korzystanie z DaKanji i Anki, nale\u017cy nacisn\u0105\u0107 poni\u017cszy przycisk. Sprawdzi on, czy konfiguracja jest prawid\u0142owa.\n\nJe\u015bli otrzymasz wiadomo\u015b\u0107 o powodzeniu, DaKanji i Anki s\u0105 po\u0142\u0105czone i mo\u017cesz zacz\u0105\u0107 u\u017cywa\u0107 DaKanji z Anki.\nBez komunikatu o powodzeniu DaKanji nie b\u0119dzie w stanie wysy\u0142a\u0107 kart do Anki, dlatego upewnij si\u0119, \u017ce nacisn\u0105\u0142e\u015b poni\u017cszy przycisk i otrzyma\u0142e\u015b komunikat o powodzeniu. Mo\u017cesz r\u00f3wnie\u017c sprawdzi\u0107, czy konfiguracja przebieg\u0142a pomy\u015blnie w ustawieniach \u2192 Anki.",
+    "anki_connection_test_text": "Aby rozpocz\u0105\u0107 korzystanie z DaKanji i Anki, nale\u017cy nacisn\u0105\u0107 poni\u017cszy przycisk. Sprawdzi on, czy konfiguracja jest prawid\u0142owa.\n\nJe\u015bli otrzymasz wiadomo\u015b\u0107 o powodzeniu, DaKanji i Anki s\u0105 po\u0142\u0105czone i mo\u017cesz zacz\u0105\u0107 u\u017cywa\u0107 DaKanji z Anki.\nBez komunikatu o powodzeniu DaKanji nie b\u0119dzie w stanie wysy\u0142a\u0107 kart do Anki. Dlatego upewnij si\u0119, \u017ce nacisn\u0105\u0142e\u015b poni\u017cszy przycisk i otrzyma\u0142e\u015b wiadomo\u015b\u0107 o powodzeniu. Mo\u017cesz r\u00f3wnie\u017c sprawdzi\u0107, czy konfiguracja przebieg\u0142a pomy\u015blnie w ustawieniach \u2192 Anki.",
     "anki_connection_test_title": "Konfiguracja testowa",
     "anki_setup_android_text": "Musisz mie\u0107 zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcj\u0119 z Anki.",
     "anki_setup_android_title": "Android",
@@ -246,7 +246,7 @@
     "anki_test_connection_deck_not_in_anki": "Wybrana talia nie jest dost\u0119pna w Anki!",
     "anki_test_connection_fail": "Nie jeste\u015b po\u0142\u0105czony z Anki! \ud83d\ude22",
     "anki_test_connection_no_deck_selected": "Nie masz wybranej talii, do kt\u00f3rej karty powinny zosta\u0107 dodane, zr\u00f3b to w ustawieniach!",
-    "anki_test_connection_not_installed": "Anki nie jest poprawnie zainstalowane!",
+    "anki_test_connection_not_installed": "Anki nie jest poprawnie zainstalowane lub uprawnienia nie zosta\u0142y przyznane!",
     "anki_test_connection_note_type_not_available": "Typ notatki DaKanji nie jest dost\u0119pny w Anki!",
     "anki_test_connection_success": "Jeste\u015b pod\u0142\u0105czony do Anki! \ud83c\udf89",
     "anki_title": "Anki",

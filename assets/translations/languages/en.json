@@ -230,7 +230,7 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.\nWithout a success message, DaKanji will not be able to send cards to Anki therefore, ensure that you press the button below and that you got a success message. You can also check if the setup was successful in settings \u2192 Anki.",
+    "anki_connection_test_text": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.\nWithout a success message, DaKanji will not be able to send cards to Anki. Therefore, ensure that you press the button below and that you got a success message. You can also check if the setup was successful in settings \u2192 Anki.",
     "anki_connection_test_title": "Test setup",
     "anki_setup_android_text": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installed and when asked grant DaKanji permission to interact with Anki.",
     "anki_setup_android_title": "Android",
@@ -246,7 +246,7 @@
     "anki_test_connection_deck_not_in_anki": "The deck you have selected is not available in Anki!",
     "anki_test_connection_fail": "You are not connected to Anki! \ud83d\ude22",
     "anki_test_connection_no_deck_selected": "You do not have a deck selected to which cards should be added, please do so in the settings!",
-    "anki_test_connection_not_installed": "Anki is not installed properly!",
+    "anki_test_connection_not_installed": "Anki is not installed properly or permissions have not been granted!",
     "anki_test_connection_note_type_not_available": "The DaKanji note type is not available in Anki!",
     "anki_test_connection_success": "You are connected to Anki! \ud83c\udf89",
     "anki_title": "Anki",

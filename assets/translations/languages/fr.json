@@ -230,7 +230,7 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Pour commencer \u00e0 utiliser DaKanji et Anki, vous devez appuyer sur le bouton ci-dessous. Il v\u00e9rifiera que votre configuration est correcte.\n\nSi vous obtenez un message de succ\u00e8s, DaKanji et Anki sont connect\u00e9s et vous pouvez commencer \u00e0 utiliser DaKanji avec Anki.\nSans message de succ\u00e8s, DaKanji ne pourra pas envoyer de cartes \u00e0 Anki. Assurez-vous donc que vous avez appuy\u00e9 sur le bouton ci-dessous et que vous avez obtenu un message de succ\u00e8s. Vous pouvez \u00e9galement v\u00e9rifier si la configuration a r\u00e9ussi dans les param\u00e8tres \u2192 Anki.",
+    "anki_connection_test_text": "Pour commencer \u00e0 utiliser DaKanji et Anki, vous devez appuyer sur le bouton ci-dessous. Il v\u00e9rifiera que votre configuration est correcte.\n\nSi vous obtenez un message de succ\u00e8s, DaKanji et Anki sont connect\u00e9s et vous pouvez commencer \u00e0 utiliser DaKanji avec Anki.\nSans message de succ\u00e8s, DaKanji ne pourra pas envoyer de cartes \u00e0 Anki. Assurez-vous donc que vous avez appuy\u00e9 sur le bouton ci-dessous et que vous avez re\u00e7u un message de succ\u00e8s. Vous pouvez \u00e9galement v\u00e9rifier si la configuration a r\u00e9ussi dans Param\u00e8tres \u2192 Anki.",
     "anki_connection_test_title": "Configuration du test",
     "anki_setup_android_text": "Vous devez avoir install\u00e9 [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) et, lorsque cela vous est demand\u00e9, donner \u00e0 DaKanji la permission d'interagir avec Anki.",
     "anki_setup_android_title": "Android",
@@ -246,7 +246,7 @@
     "anki_test_connection_deck_not_in_anki": "Le jeu que vous avez s\u00e9lectionn\u00e9 n'est pas disponible dans Anki !",
     "anki_test_connection_fail": "Vous n'\u00eates pas connect\u00e9 \u00e0 Anki ! \ud83d\ude22",
     "anki_test_connection_no_deck_selected": "Vous n'avez pas s\u00e9lectionn\u00e9 de jeu de cartes auquel ajouter des cartes, veuillez le faire dans les param\u00e8tres !",
-    "anki_test_connection_not_installed": "Anki n'est pas install\u00e9 correctement !",
+    "anki_test_connection_not_installed": "Anki n'est pas install\u00e9 correctement ou les autorisations n'ont pas \u00e9t\u00e9 accord\u00e9es !",
     "anki_test_connection_note_type_not_available": "Le type de note DaKanji n'est pas disponible dans Anki !",
     "anki_test_connection_success": "Vous \u00eates connect\u00e9 \u00e0 Anki ! \ud83c\udf89",
     "anki_title": "Anki",
