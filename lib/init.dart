@@ -143,23 +143,24 @@ Future<void> initDocumentsServices(BuildContext context) async {
     Isars(
       dictionary: Isar.getInstance("dictionary") ?? Isar.openSync(
         [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
-        directory: isarPath, name: "dictionary", maxSizeMiB: 512
+        directory: isarPath, name: "dictionary", maxSizeMiB: 256
       ),
       examples: Isar.getInstance("examples") ?? Isar.openSync(
         [ExampleSentenceSchema], directory: isarPath,
-        name: "examples", maxSizeMiB: 512
+        name: "examples", maxSizeMiB: 256
       ),
       krad: Isar.getInstance("krad") ?? Isar.openSync(
         [KradSchema], directory: isarPath,
-        name: "krad", maxSizeMiB: 512
+        name: "krad", maxSizeMiB: 1
       ),
       radk: Isar.getInstance("radk") ?? Isar.openSync(
         [RadkSchema], directory: isarPath,
-        name: "radk", maxSizeMiB: 512
+        name: "radk", maxSizeMiB: 1
       ),
       dojg: GetIt.I<UserData>().dojgImported && Directory(dojgIsarPath).existsSync()
         ? Isar.getInstance("dojg") ?? Isar.openSync(
-          [DojgEntrySchema], directory: dojgIsarPath, name: "dojg"
+          [DojgEntrySchema], directory: dojgIsarPath,
+          name: "dojg", maxSizeMiB: 16
         )
         : null
     )
