@@ -247,7 +247,7 @@
     "anki_test_connection_fail": "Vous n'\u00eates pas connect\u00e9 \u00e0 Anki ! \ud83d\ude22",
     "anki_test_connection_no_deck_selected": "Vous n'avez pas s\u00e9lectionn\u00e9 de jeu de cartes auquel ajouter des cartes, veuillez le faire dans les param\u00e8tres !",
     "anki_test_connection_not_installed": "Anki n'est pas install\u00e9 correctement ou les autorisations n'ont pas \u00e9t\u00e9 accord\u00e9es !",
-    "anki_test_connection_note_type_not_available": "Le type de note DaKanji n'est pas disponible dans Anki !",
+    "anki_test_connection_note_type_not_available": "Le type de note DaKanji n'est pas disponible dans Anki ! Vous pouvez l'ajouter manuellement en important le jeu de notes pr\u00e9-fabriqu\u00e9 mentionn\u00e9 dans le guide d'installation iOS.",
     "anki_test_connection_success": "Vous \u00eates connect\u00e9 \u00e0 Anki ! \ud83c\udf89",
     "anki_title": "Anki",
     "deep_links_text": "Les liens profonds sont un moyen d'acc\u00e9der directement au contenu d'une application. DaKanji propose deux sch\u00e9mas pour cela : dakanji:// et http(s)://dakanji.app/app. En utilisant cette fonctionnalit\u00e9, vous pouvez par exemple ouvrir la recherche dans le dictionnaire en tapant sur ce lien dakanji://dictionary?search=\u98df\u3079\u308b. Pour tous les liens support\u00e9s, voir [dakanji.app/deep-links](https://dakanji.app/deep-links)",

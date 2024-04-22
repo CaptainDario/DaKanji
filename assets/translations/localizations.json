@@ -3502,15 +3502,15 @@
       "pl": "Anki nie jest poprawnie zainstalowane lub uprawnienia nie zostały przyznane!"
     },
     "anki_test_connection_note_type_not_available": {
-      "en": "The DaKanji note type is not available in Anki!",
-      "de": "Der Notentyp DaKanji ist in Anki nicht verfügbar!",
-      "ru": "Тип нот DaKanji недоступен в Anki!",
-      "ja": "DakanjiのノートタイプはAnkiでは使用できません！",
-      "zh": "Anki 中没有大汉字注音类型！",
-      "it": "Il tipo di nota DaKanji non è disponibile in Anki!",
-      "fr": "Le type de note DaKanji n'est pas disponible dans Anki !",
-      "es": "¡El tipo de nota DaKanji no está disponible en Anki!",
-      "pl": "Typ notatki DaKanji nie jest dostępny w Anki!"
+      "en": "The DaKanji note type is not available in Anki! You can add it manually by importing the premade deck mentioned in the iOS setup guide.",
+      "de": "Der DaKanji-Notiztyp ist in Anki nicht verfügbar! Sie können ihn manuell hinzufügen, indem Sie das vorgefertigte Deck importieren, das in der iOS-Einrichtungsanleitung erwähnt wird.",
+      "ru": "Тип нот DaKanji недоступен в Anki! Вы можете добавить его вручную, импортировав готовую колоду, о которой говорится в руководстве по настройке iOS.",
+      "ja": "大漢字のノートタイプはAnkiでは利用できません！iOSセットアップガイドに記載されているプレメイドデッキをインポートすることで、手動で追加できます。",
+      "zh": "Anki 中没有大关字注音类型！您可以通过导入 iOS 安装指南中提到的预制卡组来手动添加。",
+      "it": "Il tipo di nota DaKanji non è disponibile in Anki! È possibile aggiungerlo manualmente importando il mazzo preconfezionato menzionato nella guida alla configurazione di iOS.",
+      "fr": "Le type de note DaKanji n'est pas disponible dans Anki ! Vous pouvez l'ajouter manuellement en important le jeu de notes pré-fabriqué mentionné dans le guide d'installation iOS.",
+      "es": "¡El tipo de nota DaKanji no está disponible en Anki! Puedes añadirlo manualmente importando el mazo prefabricado mencionado en la guía de configuración de iOS.",
+      "pl": "Typ notatki DaKanji nie jest dostępny w Anki! Możesz dodać go ręcznie, importując gotową talię wspomnianą w przewodniku konfiguracji iOS."
     },
     "anki_test_connection_no_deck_selected": {
       "en": "You do not have a deck selected to which cards should be added, please do so in the settings!",

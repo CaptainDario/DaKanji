@@ -247,7 +247,7 @@
     "anki_test_connection_fail": "You are not connected to Anki! \ud83d\ude22",
     "anki_test_connection_no_deck_selected": "You do not have a deck selected to which cards should be added, please do so in the settings!",
     "anki_test_connection_not_installed": "Anki is not installed properly or permissions have not been granted!",
-    "anki_test_connection_note_type_not_available": "The DaKanji note type is not available in Anki!",
+    "anki_test_connection_note_type_not_available": "The DaKanji note type is not available in Anki! You can add it manually by importing the premade deck mentioned in the iOS setup guide.",
     "anki_test_connection_success": "You are connected to Anki! \ud83c\udf89",
     "anki_title": "Anki",
     "deep_links_text": "Deep links are a way to directly link to content in an app. DaKanji provides two schemes for this dakanji:// and http(s)://dakanji.app/app. Using this feature you can for example open the dictionary search when tapping this link dakanji://dictionary?search=\u98df\u3079\u308b. For all supported links see [dakanji.app/deep-links](https://dakanji.app/deep-links)",
