@@ -46,7 +46,12 @@ Future<bool> importDoJGDeck () async {
       Isar isar = Isar.getInstance("dojg") ??
         Isar.openSync([DojgEntrySchema], directory: copyTo, name: "dojg");
 
-      isar.writeTxnSync(() => isar.dojgEntrys.putAllSync(entries));
+      isar.writeTxnSync(() {
+        // delete old entries
+        if(isar.dojgEntrys.countSync() > 0) isar.dojgEntrys.clearSync();
+
+        isar.dojgEntrys.putAllSync(entries);
+      });
       
       imported = entries.length == 629;
     } 
