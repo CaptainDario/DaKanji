@@ -247,10 +247,16 @@ class Anki {
 
     // DaKanji note type
     if(errorMessage == ""){
-      await GetIt.I<Anki>().addDaKanjiModel();
+      // is the note type already available in anki
       bool dakanjiNoteTypeAvailable = await GetIt.I<Anki>().daKanjiModelExists();
-      if(!dakanjiNoteTypeAvailable) {
-        errorMessage = LocaleKeys.ManualScreen_anki_test_connection_note_type_not_available.tr();
+      if(!dakanjiNoteTypeAvailable){
+        // note type is not available, therefore add it
+        await GetIt.I<Anki>().addDaKanjiModel();
+        // check if the note type is now available
+        dakanjiNoteTypeAvailable = await GetIt.I<Anki>().daKanjiModelExists();
+        if(!dakanjiNoteTypeAvailable) {
+          errorMessage = LocaleKeys.ManualScreen_anki_test_connection_note_type_not_available.tr();
+        }
       }
     }
     // a deck has been selected
