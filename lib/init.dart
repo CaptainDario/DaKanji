@@ -143,7 +143,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
     Isars(
       dictionary: Isar.getInstance("dictionary") ?? Isar.openSync(
         [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
-        directory: isarPath, name: "dictionary", maxSizeMiB: 256
+        directory: isarPath, name: "dictionary", maxSizeMiB: 384
       ),
       examples: Isar.getInstance("examples") ?? Isar.openSync(
         [ExampleSentenceSchema], directory: isarPath,
