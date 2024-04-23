@@ -26,6 +26,7 @@ Improvements:
   - Misc
     - Advanced
       - Optimize neural networks UI
+- Onboarding animations
 
 Fixed:
 

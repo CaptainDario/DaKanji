@@ -7,6 +7,7 @@
   * Small stutter when opening a word list
   * Dictionary
     * Share image: improved sharpness
+  * Onboarding animations
   * Anki
     * Removed empty lines at the end of notes
     * Increased Kanji font size
@@ -18,7 +19,7 @@
 * Fixed:
   * Anki card template
   * Opening the radical/filter popup while the virtual keyboard is open
-  * Long anki deck names make all settings small
+  * Long anki deck names makes the text of all settings small
   * When opening and closing the search on the kanji page the animation status is reset
   * Permission to connect with anki is requested multiple times and causes exceptions
 
