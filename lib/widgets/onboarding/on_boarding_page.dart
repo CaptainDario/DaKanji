@@ -12,13 +12,13 @@ import 'package:liquid_swipe/liquid_swipe.dart';
 // Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
 
-/*
-// The widget which is used for one OnBoarding Page.
-// 
-// `context` should be the current `BuildContext`.
-// `nr` is the number of this OnBoarding-page and totalNr the total number
-// of OnBoarding-Pages. `bgColor` is the background color for this page.
-*/
+
+
+/// The widget which is used for one OnBoarding Page.
+/// 
+/// `context` should be the current `BuildContext`.
+/// `nr` is the number of this OnBoarding-page and totalNr the total number
+/// of OnBoarding-Pages. `bgColor` is the background color for this page.
 class OnBoardingPage extends StatefulWidget {
 
   /// the number of this onboarding
