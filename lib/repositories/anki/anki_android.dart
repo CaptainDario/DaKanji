@@ -133,7 +133,7 @@ class AnkiAndroid {
       // ankidroid not installed
     }
 
-    return t .toString() == "Test Successful!";
+    return t.toString() == "Test Successful!";
   }
 
 }
