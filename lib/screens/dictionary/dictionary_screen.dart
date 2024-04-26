@@ -1,6 +1,3 @@
-
-
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -16,6 +13,8 @@ import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+
+
 
 class DictionaryScreen extends StatefulWidget {
 
@@ -65,6 +64,7 @@ class _DictionaryScreenState
 
     // init tutorial
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+
       if(widget.includeTutorial){
         final OnboardingState? onboarding = Onboarding.of(context);
         if (onboarding != null && 
