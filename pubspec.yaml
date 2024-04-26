@@ -90,8 +90,7 @@ dependencies:
   riverpod_annotation: ^2.3.5
   another_flushbar: 1.12.30
   screenshot: ^2.3.0
-
-  super_clipboard: 0.8.11
+  super_clipboard: 0.8.12
   flutter_ankidroid:
     path: /Users/darioklepoch/dev/DaKanji/flutter_ankidroid/
   kana_kit:
