@@ -39,7 +39,6 @@ AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
       }
     },
     btnCancelColor: g_Dakanji_red,
-    btnCancelOnPress: () { },
     body: SingleChildScrollView(
       child: Column(
         children: [

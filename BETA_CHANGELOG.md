@@ -22,6 +22,8 @@
   * Long anki deck names makes the text of all settings small
   * When opening and closing the search on the kanji page the animation status is reset
   * Permission to connect with anki is requested multiple times and causes exceptions
+  * Exporting word list crash on Android
+  * Export to anki dialog not closing when pressing cancle
 
 ## v3.4.0+77b4 - 仮名 (14.04.2024)
 
