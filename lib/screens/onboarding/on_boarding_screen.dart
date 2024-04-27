@@ -150,21 +150,27 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
               double currentPos = (event.position.dx / MediaQuery.sizeOf(context).width);
 
-              // swipe from left -> right
+              // swipe from right -> left
               if(startPositionX > currentPos){
                 _swipeController.value = (startPositionX - currentPos);
               }
-              // swipe from right -> left
-              if(startPositionX < currentPos){
+              // swipe from left -> right (do not allow on first page)
+              if(startPositionX < currentPos && liquidController.currentPage != 0){
                 _swipeController.value = (currentPos - startPositionX);
               }
             },
             onPointerUp: (event) {
 
+              double currentPos = (event.position.dx / MediaQuery.sizeOf(context).width);
+
               // If the user dragged more than the reveal threshold of liquidswipe
               // animate to the next page
-              if(liquidController.provider!.slidePercentHor > 0.2){
-                _swipeController.forward();
+              if(liquidController.provider!.slidePercentHor > 0.2 &&
+                startPositionX-0.1 > currentPos ||
+                liquidController.provider!.slidePercentHor > 0.2 &&
+                startPositionX+0.1 < currentPos &&
+                liquidController.currentPage != 0) {
+                  _swipeController.forward();
               }
               else {
                 _swipeController.reverse();
@@ -177,7 +183,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               liquidController: liquidController,
               fullTransitionValue: 600,
               enableLoop: false,
-              ignoreUserGestureWhileAnimating: true,
+              //ignoreUserGestureWhileAnimating: true,
               slideIconWidget: const SizedBox(
                 width:  15, 
                 height: 15,
