@@ -1,6 +1,6 @@
 # DaKanji Beta - changelog
 
-## v3.4.0+78b5 - 仮名 (19.04.2024)
+## v3.4.0+78b5 - ワードリストと暗記 (19.04.2024)
 
 * Improvments:
   * Removed grey lines from Anki manual
@@ -25,7 +25,7 @@
   * Exporting word list crash on Android
   * Export to anki dialog not closing when pressing cancle
 
-## v3.4.0+77b4 - 仮名 (14.04.2024)
+## v3.4.0+77b4 - ワードリストと暗記 (14.04.2024)
 
 * Changed: Anki manual platform sections are collapsed
 * Updated: Anki setup instructions
@@ -34,21 +34,21 @@
 * Changed: when clicking on deep links, only allow one DaKanji instance
 * Fixed: Anki manual links open a non working webview
 
-## v3.4.0+77b3 - 仮名 (11.04.2024)
+## v3.4.0+77b3 - ワードリストと暗記 (11.04.2024)
 
 * Fixed: Anki setup "no deck selected" message was not localized
 * Changed: Exported cards have translations on the front
 * Added: DaKanji note type has a note field on the front and back
 * Added: Setting to disable the add to anki dialog
 
-## v3.4.0+77b2 - 仮名 (10.04.2024)
+## v3.4.0+77b2 - ワードリストと暗記 (10.04.2024)
 
 * Deep links
   * Fixed: android https:// links
 * Fixed: Renaming word lists using Japanese keyboard
 * Fixed: moving word list node to the bottom of the tree
 
-## v3.4.0+77b1 - 仮名 (10.04.2024)
+## v3.4.0+77b1 - ワードリストと暗記 (10.04.2024)
 
 See normal changelog
 
