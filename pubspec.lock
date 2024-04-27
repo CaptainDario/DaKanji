@@ -410,6 +410,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.3+1"
+  dolphinsr_dart:
+    dependency: "direct main"
+    description:
+      name: dolphinsr_dart
+      sha256: "00ac0ec30b9f6cd86c8e0e2c49ceb92f2671d146d5371abad9125a460cf26884"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   drift:
     dependency: "direct main"
     description:
