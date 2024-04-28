@@ -538,9 +538,11 @@ packages:
   flutter_ankidroid:
     dependency: "direct main"
     description:
-      path: "/Users/darioklepoch/dev/DaKanji/flutter_ankidroid/"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "2cf8a5e7774eb2b9d9f123a66a7cf5a6074ea64a"
+      url: "https://github.com/CaptainDario/flutter_ankidroid"
+    source: git
     version: "0.8.1"
   flutter_driver:
     dependency: transitive
@@ -2080,4 +2082,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.3.0 <4.0.0"
-  flutter: ">=3.19.0"
+  flutter: ">=3.19.6"

@@ -93,7 +93,9 @@ dependencies:
   screenshot: 2.3.0
   super_clipboard: 0.8.12
   flutter_ankidroid:
-    path: /Users/darioklepoch/dev/DaKanji/flutter_ankidroid/
+    git:
+      url: https://github.com/CaptainDario/flutter_ankidroid
+    #path: /Users/darioklepoch/dev/DaKanji/flutter_ankidroid/
   kana_kit:
     git:
       url: https://github.com/CaptainDario/kana_kit
