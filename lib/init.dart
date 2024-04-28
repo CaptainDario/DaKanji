@@ -136,7 +136,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   await initDocumentsAssets(context);
 
   // ISAR / database services
-  String documentsDir = g_DakanjiPathManager.documentsDirectory.path;
+  String documentsDir = g_DakanjiPathManager.supportDirectory.path;
   String isarPath = g_DakanjiPathManager.dictionaryDirectory.path;
   String dojgIsarPath = g_DakanjiPathManager.dojgDirectory.path;
   GetIt.I.registerSingleton<Isars>(
@@ -209,7 +209,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
 /// from GitHub. The context is used for showing a popup 
 Future<void> initDocumentsAssets(BuildContext context) async {
 
-  String documentsDir = g_DakanjiPathManager.dakanjiDocumentsDirectory.path;
+  String documentsDir = g_DakanjiPathManager.dakanjiSupportDirectory.path;
   debugPrint("documents directory: ${documentsDir.toString()}");
 
   // copy assets from assets to documents directory, or download them from GH

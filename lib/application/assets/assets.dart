@@ -79,7 +79,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
 
   // if the file already exists delete it
   final file = File(p.joinAll([
-      g_DakanjiPathManager.dakanjiDocumentsDirectory.path,
+      g_DakanjiPathManager.dakanjiSupportDirectory.path,
       ...asset.path.split("/")
     ]));
   if (file.existsSync()) {
