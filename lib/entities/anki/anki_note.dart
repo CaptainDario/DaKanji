@@ -63,7 +63,7 @@ class AnkiNote{
         translation += "${j+1}: ${translations[i][j]}";
         if(j < translations[i].length-1) translation += '<br>';
       }
-      if(i < translations.length-1) translation += '<br>';
+      if(i < translations.length-1) translation += '<br><br>';
     }
 
     return {
