@@ -32,6 +32,22 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+          
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
       # get versions from pubspec
       - name: set env variables
         run: |
@@ -120,6 +136,8 @@ jobs:
           rm DaKanji_${{env.DAKANJI_VERSION}}.flatpak
           rm -rf flatpak/repo
           rm -rf flatpak/build-dir
+          sudo apt-get purge --auto-remove flatpak
+          sudo apt-get purge --auto-remove flatpak-builder
 
       # build SNAP
       - name: prepare snap building
