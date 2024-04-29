@@ -97,7 +97,7 @@ jobs:
       - name: install build packages
         run: |
           sudo apt-get update
-          sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv
+          sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv xvfb
 
       - name: Run integration tests
         run: python3 ./integration_test/run_tests.py
