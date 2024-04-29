@@ -5,14 +5,20 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Flutter",
+			"name": "Flutter (debug)",
 			"request": "launch",
 			"type": "dart",
 			"flutterMode": "debug"
 		},
 		{
+			"name": "Flutter (profile)",
+			"request": "launch",
+			"type": "dart",
+			"flutterMode": "profile"
+		},
+		{
 			"name":"Python: Current File",
-			"type":"python",
+			"type":"debugpy",
 			"request":"launch",
 			"program":"${file}",
 			"console":"integratedTerminal",
