@@ -303,82 +303,82 @@ class _WordListNodeState extends State<WordListNode> {
                           
                         }
                       ),
-                      PopupMenuButton<WordListNodePopupMenuButtonItems>(
-                        onSelected: (WordListNodePopupMenuButtonItems value) {
-                          switch(value){
-                            case WordListNodePopupMenuButtonItems.rename:
-                              renameButtonPressed();
-                              break;
-                            case WordListNodePopupMenuButtonItems.delete:
-                              deleteButtonPressed();
-                              break;
-                            case WordListNodePopupMenuButtonItems.sendToAnki:
-                              sendToAnkiPressed();
-                              break;
-                            case WordListNodePopupMenuButtonItems.toImages:
-                              toImagesPressed();
-                              break;
-                            case WordListNodePopupMenuButtonItems.toPdf:
-                              toPDFPressed();
-                              break;
-                            case WordListNodePopupMenuButtonItems.toCSV:
-                              toCSVPressed();
-                              break;
-                            case WordListNodePopupMenuButtonItems.useAsScreenSaver:
-                              startScreensaver([widget.node.id]);
-                              break;
-                          }
-                        },
-                        itemBuilder: (context) => [
-                          if(!wordListDefaultTypes.contains(widget.node.value.type))
+                    PopupMenuButton<WordListNodePopupMenuButtonItems>(
+                      onSelected: (WordListNodePopupMenuButtonItems value) {
+                        switch(value){
+                          case WordListNodePopupMenuButtonItems.rename:
+                            renameButtonPressed();
+                            break;
+                          case WordListNodePopupMenuButtonItems.delete:
+                            deleteButtonPressed();
+                            break;
+                          case WordListNodePopupMenuButtonItems.sendToAnki:
+                            sendToAnkiPressed();
+                            break;
+                          case WordListNodePopupMenuButtonItems.toImages:
+                            toImagesPressed();
+                            break;
+                          case WordListNodePopupMenuButtonItems.toPdf:
+                            toPDFPressed();
+                            break;
+                          case WordListNodePopupMenuButtonItems.toCSV:
+                            toCSVPressed();
+                            break;
+                          case WordListNodePopupMenuButtonItems.useAsScreenSaver:
+                            startScreensaver([widget.node.id]);
+                            break;
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        if(!wordListDefaultTypes.contains(widget.node.value.type))
+                          PopupMenuItem(
+                            value: WordListNodePopupMenuButtonItems.rename,
+                            child: Text(
+                              LocaleKeys.WordListsScreen_rename.tr(),
+                            )
+                          ),
+                        if(widget.node.value.type != WordListNodeType.wordListDefault)
+                          PopupMenuItem(
+                            value: WordListNodePopupMenuButtonItems.delete,
+                            child: Text(
+                              LocaleKeys.WordListsScreen_delete.tr(),
+                            )
+                          ),
+                        if(wordListListypes.contains(widget.node.value.type))
+                          ...[
                             PopupMenuItem(
-                              value: WordListNodePopupMenuButtonItems.rename,
+                              value: WordListNodePopupMenuButtonItems.sendToAnki,
                               child: Text(
-                                LocaleKeys.WordListsScreen_rename.tr(),
+                                LocaleKeys.WordListsScreen_send_to_anki.tr()
                               )
                             ),
-                          if(widget.node.value.type != WordListNodeType.wordListDefault)
                             PopupMenuItem(
-                              value: WordListNodePopupMenuButtonItems.delete,
+                              value: WordListNodePopupMenuButtonItems.toImages,
                               child: Text(
-                                LocaleKeys.WordListsScreen_delete.tr(),
+                                LocaleKeys.WordListsScreen_export_images.tr()
                               )
                             ),
-                          if(wordListListypes.contains(widget.node.value.type))
-                            ...[
-                              PopupMenuItem(
-                                value: WordListNodePopupMenuButtonItems.sendToAnki,
-                                child: Text(
-                                  LocaleKeys.WordListsScreen_send_to_anki.tr()
-                                )
-                              ),
-                              PopupMenuItem(
-                                value: WordListNodePopupMenuButtonItems.toImages,
-                                child: Text(
-                                  LocaleKeys.WordListsScreen_export_images.tr()
-                                )
-                              ),
-                              PopupMenuItem(
-                                value: WordListNodePopupMenuButtonItems.toPdf,
-                                child: Text(
-                                  LocaleKeys.WordListsScreen_export_pdf.tr()
-                                )
-                              ),
-                              PopupMenuItem(
-                                value: WordListNodePopupMenuButtonItems.toCSV,
-                                child: Text(
-                                  LocaleKeys.WordListsScreen_export_csv.tr()
-                                )
-                              ),
-                              PopupMenuItem(
-                                value: WordListNodePopupMenuButtonItems.useAsScreenSaver,
-                                child: Text(
-                                  LocaleKeys.WordListsScreen_screensaver_use_as.tr()
-                                ),
+                            PopupMenuItem(
+                              value: WordListNodePopupMenuButtonItems.toPdf,
+                              child: Text(
+                                LocaleKeys.WordListsScreen_export_pdf.tr()
                               )
-                            ]
-                        ],
-                      ),
+                            ),
+                            PopupMenuItem(
+                              value: WordListNodePopupMenuButtonItems.toCSV,
+                              child: Text(
+                                LocaleKeys.WordListsScreen_export_csv.tr()
+                              )
+                            ),
+                            PopupMenuItem(
+                              value: WordListNodePopupMenuButtonItems.useAsScreenSaver,
+                              child: Text(
+                                LocaleKeys.WordListsScreen_screensaver_use_as.tr()
+                              ),
+                            )
+                          ]
+                      ],
+                    ),
                   ],
                 ),
               ),
