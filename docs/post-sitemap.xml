@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/main-sitemap.xsl"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
+		<loc>/dakanji-3-3-released/</loc>
+		<lastmod>2024-04-30T08:18:56+00:00</lastmod>
+	</url>
+	<url>
 		<loc>/dakanji-3-2-released/</loc>
 		<lastmod>2023-12-18T11:18:46+00:00</lastmod>
 	</url>
@@ -29,5 +33,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2024-01-14 18:42:12 by W3 Total Cache
+Served from: dakanji.local @ 2024-04-30 08:29:33 by W3 Total Cache
 -->
