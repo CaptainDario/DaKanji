@@ -79,7 +79,7 @@ dependencies:
       url: https://github.com/CaptainDario/flutter-tflite
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
-  dolphinsr_dart: 3.0.1
+  #dolphinsr_dart: 3.0.1
   async: 2.11.0
   path: 1.9.0
   http: 1.2.1
