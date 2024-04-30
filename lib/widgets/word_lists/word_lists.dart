@@ -383,6 +383,21 @@ class _WordListsState extends State<WordLists> {
                                                   for (var n in [...node.dfs(), node]) {
                                                     checkedEntries[childrenDFS.indexOf(n)] = state;
                                                   }
+                                                  // If deselecting all word lists in a folder uncheck the folder
+                                                  TreeNode<WordListsData>? n = node.parent!;
+                                                  while(!n!.dfs().any((e) => 
+                                                    wordListListypes.contains(e.value.type) && checkedEntries[childrenDFS.indexOf(e)])){
+
+                                                    if(n.parent == null ||
+                                                      n.value.type == WordListNodeType.root){
+                                                      break;
+                                                    }
+
+                                                    checkedEntries[childrenDFS.indexOf(n)] = false;
+
+                                                    // if a folder gets unchecked, repeat the same check repeatedly till the root
+                                                    n = n.parent;
+                                                  }
                                                 });
                                             },
                                             key: Key('$i'),
@@ -552,7 +567,8 @@ class _WordListsState extends State<WordLists> {
   void onSelectionConfirmPressed(){
 
     List<TreeNode<WordListsData>> selection = currentRoot.dfs().where(
-      (node) => node.value.isChecked).toList();
+      (node) => node.value.isChecked
+    ).toList();
 
     widget.onSelectionConfirmed!(selection);
 

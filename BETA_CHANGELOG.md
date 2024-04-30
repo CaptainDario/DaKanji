@@ -5,6 +5,7 @@
 * Improvements
   * Word lists:
     * When a folder does not contain any word lists make it unselectable
+    * If deselecting all word lists in a folder uncheck it
 
 ## v3.4.0+99b6 - ワードリストと暗記 (29.04.2024)
 
