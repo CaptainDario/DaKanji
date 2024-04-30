@@ -3,6 +3,12 @@
 ## v3.4.0+99b6 - ワードリストと暗記 (19.04.2024)
 
 * Improvements
+  * Word lists:
+    * When a folder does not contain any word lists make it unselectable
+
+## v3.4.0+99b6 - ワードリストと暗記 (29.04.2024)
+
+* Improvements
   * The folder where DaKanji stores necessary data has been moved to a location that a user usually does not use [#85](https://github.com/CaptainDario/DaKanji/issues/85)
 
 ## v3.4.0+98b5 - ワードリストと暗記 (19.04.2024)

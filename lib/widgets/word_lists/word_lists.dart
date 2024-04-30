@@ -375,7 +375,8 @@ class _WordListsState extends State<WordLists> {
                                             onFolderPressed: (node) {
                                               widget.wordLists.updateNode(node);
                                             },
-                                            onSelectedToggled: widget.onSelectionConfirmed == null
+                                            onSelectedToggled: widget.onSelectionConfirmed == null ||
+                                                !childrenDFS[i].bfs().any((e) => wordListListypes.contains(e.value.type))
                                               ? null
                                               : (node, state) {
                                                 setState(() {
