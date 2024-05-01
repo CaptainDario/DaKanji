@@ -124,6 +124,7 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
       animation: kanjiVGAnimationController,
       builder: (context, widget) {
         return CustomPaint(
+          isComplex: true,
           painter: AnimatedKanjiPainter(
             paths,
             paints,

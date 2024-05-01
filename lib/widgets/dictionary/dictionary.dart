@@ -205,6 +205,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                         if(tabsSideBySide < 4)
                           DefaultTabController(
                             length: 4 - (tabsSideBySide == 3 ? 2 : tabsSideBySide),
+                            // set a duration to start the kanji animation after the transition
+                            animationDuration: const Duration(milliseconds: 200),
                             child: Expanded(
                               child: Column(
                                 children: [

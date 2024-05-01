@@ -7,10 +7,8 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
-import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/repositories/dictionary/kanjidic2.dart';
-import 'package:da_kanji_mobile/repositories/radicals/radicals.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_card.dart';
 
 class DictionaryKanjiTab extends StatefulWidget {
@@ -33,8 +31,6 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
   List<KanjiSVG> kanjiVGs = [];
   /// list of all entries from kanji dic 2 that should be shown
   List<Kanjidic2> kanjiDic2s = [];
-  /// list of lists of all radicals that kanjis use 
-  List<List<String>> radicals = [];
   
 
   @override
@@ -61,10 +57,6 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
     // update search results
     List<String> kanjis = removeAllButKanji(widget.entry!.kanjis);
     kanjiDic2s = findMatchingKanjiDic2(kanjis);
-    radicals = kanjiDic2s.map((e) => 
-      getRadicalsOf(e.character, GetIt.I<Isars>().krad.krads, radkIsar: GetIt.I<Isars>().radk.radks)
-    ).toList();
-
   }
 
   @override
