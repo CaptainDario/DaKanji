@@ -5,18 +5,16 @@
 
 New Features:
 
+- Anki integration: Send words and word lists to Anki
 - Dictionary
   - Share images of entry cards
   - Image search query customizable
   - Characters from drawing are now added at the cursor's position
-  - Send words to Anki
-
 - Word Lists
   - Sort lists in folders
   - Search in lists
   - Lists for JLPT
   - Export: PDF, CSV Images
-  - Send to Anki
   - Screen saver
 
 Improvements:
