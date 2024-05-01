@@ -228,14 +228,16 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           );
                         }
                       },
-                      itemBuilder: (context) => List.generate(
-                        menuItems.length,
-                        (index) => 
-                          PopupMenuItem(
-                            value: menuItems[index],
-                            child: Text(menuItems[index])
-                          )
-                      ),
+                      itemBuilder: (context) => menuItems.mapIndexed((i, e) {
+
+                        // FIX: #87 skip share as image on Linux
+                        if(i == 6 && Platform.isLinux) return null;
+
+                        return PopupMenuItem(
+                          value: menuItems[i],
+                          child: Text(menuItems[i])
+                        );
+                      }).whereNotNull().toList(),
                     )
                   ),
                 ],
