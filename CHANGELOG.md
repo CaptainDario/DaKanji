@@ -16,6 +16,8 @@ New Features:
   - Lists for JLPT
   - Export: PDF, CSV Images
   - Screen saver
+- Kana Table
+  - Added kana origins
 
 Improvements:
 
@@ -32,6 +34,8 @@ Fixed:
 - Dictionary
   - MacOS
     - When typing in Japanese, writing suggestions could not be selected using keyboard
+- Kana table
+  - Kana cut off on some aspect ratios
 - Drawing
   - #73 Kanji search bar is not cleared
 - Settings
