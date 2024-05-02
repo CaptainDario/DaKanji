@@ -111,8 +111,9 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
         }
         // restart animation if stopped at the end
         else if(kanjiVGAnimationController!.isCompleted){
-          switchAnimation?.reverse();
-          startDrawingAnimation(reverseSwitch: true, startFrom: 0);
+          switchAnimation?.reverse().then((value) {
+            startDrawingAnimation(reverseSwitch: true, startFrom: 0);
+          }); 
         }
       },
       behavior: HitTestBehavior.translucent,
