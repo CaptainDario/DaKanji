@@ -177,10 +177,8 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
                       (AnimationController controller) {
                         kanjiVGAnimationController = controller;
                         if(widget.playKanjiAnimationWhenOpened){
-                          Future.delayed(const Duration(milliseconds: 200), () {
-                            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                              startDrawingAnimation(startFrom: 0, reverseSwitch: true);
-                            },);
+                          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                            startDrawingAnimation(startFrom: 0, reverseSwitch: true);
                           },);
                         }
                       }
