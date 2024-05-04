@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:feedback_sentry/feedback_sentry.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -12,11 +11,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 /// Opens an overlay to share feedback 
 void sendFeedback(BuildContext context) {
 
-  Sentry.configureScope((p0) => p0.transaction = "User Feedback");
-
   BetterFeedback.of(context).showAndUploadToSentry();
-
-  Sentry.configureScope((p0) => p0.transaction = null);
 
 }
 
