@@ -113,7 +113,9 @@ const g_GithubRepoUrl = "https://github.com/CaptainDario/DaKanji";
 const g_GithubIssues = "$g_GithubRepoUrl/issues/new";
 /// link to the github repos release page
 const g_GithubReleasesPage = "$g_GithubRepoUrl/releases";
-///
+/// link to the latest github release
+const g_GithubLatestReleasesPage = "$g_GithubRepoUrl/releases/latest";
+/// the github api endpoint to query releases
 const g_GithubReleasesApi = "https://api.github.com/repos/CaptainDario/DaKanji/releases";
 /// lin to the github repo with dependencies needed for dakanji
 const g_GithubApiDependenciesRelase = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases";
@@ -150,6 +152,8 @@ const g_MicrosoftStoreDaAppLabPage = "ms-windows-store://publisher/?name=DaAppLa
 const g_SnapStorePage = "https://snapcraft.io/dakanji";
 /// DaAppLab page in the snap store
 const g_SnapStoreDaAppLabPage = "";
+/// Link to the flatpak store
+const g_FlatpakStorePage = g_GithubReleasesPage;
 
 /// id of the takoboto package on android
 const g_TakobotoId = "jp.takoboto";

@@ -37,6 +37,8 @@ class AboutScreen extends StatelessWidget {
     "APPSTORE_PAGE" : g_AppStorePage,
     "MACSTORE_PAGE" : g_AppStorePage,
     "SNAPSTORE_PAGE" : g_SnapStorePage,
+    "FLATPAKSTORE_PAGE" : g_GithubLatestReleasesPage,
+    "PORTABLE_DOWNLOAD" : g_GithubLatestReleasesPage, 
     "MICROSOFT_STORE_PAGE" : g_MicrosoftStorePage,
     "GITHUB_RELEASES_PAGE" : g_GithubReleasesPage,
   });
