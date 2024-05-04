@@ -175,7 +175,7 @@ const g_MidoriId = "id385231773";
 
 
 /// url to the privacy police of DaKanji
-const g_PrivacyPoliceUrl = "https://sites.google.com/view/dakanjirecognizerprivacypolicy";
+const g_PrivacyPoliceUrl = "https://dakanji.app/dakanji-app-privacy-policy/";
 
 /// LINKS
 /// URL to japanese wikipedia
