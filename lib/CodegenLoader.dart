@@ -16,7 +16,7 @@ class CodegenLoader extends AssetLoader{
 
   static const Map<String,dynamic> zh = {
   "AboutScreen": {
-    "about_text": "\"DaKanji\"帮助日语学生和使用日语的人。\n\"DaKanji\"可用于，[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) 。\n你也可以在[GitHub.]({GITHUB_RELEASES_PAGE})上找到所有版本。\n\n还可以查看[我的其他应用程序。]({DAAPPLAB_STORE_PAGE})\n如果你在使用这个应用时有问题，或者对如何改进它有建议，请在[这里]({GITHUB_ISSUES})报告，加入[discord服务器]({DISCORD_SERVER})或发送[电子邮件](daapplab@gmail.com)。\n\n隐私警察可以在[这里]({PRIVACY_POLICE})找到。",
+    "about_text": "\"DaKanji\" 为日语学生和日语使用者提供帮助。\n\"DaKanji \"适用于[iOS]({APPSTORE_PAGE})、[Android]({PLAYSTORE_PAGE})、[MacOS]({MACSTORE_PAGE})、[Linux (Snap)]({SNAPSTORE_PAGE})、[Linux（flatpak）]({FLATPAKSTORE_PAGE})、[Linux（便携式）]({PORTABLE_DOWNLOAD})、[Windows]({MICROSOFT_STORE_PAGE})。\n您还可以在 [GitHub.]({GITHUB_RELEASES_PAGE}) 上找到所有版本。\n\n还可以查看 [我的其他应用程序]({DAAPPLAB_STORE_PAGE})\n如果您在使用本程序时遇到问题或有改进建议，请在[此处]({GITHUB_ISSUES})报告，或加入[discord 服务器]({DISCORD_SERVER})，或使用反馈菜单发送带注释的截图。\n\n隐私政策请见 [此处]({PRIVACY_POLICE})",
     "credits": "贷方",
     "show_changelog": "给我看完整的更新日志。",
     "software_informations_button": "软件信息",
@@ -208,7 +208,7 @@ class CodegenLoader extends AssetLoader{
     "title": "崩し字"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "要开始使用 DaKanji 和 Anki，您需要按下面的按钮。它将检查您的设置是否正确。\n\n如果收到成功信息，DaKanji 和 Anki 就连接上了，你就可以开始使用 DaKanji 和 Anki 了。\n如果没有成功信息，DaKanji 将无法向 Anki 发送卡片。因此，请确保按了下面的按钮并收到成功信息。你也可以在设置 → Anki中检查设置是否成功。",
+    "anki_connection_test_text": "要开始使用 DaKanji 和 Anki，您需要按下面的按钮。它将检查您的设置是否正确。\n\n如果收到成功信息，说明 DaKanji 和 Anki 已经连接，您可以开始使用 DaKanji 和 Anki。\n如果收到错误信息，请按照信息中的说明操作，然后再按一次按钮。\n如果没有成功信息，DaKanji 将无法向 Anki 发送卡片。因此，请确保按下下面的按钮并收到成功信息。您也可以在设置 → Anki 中检查设置是否成功。",
     "anki_connection_test_title": "测试设置",
     "anki_setup_android_text": "你需要安装[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki)，并在被要求时授予DaKanji与Anki互动的权限。",
     "anki_setup_android_title": "安卓",
@@ -432,7 +432,7 @@ class CodegenLoader extends AssetLoader{
 };
 static const Map<String,dynamic> ja = {
   "AboutScreen": {
-    "about_text": "「DaKanji」は、日本語学習者、日本語話者をサポートします。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}) で使用することができます。\nまた、すべてのリリースは [GitHub.]({GITHUB_RELEASES_PAGE}) でご覧いただけます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてみてください。\nこのアプリの使用上の問題や改善案があれば、[ここ]({GITHUB_ISSUES})、[discordサーバー]({DISCORD_SERVER})、または[メール](daapplab@gmail.com)で報告してください。\n\nプライバシーポリシーは[こちら]({PRIVACY_POLICE})で確認いただけます。",
+    "about_text": "「大漢字」は、日本語を学ぶ人、日本語を使う人を支援します。\n「大漢字」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) でご利用いただけます、[Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nすべてのリリースは[GitHub.]({GITHUB_RELEASES_PAGE})でもご覧いただけます。\n\nまた、[私の他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてください。\nこのアプリを使用していて問題があったり、改善するための提案があれば、[こちら]({GITHUB_ISSUES})に報告するか、[discordサーバー]({DISCORD_SERVER})に参加するか、フィードバックメニューを使って注釈付きのスクリーンショットを送ってください。\n\nプライバシーポリシーは[こちら]({PRIVACY_POLICE})をご覧ください。",
     "credits": "クレジット",
     "show_changelog": "全ての更新履歴を表示",
     "software_informations_button": "ソフトウェア情報",
@@ -646,7 +646,7 @@ static const Map<String,dynamic> ja = {
     "title": "崩し字"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "大漢字と杏樹を使い始めるには、下のボタンを押してください。設定が正しいかどうかチェックされます。\n\n成功のメッセージが表示されれば、大漢字とAnkiは接続され、大漢字とAnkiを使い始めることができます。\n成功メッセージが表示されない場合、大漢字はAnkiにカードを送信することができません。以下のボタンを押して、成功メッセージが表示されたことを確認してください。設定が成功したかどうかは、設定→Ankiでも確認できます。",
+    "anki_connection_test_text": "大漢字と杏樹を使い始めるには、下のボタンを押してください。設定が正しいかどうかチェックされます。\n\n成功のメッセージが表示された場合、大漢字とAnkiは接続され、大漢字とAnkiを使い始めることができます。\nエラーメッセージが表示された場合は、メッセージの指示に従って、再度ボタンを押してください。\n成功メッセージが表示されないと、大漢字からAnkiにカードを送信することができません。以下のボタンを押して、成功メッセージが表示されることを確認してください。設定が成功したかどうかは、設定→Ankiでも確認できます。",
     "anki_connection_test_title": "テスト設定",
     "anki_setup_android_text": "[AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki)をインストールし、DakanjiにAnkiとの同期を求めるメッセージが表示されましたら、許可してください。",
     "anki_setup_android_title": "Android",
@@ -884,7 +884,7 @@ static const Map<String,dynamic> ja = {
 };
 static const Map<String,dynamic> de = {
   "AboutScreen": {
-    "about_text": "\"DaKanji\" ist für alle, die Japanisch lernen oder benutzen.\n\"DaKanji\" ist verfügbar für, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) und [Windows]({MICROSOFT_STORE_PAGE})\nDu findest alle releases auch auf [GitHub.]({GITHUB_RELEASES_PAGE})\n\nSchau dir auch meine [anderen Apps]({DAAPPLAB_STORE_PAGE}) an. \nFalls du Probleme mit der App oder Verbesserungsvorschläge hast , bitte öffne einen [GitHub-issue]({GITHUB_ISSUES}),\ntritt dem [Discordserver]({DISCORD_SERVER}) bei oder nutze das Feedback widget um einen annotierten screenshot zu schicken.\n\nDie Privacy policy kann [hier]({PRIVACY_POLICE}) gefunden werden.",
+    "about_text": "\"DaKanji\" hilft Studenten der japanischen Sprache und Menschen, die sie benutzen.\n\"DaKanji\" ist verfügbar für, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nSie können auch alle Releases auf [GitHub]({GITHUB_RELEASES_PAGE}) finden.\n\nSchauen Sie sich auch [meine anderen Apps]({DAAPPLAB_STORE_PAGE}) an.\nWenn Sie Probleme bei der Verwendung dieser App oder Verbesserungsvorschläge haben, melden Sie diese bitte [hier]({GITHUB_ISSUES}), treten Sie dem [Discord-Server]({DISCORD_SERVER}) bei, oder verwenden Sie das Feedback-Menü, um einen kommentierten Screenshot zu senden.\n\nDie Datenschutzbestimmungen können [hier]({PRIVACY_POLICE}) eingesehen werden.",
     "credits": "Credits",
     "show_changelog": "Zeig mir alle Änderungen.",
     "software_informations_button": "Softwareinformationen",
@@ -930,13 +930,13 @@ static const Map<String,dynamic> de = {
     "tutorial_begin_title": "Willkommen zum Wörterbuch!",
     "tutorial_examples_tab": "Der \"Beispiele\"-Tab zeigt einige Beispielsätze, in denen das ausgewählte Wort verwendet wird.",
     "tutorial_kanji_tab": "Der Kanji-Tab enthält Informationen über die im Wort verwendeten Kanjis. Dazu gehören Anzahl und Reihenfolge der Striche und die Bedeutung.",
-    "tutorial_search_filter_text": "Mit dieser Schaltfläche können Sie Filter auf Ihre Suche anwenden.",
+    "tutorial_search_filter_text": "Mit dieser Schaltfläche können Sie Ihre Suche filtern anwenden.",
     "tutorial_search_input_clear_text": "Diese Schaltfläche löscht die Eingabe oder fügt den Text aus der Zwischenablage.",
     "tutorial_search_input_draw_text": "Diese Schaltfläche öffnet einen Bildschirm, in dem du Kanji zeichnen kannst, um sie der Suche hinzuzufügen.",
     "tutorial_search_input_text": "Dies ist das Eingabefeld für die Suche. Tippe einfach darauf, um ein beliebiges Wort einzugeben, das du suchen möchtest.",
-    "tutorial_search_input_wildcards_text": "Sie können ? verwenden, um ein einzelnes Zeichen zu finden, und Sie können * verwenden, um 0 bis unendlich viele Zeichen zu finden.",
+    "tutorial_search_input_wildcards_text": "Sie können ? verwenden, um ein einzelnes Zeichen zu matchen, und Sie können * verwenden, um 0 bis unendlich viele Zeichen zu matchen.",
     "tutorial_search_radical_text": "Mit dieser Schaltfläche können Sie Kanji nach Radikalen suchen.",
-    "tutorial_word_tab": "Diesr Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprachen der Übersetzungen kann in den Einstellungen gewählt werden.",
+    "tutorial_word_tab": "Dieser Tab enthält verschiedene Informationen über das Suchergebnis, z. B. die Konjugation und die Übersetzungen. Die Sprachen der Übersetzungen kann in den Einstellungen gewählt werden.",
     "word_antonyms": "Antonyme",
     "word_conj_adj_causative": "Kausativ",
     "word_conj_adj_causative_m": "Jmd. [nicht] machen",
@@ -1114,7 +1114,7 @@ static const Map<String,dynamic> de = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Um DaKanji und Anki zu verwenden, müssen Sie auf die Schaltfläche unten klicken. Es wird geprüft, ob Ihre Einstellungen korrekt sind.\n\nWenn du eine Erfolgsmeldung erhältst, sind DaKanji und Anki verbunden und du kannst DaKanji mit Anki verwenden.\nOhne eine Erfolgsmeldung ist DaKanji nicht in der Lage, Karten an Anki zu senden. Vergewissere dich daher, dass du den Knopf unten drückst und eine Erfolgsmeldung erhältst. Du kannst auch unter Einstellungen → Anki überprüfen, ob die Einrichtung erfolgreich war.",
+    "anki_connection_test_text": "Um DaKanji und Anki zu verwenden, müssen Sie auf die Schaltfläche unten klicken. Es wird geprüft, ob Ihre Einstellungen korrekt sind.\n\nWenn Sie eine Erfolgsmeldung erhalten, sind DaKanji und Anki verbunden und Sie können DaKanji mit Anki verwenden.\nWenn Sie eine Fehlermeldung erhalten, folgen Sie bitte den Anweisungen in der Meldung und drücken Sie danach erneut den Button.\nOhne eine Erfolgsmeldung ist DaKanji nicht in der Lage, Karten an Anki zu senden. Stellen Sie daher sicher, dass Sie den Knopf unten drücken und eine Erfolgsmeldung erhalten. Sie können auch unter Einstellungen → Anki überprüfen, ob die Einrichtung erfolgreich war.",
     "anki_connection_test_title": "Test setup",
     "anki_setup_android_text": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
     "anki_setup_android_title": "Android",
@@ -1352,7 +1352,7 @@ static const Map<String,dynamic> de = {
 };
 static const Map<String,dynamic> ru = {
   "AboutScreen": {
-    "about_text": "\"DaKanji\" помогает изучающим японский язык и людям, которые его используют.\n\"DaKanji\" доступен для [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nВы также можете найти все релизы на [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nТакже посмотрите [другие мои приложения]({DAAPPLAB_STORE_PAGE}).\nЕсли у вас есть проблемы с использованием этого приложения или предложения по его улучшению, пожалуйста, сообщите о них [здесь]({GITHUB_ISSUES}), присоединяйтесь к [discord серверу]({DISCORD_SERVER}) или отправьте [e-mail](daapplab@gmail.com).\n\nПолицию конфиденциальности можно найти [здесь]({PRIVACY_POLICE})",
+    "about_text": "\"DaKanji\" поможет изучающим японский язык и людям, которые его используют.\n\"DaKanji\" доступен для, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nВы также можете найти все релизы на [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nТакже посмотрите [другие мои приложения]({DAAPPLAB_STORE_PAGE}).\nЕсли у вас возникли проблемы с использованием этого приложения или предложения по его улучшению, пожалуйста, сообщите о них [здесь]({GITHUB_ISSUES}), присоединяйтесь к [discord-серверу]({DISCORD_SERVER}) или используйте меню обратной связи, чтобы отправить аннотированный скриншот.\n\nС политикой конфиденциальности можно ознакомиться [здесь]({PRIVACY_POLICE})",
     "credits": "Кредиты",
     "show_changelog": "Покажите мне полный журнал изменений.",
     "software_informations_button": "Информация о программном обеспечении",
@@ -1544,7 +1544,7 @@ static const Map<String,dynamic> ru = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Чтобы начать использовать DaKanji и Anki, вам нужно нажать кнопку ниже. Она проверит правильность ваших настроек.\n\nЕсли вы получите сообщение об успехе, значит, DaKanji и Anki подключены и вы можете начать использовать DaKanji с Anki.\nБез сообщения об успехе DaKanji не сможет отправлять карточки в Anki. Поэтому убедитесь, что вы нажали кнопку ниже и получили сообщение об успехе. Вы также можете проверить успешность настройки в разделе Настройки → Anki.",
+    "anki_connection_test_text": "Чтобы начать использовать DaKanji и Anki, вам нужно нажать кнопку ниже. Она проверит правильность ваших настроек.\n\nЕсли вы получите сообщение об успехе, DaKanji и Anki подключены, и вы можете начать использовать DaKanji с Anki.\nЕсли вы получите сообщение об ошибке, пожалуйста, следуйте инструкциям, приведенным в сообщении, и нажмите кнопку снова.\nБез сообщения об ошибке DaKanji не сможет отправлять карточки в Anki. Поэтому убедитесь, что вы нажали кнопку ниже и получили сообщение об успехе. Вы также можете проверить, успешно ли прошла настройка, в разделе Настройки → Anki.",
     "anki_connection_test_title": "Испытательная установка",
     "anki_setup_android_text": "Вам необходимо установить [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki&hl=en&gl=US) и при запросе предоставить DaKanji разрешение на взаимодействие с Anki.",
     "anki_setup_android_title": "Android",
@@ -1768,7 +1768,7 @@ static const Map<String,dynamic> ru = {
 };
 static const Map<String,dynamic> pl = {
   "AboutScreen": {
-    "about_text": "DaKanji stworzone jest, aby pomagać osobom uczącym się języka japońskiego oraz jego użytkownikom. \nDaKanji dostępne jest dla [iOS](IOS), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) i [Windows]({MICROSOFT_STORE_PAGE}). \nWszystkie wersje możesz zobaczyć na [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nSprawdź również inne [moje aplikacje]({DAAPPLAB_STORE_PAGE}). \nJeżeli napotkasz problemy korzystając z tej aplikacji, albo posiadasz sugestie na to jak ją poprawić, wyślij je [tutaj]({GITHUB_ISSUES}), dołącz na [serwer discord]({DISCORD_SERVER}) albo użyj menu opinii aby wysłać zrzut ekranu z opisem",
+    "about_text": "\"DaKanji\" pomaga studentom języka japońskiego i osobom, które go używają.\n\"DaKanji\" jest dostępny dla [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nWszystkie wydania można również znaleźć na [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nSprawdź również [inne moje aplikacje]({DAAPPLAB_STORE_PAGE}).\nJeśli masz problemy z korzystaniem z tej aplikacji lub sugestie, jak ją ulepszyć, zgłoś je [tutaj]({GITHUB_ISSUES}), dołącz do [serwera discord]({DISCORD_SERVER}) lub użyj menu opinii, aby wysłać zrzut ekranu z adnotacją.\n\nPolityka prywatności znajduje się [tutaj]({PRIVACY_POLICE}).",
     "credits": "Podziękowania",
     "show_changelog": "Pokaż pełną historię zmian",
     "software_informations_button": "Informacje o oprogramowaniu",
@@ -1995,7 +1995,7 @@ static const Map<String,dynamic> pl = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Aby rozpocząć korzystanie z DaKanji i Anki, należy nacisnąć poniższy przycisk. Sprawdzi on, czy konfiguracja jest prawidłowa.\n\nJeśli otrzymasz wiadomość o powodzeniu, DaKanji i Anki są połączone i możesz zacząć używać DaKanji z Anki.\nBez komunikatu o powodzeniu DaKanji nie będzie w stanie wysyłać kart do Anki. Dlatego upewnij się, że nacisnąłeś poniższy przycisk i otrzymałeś wiadomość o powodzeniu. Możesz również sprawdzić, czy konfiguracja przebiegła pomyślnie w ustawieniach → Anki.",
+    "anki_connection_test_text": "Aby rozpocząć korzystanie z DaKanji i Anki, należy nacisnąć poniższy przycisk. Sprawdzi on, czy konfiguracja jest prawidłowa.\n\nJeśli pojawi się komunikat o powodzeniu, DaKanji i Anki są połączone i można rozpocząć korzystanie z DaKanji z Anki.\nJeśli pojawi się komunikat o błędzie, należy postępować zgodnie z instrukcjami podanymi w komunikacie, a następnie ponownie nacisnąć przycisk.\nBez komunikatu o powodzeniu DaKanji nie będzie w stanie wysyłać kart do Anki. Dlatego upewnij się, że naciśniesz poniższy przycisk i otrzymasz komunikat o powodzeniu. Możesz również sprawdzić, czy konfiguracja przebiegła pomyślnie w ustawieniach → Anki.",
     "anki_connection_test_title": "Konfiguracja testowa",
     "anki_setup_android_text": "Musisz mieć zainstalowany [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) i kiedy zostaniesz o to poproszony, daj DaKanji pozwolenie na interakcję z Anki.",
     "anki_setup_android_title": "Android",
@@ -2233,7 +2233,7 @@ static const Map<String,dynamic> pl = {
 };
 static const Map<String,dynamic> en = {
   "AboutScreen": {
-    "about_text": "\"DaKanji\" helps students of the Japanese language and people who use it.\n\"DaKanji\" is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions on how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}), or use the feedback menu to send an annotated screenshot.\n\nThe privacy policy can be found [here]({PRIVACY_POLICE})",
+    "about_text": "\"DaKanji\" helps students of the Japanese language and people who use it.\n\"DaKanji\" is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions on how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}), or use the feedback menu to send an annotated screenshot.\n\nThe privacy policy can be found [here]({PRIVACY_POLICE})",
     "credits": "Credits",
     "show_changelog": "Show me the complete changelog.",
     "software_informations_button": "Software informations",
@@ -2463,7 +2463,7 @@ static const Map<String,dynamic> en = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.\nWithout a success message, DaKanji will not be able to send cards to Anki. Therefore, ensure that you press the button below and that you got a success message. You can also check if the setup was successful in settings → Anki.",
+    "anki_connection_test_text": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.\nIf you get an error message, please follow the instructions given in the message and press the button again afterward.\nWithout a success message, DaKanji will not be able to send cards to Anki. Therefore, ensure that you press the button below and that you get a success message. You can also check if the setup was successful in settings → Anki.",
     "anki_connection_test_title": "Test setup",
     "anki_setup_android_text": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installed and when asked grant DaKanji permission to interact with Anki.",
     "anki_setup_android_title": "Android",
@@ -2701,7 +2701,7 @@ static const Map<String,dynamic> en = {
 };
 static const Map<String,dynamic> it = {
   "AboutScreen": {
-    "about_text": "\"DaKanji\" aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\n\"DaKanji\" è disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'utilizzo di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}) o inviate una [e-mail](daapplab@gmail.com).\n\nLa polizia della privacy può essere trovata [qui]({PRIVACY_POLICE})",
+    "about_text": "\"DaKanji\" aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\n\"DaKanji\" è disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'uso di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}), o usate il menu feedback per inviare uno screenshot commentato.\n\nL'informativa sulla privacy è disponibile [qui]({PRIVACY_POLICE}).",
     "credits": "Crediti",
     "show_changelog": "Mostrami il changelog completo.",
     "software_informations_button": "Informazioni sul software",
@@ -2893,7 +2893,7 @@ static const Map<String,dynamic> it = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Per iniziare a utilizzare DaKanji e Anki è necessario premere il pulsante sottostante. Verrà controllato se la configurazione è corretta.\n\nSe viene visualizzato un messaggio di successo, DaKanji e Anki sono connessi e si può iniziare a usare DaKanji con Anki.\nSenza un messaggio di successo, DaKanji non sarà in grado di inviare le schede ad Anki. Pertanto, assicurarsi di aver premuto il pulsante sottostante e di aver ricevuto un messaggio di successo. È anche possibile verificare se l'impostazione è avvenuta con successo in Impostazioni → Anki.",
+    "anki_connection_test_text": "Per iniziare a utilizzare DaKanji e Anki è necessario premere il pulsante sottostante. Verrà controllato se la configurazione è corretta.\n\nSe il messaggio è di successo, DaKanji e Anki sono collegati e si può iniziare a usare DaKanji con Anki.\nSe viene visualizzato un messaggio di errore, seguire le istruzioni fornite nel messaggio e premere nuovamente il pulsante.\nSenza un messaggio di successo, DaKanji non sarà in grado di inviare le schede ad Anki. Assicurarsi quindi di aver premuto il pulsante sottostante e di aver ricevuto un messaggio di successo. È anche possibile verificare se l'impostazione è avvenuta con successo in Impostazioni → Anki.",
     "anki_connection_test_title": "Configurazione del test",
     "anki_setup_android_text": "È necessario aver installato [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) e, quando viene richiesto, concedere a DaKanji il permesso di interagire con Anki.",
     "anki_setup_android_title": "Android",
@@ -3117,7 +3117,7 @@ static const Map<String,dynamic> it = {
 };
 static const Map<String,dynamic> fr = {
   "AboutScreen": {
-    "about_text": "\"DaKanji\" aide les étudiants de la langue japonaise et les personnes qui l'utilisent.\n\"DaKanji est disponible pour [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez également trouver toutes les versions sur [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nConsultez également [mes autres applications]({DAAPPLAB_STORE_PAGE}).\nSi vous avez des problèmes d'utilisation de cette application ou des suggestions pour l'améliorer, veuillez les signaler [ici]({GITHUB_ISSUES}), rejoindre le [serveur discord]({DISCORD_SERVER}) ou envoyer un [e-mail](daapplab@gmail.com).\n\nLa police de la vie privée peut être trouvée [ici]({PRIVACY_POLICE}).",
+    "about_text": "\"DaKanji\" aide les étudiants de la langue japonaise et les personnes qui l'utilisent.\n\"DaKanji\" est disponible pour, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez également trouver toutes les versions sur [GitHub]({GITHUB_RELEASES_PAGE}).\n\nConsultez également [mes autres applications]({DAAPPLAB_STORE_PAGE})\nSi vous avez des problèmes d'utilisation de cette application ou des suggestions pour l'améliorer, merci de les signaler [ici]({GITHUB_ISSUES}), de rejoindre le [serveur discord]({DISCORD_SERVER}), ou d'utiliser le menu feedback pour envoyer une capture d'écran annotée.\n\nLa politique de confidentialité peut être consultée [ici]({PRIVACY_POLICE})",
     "credits": "Crédits",
     "show_changelog": "Montrez-moi le journal complet des modifications.",
     "software_informations_button": "Informations sur le logiciel",
@@ -3309,7 +3309,7 @@ static const Map<String,dynamic> fr = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Pour commencer à utiliser DaKanji et Anki, vous devez appuyer sur le bouton ci-dessous. Il vérifiera que votre configuration est correcte.\n\nSi vous obtenez un message de succès, DaKanji et Anki sont connectés et vous pouvez commencer à utiliser DaKanji avec Anki.\nSans message de succès, DaKanji ne pourra pas envoyer de cartes à Anki. Assurez-vous donc que vous avez appuyé sur le bouton ci-dessous et que vous avez reçu un message de succès. Vous pouvez également vérifier si la configuration a réussi dans Paramètres → Anki.",
+    "anki_connection_test_text": "Pour commencer à utiliser DaKanji et Anki, vous devez appuyer sur le bouton ci-dessous. Il vérifiera que votre configuration est correcte.\n\nSi vous obtenez un message de succès, DaKanji et Anki sont connectés et vous pouvez commencer à utiliser DaKanji avec Anki.\nSi vous obtenez un message d'erreur, veuillez suivre les instructions données dans le message et appuyez à nouveau sur le bouton par la suite.\nSans message de succès, DaKanji ne pourra pas envoyer de cartes à Anki. Assurez-vous donc que vous appuyez sur le bouton ci-dessous et que vous obtenez un message de succès. Vous pouvez également vérifier si l'installation s'est déroulée correctement dans la rubrique Paramètres → Anki.",
     "anki_connection_test_title": "Configuration du test",
     "anki_setup_android_text": "Vous devez avoir installé [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) et, lorsque cela vous est demandé, donner à DaKanji la permission d'interagir avec Anki.",
     "anki_setup_android_title": "Android",
@@ -3533,7 +3533,7 @@ static const Map<String,dynamic> fr = {
 };
 static const Map<String,dynamic> es = {
   "AboutScreen": {
-    "about_text": "DaKanji ayuda tanto a los estudiantes de Japonés como a los que lo usan.\nDaKanji está disponible para  [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nAdemás, puedes encontrar todas las releases en [GitHub]({GITHUB_RELEASES_PAGE}).\n\nTambién puedes ver [mis otras apps.]({DAAPPLAB_STORE_PAGE})\nSi tienes problemas usando la app o tienes sugerencias para mejorarla, porfavor reportalas [aquí]({GITHUB_ISSUES}),   uniendote a nuestro [servidor de discord]({DISCORD_SERVER}) o enviando un (correo)(daapplab@gmail.com).\n\nPuedes encontrar la política de privacidad [aquí]({PRIVACY_POLICE})",
+    "about_text": "\"DaKanji\" ayuda a los estudiantes de japonés y a las personas que lo utilizan.\n\"DaKanji\" está disponible para, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nTambién puede encontrar todas las versiones en [GitHub]({GITHUB_RELEASES_PAGE}).\n\nTambién puedes echar un vistazo a [mis otras aplicaciones.]({DAAPPLAB_STORE_PAGE})\nSi tienes problemas usando esta aplicación o sugerencias sobre cómo mejorarla, por favor repórtalos [aquí]({GITHUB_ISSUES}), únete al [servidor discord]({DISCORD_SERVER}), o usa el menú de comentarios para enviar una captura de pantalla comentada.\n\nLa política de privacidad se puede encontrar [aquí]({PRIVACY_POLICE})",
     "credits": "Créditos",
     "show_changelog": "Muéstrame la lista de cambios completa.",
     "software_informations_button": "Información del software",
@@ -3725,7 +3725,7 @@ static const Map<String,dynamic> es = {
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Para empezar a utilizar DaKanji y Anki tienes que pulsar el botón de abajo. Comprobará si tu configuración es correcta.\n\nSi recibes un mensaje de éxito, DaKanji y Anki están conectados y puedes empezar a usar DaKanji con Anki.\nSin un mensaje de éxito, DaKanji no será capaz de enviar tarjetas a Anki. Por lo tanto, asegúrate de que pulsas el botón de abajo y que recibes un mensaje de éxito. También puedes comprobar si la configuración se ha realizado correctamente en ajustes → Anki.",
+    "anki_connection_test_text": "Para empezar a utilizar DaKanji y Anki tienes que pulsar el botón de abajo. Comprobará si tu configuración es correcta.\n\nSi recibes un mensaje de éxito, DaKanji y Anki están conectados y puedes empezar a usar DaKanji con Anki.\nSi recibes un mensaje de error, por favor sigue las instrucciones dadas en el mensaje y pulsa el botón de nuevo después.\nSin un mensaje de éxito, DaKanji no podrá enviar tarjetas a Anki. Por lo tanto, asegúrate de que pulsas el botón de abajo y de que recibes un mensaje de éxito. También puedes comprobar si la configuración se ha realizado correctamente en ajustes → Anki.",
     "anki_connection_test_title": "Configuración de la prueba",
     "anki_setup_android_text": "Necesitas tener instalado [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) y cuando te lo pida, conceder permiso a DaKanji para interactuar con Anki.",
     "anki_setup_android_title": "Android",

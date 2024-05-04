@@ -1,6 +1,6 @@
 {
   "AboutScreen": {
-    "about_text": "\"DaKanji\" helps students of the Japanese language and people who use it.\n\"DaKanji\" is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions on how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}), or use the feedback menu to send an annotated screenshot.\n\nThe privacy policy can be found [here]({PRIVACY_POLICE})",
+    "about_text": "\"DaKanji\" helps students of the Japanese language and people who use it.\n\"DaKanji\" is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions on how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}), or use the feedback menu to send an annotated screenshot.\n\nThe privacy policy can be found [here]({PRIVACY_POLICE})",
     "credits": "Credits",
     "show_changelog": "Show me the complete changelog.",
     "software_informations_button": "Software informations",
@@ -230,7 +230,7 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.\nWithout a success message, DaKanji will not be able to send cards to Anki. Therefore, ensure that you press the button below and that you got a success message. You can also check if the setup was successful in settings \u2192 Anki.",
+    "anki_connection_test_text": "To start using DaKanji and Anki you need to press the button below. It will check if your setup is correct.\n\nIf you get a success message, DaKanji and Anki are connected and you can start using DaKanji with Anki.\nIf you get an error message, please follow the instructions given in the message and press the button again afterward.\nWithout a success message, DaKanji will not be able to send cards to Anki. Therefore, ensure that you press the button below and that you get a success message. You can also check if the setup was successful in settings \u2192 Anki.",
     "anki_connection_test_title": "Test setup",
     "anki_setup_android_text": "You need to have [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installed and when asked grant DaKanji permission to interact with Anki.",
     "anki_setup_android_title": "Android",

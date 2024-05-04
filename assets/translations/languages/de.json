@@ -1,6 +1,6 @@
 {
   "AboutScreen": {
-    "about_text": "\"DaKanji\" ist f\u00fcr alle, die Japanisch lernen oder benutzen.\n\"DaKanji\" ist verf\u00fcgbar f\u00fcr, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}) und [Windows]({MICROSOFT_STORE_PAGE})\nDu findest alle releases auch auf [GitHub.]({GITHUB_RELEASES_PAGE})\n\nSchau dir auch meine [anderen Apps]({DAAPPLAB_STORE_PAGE}) an. \nFalls du Probleme mit der App oder Verbesserungsvorschl\u00e4ge hast , bitte \u00f6ffne einen [GitHub-issue]({GITHUB_ISSUES}),\ntritt dem [Discordserver]({DISCORD_SERVER}) bei oder nutze das Feedback widget um einen annotierten screenshot zu schicken.\n\nDie Privacy policy kann [hier]({PRIVACY_POLICE}) gefunden werden.",
+    "about_text": "\"DaKanji\" hilft Studenten der japanischen Sprache und Menschen, die sie benutzen.\n\"DaKanji\" ist verf\u00fcgbar f\u00fcr, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nSie k\u00f6nnen auch alle Releases auf [GitHub]({GITHUB_RELEASES_PAGE}) finden.\n\nSchauen Sie sich auch [meine anderen Apps]({DAAPPLAB_STORE_PAGE}) an.\nWenn Sie Probleme bei der Verwendung dieser App oder Verbesserungsvorschl\u00e4ge haben, melden Sie diese bitte [hier]({GITHUB_ISSUES}), treten Sie dem [Discord-Server]({DISCORD_SERVER}) bei, oder verwenden Sie das Feedback-Men\u00fc, um einen kommentierten Screenshot zu senden.\n\nDie Datenschutzbestimmungen k\u00f6nnen [hier]({PRIVACY_POLICE}) eingesehen werden.",
     "credits": "Credits",
     "show_changelog": "Zeig mir alle \u00c4nderungen.",
     "software_informations_button": "Softwareinformationen",
@@ -46,13 +46,13 @@
     "tutorial_begin_title": "Willkommen zum W\u00f6rterbuch!",
     "tutorial_examples_tab": "Der \"Beispiele\"-Tab zeigt einige Beispiels\u00e4tze, in denen das ausgew\u00e4hlte Wort verwendet wird.",
     "tutorial_kanji_tab": "Der Kanji-Tab enth\u00e4lt Informationen \u00fcber die im Wort verwendeten Kanjis. Dazu geh\u00f6ren Anzahl und Reihenfolge der Striche und die Bedeutung.",
-    "tutorial_search_filter_text": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie Filter auf Ihre Suche anwenden.",
+    "tutorial_search_filter_text": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie Ihre Suche filtern anwenden.",
     "tutorial_search_input_clear_text": "Diese Schaltfl\u00e4che l\u00f6scht die Eingabe oder f\u00fcgt den Text aus der Zwischenablage.",
     "tutorial_search_input_draw_text": "Diese Schaltfl\u00e4che \u00f6ffnet einen Bildschirm, in dem du Kanji zeichnen kannst, um sie der Suche hinzuzuf\u00fcgen.",
     "tutorial_search_input_text": "Dies ist das Eingabefeld f\u00fcr die Suche. Tippe einfach darauf, um ein beliebiges Wort einzugeben, das du suchen m\u00f6chtest.",
-    "tutorial_search_input_wildcards_text": "Sie k\u00f6nnen ? verwenden, um ein einzelnes Zeichen zu finden, und Sie k\u00f6nnen * verwenden, um 0 bis unendlich viele Zeichen zu finden.",
+    "tutorial_search_input_wildcards_text": "Sie k\u00f6nnen ? verwenden, um ein einzelnes Zeichen zu matchen, und Sie k\u00f6nnen * verwenden, um 0 bis unendlich viele Zeichen zu matchen.",
     "tutorial_search_radical_text": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie Kanji nach Radikalen suchen.",
-    "tutorial_word_tab": "Diesr Tab enth\u00e4lt verschiedene Informationen \u00fcber das Suchergebnis, z. B. die Konjugation und die \u00dcbersetzungen. Die Sprachen der \u00dcbersetzungen kann in den Einstellungen gew\u00e4hlt werden.",
+    "tutorial_word_tab": "Dieser Tab enth\u00e4lt verschiedene Informationen \u00fcber das Suchergebnis, z. B. die Konjugation und die \u00dcbersetzungen. Die Sprachen der \u00dcbersetzungen kann in den Einstellungen gew\u00e4hlt werden.",
     "word_antonyms": "Antonyme",
     "word_conj_adj_causative": "Kausativ",
     "word_conj_adj_causative_m": "Jmd. [nicht] machen",
@@ -230,7 +230,7 @@
     "title": "Kuzushiji"
   },
   "ManualScreen": {
-    "anki_connection_test_text": "Um DaKanji und Anki zu verwenden, m\u00fcssen Sie auf die Schaltfl\u00e4che unten klicken. Es wird gepr\u00fcft, ob Ihre Einstellungen korrekt sind.\n\nWenn du eine Erfolgsmeldung erh\u00e4ltst, sind DaKanji und Anki verbunden und du kannst DaKanji mit Anki verwenden.\nOhne eine Erfolgsmeldung ist DaKanji nicht in der Lage, Karten an Anki zu senden. Vergewissere dich daher, dass du den Knopf unten dr\u00fcckst und eine Erfolgsmeldung erh\u00e4ltst. Du kannst auch unter Einstellungen \u2192 Anki \u00fcberpr\u00fcfen, ob die Einrichtung erfolgreich war.",
+    "anki_connection_test_text": "Um DaKanji und Anki zu verwenden, m\u00fcssen Sie auf die Schaltfl\u00e4che unten klicken. Es wird gepr\u00fcft, ob Ihre Einstellungen korrekt sind.\n\nWenn Sie eine Erfolgsmeldung erhalten, sind DaKanji und Anki verbunden und Sie k\u00f6nnen DaKanji mit Anki verwenden.\nWenn Sie eine Fehlermeldung erhalten, folgen Sie bitte den Anweisungen in der Meldung und dr\u00fccken Sie danach erneut den Button.\nOhne eine Erfolgsmeldung ist DaKanji nicht in der Lage, Karten an Anki zu senden. Stellen Sie daher sicher, dass Sie den Knopf unten dr\u00fccken und eine Erfolgsmeldung erhalten. Sie k\u00f6nnen auch unter Einstellungen \u2192 Anki \u00fcberpr\u00fcfen, ob die Einrichtung erfolgreich war.",
     "anki_connection_test_title": "Test setup",
     "anki_setup_android_text": "Du musst [AnkidDroid](https://play.google.com/store/apps/details?id=com.ichi2.anki) installiert haben und DaKanji auf Nachfrage die Erlaubnis erteilen, mit Anki zu interagieren.",
     "anki_setup_android_title": "Android",
