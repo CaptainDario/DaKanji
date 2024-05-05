@@ -421,6 +421,11 @@
     "tutorial_spaces_text": "Za pomoc\u0105 tego przycisku do tekstu dodawane s\u0105 spacje.",
     "tutorial_text_input_text": "Tutaj mo\u017cesz napisa\u0107 lub wklei\u0107 dowolny tekst. Ten tekst b\u0119dzie przetwarzany za pomoc\u0105 r\u00f3\u017cnych narz\u0119dzi."
   },
+  "UserScreen": {
+    "title": "Konto",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": ""
+  },
   "WebviewScreen": {
     "loading": "\u0141adowanie",
     "title": "Webview"

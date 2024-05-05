@@ -46,6 +46,7 @@ enum Screens{
   kuzushiji,
   wordLists,
   home,
+  user,
   settings,
   onboarding,
   webviewDict,

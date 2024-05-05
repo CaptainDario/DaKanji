@@ -403,6 +403,10 @@ abstract class  LocaleKeys {
   static const TextScreen_tutorial_spaces_text = 'TextScreen.tutorial_spaces_text';
   static const TextScreen_tutorial_text_input_text = 'TextScreen.tutorial_text_input_text';
   static const TextScreen = 'TextScreen';
+  static const UserScreen_title = 'UserScreen.title';
+  static const UserScreen_tutorial_begin_text = 'UserScreen.tutorial_begin_text';
+  static const UserScreen_tutorial_begin_title = 'UserScreen.tutorial_begin_title';
+  static const UserScreen = 'UserScreen';
   static const WebviewScreen_loading = 'WebviewScreen.loading';
   static const WebviewScreen_title = 'WebviewScreen.title';
   static const WebviewScreen = 'WebviewScreen';

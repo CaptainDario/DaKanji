@@ -114,6 +114,9 @@ class DrawerAppBar extends StatelessWidget {
                     break;
                   case Screens.onboarding:
                     throw Exception("OnBoardingScreen should not be navigated to via drawer");
+                  case Screens.user:
+                    title = LocaleKeys.UserScreen_title.tr();
+                    break;
                   case Screens.webviewDict:
                     title = LocaleKeys.WebviewScreen_title.tr();
                     break;

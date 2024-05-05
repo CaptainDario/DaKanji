@@ -421,6 +421,11 @@
     "tutorial_spaces_text": "Con este bot\u00f3n se a\u00f1aden espacios al texto.",
     "tutorial_text_input_text": "Aqu\u00ed puedes escribir o pegar cualquier texto. Este texto ser\u00e1 procesado con diferentes herramientas."
   },
+  "UserScreen": {
+    "title": "Cuenta",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": ""
+  },
   "WebviewScreen": {
     "loading": "Buscando",
     "title": "Webview"

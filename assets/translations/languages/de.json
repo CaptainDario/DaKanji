@@ -421,6 +421,11 @@
     "tutorial_spaces_text": "Mit dieser Schaltfl\u00e4che werden dem Text Leerzeichen hinzugef\u00fcgt.",
     "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einf\u00fcgen. Dieser Text kann mit verschiedenen Tools bearbeitet."
   },
+  "UserScreen": {
+    "title": "Konto",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": ""
+  },
   "WebviewScreen": {
     "loading": "Suche",
     "title": "Webview"

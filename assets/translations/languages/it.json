@@ -421,6 +421,11 @@
     "tutorial_spaces_text": "Con questo pulsante vengono aggiunti spazi al testo.",
     "tutorial_text_input_text": "Qui \u00e8 possibile scrivere o incollare qualsiasi testo. Il testo verr\u00e0 elaborato con diversi strumenti."
   },
+  "UserScreen": {
+    "title": "Conto",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": ""
+  },
   "WebviewScreen": {
     "loading": "Ricerca",
     "title": "Vista sul web"

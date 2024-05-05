@@ -385,6 +385,10 @@ class CodegenLoader extends AssetLoader{
     "tutorial_spaces_text": "有了这个按钮，就可以在文本中添加空格。",
     "tutorial_text_input_text": "在这里，你可以写或粘贴任何文本。这个文本将被不同的工具处理。"
   },
+  "UserScreen": {
+    "title": "账户",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+  },
   "WebviewScreen": {
     "loading": "搜索",
     "title": "网页浏览"
@@ -836,6 +840,10 @@ static const Map<String,dynamic> ja = {
     "tutorial_processed_text_triple_tap": "トリプルタップで段落が選択されます",
     "tutorial_spaces_text": "テキストにスペースを追加します",
     "tutorial_text_input_text": "文章を入力してください。かなを振ったり、品詞を調べたりできます"
+  },
+  "UserScreen": {
+    "title": "アカウント",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
   },
   "WebviewScreen": {
     "loading": "検索中",
@@ -1305,6 +1313,10 @@ static const Map<String,dynamic> de = {
     "tutorial_spaces_text": "Mit dieser Schaltfläche werden dem Text Leerzeichen hinzugefügt.",
     "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einfügen. Dieser Text kann mit verschiedenen Tools bearbeitet."
   },
+  "UserScreen": {
+    "title": "Konto",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+  },
   "WebviewScreen": {
     "loading": "Suche",
     "title": "Webview"
@@ -1720,6 +1732,10 @@ static const Map<String,dynamic> ru = {
     "tutorial_processed_text_triple_tap": "Тройное нажатие позволяет выбрать абзац.",
     "tutorial_spaces_text": "С помощью этой кнопки в текст добавляются пробелы.",
     "tutorial_text_input_text": "Здесь вы можете написать или вставить любой текст. Этот текст будет обработан с помощью различных инструментов."
+  },
+  "UserScreen": {
+    "title": "Счет",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
   },
   "WebviewScreen": {
     "loading": "Поиск",
@@ -2185,6 +2201,10 @@ static const Map<String,dynamic> pl = {
     "tutorial_processed_text_triple_tap": "Potrójne stuknięcie powoduje zaznaczenie akapitu.",
     "tutorial_spaces_text": "Za pomocą tego przycisku do tekstu dodawane są spacje.",
     "tutorial_text_input_text": "Tutaj możesz napisać lub wkleić dowolny tekst. Ten tekst będzie przetwarzany za pomocą różnych narzędzi."
+  },
+  "UserScreen": {
+    "title": "Konto",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
   },
   "WebviewScreen": {
     "loading": "Ładowanie",
@@ -2654,6 +2674,11 @@ static const Map<String,dynamic> en = {
     "tutorial_spaces_text": "With this button spaces are added to the text.",
     "tutorial_text_input_text": "Here you can write or paste any text. This text can be processed with different tools."
   },
+  "UserScreen": {
+    "title": "Account",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the account screen!"
+  },
   "WebviewScreen": {
     "loading": "Searching",
     "title": "Webview"
@@ -3069,6 +3094,10 @@ static const Map<String,dynamic> it = {
     "tutorial_processed_text_triple_tap": "Un triplo tocco selezionerà un paragrafo.",
     "tutorial_spaces_text": "Con questo pulsante vengono aggiunti spazi al testo.",
     "tutorial_text_input_text": "Qui è possibile scrivere o incollare qualsiasi testo. Il testo verrà elaborato con diversi strumenti."
+  },
+  "UserScreen": {
+    "title": "Conto",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
   },
   "WebviewScreen": {
     "loading": "Ricerca",
@@ -3486,6 +3515,10 @@ static const Map<String,dynamic> fr = {
     "tutorial_spaces_text": "Ce bouton permet d'ajouter des espaces au texte.",
     "tutorial_text_input_text": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils."
   },
+  "UserScreen": {
+    "title": "Compte",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+  },
   "WebviewScreen": {
     "loading": "Recherche",
     "title": "Webview"
@@ -3901,6 +3934,10 @@ static const Map<String,dynamic> es = {
     "tutorial_processed_text_triple_tap": "Un triple toque seleccionará un párrafo.",
     "tutorial_spaces_text": "Con este botón se añaden espacios al texto.",
     "tutorial_text_input_text": "Aquí puedes escribir o pegar cualquier texto. Este texto será procesado con diferentes herramientas."
+  },
+  "UserScreen": {
+    "title": "Cuenta",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
   },
   "WebviewScreen": {
     "loading": "Buscando",

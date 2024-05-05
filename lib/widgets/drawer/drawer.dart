@@ -2,6 +2,8 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -377,17 +379,53 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                         selectedColor: Theme.of(context).colorScheme.secondary,
                         child: Column(
                           children: [
-                            GestureDetector(
-                              onLongPress: () {},
-                              child: SafeArea(
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(_drawerWidth*0.1, _drawerWidth*0.05, 0, _drawerWidth*0.1),
-                                    child: Image(
-                                      width: _drawerWidth * 0.6,
-                                      //height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
-                                      image: const AssetImage("assets/images/dakanji/banner.png"),
+                            // user screen
+                            SafeArea(
+                              child: Material(
+                                child: InkWell(
+                                  onTap: () {
+
+                                    String route = "/${Screens.user.name}";
+
+                                    if(ModalRoute.of(context)!.settings.name != route){
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context, route,
+                                        (Route<dynamic> route) => false,
+                                        arguments: NavigationArguments(true)
+                                      );
+                                    }
+                                    else{
+                                      _drawerController.reverse();
+                                    }
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      padding: EdgeInsets.fromLTRB(
+                                        _drawerWidth*0.1, _drawerWidth*0.05,
+                                        0, _drawerWidth*0.05),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            height: 64,
+                                            width: 64,
+                                            decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              borderRadius: BorderRadius.circular(10000)
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8,),
+                                          Text(
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: widget.currentScreen == Screens.user
+                                                ? g_Dakanji_red
+                                                : null
+                                            ),
+                                            "home"
+                                          )
+                                        ],
+                                      )
                                     ),
                                   ),
                                 ),
@@ -424,6 +462,18 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                         onTap: drawerEntries[i].onTap,
                                       )
                                 ],
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                //color: Colors.green,
+                                padding: EdgeInsets.fromLTRB(
+                                  _drawerWidth*0.1, _drawerWidth*0.025, 0, _drawerWidth*0.025),
+                                child: Image(
+                                  width: _drawerWidth * 0.5,
+                                  image: const AssetImage("assets/images/dakanji/banner.png"),
+                                ),
                               ),
                             ),
                           ],

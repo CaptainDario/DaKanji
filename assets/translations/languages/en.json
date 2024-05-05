@@ -421,6 +421,11 @@
     "tutorial_spaces_text": "With this button spaces are added to the text.",
     "tutorial_text_input_text": "Here you can write or paste any text. This text can be processed with different tools."
   },
+  "UserScreen": {
+    "title": "Account",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the account screen!"
+  },
   "WebviewScreen": {
     "loading": "Searching",
     "title": "Webview"

@@ -3953,6 +3953,33 @@
       "pl": "Głębokie linki to sposób na bezpośrednie linkowanie do treści w aplikacji. DaKanji zapewnia dwa schematy dla tego dakanji:// i http(s)://dakanji.app/app. Korzystając z tej funkcji, możesz na przykład otworzyć wyszukiwanie słownika po dotknięciu tego linku dakanji://dictionary?search=食べる. Wszystkie obsługiwane linki można znaleźć na stronie [dakanji.app/deep-links](https://dakanji.app/deep-links)."
     }
   },
+  "UserScreen": {
+    "title": {
+      "en": "Account",
+      "de": "Konto",
+      "ru": "Счет",
+      "ja": "アカウント",
+      "zh": "账户",
+      "it": "Conto",
+      "fr": "Compte",
+      "es": "Cuenta",
+      "pl": "Konto"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the account screen!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    }
+  },
   "ImmersionScreen": {
     "title": {
       "en": "Immersion",
