@@ -18,7 +18,6 @@ Future<List<String>> updateAvailable() async {
   List<String> ret = [];
 
   Response response;
-  Stopwatch s = Stopwatch()..start();
   try {
     response = await Dio().get(
       g_GithubReleasesApi,
@@ -31,7 +30,6 @@ Future<List<String>> updateAvailable() async {
     debugPrint("Could not check for new version $e");
     return [];
   }
-  print(s.elapsed);
   List<Version> versions = (List<String?>.from(
     // extract tag name (version)
     response.data.map((e) => e["tag_name"])))
