@@ -74,6 +74,7 @@ dependencies:
   media_kit_video: 1.2.4                        # For video rendering.
   media_kit_libs_video: 1.0.4                   # Native video dependencies.
   flutter_widget_from_html_core: 0.14.11
+  flutter_login: 5.0.0
   tflite_flutter: #0.10.4
     git:
       url: https://github.com/CaptainDario/flutter-tflite
