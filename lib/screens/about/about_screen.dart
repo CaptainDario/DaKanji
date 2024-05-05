@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -52,50 +54,62 @@ class AboutScreen extends StatelessWidget {
         currentScreen: Screens.about,
         drawerClosed: !openedByDrawer,
         child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 2),
           primary: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Image(image: AssetImage("assets/images/dakanji/banner.png"), width: 200,),
-              // show the about.md
-              Container(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 2),
-                child: MarkdownBody(
-                  data: about,
-                  styleSheet: MarkdownStyleSheet(
-                    a: TextStyle( 
-                      color: Theme.of(context).highlightColor,
-                      //fontSize: 20,
-                    ),
-                    p: const TextStyle( 
-                      //fontSize: 20,
-                    )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Image(
+                    image: AssetImage("assets/images/dakanji/banner.png"),
+                    height: 64,
                   ),
-                  onTapLink: (text, url, title) {
-                    if(url != null) {
-                      launchUrlString(
-                        Uri.encodeFull(url),
-                        mode: LaunchMode.externalApplication,
-                      );
-                    }
-                  },
-                ),
+                  const SizedBox(width: 64,),
+                  SvgPicture.asset(
+                    "assets/images/daapplab/logo_design_2_transparent.svg",
+                    height: 48,
+                  ),
+                ],
               ),
-              // text with link to open the "complete changelog"-screen
-              Container(
-                padding: const EdgeInsets.fromLTRB(16, 2, 16, 0),
-                child: GestureDetector(
-                  child: Text(
-                    LocaleKeys.AboutScreen_show_changelog.tr(),
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Theme.of(context).highlightColor
-                    ),
+
+              SizedBox(height: 32,),
+              // show the about.md
+              MarkdownBody(
+                data: about,
+                styleSheet: MarkdownStyleSheet(
+                  a: TextStyle( 
+                    color: Theme.of(context).highlightColor,
+                    //fontSize: 20,
                   ),
-                  onTap: () => Navigator.push(
-                    context, 
-                    MaterialPageRoute(builder: (context) => const ChangelogScreen()),
+                  p: const TextStyle( 
+                    //fontSize: 20,
                   )
+                ),
+                onTapLink: (text, url, title) {
+                  if(url != null) {
+                    launchUrlString(
+                      Uri.encodeFull(url),
+                      mode: LaunchMode.externalApplication,
+                    );
+                  }
+                },
+              ),
+              
+              SizedBox(height: 16),
+              // text with link to open the "complete changelog"-screen
+              GestureDetector(
+                child: Text(
+                  LocaleKeys.AboutScreen_show_changelog.tr(),
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Theme.of(context).highlightColor
+                  ),
+                ),
+                onTap: () => Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const ChangelogScreen()),
                 )
               ),
               Padding(

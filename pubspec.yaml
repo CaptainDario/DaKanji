@@ -228,6 +228,8 @@ flutter:
     # DaKanji icons/images...
     - assets/images/dakanji/icon.png
     - assets/images/dakanji/banner.png
+    # Dapplab icons/images
+    - assets/images/daapplab/logo_design_2_transparent.svg
     # draw screen
     - assets/images/ui/kanji_drawing_aid.png
     # dictionary screen
