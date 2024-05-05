@@ -1,6 +1,6 @@
 # DaKanji Beta - changelog
 
-## v3.4.0+99b6 - ワードリストと暗記 (19.04.2024)
+## v3.4.0+100b7 - ワードリストと暗記 (05.05.2024)
 
 * Improvements
   * Word lists:
