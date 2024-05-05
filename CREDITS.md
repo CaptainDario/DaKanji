@@ -48,7 +48,7 @@ The biggest thanks goes to my mom for always being there for me no matter what. 
   * Windows:
     * michalpatryk, pa9eup, Tobias Olms
   * Linux:
-    * Francesco S., [returnrei](https://returnrei.jp)
+    * Francesco S., [returnrei](https://returnrei.jp), BeyondMagic
   * MacOS
     * ゆうか 田村村, [returnrei](https://returnrei.jp)
 * Another huge shout out to all current and past translators:
