@@ -31,6 +31,7 @@ Improvements:
 
 Fixed:
 
+- Dramatically decreased startup time in certain scenarios
 - Dictionary
   - MacOS
     - When typing in Japanese, writing suggestions could not be selected using keyboard
