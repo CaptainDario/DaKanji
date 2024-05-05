@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -74,7 +73,7 @@ class AboutScreen extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(height: 32,),
+              const SizedBox(height: 32,),
               // show the about.md
               MarkdownBody(
                 data: about,
@@ -97,7 +96,7 @@ class AboutScreen extends StatelessWidget {
                 },
               ),
               
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               // text with link to open the "complete changelog"-screen
               GestureDetector(
                 child: Text(
