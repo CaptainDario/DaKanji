@@ -147,7 +147,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
       ),
       examples: Isar.getInstance("examples") ?? Isar.openSync(
         [ExampleSentenceSchema], directory: isarPath,
-        name: "examples", maxSizeMiB: 128
+        name: "examples", maxSizeMiB: 256
       ),
       krad: Isar.getInstance("krad") ?? Isar.openSync(
         [KradSchema], directory: isarPath,
