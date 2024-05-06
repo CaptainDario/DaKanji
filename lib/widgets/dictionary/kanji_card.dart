@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'dart:io';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -434,14 +435,25 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                             );
                           }
                         },
-                        itemBuilder: (context) => List.generate(
+                        itemBuilder: (context) => menuItems.mapIndexed((i, e) {
+
+                          // FIX: #87 skip share as image on Linux
+                          if(i == 2 && Platform.isLinux) return null;
+
+                          return PopupMenuItem(
+                            value: menuItems[i],
+                            child: Text(menuItems[i])
+                          );
+                        }).whereNotNull().toList(),
+                        
+                        /*(context) => List.generate(
                           menuItems.length,
                           (index) => 
                             PopupMenuItem(
                               value: menuItems[index],
                               child: Text(menuItems[index])
                             )
-                        ),
+                        ),*/
                       )
                     ),
                 
