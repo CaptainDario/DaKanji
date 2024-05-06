@@ -142,17 +142,14 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
               padding: const EdgeInsets.all(8.0),
               child: Stack(
                 children: [
-                  Screenshot(
-                    controller: cardScreenShotController,
-                    child: DictionaryWordCard(
-                      widget.entry,
-                      onConjugationTableExpansionChanged: (state) {
-                        conjugationsIsExpanded = state;
-                      },
-                      onGooglSearchExpansionChanged: (state) {
-                        googleImagesIsExpanded = state;
-                      },
-                    ),
+                  DictionaryWordCard(
+                    widget.entry,
+                    onConjugationTableExpansionChanged: (state) {
+                      conjugationsIsExpanded = state;
+                    },
+                    onGooglSearchExpansionChanged: (state) {
+                      googleImagesIsExpanded = state;
+                    },
                   ),
                   // audio play button
                   if(widget.entry!.audio != null)
