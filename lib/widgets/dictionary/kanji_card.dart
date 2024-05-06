@@ -11,6 +11,7 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -71,6 +72,10 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
   TextStyle headerStyle = const TextStyle(color: Colors.grey);
   /// Kanji groups Regex, extracts all tags that are kanji part tags
   RegExp kanjiGroupsRe = RegExp('<g id="kvg:(?!Stroke(Numbers|Paths)).*?>');
+  /// Controller to take an image of this kanji card
+  ScreenshotController sc = ScreenshotController();
+  /// Tab controller for the dictionary tabs
+  TabController? dictionaryTabController;
 
   @override
   void initState() {
@@ -125,10 +130,9 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
     }
   }
 
-  ScreenshotController sc = ScreenshotController();
-
   @override
   Widget build(BuildContext context) {
+
     return Screenshot(
       controller: sc,
       child: Card(
@@ -166,14 +170,26 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                               width: constrains.maxWidth * 0.5,
                               height: constrains.maxWidth * 0.5,
                               child: kanjiVGs.isNotEmpty
-                                ? KanjiVGWidget(
-                                  kanjiVGs.first.svg,
-                                  constrains.maxWidth * 0.5,
-                                  constrains.maxWidth * 0.5,
-                                  GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened,
-                                  GetIt.I<Settings>().dictionary.kanjiAnimationStrokesPerSecond,
-                                  GetIt.I<Settings>().dictionary.resumeAnimationAfterStopSwipe,
-                                  colorize: true,
+                                ? Consumer(
+                                  builder: (context, controller, child) {
+
+                                    int currentIdx = context.select<TabController, int>((TabController c) => c.index);
+                                    int totalTabs = context.select<TabController, int>((TabController c) => c.length);
+                                    bool indexIsChanging = !context.select<TabController, bool>((TabController c) => c.indexIsChanging);
+
+                                    return KanjiVGWidget(
+                                      kanjiVGs.first.svg,
+                                      constrains.maxWidth * 0.5,
+                                      constrains.maxWidth * 0.5,
+                                      ((currentIdx == 1 && totalTabs == 3) ||
+                                        (currentIdx == 0 && totalTabs == 2)) &&
+                                        indexIsChanging &&
+                                        GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened,
+                                      GetIt.I<Settings>().dictionary.kanjiAnimationStrokesPerSecond,
+                                      GetIt.I<Settings>().dictionary.resumeAnimationAfterStopSwipe,
+                                      colorize: true,
+                                    );
+                                  }
                                 )
                                 : Container(
                                   decoration: BoxDecoration(
@@ -386,7 +402,8 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                     alternative.svg,
                                     constrains.maxWidth * 0.4,
                                     constrains.maxWidth * 0.4,
-                                    GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened,
+                                    false,//context.read<TabController>().index == 1 &&
+                                    //  GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened,
                                     GetIt.I<Settings>().dictionary.kanjiAnimationStrokesPerSecond,
                                     GetIt.I<Settings>().dictionary.resumeAnimationAfterStopSwipe,
                                     colorize: true,

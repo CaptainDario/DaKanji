@@ -87,6 +87,7 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
       vsync: this
     );
     colorizedKanjiVG = colorizeKanjiVG(widget.kanjiVGString);
+
   }
 
   @override
@@ -178,6 +179,7 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
                       widget.strokesPerSecond,
                       (AnimationController controller) {
                         kanjiVGAnimationController = controller;
+
                         if(widget.playKanjiAnimationWhenOpened){
                           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                             if(mounted){
@@ -185,7 +187,9 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
                             }
                           },);
                         }
-                      }
+                      },
+                      // rebuild the animation widget when 
+                      key: Key(widget.playKanjiAnimationWhenOpened.toString()),
                     ),
                   ),
                 ),

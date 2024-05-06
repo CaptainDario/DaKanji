@@ -64,6 +64,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   int tabsSideBySide = -1;
   /// Current search in the dictionary
   DictSearch search = DictSearch();
+  /// Tab controller for the dictionary tabs
+  TabController? dictionaryTabController;
 
 
   @override
@@ -96,6 +98,11 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
           
           // calculate how many tabs should be placed side by side
           tabsSideBySide = min(4, (constraints.maxWidth / 600).floor() + 1);
+          int tabs = 4 - (tabsSideBySide == 3 ? 2 : tabsSideBySide);
+
+          if(dictionaryTabController == null || dictionaryTabController!.length != tabs){
+            dictionaryTabController = TabController(length: tabs, vsync: this);
+          }
     
           return Stack(
             children: [
@@ -203,10 +210,10 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       
                         // tab bar
                         if(tabsSideBySide < 4)
-                          DefaultTabController(
-                            length: 4 - (tabsSideBySide == 3 ? 2 : tabsSideBySide),
-                            // set a duration to start the kanji animation after the transition
-                            animationDuration: const Duration(milliseconds: 200),
+                          /// provide the tab bar controller so that other widgets
+                          /// can listen to its state (ex. Kanji animation)
+                          ListenableProvider.value(
+                            value: dictionaryTabController,
                             child: Expanded(
                               child: Column(
                                 children: [
@@ -214,6 +221,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                   IgnorePointer(
                                     ignoring: context.read<DictSearch>().selectedResult == null,
                                     child: TabBar(
+                                      controller: dictionaryTabController,
                                       labelColor: Theme.of(context).highlightColor,
                                       unselectedLabelColor: Colors.grey,
                                       indicatorColor: Theme.of(context).highlightColor,
@@ -253,6 +261,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                             GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
                                         },
                                         bottom: TabBarView(
+                                          controller: dictionaryTabController,
                                           children: [
                                             if(tabsSideBySide < 2)
                                               DictionaryWordTab(
