@@ -23,7 +23,7 @@ class Version implements Comparable<Version>{
   @JsonKey(defaultValue: 0)
   int? build = 0;
   /// The full version (includes build) as string
-  String get fullVersionString => "$major.$minor.$patch${build != null ? "+$build" : ""}";
+  String get fullVersionString => "$major.$minor.$patch${build != null ? "+$build" : "+0"}";
   /// The full version (includes build) as tuple
   Tuple4<int, int, int, int?> get fullVersionTuple => Tuple4(major, minor, patch, build);
   /// The full version as string
