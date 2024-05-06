@@ -170,7 +170,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                   kanjiVGs.first.svg,
                                   constrains.maxWidth * 0.5,
                                   constrains.maxWidth * 0.5,
-                                  false,//GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened,
+                                  GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened,
                                   GetIt.I<Settings>().dictionary.kanjiAnimationStrokesPerSecond,
                                   GetIt.I<Settings>().dictionary.resumeAnimationAfterStopSwipe,
                                   colorize: true,
