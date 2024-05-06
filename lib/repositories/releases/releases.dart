@@ -17,13 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> updateAvailable() async {
 
   try {
-    Dio().get(
-      g_GithubReleasesApi,
-      options: Options(
-        sendTimeout: const Duration(milliseconds: 500),
-        receiveTimeout: const Duration(milliseconds: 500)
-      )
-    ).then((response) async {
+    Dio().get(g_GithubReleasesApi).then((response) async {
       List<Version> versions = (List<String?>.from(
       // extract tag name (version)
       response.data.map((e) => e["tag_name"])))
