@@ -179,7 +179,9 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
                         kanjiVGAnimationController = controller;
                         if(widget.playKanjiAnimationWhenOpened){
                           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                            startDrawingAnimation(startFrom: 0, reverseSwitch: true);
+                            if(mounted){
+                              startDrawingAnimation(startFrom: 0, reverseSwitch: true);
+                            }
                           },);
                         }
                       }
