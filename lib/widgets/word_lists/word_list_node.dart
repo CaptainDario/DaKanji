@@ -516,15 +516,17 @@ class _WordListNodeState extends State<WordListNode> {
     String? path = await FilePicker.platform.getDirectoryPath();
     if(path == null) return;
 
-    // show loadign indicator
+    // show loading indicator
     loadingPopup(
       // ignore: use_build_context_synchronously
       context,
       waitingInfo: Text(LocaleKeys.WordListsScreen_export_images_progress.tr())
     ).show();
 
-    // create csv
-    List<File> files = await imagesFromWordListNode(widget.node);
+    // create images
+    List<File> files = await imagesFromWordListNode(widget.node,
+      // ignore: use_build_context_synchronously
+      Theme.of(context));
     
     // close loading indicator
     // ignore: use_build_context_synchronously

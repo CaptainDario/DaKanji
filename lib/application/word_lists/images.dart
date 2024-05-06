@@ -3,6 +3,7 @@ import 'dart:io';
 
 // Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
@@ -15,7 +16,8 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 
 /// Renders each word list entry to an image and stores it in the temp directory
 /// returns a List with all the [File]s created
-Future<List<File>> imagesFromWordListNode(TreeNode<WordListsData> node) async {
+Future<List<File>> imagesFromWordListNode(
+  TreeNode<WordListsData> node, ThemeData theme) async {
 
   List<File> images = [];
 
@@ -34,7 +36,7 @@ Future<List<File>> imagesFromWordListNode(TreeNode<WordListsData> node) async {
       await dictionaryWordCardToImage(
         entry,
         "${i}_${entry.kanjis.isNotEmpty ? entry.kanjis[0] : entry.readings[0]}.png",
-        false)
+        false, theme)
     );
 
   }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 // Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -15,12 +16,13 @@ import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card_screensh
 Future<File> dictionaryWordCardToImage(
   JMdict entry,
   String fileName,
-  bool includeConjugation) async {
+  bool includeConjugation,
+  ThemeData theme) async {
 
   late File f;
 
   await ScreenshotController().captureFromLongWidget(
-    DictionaryWordCardScreenshot(entry, includeConjugation),
+    DictionaryWordCardScreenshot(entry, includeConjugation, theme),
     delay: const Duration(milliseconds: 50),
     pixelRatio: 3
   ).then((value) async {

@@ -281,7 +281,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     File f = await dictionaryWordCardToImage(
       widget.entry!,
       "${readingOrKanji}_${conjugationsIsExpanded ? "_conj" : ""}.png",
-      conjugationsIsExpanded);
+      conjugationsIsExpanded, Theme.of(context));
 
     await Share.shareXFiles(
       [XFile(f.path)],
