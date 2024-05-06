@@ -364,7 +364,6 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       if(kanjiVGs.isNotEmpty && (kanjiGroupsRe.allMatches(kanjiVGs.first.svg)).length > 1)
                         ExpansionTile(
                           title: Text(LocaleKeys.DictionaryScreen_kanji_groups.tr()),
-                          initiallyExpanded: true,
                           children:
                           [
                             KanjiGroupWidget(
@@ -377,7 +376,6 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       if(kanjiVGs.length > 1)
                         ExpansionTile(
                           title: Text(LocaleKeys.DictionaryScreen_kanji_alternatives.tr()),
-                          initiallyExpanded: true,
                           children: [
                             Wrap(
                               children: kanjiVGs.sublist(1).map((alternative) => 
