@@ -173,18 +173,22 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                 ? Consumer(
                                   builder: (context, controller, child) {
 
-                                    int currentIdx = context.select<TabController, int>((TabController c) => c.index);
-                                    int totalTabs = context.select<TabController, int>((TabController c) => c.length);
-                                    bool indexIsChanging = !context.select<TabController, bool>((TabController c) => c.indexIsChanging);
+                                    int? currentIdx = context.select<TabController?, int?>((TabController? c) => c?.index);
+                                    int? totalTabs = context.select<TabController?, int?>((TabController? c) => c?.length);
+                                    bool? indexIsChanging = context.select<TabController?, bool?>((TabController? c) => c?.indexIsChanging);
 
                                     return KanjiVGWidget(
                                       kanjiVGs.first.svg,
                                       constrains.maxWidth * 0.5,
                                       constrains.maxWidth * 0.5,
-                                      ((currentIdx == 1 && totalTabs == 3) ||
+                                      // if a [TabController] is provided above this widget,
+                                      // play the animation after the tab animation has finished
+                                      // if none is found, plya the animation immediately
+                                      (((currentIdx == 1 && totalTabs == 3) ||
                                         (currentIdx == 0 && totalTabs == 2)) &&
-                                        indexIsChanging &&
-                                        GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened,
+                                        indexIsChanging == false &&
+                                        GetIt.I<Settings>().dictionary.playKanjiAnimationWhenOpened) ||
+                                        indexIsChanging == null,
                                       GetIt.I<Settings>().dictionary.kanjiAnimationStrokesPerSecond,
                                       GetIt.I<Settings>().dictionary.resumeAnimationAfterStopSwipe,
                                       colorize: true,
