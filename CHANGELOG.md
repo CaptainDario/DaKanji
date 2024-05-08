@@ -7,7 +7,7 @@ New Features:
 
 - Anki integration: Send words and word lists to Anki
 - Dictionary
-  - Share images of entry cards
+  - Share images of entry and kanji cards
   - Image search query customizable
   - Characters from drawing are now added at the cursor's position
 - Word Lists
@@ -28,10 +28,11 @@ Improvements:
     - Advanced
       - Optimize neural networks UI
 - Onboarding animations
+- The folder where DaKanji stores necessary data has been moved to a location that a user usually does not use [#85](https://github.com/CaptainDario/DaKanji/issues/85)
+- Dramatically decreased startup time in certain scenarios
 
 Fixed:
 
-- Dramatically decreased startup time in certain scenarios
 - Dictionary
   - MacOS
     - When typing in Japanese, writing suggestions could not be selected using keyboard
