@@ -12,9 +12,9 @@ class SettingsAutoSizeText extends StatefulWidget {
     {
       required this.text,
       this.maxLines,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   final String text;
 

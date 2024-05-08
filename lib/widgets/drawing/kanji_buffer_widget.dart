@@ -28,8 +28,8 @@ class KanjiBufferWidget extends StatefulWidget {
     this.canvasSize, 
     this.canvasSizePercentageToUse, 
     {
-      Key? key
-    }) : super(key: key);
+      super.key
+    });
 
   @override
   State<KanjiBufferWidget> createState() => _KanjiBufferWidgetState();
@@ -219,6 +219,9 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                         TextSpan(
                           children: [
                             TextSpan(
+                              text: GetIt.I<DrawScreenState>().drawingLookup.charPrefix
+                            ),
+                            TextSpan(
                               text: noChars > 0 ?
                                 GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.substring(
                                   0, noChars-1
@@ -231,6 +234,9 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                               style: TextStyle(
                                 fontSize: _scaleInNewCharAnimation.value * 100
                               )
+                            ),
+                            TextSpan(
+                              text: GetIt.I<DrawScreenState>().drawingLookup.charPostfix
                             ),
                           ],
                         ),
@@ -290,16 +296,18 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
 
   void doubleTap(){
     // start the delete animation if there are characters in the buffer
-    if(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.isNotEmpty){
+    //if(GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.isNotEmpty){
       _rotationXController.forward(from: 0.0);
 
       //delete the characters after the animation
       Future.delayed(Duration(milliseconds: (_rotationXDuration/4).round()), (){
         setState(() {
-            GetIt.I<DrawScreenState>().kanjiBuffer.clearKanjiBuffer();           
+          GetIt.I<DrawScreenState>().kanjiBuffer.clearKanjiBuffer();
+          GetIt.I<DrawScreenState>().drawingLookup.charPrefix = "";
+          GetIt.I<DrawScreenState>().drawingLookup.charPostfix = "";
         });
       });
-    }
+    //}
   }
 
   void tap(){

@@ -112,8 +112,8 @@ void openDictionary(BuildContext context, String char) async {
           if(cra != null && cra) {
             await intent.launch();
           } else{
-            // ignore: use_build_context_synchronously
             showDownloadDialogue(
+              // ignore: use_build_context_synchronously
               context,
               "No translator installed", 
               LocaleKeys.General_download.tr(),

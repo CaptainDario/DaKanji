@@ -1,6 +1,58 @@
 
 # DaKanji - changelog
 
+## v3.4.0 - ワードリストと暗記 (9.5.2024)
+
+New Features:
+
+- Anki integration: Send words and word lists to Anki
+- Dictionary
+  - Share images of entry and kanji cards
+  - Image search query customizable
+  - Characters from drawing are now added at the cursor's position
+- Word Lists
+  - Sort lists in folders
+  - Search in lists
+  - Lists for JLPT
+  - Export: PDF, CSV Images
+  - Screen saver
+- Kana Table
+  - Added kana origins
+
+Improvements:
+
+- Dictionary
+  - Fancy slide-in of search results
+- Settings
+  - Misc
+    - Advanced
+      - Optimize neural networks UI
+- Onboarding animations
+- The folder where DaKanji stores necessary data has been moved to a location that a user usually does not use [#85](https://github.com/CaptainDario/DaKanji/issues/85)
+- Dramatically decreased startup time in certain scenarios
+
+Fixed:
+
+- Dictionary
+  - MacOS
+    - When typing in Japanese, writing suggestions could not be selected using keyboard
+- Kana table
+  - Kana cut off on some aspect ratios
+- Drawing
+  - #73 Kanji search bar is not cleared
+- Settings
+  - Misc
+    - Advanced
+      - Optimize neural networks
+- Deep Links:
+  - Android https:// links
+
+Removed:
+
+- Search result navigation with arrow keys
+
+-------------------------------------------------------------------------
+
 ## v3.3.3 - 仮名 (21.12.2023)
 
 New Features:

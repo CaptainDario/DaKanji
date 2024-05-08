@@ -1,6 +1,7 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:math';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -55,7 +56,6 @@ class _ManualScreenState extends State<ManualScreen>
               // 
               if(constraints.maxHeight > constraints.maxWidth){
                 manualButtonSize = min((constraints.maxWidth-24)/2, 200);
-                print("height > w");
               }
               else{
                 manualButtonSize = min((constraints.maxWidth-24)/4, 200);

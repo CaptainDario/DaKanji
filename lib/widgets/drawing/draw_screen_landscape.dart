@@ -20,7 +20,7 @@ class DrawScreenLandscape extends StatelessWidget {
     this.undoButton,
     this.clearButton,
     this.canvasSize,
-    {Key? key}) : super(key: key);
+    {super.key});
 
   @override
   Widget build(BuildContext context) {

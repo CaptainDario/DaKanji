@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +16,7 @@ import 'package:mecab_dart/mecab_dart.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
@@ -41,12 +41,15 @@ import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/platform_dependent_variables.dart';
 import 'package:da_kanji_mobile/entities/releases/version.dart';
-import 'package:da_kanji_mobile/entities/search_history/search_history.dart';
+import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 
 /// Initializes the app, by initializing all the providers, services, etc.
 Future<bool> init() async {
@@ -101,10 +104,6 @@ Future<void> initServices() async {
   GetIt.I.registerSingleton<UserData>(uD);
   await GetIt.I<UserData>().init();
 
-  WordLists wL = WordLists();
-  wL.load();
-  GetIt.I.registerSingleton<WordLists>(wL);
-
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();
   await GetIt.I<Settings>().save();
@@ -121,6 +120,7 @@ Future<void> initServices() async {
   GetIt.I.registerSingleton<DrawerListener>(DrawerListener());
 
   GetIt.I.registerSingleton<Anki>(Anki(GetIt.I<Settings>().anki));
+  await GetIt.I<Anki>().init();
 
   GetIt.I.registerSingleton<Stats>(Stats(uD)..init());
 
@@ -136,37 +136,44 @@ Future<void> initDocumentsServices(BuildContext context) async {
   await initDocumentsAssets(context);
 
   // ISAR / database services
-  String documentsDir = g_DakanjiPathManager.documentsDirectory.path;
+  String documentsDir = g_DakanjiPathManager.supportDirectory.path;
   String isarPath = g_DakanjiPathManager.dictionaryDirectory.path;
   String dojgIsarPath = g_DakanjiPathManager.dojgDirectory.path;
   GetIt.I.registerSingleton<Isars>(
     Isars(
       dictionary: Isar.getInstance("dictionary") ?? Isar.openSync(
         [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
-        directory: isarPath, name: "dictionary", maxSizeMiB: 512
+        directory: isarPath, name: "dictionary", maxSizeMiB: 384
       ),
       examples: Isar.getInstance("examples") ?? Isar.openSync(
         [ExampleSentenceSchema], directory: isarPath,
-        name: "examples", maxSizeMiB: 512
-      ),
-      searchHistory: Isar.getInstance("searchHistory") ?? Isar.openSync(
-        [SearchHistorySchema], directory: isarPath,
-        name: "searchHistory", maxSizeMiB: 512
+        name: "examples", maxSizeMiB: 256
       ),
       krad: Isar.getInstance("krad") ?? Isar.openSync(
         [KradSchema], directory: isarPath,
-        name: "krad", maxSizeMiB: 512
+        name: "krad", maxSizeMiB: 1
       ),
       radk: Isar.getInstance("radk") ?? Isar.openSync(
         [RadkSchema], directory: isarPath,
-        name: "radk", maxSizeMiB: 512
+        name: "radk", maxSizeMiB: 1
       ),
       dojg: GetIt.I<UserData>().dojgImported && Directory(dojgIsarPath).existsSync()
         ? Isar.getInstance("dojg") ?? Isar.openSync(
-          [DojgEntrySchema], directory: dojgIsarPath, name: "dojg"
+          [DojgEntrySchema], directory: dojgIsarPath,
+          name: "dojg", maxSizeMiB: 16
         )
         : null
     )
+  );
+
+  // word lists SQL
+  final wordListsSQL = WordListsSQLDatabase(g_DakanjiPathManager.wordListsSqlFile);
+  await wordListsSQL.init();
+  GetIt.I.registerSingleton<WordListsSQLDatabase>(wordListsSQL);
+
+  // search history SQL
+  GetIt.I.registerSingleton<SearchHistorySQLDatabase>(
+    SearchHistorySQLDatabase(g_DakanjiPathManager.searchHistorySqlFile)
   );
 
   GetIt.I.registerSingleton<DictionarySearch>(
@@ -202,7 +209,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
 /// from GitHub. The context is used for showing a popup 
 Future<void> initDocumentsAssets(BuildContext context) async {
 
-  String documentsDir = g_DakanjiPathManager.dakanjiDocumentsDirectory.path;
+  String documentsDir = g_DakanjiPathManager.dakanjiSupportDirectory.path;
   debugPrint("documents directory: ${documentsDir.toString()}");
 
   // copy assets from assets to documents directory, or download them from GH
@@ -266,19 +273,27 @@ void desktopWindowSetup() {
 /// This is done by loading the model and running a dummy input through it.
 /// The results are stored in UserData, so that this function does only need to
 /// be called only once.
-Future<void> optimizeTFLiteBackendsForModels() async {
+Future<List<Tuple2<String, List<MapEntry<InferenceBackend, double>>>>> optimizeTFLiteBackendsForModels() async {
+
+  List<Tuple2<String, List<MapEntry<InferenceBackend, double>>>> allTestResults = [];
 
   debugPrint("Optimizing TFLite backends for models...");
 
   // find the best backend for the drawing ml
   DrawingInterpreter d = DrawingInterpreter();
   await d.init();
-  GetIt.I<UserData>().drawingBackend =  await d.getBestBackend();
+  final results = await d.getBestBackend();
+  GetIt.I<UserData>().drawingBackend = results.item1;
+  allTestResults.add(Tuple2(LocaleKeys.DrawScreen_title.tr(), results.item2));
   d.free();
+
+  // other
 
   debugPrint("Finished optimizing TFLite backends for models...");
   
   await GetIt.I<UserData>().save();
+
+  return allTestResults;
 
 }
 

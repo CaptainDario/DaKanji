@@ -17,10 +17,16 @@ import 'package:da_kanji_mobile/entities/settings/settings_kana_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_kanji_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_misc.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_text.dart';
+import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
 
 /// Class to store all settings of DaKanji
+/// 
+/// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outputs`
 class Settings with ChangeNotifier {
 
+  /// This settings object is a temporary instance and therefore calls to 
+  /// `save` should do nothing
+  bool isTemp;
   /// All settings related to the drawing part of the app
   late SettingsDrawing _drawing;
   /// All miscellaneous settings of the app
@@ -37,11 +43,15 @@ class Settings with ChangeNotifier {
   late SettingsKanjiTable _kanjiTable;
   /// All settings related to the kana table screen
   late SettingsKanaTable _kanaTable;
+  /// All settings related to word lists
+  late SettingsWordLists _wordLists;
   /// All settings realted to the clipboard screen
   late SettingsClipboard _clipboard;
 
 
-  Settings(){
+  Settings({
+    this.isTemp = false,
+  }){
     _drawing    = SettingsDrawing();
     _misc       = SettingsMisc(); 
     _advanced   = SettingsAdvanced();
@@ -50,6 +60,7 @@ class Settings with ChangeNotifier {
     _anki       = SettingsAnki();
     _kanjiTable = SettingsKanjiTable();
     _kanaTable  = SettingsKanaTable();
+    _wordLists  = SettingsWordLists();
     _clipboard  = SettingsClipboard();
   }
 
@@ -86,12 +97,20 @@ class Settings with ChangeNotifier {
     return _kanaTable;
   }
 
+  SettingsWordLists get wordLists {
+    return _wordLists;
+  }
+
   SettingsClipboard get clipboard{
     return _clipboard;
   }
 
   /// Saves all settings to the SharedPreferences.
   Future<void> save() async {
+    
+    // if this is a temporary settings object, skip saving
+    if(isTemp) return;
+
     // obtain shared preferences
     final prefs = await SharedPreferences.getInstance();
 
@@ -104,6 +123,7 @@ class Settings with ChangeNotifier {
     prefs.setString('settingsAnki', json.encode(anki.toJson()));
     prefs.setString('settingsKanjiTable', json.encode(kanjiTable.toJson()));
     prefs.setString('settingsKanaTable', json.encode(kanaTable.toJson()));
+    prefs.setString('settingsWordLists', json.encode(wordLists.toJson()));
     prefs.setString('settingsClipboard', json.encode(clipboard.toJson()));
   }
 
@@ -198,6 +218,17 @@ class Settings with ChangeNotifier {
       _kanaTable = SettingsKanaTable();
     }
     _kanaTable.addListener(() => notifyListeners());
+
+    // WORD LISTS SETTINGS
+    try{
+      String tmp = prefs.getString('settingsWordLists') ?? "";
+      if(tmp != "") {_wordLists = SettingsWordLists.fromJson(json.decode(tmp));}
+      else {_wordLists = SettingsWordLists();}
+    }
+    catch (e) {
+      _wordLists = SettingsWordLists();
+    }
+    _wordLists.addListener(() => notifyListeners());
 
     // CLIPBOARD SETTINGS
     try{

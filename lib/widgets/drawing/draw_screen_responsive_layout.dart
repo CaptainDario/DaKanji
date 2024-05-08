@@ -35,7 +35,7 @@ class DrawScreenResponsiveLayout extends StatelessWidget {
     this.canvasSize,
     this.layout,
     this.webView,
-    {Key? key}) : super(key: key);
+    {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -66,9 +66,11 @@ class _AnalysisOptionButtonState extends State<AnalysisOptionButton> {
                 !widget.on ?
                   widget.svgAssetPattern!.replaceAll("*", "off") :
                   widget.svgAssetPattern!.replaceAll("*", "on"),
-                color: Theme.of(context).brightness == Brightness.light
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).brightness == Brightness.light
                     ? Colors.black
                     : Colors.white,
+                  BlendMode.srcIn)
               )
               : Icon(
                 !widget.on ? widget.onIcon! : widget.offIcon!

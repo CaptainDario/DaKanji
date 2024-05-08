@@ -10,13 +10,12 @@ class ResponsiveCheckBoxTile extends StatefulWidget {
       required this.text,
       required this.value,
       this.leadingIcon,
-      this.infoText,
       this.autoSizeGroup,
       this.onTileTapped,
       this.onLeadingIconPressed,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   /// leading text
   final String text;
@@ -24,9 +23,6 @@ class ResponsiveCheckBoxTile extends StatefulWidget {
   final bool value;
   /// the icon for the button to press
   final IconData? leadingIcon;
-  /// when set to a value shows a leading info icon and when the user presses
-  /// this icon a info dialog will open
-  final String? infoText;
   /// The autoSizeGroup to use for the text
   final AutoSizeGroup? autoSizeGroup;
   /// callback which will be executed by in every tap

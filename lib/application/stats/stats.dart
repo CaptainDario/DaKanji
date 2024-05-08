@@ -4,11 +4,24 @@
 // Dart imports:
 import 'dart:async';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
 // Package imports:
+import 'package:get_it/get_it.dart';
+import 'package:screen_retriever/screen_retriever.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart'; 
+import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
+
+// Package imports:
+
+
+
 
 /// Tracking of statistics and communication with the local SQL Stas DB
 /// Also tracks daily and monthly usage
@@ -30,8 +43,15 @@ class Stats{
   final int updateStatsTimerInterval = 1;
   /// Timer that periodially saves the stats to disk
   late Timer saveStatsTimer;
-  /// After how many seconds should the stats be updated (does NOT save)
+  /// After how many seconds should the stats be saved to disk
   final int saveStatsTimerInterval = 60;
+  /// The position of the cursor last tick (updates every
+  /// `updateStatsTimerInterval` seconds)
+  Offset lastCursorPosition = Offset.zero;
+  /// Timer that starts when the cursor didnt move for one tick (see
+  /// `lastCursorPosition`). When the timer finishes, starts a screensaver
+  Timer? screenSaverTimer;
+
 
   /// Before using this `init()` needs to be called
   Stats(
@@ -45,6 +65,24 @@ class Stats{
       Duration(seconds: updateStatsTimerInterval), (timer) async {
         if(appActive){
           await updateStats();
+        }
+
+        // on desktop keep track if the cursor moves and if not
+        // show a screensaver after the user defined amount of time
+        if(g_desktopPlatform && GetIt.I<Settings>().wordLists.autoStartScreensaver){
+          Offset pos = await screenRetriever.getCursorScreenPoint();
+          if(lastCursorPosition != pos){
+            lastCursorPosition = pos;
+            screenSaverTimer?.cancel();
+            screenSaverTimer = null;
+          }
+          else {
+            screenSaverTimer ??= Timer(
+              Duration(seconds: GetIt.I<Settings>().wordLists.screenSaverSecondsToStart),
+              () async =>
+                startScreensaver(GetIt.I<Settings>().wordLists.screenSaverWordLists)
+            );
+          }
         }
       }
     );
@@ -93,7 +131,7 @@ class Stats{
 
       await logDefaultEvent("Monthly active user");
       userData.monthlyActiveUserTracked = true;
-      userData.save();
+      await userData.save();
     }
   }
 
@@ -109,7 +147,7 @@ class Stats{
 
       await logDefaultEvent("Daily active user");
       userData.dailyActiveUserTracked = true;
-      userData.save();
+      await userData.save();
     }
   }
 

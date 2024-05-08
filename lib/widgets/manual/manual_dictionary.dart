@@ -37,7 +37,7 @@ class ManualDictionary extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Search results
-            ExpansionTile(
+            /*ExpansionTile(
               title: Text(LocaleKeys.ManualScreen_dict_search_results_title.tr(), style: heading_1,),
               children: [
                 const SizedBox(height: 15),
@@ -51,7 +51,7 @@ class ManualDictionary extends StatelessWidget {
 
                 const SizedBox(height: 15),
               ],
-            ),
+            ),*/
     
             // Search history
             ExpansionTile(

@@ -17,7 +17,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 /// Shows the complete CHANGELOG.md 
 class ChangelogScreen extends StatelessWidget {
 
-  const ChangelogScreen({Key? key}) : super(key: key);
+  const ChangelogScreen({super.key});
   
   @override
   Widget build(BuildContext context) {

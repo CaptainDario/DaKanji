@@ -24,8 +24,8 @@ class KanjiGroupWidget extends StatefulWidget {
     this.kanjiVG,
     this.width,
     this.height,
-    {Key? key}
-  ) : super(key: key);
+    {super.key}
+  );
 
   @override
   State<KanjiGroupWidget> createState() => _KanjiGroupWidgetState();

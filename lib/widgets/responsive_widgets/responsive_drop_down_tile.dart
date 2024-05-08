@@ -10,20 +10,6 @@ import 'package:da_kanji_mobile/globals.dart';
 
 /// A widget that shows a responsive drop down menu
 class ResponsiveDropDownTile extends StatefulWidget {
-  const ResponsiveDropDownTile(
-    {
-      required this.text,
-      required this.value,
-      required this.items,
-      this.translateItemTexts  = false,
-      this.leadingButtonIcon,
-      this.leadingButtonPressed,
-      this.onTap,
-      this.onChanged,
-      this.autoSizeGroup,
-      Key? key
-    }
-  ) : super(key: key);
 
   /// the description of this settings
   final String text;
@@ -43,8 +29,25 @@ class ResponsiveDropDownTile extends StatefulWidget {
   final Function (String? value)? onChanged;
   /// The autoSizeGroup for this Tile
   final AutoSizeGroup? autoSizeGroup;
+  /// max lines of the dropdown
+  final int dropDownMaxLines;
 
 
+  const ResponsiveDropDownTile(
+    {
+      required this.text,
+      required this.value,
+      required this.items,
+      this.translateItemTexts  = false,
+      this.leadingButtonIcon,
+      this.leadingButtonPressed,
+      this.onTap,
+      this.onChanged,
+      this.autoSizeGroup,
+      this.dropDownMaxLines=0,
+      super.key
+    }
+  );
 
   @override
   State<ResponsiveDropDownTile> createState() => _ResponsiveDropDownTileState();
@@ -101,11 +104,10 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                       width: MediaQuery.of(context).size.width*0.35,
                       child: AutoSizeText(
                         widget.translateItemTexts ? text.tr() : text, 
-                        maxLines: 2,
+                        maxLines: 3,
                         minFontSize: g_MinFontSize,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
-                        group: g_SettingsAutoSizeGroup,
                       ),
                     ),
                   );

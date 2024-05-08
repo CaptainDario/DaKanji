@@ -15,6 +15,7 @@ import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
+import 'package:da_kanji_mobile/application/helper/feedback.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/entities/feedback_localization.dart';
 import 'package:da_kanji_mobile/env.dart';
@@ -55,8 +56,10 @@ Future<void> main() async {
                   saveLocale: true,
                   startLocale: Platform.isLinux ? const Locale("en") : null,
                   child: BetterFeedback(
+                    feedbackBuilder: simpleFeedbackBuilder,
                     theme: FeedbackThemeData(
-                      sheetIsDraggable: true
+                      sheetIsDraggable: true,
+                      dragHandleColor: Colors.grey
                     ),
                     localizationsDelegates: [
                       CustomFeedbackLocalizationsDelegate(),

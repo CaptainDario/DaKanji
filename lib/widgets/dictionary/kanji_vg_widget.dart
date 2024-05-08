@@ -46,9 +46,9 @@ class KanjiVGWidget extends StatefulWidget {
     {
       this.borderAround = true,
       this.colorize = false,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   @override
   State<KanjiVGWidget> createState() => _KanjiVGWidgetState();
@@ -62,7 +62,7 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
   AnimationController? kanjiVGAnimationController;
   /// [AnimationController] that handles switching between the animation and
   /// the colored result 
-  late AnimationController switchAnimation;
+  AnimationController? switchAnimation;
 
 
   @override
@@ -79,7 +79,7 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
 
   /// Initializes the variales of this widget
   void init(){
-    switchAnimation = AnimationController(
+    switchAnimation ??= AnimationController(
       value: widget.playKanjiAnimationWhenOpened 
         ? 0.0
         : 1.0,
@@ -87,11 +87,12 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
       vsync: this
     );
     colorizedKanjiVG = colorizeKanjiVG(widget.kanjiVGString);
+
   }
 
   @override
   void dispose() {
-    switchAnimation.dispose();
+    switchAnimation?.dispose();
     super.dispose();
   }
 
@@ -106,20 +107,22 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
         }
         // continue animation if it is stopped somwhere
         else if(!kanjiVGAnimationController!.isCompleted){
-          switchAnimation.reverse();
+          switchAnimation?.reverse();
           startDrawingAnimation();
         }
         // restart animation if stopped at the end
         else if(kanjiVGAnimationController!.isCompleted){
-          switchAnimation.reverse();
-          startDrawingAnimation(reverseSwitch: true, startFrom: 0);
+          kanjiVGAnimationController!.value = 0;
+          switchAnimation?.reverse().then((value) {
+            startDrawingAnimation(reverseSwitch: true, startFrom: 0);
+          }); 
         }
       },
       behavior: HitTestBehavior.translucent,
       onHorizontalDragStart: (details) {
         if(kanjiVGAnimationController == null) return;
 
-        switchAnimation.reverse();
+        switchAnimation?.reverse();
       },
       onHorizontalDragUpdate: (details) {
         if(kanjiVGAnimationController == null) {
@@ -127,8 +130,8 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
         }
 
         double progress = clampDouble(details.localPosition.dx / widget.width, 0, 0.99999);
-        if(progress == 0.99999 || switchAnimation.value != 0){
-          switchAnimation.value = clampDouble(((details.localPosition.dx / widget.width)-1)*4, 0, 1);
+        if(progress == 0.99999 || switchAnimation?.value != 0){
+          switchAnimation?.value = clampDouble(((details.localPosition.dx / widget.width)-1)*4, 0, 1);
         }
 
         setState(() {
@@ -149,7 +152,7 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
           )
           : null,
         child: AnimatedBuilder(
-          animation: switchAnimation,
+          animation: switchAnimation!,
           child: SvgPicture.string(
               widget.colorize ? colorizedKanjiVG : widget.kanjiVGString
             ),
@@ -161,7 +164,7 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
                   height: min(widget.height, widget.width),
                   width: min(widget.height, widget.width),
                   child: Opacity(
-                    opacity: switchAnimation.value,
+                    opacity: switchAnimation!.value,
                     child: child
                   ),
                 ),
@@ -170,16 +173,23 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
                   height: min(widget.height, widget.width),
                   width: min(widget.height, widget.width),
                   child: Opacity(
-                    opacity: 1 - switchAnimation.value,
+                    opacity: 1 - switchAnimation!.value,
                     child: AnimatedKanji(
                       colorizedKanjiVG,
                       widget.strokesPerSecond,
                       (AnimationController controller) {
                         kanjiVGAnimationController = controller;
+
                         if(widget.playKanjiAnimationWhenOpened){
-                          startDrawingAnimation(startFrom: 0, reverseSwitch: true);
+                          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                            if(mounted){
+                              startDrawingAnimation(startFrom: 0, reverseSwitch: true);
+                            }
+                          },);
                         }
-                      }
+                      },
+                      // rebuild the animation widget when 
+                      key: Key(widget.playKanjiAnimationWhenOpened.toString()),
                     ),
                   ),
                 ),
@@ -194,11 +204,11 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
   void startDrawingAnimation({double? startFrom, bool reverseSwitch = false}) {
 
     if(reverseSwitch) {
-      switchAnimation.reverse();
+      switchAnimation?.reverse();
     }
     kanjiVGAnimationController!.forward(from: startFrom)
       .then((value) {
-        switchAnimation.forward();
+        switchAnimation?.forward();
         setState(() {});
       });
 

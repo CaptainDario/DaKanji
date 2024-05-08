@@ -42,8 +42,8 @@ class TextAnalysisPopup extends StatefulWidget {
       this.onMovedViaHeader,
       this.onResizedViaCorner,
       this.onInitialized,
-      Key? key
-    }) : super(key: key);
+      super.key
+    });
   
 
   @override
@@ -201,7 +201,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                 },
                 child: SvgPicture.asset(
                   "assets/icons/corner_resize.svg",
-                  color: Colors.grey,
+                  colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn)
                 ),
               ),
             ),

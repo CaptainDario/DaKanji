@@ -1,18 +1,32 @@
+// Dart imports:
+import 'dart:io';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
+import 'package:path/path.dart' as p;
 
 // Project imports:
+import 'package:da_kanji_mobile/application/app/restart.dart';
+import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
+import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
+import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
+import 'package:da_kanji_mobile/widgets/word_lists/word_lists_selection_dialog.dart';
 
 class WordListSettings extends StatefulWidget {
     
@@ -31,6 +45,7 @@ class WordListSettings extends StatefulWidget {
 }
 
 class _WordListSettingsState extends State<WordListSettings> {
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
@@ -38,6 +53,163 @@ class _WordListSettingsState extends State<WordListSettings> {
       Icons.list,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
+        // show word frequency in search results / dictionary
+        ShowWordFrequencySetting(
+          widget.settings.wordLists.showWordFruequency,
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.wordLists.showWordFruequency = value;
+              widget.settings.save();
+            });
+          },
+        ),
+        // which langauges should be included
+        ExportLanguagesIncludeChips(
+          text: LocaleKeys.SettingsScreen_word_lists_languages_to_include_in_export.tr(),
+          includedLanguages: widget.settings.wordLists.includedLanguages,
+          selectedTranslationLanguages: widget.settings.dictionary.selectedTranslationLanguages,
+          settings: widget.settings,
+          setIncludeLanguagesItem: widget.settings.wordLists.setIncludeLanguagesItem,
+        ),
+        // how many different translations from entries should be included
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_word_lists_pdf_max_meanings_per_vocabulary.tr(),
+          value: widget.settings.wordLists.pdfMaxMeaningsPerVocabulary.toDouble(),
+          min: 1,
+          max: 50,
+          divisions: 50,
+          showLabelAsInt: true,
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+          
+          onChanged: (value) {
+            setState(() {
+              widget.settings.wordLists.pdfMaxMeaningsPerVocabulary = value.toInt();
+              widget.settings.save();
+            });
+          },
+        ),
+        // 
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_word_lists_pdf_max_words_per_meaning.tr(),
+          value: widget.settings.wordLists.pdfMaxWordsPerMeaning.toDouble(),
+          min: 1,
+          max: 50,
+          divisions: 50,
+          showLabelAsInt: true,
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+
+          onChanged: (value) {
+            setState(() {
+              widget.settings.wordLists.pdfMaxWordsPerMeaning = value.toInt();
+              widget.settings.save();
+            });
+          },
+        ),
+        // PDF translations
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_word_lists_pdf_max_lines_per_meaning.tr(),
+          value: widget.settings.wordLists.pdfMaxLinesPerMeaning.toDouble(),
+          min: 1,
+          max: 50,
+          divisions: 50,
+          showLabelAsInt: true,
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+
+          onChanged: (value) {
+            setState(() {
+              widget.settings.wordLists.pdfMaxLinesPerMeaning = value.toInt();
+              widget.settings.save();
+            });
+          },
+        ),
+        //pdf include kana
+        ResponsiveCheckBoxTile(
+          text:  LocaleKeys.SettingsScreen_word_lists_pdf_include_kana.tr(),
+          value: widget.settings.wordLists.pdfIncludeKana,
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.wordLists.pdfIncludeKana = value;
+              widget.settings.save();
+            });
+          },
+        ),
+
+        // Screensaver: should it automatically start after the set interval
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_auto_show.tr(),
+          value: widget.settings.wordLists.autoStartScreensaver,
+          onTileTapped: (value) {
+            widget.settings.wordLists.autoStartScreensaver = value;
+            widget.settings.save();
+          },
+        ),
+        // Screen saver: show
+        ResponsiveIconButtonTile(
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_show.tr(),
+          icon: Icons.play_arrow,
+          onButtonPressed: () async {
+            startScreensaver(widget.settings.wordLists.screenSaverWordLists);
+          },
+        ),
+        // Screen saver: Which word lists to use
+        ResponsiveIconButtonTile(
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_word_lists_to_use.tr(),
+          icon: Icons.list_alt,
+          onButtonPressed: () async {
+            await showWordListSelectionDialog(
+              context,
+              onSelectionConfirmed: (selection) async {
+                widget.settings.wordLists.screenSaverWordLists =
+                  selection.map((e) => e.id).toList();
+                widget.settings.save();
+                Navigator.of(context, rootNavigator: false).pop();
+              },
+            );
+          },
+        ),
+        // Screen Saver: how long to auto start
+        if(g_desktopPlatform)
+          ResponsiveSliderTile(
+            text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_start.tr(),
+            value: widget.settings.wordLists.screenSaverSecondsToStart.toDouble(),
+            min: 1,
+            max: 60*10,
+            showLabelAsInt: true,
+            onChanged: (value) async {
+              widget.settings.wordLists.screenSaverSecondsToStart = value.toInt();
+              await widget.settings.save();
+            },
+          ),
+        // Screen Saver: seconds to next card
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_next_card.tr(),
+          value: widget.settings.wordLists.screenSaverSecondsToNextCard.toDouble(),
+          min: 1,
+          max: 120,
+          showLabelAsInt: true,
+          onChanged: (value) async {
+            widget.settings.wordLists.screenSaverSecondsToNextCard = value.toInt();
+            await widget.settings.save();
+          },
+        ),
+        // readd defaults
+        ResponsiveIconButtonTile(
+          text: LocaleKeys.SettingsScreen_word_lists_readd_defaults.tr(),
+          icon: Icons.undo,
+          onButtonPressed: () async => await readdDefaults()
+        ),
+        // export word lists
+        ResponsiveIconButtonTile(
+          text: LocaleKeys.SettingsScreen_word_lists_export.tr(),
+          icon: Icons.arrow_upward,
+          onButtonPressed: () async => await exportWordLists(),
+        ),
+        // import word lists
+        ResponsiveIconButtonTile(
+          text: LocaleKeys.SettingsScreen_word_lists_import.tr(),
+          icon: Icons.arrow_downward,
+          onButtonPressed: () async => importWordLists(),
+        ),
         // reshow tutorial
         ResponsiveIconButtonTile(
           text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
@@ -52,4 +224,92 @@ class _WordListSettingsState extends State<WordListSettings> {
       ],
     );
   }
+
+  /// Readds the defaults folder to the words lists root if it has been removed
+  Future readdDefaults() async {
+    await GetIt.I<WordListsSQLDatabase>().readdDefaultsToRoot();
+  }
+
+  /// Exports the current word lists
+  /// Lets the user select a directory and stores the file there 
+  Future exportWordLists() async {
+
+    final exportDir = await FilePicker.platform.getDirectoryPath();
+    if(exportDir != null){
+      g_DakanjiPathManager.wordListsSqlFile.copy(
+        p.join(exportDir, p.basename(g_DakanjiPathManager.wordListsSqlFile.path)));
+    }
+
+  }
+
+  /// Lets the user select a wordlists database file and import it
+  Future importWordLists() async {
+
+    await AwesomeDialog(
+      context: context,
+      dialogType: DialogType.noHeader,
+      dismissOnTouchOutside: false,
+      dismissOnBackKeyPress: false,
+      title: LocaleKeys.SettingsScreen_word_lists_import_warning.tr(),
+      desc: LocaleKeys.SettingsScreen_word_lists_import_warning_description.tr(),
+      btnCancelColor: g_Dakanji_red,
+      btnCancelOnPress: () {},
+      btnOkColor: g_Dakanji_green,
+      btnOkOnPress: () async {
+        final files = await FilePicker.platform.pickFiles(
+          lockParentWindow: true,
+          type: FileType.any,
+          allowedExtensions: [".sqlite"]
+        );
+        if(files != null &&
+          files.files.first.path != null && 
+          files.files.first.name.endsWith(".sqlite")){
+
+          File dbFile = File(files.files.first.path!);
+          bool fileSeemsvalid = false;
+
+          // try loading the file to check that it is valid
+          try {
+            await GetIt.I.unregister(
+              instance: GetIt.I<WordListsSQLDatabase>(),
+              disposingFunction: (WordListsSQLDatabase p0) async {
+                await p0.close();
+              },
+            );
+
+            WordListsSQLDatabase db = WordListsSQLDatabase(dbFile);
+            await db.init();
+            fileSeemsvalid = true;
+          } 
+          catch (e) {
+            debugPrint(e.toString());  
+          }
+
+          // overwrite existing database
+          if(fileSeemsvalid){
+            g_DakanjiPathManager.wordListsSqlFile.deleteSync();
+            dbFile.copySync(g_DakanjiPathManager.wordListsSqlFile.path);
+            
+            // ignore: use_build_context_synchronously
+            await restartApp(context);
+          }
+        }
+
+        await AwesomeDialog(
+          // ignore: use_build_context_synchronously
+          context: context,
+          dialogType: DialogType.noHeader,
+          dismissOnTouchOutside: false,
+          dismissOnBackKeyPress: false,
+          title: LocaleKeys.SettingsScreen_word_lists_import_error.tr(),
+          desc: LocaleKeys.SettingsScreen_word_lists_import_error_description.tr(),
+          btnOkColor: g_Dakanji_green,
+          btnOkOnPress: () {}
+        ).show();
+      }
+      
+    ).show();
+
+  }
 }
+

@@ -46,8 +46,8 @@ class DrawScreen extends StatefulWidget {
     this.searchPostfix,
     this.includeHeroes, 
     this.includeTutorial, 
-    {Key? key}
-  ) : super(key: key);
+    {super.key}
+  );
 
   @override
   State<DrawScreen> createState() => _DrawScreenState();
@@ -70,6 +70,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
+    GetIt.I<DrawScreenState>().kanjiBuffer.clearKanjiBuffer();
 
     GetIt.I<DrawScreenState>().drawingLookup.charPrefix  = widget.searchPrefix;
     GetIt.I<DrawScreenState>().drawingLookup.charPostfix = widget.searchPostfix;

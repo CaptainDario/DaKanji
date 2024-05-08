@@ -12,8 +12,8 @@ class ResponsiveKeybindingInput extends StatefulWidget {
     required this.defaultKeyBinding,
     this.onChanged,
     this.maxKeyCount = 3,
-    Key? key
-  }) : super(key: key);
+    super.key
+  });
 
   ///the key binding which should be used on instantiation
   final Set<LogicalKeyboardKey> keyBinding;
@@ -72,7 +72,7 @@ class _ResponsiveKeybindingInputState extends State<ResponsiveKeybindingInput> {
         onKeyEvent: (KeyEvent e) {
           
           // only register key down events
-          if(e.runtimeType == RawKeyUpEvent) return;
+          if(e.runtimeType == KeyUpEvent) return;
     
           if(currentKeys.length < widget.maxKeyCount){
             currentKeys.add(e.logicalKey);

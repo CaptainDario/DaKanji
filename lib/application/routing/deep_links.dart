@@ -202,8 +202,6 @@ void handleDeepLinkDict(Map<String, String> linkArgs){
     false
   );
 
-  print(linkArgs);
-
   /// search by id
   if(linkArgs.containsKey("id")){
     navArgs.dictInitialEntryId = int.tryParse(linkArgs["id"]!);

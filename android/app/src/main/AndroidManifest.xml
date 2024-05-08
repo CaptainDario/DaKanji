@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.DaAppLab.DaKanjiRecognizer">
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -11,13 +12,14 @@
     
     <application
         android:name="${applicationName}"
+        tools:replace="android:label"
         android:label="DaKanji"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true">
         <activity
             android:name="io.flutter.embedding.android.FlutterActivity"
             android:exported="true"
-            android:launchMode="singleTop"
+            android:launchMode="singleInstance"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
@@ -45,11 +47,12 @@
               <category android:name="android.intent.category.DEFAULT" />
               <category android:name="android.intent.category.BROWSABLE" />
               <!-- Deep Links https://dakanji.app/app/-->
-              <data android:scheme="http" />
-              <data android:scheme="https"/>
-              <data android:host="dakanji.app"/>
-              <data android:host="www.dakanji.app"/>
-              <data android:pathPrefix="/app"/>
+              <data android:scheme="http"
+                android:host="dakanji.app"
+                android:pathPrefix="/app"/>
+              <data android:scheme="https"
+                android:host="dakanji.app"
+                android:pathPrefix="/app"/>
             </intent-filter>
 
             <intent-filter>

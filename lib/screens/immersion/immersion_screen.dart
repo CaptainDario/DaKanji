@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/immersion/reader.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -108,11 +109,14 @@ class _ImmersionScreenState extends State<ImmersionScreen> {
     else if(value == 1){
       currentNavigationTarget = const YoutubeBrowser();
     }
+    else if(value == 2){
+      currentNavigationTarget = Container();
+    }
     else if(value == 3){
       currentNavigationTarget = const WebBrowser();
     }
     else{
-      currentNavigationTarget = Container();
+      currentNavigationTarget = const Reader();
     }
     setState(() {
       _selectedIndex = value;

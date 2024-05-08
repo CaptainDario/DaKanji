@@ -48,8 +48,12 @@ class _VerbConjugationEntryState extends State<VerbConjugationEntry> {
   @override
   Widget build(BuildContext context) {
     
-    return widget.conjugationType == ConjugationType.plain && widget.plainFormPositive == "" && widget.plainFormNegative == "" ||
-      widget.conjugationType == ConjugationType.polite && widget.politeFormPositive == "" && widget.politeFormNegative == "" 
+    return (widget.conjugationType == ConjugationType.plain &&
+      widget.plainFormPositive == ""
+      && widget.plainFormNegative == "") ||
+      (widget.conjugationType == ConjugationType.polite &&
+      widget.politeFormPositive == "" &&
+      widget.politeFormNegative == "") 
     ? const SizedBox()
     : Column(
       children: [

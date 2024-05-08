@@ -18,8 +18,8 @@ class DrawScreenMultiCharSearch extends StatelessWidget {
     this.runningInLandscape,
     this.includeHeroes,
     this.includeTutorial,
-    {Key? key}
-    ) : super(key: key);
+    {super.key}
+    );
 
   /// is the app running in landscape
   final bool runningInLandscape;

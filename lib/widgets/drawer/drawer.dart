@@ -45,9 +45,9 @@ class DaKanjiDrawer extends StatefulWidget{
       required this.child,
       this.useBackArrowAppBar = false,
       this.drawerClosed = true,
-      Key? key, 
+      super.key, 
     }
-  ) : super(key: key);
+  );
 
   @override
   DaKanjiDrawerState createState() => DaKanjiDrawerState();
@@ -119,12 +119,11 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
         "/${Screens.kanaTrainer.name}", Screens.kanaTrainer,
         null, null,
         kDebugMode, null),
-    if(kDebugMode)
-      DrawerEntry(
-        Icons.list_outlined, LocaleKeys.WordListsScreen_title,
-        "/${Screens.wordLists.name}", Screens.wordLists,
-        null, const Alignment(0, -0.1),
-      kDebugMode, null),
+    DrawerEntry(
+      Icons.list_outlined, LocaleKeys.WordListsScreen_title,
+      "/${Screens.wordLists.name}", Screens.wordLists,
+      null, const Alignment(0, -0.1),
+      true, null),
     DrawerEntry(
       Icons.copy_rounded, LocaleKeys.ClipboardScreen_title,
       "/${Screens.clipboard.name}", Screens.clipboard,
@@ -276,6 +275,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                   ..translate(_moveDrawer.value * _screenWidth/2)
                   ..rotateY(pi/4 * _moveDrawer.value),
                 child: Scaffold(
+                  resizeToAvoidBottomInset: false,
                   // the top app bar
                   appBar: widget.useBackArrowAppBar
                     ? AppBar()

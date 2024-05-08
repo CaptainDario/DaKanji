@@ -10,8 +10,8 @@ import 'package:get_it/get_it.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as word_lists;
 
@@ -45,14 +45,14 @@ class WordListsScreen extends StatefulWidget {
 
 class _WordListsScreenState extends State<WordListsScreen> {
 
-  /// the root of this word lists
-  late TreeNode<WordListsData> parent;
+  /// The word lists database
+  late WordListsSQLDatabase wordLists;
 
 
   @override
   void initState() {
   
-    parent = widget.parent ?? GetIt.I<WordLists>().root;
+    wordLists = GetIt.I<WordListsSQLDatabase>();
 
     super.initState();
   }
@@ -65,7 +65,7 @@ class _WordListsScreenState extends State<WordListsScreen> {
       drawerClosed: !widget.openedByDrawer,
       child: word_lists.WordLists(
         widget.includeTutorial,
-        parent,
+        wordLists,
         onSelectionConfirmed: widget.onSelectionConfirmed,
       ),
     );

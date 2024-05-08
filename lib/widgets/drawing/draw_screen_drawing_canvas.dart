@@ -19,8 +19,8 @@ class DrawScreenDrawingCanvas extends StatelessWidget {
     this.canvasSize,
     this.drawingInterpreter,
     this.includeTutorial,
-    {Key? key}
-  ) : super(key: key);
+    {super.key}
+  );
 
   final double canvasSize;
   final DrawingInterpreter drawingInterpreter;

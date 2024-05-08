@@ -25,8 +25,8 @@ class ExampleSentenceCard extends StatefulWidget {
   const ExampleSentenceCard(
     this.sentences,
     this.matchSpans,
-    {Key? key}
-  ) : super(key: key);
+    {super.key}
+  );
 
   @override
   State<ExampleSentenceCard> createState() => _ExampleSentenceCardState();
@@ -158,7 +158,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                   ],
                 ),
                 
-              ).toList()
+              )
             ]
           ),
         )

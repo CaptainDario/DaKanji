@@ -60,15 +60,18 @@ class AnkiNote{
         translation += "<div class=\"language\">${isoToLanguage[isoToiso639_2T[langs[i]]]}</div>";
       }
       for (var j = 0; j < translations[i].length; j++){
-        translation += "${j+1}: ${translations[i][j]}<br>";
+        translation += "${j+1}: ${translations[i][j]}";
+        if(j < translations[i].length-1) translation += '<br>';
       }
-      translation += "<br>";
+      if(i < translations.length-1) translation += '<br><br>';
     }
 
     return {
       ankiDataFieldTranslation  : translation,
       ankiDataFieldKanji        : kanji.first,
       ankiDataFieldKana         : kana.first,
+      ankiDataFieldFrontNote    : "",
+      ankiDataFieldBackNote     : "",
       ankiDataFieldDaKanjiLink  : dakanjiLink,
       ankiDataFieldAudio        : audio,
       ankiDataFieldExample      : example,
@@ -98,7 +101,7 @@ class AnkiNote{
   AnkiNote.fromJMDict(
     this.deckName, JMdict entry,
     {
-      List<String> langsToInclude = const [],
+      required List<String> langsToInclude,
       int translationsPerLang = 3
     }
   )

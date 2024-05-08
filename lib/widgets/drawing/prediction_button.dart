@@ -23,7 +23,7 @@ class PredictionButton extends StatefulWidget {
   const PredictionButton(
     this.char,
     this.nr,
-  {Key? key}) : super(key : key);
+  {super.key});
   
   @override
   State<PredictionButton> createState() => _PredictionButtonState();

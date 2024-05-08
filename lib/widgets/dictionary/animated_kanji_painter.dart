@@ -10,12 +10,14 @@ class AnimatedKanjiPainter extends CustomPainter {
 
   /// List of all kanji strokes that should be rendered
   final List<Path> strokes;
+  /// List to save the path metrics to reuse them between init and paint
+  late final List<List<ui.PathMetric>> metrics = [];
   /// List of all `Paint` that should be usde when drawing `strokes`
   final List<Paint> paints;
   /// The animation controller to draw animated `strokes` on this canvas
   final AnimationController animationController;
   /// Length of each individual stroke
-  late final List<double> strokeLengths;
+  List<double> strokeLengths = [];
   /// The total length of all strokes combined
   double totalLength = 0;
 
@@ -28,8 +30,8 @@ class AnimatedKanjiPainter extends CustomPainter {
     // calculate how long each path should be depending on their length
     strokeLengths = List.generate(strokes.length, (index) => 0.0);
     for (var i = 0; i < strokes.length; i++) {
-      ui.PathMetrics metrics = strokes[i].computeMetrics();
-      for (var metric in metrics) {
+      metrics.add(strokes[i].computeMetrics().toList());
+      for (var metric in metrics[i]) {
         strokeLengths[i] += metric.length + (i > 0 ? strokeLengths[i-1] : 0);
         totalLength += metric.length;
       }
@@ -47,8 +49,7 @@ class AnimatedKanjiPainter extends CustomPainter {
 
     for (int i = 0; i < strokes.length; i++) {
       
-      ui.PathMetrics metrics = strokes[i].computeMetrics();
-      for (ui.PathMetric metric in metrics){
+      for (ui.PathMetric metric in metrics[i]){
 
         double currentValue = animationController.value*totalLength;
 
@@ -59,7 +60,6 @@ class AnimatedKanjiPainter extends CustomPainter {
           paints[i]
         );
       }
-      
     }
   
   }

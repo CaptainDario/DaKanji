@@ -127,6 +127,10 @@ class UserData{
   @JsonKey(defaultValue: false)
   bool showChangelog = false;
 
+  /// Has anki been setup successfully
+  @JsonKey(defaultValue: false)
+  bool ankiSetup = false;
+
   /// Has the dictionary of japanese grammar anki deck (w/o media) been imported
   @JsonKey(defaultValue: false)
   bool dojgImported = false;

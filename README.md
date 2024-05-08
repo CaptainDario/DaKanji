@@ -79,8 +79,8 @@ Here is a list of things that would help this project:
 
 ## Credits
 
-I want to thank all the people involved in this project, without you the project would not be where it's right now!
+I want to thank all the people involved in this project, without you DaKanji would not be where it's right now!
 
-But a special thanks goes to [michalpatryk](https://github.com/michalpatryk) and ゆうか 田村村.
+But a special thanks goes to my mom and dad for their endless support what ever I do, ゆうか 田村村 for using DaKanji every day, finding 99% of bugs, even though being native and [michalpatryk](https://github.com/michalpatryk) for seeing the vision of DaKanji and helping me develop it when it was still unkown.
 
 Please take the time and read the full [credits.](CREDITS.md)

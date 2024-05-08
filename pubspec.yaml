@@ -8,12 +8,12 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.3.3+92
+version: 3.4.0+101
 
 
 environment:
   sdk: ">=3.0.0"
-  flutter: "3.16.3"
+  flutter: "3.19.6"
 
 platforms:
   android:
@@ -28,70 +28,75 @@ dependencies:
   
   # all platforms supported
   linked_scroll_controller: 0.2.0
-  shared_preferences: 2.0.13
-  url_launcher: 6.1.2
-  flutter_phoenix: 1.0.0
-  image: 4.0.17
-  flutter_markdown: 0.6.13
-  get_it: 7.6.4
-  provider: 6.0.3
+  shared_preferences: 2.2.3
+  url_launcher: 6.2.6
+  flutter_phoenix: 1.1.1
+  image: 4.1.7
+  flutter_markdown: 0.6.22+1
+  get_it: 7.6.9
+  provider: 6.1.2
   universal_io: 2.2.2
-  awesome_dialog: 3.1.0
-  easy_localization: 3.0.2
-  flutter_layout_grid: 2.0.5
-  tuple: 2.0.1
-  lottie: 1.2.1
-  flutter_svg: 2.0.8
-  onboarding_overlay : 3.1.0
+  awesome_dialog: 3.2.0
+  easy_localization: 3.0.5
+  flutter_layout_grid: 2.0.6
+  tuple: 2.0.2
+  lottie: 3.1.0
+  flutter_svg: 2.0.10+1
+  onboarding_overlay : 3.2.1
   auto_size_text: 3.0.0
-  feedback: 3.0.0
+  feedback: 3.0.1
   flutter_staggered_animations: 1.1.1
-  graphview: 1.1.1
-  xml: 6.3.0
-  reorderables: 0.5.0
-  archive: 3.4.8
-  device_info_plus: 9.0.3
-  share_plus: 7.1.0
-  file_picker: 5.3.3
-  sqlite3: 2.2.0
-  sqlite3_flutter_libs: 0.5.15
-  drift: 2.14.1
+  graphview: 1.2.0
+  xml: 6.5.0
+  reorderables: 0.6.0
+  archive: 3.4.10
+  device_info_plus: 10.1.0
+  share_plus: 8.0.3
+  file_picker: 8.0.0+1
+  sqlite3: 2.4.2
+  sqlite3_flutter_libs: 0.5.20
+  drift: 2.16.0
   json_annotation: 4.8.1
-  flutter_spinkit: 5.1.0
-  sentry_flutter: 7.13.2
+  flutter_spinkit: 5.2.1
+  sentry_flutter: 7.19.0
   feedback_sentry: 3.0.0
-  sentry: any
-  dio: 5.4.0
+  sentry: 7.19.0
+  dio: 5.4.3+1
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
-  pdf: 3.10.3
-  rive: 0.11.17
-  printing: 5.11.0
-  path_parsing: any               # included in svg_flutter
-  vector_graphics: any            # included in svg_flutter
-  app_links: 3.5.0                # android, iOS, web, macos, windows (msix), linux
+  pdf: 3.10.8
+  rive: 0.12.4
+  printing: 5.12.0
+  path_parsing: 1.0.1               # included in svg_flutter
+  vector_graphics: 1.1.11+1         # included in svg_flutter
+  app_links: 4.0.1                  # android, iOS, web, macos, windows (msix), linux
 
-  media_kit: 1.1.10                              # Primary package.
+  media_kit: 1.1.10+1                           # Primary package.
   media_kit_video: 1.2.4                        # For video rendering.
   media_kit_libs_video: 1.0.4                   # Native video dependencies.
-  flutter_widget_from_html_core: 0.14.9
+  flutter_widget_from_html_core: 0.14.11
   tflite_flutter: #0.10.4
     git:
       url: https://github.com/CaptainDario/flutter-tflite
-  envied: 0.5.2
-  envied_generator: 0.5.2
+  envied: 0.5.4+1
+  envied_generator: 0.5.4+1
+  #dolphinsr_dart: 3.0.1
   async: 2.11.0
-  path: 1.8.3
-  http: 1.1.0
+  path: 1.9.0
+  http: 1.2.1
   collection: 1.18.0
-  path_provider: 2.1.0
+  path_provider: 2.1.3
   yaml: 3.1.2
   quiver: 3.2.1
-  flutter_riverpod: 2.4.0
-  riverpod_annotation: 2.1.5
+  flutter_riverpod: 2.5.1
+  riverpod_annotation: 2.3.5
   another_flushbar: 1.12.30
-  store_checker: 1.4.0
-
+  screenshot: 2.3.0
+  super_clipboard: 0.8.12
+  flutter_ankidroid:
+    git:
+      url: https://github.com/CaptainDario/flutter_ankidroid
+    #path: /Users/darioklepoch/dev/DaKanji/flutter_ankidroid/
   kana_kit:
     git:
       url: https://github.com/CaptainDario/kana_kit
@@ -107,26 +112,27 @@ dependencies:
       ref: v3.2.0
   
   # Not all platforms supported
-  webview_flutter: 4.4.2                # android, iOS
-  webview_flutter_wkwebview: any
-  in_app_review: 2.0.4                  # android, iOS, MacOS, windows (limited)
-  clipboard_watcher: 0.2.0              # android, iOS, macos, windows, linux
+  webview_flutter: 4.7.0                # android, iOS
+  webview_flutter_wkwebview: 3.13.0
+  in_app_review: 2.0.9                  # android, iOS, MacOS, windows (limited)
+  clipboard_watcher: 0.2.1              # android, iOS, macos, windows, linux
+  store_checker: 1.4.0                  # ios, android
 
   #isar: android, iOS, macos, windows, linux
-  isar: any # included in dakanji dictionary
-  isar_flutter_libs: any # included in dakanji dictionary
+  isar: 3.1.0+1 # included in dakanji dictionary
+  isar_flutter_libs: 3.1.0+1 # included in dakanji dictionary
   mecab_dart:                                   # android, iOS, macos, windows, linux
     git:
       url: https://github.com/CaptainDario/mecab_dart
 
   # packages that should only target specific platforms
-  android_intent_plus: 3.0.2      # android
-  window_manager: 0.3.7           # desktop
-  #lutter_appavailability:        # android, iOS
+  android_intent_plus: 5.0.2      # android
+  window_manager: 0.3.8           # desktop
+  screen_retriever: 0.1.9         # desktop
 
   # utility 
   flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows
-  flutter_native_splash: 2.3.0   # android, iOS, web
+  flutter_native_splash: 2.4.0   # android, iOS, web
 
 dependency_overrides:
   url_protocol:
@@ -152,17 +158,17 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  custom_lint:
-  riverpod_generator: ^2.3.2
-  riverpod_lint: ^2.1.0
-  msix: 3.16.6
-  flutter_lints: ^2.0.3
-  import_sorter: ^4.6.0
-  json_serializable: 6.7.0
-  build_runner: 2.4.7
+  custom_lint: 0.5.11
+  riverpod_generator: 2.3.3
+  riverpod_lint: 2.1.1
+  msix: 3.16.7
+  flutter_lints: 3.0.2
+  import_sorter: 4.6.0
+  json_serializable: 6.7.1
+  build_runner: 2.4.9
   dependency_validator: 3.2.3
-  isar_generator: any # included in dakanji dictionary
-  drift_dev: 2.14.0
+  isar_generator: 3.1.0+1 # included in dakanji dictionary
+  drift_dev: 2.16.0
   
 flutter_icons:
   android: "launcher_icon"
@@ -223,6 +229,8 @@ flutter:
     # DaKanji icons/images...
     - assets/images/dakanji/icon.png
     - assets/images/dakanji/banner.png
+    # Dapplab icons/images
+    - assets/images/daapplab/logo_design_2_transparent.svg
     # draw screen
     - assets/images/ui/kanji_drawing_aid.png
     # dictionary screen
@@ -242,6 +250,8 @@ flutter:
     # kana mnemonics / sounds
     - assets/images/kana/individuals/
     - assets/audios/kana/individuals/
+    # kana origin images
+    - assets/images/kana/origin/
     # kanji drawing brush
     - assets/images/brush.png
     # icons

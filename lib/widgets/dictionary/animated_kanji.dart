@@ -104,9 +104,11 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
     // set the stroke color after the first frame matching the current theme
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       for (var paint in paints) {
-        paint.color = Theme.of(context).brightness == Brightness.light
-          ? Colors.black
-          : Colors.white;
+        if(mounted){
+          paint.color = Theme.of(context).brightness == Brightness.light
+            ? Colors.black
+            : Colors.white;
+        }
       }
     });
   }
@@ -124,6 +126,7 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
       animation: kanjiVGAnimationController,
       builder: (context, widget) {
         return CustomPaint(
+          isComplex: true,
           painter: AnimatedKanjiPainter(
             paths,
             paints,

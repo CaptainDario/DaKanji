@@ -5,7 +5,6 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:dakanji.app</string>
-		<string>applinks:www.dakanji.app</string>
 	</array>
 </dict>
 </plist>

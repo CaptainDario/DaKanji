@@ -9,6 +9,7 @@ import app_links
 import clipboard_watcher
 import device_info_plus
 import in_app_review
+import irondash_engine_context
 import isar_flutter_libs
 import mecab_dart
 import media_kit_libs_macos_video
@@ -21,8 +22,9 @@ import screen_brightness_macos
 import screen_retriever
 import sentry_flutter
 import share_plus
-import shared_preferences_macos
+import shared_preferences_foundation
 import sqlite3_flutter_libs
+import super_native_extensions
 import url_launcher_macos
 import wakelock_plus
 import window_manager
@@ -32,6 +34,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   ClipboardWatcherPlugin.register(with: registry.registrar(forPlugin: "ClipboardWatcherPlugin"))
   DeviceInfoPlusMacosPlugin.register(with: registry.registrar(forPlugin: "DeviceInfoPlusMacosPlugin"))
   InAppReviewPlugin.register(with: registry.registrar(forPlugin: "InAppReviewPlugin"))
+  IrondashEngineContextPlugin.register(with: registry.registrar(forPlugin: "IrondashEngineContextPlugin"))
   IsarFlutterLibsPlugin.register(with: registry.registrar(forPlugin: "IsarFlutterLibsPlugin"))
   MecabDartPlugin.register(with: registry.registrar(forPlugin: "MecabDartPlugin"))
   MediaKitLibsMacosVideoPlugin.register(with: registry.registrar(forPlugin: "MediaKitLibsMacosVideoPlugin"))
@@ -46,6 +49,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   SharePlusMacosPlugin.register(with: registry.registrar(forPlugin: "SharePlusMacosPlugin"))
   SharedPreferencesPlugin.register(with: registry.registrar(forPlugin: "SharedPreferencesPlugin"))
   Sqlite3FlutterLibsPlugin.register(with: registry.registrar(forPlugin: "Sqlite3FlutterLibsPlugin"))
+  SuperNativeExtensionsPlugin.register(with: registry.registrar(forPlugin: "SuperNativeExtensionsPlugin"))
   UrlLauncherPlugin.register(with: registry.registrar(forPlugin: "UrlLauncherPlugin"))
   WakelockPlusMacosPlugin.register(with: registry.registrar(forPlugin: "WakelockPlusMacosPlugin"))
   WindowManagerPlugin.register(with: registry.registrar(forPlugin: "WindowManagerPlugin"))

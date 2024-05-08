@@ -10,11 +10,15 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 class PathManager {
 
   /// Applications documents directory
-  late final Directory documentsDirectory;
+  late final Directory supportDirectory;
   /// The folder in the documents directory where dakanji does store its files
-  late final Directory dakanjiDocumentsDirectory;
+  late final Directory dakanjiSupportDirectory;
   /// The folder in the documents directory in which all dictionary files are stored
   late final Directory dictionaryDirectory;
+  /// The sqlite file in the documents directory in which all wordlists are stored
+  late final File wordListsSqlFile;
+  /// The sqlite file in the documents directory in which the search history is stored
+  late final File searchHistorySqlFile;
   /// The folder in the documents directory that contains the stats sqlite DB
   late final Directory statsDirectory;
   /// The directory where the files of the DoJG are stored
@@ -27,17 +31,21 @@ class PathManager {
 
   Future<void> init() async {
 
-    documentsDirectory = (await path_provider.getApplicationDocumentsDirectory());
+    supportDirectory = (await path_provider.getApplicationSupportDirectory());
 
-    dakanjiDocumentsDirectory = Directory(p.joinAll([documentsDirectory.path, "DaKanji"]));
+    dakanjiSupportDirectory = Directory(p.joinAll([supportDirectory.path, "DaKanji"]));
 
-    statsDirectory = Directory(p.joinAll([dakanjiDocumentsDirectory.path, "stats"]));
+    statsDirectory = Directory(p.joinAll([dakanjiSupportDirectory.path, "stats"]));
 
-    dictionaryDirectory = Directory(p.joinAll([dakanjiDocumentsDirectory.path, "assets", "dict"]));
+    dictionaryDirectory = Directory(p.joinAll([dakanjiSupportDirectory.path, "assets", "dict"]));
 
-    audiosDirectory = Directory(p.joinAll([dakanjiDocumentsDirectory.path, "audios"]));
+    wordListsSqlFile = File(p.joinAll([dakanjiSupportDirectory.path, "wordlists.sqlite"]));
 
-    dojgDirectory = Directory(p.joinAll([dakanjiDocumentsDirectory.path, "dojg"]));
+    searchHistorySqlFile = File(p.joinAll([dakanjiSupportDirectory.path, "searchhistory.sqlite"]));
+
+    audiosDirectory = Directory(p.joinAll([dakanjiSupportDirectory.path, "audios"]));
+
+    dojgDirectory = Directory(p.joinAll([dakanjiSupportDirectory.path, "dojg"]));
 
   }
  

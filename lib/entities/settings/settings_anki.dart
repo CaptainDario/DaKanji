@@ -2,7 +2,11 @@
 import 'package:flutter/cupertino.dart';
 
 // Package imports:
+import 'package:collection/collection.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+// Project imports:
+import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 
 part 'settings_anki.g.dart';
 
@@ -33,6 +37,21 @@ class SettingsAnki with ChangeNotifier {
   @JsonKey(includeFromJson: false, includeToJson: false)
   List<String> availableDecks = [];
 
+  /// The default value for `showAnkiSettingsDialogBeforeAdding`
+  @JsonKey()
+  // ignore: constant_identifier_names
+  static const bool d_showAnkiSettingsDialogBeforeAdding = true;
+  /// When adding to anki should the settings dialog be shown
+  @JsonKey(defaultValue: d_showAnkiSettingsDialogBeforeAdding)
+  bool _showAnkiSettingsDialogBeforeAdding = d_showAnkiSettingsDialogBeforeAdding;
+  /// When adding to anki should the settings dialog be shown
+  bool get showAnkiSettingsDialogBeforeAdding => _showAnkiSettingsDialogBeforeAdding;
+  /// When adding to anki should the settings dialog be shown
+  set showAnkiSettingsDialogBeforeAdding(bool value) {
+    _showAnkiSettingsDialogBeforeAdding = value;
+    notifyListeners();
+  }
+
   /// When creating a new note, which languages should be included
   @JsonKey(defaultValue: [true])
   List<bool> _includedLanguages = [true];
@@ -47,6 +66,14 @@ class SettingsAnki with ChangeNotifier {
     _includedLanguages[index] = value;
     notifyListeners();
   }
+  /// Based on the given `selectedTranslationLanguages` (the languages selected
+  /// in the dictionary) returns the languages that should be included when
+  /// exporting a word list
+  List<String> langsToInclude (List<String> selectedTranslationLanguages) => 
+    selectedTranslationLanguages
+      .whereIndexed((index, element) => includedLanguages[index])
+      .map((e) => isoToiso639_2B[e]!.name)
+      .toList();
 
   /// The default value for `noTranslations`
   @JsonKey(includeFromJson: false, includeToJson: false)

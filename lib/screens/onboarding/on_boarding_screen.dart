@@ -18,6 +18,8 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
 import 'package:da_kanji_mobile/widgets/onboarding/on_boarding_page.dart';
 
+
+
 /// The "home"-screen
 /// 
 /// If this is the first app start or a new feature was added shows the
@@ -29,8 +31,8 @@ class OnBoardingScreen extends StatefulWidget {
 
   const OnBoardingScreen(
     {
-      Key? key
-    }) : super(key: key);
+      super.key
+    });
 
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
@@ -81,6 +83,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   /// Is the user currently dragging the liquid swipe onboarding
   bool isDragging = true;
 
+  double startPositionX = 0;
+
 
   @override
   void initState() { 
@@ -98,7 +102,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     _controller.addListener(updateDraggerSize);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      init().then((value) => setState((){}));
+      init().then((value) {
+        setState((){});
+      });
     });
   }
 
@@ -136,69 +142,86 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
           
           if(svgImages.length < totalPages*2) return const SizedBox();
 
-          return LiquidSwipe(
-            positionSlideIcon: 0.85,           
-            enableSideReveal: true,
-            liquidController: liquidController,
-            fullTransitionValue: 600,
-            enableLoop: false,
-            slideIconWidget: const SizedBox(
-              width:  15, 
-              height: 15,
-            ),
-            slidePercentCallback: (slidePercentHorizontal, slidePercentVertical) {
-              if(liquidController.provider == null) return;
+          return Listener(
+            onPointerDown: (event) {
+              startPositionX = event.position.dx / MediaQuery.sizeOf(context).width;
+            },
+            onPointerMove: (event) {
 
-              if(isDragging){
-                _swipeController.value = liquidController.provider!.slidePercentHor;
+              double currentPos = (event.position.dx / MediaQuery.sizeOf(context).width);
+
+              // swipe from right -> left
+              if(startPositionX > currentPos){
+                _swipeController.value = (startPositionX - currentPos);
+              }
+              // swipe from left -> right (do not allow on first page)
+              if(startPositionX < currentPos && liquidController.currentPage != 0){
+                _swipeController.value = (currentPos - startPositionX);
               }
             },
-            currentUpdateTypeCallback: (updateType) {
-              if(liquidController.provider == null) return;
+            onPointerUp: (event) {
 
-              if(updateType == UpdateType.doneDragging){
-                isDragging = false;
-                if(liquidController.provider!.slidePercentHor < 0.2){
-                  _swipeController.reverse();
-                }
-                else{
+              double currentPos = (event.position.dx / MediaQuery.sizeOf(context).width);
+
+              // If the user dragged more than the reveal threshold of liquidswipe
+              // animate to the next page
+              if(liquidController.provider!.slidePercentHor > 0.2 &&
+                startPositionX-0.1 > currentPos ||
+                liquidController.provider!.slidePercentHor > 0.2 &&
+                startPositionX+0.1 < currentPos &&
+                liquidController.currentPage != 0) {
                   _swipeController.forward();
+              }
+              else {
+                _swipeController.reverse();
+              }
+              
+            },
+            child: LiquidSwipe(
+              positionSlideIcon: 0.85,           
+              enableSideReveal: true,
+              liquidController: liquidController,
+              fullTransitionValue: 600,
+              enableLoop: false,
+              //ignoreUserGestureWhileAnimating: true,
+              slideIconWidget: const SizedBox(
+                width:  15, 
+                height: 15,
+              ),
+              slidePercentCallback: (slidePercentHorizontal, slidePercentVertical) {
+                
+              },
+              onPageChangeCallback: (int activePageIndex) {
+                if(liquidController.provider!.activePageIndex != activePageIndex){
+                  _swipeController.value = 0;
                 }
-              }
-              else if(updateType == UpdateType.dragging){
-                isDragging = true;
-              }
-            },
-            onPageChangeCallback: (int activePageIndex) {
-              if(liquidController.provider!.activePageIndex != activePageIndex){
-                _swipeController.value = 0;
-              }
-              // change the current route to the drawing screen
-              if (activePageIndex == totalPages){
-                GetIt.I<UserData>().showOnboarding = false;
-                GetIt.I<UserData>().save();
-                Future.delayed(const Duration(milliseconds: 500), () =>
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    "/${Screens.dictionary.name}",
-                    (route) => false
-                  )
-                );
-              }
-            },
-            pages: [
-              for (int i = 0; i < totalPages; i++)
-                OnBoardingPage(
-                  i+1,
-                  svgImages[(i*2)], svgImages[i*2+1],
-                  totalPages,
-                  pageColors[i],
-                  onboardingPageTexts[(i*2)], onboardingPageTexts[(i*2)+1],
-                  liquidController,
-                  _swipeController
-                ),
-              const DictionaryScreen(false, false, ""),
-            ],
+                // change the current route to the drawing screen
+                if (activePageIndex == totalPages){
+                  GetIt.I<UserData>().showOnboarding = false;
+                  GetIt.I<UserData>().save();
+                  Future.delayed(const Duration(milliseconds: 500), () =>
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      "/${Screens.dictionary.name}",
+                      (route) => false
+                    )
+                  );
+                }
+              },
+              pages: [
+                for (int i = 0; i < totalPages; i++)
+                  OnBoardingPage(
+                    i+1,
+                    svgImages[(i*2)], svgImages[i*2+1],
+                    totalPages,
+                    pageColors[i],
+                    onboardingPageTexts[(i*2)], onboardingPageTexts[(i*2)+1],
+                    liquidController,
+                    _swipeController
+                  ),
+                const DictionaryScreen(false, false, ""),
+              ],
+            ),
           );
         }
       ),

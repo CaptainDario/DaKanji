@@ -239,7 +239,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                                   )
                                 ),
                               
-                              if(showDaku   && i == 0 || showYoon    && i == 1 ||
+                              if(showDaku  && i == 0 || showYoon    && i == 1 ||
                                 showRomaji && i == 3 || showSpecial && i == 4 )
                                 Transform.rotate(
                                   angle: 45,
@@ -267,7 +267,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
             setCurrrentKanaTable(isPortrait);
             setResponsiveKanaTable(constraints);
         
-            double popupWidth = constraints.maxWidth*0.66 > 600 ? 600 : constraints.maxWidth*0.66;
+            double popupWidth = constraints.maxWidth*0.8 > 600 ? 600 : constraints.maxWidth*0.8;
             double popupHeight = constraints.maxHeight*0.66 > 600 ? 600 : constraints.maxHeight*0.66;
         
             /// The number of columns in the grid
@@ -354,19 +354,25 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                     ),
                     builder: (context, child) {
                       return Positioned(
-                        left: lerpDouble(currentKanaX,
+                        left: lerpDouble(
+                          currentKanaX-popupWidth/2,
                           (constraints.maxWidth/2 - popupWidth/2),
                           _controller.value
                         ),
-                        top: lerpDouble(currentKanaY,
+                        top: lerpDouble(
+                          currentKanaY-popupHeight/2,
                           (constraints.maxHeight/2 - popupHeight/2),
                           _controller.value
                         ),
-                        width: popupWidth * _controller.value,
-                        height: popupHeight * _controller.value,
-                        child: Opacity(
-                          opacity: _controller.value,
-                          child: child!
+                        width: popupWidth,
+                        height: popupHeight,
+                        child: Transform.scale(
+                          scaleX: _controller.value,
+                          scaleY: _controller.value,
+                          child: Opacity(
+                            opacity: _controller.value,
+                            child: child!
+                          ),
                         ),
                       );
                     }

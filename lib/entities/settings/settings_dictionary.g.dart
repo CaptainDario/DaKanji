@@ -30,7 +30,9 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
       ..kanjiAnimationStrokesPerSecond =
           (json['kanjiAnimationStrokesPerSecond'] as num?)?.toDouble() ?? 5.0
       ..resumeAnimationAfterStopSwipe =
-          json['resumeAnimationAfterStopSwipe'] as bool? ?? false;
+          json['resumeAnimationAfterStopSwipe'] as bool? ?? false
+      ..googleImageSearchQuery =
+          json['googleImageSearchQuery'] as String? ?? '%X%';
 
 Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
     <String, dynamic>{
@@ -43,4 +45,5 @@ Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
       'playKanjiAnimationWhenOpened': instance.playKanjiAnimationWhenOpened,
       'kanjiAnimationStrokesPerSecond': instance.kanjiAnimationStrokesPerSecond,
       'resumeAnimationAfterStopSwipe': instance.resumeAnimationAfterStopSwipe,
+      'googleImageSearchQuery': instance.googleImageSearchQuery,
     };

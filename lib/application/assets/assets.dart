@@ -19,6 +19,52 @@ import 'package:universal_io/io.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/downloads/download_popup.dart';
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
+
+/// Download the audio files from the github release matching this version
+void downloadAudio(BuildContext context) async {
+
+  await downloadPopup(
+    context: context,
+    dismissable: true,
+    btnOkOnPress: () async {
+      downloadAssetFromGithubRelease(
+        File(g_DakanjiPathManager.audiosDirectory.path),
+        g_GithubApiDependenciesRelase,
+      ).then((value) {
+        Navigator.of(context).pop();
+      });
+      AwesomeDialog(
+        context: context,
+        headerAnimationLoop: false,
+        dismissOnTouchOutside: false,
+        customHeader: Image.asset("assets/images/dakanji/icon.png"),
+        dialogType: DialogType.noHeader,
+        body: StreamBuilder(
+          stream: g_initAppInfoStream.stream,
+          builder: (context, snapshot) {
+            return SizedBox(
+              height: MediaQuery.of(context).size.height / 4,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const DaKanjiLoadingIndicator(),
+                    const SizedBox(height: 8,),
+                    Text(
+                      snapshot.data ?? ""
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        )
+      ).show();
+    }
+  ).show();
+
+}
 
 /// Tries to copy `asset` from assets and if that fails,
 /// downloads it from `url` (github). `path` is the destination folder inside of
@@ -33,7 +79,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
 
   // if the file already exists delete it
   final file = File(p.joinAll([
-      g_DakanjiPathManager.dakanjiDocumentsDirectory.path,
+      g_DakanjiPathManager.dakanjiSupportDirectory.path,
       ...asset.path.split("/")
     ]));
   if (file.existsSync()) {
@@ -50,8 +96,9 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
   }
   catch (e){
     if(askToDownload) {
-      // ignore: use_build_context_synchronously
+      
       await downloadPopup(
+        // ignore: use_build_context_synchronously
         context: context,
         btnOkOnPress: () {}
       ).show();
@@ -63,8 +110,8 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
         break;
       }
       catch (e){
-        // ignore: use_build_context_synchronously
         await AwesomeDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           headerAnimationLoop: false,
           desc: LocaleKeys.HomeScreen_download_failed_popup_text.tr(),

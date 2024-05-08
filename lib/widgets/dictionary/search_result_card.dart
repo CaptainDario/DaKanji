@@ -32,9 +32,9 @@ class SearchResultCard extends StatefulWidget {
       this.showWordFrequency = false,
       this.focusNode,
       this.onPressed,
-      Key? key
+      super.key
     }
-  ) : super(key: key);
+  );
 
   @override
   State<SearchResultCard> createState() => _SearchResultCardState();

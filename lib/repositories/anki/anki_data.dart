@@ -9,7 +9,11 @@ const String ankiDataFieldTranslation  = "Translations";
 const String ankiDataFieldKanji        = "Kanji";
 /// Name of the anki field for the Kana
 const String ankiDataFieldKana         = "Kana";
-/// Field to link to dakanji
+/// Name of the anki field that shows a note on the fron of the card
+const String ankiDataFieldFrontNote    = "Note Front";
+/// Name of the anki field that shows a note on the back of the card
+const String ankiDataFieldBackNote     = "Note Back";
+/// Name of the anki Field to link to dakanji
 const String ankiDataFieldDaKanjiLink  = "DaKanji Link";
 /// Name of the anki field for the Audio
 const String ankiDataFieldAudio        = "Audio";
@@ -25,6 +29,8 @@ const List<String> ankiDataFields = [
   ankiDataFieldTranslation,
   ankiDataFieldKanji,
   ankiDataFieldKana,
+  ankiDataFieldFrontNote,
+  ankiDataFieldBackNote,
   ankiDataFieldDaKanjiLink,
   ankiDataFieldAudio,
   ankiDataFieldExample,
@@ -48,24 +54,16 @@ const String ankiDataStyling =
 .translations {
   text-align: left;
 }
+.kanji{
+	font-size: 32px;
+}
+.furigana{
+	font-size: 16px;
+}
 """;
 
 /// The template for the front of DaKanji Anki notes
 const String ankiDataFrontTemplate =
-"""
-<a href="{{$ankiDataFieldDaKanjiLink}}">
-	{{#$ankiDataFieldKanji}}
-		<ruby>{{$ankiDataFieldKanji}}<rp>(</rp><rt>{{$ankiDataFieldKana}}</rt><br>
-	{{/$ankiDataFieldKanji}}
-
-	{{^$ankiDataFieldKanji}}
-		{{$ankiDataFieldKana}}
-	{{/$ankiDataFieldKanji}}
-</a>
-""";
-
-/// The template for the back of DaKanji Anki notes
-const String ankiDataBackTemplate =
 """
 <div class="translations">
 	{{$ankiDataFieldTranslation}}
@@ -75,4 +73,41 @@ const String ankiDataBackTemplate =
 {{#$ankiDataFieldImage}}
   <img src="{{$ankiDataFieldImage}}">
 {{/$ankiDataFieldImage}}
+<br>
+{{#$ankiDataFieldFrontNote}}
+	{{$ankiDataFieldFrontNote}}
+{{/$ankiDataFieldFrontNote}}
+""";
+
+/// The template for the back of DaKanji Anki notes
+const String ankiDataBackTemplate =
+"""
+{{FrontSide}}
+
+<hr id=answer>
+
+<a href="{{$ankiDataFieldDaKanjiLink}}">
+	{{#$ankiDataFieldKanji}}
+		<ruby class="kanji">{{$ankiDataFieldKanji}}<rp>(</rp><rt class="furigana">{{$ankiDataFieldKana}}</rt><br>
+	{{/$ankiDataFieldKanji}}
+
+	{{^$ankiDataFieldKanji}}
+		{{$ankiDataFieldKana}}
+	{{/$ankiDataFieldKanji}}
+</a>
+{{#$ankiDataFieldAudio}}
+	{{$ankiDataFieldAudio}}
+{{/$ankiDataFieldAudio}}
+<br>
+{{#$ankiDataFieldExample}}
+	{{$ankiDataFieldExample}}
+{{/$ankiDataFieldExample}}
+<br>
+{{#$ankiDataFieldImage}}
+	{{$ankiDataFieldImage}}
+{{/$ankiDataFieldImage}}
+<br>
+{{#$ankiDataFieldBackNote}}
+	{{$ankiDataFieldBackNote}}
+{{/$ankiDataFieldBackNote}}
 """;

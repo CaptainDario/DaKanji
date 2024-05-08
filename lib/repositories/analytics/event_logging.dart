@@ -1,15 +1,20 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:math';
-import 'package:da_kanji_mobile/env.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/repositories/releases/installation_method.dart';
-import 'package:da_kanji_mobile/repositories/releases/os_info.dart';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_io/io.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/env.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/repositories/releases/installation_method.dart';
+import 'package:da_kanji_mobile/repositories/releases/os_info.dart';
 
 /// The api to use for posthog
 String posthogServiceURL = 'https://eu.posthog.com/capture/';
@@ -44,11 +49,13 @@ Future<bool> logDefaultEvent(String eventName) async {
 }
 
 /// Logs a given event by its name and properties
-Future<bool> logEvent(String url, Map<String, String> header, Map body) async {
+Future<bool> logEvent(String url, Map<String, String> header, Map body,
+  {bool cacheEventOnfailure = true}) async {
 
   bool success;
 
-  success = await _logEventPosthogREST(url, header, jsonEncode(body));
+  success = await _logEventPosthogREST(url, header, jsonEncode(body),
+                                      cacheEventOnfailure: cacheEventOnfailure);
 
   return success;
 
@@ -81,7 +88,8 @@ String randomId(){
 }
 
 /// Uses the Posthog REST API backend for logging an event
-Future<bool> _logEventPosthogREST(String url, Map<String, String> header, String body) async {
+Future<bool> _logEventPosthogREST(String url, Map<String, String> header,
+  String body, {bool cacheEventOnfailure = true}) async {
   
   bool success = false;
 
@@ -99,7 +107,9 @@ Future<bool> _logEventPosthogREST(String url, Map<String, String> header, String
   }
   // cache the request when it was not successful to send it later
   catch (e) {
-    await cacheEvent(body);
+    if(cacheEventOnfailure){
+      await cacheEvent(body);
+    }
   }
 
   return success;
@@ -132,7 +142,8 @@ Future<void> retryCachedEvents() async {
   // try to resend all events
   for (int i = 0; i < cachedEvents.length; i++) {
     bool success = await logEvent(
-      posthogServiceURL, posthogHeader, jsonDecode(cachedEvents[i]));
+      posthogServiceURL, posthogHeader, jsonDecode(cachedEvents[i]),
+      cacheEventOnfailure: false);
 
     if(!success){
       return;

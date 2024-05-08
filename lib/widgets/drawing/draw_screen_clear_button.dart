@@ -17,8 +17,8 @@ class DrawScreenClearButton extends StatelessWidget {
   const DrawScreenClearButton(
     this.canvasSize,
     this.includeTutorial,
-    {Key? key}
-  ) : super(key: key);
+    {super.key}
+  );
 
   /// the size of the DrawingCanvas
   final double canvasSize;

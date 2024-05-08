@@ -76,7 +76,8 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
             icon: const Icon(Icons.share),
             onPressed: () async {
               await Share.share(
-                "${GetIt.I<Settings>().misc.sharingScheme}dojg?search=${widget.dojgEntry.grammaticalConcept}&open=true"
+                "${GetIt.I<Settings>().misc.sharingScheme}dojg?search=${widget.dojgEntry.grammaticalConcept}&open=true",
+                sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
               );
             },
           ),

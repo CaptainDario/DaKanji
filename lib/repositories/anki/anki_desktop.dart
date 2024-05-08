@@ -25,7 +25,7 @@ class AnkiDesktop {
 
 
   /// Platform specific (desktop via anki connect) implementation of `add_note`
-  void addNoteDesktop(AnkiNote note) async {
+  Future<http.Response> addNoteDesktop(AnkiNote note) async {
 
     // Create the body of the request
     Map<String, dynamic> body = {
@@ -54,12 +54,49 @@ class AnkiDesktop {
       settingsAnki.desktopAnkiUri,
       body: bodyString);
 
-    return;
+    return r;
   }
 
   /// Platform specific (desktop via anki connect) implementation of `add_notes`
-  void addNotesDesktop(List<AnkiNote> notes){
-    // TODO
+  Future<http.Response> addNotesDesktop(List<AnkiNote> notes) async {
+
+    List<Map> jsonNotes = [];
+
+    for (var note in notes) {
+      
+      jsonNotes.add({
+        "deckName": note.deckName,
+        "modelName": note.noteType,
+        "fields": note.fields,
+        "options": {
+          "allowDuplicate": false,
+          "duplicateScope": "deck",
+          "duplicateScopeOptions": {
+            "deckName": note.deckName,
+            "checkChildren": false
+          }
+        },
+        "tags": note.tags
+      });
+
+    }
+    
+    // Create the body of the request
+    Map<String, dynamic> body = {
+      "action": "addNotes",
+      "version": 6,
+      "params": {
+        "notes": jsonNotes
+      }
+    };
+    String bodyString = jsonEncode(body);
+
+    http.Response r = await http.post(
+      settingsAnki.desktopAnkiUri,
+      body: bodyString);
+
+    return r;
+
   }
 
   /// platform specific (desktop via anki connect) implementation of
@@ -85,7 +122,7 @@ class AnkiDesktop {
 
   /// Platform specific (desktop via anki connect) implementation of
   /// `addDaKanjiCardType`
-  Future<void> addDaKanjiModelDesktop() async {
+  Future<http.Response> addDaKanjiModelDesktop() async {
 
     // Create the DaKanji Cart type if it is not present
     Map body = {
@@ -108,12 +145,11 @@ class AnkiDesktop {
     String bodyString = jsonEncode(body);
 
     http.Response r = await http.post(settingsAnki.desktopAnkiUri, body: bodyString);
-    print(r.body);
-    return;
+    return r;
   }
 
   /// Platform specific (desktop via anki connect) implementation of `addDeck`
-  Future<void> addDeckDesktop(String deckName) async {
+  Future<http.Response> addDeckDesktop(String deckName) async {
     
     // Create the body of the request
     Map<String, dynamic> body = {
@@ -126,6 +162,8 @@ class AnkiDesktop {
     String bodyString = jsonEncode(body);
 
     http.Response r = await http.post(settingsAnki.desktopAnkiUri, body: bodyString);
+
+    return r;
 
   }
 

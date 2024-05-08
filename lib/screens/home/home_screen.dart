@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
+import 'package:da_kanji_mobile/entities/releases/version.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,11 +17,13 @@ import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 import 'package:da_kanji_mobile/repositories/releases/releases.dart';
 import 'package:da_kanji_mobile/widgets/home/downgrade_dialog.dart';
 import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as rate_popup;
 import 'package:da_kanji_mobile/widgets/home/whats_new_dialog.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// The "home"-screen
 /// 
@@ -38,8 +40,8 @@ class HomeScreen extends StatefulWidget {
 
   const HomeScreen(
     {
-      Key? key
-    }) : super(key: key);
+      super.key
+    });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -68,9 +70,18 @@ class _HomeScreenState extends State<HomeScreen> {
     // check if an update is available
     if(GetIt.I<UserData>().userRefusedUpdate == null ||
       DateTime.now().difference(GetIt.I<UserData>().userRefusedUpdate!).inDays > g_daysToWaitBeforeAskingForUpdate){
-      List<String> updates = await updateAvailable();
-      if(updates.isNotEmpty) {
+      
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<String> updates = prefs.getStringList("updateAvailable") ?? [];
+      Version updateVersion = Version.fromStringFull(prefs.getString("updateVersion") ?? "0.0.0+0");
+      
+      if(updates.isNotEmpty && updateVersion > g_Version) {
         await showUpdatePopup(updates);
+        prefs.setStringList("updateAvailable", []);
+        prefs.setString("updateVersion", "");
+      }
+      else{
+        updateAvailable();
       }
     }
 
@@ -84,10 +95,10 @@ class _HomeScreenState extends State<HomeScreen> {
       await showRatePopup();
     }
     if(GetIt.I<UserData>().showOnboarding){
-      // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
-        context, "/${Screens.onboarding.name}", (route) => false
-      );
+        // ignore: use_build_context_synchronously
+        context,
+        "/${Screens.onboarding.name}", (route) => false);
     }
     else {
       // if there is a deep link at app start handle it

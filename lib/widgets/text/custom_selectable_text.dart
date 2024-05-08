@@ -17,7 +17,7 @@ import 'package:da_kanji_mobile/application/text/custom_selectable_text_controll
 /// Widget that implements custom text selection and furigana rendering
 class CustomSelectableText extends StatefulWidget {
   const CustomSelectableText({
-    Key? key,
+    super.key,
     required this.words,
     required this.rubys,
     this.wordColors,
@@ -41,7 +41,7 @@ class CustomSelectableText extends StatefulWidget {
     this.onDoubleTap,
     this.onTripleTap,
     this.onTapOutsideOfText,
-  }) : super(key: key);
+  });
 
   /// a list containing all words that should be displayed
   final List<String> words;
@@ -555,17 +555,6 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     return Focus(
       focusNode: focuseNode,
       canRequestFocus: true,
-      onKey: (node, event) {
-        KeyEventResult result = KeyEventResult.ignored;
-        // Activates all key bindings that match, returns handled if any handle it.
-        for (final ShortcutActivator activator in bindings.keys) {
-          if (activator.accepts(event, RawKeyboard.instance)) {
-            bindings[activator]!.call();
-            result = KeyEventResult.handled;
-          }
-        }
-        return result;
-      },
       child: GestureDetector(
         onTapDown: onTap,
         onTapUp: (details) {isTapped = false;},

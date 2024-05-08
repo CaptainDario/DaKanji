@@ -115,37 +115,31 @@ class DrawingInterpreter with ChangeNotifier{
   }
 
   /// Tests all available backends on this platform and returns it.
-  Future<InferenceBackend> getBestBackend() async {
+  Future<Tuple2<InferenceBackend, List<MapEntry<InferenceBackend, double>>>> getBestBackend() async {
 
     InferenceBackend iB;
 
-    // check if the backend was already tested -> return it if true
-    if(GetIt.I<UserData>().drawingBackend != null) {
-      iB = GetIt.I<UserData>().drawingBackend!;
-    }
-    // Otherwise, find the best available backend and load the model
-    else{
-      // test all backends on this platform
-      List<MapEntry<InferenceBackend, double>> tests = (await testBackends(
-        _usedTFLiteAssetPath,
-        data.input,
-        data.output,
-        (Interpreter interpreter, Object input, Object output) => 
-          data.runInterpreter(
-            interpreter, 
-            input as List<List<List<List<double>>>>,
-            output as List<List<double>>
-          ),
-        iterations: 10,
-      )).entries.toList()..sort(((a, b) => a.value.compareTo(b.value)));
+    // test all backends on this platform
+    List<MapEntry<InferenceBackend, double>> tests = (await testBackends(
+      _usedTFLiteAssetPath,
+      data.input,
+      data.output,
+      (Interpreter interpreter, Object input, Object output) => 
+        data.runInterpreter(
+          interpreter, 
+          input as List<List<List<List<double>>>>,
+          output as List<List<double>>
+        ),
+      iterations: 10,
+    )).entries.toList()..sort(((a, b) => a.value.compareTo(b.value)));
 
-      // store the best backend to disk
-      iB = tests.first.key;
-      debugPrint("Inference timings for Drawing: $tests");
-    }
+    // store the best backend to disk
+    iB = tests.first.key;
+    debugPrint("Inference timings for Drawing: $tests");
+    
     
     debugPrint("Using: $iB");
-    return iB;
+    return Tuple2(iB, tests);
   }
 
   /// load the labels from file
