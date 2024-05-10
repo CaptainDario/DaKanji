@@ -11,7 +11,7 @@
 	<atom:link href="/comments/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description>Your are learning Japanese? Then you need to try DaKanji!</description>
-	<lastBuildDate>Wed, 08 May 2024 15:30:38 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 10 May 2024 08:07:43 +0000</lastBuildDate>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
@@ -27,5 +27,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2024-05-10 08:03:12 by W3 Total Cache
+Served from: dakanji.local @ 2024-05-10 08:08:02 by W3 Total Cache
 -->

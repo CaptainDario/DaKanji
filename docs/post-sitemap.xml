@@ -2,7 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
 		<loc>/dakanji-3-4-released/</loc>
-		<lastmod>2024-05-08T15:30:38+00:00</lastmod>
+		<lastmod>2024-05-10T08:07:43+00:00</lastmod>
 	</url>
 	<url>
 		<loc>/dakanji-3-3-released/</loc>
@@ -37,5 +37,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2024-05-10 08:03:14 by W3 Total Cache
+Served from: dakanji.local @ 2024-05-10 08:08:04 by W3 Total Cache
 -->
