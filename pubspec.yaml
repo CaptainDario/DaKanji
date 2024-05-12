@@ -57,9 +57,9 @@ dependencies:
   drift: 2.16.0
   json_annotation: 4.8.1
   flutter_spinkit: 5.2.1
-  sentry_flutter: 7.19.0
+  sentry_flutter: 8.1.0
   feedback_sentry: 3.0.0
-  sentry: 7.19.0
+  sentry: 8.1.0
   dio: 5.4.3+1
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
@@ -138,6 +138,7 @@ dependency_overrides:
     git:
       url: https://github.com/LucasXu0/flutter_url_protocol.git
       commit: 77a8420
+  sentry: 8.1.0
 
 msix_config:
   display_name: DaKanji
