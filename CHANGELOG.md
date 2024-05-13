@@ -1,6 +1,15 @@
 
 # DaKanji - changelog
 
+## v3.4.1 - ワードリストと暗記 (.5.2024)
+
+Fixed:
+
+- Anki integration on windows
+- Katakana origins images not loading
+- Word list sorting text hard to read in light mode
+- Updated sentry for better handled / unhandled
+
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
 New Features:
