@@ -183,9 +183,20 @@ class _WordListScreenState extends State<WordListScreen> {
                     child: TextField(
                       controller: searchTextEditingController,
                       focusNode: searchInputFocusNode,
-                      decoration: searchInputFocusNode.hasPrimaryFocus
-                        ? const InputDecoration()
-                        : const InputDecoration.collapsed(hintText: ""),
+                      style: const TextStyle(color: Colors.white),
+                      cursorColor: Colors.white,
+                      decoration: const InputDecoration(
+                        hintText: "Search...",
+                        focusColor: Colors.white,
+                        hoverColor: Colors.white,
+                        hintStyle: TextStyle(color: Colors.grey),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)
+                        ),
+                      ),
                       onChanged: (value) {
                         setState(() {
                           animate = true;
@@ -208,13 +219,27 @@ class _WordListScreenState extends State<WordListScreen> {
                       });
                     },
                     value: currentSorting,
+                    selectedItemBuilder: (context) {
+                      return List.generate(WordListSorting.values.length, (i) =>
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          constraints: const BoxConstraints(minWidth: 50),
+                          child: Text(
+                            wordListSortingTranslations[WordListSorting.values[i]]!(),
+                            style: const TextStyle(color: Colors.white,),
+                          ),
+                        )
+                      );
+                    },
                     items: List.generate(WordListSorting.values.length, (i) =>
                       DropdownMenuItem<WordListSorting>(
                         value: WordListSorting.values[i],
                         child: Text(
                           wordListSortingTranslations[WordListSorting.values[i]]!(),
-                          style: const TextStyle(
-                            color: Colors.white
+                          style: TextStyle(
+                            color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black
                           ),
                         ),
                       )
