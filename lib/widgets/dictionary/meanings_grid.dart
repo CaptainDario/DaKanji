@@ -194,7 +194,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                                       int id = int.parse(widget.meanings.antonyms![j]!.attributes[i]!);
                                       Navigator.pushNamedAndRemoveUntil(
                                         context,
-                                        "/dictionary",
+                                        "/${Screens.dictionary.name}",
                                         (route) => false,
                                         arguments: NavigationArguments(
                                           false,
