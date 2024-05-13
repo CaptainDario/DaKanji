@@ -136,7 +136,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   await initDocumentsAssets(context);
 
   // ISAR / database services
-  String documentsDir = g_DakanjiPathManager.supportDirectory.path;
+  String supportDirectory = g_DakanjiPathManager.dakanjiSupportDirectory.path;
   String isarPath = g_DakanjiPathManager.dictionaryDirectory.path;
   String dojgIsarPath = g_DakanjiPathManager.dojgDirectory.path;
   GetIt.I.registerSingleton<Isars>(
@@ -191,10 +191,11 @@ Future<void> initDocumentsServices(BuildContext context) async {
 
   // Mecab
   GetIt.I.registerSingleton<Mecab>(Mecab());
+
   await GetIt.I<Mecab>().init(
     "assets/ipadic",
     true,
-    dicDir: "$documentsDir/DaKanji/assets/ipadic/"
+    dicDir: "$supportDirectory/assets/ipadic/"
   );
 
   g_documentsServicesInitialized = true;

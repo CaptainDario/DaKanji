@@ -9,17 +9,15 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 /// in one place
 class PathManager {
 
-  /// Applications documents directory
-  late final Directory supportDirectory;
-  /// The folder in the documents directory where dakanji does store its files
+  /// The folder where dakanji does store its files
   late final Directory dakanjiSupportDirectory;
-  /// The folder in the documents directory in which all dictionary files are stored
+  /// The folder in the support directory in which all dictionary files are stored
   late final Directory dictionaryDirectory;
-  /// The sqlite file in the documents directory in which all wordlists are stored
+  /// The sqlite file in the support directory in which all wordlists are stored
   late final File wordListsSqlFile;
-  /// The sqlite file in the documents directory in which the search history is stored
+  /// The sqlite file in the support directory in which the search history is stored
   late final File searchHistorySqlFile;
-  /// The folder in the documents directory that contains the stats sqlite DB
+  /// The folder in the support directory that contains the stats sqlite DB
   late final Directory statsDirectory;
   /// The directory where the files of the DoJG are stored
   late final Directory dojgDirectory;
@@ -31,7 +29,10 @@ class PathManager {
 
   Future<void> init() async {
 
-    supportDirectory = (await path_provider.getApplicationSupportDirectory());
+    Directory supportDirectory = (await path_provider.getApplicationSupportDirectory());
+    if(supportDirectory.path.contains(" ")){
+      supportDirectory = Directory(supportDirectory.path.replaceAll(" ", ""));
+    }
 
     dakanjiSupportDirectory = Directory(p.joinAll([supportDirectory.path, "DaKanji"]));
 
