@@ -9,6 +9,7 @@ Fixed:
 - Katakana origins images not loading
 - Word list sorting text hard to read in light mode
 - Updated sentry for better handled / unhandled
+- Spaces between PoS elements of dictionary entries
 
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
