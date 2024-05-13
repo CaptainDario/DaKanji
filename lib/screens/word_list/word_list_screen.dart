@@ -211,7 +211,12 @@ class _WordListScreenState extends State<WordListScreen> {
                     items: List.generate(WordListSorting.values.length, (i) =>
                       DropdownMenuItem<WordListSorting>(
                         value: WordListSorting.values[i],
-                        child: Text(wordListSortingTranslations[WordListSorting.values[i]]!()),
+                        child: Text(
+                          wordListSortingTranslations[WordListSorting.values[i]]!(),
+                          style: const TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
                       )
                     ),
                   ),
