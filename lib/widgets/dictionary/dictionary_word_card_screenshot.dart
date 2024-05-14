@@ -37,7 +37,7 @@ class _DictionaryWordCardScreenshotState extends State<DictionaryWordCardScreens
     return MediaQuery(
       data: const MediaQueryData(),
       child: Theme(
-        data: ThemeData.light(),// ThemeData.dark(),
+        data: widget.theme,
         child: SizedBox(
           width: 500,
           child: DictionaryWordCard(

@@ -11,6 +11,7 @@ Fixed:
 - Updated sentry for better handled / unhandled tags
 - Spaces between PoS elements of dictionary entries
 - Mecab not loading on iOS/MacOS
+- Sharing entries as image does not respect the current theme
 
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
