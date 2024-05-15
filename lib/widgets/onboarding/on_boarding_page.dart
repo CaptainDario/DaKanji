@@ -104,145 +104,159 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       imageTopPadding = (sHeight*0.33)-imgSize/2;
     }
 
-    return Container(
-      height: sHeight,
-      width: sWidth,
-      color: widget.bgColor,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          Positioned(
-            width: canvasSize,
-            height: canvasSize,
-            top: imageTopPadding,
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Positioned(
-                  width: imgSize *
-                    (widget.liquidController.currentPage == widget.nr-1
-                      ? ui.lerpDouble(minImgSwipeSize, 1, 1-widget.swipeAnimation.value)!
-                      : ui.lerpDouble(minImgSwipeSize, 1, widget.swipeAnimation.value)!),
-                  height: imgSize,
-                  left: calculateLeftOffset(imgSize, parallaxBackground) + imgSize*padding,
-                  child: RepaintBoundary(
-                    child: RawImage(
-                      image: widget.foregroundSvgPictureInfo,
+    return MouseRegion(
+      cursor: SystemMouseCursors.grab,
+      child: Container(
+        height: sHeight,
+        width: sWidth,
+        color: widget.bgColor,
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Positioned(
+              width: canvasSize,
+              height: canvasSize,
+              top: imageTopPadding,
+              child: Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  Positioned(
+                    width: imgSize *
+                      (widget.liquidController.currentPage == widget.nr-1
+                        ? ui.lerpDouble(minImgSwipeSize, 1, 1-widget.swipeAnimation.value)!
+                        : ui.lerpDouble(minImgSwipeSize, 1, widget.swipeAnimation.value)!),
+                    height: imgSize,
+                    left: calculateLeftOffset(imgSize, parallaxBackground) + imgSize*padding,
+                    child: RepaintBoundary(
+                      child: RawImage(
+                        image: widget.foregroundSvgPictureInfo,
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  height: imgSize *
-                    (widget.liquidController.currentPage == widget.nr-1
-                      ? ui.lerpDouble(minImgSwipeSize, 1, 1-widget.swipeAnimation.value)!
-                      : ui.lerpDouble(minImgSwipeSize, 1, widget.swipeAnimation.value)!),
-                  width: imgSize,
-                  left: calculateLeftOffset(imgSize, parallaxForeground) + imgSize*padding,
-                  child: RepaintBoundary(
-                    child: RawImage(
-                      image: widget.backgroundSvgPictureInfo,
+                  Positioned(
+                    height: imgSize *
+                      (widget.liquidController.currentPage == widget.nr-1
+                        ? ui.lerpDouble(minImgSwipeSize, 1, 1-widget.swipeAnimation.value)!
+                        : ui.lerpDouble(minImgSwipeSize, 1, widget.swipeAnimation.value)!),
+                    width: imgSize,
+                    left: calculateLeftOffset(imgSize, parallaxForeground) + imgSize*padding,
+                    child: RepaintBoundary(
+                      child: RawImage(
+                        image: widget.backgroundSvgPictureInfo,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Positioned(
-            height: textSize,
-            width: imgSize,
-            top:  imgSize*(1+padding)+imageTopPadding,
-            child: Column(
-              children: [
-                const SizedBox(height: 5,),
-                FittedBox(
-                  child: Text(
-                    widget.headerText,
+            Positioned(
+              height: textSize,
+              width: imgSize,
+              top:  imgSize*(1+padding)+imageTopPadding,
+              child: Column(
+                children: [
+                  const SizedBox(height: 5,),
+                  FittedBox(
+                    child: Text(
+                      widget.headerText,
+                      textAlign: TextAlign.center,
+                      textScaler: const TextScaler.linear(1.5),
+                      style: const TextStyle(
+                        color: Colors.white
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10,),
+                  Text(
+                    widget.text,
                     textAlign: TextAlign.center,
-                    textScaler: const TextScaler.linear(1.5),
+                    textScaler: const TextScaler.linear(1),
                     style: const TextStyle(
                       color: Colors.white
                     ),
-                  ),
-                ),
-                const SizedBox(height: 10,),
-                Text(
-                  widget.text,
-                  textAlign: TextAlign.center,
-                  textScaler: const TextScaler.linear(1),
-                  style: const TextStyle(
-                    color: Colors.white
-                  ),
-                )
-              ],
-            )
-          ),
-          // skip
-          Positioned(
-            bottom: 8,
-            left: 24,
-            child: SizedBox(
-              height: 36,
-              child: InkWell(
-                onTap: (){
-                  widget.liquidController.animateToPage(page: widget.totalPages);
-                }, 
-                child: Center(
-                  child: Text(
-                    LocaleKeys.General_skip.tr(),
-                    style: const TextStyle(color: Colors.white),
                   )
-                )
+                ],
+              )
+            ),
+            // skip
+            Positioned(
+              bottom: 8,
+              left: 24,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minWidth: 100,
+                  minHeight: 36
+                ),
+                child: InkWell(
+                  onTap: (){
+                    widget.liquidController.animateToPage(page: widget.totalPages);
+                  }, 
+                  child: Center(
+                    child: Text(
+                      LocaleKeys.General_skip.tr(),
+                      style: const TextStyle(color: Colors.white),
+                    )
+                  )
+                ),
               ),
             ),
-          ),
-          Positioned(
-            // padding + half button size - half indicatr
-            bottom: 8 + 36/2 - indicatorSize/2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ...[
-                  for (int i = 0; i < widget.totalPages; i++)
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        0, 0, i+1 < widget.totalPages ? indicatorSize : 0, 0
-                      ),
-                      child: Container(
-                        width: indicatorSize,
-                        height: indicatorSize,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: widget.nr-1 == i ? Colors.white : Colors.black,
+            Positioned(
+              // padding + half button size - half indicator
+              bottom: 8 + 36/2 - indicatorSize/2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ...[
+                    for (int i = 0; i < widget.totalPages; i++)
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          0, 0, i+1 < widget.totalPages ? indicatorSize : 0, 0
+                        ),
+                        child: Container(
+                          width: indicatorSize,
+                          height: indicatorSize,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: widget.nr-1 == i ? Colors.white : Colors.black,
+                          ),
                         ),
                       ),
-                    ),
-                ],
-              ]
+                  ],
+                ]
+              ),
             ),
-          ),
-          //next
-          Positioned(
-            bottom: 8,
-            right: 24,
-            child: SizedBox(
-              height: 36,
-              child: GestureDetector(
-                onTap: (){
-                  widget.liquidController.animateToPage(
-                    page: widget.liquidController.currentPage + 1
-                  );
-                },
-                child: Center(
-                  child: Text(
-                    "${LocaleKeys.General_next.tr()} →",
-                    style: const TextStyle(color: Colors.white),
+            //next
+            Positioned(
+              bottom: 8,
+              right: 24,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minWidth: 100,
+                  minHeight: 36
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: (){
+                      widget.liquidController.animateToPage(
+                        page: widget.liquidController.currentPage + 1,
+                        duration: 150*widget.totalPages
+                      );
+                      widget.swipeAnimation.forward();
+                    },
+                    child: Center(
+                      child: Text(
+                        "${LocaleKeys.General_next.tr()} →",
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              )
             )
-          )
-        ],
-      )
+          ],
+        )
+      ),
     );
   }
 
