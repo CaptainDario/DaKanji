@@ -1,5 +1,17 @@
 # DaKanji Beta - changelog
 
+## v3.4.1+102b1 - ワードリストと暗記 (15.05.2024)
+
+Fixed:
+
+- Anki integration on windows
+- Katakana origins images not loading
+- Word list sorting text hard to read in light mode
+- Updated sentry for better handled / unhandled tags
+- Spaces between PoS elements of dictionary entries
+- Mecab not loading on iOS/MacOS
+- Sharing entries as image does not respect the current theme
+
 ## v3.4.0+100b7 - ワードリストと暗記 (05.05.2024)
 
 * Improvements

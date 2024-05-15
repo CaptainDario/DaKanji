@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v3.4.1 - ワードリストと暗記 (.5.2024)
+## v3.4.1 - ワードリストと暗記 (19.5.2024)
 
 Fixed:
 
@@ -12,6 +12,7 @@ Fixed:
 - Spaces between PoS elements of dictionary entries
 - Mecab not loading on iOS/MacOS
 - Sharing entries as image does not respect the current theme
+- Show word frequency in dictionary if selected
 
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
