@@ -242,7 +242,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                         page: widget.liquidController.currentPage + 1,
                         duration: 150*widget.totalPages
                       );
-                      widget.swipeAnimation.forward();
+                      Future.delayed(Duration(milliseconds: 150*widget.totalPages)).then((value) {
+                        widget.swipeAnimation.forward();
+                      });
                     },
                     child: Center(
                       child: Text(
