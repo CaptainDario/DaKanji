@@ -13,6 +13,7 @@ Fixed:
 - Mecab not loading on iOS/MacOS
 - Sharing entries as image does not respect the current theme
 - Show word frequency in dictionary if selected
+- Onboarding: Pressing the next button does not trigger animations
 
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
