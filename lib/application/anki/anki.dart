@@ -68,6 +68,7 @@ class Anki {
     // check that anki is available
     if(!await checkAnkiAvailable()){
       debugPrint("Anki not running");
+      return false;
     }
     // assure that the DaKanji card type is present
     if(!Platform.isIOS && !(await daKanjiModelExists())) {
@@ -99,6 +100,7 @@ class Anki {
     // check that anki is running
     if(!await checkAnkiAvailable()){
       debugPrint("Anki not running");
+      return false;
     }
     // assure that the DaKanji card type is present
     if(Platform.isIOS && !(await daKanjiModelExists())) {

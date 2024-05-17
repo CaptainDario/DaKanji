@@ -21,7 +21,7 @@ import 'package:da_kanji_mobile/widgets/settings/anki_settings_column.dart';
 AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
 
   if(!GetIt.I<Settings>().anki.showAnkiSettingsDialogBeforeAdding) {
-    addToAnki(entry);
+    addToAnki(entry, context);
     return null;
   }
 
@@ -32,8 +32,9 @@ AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
     onDismissCallback: (type) {},
     dialogType: DialogType.noHeader,
     btnOkColor: g_Dakanji_green,
+    btnOkText: LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
     btnOkOnPress: () {
-      addToAnki(entry);
+      addToAnki(entry, context);
       if(g_NavigatorKey.currentContext != null){
         Navigator.of(g_NavigatorKey.currentContext!).pop();
       }
@@ -67,7 +68,7 @@ AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
 }
 
 /// Adds the given note to anki
-void addToAnki(JMdict entry) async {
+void addToAnki(JMdict entry, BuildContext context) async {
 
   AnkiNote note = AnkiNote.fromJMDict(
     GetIt.I<Settings>().anki.defaultDeck!,
@@ -77,6 +78,15 @@ void addToAnki(JMdict entry) async {
     ),
     translationsPerLang: GetIt.I<Settings>().anki.noTranslations
   );
-  await GetIt.I<Anki>().addNote(note);
+  bool added = await GetIt.I<Anki>().addNote(note);
+
+  if(!added){
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(
+        LocaleKeys.ManualScreen_anki_test_connection_not_installed.tr()
+      )),
+    );
+  }
 
 }
