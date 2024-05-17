@@ -131,7 +131,7 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
           },
         ),
         // URL to communicate with anki connect
-        if(Platform.isMacOS || Platform.isLinux || Platform.isWindows)
+        if(g_desktopPlatform)
           ResponsiveInputFieldTile(
             enabled: true,
             text: widget.settings.anki.desktopAnkiURL,
