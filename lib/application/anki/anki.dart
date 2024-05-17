@@ -24,11 +24,11 @@ class Anki {
   /// User settings for anki
   SettingsAnki settingsAnki;
   /// Communication with anki desktop
-  AnkiDesktop? ankiDesktop;
+  late final AnkiDesktop? ankiDesktop;
   /// Communication with anki android
-  AnkiAndroid? ankiAndroid;
+  late final AnkiAndroid? ankiAndroid;
   /// Communication with anki ios
-  AnkiiOS? ankiiOS;
+  late final AnkiiOS? ankiiOS;
 
 
   Anki(
@@ -103,7 +103,7 @@ class Anki {
       return false;
     }
     // assure that the DaKanji card type is present
-    if(Platform.isIOS && !(await daKanjiModelExists())) {
+    if(!Platform.isIOS && !(await daKanjiModelExists())) {
       await addDaKanjiModel();
     }
 
