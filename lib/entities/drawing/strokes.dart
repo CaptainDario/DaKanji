@@ -95,7 +95,7 @@ class Strokes with ChangeNotifier{
   /// Deletes the last stroke of all drawn strokes WITHOUT notifying listeners.
   void removeLastStroke(){
 
-    if(strokeCount > 0){
+    if(strokeCount > 0 && _path.computeMetrics().isNotEmpty){
       // get all strokes except for the last one
       var p = _path.computeMetrics().take(_path.computeMetrics().length - 1);
       var newPath = Path();
