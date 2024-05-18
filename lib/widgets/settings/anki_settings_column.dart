@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
-import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
