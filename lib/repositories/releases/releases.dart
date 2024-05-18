@@ -18,6 +18,7 @@ Future<void> updateAvailable() async {
 
   try {
     Dio().get(g_GithubReleasesApi).then((response) async {
+
       List<Version> versions = (List<String?>.from(
       // extract tag name (version)
       response.data.map((e) => e["tag_name"])))
@@ -70,6 +71,9 @@ Future<void> updateAvailable() async {
       prefs.setStringList("updateAvailable", updates);
       prefs.setString("updateVersion", versions.first.fullVersionString);
 
+    }).onError((e, s) {
+      debugPrint(e.toString());
+      debugPrint(s.toString());
     });
   }
   on Exception catch (e) {

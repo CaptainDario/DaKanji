@@ -16,6 +16,7 @@ Fixed:
 - Onboarding: Pressing the next button does not trigger animations
 - Drawing: when pressing repeatedly the undo button the predictions are not cleared
 - Improved performance with Flutter 3.22
+- Exception when checking for new release
 
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
