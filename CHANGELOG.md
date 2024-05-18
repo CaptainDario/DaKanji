@@ -15,6 +15,7 @@ Fixed:
 - Show word frequency in dictionary if selected
 - Onboarding: Pressing the next button does not trigger animations
 - Drawing: when pressing repeatedly the undo button the predictions are not cleared
+- Improved performance with Flutter 3.22
 
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
