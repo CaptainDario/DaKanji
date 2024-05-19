@@ -30,9 +30,6 @@ class PathManager {
   Future<void> init() async {
 
     Directory supportDirectory = (await path_provider.getApplicationSupportDirectory());
-    if(supportDirectory.path.contains(" ")){
-      supportDirectory = Directory(supportDirectory.path.replaceAll(" ", ""));
-    }
 
     dakanjiSupportDirectory = Directory(p.joinAll([supportDirectory.path, "DaKanji"]));
 
