@@ -3,19 +3,23 @@
 
 ## v3.4.1 - ワードリストと暗記 (19.5.2024)
 
-Fixed:
+Added:
 
+- Added drawer manual
+- Show word frequency in dictionary if selected
+
+Fixed / Improved:
+
+- Improved performance with Flutter 3.22
+- Spaces between PoS elements of dictionary entries
+- Updated sentry for better handled / unhandled tags
+- Word list sorting text hard to read in light mode
 - Anki integration on windows
 - Katakana origins images not loading
-- Word list sorting text hard to read in light mode
-- Updated sentry for better handled / unhandled tags
-- Spaces between PoS elements of dictionary entries
-- Mecab not loading on iOS/MacOS
+- Mecab not loading on iOS/MacOS/certain configurations
 - Sharing entries as image does not respect the current theme
-- Show word frequency in dictionary if selected
 - Onboarding: Pressing the next button does not trigger animations
 - Drawing: when pressing repeatedly the undo button the predictions are not cleared
-- Improved performance with Flutter 3.22
 - Exception when checking for new release
 
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
