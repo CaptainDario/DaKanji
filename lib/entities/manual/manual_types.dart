@@ -6,5 +6,6 @@ enum ManualTypes{
   dojg,
   anki,
   kanaTable,
-  deepLinks
+  deepLinks,
+  misc
 }

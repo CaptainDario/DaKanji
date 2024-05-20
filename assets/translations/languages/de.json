@@ -278,6 +278,10 @@
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) ist eine Reihe von B\u00fcchern \u00fcber japanische Grammatik. DaKanji erlaubt es, das [Anki-Deck (das Sie hier herunterladen k\u00f6nnen)](https://dojgdeck.neocities.org/) zu importieren und dann seinen Inhalt zu durchsuchen.  \nEs existiert in zwei Versionen: eine mit Bildern und eine ohne. Sie k\u00f6nnen beide Versionen importieren, indem Sie sie zuerst herunterladen und dann die .apkg-Datei ausw\u00e4hlen, wenn Sie auf dem DoJG-Bildschirm dazu aufgefordert werden.",
     "dojg_import_title": "Wie man DoJG einrichtet",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "Navigation-drawer",
+    "misc_drawer_reorder_heading": "Anpassen",
+    "misc_drawer_reorder_text": "Um jedem Benutzer die bestm\u00f6gliche Anpassung zu erm\u00f6glichen, erlaubt DaKanji die Neuanordnung der Elemente im Hauptnavigationsmen\u00fc. Dr\u00fccken Sie einfach auf einen beliebigen Men\u00fceintrag, bis Sie ihn an die gew\u00fcnschte Stelle ziehen k\u00f6nnen.",
+    "misc_title": "Sonstiges",
     "text_selection_grow_text": "Mit diesem Button k\u00f6nnen Sie die aktuelle Textauswahl vergr\u00f6\u00dfern. Durch einmaliges Dr\u00fccken wird die aktuelle Auswahl um ein Token (Wort) erweitert. Durch langes Dr\u00fccken wird die aktuelle Auswahl um ein Zeichen vergr\u00f6\u00dfert.",
     "text_selection_grow_title": "Auswahl vergr\u00f6\u00dfern",
     "text_selection_left_text": "Mit diesem Button k\u00f6nnen Sie die aktuelle Textauswahl \u00e4ndern. Wenn Sie sie dr\u00fccken, wird das vorherige Token (Wort) ausgew\u00e4hlt. Durch langes Dr\u00fccken wird das vorherige Zeichen ausgew\u00e4hlt.",
@@ -420,6 +424,11 @@
     "tutorial_processed_text_triple_tap": "Durch dreimaliges Antippen wird ein Absatz ausgew\u00e4hlt.",
     "tutorial_spaces_text": "Mit dieser Schaltfl\u00e4che werden dem Text Leerzeichen hinzugef\u00fcgt.",
     "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einf\u00fcgen. Dieser Text kann mit verschiedenen Tools bearbeitet."
+  },
+  "UserScreen": {
+    "title": "Konto",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": ""
   },
   "WebviewScreen": {
     "loading": "Suche",

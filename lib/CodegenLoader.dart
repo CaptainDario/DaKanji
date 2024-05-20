@@ -256,6 +256,10 @@ class CodegenLoader extends AssetLoader{
     "dojg_import_text": "日语语法词典》（DoJG）是一套有关日语语法的丛书。DaKanji 允许导入其 [Anki 卡组（可在此下载）](https://dojgdeck.neocities.org/) 并搜索其内容。  \n它有两个版本：一个带图片，一个不带图片。您可以导入任何一个版本，首先下载，然后在 DoJG 屏幕上选择 .apkg 文件进行导入。",
     "dojg_import_title": "如何设置 DoJG",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "导航抽屉",
+    "misc_drawer_reorder_heading": "定制",
+    "misc_drawer_reorder_text": "为了以最佳方式满足每位用户的需求，DaKanji 允许您对主导航菜单中的元素重新排序。只需按下任何菜单条目，即可将其拖动到您想要的位置。",
+    "misc_title": "杂项",
     "text_selection_grow_text": "通过该按钮可以扩大当前文本选区。按一次将使当前选区增加一个标记（单词）。长按该按钮将使当前选区增加一个字符。",
     "text_selection_grow_title": "种植选择",
     "text_selection_left_text": "该按钮允许您更改当前文本选择。按下它将选择上一个标记（单词）。长按它将选择上一个字符。",
@@ -384,6 +388,10 @@ class CodegenLoader extends AssetLoader{
     "tutorial_processed_text_triple_tap": "点击三下将选择一个段落。",
     "tutorial_spaces_text": "有了这个按钮，就可以在文本中添加空格。",
     "tutorial_text_input_text": "在这里，你可以写或粘贴任何文本。这个文本将被不同的工具处理。"
+  },
+  "UserScreen": {
+    "title": "账户",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
   },
   "WebviewScreen": {
     "loading": "搜索",
@@ -694,6 +702,10 @@ static const Map<String,dynamic> ja = {
     "dojg_import_text": "日本語文法辞典(DoJG)は、日本語文法に関する書籍のシリーズです。Dakanjiは、[Ankiデッキ(ここからダウンロードできます)](https://dojgdeck.neocities.org/)をインポートして、内容を検索することができます。  \nDakanjiには、画像付きと画像なしの2つのバージョンがあります。ダウンロードした後、DoJGの画面で.apkgファイルを選択してインポートしてください。",
     "dojg_import_title": "DoJGの設定方法",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "ナビゲーションドロワー",
+    "misc_drawer_reorder_heading": "カスタマイズ",
+    "misc_drawer_reorder_text": "大漢字では、すべてのユーザーに最適な方法でご利用いただけるよう、メインナビゲーションメニューの順番を変更することができます。どのメニュー項目も、ドラッグして好きな場所に移動できます。",
+    "misc_title": "その他",
     "text_selection_grow_text": "このボタンを押すと、現在のテキストの選択範囲が大きくなります。1回押すと、現在の選択範囲が1単語分大きくなります。長押しすると、現在の選択範囲が1文字分大きくなります。",
     "text_selection_grow_title": "選択範囲の拡大",
     "text_selection_left_text": "このボタンを押すと、現在選択されているテキストを変更することができます。このボタンを押すと、前の単語が選択されます。長押しすると前の文字が選択されます。",
@@ -836,6 +848,10 @@ static const Map<String,dynamic> ja = {
     "tutorial_processed_text_triple_tap": "トリプルタップで段落が選択されます",
     "tutorial_spaces_text": "テキストにスペースを追加します",
     "tutorial_text_input_text": "文章を入力してください。かなを振ったり、品詞を調べたりできます"
+  },
+  "UserScreen": {
+    "title": "アカウント",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
   },
   "WebviewScreen": {
     "loading": "検索中",
@@ -1162,6 +1178,10 @@ static const Map<String,dynamic> de = {
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) ist eine Reihe von Büchern über japanische Grammatik. DaKanji erlaubt es, das [Anki-Deck (das Sie hier herunterladen können)](https://dojgdeck.neocities.org/) zu importieren und dann seinen Inhalt zu durchsuchen.  \nEs existiert in zwei Versionen: eine mit Bildern und eine ohne. Sie können beide Versionen importieren, indem Sie sie zuerst herunterladen und dann die .apkg-Datei auswählen, wenn Sie auf dem DoJG-Bildschirm dazu aufgefordert werden.",
     "dojg_import_title": "Wie man DoJG einrichtet",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "Navigation-drawer",
+    "misc_drawer_reorder_heading": "Anpassen",
+    "misc_drawer_reorder_text": "Um jedem Benutzer die bestmögliche Anpassung zu ermöglichen, erlaubt DaKanji die Neuanordnung der Elemente im Hauptnavigationsmenü. Drücken Sie einfach auf einen beliebigen Menüeintrag, bis Sie ihn an die gewünschte Stelle ziehen können.",
+    "misc_title": "Sonstiges",
     "text_selection_grow_text": "Mit diesem Button können Sie die aktuelle Textauswahl vergrößern. Durch einmaliges Drücken wird die aktuelle Auswahl um ein Token (Wort) erweitert. Durch langes Drücken wird die aktuelle Auswahl um ein Zeichen vergrößert.",
     "text_selection_grow_title": "Auswahl vergrößern",
     "text_selection_left_text": "Mit diesem Button können Sie die aktuelle Textauswahl ändern. Wenn Sie sie drücken, wird das vorherige Token (Wort) ausgewählt. Durch langes Drücken wird das vorherige Zeichen ausgewählt.",
@@ -1304,6 +1324,10 @@ static const Map<String,dynamic> de = {
     "tutorial_processed_text_triple_tap": "Durch dreimaliges Antippen wird ein Absatz ausgewählt.",
     "tutorial_spaces_text": "Mit dieser Schaltfläche werden dem Text Leerzeichen hinzugefügt.",
     "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einfügen. Dieser Text kann mit verschiedenen Tools bearbeitet."
+  },
+  "UserScreen": {
+    "title": "Konto",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
   },
   "WebviewScreen": {
     "loading": "Suche",
@@ -1592,6 +1616,10 @@ static const Map<String,dynamic> ru = {
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) - это серия книг по японской грамматике. DaKanji позволяет импортировать его [колоду Anki (которую можно скачать здесь)](https://dojgdeck.neocities.org/), а затем осуществлять поиск по его содержимому.  \nОна существует в двух версиях: с картинками и без. Вы можете импортировать любую из них, сначала скачав ее, а затем выбрав файл .apkg на экране DoJG.",
     "dojg_import_title": "Как настроить DoJG",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "Навигационный ящик",
+    "misc_drawer_reorder_heading": "Настроить",
+    "misc_drawer_reorder_text": "Чтобы наилучшим образом удовлетворить потребности каждого пользователя, DaKanji позволяет изменять порядок элементов в главном навигационном меню. Просто нажмите на любой пункт меню, чтобы перетащить его в нужное место.",
+    "misc_title": "Разное",
     "text_selection_grow_text": "Эта кнопка позволяет увеличить текущее выделение текста. При однократном нажатии текущее выделение увеличивается на одну лексему (слово). При длительном нажатии текущее выделение увеличивается на один символ.",
     "text_selection_grow_title": "Выбор выращивания",
     "text_selection_left_text": "Эта кнопка позволяет изменить текущее выделение текста. При нажатии на нее выделяется предыдущая лексема (слово). При длительном нажатии выделяется предыдущий символ.",
@@ -1720,6 +1748,10 @@ static const Map<String,dynamic> ru = {
     "tutorial_processed_text_triple_tap": "Тройное нажатие позволяет выбрать абзац.",
     "tutorial_spaces_text": "С помощью этой кнопки в текст добавляются пробелы.",
     "tutorial_text_input_text": "Здесь вы можете написать или вставить любой текст. Этот текст будет обработан с помощью различных инструментов."
+  },
+  "UserScreen": {
+    "title": "Счет",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
   },
   "WebviewScreen": {
     "loading": "Поиск",
@@ -2043,6 +2075,10 @@ static const Map<String,dynamic> pl = {
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) to seria książek o gramatyce japońskiej. DaKanji pozwala zaimportować [Anki deck (który można pobrać tutaj)](https://dojgdeck.neocities.org/), a następnie przeszukiwać jego zawartość.  \nIstnieje w dwóch wersjach: z obrazkami i bez. Możesz zaimportować dowolną z nich, najpierw pobierając ją, a następnie importując, wybierając plik .apkg, gdy zostaniesz o to poproszony na ekranie DoJG.",
     "dojg_import_title": "Jak skonfigurować DoJG",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "Szuflada nawigacji",
+    "misc_drawer_reorder_heading": "Dostosuj",
+    "misc_drawer_reorder_text": "Aby jak najlepiej dopasować się do każdego użytkownika, DaKanji umożliwia zmianę kolejności elementów w głównym menu nawigacyjnym. Wystarczy nacisnąć dowolną pozycję menu, aby przeciągnąć ją w żądane miejsce.",
+    "misc_title": "Różne",
     "text_selection_grow_text": "Ten przycisk umożliwia powiększenie bieżącego zaznaczenia tekstu. Jednokrotne naciśnięcie powoduje powiększenie bieżącego zaznaczenia o jeden token (słowo). Długie naciśnięcie spowoduje powiększenie bieżącego zaznaczenia o jeden znak.",
     "text_selection_grow_title": "Wybór uprawy",
     "text_selection_left_text": "Ten przycisk umożliwia zmianę bieżącego zaznaczenia tekstu. Jego naciśnięcie spowoduje wybranie poprzedniego tokenu (słowa). Długie naciśnięcie spowoduje zaznaczenie poprzedniej postaci.",
@@ -2185,6 +2221,10 @@ static const Map<String,dynamic> pl = {
     "tutorial_processed_text_triple_tap": "Potrójne stuknięcie powoduje zaznaczenie akapitu.",
     "tutorial_spaces_text": "Za pomocą tego przycisku do tekstu dodawane są spacje.",
     "tutorial_text_input_text": "Tutaj możesz napisać lub wkleić dowolny tekst. Ten tekst będzie przetwarzany za pomocą różnych narzędzi."
+  },
+  "UserScreen": {
+    "title": "Konto",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
   },
   "WebviewScreen": {
     "loading": "Ładowanie",
@@ -2511,6 +2551,10 @@ static const Map<String,dynamic> en = {
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) is a series of books about Japanese Grammar. DaKanji allows to import its [Anki deck (that you can download here)](https://dojgdeck.neocities.org/) and then search its content.  \nIt exists in two versions: one with images and one without. You can import either one by first downloading it and then importing it by selecting the .apkg file when asked on the DoJG screen.",
     "dojg_import_title": "How to setup DoJG",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "Navigation drawer",
+    "misc_drawer_reorder_heading": "Customize",
+    "misc_drawer_reorder_text": "To suit every user in the best way possible, DaKanji allows you to reorder the elements in the main navigation menu. Simply press on any menu entry until you can drag it to your desired spot.",
+    "misc_title": "Miscellaneous",
     "text_selection_grow_text": "This button allows you to grow the current text selection. Pressing it once will grow the current selection by one token (word). Long-pressing it will grow the current selection by one character.",
     "text_selection_grow_title": "Grow selection",
     "text_selection_left_text": "This button allows you to change the current text selection. Pressing it will select the previous token (word). Long-pressing it will select the previous charatcer.",
@@ -2653,6 +2697,11 @@ static const Map<String,dynamic> en = {
     "tutorial_processed_text_triple_tap": "A triple tap will select a paragraph.",
     "tutorial_spaces_text": "With this button spaces are added to the text.",
     "tutorial_text_input_text": "Here you can write or paste any text. This text can be processed with different tools."
+  },
+  "UserScreen": {
+    "title": "Account",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the account screen!"
   },
   "WebviewScreen": {
     "loading": "Searching",
@@ -2941,6 +2990,10 @@ static const Map<String,dynamic> it = {
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) è una serie di libri sulla grammatica giapponese. DaKanji permette di importare il suo [mazzo Anki (che potete scaricare qui)](https://dojgdeck.neocities.org/) e di cercarne il contenuto.  \nEsiste in due versioni: una con immagini e una senza. È possibile importare una delle due versioni scaricandola e poi importandola selezionando il file .apkg quando viene richiesto nella schermata di DoJG.",
     "dojg_import_title": "Come impostare DoJG",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "Cassetto di navigazione",
+    "misc_drawer_reorder_heading": "Personalizzare",
+    "misc_drawer_reorder_text": "Per soddisfare al meglio ogni utente, DaKanji consente di riordinare gli elementi del menu di navigazione principale. È sufficiente premere su qualsiasi voce di menu per trascinarla nel punto desiderato.",
+    "misc_title": "Varie",
     "text_selection_grow_text": "Questo pulsante consente di aumentare la selezione di testo corrente. Premendolo una volta, la selezione corrente crescerà di un token (parola). Premendolo a lungo, la selezione corrente crescerà di un carattere.",
     "text_selection_grow_title": "Selezione della coltivazione",
     "text_selection_left_text": "Questo pulsante consente di cambiare la selezione del testo corrente. Premendolo si seleziona il token (parola) precedente. Premendo a lungo si seleziona il carattere precedente.",
@@ -3069,6 +3122,10 @@ static const Map<String,dynamic> it = {
     "tutorial_processed_text_triple_tap": "Un triplo tocco selezionerà un paragrafo.",
     "tutorial_spaces_text": "Con questo pulsante vengono aggiunti spazi al testo.",
     "tutorial_text_input_text": "Qui è possibile scrivere o incollare qualsiasi testo. Il testo verrà elaborato con diversi strumenti."
+  },
+  "UserScreen": {
+    "title": "Conto",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
   },
   "WebviewScreen": {
     "loading": "Ricerca",
@@ -3357,6 +3414,10 @@ static const Map<String,dynamic> fr = {
     "dojg_import_text": "Le Dictionnaire de grammaire japonaise (DoJG) est une série de livres sur la grammaire japonaise. DaKanji permet d'importer son [Anki deck (que vous pouvez télécharger ici)] (https://dojgdeck.neocities.org/) et de faire des recherches dans son contenu.  \nIl existe en deux versions : l'une avec des images et l'autre sans. Vous pouvez importer l'une ou l'autre en la téléchargeant puis en sélectionnant le fichier .apkg lorsque l'écran de DoJG vous le demande.",
     "dojg_import_title": "Comment configurer DoJG",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "Tiroir de navigation",
+    "misc_drawer_reorder_heading": "Personnaliser",
+    "misc_drawer_reorder_text": "Pour s'adapter au mieux à chaque utilisateur, DaKanji vous permet de réorganiser les éléments du menu de navigation principal. Il suffit d'appuyer sur n'importe quel élément du menu pour le faire glisser à l'endroit désiré.",
+    "misc_title": "Divers",
     "text_selection_grow_text": "Ce bouton vous permet d'agrandir la sélection de texte actuelle. En appuyant une fois sur ce bouton, vous agrandirez la sélection actuelle d'un token (mot). Une pression longue sur ce bouton permet d'agrandir la sélection actuelle d'un caractère.",
     "text_selection_grow_title": "Sélection des cultures",
     "text_selection_left_text": "Ce bouton vous permet de modifier la sélection de texte en cours. Une pression sur ce bouton permet de sélectionner le token (mot) précédent. Une pression longue sur ce bouton permet de sélectionner le caractère précédent.",
@@ -3485,6 +3546,10 @@ static const Map<String,dynamic> fr = {
     "tutorial_processed_text_triple_tap": "Une triple tape permet de sélectionner un paragraphe.",
     "tutorial_spaces_text": "Ce bouton permet d'ajouter des espaces au texte.",
     "tutorial_text_input_text": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils."
+  },
+  "UserScreen": {
+    "title": "Compte",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
   },
   "WebviewScreen": {
     "loading": "Recherche",
@@ -3773,6 +3838,10 @@ static const Map<String,dynamic> es = {
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) es una serie de libros sobre gramática japonesa. DaKanji permite importar su [Anki deck (que puedes descargar aquí)](https://dojgdeck.neocities.org/) y luego buscar en su contenido.  \nExiste en dos versiones: una con imágenes y otra sin ellas. Puedes importar cualquiera de las dos descargándola primero y luego importándola seleccionando el archivo .apkg cuando te lo pida la pantalla de DoJG.",
     "dojg_import_title": "Cómo configurar DoJG",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "Cajón de navegación",
+    "misc_drawer_reorder_heading": "Personalice",
+    "misc_drawer_reorder_text": "Para adaptarse a cada usuario de la mejor manera posible, DaKanji te permite reordenar los elementos del menú de navegación principal. Solo tienes que pulsar sobre cualquier entrada del menú hasta que puedas arrastrarla al lugar que desees.",
+    "misc_title": "Varios",
     "text_selection_grow_text": "Este botón le permite aumentar la selección de texto actual. Si lo pulsa una vez, la selección aumentará un token (palabra). Si lo mantiene pulsado, la selección aumentará un carácter.",
     "text_selection_grow_title": "Selección de cultivos",
     "text_selection_left_text": "Este botón le permite cambiar la selección de texto actual. Si lo pulsa, seleccionará la palabra anterior. Si lo mantiene pulsado, seleccionará el carácter anterior.",
@@ -3901,6 +3970,10 @@ static const Map<String,dynamic> es = {
     "tutorial_processed_text_triple_tap": "Un triple toque seleccionará un párrafo.",
     "tutorial_spaces_text": "Con este botón se añaden espacios al texto.",
     "tutorial_text_input_text": "Aquí puedes escribir o pegar cualquier texto. Este texto será procesado con diferentes herramientas."
+  },
+  "UserScreen": {
+    "title": "Cuenta",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
   },
   "WebviewScreen": {
     "loading": "Buscando",

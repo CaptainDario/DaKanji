@@ -263,6 +263,10 @@ abstract class  LocaleKeys {
   static const ManualScreen_dojg_import_text = 'ManualScreen.dojg_import_text';
   static const ManualScreen_dojg_import_title = 'ManualScreen.dojg_import_title';
   static const ManualScreen_dojg_title = 'ManualScreen.dojg_title';
+  static const ManualScreen_misc_drawer_heading = 'ManualScreen.misc_drawer_heading';
+  static const ManualScreen_misc_drawer_reorder_heading = 'ManualScreen.misc_drawer_reorder_heading';
+  static const ManualScreen_misc_drawer_reorder_text = 'ManualScreen.misc_drawer_reorder_text';
+  static const ManualScreen_misc_title = 'ManualScreen.misc_title';
   static const ManualScreen_text_selection_grow_text = 'ManualScreen.text_selection_grow_text';
   static const ManualScreen_text_selection_grow_title = 'ManualScreen.text_selection_grow_title';
   static const ManualScreen_text_selection_left_text = 'ManualScreen.text_selection_left_text';
@@ -403,6 +407,10 @@ abstract class  LocaleKeys {
   static const TextScreen_tutorial_spaces_text = 'TextScreen.tutorial_spaces_text';
   static const TextScreen_tutorial_text_input_text = 'TextScreen.tutorial_text_input_text';
   static const TextScreen = 'TextScreen';
+  static const UserScreen_title = 'UserScreen.title';
+  static const UserScreen_tutorial_begin_text = 'UserScreen.tutorial_begin_text';
+  static const UserScreen_tutorial_begin_title = 'UserScreen.tutorial_begin_title';
+  static const UserScreen = 'UserScreen';
   static const WebviewScreen_loading = 'WebviewScreen.loading';
   static const WebviewScreen_title = 'WebviewScreen.title';
   static const WebviewScreen = 'WebviewScreen';

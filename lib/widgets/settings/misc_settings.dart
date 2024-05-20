@@ -40,7 +40,7 @@ class _MiscSettingsState extends State<MiscSettings> {
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
       LocaleKeys.SettingsScreen_misc_title.tr(),
-      Icons.settings,
+      Icons.miscellaneous_services,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // theme

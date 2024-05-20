@@ -3951,6 +3951,77 @@
       "fr": "Les liens profonds sont un moyen d'accéder directement au contenu d'une application. DaKanji propose deux schémas pour cela : dakanji:// et http(s)://dakanji.app/app. En utilisant cette fonctionnalité, vous pouvez par exemple ouvrir la recherche dans le dictionnaire en tapant sur ce lien dakanji://dictionary?search=食べる. Pour tous les liens supportés, voir [dakanji.app/deep-links](https://dakanji.app/deep-links)",
       "es": "Los enlaces profundos son una forma de enlazar directamente al contenido de una aplicación. DaKanji ofrece dos esquemas para ello dakanji:// y http(s)://dakanji.app/app. Usando esta función puedes, por ejemplo, abrir la búsqueda del diccionario al tocar este enlace [dakanji://diccionario?buscar=食べる](dakanji://diccionario?buscar=食べる). Para ver todos los enlaces compatibles, consulta [dakanji.app/deep-links](https://dakanji.app/deep-links)",
       "pl": "Głębokie linki to sposób na bezpośrednie linkowanie do treści w aplikacji. DaKanji zapewnia dwa schematy dla tego dakanji:// i http(s)://dakanji.app/app. Korzystając z tej funkcji, możesz na przykład otworzyć wyszukiwanie słownika po dotknięciu tego linku dakanji://dictionary?search=食べる. Wszystkie obsługiwane linki można znaleźć na stronie [dakanji.app/deep-links](https://dakanji.app/deep-links)."
+    },
+    "misc_title": {
+      "en": "Miscellaneous",
+      "de": "Sonstiges",
+      "ru": "Разное",
+      "ja": "その他",
+      "zh": "杂项",
+      "it": "Varie",
+      "fr": "Divers",
+      "es": "Varios",
+      "pl": "Różne"
+    },
+    "misc_drawer_heading": {
+      "en": "Navigation drawer",
+      "de": "Navigation-drawer",
+      "ru": "Навигационный ящик",
+      "ja": "ナビゲーションドロワー",
+      "zh": "导航抽屉",
+      "it": "Cassetto di navigazione",
+      "fr": "Tiroir de navigation",
+      "es": "Cajón de navegación",
+      "pl": "Szuflada nawigacji"
+    },
+    "misc_drawer_reorder_heading": {
+      "en": "Customize",
+      "de": "Anpassen",
+      "ru": "Настроить",
+      "ja": "カスタマイズ",
+      "zh": "定制",
+      "it": "Personalizzare",
+      "fr": "Personnaliser",
+      "es": "Personalice",
+      "pl": "Dostosuj"
+    },
+    "misc_drawer_reorder_text": {
+      "en": "To suit every user in the best way possible, DaKanji allows you to reorder the elements in the main navigation menu. Simply press on any menu entry until you can drag it to your desired spot.",
+      "de": "Um jedem Benutzer die bestmögliche Anpassung zu ermöglichen, erlaubt DaKanji die Neuanordnung der Elemente im Hauptnavigationsmenü. Drücken Sie einfach auf einen beliebigen Menüeintrag, bis Sie ihn an die gewünschte Stelle ziehen können.",
+      "ru": "Чтобы наилучшим образом удовлетворить потребности каждого пользователя, DaKanji позволяет изменять порядок элементов в главном навигационном меню. Просто нажмите на любой пункт меню, чтобы перетащить его в нужное место.",
+      "ja": "大漢字では、すべてのユーザーに最適な方法でご利用いただけるよう、メインナビゲーションメニューの順番を変更することができます。どのメニュー項目も、ドラッグして好きな場所に移動できます。",
+      "zh": "为了以最佳方式满足每位用户的需求，DaKanji 允许您对主导航菜单中的元素重新排序。只需按下任何菜单条目，即可将其拖动到您想要的位置。",
+      "it": "Per soddisfare al meglio ogni utente, DaKanji consente di riordinare gli elementi del menu di navigazione principale. È sufficiente premere su qualsiasi voce di menu per trascinarla nel punto desiderato.",
+      "fr": "Pour s'adapter au mieux à chaque utilisateur, DaKanji vous permet de réorganiser les éléments du menu de navigation principal. Il suffit d'appuyer sur n'importe quel élément du menu pour le faire glisser à l'endroit désiré.",
+      "es": "Para adaptarse a cada usuario de la mejor manera posible, DaKanji te permite reordenar los elementos del menú de navegación principal. Solo tienes que pulsar sobre cualquier entrada del menú hasta que puedas arrastrarla al lugar que desees.",
+      "pl": "Aby jak najlepiej dopasować się do każdego użytkownika, DaKanji umożliwia zmianę kolejności elementów w głównym menu nawigacyjnym. Wystarczy nacisnąć dowolną pozycję menu, aby przeciągnąć ją w żądane miejsce."
+    }
+  },
+  "UserScreen": {
+    "title": {
+      "en": "Account",
+      "de": "Konto",
+      "ru": "Счет",
+      "ja": "アカウント",
+      "zh": "账户",
+      "it": "Conto",
+      "fr": "Compte",
+      "es": "Cuenta",
+      "pl": "Konto"
+    },
+    "tutorial_begin_title": {
+      "en": "Welcome to the account screen!"
+    },
+    "tutorial_begin_text": {
+      "en": "We will show you a quick tutorial to get you started.",
+      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+      "ja": "簡単なチュートリアルをお見せします",
+      "zh": "我们将向你展示一个快速教程，让你开始。",
+      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
+      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
+      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
     }
   },
   "ImmersionScreen": {
