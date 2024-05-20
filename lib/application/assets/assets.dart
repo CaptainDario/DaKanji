@@ -150,9 +150,9 @@ Future<void> copyFromAssets(FileSystemEntity assetPath, Directory dest) async {
 }
 
 /// Wrapper for `extractArchiveToDisk` to run it in an isolate
-void extractAssetArchiveToDisk(Tuple2 params){
+void extractAssetArchiveToDisk(Tuple2 params) async {
 
-  extractArchiveToDisk(params.item1, params.item2);
+  await extractArchiveToDisk(params.item1, params.item2);
 
 }
 
