@@ -147,7 +147,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
       ),
       examples: Isar.getInstance("examples") ?? Isar.openSync(
         [ExampleSentenceSchema], directory: isarPath,
-        name: "examples", maxSizeMiB: 256
+        name: "examples", maxSizeMiB: 384
       ),
       krad: Isar.getInstance("krad") ?? Isar.openSync(
         [KradSchema], directory: isarPath,
@@ -193,10 +193,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   GetIt.I.registerSingleton<Mecab>(Mecab());
 
   await GetIt.I<Mecab>().init(
-    "assets/ipadic",
-    true,
-    dicDir: "$supportDirectory/assets/ipadic/"
-  );
+    "", true, dicDir: "$supportDirectory/assets/ipadic/");
 
   g_documentsServicesInitialized = true;
 }

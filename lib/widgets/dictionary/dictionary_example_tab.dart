@@ -216,7 +216,7 @@ List<ExampleSentence> searchExamples(Tuple7 query){
   // find all examples in ISAR that cotain this words kanji
   Isar examplesIsar = Isar.openSync(
     [ExampleSentenceSchema], directory: isarPath,
-    name: "examples", maxSizeMiB: 512
+    name: "examples", maxSizeMiB: 384
   );
   List<ExampleSentence> examples = examplesIsar.exampleSentences
     .where()
