@@ -32,7 +32,7 @@ AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
     onDismissCallback: (type) {},
     dialogType: DialogType.noHeader,
     btnOkColor: g_Dakanji_green,
-    btnOkText: LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
+    btnOkText: LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr(),
     btnOkOnPress: () {
       addToAnki(entry, context);
       if(g_NavigatorKey.currentContext != null){
