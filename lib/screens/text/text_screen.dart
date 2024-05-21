@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:mecab_dart/mecab_dart.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
@@ -95,6 +96,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
   /// the input field's controller
   final TextEditingController inputController = TextEditingController();
+  /// FocusNode for the text input
+  FocusNode textinputFocusNode = FocusNode();
   /// the currently selected text
   String selectedText = "";
   /// the text that is currently in the input field
@@ -103,6 +106,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   late CustomSelectableTextController customSelectableTextController;
   /// scroll controller for the text analysis buttons
   final ScrollController _analysisOptionsScrollController = ScrollController();
+
 
   
   @override
@@ -220,36 +224,56 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                             focusNode: widget.includeTutorial
                               ? GetIt.I<Tutorials>().textScreenTutorial.textInputSteps
                               : null,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                hintText: LocaleKeys.TextScreen_input_text_here.tr(),
+                            child: KeyboardActions(
+                              config: KeyboardActionsConfig(
+                                actions: [
+                                  KeyboardActionsItem(
+                                    focusNode: textinputFocusNode,
+                                    toolbarButtons: [
+                                    (node) {
+                                      return GestureDetector(
+                                        onTap: () => node.unfocus(),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Icon(Icons.close),
+                                        ),
+                                      );
+                                    }
+                                  ]),
+                                ]
                               ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.deny(
-                                  RegExp(r"\u000d| "),
-                                  //replacementString: "\r"
+                              child: TextField(
+                                focusNode: textinputFocusNode,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  hintText: LocaleKeys.TextScreen_input_text_here.tr(),
                                 ),
-                                FilteringTextInputFormatter.deny(
-                                  RegExp(r"\u000a|\U+2588"),
-                                  replacementString: "\n"
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.deny(
+                                    RegExp(r"\u000d| "),
+                                    //replacementString: "\r"
+                                  ),
+                                  FilteringTextInputFormatter.deny(
+                                    RegExp(r"\u000a|\U+2588"),
+                                    replacementString: "\n"
+                                  ),
+                                ],
+                                controller: inputController,
+                                maxLines: null,
+                                style: const TextStyle(
+                                  fontSize: 20,
                                 ),
-                              ],
-                              controller: inputController,
-                              maxLines: null,
-                              style: const TextStyle(
-                                fontSize: 20,
+                                onChanged: ((value) {
+                                  setState(() {
+                                    inputText = value;
+                                    processText(value);
+                                  });
+                                }),
                               ),
-                              onChanged: ((value) {
-                                setState(() {
-                                  inputText = value;
-                                  processText(value);
-                                });
-                              }),
                             ),
                           ),
                         ),

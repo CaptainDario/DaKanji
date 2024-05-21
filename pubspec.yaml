@@ -92,7 +92,8 @@ dependencies:
   riverpod_annotation: 2.3.5
   another_flushbar: 1.12.30
   screenshot: 3.0.0
-  super_clipboard: ^0.8.13
+  super_clipboard: 0.8.13
+  keyboard_actions: 4.2.0
   flutter_ankidroid:
     git:
       url: https://github.com/CaptainDario/flutter_ankidroid
@@ -122,8 +123,9 @@ dependencies:
   isar: 3.1.0+1 # included in dakanji dictionary
   isar_flutter_libs: 3.1.0+1 # included in dakanji dictionary
   mecab_dart:                                   # android, iOS, macos, windows, linux
-    git:
-      url: https://github.com/CaptainDario/mecab_dart
+    path: /Users/darioklepoch/dev/DaKanji/mecab_dart/
+    #git:
+    #  url: https://github.com/CaptainDario/mecab_dart
 
   # packages that should only target specific platforms
   android_intent_plus: 5.0.2      # android

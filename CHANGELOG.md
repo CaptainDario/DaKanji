@@ -11,6 +11,7 @@ Added:
 Fixed / Improved:
 
 - Improved performance with Flutter 3.22
+- iOS keyboard is not dismissible on text screen
 - Spaces between PoS elements of dictionary entries
 - Updated sentry for better handled / unhandled tags
 - Word list sorting text hard to read in light mode
