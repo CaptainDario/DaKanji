@@ -22,6 +22,7 @@ Fixed / Improved:
 - Onboarding: Pressing the next button does not trigger animations
 - Drawing: when pressing repeatedly the undo button the predictions are not cleared
 - Exception when checking for new release
+- Some texts used Chinese characters instead of Japanese
 
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
