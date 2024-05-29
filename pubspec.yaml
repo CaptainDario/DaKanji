@@ -8,7 +8,7 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.4.1+102
+version: 3.4.1+103
 
 environment:
   sdk: ">=3.0.0"
