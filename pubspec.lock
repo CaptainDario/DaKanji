@@ -995,9 +995,11 @@ packages:
   mecab_dart:
     dependency: "direct main"
     description:
-      path: "/Users/darioklepoch/dev/DaKanji/mecab_dart"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "8b73eceaad685c1c1fb1a223b652487585468a87"
+      url: "https://github.com/CaptainDario/mecab_dart"
+    source: git
     version: "0.1.3"
   media_kit:
     dependency: "direct main"
@@ -2080,4 +2082,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.4.0 <4.0.0"
-  flutter: ">=3.22.0"
+  flutter: ">=3.22.1"

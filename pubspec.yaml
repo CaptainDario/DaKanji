@@ -123,9 +123,9 @@ dependencies:
   isar: 3.1.0+1 # included in dakanji dictionary
   isar_flutter_libs: 3.1.0+1 # included in dakanji dictionary
   mecab_dart:                                   # android, iOS, macos, windows, linux
-    path: /Users/darioklepoch/dev/DaKanji/mecab_dart/
-    #git:
-    #  url: https://github.com/CaptainDario/mecab_dart
+    #path: /Users/darioklepoch/dev/DaKanji/mecab_dart/
+    git:
+      url: https://github.com/CaptainDario/mecab_dart
 
   # packages that should only target specific platforms
   android_intent_plus: 5.0.2      # android
