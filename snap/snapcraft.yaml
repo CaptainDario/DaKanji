@@ -65,10 +65,16 @@ parts:
     organize:
       libtensorflowlite_c-linux.so: bin/blobs/libtensorflowlite_c-linux.so
 
+  zenity:
+    plugin: nil
+    stage-packages:
+      - zenity
+
   dakanji:
     after:
       - flutter-git
       - copy-tf-lite
+      - zenity
     source: .
     plugin: nil
     build-packages:
