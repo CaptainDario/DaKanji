@@ -23,6 +23,7 @@ Fixed / Improved:
 - Drawing: when pressing repeatedly the undo button the predictions are not cleared
 - Exception when checking for new release
 - Some texts used Chinese characters instead of Japanese
+- Kanji tab starts scrolled part-way down #95
 
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
