@@ -123,6 +123,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
           // Otherwise, if there are examples, show them
           return ListView.builder(
+            key: Key(widget.entry!.id.toString()),
             itemCount: examples.length,
             itemBuilder: (context, no) {
               if(examples.length == 10 && no == 9) {

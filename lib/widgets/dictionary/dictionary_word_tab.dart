@@ -135,6 +135,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     return Align(
       alignment: Alignment.topCenter,
       child: SingleChildScrollView(
+        key: Key(widget.entry!.id.toString()),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
