@@ -996,8 +996,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "8b73eceaad685c1c1fb1a223b652487585468a87"
+      ref: "488d226626f3453ac81b4fe42047bbe0e82e1801"
+      resolved-ref: "488d226626f3453ac81b4fe42047bbe0e82e1801"
       url: "https://github.com/CaptainDario/mecab_dart"
     source: git
     version: "0.1.3"
