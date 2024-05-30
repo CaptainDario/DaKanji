@@ -126,7 +126,7 @@ dependencies:
     #path: /Users/darioklepoch/dev/DaKanji/mecab_dart/
     git:
       url: https://github.com/CaptainDario/mecab_dart
-      ref: 488d226626f3453ac81b4fe42047bbe0e82e1801
+      ref: 1a8a51f198632cd5fa5e87c809cdb15b6c493b45
 
   # packages that should only target specific platforms
   android_intent_plus: 5.0.2      # android
