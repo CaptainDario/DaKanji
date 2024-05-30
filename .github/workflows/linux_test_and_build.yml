@@ -99,8 +99,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv xvfb
 
-      #- name: Run integration tests
-      #  run: python3 ./integration_test/run_tests.py
+      - name: Run integration tests
+        run: python3 ./integration_test/run_tests.py
 
       # build portable linux
       - name: build linux executable
