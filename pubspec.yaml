@@ -92,7 +92,7 @@ dependencies:
   riverpod_annotation: 2.3.5
   another_flushbar: 1.12.30
   screenshot: 3.0.0
-  super_clipboard: 0.8.13
+  super_clipboard: 0.8.16
   keyboard_actions: 4.2.0
   flutter_ankidroid:
     git:
