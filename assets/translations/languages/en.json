@@ -105,6 +105,8 @@
     "word_synonyms": "Synonyms",
     "word_tab": "Word",
     "word_tab_menu_add_to_list": "Add to list",
+    "word_tab_menu_quick_add_to_list": "Quick add to list",
+    "word_tab_menu_quick_send_to_anki": "Quick send to Anki",
     "word_tab_menu_send_to_anki": "Send to Anki",
     "word_tab_menu_share": "Share",
     "word_tab_menu_share_as_image": "Share (image)",

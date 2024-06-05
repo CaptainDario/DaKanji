@@ -105,6 +105,8 @@
     "word_synonyms": "\u540c\u4e49\u8bcd",
     "word_tab": "\u8bcd\u8bed",
     "word_tab_menu_add_to_list": "\u6dfb\u52a0\u5230\u5217\u8868",
+    "word_tab_menu_quick_add_to_list": "\u5feb\u901f\u6dfb\u52a0\u5230\u6e05\u5355",
+    "word_tab_menu_quick_send_to_anki": "\u5feb\u901f\u53d1\u9001\u5230 Anki",
     "word_tab_menu_send_to_anki": "\u53d1\u9001\u5230 Anki",
     "word_tab_menu_share": "\u5206\u4eab",
     "word_tab_menu_share_as_image": "\u5206\u4eab\uff08\u56fe\u7247\uff09",

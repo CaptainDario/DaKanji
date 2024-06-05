@@ -20,11 +20,6 @@ import 'package:da_kanji_mobile/widgets/settings/anki_settings_column.dart';
 /// of exporting word lists
 AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
 
-  if(!GetIt.I<Settings>().anki.showAnkiSettingsDialogBeforeAdding) {
-    addToAnki(entry, context);
-    return null;
-  }
-
   return AwesomeDialog(
     context: context,
     useRootNavigator: false,

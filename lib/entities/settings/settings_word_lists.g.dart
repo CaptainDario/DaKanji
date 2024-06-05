@@ -12,17 +12,19 @@ SettingsWordLists _$SettingsWordListsFromJson(Map<String, dynamic> json) =>
       ..includedLanguages = (json['includedLanguages'] as List<dynamic>)
           .map((e) => e as bool)
           .toList()
-      ..pdfMaxMeaningsPerVocabulary = json['pdfMaxMeaningsPerVocabulary'] as int
-      ..pdfMaxWordsPerMeaning = json['pdfMaxWordsPerMeaning'] as int
-      ..pdfMaxLinesPerMeaning = json['pdfMaxLinesPerMeaning'] as int
+      ..pdfMaxMeaningsPerVocabulary =
+          (json['pdfMaxMeaningsPerVocabulary'] as num).toInt()
+      ..pdfMaxWordsPerMeaning = (json['pdfMaxWordsPerMeaning'] as num).toInt()
+      ..pdfMaxLinesPerMeaning = (json['pdfMaxLinesPerMeaning'] as num).toInt()
       ..pdfIncludeKana = json['pdfIncludeKana'] as bool
       ..autoStartScreensaver = json['autoStartScreensaver'] as bool
       ..screenSaverWordLists = (json['screenSaverWordLists'] as List<dynamic>)
-          .map((e) => e as int)
+          .map((e) => (e as num).toInt())
           .toList()
-      ..screenSaverSecondsToStart = json['screenSaverSecondsToStart'] as int
+      ..screenSaverSecondsToStart =
+          (json['screenSaverSecondsToStart'] as num).toInt()
       ..screenSaverSecondsToNextCard =
-          json['screenSaverSecondsToNextCard'] as int;
+          (json['screenSaverSecondsToNextCard'] as num).toInt();
 
 Map<String, dynamic> _$SettingsWordListsToJson(SettingsWordLists instance) =>
     <String, dynamic>{

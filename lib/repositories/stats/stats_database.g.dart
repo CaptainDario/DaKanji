@@ -146,10 +146,92 @@ class DictStatsTableCompanion extends UpdateCompanion<DictStatsTableData> {
 
 abstract class _$StatsDatabase extends GeneratedDatabase {
   _$StatsDatabase(QueryExecutor e) : super(e);
+  _$StatsDatabaseManager get managers => _$StatsDatabaseManager(this);
   late final $DictStatsTableTable dictStatsTable = $DictStatsTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [dictStatsTable];
+}
+
+typedef $$DictStatsTableTableInsertCompanionBuilder = DictStatsTableCompanion
+    Function({
+  Value<int> id,
+});
+typedef $$DictStatsTableTableUpdateCompanionBuilder = DictStatsTableCompanion
+    Function({
+  Value<int> id,
+});
+
+class $$DictStatsTableTableTableManager extends RootTableManager<
+    _$StatsDatabase,
+    $DictStatsTableTable,
+    DictStatsTableData,
+    $$DictStatsTableTableFilterComposer,
+    $$DictStatsTableTableOrderingComposer,
+    $$DictStatsTableTableProcessedTableManager,
+    $$DictStatsTableTableInsertCompanionBuilder,
+    $$DictStatsTableTableUpdateCompanionBuilder> {
+  $$DictStatsTableTableTableManager(
+      _$StatsDatabase db, $DictStatsTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$DictStatsTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$DictStatsTableTableOrderingComposer(ComposerState(db, table)),
+          getChildManagerBuilder: (p) =>
+              $$DictStatsTableTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+          }) =>
+              DictStatsTableCompanion(
+            id: id,
+          ),
+          getInsertCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+          }) =>
+              DictStatsTableCompanion.insert(
+            id: id,
+          ),
+        ));
+}
+
+class $$DictStatsTableTableProcessedTableManager extends ProcessedTableManager<
+    _$StatsDatabase,
+    $DictStatsTableTable,
+    DictStatsTableData,
+    $$DictStatsTableTableFilterComposer,
+    $$DictStatsTableTableOrderingComposer,
+    $$DictStatsTableTableProcessedTableManager,
+    $$DictStatsTableTableInsertCompanionBuilder,
+    $$DictStatsTableTableUpdateCompanionBuilder> {
+  $$DictStatsTableTableProcessedTableManager(super.$state);
+}
+
+class $$DictStatsTableTableFilterComposer
+    extends FilterComposer<_$StatsDatabase, $DictStatsTableTable> {
+  $$DictStatsTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$DictStatsTableTableOrderingComposer
+    extends OrderingComposer<_$StatsDatabase, $DictStatsTableTable> {
+  $$DictStatsTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+class _$StatsDatabaseManager {
+  final _$StatsDatabase _db;
+  _$StatsDatabaseManager(this._db);
+  $$DictStatsTableTableTableManager get dictStatsTable =>
+      $$DictStatsTableTableTableManager(_db, _db.dictStatsTable);
 }

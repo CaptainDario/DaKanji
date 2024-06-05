@@ -59,6 +59,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     LocaleKeys.DictionaryScreen_word_tab_menu_share.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_share_as_image.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
+    LocaleKeys.DictionaryScreen_word_tab_menu_quick_send_to_anki.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr(),
   ];
 
@@ -206,11 +207,20 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         else if(selection == menuItems[6]){
                           await sendWordCard();
                         }
-                        // add to word list
+                        // quick add to word list
                         else if(selection == menuItems[7]) {
+                          print("Quick add to list");
+                        }
+                        // add to word list
+                        else if(selection == menuItems[8]) {
                           await addToWordList();
                         }
-                        else if(selection == menuItems[8]){
+                        // quick send to anki
+                        else if(selection == menuItems[9]) {
+                          addToAnki(widget.entry!, context);
+                        }
+                        // send to anki
+                        else if(selection == menuItems[10]){
                           if(!GetIt.I<UserData>().ankiSetup){
                             await ankiNotSetupDialog(context).show();
                           }

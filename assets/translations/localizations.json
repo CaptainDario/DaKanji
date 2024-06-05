@@ -259,6 +259,17 @@
       "es": "Añadir a la lista",
       "pl": "Dodaj do listy"
     },
+    "word_tab_menu_quick_add_to_list": {
+      "en": "Quick add to list",
+      "de": "Schnell zur Liste hinzufügen",
+      "ru": "Быстрое добавление в список",
+      "ja": "リストに追加",
+      "zh": "快速添加到清单",
+      "it": "Aggiunta rapida all'elenco",
+      "fr": "Ajouter rapidement à la liste",
+      "es": "Añadir rápidamente a la lista",
+      "pl": "Szybkie dodanie do listy"
+    },
     "word_tab_menu_send_to_anki": {
       "en": "Send to Anki",
       "de": "An Anki senden",
@@ -269,6 +280,17 @@
       "fr": "Envoyer à Anki",
       "es": "Enviar a Anki",
       "pl": "Wyślij do Anki"
+    },
+    "word_tab_menu_quick_send_to_anki": {
+      "en": "Quick send to Anki",
+      "de": "Schnelles Senden an Anki",
+      "ru": "Быстрая отправка в Anki",
+      "ja": "Ankiへのクイック送信",
+      "zh": "快速发送到 Anki",
+      "it": "Invio rapido ad Anki",
+      "fr": "Envoi rapide vers Anki",
+      "es": "Envío rápido a Anki",
+      "pl": "Szybkie wysyłanie do Anki"
     },
     "word_see_also": {
       "en": "See also:",

@@ -105,6 +105,8 @@
     "word_synonyms": "Sin\u00f3nimos",
     "word_tab": "Palabra",
     "word_tab_menu_add_to_list": "A\u00f1adir a la lista",
+    "word_tab_menu_quick_add_to_list": "A\u00f1adir r\u00e1pidamente a la lista",
+    "word_tab_menu_quick_send_to_anki": "Env\u00edo r\u00e1pido a Anki",
     "word_tab_menu_send_to_anki": "Enviar a Anki",
     "word_tab_menu_share": "Compartir",
     "word_tab_menu_share_as_image": "Compartir (imagen)",

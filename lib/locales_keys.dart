@@ -103,6 +103,8 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_word_synonyms = 'DictionaryScreen.word_synonyms';
   static const DictionaryScreen_word_tab = 'DictionaryScreen.word_tab';
   static const DictionaryScreen_word_tab_menu_add_to_list = 'DictionaryScreen.word_tab_menu_add_to_list';
+  static const DictionaryScreen_word_tab_menu_quick_add_to_list = 'DictionaryScreen.word_tab_menu_quick_add_to_list';
+  static const DictionaryScreen_word_tab_menu_quick_send_to_anki = 'DictionaryScreen.word_tab_menu_quick_send_to_anki';
   static const DictionaryScreen_word_tab_menu_send_to_anki = 'DictionaryScreen.word_tab_menu_send_to_anki';
   static const DictionaryScreen_word_tab_menu_share = 'DictionaryScreen.word_tab_menu_share';
   static const DictionaryScreen_word_tab_menu_share_as_image = 'DictionaryScreen.word_tab_menu_share_as_image';
