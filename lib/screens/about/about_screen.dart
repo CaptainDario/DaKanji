@@ -66,10 +66,25 @@ class AboutScreen extends StatelessWidget {
                     height: 64,
                   ),
                   const SizedBox(width: 64,),
-                  SvgPicture.asset(
-                    "assets/images/daapplab/logo_design_2_transparent.svg",
-                    height: 48,
-                  ),
+                  Container(
+                    height: 64,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.transparent
+                        : g_Dakanji_blue,
+                      borderRadius: BorderRadius.circular(100)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                          child: SvgPicture.asset(
+                            "assets/images/daapplab/logo_design_2_transparent.svg",
+                            height: 48,
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
 

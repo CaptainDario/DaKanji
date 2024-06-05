@@ -35,7 +35,7 @@ const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
 /// The grey tone that dakanji uses
 const Color g_Dakanji_grey =  Color.fromARGB(255, 33, 33, 33);
 /// The blue tone that dakanji uses
-const Color g_Dakanji_blue =  Color.fromARGB(255, 9, 28, 42);
+const Color g_Dakanji_blue =  Color.fromARGB(255, 27, 3, 81);
 
 /// The font for Japanese text
 const String g_japaneseFontFamily = "NotoSansJP";
