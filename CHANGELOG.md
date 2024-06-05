@@ -7,6 +7,8 @@ Added:
 
 - Added drawer manual
 - Show word frequency in dictionary if selected
+- Quick send to anki
+- Quick add to wordlist
 
 Fixed / Improved:
 
