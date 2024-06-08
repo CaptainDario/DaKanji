@@ -264,7 +264,7 @@ SPEC CHECKSUMS:
   package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   printing: 233e1b73bd1f4a05615548e9b5a324c98588640b
-  rive_common: cbbac3192af00d7341f19dae2f26298e9e37d99e
+  rive_common: 3a4c254c6e4db7e4b9e05daeb3d1f47ae4f7bf76
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
   SDWebImage: dfe95b2466a9823cf9f0c6d01217c06550d7b29a
   Sentry: 51b056d96914a741f63eca774d118678b1eb05a1
