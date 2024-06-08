@@ -12,6 +12,9 @@ SettingsWordLists _$SettingsWordListsFromJson(Map<String, dynamic> json) =>
       ..includedLanguages = (json['includedLanguages'] as List<dynamic>)
           .map((e) => e as bool)
           .toList()
+      ..quickAddListIDs = (json['quickAddListIDs'] as List<dynamic>)
+          .map((e) => (e as num).toInt())
+          .toList()
       ..pdfMaxMeaningsPerVocabulary =
           (json['pdfMaxMeaningsPerVocabulary'] as num).toInt()
       ..pdfMaxWordsPerMeaning = (json['pdfMaxWordsPerMeaning'] as num).toInt()
@@ -30,6 +33,7 @@ Map<String, dynamic> _$SettingsWordListsToJson(SettingsWordLists instance) =>
     <String, dynamic>{
       'showWordFruequency': instance.showWordFruequency,
       'includedLanguages': instance.includedLanguages,
+      'quickAddListIDs': instance.quickAddListIDs,
       'pdfMaxMeaningsPerVocabulary': instance.pdfMaxMeaningsPerVocabulary,
       'pdfMaxWordsPerMeaning': instance.pdfMaxWordsPerMeaning,
       'pdfMaxLinesPerMeaning': instance.pdfMaxLinesPerMeaning,

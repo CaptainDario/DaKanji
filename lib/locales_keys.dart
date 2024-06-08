@@ -104,6 +104,7 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_word_tab = 'DictionaryScreen.word_tab';
   static const DictionaryScreen_word_tab_menu_add_to_list = 'DictionaryScreen.word_tab_menu_add_to_list';
   static const DictionaryScreen_word_tab_menu_quick_add_to_list = 'DictionaryScreen.word_tab_menu_quick_add_to_list';
+  static const DictionaryScreen_word_tab_menu_quick_add_to_list_no_lists_selected = 'DictionaryScreen.word_tab_menu_quick_add_to_list_no_lists_selected';
   static const DictionaryScreen_word_tab_menu_quick_send_to_anki = 'DictionaryScreen.word_tab_menu_quick_send_to_anki';
   static const DictionaryScreen_word_tab_menu_send_to_anki = 'DictionaryScreen.word_tab_menu_send_to_anki';
   static const DictionaryScreen_word_tab_menu_share = 'DictionaryScreen.word_tab_menu_share';
@@ -372,6 +373,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_word_lists_pdf_max_lines_per_meaning = 'SettingsScreen.word_lists_pdf_max_lines_per_meaning';
   static const SettingsScreen_word_lists_pdf_max_meanings_per_vocabulary = 'SettingsScreen.word_lists_pdf_max_meanings_per_vocabulary';
   static const SettingsScreen_word_lists_pdf_max_words_per_meaning = 'SettingsScreen.word_lists_pdf_max_words_per_meaning';
+  static const SettingsScreen_word_lists_quick_add_lists = 'SettingsScreen.word_lists_quick_add_lists';
   static const SettingsScreen_word_lists_readd_defaults = 'SettingsScreen.word_lists_readd_defaults';
   static const SettingsScreen_word_lists_screensaver_auto_show = 'SettingsScreen.word_lists_screensaver_auto_show';
   static const SettingsScreen_word_lists_screensaver_seconds_to_next_card = 'SettingsScreen.word_lists_screensaver_seconds_to_next_card';

@@ -50,7 +50,22 @@ class SettingsWordLists with ChangeNotifier {
       .map((e) => isoToiso639_2B[e]!.name)
       .toList();
 
-    /// The default value for `noTranslations`
+  /// The default value for `quickAddLists`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const List<int> d_quickAddListIDs = [];
+  /// IDs of the Lists to add to when quick adding
+  @JsonKey(defaultValue: d_quickAddListIDs)
+  List<int> _quickAddListIDs = d_quickAddListIDs;
+  /// IDs of the Lists to add to when quick adding
+  List<int> get quickAddListIDs => _quickAddListIDs;
+  /// IDs of the Lists to add to when quick adding
+  set quickAddListIDs(List<int> value) {
+    _quickAddListIDs = value;
+    notifyListeners();
+  }
+
+  /// The default value for `pdfMaxMeaningsPerVocabulary`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
   static const int d_pdfMaxMeaningsPerVocabulary = 3;

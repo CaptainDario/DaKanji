@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
     LocaleKeys.DictionaryScreen_word_tab_menu_share.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_share_as_image.tr(),
+    LocaleKeys.DictionaryScreen_word_tab_menu_quick_add_to_list.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_quick_send_to_anki.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr(),
@@ -209,7 +211,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         }
                         // quick add to word list
                         else if(selection == menuItems[7]) {
-                          print("Quick add to list");
+                          await quickAddToWordList();
                         }
                         // add to word list
                         else if(selection == menuItems[8]) {
@@ -255,6 +257,37 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         ),
       ),
     );
+  }
+
+  /// Function to quick add this entry to the word lists selected in the settings
+  Future quickAddToWordList() async {
+
+    // get all lists that currently still exist and that are selected
+    List<int> allIDsInDB  = await GetIt.I<WordListsSQLDatabase>().getAllNodeIDs();
+    List<int> selectedIDs = GetIt.I<Settings>().wordLists.quickAddListIDs
+      .where((e) => allIDsInDB.contains(e))
+      .toList();
+    // if there are no lists selected, show a message to the user
+    if(selectedIDs.isEmpty){
+      await AwesomeDialog(
+        // ignore: use_build_context_synchronously
+        context: context,
+        dialogType: DialogType.noHeader,
+        btnOkColor: g_Dakanji_green,
+        btnOkOnPress: () {
+          
+        },
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(LocaleKeys.DictionaryScreen_word_tab_menu_quick_add_to_list_no_lists_selected.tr()),
+        ),
+      ).show();
+      return;
+    }
+
+    await GetIt.I<WordListsSQLDatabase>().addEntriesToWordLists(
+      selectedIDs, [widget.entry!.id]);
+
   }
 
   /// Function that shows a selection dialog to the user and adds `widget.entry`

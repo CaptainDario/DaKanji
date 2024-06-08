@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -71,7 +72,29 @@ class _WordListSettingsState extends State<WordListSettings> {
           settings: widget.settings,
           setIncludeLanguagesItem: widget.settings.wordLists.setIncludeLanguagesItem,
         ),
-        // how many different translations from entries should be included
+        // To which lists should be added when quick adding
+        ResponsiveIconButtonTile(
+          text: "${LocaleKeys.SettingsScreen_word_lists_quick_add_lists.tr()} ${widget.settings.wordLists.quickAddListIDs.length}",
+          icon: Icons.perm_device_information_outlined,
+          onButtonPressed: () async {
+            await showWordListSelectionDialog(context,
+              onSelectionConfirmed: (selection) async {
+                
+                List<int> listsToAddTo = selection
+                  .where((e) => e.value.type == WordListNodeType.wordList)
+                  .map((e) => e.id).toList();
+
+                widget.settings.wordLists.quickAddListIDs = listsToAddTo;
+
+                Navigator.of(context).pop();
+
+                await widget.settings.save();
+                setState(() { });
+              },
+            );
+          },
+        ),
+        // PDF:  how many different translations from entries should be included
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_word_lists_pdf_max_meanings_per_vocabulary.tr(),
           value: widget.settings.wordLists.pdfMaxMeaningsPerVocabulary.toDouble(),
@@ -88,7 +111,7 @@ class _WordListSettingsState extends State<WordListSettings> {
             });
           },
         ),
-        // 
+        // PDF: how many words per meaning
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_word_lists_pdf_max_words_per_meaning.tr(),
           value: widget.settings.wordLists.pdfMaxWordsPerMeaning.toDouble(),

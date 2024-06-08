@@ -270,6 +270,17 @@
       "es": "Añadir rápidamente a la lista",
       "pl": "Szybkie dodanie do listy"
     },
+    "word_tab_menu_quick_add_to_list_no_lists_selected": {
+      "en": "No lists for quick select have been selected. Please do so in the settings.",
+      "de": "Es wurden keine Listen für das schnelle hinzuf[gen ausgewählt. Bitte tun Sie dies in den Einstellungen.",
+      "ru": "Не выбраны списки для быстрого выбора. Пожалуйста, сделайте это в настройках.",
+      "ja": "クイックセレクトのリストが選択されていません。設定で行ってください。",
+      "zh": "未选择快速选择列表。请在设置中进行选择。",
+      "it": "Non sono state selezionate liste per la selezione rapida. Si prega di farlo nelle impostazioni.",
+      "fr": "Aucune liste n'a été sélectionnée pour la sélection rapide. Veuillez le faire dans les paramètres.",
+      "es": "No se han seleccionado listas para la selección rápida. Por favor, hágalo en los ajustes.",
+      "pl": "Nie wybrano żadnych list do szybkiego wyboru. Należy to zrobić w ustawieniach."
+    },
     "word_tab_menu_send_to_anki": {
       "en": "Send to Anki",
       "de": "An Anki senden",
@@ -2803,6 +2814,17 @@
       "fr": "Langues à inclure dans l'exportation",
       "es": "Lenguas que deben incluirse al exportar",
       "pl": "Języki uwzględniane podczas eksportowania"
+    },
+    "word_lists_quick_add_lists": {
+      "en": "Quick add word list(s):",
+      "de": "Schnelles hinzufügen Wortliste(n):",
+      "ru": "Быстро добавьте список слов:",
+      "ja": "単語リストの追加",
+      "zh": "快速添加单词表：",
+      "it": "Elenco di parole da aggiungere rapidamente:",
+      "fr": "Liste(s) de mots à ajouter rapidement :",
+      "es": "Lista(s) de palabras de adición rápida:",
+      "pl": "Lista słów do szybkiego dodania:"
     },
     "word_lists_pdf_max_meanings_per_vocabulary": {
       "en": "PDF: Meanings per vocabulary",
