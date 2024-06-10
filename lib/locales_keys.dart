@@ -103,6 +103,9 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_word_synonyms = 'DictionaryScreen.word_synonyms';
   static const DictionaryScreen_word_tab = 'DictionaryScreen.word_tab';
   static const DictionaryScreen_word_tab_menu_add_to_list = 'DictionaryScreen.word_tab_menu_add_to_list';
+  static const DictionaryScreen_word_tab_menu_quick_add_to_list = 'DictionaryScreen.word_tab_menu_quick_add_to_list';
+  static const DictionaryScreen_word_tab_menu_quick_add_to_list_no_lists_selected = 'DictionaryScreen.word_tab_menu_quick_add_to_list_no_lists_selected';
+  static const DictionaryScreen_word_tab_menu_quick_send_to_anki = 'DictionaryScreen.word_tab_menu_quick_send_to_anki';
   static const DictionaryScreen_word_tab_menu_send_to_anki = 'DictionaryScreen.word_tab_menu_send_to_anki';
   static const DictionaryScreen_word_tab_menu_share = 'DictionaryScreen.word_tab_menu_share';
   static const DictionaryScreen_word_tab_menu_share_as_image = 'DictionaryScreen.word_tab_menu_share_as_image';
@@ -263,6 +266,10 @@ abstract class  LocaleKeys {
   static const ManualScreen_dojg_import_text = 'ManualScreen.dojg_import_text';
   static const ManualScreen_dojg_import_title = 'ManualScreen.dojg_import_title';
   static const ManualScreen_dojg_title = 'ManualScreen.dojg_title';
+  static const ManualScreen_misc_drawer_heading = 'ManualScreen.misc_drawer_heading';
+  static const ManualScreen_misc_drawer_reorder_heading = 'ManualScreen.misc_drawer_reorder_heading';
+  static const ManualScreen_misc_drawer_reorder_text = 'ManualScreen.misc_drawer_reorder_text';
+  static const ManualScreen_misc_title = 'ManualScreen.misc_title';
   static const ManualScreen_text_selection_grow_text = 'ManualScreen.text_selection_grow_text';
   static const ManualScreen_text_selection_grow_title = 'ManualScreen.text_selection_grow_title';
   static const ManualScreen_text_selection_left_text = 'ManualScreen.text_selection_left_text';
@@ -366,6 +373,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_word_lists_pdf_max_lines_per_meaning = 'SettingsScreen.word_lists_pdf_max_lines_per_meaning';
   static const SettingsScreen_word_lists_pdf_max_meanings_per_vocabulary = 'SettingsScreen.word_lists_pdf_max_meanings_per_vocabulary';
   static const SettingsScreen_word_lists_pdf_max_words_per_meaning = 'SettingsScreen.word_lists_pdf_max_words_per_meaning';
+  static const SettingsScreen_word_lists_quick_add_lists = 'SettingsScreen.word_lists_quick_add_lists';
   static const SettingsScreen_word_lists_readd_defaults = 'SettingsScreen.word_lists_readd_defaults';
   static const SettingsScreen_word_lists_screensaver_auto_show = 'SettingsScreen.word_lists_screensaver_auto_show';
   static const SettingsScreen_word_lists_screensaver_seconds_to_next_card = 'SettingsScreen.word_lists_screensaver_seconds_to_next_card';
@@ -403,6 +411,10 @@ abstract class  LocaleKeys {
   static const TextScreen_tutorial_spaces_text = 'TextScreen.tutorial_spaces_text';
   static const TextScreen_tutorial_text_input_text = 'TextScreen.tutorial_text_input_text';
   static const TextScreen = 'TextScreen';
+  static const UserScreen_title = 'UserScreen.title';
+  static const UserScreen_tutorial_begin_text = 'UserScreen.tutorial_begin_text';
+  static const UserScreen_tutorial_begin_title = 'UserScreen.tutorial_begin_title';
+  static const UserScreen = 'UserScreen';
   static const WebviewScreen_loading = 'WebviewScreen.loading';
   static const WebviewScreen_title = 'WebviewScreen.title';
   static const WebviewScreen = 'WebviewScreen';

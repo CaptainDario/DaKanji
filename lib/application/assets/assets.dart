@@ -150,9 +150,9 @@ Future<void> copyFromAssets(FileSystemEntity assetPath, Directory dest) async {
 }
 
 /// Wrapper for `extractArchiveToDisk` to run it in an isolate
-void extractAssetArchiveToDisk(Tuple2 params){
+void extractAssetArchiveToDisk(Tuple2 params) async {
 
-  extractArchiveToDisk(params.item1, params.item2);
+  await extractArchiveToDisk(params.item1, params.item2);
 
 }
 
@@ -162,7 +162,17 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
 {
   // get all releases
   Dio dio = Dio(); String downloadUrl = "";
-  Response response = await dio.get(url);
+  bool downloadError = false;
+  Response? response = await dio.get(url)
+    .then((value) {
+      return value;
+    }).catchError((error, stackTrace) {
+      downloadError = true;
+      return Response(requestOptions: RequestOptions());
+    });
+
+  if(downloadError) return;
+
   String extension = destination.uri.pathSegments.last.split(".").length > 1
     ? ".${destination.uri.pathSegments.last.split(".").last}"
     : "";
@@ -183,6 +193,7 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
     
   // download the asset
   String fileName = destination.uri.pathSegments.last;
+  downloadError = false;
   await Dio().download(
     downloadUrl, "${destination.path}.zip",
     onReceiveProgress: (received, total) {
@@ -192,7 +203,13 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
         g_initAppInfoStream.add(progress);
       }
     }
-  );
+  ).onError((error, stackTrace) {
+    downloadError = true;
+    return Response(requestOptions: RequestOptions());
+  });
+
+  if(downloadError) return;
+
   debugPrint("Downloaded $fileName to ${destination.path}");
 
   // unzip the asset

@@ -123,6 +123,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
           // Otherwise, if there are examples, show them
           return ListView.builder(
+            key: Key(widget.entry!.id.toString()),
             itemCount: examples.length,
             itemBuilder: (context, no) {
               if(examples.length == 10 && no == 9) {
@@ -216,7 +217,7 @@ List<ExampleSentence> searchExamples(Tuple7 query){
   // find all examples in ISAR that cotain this words kanji
   Isar examplesIsar = Isar.openSync(
     [ExampleSentenceSchema], directory: isarPath,
-    name: "examples", maxSizeMiB: 512
+    name: "examples", maxSizeMiB: 384
   );
   List<ExampleSentence> examples = examplesIsar.exampleSentences
     .where()

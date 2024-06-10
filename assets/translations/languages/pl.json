@@ -105,6 +105,9 @@
     "word_synonyms": "Synonimy",
     "word_tab": "S\u0142owo",
     "word_tab_menu_add_to_list": "Dodaj do listy",
+    "word_tab_menu_quick_add_to_list": "Szybkie dodanie do listy",
+    "word_tab_menu_quick_add_to_list_no_lists_selected": "Nie wybrano \u017cadnych list do szybkiego wyboru. Nale\u017cy to zrobi\u0107 w ustawieniach.",
+    "word_tab_menu_quick_send_to_anki": "Szybkie wysy\u0142anie do Anki",
     "word_tab_menu_send_to_anki": "Wy\u015blij do Anki",
     "word_tab_menu_share": "Udzia\u0142",
     "word_tab_menu_share_as_image": "Udost\u0119pnij (obraz)",
@@ -278,6 +281,10 @@
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) to seria ksi\u0105\u017cek o gramatyce japo\u0144skiej. DaKanji pozwala zaimportowa\u0107 [Anki deck (kt\u00f3ry mo\u017cna pobra\u0107 tutaj)](https://dojgdeck.neocities.org/), a nast\u0119pnie przeszukiwa\u0107 jego zawarto\u015b\u0107.  \nIstnieje w dw\u00f3ch wersjach: z obrazkami i bez. Mo\u017cesz zaimportowa\u0107 dowoln\u0105 z nich, najpierw pobieraj\u0105c j\u0105, a nast\u0119pnie importuj\u0105c, wybieraj\u0105c plik .apkg, gdy zostaniesz o to poproszony na ekranie DoJG.",
     "dojg_import_title": "Jak skonfigurowa\u0107 DoJG",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "Szuflada nawigacji",
+    "misc_drawer_reorder_heading": "Dostosuj",
+    "misc_drawer_reorder_text": "Aby jak najlepiej dopasowa\u0107 si\u0119 do ka\u017cdego u\u017cytkownika, DaKanji umo\u017cliwia zmian\u0119 kolejno\u015bci element\u00f3w w g\u0142\u00f3wnym menu nawigacyjnym. Wystarczy nacisn\u0105\u0107 dowoln\u0105 pozycj\u0119 menu, aby przeci\u0105gn\u0105\u0107 j\u0105 w \u017c\u0105dane miejsce.",
+    "misc_title": "R\u00f3\u017cne",
     "text_selection_grow_text": "Ten przycisk umo\u017cliwia powi\u0119kszenie bie\u017c\u0105cego zaznaczenia tekstu. Jednokrotne naci\u015bni\u0119cie powoduje powi\u0119kszenie bie\u017c\u0105cego zaznaczenia o jeden token (s\u0142owo). D\u0142ugie naci\u015bni\u0119cie spowoduje powi\u0119kszenie bie\u017c\u0105cego zaznaczenia o jeden znak.",
     "text_selection_grow_title": "Wyb\u00f3r uprawy",
     "text_selection_left_text": "Ten przycisk umo\u017cliwia zmian\u0119 bie\u017c\u0105cego zaznaczenia tekstu. Jego naci\u015bni\u0119cie spowoduje wybranie poprzedniego tokenu (s\u0142owa). D\u0142ugie naci\u015bni\u0119cie spowoduje zaznaczenie poprzedniej postaci.",
@@ -383,6 +390,7 @@
     "word_lists_pdf_max_lines_per_meaning": "PDF: Maks. wierszy na znaczenie",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Znaczenia wed\u0142ug s\u0142ownictwa",
     "word_lists_pdf_max_words_per_meaning": "PDF: Maksymalna liczba s\u0142\u00f3w na znaczenie",
+    "word_lists_quick_add_lists": "Lista s\u0142\u00f3w do szybkiego dodania:",
     "word_lists_readd_defaults": "Dodaj folder domy\u015blny",
     "word_lists_screensaver_auto_show": "Wygaszacz ekranu: Automatyczny start wygaszacza ekranu",
     "word_lists_screensaver_seconds_to_next_card": "Wygaszacz ekranu: sekundy do nast\u0119pnej karty",
@@ -420,6 +428,11 @@
     "tutorial_processed_text_triple_tap": "Potr\u00f3jne stukni\u0119cie powoduje zaznaczenie akapitu.",
     "tutorial_spaces_text": "Za pomoc\u0105 tego przycisku do tekstu dodawane s\u0105 spacje.",
     "tutorial_text_input_text": "Tutaj mo\u017cesz napisa\u0107 lub wklei\u0107 dowolny tekst. Ten tekst b\u0119dzie przetwarzany za pomoc\u0105 r\u00f3\u017cnych narz\u0119dzi."
+  },
+  "UserScreen": {
+    "title": "Konto",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": ""
   },
   "WebviewScreen": {
     "loading": "\u0141adowanie",

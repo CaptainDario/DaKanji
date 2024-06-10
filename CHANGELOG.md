@@ -1,6 +1,32 @@
 
 # DaKanji - changelog
 
+## v3.4.1 - ワードリストと暗記改善 (09.06.2024)
+
+Added:
+
+- Added drawer manual
+- Show word frequency in dictionary if selected
+- Quick send to anki
+- Quick add to wordlist
+
+Fixed / Improved:
+
+- Improved performance with Flutter 3.22
+- iOS keyboard is not dismissible on text screen
+- Spaces between PoS elements of dictionary entries
+- Updated sentry for better handled / unhandled tags
+- Word list sorting text hard to read in light mode
+- Anki integration on windows
+- Katakana origins images not loading
+- Mecab not loading on iOS/MacOS/certain configurations
+- Sharing entries as image does not respect the current theme
+- Onboarding: Pressing the next button does not trigger animations
+- Drawing: when pressing repeatedly the undo button the predictions are not cleared
+- Exception when checking for new release
+- Some texts used Chinese characters instead of Japanese
+- Kanji tab starts scrolled part-way down #95
+
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
 New Features:

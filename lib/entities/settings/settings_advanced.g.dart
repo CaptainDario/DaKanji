@@ -9,7 +9,7 @@ part of 'settings_advanced.dart';
 SettingsAdvanced _$SettingsAdvancedFromJson(Map<String, dynamic> json) =>
     SettingsAdvanced()
       ..useThanosSnap = json['useThanosSnap'] as bool
-      ..noOfSearchIsolates = json['noOfSearchIsolates'] as int? ?? 2;
+      ..noOfSearchIsolates = (json['noOfSearchIsolates'] as num?)?.toInt() ?? 2;
 
 Map<String, dynamic> _$SettingsAdvancedToJson(SettingsAdvanced instance) =>
     <String, dynamic>{

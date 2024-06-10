@@ -123,7 +123,7 @@ Future<Map<InferenceBackend, double>> testInterpreterIOS(
     }
   }
   // Metal delegate
-  if(!exclude.contains(InferenceBackend.gpu)){
+  if(!exclude.contains(InferenceBackend.metal)){
     try {
       Interpreter interpreter = await metalInterpreterIOS(assetPath);
       inferenceBackend.addEntries(
@@ -303,12 +303,36 @@ Future<Map<InferenceBackend, double>> testInterpreterMac(
 {
   Map<InferenceBackend, double> inferenceBackend = {};
 
-  // GPU delegate
-  if(!exclude.contains(InferenceBackend.gpu)){
-    try {
-      Interpreter interpreter = await gpuInterpreter(assetPath);
+  // CoreML 3 delegate
+  if(!exclude.contains(InferenceBackend.coreMl_3)){
+    try{
+      Interpreter interpreter = await coreMLInterpreterIOS(assetPath, coreMLVersion: 3);
       inferenceBackend.addEntries(
-        [testBackend(interpreter, InferenceBackend.gpu, iterations, runInterpreter)]
+        [testBackend(interpreter, InferenceBackend.coreMl_3, iterations, runInterpreter)]
+      );
+    }
+    catch (e){
+      Sentry.captureException(e);
+    }
+  }
+  // CoreML 2 delegate
+  if(!exclude.contains(InferenceBackend.coreMl_2)){
+    try{
+      Interpreter interpreter = await coreMLInterpreterIOS(assetPath, coreMLVersion: 2);
+      inferenceBackend.addEntries(
+        [testBackend(interpreter, InferenceBackend.coreMl_2, iterations, runInterpreter)]
+      );
+    }
+    catch (e){
+      Sentry.captureException(e);
+    }
+  }
+  // Metal delegate
+  if(!exclude.contains(InferenceBackend.metal)){
+    try {
+      Interpreter interpreter = await metalInterpreterIOS(assetPath);
+      inferenceBackend.addEntries(
+        [testBackend(interpreter, InferenceBackend.metal, iterations, runInterpreter)]
       );
     }
     catch (e){

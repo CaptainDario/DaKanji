@@ -1,9 +1,9 @@
 // Dart imports:
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -59,7 +59,7 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
   @override
   void initState() {
 
-    if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
+    if(g_desktopPlatform){
       WindowManager.instance.setFullScreen(true);
     }
 
@@ -95,7 +95,7 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
   @override
   void dispose() {
 
-    if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
+    if(g_desktopPlatform){
       WindowManager.instance.setFullScreen(false);
     }
 

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
-import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
@@ -97,15 +96,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
             });
           },
         ),
-        // should a dialog be shown before adding to anki
-        ResponsiveCheckBoxTile(
-          text: LocaleKeys.SettingsScreen_anki_show_settings_before_adding.tr(),
-          value: widget.settings.anki.showAnkiSettingsDialogBeforeAdding,
-          onTileTapped: (value) {
-            widget.settings.anki.showAnkiSettingsDialogBeforeAdding = value;
-            widget.settings.save();
-          },
-        ),
         // which langauges should be included
         ExportLanguagesIncludeChips(
           text: LocaleKeys.SettingsScreen_anki_languages_to_include.tr(),
@@ -131,7 +121,7 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
           },
         ),
         // URL to communicate with anki connect
-        if(Platform.isMacOS || Platform.isLinux || Platform.isWindows)
+        if(g_desktopPlatform)
           ResponsiveInputFieldTile(
             enabled: true,
             text: widget.settings.anki.desktopAnkiURL,

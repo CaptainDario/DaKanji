@@ -614,9 +614,9 @@ class _WordListsState extends State<WordLists> {
             // after the delay check that the input of the user has not changed
             if(animateListTileIn.length < i) return;
 
-            setState(() => animateListTileIn[i] = true);
+            if(mounted) setState(() => animateListTileIn[i] = true);
           } else {
-            setState(() => animateListTileIn[i] = true);
+            if(mounted) setState(() => animateListTileIn[i] = true);
           }
           
         }

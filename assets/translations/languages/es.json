@@ -105,6 +105,9 @@
     "word_synonyms": "Sin\u00f3nimos",
     "word_tab": "Palabra",
     "word_tab_menu_add_to_list": "A\u00f1adir a la lista",
+    "word_tab_menu_quick_add_to_list": "A\u00f1adir r\u00e1pidamente a la lista",
+    "word_tab_menu_quick_add_to_list_no_lists_selected": "No se han seleccionado listas para la selecci\u00f3n r\u00e1pida. Por favor, h\u00e1galo en los ajustes.",
+    "word_tab_menu_quick_send_to_anki": "Env\u00edo r\u00e1pido a Anki",
     "word_tab_menu_send_to_anki": "Enviar a Anki",
     "word_tab_menu_share": "Compartir",
     "word_tab_menu_share_as_image": "Compartir (imagen)",
@@ -278,6 +281,10 @@
     "dojg_import_text": "Dictionary of Japanese Grammar (DoJG) es una serie de libros sobre gram\u00e1tica japonesa. DaKanji permite importar su [Anki deck (que puedes descargar aqu\u00ed)](https://dojgdeck.neocities.org/) y luego buscar en su contenido.  \nExiste en dos versiones: una con im\u00e1genes y otra sin ellas. Puedes importar cualquiera de las dos descarg\u00e1ndola primero y luego import\u00e1ndola seleccionando el archivo .apkg cuando te lo pida la pantalla de DoJG.",
     "dojg_import_title": "C\u00f3mo configurar DoJG",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "Caj\u00f3n de navegaci\u00f3n",
+    "misc_drawer_reorder_heading": "Personalice",
+    "misc_drawer_reorder_text": "Para adaptarse a cada usuario de la mejor manera posible, DaKanji te permite reordenar los elementos del men\u00fa de navegaci\u00f3n principal. Solo tienes que pulsar sobre cualquier entrada del men\u00fa hasta que puedas arrastrarla al lugar que desees.",
+    "misc_title": "Varios",
     "text_selection_grow_text": "Este bot\u00f3n le permite aumentar la selecci\u00f3n de texto actual. Si lo pulsa una vez, la selecci\u00f3n aumentar\u00e1 un token (palabra). Si lo mantiene pulsado, la selecci\u00f3n aumentar\u00e1 un car\u00e1cter.",
     "text_selection_grow_title": "Selecci\u00f3n de cultivos",
     "text_selection_left_text": "Este bot\u00f3n le permite cambiar la selecci\u00f3n de texto actual. Si lo pulsa, seleccionar\u00e1 la palabra anterior. Si lo mantiene pulsado, seleccionar\u00e1 el car\u00e1cter anterior.",
@@ -383,6 +390,7 @@
     "word_lists_pdf_max_lines_per_meaning": "PDF: M\u00e1ximo de l\u00edneas por sentido",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF: Significados por vocabulario",
     "word_lists_pdf_max_words_per_meaning": "PDF: M\u00e1ximo de palabras por significado",
+    "word_lists_quick_add_lists": "Lista(s) de palabras de adici\u00f3n r\u00e1pida:",
     "word_lists_readd_defaults": "A\u00f1adir la carpeta por defecto",
     "word_lists_screensaver_auto_show": "Salvapantallas: Salvapantallas de inicio autom\u00e1tico",
     "word_lists_screensaver_seconds_to_next_card": "Salvapantallas: segundos hasta la siguiente carta",
@@ -420,6 +428,11 @@
     "tutorial_processed_text_triple_tap": "Un triple toque seleccionar\u00e1 un p\u00e1rrafo.",
     "tutorial_spaces_text": "Con este bot\u00f3n se a\u00f1aden espacios al texto.",
     "tutorial_text_input_text": "Aqu\u00ed puedes escribir o pegar cualquier texto. Este texto ser\u00e1 procesado con diferentes herramientas."
+  },
+  "UserScreen": {
+    "title": "Cuenta",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": ""
   },
   "WebviewScreen": {
     "loading": "Buscando",

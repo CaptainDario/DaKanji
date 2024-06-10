@@ -229,7 +229,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                           children: [
                             if(kana.flatten().contains(widget.kana))
                               for(int i = 0; i < 3; i++)
-                                if(!(katakana.flatten().contains(widget.kana) && i == 1))
+                                if(!(katakana.flatten().contains(widget.kana) && i == 2))
                                   SizedBox(
                                     height: (TextPainter(
                                         text: const TextSpan(text: "T", style: TextStyle(fontSize: 20)),

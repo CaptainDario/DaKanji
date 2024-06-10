@@ -105,6 +105,9 @@
     "word_synonyms": "Synonymes",
     "word_tab": "Word",
     "word_tab_menu_add_to_list": "Ajouter \u00e0 la liste",
+    "word_tab_menu_quick_add_to_list": "Ajouter rapidement \u00e0 la liste",
+    "word_tab_menu_quick_add_to_list_no_lists_selected": "Aucune liste n'a \u00e9t\u00e9 s\u00e9lectionn\u00e9e pour la s\u00e9lection rapide. Veuillez le faire dans les param\u00e8tres.",
+    "word_tab_menu_quick_send_to_anki": "Envoi rapide vers Anki",
     "word_tab_menu_send_to_anki": "Envoyer \u00e0 Anki",
     "word_tab_menu_share": "Partager",
     "word_tab_menu_share_as_image": "Partager (image)",
@@ -278,6 +281,10 @@
     "dojg_import_text": "Le Dictionnaire de grammaire japonaise (DoJG) est une s\u00e9rie de livres sur la grammaire japonaise. DaKanji permet d'importer son [Anki deck (que vous pouvez t\u00e9l\u00e9charger ici)] (https://dojgdeck.neocities.org/) et de faire des recherches dans son contenu.  \nIl existe en deux versions : l'une avec des images et l'autre sans. Vous pouvez importer l'une ou l'autre en la t\u00e9l\u00e9chargeant puis en s\u00e9lectionnant le fichier .apkg lorsque l'\u00e9cran de DoJG vous le demande.",
     "dojg_import_title": "Comment configurer DoJG",
     "dojg_title": "DoJG",
+    "misc_drawer_heading": "Tiroir de navigation",
+    "misc_drawer_reorder_heading": "Personnaliser",
+    "misc_drawer_reorder_text": "Pour s'adapter au mieux \u00e0 chaque utilisateur, DaKanji vous permet de r\u00e9organiser les \u00e9l\u00e9ments du menu de navigation principal. Il suffit d'appuyer sur n'importe quel \u00e9l\u00e9ment du menu pour le faire glisser \u00e0 l'endroit d\u00e9sir\u00e9.",
+    "misc_title": "Divers",
     "text_selection_grow_text": "Ce bouton vous permet d'agrandir la s\u00e9lection de texte actuelle. En appuyant une fois sur ce bouton, vous agrandirez la s\u00e9lection actuelle d'un token (mot). Une pression longue sur ce bouton permet d'agrandir la s\u00e9lection actuelle d'un caract\u00e8re.",
     "text_selection_grow_title": "S\u00e9lection des cultures",
     "text_selection_left_text": "Ce bouton vous permet de modifier la s\u00e9lection de texte en cours. Une pression sur ce bouton permet de s\u00e9lectionner le token (mot) pr\u00e9c\u00e9dent. Une pression longue sur ce bouton permet de s\u00e9lectionner le caract\u00e8re pr\u00e9c\u00e9dent.",
@@ -383,6 +390,7 @@
     "word_lists_pdf_max_lines_per_meaning": "PDF : Nombre maximal de lignes par sens",
     "word_lists_pdf_max_meanings_per_vocabulary": "PDF : Significations par vocabulaire",
     "word_lists_pdf_max_words_per_meaning": "PDF : Nombre maximal de mots par sens",
+    "word_lists_quick_add_lists": "Liste(s) de mots \u00e0 ajouter rapidement :",
     "word_lists_readd_defaults": "Ajouter le dossier par d\u00e9faut",
     "word_lists_screensaver_auto_show": "\u00c9conomiseur d'\u00e9cran : D\u00e9marrage automatique de l'\u00e9conomiseur d'\u00e9cran",
     "word_lists_screensaver_seconds_to_next_card": "\u00c9conomiseur d'\u00e9cran : secondes jusqu'\u00e0 la carte suivante",
@@ -420,6 +428,11 @@
     "tutorial_processed_text_triple_tap": "Une triple tape permet de s\u00e9lectionner un paragraphe.",
     "tutorial_spaces_text": "Ce bouton permet d'ajouter des espaces au texte.",
     "tutorial_text_input_text": "Ici, vous pouvez \u00e9crire ou coller n'importe quel texte. Ce texte sera trait\u00e9 avec diff\u00e9rents outils."
+  },
+  "UserScreen": {
+    "title": "Compte",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
+    "tutorial_begin_title": ""
   },
   "WebviewScreen": {
     "loading": "Recherche",

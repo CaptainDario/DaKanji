@@ -274,6 +274,19 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
     
 
   }
+  
+  /// Get all IDs of all nodes that the user defined
+  Future<List<int>> getAllNodeIDs(){
+
+    final idColumn = wordListNodesSQL.id; 
+    final query = selectOnly(wordListNodesSQL)
+      ..addColumns([idColumn]);
+      
+    return query.map(
+      (row) => row.read(idColumn)!)
+      .get();
+
+  } 
   // --- END : WordLists 
 
 

@@ -149,7 +149,7 @@ Future<void> _searchInIsar(SendPort p) async {
     [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
     directory: directory,
     name: name,
-    maxSizeMiB: 512
+    maxSizeMiB: 384
   );
 
   List<int> ids = isar.jmdict.where().idProperty().findAllSync();

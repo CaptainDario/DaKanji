@@ -142,12 +142,12 @@ class WordListNodesSQLData extends DataClass
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     {
-      final converter = $WordListNodesSQLTable.$converterchildrenIDs;
-      map['children_i_ds'] = Variable<String>(converter.toSql(childrenIDs));
+      map['children_i_ds'] = Variable<String>(
+          $WordListNodesSQLTable.$converterchildrenIDs.toSql(childrenIDs));
     }
     {
-      final converter = $WordListNodesSQLTable.$convertertype;
-      map['type'] = Variable<int>(converter.toSql(type));
+      map['type'] =
+          Variable<int>($WordListNodesSQLTable.$convertertype.toSql(type));
     }
     map['is_expanded'] = Variable<bool>(isExpanded);
     return map;
@@ -289,15 +289,13 @@ class WordListNodesSQLCompanion extends UpdateCompanion<WordListNodesSQLData> {
       map['name'] = Variable<String>(name.value);
     }
     if (childrenIDs.present) {
-      final converter = $WordListNodesSQLTable.$converterchildrenIDs;
-
-      map['children_i_ds'] =
-          Variable<String>(converter.toSql(childrenIDs.value));
+      map['children_i_ds'] = Variable<String>($WordListNodesSQLTable
+          .$converterchildrenIDs
+          .toSql(childrenIDs.value));
     }
     if (type.present) {
-      final converter = $WordListNodesSQLTable.$convertertype;
-
-      map['type'] = Variable<int>(converter.toSql(type.value));
+      map['type'] = Variable<int>(
+          $WordListNodesSQLTable.$convertertype.toSql(type.value));
     }
     if (isExpanded.present) {
       map['is_expanded'] = Variable<bool>(isExpanded.value);
@@ -557,6 +555,8 @@ class WordListEntriesSQLCompanion
 
 abstract class _$WordListsSQLDatabase extends GeneratedDatabase {
   _$WordListsSQLDatabase(QueryExecutor e) : super(e);
+  _$WordListsSQLDatabaseManager get managers =>
+      _$WordListsSQLDatabaseManager(this);
   late final $WordListNodesSQLTable wordListNodesSQL =
       $WordListNodesSQLTable(this);
   late final $WordListEntriesSQLTable wordListEntriesSQL =
@@ -567,4 +567,269 @@ abstract class _$WordListsSQLDatabase extends GeneratedDatabase {
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [wordListNodesSQL, wordListEntriesSQL];
+}
+
+typedef $$WordListNodesSQLTableInsertCompanionBuilder
+    = WordListNodesSQLCompanion Function({
+  Value<int> id,
+  required String name,
+  required List<int> childrenIDs,
+  required WordListNodeType type,
+  Value<bool> isExpanded,
+});
+typedef $$WordListNodesSQLTableUpdateCompanionBuilder
+    = WordListNodesSQLCompanion Function({
+  Value<int> id,
+  Value<String> name,
+  Value<List<int>> childrenIDs,
+  Value<WordListNodeType> type,
+  Value<bool> isExpanded,
+});
+
+class $$WordListNodesSQLTableTableManager extends RootTableManager<
+    _$WordListsSQLDatabase,
+    $WordListNodesSQLTable,
+    WordListNodesSQLData,
+    $$WordListNodesSQLTableFilterComposer,
+    $$WordListNodesSQLTableOrderingComposer,
+    $$WordListNodesSQLTableProcessedTableManager,
+    $$WordListNodesSQLTableInsertCompanionBuilder,
+    $$WordListNodesSQLTableUpdateCompanionBuilder> {
+  $$WordListNodesSQLTableTableManager(
+      _$WordListsSQLDatabase db, $WordListNodesSQLTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$WordListNodesSQLTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$WordListNodesSQLTableOrderingComposer(ComposerState(db, table)),
+          getChildManagerBuilder: (p) =>
+              $$WordListNodesSQLTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<List<int>> childrenIDs = const Value.absent(),
+            Value<WordListNodeType> type = const Value.absent(),
+            Value<bool> isExpanded = const Value.absent(),
+          }) =>
+              WordListNodesSQLCompanion(
+            id: id,
+            name: name,
+            childrenIDs: childrenIDs,
+            type: type,
+            isExpanded: isExpanded,
+          ),
+          getInsertCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            required String name,
+            required List<int> childrenIDs,
+            required WordListNodeType type,
+            Value<bool> isExpanded = const Value.absent(),
+          }) =>
+              WordListNodesSQLCompanion.insert(
+            id: id,
+            name: name,
+            childrenIDs: childrenIDs,
+            type: type,
+            isExpanded: isExpanded,
+          ),
+        ));
+}
+
+class $$WordListNodesSQLTableProcessedTableManager
+    extends ProcessedTableManager<
+        _$WordListsSQLDatabase,
+        $WordListNodesSQLTable,
+        WordListNodesSQLData,
+        $$WordListNodesSQLTableFilterComposer,
+        $$WordListNodesSQLTableOrderingComposer,
+        $$WordListNodesSQLTableProcessedTableManager,
+        $$WordListNodesSQLTableInsertCompanionBuilder,
+        $$WordListNodesSQLTableUpdateCompanionBuilder> {
+  $$WordListNodesSQLTableProcessedTableManager(super.$state);
+}
+
+class $$WordListNodesSQLTableFilterComposer
+    extends FilterComposer<_$WordListsSQLDatabase, $WordListNodesSQLTable> {
+  $$WordListNodesSQLTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get name => $state.composableBuilder(
+      column: $state.table.name,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<List<int>, List<int>, String>
+      get childrenIDs => $state.composableBuilder(
+          column: $state.table.childrenIDs,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<WordListNodeType, WordListNodeType, int>
+      get type => $state.composableBuilder(
+          column: $state.table.type,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get isExpanded => $state.composableBuilder(
+      column: $state.table.isExpanded,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$WordListNodesSQLTableOrderingComposer
+    extends OrderingComposer<_$WordListsSQLDatabase, $WordListNodesSQLTable> {
+  $$WordListNodesSQLTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get name => $state.composableBuilder(
+      column: $state.table.name,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get childrenIDs => $state.composableBuilder(
+      column: $state.table.childrenIDs,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get type => $state.composableBuilder(
+      column: $state.table.type,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get isExpanded => $state.composableBuilder(
+      column: $state.table.isExpanded,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+typedef $$WordListEntriesSQLTableInsertCompanionBuilder
+    = WordListEntriesSQLCompanion Function({
+  required int wordListID,
+  required int dictEntryID,
+  Value<DateTime> timeAdded,
+  Value<int> rowid,
+});
+typedef $$WordListEntriesSQLTableUpdateCompanionBuilder
+    = WordListEntriesSQLCompanion Function({
+  Value<int> wordListID,
+  Value<int> dictEntryID,
+  Value<DateTime> timeAdded,
+  Value<int> rowid,
+});
+
+class $$WordListEntriesSQLTableTableManager extends RootTableManager<
+    _$WordListsSQLDatabase,
+    $WordListEntriesSQLTable,
+    WordListEntriesSQLData,
+    $$WordListEntriesSQLTableFilterComposer,
+    $$WordListEntriesSQLTableOrderingComposer,
+    $$WordListEntriesSQLTableProcessedTableManager,
+    $$WordListEntriesSQLTableInsertCompanionBuilder,
+    $$WordListEntriesSQLTableUpdateCompanionBuilder> {
+  $$WordListEntriesSQLTableTableManager(
+      _$WordListsSQLDatabase db, $WordListEntriesSQLTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$WordListEntriesSQLTableFilterComposer(ComposerState(db, table)),
+          orderingComposer: $$WordListEntriesSQLTableOrderingComposer(
+              ComposerState(db, table)),
+          getChildManagerBuilder: (p) =>
+              $$WordListEntriesSQLTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<int> wordListID = const Value.absent(),
+            Value<int> dictEntryID = const Value.absent(),
+            Value<DateTime> timeAdded = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              WordListEntriesSQLCompanion(
+            wordListID: wordListID,
+            dictEntryID: dictEntryID,
+            timeAdded: timeAdded,
+            rowid: rowid,
+          ),
+          getInsertCompanionBuilder: ({
+            required int wordListID,
+            required int dictEntryID,
+            Value<DateTime> timeAdded = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              WordListEntriesSQLCompanion.insert(
+            wordListID: wordListID,
+            dictEntryID: dictEntryID,
+            timeAdded: timeAdded,
+            rowid: rowid,
+          ),
+        ));
+}
+
+class $$WordListEntriesSQLTableProcessedTableManager
+    extends ProcessedTableManager<
+        _$WordListsSQLDatabase,
+        $WordListEntriesSQLTable,
+        WordListEntriesSQLData,
+        $$WordListEntriesSQLTableFilterComposer,
+        $$WordListEntriesSQLTableOrderingComposer,
+        $$WordListEntriesSQLTableProcessedTableManager,
+        $$WordListEntriesSQLTableInsertCompanionBuilder,
+        $$WordListEntriesSQLTableUpdateCompanionBuilder> {
+  $$WordListEntriesSQLTableProcessedTableManager(super.$state);
+}
+
+class $$WordListEntriesSQLTableFilterComposer
+    extends FilterComposer<_$WordListsSQLDatabase, $WordListEntriesSQLTable> {
+  $$WordListEntriesSQLTableFilterComposer(super.$state);
+  ColumnFilters<int> get wordListID => $state.composableBuilder(
+      column: $state.table.wordListID,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get dictEntryID => $state.composableBuilder(
+      column: $state.table.dictEntryID,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get timeAdded => $state.composableBuilder(
+      column: $state.table.timeAdded,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$WordListEntriesSQLTableOrderingComposer
+    extends OrderingComposer<_$WordListsSQLDatabase, $WordListEntriesSQLTable> {
+  $$WordListEntriesSQLTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get wordListID => $state.composableBuilder(
+      column: $state.table.wordListID,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get dictEntryID => $state.composableBuilder(
+      column: $state.table.dictEntryID,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get timeAdded => $state.composableBuilder(
+      column: $state.table.timeAdded,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
+class _$WordListsSQLDatabaseManager {
+  final _$WordListsSQLDatabase _db;
+  _$WordListsSQLDatabaseManager(this._db);
+  $$WordListNodesSQLTableTableManager get wordListNodesSQL =>
+      $$WordListNodesSQLTableTableManager(_db, _db.wordListNodesSQL);
+  $$WordListEntriesSQLTableTableManager get wordListEntriesSQL =>
+      $$WordListEntriesSQLTableTableManager(_db, _db.wordListEntriesSQL);
 }

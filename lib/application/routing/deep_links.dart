@@ -22,7 +22,7 @@ import 'package:da_kanji_mobile/globals.dart';
 Future<void> initDeepLinksStream() async {
 
   // Subscribe to all events when app is started.
-  g_AppLinks.allUriLinkStream.listen((uri) {
+  g_AppLinks.uriLinkStream.listen((uri) {
     if(uri.toString().startsWith(g_AppLinkDaKanji) || 
       uri.toString().startsWith(g_AppLinkHttps)){
       handleDeepLink(uri.toString());

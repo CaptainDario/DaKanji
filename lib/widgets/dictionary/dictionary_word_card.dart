@@ -129,6 +129,22 @@ class _DictionaryWordCardState extends State<DictionaryWordCard> {
                   height: 5,
                 ),
               ],
+
+            // Frequency
+            if(GetIt.I<Settings>().dictionary.showWordFruequency)
+              ...[
+                Text(
+                  "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()}: ${widget.entry!.frequency.toStringAsFixed(2)}",
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12
+                  ),
+                ),
+              
+                const SizedBox(
+                  height: 5,
+                ),
+              ],
               
             // meanings
             WordMeanings(

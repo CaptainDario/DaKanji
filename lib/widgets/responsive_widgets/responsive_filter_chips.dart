@@ -75,7 +75,7 @@ class _ResponsiveFilterChipsState extends State<ResponsiveFilterChips> {
               widget.numChips,
               (index) {
                 return FilterChip(
-                  onSelected: (selected) async {
+                  onSelected: (selected) {
                     widget.onFilterChipTap?.call(selected, index);
                   },
                   selected: widget.selected(index),

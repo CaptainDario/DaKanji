@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 final ThemeData lightTheme = ThemeData(
+
+  fontFamily: 'NotoSansJP',
   
   brightness: Brightness.light,
   colorSchemeSeed: g_Dakanji_green,
-  //colorSchemeSeed: Colors.brown,
+  //colorSchemeSeed: Colors.pink,
 
   //primarySwatch: createMaterialColor(g_Dakanji_green),
 
