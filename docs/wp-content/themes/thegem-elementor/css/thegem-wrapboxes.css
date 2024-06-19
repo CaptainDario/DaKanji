@@ -109,7 +109,7 @@
 	overflow: hidden;
 }
 .gem-gmaps.gem-wrapbox-style-11 .gem-gmaps-hide {
-	-webkit-mask-image: url('https://dakanji.app/wp-content/themes/thegem-elementor/css/css/circle.svg');
+	-webkit-mask-image: url('/wp-content/themes/thegem-elementor/css/css/circle.svg');
 }
 iframe + .map-locker {
 	position: relative;
@@ -121,7 +121,7 @@ iframe + .map-locker {
 	border-radius: 50%;
 	-moz-border-radius: 50%;
 	-webkit-border-radius: 50%;
-	background: #ffffff url('https://dakanji.app/wp-content/themes/thegem-elementor/css/images/map-locker.png') no-repeat 0 50%;
+	background: #ffffff url('/wp-content/themes/thegem-elementor/css/images/map-locker.png') no-repeat 0 50%;
 }
 iframe + .map-locker.disabled {
 	background-position: 100% 50%;

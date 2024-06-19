@@ -7,8 +7,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.eot");
-  src: url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.eot#iefix") format("embedded-opentype"), url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.woff2") format("woff2"), url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.woff") format("woff"), url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.ttf") format("truetype"), url("https://dakanji.app/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.svg#fontawesome") format("svg"); }
+  src: url("/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.eot");
+  src: url("/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.eot#iefix") format("embedded-opentype"), url("/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.woff2") format("woff2"), url("/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.woff") format("woff"), url("/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.ttf") format("truetype"), url("/wp-content/plugins/elementor/assets/lib/font-awesome/webfonts/fa-brands-400.svg#fontawesome") format("svg"); }
 
 .fab {
   font-family: 'Font Awesome 5 Brands';

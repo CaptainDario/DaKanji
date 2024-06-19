@@ -209,7 +209,8 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
                       autocorrect: false,
                       maxLines: 1,
                       style: const TextStyle(
-                        fontFamily: g_japaneseFontFamily
+                        fontFamily: g_japaneseFontFamily,
+                        color: Colors.white
                       ),
                       decoration: InputDecoration(
                         hintText: LocaleKeys.DojgScreen_dojg_search.tr(),

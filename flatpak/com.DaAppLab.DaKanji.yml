@@ -4,15 +4,15 @@ runtime-version: '45'
 sdk: org.gnome.Sdk
 command: DaKanji
 finish-args:
-  - --share=ipc
-  - --socket=x11
   - --socket=fallback-x11
   - --socket=wayland
   - --socket=pulseaudio
   - --share=network
-  - --device=all
-  - --socket=session-bus
+  - --share=ipc
+  - --device=dri
+  - --talk-name=org.freedesktop.Notifications
   - --env=LD_LIBRARY_PATH=/app/lib
+  - filesystem=home
 modules:
 
 # These are the required dependencies

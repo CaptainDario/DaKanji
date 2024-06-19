@@ -21,7 +21,7 @@ import 'package:da_kanji_mobile/globals.dart';
 /// Let the user select the anki DoJG deck and import it.
 /// Returns `true` if the base dojg (no media) has been successfully been
 /// imported
-Future<bool> importDoJGDeck () async {
+Future<bool> importDoJGDeck() async {
 
   bool imported = false;
 
@@ -35,10 +35,10 @@ Future<bool> importDoJGDeck () async {
       String copyTo = g_DakanjiPathManager.dojgDirectory.path;
 
       // extract the zip (in a separate isolate) to the dakanji directory
-      await compute((Tuple2 params) {
+      await compute((Tuple2 params) async {
         final inputStream = InputFileStream(params.item1.path);
         final archive = ZipDecoder().decodeBuffer(inputStream);
-        extractArchiveToDisk(archive, params.item2);
+        await extractArchiveToDisk(archive, params.item2);
       }, Tuple2(dojg, copyTo));
 
       // convert SQLite -> Isar
