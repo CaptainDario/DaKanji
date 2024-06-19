@@ -1,6 +1,12 @@
 
 # DaKanji - changelog
 
+## v3.4.2 - ワードリストと暗記改善 (09.06.2024)
+
+Fixed:
+
+- Pressing rate on linux causes exception
+
 ## v3.4.1 - ワードリストと暗記改善 (09.06.2024)
 
 Added:
