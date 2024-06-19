@@ -35,6 +35,8 @@ void handleDeepLink(String link){
 
   debugPrint("Deeplink: $link");
 
+  link = Uri.decodeFull(link);
+
   List<String> route = extractRouteFromLink(link);
   Map<String, String> args = extractArgsFromLink(link);
 

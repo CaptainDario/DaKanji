@@ -62,6 +62,8 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
   else if(name == "/${Screens.dojg.name}"){
     newRoute = DoJGScreen(
       args.navigatedByDrawer, true,
+      openFirstResult: args.dojgOpenFirstMatch,
+      initialSearch: args.dojgInitialSearch,
     );
   }
   else if(name == "/${Screens.clipboard.name}"){

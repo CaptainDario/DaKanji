@@ -58,12 +58,6 @@ Future<bool> importDoJGDeck() async {
     catch (e){
       debugPrint("Cannot load DoJG deck! Encountered: $e");
     }
-    finally {
-      Directory dojgDir = Directory(g_DakanjiPathManager.dojgDirectory.path);
-      if(dojgDir.existsSync()){
-        dojgDir.deleteSync(recursive: true);
-      }
-    }
   }
 
   return imported;

@@ -48,7 +48,12 @@ class _DoJGScreenState extends State<DoJGScreen> {
         // show the import widget if the deck has not been imported
         ? const DojgImport()
         // if it has been imported show the actual dojg data
-        : DoJG(widget.openedByDrawer, widget.includeTutorial)
+        : DoJG(
+          widget.openedByDrawer,
+          widget.includeTutorial,
+          initialSearch: widget.initialSearch,
+          openFirstResult: widget.openFirstResult,  
+        )
     );
   }
 

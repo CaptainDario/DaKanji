@@ -5,8 +5,9 @@
 
 Fixed:
 
-- Pressing rate on linux causes exception
-- Correctly import the dojg deck
+- Pressing "rate" on linux causes exception
+- Importing the dojg deck
+- DoJG deep links
 
 ## v3.4.1 - ワードリストと暗記改善 (09.06.2024)
 
