@@ -6,6 +6,7 @@
 Fixed:
 
 - Pressing rate on linux causes exception
+- Correctly import the dojg deck
 
 ## v3.4.1 - ワードリストと暗記改善 (09.06.2024)
 
