@@ -408,7 +408,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       caretOffset.dx - (widget.caretWidth / 2),
       caretOffset.dy,
       widget.caretWidth,
-      (caretHeight),
+      (caretHeight ?? 0),
     );
   }
 
