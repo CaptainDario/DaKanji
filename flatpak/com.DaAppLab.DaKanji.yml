@@ -12,7 +12,6 @@ finish-args:
   - --device=dri
   - --talk-name=org.freedesktop.Notifications
   - --env=LD_LIBRARY_PATH=/app/lib
-  - filesystem=home
 modules:
 
 # These are the required dependencies
