@@ -24,6 +24,7 @@ files_to_exclude_mac = [
 files_to_exclude_lin = [
     "libmecab_arm64.dll", "libmecab_x86.dll",
     "libtensorflowlite_c_arm64.dll", "libtensorflowlite_c_x86.dll",
+    "libtensorflowlite_c-mac.dylib",
 ]
 
 release_url = None
