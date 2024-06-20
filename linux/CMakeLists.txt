@@ -125,11 +125,11 @@ endif()
 
 install(
   FILES
-    ${TF_LITE_SO}
+    ${PROJECT_BUILD_DIR}/../blobs/${TF_LITE_SO}
   DESTINATION
     ${INSTALL_BUNDLE_DATA_DIR}/../blobs/
   RENAME
-  libtensorflowlite_c-linux.so
+    libtensorflowlite_c-linux.so
 )
 
 # mediakit
