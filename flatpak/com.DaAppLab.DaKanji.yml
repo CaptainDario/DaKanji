@@ -12,10 +12,11 @@ finish-args:
   - --device=dri
   - --talk-name=org.freedesktop.Notifications
   - --talk-name=org.freedesktop.portal.Desktop
-  - --filesystem=xdg-download
-  - --filesystem=xdg-documents
-  - --filesystem=xdg-run/pipewire-0:ro
+  - --talk-name=org.freedesktop.portal.FileChooser
+  - --filesystem=host
+  - --talk-name=org.freedesktop.FileManager1
   - --env=LD_LIBRARY_PATH=/app/lib
+  - --env=GTK_USE_PORTAL=1
 modules:
 
 # These are the required dependencies
