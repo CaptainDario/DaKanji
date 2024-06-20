@@ -11,8 +11,46 @@ finish-args:
   - --share=ipc
   - --device=dri
   - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.freedesktop.portal.Desktop
   - --env=LD_LIBRARY_PATH=/app/lib
 modules:
+
+# file picker
+- name: zenity
+  buildsystem: simple
+  build-commands:
+    - make install
+  sources:
+    - type: archive
+      url: https://download.gnome.org/sources/zenity/3.32/zenity-3.32.0.tar.xz
+      sha256: c5fa7ba12b8a064df8a85d33cd89bb8d1073b28578fffd24b7c736e2405c7c7b
+
+- name: zanity
+  buildsystem: simple
+  build-commands:
+    - make install
+  sources:
+    - type: archive
+      url: https://github.com/YourUsername/zanity/releases/download/v1.0.0/zanity-1.0.0.tar.gz
+      sha256: your_sha256_hash_here
+
+- name: xdg-desktop-portal
+  buildsystem: simple
+  build-commands:
+    - make install
+  sources:
+    - type: archive
+      url: https://github.com/flatpak/xdg-desktop-portal/releases/download/1.16.0/xdg-desktop-portal-1.16.0.tar.xz
+      sha256: your_sha256_hash_here
+
+- name: xdg-desktop-portal-gtk
+  buildsystem: simple
+  build-commands:
+    - make install
+  sources:
+    - type: archive
+      url: https://github.com/flatpak/xdg-desktop-portal-gtk/releases/download/1.16.0/xdg-desktop-portal-gtk-1.16.0.tar.xz
+      sha256: your_sha256_hash_here
 
 # These are the required dependencies
 - name: libmpv
