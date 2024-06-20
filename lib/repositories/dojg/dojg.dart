@@ -28,7 +28,7 @@ Future<bool> importDoJGDeck() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     type: FileType.any
   );
-  if(result != null){
+  if(result != null && result.files.single.path!.endsWith("apkg")){
     try {
       // get current file path and dakanji directory
       File dojg = File(result.files.single.path!);
