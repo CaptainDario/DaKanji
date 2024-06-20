@@ -13,6 +13,7 @@ import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
 import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
+import 'package:xdg_desktop_portal/xdg_desktop_portal.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
@@ -25,6 +26,8 @@ Future<bool> importDoJGDeck() async {
 
   bool imported = false;
 
+  final client = XdgDesktopPortalClient();
+  await client.fileChooser.getVersion();
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     type: FileType.any
   );
