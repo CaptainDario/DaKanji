@@ -9,6 +9,7 @@ Fixed:
 - Importing the dojg deck
 - DoJG deep links
 - DoJG screen search text color
+- Potential race condition in SQLite when restarting the app
 
 ## v3.4.1 - ワードリストと暗記改善 (09.06.2024)
 
