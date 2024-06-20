@@ -6,6 +6,7 @@
 Fixed:
 
 - Pressing "rate" on linux causes exception
+- File picker not opening in snap
 - Importing the dojg deck
 - DoJG deep links
 - DoJG screen search text color
