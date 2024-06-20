@@ -63,9 +63,9 @@ parts:
     plugin: dump
     source: ./blobs
     stage:
-    - bin/blobs/libtensorflowlite_c-linux.so
+    - bin/blobs/libtensorflowlite_c_x86.so
     organize:
-      libtensorflowlite_c-linux.so: bin/blobs/libtensorflowlite_c-linux.so
+      libtensorflowlite_c-linux.so: bin/blobs/libtensorflowlite_c_x86.so
 
   zenity:
     plugin: nil
