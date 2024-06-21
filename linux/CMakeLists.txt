@@ -123,11 +123,10 @@ elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR
         CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
   set(TF_LITE_SO_NAME libtensorflowlite_c_x86.so)
 endif()
-set(TF_LITE_SO_PATH ${PROJECT_BUILD_DIR}/../blobs)
 
 install(
-  FILES ${TF_LITE_SO_PATH}/${TF_LITE_SO_NAME}
-  DESTINATION ${TF_LITE_SO_PATH}/
+  FILES ${PROJECT_BUILD_DIR}/../blobs/${TF_LITE_SO_NAME}
+  DESTINATION ${INSTALL_BUNDLE_DATA_DIR}/../blobs/
   RENAME libtensorflowlite_c-linux.so
 )
 
