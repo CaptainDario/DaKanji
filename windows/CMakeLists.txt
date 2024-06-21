@@ -108,9 +108,9 @@ install(
   FILES
     ${TF_LITE_DLL_PATH}/${TF_LITE_DLL_NAME}
   DESTINATION
-    ${TF_LITE_DLL_PATH}
+    ${TF_LITE_DLL_PATH}/
   RENAME
-  libtensorflowlite_c-win.dll
+    libtensorflowlite_c-win.dll
 )
 
 # Include the mecab binary
@@ -119,7 +119,7 @@ if(CMAKE_SYSTEM_PROCESSOR STREQUAL "ARM64")
   set(MECAB_DLL_NAME libmecab_arm64.dll)
   set(MECAB_DLL_PATH ${PROJECT_BUILD_DIR}/../blobs)
 elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
-  set(MECAB_DLL_NAME ibmecab_x86.dll)
+  set(MECAB_DLL_NAME libmecab_x86.dll)
   set(MECAB_DLL_PATH ${PROJECT_BUILD_DIR}/../blobs)
 endif()
 
@@ -127,7 +127,7 @@ install(
   FILES
     ${MECAB_DLL_PATH}/${MECAB_DLL_NAME}
   DESTINATION
-    ${MECAB_DLL_PATH}
+    ${MECAB_DLL_PATH}/
   RENAME
     libmecab.dll
 )

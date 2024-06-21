@@ -129,7 +129,7 @@ install(
   FILES
     ${TF_LITE_SO_PATH}/${TF_LITE_SO_NAME}
   DESTINATION
-    ${TF_LITE_SO_PATH}
+    ${TF_LITE_SO_PATH}/
   RENAME
     libtensorflowlite_c-linux.so
 )
