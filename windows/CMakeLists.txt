@@ -108,7 +108,7 @@ install(
   FILES
     ${TF_LITE_DLL_PATH}/${TF_LITE_DLL_NAME}
   DESTINATION
-    ${TF_LITE_DLL_PATH}/
+    ${TF_LITE_DLL_PATH}/${TF_LITE_DLL_NAME}
   RENAME
     libtensorflowlite_c-win.dll
 )
@@ -127,7 +127,7 @@ install(
   FILES
     ${MECAB_DLL_PATH}/${MECAB_DLL_NAME}
   DESTINATION
-    ${MECAB_DLL_PATH}/
+    ${MECAB_DLL_PATH}/${MECAB_DLL_NAME}
   RENAME
     libmecab.dll
 )
