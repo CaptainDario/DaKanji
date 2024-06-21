@@ -11,7 +11,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   media_kit_libs_linux
   media_kit_video
   printing
-  rive_common
   screen_retriever
   sentry_flutter
   sqlite3_flutter_libs
