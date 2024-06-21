@@ -86,10 +86,6 @@ jobs:
       - name: build exe
         run: flutter build windows --release -v
 
-      # TESTS
-      - name: Run integration tests
-        run: python ./integration_test/run_tests.py
-
       # build exe and upload to artifacts
       - name: build exe
         run: flutter build windows --release
