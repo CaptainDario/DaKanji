@@ -98,28 +98,28 @@ install(FILES "${AOT_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_DATA_DIR}"
 message(STATUS "TF Lite detected processor architecture: ${CMAKE_SYSTEM_PROCESSOR}")
 if(CMAKE_SYSTEM_PROCESSOR STREQUAL "ARM64")
   set(TF_LITE_DLL_NAME libtensorflowlite_c_arm64.dll)
-elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR
+        CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
   set(TF_LITE_DLL_NAME libtensorflowlite_c_x86.dll)
 endif()
 set(TF_LITE_DLL_PATH ${PROJECT_BUILD_DIR}/../blobs)
 
 install(
   FILES ${TF_LITE_DLL_PATH}/${TF_LITE_DLL_NAME}
-  DESTINATION ${TF_LITE_DLL_PATH}/
-  RENAME libtensorflowlite_c-win.dll
+  DESTINATION ${TF_LITE_DLL_PATH}/libtensorflowlite_c-win.dll
 )
 
 # Include the mecab binary
 message(STATUS "Detected processor architecture: ${CMAKE_SYSTEM_PROCESSOR}")
 if(CMAKE_SYSTEM_PROCESSOR STREQUAL "ARM64")
   set(MECAB_DLL_NAME libmecab_arm64.dll)
-elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR
+        CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
   set(MECAB_DLL_NAME libmecab_x86.dll)
 endif()
 set(MECAB_DLL_PATH ${PROJECT_BUILD_DIR}/../blobs)
 
 install(
   FILES ${MECAB_DLL_PATH}/${MECAB_DLL_NAME}
-  DESTINATION ${MECAB_DLL_PATH}/
-  RENAME libmecab.dll
+  DESTINATION ${MECAB_DLL_PATH}/libmecab.dll
 )
