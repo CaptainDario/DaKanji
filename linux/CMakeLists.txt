@@ -119,17 +119,17 @@ endif()
 message(STATUS "TF Lite detected processor architecture: ${CMAKE_SYSTEM_PROCESSOR}")
 if(CMAKE_SYSTEM_PROCESSOR STREQUAL "ARM64")
     set(TF_LITE_SO_NAME libtensorflowlite_c_arm64.so)
-    set(TF_LITE_SO_PATH ${PROJECT_BUILD_DIR}/../blobs/${TF_LITE_SO_NAME})
+    set(TF_LITE_SO_PATH ${PROJECT_BUILD_DIR}/../blobs)
 elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
     set(TF_LITE_SO_NAME libtensorflowlite_c_x86.so)
-    set(TF_LITE_SO_PATH ${PROJECT_BUILD_DIR}/../blobs/${TF_LITE_SO_NAME})
+    set(TF_LITE_SO_PATH ${PROJECT_BUILD_DIR}/../blobs)
 endif()
 
 install(
   FILES
-    ${PROJECT_BUILD_DIR}/../blobs/${TF_LITE_SO_NAME}
+    ${TF_LITE_SO_PATH}/${TF_LITE_SO_NAME}
   DESTINATION
-    ${INSTALL_BUNDLE_DATA_DIR}/../blobs/
+    ${TF_LITE_SO_PATH}
   RENAME
     libtensorflowlite_c-linux.so
 )
