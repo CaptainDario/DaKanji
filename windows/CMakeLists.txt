@@ -104,10 +104,9 @@ endif()
 set(TF_LITE_DLL_PATH ${PROJECT_BUILD_DIR}/../blobs)
 
 install(
-  FILES
-    ${TF_LITE_DLL_PATH}/${TF_LITE_DLL_NAME}
-  DESTINATION
-    ${TF_LITE_DLL_PATH}/libtensorflowlite_c-win.dll
+  FILES ${TF_LITE_DLL_PATH}/${TF_LITE_DLL_NAME}
+  DESTINATION ${TF_LITE_DLL_PATH}/
+  RENAME libtensorflowlite_c-win.dll
 )
 
 # Include the mecab binary
@@ -120,8 +119,7 @@ endif()
 set(MECAB_DLL_PATH ${PROJECT_BUILD_DIR}/../blobs)
 
 install(
-  FILES
-    ${MECAB_DLL_PATH}/${MECAB_DLL_NAME}
-  DESTINATION
-    ${MECAB_DLL_PATH}/libmecab.dll
+  FILES ${MECAB_DLL_PATH}/${MECAB_DLL_NAME}
+  DESTINATION ${MECAB_DLL_PATH}/
+  RENAME libmecab.dll
 )

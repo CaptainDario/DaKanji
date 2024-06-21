@@ -83,6 +83,9 @@ jobs:
           python3 ./.github/workflows/create_dakanji_env.py
           flutter pub run build_runner build --delete-conflicting-outputs
 
+      - name: build exe
+        run: flutter build windows --release -v
+
       # TESTS
       - name: Run integration tests
         run: python ./integration_test/run_tests.py
