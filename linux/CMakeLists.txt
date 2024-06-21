@@ -128,9 +128,7 @@ install(
   FILES
     ${TF_LITE_SO_PATH}/${TF_LITE_SO_NAME}
   DESTINATION
-    ${TF_LITE_SO_PATH}/${TF_LITE_SO_NAME}
-  RENAME
-    libtensorflowlite_c-linux.so
+    ${TF_LITE_SO_PATH}/libtensorflowlite_c-linux.so
 )
 
 # mediakit
