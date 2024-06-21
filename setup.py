@@ -18,8 +18,8 @@ files_to_exclude_win = [
 ]
 files_to_exclude_mac = [
     "libmecab_arm64.dll", "libmecab_x86.dll",
-    "libtensorflowlite_c_arm64.so", "libtensorflowlite_c_x86.so",
-    "ensorflowlite_c_x86.dll", "ensorflowlite_c_arm64.dll"
+    "libtensorflowlite_c_x86.so",  "libtensorflowlite_c_arm64.so",
+    "libtensorflowlite_c_x86.dll", "libtensorflowlite_c_arm64.dll"
 ]
 files_to_exclude_lin = [
     "libmecab_arm64.dll", "libmecab_x86.dll",
