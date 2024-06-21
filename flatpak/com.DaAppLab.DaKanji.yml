@@ -1,7 +1,7 @@
 app-id: com.DaAppLab.DaKanji
-runtime: org.gnome.Platform
-runtime-version: '45'
-sdk: org.gnome.Sdk
+runtime: org.freedesktop.Platform
+runtime-version: '22.08'
+sdk: org.freedesktop.Sdk
 command: DaKanji
 finish-args:
   - --socket=fallback-x11
@@ -11,12 +11,7 @@ finish-args:
   - --share=ipc
   - --device=dri
   - --talk-name=org.freedesktop.Notifications
-  - --talk-name=org.freedesktop.portal.Desktop
-  - --talk-name=org.freedesktop.portal.FileChooser
-  - --filesystem=host
-  - --talk-name=org.freedesktop.FileManager1
   - --env=LD_LIBRARY_PATH=/app/lib
-  - --env=GTK_USE_PORTAL=1
 modules:
 
 # These are the required dependencies
