@@ -5,6 +5,7 @@
 
 Fixed:
 
+- Does not start on Windows
 - Pressing "rate" on linux causes exception
 - File picker not opening in snap
 - Importing the dojg deck
