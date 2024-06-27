@@ -138,10 +138,6 @@ dependencies:
   flutter_native_splash: 2.4.0   # android, iOS, web
 
 dependency_overrides:
-  url_protocol:
-    git:
-      url: https://github.com/LucasXu0/flutter_url_protocol.git
-      commit: 77a8420
   sentry: 8.2.0
 
 msix_config:
