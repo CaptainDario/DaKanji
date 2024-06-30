@@ -219,7 +219,12 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         }
                         // quick send to anki
                         else if(selection == menuItems[9]) {
-                          addToAnki(widget.entry!, context);
+                          if(!GetIt.I<UserData>().ankiSetup){
+                            await ankiNotSetupDialog(context).show();
+                          }
+                          else{
+                            addToAnki(widget.entry!, context);
+                          }
                         }
                         // send to anki
                         else if(selection == menuItems[10]){
