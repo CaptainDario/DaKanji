@@ -79,6 +79,7 @@ dependencies:
   tflite_flutter: #0.10.4
     git:
       url: https://github.com/CaptainDario/flutter-tflite
+      hash: 2c4c912
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
   async: 2.11.0
@@ -97,7 +98,6 @@ dependencies:
   flutter_ankidroid:
     git:
       url: https://github.com/CaptainDario/flutter_ankidroid
-    #path: /Users/darioklepoch/dev/DaKanji/flutter_ankidroid/
   kana_kit:
     git:
       url: https://github.com/CaptainDario/kana_kit
@@ -126,7 +126,7 @@ dependencies:
     #path: /Users/darioklepoch/dev/DaKanji/mecab_dart/
     git:
       url: https://github.com/CaptainDario/mecab_dart
-      ref: 3cafe26
+      ref: e068f05
 
   # packages that should only target specific platforms
   android_intent_plus: 5.0.2      # android
