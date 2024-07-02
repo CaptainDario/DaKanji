@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v3.4.2 - ワードリストと暗記改善 (09.06.2024)
+## v3.4.2 - ワードリストと暗記改善 (05.07.2024)
 
 Fixed:
 
@@ -12,6 +12,7 @@ Fixed:
 - DoJG deep links
 - DoJG screen search text color
 - Potential race condition in SQLite when restarting the app
+- MacOS: closing the app kept did not terminate the app
 
 ## v3.4.1 - ワードリストと暗記改善 (09.06.2024)
 
