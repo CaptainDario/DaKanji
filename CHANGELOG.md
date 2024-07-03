@@ -6,13 +6,13 @@
 Fixed:
 
 - Does not start on Windows
-- Pressing "rate" on linux causes exception
+- Pressing "rate" on linux causes an exception
 - File picker not opening in snap
 - Importing the dojg deck
 - DoJG deep links
 - DoJG screen search text color
 - Potential race condition in SQLite when restarting the app
-- MacOS: closing the app kept did not terminate the app
+- MacOS: closing the app did not terminate the app
 
 ## v3.4.1 - ワードリストと暗記改善 (09.06.2024)
 
