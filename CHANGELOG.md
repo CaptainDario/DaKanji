@@ -14,6 +14,8 @@ Fixed:
 - Potential race condition in SQLite when restarting the app
 - MacOS: closing the app did not terminate the app
 
+-------------------------------------------------------------------------
+
 ## v3.4.1 - ワードリストと暗記改善 (09.06.2024)
 
 Added:
@@ -39,6 +41,8 @@ Fixed / Improved:
 - Exception when checking for new release
 - Some texts used Chinese characters instead of Japanese
 - Kanji tab starts scrolled part-way down #95
+
+-------------------------------------------------------------------------
 
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
