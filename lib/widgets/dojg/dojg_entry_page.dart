@@ -264,13 +264,15 @@ class _DojgEntryPageState extends State<DojgEntryPage> {
                       child: SizedBox(
                         height: MediaQuery.of(context).size.height-AppBar().preferredSize.height*3,
                         width: MediaQuery.of(context).size.width,
-                        child: InteractiveViewer(
-                          panEnabled: true,
-                          scaleEnabled: true,
-                          maxScale: 5,
-                          child: Image.file(File(
-                            p.joinAll([g_DakanjiPathManager.dojgDirectory.path, widget.dojgEntry.noteImageName!])
-                          )),
+                        child: SingleChildScrollView(
+                          child: InteractiveViewer(
+                            panEnabled: true,
+                            scaleEnabled: true,
+                            maxScale: 5,
+                            child: Image.file(File(
+                              p.joinAll([g_DakanjiPathManager.dojgDirectory.path, widget.dojgEntry.noteImageName!])
+                            )),
+                          ),
                         ),
                       ),
                     )
