@@ -50,6 +50,7 @@ class DojgEntryPage extends StatefulWidget {
 
 class _DojgEntryPageState extends State<DojgEntryPage> {
 
+  // how many pointers are currently on the screen
   int pointerCount = 0;
 
   @override
@@ -260,12 +261,17 @@ class _DojgEntryPageState extends State<DojgEntryPage> {
                       onDoubleTap: () {
                         openDojgImageFullScreen();
                       },
-                      child: InteractiveViewer(
-                        panEnabled: true, // Set it to false
-                        boundaryMargin: const EdgeInsets.all(100),
-                        child: Image.file(File(
-                          p.joinAll([g_DakanjiPathManager.dojgDirectory.path, widget.dojgEntry.noteImageName!])
-                        )),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height-AppBar().preferredSize.height*3,
+                        width: MediaQuery.of(context).size.width,
+                        child: InteractiveViewer(
+                          panEnabled: true,
+                          scaleEnabled: true,
+                          maxScale: 5,
+                          child: Image.file(File(
+                            p.joinAll([g_DakanjiPathManager.dojgDirectory.path, widget.dojgEntry.noteImageName!])
+                          )),
+                        ),
                       ),
                     )
                   ],
