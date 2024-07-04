@@ -1,14 +1,20 @@
 
 # DaKanji - changelog
 
-## v3.4.2 - ワードリストと暗記改善 (09.06.2024)
+## v3.4.2 - ワードリストと暗記改善 (05.07.2024)
 
 Fixed:
 
-- Pressing "rate" on linux causes exception
+- Does not start on Windows
+- Pressing "rate" on linux causes an exception
+- File picker not opening in snap
 - Importing the dojg deck
 - DoJG deep links
 - DoJG screen search text color
+- Potential race condition in SQLite when restarting the app
+- MacOS: closing the app did not terminate the app
+
+-------------------------------------------------------------------------
 
 ## v3.4.1 - ワードリストと暗記改善 (09.06.2024)
 
@@ -35,6 +41,8 @@ Fixed / Improved:
 - Exception when checking for new release
 - Some texts used Chinese characters instead of Japanese
 - Kanji tab starts scrolled part-way down #95
+
+-------------------------------------------------------------------------
 
 ## v3.4.0 - ワードリストと暗記 (9.5.2024)
 

@@ -12,6 +12,20 @@ move_to_blobs = ["libtensorflow", "libmecab"]
 move_to_dict  = ["dict", "examples", "krad", "radk"]
 move_to_tf_lite = ["CNN_single_char.tflite"]
 files_to_exclude = ["audios.zip", "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
+files_to_exclude_win = [
+    "libtensorflowlite_c-mac.dylib",
+    "libtensorflowlite_c_arm64.so", "libtensorflowlite_c_x86.so",
+]
+files_to_exclude_mac = [
+    "libmecab_arm64.dll", "libmecab_x86.dll",
+    "libtensorflowlite_c_x86.so",  "libtensorflowlite_c_arm64.so",
+    "libtensorflowlite_c_x86.dll", "libtensorflowlite_c_arm64.dll"
+]
+files_to_exclude_lin = [
+    "libmecab_arm64.dll", "libmecab_x86.dll",
+    "libtensorflowlite_c_arm64.dll", "libtensorflowlite_c_x86.dll",
+    "libtensorflowlite_c-mac.dylib",
+]
 
 release_url = None
 assets_version = None
@@ -22,16 +36,11 @@ def exclude_files_per_platform():
     """
 
     if(sys.platform.startswith("win32")):
-        files_to_exclude.append("libtensorflowlite_c-mac.dylib")
-        files_to_exclude.append("libtensorflowlite_c-linux.so")
+        files_to_exclude.extend(files_to_exclude_win)
     elif(sys.platform.startswith("darwin")):
-        files_to_exclude.append("libtensorflowlite_c-linux.so")
-        files_to_exclude.append("libtensorflowlite_c-win.dll")
-        files_to_exclude.append("libmecab.dll")
+        files_to_exclude.extend(files_to_exclude_mac)
     elif(sys.platform.startswith("linux")):
-        files_to_exclude.append("libtensorflowlite_c-mac.dylib")
-        files_to_exclude.append("libtensorflowlite_c-win.dll")
-        files_to_exclude.append("libmecab.dll")
+        files_to_exclude.extend(files_to_exclude_lin)
 
 def get_release_url():
     """ gets the url to the latest assets release of DaKanji

@@ -239,7 +239,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                   // additional information about this sense: 表す
                   if(widget.meanings.senseInfo != null && widget.meanings.senseInfo![j] != null)
                     Text(
-                      "${LocaleKeys.DictionaryScreen_word_info.tr()} ${widget.meanings.senseInfo![j]!.attributes.join(",")}",
+                      "${LocaleKeys.DictionaryScreen_word_info.tr()} ${widget.meanings.senseInfo![j]!.attributes.join("\n").replaceAll(";", "\n")}",
                       style: informationStyle,
                     ),
                   // Part of Speech: 食べる

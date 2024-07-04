@@ -32,13 +32,14 @@ apps:
     slots:
       - dbus-dakanji
     environment:
+      GTK_USE_PORTAL: 1
       LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/blas:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/lapack:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/vdpau:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/dri
 
 parts:
 
   flutter-git:
     source: https://github.com/flutter/flutter.git
-    source-tag: "3.22.1"
+    source-tag: "3.19.6"
     plugin: nil
     override-build: |
       set -eux
@@ -62,9 +63,9 @@ parts:
     plugin: dump
     source: ./blobs
     stage:
-    - bin/blobs/libtensorflowlite_c-linux.so
+    - bin/blobs/libtensorflowlite_c_x86.so
     organize:
-      libtensorflowlite_c-linux.so: bin/blobs/libtensorflowlite_c-linux.so
+      libtensorflowlite_c_x86.so: bin/blobs/libtensorflowlite_c_x86.so
 
   zenity:
     plugin: nil

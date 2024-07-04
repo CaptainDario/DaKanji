@@ -62,8 +62,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   bool showWelcomeToTheDrawingscreen = GetIt.I<UserData>().showTutorialDrawing;
   /// Future that completes and returns true when the drawing interpreter 
   /// has been initialized
-  Future<void>? initInterpter;
-
+  late Future<bool> initInterpter;
+  /// Controller for the webview to show online dictionaries
   WebViewController? webViewController;
 
 
@@ -81,7 +81,10 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     // initialize the drawing interpreter if it has not been already
     if(!GetIt.I.isRegistered<DrawingInterpreter>()){
       GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter(name: "DrawScreen"));
-      initInterpter = GetIt.I<DrawingInterpreter>().init().then((value) => true);
+      initInterpter = GetIt.I<DrawingInterpreter>().init().then((value) {setState((){}); return true;});
+    }
+    else{
+      initInterpter = Future.sync(() => true);
     }
 
     // init tutorial
@@ -132,7 +135,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
           builder: (context, snapshot) {
 
             // Assure that the drawing interpreter has been initialized
-            if(!snapshot.hasData) {
+            if(!snapshot.hasData && snapshot.data == true) {
               return Container();
             }
 

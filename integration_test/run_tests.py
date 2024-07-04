@@ -50,6 +50,7 @@ if __name__ == "__main__":
             command += "--target=integration_test/draw_screen_test.dart "
             command += f"-d {device} "
             command += additional_args
+            command += " -v"
             print(f"Executing: {command}")
             ret_val = subprocess.run(command, shell=True)
             if(ret_val.returncode != 0):
