@@ -1,6 +1,17 @@
 
 # DaKanji - changelog
 
+## v3.4.3 - ワードリストと暗記改善 (31.08.2024)
+
+Improvements:
+
+- Dictionary
+  - Back gesture clears the current search
+  - Falling words
+    - Not all controlled at the same time
+
+-------------------------------------------------------------------------
+
 ## v3.4.2 - ワードリストと暗記改善 (05.07.2024)
 
 Fixed:
