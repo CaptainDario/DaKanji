@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'dart:io';
 import 'package:collection/collection.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -379,7 +380,26 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                           ],
                         ),
                       ),
+                      const SizedBox(height: 8,),
+
+                      // TODO: words that use this kanji
+                      /*
+                      Text.rich(
+                        TextSpan(
+                          text: "Words: ",
+                          children: [
+                            TextSpan(
+                              text: "食べる",
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  print("test");
+                                }
+                            )
+                          ]
+                        )
+                      ),
                       const SizedBox(height: 16,),
+                      */
       
                       // Kanji groups
                       if(kanjiVGs.isNotEmpty && (kanjiGroupsRe.allMatches(kanjiVGs.first.svg)).length > 1)
