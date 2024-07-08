@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v3.4.3 - ワードリストと暗記改善 (31.08.2024)
+## v3.4.3 - ワードリストと暗記改善 (10.07.2024)
 
 Improvements:
 
@@ -9,6 +9,11 @@ Improvements:
   - Back gesture clears the current search
   - Falling words
     - Not all controlled at the same time
+  - Use fvp for media playback
+
+- Fixed:
+  - App does not work in MS Store
+  - DoJG: Impossible to scroll back when image full screen on desktop
 
 -------------------------------------------------------------------------
 
