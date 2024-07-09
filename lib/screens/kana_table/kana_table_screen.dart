@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get_it/get_it.dart';
-import 'package:media_kit/media_kit.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:fvp/mdk.dart' as mdk;
 
 // Project imports:
 import 'package:da_kanji_mobile/application/kana/kana.dart';
@@ -76,7 +76,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
   /// The animation controller for the kana info card
   late AnimationController _controller;
   /// The player for the kana sound
-  final Player kanaSoundPlayer = Player();
+  final mdk.Player kanaSoundPlayer = mdk.Player();
 
 
   @override
@@ -292,12 +292,10 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                     width: constraints.maxWidth,
                     showRomaji: showRomaji,
                     onTap: (String kana) async {
-                      await kanaSoundPlayer.open(
-                        Media("asset://assets/audios/kana/individuals/${convertToRomaji(kana)}.wav"),
-                        play: false
-                      );
                       if(GetIt.I<Settings>().kanaTable.playAudio){
-                        kanaSoundPlayer.play();
+                        kanaSoundPlayer.setAsset(
+                          "assets//audios/kana/individuals/${convertToRomaji(kana)}.wav");
+                        kanaSoundPlayer.state = mdk.PlaybackState.playing;
                       }
                       setState(() {
                         currentKana = kana;
@@ -349,7 +347,11 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                       playKanaAnimationWhenOpened: _controller.isCompleted &&
                         GetIt.I<Settings>().kanaTable.playKanaAnimationWhenOpened,
                       onPlayPressed: () async {
-                        await kanaSoundPlayer.play();
+                        if(currentKana == null) return;
+
+                        kanaSoundPlayer.setAsset(
+                          "assets//audios/kana/individuals/${convertToRomaji(currentKana!)}.wav");
+                        kanaSoundPlayer.state = mdk.PlaybackState.playing;
                       },
                     ),
                     builder: (context, child) {

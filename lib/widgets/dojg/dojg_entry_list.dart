@@ -1,22 +1,22 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/dojg/dojg_search_provider.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
-import 'package:da_kanji_mobile/entities/dojg/dojg_search_provider.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dojg/dojg_entry_card.dart';
+import 'package:provider/provider.dart';
 
-class DojgEntryList extends ConsumerStatefulWidget {
+class DojgEntryList extends StatefulWidget {
 
   /// A search term that should be the initial search
   final String? initialSearch;
@@ -43,10 +43,10 @@ class DojgEntryList extends ConsumerStatefulWidget {
   );
 
   @override
-  ConsumerState<DojgEntryList> createState() => _DojgEntryListState();
+  State<DojgEntryList> createState() => _DojgEntryListState();
 }
 
-class _DojgEntryListState extends ConsumerState<DojgEntryList> {
+class _DojgEntryListState extends State<DojgEntryList> {
 
   /// all dojg entries that are currently being shown
   List<DojgEntry> currentEntries = [];
@@ -177,127 +177,134 @@ class _DojgEntryListState extends ConsumerState<DojgEntryList> {
   @override
   Widget build(BuildContext context) {
 
-    // get the initial search once
-    if(!readInitialSearch && widget.initialSearch != null){
-      readInitialSearch = true;
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        ref.watch(dojgSearchProvider.notifier).setCurrentSearchTerm(currentSearch);
-      });
-    }
-    // update the current search if it changed
-    else if(searchTextEditingController.text != ref.watch(dojgSearchProvider)){
-      currentSearch = ref.watch(dojgSearchProvider);
-      searchTextEditingController.text = currentSearch;
-      updateSearchResults();
-    }
+    return ChangeNotifierProvider(
+      create: (context) => DojgSearch(),
+      builder: (context, child) {
+        
+        // get the initial search once
+        if(!readInitialSearch && widget.initialSearch != null){
+          readInitialSearch = true;
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            context.read<DojgSearch>().currentSearchTerm = currentSearch;
+          });
+        }
+        // update the current search if it changed
+        else if(searchTextEditingController.text != context.watch<DojgSearch>().currentSearchTerm){
+          currentSearch = context.watch<DojgSearch>().currentSearchTerm;
+          searchTextEditingController.text = currentSearch;
+          updateSearchResults();
+        }
+        return child!;
 
-    return Align(
-      alignment: Alignment.topCenter,
-      child: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            floating: true,
-            title: Row(
-              children: [
-                Expanded(
-                  child: Focus(
-                    focusNode: widget.includeTutorial
-                      ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![1]
-                      : null,
-                    child: TextField(
-                      controller: searchTextEditingController,
-                      autocorrect: false,
-                      maxLines: 1,
-                      style: const TextStyle(
-                        fontFamily: g_japaneseFontFamily,
-                        color: Colors.white
-                      ),
-                      decoration: InputDecoration(
-                        hintText: LocaleKeys.DojgScreen_dojg_search.tr(),
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
+      },
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              floating: true,
+              title: Row(
+                children: [
+                  Expanded(
+                    child: Focus(
+                      focusNode: widget.includeTutorial
+                        ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![1]
+                        : null,
+                      child: TextField(
+                        controller: searchTextEditingController,
+                        autocorrect: false,
+                        maxLines: 1,
+                        style: const TextStyle(
+                          fontFamily: g_japaneseFontFamily,
+                          color: Colors.white
                         ),
-                      ),
-                      onChanged: (value) {
-                        ref.read(dojgSearchProvider.notifier).setCurrentSearchTerm(value);
-                        currentSearch = value;
-                        setState(() {
-                          updateSearchResults();
-                        });
-                      },
-                    ),
-                  )
-                ),
-                const SizedBox(width: 50,),
-                Focus(
-                  focusNode: widget.includeTutorial
-                    ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![2]
-                    : null,
-                  child: widget.includeVolumeTags
-                    ? SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          ToggleButtons(
-                            renderBorder: false,
-                            isSelected: currentVolumeSelection,
-                            fillColor: Colors.transparent,
-                            hoverColor: Colors.grey.withOpacity(0.2),
-                            selectedColor: Colors.white,
-                            color: Colors.grey.withOpacity(0.4),
-                            onPressed: (index) {
-                              setState(() {
-                                currentVolumeSelection[index] = !currentVolumeSelection[index];
-                                updateSearchResults();
-                              });
-                            },
-                            children: [
-                              for (int i = 0; i < 3; i++)
-                                Text(
-                                  volumeTags[i],
-                                  textScaler: const TextScaler.linear(1.25),
-                                )
-                            ],
+                        decoration: InputDecoration(
+                          hintText: LocaleKeys.DojgScreen_dojg_search.tr(),
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
                           ),
-                        ],
+                        ),
+                        onChanged: (value) {
+                          context.read<DojgSearch>().currentSearchTerm = value;
+                          currentSearch = value;
+                          setState(() {
+                            updateSearchResults();
+                          });
+                        },
                       ),
                     )
-                    : const SizedBox(),
-                )
-              ]
-            )
-          ),
-          SliverList.separated(
-            itemCount: currentEntries.length,
-            separatorBuilder: (context, i) {
-              // hide separators when the user searched smth
-              if(currentSearch.isNotEmpty) return const SizedBox();
-              
-              if(i < currentEntries.length && currentEntries[i].grammaticalConcept[0] !=
-                currentEntries[i+1].grammaticalConcept[0]) {
-                return Text(
-                  " ${currentEntries[i+1].grammaticalConcept[0]}",
-                  textScaler: const TextScaler.linear(1.5),
+                  ),
+                  const SizedBox(width: 50,),
+                  Focus(
+                    focusNode: widget.includeTutorial
+                      ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![2]
+                      : null,
+                    child: widget.includeVolumeTags
+                      ? SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            ToggleButtons(
+                              renderBorder: false,
+                              isSelected: currentVolumeSelection,
+                              fillColor: Colors.transparent,
+                              hoverColor: Colors.grey.withOpacity(0.2),
+                              selectedColor: Colors.white,
+                              color: Colors.grey.withOpacity(0.4),
+                              onPressed: (index) {
+                                setState(() {
+                                  currentVolumeSelection[index] = !currentVolumeSelection[index];
+                                  updateSearchResults();
+                                });
+                              },
+                              children: [
+                                for (int i = 0; i < 3; i++)
+                                  Text(
+                                    volumeTags[i],
+                                    textScaler: const TextScaler.linear(1.25),
+                                  )
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                      : const SizedBox(),
+                  )
+                ]
+              )
+            ),
+            SliverList.separated(
+              itemCount: currentEntries.length,
+              separatorBuilder: (context, i) {
+                // hide separators when the user searched smth
+                if(currentSearch.isNotEmpty) return const SizedBox();
+                
+                if(i < currentEntries.length && currentEntries[i].grammaticalConcept[0] !=
+                  currentEntries[i+1].grammaticalConcept[0]) {
+                  return Text(
+                    " ${currentEntries[i+1].grammaticalConcept[0]}",
+                    textScaler: const TextScaler.linear(1.5),
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+              itemBuilder: (context, i) {
+                return Focus(
+                  focusNode: widget.includeTutorial && i == 0
+                    ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![3]
+                    : null,
+                  child: DojgEntryCard(
+                    currentEntries[i],
+                    onTap: (entry) {
+                      widget.onTap?.call(currentEntries[i]);
+                    },
+                  ),
                 );
-              } else {
-                return const SizedBox();
               }
-            },
-            itemBuilder: (context, i) {
-              return Focus(
-                focusNode: widget.includeTutorial && i == 0
-                  ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![3]
-                  : null,
-                child: DojgEntryCard(
-                  currentEntries[i],
-                  onTap: (entry) {
-                    widget.onTap?.call(currentEntries[i]);
-                  },
-                ),
-              );
-            }
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

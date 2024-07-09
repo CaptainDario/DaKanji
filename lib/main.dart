@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
+import 'package:fvp/fvp.dart' as fvp;
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
@@ -29,6 +29,8 @@ Future<void> main() async {
   // wait for flutter to initialize
   WidgetsFlutterBinding.ensureInitialized();
 
+  fvp.registerWith();
+
   // delete settings for debugging
   //if(kDebugMode) await clearPreferences();
 
@@ -38,42 +40,40 @@ Future<void> main() async {
       options.sendDefaultPii = false;
     },
     appRunner: () => runApp(
-      ProviderScope(
-        child: Phoenix(
-          child: FutureBuilder(
-            future: g_initApp,
-            builder: (context, snapshot) {
-              if(snapshot.hasData == false) {
-                return const DaKanjiSplash();
-              } else {
-                return EasyLocalization(
-                  supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
-                  path: 'assets/translations',
-                  fallbackLocale: const Locale('en'),
-                  useFallbackTranslations: true,
-                  useOnlyLangCode: true,
-                  assetLoader: const CodegenLoader(),
-                  saveLocale: true,
-                  startLocale: Platform.isLinux ? const Locale("en") : null,
-                  child: BetterFeedback(
-                    feedbackBuilder: simpleFeedbackBuilder,
-                    theme: FeedbackThemeData(
-                      sheetIsDraggable: true,
-                      dragHandleColor: Colors.grey
-                    ),
-                    localizationsDelegates: [
-                      CustomFeedbackLocalizationsDelegate(),
-                    ],
-                    localeOverride: const Locale("en"),
-                    mode: FeedbackMode.navigate,
-                    child: const DaKanjiApp(),
+      Phoenix(
+        child: FutureBuilder(
+          future: g_initApp,
+          builder: (context, snapshot) {
+            if(snapshot.hasData == false) {
+              return const DaKanjiSplash();
+            } else {
+              return EasyLocalization(
+                supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
+                path: 'assets/translations',
+                fallbackLocale: const Locale('en'),
+                useFallbackTranslations: true,
+                useOnlyLangCode: true,
+                assetLoader: const CodegenLoader(),
+                saveLocale: true,
+                startLocale: Platform.isLinux ? const Locale("en") : null,
+                child: BetterFeedback(
+                  feedbackBuilder: simpleFeedbackBuilder,
+                  theme: FeedbackThemeData(
+                    sheetIsDraggable: true,
+                    dragHandleColor: Colors.grey
                   ),
-                );
-              }
+                  localizationsDelegates: [
+                    CustomFeedbackLocalizationsDelegate(),
+                  ],
+                  localeOverride: const Locale("en"),
+                  mode: FeedbackMode.navigate,
+                  child: const DaKanjiApp(),
+                ),
+              );
             }
-          ),
+          }
         ),
-      )
+      ),
     )
   );
 }

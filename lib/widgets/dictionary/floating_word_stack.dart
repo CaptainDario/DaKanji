@@ -19,7 +19,7 @@ import 'package:da_kanji_mobile/globals.dart';
 class FloatingWordStack extends StatefulWidget {
 
   /// The widget that should be rendered below the floating words
-  final Widget? bottom;
+  final Widget? child;
   /// A list of JLPT levels to include
   final List<String> levels;
   /// Should the falling words be hidden
@@ -31,7 +31,7 @@ class FloatingWordStack extends StatefulWidget {
 
   const FloatingWordStack(
     {
-      this.bottom,
+      this.child,
       required this.levels,
       this.hide = false,
       this.secondsTillFirstWord = 5,
@@ -222,8 +222,8 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
     // if no level selection is made or the widget should be hidden return `widget.bottom`
     if(widget.levels.isEmpty || widget.hide){
-      if(widget.bottom != null) {
-        return widget.bottom!;
+      if(widget.child != null) {
+        return widget.child!;
       } else {
         return const SizedBox();
       }
@@ -245,7 +245,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
       },
       child: Stack(
         children: [
-          if(widget.bottom != null) widget.bottom!,
+          if(widget.child != null) widget.child!,
 
           // add empty container so that the gesturedetector works on the whole stack
           Positioned.fill(
