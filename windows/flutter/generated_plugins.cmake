@@ -5,14 +5,12 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   clipboard_watcher
+  fvp
   irondash_engine_context
   isar_flutter_libs
   mecab_dart
-  media_kit_libs_windows_video
-  media_kit_video
   printing
   rive_common
-  screen_brightness_windows
   screen_retriever
   sentry_flutter
   share_plus
@@ -23,7 +21,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
-  media_kit_native_event_loop
   tflite_flutter
 )
 
