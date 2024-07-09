@@ -12,10 +12,10 @@ import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
-import 'package:media_kit/media_kit.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:fvp/mdk.dart' as mdk;
 
 // Project imports:
 import 'package:da_kanji_mobile/application/assets/assets.dart';
@@ -77,7 +77,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// the directory in which the audio files are stored
   late Directory audioFilesDir;
   /// Playback of audio files
-  final Player player = Player();
+  final mdk.Player player = mdk.Player();
   /// Is currently the google image search expanded
   bool googleImagesIsExpanded = false;
   /// Is the conjugation table currently expanded
@@ -89,9 +89,14 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   @override
   void initState() {
+
+    player.loop = 0;
+
     initData();
     initDataAsync();
+
     super.initState();
+
   }
 
   @override
@@ -168,8 +173,11 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                             downloadAudio(context);
                           }
                         
-                          player.open(Media('file:///${audioFilesDir.path}/${widget.entry!.audio}.mp3'));
-                          player.play();
+                          
+                          player.setMedia(
+                            '${audioFilesDir.path}/${widget.entry!.audio}.mp3',
+                            mdk.MediaType.audio);
+                          player.state = mdk.PlaybackState.playing;
                         },
                       )
                     ),

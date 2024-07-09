@@ -11,6 +11,7 @@ import 'package:feedback/feedback.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
+import 'package:fvp/fvp.dart' as fvp;
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
@@ -27,6 +28,8 @@ Future<void> main() async {
 
   // wait for flutter to initialize
   WidgetsFlutterBinding.ensureInitialized();
+
+  fvp.registerWith();
 
   // delete settings for debugging
   //if(kDebugMode) await clearPreferences();
