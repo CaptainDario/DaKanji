@@ -72,10 +72,7 @@ dependencies:
   vector_graphics: 1.1.11+1         # included in svg_flutter
   app_links: 6.1.1                 # android, iOS, web, macos, windows (msix), linux
 
-  fvp:  
-    git:
-      url: https://github.com/wang-bin/fvp
-      hash: b953bac6e6d089b3d77a5fcaa791848264d03894
+  fvp: 0.21.0
   flutter_widget_from_html_core: 0.15.1
   tflite_flutter: #0.10.4
     git:
