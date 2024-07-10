@@ -107,9 +107,11 @@ Future<bool> _logEventPosthogREST(String url, Map<String, String> header,
   }
   // cache the request when it was not successful to send it later
   catch (e) {
-    if(cacheEventOnfailure){
-      await cacheEvent(body);
-    }
+    success = false;
+  }
+
+  if(cacheEventOnfailure && !success){
+    await cacheEvent(body);
   }
 
   return success;
