@@ -33,7 +33,6 @@ apps:
       - dbus-dakanji
     environment:
       GTK_USE_PORTAL: 1
-      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/blas:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/lapack:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/vdpau:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/dri
 
 parts:
 
@@ -80,11 +79,7 @@ parts:
     source: .
     plugin: nil
     build-packages:
-      - libmpv-dev
       - jq
-    stage-packages:
-      - libmpv1
-      - libblas3
     override-build: |
       set -eux
       flutter pub get || true
