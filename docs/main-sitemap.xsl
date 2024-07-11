@@ -266,5 +266,5 @@ Object Caching 0/0 objects using disk
 Page Caching using disk: enhanced (Requested URI contains query) 
 Database Caching using disk
 
-Served from: dakanji.local @ 2024-05-10 08:08:04 by W3 Total Cache
+Served from: dakanji.local @ 2024-07-11 07:56:19 by W3 Total Cache
 -->
