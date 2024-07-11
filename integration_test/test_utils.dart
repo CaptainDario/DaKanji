@@ -17,6 +17,8 @@ Future<void> waitTillFinder(WidgetTester tester, Finder finder, String waitingMe
   }
 }
 
+/// This should be called in every integration test at the beginning
+/// to setup dakanji
 Future<void> initDaKanjiTest(WidgetTester tester, {Function? initCallback}) async {
 
   SharedPreferences prefs = await SharedPreferences.getInstance();

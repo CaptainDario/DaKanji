@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:flutter_driver/driver_extension.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -18,6 +19,8 @@ import 'test_utils.dart';
 
 
 void main() {
+
+  enableFlutterDriverExtension();
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets("DrawScreen test", (WidgetTester tester) async {
