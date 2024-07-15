@@ -230,6 +230,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
     }
 
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onPanUpdate: (update) {
         for (var entry in floatingWords) {
           if(widgetSize == null) return;
@@ -246,13 +247,6 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
       child: Stack(
         children: [
           if(widget.child != null) widget.child!,
-
-          // add empty container so that the gesturedetector works on the whole stack
-          Positioned.fill(
-            child: Container(
-              color: Colors.transparent,
-            )
-          ),
           
           for (FloatingWord entry in floatingWords)
             AnimatedBuilder(
@@ -268,20 +262,23 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
                   top: entry.position.dy +
                     ((widgetSize?.height ?? 0)-(entry.position.dy*1.02)) *
                       (entry.animationController.value),
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.onTap?.call(entry);
-                    },
-                    child: Text(
-                      entry.entryVerticalString,
-                      style: TextStyle(
-                        fontSize: entryTextStyleFontSize * min(1, entry.parallax*1.25),
-                        height: entryTextStyleHeight,
-                        fontFamily: g_japaneseFontFamily,
-                        color: (Theme.of(context).brightness == Brightness.light
-                          ? Colors.black
-                          : Colors.white
-                        ).withOpacity(entry.parallax)
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.onTap?.call(entry);
+                      },
+                      child: Text(
+                        entry.entryVerticalString,
+                        style: TextStyle(
+                          fontSize: entryTextStyleFontSize * min(1, entry.parallax*1.25),
+                          height: entryTextStyleHeight,
+                          fontFamily: g_japaneseFontFamily,
+                          color: (Theme.of(context).brightness == Brightness.light
+                            ? Colors.black
+                            : Colors.white
+                          ).withOpacity(entry.parallax)
+                        ),
                       ),
                     ),
                   )
