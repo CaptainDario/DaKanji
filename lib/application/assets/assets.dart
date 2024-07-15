@@ -171,7 +171,10 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
       return Response(requestOptions: RequestOptions());
     });
 
-  if(downloadError) return;
+  if(downloadError) {
+    debugPrint("Encountered error while downloading: $downloadError");
+    return;
+  }
 
   String extension = destination.uri.pathSegments.last.split(".").length > 1
     ? ".${destination.uri.pathSegments.last.split(".").last}"
@@ -208,11 +211,13 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
     return Response(requestOptions: RequestOptions());
   });
 
-  if(downloadError) return;
+  if(downloadError) {
+    debugPrint("Encountered error while downloading: $downloadError");
+    return;
+  }
 
   debugPrint("Downloaded $fileName to ${destination.path}");
 
-  // unzip the asset
   await extractFileToDisk(
     "${destination.path}.zip",
     destination.parent.path
