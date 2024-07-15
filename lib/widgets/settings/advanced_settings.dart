@@ -190,6 +190,16 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
+        // matrix color setting
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_advanced_settings_matrix.tr(),
+          value: widget.settings.advanced.iAmInTheMatrix,
+          onTileTapped: (newValue) {
+            widget.settings.advanced.iAmInTheMatrix = newValue;
+            widget.settings.save();
+          },
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+        ),
       ],
     );
   }

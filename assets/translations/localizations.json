@@ -3156,6 +3156,17 @@
       "es": "Soy inevitable...",
       "pl": "Jestem nieunikniony..."
     },
+    "advanced_settings_matrix": {
+      "en": "I am in the matrix",
+      "de": "Ich bin in der Matrix",
+      "ru": "Я в матрице",
+      "ja": "私はマトリックスの中にいる",
+      "zh": "我在矩阵中",
+      "it": "Sono nella matrice",
+      "fr": "Je suis dans la matrice",
+      "es": "Estoy en la matriz",
+      "pl": "Jestem w matrycy"
+    },
     "advanced_settings_optimize_nn": {
       "en": "Optimize Neural Networks",
       "de": "Neuronale Netze optimieren",

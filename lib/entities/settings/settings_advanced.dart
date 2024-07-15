@@ -31,6 +31,21 @@ class SettingsAdvanced with ChangeNotifier {
     notifyListeners();
   }
 
+  /// The default value for `iAmInTheMatrix`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_iAmInTheMatrix = false;
+  /// Show the falling words in a matrix like color
+  @JsonKey(defaultValue: d_iAmInTheMatrix)
+  bool _iAmInTheMatrix = d_iAmInTheMatrix;
+  /// Show the falling words in a matrix like color
+  bool get iAmInTheMatrix => _iAmInTheMatrix;
+  /// Show the falling words in a matrix like color
+  set iAmInTheMatrix(bool iAmInTheMatrix) {
+    _iAmInTheMatrix = iAmInTheMatrix;
+    notifyListeners();
+  }
+
   /// the default for `noOfSearchIsolates`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names

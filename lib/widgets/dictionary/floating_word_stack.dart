@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -274,9 +275,11 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
                           fontSize: entryTextStyleFontSize * min(1, entry.parallax*1.25),
                           height: entryTextStyleHeight,
                           fontFamily: g_japaneseFontFamily,
-                          color: (Theme.of(context).brightness == Brightness.light
-                            ? Colors.black
-                            : Colors.white
+                          color: (!GetIt.I<Settings>().advanced.iAmInTheMatrix
+                            ? Theme.of(context).brightness == Brightness.light
+                              ? Colors.black
+                              : Colors.white
+                            : const Color.fromARGB(255, 3, 160, 98)
                           ).withOpacity(entry.parallax)
                         ),
                       ),

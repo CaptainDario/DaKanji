@@ -296,6 +296,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_advanced_settings_delete_user_data = 'SettingsScreen.advanced_settings_delete_user_data';
   static const SettingsScreen_advanced_settings_delete_word_lists = 'SettingsScreen.advanced_settings_delete_word_lists';
   static const SettingsScreen_advanced_settings_draw_backend = 'SettingsScreen.advanced_settings_draw_backend';
+  static const SettingsScreen_advanced_settings_matrix = 'SettingsScreen.advanced_settings_matrix';
   static const SettingsScreen_advanced_settings_number_search_procs = 'SettingsScreen.advanced_settings_number_search_procs';
   static const SettingsScreen_advanced_settings_number_search_procs_body = 'SettingsScreen.advanced_settings_number_search_procs_body';
   static const SettingsScreen_advanced_settings_optimize_backend = 'SettingsScreen.advanced_settings_optimize_backend';

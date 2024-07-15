@@ -3,6 +3,10 @@
 
 ## v3.4.3 - ワードリストと暗記改善 (10.07.2024)
 
+Added:
+
+- I am in the matrix
+
 Improvements:
 
 - Dictionary

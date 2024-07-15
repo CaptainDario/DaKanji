@@ -313,6 +313,7 @@
     "advanced_settings_delete_user_data": "Benutzerdaten l\u00f6schen",
     "advanced_settings_delete_word_lists": "Alle Wortlisten l\u00f6schen",
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
+    "advanced_settings_matrix": "Ich bin in der Matrix",
     "advanced_settings_number_search_procs": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert f\u00fcr die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
     "advanced_settings_optimize_backend": "Backend",
