@@ -141,11 +141,13 @@ Future<void> copyFromAssets(FileSystemEntity assetPath, Directory dest) async {
   g_initAppInfoStream.add(
     "Unpacking: ${p.withoutExtension(assetPath.uri.pathSegments.lastWhere((e) => e!=""))}");
 
+  Stopwatch s = Stopwatch()..start();
   await compute(
     extractAssetArchiveToDisk,
     Tuple2(archive, dest.path),
     debugLabel: "Extraction isolate: ${dest.uri}"
   );
+  debugPrint(s.elapsed.toString());
 
 }
 
