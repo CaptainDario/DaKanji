@@ -187,9 +187,18 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputWildcardsStep,
       ],
       child: PopScope(
-        canPop: context.read<DictSearch>().selectedResult == null,
+        canPop: context.read<DictSearch>().selectedResult == null &&
+                !searchBarExpanded,
         onPopInvoked: (didPop) {
-          context.read<DictSearch>().selectedResult = null;
+          if(searchBarExpanded) {
+            collapseSearchBar();
+          }
+          else if (context.read<DictSearch>().selectedResult != null){
+            context.read<DictSearch>().selectedResult = null;
+            searchInputController.text = "";
+            context.read<DictSearch>().currentSearch = "";
+            context.read<DictSearch>().searchResults = [];
+          }
         },
         child: Container(
           decoration: BoxDecoration(
@@ -235,21 +244,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                   
                           //close onscreen keyboard
                           FocusManager.instance.primaryFocus?.unfocus();
-                  
-                          setState(() {
-                  
-                            if(!searchBarExpanded) {
-                              searchBarExpanded = true;
-                              searchBarAnimationController.forward();
-                            }
-                            else{
-                              searchBarAnimationController.reverse().then((value) {
-                                setState(() {
-                                  searchBarExpanded = false;
-                                });
-                              });
-                            }
-                          });
+                                    
+                          if(!searchBarExpanded) {
+                            openSearchBar();
+                          }
+                          else{
+                            collapseSearchBar();
+                          }
                         },
                       ),
                     ),
@@ -452,6 +453,29 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         ),
       ),
     );
+  }
+
+  /// Opens the search bar
+  void openSearchBar(){
+    
+    searchBarExpanded = true;
+    searchBarAnimationController.forward();
+
+    setState(() {});
+
+  }
+
+  /// Collapses the search bar
+  void collapseSearchBar(){
+    
+    searchBarAnimationController.reverse().then((value) {
+      setState(() {
+        searchBarExpanded = false;
+      });
+    });
+
+    setState(() {});
+
   }
 
   /// Deletes an entry from the search history when the user swipes (deletes)
