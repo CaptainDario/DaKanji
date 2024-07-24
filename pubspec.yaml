@@ -8,7 +8,7 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.4.3+111
+version: 3.4.4+111
 
 
 environment:
@@ -140,7 +140,6 @@ msix_config:
   display_name: DaKanji
   protocol_activation: dakanji
   app_uri_handler_hosts: dakanji.app, www.dakanji.app
-  msix_version: 3.4.3.1
   # package family name: 61015DaAppLab.DaKanji_t0074r350qa7p
   publisher: CN=EC6A3F44-67FB-44EF-B45B-1DACD55293B9
   publisher_display_name: DaAppLab
