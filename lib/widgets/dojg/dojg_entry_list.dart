@@ -177,7 +177,7 @@ class _DojgEntryListState extends State<DojgEntryList> {
   @override
   Widget build(BuildContext context) {
 
-    return ChangeNotifierProvider(
+    return ChangeNotifierProvider<DojgSearch>(
       create: (context) => DojgSearch(),
       builder: (context, child) {
         
@@ -194,118 +194,116 @@ class _DojgEntryListState extends State<DojgEntryList> {
           searchTextEditingController.text = currentSearch;
           updateSearchResults();
         }
-        return child!;
-
-      },
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              floating: true,
-              title: Row(
-                children: [
-                  Expanded(
-                    child: Focus(
-                      focusNode: widget.includeTutorial
-                        ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![1]
-                        : null,
-                      child: TextField(
-                        controller: searchTextEditingController,
-                        autocorrect: false,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          fontFamily: g_japaneseFontFamily,
-                          color: Colors.white
-                        ),
-                        decoration: InputDecoration(
-                          hintText: LocaleKeys.DojgScreen_dojg_search.tr(),
-                          hintStyle: const TextStyle(
-                            color: Colors.grey,
+        return Align(
+          alignment: Alignment.topCenter,
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                floating: true,
+                title: Row(
+                  children: [
+                    Expanded(
+                      child: Focus(
+                        focusNode: widget.includeTutorial
+                          ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![1]
+                          : null,
+                        child: TextField(
+                          controller: searchTextEditingController,
+                          autocorrect: false,
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontFamily: g_japaneseFontFamily,
+                            color: Colors.white
                           ),
-                        ),
-                        onChanged: (value) {
-                          context.read<DojgSearch>().currentSearchTerm = value;
-                          currentSearch = value;
-                          setState(() {
-                            updateSearchResults();
-                          });
-                        },
-                      ),
-                    )
-                  ),
-                  const SizedBox(width: 50,),
-                  Focus(
-                    focusNode: widget.includeTutorial
-                      ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![2]
-                      : null,
-                    child: widget.includeVolumeTags
-                      ? SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            ToggleButtons(
-                              renderBorder: false,
-                              isSelected: currentVolumeSelection,
-                              fillColor: Colors.transparent,
-                              hoverColor: Colors.grey.withOpacity(0.2),
-                              selectedColor: Colors.white,
-                              color: Colors.grey.withOpacity(0.4),
-                              onPressed: (index) {
-                                setState(() {
-                                  currentVolumeSelection[index] = !currentVolumeSelection[index];
-                                  updateSearchResults();
-                                });
-                              },
-                              children: [
-                                for (int i = 0; i < 3; i++)
-                                  Text(
-                                    volumeTags[i],
-                                    textScaler: const TextScaler.linear(1.25),
-                                  )
-                              ],
+                          decoration: InputDecoration(
+                            hintText: LocaleKeys.DojgScreen_dojg_search.tr(),
+                            hintStyle: const TextStyle(
+                              color: Colors.grey,
                             ),
-                          ],
+                          ),
+                          onChanged: (value) {
+                            context.read<DojgSearch>().currentSearchTerm = value;
+                            currentSearch = value;
+                            setState(() {
+                              updateSearchResults();
+                            });
+                          },
                         ),
                       )
-                      : const SizedBox(),
-                  )
-                ]
-              )
-            ),
-            SliverList.separated(
-              itemCount: currentEntries.length,
-              separatorBuilder: (context, i) {
-                // hide separators when the user searched smth
-                if(currentSearch.isNotEmpty) return const SizedBox();
-                
-                if(i < currentEntries.length && currentEntries[i].grammaticalConcept[0] !=
-                  currentEntries[i+1].grammaticalConcept[0]) {
-                  return Text(
-                    " ${currentEntries[i+1].grammaticalConcept[0]}",
-                    textScaler: const TextScaler.linear(1.5),
+                    ),
+                    const SizedBox(width: 50,),
+                    Focus(
+                      focusNode: widget.includeTutorial
+                        ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![2]
+                        : null,
+                      child: widget.includeVolumeTags
+                        ? SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              ToggleButtons(
+                                renderBorder: false,
+                                isSelected: currentVolumeSelection,
+                                fillColor: Colors.transparent,
+                                hoverColor: Colors.grey.withOpacity(0.2),
+                                selectedColor: Colors.white,
+                                color: Colors.grey.withOpacity(0.4),
+                                onPressed: (index) {
+                                  setState(() {
+                                    currentVolumeSelection[index] = !currentVolumeSelection[index];
+                                    updateSearchResults();
+                                  });
+                                },
+                                children: [
+                                  for (int i = 0; i < 3; i++)
+                                    Text(
+                                      volumeTags[i],
+                                      textScaler: const TextScaler.linear(1.25),
+                                    )
+                                ],
+                              ),
+                            ],
+                          ),
+                        )
+                        : const SizedBox(),
+                    )
+                  ]
+                )
+              ),
+              SliverList.separated(
+                itemCount: currentEntries.length,
+                separatorBuilder: (context, i) {
+                  // hide separators when the user searched smth
+                  if(currentSearch.isNotEmpty) return const SizedBox();
+                  
+                  if(i < currentEntries.length && currentEntries[i].grammaticalConcept[0] !=
+                    currentEntries[i+1].grammaticalConcept[0]) {
+                    return Text(
+                      " ${currentEntries[i+1].grammaticalConcept[0]}",
+                      textScaler: const TextScaler.linear(1.5),
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+                itemBuilder: (context, i) {
+                  return Focus(
+                    focusNode: widget.includeTutorial && i == 0
+                      ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![3]
+                      : null,
+                    child: DojgEntryCard(
+                      currentEntries[i],
+                      onTap: (entry) {
+                        widget.onTap?.call(currentEntries[i]);
+                      },
+                    ),
                   );
-                } else {
-                  return const SizedBox();
                 }
-              },
-              itemBuilder: (context, i) {
-                return Focus(
-                  focusNode: widget.includeTutorial && i == 0
-                    ? GetIt.I<Tutorials>().dojgScreenTutorial.focusNodes![3]
-                    : null,
-                  child: DojgEntryCard(
-                    currentEntries[i],
-                    onTap: (entry) {
-                      widget.onTap?.call(currentEntries[i]);
-                    },
-                  ),
-                );
-              }
-            )
-          ],
-        ),
-      ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }
