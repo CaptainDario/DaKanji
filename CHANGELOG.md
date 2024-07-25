@@ -1,6 +1,14 @@
 
 # DaKanji - changelog
 
+## v3.4.4 - ワードリストと暗記改善 (25.07.2024)
+
+Fixed:
+
+- Windows drawing recognition does not work
+- DoJG search does not work
+- Falling words block UI interaction
+
 ## v3.4.3 - ワードリストと暗記改善 (10.07.2024)
 
 Added:
@@ -15,7 +23,7 @@ Improvements:
     - Not all controlled at the same time
 - Use fvp for media playback
 
-- Fixed:
+Fixed:
   - App does not work in MS Store
   - DoJG: Impossible to scroll back when image full screen on desktop
 
