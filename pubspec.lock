@@ -1315,7 +1315,7 @@ packages:
     source: hosted
     version: "0.3.8"
   sentry:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: sentry
       sha256: "033287044a6644a93498969449d57c37907e56f5cedb17b88a3ff20a882261dd"
@@ -1564,10 +1564,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "2c4c912848d60e449497d15ff346c67346fef389"
+      resolved-ref: "1680ba59a863c23f8fe58475f3fb3620b85e8627"
       url: "https://github.com/CaptainDario/flutter-tflite"
     source: git
-    version: "0.10.3"
+    version: "0.11.0"
   time:
     dependency: transitive
     description:

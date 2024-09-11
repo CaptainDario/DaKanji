@@ -92,7 +92,7 @@ List<Version> g_NewRadicals = [
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
 /// variable that indicates if a webivew is available on this platform
 final bool g_webViewSupported =
-  Platform.isAndroid || Platform.isIOS;
+  Platform.isAndroid || Platform.isIOS || Platform.isMacOS;
 final bool g_desktopPlatform = 
   Platform.isWindows || Platform.isMacOS || Platform.isLinux;
 /// browser user agent to fake a mobile device on desktop
