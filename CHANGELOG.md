@@ -3,6 +3,10 @@
 
 ## v3.4.5 - ワードリストと暗記改善 (14.09.2024)
 
+Improvements:
+
+- Images and DeepL on macos
+
 Fixed:
 
 - Windows drawing recognition does not work
