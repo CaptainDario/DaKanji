@@ -10,6 +10,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   isar_flutter_libs
   mecab_dart
   printing
+  rive_common
   screen_retriever
   sentry_flutter
   sqlite3_flutter_libs

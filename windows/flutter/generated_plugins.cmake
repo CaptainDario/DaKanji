@@ -12,7 +12,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   printing
   rive_common
   screen_retriever
-  sentry_flutter
   share_plus
   sqlite3_flutter_libs
   super_native_extensions
@@ -21,6 +20,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
+  sentry_flutter
   tflite_flutter
 )
 
