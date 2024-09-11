@@ -37,7 +37,7 @@ Future<bool> importDoJGDeck() async {
       // extract the zip (in a separate isolate) to the dakanji directory
       await compute((Tuple2 params) async {
         final inputStream = InputFileStream(params.item1.path);
-        final archive = ZipDecoder().decodeBuffer(inputStream);
+        final archive = ZipDecoder().decodeStream(inputStream);
         await extractArchiveToDisk(archive, params.item2);
       }, Tuple2(dojg, copyTo));
 
