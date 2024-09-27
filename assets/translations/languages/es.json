@@ -206,11 +206,6 @@
   "KanaTrainerScreen": {
     "title": "Entrenador Kana"
   },
-  "KanjiMapScreen": {
-    "title": "Mapa Kanji",
-    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "\u00a1Bienvenido a la pantalla del mapa kanji!"
-  },
   "KanjiTableScreen": {
     "title": "Tabla de Kanji",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",

@@ -102,8 +102,6 @@ class DrawerAppBar extends StatelessWidget {
                   case Screens.kanjiTable:
                     title = LocaleKeys.KanjiTableScreen_title.tr();
                     break;
-                  case Screens.kanjiMap:
-                    title = LocaleKeys.KanjiMapScreen_title.tr();
                   case Screens.kanaTable:
                     title = LocaleKeys.KanaTableScreen_title.tr();
                     break;

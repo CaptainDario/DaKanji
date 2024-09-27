@@ -45,7 +45,6 @@ enum Screens{
   clipboard,
   kanjiTrainer,
   kanjiTable,
-  kanjiMap,
   kanaTable,
   kanaTrainer,
   kuzushiji,
