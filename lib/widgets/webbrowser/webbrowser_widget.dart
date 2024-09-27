@@ -12,7 +12,8 @@ class WebbrowserWidget extends StatefulWidget {
   final bool openedByDrawer;
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
-  
+
+
   const WebbrowserWidget(
     this.openedByDrawer,
     this.includeTutorial,
@@ -27,18 +28,13 @@ class WebbrowserWidget extends StatefulWidget {
 
 class _WebbrowserWidgetState extends State<WebbrowserWidget> {
 
+
   @override
   void initState() {
-     
     super.initState();
-
     showTutorialCallback();
   }
 
-  @override
-  void didUpdateWidget(covariant WebbrowserWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
 
   void showTutorialCallback() {
     // after first frame
@@ -48,10 +44,10 @@ class _WebbrowserWidgetState extends State<WebbrowserWidget> {
         // init tutorial
         final OnboardingState? onboarding = Onboarding.of(context);
         if(onboarding != null && 
-          GetIt.I<UserData>().showTutorialDojg) {
+          GetIt.I<UserData>().showTutorialWebbrowser) {
           onboarding.showWithSteps(
-            GetIt.I<Tutorials>().dojgScreenTutorial.indexes![0],
-            GetIt.I<Tutorials>().dojgScreenTutorial.indexes!
+            GetIt.I<Tutorials>().webbrowserScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().webbrowserScreenTutorial.indexes!
           );
         }
       }
@@ -60,6 +56,6 @@ class _WebbrowserWidgetState extends State<WebbrowserWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Text("Webbrowser");
   }
 }

@@ -33,7 +33,10 @@ class _ReadingScreenState extends State<ReadingScreen> {
     return DaKanjiDrawer(
       drawerClosed: !widget.openedByDrawer,
       currentScreen: Screens.reading,
-      child: const ReadingWidget()
+      child: ReadingWidget(
+        widget.openedByDrawer,
+        widget.includeTutorial
+      )
     );
   }
 

@@ -85,7 +85,7 @@ class DrawerAppBar extends StatelessWidget {
                     title = LocaleKeys.ReadingScreen_title.tr();
                     break;
                   case Screens.youtube:
-                    title = LocaleKeys.YoutubeScreen.tr();
+                    title = LocaleKeys.YoutubeScreen_title.tr();
                     break;
                   case Screens.dojg:
                     title = LocaleKeys.DojgScreen_title.tr();

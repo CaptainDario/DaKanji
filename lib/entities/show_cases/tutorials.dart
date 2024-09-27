@@ -96,7 +96,7 @@ class Tutorials{
     ).toList();
 
     videoScreenTutorial = VideoScreenTutorial();
-    dojgScreenTutorial.indexes = dojgScreenTutorial.indexes!.map(
+    videoScreenTutorial.indexes = videoScreenTutorial.indexes!.map(
       (e) => e + ocrScreenTutorial.indexes!.last + 1
     ).toList();
 
@@ -124,6 +124,11 @@ class Tutorials{
       kanjiTableScreenTutorial.steps! +
       kanaTableScreenTutorial.steps! +
       wordListsScreenTutorial.steps! + 
-      dojgScreenTutorial.steps!;
+      dojgScreenTutorial.steps! + 
+      ocrScreenTutorial.steps! + 
+      videoScreenTutorial.steps! +
+      webbrowserScreenTutorial.steps! +
+      readingScreenTutorial.steps! +
+      youtubeScreenTutorial.steps!;
   }
 }

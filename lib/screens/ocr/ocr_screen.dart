@@ -33,7 +33,10 @@ class _OcrScreenState extends State<OcrScreen> {
     return DaKanjiDrawer(
       drawerClosed: !widget.openedByDrawer,
       currentScreen: Screens.ocr,
-      child: const OcrWidget()
+      child: OcrWidget(
+        widget.openedByDrawer,
+        widget.includeTutorial
+      )
     );
   }
 

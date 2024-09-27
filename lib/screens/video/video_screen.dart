@@ -33,7 +33,10 @@ class _VideoScreenState extends State<VideoScreen> {
     return DaKanjiDrawer(
       drawerClosed: !widget.openedByDrawer,
       currentScreen: Screens.video,
-      child: const VideoWidget()
+      child: VideoWidget(
+        widget.openedByDrawer,
+        widget.includeTutorial
+      )
     );
   }
 

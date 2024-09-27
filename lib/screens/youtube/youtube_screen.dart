@@ -32,8 +32,11 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
       drawerClosed: !widget.openedByDrawer,
-      currentScreen: Screens.video,
-      child: const YoutubeWidget()
+      currentScreen: Screens.youtube,
+      child: YoutubeWidget(
+        widget.openedByDrawer,
+        widget.includeTutorial
+      )
     );
   }
 
