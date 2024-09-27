@@ -14,7 +14,6 @@ import 'package:da_kanji_mobile/entities/show_cases/dictionary_screen_tutorial.d
 import 'package:da_kanji_mobile/entities/show_cases/dojg_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/draw_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/kana_table_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/kanji_map_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/kanji_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/text_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/word_lists_screen_tutorial.dart';
@@ -43,8 +42,6 @@ class Tutorials{
   late ClipboardScreenTutorial clipboardScreenTutorial;
   /// the kanji table screen tutorial
   late KanjiTableScreenTutorial kanjiTableScreenTutorial;
-  /// the kanji map screen tutorial
-  late KanjiMapScreenTutorial kanjiMapScreenTutorial;
   /// the kana table screen tutorial
   late KanaTableScreenTutorial kanaTableScreenTutorial;
   /// the word lists screen tutorial
@@ -78,14 +75,9 @@ class Tutorials{
       (e) => e + clipboardScreenTutorial.indexes!.last + 1
     ).toList();
 
-    kanjiMapScreenTutorial = KanjiMapScreenTutorial();
-    kanjiMapScreenTutorial.indexes = kanjiMapScreenTutorial.indexes!.map(
-      (e) => e + kanjiTableScreenTutorial.indexes!.last + 1
-    ).toList();
-
     kanaTableScreenTutorial = KanaTableScreenTutorial();
     kanaTableScreenTutorial.indexes = kanaTableScreenTutorial.indexes!.map(
-      (e) => e + kanjiMapScreenTutorial.indexes!.last + 1
+      (e) => e + kanjiTableScreenTutorial.indexes!.last + 1
     ).toList();
 
     wordListsScreenTutorial = WordListsScreenTutorial();
@@ -105,7 +97,6 @@ class Tutorials{
       textScreenTutorial.steps! + 
       clipboardScreenTutorial.steps! +
       kanjiTableScreenTutorial.steps! +
-      kanjiMapScreenTutorial.steps! +
       kanaTableScreenTutorial.steps! +
       wordListsScreenTutorial.steps! + 
       dojgScreenTutorial.steps!;

@@ -36,7 +36,7 @@ class _KanjiTableSettingsState extends State<KanjiTableSettings> {
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
       LocaleKeys.KanjiTableScreen_title.tr(),
-      DaKanjiIcons.kanji_table,
+      DaKanjiCustomIcons.kanji_table,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // reshow tutorial

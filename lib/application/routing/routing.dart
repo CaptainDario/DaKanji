@@ -18,7 +18,6 @@ import 'package:da_kanji_mobile/screens/home/home_screen.dart';
 import 'package:da_kanji_mobile/screens/webbrowser/webbrowser_screen.dart';
 import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
 import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji_map/kanji_map_screen.dart';
 import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
 import 'package:da_kanji_mobile/screens/kanji_trainer/kanji_trainer_screen.dart';
 import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
@@ -97,11 +96,6 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
   }
   else if(name == "/${Screens.kanjiTrainer.name}"){
     newRoute = KanjiTrainerScreen(
-      args.navigatedByDrawer, true
-    );
-  }
-  else if(name == "/${Screens.kanjiMap.name}"){
-    newRoute = KanjiMapScreen(
       args.navigatedByDrawer, true
     );
   }

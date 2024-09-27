@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_misc.dart';
 import 'package:flutter/material.dart';
 

@@ -29,8 +29,6 @@
 //     lib/application/manual/routing/deep_links.dart
 // 8. Add deep links to https://dakanji.app/deep-links/
 
-import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
-import 'package:flutter/material.dart';
 
 enum Screens{
   about,

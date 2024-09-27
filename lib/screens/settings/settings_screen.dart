@@ -21,7 +21,6 @@ import 'package:da_kanji_mobile/widgets/settings/dictionary_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/dojg_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/drawing_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/kana_table_settings.dart';
-import 'package:da_kanji_mobile/widgets/settings/kanji_map_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/kanji_table_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/misc_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/text_settings.dart';
@@ -106,8 +105,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       TextSettings(settings),
                       DoJGSettings(settings),
                       KanjiTableSettings(settings),
-                      if(kDebugMode)
-                        KanjiMapSettings(settings),
                       KanaTableSettings(settings),
                       WordListSettings(settings),     
                       AnkiSettings(settings),

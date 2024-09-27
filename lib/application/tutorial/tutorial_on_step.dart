@@ -61,11 +61,6 @@ void onTutorialStep (int index) async {
     GetIt.I<UserData>().showTutorialKanjiTable = false;
     await GetIt.I<UserData>().save();
   }
-  else if(index == GetIt.I<Tutorials>().kanjiMapScreenTutorial.indexes!.last){
-    debugPrint("Kanji map screen tutorial done, saving...");
-    GetIt.I<UserData>().showTutorialKanjiMap = false;
-    await GetIt.I<UserData>().save();
-  }
   else if(index == GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!.last){
     debugPrint("Kana table screen tutorial done, saving...");
     GetIt.I<UserData>().showTutorialKanaTable = false;

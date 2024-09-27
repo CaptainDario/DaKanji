@@ -34,7 +34,7 @@ class _AnkiSettingsState extends State<AnkiSettings> {
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
       LocaleKeys.SettingsScreen_anki_title.tr(),
-      DaKanjiIcons.anki,
+      DaKanjiCustomIcons.anki,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         AnkiSettingsColumn(widget.settings)  
