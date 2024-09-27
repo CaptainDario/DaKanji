@@ -89,6 +89,31 @@ class Tutorials{
     dojgScreenTutorial.indexes = dojgScreenTutorial.indexes!.map(
       (e) => e + wordListsScreenTutorial.indexes!.last + 1
     ).toList();
+
+    ocrScreenTutorial = OcrScreenTutorial();
+    ocrScreenTutorial.indexes = ocrScreenTutorial.indexes!.map(
+      (e) => e + dojgScreenTutorial.indexes!.last + 1
+    ).toList();
+
+    videoScreenTutorial = VideoScreenTutorial();
+    dojgScreenTutorial.indexes = dojgScreenTutorial.indexes!.map(
+      (e) => e + ocrScreenTutorial.indexes!.last + 1
+    ).toList();
+
+    webbrowserScreenTutorial = WebbrowserScreenTutorial();
+    webbrowserScreenTutorial.indexes = webbrowserScreenTutorial.indexes!.map(
+      (e) => e + videoScreenTutorial.indexes!.last + 1
+    ).toList();
+
+    readingScreenTutorial = ReadingScreenTutorial();
+    readingScreenTutorial.indexes = readingScreenTutorial.indexes!.map(
+      (e) => e + webbrowserScreenTutorial.indexes!.last + 1
+    ).toList();
+
+    youtubeScreenTutorial = YoutubeScreenTutorial();
+    youtubeScreenTutorial.indexes = youtubeScreenTutorial.indexes!.map(
+      (e) => e + readingScreenTutorial.indexes!.last + 1
+    ).toList();
   }
 
   List<OnboardingStep> getSteps (){
