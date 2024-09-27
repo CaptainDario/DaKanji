@@ -235,7 +235,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   Future<void> updateNodes(List<TreeNode<WordListsData>?> nodes) async {
 
     await batch((batch) {
-      for (var node in nodes.whereNotNull()){
+      for (var node in nodes.nonNulls){
         var sqlNode = companionFromTreeNode(node, true);
         batch.update(
           wordListNodesSQL, sqlNode,

@@ -143,6 +143,17 @@ class SearchHistorySQLData extends DataClass
         dateSearched: dateSearched ?? this.dateSearched,
         dictEntryID: dictEntryID ?? this.dictEntryID,
       );
+  SearchHistorySQLData copyWithCompanion(SearchHistorySQLCompanion data) {
+    return SearchHistorySQLData(
+      id: data.id.present ? data.id.value : this.id,
+      dateSearched: data.dateSearched.present
+          ? data.dateSearched.value
+          : this.dateSearched,
+      dictEntryID:
+          data.dictEntryID.present ? data.dictEntryID.value : this.dictEntryID,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('SearchHistorySQLData(')
@@ -230,8 +241,8 @@ class SearchHistorySQLCompanion extends UpdateCompanion<SearchHistorySQLData> {
 
 abstract class _$SearchHistorySQLDatabase extends GeneratedDatabase {
   _$SearchHistorySQLDatabase(QueryExecutor e) : super(e);
-  _$SearchHistorySQLDatabaseManager get managers =>
-      _$SearchHistorySQLDatabaseManager(this);
+  $SearchHistorySQLDatabaseManager get managers =>
+      $SearchHistorySQLDatabaseManager(this);
   late final $SearchHistorySQLTable searchHistorySQL =
       $SearchHistorySQLTable(this);
   @override
@@ -241,7 +252,7 @@ abstract class _$SearchHistorySQLDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [searchHistorySQL];
 }
 
-typedef $$SearchHistorySQLTableInsertCompanionBuilder
+typedef $$SearchHistorySQLTableCreateCompanionBuilder
     = SearchHistorySQLCompanion Function({
   Value<int> id,
   required DateTime dateSearched,
@@ -253,62 +264,6 @@ typedef $$SearchHistorySQLTableUpdateCompanionBuilder
   Value<DateTime> dateSearched,
   Value<int> dictEntryID,
 });
-
-class $$SearchHistorySQLTableTableManager extends RootTableManager<
-    _$SearchHistorySQLDatabase,
-    $SearchHistorySQLTable,
-    SearchHistorySQLData,
-    $$SearchHistorySQLTableFilterComposer,
-    $$SearchHistorySQLTableOrderingComposer,
-    $$SearchHistorySQLTableProcessedTableManager,
-    $$SearchHistorySQLTableInsertCompanionBuilder,
-    $$SearchHistorySQLTableUpdateCompanionBuilder> {
-  $$SearchHistorySQLTableTableManager(
-      _$SearchHistorySQLDatabase db, $SearchHistorySQLTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$SearchHistorySQLTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$SearchHistorySQLTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) =>
-              $$SearchHistorySQLTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
-            Value<DateTime> dateSearched = const Value.absent(),
-            Value<int> dictEntryID = const Value.absent(),
-          }) =>
-              SearchHistorySQLCompanion(
-            id: id,
-            dateSearched: dateSearched,
-            dictEntryID: dictEntryID,
-          ),
-          getInsertCompanionBuilder: ({
-            Value<int> id = const Value.absent(),
-            required DateTime dateSearched,
-            required int dictEntryID,
-          }) =>
-              SearchHistorySQLCompanion.insert(
-            id: id,
-            dateSearched: dateSearched,
-            dictEntryID: dictEntryID,
-          ),
-        ));
-}
-
-class $$SearchHistorySQLTableProcessedTableManager
-    extends ProcessedTableManager<
-        _$SearchHistorySQLDatabase,
-        $SearchHistorySQLTable,
-        SearchHistorySQLData,
-        $$SearchHistorySQLTableFilterComposer,
-        $$SearchHistorySQLTableOrderingComposer,
-        $$SearchHistorySQLTableProcessedTableManager,
-        $$SearchHistorySQLTableInsertCompanionBuilder,
-        $$SearchHistorySQLTableUpdateCompanionBuilder> {
-  $$SearchHistorySQLTableProcessedTableManager(super.$state);
-}
 
 class $$SearchHistorySQLTableFilterComposer
     extends FilterComposer<_$SearchHistorySQLDatabase, $SearchHistorySQLTable> {
@@ -348,9 +303,76 @@ class $$SearchHistorySQLTableOrderingComposer extends OrderingComposer<
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-class _$SearchHistorySQLDatabaseManager {
+class $$SearchHistorySQLTableTableManager extends RootTableManager<
+    _$SearchHistorySQLDatabase,
+    $SearchHistorySQLTable,
+    SearchHistorySQLData,
+    $$SearchHistorySQLTableFilterComposer,
+    $$SearchHistorySQLTableOrderingComposer,
+    $$SearchHistorySQLTableCreateCompanionBuilder,
+    $$SearchHistorySQLTableUpdateCompanionBuilder,
+    (
+      SearchHistorySQLData,
+      BaseReferences<_$SearchHistorySQLDatabase, $SearchHistorySQLTable,
+          SearchHistorySQLData>
+    ),
+    SearchHistorySQLData,
+    PrefetchHooks Function()> {
+  $$SearchHistorySQLTableTableManager(
+      _$SearchHistorySQLDatabase db, $SearchHistorySQLTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$SearchHistorySQLTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$SearchHistorySQLTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<DateTime> dateSearched = const Value.absent(),
+            Value<int> dictEntryID = const Value.absent(),
+          }) =>
+              SearchHistorySQLCompanion(
+            id: id,
+            dateSearched: dateSearched,
+            dictEntryID: dictEntryID,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required DateTime dateSearched,
+            required int dictEntryID,
+          }) =>
+              SearchHistorySQLCompanion.insert(
+            id: id,
+            dateSearched: dateSearched,
+            dictEntryID: dictEntryID,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$SearchHistorySQLTableProcessedTableManager = ProcessedTableManager<
+    _$SearchHistorySQLDatabase,
+    $SearchHistorySQLTable,
+    SearchHistorySQLData,
+    $$SearchHistorySQLTableFilterComposer,
+    $$SearchHistorySQLTableOrderingComposer,
+    $$SearchHistorySQLTableCreateCompanionBuilder,
+    $$SearchHistorySQLTableUpdateCompanionBuilder,
+    (
+      SearchHistorySQLData,
+      BaseReferences<_$SearchHistorySQLDatabase, $SearchHistorySQLTable,
+          SearchHistorySQLData>
+    ),
+    SearchHistorySQLData,
+    PrefetchHooks Function()>;
+
+class $SearchHistorySQLDatabaseManager {
   final _$SearchHistorySQLDatabase _db;
-  _$SearchHistorySQLDatabaseManager(this._db);
+  $SearchHistorySQLDatabaseManager(this._db);
   $$SearchHistorySQLTableTableManager get searchHistorySQL =>
       $$SearchHistorySQLTableTableManager(_db, _db.searchHistorySQL);
 }
