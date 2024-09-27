@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
@@ -58,10 +57,10 @@ class _SearchResultCardState extends State<SearchResultCard> {
 
   void init(){
     pos = widget.dictEntry.meanings.map((e) => e.partOfSpeech)
-      .whereNotNull().expand((element) => element)
-      .whereNotNull().map((e) => e.attributes)
+      .nonNulls.expand((element) => element)
+      .nonNulls.map((e) => e.attributes)
       .expand((e) => e)
-      .whereNotNull().toSet().toList();
+      .nonNulls.toSet().toList();
   }
 
   @override

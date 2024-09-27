@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
@@ -87,9 +86,9 @@ class _DictionaryWordCardState extends State<DictionaryWordCard> {
 
       // get the pos for conjugating this word
       conjugationPos = widget.entry!.meanings.map((e) => e.partOfSpeech)
-        .whereNotNull().expand((e) => e)
-        .whereNotNull().expand((e) => e.attributes)
-        .whereNotNull().map((e) => posDescriptionToPosEnum[e]!)
+        .nonNulls.expand((e) => e)
+        .nonNulls.expand((e) => e.attributes)
+        .nonNulls.map((e) => posDescriptionToPosEnum[e]!)
         .toSet().toList();
     }
   }

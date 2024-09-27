@@ -7,7 +7,6 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
@@ -110,7 +109,7 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
 
     entries = GetIt.I<Isars>().dictionary.jmdict
       .getAllSync(widget.entryIDs)
-      .whereNotNull()
+      .nonNulls
       .toList();
 
     setRandomEntry();

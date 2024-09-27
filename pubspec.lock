@@ -87,7 +87,7 @@ packages:
     source: hosted
     version: "1.0.4"
   archive:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "."
       ref: HEAD
@@ -280,7 +280,7 @@ packages:
     source: hosted
     version: "4.10.0"
   collection:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: collection
       sha256: a1ace0a119f20aabc852d165077c036cd864315bd99b7eaa10a60100341941bf
@@ -368,7 +368,7 @@ packages:
     source: hosted
     version: "0.6.3"
   dart_style:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: dart_style
       sha256: "7856d364b589d1f08986e140938578ed36ed948581fbc3bc9aef1805039ac5ab"
@@ -1076,7 +1076,7 @@ packages:
     source: git
     version: "0.1.6"
   meta:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: meta
       sha256: e3641ec5d63ebf0d9b41bd43201a66e3fc79a65db5f61fc181f04cd27aab950c
@@ -1380,7 +1380,7 @@ packages:
     source: hosted
     version: "0.3.8"
   sentry:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: sentry
       sha256: "033287044a6644a93498969449d57c37907e56f5cedb17b88a3ff20a882261dd"

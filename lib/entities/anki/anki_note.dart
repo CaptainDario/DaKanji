@@ -2,7 +2,6 @@
 import 'dart:math';
 
 // Package imports:
-import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 
 // Project imports:
@@ -114,7 +113,7 @@ class AnkiNote{
 
       translations.putIfAbsent(meaning.language!, () => []);
       List<String> langTrans = meaning.meanings
-        .map((e) => e.attributes.whereNotNull().join("; "))
+        .map((e) => e.attributes.nonNulls.join("; "))
         .toList();
       translations[meaning.language!]!.addAll(
         langTrans.sublist(0, min(translationsPerLang, langTrans.length))

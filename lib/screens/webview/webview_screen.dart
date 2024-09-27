@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/drawing/handle_predictions.dart';
@@ -26,8 +26,7 @@ class _WebviewScreenState extends State<WebviewScreen>
   with TickerProviderStateMixin{
 
   /// should the webview be loaded 
-  WebViewController webViewController = WebViewController()
-    ..setJavaScriptMode(JavaScriptMode.unrestricted);
+  late InAppWebViewController inAppWebViewController;
   /// should the loading screen be shown (hides webview)
   bool showLoading = false;
   /// the screen's width 
@@ -89,9 +88,14 @@ class _WebviewScreenState extends State<WebviewScreen>
     void handler(status) {
       if (status == AnimationStatus.completed) {
         route!.animation!.removeStatusListener(handler);
-        webViewController.loadRequest(Uri.parse(
-            openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
-          )).then((value) => 
+
+        inAppWebViewController.loadUrl(
+          urlRequest: URLRequest(
+            url: WebUri.uri(Uri.parse(
+              openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
+            ))
+          )
+        ).then((value) => 
             _controller.forward(from: 0.0)
           );
         setState(() {});
@@ -105,7 +109,7 @@ class _WebviewScreenState extends State<WebviewScreen>
       
       PopScope(
         // when leaving this screen hide the webview  
-        onPopInvoked: (popped) {
+        onPopInvokedWithResult: (didPop, result) {
           setState(() {
             showLoading = false;
             _controller.reverse();
@@ -127,10 +131,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                     (_rotationAnimation.value - 1) * (pi/2))
                   ),
                 alignment: Alignment.centerLeft,
-                child: WebViewWidget(
-                  controller: webViewController,
-                )
-                /*InAppWebView(
+                child: InAppWebView(
                   initialUrlRequest: URLRequest(
                     url: WebUri(
                       openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
@@ -139,7 +140,7 @@ class _WebviewScreenState extends State<WebviewScreen>
                   onLoadStop: (controller, uri) {
                     _controller.forward(from: 0.0);
                   }
-                )*/
+                )
               )
             ),
             

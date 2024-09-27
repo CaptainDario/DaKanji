@@ -417,6 +417,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                             Clipboard.setData(
                                               ClipboardData(text:currentSelection)
                                             ).then((_){
+                                              // ignore: use_build_context_synchronously
                                               ScaffoldMessenger.of(context).showSnackBar(
                                                 SnackBar(
                                                   content: Text("${LocaleKeys.TextScreen_copy_button_copy.tr()} $currentSelection"))

@@ -46,7 +46,7 @@ List<List<JMdict>> sortJmdictList(
           (LanguageMeanings e) => languages.contains(e.language)
         ).map((e) => 
           e.meanings.map((e) => 
-            e.attributes.whereNotNull()
+            e.attributes.nonNulls
           ).flattened.toList()
         )
         .toList();

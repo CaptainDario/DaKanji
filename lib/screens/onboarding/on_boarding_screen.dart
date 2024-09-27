@@ -201,6 +201,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                   GetIt.I<UserData>().save();
                   Future.delayed(const Duration(milliseconds: 500), () =>
                     Navigator.pushNamedAndRemoveUntil(
+                      // ignore: use_build_context_synchronously
                       context,
                       "/${Screens.dictionary.name}",
                       (route) => false

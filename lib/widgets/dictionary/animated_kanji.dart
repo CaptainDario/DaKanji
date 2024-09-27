@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:collection/collection.dart';
 import 'package:path_parsing/path_parsing.dart';
 
 // Project imports:
@@ -69,7 +68,7 @@ class _AnimatedKanjiState extends State<AnimatedKanji> with TickerProviderStateM
     // parse kanjiVG entry for paths
     RegExp pathsRegex = RegExp(r' d="(.+?)" stroke="hsl\((\d+).+?(\d+).+?(\d+).*\)" stroke-width="(.+?)');
     List<RegExpMatch> svgPathMatches = pathsRegex.allMatches(widget.kanjiVGString)
-      .whereNotNull()
+      .nonNulls
       .toList();
 
     for (RegExpMatch svgPathMatch in svgPathMatches) {

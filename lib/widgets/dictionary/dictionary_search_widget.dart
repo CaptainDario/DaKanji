@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:another_flushbar/flushbar.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
@@ -189,7 +188,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       child: PopScope(
         canPop: context.read<DictSearch>().selectedResult == null &&
                 !searchBarExpanded,
-        onPopInvoked: (didPop) {
+        onPopInvokedWithResult: (didPop, result) {
           if(searchBarExpanded) {
             collapseSearchBar();
           }
@@ -427,7 +426,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                               final ids = snapshot.data!.map((e) => e.dictEntryID).toList();
                               searchHistory = GetIt.I<Isars>().dictionary.jmdict
                                 .getAllSync(ids)
-                                .whereNotNull().toList();
+                                .nonNulls.toList();
             
                               sqlIDs = snapshot.data!.map((e) => e.id).toList();
                             }

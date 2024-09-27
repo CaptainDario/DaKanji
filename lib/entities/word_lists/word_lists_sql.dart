@@ -2,7 +2,6 @@
 import 'dart:io';
 
 // Package imports:
-import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 
 // Project imports:
@@ -207,7 +206,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
       // update the remaining affected nodes
       await batch((batch) {
-        for (var node in (affectedNodes).whereNotNull()){
+        for (var node in (affectedNodes).nonNulls){
           var sqlNode = companionFromTreeNode(node, true);
           batch.update(
             wordListNodesSQL, sqlNode,

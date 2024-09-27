@@ -483,7 +483,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                             value: menuItems[i],
                             child: Text(menuItems[i])
                           );
-                        }).whereNotNull().toList(),
+                        }).nonNulls.toList(),
                         
                         /*(context) => List.generate(
                           menuItems.length,

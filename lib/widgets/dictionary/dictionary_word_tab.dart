@@ -116,9 +116,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
       // get the pos for conjugating this word
       conjugationPos = widget.entry!.meanings.map((e) => e.partOfSpeech)
-        .whereNotNull().expand((e) => e)
-        .whereNotNull().expand((e) => e.attributes)
-        .whereNotNull().map((e) => posDescriptionToPosEnum[e]!)
+        .nonNulls.expand((e) => e)
+        .nonNulls.expand((e) => e.attributes)
+        .nonNulls.map((e) => posDescriptionToPosEnum[e]!)
         .toSet().toList();
     }
   }
@@ -260,7 +260,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                           value: menuItems[i],
                           child: Text(menuItems[i])
                         );
-                      }).whereNotNull().toList(),
+                      }).nonNulls.toList(),
                     )
                   ),
                 ],

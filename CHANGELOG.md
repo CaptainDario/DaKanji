@@ -38,8 +38,9 @@ Improvements:
 - Use fvp for media playback
 
 Fixed:
-  - App does not work in MS Store
-  - DoJG: Impossible to scroll back when image full screen on desktop
+
+- App does not work in MS Store
+- DoJG: Impossible to scroll back when image full screen on desktop
 
 -------------------------------------------------------------------------
 

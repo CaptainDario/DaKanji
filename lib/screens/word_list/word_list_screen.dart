@@ -115,7 +115,7 @@ class _WordListScreenState extends State<WordListScreen> {
       .map((e) {
         return GetIt.I<Isars>().dictionary.jmdict
           .getAllSync(e.map((e) => e.item2).toList())
-          .whereNotNull();
+          .nonNulls;
       })
       // apply search term
       .map((event) => 

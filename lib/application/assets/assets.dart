@@ -32,6 +32,7 @@ void downloadAudio(BuildContext context) async {
         File(g_DakanjiPathManager.audiosDirectory.path),
         g_GithubApiDependenciesRelase,
       ).then((value) {
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pop();
       });
       AwesomeDialog(
