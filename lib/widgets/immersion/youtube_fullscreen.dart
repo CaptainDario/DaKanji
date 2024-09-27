@@ -1,9 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 // Package imports:
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 class YoutubeFullscreen extends StatefulWidget {
 
@@ -24,10 +23,8 @@ class YoutubeFullscreen extends StatefulWidget {
 
 class _YoutubeFullscreenState extends State<YoutubeFullscreen> {
 
-  /// Webview params to create the webview controller
-  late final PlatformWebViewControllerCreationParams params;
   /// Webviewcontroller to manage the webview that shows youtube
-  late final WebViewController _webViewController;
+  late final InAppWebViewController _inAppWebViewController;
   
 
   @override
@@ -48,36 +45,12 @@ class _YoutubeFullscreenState extends State<YoutubeFullscreen> {
   }
 
   void init(){
-    if (WebViewPlatform.instance is WebKitWebViewPlatform) {
-      params = WebKitWebViewControllerCreationParams(
-        allowsInlineMediaPlayback: true,
-        
-      );
-    }
-    else {
-      params = const PlatformWebViewControllerCreationParams();
-    }
-
-    _webViewController = WebViewController.fromPlatformCreationParams(params)
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(Colors.black)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onUrlChange: (change) {
-            
-          },
-        )
-      );
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      loadFullScreenVideo();
-    });
   }
 
   double _scale = 1.0;
 
   void loadFullScreenVideo(){
-    _webViewController.loadHtmlString(
+    /*_inAppWebViewController.loadHtmlString(
       """
       <!DOCTYPE html>
       <html>
@@ -90,7 +63,7 @@ class _YoutubeFullscreenState extends State<YoutubeFullscreen> {
       </body>
       </html>
       """
-    );
+    );*/
   }
 
   @override
@@ -101,13 +74,11 @@ class _YoutubeFullscreenState extends State<YoutubeFullscreen> {
       },
       onScaleEnd: (details) {
         if(_scale < 0.5){
-          _webViewController.loadRequest(Uri.parse('about:blank'));
+          //_inAppWebViewController.loadRequest(Uri.parse('about:blank'));
           Navigator.pop(context);
         }
       },
-      child: WebViewWidget(
-        controller: _webViewController
-      ),
+      child: Text("redo")
     );
   }
 

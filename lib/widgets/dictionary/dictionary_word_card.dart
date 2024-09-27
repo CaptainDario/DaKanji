@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
@@ -160,14 +160,16 @@ class _DictionaryWordCardState extends State<DictionaryWordCard> {
                 children: [
                   AspectRatio(
                     aspectRatio: 1,
-                    child: WebViewWidget(
-                      controller: WebViewController()
-                        ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                        ..loadRequest(Uri.parse(
-                          "$g_GoogleImgSearchUrl${GetIt.I<Settings>().dictionary.googleImageSearchQuery.replaceAll(SettingsDictionary.d_googleImageSearchQuery, readingOrKanji ?? "")}")),
-                        gestureRecognizers: {
-                          Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
-                        },
+                    child: InAppWebView(
+                      onWebViewCreated: (controller) {
+
+                        String s = GetIt.I<Settings>()
+                          .dictionary.googleImageSearchQuery
+                          .replaceAll(SettingsDictionary.d_googleImageSearchQuery, readingOrKanji ?? "");
+                        controller.loadUrl(urlRequest: URLRequest(
+                          url: WebUri("$g_GoogleImgSearchUrl$s")
+                        ));
+                      },
                     )
                   )
                 ],

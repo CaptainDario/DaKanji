@@ -1,11 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 // Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/drawing/handle_predictions.dart';
@@ -64,7 +64,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   /// has been initialized
   late Future<bool> initInterpter;
   /// Controller for the webview to show online dictionaries
-  WebViewController? webViewController;
+  InAppWebViewController? inAppWebViewController;
 
 
   @override
@@ -145,10 +145,10 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                 // set layout and canvas size
                 var t = getDrawScreenLayout(constraints);
                 if(drawScreenIncludesWebview(t.item1)){
-                  webViewController = WebViewController()
-                    ..loadRequest(Uri.parse(openWithSelectedDictionary(
-                      GetIt.I<DrawScreenState>().drawingLookup.chars
-                    )));
+                  //inAppWebViewController = WebViewController()
+                  //  ..loadRequest(Uri.parse(openWithSelectedDictionary(
+                  //    GetIt.I<DrawScreenState>().drawingLookup.chars
+                  //  )));
                 }
                 GetIt.I<DrawScreenState>().drawScreenLayout = t.item1;
                 GetIt.I<DrawScreenState>().canvasSize = t.item2;
@@ -176,10 +176,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   DrawScreenClearButton(_canvasSize!, widget.includeTutorial),
                   _canvasSize!,
                   GetIt.I<DrawScreenState>().drawScreenLayout,
-                  drawScreenIncludesWebview(t.item1) && webViewController != null
-                    ? WebViewWidget(
-                      controller: webViewController!,
-                    )
+                  drawScreenIncludesWebview(t.item1) && inAppWebViewController != null
+                    ? InAppWebView()
                     : null
                 );
               }
@@ -192,9 +190,10 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
   void reloadWebViewUrl(){
     if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {
-      webViewController!.loadRequest(Uri.parse(openWithSelectedDictionary(
-        GetIt.I<DrawScreenState>().drawingLookup.chars
-      )));
+      inAppWebViewController!.loadUrl(
+        urlRequest: URLRequest(url: WebUri.uri(Uri.parse(openWithSelectedDictionary(
+          GetIt.I<DrawScreenState>().drawingLookup.chars
+        )))));
     }
   }
 }

@@ -26,7 +26,7 @@ class _WebviewScreenState extends State<WebviewScreen>
   with TickerProviderStateMixin{
 
   /// should the webview be loaded 
-  late InAppWebViewController inAppWebViewController;
+  InAppWebViewController? inAppWebViewController;
   /// should the loading screen be shown (hides webview)
   bool showLoading = false;
   /// the screen's width 
@@ -86,10 +86,10 @@ class _WebviewScreenState extends State<WebviewScreen>
     // add a listener to when the screen change animation finished
     var route = ModalRoute.of(context);
     void handler(status) {
-      if (status == AnimationStatus.completed) {
+      if (status == AnimationStatus.completed && inAppWebViewController != null) {
         route!.animation!.removeStatusListener(handler);
 
-        inAppWebViewController.loadUrl(
+        inAppWebViewController!.loadUrl(
           urlRequest: URLRequest(
             url: WebUri.uri(Uri.parse(
               openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
@@ -133,9 +133,8 @@ class _WebviewScreenState extends State<WebviewScreen>
                 alignment: Alignment.centerLeft,
                 child: InAppWebView(
                   initialUrlRequest: URLRequest(
-                    url: WebUri(
-                      openWithSelectedDictionary(GetIt.I<DrawScreenState>().drawingLookup.chars)
-                    )
+                    url: WebUri(openWithSelectedDictionary(
+                      GetIt.I<DrawScreenState>().drawingLookup.chars))
                   ),
                   onLoadStop: (controller, uri) {
                     _controller.forward(from: 0.0);

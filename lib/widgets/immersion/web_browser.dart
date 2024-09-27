@@ -1,9 +1,8 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-// Package imports:
-import 'package:webview_flutter/webview_flutter.dart';
 
 class WebBrowser extends StatefulWidget {
   const WebBrowser({super.key});
@@ -15,7 +14,7 @@ class WebBrowser extends StatefulWidget {
 class _WebBrowserState extends State<WebBrowser> {
 
   /// Webviewcontroller to manage the webview that shows youtube
-  late final WebViewController _webViewController;
+  late final InAppWebViewController _webViewController;
 
   final String startUrl = "https://www.google.com";
 
@@ -39,10 +38,11 @@ class _WebBrowserState extends State<WebBrowser> {
   void init(){
 
     setupController();
-    _webViewController.loadRequest(Uri.parse(startUrl));
+    //_webViewController.loadRequest(Uri.parse(startUrl));
   }
 
   void setupController(){
+    /*
     _webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -58,16 +58,18 @@ class _WebBrowserState extends State<WebBrowser> {
       ..setOnConsoleMessage((message) {
         //print("testtest: ${message.message}");
       });
+    */
   }
 
   void _setUpJavascriptChannel() {
+    /*
     _webViewController.runJavaScript('''
 document.addEventListener("selectionchange", () => {
   console.log(document.getSelection().toString());
 });
     ''');
 
-    /*_webViewController.addJavaScriptChannel(
+    _webViewController.addJavaScriptChannel(
       'onSelectionChange',
       onMessageReceived: (JavaScriptMessage message) {
         setState(() {
@@ -84,11 +86,11 @@ document.addEventListener("selectionchange", () => {
       
       children: [
         const Text("Test"),
-        Expanded(
-          child: WebViewWidget(
-            controller: _webViewController,
-          ),
-        ),
+        //Expanded(
+        //  child: WebViewWidget(
+        //    controller: _webViewController,
+        //  ),
+        //),
       ],
     );
   }

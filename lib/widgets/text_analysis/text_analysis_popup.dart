@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
@@ -55,7 +55,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
   /// A list containing the names for all tabs in the popup
   late List<String> tabNames;
   /// controller for the webview
-  WebViewController? webViewController;
+  InAppWebViewController? inAppWebViewController;
   /// controller for the tabbar
   late TabController popupTabController;
   /// The last word that has been lookeup in the webview with deepl
@@ -72,9 +72,6 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
     }
     if(g_webViewSupported){
       tabNames.add("Deepl");
-      webViewController = WebViewController()
-        ..setUserAgent(g_mobileUserAgentArg)
-        ..setJavaScriptMode(JavaScriptMode.unrestricted);
     }
 
     popupTabController = TabController(length: tabNames.length, vsync: this);
@@ -93,9 +90,11 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
   }
 
   void updateWebview() async {
-    if(webViewController != null && lastWebViewLookup != widget.text) {
-      await webViewController!.loadRequest(
-        Uri.parse("$g_deepLUrl${widget.text}") 
+    if(inAppWebViewController != null && lastWebViewLookup != widget.text) {
+      await inAppWebViewController!.loadUrl(
+        urlRequest: URLRequest(
+          url: WebUri.uri(Uri.parse("$g_deepLUrl${widget.text}"))
+        ) 
       );
       lastWebViewLookup = widget.text;
     }
@@ -170,8 +169,10 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                           ),
                         if(g_webViewSupported)
                           Card(
-                            child: WebViewWidget(
-                              controller: webViewController!,
+                            child: InAppWebView(
+                              onWebViewCreated: (controller) {
+                                inAppWebViewController = controller;
+                              },
                               gestureRecognizers: {
                                 Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
                               }
