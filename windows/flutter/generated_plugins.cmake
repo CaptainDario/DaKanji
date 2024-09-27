@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   clipboard_watcher
+  flutter_inappwebview_windows
   fvp
   irondash_engine_context
   isar_flutter_libs
