@@ -106,7 +106,7 @@
     "word_tab": "Word",
     "word_tab_menu_add_to_list": "Add to list",
     "word_tab_menu_quick_add_to_list": "Quick add to list",
-    "word_tab_menu_quick_add_to_list_no_lists_selected": "No lists for quick select have been selected. Please do so in the settings.",
+    "word_tab_menu_quick_add_to_list_no_lists_selected": "No lists for quick send have been selected. Please do so in the settings.",
     "word_tab_menu_quick_send_to_anki": "Quick send to Anki",
     "word_tab_menu_send_to_anki": "Send to Anki",
     "word_tab_menu_share": "Share",
@@ -190,11 +190,6 @@
     "new_versions_available_text": "There are {NEW_VERSIONS} new versions of DaKanji available!",
     "rate_this_app": "Rate",
     "whats_new": "what's new"
-  },
-  "ImmersionScreen": {
-    "title": "Immersion",
-    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
-    "tutorial_begin_title": "Welcome to the immersion screen!"
   },
   "KanaTableScreen": {
     "title": "Kana Table",
@@ -296,6 +291,11 @@
     "text_selection_title": "Text selection buttons",
     "title": "Manual"
   },
+  "OcrScreen": {
+    "title": "OCR",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the OCR table screen!"
+  },
   "OnBoarding": {
     "Onboarding_1_text": "Just draw it and \"DaKanji\" will show the character you need.",
     "Onboarding_1_title": "You do not know a Kanji?",
@@ -305,6 +305,11 @@
     "Onboarding_3_title": "Do not know how to read a sentence?",
     "Onboarding_4_text": "DaKanji has Kanji and Kana tables to let you study them efficiently.",
     "Onboarding_4_title": "Study Kanji and Kana"
+  },
+  "ReadingScreen": {
+    "title": "Reading",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the reading screen!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Reset dictionary files",
@@ -399,6 +404,24 @@
     "word_lists_screensaver_show": "Screensaver: show",
     "word_lists_screensaver_word_lists_to_use": "Screensaver: Word list to use"
   },
+  "Stores": {
+    "long_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!\n\nFeature overview:\n\n* Recognize 6500+ Kanji and all Kana offline by just drawing them\n* Use the inbuilt dictionary to look up words offline\n  * Multi-language support: en, es, de, fr, ...\n  * Detailed information about words: pitch accent, related words, ...\n  * Detailed information about Kanji: radicals, JLPT, ...\n  * Example sentences\n  * Drawing or radical-based kanji lookup\n  * 6000+ audios\n* Create word lists to organize your studies\n* Kana table with audios and mnemonics\n* Anki integration to send dictionary entries to Anki\n* Read any text with ease by adding furigana, spaces, and more to texts\n* Use it on all your devices: Phone, Tablet or Laptop it doesn't matter!",
+    "mockup_10": "",
+    "mockup_1_1": "Use the built-in dictionary to lookup words offline.",
+    "mockup_1_2": "Use Kana, Kanji or Romaji, DaKanji knows them all.",
+    "mockup_2_1": "Don't know a Kanji?\nJust draw it!",
+    "mockup_2_2": "Find 6500+ characters, not even the stroke order matters!",
+    "mockup_3": "Read texts by adding Furigana, translations and more!",
+    "mockup_4_1": "Use it on all your devices!",
+    "mockup_4_2": "iPad, Android, PC, Mac or Linux DaKanji works everywhere.",
+    "mockup_5": "",
+    "mockup_6": "",
+    "mockup_7": "",
+    "mockup_8": "",
+    "mockup_9": "",
+    "short_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!",
+    "shortest_description": "Are you learning Japanese? Then you need to try DaKanji!"
+  },
   "TextScreen": {
     "copy_button_copy": "Copied:",
     "input_text_here": "Input text here...",
@@ -435,6 +458,65 @@
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the account screen!"
   },
+  "VideoScreen": {
+    "title": "Video",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the video screen!"
+  },
+  "WebbrowserScreen": {
+    "title": "Webbrowser",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the Webbrowser screen!"
+  },
+  "Webpage": {
+    "download_stats_downloads": "Downloads",
+    "download_stats_reviews": "5 star reviews",
+    "download_text": "Join the Japanese learning revolution now!",
+    "feature_long_clipboard_text": "",
+    "feature_long_clipboard_title": "",
+    "feature_long_devices_text": "",
+    "feature_long_devices_title": "",
+    "feature_long_dict_text": "",
+    "feature_long_dict_title": "",
+    "feature_long_draw_text": "",
+    "feature_long_draw_title": "",
+    "feature_long_texts_text": "",
+    "feature_long_texts_title": "",
+    "feature_short__text": "",
+    "feature_short__title": "",
+    "feature_short_clipboard_text": "Watch your clipboard to analyse content from any source",
+    "feature_short_clipboard_title": "Clipboard",
+    "feature_short_community_text": "Join a growing community of passionate Japanese learners that use and develop DaKanji",
+    "feature_short_community_title": "Community",
+    "feature_short_devices_text": "Use it on all your devices: tablet, phone or desktop it doesn't matter",
+    "feature_short_devices_title": "Use every where",
+    "feature_short_dict_text": "Use the built-in dictionary to lookup words offline",
+    "feature_short_dict_title": "Dictionary",
+    "feature_short_draw_text": "Find 6500+ characters, not even the stroke order matters",
+    "feature_short_draw_title": "Draw",
+    "feature_short_texts_text": "Read any text with ease by adding furigana, spaces, and more",
+    "feature_short_texts_title": "Analyse texts",
+    "landing_button": "Get the app",
+    "landing_subtitle": "Use the built-in dictionary to look up words, search Kanjis by simply drawing them, add furigana to texts, and much more!",
+    "landing_title": "Your are learning Japanese?\nThen you need to try DaKanji!",
+    "support_text": "Do not hesitate to reach out to us in case that you have any questions. We will answer you as soon as possible.",
+    "support_title": "Contact",
+    "users_1_name": "Benjamin Ransom",
+    "users_1_review": "a wonderfully fantastic tool for identifying and learning kanji on the fly. I can see something totally new and not know the stroke order and still figure it out. [...]",
+    "users_2_name": "Evelyn Snyder",
+    "users_2_review": "I work somewhere with really bad 4G and whenever I want to remind myself of a word or phrases it's really hard to do so. This app has shaken things up for me and I really love it's offline functionality!",
+    "users_3_name": "Kuroodo",
+    "users_3_review": "If Google translate ever fails you, and you don't know the stroke order, use the app called DaKanji. Just draw the kanji with as many strokes as.you like and as sloppy as you like, and it should pop up as one of the results. Works like magic.",
+    "users_4_name": "StarB_fly",
+    "users_4_review": "Love that you also Support other languages besides english. As a German there isnt that much Stuff jpn-ger. So I mostly Need to translate to english then to German. It works but I Just Love having Something jpn-ger directly.",
+    "users_5_name": "Reduces",
+    "users_5_review": "Oh my god the furigana feature is a godsend! Thank you!!",
+    "users_6_name": "Sgoicharly",
+    "users_6_review": "WOW, the app is way more than I thought! Thank you for such a useful tool!",
+    "users_7_name": "Murillo Gabriel",
+    "users_7_review": "Essential for Japanese learners. Thank you for making this free!",
+    "users_title": "What the users say"
+  },
   "WebviewScreen": {
     "loading": "Searching",
     "title": "Webview"
@@ -452,6 +534,7 @@
     "delete": "Delete",
     "delete_warning": "Warning",
     "delete_warning_desc": "This will permanently delete this word list, this cannot be undone.",
+    "divider": "/",
     "drag_to_scroll": "Drag here to scroll",
     "export_csv": "Export CSV",
     "export_csv_progress": "Creating CSV, please wait...",
@@ -463,7 +546,6 @@
     "new_list": "New list",
     "no_entries": "No entries in this word list",
     "node_hint_text": "Name",
-    "of": "of",
     "ok": "ok",
     "page": "page",
     "rename": "Rename",
@@ -478,5 +560,10 @@
     "tutorial_create_list": "Using this button you can create a new wordlist.",
     "tutorial_folder": "This is a wordlist-folder. You can store other wordlist-folders or wordlists in it.\nThis is also the default word list folder. It contains some word lists based on the JLPT, your search history, etc..",
     "tutorial_list": "This is a wordlist. By tapping on it you can see its content.\nUsing the menu-button on the right side of this list, you can also export your list to different formats."
+  },
+  "YoutubeScreen": {
+    "title": "YouTube",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the YouTube screen!"
   }
 }

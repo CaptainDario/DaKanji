@@ -113,6 +113,9 @@ dependencies:
   
   # Not all platforms supported
   flutter_inappwebview: 6.1.1
+  flutter_browser:
+    path: /Users/darioklepoch/dev/DaKanji/flutter_browser_app/
+
   in_app_review: 2.0.9                  # android, iOS, MacOS, windows (limited)
   clipboard_watcher: 0.2.1              # android, iOS, macos, windows, linux
   store_checker: 1.6.0                  # ios, android

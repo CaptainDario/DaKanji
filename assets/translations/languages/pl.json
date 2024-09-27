@@ -106,7 +106,7 @@
     "word_tab": "S\u0142owo",
     "word_tab_menu_add_to_list": "Dodaj do listy",
     "word_tab_menu_quick_add_to_list": "Szybkie dodanie do listy",
-    "word_tab_menu_quick_add_to_list_no_lists_selected": "Nie wybrano \u017cadnych list do szybkiego wyboru. Nale\u017cy to zrobi\u0107 w ustawieniach.",
+    "word_tab_menu_quick_add_to_list_no_lists_selected": "Nie wybrano list do szybkiego wysy\u0142ania. Nale\u017cy to zrobi\u0107 w ustawieniach.",
     "word_tab_menu_quick_send_to_anki": "Szybkie wysy\u0142anie do Anki",
     "word_tab_menu_send_to_anki": "Wy\u015blij do Anki",
     "word_tab_menu_share": "Udzia\u0142",
@@ -190,11 +190,6 @@
     "new_versions_available_text": "Dost\u0119pne s\u0105 {NEW_VERSIONS} nowe wersje DaKanji!",
     "rate_this_app": "Oce\u0144",
     "whats_new": "co nowego"
-  },
-  "ImmersionScreen": {
-    "title": "Zanurzenie",
-    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
-    "tutorial_begin_title": "Witamy na ekranie immersji!"
   },
   "KanaTableScreen": {
     "title": "St\u00f3\u0142 Kana",
@@ -296,6 +291,11 @@
     "text_selection_title": "Przyciski wyboru tekstu",
     "title": "Instrukcja"
   },
+  "OcrScreen": {
+    "title": "OCR",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie tabeli OCR!"
+  },
   "OnBoarding": {
     "Onboarding_1_text": "Po prostu go narysuj i DaKanji poka\u017ce Ci znak kt\u00f3rego potrzebujesz",
     "Onboarding_1_title": "Nie znasz Kanji?",
@@ -305,6 +305,11 @@
     "Onboarding_3_title": "Nie wiesz jak przeczyta\u0107 zdanie?",
     "Onboarding_4_text": "DaKanji zawiera tabele Kanji i Kana, kt\u00f3re pozwalaj\u0105 na efektywn\u0105 nauk\u0119.",
     "Onboarding_4_title": "Nauka kanji i kana"
+  },
+  "ReadingScreen": {
+    "title": "Czytanie",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie czytania!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Resetowanie plik\u00f3w s\u0142ownika",
@@ -399,6 +404,24 @@
     "word_lists_screensaver_show": "Wygaszacz ekranu: poka\u017c",
     "word_lists_screensaver_word_lists_to_use": "Wygaszacz ekranu: Lista s\u0142\u00f3w do u\u017cycia"
   },
+  "Stores": {
+    "long_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!\n\nCzy pr\u00f3bowa\u0142e\u015b kiedy\u015b przeczyta\u0107 tekst po japo\u0144sku ale nie wiedzia\u0142e\u015b jak przeczyta\u0107 niekt\u00f3re Kanji? DaKanji jest tutaj \u017ceby Ci z tym pom\u00f3c. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz zna\u0107 kolejno\u015bci pisania! Maluj znaki i buduj s\u0142owa kt\u00f3re mo\u017cesz p\u00f3\u017aniej t\u0142umaczy\u0107, a to wszystko kompletnie offline.\n\nFunkcjonalno\u015bci:\n* Rozpoznawanie 6500+ Kanji i ca\u0142ej Kany offline\n* U\u017cywaj s\u0142ownik\u00f3w internetowych oraz aplikacji aby t\u0142umaczy\u0107 znaki i s\u0142owa",
+    "mockup_10": "",
+    "mockup_1_1": "T\u0142umacz za pomoc\u0105 s\u0142ownika",
+    "mockup_1_2": "",
+    "mockup_2_1": "Nie znasz Kanji? Po prostu je namaluj!",
+    "mockup_2_2": "Kolejno\u015b\u0107 malowania znak\u00f3w nie ma znaczenia.",
+    "mockup_3": "Odczytaj tekst poprzez dodanie Furigany, t\u0142umaczenia i wiele wi\u0119cej!",
+    "mockup_4_1": "U\u017cywaj na wszystkich swoich urz\u0105dzeniach!",
+    "mockup_4_2": "iPad, Android, PC, Mac lub Linux DaKanji dzia\u0142a wsz\u0119dzie.",
+    "mockup_5": "",
+    "mockup_6": "",
+    "mockup_7": "",
+    "mockup_8": "",
+    "mockup_9": "",
+    "short_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!\nZa pomoc\u0105 malowania mo\u017cesz odnajdowa\u0107 i t\u0142umaczy\u0107 znaki.",
+    "shortest_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!"
+  },
   "TextScreen": {
     "copy_button_copy": "Skopiowane:",
     "input_text_here": "Wprowad\u017a tekst tutaj...",
@@ -435,6 +458,65 @@
     "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
     "tutorial_begin_title": ""
   },
+  "VideoScreen": {
+    "title": "Wideo",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie wideo!"
+  },
+  "WebbrowserScreen": {
+    "title": "Webbrowser",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie Webbrowser!"
+  },
+  "Webpage": {
+    "download_stats_downloads": "",
+    "download_stats_reviews": "",
+    "download_text": "",
+    "feature_long_clipboard_text": "",
+    "feature_long_clipboard_title": "",
+    "feature_long_devices_text": "",
+    "feature_long_devices_title": "",
+    "feature_long_dict_text": "",
+    "feature_long_dict_title": "",
+    "feature_long_draw_text": "",
+    "feature_long_draw_title": "",
+    "feature_long_texts_text": "",
+    "feature_long_texts_title": "",
+    "feature_short__text": "",
+    "feature_short__title": "",
+    "feature_short_clipboard_text": "",
+    "feature_short_clipboard_title": "",
+    "feature_short_community_text": "",
+    "feature_short_community_title": "",
+    "feature_short_devices_text": "",
+    "feature_short_devices_title": "",
+    "feature_short_dict_text": "",
+    "feature_short_dict_title": "",
+    "feature_short_draw_text": "",
+    "feature_short_draw_title": "",
+    "feature_short_texts_text": "",
+    "feature_short_texts_title": "",
+    "landing_button": "",
+    "landing_subtitle": "",
+    "landing_title": "",
+    "support_text": "",
+    "support_title": "",
+    "users_1_name": "",
+    "users_1_review": "",
+    "users_2_name": "",
+    "users_2_review": "",
+    "users_3_name": "",
+    "users_3_review": "",
+    "users_4_name": "",
+    "users_4_review": "",
+    "users_5_name": "",
+    "users_5_review": "",
+    "users_6_name": "",
+    "users_6_review": "",
+    "users_7_name": "",
+    "users_7_review": "",
+    "users_title": ""
+  },
   "WebviewScreen": {
     "loading": "\u0141adowanie",
     "title": "Webview"
@@ -452,6 +534,7 @@
     "delete": "Usu\u0144",
     "delete_warning": "Ostrze\u017cenie",
     "delete_warning_desc": "Spowoduje to trwa\u0142e usuni\u0119cie listy s\u0142\u00f3w, czego nie mo\u017cna cofn\u0105\u0107.",
+    "divider": "/",
     "drag_to_scroll": "Przeci\u0105gnij tutaj, aby przewin\u0105\u0107",
     "export_csv": "Eksport CSV",
     "export_csv_progress": "Tworzenie CSV, prosz\u0119 czeka\u0107...",
@@ -463,7 +546,6 @@
     "new_list": "Nowy wykaz",
     "no_entries": "Brak wpis\u00f3w w tej li\u015bcie s\u0142\u00f3w",
     "node_hint_text": "Nazwa",
-    "of": "z",
     "ok": "ok",
     "page": "strona",
     "rename": "Zmie\u0144 nazw\u0119",
@@ -478,5 +560,10 @@
     "tutorial_create_list": "Za pomoc\u0105 tego przycisku mo\u017cna utworzy\u0107 now\u0105 list\u0119 s\u0142\u00f3w. Za pomoc\u0105 przycisku menu po prawej stronie tej listy mo\u017cna r\u00f3wnie\u017c wyeksportowa\u0107 list\u0119 do r\u00f3\u017cnych format\u00f3w.",
     "tutorial_folder": "Jest to folder listy s\u0142\u00f3w. Mo\u017cna w nim przechowywa\u0107 inne foldery lub listy s\u0142\u00f3w.\nJest to r\u00f3wnie\u017c domy\u015blny folder listy s\u0142\u00f3w. Zawiera on niekt\u00f3re listy s\u0142\u00f3w oparte na JLPT, historii wyszukiwania itp.",
     "tutorial_list": "To jest lista s\u0142\u00f3w. Dotkni\u0119cie jej powoduje wy\u015bwietlenie jej zawarto\u015bci."
+  },
+  "YoutubeScreen": {
+    "title": "YouTube",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie YouTube!"
   }
 }

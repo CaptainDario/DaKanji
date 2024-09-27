@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +52,7 @@ class _WordListSettingsState extends State<WordListSettings> {
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
       LocaleKeys.WordListsScreen_title.tr(),
-      Icons.list,
+      DaKanjiIcons.wordLists,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // show word frequency in search results / dictionary

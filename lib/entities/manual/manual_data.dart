@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
+import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_misc.dart';
 import 'package:flutter/material.dart';
 
@@ -42,13 +44,13 @@ class ManualData {
     ];
 
     manualIcons = [
-      Icons.book,
-      Icons.text_snippet,
-      DaKanjiIcons.anki,
-      DaKanjiIcons.dojg,
-      DaKanjiIcons.kana_table,
-      Icons.link,
-      Icons.miscellaneous_services
+      DaKanjiIcons.dictionary,
+      DaKanjiIcons.text,
+      DaKanjiCustomIcons.anki,
+      DaKanjiCustomIcons.dojg,
+      DaKanjiCustomIcons.kana_table,
+      DaKanjiIcons.deepLinks,
+      DaKanjiIcons.misc
     ];
 
     manualPages = [

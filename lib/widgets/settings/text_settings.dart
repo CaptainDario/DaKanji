@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -38,7 +39,7 @@ class _TextSettingsState extends State<TextSettings> {
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
       LocaleKeys.TextScreen_title.tr(),
-      Icons.text_snippet,
+      DaKanjiIcons.text,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // disable text selection buttons

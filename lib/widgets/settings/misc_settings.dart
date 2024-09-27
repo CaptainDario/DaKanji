@@ -1,6 +1,7 @@
 // Flutter imports:
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -40,7 +41,7 @@ class _MiscSettingsState extends State<MiscSettings> {
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
       LocaleKeys.SettingsScreen_misc_title.tr(),
-      Icons.miscellaneous_services,
+      DaKanjiIcons.misc,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // theme

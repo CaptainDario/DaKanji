@@ -39,7 +39,7 @@ class _DoJGSettingsState extends State<DoJGSettings> {
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
       LocaleKeys.DojgScreen_title.tr(),
-      DaKanjiIcons.dojg,
+      DaKanjiCustomIcons.dojg,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // has dojg w/o media been imported

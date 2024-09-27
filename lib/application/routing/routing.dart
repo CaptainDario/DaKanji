@@ -1,4 +1,8 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/screens/ocr/ocr_screen.dart';
+import 'package:da_kanji_mobile/screens/reading/reading_screen.dart';
+import 'package:da_kanji_mobile/screens/video/video_screen.dart';
+import 'package:da_kanji_mobile/screens/youtube/youtube_screen.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -11,7 +15,7 @@ import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
 import 'package:da_kanji_mobile/screens/dojg/dojg_screen.dart';
 import 'package:da_kanji_mobile/screens/drawing/draw_screen.dart';
 import 'package:da_kanji_mobile/screens/home/home_screen.dart';
-import 'package:da_kanji_mobile/screens/immersion/immersion_screen.dart';
+import 'package:da_kanji_mobile/screens/webbrowser/webbrowser_screen.dart';
 import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
 import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
 import 'package:da_kanji_mobile/screens/kanji_map/kanji_map_screen.dart';
@@ -54,8 +58,28 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
       initialText: args.textInitialText,
     );
   }
-  else if(name == "/${Screens.immersion.name}"){
-    newRoute = ImmersionScreen(
+  else if(name == "/${Screens.reading.name}"){
+    newRoute = ReadingScreen(
+      args.navigatedByDrawer, true,
+    );
+  }
+  else if(name == "/${Screens.webbrowser.name}"){
+    newRoute = WebBrowserScreen(
+      args.navigatedByDrawer, true,
+    );
+  }
+  else if(name == "/${Screens.video.name}"){
+    newRoute = VideoScreen(
+      args.navigatedByDrawer, true,
+    );
+  }
+  else if(name == "/${Screens.ocr.name}"){
+    newRoute = OcrScreen(
+      args.navigatedByDrawer, true,
+    );
+  }
+  else if(name == "/${Screens.youtube.name}"){
+    newRoute = YoutubeScreen(
       args.navigatedByDrawer, true,
     );
   }

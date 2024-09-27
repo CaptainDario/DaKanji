@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ void main() {
       GetIt.I<Settings>().drawing.emptyCanvasAfterDoubleTap = false;
     });
 
-    await navigateToScreen(Icons.brush, tester);
+    await navigateToScreen(DaKanjiIcons.drawing, tester);
 
     await waitTillFinder(tester, find.byType(DrawingCanvas), "Waiting for canvas init");
   

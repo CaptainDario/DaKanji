@@ -95,6 +95,26 @@ class UserData{
   @JsonKey(defaultValue: true)
   bool showTutorialDojg = true;
 
+  /// should the tutorial of the video screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialVideo = true;
+
+  /// should the tutorial of the reading screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialReading = true;
+
+  /// should the tutorial of the ocr screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialOcr = true;
+
+  /// should the tutorial of the webbrowser screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialWebbrowser = true;
+
+  /// should the tutorial of the youtube screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialYoutube = true;
+
   /// should the tutorial of the clipboard screen be shown
   @JsonKey(defaultValue: true)
   bool showTutorialClipboard = true;

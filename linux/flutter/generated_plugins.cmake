@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   clipboard_watcher
+  dynamic_color
   fvp
   gtk
   irondash_engine_context

@@ -39,7 +39,7 @@ class _KanaTableSettingsState extends State<KanaTableSettings> {
     
     return ResponsiveHeaderTile(
       LocaleKeys.KanaTableScreen_title.tr(),
-      DaKanjiIcons.kana_table,
+      DaKanjiCustomIcons.kana_table,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         ResponsiveCheckBoxTile(

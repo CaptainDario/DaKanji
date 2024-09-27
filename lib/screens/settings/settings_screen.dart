@@ -1,4 +1,9 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/settings/ocr_settings.dart';
+import 'package:da_kanji_mobile/widgets/settings/reading_settings.dart';
+import 'package:da_kanji_mobile/widgets/settings/video_settings.dart';
+import 'package:da_kanji_mobile/widgets/settings/webbrowser_settings.dart';
+import 'package:da_kanji_mobile/widgets/settings/youtube_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -86,6 +91,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       
                       DrawingSettings(settings),
                       DictionarySettings(settings),
+
+                      if(kDebugMode)
+                        ReadingSettings(settings),
+                      if(kDebugMode)
+                        VideoSettings(settings),
+                      if(kDebugMode)
+                        WebbrowserSettings(settings),
+                      if(kDebugMode)
+                        YoutubeSettings(settings),
+                      if(kDebugMode)
+                        OcrSettings(settings),
+
                       TextSettings(settings),
                       DoJGSettings(settings),
                       KanjiTableSettings(settings),

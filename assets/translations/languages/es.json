@@ -106,7 +106,7 @@
     "word_tab": "Palabra",
     "word_tab_menu_add_to_list": "A\u00f1adir a la lista",
     "word_tab_menu_quick_add_to_list": "A\u00f1adir r\u00e1pidamente a la lista",
-    "word_tab_menu_quick_add_to_list_no_lists_selected": "No se han seleccionado listas para la selecci\u00f3n r\u00e1pida. Por favor, h\u00e1galo en los ajustes.",
+    "word_tab_menu_quick_add_to_list_no_lists_selected": "No se han seleccionado listas para el env\u00edo r\u00e1pido. Por favor, h\u00e1galo en los ajustes.",
     "word_tab_menu_quick_send_to_anki": "Env\u00edo r\u00e1pido a Anki",
     "word_tab_menu_send_to_anki": "Enviar a Anki",
     "word_tab_menu_share": "Compartir",
@@ -190,11 +190,6 @@
     "new_versions_available_text": "#ERROR!",
     "rate_this_app": "Calificar",
     "whats_new": "qu\u00e9 hay de nuevo"
-  },
-  "ImmersionScreen": {
-    "title": "Inmersi\u00f3n",
-    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "\u00a1Bienvenido a la pantalla de inmersi\u00f3n!"
   },
   "KanaTableScreen": {
     "title": "Mesa Kana",
@@ -296,6 +291,11 @@
     "text_selection_title": "Botones de selecci\u00f3n de texto",
     "title": "Manual"
   },
+  "OcrScreen": {
+    "title": "OCR",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "Bienvenido a la pantalla de la tabla OCR"
+  },
   "OnBoarding": {
     "Onboarding_1_text": "Solo dib\u00fajalo y DaKanji te mostrar\u00e1 el caracter que necesitas.",
     "Onboarding_1_title": "No sabes un Kanji?",
@@ -305,6 +305,11 @@
     "Onboarding_3_title": "\u00bfNo sabe leer una frase?",
     "Onboarding_4_text": "DaKanji dispone de tablas de Kanji y Kana para que puedas estudiarlos de forma eficaz.",
     "Onboarding_4_title": "Estudiar kanji y kana"
+  },
+  "ReadingScreen": {
+    "title": "Lectura",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "\u00a1Bienvenido a la pantalla de lectura!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Restablecer archivos de diccionario",
@@ -399,6 +404,24 @@
     "word_lists_screensaver_show": "Salvapantallas: mostrar",
     "word_lists_screensaver_word_lists_to_use": "Salvapantallas: Lista de palabras a utilizar"
   },
+  "Stores": {
+    "long_description": "\u00bfEst\u00e1s aprendiendo Japon\u00e9s? \u00a1Tienes que probar DaKanji!\n\n\u00bfAlguna vez intentaste leer un texto en Japon\u00e9s pero no sab\u00edas como leer un kanji? DaKanji est\u00e1 para ayudarte. Dibuja un kanji y la app lo convertir\u00e1 en un car\u00e1cter digital. \u00a1Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracter\u00edsticas:\n* Reconocer m\u00e1s de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
+    "mockup_10": "",
+    "mockup_1_1": "Traduce con diccionarios",
+    "mockup_1_2": "",
+    "mockup_2_1": "\u00bfNo sabes un Kanji? \u00a1Solo dib\u00fajalo!",
+    "mockup_2_2": "Ni siquiera importa el orden de los trazos.",
+    "mockup_3": "",
+    "mockup_4_1": "",
+    "mockup_4_2": "",
+    "mockup_5": "",
+    "mockup_6": "",
+    "mockup_7": "",
+    "mockup_8": "",
+    "mockup_9": "",
+    "short_description": "\u00bfEst\u00e1s aprendiendo Japon\u00e9s? \u00a1Tienes que probar DaKanji!\nEncuentra car\u00e1cteres y trad\u00facelos solamente dibuj\u00e1ndolos.",
+    "shortest_description": "\u00bfEst\u00e1s aprendiendo Japon\u00e9s? \u00a1Tienes que probar DaKanji!"
+  },
   "TextScreen": {
     "copy_button_copy": "Copiado:",
     "input_text_here": "Introduzca aqu\u00ed el texto...",
@@ -435,6 +458,65 @@
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": ""
   },
+  "VideoScreen": {
+    "title": "V\u00eddeo",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "Bienvenido a la pantalla de v\u00eddeo"
+  },
+  "WebbrowserScreen": {
+    "title": "Navegador",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "Bienvenido a la pantalla Webbrowser"
+  },
+  "Webpage": {
+    "download_stats_downloads": "",
+    "download_stats_reviews": "",
+    "download_text": "",
+    "feature_long_clipboard_text": "",
+    "feature_long_clipboard_title": "",
+    "feature_long_devices_text": "",
+    "feature_long_devices_title": "",
+    "feature_long_dict_text": "",
+    "feature_long_dict_title": "",
+    "feature_long_draw_text": "",
+    "feature_long_draw_title": "",
+    "feature_long_texts_text": "",
+    "feature_long_texts_title": "",
+    "feature_short__text": "",
+    "feature_short__title": "",
+    "feature_short_clipboard_text": "",
+    "feature_short_clipboard_title": "",
+    "feature_short_community_text": "",
+    "feature_short_community_title": "",
+    "feature_short_devices_text": "",
+    "feature_short_devices_title": "",
+    "feature_short_dict_text": "",
+    "feature_short_dict_title": "",
+    "feature_short_draw_text": "",
+    "feature_short_draw_title": "",
+    "feature_short_texts_text": "",
+    "feature_short_texts_title": "",
+    "landing_button": "",
+    "landing_subtitle": "",
+    "landing_title": "",
+    "support_text": "",
+    "support_title": "",
+    "users_1_name": "",
+    "users_1_review": "",
+    "users_2_name": "",
+    "users_2_review": "",
+    "users_3_name": "",
+    "users_3_review": "",
+    "users_4_name": "",
+    "users_4_review": "",
+    "users_5_name": "",
+    "users_5_review": "",
+    "users_6_name": "",
+    "users_6_review": "",
+    "users_7_name": "",
+    "users_7_review": "",
+    "users_title": ""
+  },
   "WebviewScreen": {
     "loading": "Buscando",
     "title": "Webview"
@@ -452,6 +534,7 @@
     "delete": "Borrar",
     "delete_warning": "Advertencia",
     "delete_warning_desc": "Esto borrar\u00e1 permanentemente esta lista de palabras, no se puede deshacer.",
+    "divider": "/",
     "drag_to_scroll": "Arrastre aqu\u00ed para desplazarse",
     "export_csv": "Exportar CSV",
     "export_csv_progress": "Creando CSV, por favor espere...",
@@ -463,7 +546,6 @@
     "new_list": "Nueva lista",
     "no_entries": "No hay entradas en esta lista de palabras",
     "node_hint_text": "Nombre",
-    "of": "de",
     "ok": "ok",
     "page": "p\u00e1gina",
     "rename": "Cambie el nombre de",
@@ -478,5 +560,10 @@
     "tutorial_create_list": "Con este bot\u00f3n puede crear una nueva lista de palabras. Mediante el bot\u00f3n de men\u00fa situado a la derecha de esta lista, tambi\u00e9n puede exportar su lista a diferentes formatos.",
     "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambi\u00e9n es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de b\u00fasqueda, etc..",
     "tutorial_list": "Esto es una lista de palabras. Pulsando sobre ella puedes ver su contenido."
+  },
+  "YoutubeScreen": {
+    "title": "YouTube",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "Bienvenido a la pantalla de YouTube"
   }
 }

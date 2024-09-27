@@ -19,8 +19,8 @@
 // Flutter imports:
 import 'package:flutter/widgets.dart';
 
-class DaKanjiIcons {
-  DaKanjiIcons._();
+class DaKanjiCustomIcons {
+  DaKanjiCustomIcons._();
 
   static const _kFontFam = 'DaKanjiIcons';
   static const String? _kFontPkg = null;

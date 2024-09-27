@@ -1,6 +1,11 @@
 
 
 // Package imports:
+import 'package:da_kanji_mobile/entities/show_cases/ocr_screen_tutorial.dart';
+import 'package:da_kanji_mobile/entities/show_cases/reading_screen_tutorial.dart';
+import 'package:da_kanji_mobile/entities/show_cases/video_screen_tutorial.dart';
+import 'package:da_kanji_mobile/entities/show_cases/webbrowser_screen_tutorial.dart';
+import 'package:da_kanji_mobile/entities/show_cases/youtube_screen_tutorial.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
@@ -20,6 +25,16 @@ class Tutorials{
   late DrawScreenTutorial drawScreenTutorial;
   /// the dictionary screen tutorial
   late DictionaryScreenTutorial dictionaryScreenTutorial;
+  /// the ocr screen tutorial
+  late OcrScreenTutorial ocrScreenTutorial;
+  /// the reading screen tutorial
+  late ReadingScreenTutorial readingScreenTutorial;
+  /// the video screen tutorial
+  late VideoScreenTutorial videoScreenTutorial;
+  /// the webbrowser screen tutorial
+  late WebbrowserScreenTutorial webbrowserScreenTutorial;
+  /// the youtube screen tutorial
+  late YoutubeScreenTutorial youtubeScreenTutorial;
   /// the text screen tutorial
   late TextScreenTutorial textScreenTutorial;
   /// the dojg screen tutorial

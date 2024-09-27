@@ -106,7 +106,7 @@
     "word_tab": "Wort",
     "word_tab_menu_add_to_list": "Zu Liste hinzuf\u00fcgen",
     "word_tab_menu_quick_add_to_list": "Schnell zur Liste hinzuf\u00fcgen",
-    "word_tab_menu_quick_add_to_list_no_lists_selected": "Es wurden keine Listen f\u00fcr das schnelle hinzuf[gen ausgew\u00e4hlt. Bitte tun Sie dies in den Einstellungen.",
+    "word_tab_menu_quick_add_to_list_no_lists_selected": "Es wurden keine Listen f\u00fcr das schnell Hinzuf\u00fcgen ausgew\u00e4hlt. Bitte tun Sie dies in den Einstellungen.",
     "word_tab_menu_quick_send_to_anki": "Schnelles Senden an Anki",
     "word_tab_menu_send_to_anki": "An Anki senden",
     "word_tab_menu_share": "Teilen",
@@ -190,11 +190,6 @@
     "new_versions_available_text": "Es sind {NEW_VERSIONS} neue Versionen von DaKanji verf\u00fcgbar!",
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
-  },
-  "ImmersionScreen": {
-    "title": "Immersion",
-    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "Willkommen auf dem Immersionsbildschirm!"
   },
   "KanaTableScreen": {
     "title": "Kana Tabelle",
@@ -296,6 +291,11 @@
     "text_selection_title": "Buttons zur Textauswahl",
     "title": "Handbuch"
   },
+  "OcrScreen": {
+    "title": "OCR",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm der OCR-Tabelle!"
+  },
   "OnBoarding": {
     "Onboarding_1_text": "Male es mit deinem Finger und DaKanji zeigt dir das Zeichen",
     "Onboarding_1_title": "Du kennst ein Kanji nicht?",
@@ -305,6 +305,11 @@
     "Onboarding_3_title": "Du wei\u00dft nicht wie man einen Satz liest?",
     "Onboarding_4_text": "DaKanji verf\u00fcgt \u00fcber Kanji- und Kana-Tabellen, damit Sie sie effizient lernen k\u00f6nnen.",
     "Onboarding_4_title": "Kanji und Kana lernen"
+  },
+  "ReadingScreen": {
+    "title": "Lesen",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Lesebildschirm!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "W\u00f6rterbuchdateien zur\u00fccksetzen",
@@ -399,6 +404,24 @@
     "word_lists_screensaver_show": "Bildschirmschoner: anzeigen",
     "word_lists_screensaver_word_lists_to_use": "Bildschirmschoner: Wortlisten die benutuzt werden"
   },
+  "Stores": {
+    "long_description": "",
+    "mockup_10": "",
+    "mockup_1_1": "",
+    "mockup_1_2": "",
+    "mockup_2_1": "",
+    "mockup_2_2": "",
+    "mockup_3": "",
+    "mockup_4_1": "",
+    "mockup_4_2": "",
+    "mockup_5": "",
+    "mockup_6": "",
+    "mockup_7": "",
+    "mockup_8": "",
+    "mockup_9": "",
+    "short_description": "",
+    "shortest_description": ""
+  },
   "TextScreen": {
     "copy_button_copy": "Kopiert:",
     "input_text_here": "Text hier eingeben...",
@@ -435,6 +458,65 @@
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
     "tutorial_begin_title": ""
   },
+  "VideoScreen": {
+    "title": "Video",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Videobildschirm!"
+  },
+  "WebbrowserScreen": {
+    "title": "Webbrowser",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Webbrowser-Bildschirm!"
+  },
+  "Webpage": {
+    "download_stats_downloads": "",
+    "download_stats_reviews": "",
+    "download_text": "",
+    "feature_long_clipboard_text": "",
+    "feature_long_clipboard_title": "",
+    "feature_long_devices_text": "",
+    "feature_long_devices_title": "",
+    "feature_long_dict_text": "",
+    "feature_long_dict_title": "",
+    "feature_long_draw_text": "",
+    "feature_long_draw_title": "",
+    "feature_long_texts_text": "",
+    "feature_long_texts_title": "",
+    "feature_short__text": "",
+    "feature_short__title": "",
+    "feature_short_clipboard_text": "",
+    "feature_short_clipboard_title": "",
+    "feature_short_community_text": "",
+    "feature_short_community_title": "",
+    "feature_short_devices_text": "",
+    "feature_short_devices_title": "",
+    "feature_short_dict_text": "",
+    "feature_short_dict_title": "",
+    "feature_short_draw_text": "",
+    "feature_short_draw_title": "",
+    "feature_short_texts_text": "",
+    "feature_short_texts_title": "",
+    "landing_button": "",
+    "landing_subtitle": "",
+    "landing_title": "",
+    "support_text": "",
+    "support_title": "",
+    "users_1_name": "",
+    "users_1_review": "",
+    "users_2_name": "",
+    "users_2_review": "",
+    "users_3_name": "",
+    "users_3_review": "",
+    "users_4_name": "",
+    "users_4_review": "",
+    "users_5_name": "",
+    "users_5_review": "",
+    "users_6_name": "",
+    "users_6_review": "",
+    "users_7_name": "",
+    "users_7_review": "",
+    "users_title": ""
+  },
   "WebviewScreen": {
     "loading": "Suche",
     "title": "Webview"
@@ -452,6 +534,7 @@
     "delete": "L\u00f6schen",
     "delete_warning": "Warnung",
     "delete_warning_desc": "Dadurch wird diese Wortliste endg\u00fcltig gel\u00f6scht, das kann nicht r\u00fcckg\u00e4ngig gemacht werden.",
+    "divider": "/",
     "drag_to_scroll": "Ziehen hier, um zu scrollen",
     "export_csv": "CSV exportieren",
     "export_csv_progress": "Erstelle CSV, bitte warten...",
@@ -463,7 +546,6 @@
     "new_list": "Neue Liste",
     "no_entries": "Keine Eintr\u00e4ge in dieser Liste",
     "node_hint_text": "Name",
-    "of": "von",
     "ok": "ok",
     "page": "Seite",
     "rename": "Umbennen",
@@ -478,5 +560,10 @@
     "tutorial_create_list": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie eine neue Wortliste erstellen. Mit dem Men\u00fc-Button auf der rechten Seite dieser Liste k\u00f6nnen Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie k\u00f6nnen andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enth\u00e4lt einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
     "tutorial_list": "Dies ist eine Wortliste. Wenn Sie auf sie tippen, k\u00f6nnen Sie ihren Inhalt sehen."
+  },
+  "YoutubeScreen": {
+    "title": "YouTube",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem YouTube-Bildschirm!"
   }
 }

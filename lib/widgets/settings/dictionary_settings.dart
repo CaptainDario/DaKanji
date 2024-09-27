@@ -1,6 +1,7 @@
 // Dart imports:
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -55,7 +56,7 @@ class _DictionarySettingsState extends State<DictionarySettings> {
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
       LocaleKeys.DictionaryScreen_title.tr(),
-      Icons.book,
+      DaKanjiIcons.dictionary,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // Language selection

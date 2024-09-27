@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,12 +15,12 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 
-class KanjiMapSettings extends StatefulWidget {
+class VideoSettings extends StatefulWidget {
     
   /// DaKanji settings object
   final Settings settings;
 
-  const KanjiMapSettings(
+  const VideoSettings(
     this.settings,
     {
       super.key
@@ -27,15 +28,15 @@ class KanjiMapSettings extends StatefulWidget {
   );
 
   @override
-  State<KanjiMapSettings> createState() => _KanjiMapSettingsState();
+  State<VideoSettings> createState() => _VideoSettingsState();
 }
 
-class _KanjiMapSettingsState extends State<KanjiMapSettings> {
+class _VideoSettingsState extends State<VideoSettings> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
-      LocaleKeys.KanjiMapScreen_title.tr(),
-      Icons.map,
+      LocaleKeys.VideoScreen_title.tr(),
+      DaKanjiIcons.video,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // reshow tutorial
@@ -43,7 +44,7 @@ class _KanjiMapSettingsState extends State<KanjiMapSettings> {
           text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
           icon: Icons.replay_outlined,
           onButtonPressed: () {
-            GetIt.I<UserData>().showTutorialKanjiMap = true;
+            GetIt.I<UserData>().showTutorialVideo = true;
             widget.settings.save();
             Phoenix.rebirth(context);
           },

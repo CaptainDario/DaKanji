@@ -21,6 +21,31 @@ void onTutorialStep (int index) async {
     GetIt.I<UserData>().showTutorialDictionary = false;
     await GetIt.I<UserData>().save();
   }
+  else if(index == GetIt.I<Tutorials>().ocrScreenTutorial.indexes!.last){
+    debugPrint("OcrScreen tutorial done, saving...");
+    GetIt.I<UserData>().showTutorialOcr = false;
+    await GetIt.I<UserData>().save();
+  }
+  else if(index == GetIt.I<Tutorials>().readingScreenTutorial.indexes!.last){
+    debugPrint("ReadingScreen tutorial done, saving...");
+    GetIt.I<UserData>().showTutorialReading = false;
+    await GetIt.I<UserData>().save();
+  }
+  else if(index == GetIt.I<Tutorials>().videoScreenTutorial.indexes!.last){
+    debugPrint("VideoScreen tutorial done, saving...");
+    GetIt.I<UserData>().showTutorialVideo = false;
+    await GetIt.I<UserData>().save();
+  }
+  else if(index == GetIt.I<Tutorials>().webbrowserScreenTutorial.indexes!.last){
+    debugPrint("WebbrowserScreen tutorial done, saving...");
+    GetIt.I<UserData>().showTutorialWebbrowser = false;
+    await GetIt.I<UserData>().save();
+  }
+  else if(index == GetIt.I<Tutorials>().youtubeScreenTutorial.indexes!.last){
+    debugPrint("YoutubeScreen tutorial done, saving...");
+    GetIt.I<UserData>().showTutorialYoutube = false;
+    await GetIt.I<UserData>().save();
+  }
   else if(index == GetIt.I<Tutorials>().textScreenTutorial.indexes!.last){
     debugPrint("TextScreen tutorial done, saving...");
     GetIt.I<UserData>().showTutorialText = false;

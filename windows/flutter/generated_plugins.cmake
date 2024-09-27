@@ -5,11 +5,13 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   clipboard_watcher
+  dynamic_color
   flutter_inappwebview_windows
   fvp
   irondash_engine_context
   isar_flutter_libs
   mecab_dart
+  permission_handler_windows
   printing
   rive_common
   screen_retriever

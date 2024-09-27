@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -153,7 +154,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
-              icon: Icons.settings,
+              icon: DaKanjiIcons.settings,
               openCloseDial: isDialOpen,
               activeIcon: Icons.close,
               iconTheme: const IconThemeData(color: Colors.white),

@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -40,7 +41,7 @@ class _DrawingSettingsState extends State<DrawingSettings> {
   Widget build(BuildContext context) {
     return ResponsiveHeaderTile(
       LocaleKeys.SettingsScreen_draw_title.tr(),
-      Icons.brush,
+      DaKanjiIcons.drawing,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // Dictionary Options
