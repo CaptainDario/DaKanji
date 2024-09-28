@@ -244,6 +244,13 @@ flutter:
     - assets/images/daapplab/logo_design_2_transparent.svg
     # draw screen
     - assets/images/ui/kanji_drawing_aid.png
+    # webbrowser
+    - assets/images/bing_logo.png
+    - assets/images/duckduckgo_logo.png
+    - assets/images/ecosia_logo.png
+    - assets/images/google_logo.png
+    - assets/images/yahoo_logo.png
+    - assets/icons/flutter_browser_icon.png
     # dictionary screen
     - assets/dict/krad.zip
     - assets/dict/radk.zip

@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_browser/models/browser_model.dart';
+import 'package:flutter_browser/models/webview_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -66,59 +69,79 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: true,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      navigatorKey: g_NavigatorKey,
-      navigatorObservers: [
-        SentryNavigatorObserver(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => WebViewModel(),
+        ),
+        ChangeNotifierProxyProvider<WebViewModel, BrowserModel>(
+          update: (context, webViewModel, browserModel) {
+            browserModel!.setCurrentWebViewModel(webViewModel);
+            return browserModel;
+          },
+          create: (BuildContext context) => BrowserModel(),
+        ),
       ],
-      
-      onGenerateRoute: (settings) {
-        PageRouteBuilder switchScreen (Widget screen) =>
-          PageRouteBuilder(
-            pageBuilder: (_, __, ___) {
-                // reload the tutorials
-                GetIt.I<Tutorials>().reload();
-
-                return Onboarding(
-                  globalOnboarding: true,
-                  autoSizeTexts: true,
-                  steps: GetIt.I<Tutorials>().getSteps(),
-                  onChanged: onTutorialStep,
-                  child: screen,
-                );
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => WebViewModel(),
+          ),
+          ChangeNotifierProxyProvider<WebViewModel, BrowserModel>(
+            update: (context, webViewModel, browserModel) {
+              browserModel!.setCurrentWebViewModel(webViewModel);
+              return browserModel;
             },
-            settings: settings,
-            transitionsBuilder: (_, a, __, c) =>
-              FadeTransition(opacity: a, child: c)
-          );
-
-        // check type and extract arguments
-        NavigationArguments args = NavigationArguments(false);
-
-        if((settings.arguments is NavigationArguments)){
-          args = settings.arguments as NavigationArguments;
-        }
-
-        return switchScreen(getWidgetFromScreen(settings.name, args));
+            create: (BuildContext context) => BrowserModel(),
+          ),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: true,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          navigatorKey: g_NavigatorKey,
+          navigatorObservers: [
+            SentryNavigatorObserver(),
+          ],
+          onGenerateRoute: (settings) {
+            PageRouteBuilder switchScreen (Widget screen) =>
+              PageRouteBuilder(
+                pageBuilder: (_, __, ___) {
+                    // reload the tutorials
+                    GetIt.I<Tutorials>().reload();
         
-      },
-
-      title: g_AppTitle,
-
-      // themes
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: GetIt.I<Settings>().misc.selectedThemeMode(),
-
-      //screens
-      home: const DaKanjiSplash(),
-      //home: TestScreen()
-      initialRoute: "/home",
-
+                    return Onboarding(
+                      globalOnboarding: true,
+                      autoSizeTexts: true,
+                      steps: GetIt.I<Tutorials>().getSteps(),
+                      onChanged: onTutorialStep,
+                      child: screen,
+                    );
+                },
+                settings: settings,
+                transitionsBuilder: (_, a, __, c) =>
+                  FadeTransition(opacity: a, child: c)
+              );
+        
+            // check type and extract arguments
+            NavigationArguments args = NavigationArguments(false);
+        
+            if((settings.arguments is NavigationArguments)){
+              args = settings.arguments as NavigationArguments;
+            }
+        
+            return switchScreen(getWidgetFromScreen(settings.name, args));
+            
+          },
+          title: g_AppTitle,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: GetIt.I<Settings>().misc.selectedThemeMode(),
+          initialRoute: "/home",
+          home: const DaKanjiSplash(),
+        ),
+      ),
     );
   }
 }
