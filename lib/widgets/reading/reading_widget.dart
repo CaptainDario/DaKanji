@@ -1,5 +1,6 @@
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/widgets/reading/reader.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
@@ -28,7 +29,6 @@ class ReadingWidget extends StatefulWidget {
 
 class _ReadingWidgetState extends State<ReadingWidget> {
 
-
   @override
   void initState() {
     super.initState();
@@ -56,6 +56,6 @@ class _ReadingWidgetState extends State<ReadingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Reading");
+    return Reader();
   }
 }

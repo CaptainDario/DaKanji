@@ -92,6 +92,7 @@ dependencies:
   collection: 1.19.0
   dart_style: 2.3.7
   archive: 3.6.1
+  local_assets_server: 2.0.2+12
   flutter_ankidroid:
     path: /Users/darioklepoch/dev/DaKanji/flutter_ankidroid
     #git:
@@ -251,6 +252,9 @@ flutter:
     - assets/images/google_logo.png
     - assets/images/yahoo_logo.png
     - assets/icons/flutter_browser_icon.png
+    # reader
+    - assets/web/reader/foliate-js/
+    - assets/web/reader/foliate-js/ui/
     # dictionary screen
     - assets/dict/krad.zip
     - assets/dict/radk.zip
