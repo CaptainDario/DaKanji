@@ -65,7 +65,7 @@ class _WebbrowserWidgetState extends State<WebbrowserWidget> {
           settings: WebViewEnvironmentSettings(userDataFolder: 'flutter_browser_app'));
     }
 
-    WEBBROWSER_INITIALIZED = true;
+    g_WEBBROWSER_INITIALIZED = true;
     return true;
 
   }
@@ -95,7 +95,7 @@ class _WebbrowserWidgetState extends State<WebbrowserWidget> {
       future: initAsync(),
       builder: (context, snapshot) {
 
-        if(!WEBBROWSER_INITIALIZED) return const SizedBox();
+        if(!g_WEBBROWSER_INITIALIZED) return const SizedBox();
 
         return const Browser();
       }
