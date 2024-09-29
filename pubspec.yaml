@@ -71,6 +71,10 @@ dependencies:
   app_links: 6.3.2                 # android, iOS, web, macos, windows (msix), linux
 
   fvp: 0.26.1
+  chewie: 1.8.5
+  video_player: 2.9.1
+  flutter_subtitle: 0.0.5
+
   flutter_widget_from_html_core: 0.15.2
   tflite_flutter: #0.10.4
     git:
