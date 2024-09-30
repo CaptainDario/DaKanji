@@ -606,9 +606,11 @@ packages:
   flutter_ankidroid:
     dependency: "direct main"
     description:
-      path: "/Users/darioklepoch/dev/DaKanji/flutter_ankidroid"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: b6c7188f050a2da445cdf60fbdb414ccc96ca528
+      url: "https://github.com/CaptainDario/flutter_ankidroid"
+    source: git
     version: "0.8.1"
   flutter_browser:
     dependency: "direct main"
@@ -1779,10 +1781,10 @@ packages:
     dependency: "direct main"
     description:
       name: super_clipboard
-      sha256: "74098001413e075cc53dee72b68c32eaffc10709df41806800393abaa6dac9d5"
+      sha256: cfeb142360fac67e0da1ca339accb892eb790c6528a218a008eef1709d96ed0f
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.19"
+    version: "0.8.22"
   super_native_extensions:
     dependency: transitive
     description:

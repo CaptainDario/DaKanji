@@ -88,6 +88,10 @@ linux/flutter/ephemeral/**
 # ios build files
 ios/build/**
 
+# android build files
+android/app/build/intermediates
+android/app/build/outputs
+
 # flatpak
 build-dir
 repo
