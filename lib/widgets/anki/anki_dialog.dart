@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
+import 'package:da_kanji_mobile/widgets/settings/anki_settings.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -65,14 +67,27 @@ AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
 /// Adds the given note to anki
 void addToAnki(JMdict entry, BuildContext context) async {
 
+  SettingsAnki ankiSettings = GetIt.I<Settings>().anki;
+
+  List<String> langsToInclude = ankiSettings.langsToInclude(
+      GetIt.I<Settings>().dictionary.selectedTranslationLanguages
+    );
+
   AnkiNote note = AnkiNote.fromJMDict(
     GetIt.I<Settings>().anki.defaultDeck!,
     entry,
-    langsToInclude: GetIt.I<Settings>().anki.langsToInclude(
-      GetIt.I<Settings>().dictionary.selectedTranslationLanguages
-    ),
-    translationsPerLang: GetIt.I<Settings>().anki.noTranslations
+    langsToInclude: langsToInclude,
+    translationsPerLang: ankiSettings.noTranslations,
+    includeExample: true
   );
+
+  // set example sentence
+  await note.setExamplesFromDict(entry,
+    langsToInclude: langsToInclude,
+    includeTranslations: ankiSettings.includeExampleTranslations,
+    numberOfExamples: ankiSettings.noExamples);
+
+  // add the note to anki
   bool added = await GetIt.I<Anki>().addNote(note);
 
   if(!added){

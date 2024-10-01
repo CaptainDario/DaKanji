@@ -131,6 +131,34 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
               widget.settings.save();
             },
           ),
+        // how many examples should be included
+        ResponsiveSliderTile(
+          text: "Number of examples",
+          value: widget.settings.anki.noExamples.toDouble(),
+          min: 0,
+          max: 5,
+          divisions: 5,
+          showLabelAsInt: true,
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+          onChanged: (value) {
+            setState(() {
+              widget.settings.anki.noExamples = value.toInt();
+              widget.settings.save();
+            });
+          },
+        ),
+        // Should the example's translations be included
+        ResponsiveCheckBoxTile(
+          text: "Include example translations",
+          value: widget.settings.anki.includeExampleTranslations,
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.anki.includeExampleTranslations = value;
+              widget.settings.save();
+            });
+          },
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+        ),
         // include google image (disabled for now)
         if(false)
           // ignore: dead_code

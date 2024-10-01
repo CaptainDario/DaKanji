@@ -1,7 +1,12 @@
 
 # DaKanji - changelog
 
-## v3.4.5 - ワードリストと暗記改善 (14.09.2024)
+## v3.4.5 - ワードリストと暗記改善 (14.10.2024)
+
+Added:
+
+- Anki
+  - Examples sentences can be added to notes
 
 Improvements:
 
@@ -16,6 +21,8 @@ Fixed:
 - Windows drawing recognition does not work
 - Quick add to word list selection is always empty
 - DoJG: Zooming and scrolling using the mouse wheel conflicts each other
+- Anki
+  - The order of languages when sending to Anki has been ignored
 
 -------------------------------------------------------------------------
 

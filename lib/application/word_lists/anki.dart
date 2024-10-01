@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Package imports:
+import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
@@ -24,13 +25,21 @@ Future sendListToAnkiFromWordListNode(TreeNode<WordListsData> node) async {
     .langsToInclude(GetIt.I<Settings>().dictionary.selectedTranslationLanguages);
 
   // find all elements from the word list in the database
-  List<AnkiNote> notes = (await wordListEntriesForExport(entryIDs, langsToInclude))
-    .map((e) => AnkiNote.fromJMDict(
-      GetIt.I<Settings>().anki.defaultDeck!, e,
+  List<JMdict> jmdicts = (await wordListEntriesForExport(entryIDs, langsToInclude));
+  List<AnkiNote> notes = [];
+  for (var jmdict in jmdicts) {
+    AnkiNote note = AnkiNote.fromJMDict(
+      GetIt.I<Settings>().anki.defaultDeck!, jmdict,
       langsToInclude: langsToInclude,
-      translationsPerLang: GetIt.I<Settings>().anki.noTranslations
-    ))
-    .toList();
+      translationsPerLang: GetIt.I<Settings>().anki.noTranslations,
+      includeExample: true
+    );
+    await note.setExamplesFromDict(jmdict,
+      langsToInclude: langsToInclude,
+      includeTranslations: GetIt.I<Settings>().anki.includeExampleTranslations,
+      numberOfExamples: GetIt.I<Settings>().anki.noExamples);
+    notes.add(note);
+  }
 
   GetIt.I<Anki>().addNotes(notes);
 
