@@ -13,7 +13,7 @@ import 'package:tuple/tuple.dart';
 /// 2.  sort inside each category based on <br/>
 ///   1. word frequency
 List<List<JMdict>> sortJmdictList(
-  List<JMdict> entries, String queryText, String? queryKana, List<String> languages,
+  List<JMdict> entries, String query, String? queryKana, List<String> languages,
   bool convertToHiragana
 ){
 
@@ -27,6 +27,8 @@ List<List<JMdict>> sortJmdictList(
   /// how many characters are the query and the matched result apart
   List<List<int>> lenDifferences = [[], [], []];
 
+  String queryText = queryKana ?? query;
+
   // if no wildcard is used, iterate over the entries and create a ranking for each
   if(!queryText.contains(RegExp(r"\?|\*"))){
     // iterate over the entries and create a ranking for each
@@ -36,7 +38,7 @@ List<List<JMdict>> sortJmdictList(
       
       // READING matched
       if(ranked.item1 == -1) {
-        ranked = rankMatches([entry.hiraganas], queryKana ?? queryText);
+        ranked = rankMatches([entry.hiraganas], queryText);
       }
       
       // MEANING matched

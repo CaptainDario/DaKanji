@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
-import 'package:da_kanji_mobile/widgets/settings/anki_settings.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:

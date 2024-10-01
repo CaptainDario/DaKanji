@@ -181,7 +181,7 @@ Future<void> _searchInIsar(SendPort p) async {
 
       // Send the result to the main isolate.
       p.send(searchResults);
-      debugPrint("Query: $query, filters: $filters, results: ${searchResults.length}, time: ${s.elapsed}");
+      debugPrint("Query: $query, QueryKana: $queryKana filters: $filters, results: ${searchResults.length}, time: ${s.elapsed}");
     }    
   }
 

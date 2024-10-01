@@ -44,7 +44,7 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
       // allow kanji / hiragana matches without wildcard
       q.optional(!containsWildcard, (q) => 
         q.group((q) => 
-          q.kanjiIndexesElementStartsWith(query)
+          q.kanjiIndexesElementStartsWith(kanaizedQuery ?? query)
             .or()
           .hiraganasElementStartsWith(kanaizedQuery ?? query)
         )
@@ -53,7 +53,7 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
       // allow kanji / hiragana matches with wildcard  
       .optional(containsWildcard, (q) => 
         q.group((q) => 
-          q.kanjisElementMatches(query)
+          q.kanjisElementMatches(kanaizedQuery ?? query)
             .or()
           .hiraganasElementMatches(kanaizedQuery ?? query)
         )
@@ -93,7 +93,7 @@ QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
   Isar isar, int idRangeStart, int idRangeEnd, String query, String? kanaizedQuery){
 
   return isar.jmdict.where()
-    .kanjiIndexesElementStartsWith(query)
+    .kanjiIndexesElementStartsWith(kanaizedQuery ?? query)
       .or()
     .hiraganasElementStartsWith(kanaizedQuery ?? query)
       .or()
@@ -111,7 +111,7 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> wildcardQuery(
       .idBetween(idRangeStart, idRangeEnd)
     .filter()
 
-      .kanjisElementMatches(query)
+      .kanjisElementMatches(kanaizedQuery ?? query)
         .or()
       .hiraganasElementMatches(kanaizedQuery ?? query)
         .or()
