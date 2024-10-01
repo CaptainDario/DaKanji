@@ -189,9 +189,7 @@ class _WordListsState extends State<WordLists> {
             // apply the initial selection
             if(!initialSelectionApplied && widget.selectedItems != null){
               checkedEntries = childrenDFS
-                .map((e) => widget.selectedItems!.contains(e.id)
-                  ? true
-                  : false)
+                .map((e) => widget.selectedItems!.contains(e.id) ? true : false)
                 .toList();
               initialSelectionApplied = true;
             }
