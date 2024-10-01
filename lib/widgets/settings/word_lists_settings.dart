@@ -78,7 +78,12 @@ class _WordListSettingsState extends State<WordListSettings> {
           text: "${LocaleKeys.SettingsScreen_word_lists_quick_add_lists.tr()} ${widget.settings.wordLists.quickAddListIDs.length}",
           icon: Icons.perm_device_information_outlined,
           onButtonPressed: () async {
+
+            List<int> selectedItems = widget.settings.wordLists.quickAddListIDs;
+
             await showWordListSelectionDialog(context,
+              wordlists: GetIt.I<WordListsSQLDatabase>(),
+              selectedItems: selectedItems,
               onSelectionConfirmed: (selection) async {
                 
                 List<int> listsToAddTo = selection
