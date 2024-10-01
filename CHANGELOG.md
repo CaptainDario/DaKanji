@@ -5,11 +5,17 @@
 
 Improvements:
 
-- Images and DeepL on macos
+- Dictionary
+  - Image search and DeepL supported on MacOS and Windows
+  - Back navigation clears search and resets current entry
+- Kana table: playback on android does not cut off
+- Anki: setting to decide how adding a duplicate should be handled
 
 Fixed:
 
 - Windows drawing recognition does not work
+- Quick add to word list selection is always empty
+- DoJG: Zooming and scrolling using the mouse wheel conflicts each other
 
 -------------------------------------------------------------------------
 
