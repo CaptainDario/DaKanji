@@ -8,6 +8,7 @@ import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_subtitle/flutter_subtitle.dart' hide Subtitle;
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_dart/mecab_dart.dart';
@@ -62,6 +63,9 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
   List<String> mecabReadings = const [];
   /// the controller to manipulate the CustomSelectableText
   CustomSelectableTextController? customSelectableTextController;
+
+  Offset subtitleOffset = Offset.zero;
+
 
 
 
@@ -158,24 +162,50 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
                   children: [
                     child!,
                     Positioned(
-                      bottom: 75,
-                      left: MediaQuery.of(context).size.width / 4,
+                      bottom: 75 - subtitleOffset.dy,
+                      left: MediaQuery.of(context).size.width / 4 + subtitleOffset.dx,
+                      width: MediaQuery.of(context).size.width / 2 + subtitleSize.width,
                       child: ValueListenableBuilder<List<String>>(
                         valueListenable: mecabSurfaces,
                         builder: (BuildContext context, List<String> value, Widget? child) {
                           return Container(
-                            width: MediaQuery.of(context).size.width / 2,
-                            color: Colors.white,
-                            child: CustomSelectableText(
-                              words: value,
-                              rubys: mecabReadings,
-                              init: (controller) => customSelectableTextController = controller,
-                              textColor: Colors.black,
-                              onSelectionChange: (p0) {
-                                currentSelection.value = currentSubtitle.substring(
-                                  p0.start, p0.end);
-                                popupAnimationController.forward();
-                              },
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20), // Rounded corners
+                            ),
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CustomSelectableText(
+                                    words: value,
+                                    rubys: mecabReadings,
+                                    init: (controller) => customSelectableTextController = controller,
+                                    textColor: Colors.black,
+                                    onSelectionChange: (p0) {
+                                      currentSelection.value = currentSubtitle
+                                        .replaceAll(" ", "")
+                                        .substring(p0.baseOffset, p0.extentOffset);
+                                      popupAnimationController.forward();
+                                    },
+                                  ),
+                                ),
+                                // move handle
+                                Positioned(
+                                  left: 0,
+                                  top: 0,
+                                  child: Listener(
+                                    onPointerMove: (event) {
+                                      subtitleOffset += event.delta;
+                                      setState(() {});
+                                    },
+                                    child: SvgPicture.asset(
+                                      "assets/icons/corner_resize.svg",
+                                      colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn)
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           );
                         },
