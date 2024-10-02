@@ -84,13 +84,14 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
   @override
   void didUpdateWidget(covariant TextAnalysisPopup oldWidget) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      updateWebview();
+      await updateWebview();
     });
     super.didUpdateWidget(oldWidget);
   }
 
-  void updateWebview() async {
+  Future updateWebview() async {
     if(inAppWebViewController != null && lastWebViewLookup != widget.text) {
+      print("$g_deepLUrl${widget.text}");
       await inAppWebViewController!.loadUrl(
         urlRequest: URLRequest(
           url: WebUri.uri(Uri.parse("$g_deepLUrl${widget.text}"))
@@ -170,8 +171,19 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                         if(g_webViewSupported)
                           Card(
                             child: InAppWebView(
+                              initialUrlRequest: (
+                                URLRequest(
+                                  url: WebUri("$g_deepLUrl${widget.text}")  
+                                )
+                              ),
                               onWebViewCreated: (controller) {
                                 inAppWebViewController = controller;
+
+                                inAppWebViewController!.loadUrl(
+                                  urlRequest: URLRequest(
+                                    url: WebUri(Uri.parse("$g_deepLUrl${widget.text}").toString())
+                                  )
+                                );
                               },
                               gestureRecognizers: {
                                 Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),

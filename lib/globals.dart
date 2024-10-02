@@ -193,7 +193,7 @@ const g_forvo = "https://forvo.com/word/";
 /// URL to search for an images on google image search
 const g_GoogleImgSearchUrl = "https://www.google.com/search?tbm=isch&q=";
 /// url to look up a word in deepL 
-const g_deepLUrl = "https://www.deepl.com/translator#jp/en/";
+const g_deepLUrl = "https://www.deepl.com/en/translator#ja/en-us/";
 /// url to open a kanji in thekanjimap.com
 const g_theKanjiMapUrl = "https://thekanjimap.com/";
 /// url to open a kanji in japanesegraph.com
