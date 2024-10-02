@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -143,7 +144,12 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         setState(() {
           inputController.text = g_SampleText;
           inputText = g_SampleText;
-          processText(inputText);
+          final res = processText(inputText,
+            GetIt.I<Mecab>(),
+            GetIt.I<KanaKit>());
+          mecabReadings = res.item1;
+          mecabSurfaces = res.item2;
+          mecabPOS = res.item3;
         }); 
       }
 
@@ -152,7 +158,12 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         setState(() {
           inputController.text = widget.initialText!;
           inputText = widget.initialText!;
-          processText(inputText);
+          final res = processText(inputText,
+            GetIt.I<Mecab>(),
+            GetIt.I<KanaKit>());
+          mecabReadings = res.item1;
+          mecabSurfaces = res.item2;
+          mecabPOS = res.item3;
         }); 
       }
 
@@ -270,7 +281,12 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                 onChanged: ((value) {
                                   setState(() {
                                     inputText = value;
-                                    processText(value);
+                                    final res = processText(value,
+                                      GetIt.I<Mecab>(),
+                                      GetIt.I<KanaKit>());
+                                    mecabReadings = res.item1;
+                                    mecabSurfaces = res.item2;
+                                    mecabPOS = res.item3;
                                   });
                                 }),
                               ),
@@ -401,7 +417,12 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                               customSelectableTextController.resetSelection();
                                               inputController.text = clipboardString;
                                               inputText = clipboardString;
-                                              processText(clipboardString);
+                                              final res = processText(clipboardString,
+                                                GetIt.I<Mecab>(),
+                                                GetIt.I<KanaKit>());
+                                              mecabReadings = res.item1;
+                                              mecabSurfaces = res.item2;
+                                              mecabPOS = res.item3;
                                             });
                                           },
                                         ),
@@ -588,44 +609,5 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     });
   }
 
-  /// Processes the given `text` with mecab. Outputs the processing result to 
-  /// mecabPOS, mecabSurfaces and mecabReadings
-  void processText(String text){
-    
-    // analyze text with mecab
-    List<TokenNode> analyzedText = GetIt.I<Mecab>().parse(text);
-    // remove EOS symbol
-    analyzedText.removeLast(); 
-
-    mecabReadings = []; mecabSurfaces = []; mecabPOS = [];
-    int txtCnt = 0;
-    for (var i = 0; i < analyzedText.length; i++) {
-      // remove furigana when: non Japanese, kana only, no reading, reading == word
-      if(!GetIt.I<KanaKit>().isJapanese(analyzedText[i].surface) ||
-        GetIt.I<KanaKit>().isKana(analyzedText[i].surface) ||
-        analyzedText[i].features.length < 8 ||
-        analyzedText[i].features[7] == analyzedText[i].surface
-      )
-      {
-        mecabReadings.add(" ");
-      }
-      else{
-        mecabReadings.add(GetIt.I<KanaKit>().toHiragana(analyzedText[i].features[7]));
-      }
-      mecabPOS.add(analyzedText[i].features.sublist(0, 4).join("-"));
-      mecabSurfaces.add(analyzedText[i].surface);
-
-      // add line breaks to mecab output
-      if(i < analyzedText.length-1 && text[txtCnt + analyzedText[i].surface.length] == "\n"){
-        while(text[txtCnt + analyzedText[i].surface.length] == "\n"){
-          mecabPOS.add("");
-          mecabSurfaces.add("\n");
-          mecabReadings.add("");
-          txtCnt += 1;
-        }
-      }
-      txtCnt += analyzedText[i].surface.length;
-    }
-  }
 }
 
