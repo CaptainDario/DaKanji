@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/dictionary/kanji_vg.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -153,9 +154,26 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
           : null,
         child: AnimatedBuilder(
           animation: switchAnimation!,
-          child: SvgPicture.string(
-              widget.colorize ? colorizedKanjiVG : widget.kanjiVGString
-            ),
+          child: Stack(
+            children: [
+              if(widget.colorize && Theme.of(context).brightness == Brightness.light)
+                Positioned.fill(
+                  child: SvgPicture.string(
+                    changeTextWidthAndColor(
+                      changeStrokeWidthAndColor(widget.kanjiVGString, 2.2, "grey"),
+                      0.7, "grey"
+                    )
+                  ),
+                ),
+              Positioned.fill(
+                child: SvgPicture.string(
+                  widget.colorize
+                    ? colorizedKanjiVG
+                    : widget.kanjiVGString
+                ),
+              ),
+            ]
+          ),
           builder: (context, child) {
             return Stack(
               children: [
@@ -214,34 +232,4 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
 
   }
 
-  /// Changes the colors of the strokes and text of the given `kanjiVGEntry`
-  /// and returns it.
-  String colorizeKanjiVG (String kanjiVGEntry) {
-
-    // convert the KanjiVG entry to a Xml doc
-    final document = XmlDocument.parse(kanjiVGEntry);
-
-    //iterate over the strokes
-    int cnt = 0, cntInc = 13;
-    for (var element in document.findAllElements("path")) {
-      element.setAttribute("stroke", "hsl($cnt, 100%, 50%)");
-      element.setAttribute("stroke-width", "2");
-
-      cnt += cntInc;
-      if(cnt > 360) cnt = 0;
-    }
-
-    // iterate over the texts
-    cnt = 0;
-    for (var element in document.findAllElements("text")) {
-      element.setAttribute("stroke", "hsl($cnt, 100%, 50%)");
-      element.setAttribute("fill", "hsl($cnt, 100%, 50%)");
-      element.setAttribute("stroke-width", "0.5");
-
-      cnt += cntInc;
-      if(cnt > 360) cnt = 0;
-    }
-
-    return document.toString();
-  }
 }

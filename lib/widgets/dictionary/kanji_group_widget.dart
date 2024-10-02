@@ -34,7 +34,7 @@ class KanjiGroupWidget extends StatefulWidget {
 class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
 
   /// graph of the KanjiVG element
-  late Graph graph;
+  Graph? graph;
   /// builder configuration for the GraphView
   late BuchheimWalkerConfiguration builder;
   /// List containing all sub SVGs of the KanjiVG entry and its order matches
@@ -60,30 +60,45 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
   }
 
   void init(){
-    graph = Graph()..isTree = true;
+    
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      graph = Graph()..isTree = true;
 
-    Tuple2 tmp = kanjiVGToGraph(widget.kanjiVG, graph);
-    kanjiVGStringList = tmp.item1;
-    kanjiVGChars = tmp.item2;
+      Tuple2 tmp = kanjiVGToGraph(
+        changeStrokeWidthAndColor(widget.kanjiVG, 2,
+          Theme.of(context).brightness == Brightness.light
+            ? "black" : "grey"),
+        graph!);
+      kanjiVGStringList = tmp.item1;
+      kanjiVGChars = tmp.item2;
 
-    builder = BuchheimWalkerConfiguration()
-      ..siblingSeparation = (10)
-      ..levelSeparation = (15)
-      ..subtreeSeparation = (30)
-      ..orientation = (BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM);
+      builder = BuchheimWalkerConfiguration()
+        ..siblingSeparation = (10)
+        ..levelSeparation = (15)
+        ..subtreeSeparation = (30)
+        ..orientation = (BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM); 
+
+      setState(() {});
+    },);
+    
   }
 
   @override
   Widget build(BuildContext context) {
+
+    if(graph == null) return Container();
+
     return Center(
       child: FittedBox(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: GraphView(
-            graph: graph,
+            graph: graph!,
             algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
             paint: Paint()
-              ..color = Colors.black
+              ..color = Theme.of(context).brightness == Brightness.light
+                ? Colors.black
+                : Colors.grey
               ..strokeWidth = 2
               ..style = PaintingStyle.stroke,
             builder: (Node node) {

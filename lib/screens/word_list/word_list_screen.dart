@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -237,7 +238,7 @@ class _WordListScreenState extends State<WordListScreen> {
                         child: Text(
                           wordListSortingTranslations[WordListSorting.values[i]]!(),
                           style: TextStyle(
-                            color: Theme.of(context).brightness == Brightness.dark
+                            color: Theme.of(g_NavigatorKey.currentContext!).brightness == Brightness.dark
                               ? Colors.white
                               : Colors.black
                           ),
