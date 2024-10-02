@@ -1,6 +1,6 @@
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
-import 'package:da_kanji_mobile/widgets/video/video_player.dart';
+import 'package:da_kanji_mobile/widgets/video/video_library.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
@@ -57,6 +57,6 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return VideoPlayer();
+    return const VideoLibrary();
   }
 }
