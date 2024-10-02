@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:math';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -16,6 +15,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
 

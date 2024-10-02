@@ -1,11 +1,6 @@
 
 
 // Package imports:
-import 'package:da_kanji_mobile/entities/show_cases/ocr_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/reading_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/video_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/webbrowser_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/youtube_screen_tutorial.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
@@ -15,8 +10,13 @@ import 'package:da_kanji_mobile/entities/show_cases/dojg_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/draw_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/kana_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/kanji_table_screen_tutorial.dart';
+import 'package:da_kanji_mobile/entities/show_cases/ocr_screen_tutorial.dart';
+import 'package:da_kanji_mobile/entities/show_cases/reading_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/text_screen_tutorial.dart';
+import 'package:da_kanji_mobile/entities/show_cases/video_screen_tutorial.dart';
+import 'package:da_kanji_mobile/entities/show_cases/webbrowser_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/word_lists_screen_tutorial.dart';
+import 'package:da_kanji_mobile/entities/show_cases/youtube_screen_tutorial.dart';
 
 class Tutorials{
 

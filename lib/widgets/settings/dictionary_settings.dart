@@ -1,7 +1,6 @@
 // Dart imports:
 
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';

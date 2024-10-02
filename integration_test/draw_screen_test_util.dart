@@ -1,6 +1,5 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
-
-
 
 final List<Offset> kuchiStrokes = [
   const Offset( 0.75,  0.75),

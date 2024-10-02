@@ -2,7 +2,6 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/dojg/dojg_search_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +17,7 @@ import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
+import 'package:da_kanji_mobile/entities/dojg/dojg_search_provider.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';

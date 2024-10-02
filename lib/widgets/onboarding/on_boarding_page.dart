@@ -12,8 +12,6 @@ import 'package:liquid_swipe/liquid_swipe.dart';
 // Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
 
-
-
 /// The widget which is used for one OnBoarding Page.
 /// 
 /// `context` should be the current `BuildContext`.

@@ -2,8 +2,6 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,8 +15,10 @@ import 'package:path/path.dart' as p;
 // Project imports:
 import 'package:da_kanji_mobile/application/app/restart.dart';
 import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';

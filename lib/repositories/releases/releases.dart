@@ -4,12 +4,12 @@ import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/releases/version.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// Checks if a new version of DaKanji is available on Github.
 /// Returns the changelog of the newest version if there is a new version,

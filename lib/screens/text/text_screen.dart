@@ -2,7 +2,6 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +16,7 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
+import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
 import 'package:da_kanji_mobile/application/text/pos.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';

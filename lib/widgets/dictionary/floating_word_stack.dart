@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:math';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,6 +13,7 @@ import 'package:isar/isar.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/dictionary/floating_word.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 /// Widget that shows downwards floating words that can be tapped and scrolled

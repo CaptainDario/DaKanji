@@ -1,9 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/settings/ocr_settings.dart';
-import 'package:da_kanji_mobile/widgets/settings/reading_settings.dart';
-import 'package:da_kanji_mobile/widgets/settings/video_settings.dart';
-import 'package:da_kanji_mobile/widgets/settings/webbrowser_settings.dart';
-import 'package:da_kanji_mobile/widgets/settings/youtube_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -23,8 +18,13 @@ import 'package:da_kanji_mobile/widgets/settings/drawing_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/kana_table_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/kanji_table_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/misc_settings.dart';
+import 'package:da_kanji_mobile/widgets/settings/ocr_settings.dart';
+import 'package:da_kanji_mobile/widgets/settings/reading_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/text_settings.dart';
+import 'package:da_kanji_mobile/widgets/settings/video_settings.dart';
+import 'package:da_kanji_mobile/widgets/settings/webbrowser_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/word_lists_settings.dart';
+import 'package:da_kanji_mobile/widgets/settings/youtube_settings.dart';
 
 /// The "settings"-screen.
 /// 

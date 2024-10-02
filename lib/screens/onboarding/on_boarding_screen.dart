@@ -18,8 +18,6 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
 import 'package:da_kanji_mobile/widgets/onboarding/on_boarding_page.dart';
 
-
-
 /// The "home"-screen
 /// 
 /// If this is the first app start or a new feature was added shows the

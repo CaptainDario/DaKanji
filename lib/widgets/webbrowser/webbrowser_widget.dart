@@ -1,14 +1,18 @@
-import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:onboarding_overlay/onboarding_overlay.dart';
+
+// Package imports:
 import 'package:flutter_browser/browser.dart';
 import 'package:flutter_browser/main.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get_it/get_it.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter/foundation.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 
 /// Have the webview variables be initialized
 bool g_WEBBROWSER_INITIALIZED = false;

@@ -5,8 +5,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:get_it/get_it.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/drawing/handle_predictions.dart';

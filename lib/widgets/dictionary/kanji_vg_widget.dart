@@ -3,14 +3,13 @@ import 'dart:math';
 import 'dart:ui';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/dictionary/kanji_vg.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:xml/xml.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/application/dictionary/kanji_vg.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/animated_kanji.dart';
 
  /// Widget that shows an animated KanjiVG entry. After the animation finished,

@@ -1,10 +1,10 @@
 // Package imports:
 import 'package:in_app_review/in_app_review.dart';
 import 'package:universal_io/io.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 /// Opens a in app review dialogue if available or otherwise
 /// opens the app in the platforms app store

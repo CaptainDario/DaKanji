@@ -1,12 +1,11 @@
+// Dart imports:
 import 'dart:io';
 
-import 'package:chewie/chewie.dart';
-import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
-import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
-import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
-import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:chewie/chewie.dart';
 import 'package:flutter_subtitle/flutter_subtitle.dart' hide Subtitle;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -14,7 +13,12 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_dart/mecab_dart.dart';
 import 'package:video_player/video_player.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
+import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
+import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
+import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
+import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 
 class VideoPlayer extends StatefulWidget {
 
@@ -164,7 +168,7 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
                     Positioned(
                       bottom: 75 - subtitleOffset.dy,
                       left: MediaQuery.of(context).size.width / 4 + subtitleOffset.dx,
-                      width: MediaQuery.of(context).size.width / 2 + subtitleSize.width,
+                      width: MediaQuery.of(context).size.width / 2,
                       child: ValueListenableBuilder<List<String>>(
                         valueListenable: mecabSurfaces,
                         builder: (BuildContext context, List<String> value, Widget? child) {

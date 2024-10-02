@@ -2,7 +2,6 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -13,6 +12,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/helper/feedback.dart';
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/entities/drawer/drawer_entries.dart';
 import 'package:da_kanji_mobile/entities/drawer/drawer_listener.dart';

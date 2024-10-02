@@ -952,10 +952,10 @@ packages:
     dependency: "direct dev"
     description:
       name: import_sorter
-      sha256: eb15738ccead84e62c31e0208ea4e3104415efcd4972b86906ca64a1187d0836
+      sha256: "0baa5ab5886183421a2da29bb377e6b19ecee7e6dd7423a26c5e599fbe303829"
       url: "https://pub.dev"
     source: hosted
-    version: "4.6.0"
+    version: "5.0.0-releasecandidate.1"
   in_app_review:
     dependency: "direct main"
     description:

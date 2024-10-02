@@ -1,11 +1,14 @@
-import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
-import 'package:da_kanji_mobile/widgets/reading/reader.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/widgets/reading/reader.dart';
 
 class ReadingWidget extends StatefulWidget {
 

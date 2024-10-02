@@ -14,8 +14,6 @@ import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 
-
-
 class DictionaryScreen extends StatefulWidget {
 
   /// was this page opened by clicking on the tab in the drawer

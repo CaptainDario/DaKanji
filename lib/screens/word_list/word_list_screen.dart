@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -20,6 +19,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/word_list/word_list_view_entry_screen.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';

@@ -1,8 +1,8 @@
 // Flutter imports:
 import "package:flutter/material.dart";
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 // Package imports:
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 

@@ -1,10 +1,14 @@
+// Dart imports:
 import 'dart:io';
 
-import 'package:da_kanji_mobile/widgets/video/video_player.dart';
-import 'package:file_picker/file_picker.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:file_picker/file_picker.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/widgets/video/video_player.dart';
 
 class VideoLibrary extends StatefulWidget {
   const VideoLibrary({super.key});

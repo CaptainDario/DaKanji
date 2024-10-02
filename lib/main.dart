@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:fvp/fvp.dart' as fvp;
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
-import 'package:fvp/fvp.dart' as fvp;
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';

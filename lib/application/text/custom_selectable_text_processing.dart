@@ -1,8 +1,7 @@
+// Package imports:
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_dart/mecab_dart.dart';
 import 'package:tuple/tuple.dart';
-
-
 
 /// Processes the given `text` with mecab. Returns the result as a tuple
 /// mecabReadings, mecabSurfaces and mecabPOS

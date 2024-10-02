@@ -3,17 +3,17 @@ import 'dart:math';
 import 'dart:ui';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:fvp/mdk.dart' as mdk;
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
-import 'package:fvp/mdk.dart' as mdk;
 
 // Project imports:
 import 'package:da_kanji_mobile/application/kana/kana.dart';
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/kana/kana.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';

@@ -2,20 +2,20 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fvp/mdk.dart' as mdk;
 import 'package:get_it/get_it.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:fvp/mdk.dart' as mdk;
 
 // Project imports:
 import 'package:da_kanji_mobile/application/assets/assets.dart';
