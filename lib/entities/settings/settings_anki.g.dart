@@ -13,6 +13,8 @@ SettingsAnki _$SettingsAnkiFromJson(Map<String, dynamic> json) => SettingsAnki()
       .toList()
   ..noTranslations = (json['noTranslations'] as num).toInt()
   ..desktopAnkiURL = json['desktopAnkiURL'] as String
+  ..noExamples = (json['noExamples'] as num).toInt()
+  ..includeExampleTranslations = json['includeExampleTranslations'] as bool
   ..includeGoogleImage = json['includeGoogleImage'] as bool
   ..includeAudio = json['includeAudio'] as bool
   ..includeScreenshot = json['includeScreenshot'] as bool;
@@ -23,6 +25,8 @@ Map<String, dynamic> _$SettingsAnkiToJson(SettingsAnki instance) =>
       'includedLanguages': instance.includedLanguages,
       'noTranslations': instance.noTranslations,
       'desktopAnkiURL': instance.desktopAnkiURL,
+      'noExamples': instance.noExamples,
+      'includeExampleTranslations': instance.includeExampleTranslations,
       'includeGoogleImage': instance.includeGoogleImage,
       'includeAudio': instance.includeAudio,
       'includeScreenshot': instance.includeScreenshot,
