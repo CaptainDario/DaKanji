@@ -600,7 +600,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       !text.contains(" ")
       )
     {
-      deconjugated = deconjugate(k.isJapanese(text) ? text : k.toKana(text));
+      deconjugated = deconjugate(k.isJapanese(text) ? text : k.toHiragana(k.toKana(text)));
       if(deconjugated != "" && k.isJapanese(deconjugated) && k.isRomaji(text)) {
         deconjugated = k.toRomaji(deconjugated);
       }
