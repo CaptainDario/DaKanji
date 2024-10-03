@@ -113,7 +113,7 @@ class AnkiDesktop {
     Map rMap = jsonDecode(r.body);
 
     if(rMap.containsKey("result")) {
-      return rMap["result"].contains("DaKanji");
+      return rMap["result"].contains(ankiDataCardModelName);
     } else {
       return false;
     }

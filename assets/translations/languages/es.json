@@ -232,7 +232,7 @@
     "anki_setup_general_text": "Despu\u00e9s de completar la configuraci\u00f3n espec\u00edfica de la plataforma, tambi\u00e9n necesitas seleccionar un mazo Anki al que se a\u00f1adir\u00e1n las nuevas cartas. Puedes hacerlo en ajustes \u2192 Anki.",
     "anki_setup_general_title": "Configuraci\u00f3n general",
     "anki_setup_intro": "DaKanji puede utilizarse para enviar notas a Anki. Para ello, cada plataforma requiere una configuraci\u00f3n diferente.",
-    "anki_setup_ios_text": "La configuraci\u00f3n en iOS es un poco engorrosa ya que AnkiMobile no permite a\u00f1adir tipos de notas, lo que s\u00ed es posible en Android y escritorio. Por lo tanto, necesitas importar un mazo de Anki con el tipo de nota DaKanji (no necesitas hacer esto si has exportado tarjetas de DaKanji a anki en otro dispositivo).\n\n1. Instala [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Descarga la baraja pre-hecha de Anki desde [aqu\u00ed](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.0/DaKanji.apkg)\n3. Pulsa sobre el archivo descargado, esto abrir\u00e1 el di\u00e1logo de importaci\u00f3n de AnkiMobile\n4. Importa el mazo\n5. Cuando se te pida permite que DaKanji se comunique con AnkiMobile y lea tu portapapeles",
+    "anki_setup_ios_text": "La configuraci\u00f3n en iOS es un poco engorrosa ya que AnkiMobile no permite a\u00f1adir tipos de notas, lo que s\u00ed es posible en Android y escritorio. Por lo tanto, necesitas importar un mazo de Anki con el tipo de nota DaKanji (no necesitas hacer esto si has exportado tarjetas de DaKanji a anki en otro dispositivo).\n\n1. Instala [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Descarga la baraja pre-hecha de Anki desde [aqu\u00ed](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.6/DaKanji.apkg)\n3. Pulsa sobre el archivo descargado, esto abrir\u00e1 el di\u00e1logo de importaci\u00f3n de AnkiMobile\n4. Importa el mazo\n5. Cuando se te pida permite que DaKanji se comunique con AnkiMobile y lea tu portapapeles",
     "anki_setup_ios_title": "iOS",
     "anki_setup_title": "Configurar",
     "anki_test_connection": "Prueba de conexi\u00f3n a Anki",
@@ -449,7 +449,7 @@
     "tutorial_text_input_text": "Aqu\u00ed puedes escribir o pegar cualquier texto. Este texto ser\u00e1 procesado con diferentes herramientas."
   },
   "UserScreen": {
-    "title": "Cuenta",
+    "title": "#ERROR!",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": ""
   },

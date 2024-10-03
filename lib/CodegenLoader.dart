@@ -2,10 +2,8 @@
 
 // ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters
 
-// Dart imports:
 import 'dart:ui';
 
-// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -212,7 +210,7 @@ class CodegenLoader extends AssetLoader{
     "anki_setup_general_text": "完成平台特定设置后，您还需要选择一个 Anki 卡组，将新卡添加到其中。您可以在设置 → Anki 中进行选择。",
     "anki_setup_general_title": "一般设置",
     "anki_setup_intro": "DaKanji 可用于将笔记发送到 Anki。为此，每个平台需要不同的设置。",
-    "anki_setup_ios_text": "iOS 上的设置有点麻烦，因为 AnkiMobile 不允许添加注释类型，而在 Android 和桌面上却可以。因此，你需要导入带有 DaKanji 笔记类型的 Anki 卡组（如果你已经在其他设备上把卡片从 DaKanji 导出到了 anki，就不需要这样做了）\n\n1.安装 [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2.从[这里](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.0/DaKanji.apkg)下载预制的安基卡组\n3.点击下载的文件，打开 AnkiMobile 的导入对话框。\n4.导入卡组\n5.当要求允许 DaKanji 与 AnkiMobile 通信并读取你的剪贴板时",
+    "anki_setup_ios_text": "iOS 上的设置有点麻烦，因为 AnkiMobile 不允许添加注释类型，而在 Android 和桌面上却可以。因此，你需要导入带有 DaKanji 笔记类型的 Anki 卡组（如果你已经在其他设备上把卡片从 DaKanji 导出到了 anki，就不需要这样做了）\n\n1.安装 [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2.从[这里](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.6/DaKanji.apkg)下载预制的安基卡组\n3.点击下载的文件，打开 AnkiMobile 的导入对话框。\n4.导入卡组\n5.当要求允许 DaKanji 与 AnkiMobile 通信并读取你的剪贴板时",
     "anki_setup_ios_title": "基础设施",
     "anki_setup_title": "设置",
     "anki_test_connection": "测试与Anki的连接",
@@ -682,7 +680,7 @@ static const Map<String,dynamic> ja = {
     "anki_setup_general_text": "プラットフォーム毎の設定が完了したら、新しいカードを追加するAnkiデッキも選択する必要があります。設定 → Ankiで設定可能です",
     "anki_setup_general_title": "一般設定",
     "anki_setup_intro": "DaKanjiからAnkiに単語を送信するできます。これには、プラットフォームごとに異なる設定が必要です。",
-    "anki_setup_ios_text": "iOSでの設定は少し手間がかかります。AnkiMobileではノートタイプの追加ができないため、Androidやデスクトップとは異なります。そのため、DaKanjiノートタイプを含むAnkiデッキをインポートする必要があります（他のデバイスでDaKanjiからAnkiにエクスポートしたカードがある場合は、この手順は不要です）。\n\n1.AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)をインストールする\n2.[こちら](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.0/DaKanji.apkg)から、既成のAnkiデッキをダウンロードする\n3.ダウンロードしたファイルをタップすると、AnkiMobileのインポートダイアログが開きます\n4.デッキをインポートします\n5.DaKanjiがAnkiMobileと通信し、クリップボードを読み取ることを許可してください",
+    "anki_setup_ios_text": "iOSでの設定は少し手間がかかります。AnkiMobileではノートタイプの追加ができないため、Androidやデスクトップとは異なります。そのため、DaKanjiノートタイプを含むAnkiデッキをインポートする必要があります（他のデバイスでDaKanjiからAnkiにエクスポートしたカードがある場合は、この手順は不要です）。\n\n1.AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)をインストールする\n2.[こちら](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.6/DaKanji.apkg)から、既成のAnkiデッキをダウンロードする\n3.ダウンロードしたファイルをタップすると、AnkiMobileのインポートダイアログが開きます\n4.デッキをインポートします\n5.DaKanjiがAnkiMobileと通信し、クリップボードを読み取ることを許可してください",
     "anki_setup_ios_title": "iOS",
     "anki_setup_title": "セットアップ",
     "anki_test_connection": "Ankiへの接続をテスト",
@@ -1192,7 +1190,7 @@ static const Map<String,dynamic> de = {
     "anki_setup_general_text": "Nachdem Sie die plattformspezifischen Einstellungen vorgenommen haben, müssen Sie auch ein Anki-Deck auswählen, dem die neuen Karten hinzugefügt werden sollen. Das können Sie unter Einstellungen → Anki tun.",
     "anki_setup_general_title": "Allgemeine Einstellungen",
     "anki_setup_intro": "DaKanji kann verwendet werden, um Notizen an Anki zu senden. Dafür benötigt jede Plattform eine andere Einrichtung.",
-    "anki_setup_ios_text": "Die Einrichtung auf iOS ist etwas umständlich, da AnkiMobile das Hinzufügen von Notiztypen nicht erlaubt, was auf Android und Desktop möglich ist. Daher müssen Sie ein Anki-Deck mit dem DaKanji-Notiztyp importieren (Sie müssen dies nicht tun, wenn Sie Karten von DaKanji zu Anki auf einem anderen Gerät exportiert haben)\n\n1. Installiere [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Lade das vorgefertigte Anki Deck [hier](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.0/DaKanji.apkg) herunter\n3. Tippe auf die heruntergeladene Datei, dies öffnet den Importdialog von AnkiMobile\n4. Importiere das Deck\n5. Wenn du gefragt wirst, erlaube DaKanji, mit AnkiMobile zu kommunizieren und deine Zwischenablage zu lesen",
+    "anki_setup_ios_text": "Die Einrichtung auf iOS ist etwas umständlich, da AnkiMobile das Hinzufügen von Notiztypen nicht erlaubt, was auf Android und Desktop möglich ist. Daher müssen Sie ein Anki-Deck mit dem DaKanji-Notiztyp importieren (Sie müssen dies nicht tun, wenn Sie Karten von DaKanji zu Anki auf einem anderen Gerät exportiert haben)\n\n1. Installiere [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Lade das vorgefertigte Anki Deck [hier](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.6/DaKanji.apkg) herunter\n3. Tippe auf die heruntergeladene Datei, dies öffnet den Importdialog von AnkiMobile\n4. Importiere das Deck\n5. Wenn du gefragt wirst, erlaube DaKanji, mit AnkiMobile zu kommunizieren und deine Zwischenablage zu lesen",
     "anki_setup_ios_title": "iOS",
     "anki_setup_title": "Einrichtung",
     "anki_test_connection": "Überprüfe Verbindung zu Anki",
@@ -1654,7 +1652,7 @@ static const Map<String,dynamic> ru = {
     "anki_setup_general_text": "После завершения настройки для конкретной платформы вам также нужно выбрать колоду Anki, в которую будут добавлены новые карты. Это можно сделать в разделе Настройки → Anki.",
     "anki_setup_general_title": "Общая настройка",
     "anki_setup_intro": "DaKanji можно использовать для отправки заметок в Anki. Для этого каждая платформа требует различных настроек.",
-    "anki_setup_ios_text": "Настройка на iOS немного затруднена, поскольку AnkiMobile не позволяет добавлять типы нот, что возможно на Android и настольных компьютерах. Поэтому вам нужно импортировать колоду Anki с типом нот DaKanji (вам не нужно делать этого, если вы экспортировали карты из DaKanji в Anki на другом устройстве).\n\n1. Установите [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Скачайте готовые колоды Anki отсюда [https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.0/DaKanji.apkg].\n3. Нажмите на загруженный файл, откроется диалог импорта AnkiMobile\n4. Импортируйте колоду\n5. В ответ на запрос разрешите DaKanji взаимодействовать с AnkiMobile и читать ваш буфер обмена",
+    "anki_setup_ios_text": "Настройка на iOS немного затруднена, поскольку AnkiMobile не позволяет добавлять типы нот, что возможно на Android и настольных компьютерах. Поэтому вам нужно импортировать колоду Anki с типом нот DaKanji (вам не нужно делать этого, если вы экспортировали карты из DaKanji в Anki на другом устройстве).\n\n1. Установите [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Скачайте готовые колоды Anki отсюда [https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.6/DaKanji.apkg].\n3. Нажмите на загруженный файл, откроется диалог импорта AnkiMobile\n4. Импортируйте колоду\n5. В ответ на запрос разрешите DaKanji взаимодействовать с AnkiMobile и читать ваш буфер обмена",
     "anki_setup_ios_title": "iOS",
     "anki_setup_title": "Настройка",
     "anki_test_connection": "Тестовое подключение к Anki",
@@ -2137,7 +2135,7 @@ static const Map<String,dynamic> pl = {
     "anki_setup_general_text": "Po zakończeniu konfiguracji specyficznej dla platformy należy również wybrać talię Anki, do której zostaną dodane nowe karty. Można to zrobić w ustawieniach → Anki.",
     "anki_setup_general_title": "Konfiguracja ogólna",
     "anki_setup_intro": "DaKanji może być używane do wysyłania notatek do Anki. W tym celu każda platforma wymaga innej konfiguracji.",
-    "anki_setup_ios_text": "Konfiguracja na iOS jest nieco kłopotliwa, ponieważ AnkiMobile nie pozwala na dodawanie typów notatek, co jest możliwe na Androidzie i komputerze. Dlatego musisz zaimportować talię Anki z typem notatek DaKanji (nie musisz tego robić, jeśli wyeksportowałeś karty z DaKanji do Anki na innym urządzeniu).\n\n1. Zainstaluj [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Pobierz gotową talię Anki z [tutaj](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.0/DaKanji.apkg).\n3. Dotknij pobranego pliku, co spowoduje otwarcie okna dialogowego importu AnkiMobile.\n4. Zaimportuj talię\n5. Po wyświetleniu pytania zezwól DaKanji na komunikację z AnkiMobile i odczytanie schowka.",
+    "anki_setup_ios_text": "Konfiguracja na iOS jest nieco kłopotliwa, ponieważ AnkiMobile nie pozwala na dodawanie typów notatek, co jest możliwe na Androidzie i komputerze. Dlatego musisz zaimportować talię Anki z typem notatek DaKanji (nie musisz tego robić, jeśli wyeksportowałeś karty z DaKanji do Anki na innym urządzeniu).\n\n1. Zainstaluj [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Pobierz gotową talię Anki z [tutaj](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.6/DaKanji.apkg).\n3. Dotknij pobranego pliku, co spowoduje otwarcie okna dialogowego importu AnkiMobile.\n4. Zaimportuj talię\n5. Po wyświetleniu pytania zezwól DaKanji na komunikację z AnkiMobile i odczytanie schowka.",
     "anki_setup_ios_title": "iOS",
     "anki_setup_title": "Ustawienie",
     "anki_test_connection": "Przetestuj połączenie z Anki",
@@ -2646,7 +2644,7 @@ static const Map<String,dynamic> en = {
     "anki_setup_general_text": "After completing the platform-specific setup, you also need to select an Anki deck to which the new cards will be added. You can do that in settings → Anki.",
     "anki_setup_general_title": "General setup",
     "anki_setup_intro": "DaKanji can be used to send notes to Anki. For this, each platform requires a different setup.",
-    "anki_setup_ios_text": "Setup on iOS is a bit cumbersome as AnkiMobile does not allow adding note types, which is possible on Android and desktop. Therefore you need to import an Anki deck with the DaKanji note type (you do not need to do this if you have exported cards from DaKanji to anki on another device)\n\n1. Install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Download the pre-made Anki deck from [here](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.0/DaKanji.apkg)\n3. Tap on the downloaded file, this will open the import dialog of AnkiMobile\n4. Import the deck\n5. When asked permit DaKanji to communicate with AnkiMobile and read your clipboard",
+    "anki_setup_ios_text": "Setup on iOS is a bit cumbersome as AnkiMobile does not allow adding note types, which is possible on Android and desktop. Therefore you need to import an Anki deck with the DaKanji note type (you do not need to do this if you have exported cards from DaKanji to anki on another device)\n\n1. Install [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Download the pre-made Anki deck from [here](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.6/DaKanji.apkg)\n3. Tap on the downloaded file, this will open the import dialog of AnkiMobile\n4. Import the deck\n5. When asked permit DaKanji to communicate with AnkiMobile and read your clipboard",
     "anki_setup_ios_title": "iOS",
     "anki_setup_title": "Setup",
     "anki_test_connection": "Test DaKanji and Anki setup",
@@ -3154,7 +3152,7 @@ static const Map<String,dynamic> it = {
     "anki_setup_general_text": "Dopo aver completato l'impostazione specifica della piattaforma, è necessario selezionare un mazzo Anki a cui aggiungere le nuove carte. È possibile farlo in Impostazioni → Anki.",
     "anki_setup_general_title": "Impostazione generale",
     "anki_setup_intro": "DaKanji può essere utilizzato per inviare note ad Anki. Per questo, ogni piattaforma richiede una configurazione diversa.",
-    "anki_setup_ios_text": "L'installazione su iOS è un po' complicata perché AnkiMobile non consente di aggiungere tipi di note, cosa che invece è possibile su Android e desktop. Pertanto, è necessario importare un mazzo Anki con il tipo di nota DaKanji (non è necessario farlo se si sono esportate le carte da DaKanji ad Anki su un altro dispositivo).\n\n1. Installare [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Scaricare il mazzo Anki preconfezionato da [qui](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.0/DaKanji.apkg)\n3. Toccare il file scaricato per aprire la finestra di dialogo di importazione di AnkiMobile.\n4. Importare il mazzo\n5. Quando viene richiesto, permettete a DaKanji di comunicare con AnkiMobile e di leggere gli appunti.",
+    "anki_setup_ios_text": "L'installazione su iOS è un po' complicata perché AnkiMobile non consente di aggiungere tipi di note, cosa che invece è possibile su Android e desktop. Pertanto, è necessario importare un mazzo Anki con il tipo di nota DaKanji (non è necessario farlo se si sono esportate le carte da DaKanji ad Anki su un altro dispositivo).\n\n1. Installare [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Scaricare il mazzo Anki preconfezionato da [qui](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.6/DaKanji.apkg)\n3. Toccare il file scaricato per aprire la finestra di dialogo di importazione di AnkiMobile.\n4. Importare il mazzo\n5. Quando viene richiesto, permettete a DaKanji di comunicare con AnkiMobile e di leggere gli appunti.",
     "anki_setup_ios_title": "iOS",
     "anki_setup_title": "Impostazione",
     "anki_test_connection": "Prova la connessione ad Anki",
@@ -3602,7 +3600,7 @@ static const Map<String,dynamic> fr = {
     "anki_setup_general_text": "Après avoir effectué la configuration spécifique à la plateforme, vous devez également sélectionner un jeu Anki auquel les nouvelles cartes seront ajoutées. Vous pouvez le faire dans Paramètres → Anki.",
     "anki_setup_general_title": "Configuration générale",
     "anki_setup_intro": "DaKanji peut être utilisé pour envoyer des notes à Anki. Pour cela, chaque plateforme nécessite une configuration différente.",
-    "anki_setup_ios_text": "La configuration sur iOS est un peu lourde car AnkiMobile ne permet pas d'ajouter des types de notes, ce qui est possible sur Android et desktop. Vous devez donc importer un jeu Anki avec le type de note DaKanji (vous n'avez pas besoin de faire cela si vous avez exporté des cartes de DaKanji vers Anki sur un autre appareil).\n\n1. Installez [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Téléchargez le jeu de cartes Anki pré-fait à partir de [ici](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.0/DaKanji.apkg)\n3. Tapez sur le fichier téléchargé, cela ouvrira la boîte de dialogue d'importation d'AnkiMobile.\n4. Importez le jeu\n5. Lorsque cela vous est demandé, autorisez DaKanji à communiquer avec AnkiMobile et à lire votre presse-papiers.",
+    "anki_setup_ios_text": "La configuration sur iOS est un peu lourde car AnkiMobile ne permet pas d'ajouter des types de notes, ce qui est possible sur Android et desktop. Vous devez donc importer un jeu Anki avec le type de note DaKanji (vous n'avez pas besoin de faire cela si vous avez exporté des cartes de DaKanji vers Anki sur un autre appareil).\n\n1. Installez [AnkiMobile] (https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Téléchargez le jeu de cartes Anki pré-fait à partir de [ici](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.6/DaKanji.apkg)\n3. Tapez sur le fichier téléchargé, cela ouvrira la boîte de dialogue d'importation d'AnkiMobile.\n4. Importez le jeu\n5. Lorsque cela vous est demandé, autorisez DaKanji à communiquer avec AnkiMobile et à lire votre presse-papiers.",
     "anki_setup_ios_title": "iOS",
     "anki_setup_title": "Mise en place",
     "anki_test_connection": "Test de connexion à Anki",
@@ -4050,7 +4048,7 @@ static const Map<String,dynamic> es = {
     "anki_setup_general_text": "Después de completar la configuración específica de la plataforma, también necesitas seleccionar un mazo Anki al que se añadirán las nuevas cartas. Puedes hacerlo en ajustes → Anki.",
     "anki_setup_general_title": "Configuración general",
     "anki_setup_intro": "DaKanji puede utilizarse para enviar notas a Anki. Para ello, cada plataforma requiere una configuración diferente.",
-    "anki_setup_ios_text": "La configuración en iOS es un poco engorrosa ya que AnkiMobile no permite añadir tipos de notas, lo que sí es posible en Android y escritorio. Por lo tanto, necesitas importar un mazo de Anki con el tipo de nota DaKanji (no necesitas hacer esto si has exportado tarjetas de DaKanji a anki en otro dispositivo).\n\n1. Instala [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Descarga la baraja pre-hecha de Anki desde [aquí](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.0/DaKanji.apkg)\n3. Pulsa sobre el archivo descargado, esto abrirá el diálogo de importación de AnkiMobile\n4. Importa el mazo\n5. Cuando se te pida permite que DaKanji se comunique con AnkiMobile y lea tu portapapeles",
+    "anki_setup_ios_text": "La configuración en iOS es un poco engorrosa ya que AnkiMobile no permite añadir tipos de notas, lo que sí es posible en Android y escritorio. Por lo tanto, necesitas importar un mazo de Anki con el tipo de nota DaKanji (no necesitas hacer esto si has exportado tarjetas de DaKanji a anki en otro dispositivo).\n\n1. Instala [AnkiMobile](https://apps.apple.com/us/app/ankimobile-flashcards/id373493387)\n2. Descarga la baraja pre-hecha de Anki desde [aquí](https://github.com/CaptainDario/DaKanji-Dependencies/releases/download/v3.4.6/DaKanji.apkg)\n3. Pulsa sobre el archivo descargado, esto abrirá el diálogo de importación de AnkiMobile\n4. Importa el mazo\n5. Cuando se te pida permite que DaKanji se comunique con AnkiMobile y lea tu portapapeles",
     "anki_setup_ios_title": "iOS",
     "anki_setup_title": "Configurar",
     "anki_test_connection": "Prueba de conexión a Anki",
@@ -4243,7 +4241,7 @@ static const Map<String,dynamic> es = {
     "tutorial_text_input_text": "Aquí puedes escribir o pegar cualquier texto. Este texto será procesado con diferentes herramientas."
   },
   "UserScreen": {
-    "title": "Cuenta",
+    "title": "#ERROR!",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
   },
   "VideoScreen": {

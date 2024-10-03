@@ -80,7 +80,7 @@ class AnkiAndroid {
 
     Map models = (await (await ankidroid.modelList()).asFuture);
 
-    return models.values.contains("DaKanji");
+    return models.values.contains(ankiDataCardModelName);
 
   }
 

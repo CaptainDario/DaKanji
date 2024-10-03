@@ -38,6 +38,8 @@ class AnkiNote{
   String audio = "";
   /// Example sentence for this card
   String example = "";
+  /// All translations of the examples
+  String exampleTrans = "";
   /// Audio of `example`
   String exampleAudio = "";
 
@@ -77,6 +79,7 @@ class AnkiNote{
       ankiDataFieldDaKanjiLink  : dakanjiLink,
       ankiDataFieldAudio        : audio,
       ankiDataFieldExample      : example,
+      ankiDataFieldExampleTrans : exampleTrans,
       ankiDataFieldExampleAudio : exampleAudio,
       ankiDataFieldImage        : image
     };
@@ -93,6 +96,7 @@ class AnkiNote{
       this.dakanjiLink = "",
       this.audio = "",
       this.example = "",
+      this.exampleTrans = "",
       this.exampleAudio = "",
       this.image = ""
     }
@@ -161,7 +165,7 @@ class AnkiNote{
     // get the positions where the entry matches the example
     final spans = getMatchSpans(entry, examples);
 
-    example = "";
+    example = ""; exampleTrans = "";
     for (var i = 0; i < min(numberOfExamples, examples.length); i++) {
 
       if(examples.length > 1) example += "${i+1}. ";
@@ -180,7 +184,7 @@ class AnkiNote{
           final translations = examples[i].translations
             .where((e) => e.language == langCode);
           
-          if(translations.isNotEmpty) example += "${translations.first.sentence}\n";
+          if(translations.isNotEmpty) exampleTrans += "${translations.first.sentence}\n";
 
         }
       }

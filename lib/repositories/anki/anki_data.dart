@@ -1,5 +1,5 @@
 /// Name of the DaKanji Anki model
-const String ankiDataCardModelName = "DaKanji";
+const String ankiDataCardModelName = "DaKanji2";
 /// name of the DaKanji anki card 
 const String ankiDataCardTypeName = "DaKanji Card";
 
@@ -19,6 +19,8 @@ const String ankiDataFieldDaKanjiLink  = "DaKanji Link";
 const String ankiDataFieldAudio        = "Audio";
 /// Name of the anki field for the Example
 const String ankiDataFieldExample      = "Example";
+/// Name of the anki field for the translations of the examples
+const String ankiDataFieldExampleTrans = "Example Translations";
 /// Name of the anki field for the audio example
 const String ankiDataFieldExampleAudio = "Audio Example";
 /// Name of the anki field for the Image
@@ -34,6 +36,7 @@ const List<String> ankiDataFields = [
   ankiDataFieldDaKanjiLink,
   ankiDataFieldAudio,
   ankiDataFieldExample,
+  ankiDataFieldExampleTrans,
   ankiDataFieldExampleAudio,
   ankiDataFieldImage
 ];
@@ -73,6 +76,14 @@ const String ankiDataFrontTemplate =
 {{#$ankiDataFieldImage}}
   <img src="{{$ankiDataFieldImage}}">
 {{/$ankiDataFieldImage}}
+</a>
+{{#$ankiDataFieldAudio}}
+	{{$ankiDataFieldAudio}}
+{{/$ankiDataFieldAudio}}
+<br>
+{{#$ankiDataFieldExampleTrans}}
+	{{$ankiDataFieldExampleTrans}}
+{{/$ankiDataFieldExampleTrans}}
 <br>
 {{#$ankiDataFieldFrontNote}}
 	{{$ankiDataFieldFrontNote}}
@@ -94,18 +105,10 @@ const String ankiDataBackTemplate =
 	{{^$ankiDataFieldKanji}}
 		{{$ankiDataFieldKana}}
 	{{/$ankiDataFieldKanji}}
-</a>
-{{#$ankiDataFieldAudio}}
-	{{$ankiDataFieldAudio}}
-{{/$ankiDataFieldAudio}}
 <br>
 {{#$ankiDataFieldExample}}
 	{{$ankiDataFieldExample}}
 {{/$ankiDataFieldExample}}
-<br>
-{{#$ankiDataFieldImage}}
-	{{$ankiDataFieldImage}}
-{{/$ankiDataFieldImage}}
 <br>
 {{#$ankiDataFieldBackNote}}
 	{{$ankiDataFieldBackNote}}
