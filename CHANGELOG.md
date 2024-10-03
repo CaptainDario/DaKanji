@@ -3,6 +3,8 @@
 
 ## v3.4.5 - ワードリストと暗記改善 (14.10.2024)
 
+Note: **This update resets the Anki integration, please run the setup again**
+
 Added:
 
 - Dictionary: Add to anki / list from search results
@@ -15,8 +17,7 @@ Improvements:
   - Back navigation clears search and resets current entry
   - Readability of kanji stroke order diagrams
 - Kana table: playback on android does not cut off
-- Anki:
-  - Setting to decide how adding a duplicate should be handled
+- Anki: Setting to decide how adding a duplicate should be handled
 
 Fixed:
 
