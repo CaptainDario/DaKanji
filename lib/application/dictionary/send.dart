@@ -56,7 +56,7 @@ Future quickSendToAnki(JMdict entry, BuildContext context) async {
     await ankiNotSetupDialog(context).show();
   }
   else{
-    addToAnki(entry, context);
+    addToAnki(entry, context, GetIt.I<Settings>().anki.allowDuplicates);
   }
 
 }

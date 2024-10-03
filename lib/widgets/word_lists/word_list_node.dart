@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -440,7 +441,8 @@ class _WordListNodeState extends State<WordListNode> {
       ).show();
 
       // send to anki PDF
-      await sendListToAnkiFromWordListNode(widget.node);
+      await sendListToAnkiFromWordListNode(widget.node,
+        GetIt.I<Settings>().anki.allowDuplicates);
 
       // close loading indicator
       // ignore: use_build_context_synchronously

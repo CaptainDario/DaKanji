@@ -63,7 +63,7 @@ class Anki {
   /// Addes the given note to Anki
   /// 
   /// Note: if the deck or model does not exist, it will be created
-  Future<bool> addNote(AnkiNote note) async {
+  Future<bool> addNote(AnkiNote note, bool allowDuplicates) async {
 
     // check that anki is available
     if(!await checkAnkiAvailable()){
@@ -77,13 +77,13 @@ class Anki {
 
     // Add the note to Anki platform dependent
     if(g_desktopPlatform){
-      ankiDesktop!.addNoteDesktop(note);
+      ankiDesktop!.addNoteDesktop(note, allowDuplicates);
     }
     else if(Platform.isIOS) {
-      ankiiOS!.addNoteIos(note);
+      ankiiOS!.addNoteIos(note, allowDuplicates);
     }
     else if(Platform.isAndroid) {
-      ankiAndroid!.addNoteAndroid(note);
+      ankiAndroid!.addNoteAndroid(note, allowDuplicates);
     }
     else {
       throw Exception("Unsupported platform");
@@ -95,7 +95,7 @@ class Anki {
   /// Addes the given note*s* to Anki
   /// 
   /// Note: if the deck or model does not exist, it will be created
-  Future addNotes(List<AnkiNote> notes) async {
+  Future addNotes(List<AnkiNote> notes, bool allowDuplicates) async {
 
     // check that anki is running
     if(!await checkAnkiAvailable()){
@@ -109,13 +109,13 @@ class Anki {
 
     // Add the note to Anki platform dependent
     if(g_desktopPlatform){
-      ankiDesktop!.addNotesDesktop(notes);
+      ankiDesktop!.addNotesDesktop(notes, allowDuplicates);
     }
     else if(Platform.isIOS) {
-      ankiiOS!.addNotesIos(notes);
+      ankiiOS!.addNotesIos(notes, allowDuplicates);
     }
     else if(Platform.isAndroid) {
-      ankiAndroid!.addNotesAndroid(notes);
+      ankiAndroid!.addNotesAndroid(notes, allowDuplicates);
     }
     else {
       throw Exception("Unsupported platform");

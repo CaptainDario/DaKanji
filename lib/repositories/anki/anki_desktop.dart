@@ -25,7 +25,7 @@ class AnkiDesktop {
 
 
   /// Platform specific (desktop via anki connect) implementation of `add_note`
-  Future<http.Response> addNoteDesktop(AnkiNote note) async {
+  Future<http.Response> addNoteDesktop(AnkiNote note, bool allowDuplicates) async {
 
     // Create the body of the request
     Map<String, dynamic> body = {
@@ -37,7 +37,7 @@ class AnkiDesktop {
           "modelName": note.noteType,
           "fields": note.fields,
           "options": {
-            "allowDuplicate": false,
+            "allowDuplicate": allowDuplicates,
             "duplicateScope": "deck",
             "duplicateScopeOptions": {
               "deckName": note.deckName,
@@ -58,7 +58,7 @@ class AnkiDesktop {
   }
 
   /// Platform specific (desktop via anki connect) implementation of `add_notes`
-  Future<http.Response> addNotesDesktop(List<AnkiNote> notes) async {
+  Future<http.Response> addNotesDesktop(List<AnkiNote> notes, bool allowDuplicates) async {
 
     List<Map> jsonNotes = [];
 
@@ -69,7 +69,7 @@ class AnkiDesktop {
         "modelName": note.noteType,
         "fields": note.fields,
         "options": {
-          "allowDuplicate": false,
+          "allowDuplicate": allowDuplicates,
           "duplicateScope": "deck",
           "duplicateScopeOptions": {
             "deckName": note.deckName,

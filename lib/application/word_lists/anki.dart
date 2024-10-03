@@ -16,7 +16,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 
 /// Renders each word list entry to an image and stores it in the temp directory
 /// returns a List with all the [File]s created
-Future sendListToAnkiFromWordListNode(TreeNode<WordListsData> node) async {
+Future sendListToAnkiFromWordListNode(TreeNode<WordListsData> node, bool allowDuplicates) async {
 
   List<int> entryIDs =
     await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(node.id);
@@ -41,6 +41,6 @@ Future sendListToAnkiFromWordListNode(TreeNode<WordListsData> node) async {
     notes.add(note);
   }
 
-  GetIt.I<Anki>().addNotes(notes);
+  GetIt.I<Anki>().addNotes(notes, allowDuplicates);
 
 }

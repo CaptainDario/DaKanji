@@ -30,7 +30,7 @@ AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
     btnOkColor: g_Dakanji_green,
     btnOkText: LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr(),
     btnOkOnPress: () {
-      addToAnki(entry, context);
+      addToAnki(entry, context, GetIt.I<Settings>().anki.allowDuplicates);
       if(g_NavigatorKey.currentContext != null){
         Navigator.of(g_NavigatorKey.currentContext!).pop();
       }
@@ -64,7 +64,7 @@ AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
 }
 
 /// Adds the given note to anki
-void addToAnki(JMdict entry, BuildContext context) async {
+void addToAnki(JMdict entry, BuildContext context, bool allowDuplicates) async {
 
   SettingsAnki ankiSettings = GetIt.I<Settings>().anki;
 
@@ -87,7 +87,7 @@ void addToAnki(JMdict entry, BuildContext context) async {
     numberOfExamples: ankiSettings.noExamples);
 
   // add the note to anki
-  bool added = await GetIt.I<Anki>().addNote(note);
+  bool added = await GetIt.I<Anki>().addNote(note, allowDuplicates);
 
   if(!added){
     // ignore: use_build_context_synchronously

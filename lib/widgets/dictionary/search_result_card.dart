@@ -11,9 +11,9 @@ import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
-import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';
-import 'package:da_kanji_mobile/widgets/anki/anki_not_setup_dialog.dart';
+
+
+
 
 /// A Card that is used to preview the content of a search result
 class SearchResultCard extends StatefulWidget {
