@@ -38,11 +38,11 @@ class AnkiDesktop {
           "fields": note.fields,
           "options": {
             "allowDuplicate": allowDuplicates,
-            "duplicateScope": "deck",
-            "duplicateScopeOptions": {
-              "deckName": note.deckName,
-              "checkChildren": false
-            }
+            //"duplicateScope": "deck",
+            //"duplicateScopeOptions": {
+            //  "deckName": note.deckName,
+            //  "checkChildren": false
+            //}
           },
           "tags": note.tags
         }
@@ -70,11 +70,11 @@ class AnkiDesktop {
         "fields": note.fields,
         "options": {
           "allowDuplicate": allowDuplicates,
-          "duplicateScope": "deck",
-          "duplicateScopeOptions": {
-            "deckName": note.deckName,
-            "checkChildren": false
-          }
+          //"duplicateScope": "deck",
+          //"duplicateScopeOptions": {
+          //  "deckName": note.deckName,
+          //  "checkChildren": false
+          //}
         },
         "tags": note.tags
       });
