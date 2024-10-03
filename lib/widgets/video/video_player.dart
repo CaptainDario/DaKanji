@@ -108,7 +108,7 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
             WidgetsBinding.instance.addPostFrameCallback(
               (timeStamp) => mecabSurfaces.value = res.item2,
             );
-          mecabReadings = res.item2;
+          mecabReadings = res.item1;
           mecabPOS      = res.item3;
         }
         return Container();
@@ -184,6 +184,7 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
                                   child: CustomSelectableText(
                                     words: value,
                                     rubys: mecabReadings,
+                                    showRubys: true,
                                     init: (controller) => customSelectableTextController = controller,
                                     textColor: Colors.black,
                                     onSelectionChange: (p0) {
