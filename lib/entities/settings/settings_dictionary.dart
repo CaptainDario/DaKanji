@@ -49,6 +49,20 @@ class SettingsDictionary with ChangeNotifier {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
+  static const bool d_addToAnkiFromSearchResults = false;
+  @JsonKey(defaultValue: d_addToAnkiFromSearchResults)
+  /// Should the word frequency be shown in the dict UI
+  bool addToAnkiFromSearchResults = d_addToAnkiFromSearchResults;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_addToListFromSearchResults = false;
+  @JsonKey(defaultValue: d_addToAnkiFromSearchResults)
+  /// Should the word frequency be shown in the dict UI
+  bool addToListFromSearchResults = d_addToListFromSearchResults;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const bool d_showWordFruequency = false;
   @JsonKey(defaultValue: d_showWordFruequency)
   /// Should the word frequency be shown in the dict UI

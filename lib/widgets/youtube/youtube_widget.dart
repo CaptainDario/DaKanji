@@ -1,13 +1,19 @@
-import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
-import 'package:html/parser.dart' as html_parser;
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get_it/get_it.dart';
+import 'package:html/parser.dart' as html_parser;
+import 'package:http/http.dart' as http;
 import 'package:onboarding_overlay/onboarding_overlay.dart';
+
+// Project imports:
+import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 
 String youtubeVideoUrl = "https://www.youtube.com/watch?v=XnkQKn67qzM&t=74s";
 

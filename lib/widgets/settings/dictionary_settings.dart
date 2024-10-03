@@ -226,6 +226,31 @@ class _DictionarySettingsState extends State<DictionarySettings> {
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
+        // Add to anki from search results
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_dict_add_to_anki_from_search_results.tr(),
+          value: widget.settings.dictionary.addToAnkiFromSearchResults,
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.dictionary.addToAnkiFromSearchResults = value;
+              widget.settings.save();
+            });
+          },
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+        ),
+        // Add to list from search results
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_dict_add_to_list_from_search_results.tr(),
+          value: widget.settings.dictionary.addToListFromSearchResults,
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.dictionary.addToListFromSearchResults = value;
+              widget.settings.save();
+            });
+          },
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+        ),
+        const SizedBox(height: 8),
         // Floating words selection
         ResponsiveFilterChips(
           chipWidget: (index) {

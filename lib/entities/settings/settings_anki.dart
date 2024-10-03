@@ -33,6 +33,21 @@ class SettingsAnki with ChangeNotifier {
     notifyListeners();
   }
 
+  /// The default value for `allowDuplicates`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_allowDuplicates = false;
+  /// When sending a note to anki, should duplicates be allowed
+  @JsonKey(defaultValue: d_allowDuplicates)
+  bool _allowDuplicates = d_allowDuplicates;
+  /// When sending a note to anki, should duplicates be allowed
+  bool get allowDuplicates => _allowDuplicates;
+  /// When sending a note to anki, should duplicates be allowed
+  set allowDuplicates(bool value) {
+    _allowDuplicates = value;
+    notifyListeners();
+  }
+
   /// All decks currently in anki
   @JsonKey(includeFromJson: false, includeToJson: false)
   List<String> availableDecks = [];

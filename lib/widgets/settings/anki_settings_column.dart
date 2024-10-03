@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
@@ -96,6 +98,35 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
             });
           },
         ),
+        // Allow Duplicates
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_anki_allow_duplicates.tr(),
+          value: widget.settings.anki.allowDuplicates,
+          leadingIcon: Icons.info,
+          onLeadingIconPressed: () async {
+            AwesomeDialog(
+              context: context,
+              dialogType: DialogType.noHeader,
+              btnOkColor: g_Dakanji_green,
+              btnOkOnPress: (){},
+              body: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MarkdownBody(
+                    data: LocaleKeys.SettingsScreen_anki_allow_duplicates_explanation.tr(),
+                  ),
+                )
+              )
+            ).show();
+          },
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.anki.allowDuplicates = value;
+              widget.settings.save();
+            });
+          },
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+        ),
         // which langauges should be included
         ExportLanguagesIncludeChips(
           text: LocaleKeys.SettingsScreen_anki_languages_to_include.tr(),
@@ -133,7 +164,7 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
           ),
         // how many examples should be included
         ResponsiveSliderTile(
-          text: "Number of examples",
+          text: LocaleKeys.SettingsScreen_anki_number_of_examples.tr(),
           value: widget.settings.anki.noExamples.toDouble(),
           min: 0,
           max: 5,
@@ -149,7 +180,7 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
         ),
         // Should the example's translations be included
         ResponsiveCheckBoxTile(
-          text: "Include example translations",
+          text: LocaleKeys.SettingsScreen_anki_include_example_translations.tr(),
           value: widget.settings.anki.includeExampleTranslations,
           onTileTapped: (value) {
             setState(() {

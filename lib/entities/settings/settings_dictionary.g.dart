@@ -17,6 +17,10 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
           (json['selectedTranslationLanguages'] as List<dynamic>)
               .map((e) => e as String)
               .toList()
+      ..addToAnkiFromSearchResults =
+          json['addToAnkiFromSearchResults'] as bool? ?? false
+      ..addToListFromSearchResults =
+          json['addToListFromSearchResults'] as bool? ?? false
       ..showWordFruequency = json['showWordFruequency'] as bool? ?? false
       ..searchDeconjugate = json['searchDeconjugate'] as bool? ?? true
       ..convertToHiragana = json['convertToHiragana'] as bool? ?? true
@@ -38,6 +42,8 @@ Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
     <String, dynamic>{
       'translationLanguageCodes': instance.translationLanguageCodes,
       'selectedTranslationLanguages': instance.selectedTranslationLanguages,
+      'addToAnkiFromSearchResults': instance.addToAnkiFromSearchResults,
+      'addToListFromSearchResults': instance.addToListFromSearchResults,
       'showWordFruequency': instance.showWordFruequency,
       'searchDeconjugate': instance.searchDeconjugate,
       'convertToHiragana': instance.convertToHiragana,

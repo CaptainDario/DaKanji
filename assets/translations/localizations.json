@@ -2907,6 +2907,28 @@
       "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda a una representación kana uniforme antes de buscarlo. Esto significa que la consulta \"taberu\" se convertirá a たべる y encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\n\nPor ejemplo, al buscar \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万 y la palabra inglesa \"man\".\n\nNota: esta configuración es global y se aplica en todos los lugares en los que se utiliza el diccionario.",
       "pl": "Po włączeniu tego ustawienia, DaKanji konwertuje każde wyszukiwane słowo na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że zapytanie 'taberu' zostanie przekonwertowane na たべる i znajdzie 食べる, ale może to również prowadzić do niezamierzonych dopasowań.\n\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego dopasuje 万 i angielskie słowo 'man'.\n\nUwaga: jest to ustawienie globalne i jest stosowane wszędzie tam, gdzie słownik jest używany"
     },
+    "dict_add_to_anki_from_search_results": {
+      "en": "Add to anki from search results",
+      "de": "Aus Suchergebnissen zu anki hinzufügen",
+      "ru": "Добавить в anki из результатов поиска",
+      "ja": "検索結果から杏樹に追加",
+      "zh": "从搜索结果中添加到 anki",
+      "it": "Aggiungere ad anki dai risultati della ricerca",
+      "fr": "Ajouter à anki à partir des résultats de recherche",
+      "es": "Añadir a anki desde los resultados de búsqueda",
+      "pl": "Dodaj do anki z wyników wyszukiwania"
+    },
+    "dict_add_to_list_from_search_results": {
+      "en": "Add to list from search results",
+      "de": "Zur Liste aus Suchergebnissen hinzufügen",
+      "ru": "Добавить в список из результатов поиска",
+      "ja": "検索結果からリストに追加",
+      "zh": "从搜索结果添加到列表",
+      "it": "Aggiungi all'elenco dai risultati della ricerca",
+      "fr": "Ajouter à la liste à partir des résultats de la recherche",
+      "es": "Añadir a la lista desde los resultados de búsqueda",
+      "pl": "Dodaj do listy z wyników wyszukiwania"
+    },
     "dict_matrix_word_levels": {
       "en": "Matrix words use JLPT level",
       "de": "Matrixwörter verwenden JLPT-Niveau",
@@ -3038,6 +3060,50 @@
       "fr": "Terrasse à ajouter",
       "es": "Cubierta para añadir a",
       "pl": "Pokład do dodania do"
+    },
+    "anki_allow_duplicates": {
+      "en": "Allow adding duplicates",
+      "de": "Hinzufügen von Duplikaten zulassen",
+      "ru": "Разрешить добавление дубликатов",
+      "ja": "重複の追加を許可する",
+      "zh": "允许添加重复内容",
+      "it": "Consentire l'aggiunta di duplicati",
+      "fr": "Permettre l'ajout de doublons",
+      "es": "Permitir añadir duplicados",
+      "pl": "Zezwalaj na dodawanie duplikatów"
+    },
+    "anki_allow_duplicates_explanation": {
+      "en": "Duplicates are checked by comparing the first field of the DaKanji note type. A match is every other card that has the exact same content in that field.\nBy default, this is the translation field. Therefore, if you modify the translation, adding the same card will be possible again. However, you can change the order of the fields in Anki. Every dictionary entry is uniquely identified when using the \"DaKanji link\" field as the first field.",
+      "de": "Duplikate werden geprüft, indem das erste Feld des DaKanji-Notiztyps verglichen wird. Eine Übereinstimmung ist jede andere Karte, die genau den gleichen Inhalt in diesem Feld hat.\nStandardmäßig ist dies das Übersetzungsfeld. Wenn Sie also die Übersetzung ändern, können Sie die gleiche Karte wieder hinzufügen. Sie können jedoch die Reihenfolge der Felder in Anki ändern. Jeder Wörterbucheintrag wird eindeutig identifiziert, wenn das Feld \"DaKanji link\" als erstes Feld verwendet wird.",
+      "ru": "Дубликаты проверяются путем сравнения первого поля типа нот DaKanji. Совпадением считается любая другая карточка, имеющая точно такое же содержимое в этом поле.\nПо умолчанию это поле перевода. Поэтому, если вы измените перевод, добавление той же карточки будет снова возможно. Однако вы можете изменить порядок полей в Anki. Каждая словарная статья идентифицируется однозначно, если в качестве первого поля используется поле \"Ссылка на дакандзи\".",
+      "ja": "重複は、大漢字ノートタイプの最初のフィールドを比較することによってチェックされます。一致するのは、そのフィールドに全く同じ内容を持つ他のすべてのカードです。\nデフォルトでは、これは翻訳フィールドです。したがって、訳語を修正すれば、同じカードを追加することが再び可能になります。ただし、Ankiではフィールドの順序を変更することができます。大漢字リンク」フィールドを最初のフィールドとして使用する場合、すべての辞書項目は一意に識別されます。",
+      "zh": "通过比较 DaKanji 注释类型的第一个字段来检查重复。在该字段中具有完全相同内容的所有其他卡片都是匹配的。\n默认情况下，这是翻译字段。因此，如果您修改了翻译，就可以再次添加相同的卡片。不过，您可以在 Anki 中更改字段的顺序。当使用 \"DaKanji link（大汉字链接）\"字段作为第一个字段时，每个字典条目都是唯一标识的。",
+      "it": "I duplicati vengono controllati confrontando il primo campo del tipo di nota DaKanji. Una corrispondenza è ogni altra scheda che ha lo stesso identico contenuto in quel campo.\nPer impostazione predefinita, questo campo è quello della traduzione. Pertanto, se si modifica la traduzione, sarà possibile aggiungere nuovamente la stessa scheda. Tuttavia, è possibile modificare l'ordine dei campi in Anki. Ogni voce del dizionario è identificata in modo univoco quando si utilizza il campo \"DaKanji link\" come primo campo.",
+      "fr": "Les doublons sont vérifiés en comparant le premier champ du type de note DaKanji. Une correspondance est une carte sur deux qui a exactement le même contenu dans ce champ.\nPar défaut, il s'agit du champ de traduction. Par conséquent, si vous modifiez la traduction, il sera à nouveau possible d'ajouter la même carte. Vous pouvez toutefois modifier l'ordre des champs dans Anki. Chaque entrée du dictionnaire est identifiée de manière unique en utilisant le champ \"DaKanji link\" comme premier champ.",
+      "es": "Los duplicados se comprueban comparando el primer campo del tipo de nota DaKanji. Una coincidencia es cualquier otra tarjeta que tenga exactamente el mismo contenido en ese campo.\nPor defecto, este es el campo de traducción. Por lo tanto, si modifica la traducción, será posible volver a añadir la misma ficha. Sin embargo, puedes cambiar el orden de los campos en Anki. Cada entrada del diccionario se identifica de forma única cuando se utiliza el campo \"Enlace DaKanji\" como primer campo.",
+      "pl": "Duplikaty są sprawdzane poprzez porównanie pierwszego pola typu notatki DaKanji. Dopasowaniem jest każda inna karta, która ma dokładnie taką samą zawartość w tym polu.\nDomyślnie jest to pole tłumaczenia. Dlatego jeśli zmodyfikujesz tłumaczenie, dodanie tej samej karty będzie możliwe ponownie. Można jednak zmienić kolejność pól w Anki. Każdy wpis słownika jest jednoznacznie identyfikowany przy użyciu pola \"DaKanji link\" jako pierwszego pola."
+    },
+    "anki_number_of_examples": {
+      "en": "Number of examples to add",
+      "de": "Anzahl der hinzuzufügenden Beispiele",
+      "ru": "Количество примеров для добавления",
+      "ja": "追加する例の数",
+      "zh": "要添加的示例数量",
+      "it": "Numero di esempi da aggiungere",
+      "fr": "Nombre d'exemples à ajouter",
+      "es": "Número de ejemplos a añadir",
+      "pl": "Liczba przykładów do dodania"
+    },
+    "anki_include_example_translations": {
+      "en": "Include example translations",
+      "de": "Beispielübersetzungen einbeziehen",
+      "ru": "Включите примеры переводов",
+      "ja": "翻訳例を含む",
+      "zh": "包括翻译示例",
+      "it": "Includere traduzioni di esempio",
+      "fr": "Inclure des exemples de traductions",
+      "es": "Incluir ejemplos de traducciones",
+      "pl": "Dołącz przykładowe tłumaczenia"
     },
     "anki_get_decks_success": {
       "en": "Updated decks! 🎉",
@@ -4395,7 +4461,7 @@
       "zh": "账户",
       "it": "Conto",
       "fr": "Compte",
-      "es": "#ERROR!",
+      "es": "Cuenta",
       "pl": "Konto"
     },
     "tutorial_begin_title": {

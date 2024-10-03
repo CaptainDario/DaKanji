@@ -5,8 +5,8 @@
 
 Added:
 
-- Anki
-  - Examples sentences can be added to notes
+- Dictionary: Add to anki / list from search results
+- Anki: Examples sentences can be added to notes
 
 Improvements:
 
@@ -15,7 +15,8 @@ Improvements:
   - Back navigation clears search and resets current entry
   - Readability of kanji stroke order diagrams
 - Kana table: playback on android does not cut off
-- Anki: setting to decide how adding a duplicate should be handled
+- Anki:
+  - Setting to decide how adding a duplicate should be handled
 
 Fixed:
 

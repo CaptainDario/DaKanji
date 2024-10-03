@@ -7,7 +7,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -19,6 +18,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/assets/assets.dart';
+import 'package:da_kanji_mobile/application/dictionary/send.dart';
 import 'package:da_kanji_mobile/application/screenshots/dictionary_word_card.dart';
 import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
@@ -219,7 +219,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         }
                         // quick add to word list
                         else if(selection == menuItems[7]) {
-                          await quickAddToWordList();
+                          await quickAddToWordList(widget.entry!, context);
                         }
                         // add to word list
                         else if(selection == menuItems[8]) {
@@ -227,12 +227,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                         }
                         // quick send to anki
                         else if(selection == menuItems[9]) {
-                          if(!GetIt.I<UserData>().ankiSetup){
-                            await ankiNotSetupDialog(context).show();
-                          }
-                          else{
-                            addToAnki(widget.entry!, context);
-                          }
+                          await quickSendToAnki(widget.entry!, context);
                         }
                         // send to anki
                         else if(selection == menuItems[10]){
@@ -270,37 +265,6 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         ),
       ),
     );
-  }
-
-  /// Function to quick add this entry to the word lists selected in the settings
-  Future quickAddToWordList() async {
-
-    // get all lists that currently still exist and that are selected
-    List<int> allIDsInDB  = await GetIt.I<WordListsSQLDatabase>().getAllNodeIDs();
-    List<int> selectedIDs = GetIt.I<Settings>().wordLists.quickAddListIDs
-      .where((e) => allIDsInDB.contains(e))
-      .toList();
-    // if there are no lists selected, show a message to the user
-    if(selectedIDs.isEmpty){
-      await AwesomeDialog(
-        // ignore: use_build_context_synchronously
-        context: context,
-        dialogType: DialogType.noHeader,
-        btnOkColor: g_Dakanji_green,
-        btnOkOnPress: () {
-          
-        },
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(LocaleKeys.DictionaryScreen_word_tab_menu_quick_add_to_list_no_lists_selected.tr()),
-        ),
-      ).show();
-      return;
-    }
-
-    await GetIt.I<WordListsSQLDatabase>().addEntriesToWordLists(
-      selectedIDs, [widget.entry!.id]);
-
   }
 
   /// Function that shows a selection dialog to the user and adds `widget.entry`
