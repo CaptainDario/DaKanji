@@ -8,7 +8,7 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.4.5+112
+version: 3.4.6+113
 
 
 environment:

@@ -183,6 +183,7 @@ class UserData{
     // a different version than last time is being used (test with version = 0.0.0)
     debugPrint("used: $versionUsed now: $g_Version");
     versionUsed ??= Version(0, 0, 0);
+    versionUsed = Version(3, 4, 5);
     if(versionUsed! < g_Version && appOpenedTimes > 1){
       newVersionUsed = true;debugPrint("New version installed");
       // show the changelog
@@ -207,6 +208,10 @@ class UserData{
       // any version newer than `versionUsed` has newer radicals data
       if(g_NewRadicals.any((v) => v > versionUsed!)){
         getNewRadicals = true;
+      }
+      // any version newer than `versionUsed` needs a anki reset
+      if(g_ResetAnki.any((v) => v > versionUsed!)){
+        ankiSetup = false;
       }
     }
     if(versionUsed! > g_Version){

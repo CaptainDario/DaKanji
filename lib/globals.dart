@@ -88,6 +88,8 @@ List<Version> g_NewRadicals = [
   Version(3, 2, 0, build: 67),
   Version(3, 3, 0, build: 76)
 ];
+/// Versions that require to setup the anki integration again
+List<Version> g_ResetAnki = [Version(3, 4, 6)];
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
 /// variable that indicates if a webivew is available on this platform
