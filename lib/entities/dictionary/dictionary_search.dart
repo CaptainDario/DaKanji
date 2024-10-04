@@ -86,7 +86,9 @@ class DictionarySearch {
     // if romaji conversion setting is enabled, convert query to hiragana
     String? queryKana;
     if(convertToHiragana) {
-      queryKana = _kKitRomaji.toHiragana(_kKitRomaji.toKana(query));
+      String t = _kKitRomaji.toHiragana(_kKitRomaji.toKana(query));
+      // assure that the outcome is japanese
+      if(_kKitRomaji.isJapanese(t)) queryKana = t;
     }
 
     // search in `noIsolates` separte Isolates 
