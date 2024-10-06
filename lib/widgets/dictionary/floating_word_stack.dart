@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/dictionary/falling_word_stack_controller.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -29,14 +30,17 @@ class FloatingWordStack extends StatefulWidget {
   final int secondsTillFirstWord;
   /// Callback that is executed when the user taps on a floating word
   final Function(FloatingWord entry)? onTap;
+  /// The controller to invoke methods of this widget
+  final Function(FloatingWordStackController controller)? onInitialized;
 
   const FloatingWordStack(
     {
       this.child,
       required this.levels,
       this.hide = false,
-      this.secondsTillFirstWord = 5,
+      this.secondsTillFirstWord = 0,
       this.onTap,
+      this.onInitialized,
       super.key
     }
   );
@@ -71,21 +75,41 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   double entryTextStyleHeight = 1.05;
   /// The MINIMUM seconds for an entry to travel to the bottom, total travel
   /// time is also based on the parallax
-  int entryToBttomSeconds = 20; 
+  int entryToBttomSeconds = 5; 
   /// List of all floating words
   List<FloatingWord> floatingWords = [];
   /// List of entries that finished their animations and thus should be removed
   List<FloatingWord> removeAtNextBuild = [];
   /// The timer to start spawning the fallingowrds
   Timer? spawnEntriesTimer;
+  /// controller to invoke functions of this widget
+  late FloatingWordStackController floatingWordStackController;
 
+  /// [AnimationController] to hide the falling words
+  late AnimationController hideAnimationController = AnimationController(
+    value: 1, upperBound: 1, lowerBound: 0,
+    duration: const Duration(milliseconds: 500),
+    vsync: this,
+  );
+  /// [Animation] to hide the falling words
+  late Animation hideAnimation;
  
   
   @override
   void initState() {
 
+    floatingWordStackController = FloatingWordStackController(
+      init, hideAnimationController);
+
+    hideAnimation = CurvedAnimation(
+      parent: hideAnimationController, curve: Curves.easeIn);
+    hideAnimationController.addListener(() {
+      print(hideAnimation.value);
+    },);
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       init();
+      widget.onInitialized?.call(floatingWordStackController);
     });
     super.initState();
   }
@@ -93,13 +117,15 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   @override
   void didUpdateWidget(covariant FloatingWordStack oldWidget) {
     
-    init();
+    //init();
     super.didUpdateWidget(oldWidget);
   }
 
   void init() async {
 
-    if(MediaQuery.sizeOf(context) == widgetSize) return;
+    hideAnimationController.value = 1.0;
+
+    //if(MediaQuery.sizeOf(context) == widgetSize) return;
     widgetSize = MediaQuery.sizeOf(context);
 
     for (FloatingWord entry in floatingWords) {
@@ -221,15 +247,6 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   @override
   Widget build(BuildContext context) {
 
-    // if no level selection is made or the widget should be hidden return `widget.bottom`
-    if(widget.levels.isEmpty || widget.hide){
-      if(widget.child != null) {
-        return widget.child!;
-      } else {
-        return const SizedBox();
-      }
-    }
-
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onPanUpdate: (update) {
@@ -248,11 +265,19 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
       child: Stack(
         children: [
           if(widget.child != null) widget.child!,
+
+            // if no level selection is made or the widget should be hidden return `widget.bottom`
+            (widget.levels.isEmpty || widget.hide) && widget.child != null
+              ? widget.child!
+              : const SizedBox(),
           
           for (FloatingWord entry in floatingWords)
             AnimatedBuilder(
               animation: entry.animation,
               builder: (context, child) {
+
+                // if the stack is hidden do not build widgets
+                if(hideAnimationController.value < 0.01) return const SizedBox();
     
                 return Positioned(
                   left: entry.position.dx,
@@ -269,18 +294,26 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
                       onTap: () {
                         widget.onTap?.call(entry);
                       },
-                      child: Text(
-                        entry.entryVerticalString,
-                        style: TextStyle(
-                          fontSize: entryTextStyleFontSize * min(1, entry.parallax*1.25),
-                          height: entryTextStyleHeight,
-                          fontFamily: g_japaneseFontFamily,
-                          color: (!GetIt.I<Settings>().advanced.iAmInTheMatrix
-                            ? Theme.of(context).brightness == Brightness.light
-                              ? Colors.black
-                              : Colors.white
-                            : const Color.fromARGB(255, 3, 160, 98)
-                          ).withOpacity(entry.parallax)
+                      child: AnimatedBuilder(
+                        animation: hideAnimationController,
+                        builder: (context, child) {
+                          return Opacity(
+                            opacity: hideAnimationController.value,
+                            child: child!);
+                        },
+                        child: Text(
+                          entry.entryVerticalString,
+                          style: TextStyle(
+                            fontSize: entryTextStyleFontSize * min(1, entry.parallax*1.25),
+                            height: entryTextStyleHeight,
+                            fontFamily: g_japaneseFontFamily,
+                            color: (!GetIt.I<Settings>().advanced.iAmInTheMatrix
+                              ? Theme.of(context).brightness == Brightness.light
+                                ? Colors.black
+                                : Colors.white
+                              : const Color.fromARGB(255, 3, 160, 98)
+                            ).withOpacity(entry.parallax)
+                          ),
                         ),
                       ),
                     ),

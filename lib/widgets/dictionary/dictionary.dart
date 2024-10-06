@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/dictionary/falling_word_stack_controller.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -66,6 +67,10 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   DictSearch search = DictSearch();
   /// Tab controller for the dictionary tabs
   TabController? dictionaryTabController;
+  /// Controller of the floating words
+  FloatingWordStackController? floatingWordStackController;
+  /// Has the initial search been set
+  bool initialSearchSet = false;
 
 
   @override
@@ -83,7 +88,10 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(covariant Dictionary oldWidget) {
     setState(() {
-      search.currentSearch = widget.initialSearch;
+      if(!initialSearchSet){
+        search.currentSearch = widget.initialSearch;
+        initialSearchSet = true;
+      }
     });
     super.didUpdateWidget(oldWidget);
   }
@@ -95,6 +103,16 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
       value: search,
       child: LayoutBuilder(
         builder: ((context, constraints) {
+
+          // reset the floating words when the search was emptied
+          if(search.currentSearch == "" && search.selectedResult != null) {
+            floatingWordStackController?.reset();
+          }
+          // hide the falling words when a search starts
+          if(search.currentSearch != "" &&
+            floatingWordStackController!.opacityAnimationController.isCompleted){
+            floatingWordStackController?.opacityAnimationController.reverse(from: 1);
+          }
           
           // calculate how many tabs should be placed side by side
           tabsSideBySide = min(4, (constraints.maxWidth / 600).floor() + 1);
@@ -130,6 +148,9 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                         search.selectedResult =
                           GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
                       },
+                      onInitialized: (controller) {
+                        floatingWordStackController = controller;
+                      },
                       child: Row(
                         children: [
                           // search bar spanning maxium 2 tabs (no function)
@@ -138,7 +159,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: DictionarySearchWidget(
-                                  initialSearch: widget.initialSearch,
+                                  initialSearch: search.currentSearch,
                                   expandedHeight: constraints.maxHeight - 24,
                                   isExpanded: true,
                                   canCollapse: false,

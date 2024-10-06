@@ -133,12 +133,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       Navigator.of(context).pop();
       reopenPopupTimer?.cancel();
       reopenPopupTimer = Timer(const Duration(seconds: 1), () {
-        if(reshowRadicalPopup) {
-          showRadicalPopup();
-        }
-        if(reshowFilterPopup) {
-          showFilterPopup();
-        }
+        
+        if(reshowRadicalPopup) showRadicalPopup();
+        if(reshowFilterPopup) showFilterPopup();
 
         reshowFilterPopup = false; reshowRadicalPopup = false;
       });
@@ -273,15 +270,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           });
                         },
                         onChanged: (text) async {
-                          // if all text has been deleted from the search cle
-                          if(text == ""){
-                            widget.context.read<DictSearch>().currentSearch = "";
-                            widget.context.read<DictSearch>().searchResults = [];
-                            widget.context.read<DictSearch>().selectedResult = null;
-                          }
-                          else {
-                            await updateSearchResults(text, widget.allowDeconjugation);
-                          }
+                          
+                          await updateSearchResults(text, widget.allowDeconjugation);
+                          
                           setState(() {});
                         },
                       ),
@@ -292,6 +283,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       child: InkWell(
                         borderRadius: BorderRadius.circular(1000000),
                         onTap: onClipboardButtonPressed,
+                        onLongPress: onClipboardButtonPressed,
                         child: SizedBox(
                           width: 30,
                           height: 30,
@@ -566,7 +558,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       searchInputController.text = "";
       widget.context.read<DictSearch>().currentSearch = "";
       widget.context.read<DictSearch>().searchResults = [];
-      widget.context.read<DictSearch>().selectedResult = null;
       searchTextFieldFocusNode.requestFocus();
     }
     else{

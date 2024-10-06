@@ -61,24 +61,24 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
   /// Initializes the list of example sentences.
   /// Limit is the maximum number of examples to be loaded. -1 means no limit.
-  void initExamples({int limit = 10}){
+  Future initExamples({int limit = 10}) async {
 
     if(widget.entry != null){
       List<String> selectedLangs = 
         GetIt.I<Settings>().dictionary.selectedTranslationLanguages;
 
-      searchExamples(
+      examples = await searchExamples(
         selectedLangs,
         widget.entry!.kanjis,
         widget.entry!.readings,
         widget.entry!.hiraganas,
         limit,
         GetIt.I<Isars>().examples.directory
-      ).then((value) {
-        examples = value;
-        matchSpans = getMatchSpans(widget.entry!, examples);
-        return examples;
-      });
+      );
+
+      matchSpans = getMatchSpans(widget.entry!, examples);
+      return examples;
+
     }    
   }
   
@@ -91,7 +91,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
     }
 
     return FutureBuilder(
-      future: examplesSearch,
+      future: initExamples(),
       builder: (context, snapshot) {
         // Is data loading
         if(!snapshot.hasData){
