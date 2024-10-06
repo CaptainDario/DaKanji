@@ -27,18 +27,17 @@ List<List<JMdict>> sortJmdictList(
   /// how many characters are the query and the matched result apart
   List<List<int>> lenDifferences = [[], [], []];
 
-  String queryText = queryKana ?? query;
 
   // if no wildcard is used, iterate over the entries and create a ranking for each
-  if(!queryText.contains(RegExp(r"\?|\*"))){
+  if(!query.contains(RegExp(r"\?|\*"))){
     // iterate over the entries and create a ranking for each
     for (JMdict entry in entries) {
-      // KANJI matched
-      Tuple3 ranked = rankMatches([entry.kanjiIndexes], queryText);
+      // KANJI matched (normal query)
+      Tuple3 ranked = rankMatches([entry.kanjiIndexes], query, queryKana);
       
       // READING matched
-      if(ranked.item1 == -1) {
-        ranked = rankMatches([entry.hiraganas], queryText);
+      if(ranked.item1 == -1 && queryKana != null){
+        ranked = rankMatches([entry.hiraganas], query, queryKana);
       }
       
       // MEANING matched
@@ -53,7 +52,7 @@ List<List<JMdict>> sortJmdictList(
         )
         .toList();
         
-        ranked = rankMatches(k, queryText);
+        ranked = rankMatches(k, query, queryKana);
       }
       // the query was found in this entry
       if(ranked.item1 != -1){
@@ -83,7 +82,8 @@ List<List<JMdict>> sortJmdictList(
 ///   1 - if it was a full (0), start(1) or other(2) match <br/>
 ///   2 - how many characters are in the match but not in `queryText` <br/>
 ///   3 - the index where the search matched <br/>
-Tuple3<int, int, int> rankMatches(List<List<String>> matches, String queryText) {   
+Tuple3<int, int, int> rankMatches(List<List<String>> matches, String queryText,
+  String? queryKana) {   
 
   int result = -1, lenDiff = -1; List<int> matchIndeces = [-1, -1];
   
@@ -92,7 +92,8 @@ Tuple3<int, int, int> rankMatches(List<List<String>> matches, String queryText) 
   for (var i = 0; i < matches.length; i++) {
     for (var j = 0; j < matches[i].length; j++) {
       matches[i][j] = matches[i][j].toLowerCase();
-      if(matches[i][j].contains(queryText)){
+      if(matches[i][j].contains(queryText) ||
+        queryKana != null && matches[i][j].contains(queryKana)){
         matchIndeces = [i, j];
         break;
       }

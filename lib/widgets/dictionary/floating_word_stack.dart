@@ -38,7 +38,7 @@ class FloatingWordStack extends StatefulWidget {
       this.child,
       required this.levels,
       this.hide = false,
-      this.secondsTillFirstWord = 0,
+      this.secondsTillFirstWord = 5,
       this.onTap,
       this.onInitialized,
       super.key
@@ -75,7 +75,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   double entryTextStyleHeight = 1.05;
   /// The MINIMUM seconds for an entry to travel to the bottom, total travel
   /// time is also based on the parallax
-  int entryToBttomSeconds = 5; 
+  int entryToBttomSeconds = 20; 
   /// List of all floating words
   List<FloatingWord> floatingWords = [];
   /// List of entries that finished their animations and thus should be removed
@@ -103,9 +103,6 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
     hideAnimation = CurvedAnimation(
       parent: hideAnimationController, curve: Curves.easeIn);
-    hideAnimationController.addListener(() {
-      print(hideAnimation.value);
-    },);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       init();

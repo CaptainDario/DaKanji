@@ -159,6 +159,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: DictionarySearchWidget(
+                                  //key: Key(search.selectedResult.toString()),
                                   initialSearch: search.currentSearch,
                                   expandedHeight: constraints.maxHeight - 24,
                                   isExpanded: true,
