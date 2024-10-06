@@ -183,7 +183,6 @@ class UserData{
     // a different version than last time is being used (test with version = 0.0.0)
     debugPrint("used: $versionUsed now: $g_Version");
     versionUsed ??= Version(0, 0, 0);
-    versionUsed = Version(3, 4, 5);
     if(versionUsed! < g_Version && appOpenedTimes > 1){
       newVersionUsed = true;debugPrint("New version installed");
       // show the changelog
