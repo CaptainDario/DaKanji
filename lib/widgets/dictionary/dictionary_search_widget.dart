@@ -196,251 +196,254 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
             context.read<DictSearch>().searchResults = [];
           }
         },
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).brightness == Brightness.dark 
-                ? Colors.grey.shade800
-                : Colors.grey.shade300
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Theme.of(context).brightness == Brightness.dark 
+                  ? Colors.grey.shade800
+                  : Colors.grey.shade300
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              color: Theme.of(context).brightness == Brightness.dark
+                ? Theme.of(context).scaffoldBackgroundColor
+                : Colors.white,
             ),
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: Theme.of(context).brightness == Brightness.dark
-              ? Theme.of(context).scaffoldBackgroundColor
-              : Colors.white,
-          ),
-          child: Column(
-            children: [
-              // the search bar
-              Container(
-                decoration: BoxDecoration(
-                  border: BorderDirectional(
-                    bottom: BorderSide(
-                      color: searchBarExpanded
-                        ? Theme.of(context).brightness == Brightness.dark 
-                          ? Colors.grey.shade800
-                          : Colors.grey.shade300 
-                        : Colors.transparent,
-                      style: BorderStyle.solid
+            child: Column(
+              children: [
+                // the search bar
+                Container(
+                  decoration: BoxDecoration(
+                    border: BorderDirectional(
+                      bottom: BorderSide(
+                        color: searchBarExpanded
+                          ? Theme.of(context).brightness == Brightness.dark 
+                            ? Colors.grey.shade800
+                            : Colors.grey.shade300 
+                          : Colors.transparent,
+                        style: BorderStyle.solid
+                      )
                     )
-                  )
-                ),
-                child: Row(
-                  key: searchTextInputKey,
-                  children: [
-                    // magnifying glass / arrow back icon button
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 4.0),
-                      child: IconButton(
-                        splashRadius: 20,
-                        icon: Icon(searchBarExpanded && widget.canCollapse
-                          ? Icons.arrow_back
-                          : Icons.search),
-                        onPressed: () {
-                          if(!widget.canCollapse) return;
-                  
-                          //close onscreen keyboard
-                          FocusManager.instance.primaryFocus?.unfocus();
-                                    
-                          if(!searchBarExpanded) {
-                            openSearchBar();
-                          }
-                          else{
-                            collapseSearchBar();
-                          }
-                        },
-                      ),
-                    ),
-                    // text input
-                    Expanded(
-                      child: TextField(
-                        focusNode: searchTextFieldFocusNode,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none
+                  ),
+                  child: Row(
+                    key: searchTextInputKey,
+                    children: [
+                      // magnifying glass / arrow back icon button
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 4.0),
+                        child: IconButton(
+                          splashRadius: 20,
+                          icon: Icon(searchBarExpanded && widget.canCollapse
+                            ? Icons.arrow_back
+                            : Icons.search),
+                          onPressed: () {
+                            if(!widget.canCollapse) return;
+                    
+                            //close onscreen keyboard
+                            FocusManager.instance.primaryFocus?.unfocus();
+                                      
+                            if(!searchBarExpanded) {
+                              openSearchBar();
+                            }
+                            else{
+                              collapseSearchBar();
+                            }
+                          },
                         ),
-                        controller: searchInputController,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          fontSize: 16
-                        ),
-                        onTap: () {
-                          searchTextFieldFocusNode.requestFocus();
-                          setState(() {
-                            searchBarExpanded = true;
-                            searchBarAnimationController.forward();
-                          });
-                        },
-                        onChanged: (text) async {
-                          
-                          await updateSearchResults(text, widget.allowDeconjugation);
-                          
-                          setState(() {});
-                        },
                       ),
-                    ),
-                    // Copy / clear button
-                    Focus(
-                      focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputClearStep,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(1000000),
-                        onTap: onClipboardButtonPressed,
-                        onLongPress: onClipboardButtonPressed,
-                        child: SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: Icon(
-                            searchInputController.text == ""
-                              ? Icons.paste
-                              : Icons.clear,
-                            size: 20,
+                      // text input
+                      Expanded(
+                        child: TextField(
+                          focusNode: searchTextFieldFocusNode,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none
                           ),
-                        ),
-                      ),
-                    ),
-                    // drawing screen button
-                    if(widget.includeDrawButton)
-                      Focus(
-                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(1000000),
+                          controller: searchInputController,
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontSize: 16
+                          ),
                           onTap: () {
+                            searchTextFieldFocusNode.requestFocus();
                             setState(() {
                               searchBarExpanded = true;
+                              searchBarAnimationController.forward();
                             });
-                            GetIt.I<Settings>().drawing.selectedDictionary =
-                              GetIt.I<Settings>().drawing.inbuiltDictId;
-                            Navigator.pushNamedAndRemoveUntil(
-                              widget.context, 
-                              "/${Screens.drawing.name}",
-                              (route) => true,
-                              arguments: NavigationArguments(
-                                false,
-                                drawSearchPrefix: searchInputController.text.isNotEmpty
-                                  ? searchInputController.text.substring(
-                                    0,
-                                    searchInputController.selection.baseOffset == -1
-                                      ? searchInputController.text.length
-                                      : searchInputController.selection.baseOffset
-                                  )
-                                  : "",
-                                drawSearchPostfix: searchInputController.text.isNotEmpty
-                                  ? searchInputController.text.substring(
-                                    searchInputController.selection.baseOffset == -1
-                                      ? searchInputController.text.length
-                                      : searchInputController.selection.baseOffset
-                                  )
-                                  : ""
-                              )
-                            );
                           },
-                          child: const SizedBox(
+                          onChanged: (text) async {
+                            
+                            await updateSearchResults(text, widget.allowDeconjugation);
+                            
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                      // Copy / clear button
+                      Focus(
+                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputClearStep,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(1000000),
+                          onTap: onClipboardButtonPressed,
+                          onLongPress: onClipboardButtonPressed,
+                          child: SizedBox(
                             width: 30,
                             height: 30,
-                            child: Icon(Icons.brush)
+                            child: Icon(
+                              searchInputController.text == ""
+                                ? Icons.paste
+                                : Icons.clear,
+                              size: 20,
+                            ),
                           ),
                         ),
                       ),
-                    // filter button 
-                    Focus(
-                      focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchFilterStep,
-                      child: InkWell(
+                      // drawing screen button
+                      if(widget.includeDrawButton)
+                        Focus(
+                          focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(1000000),
+                            onTap: () {
+                              setState(() {
+                                searchBarExpanded = true;
+                              });
+                              GetIt.I<Settings>().drawing.selectedDictionary =
+                                GetIt.I<Settings>().drawing.inbuiltDictId;
+                              Navigator.pushNamedAndRemoveUntil(
+                                widget.context, 
+                                "/${Screens.drawing.name}",
+                                (route) => true,
+                                arguments: NavigationArguments(
+                                  false,
+                                  drawSearchPrefix: searchInputController.text.isNotEmpty
+                                    ? searchInputController.text.substring(
+                                      0,
+                                      searchInputController.selection.baseOffset == -1
+                                        ? searchInputController.text.length
+                                        : searchInputController.selection.baseOffset
+                                    )
+                                    : "",
+                                  drawSearchPostfix: searchInputController.text.isNotEmpty
+                                    ? searchInputController.text.substring(
+                                      searchInputController.selection.baseOffset == -1
+                                        ? searchInputController.text.length
+                                        : searchInputController.selection.baseOffset
+                                    )
+                                    : ""
+                                )
+                              );
+                            },
+                            child: const SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: Icon(Icons.brush)
+                            ),
+                          ),
+                        ),
+                      // filter button 
+                      Focus(
+                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchFilterStep,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(1000000),
+                          onTap: showFilterPopup,
+                          child: const SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: Icon(
+                              Icons.filter_alt_outlined,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                      // radical button 
+                      Focus(
+                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchRadicalStep,
+                        child: InkWell(
                         borderRadius: BorderRadius.circular(1000000),
-                        onTap: showFilterPopup,
-                        child: const SizedBox(
-                          height: 30,
-                          width: 30,
-                          child: Icon(
-                            Icons.filter_alt_outlined,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                    // radical button 
-                    Focus(
-                      focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchRadicalStep,
-                      child: InkWell(
-                      borderRadius: BorderRadius.circular(1000000),
-                        onTap: showRadicalPopup,
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Transform.translate(
-                              offset: const Offset(0, -2),
-                              child: const Text(
-                                "部",
-                                style: TextStyle(
-                                  fontSize: 20,
+                          onTap: showRadicalPopup,
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Transform.translate(
+                                offset: const Offset(0, -2),
+                                child: const Text(
+                                  "部",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                      ),
-                    ),
-                    const SizedBox(width: 4,)
-                  ],
-                ),
-              ),
-              if(searchBarInputHeight != 0)
-                AnimatedBuilder(
-                  animation: searchBarAnimation,
-                  builder: (context, child) {
-                    return SizedBox(
-                      height: (widget.expandedHeight - searchBarInputHeight)
-                        * searchBarAnimation.value,
-                      child: child,
-                    );
-                  },
-                  child: Stack(
-                    children: [
-                      widget.context.read<DictSearch>().currentSearch != ""
-                        // search results if the user entered text
-                        ? SearchResultList(
-                          searchResults: widget.context.watch<DictSearch>().searchResults,
-                          onSearchResultPressed: onSearchResultPressed,
-                          showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
-                          init: (controller) {},
-                        )
-                        // otherwise the search history
-                        : StreamBuilder<List<SearchHistorySQLData>>(
-                          stream: GetIt.I<SearchHistorySQLDatabase>().watchAllSearchHistoryIDs(),
-                          builder: (context, snapshot) {
-            
-                            if(snapshot.data == null) return const SizedBox();
-            
-                            List<JMdict> searchHistory = [];
-                            List<int> sqlIDs = [];
-                            if(snapshot.hasData){
-                              final ids = snapshot.data!.map((e) => e.dictEntryID).toList();
-                              searchHistory = GetIt.I<Isars>().dictionary.jmdict
-                                .getAllSync(ids)
-                                .nonNulls.toList();
-            
-                              sqlIDs = snapshot.data!.map((e) => e.id).toList();
-                            }
-            
-                            return SearchResultList(
-                              searchResults: searchHistory,
-                              showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
-                              alwaysAnimateIn: false,
-                              init: (controller) {},
-                              onSearchResultPressed: onSearchResultPressed,
-                              onDismissed: (direction, entry, idx) => 
-                                GetIt.I<SearchHistorySQLDatabase>().deleteEntry(
-                                  sqlIDs[idx]
-                                ),
-                            );
-                          }
+                          )
                         ),
+                      ),
+                      const SizedBox(width: 4,)
                     ],
+                  ),
+                ),
+                if(searchBarInputHeight != 0)
+                  AnimatedBuilder(
+                    animation: searchBarAnimation,
+                    builder: (context, child) {
+                      return SizedBox(
+                        height: (widget.expandedHeight - searchBarInputHeight)
+                          * searchBarAnimation.value,
+                        child: child,
+                      );
+                    },
+                    child: Stack(
+                      children: [
+                        widget.context.read<DictSearch>().currentSearch != ""
+                          // search results if the user entered text
+                          ? SearchResultList(
+                            searchResults: widget.context.watch<DictSearch>().searchResults,
+                            onSearchResultPressed: onSearchResultPressed,
+                            showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
+                            init: (controller) {},
+                          )
+                          // otherwise the search history
+                          : StreamBuilder<List<SearchHistorySQLData>>(
+                            stream: GetIt.I<SearchHistorySQLDatabase>().watchAllSearchHistoryIDs(),
+                            builder: (context, snapshot) {
+              
+                              if(snapshot.data == null) return const SizedBox();
+              
+                              List<JMdict> searchHistory = [];
+                              List<int> sqlIDs = [];
+                              if(snapshot.hasData){
+                                final ids = snapshot.data!.map((e) => e.dictEntryID).toList();
+                                searchHistory = GetIt.I<Isars>().dictionary.jmdict
+                                  .getAllSync(ids)
+                                  .nonNulls.toList();
+              
+                                sqlIDs = snapshot.data!.map((e) => e.id).toList();
+                              }
+              
+                              return SearchResultList(
+                                searchResults: searchHistory,
+                                showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
+                                alwaysAnimateIn: false,
+                                init: (controller) {},
+                                onSearchResultPressed: onSearchResultPressed,
+                                onDismissed: (direction, entry, idx) => 
+                                  GetIt.I<SearchHistorySQLDatabase>().deleteEntry(
+                                    sqlIDs[idx]
+                                  ),
+                              );
+                            }
+                          ),
+                      ],
+                    )
                   )
-                )
-            ],
-          )
+              ],
+            )
+          ),
         ),
       ),
     );
