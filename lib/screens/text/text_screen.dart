@@ -144,9 +144,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         setState(() {
           inputController.text = g_SampleText;
           inputText = g_SampleText;
-          final res = processText(inputText,
-            GetIt.I<Mecab>(),
-            GetIt.I<KanaKit>());
+          final res = processText(inputText, GetIt.I<Mecab>(), GetIt.I<KanaKit>());
           mecabReadings = res.item1;
           mecabSurfaces = res.item2;
           mecabPOS = res.item3;
@@ -189,6 +187,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
+    processText(inputText, GetIt.I<Mecab>(), GetIt.I<KanaKit>());
 
     return DaKanjiDrawer(
       currentScreen: Screens.text,
