@@ -27,12 +27,11 @@ String conjunctionParticle = "接続助詞";
 String auxVerb = "非自立";
 /// Suffix verb
 String suffixVerb = "接尾";
-
+/// Main verb
 String mainVerb = "自立";
 
 /// A list of mecab pos that indicate that this is a valid conjugation 
 List<List<String>> mecabPosToRemove = [
-  
   [inflectionDependentWord],
   [verb, auxVerb]
 ];
@@ -90,7 +89,8 @@ String deconjugate(String word){
     
     bool deconjugated = false;
     for (int i = nodes.length-1; i >= 0; i--) {
-      // if this token node is can be deconjugated
+      // if this token node can be deconjugated
+      // TODO handle adjectives
       if(compareMecabOuts(nodes[i].features, mecabPosCanDeconjugate)){
 
         // if this word has not been deconjugated
