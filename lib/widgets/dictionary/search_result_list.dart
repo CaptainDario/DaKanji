@@ -53,7 +53,7 @@ class SearchResultList extends StatefulWidget {
 class _SearchResultListState extends State<SearchResultList> {
 
   /// Key to either only slide in search results once, or multiple times
-  Key slideInAnimationKey = Key(DateTime.now().toIso8601String());
+  Key? slideInAnimationKey;
   /// List of focus nodes that each corresponds to on search result entry 
   List searchResultsFocusses = [];
   /// Controller that can be used to hadle this instance
