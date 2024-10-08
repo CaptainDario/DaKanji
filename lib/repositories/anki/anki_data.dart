@@ -99,12 +99,14 @@ const String ankiDataBackTemplate =
 
 <a href="{{$ankiDataFieldDaKanjiLink}}">
 	{{#$ankiDataFieldKanji}}
-		<ruby class="kanji">{{$ankiDataFieldKanji}}<rp>(</rp><rt class="furigana">{{$ankiDataFieldKana}}</rt><br>
+		<ruby class="kanji">{{$ankiDataFieldKanji}}<rp>(</rp><rt class="furigana">{{$ankiDataFieldKana}}</rt>
 	{{/$ankiDataFieldKanji}}
+  <br>
 
 	{{^$ankiDataFieldKanji}}
 		{{$ankiDataFieldKana}}
 	{{/$ankiDataFieldKanji}}
+</a>
 <br>
 {{#$ankiDataFieldExample}}
 	{{$ankiDataFieldExample}}
