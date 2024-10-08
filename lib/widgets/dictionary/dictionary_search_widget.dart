@@ -577,6 +577,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// Searches in the dictionary and updates all search results and variables
   /// setState() needs to be called to update the ui.
   Future<void> updateSearchResults(String text, bool allowDeconjugation) async {
+
     // only search in dictionary if the query is not empty (remove filters to check this)
     if(text.split(" ").where((e) => !e.startsWith("#")).join() == ""){
       widget.context.read<DictSearch>().currentSearch = "";
@@ -653,3 +654,4 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       await GetIt.I<DictionarySearch>().query(deconjugated) ?? [];
   }
 }
+
