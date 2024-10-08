@@ -114,15 +114,16 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
   @override
   void didUpdateWidget(covariant FloatingWordStack oldWidget) {
     
-    //init();
+    if(MediaQuery.sizeOf(context) != widgetSize) {
+      hideAnimationController.reverse().then((value) => init(),);
+    }
     super.didUpdateWidget(oldWidget);
+
   }
 
   void init() async {
 
     hideAnimationController.value = 1.0;
-
-    //if(MediaQuery.sizeOf(context) == widgetSize) return;
     widgetSize = MediaQuery.sizeOf(context);
 
     for (FloatingWord entry in floatingWords) {
