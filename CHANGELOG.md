@@ -13,11 +13,14 @@ Added:
 Improvements:
 
 - Dictionary
+  - New deconjugation engine, handles more deconjugation patterns
   - Image search and DeepL supported on MacOS and Windows
   - Back navigation clears search and resets current entry
   - Readability of kanji stroke order diagrams
+- Text: Improved handling of conjugations
 - Kana table: playback on android does not cut off
 - Anki: Setting to decide how adding a duplicate should be handled
+- Various small UI improvements
 
 Fixed:
 
