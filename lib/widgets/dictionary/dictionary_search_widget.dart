@@ -272,6 +272,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                             });
                           },
                           onChanged: (text) async {
+
+                            text = text.trim();
                             
                             await updateSearchResults(text, widget.allowDeconjugation);
                             
