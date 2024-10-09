@@ -14,12 +14,13 @@ List<String> selectMaxLengthWord(List<TokenNode> mecabTokens){
 
   // if this is the beginning of a verb
   // todo handle adjectives
-  if(mecabTokens.first.features[1] == mainVerb){
+  if(mecabTokens.first.features[1] == startPos){
     for (var i = 1; i < mecabTokens.length; i++) {
     
       // search for all its parts
       List<String> nextFeatures = mecabTokens[i].features;
-      if (nextFeatures[0] == verb || nextFeatures[5] == "基本形" ||
+      if (nextFeatures[0] == verb ||
+        nextFeatures[5] == "基本形" ||
         nextFeatures[1] == conjunctionParticle){
         
         ret.add(mecabTokens[i].surface);

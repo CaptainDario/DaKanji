@@ -27,8 +27,10 @@ String conjunctionParticle = "接続助詞";
 String auxVerb = "非自立";
 /// Suffix verb
 String suffixVerb = "接尾";
-/// Main verb
-String mainVerb = "自立";
+/// The verb / adjective that starts this word
+String startPos = "自立";
+/// Indicates that this is a na adjective
+String nounAdjectiveBase = "形容動詞語幹";
 
 /// A list of mecab pos that indicate that this is a valid conjugation 
 List<List<String>> mecabPosToRemove = [
@@ -36,9 +38,13 @@ List<List<String>> mecabPosToRemove = [
   [verb, auxVerb]
 ];
 
+/// A list of mecab pos combinations that indicate a deconjugatable word
 List<List<String>> mecabPosCanDeconjugate = [
   [verb, auxVerb],
-  [verb, mainVerb]
+  [verb, startPos],
+  [iAdjective, startPos],
+  [naAdjective, startPos],
+  [noun, nounAdjectiveBase]
 ];
 
 /// Compares `a` to `b`, if the strings are the same.
@@ -65,7 +71,8 @@ bool compareMecabOut(List<String> a, List<String?> b,){
 
 }
 
-///
+/// Compares one mecab output to a list of mecab outputs.
+/// If any of them are equal returns true
 bool compareMecabOuts(List<String> a, List<List<String>> mecabOuts){
 
   for (var mecabOut in mecabOuts) {
@@ -83,34 +90,35 @@ String deconjugate(String word){
 
   String ret = "";
 
-  if(word != "" && GetIt.I<KanaKit>().isJapanese(word)){
+  // is a a japanese word given ?
+  if(word == "" || !GetIt.I<KanaKit>().isJapanese(word)) return ret;
 
-    List<TokenNode> nodes = GetIt.I<Mecab>().parse(word)..removeLast();
-    
-    bool deconjugated = false;
-    for (int i = nodes.length-1; i >= 0; i--) {
-      // if this token node can be deconjugated
-      // TODO handle adjectives
-      if(compareMecabOuts(nodes[i].features, mecabPosCanDeconjugate)){
+  List<TokenNode> nodes = GetIt.I<Mecab>().parse(word)..removeLast();
 
-        // if this word has not been deconjugated
-        if(!deconjugated){
-          // if the word is in て-形, drop the auxillary verb
-          if((i-1 >= 0 && ["て", "で"].contains(nodes[i-1].features[6]))){
-          }
-          // otherwise deconjugate the verb
-          else{
-            ret = nodes[i].features[6] + ret;
-            deconjugated = true;
-          }
+  // does it seem deconjugatable ?
+  if(!compareMecabOuts(nodes[0].features, mecabPosCanDeconjugate)) return ret;
+
+  bool deconjugated = false;
+  for (int i = nodes.length-1; i >= 0; i--){
+    // if this token node can be deconjugated
+    if(compareMecabOuts(nodes[i].features, mecabPosCanDeconjugate)){
+
+      // if this word has not been deconjugated
+      if(!deconjugated){
+        // if the word is in て-形, drop the auxillary verb
+        if((i-1 >= 0 && ["て", "で"].contains(nodes[i-1].features[6]))){
         }
-        else {
-          ret = nodes[i].surface + ret;
+        // otherwise deconjugate the verb
+        else{
+          ret = nodes[i].features[6] + ret;
+          deconjugated = true;
         }
       }
-      
+      else {
+        ret = nodes[i].surface + ret;
+      }
     }
   }
-
+  
   return ret;
 }
