@@ -2,6 +2,8 @@
 import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';
 
+
+
 ///  Builds a search query for the JMDict database in ISAR
 /// 
 /// Searches in the given `isar` for entries with an id between `idRangeStart`
@@ -11,7 +13,8 @@ import 'package:isar/isar.dart';
 /// * include ID in kanji / kana / meanings index to split load between isolates
 QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
   Isar isar, int idRangeStart, int idRangeEnd, int noIsolates,
-  String query, String? kanaizedQuery, List<String> filters, List<String> langs)
+  String query, String? queryKana, String? queryDeconjugated,
+  List<String> filters, List<String> langs)
 {
 
   // check if the search contains a wildcard
@@ -19,9 +22,9 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
 
   QueryBuilder<JMdict, JMdict, QFilterCondition> q;
   if(!containsWildcard) {
-    q = normalQuery(isar, idRangeStart, idRangeEnd, query, kanaizedQuery);
+    q = normalQuery(isar, idRangeStart, idRangeEnd, query, queryKana, queryDeconjugated);
   } else {
-    q = wildcardQuery(isar, idRangeStart, idRangeEnd, query, kanaizedQuery);
+    q = wildcardQuery(isar, idRangeStart, idRangeEnd, query, queryKana, queryDeconjugated);
   }    
 
   return q
@@ -44,18 +47,22 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
       // allow kanji / hiragana matches without wildcard
       q.optional(!containsWildcard, (q) => 
         q.group((q) => 
-          q.kanjiIndexesElementStartsWith(kanaizedQuery ?? query)
+          q.anyOf([queryKana, query, queryDeconjugated].nonNulls, (q, element)
+            => q.kanjiIndexesElementStartsWith(element))
             .or()
-          .hiraganasElementStartsWith(kanaizedQuery ?? query)
+          .anyOf([queryKana, query, queryDeconjugated].nonNulls, (q, element)
+            => q.hiraganasElementStartsWith(element))
         )
       )
       .or()
       // allow kanji / hiragana matches with wildcard  
       .optional(containsWildcard, (q) => 
-        q.group((q) => 
-          q.kanjisElementMatches(kanaizedQuery ?? query)
+        q.group((q) =>
+          q.anyOf([queryKana, query, queryDeconjugated].nonNulls, (q, element)
+            => q.kanjisElementMatches(element))
             .or()
-          .hiraganasElementMatches(kanaizedQuery ?? query)
+          .anyOf([queryKana, query, queryDeconjugated].nonNulls, (q, element)
+            => q.hiraganasElementMatches(element))
         )
       )
       .or()
@@ -68,7 +75,7 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
             .and()
           .group((q) => 
             q
-            .optional(!containsWildcard, (q) => 
+            .optional(!containsWildcard, (q) =>
               q.meaningsElement((meaning) => 
                 meaning.attributesElementStartsWith(query)
               )
@@ -90,14 +97,18 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
 
 
 QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
-  Isar isar, int idRangeStart, int idRangeEnd, String query, String? kanaizedQuery){
+  Isar isar, int idRangeStart, int idRangeEnd,
+  String query, String? queryKana, String? queryDeconjugated){
 
   return isar.jmdict.where()
-    .kanjiIndexesElementStartsWith(kanaizedQuery ?? query)
-      .or()
-    .hiraganasElementStartsWith(kanaizedQuery ?? query)
-      .or()
-    .meaningsIndexesElementStartsWith(query)
+    .anyOf([query, queryKana, queryDeconjugated].nonNulls, (q, element)
+        => q.kanjiIndexesElementStartsWith(element))
+        .or()
+      .anyOf([query, queryKana, queryDeconjugated].nonNulls, (q, element)
+        => q.hiraganasElementStartsWith(element))
+        .or()
+      .anyOf([query].nonNulls, (q, element)
+        => q.meaningsIndexesElementStartsWith(element))
   .filter()
     // limit this process to one chunk of size (entries.length / num_processes)
     .idBetween(idRangeStart, idRangeEnd)
@@ -105,17 +116,20 @@ QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
 }
 
 QueryBuilder<JMdict, JMdict, QAfterFilterCondition> wildcardQuery(
-  Isar isar, int idRangeStart, int idRangeEnd, String query, String? kanaizedQuery){
+  Isar isar, int idRangeStart, int idRangeEnd,
+  String query, String? queryKana, String? queryDeconjugated){
 
   return isar.jmdict.where()
       .idBetween(idRangeStart, idRangeEnd)
     .filter()
-
-      .kanjisElementMatches(kanaizedQuery ?? query)
+      .anyOf([query, queryKana, queryDeconjugated].nonNulls, (q, element)
+        => q.kanjisElementMatches(element))
         .or()
-      .hiraganasElementMatches(kanaizedQuery ?? query)
+      .anyOf([query, queryKana, queryDeconjugated].nonNulls, (q, element)
+        => q.hiraganasElementMatches(element))
         .or()
-      .meaningsIndexesElementMatches(query)
+      .anyOf([query].nonNulls, (q, element)
+        => q.meaningsIndexesElementMatches(element))
   ;
 
 }

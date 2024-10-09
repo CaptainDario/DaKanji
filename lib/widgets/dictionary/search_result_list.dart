@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/repositories/radicals/radicals.dart';
+import 'package:da_kanji_mobile/repositories/tf_lite/backend.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,7 +15,7 @@ import 'search_result_card.dart';
 class SearchResultList extends StatefulWidget {
 
   /// The search results that should be shown in the list
-  final List searchResults;
+  final List<JMdict> searchResults;
   /// should the searchResults be shown in reverse
   final bool reversed;
   /// If true the word frequency will be displayed
@@ -96,6 +98,7 @@ class _SearchResultListState extends State<SearchResultList> {
 
   @override
   Widget build(BuildContext context) {
+
     return AnimationLimiter(
       key: slideInAnimationKey,
       child: LayoutBuilder(
@@ -103,7 +106,7 @@ class _SearchResultListState extends State<SearchResultList> {
           return ListView.builder(
             itemCount: widget.searchResults.length,
             itemBuilder: ((context, index) {
-              // determine index based on 
+              // determine index based on reversed or not
               int i = widget.reversed ? widget.searchResults.length-index-1 : index;
           
               return AnimationConfiguration.staggeredList(

@@ -41,6 +41,8 @@ class Dictionary extends StatefulWidget {
   
   /// Should the search term be deconjugated before searching
   final bool allowDeconjugation;
+  /// Should the search term be converted to kana
+  final bool convertToKana;
 
   const Dictionary(
     this.includeTutorial,
@@ -51,6 +53,7 @@ class Dictionary extends StatefulWidget {
       this.includeDrawButton = true,
       this.isExpanded = false,
       this.allowDeconjugation=true,
+      this.convertToKana=true,
       super.key
     }
   );
@@ -165,6 +168,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                   isExpanded: true,
                                   canCollapse: false,
                                   includeDrawButton: widget.includeDrawButton,
+                                  convertToKana: widget.convertToKana,
                                   allowDeconjugation: widget.allowDeconjugation,
                                   context: context,
                                 ),
@@ -300,6 +304,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       expandedHeight: constraints.maxHeight - 24,
                       isExpanded: widget.isExpanded,
                       includeDrawButton: widget.includeDrawButton,
+                      convertToKana: widget.convertToKana,
                       allowDeconjugation: widget.allowDeconjugation,
                       context: context,
                     ),

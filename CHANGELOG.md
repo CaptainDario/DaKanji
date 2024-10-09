@@ -14,6 +14,9 @@ Improvements:
 
 - Dictionary
   - New deconjugation engine, handles more deconjugation patterns
+  - Improved searching
+    - Searches for multiple possible search terms at the same time
+    - Ignore white space at the beginning and end of search terms
   - Image search and DeepL supported on MacOS and Windows
   - Back navigation clears search and resets current entry
   - Readability of kanji stroke order diagrams

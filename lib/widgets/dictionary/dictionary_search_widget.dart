@@ -2,6 +2,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/dictionary/dictionary_alt_search_flushbar.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -45,6 +47,8 @@ class DictionarySearchWidget extends StatefulWidget {
   final bool canCollapse;
   /// should the button to navigate to the drawing screen be included
   final bool includeDrawButton;
+  /// should queries be converted to kana if possible
+  final bool convertToKana;
   /// should queries be deconjugated
   final bool allowDeconjugation;
   /// The current build context
@@ -57,6 +61,7 @@ class DictionarySearchWidget extends StatefulWidget {
       this.isExpanded = false,
       this.canCollapse = true,
       this.includeDrawButton = true,
+      required this.convertToKana,
       this.allowDeconjugation = true,
       required this.context,
       super.key
@@ -160,7 +165,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       if(widget.initialSearch != initialSearch){
         searchInputController.text = widget.initialSearch;
         initialSearch = widget.initialSearch;
-        await updateSearchResults(initialSearch, widget.allowDeconjugation);
+        await updateSearchResults(initialSearch,
+          widget.convertToKana, widget.allowDeconjugation);
       }
       if(mounted) {
         setState(() {});
@@ -275,7 +281,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
                             text = text.trim();
                             
-                            await updateSearchResults(text, widget.allowDeconjugation);
+                            await updateSearchResults(text,
+                              widget.allowDeconjugation,
+                              widget.convertToKana,);
                             
                             setState(() {});
                           },
@@ -495,7 +503,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       onDismissCallback: (dismissType) async {
         await updateSearchResults(
           searchInputController.text,
-          widget.allowDeconjugation
+          widget.allowDeconjugation,
+           widget.convertToKana,
         );
         filterPopupOpen = false;
       },
@@ -520,7 +529,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       onDismissCallback: (dismissType) async {
         await updateSearchResults(
           searchInputController.text,
-          widget.allowDeconjugation
+          widget.allowDeconjugation,
+          widget.convertToKana,
         );
         radicalPopupOpen = false;
       },
@@ -569,7 +579,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       String data = (await Clipboard.getData('text/plain'))?.text ?? "";
       data = data.replaceAll("\n", " ");
       searchInputController.text = data;
-      await updateSearchResults(data, widget.allowDeconjugation);
+      await updateSearchResults(data, widget.convertToKana, widget.allowDeconjugation);
     }
     searchBarExpanded = true;
     searchBarAnimationController.forward();
@@ -578,7 +588,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   /// Searches in the dictionary and updates all search results and variables
   /// setState() needs to be called to update the ui.
-  Future<void> updateSearchResults(String text, bool allowDeconjugation) async {
+  Future<void> updateSearchResults(
+    String text, bool convertToHiragana, bool allowDeconjugation) async {
+
+    // hide all flushbars from previous searches
+    deconjugationFlushbar?.dismiss();
 
     // only search in dictionary if the query is not empty (remove filters to check this)
     if(text.split(" ").where((e) => !e.startsWith("#")).join() == ""){
@@ -589,62 +603,37 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     KanaKit k = GetIt.I<KanaKit>();
     String deconjugated = "";
-    // try to deconjugate the input if allowed
-    // convertable to hiragana (or is already japanese)
-    // does not have spaces
-    if(allowDeconjugation &&
-      (k.isJapanese(text) || k.isJapanese(k.toKana(text))) &&
-      !text.contains(" ")
-      )
+    // try to deconjugate the input if
+    // 1. allowed
+    // 2. convertable to hiragana (or is already japanese)
+    // 3. does not have spaces
+    if(allowDeconjugation &&!text.contains(" ") && 
+      (k.isJapanese(text) || k.isJapanese(k.toKana(text))))
     {
       deconjugated = deconjugate(k.isJapanese(text) ? text : k.toHiragana(k.toKana(text)));
-      if(deconjugated != "" && k.isJapanese(deconjugated) && k.isRomaji(text)) {
-        deconjugated = k.toRomaji(deconjugated);
-      }
+    }
+
+    // if romaji conversion setting is enabled, convert query to hiragana
+    String? queryKana; KanaKit kKitRomaji = const KanaKit();
+    if(convertToHiragana) {
+      String t = kKitRomaji.toHiragana(kKitRomaji.toKana(text));
+      // assure that the outcome is japanese
+      if(kKitRomaji.isJapanese(t)) queryKana = t;
     }
 
     // if the search query was changed show a snackbar and give the option to
     // use the original search
     if(deconjugated != "" && deconjugated != text){
-      deconjugationFlushbar?.dismiss();
-      deconjugationFlushbar = Flushbar(
-        backgroundColor: Colors.white,
-        messageText: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                "${LocaleKeys.DictionaryScreen_search_searched.tr()} $deconjugated",
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.black
-                ),
-              ),
-            ),
-            const SizedBox(width: 20,),
-            Expanded(
-              child: InkWell(
-                onTap: () async {
-                  await updateSearchResults(text, false);
-                },
-                child: Text(
-                  "${LocaleKeys.DictionaryScreen_search_search_for.tr()}  $text",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: Theme.of(widget.context).highlightColor
-                  ),                
-                ),
-              ),
-            )
-          ],
-        ),
-        flushbarPosition: FlushbarPosition.TOP,
-        isDismissible: true,
-        duration: const Duration(milliseconds: 4000),
-      )..show(context).then((value) {
-        deconjugationFlushbar = null;
-        return value;
-      });
+
+      deconjugationFlushbar = DictionaryAltSearchFlushbar(
+          text, queryKana, deconjugated,
+          onAltSearchTapped
+        )
+        .build(context)..show(context).then((value) {
+          deconjugationFlushbar = null;
+          return value;
+        }
+      );
     }
     else{
       deconjugated = text;
@@ -653,7 +642,19 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     // update search variables and search
     widget.context.read<DictSearch>().currentSearch = deconjugated;
     widget.context.read<DictSearch>().searchResults =
-      await GetIt.I<DictionarySearch>().query(deconjugated) ?? [];
+      await GetIt.I<DictionarySearch>().search(
+        text,
+        queryKana != text ? queryKana : null,
+        deconjugated != text ? deconjugated : null) ?? [];
+  }
+
+  /// when the user taps on an alternative search term from the flushbar
+  void onAltSearchTapped(String text) async {
+
+    searchInputController.text = text;
+    await updateSearchResults(text, false, false);
+    deconjugationFlushbar?.dismiss();
+
   }
 }
 

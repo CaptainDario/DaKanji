@@ -89,6 +89,7 @@ class _DictionaryScreenState
         includeFallingWords: true,
         isExpanded: widget.initialSearch != "",
         initialEntryId: widget.initialEntryId,
+        convertToKana: GetIt.I<Settings>().dictionary.convertToHiragana,
         allowDeconjugation: GetIt.I<Settings>().dictionary.searchDeconjugate,
       )
     );

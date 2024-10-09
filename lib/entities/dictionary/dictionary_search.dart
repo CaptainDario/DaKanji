@@ -6,6 +6,7 @@ import 'package:kana_kit/kana_kit.dart';
 // Project imports:
 import 'package:da_kanji_mobile/application/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/dictionary_filters/filter_options.dart';
+import 'package:tuple/tuple.dart';
 import 'search_isolate.dart';
 
 /// Class that spawns a number of isolates to search multi-processed in the
@@ -29,14 +30,12 @@ class DictionarySearch {
   /// Is a search currently running
   bool _isSearching = false;
   /// The last query that was blocked by a running search
-  String? _lastBlockedQuery;
+  /// Consists of <query, kana query, deconjugated query>
+  Tuple3<String, String?, String?>? _lastBlockedQuery;
   /// Should the search be converted to hiragana
   bool convertToHiragana;
 
-  final KanaKit _kKitRomaji = const KanaKit();
-  final KanaKit _kKitKanji = const KanaKit(
-    config: KanaKitConfig(passRomaji: true, passKanji: true, upcaseKatakana: false)
-  );
+  
 
 
   DictionarySearch(
@@ -58,18 +57,19 @@ class DictionarySearch {
   }
 
   /// Queries the database and sorts the results using multiple isolates.
-  Future<List<JMdict>?> query (String queryText) async {
+  Future<List<JMdict>?> search(
+    String query, String? queryKana, String? queryDeconjugated) async {
     _checkInitialized();
 
     // do not search if a search is already running but remember the last blocked query
     if(_isSearching){
-      _lastBlockedQuery = queryText;
+      _lastBlockedQuery = Tuple3(query, queryKana, queryDeconjugated);
       return null;
     }
     _isSearching = true;
 
     // check if the message contains wildcards and replace them appropriately
-    String query = queryText.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
+    query = query.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
     
     // replace full-width chars with normal ones
     query = query.toHalfWidth();
@@ -78,24 +78,11 @@ class DictionarySearch {
     List<String> filters = getFilters(query);
     query = query.split(" ").where((e) => !e.startsWith("#")).join(" ");
 
-    // convert query to hiragana if it is Japanese
-    if(_kKitKanji.isJapanese(query)) {
-      query = _kKitKanji.toKana(query);
-    }
-
-    // if romaji conversion setting is enabled, convert query to hiragana
-    String? queryKana;
-    if(convertToHiragana) {
-      String t = _kKitRomaji.toHiragana(_kKitRomaji.toKana(query));
-      // assure that the outcome is japanese
-      if(_kKitRomaji.isJapanese(t)) queryKana = t;
-    }
-
     // search in `noIsolates` separte Isolates 
     FutureGroup<List> searchGroup = FutureGroup();
     for (var i = 0; i < noIsolates; i++) {
       searchGroup.add(_searchIsolates[i].query(
-        query, queryKana, filters
+        query, queryKana, queryDeconjugated, filters
       ));
     }
     searchGroup.close();
@@ -104,8 +91,8 @@ class DictionarySearch {
     final searchResult =
       List<JMdict>.from((await searchGroup.future).expand((e) => e));
     // sort and merge the results
-    final sortResult = sortJmdictList(
-      searchResult, query, queryKana, languages, convertToHiragana
+    List<List<JMdict>> sortResult = sortJmdictList(
+      searchResult, query, queryKana, queryDeconjugated, languages
     );
     var result = sortResult.expand((element) => element).toList();
     _isSearching = false;
@@ -113,9 +100,11 @@ class DictionarySearch {
     // if one or more queries were made while this one was running, run the last
     // one
     if(_lastBlockedQuery != null){
-      var t = _lastBlockedQuery;
+      String t1 = _lastBlockedQuery!.item1;
+      String? t2 = _lastBlockedQuery!.item2;
+      String? t3 = _lastBlockedQuery!.item3;
       _lastBlockedQuery = null;
-      result = (await this.query(t!)) ?? [];
+      result = (await search(t1, t2, t3)) ?? [];
       _lastBlockedQuery = null;
     }
     

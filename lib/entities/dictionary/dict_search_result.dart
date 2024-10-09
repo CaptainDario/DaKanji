@@ -12,9 +12,9 @@ class DictSearch with ChangeNotifier {
   String currentSearch = "";
 
   /// a list of all search results
-  List _searchResults = [];
-  List get searchResults => _searchResults;
-  set searchResults(List newResults){
+  List<JMdict> _searchResults = [];
+  List<JMdict> get searchResults => _searchResults;
+  set searchResults(List<JMdict> newResults){
     _searchResults = newResults;
     notifyListeners();
   }

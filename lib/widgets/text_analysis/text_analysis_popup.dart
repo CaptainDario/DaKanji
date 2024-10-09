@@ -155,6 +155,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                           includeFallingWords: false,
                           includeDrawButton: false,
                           isExpanded: true,
+                          convertToKana: false,
                           allowDeconjugation: widget.allowDeconjugation,
                         ),
                         if(GetIt.I<UserData>().dojgImported || GetIt.I<UserData>().dojgWithMediaImported)

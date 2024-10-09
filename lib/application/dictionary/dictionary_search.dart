@@ -13,8 +13,8 @@ import 'package:tuple/tuple.dart';
 /// 2.  sort inside each category based on <br/>
 ///   1. word frequency
 List<List<JMdict>> sortJmdictList(
-  List<JMdict> entries, String query, String? queryKana, List<String> languages,
-  bool convertToHiragana
+  List<JMdict> entries, String query, String? queryKana, String? queryDeconjugated,
+  List<String> languages
 ){
 
   /// lists with three sub lists
@@ -33,11 +33,11 @@ List<List<JMdict>> sortJmdictList(
     // iterate over the entries and create a ranking for each
     for (JMdict entry in entries) {
       // KANJI matched (normal query)
-      Tuple3 ranked = rankMatches([entry.kanjiIndexes], query, queryKana);
+      Tuple3 ranked = rankMatches([entry.kanjiIndexes], query, queryKana, queryDeconjugated);
       
       // READING matched
-      if(ranked.item1 == -1 && queryKana != null){
-        ranked = rankMatches([entry.hiraganas], query, queryKana);
+      if(ranked.item1 == -1){
+        ranked = rankMatches([entry.hiraganas], query, queryKana, queryDeconjugated);
       }
       
       // MEANING matched
@@ -52,13 +52,13 @@ List<List<JMdict>> sortJmdictList(
         )
         .toList();
         
-        ranked = rankMatches(k, query, queryKana);
+        ranked = rankMatches(k, query, queryKana, queryDeconjugated);
       }
-      // the query was found in this entry
+      // the query was found in this entry せんせ
       if(ranked.item1 != -1){
-        matches[ranked.item1].add(entry);
-        matchIndices[ranked.item1].add(ranked.item3);
-        lenDifferences[ranked.item1].add(ranked.item2);
+        matches[ranked.item1%3].add(entry);
+        matchIndices[ranked.item1%3].add(ranked.item3);
+        lenDifferences[ranked.item1%3].add(ranked.item2);
       }
     }
 
@@ -82,18 +82,19 @@ List<List<JMdict>> sortJmdictList(
 ///   1 - if it was a full (0), start(1) or other(2) match <br/>
 ///   2 - how many characters are in the match but not in `queryText` <br/>
 ///   3 - the index where the search matched <br/>
-Tuple3<int, int, int> rankMatches(List<List<String>> matches, String queryText,
-  String? queryKana) {   
+Tuple3<int, int, int> rankMatches(List<List<String>> matches,
+  String queryText, String? queryKana, String? queryDeconjugated) {
 
   int result = -1, lenDiff = -1; List<int> matchIndeces = [-1, -1];
+
+  List<String> allSearches = [queryText, queryKana, queryDeconjugated].nonNulls.toList();
   
   // convert query and matches to lower case; find where the query matched
   queryText = queryText.toLowerCase();
   for (var i = 0; i < matches.length; i++) {
     for (var j = 0; j < matches[i].length; j++) {
       matches[i][j] = matches[i][j].toLowerCase();
-      if(matches[i][j].contains(queryText) ||
-        queryKana != null && matches[i][j].contains(queryKana)){
+      if(matches[i][j].contains(RegExp(allSearches.join("|")))){
         matchIndeces = [i, j];
         break;
       }
@@ -101,20 +102,22 @@ Tuple3<int, int, int> rankMatches(List<List<String>> matches, String queryText,
   }  
 
   if(matchIndeces[0] != -1 && matchIndeces[1] != -1){
-    // check for full match
-    if(queryText == matches[matchIndeces[0]][matchIndeces[1]]){
-      result = 0;
+    for (var i = 0; i < allSearches.length; i++) {
+      // check for full match
+      if(allSearches[i] == matches[matchIndeces[0]][matchIndeces[1]]){
+        result = 0 + i*allSearches.length;
+      }
+      // does the found dict entry start with the search term
+      else if(matches[matchIndeces[0]][matchIndeces[1]].startsWith(allSearches[i])){
+        result = 1 + i*allSearches.length;
+      }
+      // the query matches somwhere in the entry
+      else {
+        result = 2 + i*allSearches.length;
+      }
+      /// calculate the difference in length between the query and the result
+      lenDiff = matches[matchIndeces[0]][matchIndeces[1]].length - allSearches[i].length;
     }
-    // does the found dict entry start with the search term
-    else if(matches[matchIndeces[0]][matchIndeces[1]].startsWith(queryText)){
-      result = 1;
-    }
-    // the query matches somwhere in the entry
-    else {
-      result = 2;
-    }
-    /// calculate the difference in length between the query and the result
-    lenDiff = matches[matchIndeces[0]][matchIndeces[1]].length - queryText.length;
   }
   
   return Tuple3(result, lenDiff, matchIndeces[1]);
