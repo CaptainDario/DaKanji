@@ -1,5 +1,15 @@
 # DaKanji Beta - changelog
 
+## v3.4.6b2 - ワードリストと暗記改善 (11.10.2024)
+
+Fixed:
+
+- Dictionary
+  - Search results overlaying
+  - Floating words appear with entry open
+  - Different searching bugs fixed
+  - Colors of the "searched for"-snackbar improved to make it clearer that they are tappable
+
 ## v3.4.5b1 - ワードリストと暗記改善 (11.09.2024)
 
 Improvements:
