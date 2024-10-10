@@ -108,7 +108,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
         builder: ((context, constraints) {
 
           // reset the floating words when the search was emptied
-          if(search.currentSearch == "" && search.selectedResult != null) {
+          if(search.currentSearch == "" && search.selectedResult == null) {
             floatingWordStackController?.reset();
           }
           // hide the falling words when a search starts
