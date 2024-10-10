@@ -123,6 +123,8 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
 
   void init() async {
 
+    debugPrint("Initialized floating words");
+
     hideAnimationController.value = 1.0;
     widgetSize = MediaQuery.sizeOf(context);
 
@@ -262,63 +264,66 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
       },
       child: Stack(
         children: [
-          if(widget.child != null) widget.child!,
-
-            // if no level selection is made or the widget should be hidden return `widget.bottom`
-            (widget.levels.isEmpty || widget.hide) && widget.child != null
-              ? widget.child!
-              : const SizedBox(),
           
-          for (FloatingWord entry in floatingWords)
-            AnimatedBuilder(
-              animation: entry.animation,
-              builder: (context, child) {
+          widget.child != null ? widget.child! : const SizedBox(),
+          
+          // no level selection is made or the widget should be hidden ?
+          ...(widget.levels.isNotEmpty && !widget.hide)
+            ? [
+              for (FloatingWord entry in floatingWords)
+                ...[
+                  AnimatedBuilder(
+                    animation: entry.animation,
+                    builder: (context, child) {
 
-                // if the stack is hidden do not build widgets
-                if(hideAnimationController.value < 0.01) return const SizedBox();
-    
-                return Positioned(
-                  left: entry.position.dx,
-                  // interpolate the current position between the start position
-                  // and the height of the available space
-                  // *1.02 is important so there is no visible overlap as the cleanup
-                  // is not run every frame
-                  top: entry.position.dy +
-                    ((widgetSize?.height ?? 0)-(entry.position.dy*1.02)) *
-                      (entry.animationController.value),
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTap: () {
-                        widget.onTap?.call(entry);
-                      },
-                      child: AnimatedBuilder(
-                        animation: hideAnimationController,
-                        builder: (context, child) {
-                          return Opacity(
-                            opacity: hideAnimationController.value,
-                            child: child!);
-                        },
-                        child: Text(
-                          entry.entryVerticalString,
-                          style: TextStyle(
-                            fontSize: entryTextStyleFontSize * min(1, entry.parallax*1.25),
-                            height: entryTextStyleHeight,
-                            fontFamily: g_japaneseFontFamily,
-                            color: (!GetIt.I<Settings>().advanced.iAmInTheMatrix
-                              ? Theme.of(context).brightness == Brightness.light
-                                ? Colors.black
-                                : Colors.white
-                              : const Color.fromARGB(255, 3, 160, 98)
-                            ).withOpacity(entry.parallax)
+                      // if the stack is hidden do not build widgets
+                      if(hideAnimationController.value < 0.01) return const SizedBox();
+          
+                      return Positioned(
+                        left: entry.position.dx,
+                        // interpolate the current position between the start position
+                        // and the height of the available space
+                        // *1.02 is important so there is no visible overlap as the cleanup
+                        // is not run every frame
+                        top: entry.position.dy +
+                          ((widgetSize?.height ?? 0)-(entry.position.dy*1.02)) *
+                            (entry.animationController.value),
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              widget.onTap?.call(entry);
+                            },
+                            child: AnimatedBuilder(
+                              animation: hideAnimationController,
+                              builder: (context, child) {
+                                return Opacity(
+                                  opacity: hideAnimationController.value,
+                                  child: child!);
+                              },
+                              child: Text(
+                                entry.entryVerticalString,
+                                style: TextStyle(
+                                  fontSize: entryTextStyleFontSize * min(1, entry.parallax*1.25),
+                                  height: entryTextStyleHeight,
+                                  fontFamily: g_japaneseFontFamily,
+                                  color: (!GetIt.I<Settings>().advanced.iAmInTheMatrix
+                                    ? Theme.of(context).brightness == Brightness.light
+                                      ? Colors.black
+                                      : Colors.white
+                                    : const Color.fromARGB(255, 3, 160, 98)
+                                  ).withOpacity(entry.parallax)
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
+                        )
+                      );
+                    }
                   )
-                );
-              }
-            )
+                ]
+              ]
+            : [const SizedBox()]
         ],
       ),
     );
