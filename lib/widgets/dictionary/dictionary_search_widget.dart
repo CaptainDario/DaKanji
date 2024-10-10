@@ -640,7 +640,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     }
 
     // update search variables and search
-    widget.context.read<DictSearch>().currentSearch = deconjugated;
+    widget.context.read<DictSearch>().currentSearch = text;
     widget.context.read<DictSearch>().searchResults =
       await GetIt.I<DictionarySearch>().search(
         text,

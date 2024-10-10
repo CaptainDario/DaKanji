@@ -181,7 +181,6 @@ Future<void> _searchInIsar(SendPort p) async {
         buildJMDictQuery(isar, idRangeStart, idRangeEnd, noIsolates,
           query, queryKana, queryDeconjugated, filters, langs)
         .findAllSync();
-      print(searchResults);
 
       // Send the result to the main isolate.
       p.send(searchResults);

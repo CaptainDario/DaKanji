@@ -54,11 +54,11 @@ List<List<JMdict>> sortJmdictList(
         
         ranked = rankMatches(k, query, queryKana, queryDeconjugated);
       }
-      // the query was found in this entry せんせ
+      // the query was found in this entry
       if(ranked.item1 != -1){
-        matches[ranked.item1%3].add(entry);
-        matchIndices[ranked.item1%3].add(ranked.item3);
-        lenDifferences[ranked.item1%3].add(ranked.item2);
+        matches[ranked.item1].add(entry);
+        matchIndices[ranked.item1].add(ranked.item3);
+        lenDifferences[ranked.item1].add(ranked.item2);
       }
     }
 
@@ -104,19 +104,22 @@ Tuple3<int, int, int> rankMatches(List<List<String>> matches,
   if(matchIndeces[0] != -1 && matchIndeces[1] != -1){
     for (var i = 0; i < allSearches.length; i++) {
       // check for full match
-      if(allSearches[i] == matches[matchIndeces[0]][matchIndeces[1]]){
-        result = 0 + i*allSearches.length;
+      if(allSearches[i] == matches[matchIndeces[0]][matchIndeces[1]] &&
+        (result == -1 || result > i)){
+        result = 0;// + i*allSearches.length;
       }
       // does the found dict entry start with the search term
-      else if(matches[matchIndeces[0]][matchIndeces[1]].startsWith(allSearches[i])){
-        result = 1 + i*allSearches.length;
+      else if(matches[matchIndeces[0]][matchIndeces[1]].startsWith(allSearches[i]) &&
+        (result == -1 || result > i)){
+        result = 1;// + i;allSearches.length;
       }
       // the query matches somwhere in the entry
-      else {
-        result = 2 + i*allSearches.length;
+      else if (result == -1 || result > i){
+        result = 2;// + i*allSearches.length;
       }
       /// calculate the difference in length between the query and the result
       lenDiff = matches[matchIndeces[0]][matchIndeces[1]].length - allSearches[i].length;
+
     }
   }
   
