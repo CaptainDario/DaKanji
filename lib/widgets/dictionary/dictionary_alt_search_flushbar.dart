@@ -42,21 +42,37 @@ class DictionaryAltSearchFlushbar {
                 ),
                 children: [
                   TextSpan(
-                    text: "$text; ",
+                    text: text,
                     style: TextStyle(
                       color: Theme.of(context).highlightColor
                     ),
                     recognizer: TapGestureRecognizer()..onTap =
                       () => onTapped(text),
+                    children: const[
+                      TextSpan(
+                        text: "; ",
+                        style: TextStyle(
+                          color: Colors.black
+                        ),
+                      )
+                    ]
                   ),
                   if(queryKana != null && queryKana != "")
                     TextSpan(
-                      text: "$queryKana; ",
+                      text: queryKana,
                       style: TextStyle(
                         color: Theme.of(context).highlightColor
                       ),
                       recognizer: TapGestureRecognizer()..onTap =
                         () => onTapped(queryKana!),
+                      children: const[
+                        TextSpan(
+                          text: "; ",
+                          style: TextStyle(
+                            color: Colors.black
+                          ),
+                        )
+                      ]
                     ),
                   if(deconjugated != null && deconjugated != "")
                     TextSpan(
