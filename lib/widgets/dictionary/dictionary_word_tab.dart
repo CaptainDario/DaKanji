@@ -144,124 +144,119 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
       alignment: Alignment.topCenter,
       child: SingleChildScrollView(
         key: Key(widget.entry!.id.toString()),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(
-                children: [
-                  DictionaryWordCard(
-                    widget.entry,
-                    onConjugationTableExpansionChanged: (state) {
-                      conjugationsIsExpanded = state;
-                    },
-                    onGooglSearchExpansionChanged: (state) {
-                      googleImagesIsExpanded = state;
-                    },
-                  ),
-                  // audio play button
-                  if(widget.entry!.audio != null)
-                    Positioned(
-                      top: 8,
-                      right: 48,
-                      child: IconButton(
-                        splashRadius: 25,
-                        icon: const Icon(Icons.play_arrow),
-                        onPressed: () async {
-                          if(!audioFilesDir.existsSync()) {
-                            downloadAudio(context);
-                          }
-                        
-                          
-                          player.setMedia(
-                            '${audioFilesDir.path}/${widget.entry!.audio}.mp3',
-                            mdk.MediaType.audio);
-                          player.state = mdk.PlaybackState.playing;
-                        },
-                      )
-                    ),
-                  // more menu, to open this word in different web pages
-                  Positioned(
-                    right: 8,
-                    top: 8,
-                    child: PopupMenuButton(
-                      splashRadius: 25,
-                      icon: const Icon(Icons.more_vert),
-                      onSelected: (String selection) async {
-                        String url = "";
-                        // Wiki
-                        if(selection == menuItems[0]) {
-                          url = Uri.encodeFull("$g_WikipediaJpUrl$readingOrKanji");
-                        }
-                        else if(selection == menuItems[1]) {
-                          url = Uri.encodeFull("$g_WikipediaEnUrl${widget.entry!.meanings.firstWhere((e) => e.language == "eng").meanings[0].attributes[0]}");
-                        }
-                        else if(selection == menuItems[2]) {
-                          url = Uri.encodeFull("$g_WiktionaryUrl$readingOrKanji");
-                        }
-                        else if(selection == menuItems[3]) {
-                          url = Uri.encodeFull("$g_Massif$readingOrKanji");
-                        }
-                        else if(selection == menuItems[4]) {
-                          url = Uri.encodeFull("$g_forvo$readingOrKanji");
-                        }
-                        // send dakanji link
-                        else if(selection == menuItems[5]){
-                          await Share.share(
-                            "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
-                            sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
-                          );
-                        }
-                        // send dakanji link and image
-                        else if(selection == menuItems[6]){
-                          await sendWordCard();
-                        }
-                        // quick add to word list
-                        else if(selection == menuItems[7]) {
-                          await quickAddToWordList(widget.entry!, context);
-                        }
-                        // add to word list
-                        else if(selection == menuItems[8]) {
-                          await addToWordList();
-                        }
-                        // quick send to anki
-                        else if(selection == menuItems[9]) {
-                          await quickSendToAnki(widget.entry!, context);
-                        }
-                        // send to anki
-                        else if(selection == menuItems[10]){
-                          if(!GetIt.I<UserData>().ankiSetup){
-                            await ankiNotSetupDialog(context).show();
-                          }
-                          else{
-                            await ankiDialog(context, widget.entry!)?.show();
-                          }
-                        }
-          
-                        if(url != "") {
-                          launchUrlString(
-                            url,
-                            mode: g_webViewSupported ? LaunchMode.inAppWebView : LaunchMode.platformDefault,
-                          );
-                        }
-                      },
-                      itemBuilder: (context) => menuItems.mapIndexed((i, e) {
-
-                        // FIX: #87 skip share as image on Linux
-                        if(i == 6 && Platform.isLinux) return null;
-
-                        return PopupMenuItem(
-                          value: menuItems[i],
-                          child: Text(menuItems[i])
-                        );
-                      }).nonNulls.toList(),
-                    )
-                  ),
-                ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Stack(
+            children: [
+              DictionaryWordCard(
+                widget.entry,
+                onConjugationTableExpansionChanged: (state) {
+                  conjugationsIsExpanded = state;
+                },
+                onGooglSearchExpansionChanged: (state) {
+                  googleImagesIsExpanded = state;
+                },
               ),
-            ),
-          ],
+              // audio play button
+              if(widget.entry!.audio != null)
+                Positioned(
+                  top: 8,
+                  right: 48,
+                  child: IconButton(
+                    splashRadius: 25,
+                    icon: const Icon(Icons.play_arrow),
+                    onPressed: () async {
+                      if(!audioFilesDir.existsSync()) {
+                        downloadAudio(context);
+                      }
+                    
+                      
+                      player.setMedia(
+                        '${audioFilesDir.path}/${widget.entry!.audio}.mp3',
+                        mdk.MediaType.audio);
+                      player.state = mdk.PlaybackState.playing;
+                    },
+                  )
+                ),
+              // more menu, to open this word in different web pages
+              Positioned(
+                right: 8,
+                top: 8,
+                child: PopupMenuButton(
+                  splashRadius: 25,
+                  icon: const Icon(Icons.more_vert),
+                  onSelected: (String selection) async {
+                    String url = "";
+                    // Wiki
+                    if(selection == menuItems[0]) {
+                      url = Uri.encodeFull("$g_WikipediaJpUrl$readingOrKanji");
+                    }
+                    else if(selection == menuItems[1]) {
+                      url = Uri.encodeFull("$g_WikipediaEnUrl${widget.entry!.meanings.firstWhere((e) => e.language == "eng").meanings[0].attributes[0]}");
+                    }
+                    else if(selection == menuItems[2]) {
+                      url = Uri.encodeFull("$g_WiktionaryUrl$readingOrKanji");
+                    }
+                    else if(selection == menuItems[3]) {
+                      url = Uri.encodeFull("$g_Massif$readingOrKanji");
+                    }
+                    else if(selection == menuItems[4]) {
+                      url = Uri.encodeFull("$g_forvo$readingOrKanji");
+                    }
+                    // send dakanji link
+                    else if(selection == menuItems[5]){
+                      await Share.share(
+                        "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
+                        sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
+                      );
+                    }
+                    // send dakanji link and image
+                    else if(selection == menuItems[6]){
+                      await sendWordCard();
+                    }
+                    // quick add to word list
+                    else if(selection == menuItems[7]) {
+                      await quickAddToWordList(widget.entry!, context);
+                    }
+                    // add to word list
+                    else if(selection == menuItems[8]) {
+                      await addToWordList();
+                    }
+                    // quick send to anki
+                    else if(selection == menuItems[9]) {
+                      await quickSendToAnki(widget.entry!, context);
+                    }
+                    // send to anki
+                    else if(selection == menuItems[10]){
+                      if(!GetIt.I<UserData>().ankiSetup){
+                        await ankiNotSetupDialog(context).show();
+                      }
+                      else{
+                        await ankiDialog(context, widget.entry!)?.show();
+                      }
+                    }
+                  
+                    if(url != "") {
+                      launchUrlString(
+                        url,
+                        mode: g_webViewSupported ? LaunchMode.inAppWebView : LaunchMode.platformDefault,
+                      );
+                    }
+                  },
+                  itemBuilder: (context) => menuItems.mapIndexed((i, e) {
+        
+                    // FIX: #87 skip share as image on Linux
+                    if(i == 6 && Platform.isLinux) return null;
+        
+                    return PopupMenuItem(
+                      value: menuItems[i],
+                      child: Text(menuItems[i])
+                    );
+                  }).nonNulls.toList(),
+                )
+              ),
+            ],
+          ),
         ),
       ),
     );
