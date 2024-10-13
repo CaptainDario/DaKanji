@@ -5,27 +5,38 @@ import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:tuple/tuple.dart';
 
-/// Sorts a list of Jmdict entries given a query text. The order is determined
+/// Sorts a list of Jmdict entries given a query text.
+/// If it is a search *without* wildcards the order is determined
 /// by those sorting criteria:
 /// 
-/// 1. Full Match > Match at the beginning > Match somwhere in the word
-///    Those three categories are sorted individually and merged in the end
-/// 2.  sort inside each category based on <br/>
+/// 1. level sorting criteria:
+///   1 - Matches original search term
+///   2 - Matches search term converted to kana
+///   3 - Matches deconjugated search term
+/// 2. level sorting criteria:
+///   x.1 - full match
+///   x.2 - match at the beginning
+///   x.3 - matches anywhere
+/// 3. level sorting criteria
+///   1. word frequency
+/// 
+/// If it is a search *with* a wildcard the order is determined by
+/// First level sorting criteria:
 ///   1. word frequency
 List<List<JMdict>> sortJmdictList(
   List<JMdict> entries, String query, String? queryKana, String? queryDeconjugated,
   List<String> languages
 ){
 
-  /// lists with three sub lists
-  /// 0 - full matchs 
-  /// 1 - matchs starting at the word beginning 
-  /// 2 - other matches
-  List<List<JMdict>> matches = [[], [], []];
+  /// number of citeria used to sort the list
+  int n = 3 * 3;
+
+  /// lists with n sub lists to sort search results
+  List<List<JMdict>> matches = List.generate(n, (i) => <JMdict>[]);
   /// where in the meanings of this entry did the search match
-  List<List<int>> matchIndices = [[], [], []];
+  List<List<int>> matchIndices = List.generate(n, (i) => <int>[]);
   /// how many characters are the query and the matched result apart
-  List<List<int>> lenDifferences = [[], [], []];
+  List<List<int>> lenDifferences = List.generate(n, (i) => <int>[]);
 
 
   // if no wildcard is used, iterate over the entries and create a ranking for each
@@ -63,9 +74,10 @@ List<List<JMdict>> sortJmdictList(
     }
 
     // sort the results
-    matches[0] = sortEntries(matches[0], matchIndices[0], lenDifferences[0]);
-    matches[1] = sortEntries(matches[1], matchIndices[1], lenDifferences[1]);
-    matches[2] = sortEntries(matches[2], matchIndices[2], lenDifferences[2]);
+    for (var i = 0; i < n; i++) {
+      matches[i] = sortEntries(matches[i], matchIndices[i], lenDifferences[i]);
+    }
+    
   }
   // if a wildcard was used just sort by frequency
   else {
@@ -106,16 +118,17 @@ Tuple3<int, int, int> rankMatches(List<List<String>> matches,
       // check for full match
       if(allSearches[i] == matches[matchIndeces[0]][matchIndeces[1]] &&
         (result == -1 || result > i)){
-        result = 0;// + i*allSearches.length;
+        result = 0 + i*allSearches.length;
       }
       // does the found dict entry start with the search term
       else if(matches[matchIndeces[0]][matchIndeces[1]].startsWith(allSearches[i]) &&
         (result == -1 || result > i)){
-        result = 1;// + i;allSearches.length;
+        result = 1 + i*allSearches.length;
       }
       // the query matches somwhere in the entry
-      else if (result == -1 || result > i){
-        result = 2;// + i*allSearches.length;
+      else if (matches[matchIndeces[0]][matchIndeces[1]].contains(allSearches[i]) &&
+        (result == -1 || result > i)){
+        result = 2 + i*allSearches.length;
       }
       /// calculate the difference in length between the query and the result
       lenDiff = matches[matchIndeces[0]][matchIndeces[1]].length - allSearches[i].length;
