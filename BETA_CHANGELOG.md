@@ -40,6 +40,84 @@ Fixed:
 
 - Windows drawing recognition does not work
 
+## v3.4.4b1 - ワードリストと暗記改善 (25.07.2024)
+
+Fixed:
+
+- Windows drawing recognition does not work
+- DoJG search does not work
+- Falling words block UI interaction
+
+## v3.4.3b1 - ワードリストと暗記改善
+
+Improvements:
+
+- Dictionary
+  - Back gesture clears the current search
+  - Falling words
+    - Not all controlled at the same time
+- Use fvp for media playback
+
+- Fixed:
+  - App does not work in MS Store
+  - DoJG: Impossible to scroll back when image full screen on desktop
+
+## v3.4.2b3 - ワードリストと暗記改善 (05.07.2024)
+
+Fixed:
+
+- Does not start on Windows
+- Pressing "rate" on linux causes an exception
+- File picker not opening in snap
+- Importing the dojg deck
+- DoJG deep links
+- DoJG screen search text color
+- Potential race condition in SQLite when restarting the app
+- MacOS: closing the app did not terminate the app
+
+## v3.4.2b2 - ワードリストと暗記改善 (01.07.2024)
+
+Fixed:
+
+- Does not start on Windows
+- Pressing "rate" on linux causes exception
+- File picker not opening in snap
+- Importing the dojg deck
+- DoJG deep links
+- DoJG screen search text color
+- Potential race condition in SQLite when restarting the app
+
+Fixed:
+
+- Dictionary
+  - MacOS
+    - When typing in Japanese, writing suggestions could not be selected using keyboard
+- Kana table
+  - Kana cut off on some aspect ratios
+- Drawing
+  - #73 Kanji search bar is not cleared
+- Settings
+  - Misc
+    - Advanced
+      - Optimize neural networks
+- Deep Links:
+  - Android https:// links
+
+Removed:
+
+- Search result navigation with arrow keys
+
+## v3.4.2b1 - ワードリストと暗記改善 (21.06.2024)
+
+Fixed:
+
+- Pressing "rate" on linux causes exception
+- File picker not opening in snap
+- Importing the dojg deck
+- DoJG deep links
+- DoJG screen search text color
+- Potential race condition in SQLite when restarting the app
+
 ## v3.4.1+102b1 - ワードリストと暗記 (15.05.2024)
 
 Fixed:
