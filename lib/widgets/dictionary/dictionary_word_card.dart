@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -159,6 +161,10 @@ class _DictionaryWordCardState extends State<DictionaryWordCard> {
                   AspectRatio(
                     aspectRatio: 1,
                     child: InAppWebView(
+                      gestureRecognizers: {
+                        Factory<OneSequenceGestureRecognizer>(()  
+                          => EagerGestureRecognizer())
+                      },
                       onWebViewCreated: (controller) {
 
                         String s = GetIt.I<Settings>()

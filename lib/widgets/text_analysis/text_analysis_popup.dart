@@ -172,6 +172,10 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                         if(g_webViewSupported)
                           Card(
                             child: InAppWebView(
+                              gestureRecognizers: {
+                                Factory<OneSequenceGestureRecognizer>(()  
+                                  => EagerGestureRecognizer())
+                              },
                               initialUrlRequest: (
                                 URLRequest(
                                   url: WebUri("$g_deepLUrl${widget.text}")  
@@ -186,9 +190,6 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                                   )
                                 );
                               },
-                              gestureRecognizers: {
-                                Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
-                              }
                             )
                           )
                       ]
