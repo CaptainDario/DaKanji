@@ -1,5 +1,21 @@
 # DaKanji Beta - changelog
 
+## v3.4.6b4 - ワードリストと暗記改善 (15.10.2024)
+
+Fixed:
+
+- Dictionary
+  - Webview does not scroll in the dictionary
+  - Android: Kana table no sound
+  - Scrolling floating words is too fast with spen
+  - Searched for: should not show the same term multiple times
+
+## v3.4.6b3 - ワードリストと暗記改善 (13.10.2024)
+
+Fixed:
+
+- Sorting of search results
+
 ## v3.4.6b2 - ワードリストと暗記改善 (11.10.2024)
 
 Fixed:
