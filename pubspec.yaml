@@ -8,7 +8,7 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.4.6+115
+version: 3.4.6+116
 
 
 environment:
@@ -70,7 +70,7 @@ dependencies:
   vector_graphics: 1.1.11+1         # included in svg_flutter
   app_links: 6.3.2                 # android, iOS, web, macos, windows (msix), linux
 
-  fvp: 0.26.1
+  fvp: 0.27.0
   chewie: 1.8.5
   video_player: 2.9.1
   flutter_subtitle: 0.0.5
