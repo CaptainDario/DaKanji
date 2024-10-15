@@ -626,7 +626,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     if(deconjugated != "" && deconjugated != text){
 
       deconjugationFlushbar = DictionaryAltSearchFlushbar(
-          text, queryKana, deconjugated,
+          text,
+          text != queryKana ? queryKana : null,
+          queryKana != deconjugated ? queryKana : null,
           onAltSearchTapped
         )
         .build(context)..show(context).then((value) {

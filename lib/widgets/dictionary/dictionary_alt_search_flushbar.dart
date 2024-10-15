@@ -48,13 +48,14 @@ class DictionaryAltSearchFlushbar {
                     ),
                     recognizer: TapGestureRecognizer()..onTap =
                       () => onTapped(text),
-                    children: const[
-                      TextSpan(
-                        text: "; ",
-                        style: TextStyle(
-                          color: Colors.black
-                        ),
-                      )
+                    children: [
+                      if(queryKana != null)
+                        const TextSpan(
+                          text: "; ",
+                          style: TextStyle(
+                            color: Colors.black
+                          ),
+                        )
                     ]
                   ),
                   if(queryKana != null && queryKana != "")
@@ -65,13 +66,14 @@ class DictionaryAltSearchFlushbar {
                       ),
                       recognizer: TapGestureRecognizer()..onTap =
                         () => onTapped(queryKana!),
-                      children: const[
-                        TextSpan(
-                          text: "; ",
-                          style: TextStyle(
-                            color: Colors.black
-                          ),
-                        )
+                      children: [
+                        if(deconjugated != null)
+                          const TextSpan(
+                            text: "; ",
+                            style: TextStyle(
+                              color: Colors.black
+                            ),
+                          )
                       ]
                     ),
                   if(deconjugated != null && deconjugated != "")
