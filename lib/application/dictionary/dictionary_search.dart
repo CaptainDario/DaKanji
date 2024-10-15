@@ -142,7 +142,7 @@ Tuple3<int, int, int> rankMatches(List<List<String>> matches,
 /// Sorts the list `a` of `JMdict` based on (1. is more important than 2., ...)
 ///   1. the int in `b`. <br/>
 ///   2. the difference in length in `c`
-///   2. the frequency of the entries. <br/> 
+///   3. the frequency of the entries. <br/> 
 /// and returns it
 /// 
 /// Caution: Throws an exception if the lists do not have the same length.
