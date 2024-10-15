@@ -11,7 +11,7 @@ PODS:
     - FlutterMacOS
     - OrderedSet (~> 6.0.3)
   - FlutterMacOS (1.0.0)
-  - fvp (0.26.1):
+  - fvp (0.27.0):
     - Flutter
     - FlutterMacOS
     - mdk (~> 0.29.1)
@@ -185,7 +185,7 @@ SPEC CHECKSUMS:
   dynamic_color: 2eaa27267de1ca20d879fbd6e01259773fb1670f
   flutter_inappwebview_macos: bdf207b8f4ebd58e86ae06cd96b147de99a67c9b
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  fvp: 2ed530d49ba212cbe34965c2aa67f51a0e697826
+  fvp: b843e46165476a3702ec3c80f781488ef5089964
   in_app_review: a850789fad746e89bce03d4aeee8078b45a53fd0
   irondash_engine_context: da62996ee25616d2f01bbeb85dc115d813359478
   isar_flutter_libs: 43385c99864c168fadba7c9adeddc5d38838ca6a
