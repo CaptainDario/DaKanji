@@ -295,7 +295,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                     onTap: (String kana) async {
                       if(GetIt.I<Settings>().kanaTable.playAudio){
                         kanaSoundPlayer.setAsset(
-                          "assets//audios/kana/individuals/${convertToRomaji(kana)}.wav");
+                          "assets/audios/kana/individuals/${convertToRomaji(kana)}.wav");
                         kanaSoundPlayer.state = mdk.PlaybackState.playing;
                       }
                       setState(() {
@@ -351,7 +351,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                         if(currentKana == null) return;
 
                         kanaSoundPlayer.setAsset(
-                          "assets//audios/kana/individuals/${convertToRomaji(currentKana!)}.wav");
+                          "assets/audios/kana/individuals/${convertToRomaji(currentKana!)}.wav");
                         kanaSoundPlayer.state = mdk.PlaybackState.playing;
                       },
                     ),
