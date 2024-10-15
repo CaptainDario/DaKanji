@@ -253,11 +253,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
         for (var entry in floatingWords) {
           if(widgetSize == null) return;
 
-          if(update.delta.dy > 0) {
-            entry.animationController.value += 0.002 * entry.parallax;
-          } else {
-            entry.animationController.value -= 0.002 * entry.parallax;
-          }
+          entry.animationController.value += (update.delta.dy/1000) * entry.parallax;
 
           entry.animationController.forward();
         }
