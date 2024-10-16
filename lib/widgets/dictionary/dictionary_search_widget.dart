@@ -592,7 +592,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     String text, bool convertToHiragana, bool allowDeconjugation) async {
 
     // hide all flushbars from previous searches
-    deconjugationFlushbar?.dismiss();
+    if(!(deconjugationFlushbar?.isDismissed() ?? true)) deconjugationFlushbar?.dismiss();
 
     // only search in dictionary if the query is not empty (remove filters to check this)
     if(text.split(" ").where((e) => !e.startsWith("#")).join() == ""){
@@ -627,8 +627,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
       deconjugationFlushbar = DictionaryAltSearchFlushbar(
           text,
-          text != queryKana ? queryKana : null,
-          queryKana != deconjugated ? queryKana : null,
+          queryKana != text ? queryKana : null,
+          deconjugated != text && deconjugated != queryKana
+            ? deconjugated : null,
           onAltSearchTapped
         )
         .build(context)..show(context).then((value) {
