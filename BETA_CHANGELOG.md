@@ -1,5 +1,11 @@
 # DaKanji Beta - changelog
 
+## v3.4.6b5 - ワードリストと暗記改善 (15.10.2024)
+
+Fixed:
+
+- Dictionary - Searched for: should not show the same term multiple times
+
 ## v3.4.6b4 - ワードリストと暗記改善 (15.10.2024)
 
 Fixed:
