@@ -79,8 +79,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   TextEditingController searchInputController = TextEditingController();
   /// Used to check if `widget.initialQuery` changed
   String initialSearch = "";
-  /// Is the search list expanded or not
-  bool searchBarExpanded = false;
   /// Animation for closing and opening the search bar
   late Animation<double> searchBarAnimation;
   /// AnimationController for closing and opening the search bar
@@ -153,7 +151,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   void init(){
 
     if(widget.isExpanded){
-      searchBarExpanded = true;
       searchBarAnimationController.value = 1.0;
     }
 
@@ -190,9 +187,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       ],
       child: PopScope(
         canPop: context.read<DictSearch>().selectedResult == null &&
-                !searchBarExpanded,
+                !searchBarAnimationController.isCompleted,
         onPopInvokedWithResult: (didPop, result) {
-          if(searchBarExpanded) {
+          if(searchBarAnimationController.isCompleted) {
             collapseSearchBar();
           }
           else if (context.read<DictSearch>().selectedResult != null){
@@ -223,7 +220,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                   decoration: BoxDecoration(
                     border: BorderDirectional(
                       bottom: BorderSide(
-                        color: searchBarExpanded
+                        color: searchBarAnimationController.isCompleted
                           ? Theme.of(context).brightness == Brightness.dark 
                             ? Colors.grey.shade800
                             : Colors.grey.shade300 
@@ -238,24 +235,33 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                       // magnifying glass / arrow back icon button
                       Padding(
                         padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 4.0),
-                        child: IconButton(
-                          splashRadius: 20,
-                          icon: Icon(searchBarExpanded && widget.canCollapse
-                            ? Icons.arrow_back
-                            : Icons.search),
-                          onPressed: () {
-                            if(!widget.canCollapse) return;
-                    
-                            //close onscreen keyboard
-                            FocusManager.instance.primaryFocus?.unfocus();
-                                      
-                            if(!searchBarExpanded) {
-                              openSearchBar();
-                            }
-                            else{
-                              collapseSearchBar();
-                            }
-                          },
+                        child: AnimatedBuilder(
+                          animation: searchBarAnimationController,
+                          builder: (context, animation) {
+                            return IconButton(
+                              splashRadius: 20,
+                              icon: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 100),
+                                child: Icon(searchBarAnimationController.isForwardOrCompleted
+                                  ? Icons.arrow_back
+                                  : Icons.search,
+                                  key: Key(searchBarAnimationController.isForwardOrCompleted.toString()),),
+                              ),
+                              onPressed: () {
+                                if(!widget.canCollapse) return;
+                                                
+                                //close onscreen keyboard
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                          
+                                if(searchBarAnimationController.isDismissed) {
+                                  openSearchBar();
+                                }
+                                else{
+                                  collapseSearchBar();
+                                }
+                              },
+                            );
+                          }
                         ),
                       ),
                       // text input
@@ -272,10 +278,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           ),
                           onTap: () {
                             searchTextFieldFocusNode.requestFocus();
-                            setState(() {
-                              searchBarExpanded = true;
-                              searchBarAnimationController.forward();
-                            });
+                            openSearchBar();
                           },
                           onChanged: (text) async {
 
@@ -315,9 +318,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           child: InkWell(
                             borderRadius: BorderRadius.circular(1000000),
                             onTap: () {
-                              setState(() {
-                                searchBarExpanded = true;
-                              });
                               GetIt.I<Settings>().drawing.selectedDictionary =
                                 GetIt.I<Settings>().drawing.inbuiltDictId;
                               Navigator.pushNamedAndRemoveUntil(
@@ -460,26 +460,29 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     );
   }
 
-  /// Opens the search bar
-  void openSearchBar(){
-    
-    searchBarExpanded = true;
-    searchBarAnimationController.forward();
+  /// Opens the search bar, if it is not open
+  TickerFuture openSearchBar(){
 
-    setState(() {});
+    if(searchBarAnimationController.isCompleted) TickerFuture.complete();
+    
+    final t = searchBarAnimationController.forward();
+
+    t.then((value) => setState(() {}),);
+
+    return t;
 
   }
 
-  /// Collapses the search bar
-  void collapseSearchBar(){
-    
-    searchBarAnimationController.reverse().then((value) {
-      setState(() {
-        searchBarExpanded = false;
-      });
-    });
+  /// Collapses the search bar if it is not collapsed
+  TickerFuture collapseSearchBar(){
 
-    setState(() {});
+    if(searchBarAnimationController.isDismissed) return TickerFuture.complete();
+    
+    final t = searchBarAnimationController.reverse(from: 1.0);
+
+    t.then((value) => setState(() {}),);
+
+    return t;
 
   }
 
@@ -554,18 +557,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     // collapse the search bar
     if(widget.canCollapse){
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        
-        searchBarAnimationController.reverse(from: 1.0).then((value) {
-          setState(() {
-            searchBarExpanded = false;
-          });
-        });
-      }); 
+      collapseSearchBar();
     }
 
     // close the keyboard
-    FocusManager.instance.primaryFocus?.unfocus();
+    //FocusManager.instance.primaryFocus?.unfocus();
   }
 
   /// callback when the copy/paste from clipboard button is pressed
@@ -582,8 +578,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       searchInputController.text = data;
       await updateSearchResults(data, widget.convertToKana, widget.allowDeconjugation);
     }
-    searchBarExpanded = true;
-    searchBarAnimationController.forward();
+
+    openSearchBar();
     setState(() { });
   }
 
