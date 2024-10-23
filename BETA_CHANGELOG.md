@@ -1,5 +1,14 @@
 # DaKanji Beta - changelog
 
+## v3.4.6b6 - ワードリストと暗記改善 (23.10.2024)
+
+Fixed:
+
+- Dictionary
+  - Do not show duplicate entries in the search history
+  - First search is slow on android
+  - When opening from the drawing screen tapping a search result does not close the search results
+
 ## v3.4.6b5 - ワードリストと暗記改善 (15.10.2024)
 
 Fixed:
