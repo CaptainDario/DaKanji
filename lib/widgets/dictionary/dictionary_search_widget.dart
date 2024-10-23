@@ -233,37 +233,38 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                     key: searchTextInputKey,
                     children: [
                       // magnifying glass / arrow back icon button
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 4.0),
-                        child: AnimatedBuilder(
-                          animation: searchBarAnimationController,
-                          builder: (context, animation) {
-                            return IconButton(
-                              splashRadius: 20,
-                              icon: AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 100),
-                                child: Icon(searchBarAnimationController.isForwardOrCompleted
-                                  ? Icons.arrow_back
-                                  : Icons.search,
-                                  key: Key(searchBarAnimationController.isForwardOrCompleted.toString()),),
-                              ),
-                              onPressed: () {
-                                if(!widget.canCollapse) return;
-                                                
-                                //close onscreen keyboard
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                          
-                                if(searchBarAnimationController.isDismissed) {
-                                  openSearchBar();
-                                }
-                                else{
-                                  collapseSearchBar();
-                                }
-                              },
-                            );
-                          }
+                      if(widget.canCollapse)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 4.0),
+                          child: AnimatedBuilder(
+                            animation: searchBarAnimationController,
+                            builder: (context, animation) {
+                              return IconButton(
+                                splashRadius: 20,
+                                icon: AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 100),
+                                  child: Icon(searchBarAnimationController.isForwardOrCompleted
+                                    ? Icons.arrow_back
+                                    : Icons.search,
+                                    key: Key(searchBarAnimationController.isForwardOrCompleted.toString()),),
+                                ),
+                                onPressed: () {
+                                  if(!widget.canCollapse) return;
+                                                  
+                                  //close onscreen keyboard
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                            
+                                  if(searchBarAnimationController.isDismissed) {
+                                    openSearchBar();
+                                  }
+                                  else{
+                                    collapseSearchBar();
+                                  }
+                                },
+                              );
+                            }
+                          ),
                         ),
-                      ),
                       // text input
                       Expanded(
                         child: TextField(
