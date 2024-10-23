@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:isolate';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -151,7 +152,7 @@ Future<void> _searchInIsar(SendPort p) async {
     [KanjiSVGSchema, JMNEdictSchema, JMdictSchema, Kanjidic2Schema],
     directory: directory,
     name: name,
-    maxSizeMiB: 384
+    maxSizeMiB: g_IsarDictMaxMiB
   );
 
   List<int> ids = isar.jmdict.where().idProperty().findAllSync();

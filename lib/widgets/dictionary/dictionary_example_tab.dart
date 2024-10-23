@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -209,7 +210,7 @@ List<ExampleSentence> _searchExamples(Tuple6 query){
   // find all examples in ISAR that cotain this words kanji
   Isar examplesIsar = Isar.openSync(
     [ExampleSentenceSchema], directory: isarPath,
-    name: "examples", maxSizeMiB: 384
+    name: "examples", maxSizeMiB: g_IsarExampleMaxMiB
   );
   List<ExampleSentence> examples = examplesIsar.exampleSentences
     .where()

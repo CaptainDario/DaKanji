@@ -90,13 +90,23 @@ List<Version> g_NewRadicals = [
 ];
 /// Versions that require to setup the anki integration again
 List<Version> g_ResetAnki = [Version(3, 4, 6)];
+
+/// The maxMiB size of the dictionary isar
+const g_IsarDictMaxMiB = Platform.isAndroid ? 512 : 384;
+/// The maxMiB size of the examples isar
+const g_IsarExampleMaxMiB = Platform.isAndroid ? 512 : 384;
+
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
+
 /// variable that indicates if a webivew is available on this platform
 final bool g_webViewSupported =
   Platform.isAndroid || Platform.isIOS || Platform.isMacOS;
+
+/// variable that is true if app is running on a mobile platform
 final bool g_desktopPlatform = 
   Platform.isWindows || Platform.isMacOS || Platform.isLinux;
+
 /// browser user agent to fake a mobile device on desktop
 String g_mobileUserAgentArg = 'Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.66 Mobile Safari/537.36';
 
