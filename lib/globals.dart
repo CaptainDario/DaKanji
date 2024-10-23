@@ -92,9 +92,9 @@ List<Version> g_NewRadicals = [
 List<Version> g_ResetAnki = [Version(3, 4, 6)];
 
 /// The maxMiB size of the dictionary isar
-g_IsarDictMaxMiB = Platform.isIOS ? 384 : 512;
+int g_IsarDictMaxMiB = Platform.isIOS ? 384 : 512;
 /// The maxMiB size of the examples isar
-g_IsarExampleMaxMiB = Platform.isIOS ? 384 : 512;
+int g_IsarExampleMaxMiB = Platform.isIOS ? 384 : 512;
 
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
