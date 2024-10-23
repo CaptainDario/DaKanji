@@ -1,6 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/repositories/radicals/radicals.dart';
-import 'package:da_kanji_mobile/repositories/tf_lite/backend.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:

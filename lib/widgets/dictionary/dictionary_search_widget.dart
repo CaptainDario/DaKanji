@@ -427,7 +427,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                               List<JMdict> searchHistory = [];
                               List<int> sqlIDs = [];
                               if(snapshot.hasData){
-                                final ids = snapshot.data!.map((e) => e.dictEntryID).toList();
+                                final ids = snapshot.data!.map((e) => e.dictEntryID)
+                                  .toSet().toList();
                                 searchHistory = GetIt.I<Isars>().dictionary.jmdict
                                   .getAllSync(ids)
                                   .nonNulls.toList();
