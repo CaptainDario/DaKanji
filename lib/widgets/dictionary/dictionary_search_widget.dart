@@ -79,6 +79,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   TextEditingController searchInputController = TextEditingController();
   /// Used to check if `widget.initialQuery` changed
   String initialSearch = "";
+  /// Is the search bar initially expanded
+  bool initiallyExpanded = false;
   /// Animation for closing and opening the search bar
   late Animation<double> searchBarAnimation;
   /// AnimationController for closing and opening the search bar
@@ -106,6 +108,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   @override
   void initState() {
     super.initState();
+
+    initiallyExpanded = widget.isExpanded;
 
     searchBarAnimationController = AnimationController(
       vsync: this,
@@ -150,8 +154,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// init this widget on init or rebuild
   void init(){
 
-    if(widget.isExpanded){
+    if(initiallyExpanded){
       searchBarAnimationController.value = 1.0;
+      initiallyExpanded = false;
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -400,11 +405,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                 ),
                 if(searchBarInputHeight != 0)
                   AnimatedBuilder(
-                    animation: searchBarAnimation,
+                    animation: searchBarAnimationController,
                     builder: (context, child) {
                       return SizedBox(
                         height: (widget.expandedHeight - searchBarInputHeight)
-                          * searchBarAnimation.value,
+                          * searchBarAnimationController.value,
                         child: child,
                       );
                     },
@@ -414,7 +419,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           // search results if the user entered text
                           ? SearchResultList(
                             searchResults: widget.context.watch<DictSearch>().searchResults,
-                            onSearchResultPressed: onSearchResultPressed,
+                            onSearchResultPressed: (entry) async {
+                              onSearchResultPressed(entry);
+                            },
                             showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                             init: (controller) {},
                           )
@@ -475,11 +482,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   }
 
   /// Collapses the search bar if it is not collapsed
-  TickerFuture collapseSearchBar(){
+  Future collapseSearchBar() async {
 
     if(searchBarAnimationController.isDismissed) return TickerFuture.complete();
     
-    final t = searchBarAnimationController.reverse(from: 1.0);
+    final t = searchBarAnimationController.reverse();
 
     t.then((value) => setState(() {}),);
 
@@ -562,7 +569,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     }
 
     // close the keyboard
-    //FocusManager.instance.primaryFocus?.unfocus();
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   /// callback when the copy/paste from clipboard button is pressed
