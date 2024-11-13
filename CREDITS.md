@@ -42,11 +42,11 @@ The biggest thanks goes to my mom for always being there for me no matter what. 
 
 * A big shout out to all current and past testers!
   * Android
-    * pa9eup, michalpatryk, tsumugii_12, Francesco S., モフン, mch99, Tobias Olms, ibrakap, ゆうか 田村村
+    * ゆうか 田村村, pa9eup, michalpatryk, tsumugii_12, Francesco S., モフン, mch99, Tobias Olms, ibrakap, Solomon Kabuka
   * iOS
     * ゆうか 田村村, モフン, Nurellina
   * Windows:
-    * michalpatryk, pa9eup, Tobias Olms
+    * michalpatryk, pa9eup, Tobias Olms, Solomon Kabuka
   * Linux:
     * Francesco S., [returnrei](https://returnrei.jp), BeyondMagic
   * MacOS
