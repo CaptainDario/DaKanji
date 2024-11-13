@@ -28,6 +28,9 @@ class DictionaryAltSearchFlushbar {
   );
 
   Flushbar build(BuildContext context) {
+
+    Iterable<String> options = [text, queryKana, deconjugated].nonNulls;
+
     return Flushbar(
       backgroundColor: Colors.white,
       messageText: Row(
@@ -41,46 +44,24 @@ class DictionaryAltSearchFlushbar {
                   color: Colors.black
                 ),
                 children: [
-                  TextSpan(
-                    text: text,
-                    style: TextStyle(
-                      color: Theme.of(context).highlightColor
-                    ),
-                    recognizer: TapGestureRecognizer()..onTap =
-                      () => onTapped(text),
-                  ),
-                  if(queryKana != null)
-                    const TextSpan(
-                      text: "; ",
-                      style: TextStyle(
-                        color: Colors.black
+                  for (String t in options)
+                    ...[
+                      TextSpan(
+                        text: t,
+                        style: TextStyle(
+                          color: Theme.of(context).highlightColor
+                        ),
+                        recognizer: TapGestureRecognizer()..onTap =
+                          () => onTapped(t),
                       ),
-                    ),
-                  if(queryKana != null && queryKana != "")
-                    TextSpan(
-                      text: queryKana,
-                      style: TextStyle(
-                        color: Theme.of(context).highlightColor
-                      ),
-                      recognizer: TapGestureRecognizer()..onTap =
-                        () => onTapped(queryKana!),
-                    ),
-                  if(deconjugated != null)
-                    const TextSpan(
-                      text: "; ",
-                      style: TextStyle(
-                        color: Colors.black
-                      ),
-                    ),
-                  if(deconjugated != null && deconjugated != "")
-                    TextSpan(
-                      text: deconjugated,
-                      style: TextStyle(
-                        color: Theme.of(context).highlightColor
-                      ),
-                      recognizer: TapGestureRecognizer()..onTap =
-                        () => onTapped(deconjugated!),
-                    ),
+                      if(t != options.last)
+                        const TextSpan(
+                          text: "; ",
+                          style: TextStyle(
+                            color: Colors.black
+                          ),
+                        ),
+                    ],
                 ]
               )
             )
