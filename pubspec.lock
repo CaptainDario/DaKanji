@@ -435,8 +435,8 @@ packages:
     dependency: "direct main"
     description:
       path: database_builder
-      ref: "v3.4.5"
-      resolved-ref: "542752fc948bfa9ff708ec81658fd424223de672"
+      ref: "r3.4.5"
+      resolved-ref: "5477bd638b0dfd1cd0003b4b67aac485646e7e8c"
       url: "https://github.com/CaptainDario/DaKanji-Dictionary"
     source: git
     version: "1.0.0"
