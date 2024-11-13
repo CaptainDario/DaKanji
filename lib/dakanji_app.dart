@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:ui_web';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -76,8 +78,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
         ),
         ChangeNotifierProxyProvider<WebViewModel, BrowserModel>(
           update: (context, webViewModel, browserModel) {
-            browserModel!.setCurrentWebViewModel(webViewModel);
-            return browserModel;
+            //browserModel!.setCurrentWebViewModel(webViewModel);
+            return browserModel!;
           },
           create: (BuildContext context) => BrowserModel(),
         ),
@@ -89,8 +91,8 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
           ),
           ChangeNotifierProxyProvider<WebViewModel, BrowserModel>(
             update: (context, webViewModel, browserModel) {
-              browserModel!.setCurrentWebViewModel(webViewModel);
-              return browserModel;
+              //browserModel!.setCurrentWebViewModel(webViewModel);
+              return browserModel!;
             },
             create: (BuildContext context) => BrowserModel(),
           ),
