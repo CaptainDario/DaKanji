@@ -140,8 +140,8 @@ dependencies:
 
   # packages that should only target specific platforms
   android_intent_plus: 5.1.0      # android
-  window_manager: 0.4.2           # desktop
-  screen_retriever: 0.1.9         # desktop
+  window_manager: 0.4.3           # desktop
+  screen_retriever: 0.2.0         # desktop
 
   # utility 
   flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows

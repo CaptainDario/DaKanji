@@ -10,9 +10,10 @@ list(APPEND FLUTTER_PLUGIN_LIST
   irondash_engine_context
   isar_flutter_libs
   mecab_dart
+  multi_window_linux
   printing
   rive_common
-  screen_retriever
+  screen_retriever_linux
   sentry_flutter
   sqlite3_flutter_libs
   super_native_extensions
