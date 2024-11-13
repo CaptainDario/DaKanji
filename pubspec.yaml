@@ -97,29 +97,19 @@ dependencies:
   dart_style: 2.3.7
   archive: 3.6.1
   local_assets_server: 2.0.2+12
-  flutter_ankidroid:
-    git:
-      url: https://github.com/CaptainDario/flutter_ankidroid
-  kana_kit:
-    git:
-      url: https://github.com/CaptainDario/kana_kit
+  kana_kit: 
 
+  flutter_ankidroid:
+    path: ./plugins/flutter_ankidroid
   liquid_swipe:
-    git:
-      url: https://github.com/CaptainDario/DaKanji-Dependencies
-      path: liquid_swipe_flutter
+    path: ./plugins/DaKanji-Dependencies/liquid_swipe_flutter
   database_builder:
-    #path: ../DaKanji-Dictionary/database_builder
-    git:
-      url: https://github.com/CaptainDario/DaKanji-Dictionary
-      path: database_builder
-      ref: r3.4.5
+    path: ./plugins/DaKanji-Dictionary/database_builder
   
   # Not all platforms supported
   flutter_inappwebview: 6.1.5
   flutter_browser:
-    git: https://github.com/CaptainDario/flutter_browser_app
-    #path: /Users/darioklepoch/dev/DaKanji/flutter_browser_app/
+    path: ./plugins/flutter_browser_app/
 
   in_app_review: 2.0.9                  # android, iOS, MacOS, windows (limited)
   clipboard_watcher: 0.2.1              # android, iOS, macos, windows, linux
@@ -133,10 +123,7 @@ dependencies:
     version: 3.1.8
     hosted: https://pub.isar-community.dev/
   mecab_dart:                                   # android, iOS, macos, windows, linux
-    #path: /Users/darioklepoch/dev/DaKanji/mecab_dart/
-    git:
-      url: https://github.com/CaptainDario/mecab_dart
-      ref: e068f05
+    path: ./plugins/mecab_dart/
 
   # packages that should only target specific platforms
   android_intent_plus: 5.1.0      # android

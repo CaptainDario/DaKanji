@@ -263,6 +263,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  checks:
+    dependency: transitive
+    description:
+      name: checks
+      sha256: aad431b45a8ae2fa26db8c22e385b9cdec73f72986a1d9d9f2017f4c39ecf5c9
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   chewie:
     dependency: "direct main"
     description:
@@ -434,11 +442,9 @@ packages:
   database_builder:
     dependency: "direct main"
     description:
-      path: database_builder
-      ref: "r3.4.5"
-      resolved-ref: "5477bd638b0dfd1cd0003b4b67aac485646e7e8c"
-      url: "https://github.com/CaptainDario/DaKanji-Dictionary"
-    source: git
+      path: "plugins/DaKanji-Dictionary/database_builder"
+      relative: true
+    source: path
     version: "1.0.0"
   dbus:
     dependency: transitive
@@ -616,20 +622,16 @@ packages:
   flutter_ankidroid:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: b6c7188f050a2da445cdf60fbdb414ccc96ca528
-      url: "https://github.com/CaptainDario/flutter_ankidroid"
-    source: git
+      path: "plugins/flutter_ankidroid"
+      relative: true
+    source: path
     version: "0.8.1"
   flutter_browser:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "2377098d015c07a8cabc61e71aee0f80de067d5d"
-      url: "https://github.com/CaptainDario/flutter_browser_app"
-    source: git
+      path: "plugins/flutter_browser_app"
+      relative: true
+    source: path
     version: "3.1.0+9"
   flutter_cache_manager:
     dependency: transitive
@@ -1072,12 +1074,11 @@ packages:
   kana_kit:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "74433b403654f234c69158afe8cb0fa584c7edbf"
-      url: "https://github.com/CaptainDario/kana_kit"
-    source: git
-    version: "2.0.0"
+      name: kana_kit
+      sha256: "4e99cfddae947971c327ef3d8d82d35cf036c046c7f460583785d48c0f777fa3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
   keyboard_actions:
     dependency: "direct main"
     description:
@@ -1129,11 +1130,9 @@ packages:
   liquid_swipe:
     dependency: "direct main"
     description:
-      path: liquid_swipe_flutter
-      ref: HEAD
-      resolved-ref: dc55b23cc96eca861f41b4a4d88168143c991e50
-      url: "https://github.com/CaptainDario/DaKanji-Dependencies"
-    source: git
+      path: "plugins/DaKanji-Dependencies/liquid_swipe_flutter"
+      relative: true
+    source: path
     version: "2.1.1"
   local_assets_server:
     dependency: "direct main"
@@ -1194,11 +1193,9 @@ packages:
   mecab_dart:
     dependency: "direct main"
     description:
-      path: "."
-      ref: e068f05
-      resolved-ref: e068f058cc462264183425a2e85b44390805c8fb
-      url: "https://github.com/CaptainDario/mecab_dart"
-    source: git
+      path: "plugins/mecab_dart"
+      relative: true
+    source: path
     version: "0.1.6"
   meta:
     dependency: "direct main"

@@ -1,3 +1,18 @@
 [submodule "plugins/foliate-js"]
 	path = plugins/foliate-js
 	url = https://github.com/johnfactotum/foliate-js
+[submodule "plugins/flutter_ankidroid"]
+	path = plugins/flutter_ankidroid
+	url = https://github.com/CaptainDario/flutter_ankidroid
+[submodule "plugins/DaKanji-dependencies"]
+	path = plugins/DaKanji-dependencies
+	url = https://github.com/CaptainDario/DaKanji-dependencies
+[submodule "plugins/DaKanji-Dictionary"]
+	path = plugins/DaKanji-Dictionary
+	url = https://github.com/CaptainDario/DaKanji-Dictionary
+[submodule "plugins/flutter_browser_app"]
+	path = plugins/flutter_browser_app
+	url = https://github.com/CaptainDario/flutter_browser_app
+[submodule "plugins/mecab_dart"]
+	path = plugins/mecab_dart
+	url = https://github.com/CaptainDario/mecab_dart
