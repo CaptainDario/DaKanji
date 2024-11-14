@@ -110,3 +110,6 @@ com.DaAppLab.DaKanji.flatpak
 # keys
 dakanji.env
 **/env.g.dart
+
+# python environment
+.venv
