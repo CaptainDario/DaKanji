@@ -1,2 +1,2 @@
-# Yomi2SQLite
-Dart scripts that convert Yomi(tan) dictionaries to SQLite
+A sample command-line application with an entrypoint in `bin/`, library code
+in `lib/`, and example unit test in `test/`.
