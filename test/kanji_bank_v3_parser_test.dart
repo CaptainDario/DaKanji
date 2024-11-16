@@ -26,10 +26,8 @@ void main() {
     Stopwatch s = Stopwatch()..start();
     await parseKanjiBankV3(File(jsonPath), db);
     print("Conversion took ${s.elapsedMilliseconds} ms");
-
-    // measure time for regression
     
-    // check some entries    
+    // TODO check some entries    
 
   });
 }
