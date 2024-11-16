@@ -1,5 +1,26 @@
 [
     [
+        "吞",
+        "ドン トン テン",
+        "のむ",
+        "jinmeiyou",
+        [
+            "swallow",
+            "absorb",
+            "annex",
+            "engulf"
+        ],
+        {
+            "grade": "9",
+            "halpern_kkd": "3059",
+            "jis213": "1-47-94",
+            "moro": "3329",
+            "skip": "2-4-3",
+            "strokes": "7",
+            "ucs": "541E"
+        }
+    ],
+    [
         "㖨",
         "",
         "",
@@ -2717,27 +2738,6 @@
             "skip": "1-3-3",
             "strokes": "6",
             "ucs": "5412"
-        }
-    ],
-    [
-        "吞",
-        "ドン トン テン",
-        "のむ",
-        "jinmeiyou",
-        [
-            "swallow",
-            "absorb",
-            "annex",
-            "engulf"
-        ],
-        {
-            "grade": "9",
-            "halpern_kkd": "3059",
-            "jis213": "1-47-94",
-            "moro": "3329",
-            "skip": "2-4-3",
-            "strokes": "7",
-            "ucs": "541E"
         }
     ],
     [

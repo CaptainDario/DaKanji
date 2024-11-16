@@ -14,13 +14,18 @@ void main() {
       "KANJIDIC_english", "kanji_bank_2.json"]);
     print("Reading json from $jsonPath");
 
-    // create the testing database
-    String dbPath = p.joinAll([Directory.current.path, "tmp", "dakanji_db.sqlite"]);
+    // create the testing database (delete any existing database)
+    String dbPath = p.joinAll([Directory.current.path, "tmp", "dakanji.db"]);
+    if(File(dbPath).existsSync()){
+      File(dbPath).deleteSync();
+    }
     DaKanjiDB db = DaKanjiDB(dbPath);
     print("Using database at $dbPath");
 
     // convert the test files
+    Stopwatch s = Stopwatch()..start();
     await parseKanjiBankV3(File(jsonPath), db);
+    print("Conversion took ${s.elapsedMilliseconds} ms");
 
     // measure time for regression
     

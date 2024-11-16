@@ -45,7 +45,7 @@ class KanjiBankV3OnyomiTable extends Table {
 
 }
 
-/// Contains all onyomi reading elements and each entry links to
+/// Contains all kunyomi reading elements and each entry links to
 /// `KanjiBankV3Table` elements
 class KanjiBankV3KunyomiTable extends Table {
 
@@ -56,7 +56,7 @@ class KanjiBankV3KunyomiTable extends Table {
   IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
 
   /// The kunyomi reading of this entry
-  TextColumn get kunyomi => text()();
+  TextColumn get kunyomi => text().nullable()();
 
 }
 
