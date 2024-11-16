@@ -1,0 +1,58 @@
+[
+    [
+        "★",
+        "popular",
+        2,
+        "high priority entry",
+        2
+    ],
+    [
+        "priority form",
+        "frequent",
+        1,
+        "high priority spelling or reading of this term",
+        1
+    ],
+    [
+        "irregular form",
+        "archaism",
+        0,
+        "irregular spelling or reading of this term",
+        1
+    ],
+    [
+        "old kanji form",
+        "archaism",
+        0,
+        "old character form (kyūjitai)",
+        1
+    ],
+    [
+        "obsolete reading",
+        "archaism",
+        0,
+        "archaic or obsolete reading of this term",
+        1
+    ],
+    [
+        "rarely used form",
+        "archaism",
+        0,
+        "rarely used form of this term",
+        1
+    ],
+    [
+        "ateji form",
+        "expression",
+        1,
+        "ateji (phonetic) reading",
+        0
+    ],
+    [
+        "special reading",
+        "expression",
+        1,
+        "jukujikun (idiomatic reading of a kanji compound) or gikun (idiosyncratic reading of a particular kanji)",
+        0
+    ]
+]

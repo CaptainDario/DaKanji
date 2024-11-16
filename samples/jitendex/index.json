@@ -1,0 +1,15 @@
+{
+    "title": "Jitendex.org [2024-10-28]",
+    "author": "Stephen Kraus",
+    "sequenced": true,
+    "format": 3,
+    "url": "https://jitendex.org",
+    "isUpdatable": true,
+    "indexUrl": "https://jitendex.org/static/yomitan.json",
+    "downloadUrl": "https://github.com/stephenmk/stephenmk.github.io/releases/latest/download/jitendex-yomitan.zip",
+    "sourceLanguage": "ja",
+    "targetLanguage": "en",
+    "description": "Jitendex is updated with new content every week. Click the 'Check for Updates' button in the Yomitan 'Dictionaries' menu to upgrade to the latest version.\n\nIf Jitendex is useful for you, please consider giving the project a star on GitHub. You can also leave a tip on Ko-fi.\nVisit https://ko-fi.com/jitendex\n\nMany thanks to everyone who has helped to fund Jitendex.\n\n• epistularum\n• 昭玄大统\n• Maciej Jur\n• Ian Strandberg\n• Kip",
+    "attribution": "© CC BY-SA 4.0 Stephen Kraus 2023-2024\n\nYou are free to use, modify, and redistribute Jitendex files under the terms of the Creative Commons Attribution-ShareAlike License (V4.0)\n\nJitendex includes material from several copyrighted sources in compliance with the terms and conditions of those projects.\n\n• JMdict (EDICT, etc.) dictionary data is provided by the Electronic Dictionaries Research Group. Visit edrdg.org for more information.\n• Example sentences (Japanese and English) are provided by Tatoeba (https://tatoeba.org/). This data is licensed CC BY 2.0 FR.\n• Positional information for the furigana displayed in headwords is provided by the JmdictFurigana project. This data is distributed under a Creative Commons Attribution-ShareAlike License.",
+    "revision": "2024.10.28.0"
+}
