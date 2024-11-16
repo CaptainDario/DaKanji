@@ -7,7 +7,7 @@ import 'package:path/path.dart' as p;
 
 
 void main() {
-  test('Test importing kanjidic 2', () {
+  test('Test importing kanjidic 2', () async {
     
     // get path to the testing files
     String jsonPath = p.joinAll([Directory.current.path, "samples",
@@ -20,7 +20,7 @@ void main() {
     print("Using database at $dbPath");
 
     // convert the test files
-    parseKanjiBankV3(File(jsonPath), db);
+    await parseKanjiBankV3(File(jsonPath), db);
 
     // measure time for regression
     

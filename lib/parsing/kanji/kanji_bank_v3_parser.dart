@@ -6,7 +6,7 @@ import 'package:dakanji_db/database/dakanji_db.dart';
 
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-void parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db) async {
+Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db) async {
 
   // read and decode the json
   String jsonString = kanjiBankV3JsonPath.readAsStringSync();
