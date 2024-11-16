@@ -1,2 +1,4 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+# DaKanji-DB
+
+A set of tools to create the database used in DaKanji.
+These tools are used for DaKanji v4 and onwards.
