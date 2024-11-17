@@ -19,9 +19,9 @@ python3 -m venv .venv
 To generate schemas graphviz is required.
 Install it like this
 
-Macos: `brew install graphviz`
-Linux:
-Windows:
+* Macos: `brew install graphviz`
+* Linux:
+* Windows:
 
 ## Running
 
@@ -39,6 +39,7 @@ The official (base dictionary that is shipped with DaKanji) consists of the foll
   * RADK
   * KRAD
   * KanjiVG
+  * Tatoeba
 
 To download the current state of each source and build a new `dakanji.db`,
 run
