@@ -7,3 +7,6 @@ tmp/
 
 # ignore python
 .venv/
+
+# ignore tmp schema
+dakanji_db_schema/schema.pdf
