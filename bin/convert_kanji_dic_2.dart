@@ -24,6 +24,7 @@ void main() async {
   await parseDictionaryFolder(Directory(dictPath), db);
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
-  // TODO check some entries    
+  
+  exit(0);
 
 }
