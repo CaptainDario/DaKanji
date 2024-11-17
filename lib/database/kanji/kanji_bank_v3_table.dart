@@ -5,14 +5,17 @@ import 'package:drift/drift.dart';
 /// Contains the main Kanji entries to which the other tables link
 @TableIndex(name: 'kanji', columns: {#kanji})
 class KanjiBankV3Table extends Table {
+
+  @override
+  Set<Column> get primaryKey => {id};
   
   /// id of this entry
-  IntColumn get id => integer().autoIncrement()();
+  IntColumn get id => integer()();
 
 
   /// the kanji character of this entry
   /// this column is indexed
-  TextColumn get kanji => text().withLength(min: 1, max: 1)();
+  TextColumn get kanji => text().withLength(min: 1)();
 
   /// the onyomi reading of this character
   // is there a way to reference all entries from the Meanings Table?
@@ -32,7 +35,7 @@ class KanjiBankV3Table extends Table {
 
 /// Contains all onyomi reading elements and each entry links to
 /// `KanjiBankV3Table` elements
-class KanjiBankV3OnyomiTable extends Table {
+class KanjiBankV3OnyomisTable extends Table {
 
   /// id of this meaning
   IntColumn get id => integer().autoIncrement()();
@@ -41,13 +44,25 @@ class KanjiBankV3OnyomiTable extends Table {
   IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
 
   /// The onyomi reading of this entry
-  TextColumn get onyomi => text()();
+  TextColumn get onyomi => text().unique()();
+
+}
+
+
+class KanjiBankV3OnyomiKanjiRelationsTable extends Table {
+
+  /// id of this realtion
+  IntColumn get id => integer().autoIncrement()();
+  /// the id of the associated onyomi reading
+  IntColumn get onyomiId => integer()();
+  /// the id of the associated kanji
+  IntColumn get kanjiId => integer()();
 
 }
 
 /// Contains all kunyomi reading elements and each entry links to
 /// `KanjiBankV3Table` elements
-class KanjiBankV3KunyomiTable extends Table {
+class KanjiBankV3KunyomisTable extends Table {
 
   /// id of this meaning
   IntColumn get id => integer().autoIncrement()();
@@ -56,12 +71,12 @@ class KanjiBankV3KunyomiTable extends Table {
   IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
 
   /// The kunyomi reading of this entry
-  TextColumn get kunyomi => text().nullable()();
+  TextColumn get kunyomi => text()();
 
 }
 
 /// Contains all tags and each entry links to a `KanjiBankV3Table` elements
-class KanjiBankV3TagTable extends Table {
+class KanjiBankV3TagsTable extends Table {
 
   /// id of this meaning
   IntColumn get id => integer().autoIncrement()();

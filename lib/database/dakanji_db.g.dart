@@ -13,19 +13,16 @@ class $KanjiBankV3TableTable extends KanjiBankV3Table
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+      type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _kanjiMeta = const VerificationMeta('kanji');
   @override
-  late final GeneratedColumn<String> kanji = GeneratedColumn<String>(
-      'kanji', aliasedName, false,
-      additionalChecks:
-          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 1),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+  late final GeneratedColumn<String> kanji =
+      GeneratedColumn<String>('kanji', aliasedName, false,
+          additionalChecks: GeneratedColumn.checkTextLength(
+            minTextLength: 1,
+          ),
+          type: DriftSqlType.string,
+          requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, kanji];
   @override
@@ -192,12 +189,12 @@ class KanjiBankV3TableCompanion extends UpdateCompanion<KanjiBankV3TableData> {
   }
 }
 
-class $KanjiBankV3OnyomiTableTable extends KanjiBankV3OnyomiTable
-    with TableInfo<$KanjiBankV3OnyomiTableTable, KanjiBankV3OnyomiTableData> {
+class $KanjiBankV3OnyomisTableTable extends KanjiBankV3OnyomisTable
+    with TableInfo<$KanjiBankV3OnyomisTableTable, KanjiBankV3OnyomisTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $KanjiBankV3OnyomiTableTable(this.attachedDatabase, [this._alias]);
+  $KanjiBankV3OnyomisTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -220,17 +217,19 @@ class $KanjiBankV3OnyomiTableTable extends KanjiBankV3OnyomiTable
   @override
   late final GeneratedColumn<String> onyomi = GeneratedColumn<String>(
       'onyomi', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
   @override
   List<GeneratedColumn> get $columns => [id, kanjiBankV3ID, onyomi];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'kanji_bank_v3_onyomi_table';
+  static const String $name = 'kanji_bank_v3_onyomis_table';
   @override
   VerificationContext validateIntegrity(
-      Insertable<KanjiBankV3OnyomiTableData> instance,
+      Insertable<KanjiBankV3OnyomisTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -257,10 +256,10 @@ class $KanjiBankV3OnyomiTableTable extends KanjiBankV3OnyomiTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  KanjiBankV3OnyomiTableData map(Map<String, dynamic> data,
+  KanjiBankV3OnyomisTableData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiBankV3OnyomiTableData(
+    return KanjiBankV3OnyomisTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       kanjiBankV3ID: attachedDatabase.typeMapping
@@ -271,13 +270,13 @@ class $KanjiBankV3OnyomiTableTable extends KanjiBankV3OnyomiTable
   }
 
   @override
-  $KanjiBankV3OnyomiTableTable createAlias(String alias) {
-    return $KanjiBankV3OnyomiTableTable(attachedDatabase, alias);
+  $KanjiBankV3OnyomisTableTable createAlias(String alias) {
+    return $KanjiBankV3OnyomisTableTable(attachedDatabase, alias);
   }
 }
 
-class KanjiBankV3OnyomiTableData extends DataClass
-    implements Insertable<KanjiBankV3OnyomiTableData> {
+class KanjiBankV3OnyomisTableData extends DataClass
+    implements Insertable<KanjiBankV3OnyomisTableData> {
   /// id of this meaning
   final int id;
 
@@ -286,7 +285,7 @@ class KanjiBankV3OnyomiTableData extends DataClass
 
   /// The onyomi reading of this entry
   final String onyomi;
-  const KanjiBankV3OnyomiTableData(
+  const KanjiBankV3OnyomisTableData(
       {required this.id, required this.kanjiBankV3ID, required this.onyomi});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -297,18 +296,18 @@ class KanjiBankV3OnyomiTableData extends DataClass
     return map;
   }
 
-  KanjiBankV3OnyomiTableCompanion toCompanion(bool nullToAbsent) {
-    return KanjiBankV3OnyomiTableCompanion(
+  KanjiBankV3OnyomisTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiBankV3OnyomisTableCompanion(
       id: Value(id),
       kanjiBankV3ID: Value(kanjiBankV3ID),
       onyomi: Value(onyomi),
     );
   }
 
-  factory KanjiBankV3OnyomiTableData.fromJson(Map<String, dynamic> json,
+  factory KanjiBankV3OnyomisTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiBankV3OnyomiTableData(
+    return KanjiBankV3OnyomisTableData(
       id: serializer.fromJson<int>(json['id']),
       kanjiBankV3ID: serializer.fromJson<int>(json['kanjiBankV3ID']),
       onyomi: serializer.fromJson<String>(json['onyomi']),
@@ -324,16 +323,16 @@ class KanjiBankV3OnyomiTableData extends DataClass
     };
   }
 
-  KanjiBankV3OnyomiTableData copyWith(
+  KanjiBankV3OnyomisTableData copyWith(
           {int? id, int? kanjiBankV3ID, String? onyomi}) =>
-      KanjiBankV3OnyomiTableData(
+      KanjiBankV3OnyomisTableData(
         id: id ?? this.id,
         kanjiBankV3ID: kanjiBankV3ID ?? this.kanjiBankV3ID,
         onyomi: onyomi ?? this.onyomi,
       );
-  KanjiBankV3OnyomiTableData copyWithCompanion(
-      KanjiBankV3OnyomiTableCompanion data) {
-    return KanjiBankV3OnyomiTableData(
+  KanjiBankV3OnyomisTableData copyWithCompanion(
+      KanjiBankV3OnyomisTableCompanion data) {
+    return KanjiBankV3OnyomisTableData(
       id: data.id.present ? data.id.value : this.id,
       kanjiBankV3ID: data.kanjiBankV3ID.present
           ? data.kanjiBankV3ID.value
@@ -344,7 +343,7 @@ class KanjiBankV3OnyomiTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('KanjiBankV3OnyomiTableData(')
+    return (StringBuffer('KanjiBankV3OnyomisTableData(')
           ..write('id: $id, ')
           ..write('kanjiBankV3ID: $kanjiBankV3ID, ')
           ..write('onyomi: $onyomi')
@@ -357,29 +356,29 @@ class KanjiBankV3OnyomiTableData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is KanjiBankV3OnyomiTableData &&
+      (other is KanjiBankV3OnyomisTableData &&
           other.id == this.id &&
           other.kanjiBankV3ID == this.kanjiBankV3ID &&
           other.onyomi == this.onyomi);
 }
 
-class KanjiBankV3OnyomiTableCompanion
-    extends UpdateCompanion<KanjiBankV3OnyomiTableData> {
+class KanjiBankV3OnyomisTableCompanion
+    extends UpdateCompanion<KanjiBankV3OnyomisTableData> {
   final Value<int> id;
   final Value<int> kanjiBankV3ID;
   final Value<String> onyomi;
-  const KanjiBankV3OnyomiTableCompanion({
+  const KanjiBankV3OnyomisTableCompanion({
     this.id = const Value.absent(),
     this.kanjiBankV3ID = const Value.absent(),
     this.onyomi = const Value.absent(),
   });
-  KanjiBankV3OnyomiTableCompanion.insert({
+  KanjiBankV3OnyomisTableCompanion.insert({
     this.id = const Value.absent(),
     required int kanjiBankV3ID,
     required String onyomi,
   })  : kanjiBankV3ID = Value(kanjiBankV3ID),
         onyomi = Value(onyomi);
-  static Insertable<KanjiBankV3OnyomiTableData> custom({
+  static Insertable<KanjiBankV3OnyomisTableData> custom({
     Expression<int>? id,
     Expression<int>? kanjiBankV3ID,
     Expression<String>? onyomi,
@@ -391,9 +390,9 @@ class KanjiBankV3OnyomiTableCompanion
     });
   }
 
-  KanjiBankV3OnyomiTableCompanion copyWith(
+  KanjiBankV3OnyomisTableCompanion copyWith(
       {Value<int>? id, Value<int>? kanjiBankV3ID, Value<String>? onyomi}) {
-    return KanjiBankV3OnyomiTableCompanion(
+    return KanjiBankV3OnyomisTableCompanion(
       id: id ?? this.id,
       kanjiBankV3ID: kanjiBankV3ID ?? this.kanjiBankV3ID,
       onyomi: onyomi ?? this.onyomi,
@@ -417,7 +416,7 @@ class KanjiBankV3OnyomiTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('KanjiBankV3OnyomiTableCompanion(')
+    return (StringBuffer('KanjiBankV3OnyomisTableCompanion(')
           ..write('id: $id, ')
           ..write('kanjiBankV3ID: $kanjiBankV3ID, ')
           ..write('onyomi: $onyomi')
@@ -426,12 +425,247 @@ class KanjiBankV3OnyomiTableCompanion
   }
 }
 
-class $KanjiBankV3KunyomiTableTable extends KanjiBankV3KunyomiTable
-    with TableInfo<$KanjiBankV3KunyomiTableTable, KanjiBankV3KunyomiTableData> {
+class $KanjiBankV3OnyomiKanjiRelationsTableTable
+    extends KanjiBankV3OnyomiKanjiRelationsTable
+    with
+        TableInfo<$KanjiBankV3OnyomiKanjiRelationsTableTable,
+            KanjiBankV3OnyomiKanjiRelationsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $KanjiBankV3KunyomiTableTable(this.attachedDatabase, [this._alias]);
+  $KanjiBankV3OnyomiKanjiRelationsTableTable(this.attachedDatabase,
+      [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _onyomiIdMeta =
+      const VerificationMeta('onyomiId');
+  @override
+  late final GeneratedColumn<int> onyomiId = GeneratedColumn<int>(
+      'onyomi_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _kanjiIdMeta =
+      const VerificationMeta('kanjiId');
+  @override
+  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
+      'kanji_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, onyomiId, kanjiId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_bank_v3_onyomi_kanji_relations_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<KanjiBankV3OnyomiKanjiRelationsTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('onyomi_id')) {
+      context.handle(_onyomiIdMeta,
+          onyomiId.isAcceptableOrUnknown(data['onyomi_id']!, _onyomiIdMeta));
+    } else if (isInserting) {
+      context.missing(_onyomiIdMeta);
+    }
+    if (data.containsKey('kanji_id')) {
+      context.handle(_kanjiIdMeta,
+          kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta));
+    } else if (isInserting) {
+      context.missing(_kanjiIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  KanjiBankV3OnyomiKanjiRelationsTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiBankV3OnyomiKanjiRelationsTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      onyomiId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}onyomi_id'])!,
+      kanjiId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}kanji_id'])!,
+    );
+  }
+
+  @override
+  $KanjiBankV3OnyomiKanjiRelationsTableTable createAlias(String alias) {
+    return $KanjiBankV3OnyomiKanjiRelationsTableTable(attachedDatabase, alias);
+  }
+}
+
+class KanjiBankV3OnyomiKanjiRelationsTableData extends DataClass
+    implements Insertable<KanjiBankV3OnyomiKanjiRelationsTableData> {
+  /// id of this realtion
+  final int id;
+
+  /// the id of the associated onyomi reading
+  final int onyomiId;
+
+  /// the id of the associated kanji
+  final int kanjiId;
+  const KanjiBankV3OnyomiKanjiRelationsTableData(
+      {required this.id, required this.onyomiId, required this.kanjiId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['onyomi_id'] = Variable<int>(onyomiId);
+    map['kanji_id'] = Variable<int>(kanjiId);
+    return map;
+  }
+
+  KanjiBankV3OnyomiKanjiRelationsTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiBankV3OnyomiKanjiRelationsTableCompanion(
+      id: Value(id),
+      onyomiId: Value(onyomiId),
+      kanjiId: Value(kanjiId),
+    );
+  }
+
+  factory KanjiBankV3OnyomiKanjiRelationsTableData.fromJson(
+      Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiBankV3OnyomiKanjiRelationsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      onyomiId: serializer.fromJson<int>(json['onyomiId']),
+      kanjiId: serializer.fromJson<int>(json['kanjiId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'onyomiId': serializer.toJson<int>(onyomiId),
+      'kanjiId': serializer.toJson<int>(kanjiId),
+    };
+  }
+
+  KanjiBankV3OnyomiKanjiRelationsTableData copyWith(
+          {int? id, int? onyomiId, int? kanjiId}) =>
+      KanjiBankV3OnyomiKanjiRelationsTableData(
+        id: id ?? this.id,
+        onyomiId: onyomiId ?? this.onyomiId,
+        kanjiId: kanjiId ?? this.kanjiId,
+      );
+  KanjiBankV3OnyomiKanjiRelationsTableData copyWithCompanion(
+      KanjiBankV3OnyomiKanjiRelationsTableCompanion data) {
+    return KanjiBankV3OnyomiKanjiRelationsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      onyomiId: data.onyomiId.present ? data.onyomiId.value : this.onyomiId,
+      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiBankV3OnyomiKanjiRelationsTableData(')
+          ..write('id: $id, ')
+          ..write('onyomiId: $onyomiId, ')
+          ..write('kanjiId: $kanjiId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, onyomiId, kanjiId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiBankV3OnyomiKanjiRelationsTableData &&
+          other.id == this.id &&
+          other.onyomiId == this.onyomiId &&
+          other.kanjiId == this.kanjiId);
+}
+
+class KanjiBankV3OnyomiKanjiRelationsTableCompanion
+    extends UpdateCompanion<KanjiBankV3OnyomiKanjiRelationsTableData> {
+  final Value<int> id;
+  final Value<int> onyomiId;
+  final Value<int> kanjiId;
+  const KanjiBankV3OnyomiKanjiRelationsTableCompanion({
+    this.id = const Value.absent(),
+    this.onyomiId = const Value.absent(),
+    this.kanjiId = const Value.absent(),
+  });
+  KanjiBankV3OnyomiKanjiRelationsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int onyomiId,
+    required int kanjiId,
+  })  : onyomiId = Value(onyomiId),
+        kanjiId = Value(kanjiId);
+  static Insertable<KanjiBankV3OnyomiKanjiRelationsTableData> custom({
+    Expression<int>? id,
+    Expression<int>? onyomiId,
+    Expression<int>? kanjiId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (onyomiId != null) 'onyomi_id': onyomiId,
+      if (kanjiId != null) 'kanji_id': kanjiId,
+    });
+  }
+
+  KanjiBankV3OnyomiKanjiRelationsTableCompanion copyWith(
+      {Value<int>? id, Value<int>? onyomiId, Value<int>? kanjiId}) {
+    return KanjiBankV3OnyomiKanjiRelationsTableCompanion(
+      id: id ?? this.id,
+      onyomiId: onyomiId ?? this.onyomiId,
+      kanjiId: kanjiId ?? this.kanjiId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (onyomiId.present) {
+      map['onyomi_id'] = Variable<int>(onyomiId.value);
+    }
+    if (kanjiId.present) {
+      map['kanji_id'] = Variable<int>(kanjiId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiBankV3OnyomiKanjiRelationsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('onyomiId: $onyomiId, ')
+          ..write('kanjiId: $kanjiId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $KanjiBankV3KunyomisTableTable extends KanjiBankV3KunyomisTable
+    with
+        TableInfo<$KanjiBankV3KunyomisTableTable,
+            KanjiBankV3KunyomisTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiBankV3KunyomisTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -462,10 +696,10 @@ class $KanjiBankV3KunyomiTableTable extends KanjiBankV3KunyomiTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'kanji_bank_v3_kunyomi_table';
+  static const String $name = 'kanji_bank_v3_kunyomis_table';
   @override
   VerificationContext validateIntegrity(
-      Insertable<KanjiBankV3KunyomiTableData> instance,
+      Insertable<KanjiBankV3KunyomisTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -492,10 +726,10 @@ class $KanjiBankV3KunyomiTableTable extends KanjiBankV3KunyomiTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  KanjiBankV3KunyomiTableData map(Map<String, dynamic> data,
+  KanjiBankV3KunyomisTableData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiBankV3KunyomiTableData(
+    return KanjiBankV3KunyomisTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       kanjiBankV3ID: attachedDatabase.typeMapping
@@ -506,13 +740,13 @@ class $KanjiBankV3KunyomiTableTable extends KanjiBankV3KunyomiTable
   }
 
   @override
-  $KanjiBankV3KunyomiTableTable createAlias(String alias) {
-    return $KanjiBankV3KunyomiTableTable(attachedDatabase, alias);
+  $KanjiBankV3KunyomisTableTable createAlias(String alias) {
+    return $KanjiBankV3KunyomisTableTable(attachedDatabase, alias);
   }
 }
 
-class KanjiBankV3KunyomiTableData extends DataClass
-    implements Insertable<KanjiBankV3KunyomiTableData> {
+class KanjiBankV3KunyomisTableData extends DataClass
+    implements Insertable<KanjiBankV3KunyomisTableData> {
   /// id of this meaning
   final int id;
 
@@ -521,7 +755,7 @@ class KanjiBankV3KunyomiTableData extends DataClass
 
   /// The kunyomi reading of this entry
   final String kunyomi;
-  const KanjiBankV3KunyomiTableData(
+  const KanjiBankV3KunyomisTableData(
       {required this.id, required this.kanjiBankV3ID, required this.kunyomi});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -532,18 +766,18 @@ class KanjiBankV3KunyomiTableData extends DataClass
     return map;
   }
 
-  KanjiBankV3KunyomiTableCompanion toCompanion(bool nullToAbsent) {
-    return KanjiBankV3KunyomiTableCompanion(
+  KanjiBankV3KunyomisTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiBankV3KunyomisTableCompanion(
       id: Value(id),
       kanjiBankV3ID: Value(kanjiBankV3ID),
       kunyomi: Value(kunyomi),
     );
   }
 
-  factory KanjiBankV3KunyomiTableData.fromJson(Map<String, dynamic> json,
+  factory KanjiBankV3KunyomisTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiBankV3KunyomiTableData(
+    return KanjiBankV3KunyomisTableData(
       id: serializer.fromJson<int>(json['id']),
       kanjiBankV3ID: serializer.fromJson<int>(json['kanjiBankV3ID']),
       kunyomi: serializer.fromJson<String>(json['kunyomi']),
@@ -559,16 +793,16 @@ class KanjiBankV3KunyomiTableData extends DataClass
     };
   }
 
-  KanjiBankV3KunyomiTableData copyWith(
+  KanjiBankV3KunyomisTableData copyWith(
           {int? id, int? kanjiBankV3ID, String? kunyomi}) =>
-      KanjiBankV3KunyomiTableData(
+      KanjiBankV3KunyomisTableData(
         id: id ?? this.id,
         kanjiBankV3ID: kanjiBankV3ID ?? this.kanjiBankV3ID,
         kunyomi: kunyomi ?? this.kunyomi,
       );
-  KanjiBankV3KunyomiTableData copyWithCompanion(
-      KanjiBankV3KunyomiTableCompanion data) {
-    return KanjiBankV3KunyomiTableData(
+  KanjiBankV3KunyomisTableData copyWithCompanion(
+      KanjiBankV3KunyomisTableCompanion data) {
+    return KanjiBankV3KunyomisTableData(
       id: data.id.present ? data.id.value : this.id,
       kanjiBankV3ID: data.kanjiBankV3ID.present
           ? data.kanjiBankV3ID.value
@@ -579,7 +813,7 @@ class KanjiBankV3KunyomiTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('KanjiBankV3KunyomiTableData(')
+    return (StringBuffer('KanjiBankV3KunyomisTableData(')
           ..write('id: $id, ')
           ..write('kanjiBankV3ID: $kanjiBankV3ID, ')
           ..write('kunyomi: $kunyomi')
@@ -592,29 +826,29 @@ class KanjiBankV3KunyomiTableData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is KanjiBankV3KunyomiTableData &&
+      (other is KanjiBankV3KunyomisTableData &&
           other.id == this.id &&
           other.kanjiBankV3ID == this.kanjiBankV3ID &&
           other.kunyomi == this.kunyomi);
 }
 
-class KanjiBankV3KunyomiTableCompanion
-    extends UpdateCompanion<KanjiBankV3KunyomiTableData> {
+class KanjiBankV3KunyomisTableCompanion
+    extends UpdateCompanion<KanjiBankV3KunyomisTableData> {
   final Value<int> id;
   final Value<int> kanjiBankV3ID;
   final Value<String> kunyomi;
-  const KanjiBankV3KunyomiTableCompanion({
+  const KanjiBankV3KunyomisTableCompanion({
     this.id = const Value.absent(),
     this.kanjiBankV3ID = const Value.absent(),
     this.kunyomi = const Value.absent(),
   });
-  KanjiBankV3KunyomiTableCompanion.insert({
+  KanjiBankV3KunyomisTableCompanion.insert({
     this.id = const Value.absent(),
     required int kanjiBankV3ID,
     required String kunyomi,
   })  : kanjiBankV3ID = Value(kanjiBankV3ID),
         kunyomi = Value(kunyomi);
-  static Insertable<KanjiBankV3KunyomiTableData> custom({
+  static Insertable<KanjiBankV3KunyomisTableData> custom({
     Expression<int>? id,
     Expression<int>? kanjiBankV3ID,
     Expression<String>? kunyomi,
@@ -626,9 +860,9 @@ class KanjiBankV3KunyomiTableCompanion
     });
   }
 
-  KanjiBankV3KunyomiTableCompanion copyWith(
+  KanjiBankV3KunyomisTableCompanion copyWith(
       {Value<int>? id, Value<int>? kanjiBankV3ID, Value<String>? kunyomi}) {
-    return KanjiBankV3KunyomiTableCompanion(
+    return KanjiBankV3KunyomisTableCompanion(
       id: id ?? this.id,
       kanjiBankV3ID: kanjiBankV3ID ?? this.kanjiBankV3ID,
       kunyomi: kunyomi ?? this.kunyomi,
@@ -652,7 +886,7 @@ class KanjiBankV3KunyomiTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('KanjiBankV3KunyomiTableCompanion(')
+    return (StringBuffer('KanjiBankV3KunyomisTableCompanion(')
           ..write('id: $id, ')
           ..write('kanjiBankV3ID: $kanjiBankV3ID, ')
           ..write('kunyomi: $kunyomi')
@@ -661,12 +895,12 @@ class KanjiBankV3KunyomiTableCompanion
   }
 }
 
-class $KanjiBankV3TagTableTable extends KanjiBankV3TagTable
-    with TableInfo<$KanjiBankV3TagTableTable, KanjiBankV3TagTableData> {
+class $KanjiBankV3TagsTableTable extends KanjiBankV3TagsTable
+    with TableInfo<$KanjiBankV3TagsTableTable, KanjiBankV3TagsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $KanjiBankV3TagTableTable(this.attachedDatabase, [this._alias]);
+  $KanjiBankV3TagsTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -696,10 +930,10 @@ class $KanjiBankV3TagTableTable extends KanjiBankV3TagTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'kanji_bank_v3_tag_table';
+  static const String $name = 'kanji_bank_v3_tags_table';
   @override
   VerificationContext validateIntegrity(
-      Insertable<KanjiBankV3TagTableData> instance,
+      Insertable<KanjiBankV3TagsTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -726,10 +960,10 @@ class $KanjiBankV3TagTableTable extends KanjiBankV3TagTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  KanjiBankV3TagTableData map(Map<String, dynamic> data,
+  KanjiBankV3TagsTableData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiBankV3TagTableData(
+    return KanjiBankV3TagsTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       kanjiBankV3ID: attachedDatabase.typeMapping
@@ -740,13 +974,13 @@ class $KanjiBankV3TagTableTable extends KanjiBankV3TagTable
   }
 
   @override
-  $KanjiBankV3TagTableTable createAlias(String alias) {
-    return $KanjiBankV3TagTableTable(attachedDatabase, alias);
+  $KanjiBankV3TagsTableTable createAlias(String alias) {
+    return $KanjiBankV3TagsTableTable(attachedDatabase, alias);
   }
 }
 
-class KanjiBankV3TagTableData extends DataClass
-    implements Insertable<KanjiBankV3TagTableData> {
+class KanjiBankV3TagsTableData extends DataClass
+    implements Insertable<KanjiBankV3TagsTableData> {
   /// id of this meaning
   final int id;
 
@@ -755,7 +989,7 @@ class KanjiBankV3TagTableData extends DataClass
 
   /// The kunyomi reading of this entry
   final String tag;
-  const KanjiBankV3TagTableData(
+  const KanjiBankV3TagsTableData(
       {required this.id, required this.kanjiBankV3ID, required this.tag});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -766,18 +1000,18 @@ class KanjiBankV3TagTableData extends DataClass
     return map;
   }
 
-  KanjiBankV3TagTableCompanion toCompanion(bool nullToAbsent) {
-    return KanjiBankV3TagTableCompanion(
+  KanjiBankV3TagsTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiBankV3TagsTableCompanion(
       id: Value(id),
       kanjiBankV3ID: Value(kanjiBankV3ID),
       tag: Value(tag),
     );
   }
 
-  factory KanjiBankV3TagTableData.fromJson(Map<String, dynamic> json,
+  factory KanjiBankV3TagsTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiBankV3TagTableData(
+    return KanjiBankV3TagsTableData(
       id: serializer.fromJson<int>(json['id']),
       kanjiBankV3ID: serializer.fromJson<int>(json['kanjiBankV3ID']),
       tag: serializer.fromJson<String>(json['tag']),
@@ -793,15 +1027,16 @@ class KanjiBankV3TagTableData extends DataClass
     };
   }
 
-  KanjiBankV3TagTableData copyWith(
+  KanjiBankV3TagsTableData copyWith(
           {int? id, int? kanjiBankV3ID, String? tag}) =>
-      KanjiBankV3TagTableData(
+      KanjiBankV3TagsTableData(
         id: id ?? this.id,
         kanjiBankV3ID: kanjiBankV3ID ?? this.kanjiBankV3ID,
         tag: tag ?? this.tag,
       );
-  KanjiBankV3TagTableData copyWithCompanion(KanjiBankV3TagTableCompanion data) {
-    return KanjiBankV3TagTableData(
+  KanjiBankV3TagsTableData copyWithCompanion(
+      KanjiBankV3TagsTableCompanion data) {
+    return KanjiBankV3TagsTableData(
       id: data.id.present ? data.id.value : this.id,
       kanjiBankV3ID: data.kanjiBankV3ID.present
           ? data.kanjiBankV3ID.value
@@ -812,7 +1047,7 @@ class KanjiBankV3TagTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('KanjiBankV3TagTableData(')
+    return (StringBuffer('KanjiBankV3TagsTableData(')
           ..write('id: $id, ')
           ..write('kanjiBankV3ID: $kanjiBankV3ID, ')
           ..write('tag: $tag')
@@ -825,29 +1060,29 @@ class KanjiBankV3TagTableData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is KanjiBankV3TagTableData &&
+      (other is KanjiBankV3TagsTableData &&
           other.id == this.id &&
           other.kanjiBankV3ID == this.kanjiBankV3ID &&
           other.tag == this.tag);
 }
 
-class KanjiBankV3TagTableCompanion
-    extends UpdateCompanion<KanjiBankV3TagTableData> {
+class KanjiBankV3TagsTableCompanion
+    extends UpdateCompanion<KanjiBankV3TagsTableData> {
   final Value<int> id;
   final Value<int> kanjiBankV3ID;
   final Value<String> tag;
-  const KanjiBankV3TagTableCompanion({
+  const KanjiBankV3TagsTableCompanion({
     this.id = const Value.absent(),
     this.kanjiBankV3ID = const Value.absent(),
     this.tag = const Value.absent(),
   });
-  KanjiBankV3TagTableCompanion.insert({
+  KanjiBankV3TagsTableCompanion.insert({
     this.id = const Value.absent(),
     required int kanjiBankV3ID,
     required String tag,
   })  : kanjiBankV3ID = Value(kanjiBankV3ID),
         tag = Value(tag);
-  static Insertable<KanjiBankV3TagTableData> custom({
+  static Insertable<KanjiBankV3TagsTableData> custom({
     Expression<int>? id,
     Expression<int>? kanjiBankV3ID,
     Expression<String>? tag,
@@ -859,9 +1094,9 @@ class KanjiBankV3TagTableCompanion
     });
   }
 
-  KanjiBankV3TagTableCompanion copyWith(
+  KanjiBankV3TagsTableCompanion copyWith(
       {Value<int>? id, Value<int>? kanjiBankV3ID, Value<String>? tag}) {
-    return KanjiBankV3TagTableCompanion(
+    return KanjiBankV3TagsTableCompanion(
       id: id ?? this.id,
       kanjiBankV3ID: kanjiBankV3ID ?? this.kanjiBankV3ID,
       tag: tag ?? this.tag,
@@ -885,7 +1120,7 @@ class KanjiBankV3TagTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('KanjiBankV3TagTableCompanion(')
+    return (StringBuffer('KanjiBankV3TagsTableCompanion(')
           ..write('id: $id, ')
           ..write('kanjiBankV3ID: $kanjiBankV3ID, ')
           ..write('tag: $tag')
@@ -1414,12 +1649,15 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
   late final $KanjiBankV3TableTable kanjiBankV3Table =
       $KanjiBankV3TableTable(this);
-  late final $KanjiBankV3OnyomiTableTable kanjiBankV3OnyomiTable =
-      $KanjiBankV3OnyomiTableTable(this);
-  late final $KanjiBankV3KunyomiTableTable kanjiBankV3KunyomiTable =
-      $KanjiBankV3KunyomiTableTable(this);
-  late final $KanjiBankV3TagTableTable kanjiBankV3TagTable =
-      $KanjiBankV3TagTableTable(this);
+  late final $KanjiBankV3OnyomisTableTable kanjiBankV3OnyomisTable =
+      $KanjiBankV3OnyomisTableTable(this);
+  late final $KanjiBankV3OnyomiKanjiRelationsTableTable
+      kanjiBankV3OnyomiKanjiRelationsTable =
+      $KanjiBankV3OnyomiKanjiRelationsTableTable(this);
+  late final $KanjiBankV3KunyomisTableTable kanjiBankV3KunyomisTable =
+      $KanjiBankV3KunyomisTableTable(this);
+  late final $KanjiBankV3TagsTableTable kanjiBankV3TagsTable =
+      $KanjiBankV3TagsTableTable(this);
   late final $KanjiBankV3MeaningsTableTable kanjiBankV3MeaningsTable =
       $KanjiBankV3MeaningsTableTable(this);
   late final $KanjiBankV3StatsTableTable kanjiBankV3StatsTable =
@@ -1432,9 +1670,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
         kanjiBankV3Table,
-        kanjiBankV3OnyomiTable,
-        kanjiBankV3KunyomiTable,
-        kanjiBankV3TagTable,
+        kanjiBankV3OnyomisTable,
+        kanjiBankV3OnyomiKanjiRelationsTable,
+        kanjiBankV3KunyomisTable,
+        kanjiBankV3TagsTable,
         kanjiBankV3MeaningsTable,
         kanjiBankV3StatsTable,
         kanji
@@ -1457,58 +1696,59 @@ final class $$KanjiBankV3TableTableReferences extends BaseReferences<
   $$KanjiBankV3TableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<$KanjiBankV3OnyomiTableTable,
-      List<KanjiBankV3OnyomiTableData>> _kanjiBankV3OnyomiTableRefsTable(
+  static MultiTypedResultKey<$KanjiBankV3OnyomisTableTable,
+      List<KanjiBankV3OnyomisTableData>> _kanjiBankV3OnyomisTableRefsTable(
           _$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(db.kanjiBankV3OnyomiTable,
-          aliasName: $_aliasNameGenerator(
-              db.kanjiBankV3Table.id, db.kanjiBankV3OnyomiTable.kanjiBankV3ID));
-
-  $$KanjiBankV3OnyomiTableTableProcessedTableManager
-      get kanjiBankV3OnyomiTableRefs {
-    final manager = $$KanjiBankV3OnyomiTableTableTableManager(
-            $_db, $_db.kanjiBankV3OnyomiTable)
-        .filter((f) => f.kanjiBankV3ID.id($_item.id));
-
-    final cache =
-        $_typedResult.readTableOrNull(_kanjiBankV3OnyomiTableRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-
-  static MultiTypedResultKey<$KanjiBankV3KunyomiTableTable,
-      List<KanjiBankV3KunyomiTableData>> _kanjiBankV3KunyomiTableRefsTable(
-          _$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(db.kanjiBankV3KunyomiTable,
+      MultiTypedResultKey.fromTable(db.kanjiBankV3OnyomisTable,
           aliasName: $_aliasNameGenerator(db.kanjiBankV3Table.id,
-              db.kanjiBankV3KunyomiTable.kanjiBankV3ID));
+              db.kanjiBankV3OnyomisTable.kanjiBankV3ID));
 
-  $$KanjiBankV3KunyomiTableTableProcessedTableManager
-      get kanjiBankV3KunyomiTableRefs {
-    final manager = $$KanjiBankV3KunyomiTableTableTableManager(
-            $_db, $_db.kanjiBankV3KunyomiTable)
+  $$KanjiBankV3OnyomisTableTableProcessedTableManager
+      get kanjiBankV3OnyomisTableRefs {
+    final manager = $$KanjiBankV3OnyomisTableTableTableManager(
+            $_db, $_db.kanjiBankV3OnyomisTable)
         .filter((f) => f.kanjiBankV3ID.id($_item.id));
 
     final cache =
-        $_typedResult.readTableOrNull(_kanjiBankV3KunyomiTableRefsTable($_db));
+        $_typedResult.readTableOrNull(_kanjiBankV3OnyomisTableRefsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
 
-  static MultiTypedResultKey<$KanjiBankV3TagTableTable,
-      List<KanjiBankV3TagTableData>> _kanjiBankV3TagTableRefsTable(
+  static MultiTypedResultKey<$KanjiBankV3KunyomisTableTable,
+      List<KanjiBankV3KunyomisTableData>> _kanjiBankV3KunyomisTableRefsTable(
           _$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(db.kanjiBankV3TagTable,
-          aliasName: $_aliasNameGenerator(
-              db.kanjiBankV3Table.id, db.kanjiBankV3TagTable.kanjiBankV3ID));
+      MultiTypedResultKey.fromTable(db.kanjiBankV3KunyomisTable,
+          aliasName: $_aliasNameGenerator(db.kanjiBankV3Table.id,
+              db.kanjiBankV3KunyomisTable.kanjiBankV3ID));
 
-  $$KanjiBankV3TagTableTableProcessedTableManager get kanjiBankV3TagTableRefs {
+  $$KanjiBankV3KunyomisTableTableProcessedTableManager
+      get kanjiBankV3KunyomisTableRefs {
+    final manager = $$KanjiBankV3KunyomisTableTableTableManager(
+            $_db, $_db.kanjiBankV3KunyomisTable)
+        .filter((f) => f.kanjiBankV3ID.id($_item.id));
+
+    final cache =
+        $_typedResult.readTableOrNull(_kanjiBankV3KunyomisTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$KanjiBankV3TagsTableTable,
+      List<KanjiBankV3TagsTableData>> _kanjiBankV3TagsTableRefsTable(
+          _$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(db.kanjiBankV3TagsTable,
+          aliasName: $_aliasNameGenerator(
+              db.kanjiBankV3Table.id, db.kanjiBankV3TagsTable.kanjiBankV3ID));
+
+  $$KanjiBankV3TagsTableTableProcessedTableManager
+      get kanjiBankV3TagsTableRefs {
     final manager =
-        $$KanjiBankV3TagTableTableTableManager($_db, $_db.kanjiBankV3TagTable)
+        $$KanjiBankV3TagsTableTableTableManager($_db, $_db.kanjiBankV3TagsTable)
             .filter((f) => f.kanjiBankV3ID.id($_item.id));
 
     final cache =
-        $_typedResult.readTableOrNull(_kanjiBankV3TagTableRefsTable($_db));
+        $_typedResult.readTableOrNull(_kanjiBankV3TagsTableRefsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
@@ -1567,21 +1807,21 @@ class $$KanjiBankV3TableTableFilterComposer
   ColumnFilters<String> get kanji => $composableBuilder(
       column: $table.kanji, builder: (column) => ColumnFilters(column));
 
-  Expression<bool> kanjiBankV3OnyomiTableRefs(
-      Expression<bool> Function($$KanjiBankV3OnyomiTableTableFilterComposer f)
+  Expression<bool> kanjiBankV3OnyomisTableRefs(
+      Expression<bool> Function($$KanjiBankV3OnyomisTableTableFilterComposer f)
           f) {
-    final $$KanjiBankV3OnyomiTableTableFilterComposer composer =
+    final $$KanjiBankV3OnyomisTableTableFilterComposer composer =
         $composerBuilder(
             composer: this,
             getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3OnyomiTable,
+            referencedTable: $db.kanjiBankV3OnyomisTable,
             getReferencedColumn: (t) => t.kanjiBankV3ID,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3OnyomiTableTableFilterComposer(
+                $$KanjiBankV3OnyomisTableTableFilterComposer(
                   $db: $db,
-                  $table: $db.kanjiBankV3OnyomiTable,
+                  $table: $db.kanjiBankV3OnyomisTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -1590,21 +1830,21 @@ class $$KanjiBankV3TableTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> kanjiBankV3KunyomiTableRefs(
-      Expression<bool> Function($$KanjiBankV3KunyomiTableTableFilterComposer f)
+  Expression<bool> kanjiBankV3KunyomisTableRefs(
+      Expression<bool> Function($$KanjiBankV3KunyomisTableTableFilterComposer f)
           f) {
-    final $$KanjiBankV3KunyomiTableTableFilterComposer composer =
+    final $$KanjiBankV3KunyomisTableTableFilterComposer composer =
         $composerBuilder(
             composer: this,
             getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3KunyomiTable,
+            referencedTable: $db.kanjiBankV3KunyomisTable,
             getReferencedColumn: (t) => t.kanjiBankV3ID,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3KunyomiTableTableFilterComposer(
+                $$KanjiBankV3KunyomisTableTableFilterComposer(
                   $db: $db,
-                  $table: $db.kanjiBankV3KunyomiTable,
+                  $table: $db.kanjiBankV3KunyomisTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -1613,19 +1853,20 @@ class $$KanjiBankV3TableTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> kanjiBankV3TagTableRefs(
-      Expression<bool> Function($$KanjiBankV3TagTableTableFilterComposer f) f) {
-    final $$KanjiBankV3TagTableTableFilterComposer composer = $composerBuilder(
+  Expression<bool> kanjiBankV3TagsTableRefs(
+      Expression<bool> Function($$KanjiBankV3TagsTableTableFilterComposer f)
+          f) {
+    final $$KanjiBankV3TagsTableTableFilterComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.id,
-        referencedTable: $db.kanjiBankV3TagTable,
+        referencedTable: $db.kanjiBankV3TagsTable,
         getReferencedColumn: (t) => t.kanjiBankV3ID,
         builder: (joinBuilder,
                 {$addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer}) =>
-            $$KanjiBankV3TagTableTableFilterComposer(
+            $$KanjiBankV3TagsTableTableFilterComposer(
               $db: $db,
-              $table: $db.kanjiBankV3TagTable,
+              $table: $db.kanjiBankV3TagsTable,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -1712,21 +1953,21 @@ class $$KanjiBankV3TableTableAnnotationComposer
   GeneratedColumn<String> get kanji =>
       $composableBuilder(column: $table.kanji, builder: (column) => column);
 
-  Expression<T> kanjiBankV3OnyomiTableRefs<T extends Object>(
-      Expression<T> Function($$KanjiBankV3OnyomiTableTableAnnotationComposer a)
+  Expression<T> kanjiBankV3OnyomisTableRefs<T extends Object>(
+      Expression<T> Function($$KanjiBankV3OnyomisTableTableAnnotationComposer a)
           f) {
-    final $$KanjiBankV3OnyomiTableTableAnnotationComposer composer =
+    final $$KanjiBankV3OnyomisTableTableAnnotationComposer composer =
         $composerBuilder(
             composer: this,
             getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3OnyomiTable,
+            referencedTable: $db.kanjiBankV3OnyomisTable,
             getReferencedColumn: (t) => t.kanjiBankV3ID,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3OnyomiTableTableAnnotationComposer(
+                $$KanjiBankV3OnyomisTableTableAnnotationComposer(
                   $db: $db,
-                  $table: $db.kanjiBankV3OnyomiTable,
+                  $table: $db.kanjiBankV3OnyomisTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -1735,21 +1976,22 @@ class $$KanjiBankV3TableTableAnnotationComposer
     return f(composer);
   }
 
-  Expression<T> kanjiBankV3KunyomiTableRefs<T extends Object>(
-      Expression<T> Function($$KanjiBankV3KunyomiTableTableAnnotationComposer a)
+  Expression<T> kanjiBankV3KunyomisTableRefs<T extends Object>(
+      Expression<T> Function(
+              $$KanjiBankV3KunyomisTableTableAnnotationComposer a)
           f) {
-    final $$KanjiBankV3KunyomiTableTableAnnotationComposer composer =
+    final $$KanjiBankV3KunyomisTableTableAnnotationComposer composer =
         $composerBuilder(
             composer: this,
             getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3KunyomiTable,
+            referencedTable: $db.kanjiBankV3KunyomisTable,
             getReferencedColumn: (t) => t.kanjiBankV3ID,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3KunyomiTableTableAnnotationComposer(
+                $$KanjiBankV3KunyomisTableTableAnnotationComposer(
                   $db: $db,
-                  $table: $db.kanjiBankV3KunyomiTable,
+                  $table: $db.kanjiBankV3KunyomisTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -1758,21 +2000,21 @@ class $$KanjiBankV3TableTableAnnotationComposer
     return f(composer);
   }
 
-  Expression<T> kanjiBankV3TagTableRefs<T extends Object>(
-      Expression<T> Function($$KanjiBankV3TagTableTableAnnotationComposer a)
+  Expression<T> kanjiBankV3TagsTableRefs<T extends Object>(
+      Expression<T> Function($$KanjiBankV3TagsTableTableAnnotationComposer a)
           f) {
-    final $$KanjiBankV3TagTableTableAnnotationComposer composer =
+    final $$KanjiBankV3TagsTableTableAnnotationComposer composer =
         $composerBuilder(
             composer: this,
             getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3TagTable,
+            referencedTable: $db.kanjiBankV3TagsTable,
             getReferencedColumn: (t) => t.kanjiBankV3ID,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3TagTableTableAnnotationComposer(
+                $$KanjiBankV3TagsTableTableAnnotationComposer(
                   $db: $db,
-                  $table: $db.kanjiBankV3TagTable,
+                  $table: $db.kanjiBankV3TagsTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -1841,9 +2083,9 @@ class $$KanjiBankV3TableTableTableManager extends RootTableManager<
     (KanjiBankV3TableData, $$KanjiBankV3TableTableReferences),
     KanjiBankV3TableData,
     PrefetchHooks Function(
-        {bool kanjiBankV3OnyomiTableRefs,
-        bool kanjiBankV3KunyomiTableRefs,
-        bool kanjiBankV3TagTableRefs,
+        {bool kanjiBankV3OnyomisTableRefs,
+        bool kanjiBankV3KunyomisTableRefs,
+        bool kanjiBankV3TagsTableRefs,
         bool kanjiBankV3MeaningsTableRefs,
         bool kanjiBankV3StatsTableRefs})> {
   $$KanjiBankV3TableTableTableManager(
@@ -1880,55 +2122,55 @@ class $$KanjiBankV3TableTableTableManager extends RootTableManager<
                   ))
               .toList(),
           prefetchHooksCallback: (
-              {kanjiBankV3OnyomiTableRefs = false,
-              kanjiBankV3KunyomiTableRefs = false,
-              kanjiBankV3TagTableRefs = false,
+              {kanjiBankV3OnyomisTableRefs = false,
+              kanjiBankV3KunyomisTableRefs = false,
+              kanjiBankV3TagsTableRefs = false,
               kanjiBankV3MeaningsTableRefs = false,
               kanjiBankV3StatsTableRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
-                if (kanjiBankV3OnyomiTableRefs) db.kanjiBankV3OnyomiTable,
-                if (kanjiBankV3KunyomiTableRefs) db.kanjiBankV3KunyomiTable,
-                if (kanjiBankV3TagTableRefs) db.kanjiBankV3TagTable,
+                if (kanjiBankV3OnyomisTableRefs) db.kanjiBankV3OnyomisTable,
+                if (kanjiBankV3KunyomisTableRefs) db.kanjiBankV3KunyomisTable,
+                if (kanjiBankV3TagsTableRefs) db.kanjiBankV3TagsTable,
                 if (kanjiBankV3MeaningsTableRefs) db.kanjiBankV3MeaningsTable,
                 if (kanjiBankV3StatsTableRefs) db.kanjiBankV3StatsTable
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
-                  if (kanjiBankV3OnyomiTableRefs)
+                  if (kanjiBankV3OnyomisTableRefs)
                     await $_getPrefetchedData(
                         currentTable: table,
                         referencedTable: $$KanjiBankV3TableTableReferences
-                            ._kanjiBankV3OnyomiTableRefsTable(db),
+                            ._kanjiBankV3OnyomisTableRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$KanjiBankV3TableTableReferences(db, table, p0)
-                                .kanjiBankV3OnyomiTableRefs,
+                                .kanjiBankV3OnyomisTableRefs,
                         referencedItemsForCurrentItem:
                             (item, referencedItems) => referencedItems
                                 .where((e) => e.kanjiBankV3ID == item.id),
                         typedResults: items),
-                  if (kanjiBankV3KunyomiTableRefs)
+                  if (kanjiBankV3KunyomisTableRefs)
                     await $_getPrefetchedData(
                         currentTable: table,
                         referencedTable: $$KanjiBankV3TableTableReferences
-                            ._kanjiBankV3KunyomiTableRefsTable(db),
+                            ._kanjiBankV3KunyomisTableRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$KanjiBankV3TableTableReferences(db, table, p0)
-                                .kanjiBankV3KunyomiTableRefs,
+                                .kanjiBankV3KunyomisTableRefs,
                         referencedItemsForCurrentItem:
                             (item, referencedItems) => referencedItems
                                 .where((e) => e.kanjiBankV3ID == item.id),
                         typedResults: items),
-                  if (kanjiBankV3TagTableRefs)
+                  if (kanjiBankV3TagsTableRefs)
                     await $_getPrefetchedData(
                         currentTable: table,
                         referencedTable: $$KanjiBankV3TableTableReferences
-                            ._kanjiBankV3TagTableRefsTable(db),
+                            ._kanjiBankV3TagsTableRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$KanjiBankV3TableTableReferences(db, table, p0)
-                                .kanjiBankV3TagTableRefs,
+                                .kanjiBankV3TagsTableRefs,
                         referencedItemsForCurrentItem:
                             (item, referencedItems) => referencedItems
                                 .where((e) => e.kanjiBankV3ID == item.id),
@@ -1976,32 +2218,32 @@ typedef $$KanjiBankV3TableTableProcessedTableManager = ProcessedTableManager<
     (KanjiBankV3TableData, $$KanjiBankV3TableTableReferences),
     KanjiBankV3TableData,
     PrefetchHooks Function(
-        {bool kanjiBankV3OnyomiTableRefs,
-        bool kanjiBankV3KunyomiTableRefs,
-        bool kanjiBankV3TagTableRefs,
+        {bool kanjiBankV3OnyomisTableRefs,
+        bool kanjiBankV3KunyomisTableRefs,
+        bool kanjiBankV3TagsTableRefs,
         bool kanjiBankV3MeaningsTableRefs,
         bool kanjiBankV3StatsTableRefs})>;
-typedef $$KanjiBankV3OnyomiTableTableCreateCompanionBuilder
-    = KanjiBankV3OnyomiTableCompanion Function({
+typedef $$KanjiBankV3OnyomisTableTableCreateCompanionBuilder
+    = KanjiBankV3OnyomisTableCompanion Function({
   Value<int> id,
   required int kanjiBankV3ID,
   required String onyomi,
 });
-typedef $$KanjiBankV3OnyomiTableTableUpdateCompanionBuilder
-    = KanjiBankV3OnyomiTableCompanion Function({
+typedef $$KanjiBankV3OnyomisTableTableUpdateCompanionBuilder
+    = KanjiBankV3OnyomisTableCompanion Function({
   Value<int> id,
   Value<int> kanjiBankV3ID,
   Value<String> onyomi,
 });
 
-final class $$KanjiBankV3OnyomiTableTableReferences extends BaseReferences<
-    _$DaKanjiDB, $KanjiBankV3OnyomiTableTable, KanjiBankV3OnyomiTableData> {
-  $$KanjiBankV3OnyomiTableTableReferences(
+final class $$KanjiBankV3OnyomisTableTableReferences extends BaseReferences<
+    _$DaKanjiDB, $KanjiBankV3OnyomisTableTable, KanjiBankV3OnyomisTableData> {
+  $$KanjiBankV3OnyomisTableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
 
   static $KanjiBankV3TableTable _kanjiBankV3IDTable(_$DaKanjiDB db) =>
       db.kanjiBankV3Table.createAlias($_aliasNameGenerator(
-          db.kanjiBankV3OnyomiTable.kanjiBankV3ID, db.kanjiBankV3Table.id));
+          db.kanjiBankV3OnyomisTable.kanjiBankV3ID, db.kanjiBankV3Table.id));
 
   $$KanjiBankV3TableTableProcessedTableManager? get kanjiBankV3ID {
     if ($_item.kanjiBankV3ID == null) return null;
@@ -2015,9 +2257,9 @@ final class $$KanjiBankV3OnyomiTableTableReferences extends BaseReferences<
   }
 }
 
-class $$KanjiBankV3OnyomiTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3OnyomiTableTable> {
-  $$KanjiBankV3OnyomiTableTableFilterComposer({
+class $$KanjiBankV3OnyomisTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3OnyomisTableTable> {
+  $$KanjiBankV3OnyomisTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2051,9 +2293,9 @@ class $$KanjiBankV3OnyomiTableTableFilterComposer
   }
 }
 
-class $$KanjiBankV3OnyomiTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3OnyomiTableTable> {
-  $$KanjiBankV3OnyomiTableTableOrderingComposer({
+class $$KanjiBankV3OnyomisTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3OnyomisTableTable> {
+  $$KanjiBankV3OnyomisTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2087,9 +2329,9 @@ class $$KanjiBankV3OnyomiTableTableOrderingComposer
   }
 }
 
-class $$KanjiBankV3OnyomiTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3OnyomiTableTable> {
-  $$KanjiBankV3OnyomiTableTableAnnotationComposer({
+class $$KanjiBankV3OnyomisTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3OnyomisTableTable> {
+  $$KanjiBankV3OnyomisTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2123,38 +2365,38 @@ class $$KanjiBankV3OnyomiTableTableAnnotationComposer
   }
 }
 
-class $$KanjiBankV3OnyomiTableTableTableManager extends RootTableManager<
+class $$KanjiBankV3OnyomisTableTableTableManager extends RootTableManager<
     _$DaKanjiDB,
-    $KanjiBankV3OnyomiTableTable,
-    KanjiBankV3OnyomiTableData,
-    $$KanjiBankV3OnyomiTableTableFilterComposer,
-    $$KanjiBankV3OnyomiTableTableOrderingComposer,
-    $$KanjiBankV3OnyomiTableTableAnnotationComposer,
-    $$KanjiBankV3OnyomiTableTableCreateCompanionBuilder,
-    $$KanjiBankV3OnyomiTableTableUpdateCompanionBuilder,
-    (KanjiBankV3OnyomiTableData, $$KanjiBankV3OnyomiTableTableReferences),
-    KanjiBankV3OnyomiTableData,
+    $KanjiBankV3OnyomisTableTable,
+    KanjiBankV3OnyomisTableData,
+    $$KanjiBankV3OnyomisTableTableFilterComposer,
+    $$KanjiBankV3OnyomisTableTableOrderingComposer,
+    $$KanjiBankV3OnyomisTableTableAnnotationComposer,
+    $$KanjiBankV3OnyomisTableTableCreateCompanionBuilder,
+    $$KanjiBankV3OnyomisTableTableUpdateCompanionBuilder,
+    (KanjiBankV3OnyomisTableData, $$KanjiBankV3OnyomisTableTableReferences),
+    KanjiBankV3OnyomisTableData,
     PrefetchHooks Function({bool kanjiBankV3ID})> {
-  $$KanjiBankV3OnyomiTableTableTableManager(
-      _$DaKanjiDB db, $KanjiBankV3OnyomiTableTable table)
+  $$KanjiBankV3OnyomisTableTableTableManager(
+      _$DaKanjiDB db, $KanjiBankV3OnyomisTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$KanjiBankV3OnyomiTableTableFilterComposer(
+              $$KanjiBankV3OnyomisTableTableFilterComposer(
                   $db: db, $table: table),
           createOrderingComposer: () =>
-              $$KanjiBankV3OnyomiTableTableOrderingComposer(
+              $$KanjiBankV3OnyomisTableTableOrderingComposer(
                   $db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$KanjiBankV3OnyomiTableTableAnnotationComposer(
+              $$KanjiBankV3OnyomisTableTableAnnotationComposer(
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> kanjiBankV3ID = const Value.absent(),
             Value<String> onyomi = const Value.absent(),
           }) =>
-              KanjiBankV3OnyomiTableCompanion(
+              KanjiBankV3OnyomisTableCompanion(
             id: id,
             kanjiBankV3ID: kanjiBankV3ID,
             onyomi: onyomi,
@@ -2164,7 +2406,7 @@ class $$KanjiBankV3OnyomiTableTableTableManager extends RootTableManager<
             required int kanjiBankV3ID,
             required String onyomi,
           }) =>
-              KanjiBankV3OnyomiTableCompanion.insert(
+              KanjiBankV3OnyomisTableCompanion.insert(
             id: id,
             kanjiBankV3ID: kanjiBankV3ID,
             onyomi: onyomi,
@@ -2172,7 +2414,7 @@ class $$KanjiBankV3OnyomiTableTableTableManager extends RootTableManager<
           withReferenceMapper: (p0) => p0
               .map((e) => (
                     e.readTable(table),
-                    $$KanjiBankV3OnyomiTableTableReferences(db, table, e)
+                    $$KanjiBankV3OnyomisTableTableReferences(db, table, e)
                   ))
               .toList(),
           prefetchHooksCallback: ({kanjiBankV3ID = false}) {
@@ -2196,9 +2438,9 @@ class $$KanjiBankV3OnyomiTableTableTableManager extends RootTableManager<
                   state = state.withJoin(
                     currentTable: table,
                     currentColumn: table.kanjiBankV3ID,
-                    referencedTable: $$KanjiBankV3OnyomiTableTableReferences
+                    referencedTable: $$KanjiBankV3OnyomisTableTableReferences
                         ._kanjiBankV3IDTable(db),
-                    referencedColumn: $$KanjiBankV3OnyomiTableTableReferences
+                    referencedColumn: $$KanjiBankV3OnyomisTableTableReferences
                         ._kanjiBankV3IDTable(db)
                         .id,
                   ) as T;
@@ -2214,40 +2456,189 @@ class $$KanjiBankV3OnyomiTableTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$KanjiBankV3OnyomiTableTableProcessedTableManager
+typedef $$KanjiBankV3OnyomisTableTableProcessedTableManager
     = ProcessedTableManager<
         _$DaKanjiDB,
-        $KanjiBankV3OnyomiTableTable,
-        KanjiBankV3OnyomiTableData,
-        $$KanjiBankV3OnyomiTableTableFilterComposer,
-        $$KanjiBankV3OnyomiTableTableOrderingComposer,
-        $$KanjiBankV3OnyomiTableTableAnnotationComposer,
-        $$KanjiBankV3OnyomiTableTableCreateCompanionBuilder,
-        $$KanjiBankV3OnyomiTableTableUpdateCompanionBuilder,
-        (KanjiBankV3OnyomiTableData, $$KanjiBankV3OnyomiTableTableReferences),
-        KanjiBankV3OnyomiTableData,
+        $KanjiBankV3OnyomisTableTable,
+        KanjiBankV3OnyomisTableData,
+        $$KanjiBankV3OnyomisTableTableFilterComposer,
+        $$KanjiBankV3OnyomisTableTableOrderingComposer,
+        $$KanjiBankV3OnyomisTableTableAnnotationComposer,
+        $$KanjiBankV3OnyomisTableTableCreateCompanionBuilder,
+        $$KanjiBankV3OnyomisTableTableUpdateCompanionBuilder,
+        (KanjiBankV3OnyomisTableData, $$KanjiBankV3OnyomisTableTableReferences),
+        KanjiBankV3OnyomisTableData,
         PrefetchHooks Function({bool kanjiBankV3ID})>;
-typedef $$KanjiBankV3KunyomiTableTableCreateCompanionBuilder
-    = KanjiBankV3KunyomiTableCompanion Function({
+typedef $$KanjiBankV3OnyomiKanjiRelationsTableTableCreateCompanionBuilder
+    = KanjiBankV3OnyomiKanjiRelationsTableCompanion Function({
+  Value<int> id,
+  required int onyomiId,
+  required int kanjiId,
+});
+typedef $$KanjiBankV3OnyomiKanjiRelationsTableTableUpdateCompanionBuilder
+    = KanjiBankV3OnyomiKanjiRelationsTableCompanion Function({
+  Value<int> id,
+  Value<int> onyomiId,
+  Value<int> kanjiId,
+});
+
+class $$KanjiBankV3OnyomiKanjiRelationsTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3OnyomiKanjiRelationsTableTable> {
+  $$KanjiBankV3OnyomiKanjiRelationsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get onyomiId => $composableBuilder(
+      column: $table.onyomiId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get kanjiId => $composableBuilder(
+      column: $table.kanjiId, builder: (column) => ColumnFilters(column));
+}
+
+class $$KanjiBankV3OnyomiKanjiRelationsTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3OnyomiKanjiRelationsTableTable> {
+  $$KanjiBankV3OnyomiKanjiRelationsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get onyomiId => $composableBuilder(
+      column: $table.onyomiId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get kanjiId => $composableBuilder(
+      column: $table.kanjiId, builder: (column) => ColumnOrderings(column));
+}
+
+class $$KanjiBankV3OnyomiKanjiRelationsTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3OnyomiKanjiRelationsTableTable> {
+  $$KanjiBankV3OnyomiKanjiRelationsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get onyomiId =>
+      $composableBuilder(column: $table.onyomiId, builder: (column) => column);
+
+  GeneratedColumn<int> get kanjiId =>
+      $composableBuilder(column: $table.kanjiId, builder: (column) => column);
+}
+
+class $$KanjiBankV3OnyomiKanjiRelationsTableTableTableManager
+    extends RootTableManager<
+        _$DaKanjiDB,
+        $KanjiBankV3OnyomiKanjiRelationsTableTable,
+        KanjiBankV3OnyomiKanjiRelationsTableData,
+        $$KanjiBankV3OnyomiKanjiRelationsTableTableFilterComposer,
+        $$KanjiBankV3OnyomiKanjiRelationsTableTableOrderingComposer,
+        $$KanjiBankV3OnyomiKanjiRelationsTableTableAnnotationComposer,
+        $$KanjiBankV3OnyomiKanjiRelationsTableTableCreateCompanionBuilder,
+        $$KanjiBankV3OnyomiKanjiRelationsTableTableUpdateCompanionBuilder,
+        (
+          KanjiBankV3OnyomiKanjiRelationsTableData,
+          BaseReferences<
+              _$DaKanjiDB,
+              $KanjiBankV3OnyomiKanjiRelationsTableTable,
+              KanjiBankV3OnyomiKanjiRelationsTableData>
+        ),
+        KanjiBankV3OnyomiKanjiRelationsTableData,
+        PrefetchHooks Function()> {
+  $$KanjiBankV3OnyomiKanjiRelationsTableTableTableManager(
+      _$DaKanjiDB db, $KanjiBankV3OnyomiKanjiRelationsTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiBankV3OnyomiKanjiRelationsTableTableFilterComposer(
+                  $db: db, $table: table),
+          createOrderingComposer: () =>
+              $$KanjiBankV3OnyomiKanjiRelationsTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$KanjiBankV3OnyomiKanjiRelationsTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> onyomiId = const Value.absent(),
+            Value<int> kanjiId = const Value.absent(),
+          }) =>
+              KanjiBankV3OnyomiKanjiRelationsTableCompanion(
+            id: id,
+            onyomiId: onyomiId,
+            kanjiId: kanjiId,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int onyomiId,
+            required int kanjiId,
+          }) =>
+              KanjiBankV3OnyomiKanjiRelationsTableCompanion.insert(
+            id: id,
+            onyomiId: onyomiId,
+            kanjiId: kanjiId,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$KanjiBankV3OnyomiKanjiRelationsTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$DaKanjiDB,
+        $KanjiBankV3OnyomiKanjiRelationsTableTable,
+        KanjiBankV3OnyomiKanjiRelationsTableData,
+        $$KanjiBankV3OnyomiKanjiRelationsTableTableFilterComposer,
+        $$KanjiBankV3OnyomiKanjiRelationsTableTableOrderingComposer,
+        $$KanjiBankV3OnyomiKanjiRelationsTableTableAnnotationComposer,
+        $$KanjiBankV3OnyomiKanjiRelationsTableTableCreateCompanionBuilder,
+        $$KanjiBankV3OnyomiKanjiRelationsTableTableUpdateCompanionBuilder,
+        (
+          KanjiBankV3OnyomiKanjiRelationsTableData,
+          BaseReferences<
+              _$DaKanjiDB,
+              $KanjiBankV3OnyomiKanjiRelationsTableTable,
+              KanjiBankV3OnyomiKanjiRelationsTableData>
+        ),
+        KanjiBankV3OnyomiKanjiRelationsTableData,
+        PrefetchHooks Function()>;
+typedef $$KanjiBankV3KunyomisTableTableCreateCompanionBuilder
+    = KanjiBankV3KunyomisTableCompanion Function({
   Value<int> id,
   required int kanjiBankV3ID,
   required String kunyomi,
 });
-typedef $$KanjiBankV3KunyomiTableTableUpdateCompanionBuilder
-    = KanjiBankV3KunyomiTableCompanion Function({
+typedef $$KanjiBankV3KunyomisTableTableUpdateCompanionBuilder
+    = KanjiBankV3KunyomisTableCompanion Function({
   Value<int> id,
   Value<int> kanjiBankV3ID,
   Value<String> kunyomi,
 });
 
-final class $$KanjiBankV3KunyomiTableTableReferences extends BaseReferences<
-    _$DaKanjiDB, $KanjiBankV3KunyomiTableTable, KanjiBankV3KunyomiTableData> {
-  $$KanjiBankV3KunyomiTableTableReferences(
+final class $$KanjiBankV3KunyomisTableTableReferences extends BaseReferences<
+    _$DaKanjiDB, $KanjiBankV3KunyomisTableTable, KanjiBankV3KunyomisTableData> {
+  $$KanjiBankV3KunyomisTableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
 
   static $KanjiBankV3TableTable _kanjiBankV3IDTable(_$DaKanjiDB db) =>
       db.kanjiBankV3Table.createAlias($_aliasNameGenerator(
-          db.kanjiBankV3KunyomiTable.kanjiBankV3ID, db.kanjiBankV3Table.id));
+          db.kanjiBankV3KunyomisTable.kanjiBankV3ID, db.kanjiBankV3Table.id));
 
   $$KanjiBankV3TableTableProcessedTableManager? get kanjiBankV3ID {
     if ($_item.kanjiBankV3ID == null) return null;
@@ -2261,9 +2652,9 @@ final class $$KanjiBankV3KunyomiTableTableReferences extends BaseReferences<
   }
 }
 
-class $$KanjiBankV3KunyomiTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3KunyomiTableTable> {
-  $$KanjiBankV3KunyomiTableTableFilterComposer({
+class $$KanjiBankV3KunyomisTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3KunyomisTableTable> {
+  $$KanjiBankV3KunyomisTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2297,9 +2688,9 @@ class $$KanjiBankV3KunyomiTableTableFilterComposer
   }
 }
 
-class $$KanjiBankV3KunyomiTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3KunyomiTableTable> {
-  $$KanjiBankV3KunyomiTableTableOrderingComposer({
+class $$KanjiBankV3KunyomisTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3KunyomisTableTable> {
+  $$KanjiBankV3KunyomisTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2333,9 +2724,9 @@ class $$KanjiBankV3KunyomiTableTableOrderingComposer
   }
 }
 
-class $$KanjiBankV3KunyomiTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3KunyomiTableTable> {
-  $$KanjiBankV3KunyomiTableTableAnnotationComposer({
+class $$KanjiBankV3KunyomisTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3KunyomisTableTable> {
+  $$KanjiBankV3KunyomisTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2369,38 +2760,38 @@ class $$KanjiBankV3KunyomiTableTableAnnotationComposer
   }
 }
 
-class $$KanjiBankV3KunyomiTableTableTableManager extends RootTableManager<
+class $$KanjiBankV3KunyomisTableTableTableManager extends RootTableManager<
     _$DaKanjiDB,
-    $KanjiBankV3KunyomiTableTable,
-    KanjiBankV3KunyomiTableData,
-    $$KanjiBankV3KunyomiTableTableFilterComposer,
-    $$KanjiBankV3KunyomiTableTableOrderingComposer,
-    $$KanjiBankV3KunyomiTableTableAnnotationComposer,
-    $$KanjiBankV3KunyomiTableTableCreateCompanionBuilder,
-    $$KanjiBankV3KunyomiTableTableUpdateCompanionBuilder,
-    (KanjiBankV3KunyomiTableData, $$KanjiBankV3KunyomiTableTableReferences),
-    KanjiBankV3KunyomiTableData,
+    $KanjiBankV3KunyomisTableTable,
+    KanjiBankV3KunyomisTableData,
+    $$KanjiBankV3KunyomisTableTableFilterComposer,
+    $$KanjiBankV3KunyomisTableTableOrderingComposer,
+    $$KanjiBankV3KunyomisTableTableAnnotationComposer,
+    $$KanjiBankV3KunyomisTableTableCreateCompanionBuilder,
+    $$KanjiBankV3KunyomisTableTableUpdateCompanionBuilder,
+    (KanjiBankV3KunyomisTableData, $$KanjiBankV3KunyomisTableTableReferences),
+    KanjiBankV3KunyomisTableData,
     PrefetchHooks Function({bool kanjiBankV3ID})> {
-  $$KanjiBankV3KunyomiTableTableTableManager(
-      _$DaKanjiDB db, $KanjiBankV3KunyomiTableTable table)
+  $$KanjiBankV3KunyomisTableTableTableManager(
+      _$DaKanjiDB db, $KanjiBankV3KunyomisTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$KanjiBankV3KunyomiTableTableFilterComposer(
+              $$KanjiBankV3KunyomisTableTableFilterComposer(
                   $db: db, $table: table),
           createOrderingComposer: () =>
-              $$KanjiBankV3KunyomiTableTableOrderingComposer(
+              $$KanjiBankV3KunyomisTableTableOrderingComposer(
                   $db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$KanjiBankV3KunyomiTableTableAnnotationComposer(
+              $$KanjiBankV3KunyomisTableTableAnnotationComposer(
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> kanjiBankV3ID = const Value.absent(),
             Value<String> kunyomi = const Value.absent(),
           }) =>
-              KanjiBankV3KunyomiTableCompanion(
+              KanjiBankV3KunyomisTableCompanion(
             id: id,
             kanjiBankV3ID: kanjiBankV3ID,
             kunyomi: kunyomi,
@@ -2410,7 +2801,7 @@ class $$KanjiBankV3KunyomiTableTableTableManager extends RootTableManager<
             required int kanjiBankV3ID,
             required String kunyomi,
           }) =>
-              KanjiBankV3KunyomiTableCompanion.insert(
+              KanjiBankV3KunyomisTableCompanion.insert(
             id: id,
             kanjiBankV3ID: kanjiBankV3ID,
             kunyomi: kunyomi,
@@ -2418,7 +2809,7 @@ class $$KanjiBankV3KunyomiTableTableTableManager extends RootTableManager<
           withReferenceMapper: (p0) => p0
               .map((e) => (
                     e.readTable(table),
-                    $$KanjiBankV3KunyomiTableTableReferences(db, table, e)
+                    $$KanjiBankV3KunyomisTableTableReferences(db, table, e)
                   ))
               .toList(),
           prefetchHooksCallback: ({kanjiBankV3ID = false}) {
@@ -2442,9 +2833,9 @@ class $$KanjiBankV3KunyomiTableTableTableManager extends RootTableManager<
                   state = state.withJoin(
                     currentTable: table,
                     currentColumn: table.kanjiBankV3ID,
-                    referencedTable: $$KanjiBankV3KunyomiTableTableReferences
+                    referencedTable: $$KanjiBankV3KunyomisTableTableReferences
                         ._kanjiBankV3IDTable(db),
-                    referencedColumn: $$KanjiBankV3KunyomiTableTableReferences
+                    referencedColumn: $$KanjiBankV3KunyomisTableTableReferences
                         ._kanjiBankV3IDTable(db)
                         .id,
                   ) as T;
@@ -2460,40 +2851,43 @@ class $$KanjiBankV3KunyomiTableTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$KanjiBankV3KunyomiTableTableProcessedTableManager
+typedef $$KanjiBankV3KunyomisTableTableProcessedTableManager
     = ProcessedTableManager<
         _$DaKanjiDB,
-        $KanjiBankV3KunyomiTableTable,
-        KanjiBankV3KunyomiTableData,
-        $$KanjiBankV3KunyomiTableTableFilterComposer,
-        $$KanjiBankV3KunyomiTableTableOrderingComposer,
-        $$KanjiBankV3KunyomiTableTableAnnotationComposer,
-        $$KanjiBankV3KunyomiTableTableCreateCompanionBuilder,
-        $$KanjiBankV3KunyomiTableTableUpdateCompanionBuilder,
-        (KanjiBankV3KunyomiTableData, $$KanjiBankV3KunyomiTableTableReferences),
-        KanjiBankV3KunyomiTableData,
+        $KanjiBankV3KunyomisTableTable,
+        KanjiBankV3KunyomisTableData,
+        $$KanjiBankV3KunyomisTableTableFilterComposer,
+        $$KanjiBankV3KunyomisTableTableOrderingComposer,
+        $$KanjiBankV3KunyomisTableTableAnnotationComposer,
+        $$KanjiBankV3KunyomisTableTableCreateCompanionBuilder,
+        $$KanjiBankV3KunyomisTableTableUpdateCompanionBuilder,
+        (
+          KanjiBankV3KunyomisTableData,
+          $$KanjiBankV3KunyomisTableTableReferences
+        ),
+        KanjiBankV3KunyomisTableData,
         PrefetchHooks Function({bool kanjiBankV3ID})>;
-typedef $$KanjiBankV3TagTableTableCreateCompanionBuilder
-    = KanjiBankV3TagTableCompanion Function({
+typedef $$KanjiBankV3TagsTableTableCreateCompanionBuilder
+    = KanjiBankV3TagsTableCompanion Function({
   Value<int> id,
   required int kanjiBankV3ID,
   required String tag,
 });
-typedef $$KanjiBankV3TagTableTableUpdateCompanionBuilder
-    = KanjiBankV3TagTableCompanion Function({
+typedef $$KanjiBankV3TagsTableTableUpdateCompanionBuilder
+    = KanjiBankV3TagsTableCompanion Function({
   Value<int> id,
   Value<int> kanjiBankV3ID,
   Value<String> tag,
 });
 
-final class $$KanjiBankV3TagTableTableReferences extends BaseReferences<
-    _$DaKanjiDB, $KanjiBankV3TagTableTable, KanjiBankV3TagTableData> {
-  $$KanjiBankV3TagTableTableReferences(
+final class $$KanjiBankV3TagsTableTableReferences extends BaseReferences<
+    _$DaKanjiDB, $KanjiBankV3TagsTableTable, KanjiBankV3TagsTableData> {
+  $$KanjiBankV3TagsTableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
 
   static $KanjiBankV3TableTable _kanjiBankV3IDTable(_$DaKanjiDB db) =>
       db.kanjiBankV3Table.createAlias($_aliasNameGenerator(
-          db.kanjiBankV3TagTable.kanjiBankV3ID, db.kanjiBankV3Table.id));
+          db.kanjiBankV3TagsTable.kanjiBankV3ID, db.kanjiBankV3Table.id));
 
   $$KanjiBankV3TableTableProcessedTableManager? get kanjiBankV3ID {
     if ($_item.kanjiBankV3ID == null) return null;
@@ -2507,9 +2901,9 @@ final class $$KanjiBankV3TagTableTableReferences extends BaseReferences<
   }
 }
 
-class $$KanjiBankV3TagTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3TagTableTable> {
-  $$KanjiBankV3TagTableTableFilterComposer({
+class $$KanjiBankV3TagsTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3TagsTableTable> {
+  $$KanjiBankV3TagsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2543,9 +2937,9 @@ class $$KanjiBankV3TagTableTableFilterComposer
   }
 }
 
-class $$KanjiBankV3TagTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3TagTableTable> {
-  $$KanjiBankV3TagTableTableOrderingComposer({
+class $$KanjiBankV3TagsTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3TagsTableTable> {
+  $$KanjiBankV3TagsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2579,9 +2973,9 @@ class $$KanjiBankV3TagTableTableOrderingComposer
   }
 }
 
-class $$KanjiBankV3TagTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3TagTableTable> {
-  $$KanjiBankV3TagTableTableAnnotationComposer({
+class $$KanjiBankV3TagsTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3TagsTableTable> {
+  $$KanjiBankV3TagsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2615,37 +3009,37 @@ class $$KanjiBankV3TagTableTableAnnotationComposer
   }
 }
 
-class $$KanjiBankV3TagTableTableTableManager extends RootTableManager<
+class $$KanjiBankV3TagsTableTableTableManager extends RootTableManager<
     _$DaKanjiDB,
-    $KanjiBankV3TagTableTable,
-    KanjiBankV3TagTableData,
-    $$KanjiBankV3TagTableTableFilterComposer,
-    $$KanjiBankV3TagTableTableOrderingComposer,
-    $$KanjiBankV3TagTableTableAnnotationComposer,
-    $$KanjiBankV3TagTableTableCreateCompanionBuilder,
-    $$KanjiBankV3TagTableTableUpdateCompanionBuilder,
-    (KanjiBankV3TagTableData, $$KanjiBankV3TagTableTableReferences),
-    KanjiBankV3TagTableData,
+    $KanjiBankV3TagsTableTable,
+    KanjiBankV3TagsTableData,
+    $$KanjiBankV3TagsTableTableFilterComposer,
+    $$KanjiBankV3TagsTableTableOrderingComposer,
+    $$KanjiBankV3TagsTableTableAnnotationComposer,
+    $$KanjiBankV3TagsTableTableCreateCompanionBuilder,
+    $$KanjiBankV3TagsTableTableUpdateCompanionBuilder,
+    (KanjiBankV3TagsTableData, $$KanjiBankV3TagsTableTableReferences),
+    KanjiBankV3TagsTableData,
     PrefetchHooks Function({bool kanjiBankV3ID})> {
-  $$KanjiBankV3TagTableTableTableManager(
-      _$DaKanjiDB db, $KanjiBankV3TagTableTable table)
+  $$KanjiBankV3TagsTableTableTableManager(
+      _$DaKanjiDB db, $KanjiBankV3TagsTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$KanjiBankV3TagTableTableFilterComposer($db: db, $table: table),
+              $$KanjiBankV3TagsTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$KanjiBankV3TagTableTableOrderingComposer(
+              $$KanjiBankV3TagsTableTableOrderingComposer(
                   $db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$KanjiBankV3TagTableTableAnnotationComposer(
+              $$KanjiBankV3TagsTableTableAnnotationComposer(
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> kanjiBankV3ID = const Value.absent(),
             Value<String> tag = const Value.absent(),
           }) =>
-              KanjiBankV3TagTableCompanion(
+              KanjiBankV3TagsTableCompanion(
             id: id,
             kanjiBankV3ID: kanjiBankV3ID,
             tag: tag,
@@ -2655,7 +3049,7 @@ class $$KanjiBankV3TagTableTableTableManager extends RootTableManager<
             required int kanjiBankV3ID,
             required String tag,
           }) =>
-              KanjiBankV3TagTableCompanion.insert(
+              KanjiBankV3TagsTableCompanion.insert(
             id: id,
             kanjiBankV3ID: kanjiBankV3ID,
             tag: tag,
@@ -2663,7 +3057,7 @@ class $$KanjiBankV3TagTableTableTableManager extends RootTableManager<
           withReferenceMapper: (p0) => p0
               .map((e) => (
                     e.readTable(table),
-                    $$KanjiBankV3TagTableTableReferences(db, table, e)
+                    $$KanjiBankV3TagsTableTableReferences(db, table, e)
                   ))
               .toList(),
           prefetchHooksCallback: ({kanjiBankV3ID = false}) {
@@ -2687,9 +3081,9 @@ class $$KanjiBankV3TagTableTableTableManager extends RootTableManager<
                   state = state.withJoin(
                     currentTable: table,
                     currentColumn: table.kanjiBankV3ID,
-                    referencedTable: $$KanjiBankV3TagTableTableReferences
+                    referencedTable: $$KanjiBankV3TagsTableTableReferences
                         ._kanjiBankV3IDTable(db),
-                    referencedColumn: $$KanjiBankV3TagTableTableReferences
+                    referencedColumn: $$KanjiBankV3TagsTableTableReferences
                         ._kanjiBankV3IDTable(db)
                         .id,
                   ) as T;
@@ -2705,18 +3099,19 @@ class $$KanjiBankV3TagTableTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$KanjiBankV3TagTableTableProcessedTableManager = ProcessedTableManager<
-    _$DaKanjiDB,
-    $KanjiBankV3TagTableTable,
-    KanjiBankV3TagTableData,
-    $$KanjiBankV3TagTableTableFilterComposer,
-    $$KanjiBankV3TagTableTableOrderingComposer,
-    $$KanjiBankV3TagTableTableAnnotationComposer,
-    $$KanjiBankV3TagTableTableCreateCompanionBuilder,
-    $$KanjiBankV3TagTableTableUpdateCompanionBuilder,
-    (KanjiBankV3TagTableData, $$KanjiBankV3TagTableTableReferences),
-    KanjiBankV3TagTableData,
-    PrefetchHooks Function({bool kanjiBankV3ID})>;
+typedef $$KanjiBankV3TagsTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$DaKanjiDB,
+        $KanjiBankV3TagsTableTable,
+        KanjiBankV3TagsTableData,
+        $$KanjiBankV3TagsTableTableFilterComposer,
+        $$KanjiBankV3TagsTableTableOrderingComposer,
+        $$KanjiBankV3TagsTableTableAnnotationComposer,
+        $$KanjiBankV3TagsTableTableCreateCompanionBuilder,
+        $$KanjiBankV3TagsTableTableUpdateCompanionBuilder,
+        (KanjiBankV3TagsTableData, $$KanjiBankV3TagsTableTableReferences),
+        KanjiBankV3TagsTableData,
+        PrefetchHooks Function({bool kanjiBankV3ID})>;
 typedef $$KanjiBankV3MeaningsTableTableCreateCompanionBuilder
     = KanjiBankV3MeaningsTableCompanion Function({
   Value<int> id,
@@ -3233,14 +3628,18 @@ class $DaKanjiDBManager {
   $DaKanjiDBManager(this._db);
   $$KanjiBankV3TableTableTableManager get kanjiBankV3Table =>
       $$KanjiBankV3TableTableTableManager(_db, _db.kanjiBankV3Table);
-  $$KanjiBankV3OnyomiTableTableTableManager get kanjiBankV3OnyomiTable =>
-      $$KanjiBankV3OnyomiTableTableTableManager(
-          _db, _db.kanjiBankV3OnyomiTable);
-  $$KanjiBankV3KunyomiTableTableTableManager get kanjiBankV3KunyomiTable =>
-      $$KanjiBankV3KunyomiTableTableTableManager(
-          _db, _db.kanjiBankV3KunyomiTable);
-  $$KanjiBankV3TagTableTableTableManager get kanjiBankV3TagTable =>
-      $$KanjiBankV3TagTableTableTableManager(_db, _db.kanjiBankV3TagTable);
+  $$KanjiBankV3OnyomisTableTableTableManager get kanjiBankV3OnyomisTable =>
+      $$KanjiBankV3OnyomisTableTableTableManager(
+          _db, _db.kanjiBankV3OnyomisTable);
+  $$KanjiBankV3OnyomiKanjiRelationsTableTableTableManager
+      get kanjiBankV3OnyomiKanjiRelationsTable =>
+          $$KanjiBankV3OnyomiKanjiRelationsTableTableTableManager(
+              _db, _db.kanjiBankV3OnyomiKanjiRelationsTable);
+  $$KanjiBankV3KunyomisTableTableTableManager get kanjiBankV3KunyomisTable =>
+      $$KanjiBankV3KunyomisTableTableTableManager(
+          _db, _db.kanjiBankV3KunyomisTable);
+  $$KanjiBankV3TagsTableTableTableManager get kanjiBankV3TagsTable =>
+      $$KanjiBankV3TagsTableTableTableManager(_db, _db.kanjiBankV3TagsTable);
   $$KanjiBankV3MeaningsTableTableTableManager get kanjiBankV3MeaningsTable =>
       $$KanjiBankV3MeaningsTableTableTableManager(
           _db, _db.kanjiBankV3MeaningsTable);
