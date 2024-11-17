@@ -22,7 +22,37 @@ Macos: `brew install graphviz`
 Linux:
 Windows:
 
+## Running
+
+### Official DaKanji dictionary
+
+The official (base dictionary that is shipped with DaKanji) consists of the following dictionaries
+
+* Availalbe online
+  * Jitendex (base dictionary)
+  * JLPT (jlpt annotations)
+  * JPDB frquency (word frequencies)
+  * KANJIDIC (kanji definitions)
+  * Kanjium pitch accents
+* Custom parsed
+  * RADK
+  * KRAD
+  * KanjiVG
+
+To download the current state of each source and build a new `dakanji.db`,
+run
+
+```
+dart run ./bin/build_dakanji_db.dart
+```
+
 ## Development
+
+### Testing
+
+For testing the official yomitan test dictionary is included in `samples/valid_dictionary1`.
+
+It can be tested using either the tests in `test/`
 
 ### Generating schema
 
@@ -32,4 +62,31 @@ You can generate schema using
 
 ### Inspecting the yomitan json schema
 
-* [dictionary-term-bank-v3-schema.json](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-term-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js#items_items_i5_items_oneOf_i0)
+* [custom-audio-list-schema.json](yomitan_schema/custom-audio-list-schema.json)
+  * Meaning: ?
+  * File name pattern: ?
+  * [Inspector]()
+* [dictionary-index-schema.json](yomitan_schema/dictionary-index-schema.json)
+  * Meaning: Metadata about the dictionary. Please include as much detail as possible.
+  * File name pattern: index.json
+  * [Inspector]()
+* [dictionary-kanji-bank-v3-schema.json](yomitan_schema/dictionary-kanji-bank-v3-schema.json)
+  * Meaning: Information used in the kanji viewer - meanings, readings, statistics, and codepoints.
+  * File name pattern: 
+  * [Inspector]()
+* [dictionary-kanji-meta-bank-v3-schema.json](yomitan_schema/dictionary-kanji-meta-bank-v3-schema.json)
+  * Meaning: Stores kanji frequency data.
+  * File name pattern: 
+  * [Inspector]()
+* [dictionary-tag-bank-v3-schema.json](yomitan_schema/dictionary-tag-bank-v3-schema.json)
+  * Meaning: Defines tags for kanji and term dictionaries, like parts of speech or kanken level.
+  * File name pattern: 
+  * [Inspector]()
+* [dictionary-term-bank-v3-schema.json](yomitan_schema/dictionary-term-bank-v3-schema.json)
+  * Meaning: Stores dictionary readings, definitions, etc.
+  * File name pattern: index.json
+  * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-term-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js#items_items_i5_items_oneOf_i0)
+* [dictionary-term-meta-bank-v3-schema.json](yomitan_schema/dictionary-term-meta-bank-v3-schema.json)
+  * Meaning: Stores meta information about terms, such as frequency data and pitch accent data.
+  * File name pattern: 
+  * [Inspector]()
