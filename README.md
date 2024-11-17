@@ -52,8 +52,11 @@ dart run ./bin/build_dakanji_db.dart
 ### Testing
 
 For testing the official yomitan test dictionary is included in `samples/`.
-
 It can be tested using the tests in `test/`
+
+#### Stress testing
+
+The scripts in `ADD PATH HERE` are used to test the performance of the database creation and queries.
 
 ### Generating schema
 
