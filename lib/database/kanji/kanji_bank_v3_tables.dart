@@ -1,3 +1,4 @@
+import 'package:dakanji_db/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
 
 
@@ -25,7 +26,7 @@ class KanjiBankV3OnyomisTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// The id of the dictionary this entry belongs to
-  IntColumn get dictId => integer()();
+  IntColumn get dictId => integer().references(IndexTable, #id)();
 
   /// `KanjiBankV3` entry this meaning belongs to
   IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
@@ -43,7 +44,7 @@ class KanjiBankV3KunyomisTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// The id of the dictionary this entry belongs to
-  IntColumn get dictId => integer()();
+  IntColumn get dictId => integer().references(IndexTable, #id)();
 
   /// `KanjiBankV3` entry this meaning belongs to
   IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
@@ -60,7 +61,7 @@ class KanjiBankV3TagsTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// The id of the dictionary this entry belongs to
-  IntColumn get dictId => integer()();
+  IntColumn get dictId => integer().references(IndexTable, #id)();
 
   /// `KanjiBankV3` entry this meaning belongs to
   IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
@@ -78,7 +79,7 @@ class KanjiBankV3MeaningsTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// The id of the dictionary this entry belongs to
-  IntColumn get dictId => integer()();
+  IntColumn get dictId => integer().references(IndexTable, #id)();
 
   /// `KanjiBankV3` entry this meaning belongs to
   IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
@@ -96,7 +97,7 @@ class KanjiBankV3StatsTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// The id of the dictionary this entry belongs to
-  IntColumn get dictId => integer()();
+  IntColumn get dictId => integer().references(IndexTable, #id)();
 
   /// `KanjiBankV3` entry this meaning belongs to
   IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();

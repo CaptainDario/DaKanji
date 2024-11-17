@@ -6,13 +6,14 @@ part of 'kanji_bank_v3_dao.dart';
 mixin _$KanjiBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $KanjiBankV3TableTable get kanjiBankV3Table =>
       attachedDatabase.kanjiBankV3Table;
+  $IndexTableTable get indexTable => attachedDatabase.indexTable;
   $KanjiBankV3OnyomisTableTable get kanjiBankV3OnyomisTable =>
       attachedDatabase.kanjiBankV3OnyomisTable;
+  $KanjiBankV3KunyomisTableTable get kanjiBankV3KunyomisTable =>
+      attachedDatabase.kanjiBankV3KunyomisTable;
   $KanjiBankV3KunyomiKanjiRelationsTableTable
       get kanjiBankV3KunyomiKanjiRelationsTable =>
           attachedDatabase.kanjiBankV3KunyomiKanjiRelationsTable;
-  $KanjiBankV3KunyomisTableTable get kanjiBankV3KunyomisTable =>
-      attachedDatabase.kanjiBankV3KunyomisTable;
   $KanjiBankV3TagsTableTable get kanjiBankV3TagsTable =>
       attachedDatabase.kanjiBankV3TagsTable;
   $KanjiBankV3TagsKanjiRelationsTableTable
