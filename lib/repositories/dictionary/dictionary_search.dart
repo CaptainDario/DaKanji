@@ -33,11 +33,11 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
       q.anyOf(filters, (q, filter) => 
         q.meaningsElement((qM) => 
           qM.partOfSpeechElement((qP) => 
-            qP.attributesElementContains(filter)
+            qP.attributesElementContains(filter, caseSensitive: false)
           )
             .or()
           .fieldElement((qF) => 
-            qF.attributesElementContains(filter)
+            qF.attributesElementContains(filter, caseSensitive: false)
           )
         )
       )
@@ -77,13 +77,13 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
             q
             .optional(!containsWildcard, (q) =>
               q.meaningsElement((meaning) => 
-                meaning.attributesElementStartsWith(query)
+                meaning.attributesElementStartsWith(query, caseSensitive: false)
               )
             )
             .or()
             .optional(containsWildcard, (q) => 
               q.meaningsElement((meaning) => 
-                meaning.attributesElementMatches(query)
+                meaning.attributesElementMatches(query, caseSensitive: false)
               )
             )
           )
@@ -129,7 +129,7 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> wildcardQuery(
         => q.hiraganasElementMatches(element))
         .or()
       .anyOf([query].nonNulls, (q, element)
-        => q.meaningsIndexesElementMatches(element))
+        => q.meaningsIndexesElementMatches(element, caseSensitive: false))
   ;
 
 }

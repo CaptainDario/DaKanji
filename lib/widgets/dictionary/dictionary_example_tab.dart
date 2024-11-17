@@ -237,7 +237,7 @@ List<ExampleSentence> _searchExamples(Tuple6 query){
       .filter()
         .anyOf(kanjis, (q, kanji) => q.sentenceContains(kanji))
       .or()
-        .anyOf(readings, (q, reading) => q.sentenceContains(reading))
+        .anyOf(readings, (q, reading) => q.sentenceContains(reading, caseSensitive: false))
         // apply language filters
         .translationsElement((q) => 
           q.anyOf(selectedLangs, (q, element) => 
