@@ -58,7 +58,7 @@ It can be tested using either the tests in `test/`
 
 You can generate schema using
 
-`./.venv/bin/python -m eralchemy -i sqlite:///./tmp/dakanji.db -o images/schema.pdf`
+`./.venv/bin/eralchemy -i sqlite:///./tmp/dakanji.db -o dakanji_db_schema/schema.pdf`
 
 ### Inspecting the yomitan json schema
 
