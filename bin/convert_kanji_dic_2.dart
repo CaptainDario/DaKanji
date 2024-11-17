@@ -1,6 +1,5 @@
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:dakanji_db/parsing/dictionary_parser.dart';
-import 'package:test/test.dart';
 import 'dart:io';
 import 'package:path/path.dart' as p;
 

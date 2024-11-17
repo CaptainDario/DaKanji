@@ -1,12 +1,7 @@
 import 'dart:io';
-import 'dart:isolate';
-import 'dart:math';
-import 'package:async/async.dart';
 import 'package:dakanji_db/database/dakanji_db.dart';
-import 'package:dakanji_db/parsing/dictionary_parser_isolate.dart';
 import 'package:dakanji_db/parsing/kanji/kanji_bank_v3_parser.dart';
 import 'package:drift/isolate.dart';
-import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:archive/archive_io.dart';
 import 'package:tuple/tuple.dart';
@@ -50,10 +45,6 @@ Future parseDictionaryZip (File dictZip, DaKanjiDB db) async {
 
 /// Parses the given yomitan dictionary folder
 Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db) async {
-
-
-  /// A connection to the drift database that can be send to isolates
-  final connection = await db.serializableConnection();
 
   /// Get all files from the given folder that can be parsed
   List<File> validFiles = dictDir.listSync().where((f) => 

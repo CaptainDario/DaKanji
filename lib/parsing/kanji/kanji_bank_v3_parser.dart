@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dakanji_db/database/dakanji_db.dart';
-import 'package:dakanji_db/database/kanji/kanji_bank_v3_table.dart';
 import 'package:drift/drift.dart';
 
 
@@ -17,10 +16,10 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db) async {
 
   // lists to store the companion objects
   List<KanjiBankV3TableCompanion> kanjis = [];
-  int kanjiId = await db.maxKanjiId();
+  int kanjiId = await db.kanjiBankV3Dao.maxKanjiId();
   print("Max kanji id $kanjiId");
   List<KanjiBankV3OnyomisTableCompanion>  onyomis  = [];
-  int onyomiId = await db.maxOnyomiId();
+  int onyomiId = await db.kanjiBankV3Dao.maxOnyomiId();
   List<KanjiBankV3OnyomiKanjiRelationsTableCompanion> onyomiRels = [];
   //List<KanjiBankV3KunyomisTableCompanion> kunyomis = [];
   //List<KanjiBankV3KunyomisTableCompanion> tags     = [];
@@ -30,7 +29,7 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db) async {
   // populate the companion lists
   for (var i = 0; i < jsonList.length; i++) {
     
-    int? kanjiInsertId = await db.checkKanjiEntry(jsonList[i][0]) ?? ++kanjiId;
+    int? kanjiInsertId = await db.kanjiBankV3Dao.getKanjiId(jsonList[i][0]) ?? ++kanjiId;
     kanjis.add(KanjiBankV3TableCompanion(
       id: Value(kanjiInsertId),
       kanji: Value(jsonList[i][0])
@@ -39,7 +38,7 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db) async {
     if(jsonList[i][1] != ""){
       for (var onyomi in jsonList[i][1].toString().split(" ")) {
         
-        int? onyomiInsertId = await db.checkKanjiEntry(jsonList[i][0]) ?? ++onyomiId;
+        int? onyomiInsertId = await db.kanjiBankV3Dao.getKanjiId(jsonList[i][0]) ?? ++onyomiId;
         onyomis.add(KanjiBankV3OnyomisTableCompanion(
           id: Value(onyomiInsertId),
           kanjiBankV3ID: Value(kanjiInsertId),
