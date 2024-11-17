@@ -10,8 +10,7 @@ void main() {
   test('Test importing kanji_bank_2.json', () async {
     
     // get path to the testing files
-    String jsonPath = p.joinAll([Directory.current.path, "samples",
-      "KANJIDIC_english", "kanji_bank_2.json"]);
+    String jsonPath = p.joinAll([Directory.current.path, "samples", "kanji_bank_1.json"]);
     print("Reading json from $jsonPath");
 
     // create the testing database (delete any existing database)

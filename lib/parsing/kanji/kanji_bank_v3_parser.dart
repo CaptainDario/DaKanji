@@ -66,8 +66,11 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db) async {
       mode: InsertMode.insertOrIgnore);
 
     //batch.insertAll(db.kanjiBankV3KunyomisTable, onyomis);
+
     //batch.insertAll(db.kanjiBankV3TagsTable, tags);
+
     //batch.insertAll(db.kanjiBankV3MeaningsTable, meanings);
+    
     //batch.insertAll(db.kanjiBankV3StatsTable, stats);
 
   });

@@ -10,7 +10,7 @@ void main() {
   test('Test importing kanjidic 2', () async {
     
     // get path to the testing files
-    String dictPath = p.joinAll([Directory.current.path, "samples", "KANJIDIC_english"]);
+    String dictPath = p.joinAll([Directory.current.path, "samples"]);
     print("Reading json from $dictPath");
 
     // create the testing database (delete any existing database)
@@ -26,6 +26,12 @@ void main() {
     print("Conversion took ${s.elapsedMilliseconds} ms");
     
     // TODO check some entries    
+
+  });
+
+  test('Stress testing importing', () async {
+
+    // TODO stress testing
 
   });
 }

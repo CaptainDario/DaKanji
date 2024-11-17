@@ -9,7 +9,7 @@ import 'package:path/path.dart' as p;
 void main() async {
   
   // get path to the testing files
-  String dictPath = p.joinAll([Directory.current.path, "samples", "KANJIDIC_english"]);
+  String dictPath = p.joinAll([Directory.current.path, "samples"]);
   print("Reading json from $dictPath");
 
   // create the testing database (delete any existing database)
