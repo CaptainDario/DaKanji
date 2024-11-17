@@ -125,3 +125,7 @@ The [RADKFILE/KRADFILE](https://www.edrdg.org/krad/kradinf.html) project contain
 [**Download**](http://ftp.edrdg.org/pub/Nihongo/kradzip.zip)
 
 UPDATE HERE WITH INSTRUCTIONS HOW TO PARSE THE PROJECT
+
+##### Tatoeba
+
+UPDATE HERE
