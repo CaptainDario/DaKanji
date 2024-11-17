@@ -23,7 +23,8 @@ void isolateWorker(SendPort mainSendPort) {
     }
     if (message is File) {
       print("isolate received a file");
-      await parseDictionaryFile(Tuple2(message, db));
+      // TODO update api
+      //await parseDictionaryFile(Tuple2(message, db));
       // Notify the main isolate that the file is done
       mainSendPort.send('done'); 
     }

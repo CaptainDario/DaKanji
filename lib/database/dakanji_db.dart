@@ -1,3 +1,5 @@
+import 'package:dakanji_db/database/index/index_dao.dart';
+import 'package:dakanji_db/database/index/index_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_dao.dart';
@@ -7,7 +9,11 @@ import 'package:drift/native.dart';
 
 part 'dakanji_db.g.dart';
 
+
+
 @DriftDatabase(tables: [
+    IndexTable,
+
     KanjiBankV3Table,
     KanjiBankV3OnyomisTable, KanjiBankV3OnyomiKanjiRelationsTable,
     KanjiBankV3KunyomisTable, KanjiBankV3KunyomiKanjiRelationsTable,
@@ -18,7 +24,7 @@ part 'dakanji_db.g.dart';
 
   ],
   daos: [
-    KanjiBankV3Dao
+    KanjiBankV3Dao, IndexDao
   ]
 )
 class DaKanjiDB extends _$DaKanjiDB {

@@ -23,7 +23,7 @@ void main() {
 
     // convert the test files
     Stopwatch s = Stopwatch()..start();
-    await parseKanjiBankV3(File(jsonPath), db);
+    await parseKanjiBankV3(File(jsonPath), db, 0);
     print("Conversion took ${s.elapsedMilliseconds} ms");
     
     // TODO check some entries    

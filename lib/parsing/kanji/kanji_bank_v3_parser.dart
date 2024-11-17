@@ -7,7 +7,7 @@ import 'package:drift/drift.dart';
 
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db) async {
+Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db, int dictId) async {
 
   // read and decode the json
   String jsonString = kanjiBankV3JsonPath.readAsStringSync();
@@ -35,12 +35,14 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db) async {
       kanji: Value(jsonList[i][0])
     ));
 
+    // parse onyomi
     if(jsonList[i][1] != ""){
       for (var onyomi in jsonList[i][1].toString().split(" ")) {
         
         int? onyomiInsertId = await db.kanjiBankV3Dao.getKanjiId(jsonList[i][0]) ?? ++onyomiId;
         onyomis.add(KanjiBankV3OnyomisTableCompanion(
           id: Value(onyomiInsertId),
+          dictId: Value(dictId),
           kanjiBankV3ID: Value(kanjiInsertId),
           onyomi: Value(onyomi)
         ));

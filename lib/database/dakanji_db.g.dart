@@ -3,6 +3,811 @@
 part of 'dakanji_db.dart';
 
 // ignore_for_file: type=lint
+class $IndexTableTable extends IndexTable
+    with TableInfo<$IndexTableTable, IndexTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $IndexTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+      'title', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _revisionMeta =
+      const VerificationMeta('revision');
+  @override
+  late final GeneratedColumn<String> revision = GeneratedColumn<String>(
+      'revision', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _sequencedMeta =
+      const VerificationMeta('sequenced');
+  @override
+  late final GeneratedColumn<bool> sequenced = GeneratedColumn<bool>(
+      'sequenced', aliasedName, true,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("sequenced" IN (0, 1))'));
+  static const VerificationMeta _formatMeta = const VerificationMeta('format');
+  @override
+  late final GeneratedColumn<int> format = GeneratedColumn<int>(
+      'format', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _versionMeta =
+      const VerificationMeta('version');
+  @override
+  late final GeneratedColumn<int> version = GeneratedColumn<int>(
+      'version', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _authorMeta = const VerificationMeta('author');
+  @override
+  late final GeneratedColumn<String> author = GeneratedColumn<String>(
+      'author', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _updatableMeta =
+      const VerificationMeta('updatable');
+  @override
+  late final GeneratedColumn<bool> updatable = GeneratedColumn<bool>(
+      'updatable', aliasedName, true,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("updatable" IN (0, 1))'));
+  static const VerificationMeta _indexUrlMeta =
+      const VerificationMeta('indexUrl');
+  @override
+  late final GeneratedColumn<String> indexUrl = GeneratedColumn<String>(
+      'index_url', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _downloadUrlMeta =
+      const VerificationMeta('downloadUrl');
+  @override
+  late final GeneratedColumn<String> downloadUrl = GeneratedColumn<String>(
+      'download_url', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _urlMeta = const VerificationMeta('url');
+  @override
+  late final GeneratedColumn<String> url = GeneratedColumn<String>(
+      'url', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _attributionMeta =
+      const VerificationMeta('attribution');
+  @override
+  late final GeneratedColumn<String> attribution = GeneratedColumn<String>(
+      'attribution', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _sourceLanguageMeta =
+      const VerificationMeta('sourceLanguage');
+  @override
+  late final GeneratedColumn<String> sourceLanguage = GeneratedColumn<String>(
+      'source_language', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _targetLanguageMeta =
+      const VerificationMeta('targetLanguage');
+  @override
+  late final GeneratedColumn<String> targetLanguage = GeneratedColumn<String>(
+      'target_language', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _frequencyModeMeta =
+      const VerificationMeta('frequencyMode');
+  @override
+  late final GeneratedColumn<String> frequencyMode = GeneratedColumn<String>(
+      'frequency_mode', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        title,
+        revision,
+        sequenced,
+        format,
+        version,
+        author,
+        updatable,
+        indexUrl,
+        downloadUrl,
+        url,
+        description,
+        attribution,
+        sourceLanguage,
+        targetLanguage,
+        frequencyMode
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'index_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<IndexTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('revision')) {
+      context.handle(_revisionMeta,
+          revision.isAcceptableOrUnknown(data['revision']!, _revisionMeta));
+    } else if (isInserting) {
+      context.missing(_revisionMeta);
+    }
+    if (data.containsKey('sequenced')) {
+      context.handle(_sequencedMeta,
+          sequenced.isAcceptableOrUnknown(data['sequenced']!, _sequencedMeta));
+    }
+    if (data.containsKey('format')) {
+      context.handle(_formatMeta,
+          format.isAcceptableOrUnknown(data['format']!, _formatMeta));
+    }
+    if (data.containsKey('version')) {
+      context.handle(_versionMeta,
+          version.isAcceptableOrUnknown(data['version']!, _versionMeta));
+    }
+    if (data.containsKey('author')) {
+      context.handle(_authorMeta,
+          author.isAcceptableOrUnknown(data['author']!, _authorMeta));
+    }
+    if (data.containsKey('updatable')) {
+      context.handle(_updatableMeta,
+          updatable.isAcceptableOrUnknown(data['updatable']!, _updatableMeta));
+    }
+    if (data.containsKey('index_url')) {
+      context.handle(_indexUrlMeta,
+          indexUrl.isAcceptableOrUnknown(data['index_url']!, _indexUrlMeta));
+    }
+    if (data.containsKey('download_url')) {
+      context.handle(
+          _downloadUrlMeta,
+          downloadUrl.isAcceptableOrUnknown(
+              data['download_url']!, _downloadUrlMeta));
+    }
+    if (data.containsKey('url')) {
+      context.handle(
+          _urlMeta, url.isAcceptableOrUnknown(data['url']!, _urlMeta));
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('attribution')) {
+      context.handle(
+          _attributionMeta,
+          attribution.isAcceptableOrUnknown(
+              data['attribution']!, _attributionMeta));
+    }
+    if (data.containsKey('source_language')) {
+      context.handle(
+          _sourceLanguageMeta,
+          sourceLanguage.isAcceptableOrUnknown(
+              data['source_language']!, _sourceLanguageMeta));
+    }
+    if (data.containsKey('target_language')) {
+      context.handle(
+          _targetLanguageMeta,
+          targetLanguage.isAcceptableOrUnknown(
+              data['target_language']!, _targetLanguageMeta));
+    }
+    if (data.containsKey('frequency_mode')) {
+      context.handle(
+          _frequencyModeMeta,
+          frequencyMode.isAcceptableOrUnknown(
+              data['frequency_mode']!, _frequencyModeMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  IndexTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return IndexTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      revision: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}revision'])!,
+      sequenced: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}sequenced']),
+      format: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}format']),
+      version: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}version']),
+      author: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}author']),
+      updatable: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}updatable']),
+      indexUrl: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}index_url']),
+      downloadUrl: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}download_url']),
+      url: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}url']),
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      attribution: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}attribution']),
+      sourceLanguage: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}source_language']),
+      targetLanguage: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}target_language']),
+      frequencyMode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}frequency_mode']),
+    );
+  }
+
+  @override
+  $IndexTableTable createAlias(String alias) {
+    return $IndexTableTable(attachedDatabase, alias);
+  }
+}
+
+class IndexTableData extends DataClass implements Insertable<IndexTableData> {
+  /// id of this entry
+  final int id;
+
+  /// Title of the dictionary.
+  final String title;
+
+  /// Revision of the dictionary. This value is displayed, and used to check for dictionary updates.
+  final String revision;
+
+  /// Whether or not this dictionary contains sequencing information for related terms.
+  final bool? sequenced;
+
+  /// Format of data found in the JSON data files.
+  final int? format;
+
+  /// Alias for format.
+  final int? version;
+
+  /// Creator of the dictionary.
+  final String? author;
+
+  /// Whether this dictionary contains links to its latest version.
+  final bool? updatable;
+
+  /// URL for the index file of the latest revision of the dictionary, used to check for updates.
+  final String? indexUrl;
+
+  /// URL for the download of the latest revision of the dictionary.
+  final String? downloadUrl;
+
+  /// URL for the source of the dictionary, displayed in the dictionary details.
+  final String? url;
+
+  /// Description of the dictionary data.
+  final String? description;
+
+  /// Attribution information for the dictionary data.
+  final String? attribution;
+
+  /// Language of the terms in the dictionary.
+  final String? sourceLanguage;
+
+  /// Main language of the definitions in the dictionary.
+  final String? targetLanguage;
+
+  /// The mode of the frequency in this dictionary, one of
+  /// "occurrence-based", "rank-based"
+  final String? frequencyMode;
+  const IndexTableData(
+      {required this.id,
+      required this.title,
+      required this.revision,
+      this.sequenced,
+      this.format,
+      this.version,
+      this.author,
+      this.updatable,
+      this.indexUrl,
+      this.downloadUrl,
+      this.url,
+      this.description,
+      this.attribution,
+      this.sourceLanguage,
+      this.targetLanguage,
+      this.frequencyMode});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['title'] = Variable<String>(title);
+    map['revision'] = Variable<String>(revision);
+    if (!nullToAbsent || sequenced != null) {
+      map['sequenced'] = Variable<bool>(sequenced);
+    }
+    if (!nullToAbsent || format != null) {
+      map['format'] = Variable<int>(format);
+    }
+    if (!nullToAbsent || version != null) {
+      map['version'] = Variable<int>(version);
+    }
+    if (!nullToAbsent || author != null) {
+      map['author'] = Variable<String>(author);
+    }
+    if (!nullToAbsent || updatable != null) {
+      map['updatable'] = Variable<bool>(updatable);
+    }
+    if (!nullToAbsent || indexUrl != null) {
+      map['index_url'] = Variable<String>(indexUrl);
+    }
+    if (!nullToAbsent || downloadUrl != null) {
+      map['download_url'] = Variable<String>(downloadUrl);
+    }
+    if (!nullToAbsent || url != null) {
+      map['url'] = Variable<String>(url);
+    }
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || attribution != null) {
+      map['attribution'] = Variable<String>(attribution);
+    }
+    if (!nullToAbsent || sourceLanguage != null) {
+      map['source_language'] = Variable<String>(sourceLanguage);
+    }
+    if (!nullToAbsent || targetLanguage != null) {
+      map['target_language'] = Variable<String>(targetLanguage);
+    }
+    if (!nullToAbsent || frequencyMode != null) {
+      map['frequency_mode'] = Variable<String>(frequencyMode);
+    }
+    return map;
+  }
+
+  IndexTableCompanion toCompanion(bool nullToAbsent) {
+    return IndexTableCompanion(
+      id: Value(id),
+      title: Value(title),
+      revision: Value(revision),
+      sequenced: sequenced == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sequenced),
+      format:
+          format == null && nullToAbsent ? const Value.absent() : Value(format),
+      version: version == null && nullToAbsent
+          ? const Value.absent()
+          : Value(version),
+      author:
+          author == null && nullToAbsent ? const Value.absent() : Value(author),
+      updatable: updatable == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatable),
+      indexUrl: indexUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(indexUrl),
+      downloadUrl: downloadUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(downloadUrl),
+      url: url == null && nullToAbsent ? const Value.absent() : Value(url),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      attribution: attribution == null && nullToAbsent
+          ? const Value.absent()
+          : Value(attribution),
+      sourceLanguage: sourceLanguage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sourceLanguage),
+      targetLanguage: targetLanguage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetLanguage),
+      frequencyMode: frequencyMode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(frequencyMode),
+    );
+  }
+
+  factory IndexTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return IndexTableData(
+      id: serializer.fromJson<int>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      revision: serializer.fromJson<String>(json['revision']),
+      sequenced: serializer.fromJson<bool?>(json['sequenced']),
+      format: serializer.fromJson<int?>(json['format']),
+      version: serializer.fromJson<int?>(json['version']),
+      author: serializer.fromJson<String?>(json['author']),
+      updatable: serializer.fromJson<bool?>(json['updatable']),
+      indexUrl: serializer.fromJson<String?>(json['indexUrl']),
+      downloadUrl: serializer.fromJson<String?>(json['downloadUrl']),
+      url: serializer.fromJson<String?>(json['url']),
+      description: serializer.fromJson<String?>(json['description']),
+      attribution: serializer.fromJson<String?>(json['attribution']),
+      sourceLanguage: serializer.fromJson<String?>(json['sourceLanguage']),
+      targetLanguage: serializer.fromJson<String?>(json['targetLanguage']),
+      frequencyMode: serializer.fromJson<String?>(json['frequencyMode']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'title': serializer.toJson<String>(title),
+      'revision': serializer.toJson<String>(revision),
+      'sequenced': serializer.toJson<bool?>(sequenced),
+      'format': serializer.toJson<int?>(format),
+      'version': serializer.toJson<int?>(version),
+      'author': serializer.toJson<String?>(author),
+      'updatable': serializer.toJson<bool?>(updatable),
+      'indexUrl': serializer.toJson<String?>(indexUrl),
+      'downloadUrl': serializer.toJson<String?>(downloadUrl),
+      'url': serializer.toJson<String?>(url),
+      'description': serializer.toJson<String?>(description),
+      'attribution': serializer.toJson<String?>(attribution),
+      'sourceLanguage': serializer.toJson<String?>(sourceLanguage),
+      'targetLanguage': serializer.toJson<String?>(targetLanguage),
+      'frequencyMode': serializer.toJson<String?>(frequencyMode),
+    };
+  }
+
+  IndexTableData copyWith(
+          {int? id,
+          String? title,
+          String? revision,
+          Value<bool?> sequenced = const Value.absent(),
+          Value<int?> format = const Value.absent(),
+          Value<int?> version = const Value.absent(),
+          Value<String?> author = const Value.absent(),
+          Value<bool?> updatable = const Value.absent(),
+          Value<String?> indexUrl = const Value.absent(),
+          Value<String?> downloadUrl = const Value.absent(),
+          Value<String?> url = const Value.absent(),
+          Value<String?> description = const Value.absent(),
+          Value<String?> attribution = const Value.absent(),
+          Value<String?> sourceLanguage = const Value.absent(),
+          Value<String?> targetLanguage = const Value.absent(),
+          Value<String?> frequencyMode = const Value.absent()}) =>
+      IndexTableData(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        revision: revision ?? this.revision,
+        sequenced: sequenced.present ? sequenced.value : this.sequenced,
+        format: format.present ? format.value : this.format,
+        version: version.present ? version.value : this.version,
+        author: author.present ? author.value : this.author,
+        updatable: updatable.present ? updatable.value : this.updatable,
+        indexUrl: indexUrl.present ? indexUrl.value : this.indexUrl,
+        downloadUrl: downloadUrl.present ? downloadUrl.value : this.downloadUrl,
+        url: url.present ? url.value : this.url,
+        description: description.present ? description.value : this.description,
+        attribution: attribution.present ? attribution.value : this.attribution,
+        sourceLanguage:
+            sourceLanguage.present ? sourceLanguage.value : this.sourceLanguage,
+        targetLanguage:
+            targetLanguage.present ? targetLanguage.value : this.targetLanguage,
+        frequencyMode:
+            frequencyMode.present ? frequencyMode.value : this.frequencyMode,
+      );
+  IndexTableData copyWithCompanion(IndexTableCompanion data) {
+    return IndexTableData(
+      id: data.id.present ? data.id.value : this.id,
+      title: data.title.present ? data.title.value : this.title,
+      revision: data.revision.present ? data.revision.value : this.revision,
+      sequenced: data.sequenced.present ? data.sequenced.value : this.sequenced,
+      format: data.format.present ? data.format.value : this.format,
+      version: data.version.present ? data.version.value : this.version,
+      author: data.author.present ? data.author.value : this.author,
+      updatable: data.updatable.present ? data.updatable.value : this.updatable,
+      indexUrl: data.indexUrl.present ? data.indexUrl.value : this.indexUrl,
+      downloadUrl:
+          data.downloadUrl.present ? data.downloadUrl.value : this.downloadUrl,
+      url: data.url.present ? data.url.value : this.url,
+      description:
+          data.description.present ? data.description.value : this.description,
+      attribution:
+          data.attribution.present ? data.attribution.value : this.attribution,
+      sourceLanguage: data.sourceLanguage.present
+          ? data.sourceLanguage.value
+          : this.sourceLanguage,
+      targetLanguage: data.targetLanguage.present
+          ? data.targetLanguage.value
+          : this.targetLanguage,
+      frequencyMode: data.frequencyMode.present
+          ? data.frequencyMode.value
+          : this.frequencyMode,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('IndexTableData(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('revision: $revision, ')
+          ..write('sequenced: $sequenced, ')
+          ..write('format: $format, ')
+          ..write('version: $version, ')
+          ..write('author: $author, ')
+          ..write('updatable: $updatable, ')
+          ..write('indexUrl: $indexUrl, ')
+          ..write('downloadUrl: $downloadUrl, ')
+          ..write('url: $url, ')
+          ..write('description: $description, ')
+          ..write('attribution: $attribution, ')
+          ..write('sourceLanguage: $sourceLanguage, ')
+          ..write('targetLanguage: $targetLanguage, ')
+          ..write('frequencyMode: $frequencyMode')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      title,
+      revision,
+      sequenced,
+      format,
+      version,
+      author,
+      updatable,
+      indexUrl,
+      downloadUrl,
+      url,
+      description,
+      attribution,
+      sourceLanguage,
+      targetLanguage,
+      frequencyMode);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is IndexTableData &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.revision == this.revision &&
+          other.sequenced == this.sequenced &&
+          other.format == this.format &&
+          other.version == this.version &&
+          other.author == this.author &&
+          other.updatable == this.updatable &&
+          other.indexUrl == this.indexUrl &&
+          other.downloadUrl == this.downloadUrl &&
+          other.url == this.url &&
+          other.description == this.description &&
+          other.attribution == this.attribution &&
+          other.sourceLanguage == this.sourceLanguage &&
+          other.targetLanguage == this.targetLanguage &&
+          other.frequencyMode == this.frequencyMode);
+}
+
+class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
+  final Value<int> id;
+  final Value<String> title;
+  final Value<String> revision;
+  final Value<bool?> sequenced;
+  final Value<int?> format;
+  final Value<int?> version;
+  final Value<String?> author;
+  final Value<bool?> updatable;
+  final Value<String?> indexUrl;
+  final Value<String?> downloadUrl;
+  final Value<String?> url;
+  final Value<String?> description;
+  final Value<String?> attribution;
+  final Value<String?> sourceLanguage;
+  final Value<String?> targetLanguage;
+  final Value<String?> frequencyMode;
+  const IndexTableCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.revision = const Value.absent(),
+    this.sequenced = const Value.absent(),
+    this.format = const Value.absent(),
+    this.version = const Value.absent(),
+    this.author = const Value.absent(),
+    this.updatable = const Value.absent(),
+    this.indexUrl = const Value.absent(),
+    this.downloadUrl = const Value.absent(),
+    this.url = const Value.absent(),
+    this.description = const Value.absent(),
+    this.attribution = const Value.absent(),
+    this.sourceLanguage = const Value.absent(),
+    this.targetLanguage = const Value.absent(),
+    this.frequencyMode = const Value.absent(),
+  });
+  IndexTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String title,
+    required String revision,
+    this.sequenced = const Value.absent(),
+    this.format = const Value.absent(),
+    this.version = const Value.absent(),
+    this.author = const Value.absent(),
+    this.updatable = const Value.absent(),
+    this.indexUrl = const Value.absent(),
+    this.downloadUrl = const Value.absent(),
+    this.url = const Value.absent(),
+    this.description = const Value.absent(),
+    this.attribution = const Value.absent(),
+    this.sourceLanguage = const Value.absent(),
+    this.targetLanguage = const Value.absent(),
+    this.frequencyMode = const Value.absent(),
+  })  : title = Value(title),
+        revision = Value(revision);
+  static Insertable<IndexTableData> custom({
+    Expression<int>? id,
+    Expression<String>? title,
+    Expression<String>? revision,
+    Expression<bool>? sequenced,
+    Expression<int>? format,
+    Expression<int>? version,
+    Expression<String>? author,
+    Expression<bool>? updatable,
+    Expression<String>? indexUrl,
+    Expression<String>? downloadUrl,
+    Expression<String>? url,
+    Expression<String>? description,
+    Expression<String>? attribution,
+    Expression<String>? sourceLanguage,
+    Expression<String>? targetLanguage,
+    Expression<String>? frequencyMode,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (revision != null) 'revision': revision,
+      if (sequenced != null) 'sequenced': sequenced,
+      if (format != null) 'format': format,
+      if (version != null) 'version': version,
+      if (author != null) 'author': author,
+      if (updatable != null) 'updatable': updatable,
+      if (indexUrl != null) 'index_url': indexUrl,
+      if (downloadUrl != null) 'download_url': downloadUrl,
+      if (url != null) 'url': url,
+      if (description != null) 'description': description,
+      if (attribution != null) 'attribution': attribution,
+      if (sourceLanguage != null) 'source_language': sourceLanguage,
+      if (targetLanguage != null) 'target_language': targetLanguage,
+      if (frequencyMode != null) 'frequency_mode': frequencyMode,
+    });
+  }
+
+  IndexTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? title,
+      Value<String>? revision,
+      Value<bool?>? sequenced,
+      Value<int?>? format,
+      Value<int?>? version,
+      Value<String?>? author,
+      Value<bool?>? updatable,
+      Value<String?>? indexUrl,
+      Value<String?>? downloadUrl,
+      Value<String?>? url,
+      Value<String?>? description,
+      Value<String?>? attribution,
+      Value<String?>? sourceLanguage,
+      Value<String?>? targetLanguage,
+      Value<String?>? frequencyMode}) {
+    return IndexTableCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      revision: revision ?? this.revision,
+      sequenced: sequenced ?? this.sequenced,
+      format: format ?? this.format,
+      version: version ?? this.version,
+      author: author ?? this.author,
+      updatable: updatable ?? this.updatable,
+      indexUrl: indexUrl ?? this.indexUrl,
+      downloadUrl: downloadUrl ?? this.downloadUrl,
+      url: url ?? this.url,
+      description: description ?? this.description,
+      attribution: attribution ?? this.attribution,
+      sourceLanguage: sourceLanguage ?? this.sourceLanguage,
+      targetLanguage: targetLanguage ?? this.targetLanguage,
+      frequencyMode: frequencyMode ?? this.frequencyMode,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (revision.present) {
+      map['revision'] = Variable<String>(revision.value);
+    }
+    if (sequenced.present) {
+      map['sequenced'] = Variable<bool>(sequenced.value);
+    }
+    if (format.present) {
+      map['format'] = Variable<int>(format.value);
+    }
+    if (version.present) {
+      map['version'] = Variable<int>(version.value);
+    }
+    if (author.present) {
+      map['author'] = Variable<String>(author.value);
+    }
+    if (updatable.present) {
+      map['updatable'] = Variable<bool>(updatable.value);
+    }
+    if (indexUrl.present) {
+      map['index_url'] = Variable<String>(indexUrl.value);
+    }
+    if (downloadUrl.present) {
+      map['download_url'] = Variable<String>(downloadUrl.value);
+    }
+    if (url.present) {
+      map['url'] = Variable<String>(url.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (attribution.present) {
+      map['attribution'] = Variable<String>(attribution.value);
+    }
+    if (sourceLanguage.present) {
+      map['source_language'] = Variable<String>(sourceLanguage.value);
+    }
+    if (targetLanguage.present) {
+      map['target_language'] = Variable<String>(targetLanguage.value);
+    }
+    if (frequencyMode.present) {
+      map['frequency_mode'] = Variable<String>(frequencyMode.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('IndexTableCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('revision: $revision, ')
+          ..write('sequenced: $sequenced, ')
+          ..write('format: $format, ')
+          ..write('version: $version, ')
+          ..write('author: $author, ')
+          ..write('updatable: $updatable, ')
+          ..write('indexUrl: $indexUrl, ')
+          ..write('downloadUrl: $downloadUrl, ')
+          ..write('url: $url, ')
+          ..write('description: $description, ')
+          ..write('attribution: $attribution, ')
+          ..write('sourceLanguage: $sourceLanguage, ')
+          ..write('targetLanguage: $targetLanguage, ')
+          ..write('frequencyMode: $frequencyMode')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $KanjiBankV3TableTable extends KanjiBankV3Table
     with TableInfo<$KanjiBankV3TableTable, KanjiBankV3TableData> {
   @override
@@ -2786,6 +3591,7 @@ class KanjiBankV3StatsKanjiRelationsTableCompanion
 abstract class _$DaKanjiDB extends GeneratedDatabase {
   _$DaKanjiDB(QueryExecutor e) : super(e);
   $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
+  late final $IndexTableTable indexTable = $IndexTableTable(this);
   late final $KanjiBankV3TableTable kanjiBankV3Table =
       $KanjiBankV3TableTable(this);
   late final $KanjiBankV3OnyomisTableTable kanjiBankV3OnyomisTable =
@@ -2816,11 +3622,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final Index kanji =
       Index('kanji', 'CREATE INDEX kanji ON kanji_bank_v3_table (kanji)');
   late final KanjiBankV3Dao kanjiBankV3Dao = KanjiBankV3Dao(this as DaKanjiDB);
+  late final IndexDao indexDao = IndexDao(this as DaKanjiDB);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
+        indexTable,
         kanjiBankV3Table,
         kanjiBankV3OnyomisTable,
         kanjiBankV3OnyomiKanjiRelationsTable,
@@ -2836,6 +3644,341 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       ];
 }
 
+typedef $$IndexTableTableCreateCompanionBuilder = IndexTableCompanion Function({
+  Value<int> id,
+  required String title,
+  required String revision,
+  Value<bool?> sequenced,
+  Value<int?> format,
+  Value<int?> version,
+  Value<String?> author,
+  Value<bool?> updatable,
+  Value<String?> indexUrl,
+  Value<String?> downloadUrl,
+  Value<String?> url,
+  Value<String?> description,
+  Value<String?> attribution,
+  Value<String?> sourceLanguage,
+  Value<String?> targetLanguage,
+  Value<String?> frequencyMode,
+});
+typedef $$IndexTableTableUpdateCompanionBuilder = IndexTableCompanion Function({
+  Value<int> id,
+  Value<String> title,
+  Value<String> revision,
+  Value<bool?> sequenced,
+  Value<int?> format,
+  Value<int?> version,
+  Value<String?> author,
+  Value<bool?> updatable,
+  Value<String?> indexUrl,
+  Value<String?> downloadUrl,
+  Value<String?> url,
+  Value<String?> description,
+  Value<String?> attribution,
+  Value<String?> sourceLanguage,
+  Value<String?> targetLanguage,
+  Value<String?> frequencyMode,
+});
+
+class $$IndexTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $IndexTableTable> {
+  $$IndexTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get revision => $composableBuilder(
+      column: $table.revision, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get sequenced => $composableBuilder(
+      column: $table.sequenced, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get format => $composableBuilder(
+      column: $table.format, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get version => $composableBuilder(
+      column: $table.version, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get author => $composableBuilder(
+      column: $table.author, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get updatable => $composableBuilder(
+      column: $table.updatable, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get indexUrl => $composableBuilder(
+      column: $table.indexUrl, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get downloadUrl => $composableBuilder(
+      column: $table.downloadUrl, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get url => $composableBuilder(
+      column: $table.url, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get attribution => $composableBuilder(
+      column: $table.attribution, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get sourceLanguage => $composableBuilder(
+      column: $table.sourceLanguage,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get targetLanguage => $composableBuilder(
+      column: $table.targetLanguage,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get frequencyMode => $composableBuilder(
+      column: $table.frequencyMode, builder: (column) => ColumnFilters(column));
+}
+
+class $$IndexTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $IndexTableTable> {
+  $$IndexTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get revision => $composableBuilder(
+      column: $table.revision, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get sequenced => $composableBuilder(
+      column: $table.sequenced, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get format => $composableBuilder(
+      column: $table.format, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get version => $composableBuilder(
+      column: $table.version, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get author => $composableBuilder(
+      column: $table.author, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get updatable => $composableBuilder(
+      column: $table.updatable, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get indexUrl => $composableBuilder(
+      column: $table.indexUrl, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get downloadUrl => $composableBuilder(
+      column: $table.downloadUrl, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get url => $composableBuilder(
+      column: $table.url, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get attribution => $composableBuilder(
+      column: $table.attribution, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get sourceLanguage => $composableBuilder(
+      column: $table.sourceLanguage,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get targetLanguage => $composableBuilder(
+      column: $table.targetLanguage,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get frequencyMode => $composableBuilder(
+      column: $table.frequencyMode,
+      builder: (column) => ColumnOrderings(column));
+}
+
+class $$IndexTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $IndexTableTable> {
+  $$IndexTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get revision =>
+      $composableBuilder(column: $table.revision, builder: (column) => column);
+
+  GeneratedColumn<bool> get sequenced =>
+      $composableBuilder(column: $table.sequenced, builder: (column) => column);
+
+  GeneratedColumn<int> get format =>
+      $composableBuilder(column: $table.format, builder: (column) => column);
+
+  GeneratedColumn<int> get version =>
+      $composableBuilder(column: $table.version, builder: (column) => column);
+
+  GeneratedColumn<String> get author =>
+      $composableBuilder(column: $table.author, builder: (column) => column);
+
+  GeneratedColumn<bool> get updatable =>
+      $composableBuilder(column: $table.updatable, builder: (column) => column);
+
+  GeneratedColumn<String> get indexUrl =>
+      $composableBuilder(column: $table.indexUrl, builder: (column) => column);
+
+  GeneratedColumn<String> get downloadUrl => $composableBuilder(
+      column: $table.downloadUrl, builder: (column) => column);
+
+  GeneratedColumn<String> get url =>
+      $composableBuilder(column: $table.url, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => column);
+
+  GeneratedColumn<String> get attribution => $composableBuilder(
+      column: $table.attribution, builder: (column) => column);
+
+  GeneratedColumn<String> get sourceLanguage => $composableBuilder(
+      column: $table.sourceLanguage, builder: (column) => column);
+
+  GeneratedColumn<String> get targetLanguage => $composableBuilder(
+      column: $table.targetLanguage, builder: (column) => column);
+
+  GeneratedColumn<String> get frequencyMode => $composableBuilder(
+      column: $table.frequencyMode, builder: (column) => column);
+}
+
+class $$IndexTableTableTableManager extends RootTableManager<
+    _$DaKanjiDB,
+    $IndexTableTable,
+    IndexTableData,
+    $$IndexTableTableFilterComposer,
+    $$IndexTableTableOrderingComposer,
+    $$IndexTableTableAnnotationComposer,
+    $$IndexTableTableCreateCompanionBuilder,
+    $$IndexTableTableUpdateCompanionBuilder,
+    (
+      IndexTableData,
+      BaseReferences<_$DaKanjiDB, $IndexTableTable, IndexTableData>
+    ),
+    IndexTableData,
+    PrefetchHooks Function()> {
+  $$IndexTableTableTableManager(_$DaKanjiDB db, $IndexTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$IndexTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$IndexTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$IndexTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> title = const Value.absent(),
+            Value<String> revision = const Value.absent(),
+            Value<bool?> sequenced = const Value.absent(),
+            Value<int?> format = const Value.absent(),
+            Value<int?> version = const Value.absent(),
+            Value<String?> author = const Value.absent(),
+            Value<bool?> updatable = const Value.absent(),
+            Value<String?> indexUrl = const Value.absent(),
+            Value<String?> downloadUrl = const Value.absent(),
+            Value<String?> url = const Value.absent(),
+            Value<String?> description = const Value.absent(),
+            Value<String?> attribution = const Value.absent(),
+            Value<String?> sourceLanguage = const Value.absent(),
+            Value<String?> targetLanguage = const Value.absent(),
+            Value<String?> frequencyMode = const Value.absent(),
+          }) =>
+              IndexTableCompanion(
+            id: id,
+            title: title,
+            revision: revision,
+            sequenced: sequenced,
+            format: format,
+            version: version,
+            author: author,
+            updatable: updatable,
+            indexUrl: indexUrl,
+            downloadUrl: downloadUrl,
+            url: url,
+            description: description,
+            attribution: attribution,
+            sourceLanguage: sourceLanguage,
+            targetLanguage: targetLanguage,
+            frequencyMode: frequencyMode,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String title,
+            required String revision,
+            Value<bool?> sequenced = const Value.absent(),
+            Value<int?> format = const Value.absent(),
+            Value<int?> version = const Value.absent(),
+            Value<String?> author = const Value.absent(),
+            Value<bool?> updatable = const Value.absent(),
+            Value<String?> indexUrl = const Value.absent(),
+            Value<String?> downloadUrl = const Value.absent(),
+            Value<String?> url = const Value.absent(),
+            Value<String?> description = const Value.absent(),
+            Value<String?> attribution = const Value.absent(),
+            Value<String?> sourceLanguage = const Value.absent(),
+            Value<String?> targetLanguage = const Value.absent(),
+            Value<String?> frequencyMode = const Value.absent(),
+          }) =>
+              IndexTableCompanion.insert(
+            id: id,
+            title: title,
+            revision: revision,
+            sequenced: sequenced,
+            format: format,
+            version: version,
+            author: author,
+            updatable: updatable,
+            indexUrl: indexUrl,
+            downloadUrl: downloadUrl,
+            url: url,
+            description: description,
+            attribution: attribution,
+            sourceLanguage: sourceLanguage,
+            targetLanguage: targetLanguage,
+            frequencyMode: frequencyMode,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$IndexTableTableProcessedTableManager = ProcessedTableManager<
+    _$DaKanjiDB,
+    $IndexTableTable,
+    IndexTableData,
+    $$IndexTableTableFilterComposer,
+    $$IndexTableTableOrderingComposer,
+    $$IndexTableTableAnnotationComposer,
+    $$IndexTableTableCreateCompanionBuilder,
+    $$IndexTableTableUpdateCompanionBuilder,
+    (
+      IndexTableData,
+      BaseReferences<_$DaKanjiDB, $IndexTableTable, IndexTableData>
+    ),
+    IndexTableData,
+    PrefetchHooks Function()>;
 typedef $$KanjiBankV3TableTableCreateCompanionBuilder
     = KanjiBankV3TableCompanion Function({
   Value<int> id,
@@ -5448,6 +6591,8 @@ typedef $$KanjiBankV3StatsKanjiRelationsTableTableProcessedTableManager
 class $DaKanjiDBManager {
   final _$DaKanjiDB _db;
   $DaKanjiDBManager(this._db);
+  $$IndexTableTableTableManager get indexTable =>
+      $$IndexTableTableTableManager(_db, _db.indexTable);
   $$KanjiBankV3TableTableTableManager get kanjiBankV3Table =>
       $$KanjiBankV3TableTableTableManager(_db, _db.kanjiBankV3Table);
   $$KanjiBankV3OnyomisTableTableTableManager get kanjiBankV3OnyomisTable =>
