@@ -8,13 +8,20 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
-  path: ^1.8.0
-  drift: ^2.21.0
-  sqlite3: ^2.4.6
+  path: 1.9.1
+  drift: 2.21.0
+  sqlite3: 2.4.7
+  archive: 3.6.1
+  tuple: 2.0.2
 
 dev_dependencies:
-  drift_dev: ^2.21.0
-  build_runner: ^2.4.13
+  drift_dev: 2.21.0
+  build_runner: 2.4.13
 
-  lints: ^4.0.0
-  test: ^1.24.0
+  lints: 4.0.0
+  test: 1.25.8
+
+dependency_overrides:
+  archive:
+    git:
+      url: https://github.com/brendan-duncan/archive
