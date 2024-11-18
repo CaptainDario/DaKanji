@@ -20,7 +20,7 @@ class KanjiBankV3KunyomiKanjiRelationsTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
-  /// the id of the associated onyomi reading
+  /// the id of the associated kunyomi reading
   IntColumn get kunyomiId => integer().references(KanjiBankV3KunyomisTable, #id)();
   /// the id of the associated kanji
   IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
@@ -32,7 +32,7 @@ class KanjiBankV3TagsKanjiRelationsTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
-  /// the id of the associated onyomi reading
+  /// the id of the associated tag
   IntColumn get tagId => integer().references(KanjiBankV3TagsTable, #id)();
   /// the id of the associated kanji
   IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
@@ -44,20 +44,20 @@ class KanjiBankV3MeaningsKanjiRelationsTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
-  /// the id of the associated onyomi reading
+  /// the id of the associated meaning
   IntColumn get meaningId => integer().references(KanjiBankV3MeaningsTable, #id)();
   /// the id of the associated kanji
   IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
 
 }
 
-/// Contains the relationships between stats and kanjis
-class KanjiBankV3StatsKanjiRelationsTable extends Table {
+/// Contains the relationships between stat values and kanjis
+class KanjiBankV3StatKanjiRelationsTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
-  /// the id of the associated onyomi reading
-  IntColumn get statId => integer().references(KanjiBankV3StatsTable, #id)();
+  /// the id of the associated stats value
+  IntColumn get statValueId => integer().references(KanjiBankV3StatValuesTable, #id)();
   /// the id of the associated kanji
   IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
 

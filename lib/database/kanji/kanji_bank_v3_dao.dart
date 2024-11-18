@@ -13,11 +13,12 @@ part 'kanji_bank_v3_dao.g.dart';
 // that should use this dao.
 @DriftAccessor(tables: [
     KanjiBankV3Table,
-    KanjiBankV3OnyomisTable, KanjiBankV3KunyomiKanjiRelationsTable,
+    KanjiBankV3OnyomisTable, KanjiBankV3OnyomiKanjiRelationsTable,
     KanjiBankV3KunyomisTable, KanjiBankV3KunyomiKanjiRelationsTable,
     KanjiBankV3TagsTable, KanjiBankV3TagsKanjiRelationsTable,
     KanjiBankV3MeaningsTable, KanjiBankV3MeaningsKanjiRelationsTable,
-    KanjiBankV3StatsTable, KanjiBankV3StatsKanjiRelationsTable
+    KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
+    KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable, 
 ])
 class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMixin {
   
@@ -80,6 +81,28 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
   }
 
+  /// Checks if the given `statsName` is already present in the database
+  Future<int?> getStatsNameId(String statsName) async {
+
+    final result = await db.managers.kanjiBankV3StatNamesTable
+      .filter((f) => f.statName(statsName))
+      .getSingleOrNull();
+
+    return result?.id;
+
+  }
+
+  /// Checks if the given `statsValue` is already present in the database
+  Future<int?> getStatsValueId(String statsValue) async {
+
+    final result = await db.managers.kanjiBankV3StatValuesTable
+      .filter((f) => f.statValue(statsValue))
+      .getSingleOrNull();
+
+    return result?.id;
+
+  }
+
   /// Get the maximum id of the kanji table
   Future<int> maxKanjiId() async {
     
@@ -130,6 +153,26 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
     // Extract the value of the max column using the alias
     return result.read(kanjiBankV3MeaningsTable.id.max()) ?? 0;
+  }
+
+  /// Get the maximum id of the stats name table
+  Future<int> maxStatsNameId() async {
+    final query = selectOnly(kanjiBankV3StatNamesTable)
+        ..addColumns([kanjiBankV3StatNamesTable.id.max()]);
+    final result = await query.getSingle();
+
+    // Extract the value of the max column using the alias
+    return result.read(kanjiBankV3StatNamesTable.id.max()) ?? 0;
+  }
+
+  /// Get the maximum id of the stats name table
+  Future<int> maxStatsValueId() async {
+    final query = selectOnly(kanjiBankV3StatValuesTable)
+        ..addColumns([kanjiBankV3StatValuesTable.id.max()]);
+    final result = await query.getSingle();
+
+    // Extract the value of the max column using the alias
+    return result.read(kanjiBankV3StatValuesTable.id.max()) ?? 0;
   }
   
 }

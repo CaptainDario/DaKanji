@@ -19,9 +19,8 @@ part 'dakanji_db.g.dart';
     KanjiBankV3KunyomisTable, KanjiBankV3KunyomiKanjiRelationsTable,
     KanjiBankV3TagsTable, KanjiBankV3TagsKanjiRelationsTable,
     KanjiBankV3MeaningsTable, KanjiBankV3MeaningsKanjiRelationsTable,
-    KanjiBankV3StatsTable, KanjiBankV3StatsKanjiRelationsTable
-
-
+    KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
+    KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable, 
   ],
   daos: [
     KanjiBankV3Dao, IndexDao

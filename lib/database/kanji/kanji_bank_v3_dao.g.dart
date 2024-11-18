@@ -9,6 +9,9 @@ mixin _$KanjiBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $IndexTableTable get indexTable => attachedDatabase.indexTable;
   $KanjiBankV3OnyomisTableTable get kanjiBankV3OnyomisTable =>
       attachedDatabase.kanjiBankV3OnyomisTable;
+  $KanjiBankV3OnyomiKanjiRelationsTableTable
+      get kanjiBankV3OnyomiKanjiRelationsTable =>
+          attachedDatabase.kanjiBankV3OnyomiKanjiRelationsTable;
   $KanjiBankV3KunyomisTableTable get kanjiBankV3KunyomisTable =>
       attachedDatabase.kanjiBankV3KunyomisTable;
   $KanjiBankV3KunyomiKanjiRelationsTableTable
@@ -24,9 +27,13 @@ mixin _$KanjiBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $KanjiBankV3MeaningsKanjiRelationsTableTable
       get kanjiBankV3MeaningsKanjiRelationsTable =>
           attachedDatabase.kanjiBankV3MeaningsKanjiRelationsTable;
+  $KanjiBankV3StatNamesTableTable get kanjiBankV3StatNamesTable =>
+      attachedDatabase.kanjiBankV3StatNamesTable;
+  $KanjiBankV3StatValuesTableTable get kanjiBankV3StatValuesTable =>
+      attachedDatabase.kanjiBankV3StatValuesTable;
   $KanjiBankV3StatsTableTable get kanjiBankV3StatsTable =>
       attachedDatabase.kanjiBankV3StatsTable;
-  $KanjiBankV3StatsKanjiRelationsTableTable
-      get kanjiBankV3StatsKanjiRelationsTable =>
-          attachedDatabase.kanjiBankV3StatsKanjiRelationsTable;
+  $KanjiBankV3StatKanjiRelationsTableTable
+      get kanjiBankV3StatKanjiRelationsTable =>
+          attachedDatabase.kanjiBankV3StatKanjiRelationsTable;
 }

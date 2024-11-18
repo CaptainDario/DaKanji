@@ -28,9 +28,6 @@ class KanjiBankV3OnyomisTable extends Table {
   /// The id of the dictionary this entry belongs to
   IntColumn get dictId => integer().references(IndexTable, #id)();
 
-  /// `KanjiBankV3` entry this meaning belongs to
-  IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
-
   /// The onyomi reading of this entry
   TextColumn get onyomi => text().unique()();
 
@@ -46,9 +43,6 @@ class KanjiBankV3KunyomisTable extends Table {
   /// The id of the dictionary this entry belongs to
   IntColumn get dictId => integer().references(IndexTable, #id)();
 
-  /// `KanjiBankV3` entry this meaning belongs to
-  IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
-
   /// The kunyomi reading of this entry
   TextColumn get kunyomi => text()();
 
@@ -62,9 +56,6 @@ class KanjiBankV3TagsTable extends Table {
 
   /// The id of the dictionary this entry belongs to
   IntColumn get dictId => integer().references(IndexTable, #id)();
-
-  /// `KanjiBankV3` entry this meaning belongs to
-  IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
 
   /// The kunyomi reading of this entry
   TextColumn get tag => text()();
@@ -81,16 +72,13 @@ class KanjiBankV3MeaningsTable extends Table {
   /// The id of the dictionary this entry belongs to
   IntColumn get dictId => integer().references(IndexTable, #id)();
 
-  /// `KanjiBankV3` entry this meaning belongs to
-  IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
-
   /// The meaning of this entry
   TextColumn get meaning => text()();
 
 }
 
-/// Contains all kanji stats and each entry links to
-/// `KanjiBankV3Table` elements
+/// Contains all kanji stat's. Each entry links to a
+/// [KanjiBankV3StatValuesTable] and a [KanjiBankV3StatNamesTable]
 class KanjiBankV3StatsTable extends Table {
 
   /// id of this meaning
@@ -99,14 +87,32 @@ class KanjiBankV3StatsTable extends Table {
   /// The id of the dictionary this entry belongs to
   IntColumn get dictId => integer().references(IndexTable, #id)();
 
-  /// `KanjiBankV3` entry this meaning belongs to
-  IntColumn get kanjiBankV3ID => integer().references(KanjiBankV3Table, #id)();
+  /// `KanjiBankV3StatsName` entry of this meaning
+  IntColumn get statNameId => integer().references(KanjiBankV3StatNamesTable, #id)();
 
-  /// The name of this entrie's stat
-  TextColumn get statName => text()();
+  /// The value of this entrie's stat
+  IntColumn get statValueId => integer().references(KanjiBankV3StatValuesTable, #id)();
+
+}
+
+/// Contains all kanji stat's values, links to a [KanjiBankV3StatsTable]
+class KanjiBankV3StatValuesTable extends Table {
+
+  /// id of this stat value
+  IntColumn get id => integer().autoIncrement()();
 
   /// The value of this entrie's stat
   TextColumn get statValue => text()();
 
 }
 
+/// Contains all kanji stat's names, links to a [KanjiBankV3StatsTable]
+class KanjiBankV3StatNamesTable extends Table {
+
+  /// id of this stat name
+  IntColumn get id => integer().autoIncrement()();
+
+  /// The name of this entrie's stat
+  TextColumn get statName => text()();
+
+}
