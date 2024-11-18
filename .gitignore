@@ -10,3 +10,7 @@ tmp/
 
 # ignore tmp schema
 dakanji_db_schema/schema.pdf
+
+# ignore stress test downloads
+stresstest/*
+!stresstest/.gitkeep
