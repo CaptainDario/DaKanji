@@ -2,21 +2,25 @@ import 'dart:io';
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:dakanji_db/parsing/index/index_parser.dart';
 import 'package:dakanji_db/parsing/kanji/kanji_bank_v3_parser.dart';
+import 'package:dakanji_db/parsing/tag/tag_bank_v3_parser.dart';
 import 'package:path/path.dart' as p;
-import 'package:archive/archive_io.dart';
 import 'package:tuple/tuple.dart';
 
 
 
 /// A list containing the names of files that are valid yomtain files
 List<String> validDictionaryFiles = [
+  indexFile,
+  tagBankFile,
   kanjiBankFile,
-  dictionaryIndexFile
 ];
+
+/// The name of the dictionary index file
+String indexFile = "index.json";
 /// The naming patter for kanji bank terms
 String kanjiBankFile = "kanji_bank";
-/// The name of the dictionary index file
-String dictionaryIndexFile = "index.json";
+/// The naming patter for tag bank terms
+String tagBankFile = "tag_bank";
 
 /// Parses the given yomitan dictionary zip
 Future parseDictionaryZip (File dictZip, DaKanjiDB db) async {
@@ -38,14 +42,21 @@ Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db) async {
 
   // parse the index file -> get dict index
   int dictId = await parseIndex(
-    validFiles.where((e) => p.basename(e.path) == dictionaryIndexFile).first,
+    validFiles.where((e) => p.basename(e.path) == indexFile).first,
     db
   );
   final dictEntry = await db.indexDao.getById(dictId);
-
-  for (var file in validFiles) {
-    await parseDictionaryFile(Tuple3(file, db, dictEntry!));
+  
+  // parse the tags
+  Iterable<File> tagFiles = validFiles.where((e) => p.basename(e.path).contains(tagBankFile));
+  for (var tagFile in tagFiles) {
+    await parseTagBankv3(tagFile, db);
   }
+
+  // parse the remaining files
+  //for (var file in validFiles) {
+  //  await parseDictionaryFile(Tuple3(file, db, dictEntry!));
+  //}
 
 }
 

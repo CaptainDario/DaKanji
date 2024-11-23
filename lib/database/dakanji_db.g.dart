@@ -808,6 +808,804 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   }
 }
 
+class $TagBankV3TableTable extends TagBankV3Table
+    with TableInfo<$TagBankV3TableTable, TagBankV3TableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TagBankV3TableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name =
+      GeneratedColumn<String>('name', aliasedName, false,
+          additionalChecks: GeneratedColumn.checkTextLength(
+            minTextLength: 1,
+          ),
+          type: DriftSqlType.string,
+          requiredDuringInsert: true);
+  static const VerificationMeta _categoryIdMeta =
+      const VerificationMeta('categoryId');
+  @override
+  late final GeneratedColumn<int> categoryId = GeneratedColumn<int>(
+      'category_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _sortingOrderMeta =
+      const VerificationMeta('sortingOrder');
+  @override
+  late final GeneratedColumn<int> sortingOrder = GeneratedColumn<int>(
+      'sorting_order', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes =
+      GeneratedColumn<String>('notes', aliasedName, false,
+          additionalChecks: GeneratedColumn.checkTextLength(
+            minTextLength: 1,
+          ),
+          type: DriftSqlType.string,
+          requiredDuringInsert: true);
+  static const VerificationMeta _scoreMeta = const VerificationMeta('score');
+  @override
+  late final GeneratedColumn<int> score = GeneratedColumn<int>(
+      'score', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, categoryId, sortingOrder, notes, score];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tag_bank_v3_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<TagBankV3TableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('category_id')) {
+      context.handle(
+          _categoryIdMeta,
+          categoryId.isAcceptableOrUnknown(
+              data['category_id']!, _categoryIdMeta));
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    if (data.containsKey('sorting_order')) {
+      context.handle(
+          _sortingOrderMeta,
+          sortingOrder.isAcceptableOrUnknown(
+              data['sorting_order']!, _sortingOrderMeta));
+    } else if (isInserting) {
+      context.missing(_sortingOrderMeta);
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+          _notesMeta, notes.isAcceptableOrUnknown(data['notes']!, _notesMeta));
+    } else if (isInserting) {
+      context.missing(_notesMeta);
+    }
+    if (data.containsKey('score')) {
+      context.handle(
+          _scoreMeta, score.isAcceptableOrUnknown(data['score']!, _scoreMeta));
+    } else if (isInserting) {
+      context.missing(_scoreMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TagBankV3TableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TagBankV3TableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      categoryId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}category_id'])!,
+      sortingOrder: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sorting_order'])!,
+      notes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}notes'])!,
+      score: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}score'])!,
+    );
+  }
+
+  @override
+  $TagBankV3TableTable createAlias(String alias) {
+    return $TagBankV3TableTable(attachedDatabase, alias);
+  }
+}
+
+class TagBankV3TableData extends DataClass
+    implements Insertable<TagBankV3TableData> {
+  /// id of this entry
+  final int id;
+
+  /// Tag name.
+  final String name;
+
+  /// Category for the tag.
+  final int categoryId;
+
+  /// Sorting order for the tag.
+  final int sortingOrder;
+
+  /// Notes for the tag.
+  final String notes;
+
+  /// Score used to determine popularity. Negative values are more rare and
+  /// positive values are more frequent. This score is also used to sort search
+  /// results.
+  final int score;
+  const TagBankV3TableData(
+      {required this.id,
+      required this.name,
+      required this.categoryId,
+      required this.sortingOrder,
+      required this.notes,
+      required this.score});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['category_id'] = Variable<int>(categoryId);
+    map['sorting_order'] = Variable<int>(sortingOrder);
+    map['notes'] = Variable<String>(notes);
+    map['score'] = Variable<int>(score);
+    return map;
+  }
+
+  TagBankV3TableCompanion toCompanion(bool nullToAbsent) {
+    return TagBankV3TableCompanion(
+      id: Value(id),
+      name: Value(name),
+      categoryId: Value(categoryId),
+      sortingOrder: Value(sortingOrder),
+      notes: Value(notes),
+      score: Value(score),
+    );
+  }
+
+  factory TagBankV3TableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TagBankV3TableData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      categoryId: serializer.fromJson<int>(json['categoryId']),
+      sortingOrder: serializer.fromJson<int>(json['sortingOrder']),
+      notes: serializer.fromJson<String>(json['notes']),
+      score: serializer.fromJson<int>(json['score']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'categoryId': serializer.toJson<int>(categoryId),
+      'sortingOrder': serializer.toJson<int>(sortingOrder),
+      'notes': serializer.toJson<String>(notes),
+      'score': serializer.toJson<int>(score),
+    };
+  }
+
+  TagBankV3TableData copyWith(
+          {int? id,
+          String? name,
+          int? categoryId,
+          int? sortingOrder,
+          String? notes,
+          int? score}) =>
+      TagBankV3TableData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        categoryId: categoryId ?? this.categoryId,
+        sortingOrder: sortingOrder ?? this.sortingOrder,
+        notes: notes ?? this.notes,
+        score: score ?? this.score,
+      );
+  TagBankV3TableData copyWithCompanion(TagBankV3TableCompanion data) {
+    return TagBankV3TableData(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      categoryId:
+          data.categoryId.present ? data.categoryId.value : this.categoryId,
+      sortingOrder: data.sortingOrder.present
+          ? data.sortingOrder.value
+          : this.sortingOrder,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      score: data.score.present ? data.score.value : this.score,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TagBankV3TableData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('sortingOrder: $sortingOrder, ')
+          ..write('notes: $notes, ')
+          ..write('score: $score')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, name, categoryId, sortingOrder, notes, score);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TagBankV3TableData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.categoryId == this.categoryId &&
+          other.sortingOrder == this.sortingOrder &&
+          other.notes == this.notes &&
+          other.score == this.score);
+}
+
+class TagBankV3TableCompanion extends UpdateCompanion<TagBankV3TableData> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<int> categoryId;
+  final Value<int> sortingOrder;
+  final Value<String> notes;
+  final Value<int> score;
+  const TagBankV3TableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.categoryId = const Value.absent(),
+    this.sortingOrder = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.score = const Value.absent(),
+  });
+  TagBankV3TableCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required int categoryId,
+    required int sortingOrder,
+    required String notes,
+    required int score,
+  })  : name = Value(name),
+        categoryId = Value(categoryId),
+        sortingOrder = Value(sortingOrder),
+        notes = Value(notes),
+        score = Value(score);
+  static Insertable<TagBankV3TableData> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<int>? categoryId,
+    Expression<int>? sortingOrder,
+    Expression<String>? notes,
+    Expression<int>? score,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (categoryId != null) 'category_id': categoryId,
+      if (sortingOrder != null) 'sorting_order': sortingOrder,
+      if (notes != null) 'notes': notes,
+      if (score != null) 'score': score,
+    });
+  }
+
+  TagBankV3TableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? name,
+      Value<int>? categoryId,
+      Value<int>? sortingOrder,
+      Value<String>? notes,
+      Value<int>? score}) {
+    return TagBankV3TableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      categoryId: categoryId ?? this.categoryId,
+      sortingOrder: sortingOrder ?? this.sortingOrder,
+      notes: notes ?? this.notes,
+      score: score ?? this.score,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (categoryId.present) {
+      map['category_id'] = Variable<int>(categoryId.value);
+    }
+    if (sortingOrder.present) {
+      map['sorting_order'] = Variable<int>(sortingOrder.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (score.present) {
+      map['score'] = Variable<int>(score.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TagBankV3TableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('sortingOrder: $sortingOrder, ')
+          ..write('notes: $notes, ')
+          ..write('score: $score')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TagBankV3CategoryTableTable extends TagBankV3CategoryTable
+    with TableInfo<$TagBankV3CategoryTableTable, TagBankV3CategoryTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TagBankV3CategoryTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _categoryMeta =
+      const VerificationMeta('category');
+  @override
+  late final GeneratedColumn<String> category =
+      GeneratedColumn<String>('category', aliasedName, false,
+          additionalChecks: GeneratedColumn.checkTextLength(
+            minTextLength: 1,
+          ),
+          type: DriftSqlType.string,
+          requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, category];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tag_bank_v3_category_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<TagBankV3CategoryTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('category')) {
+      context.handle(_categoryMeta,
+          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TagBankV3CategoryTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TagBankV3CategoryTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      category: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}category'])!,
+    );
+  }
+
+  @override
+  $TagBankV3CategoryTableTable createAlias(String alias) {
+    return $TagBankV3CategoryTableTable(attachedDatabase, alias);
+  }
+}
+
+class TagBankV3CategoryTableData extends DataClass
+    implements Insertable<TagBankV3CategoryTableData> {
+  /// id of this entry
+  final int id;
+
+  /// Category for the tag.
+  final String category;
+  const TagBankV3CategoryTableData({required this.id, required this.category});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['category'] = Variable<String>(category);
+    return map;
+  }
+
+  TagBankV3CategoryTableCompanion toCompanion(bool nullToAbsent) {
+    return TagBankV3CategoryTableCompanion(
+      id: Value(id),
+      category: Value(category),
+    );
+  }
+
+  factory TagBankV3CategoryTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TagBankV3CategoryTableData(
+      id: serializer.fromJson<int>(json['id']),
+      category: serializer.fromJson<String>(json['category']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'category': serializer.toJson<String>(category),
+    };
+  }
+
+  TagBankV3CategoryTableData copyWith({int? id, String? category}) =>
+      TagBankV3CategoryTableData(
+        id: id ?? this.id,
+        category: category ?? this.category,
+      );
+  TagBankV3CategoryTableData copyWithCompanion(
+      TagBankV3CategoryTableCompanion data) {
+    return TagBankV3CategoryTableData(
+      id: data.id.present ? data.id.value : this.id,
+      category: data.category.present ? data.category.value : this.category,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TagBankV3CategoryTableData(')
+          ..write('id: $id, ')
+          ..write('category: $category')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, category);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TagBankV3CategoryTableData &&
+          other.id == this.id &&
+          other.category == this.category);
+}
+
+class TagBankV3CategoryTableCompanion
+    extends UpdateCompanion<TagBankV3CategoryTableData> {
+  final Value<int> id;
+  final Value<String> category;
+  const TagBankV3CategoryTableCompanion({
+    this.id = const Value.absent(),
+    this.category = const Value.absent(),
+  });
+  TagBankV3CategoryTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String category,
+  }) : category = Value(category);
+  static Insertable<TagBankV3CategoryTableData> custom({
+    Expression<int>? id,
+    Expression<String>? category,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (category != null) 'category': category,
+    });
+  }
+
+  TagBankV3CategoryTableCompanion copyWith(
+      {Value<int>? id, Value<String>? category}) {
+    return TagBankV3CategoryTableCompanion(
+      id: id ?? this.id,
+      category: category ?? this.category,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TagBankV3CategoryTableCompanion(')
+          ..write('id: $id, ')
+          ..write('category: $category')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TagBankV3TagCategoryRelationsTableTable
+    extends TagBankV3TagCategoryRelationsTable
+    with
+        TableInfo<$TagBankV3TagCategoryRelationsTableTable,
+            TagBankV3TagCategoryRelationsTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TagBankV3TagCategoryRelationsTableTable(this.attachedDatabase,
+      [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
+  @override
+  late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
+      'tag_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES tag_bank_v3_table (id)'));
+  static const VerificationMeta _categoryIdMeta =
+      const VerificationMeta('categoryId');
+  @override
+  late final GeneratedColumn<int> categoryId = GeneratedColumn<int>(
+      'category_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES tag_bank_v3_category_table (id)'));
+  @override
+  List<GeneratedColumn> get $columns => [id, tagId, categoryId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tag_bank_v3_tag_category_relations_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<TagBankV3TagCategoryRelationsTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('tag_id')) {
+      context.handle(
+          _tagIdMeta, tagId.isAcceptableOrUnknown(data['tag_id']!, _tagIdMeta));
+    } else if (isInserting) {
+      context.missing(_tagIdMeta);
+    }
+    if (data.containsKey('category_id')) {
+      context.handle(
+          _categoryIdMeta,
+          categoryId.isAcceptableOrUnknown(
+              data['category_id']!, _categoryIdMeta));
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TagBankV3TagCategoryRelationsTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TagBankV3TagCategoryRelationsTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      tagId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}tag_id'])!,
+      categoryId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}category_id'])!,
+    );
+  }
+
+  @override
+  $TagBankV3TagCategoryRelationsTableTable createAlias(String alias) {
+    return $TagBankV3TagCategoryRelationsTableTable(attachedDatabase, alias);
+  }
+}
+
+class TagBankV3TagCategoryRelationsTableData extends DataClass
+    implements Insertable<TagBankV3TagCategoryRelationsTableData> {
+  /// id of this relation
+  final int id;
+
+  /// the id of the associated tag reading
+  final int tagId;
+
+  /// the id of the associated tag category
+  final int categoryId;
+  const TagBankV3TagCategoryRelationsTableData(
+      {required this.id, required this.tagId, required this.categoryId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['tag_id'] = Variable<int>(tagId);
+    map['category_id'] = Variable<int>(categoryId);
+    return map;
+  }
+
+  TagBankV3TagCategoryRelationsTableCompanion toCompanion(bool nullToAbsent) {
+    return TagBankV3TagCategoryRelationsTableCompanion(
+      id: Value(id),
+      tagId: Value(tagId),
+      categoryId: Value(categoryId),
+    );
+  }
+
+  factory TagBankV3TagCategoryRelationsTableData.fromJson(
+      Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TagBankV3TagCategoryRelationsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      tagId: serializer.fromJson<int>(json['tagId']),
+      categoryId: serializer.fromJson<int>(json['categoryId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'tagId': serializer.toJson<int>(tagId),
+      'categoryId': serializer.toJson<int>(categoryId),
+    };
+  }
+
+  TagBankV3TagCategoryRelationsTableData copyWith(
+          {int? id, int? tagId, int? categoryId}) =>
+      TagBankV3TagCategoryRelationsTableData(
+        id: id ?? this.id,
+        tagId: tagId ?? this.tagId,
+        categoryId: categoryId ?? this.categoryId,
+      );
+  TagBankV3TagCategoryRelationsTableData copyWithCompanion(
+      TagBankV3TagCategoryRelationsTableCompanion data) {
+    return TagBankV3TagCategoryRelationsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      tagId: data.tagId.present ? data.tagId.value : this.tagId,
+      categoryId:
+          data.categoryId.present ? data.categoryId.value : this.categoryId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TagBankV3TagCategoryRelationsTableData(')
+          ..write('id: $id, ')
+          ..write('tagId: $tagId, ')
+          ..write('categoryId: $categoryId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, tagId, categoryId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TagBankV3TagCategoryRelationsTableData &&
+          other.id == this.id &&
+          other.tagId == this.tagId &&
+          other.categoryId == this.categoryId);
+}
+
+class TagBankV3TagCategoryRelationsTableCompanion
+    extends UpdateCompanion<TagBankV3TagCategoryRelationsTableData> {
+  final Value<int> id;
+  final Value<int> tagId;
+  final Value<int> categoryId;
+  const TagBankV3TagCategoryRelationsTableCompanion({
+    this.id = const Value.absent(),
+    this.tagId = const Value.absent(),
+    this.categoryId = const Value.absent(),
+  });
+  TagBankV3TagCategoryRelationsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int tagId,
+    required int categoryId,
+  })  : tagId = Value(tagId),
+        categoryId = Value(categoryId);
+  static Insertable<TagBankV3TagCategoryRelationsTableData> custom({
+    Expression<int>? id,
+    Expression<int>? tagId,
+    Expression<int>? categoryId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (tagId != null) 'tag_id': tagId,
+      if (categoryId != null) 'category_id': categoryId,
+    });
+  }
+
+  TagBankV3TagCategoryRelationsTableCompanion copyWith(
+      {Value<int>? id, Value<int>? tagId, Value<int>? categoryId}) {
+    return TagBankV3TagCategoryRelationsTableCompanion(
+      id: id ?? this.id,
+      tagId: tagId ?? this.tagId,
+      categoryId: categoryId ?? this.categoryId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (tagId.present) {
+      map['tag_id'] = Variable<int>(tagId.value);
+    }
+    if (categoryId.present) {
+      map['category_id'] = Variable<int>(categoryId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TagBankV3TagCategoryRelationsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('tagId: $tagId, ')
+          ..write('categoryId: $categoryId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $KanjiBankV3TableTable extends KanjiBankV3Table
     with TableInfo<$KanjiBankV3TableTable, KanjiBankV3TableData> {
   @override
@@ -3791,6 +4589,12 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   _$DaKanjiDB(QueryExecutor e) : super(e);
   $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
   late final $IndexTableTable indexTable = $IndexTableTable(this);
+  late final $TagBankV3TableTable tagBankV3Table = $TagBankV3TableTable(this);
+  late final $TagBankV3CategoryTableTable tagBankV3CategoryTable =
+      $TagBankV3CategoryTableTable(this);
+  late final $TagBankV3TagCategoryRelationsTableTable
+      tagBankV3TagCategoryRelationsTable =
+      $TagBankV3TagCategoryRelationsTableTable(this);
   late final $KanjiBankV3TableTable kanjiBankV3Table =
       $KanjiBankV3TableTable(this);
   late final $KanjiBankV3OnyomisTableTable kanjiBankV3OnyomisTable =
@@ -3822,16 +4626,22 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $KanjiBankV3StatKanjiRelationsTableTable
       kanjiBankV3StatKanjiRelationsTable =
       $KanjiBankV3StatKanjiRelationsTableTable(this);
+  late final Index name =
+      Index('name', 'CREATE INDEX name ON tag_bank_v3_table (name)');
   late final Index kanji =
       Index('kanji', 'CREATE INDEX kanji ON kanji_bank_v3_table (kanji)');
-  late final KanjiBankV3Dao kanjiBankV3Dao = KanjiBankV3Dao(this as DaKanjiDB);
   late final IndexDao indexDao = IndexDao(this as DaKanjiDB);
+  late final TagBankV3Dao tagBankV3Dao = TagBankV3Dao(this as DaKanjiDB);
+  late final KanjiBankV3Dao kanjiBankV3Dao = KanjiBankV3Dao(this as DaKanjiDB);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
         indexTable,
+        tagBankV3Table,
+        tagBankV3CategoryTable,
+        tagBankV3TagCategoryRelationsTable,
         kanjiBankV3Table,
         kanjiBankV3OnyomisTable,
         kanjiBankV3OnyomiKanjiRelationsTable,
@@ -3845,6 +4655,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         kanjiBankV3StatValuesTable,
         kanjiBankV3StatsTable,
         kanjiBankV3StatKanjiRelationsTable,
+        name,
         kanji
       ];
 }
@@ -4603,6 +5414,850 @@ typedef $$IndexTableTableProcessedTableManager = ProcessedTableManager<
         bool kanjiBankV3TagsTableRefs,
         bool kanjiBankV3MeaningsTableRefs,
         bool kanjiBankV3StatsTableRefs})>;
+typedef $$TagBankV3TableTableCreateCompanionBuilder = TagBankV3TableCompanion
+    Function({
+  Value<int> id,
+  required String name,
+  required int categoryId,
+  required int sortingOrder,
+  required String notes,
+  required int score,
+});
+typedef $$TagBankV3TableTableUpdateCompanionBuilder = TagBankV3TableCompanion
+    Function({
+  Value<int> id,
+  Value<String> name,
+  Value<int> categoryId,
+  Value<int> sortingOrder,
+  Value<String> notes,
+  Value<int> score,
+});
+
+final class $$TagBankV3TableTableReferences extends BaseReferences<_$DaKanjiDB,
+    $TagBankV3TableTable, TagBankV3TableData> {
+  $$TagBankV3TableTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$TagBankV3TagCategoryRelationsTableTable,
+          List<TagBankV3TagCategoryRelationsTableData>>
+      _tagBankV3TagCategoryRelationsTableRefsTable(_$DaKanjiDB db) =>
+          MultiTypedResultKey.fromTable(db.tagBankV3TagCategoryRelationsTable,
+              aliasName: $_aliasNameGenerator(db.tagBankV3Table.id,
+                  db.tagBankV3TagCategoryRelationsTable.tagId));
+
+  $$TagBankV3TagCategoryRelationsTableTableProcessedTableManager
+      get tagBankV3TagCategoryRelationsTableRefs {
+    final manager = $$TagBankV3TagCategoryRelationsTableTableTableManager(
+            $_db, $_db.tagBankV3TagCategoryRelationsTable)
+        .filter((f) => f.tagId.id($_item.id));
+
+    final cache = $_typedResult
+        .readTableOrNull(_tagBankV3TagCategoryRelationsTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$TagBankV3TableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TagBankV3TableTable> {
+  $$TagBankV3TableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get categoryId => $composableBuilder(
+      column: $table.categoryId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get sortingOrder => $composableBuilder(
+      column: $table.sortingOrder, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get score => $composableBuilder(
+      column: $table.score, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> tagBankV3TagCategoryRelationsTableRefs(
+      Expression<bool> Function(
+              $$TagBankV3TagCategoryRelationsTableTableFilterComposer f)
+          f) {
+    final $$TagBankV3TagCategoryRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.tagBankV3TagCategoryRelationsTable,
+            getReferencedColumn: (t) => t.tagId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TagBankV3TagCategoryRelationsTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.tagBankV3TagCategoryRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$TagBankV3TableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TagBankV3TableTable> {
+  $$TagBankV3TableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get categoryId => $composableBuilder(
+      column: $table.categoryId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get sortingOrder => $composableBuilder(
+      column: $table.sortingOrder,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+      column: $table.notes, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get score => $composableBuilder(
+      column: $table.score, builder: (column) => ColumnOrderings(column));
+}
+
+class $$TagBankV3TableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TagBankV3TableTable> {
+  $$TagBankV3TableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<int> get categoryId => $composableBuilder(
+      column: $table.categoryId, builder: (column) => column);
+
+  GeneratedColumn<int> get sortingOrder => $composableBuilder(
+      column: $table.sortingOrder, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<int> get score =>
+      $composableBuilder(column: $table.score, builder: (column) => column);
+
+  Expression<T> tagBankV3TagCategoryRelationsTableRefs<T extends Object>(
+      Expression<T> Function(
+              $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer a)
+          f) {
+    final $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.tagBankV3TagCategoryRelationsTable,
+            getReferencedColumn: (t) => t.tagId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.tagBankV3TagCategoryRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$TagBankV3TableTableTableManager extends RootTableManager<
+    _$DaKanjiDB,
+    $TagBankV3TableTable,
+    TagBankV3TableData,
+    $$TagBankV3TableTableFilterComposer,
+    $$TagBankV3TableTableOrderingComposer,
+    $$TagBankV3TableTableAnnotationComposer,
+    $$TagBankV3TableTableCreateCompanionBuilder,
+    $$TagBankV3TableTableUpdateCompanionBuilder,
+    (TagBankV3TableData, $$TagBankV3TableTableReferences),
+    TagBankV3TableData,
+    PrefetchHooks Function({bool tagBankV3TagCategoryRelationsTableRefs})> {
+  $$TagBankV3TableTableTableManager(_$DaKanjiDB db, $TagBankV3TableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TagBankV3TableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TagBankV3TableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TagBankV3TableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<int> categoryId = const Value.absent(),
+            Value<int> sortingOrder = const Value.absent(),
+            Value<String> notes = const Value.absent(),
+            Value<int> score = const Value.absent(),
+          }) =>
+              TagBankV3TableCompanion(
+            id: id,
+            name: name,
+            categoryId: categoryId,
+            sortingOrder: sortingOrder,
+            notes: notes,
+            score: score,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String name,
+            required int categoryId,
+            required int sortingOrder,
+            required String notes,
+            required int score,
+          }) =>
+              TagBankV3TableCompanion.insert(
+            id: id,
+            name: name,
+            categoryId: categoryId,
+            sortingOrder: sortingOrder,
+            notes: notes,
+            score: score,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TagBankV3TableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: (
+              {tagBankV3TagCategoryRelationsTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (tagBankV3TagCategoryRelationsTableRefs)
+                  db.tagBankV3TagCategoryRelationsTable
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (tagBankV3TagCategoryRelationsTableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$TagBankV3TableTableReferences
+                            ._tagBankV3TagCategoryRelationsTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TagBankV3TableTableReferences(db, table, p0)
+                                .tagBankV3TagCategoryRelationsTableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.tagId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TagBankV3TableTableProcessedTableManager = ProcessedTableManager<
+    _$DaKanjiDB,
+    $TagBankV3TableTable,
+    TagBankV3TableData,
+    $$TagBankV3TableTableFilterComposer,
+    $$TagBankV3TableTableOrderingComposer,
+    $$TagBankV3TableTableAnnotationComposer,
+    $$TagBankV3TableTableCreateCompanionBuilder,
+    $$TagBankV3TableTableUpdateCompanionBuilder,
+    (TagBankV3TableData, $$TagBankV3TableTableReferences),
+    TagBankV3TableData,
+    PrefetchHooks Function({bool tagBankV3TagCategoryRelationsTableRefs})>;
+typedef $$TagBankV3CategoryTableTableCreateCompanionBuilder
+    = TagBankV3CategoryTableCompanion Function({
+  Value<int> id,
+  required String category,
+});
+typedef $$TagBankV3CategoryTableTableUpdateCompanionBuilder
+    = TagBankV3CategoryTableCompanion Function({
+  Value<int> id,
+  Value<String> category,
+});
+
+final class $$TagBankV3CategoryTableTableReferences extends BaseReferences<
+    _$DaKanjiDB, $TagBankV3CategoryTableTable, TagBankV3CategoryTableData> {
+  $$TagBankV3CategoryTableTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$TagBankV3TagCategoryRelationsTableTable,
+          List<TagBankV3TagCategoryRelationsTableData>>
+      _tagBankV3TagCategoryRelationsTableRefsTable(_$DaKanjiDB db) =>
+          MultiTypedResultKey.fromTable(db.tagBankV3TagCategoryRelationsTable,
+              aliasName: $_aliasNameGenerator(db.tagBankV3CategoryTable.id,
+                  db.tagBankV3TagCategoryRelationsTable.categoryId));
+
+  $$TagBankV3TagCategoryRelationsTableTableProcessedTableManager
+      get tagBankV3TagCategoryRelationsTableRefs {
+    final manager = $$TagBankV3TagCategoryRelationsTableTableTableManager(
+            $_db, $_db.tagBankV3TagCategoryRelationsTable)
+        .filter((f) => f.categoryId.id($_item.id));
+
+    final cache = $_typedResult
+        .readTableOrNull(_tagBankV3TagCategoryRelationsTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$TagBankV3CategoryTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TagBankV3CategoryTableTable> {
+  $$TagBankV3CategoryTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get category => $composableBuilder(
+      column: $table.category, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> tagBankV3TagCategoryRelationsTableRefs(
+      Expression<bool> Function(
+              $$TagBankV3TagCategoryRelationsTableTableFilterComposer f)
+          f) {
+    final $$TagBankV3TagCategoryRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.tagBankV3TagCategoryRelationsTable,
+            getReferencedColumn: (t) => t.categoryId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TagBankV3TagCategoryRelationsTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.tagBankV3TagCategoryRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$TagBankV3CategoryTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TagBankV3CategoryTableTable> {
+  $$TagBankV3CategoryTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get category => $composableBuilder(
+      column: $table.category, builder: (column) => ColumnOrderings(column));
+}
+
+class $$TagBankV3CategoryTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TagBankV3CategoryTableTable> {
+  $$TagBankV3CategoryTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  Expression<T> tagBankV3TagCategoryRelationsTableRefs<T extends Object>(
+      Expression<T> Function(
+              $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer a)
+          f) {
+    final $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.tagBankV3TagCategoryRelationsTable,
+            getReferencedColumn: (t) => t.categoryId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.tagBankV3TagCategoryRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$TagBankV3CategoryTableTableTableManager extends RootTableManager<
+    _$DaKanjiDB,
+    $TagBankV3CategoryTableTable,
+    TagBankV3CategoryTableData,
+    $$TagBankV3CategoryTableTableFilterComposer,
+    $$TagBankV3CategoryTableTableOrderingComposer,
+    $$TagBankV3CategoryTableTableAnnotationComposer,
+    $$TagBankV3CategoryTableTableCreateCompanionBuilder,
+    $$TagBankV3CategoryTableTableUpdateCompanionBuilder,
+    (TagBankV3CategoryTableData, $$TagBankV3CategoryTableTableReferences),
+    TagBankV3CategoryTableData,
+    PrefetchHooks Function({bool tagBankV3TagCategoryRelationsTableRefs})> {
+  $$TagBankV3CategoryTableTableTableManager(
+      _$DaKanjiDB db, $TagBankV3CategoryTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TagBankV3CategoryTableTableFilterComposer(
+                  $db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TagBankV3CategoryTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TagBankV3CategoryTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> category = const Value.absent(),
+          }) =>
+              TagBankV3CategoryTableCompanion(
+            id: id,
+            category: category,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String category,
+          }) =>
+              TagBankV3CategoryTableCompanion.insert(
+            id: id,
+            category: category,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TagBankV3CategoryTableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: (
+              {tagBankV3TagCategoryRelationsTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (tagBankV3TagCategoryRelationsTableRefs)
+                  db.tagBankV3TagCategoryRelationsTable
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (tagBankV3TagCategoryRelationsTableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$TagBankV3CategoryTableTableReferences
+                            ._tagBankV3TagCategoryRelationsTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TagBankV3CategoryTableTableReferences(
+                                    db, table, p0)
+                                .tagBankV3TagCategoryRelationsTableRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.categoryId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TagBankV3CategoryTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$DaKanjiDB,
+        $TagBankV3CategoryTableTable,
+        TagBankV3CategoryTableData,
+        $$TagBankV3CategoryTableTableFilterComposer,
+        $$TagBankV3CategoryTableTableOrderingComposer,
+        $$TagBankV3CategoryTableTableAnnotationComposer,
+        $$TagBankV3CategoryTableTableCreateCompanionBuilder,
+        $$TagBankV3CategoryTableTableUpdateCompanionBuilder,
+        (TagBankV3CategoryTableData, $$TagBankV3CategoryTableTableReferences),
+        TagBankV3CategoryTableData,
+        PrefetchHooks Function({bool tagBankV3TagCategoryRelationsTableRefs})>;
+typedef $$TagBankV3TagCategoryRelationsTableTableCreateCompanionBuilder
+    = TagBankV3TagCategoryRelationsTableCompanion Function({
+  Value<int> id,
+  required int tagId,
+  required int categoryId,
+});
+typedef $$TagBankV3TagCategoryRelationsTableTableUpdateCompanionBuilder
+    = TagBankV3TagCategoryRelationsTableCompanion Function({
+  Value<int> id,
+  Value<int> tagId,
+  Value<int> categoryId,
+});
+
+final class $$TagBankV3TagCategoryRelationsTableTableReferences
+    extends BaseReferences<
+        _$DaKanjiDB,
+        $TagBankV3TagCategoryRelationsTableTable,
+        TagBankV3TagCategoryRelationsTableData> {
+  $$TagBankV3TagCategoryRelationsTableTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $TagBankV3TableTable _tagIdTable(_$DaKanjiDB db) =>
+      db.tagBankV3Table.createAlias($_aliasNameGenerator(
+          db.tagBankV3TagCategoryRelationsTable.tagId, db.tagBankV3Table.id));
+
+  $$TagBankV3TableTableProcessedTableManager? get tagId {
+    if ($_item.tagId == null) return null;
+    final manager = $$TagBankV3TableTableTableManager($_db, $_db.tagBankV3Table)
+        .filter((f) => f.id($_item.tagId!));
+    final item = $_typedResult.readTableOrNull(_tagIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $TagBankV3CategoryTableTable _categoryIdTable(_$DaKanjiDB db) =>
+      db.tagBankV3CategoryTable.createAlias($_aliasNameGenerator(
+          db.tagBankV3TagCategoryRelationsTable.categoryId,
+          db.tagBankV3CategoryTable.id));
+
+  $$TagBankV3CategoryTableTableProcessedTableManager? get categoryId {
+    if ($_item.categoryId == null) return null;
+    final manager = $$TagBankV3CategoryTableTableTableManager(
+            $_db, $_db.tagBankV3CategoryTable)
+        .filter((f) => f.id($_item.categoryId!));
+    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
+class $$TagBankV3TagCategoryRelationsTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TagBankV3TagCategoryRelationsTableTable> {
+  $$TagBankV3TagCategoryRelationsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  $$TagBankV3TableTableFilterComposer get tagId {
+    final $$TagBankV3TableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.tagId,
+        referencedTable: $db.tagBankV3Table,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TagBankV3TableTableFilterComposer(
+              $db: $db,
+              $table: $db.tagBankV3Table,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TagBankV3CategoryTableTableFilterComposer get categoryId {
+    final $$TagBankV3CategoryTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.categoryId,
+            referencedTable: $db.tagBankV3CategoryTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TagBankV3CategoryTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.tagBankV3CategoryTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+}
+
+class $$TagBankV3TagCategoryRelationsTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TagBankV3TagCategoryRelationsTableTable> {
+  $$TagBankV3TagCategoryRelationsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  $$TagBankV3TableTableOrderingComposer get tagId {
+    final $$TagBankV3TableTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.tagId,
+        referencedTable: $db.tagBankV3Table,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TagBankV3TableTableOrderingComposer(
+              $db: $db,
+              $table: $db.tagBankV3Table,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TagBankV3CategoryTableTableOrderingComposer get categoryId {
+    final $$TagBankV3CategoryTableTableOrderingComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.categoryId,
+            referencedTable: $db.tagBankV3CategoryTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TagBankV3CategoryTableTableOrderingComposer(
+                  $db: $db,
+                  $table: $db.tagBankV3CategoryTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+}
+
+class $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TagBankV3TagCategoryRelationsTableTable> {
+  $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$TagBankV3TableTableAnnotationComposer get tagId {
+    final $$TagBankV3TableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.tagId,
+        referencedTable: $db.tagBankV3Table,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TagBankV3TableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.tagBankV3Table,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TagBankV3CategoryTableTableAnnotationComposer get categoryId {
+    final $$TagBankV3CategoryTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.categoryId,
+            referencedTable: $db.tagBankV3CategoryTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TagBankV3CategoryTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.tagBankV3CategoryTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+}
+
+class $$TagBankV3TagCategoryRelationsTableTableTableManager
+    extends RootTableManager<
+        _$DaKanjiDB,
+        $TagBankV3TagCategoryRelationsTableTable,
+        TagBankV3TagCategoryRelationsTableData,
+        $$TagBankV3TagCategoryRelationsTableTableFilterComposer,
+        $$TagBankV3TagCategoryRelationsTableTableOrderingComposer,
+        $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer,
+        $$TagBankV3TagCategoryRelationsTableTableCreateCompanionBuilder,
+        $$TagBankV3TagCategoryRelationsTableTableUpdateCompanionBuilder,
+        (
+          TagBankV3TagCategoryRelationsTableData,
+          $$TagBankV3TagCategoryRelationsTableTableReferences
+        ),
+        TagBankV3TagCategoryRelationsTableData,
+        PrefetchHooks Function({bool tagId, bool categoryId})> {
+  $$TagBankV3TagCategoryRelationsTableTableTableManager(
+      _$DaKanjiDB db, $TagBankV3TagCategoryRelationsTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TagBankV3TagCategoryRelationsTableTableFilterComposer(
+                  $db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TagBankV3TagCategoryRelationsTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> tagId = const Value.absent(),
+            Value<int> categoryId = const Value.absent(),
+          }) =>
+              TagBankV3TagCategoryRelationsTableCompanion(
+            id: id,
+            tagId: tagId,
+            categoryId: categoryId,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int tagId,
+            required int categoryId,
+          }) =>
+              TagBankV3TagCategoryRelationsTableCompanion.insert(
+            id: id,
+            tagId: tagId,
+            categoryId: categoryId,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TagBankV3TagCategoryRelationsTableTableReferences(
+                        db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({tagId = false, categoryId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (tagId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.tagId,
+                    referencedTable:
+                        $$TagBankV3TagCategoryRelationsTableTableReferences
+                            ._tagIdTable(db),
+                    referencedColumn:
+                        $$TagBankV3TagCategoryRelationsTableTableReferences
+                            ._tagIdTable(db)
+                            .id,
+                  ) as T;
+                }
+                if (categoryId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.categoryId,
+                    referencedTable:
+                        $$TagBankV3TagCategoryRelationsTableTableReferences
+                            ._categoryIdTable(db),
+                    referencedColumn:
+                        $$TagBankV3TagCategoryRelationsTableTableReferences
+                            ._categoryIdTable(db)
+                            .id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TagBankV3TagCategoryRelationsTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$DaKanjiDB,
+        $TagBankV3TagCategoryRelationsTableTable,
+        TagBankV3TagCategoryRelationsTableData,
+        $$TagBankV3TagCategoryRelationsTableTableFilterComposer,
+        $$TagBankV3TagCategoryRelationsTableTableOrderingComposer,
+        $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer,
+        $$TagBankV3TagCategoryRelationsTableTableCreateCompanionBuilder,
+        $$TagBankV3TagCategoryRelationsTableTableUpdateCompanionBuilder,
+        (
+          TagBankV3TagCategoryRelationsTableData,
+          $$TagBankV3TagCategoryRelationsTableTableReferences
+        ),
+        TagBankV3TagCategoryRelationsTableData,
+        PrefetchHooks Function({bool tagId, bool categoryId})>;
 typedef $$KanjiBankV3TableTableCreateCompanionBuilder
     = KanjiBankV3TableCompanion Function({
   Value<int> id,
@@ -9199,6 +10854,15 @@ class $DaKanjiDBManager {
   $DaKanjiDBManager(this._db);
   $$IndexTableTableTableManager get indexTable =>
       $$IndexTableTableTableManager(_db, _db.indexTable);
+  $$TagBankV3TableTableTableManager get tagBankV3Table =>
+      $$TagBankV3TableTableTableManager(_db, _db.tagBankV3Table);
+  $$TagBankV3CategoryTableTableTableManager get tagBankV3CategoryTable =>
+      $$TagBankV3CategoryTableTableTableManager(
+          _db, _db.tagBankV3CategoryTable);
+  $$TagBankV3TagCategoryRelationsTableTableTableManager
+      get tagBankV3TagCategoryRelationsTable =>
+          $$TagBankV3TagCategoryRelationsTableTableTableManager(
+              _db, _db.tagBankV3TagCategoryRelationsTable);
   $$KanjiBankV3TableTableTableManager get kanjiBankV3Table =>
       $$KanjiBankV3TableTableTableManager(_db, _db.kanjiBankV3Table);
   $$KanjiBankV3OnyomisTableTableTableManager get kanjiBankV3OnyomisTable =>
