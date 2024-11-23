@@ -48,20 +48,6 @@ class KanjiBankV3KunyomisTable extends Table {
 
 }
 
-/// Contains all tags and each entry links to a `KanjiBankV3Table` elements
-class KanjiBankV3TagsTable extends Table {
-
-  /// id of this meaning
-  IntColumn get id => integer().autoIncrement()();
-
-  /// The id of the dictionary this entry belongs to
-  IntColumn get dictId => integer().references(IndexTable, #id)();
-
-  /// The kunyomi reading of this entry
-  TextColumn get tag => text()();
-
-}
-
 /// Contains all kanji meaning elements and each entry links to
 /// `KanjiBankV3Table` elements
 class KanjiBankV3MeaningsTable extends Table {

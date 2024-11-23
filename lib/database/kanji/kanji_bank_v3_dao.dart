@@ -15,7 +15,7 @@ part 'kanji_bank_v3_dao.g.dart';
     KanjiBankV3Table,
     KanjiBankV3OnyomisTable, KanjiBankV3OnyomiKanjiRelationsTable,
     KanjiBankV3KunyomisTable, KanjiBankV3KunyomiKanjiRelationsTable,
-    KanjiBankV3TagsTable, KanjiBankV3TagsKanjiRelationsTable,
+    KanjiBankV3TagsKanjiRelationsTable,
     KanjiBankV3MeaningsTable, KanjiBankV3MeaningsKanjiRelationsTable,
     KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable, 
@@ -53,17 +53,6 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
     final result = await db.managers.kanjiBankV3KunyomisTable
       .filter((f) => f.kunyomi(kunyomi))
-      .getSingleOrNull();
-
-    return result?.id;
-
-  }
-
-  /// Checks if the given `tag` is already present in the database
-  Future<int?> getTagId(String tag) async {
-
-    final result = await db.managers.kanjiBankV3TagsTable
-      .filter((f) => f.tag(tag))
       .getSingleOrNull();
 
     return result?.id;
@@ -133,16 +122,6 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
     // Extract the value of the max column using the alias
     return result.read(kanjiBankV3KunyomisTable.id.max()) ?? 0;
-  }
-
-    /// Get the maximum id of the tag table
-  Future<int> maxTagId() async {
-    final query = selectOnly(kanjiBankV3TagsTable)
-        ..addColumns([kanjiBankV3TagsTable.id.max()]);
-    final result = await query.getSingle();
-
-    // Extract the value of the max column using the alias
-    return result.read(kanjiBankV3TagsTable.id.max()) ?? 0;
   }
 
   /// Get the maximum id of the meanings table

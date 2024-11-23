@@ -17,8 +17,7 @@ mixin _$KanjiBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $KanjiBankV3KunyomiKanjiRelationsTableTable
       get kanjiBankV3KunyomiKanjiRelationsTable =>
           attachedDatabase.kanjiBankV3KunyomiKanjiRelationsTable;
-  $KanjiBankV3TagsTableTable get kanjiBankV3TagsTable =>
-      attachedDatabase.kanjiBankV3TagsTable;
+  $TagBankV3TableTable get tagBankV3Table => attachedDatabase.tagBankV3Table;
   $KanjiBankV3TagsKanjiRelationsTableTable
       get kanjiBankV3TagsKanjiRelationsTable =>
           attachedDatabase.kanjiBankV3TagsKanjiRelationsTable;

@@ -11,8 +11,6 @@ class TagBankV3Table extends Table {
 
   /// Tag name.
   TextColumn get name => text().withLength(min: 1)();
-  /// Category for the tag.
-  IntColumn get categoryId => integer()();
   /// Sorting order for the tag.
   IntColumn get sortingOrder => integer()();
   /// Notes for the tag.

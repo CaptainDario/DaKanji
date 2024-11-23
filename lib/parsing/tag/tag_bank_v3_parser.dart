@@ -44,7 +44,6 @@ Future parseTagBankv3(File indexJsonPath, DaKanjiDB db) async {
     tagComps.add(TagBankV3TableCompanion(
       id: Value(++maxTagId),
       name: Value(tag[0]),
-      categoryId: Value(categoryInsertId),
       sortingOrder: Value(tag[2]),
       notes: Value(tag[3]),
       score: Value(tag[4])

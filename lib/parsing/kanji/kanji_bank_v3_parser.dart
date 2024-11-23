@@ -37,8 +37,6 @@ class KanjiBankV3ParserRefs {
   ///
   Map<String, int> seenKunyomis = {};
 
-  ///
-  List<KanjiBankV3TagsTableCompanion> tagCompanions  = [];
   /// 
   int tagId = 0;
   ///
@@ -116,8 +114,6 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db, int dictId) asyn
     batch.insertAll(db.kanjiBankV3KunyomiKanjiRelationsTable, refs.kunyomiRelCompanions,
       mode: InsertMode.insertOrIgnore);
 
-    batch.insertAll(db.kanjiBankV3TagsTable, refs.tagCompanions,
-      mode: InsertMode.insertOrIgnore);
     batch.insertAll(db.kanjiBankV3TagsKanjiRelationsTable, refs.tagRelCompanions,
       mode: InsertMode.insertOrIgnore);
 
@@ -219,12 +215,6 @@ Future<void> parseTag(String jsonTag, KanjiBankV3ParserRefs refs, DaKanjiDB db) 
       
       int tagInsertId = (await db.tagBankV3Dao.getTagId(tag))!;
 
-      refs.tagCompanions.add(KanjiBankV3TagsTableCompanion(
-        id: Value(tagInsertId),
-        dictId: Value(refs.dictId),
-        //kanjiBankV3ID: Value(refs.kanjiInsertId),
-        tag: Value(tag)
-      ));
       refs.tagRelCompanions.add(KanjiBankV3TagsKanjiRelationsTableCompanion(
         kanjiId: Value(refs.kanjiInsertId),
         tagId: Value(tagInsertId)
