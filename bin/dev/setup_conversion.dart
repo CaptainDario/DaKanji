@@ -18,7 +18,7 @@ Tuple2<Directory, DaKanjiDB> setupConversion(ConversionTarget c) {
   String dictPath = "";
   switch (c) {
     case ConversionTarget.sample:
-      p.joinAll([Directory.current.path, "samples"]);
+      dictPath = p.joinAll([Directory.current.path, "samples"]);
       break;
     case ConversionTarget.stressKanji:
       dictPath = p.joinAll([Directory.current.path, "stresstest", "KANJIDIC_english"]);
