@@ -93,7 +93,7 @@ Additionally, some other databases are included in DaKanji
   * Meaning: Stores kanji frequency data.
   * File name pattern: `kanji_meta-bank_${number}.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-kanji-meta-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js)
-* [dictionary-tag-bank-v3-schema.json](yomitan_schema/dictionary-tag-bank-v3-schema.json) - ❌
+* [dictionary-tag-bank-v3-schema.json](yomitan_schema/dictionary-tag-bank-v3-schema.json) - ✅
   * Meaning: Defines tags for kanji and term dictionaries, like parts of speech or kanken level.
   * File name pattern: `tag_bank_${number}.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-tag-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js)
