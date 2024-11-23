@@ -12,6 +12,7 @@ class KanjiBankV3ParserRefs {
   /// The SQLite id of the dictionary that is currently being parsed
   int dictId = 0;
 
+  // TODO - add documentation
   ///
   List<KanjiBankV3TableCompanion> kanjiCompanions = [];
   /// 
