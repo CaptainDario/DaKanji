@@ -52,7 +52,7 @@ class DaKanjiDB extends _$DaKanjiDB {
         // causes "database locked" errors.
         // With write-ahead logging (WAL) enabled, a single writer and multiple
         // readers can operate on the database in parallel.
-        database.execute('pragma journal_mode = MEMORY;');
+        database.execute('pragma journal_mode = WAL;');
       },
       readPool: 6
     );
