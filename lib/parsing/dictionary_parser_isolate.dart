@@ -2,9 +2,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:dakanji_db/database/dakanji_db.dart';
-import 'package:dakanji_db/parsing/dictionary_parser.dart';
 import 'package:drift/isolate.dart';
-import 'package:tuple/tuple.dart';
 
 /// Worker isolate that processes a file and sends a message when done
 void isolateWorker(SendPort mainSendPort) {
