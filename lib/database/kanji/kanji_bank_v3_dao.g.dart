@@ -4,9 +4,9 @@ part of 'kanji_bank_v3_dao.dart';
 
 // ignore_for_file: type=lint
 mixin _$KanjiBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
+  $IndexTableTable get indexTable => attachedDatabase.indexTable;
   $KanjiBankV3TableTable get kanjiBankV3Table =>
       attachedDatabase.kanjiBankV3Table;
-  $IndexTableTable get indexTable => attachedDatabase.indexTable;
   $KanjiBankV3OnyomisTableTable get kanjiBankV3OnyomisTable =>
       attachedDatabase.kanjiBankV3OnyomisTable;
   $KanjiBankV3OnyomiKanjiRelationsTableTable

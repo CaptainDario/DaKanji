@@ -27,10 +27,10 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   KanjiBankV3Dao(super.db);
 
   /// Checks if the given `kanji` is already present in the database
-  Future<int?> getKanjiId(String kanji) async {
+  Future<int?> getKanjiId(String kanji, int dictId) async {
 
     final result = await db.managers.kanjiBankV3Table
-      .filter((f) => f.kanji(kanji))
+      .filter((f) => f.kanji(kanji) & f.dictId.id(dictId))
       .getSingleOrNull();
 
     return result?.id;

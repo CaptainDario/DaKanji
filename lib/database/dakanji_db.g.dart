@@ -1582,8 +1582,16 @@ class $KanjiBankV3TableTable extends KanjiBankV3Table
           ),
           type: DriftSqlType.string,
           requiredDuringInsert: true);
+  static const VerificationMeta _dictIdMeta = const VerificationMeta('dictId');
   @override
-  List<GeneratedColumn> get $columns => [id, kanji];
+  late final GeneratedColumn<int> dictId = GeneratedColumn<int>(
+      'dict_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES index_table (id)'));
+  @override
+  List<GeneratedColumn> get $columns => [id, kanji, dictId];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1604,6 +1612,12 @@ class $KanjiBankV3TableTable extends KanjiBankV3Table
     } else if (isInserting) {
       context.missing(_kanjiMeta);
     }
+    if (data.containsKey('dict_id')) {
+      context.handle(_dictIdMeta,
+          dictId.isAcceptableOrUnknown(data['dict_id']!, _dictIdMeta));
+    } else if (isInserting) {
+      context.missing(_dictIdMeta);
+    }
     return context;
   }
 
@@ -1617,6 +1631,8 @@ class $KanjiBankV3TableTable extends KanjiBankV3Table
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       kanji: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}kanji'])!,
+      dictId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}dict_id'])!,
     );
   }
 
@@ -1634,12 +1650,17 @@ class KanjiBankV3TableData extends DataClass
   /// the kanji character of this entry
   /// this column is indexed
   final String kanji;
-  const KanjiBankV3TableData({required this.id, required this.kanji});
+
+  /// The id of the dictionary this entry belongs to
+  final int dictId;
+  const KanjiBankV3TableData(
+      {required this.id, required this.kanji, required this.dictId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['kanji'] = Variable<String>(kanji);
+    map['dict_id'] = Variable<int>(dictId);
     return map;
   }
 
@@ -1647,6 +1668,7 @@ class KanjiBankV3TableData extends DataClass
     return KanjiBankV3TableCompanion(
       id: Value(id),
       kanji: Value(kanji),
+      dictId: Value(dictId),
     );
   }
 
@@ -1656,6 +1678,7 @@ class KanjiBankV3TableData extends DataClass
     return KanjiBankV3TableData(
       id: serializer.fromJson<int>(json['id']),
       kanji: serializer.fromJson<String>(json['kanji']),
+      dictId: serializer.fromJson<int>(json['dictId']),
     );
   }
   @override
@@ -1664,18 +1687,21 @@ class KanjiBankV3TableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'kanji': serializer.toJson<String>(kanji),
+      'dictId': serializer.toJson<int>(dictId),
     };
   }
 
-  KanjiBankV3TableData copyWith({int? id, String? kanji}) =>
+  KanjiBankV3TableData copyWith({int? id, String? kanji, int? dictId}) =>
       KanjiBankV3TableData(
         id: id ?? this.id,
         kanji: kanji ?? this.kanji,
+        dictId: dictId ?? this.dictId,
       );
   KanjiBankV3TableData copyWithCompanion(KanjiBankV3TableCompanion data) {
     return KanjiBankV3TableData(
       id: data.id.present ? data.id.value : this.id,
       kanji: data.kanji.present ? data.kanji.value : this.kanji,
+      dictId: data.dictId.present ? data.dictId.value : this.dictId,
     );
   }
 
@@ -1683,46 +1709,56 @@ class KanjiBankV3TableData extends DataClass
   String toString() {
     return (StringBuffer('KanjiBankV3TableData(')
           ..write('id: $id, ')
-          ..write('kanji: $kanji')
+          ..write('kanji: $kanji, ')
+          ..write('dictId: $dictId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, kanji);
+  int get hashCode => Object.hash(id, kanji, dictId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiBankV3TableData &&
           other.id == this.id &&
-          other.kanji == this.kanji);
+          other.kanji == this.kanji &&
+          other.dictId == this.dictId);
 }
 
 class KanjiBankV3TableCompanion extends UpdateCompanion<KanjiBankV3TableData> {
   final Value<int> id;
   final Value<String> kanji;
+  final Value<int> dictId;
   const KanjiBankV3TableCompanion({
     this.id = const Value.absent(),
     this.kanji = const Value.absent(),
+    this.dictId = const Value.absent(),
   });
   KanjiBankV3TableCompanion.insert({
     this.id = const Value.absent(),
     required String kanji,
-  }) : kanji = Value(kanji);
+    required int dictId,
+  })  : kanji = Value(kanji),
+        dictId = Value(dictId);
   static Insertable<KanjiBankV3TableData> custom({
     Expression<int>? id,
     Expression<String>? kanji,
+    Expression<int>? dictId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (kanji != null) 'kanji': kanji,
+      if (dictId != null) 'dict_id': dictId,
     });
   }
 
-  KanjiBankV3TableCompanion copyWith({Value<int>? id, Value<String>? kanji}) {
+  KanjiBankV3TableCompanion copyWith(
+      {Value<int>? id, Value<String>? kanji, Value<int>? dictId}) {
     return KanjiBankV3TableCompanion(
       id: id ?? this.id,
       kanji: kanji ?? this.kanji,
+      dictId: dictId ?? this.dictId,
     );
   }
 
@@ -1735,6 +1771,9 @@ class KanjiBankV3TableCompanion extends UpdateCompanion<KanjiBankV3TableData> {
     if (kanji.present) {
       map['kanji'] = Variable<String>(kanji.value);
     }
+    if (dictId.present) {
+      map['dict_id'] = Variable<int>(dictId.value);
+    }
     return map;
   }
 
@@ -1742,7 +1781,8 @@ class KanjiBankV3TableCompanion extends UpdateCompanion<KanjiBankV3TableData> {
   String toString() {
     return (StringBuffer('KanjiBankV3TableCompanion(')
           ..write('id: $id, ')
-          ..write('kanji: $kanji')
+          ..write('kanji: $kanji, ')
+          ..write('dictId: $dictId')
           ..write(')'))
         .toString();
   }
@@ -1763,14 +1803,6 @@ class $KanjiBankV3OnyomisTableTable extends KanjiBankV3OnyomisTable
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _dictIdMeta = const VerificationMeta('dictId');
-  @override
-  late final GeneratedColumn<int> dictId = GeneratedColumn<int>(
-      'dict_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES index_table (id)'));
   static const VerificationMeta _onyomiMeta = const VerificationMeta('onyomi');
   @override
   late final GeneratedColumn<String> onyomi = GeneratedColumn<String>(
@@ -1779,7 +1811,7 @@ class $KanjiBankV3OnyomisTableTable extends KanjiBankV3OnyomisTable
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
   @override
-  List<GeneratedColumn> get $columns => [id, dictId, onyomi];
+  List<GeneratedColumn> get $columns => [id, onyomi];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1793,12 +1825,6 @@ class $KanjiBankV3OnyomisTableTable extends KanjiBankV3OnyomisTable
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('dict_id')) {
-      context.handle(_dictIdMeta,
-          dictId.isAcceptableOrUnknown(data['dict_id']!, _dictIdMeta));
-    } else if (isInserting) {
-      context.missing(_dictIdMeta);
     }
     if (data.containsKey('onyomi')) {
       context.handle(_onyomiMeta,
@@ -1818,8 +1844,6 @@ class $KanjiBankV3OnyomisTableTable extends KanjiBankV3OnyomisTable
     return KanjiBankV3OnyomisTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      dictId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}dict_id'])!,
       onyomi: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}onyomi'])!,
     );
@@ -1836,18 +1860,13 @@ class KanjiBankV3OnyomisTableData extends DataClass
   /// id of this meaning
   final int id;
 
-  /// The id of the dictionary this entry belongs to
-  final int dictId;
-
   /// The onyomi reading of this entry
   final String onyomi;
-  const KanjiBankV3OnyomisTableData(
-      {required this.id, required this.dictId, required this.onyomi});
+  const KanjiBankV3OnyomisTableData({required this.id, required this.onyomi});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['dict_id'] = Variable<int>(dictId);
     map['onyomi'] = Variable<String>(onyomi);
     return map;
   }
@@ -1855,7 +1874,6 @@ class KanjiBankV3OnyomisTableData extends DataClass
   KanjiBankV3OnyomisTableCompanion toCompanion(bool nullToAbsent) {
     return KanjiBankV3OnyomisTableCompanion(
       id: Value(id),
-      dictId: Value(dictId),
       onyomi: Value(onyomi),
     );
   }
@@ -1865,7 +1883,6 @@ class KanjiBankV3OnyomisTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return KanjiBankV3OnyomisTableData(
       id: serializer.fromJson<int>(json['id']),
-      dictId: serializer.fromJson<int>(json['dictId']),
       onyomi: serializer.fromJson<String>(json['onyomi']),
     );
   }
@@ -1874,23 +1891,19 @@ class KanjiBankV3OnyomisTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'dictId': serializer.toJson<int>(dictId),
       'onyomi': serializer.toJson<String>(onyomi),
     };
   }
 
-  KanjiBankV3OnyomisTableData copyWith(
-          {int? id, int? dictId, String? onyomi}) =>
+  KanjiBankV3OnyomisTableData copyWith({int? id, String? onyomi}) =>
       KanjiBankV3OnyomisTableData(
         id: id ?? this.id,
-        dictId: dictId ?? this.dictId,
         onyomi: onyomi ?? this.onyomi,
       );
   KanjiBankV3OnyomisTableData copyWithCompanion(
       KanjiBankV3OnyomisTableCompanion data) {
     return KanjiBankV3OnyomisTableData(
       id: data.id.present ? data.id.value : this.id,
-      dictId: data.dictId.present ? data.dictId.value : this.dictId,
       onyomi: data.onyomi.present ? data.onyomi.value : this.onyomi,
     );
   }
@@ -1899,56 +1912,47 @@ class KanjiBankV3OnyomisTableData extends DataClass
   String toString() {
     return (StringBuffer('KanjiBankV3OnyomisTableData(')
           ..write('id: $id, ')
-          ..write('dictId: $dictId, ')
           ..write('onyomi: $onyomi')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, dictId, onyomi);
+  int get hashCode => Object.hash(id, onyomi);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiBankV3OnyomisTableData &&
           other.id == this.id &&
-          other.dictId == this.dictId &&
           other.onyomi == this.onyomi);
 }
 
 class KanjiBankV3OnyomisTableCompanion
     extends UpdateCompanion<KanjiBankV3OnyomisTableData> {
   final Value<int> id;
-  final Value<int> dictId;
   final Value<String> onyomi;
   const KanjiBankV3OnyomisTableCompanion({
     this.id = const Value.absent(),
-    this.dictId = const Value.absent(),
     this.onyomi = const Value.absent(),
   });
   KanjiBankV3OnyomisTableCompanion.insert({
     this.id = const Value.absent(),
-    required int dictId,
     required String onyomi,
-  })  : dictId = Value(dictId),
-        onyomi = Value(onyomi);
+  }) : onyomi = Value(onyomi);
   static Insertable<KanjiBankV3OnyomisTableData> custom({
     Expression<int>? id,
-    Expression<int>? dictId,
     Expression<String>? onyomi,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (dictId != null) 'dict_id': dictId,
       if (onyomi != null) 'onyomi': onyomi,
     });
   }
 
   KanjiBankV3OnyomisTableCompanion copyWith(
-      {Value<int>? id, Value<int>? dictId, Value<String>? onyomi}) {
+      {Value<int>? id, Value<String>? onyomi}) {
     return KanjiBankV3OnyomisTableCompanion(
       id: id ?? this.id,
-      dictId: dictId ?? this.dictId,
       onyomi: onyomi ?? this.onyomi,
     );
   }
@@ -1958,9 +1962,6 @@ class KanjiBankV3OnyomisTableCompanion
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
-    }
-    if (dictId.present) {
-      map['dict_id'] = Variable<int>(dictId.value);
     }
     if (onyomi.present) {
       map['onyomi'] = Variable<String>(onyomi.value);
@@ -1972,7 +1973,6 @@ class KanjiBankV3OnyomisTableCompanion
   String toString() {
     return (StringBuffer('KanjiBankV3OnyomisTableCompanion(')
           ..write('id: $id, ')
-          ..write('dictId: $dictId, ')
           ..write('onyomi: $onyomi')
           ..write(')'))
         .toString();
@@ -2235,14 +2235,6 @@ class $KanjiBankV3KunyomisTableTable extends KanjiBankV3KunyomisTable
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _dictIdMeta = const VerificationMeta('dictId');
-  @override
-  late final GeneratedColumn<int> dictId = GeneratedColumn<int>(
-      'dict_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES index_table (id)'));
   static const VerificationMeta _kunyomiMeta =
       const VerificationMeta('kunyomi');
   @override
@@ -2250,7 +2242,7 @@ class $KanjiBankV3KunyomisTableTable extends KanjiBankV3KunyomisTable
       'kunyomi', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, dictId, kunyomi];
+  List<GeneratedColumn> get $columns => [id, kunyomi];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2264,12 +2256,6 @@ class $KanjiBankV3KunyomisTableTable extends KanjiBankV3KunyomisTable
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('dict_id')) {
-      context.handle(_dictIdMeta,
-          dictId.isAcceptableOrUnknown(data['dict_id']!, _dictIdMeta));
-    } else if (isInserting) {
-      context.missing(_dictIdMeta);
     }
     if (data.containsKey('kunyomi')) {
       context.handle(_kunyomiMeta,
@@ -2289,8 +2275,6 @@ class $KanjiBankV3KunyomisTableTable extends KanjiBankV3KunyomisTable
     return KanjiBankV3KunyomisTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      dictId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}dict_id'])!,
       kunyomi: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}kunyomi'])!,
     );
@@ -2307,18 +2291,13 @@ class KanjiBankV3KunyomisTableData extends DataClass
   /// id of this meaning
   final int id;
 
-  /// The id of the dictionary this entry belongs to
-  final int dictId;
-
   /// The kunyomi reading of this entry
   final String kunyomi;
-  const KanjiBankV3KunyomisTableData(
-      {required this.id, required this.dictId, required this.kunyomi});
+  const KanjiBankV3KunyomisTableData({required this.id, required this.kunyomi});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['dict_id'] = Variable<int>(dictId);
     map['kunyomi'] = Variable<String>(kunyomi);
     return map;
   }
@@ -2326,7 +2305,6 @@ class KanjiBankV3KunyomisTableData extends DataClass
   KanjiBankV3KunyomisTableCompanion toCompanion(bool nullToAbsent) {
     return KanjiBankV3KunyomisTableCompanion(
       id: Value(id),
-      dictId: Value(dictId),
       kunyomi: Value(kunyomi),
     );
   }
@@ -2336,7 +2314,6 @@ class KanjiBankV3KunyomisTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return KanjiBankV3KunyomisTableData(
       id: serializer.fromJson<int>(json['id']),
-      dictId: serializer.fromJson<int>(json['dictId']),
       kunyomi: serializer.fromJson<String>(json['kunyomi']),
     );
   }
@@ -2345,23 +2322,19 @@ class KanjiBankV3KunyomisTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'dictId': serializer.toJson<int>(dictId),
       'kunyomi': serializer.toJson<String>(kunyomi),
     };
   }
 
-  KanjiBankV3KunyomisTableData copyWith(
-          {int? id, int? dictId, String? kunyomi}) =>
+  KanjiBankV3KunyomisTableData copyWith({int? id, String? kunyomi}) =>
       KanjiBankV3KunyomisTableData(
         id: id ?? this.id,
-        dictId: dictId ?? this.dictId,
         kunyomi: kunyomi ?? this.kunyomi,
       );
   KanjiBankV3KunyomisTableData copyWithCompanion(
       KanjiBankV3KunyomisTableCompanion data) {
     return KanjiBankV3KunyomisTableData(
       id: data.id.present ? data.id.value : this.id,
-      dictId: data.dictId.present ? data.dictId.value : this.dictId,
       kunyomi: data.kunyomi.present ? data.kunyomi.value : this.kunyomi,
     );
   }
@@ -2370,56 +2343,47 @@ class KanjiBankV3KunyomisTableData extends DataClass
   String toString() {
     return (StringBuffer('KanjiBankV3KunyomisTableData(')
           ..write('id: $id, ')
-          ..write('dictId: $dictId, ')
           ..write('kunyomi: $kunyomi')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, dictId, kunyomi);
+  int get hashCode => Object.hash(id, kunyomi);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiBankV3KunyomisTableData &&
           other.id == this.id &&
-          other.dictId == this.dictId &&
           other.kunyomi == this.kunyomi);
 }
 
 class KanjiBankV3KunyomisTableCompanion
     extends UpdateCompanion<KanjiBankV3KunyomisTableData> {
   final Value<int> id;
-  final Value<int> dictId;
   final Value<String> kunyomi;
   const KanjiBankV3KunyomisTableCompanion({
     this.id = const Value.absent(),
-    this.dictId = const Value.absent(),
     this.kunyomi = const Value.absent(),
   });
   KanjiBankV3KunyomisTableCompanion.insert({
     this.id = const Value.absent(),
-    required int dictId,
     required String kunyomi,
-  })  : dictId = Value(dictId),
-        kunyomi = Value(kunyomi);
+  }) : kunyomi = Value(kunyomi);
   static Insertable<KanjiBankV3KunyomisTableData> custom({
     Expression<int>? id,
-    Expression<int>? dictId,
     Expression<String>? kunyomi,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (dictId != null) 'dict_id': dictId,
       if (kunyomi != null) 'kunyomi': kunyomi,
     });
   }
 
   KanjiBankV3KunyomisTableCompanion copyWith(
-      {Value<int>? id, Value<int>? dictId, Value<String>? kunyomi}) {
+      {Value<int>? id, Value<String>? kunyomi}) {
     return KanjiBankV3KunyomisTableCompanion(
       id: id ?? this.id,
-      dictId: dictId ?? this.dictId,
       kunyomi: kunyomi ?? this.kunyomi,
     );
   }
@@ -2429,9 +2393,6 @@ class KanjiBankV3KunyomisTableCompanion
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
-    }
-    if (dictId.present) {
-      map['dict_id'] = Variable<int>(dictId.value);
     }
     if (kunyomi.present) {
       map['kunyomi'] = Variable<String>(kunyomi.value);
@@ -2443,7 +2404,6 @@ class KanjiBankV3KunyomisTableCompanion
   String toString() {
     return (StringBuffer('KanjiBankV3KunyomisTableCompanion(')
           ..write('id: $id, ')
-          ..write('dictId: $dictId, ')
           ..write('kunyomi: $kunyomi')
           ..write(')'))
         .toString();
@@ -2945,14 +2905,6 @@ class $KanjiBankV3MeaningsTableTable extends KanjiBankV3MeaningsTable
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _dictIdMeta = const VerificationMeta('dictId');
-  @override
-  late final GeneratedColumn<int> dictId = GeneratedColumn<int>(
-      'dict_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES index_table (id)'));
   static const VerificationMeta _meaningMeta =
       const VerificationMeta('meaning');
   @override
@@ -2960,7 +2912,7 @@ class $KanjiBankV3MeaningsTableTable extends KanjiBankV3MeaningsTable
       'meaning', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, dictId, meaning];
+  List<GeneratedColumn> get $columns => [id, meaning];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2974,12 +2926,6 @@ class $KanjiBankV3MeaningsTableTable extends KanjiBankV3MeaningsTable
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('dict_id')) {
-      context.handle(_dictIdMeta,
-          dictId.isAcceptableOrUnknown(data['dict_id']!, _dictIdMeta));
-    } else if (isInserting) {
-      context.missing(_dictIdMeta);
     }
     if (data.containsKey('meaning')) {
       context.handle(_meaningMeta,
@@ -2999,8 +2945,6 @@ class $KanjiBankV3MeaningsTableTable extends KanjiBankV3MeaningsTable
     return KanjiBankV3MeaningsTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      dictId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}dict_id'])!,
       meaning: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}meaning'])!,
     );
@@ -3017,18 +2961,13 @@ class KanjiBankV3MeaningsTableData extends DataClass
   /// id of this meaning
   final int id;
 
-  /// The id of the dictionary this entry belongs to
-  final int dictId;
-
   /// The meaning of this entry
   final String meaning;
-  const KanjiBankV3MeaningsTableData(
-      {required this.id, required this.dictId, required this.meaning});
+  const KanjiBankV3MeaningsTableData({required this.id, required this.meaning});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['dict_id'] = Variable<int>(dictId);
     map['meaning'] = Variable<String>(meaning);
     return map;
   }
@@ -3036,7 +2975,6 @@ class KanjiBankV3MeaningsTableData extends DataClass
   KanjiBankV3MeaningsTableCompanion toCompanion(bool nullToAbsent) {
     return KanjiBankV3MeaningsTableCompanion(
       id: Value(id),
-      dictId: Value(dictId),
       meaning: Value(meaning),
     );
   }
@@ -3046,7 +2984,6 @@ class KanjiBankV3MeaningsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return KanjiBankV3MeaningsTableData(
       id: serializer.fromJson<int>(json['id']),
-      dictId: serializer.fromJson<int>(json['dictId']),
       meaning: serializer.fromJson<String>(json['meaning']),
     );
   }
@@ -3055,23 +2992,19 @@ class KanjiBankV3MeaningsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'dictId': serializer.toJson<int>(dictId),
       'meaning': serializer.toJson<String>(meaning),
     };
   }
 
-  KanjiBankV3MeaningsTableData copyWith(
-          {int? id, int? dictId, String? meaning}) =>
+  KanjiBankV3MeaningsTableData copyWith({int? id, String? meaning}) =>
       KanjiBankV3MeaningsTableData(
         id: id ?? this.id,
-        dictId: dictId ?? this.dictId,
         meaning: meaning ?? this.meaning,
       );
   KanjiBankV3MeaningsTableData copyWithCompanion(
       KanjiBankV3MeaningsTableCompanion data) {
     return KanjiBankV3MeaningsTableData(
       id: data.id.present ? data.id.value : this.id,
-      dictId: data.dictId.present ? data.dictId.value : this.dictId,
       meaning: data.meaning.present ? data.meaning.value : this.meaning,
     );
   }
@@ -3080,56 +3013,47 @@ class KanjiBankV3MeaningsTableData extends DataClass
   String toString() {
     return (StringBuffer('KanjiBankV3MeaningsTableData(')
           ..write('id: $id, ')
-          ..write('dictId: $dictId, ')
           ..write('meaning: $meaning')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, dictId, meaning);
+  int get hashCode => Object.hash(id, meaning);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiBankV3MeaningsTableData &&
           other.id == this.id &&
-          other.dictId == this.dictId &&
           other.meaning == this.meaning);
 }
 
 class KanjiBankV3MeaningsTableCompanion
     extends UpdateCompanion<KanjiBankV3MeaningsTableData> {
   final Value<int> id;
-  final Value<int> dictId;
   final Value<String> meaning;
   const KanjiBankV3MeaningsTableCompanion({
     this.id = const Value.absent(),
-    this.dictId = const Value.absent(),
     this.meaning = const Value.absent(),
   });
   KanjiBankV3MeaningsTableCompanion.insert({
     this.id = const Value.absent(),
-    required int dictId,
     required String meaning,
-  })  : dictId = Value(dictId),
-        meaning = Value(meaning);
+  }) : meaning = Value(meaning);
   static Insertable<KanjiBankV3MeaningsTableData> custom({
     Expression<int>? id,
-    Expression<int>? dictId,
     Expression<String>? meaning,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (dictId != null) 'dict_id': dictId,
       if (meaning != null) 'meaning': meaning,
     });
   }
 
   KanjiBankV3MeaningsTableCompanion copyWith(
-      {Value<int>? id, Value<int>? dictId, Value<String>? meaning}) {
+      {Value<int>? id, Value<String>? meaning}) {
     return KanjiBankV3MeaningsTableCompanion(
       id: id ?? this.id,
-      dictId: dictId ?? this.dictId,
       meaning: meaning ?? this.meaning,
     );
   }
@@ -3139,9 +3063,6 @@ class KanjiBankV3MeaningsTableCompanion
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
-    }
-    if (dictId.present) {
-      map['dict_id'] = Variable<int>(dictId.value);
     }
     if (meaning.present) {
       map['meaning'] = Variable<String>(meaning.value);
@@ -3153,7 +3074,6 @@ class KanjiBankV3MeaningsTableCompanion
   String toString() {
     return (StringBuffer('KanjiBankV3MeaningsTableCompanion(')
           ..write('id: $id, ')
-          ..write('dictId: $dictId, ')
           ..write('meaning: $meaning')
           ..write(')'))
         .toString();
@@ -3802,14 +3722,6 @@ class $KanjiBankV3StatsTableTable extends KanjiBankV3StatsTable
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _dictIdMeta = const VerificationMeta('dictId');
-  @override
-  late final GeneratedColumn<int> dictId = GeneratedColumn<int>(
-      'dict_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES index_table (id)'));
   static const VerificationMeta _statNameIdMeta =
       const VerificationMeta('statNameId');
   @override
@@ -3829,7 +3741,7 @@ class $KanjiBankV3StatsTableTable extends KanjiBankV3StatsTable
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES kanji_bank_v3_stat_values_table (id)'));
   @override
-  List<GeneratedColumn> get $columns => [id, dictId, statNameId, statValueId];
+  List<GeneratedColumn> get $columns => [id, statNameId, statValueId];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -3843,12 +3755,6 @@ class $KanjiBankV3StatsTableTable extends KanjiBankV3StatsTable
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('dict_id')) {
-      context.handle(_dictIdMeta,
-          dictId.isAcceptableOrUnknown(data['dict_id']!, _dictIdMeta));
-    } else if (isInserting) {
-      context.missing(_dictIdMeta);
     }
     if (data.containsKey('stat_name_id')) {
       context.handle(
@@ -3878,8 +3784,6 @@ class $KanjiBankV3StatsTableTable extends KanjiBankV3StatsTable
     return KanjiBankV3StatsTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      dictId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}dict_id'])!,
       statNameId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}stat_name_id'])!,
       statValueId: attachedDatabase.typeMapping
@@ -3898,24 +3802,17 @@ class KanjiBankV3StatsTableData extends DataClass
   /// id of this meaning
   final int id;
 
-  /// The id of the dictionary this entry belongs to
-  final int dictId;
-
   /// `KanjiBankV3StatsName` entry of this meaning
   final int statNameId;
 
   /// The value of this entrie's stat
   final int statValueId;
   const KanjiBankV3StatsTableData(
-      {required this.id,
-      required this.dictId,
-      required this.statNameId,
-      required this.statValueId});
+      {required this.id, required this.statNameId, required this.statValueId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['dict_id'] = Variable<int>(dictId);
     map['stat_name_id'] = Variable<int>(statNameId);
     map['stat_value_id'] = Variable<int>(statValueId);
     return map;
@@ -3924,7 +3821,6 @@ class KanjiBankV3StatsTableData extends DataClass
   KanjiBankV3StatsTableCompanion toCompanion(bool nullToAbsent) {
     return KanjiBankV3StatsTableCompanion(
       id: Value(id),
-      dictId: Value(dictId),
       statNameId: Value(statNameId),
       statValueId: Value(statValueId),
     );
@@ -3935,7 +3831,6 @@ class KanjiBankV3StatsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return KanjiBankV3StatsTableData(
       id: serializer.fromJson<int>(json['id']),
-      dictId: serializer.fromJson<int>(json['dictId']),
       statNameId: serializer.fromJson<int>(json['statNameId']),
       statValueId: serializer.fromJson<int>(json['statValueId']),
     );
@@ -3945,17 +3840,15 @@ class KanjiBankV3StatsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'dictId': serializer.toJson<int>(dictId),
       'statNameId': serializer.toJson<int>(statNameId),
       'statValueId': serializer.toJson<int>(statValueId),
     };
   }
 
   KanjiBankV3StatsTableData copyWith(
-          {int? id, int? dictId, int? statNameId, int? statValueId}) =>
+          {int? id, int? statNameId, int? statValueId}) =>
       KanjiBankV3StatsTableData(
         id: id ?? this.id,
-        dictId: dictId ?? this.dictId,
         statNameId: statNameId ?? this.statNameId,
         statValueId: statValueId ?? this.statValueId,
       );
@@ -3963,7 +3856,6 @@ class KanjiBankV3StatsTableData extends DataClass
       KanjiBankV3StatsTableCompanion data) {
     return KanjiBankV3StatsTableData(
       id: data.id.present ? data.id.value : this.id,
-      dictId: data.dictId.present ? data.dictId.value : this.dictId,
       statNameId:
           data.statNameId.present ? data.statNameId.value : this.statNameId,
       statValueId:
@@ -3975,7 +3867,6 @@ class KanjiBankV3StatsTableData extends DataClass
   String toString() {
     return (StringBuffer('KanjiBankV3StatsTableData(')
           ..write('id: $id, ')
-          ..write('dictId: $dictId, ')
           ..write('statNameId: $statNameId, ')
           ..write('statValueId: $statValueId')
           ..write(')'))
@@ -3983,13 +3874,12 @@ class KanjiBankV3StatsTableData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, dictId, statNameId, statValueId);
+  int get hashCode => Object.hash(id, statNameId, statValueId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiBankV3StatsTableData &&
           other.id == this.id &&
-          other.dictId == this.dictId &&
           other.statNameId == this.statNameId &&
           other.statValueId == this.statValueId);
 }
@@ -3997,45 +3887,35 @@ class KanjiBankV3StatsTableData extends DataClass
 class KanjiBankV3StatsTableCompanion
     extends UpdateCompanion<KanjiBankV3StatsTableData> {
   final Value<int> id;
-  final Value<int> dictId;
   final Value<int> statNameId;
   final Value<int> statValueId;
   const KanjiBankV3StatsTableCompanion({
     this.id = const Value.absent(),
-    this.dictId = const Value.absent(),
     this.statNameId = const Value.absent(),
     this.statValueId = const Value.absent(),
   });
   KanjiBankV3StatsTableCompanion.insert({
     this.id = const Value.absent(),
-    required int dictId,
     required int statNameId,
     required int statValueId,
-  })  : dictId = Value(dictId),
-        statNameId = Value(statNameId),
+  })  : statNameId = Value(statNameId),
         statValueId = Value(statValueId);
   static Insertable<KanjiBankV3StatsTableData> custom({
     Expression<int>? id,
-    Expression<int>? dictId,
     Expression<int>? statNameId,
     Expression<int>? statValueId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (dictId != null) 'dict_id': dictId,
       if (statNameId != null) 'stat_name_id': statNameId,
       if (statValueId != null) 'stat_value_id': statValueId,
     });
   }
 
   KanjiBankV3StatsTableCompanion copyWith(
-      {Value<int>? id,
-      Value<int>? dictId,
-      Value<int>? statNameId,
-      Value<int>? statValueId}) {
+      {Value<int>? id, Value<int>? statNameId, Value<int>? statValueId}) {
     return KanjiBankV3StatsTableCompanion(
       id: id ?? this.id,
-      dictId: dictId ?? this.dictId,
       statNameId: statNameId ?? this.statNameId,
       statValueId: statValueId ?? this.statValueId,
     );
@@ -4046,9 +3926,6 @@ class KanjiBankV3StatsTableCompanion
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
-    }
-    if (dictId.present) {
-      map['dict_id'] = Variable<int>(dictId.value);
     }
     if (statNameId.present) {
       map['stat_name_id'] = Variable<int>(statNameId.value);
@@ -4063,7 +3940,6 @@ class KanjiBankV3StatsTableCompanion
   String toString() {
     return (StringBuffer('KanjiBankV3StatsTableCompanion(')
           ..write('id: $id, ')
-          ..write('dictId: $dictId, ')
           ..write('statNameId: $statNameId, ')
           ..write('statValueId: $statValueId')
           ..write(')'))
@@ -4426,78 +4302,19 @@ final class $$IndexTableTableReferences
     extends BaseReferences<_$DaKanjiDB, $IndexTableTable, IndexTableData> {
   $$IndexTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<$KanjiBankV3OnyomisTableTable,
-      List<KanjiBankV3OnyomisTableData>> _kanjiBankV3OnyomisTableRefsTable(
-          _$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(db.kanjiBankV3OnyomisTable,
-          aliasName: $_aliasNameGenerator(
-              db.indexTable.id, db.kanjiBankV3OnyomisTable.dictId));
+  static MultiTypedResultKey<$KanjiBankV3TableTable, List<KanjiBankV3TableData>>
+      _kanjiBankV3TableRefsTable(_$DaKanjiDB db) =>
+          MultiTypedResultKey.fromTable(db.kanjiBankV3Table,
+              aliasName: $_aliasNameGenerator(
+                  db.indexTable.id, db.kanjiBankV3Table.dictId));
 
-  $$KanjiBankV3OnyomisTableTableProcessedTableManager
-      get kanjiBankV3OnyomisTableRefs {
-    final manager = $$KanjiBankV3OnyomisTableTableTableManager(
-            $_db, $_db.kanjiBankV3OnyomisTable)
-        .filter((f) => f.dictId.id($_item.id));
+  $$KanjiBankV3TableTableProcessedTableManager get kanjiBankV3TableRefs {
+    final manager =
+        $$KanjiBankV3TableTableTableManager($_db, $_db.kanjiBankV3Table)
+            .filter((f) => f.dictId.id($_item.id));
 
     final cache =
-        $_typedResult.readTableOrNull(_kanjiBankV3OnyomisTableRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-
-  static MultiTypedResultKey<$KanjiBankV3KunyomisTableTable,
-      List<KanjiBankV3KunyomisTableData>> _kanjiBankV3KunyomisTableRefsTable(
-          _$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(db.kanjiBankV3KunyomisTable,
-          aliasName: $_aliasNameGenerator(
-              db.indexTable.id, db.kanjiBankV3KunyomisTable.dictId));
-
-  $$KanjiBankV3KunyomisTableTableProcessedTableManager
-      get kanjiBankV3KunyomisTableRefs {
-    final manager = $$KanjiBankV3KunyomisTableTableTableManager(
-            $_db, $_db.kanjiBankV3KunyomisTable)
-        .filter((f) => f.dictId.id($_item.id));
-
-    final cache =
-        $_typedResult.readTableOrNull(_kanjiBankV3KunyomisTableRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-
-  static MultiTypedResultKey<$KanjiBankV3MeaningsTableTable,
-      List<KanjiBankV3MeaningsTableData>> _kanjiBankV3MeaningsTableRefsTable(
-          _$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(db.kanjiBankV3MeaningsTable,
-          aliasName: $_aliasNameGenerator(
-              db.indexTable.id, db.kanjiBankV3MeaningsTable.dictId));
-
-  $$KanjiBankV3MeaningsTableTableProcessedTableManager
-      get kanjiBankV3MeaningsTableRefs {
-    final manager = $$KanjiBankV3MeaningsTableTableTableManager(
-            $_db, $_db.kanjiBankV3MeaningsTable)
-        .filter((f) => f.dictId.id($_item.id));
-
-    final cache =
-        $_typedResult.readTableOrNull(_kanjiBankV3MeaningsTableRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-
-  static MultiTypedResultKey<$KanjiBankV3StatsTableTable,
-      List<KanjiBankV3StatsTableData>> _kanjiBankV3StatsTableRefsTable(
-          _$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(db.kanjiBankV3StatsTable,
-          aliasName: $_aliasNameGenerator(
-              db.indexTable.id, db.kanjiBankV3StatsTable.dictId));
-
-  $$KanjiBankV3StatsTableTableProcessedTableManager
-      get kanjiBankV3StatsTableRefs {
-    final manager = $$KanjiBankV3StatsTableTableTableManager(
-            $_db, $_db.kanjiBankV3StatsTable)
-        .filter((f) => f.dictId.id($_item.id));
-
-    final cache =
-        $_typedResult.readTableOrNull(_kanjiBankV3StatsTableRefsTable($_db));
+        $_typedResult.readTableOrNull(_kanjiBankV3TableRefsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
@@ -4562,95 +4379,24 @@ class $$IndexTableTableFilterComposer
   ColumnFilters<String> get frequencyMode => $composableBuilder(
       column: $table.frequencyMode, builder: (column) => ColumnFilters(column));
 
-  Expression<bool> kanjiBankV3OnyomisTableRefs(
-      Expression<bool> Function($$KanjiBankV3OnyomisTableTableFilterComposer f)
-          f) {
-    final $$KanjiBankV3OnyomisTableTableFilterComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3OnyomisTable,
-            getReferencedColumn: (t) => t.dictId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3OnyomisTableTableFilterComposer(
-                  $db: $db,
-                  $table: $db.kanjiBankV3OnyomisTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-
-  Expression<bool> kanjiBankV3KunyomisTableRefs(
-      Expression<bool> Function($$KanjiBankV3KunyomisTableTableFilterComposer f)
-          f) {
-    final $$KanjiBankV3KunyomisTableTableFilterComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3KunyomisTable,
-            getReferencedColumn: (t) => t.dictId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3KunyomisTableTableFilterComposer(
-                  $db: $db,
-                  $table: $db.kanjiBankV3KunyomisTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-
-  Expression<bool> kanjiBankV3MeaningsTableRefs(
-      Expression<bool> Function($$KanjiBankV3MeaningsTableTableFilterComposer f)
-          f) {
-    final $$KanjiBankV3MeaningsTableTableFilterComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3MeaningsTable,
-            getReferencedColumn: (t) => t.dictId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3MeaningsTableTableFilterComposer(
-                  $db: $db,
-                  $table: $db.kanjiBankV3MeaningsTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-
-  Expression<bool> kanjiBankV3StatsTableRefs(
-      Expression<bool> Function($$KanjiBankV3StatsTableTableFilterComposer f)
-          f) {
-    final $$KanjiBankV3StatsTableTableFilterComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3StatsTable,
-            getReferencedColumn: (t) => t.dictId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3StatsTableTableFilterComposer(
-                  $db: $db,
-                  $table: $db.kanjiBankV3StatsTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
+  Expression<bool> kanjiBankV3TableRefs(
+      Expression<bool> Function($$KanjiBankV3TableTableFilterComposer f) f) {
+    final $$KanjiBankV3TableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.kanjiBankV3Table,
+        getReferencedColumn: (t) => t.dictId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$KanjiBankV3TableTableFilterComposer(
+              $db: $db,
+              $table: $db.kanjiBankV3Table,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return f(composer);
   }
 }
@@ -4773,97 +4519,24 @@ class $$IndexTableTableAnnotationComposer
   GeneratedColumn<String> get frequencyMode => $composableBuilder(
       column: $table.frequencyMode, builder: (column) => column);
 
-  Expression<T> kanjiBankV3OnyomisTableRefs<T extends Object>(
-      Expression<T> Function($$KanjiBankV3OnyomisTableTableAnnotationComposer a)
-          f) {
-    final $$KanjiBankV3OnyomisTableTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3OnyomisTable,
-            getReferencedColumn: (t) => t.dictId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3OnyomisTableTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.kanjiBankV3OnyomisTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-
-  Expression<T> kanjiBankV3KunyomisTableRefs<T extends Object>(
-      Expression<T> Function(
-              $$KanjiBankV3KunyomisTableTableAnnotationComposer a)
-          f) {
-    final $$KanjiBankV3KunyomisTableTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3KunyomisTable,
-            getReferencedColumn: (t) => t.dictId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3KunyomisTableTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.kanjiBankV3KunyomisTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-
-  Expression<T> kanjiBankV3MeaningsTableRefs<T extends Object>(
-      Expression<T> Function(
-              $$KanjiBankV3MeaningsTableTableAnnotationComposer a)
-          f) {
-    final $$KanjiBankV3MeaningsTableTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3MeaningsTable,
-            getReferencedColumn: (t) => t.dictId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3MeaningsTableTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.kanjiBankV3MeaningsTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-
-  Expression<T> kanjiBankV3StatsTableRefs<T extends Object>(
-      Expression<T> Function($$KanjiBankV3StatsTableTableAnnotationComposer a)
-          f) {
-    final $$KanjiBankV3StatsTableTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.kanjiBankV3StatsTable,
-            getReferencedColumn: (t) => t.dictId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$KanjiBankV3StatsTableTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.kanjiBankV3StatsTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
+  Expression<T> kanjiBankV3TableRefs<T extends Object>(
+      Expression<T> Function($$KanjiBankV3TableTableAnnotationComposer a) f) {
+    final $$KanjiBankV3TableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.kanjiBankV3Table,
+        getReferencedColumn: (t) => t.dictId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$KanjiBankV3TableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.kanjiBankV3Table,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return f(composer);
   }
 }
@@ -4879,11 +4552,7 @@ class $$IndexTableTableTableManager extends RootTableManager<
     $$IndexTableTableUpdateCompanionBuilder,
     (IndexTableData, $$IndexTableTableReferences),
     IndexTableData,
-    PrefetchHooks Function(
-        {bool kanjiBankV3OnyomisTableRefs,
-        bool kanjiBankV3KunyomisTableRefs,
-        bool kanjiBankV3MeaningsTableRefs,
-        bool kanjiBankV3StatsTableRefs})> {
+    PrefetchHooks Function({bool kanjiBankV3TableRefs})> {
   $$IndexTableTableTableManager(_$DaKanjiDB db, $IndexTableTable table)
       : super(TableManagerState(
           db: db,
@@ -4972,66 +4641,23 @@ class $$IndexTableTableTableManager extends RootTableManager<
                     $$IndexTableTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: (
-              {kanjiBankV3OnyomisTableRefs = false,
-              kanjiBankV3KunyomisTableRefs = false,
-              kanjiBankV3MeaningsTableRefs = false,
-              kanjiBankV3StatsTableRefs = false}) {
+          prefetchHooksCallback: ({kanjiBankV3TableRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
-                if (kanjiBankV3OnyomisTableRefs) db.kanjiBankV3OnyomisTable,
-                if (kanjiBankV3KunyomisTableRefs) db.kanjiBankV3KunyomisTable,
-                if (kanjiBankV3MeaningsTableRefs) db.kanjiBankV3MeaningsTable,
-                if (kanjiBankV3StatsTableRefs) db.kanjiBankV3StatsTable
+                if (kanjiBankV3TableRefs) db.kanjiBankV3Table
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
-                  if (kanjiBankV3OnyomisTableRefs)
+                  if (kanjiBankV3TableRefs)
                     await $_getPrefetchedData(
                         currentTable: table,
                         referencedTable: $$IndexTableTableReferences
-                            ._kanjiBankV3OnyomisTableRefsTable(db),
+                            ._kanjiBankV3TableRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$IndexTableTableReferences(db, table, p0)
-                                .kanjiBankV3OnyomisTableRefs,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.dictId == item.id),
-                        typedResults: items),
-                  if (kanjiBankV3KunyomisTableRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable: $$IndexTableTableReferences
-                            ._kanjiBankV3KunyomisTableRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$IndexTableTableReferences(db, table, p0)
-                                .kanjiBankV3KunyomisTableRefs,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.dictId == item.id),
-                        typedResults: items),
-                  if (kanjiBankV3MeaningsTableRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable: $$IndexTableTableReferences
-                            ._kanjiBankV3MeaningsTableRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$IndexTableTableReferences(db, table, p0)
-                                .kanjiBankV3MeaningsTableRefs,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.dictId == item.id),
-                        typedResults: items),
-                  if (kanjiBankV3StatsTableRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable: $$IndexTableTableReferences
-                            ._kanjiBankV3StatsTableRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$IndexTableTableReferences(db, table, p0)
-                                .kanjiBankV3StatsTableRefs,
+                                .kanjiBankV3TableRefs,
                         referencedItemsForCurrentItem: (item,
                                 referencedItems) =>
                             referencedItems.where((e) => e.dictId == item.id),
@@ -5054,11 +4680,7 @@ typedef $$IndexTableTableProcessedTableManager = ProcessedTableManager<
     $$IndexTableTableUpdateCompanionBuilder,
     (IndexTableData, $$IndexTableTableReferences),
     IndexTableData,
-    PrefetchHooks Function(
-        {bool kanjiBankV3OnyomisTableRefs,
-        bool kanjiBankV3KunyomisTableRefs,
-        bool kanjiBankV3MeaningsTableRefs,
-        bool kanjiBankV3StatsTableRefs})>;
+    PrefetchHooks Function({bool kanjiBankV3TableRefs})>;
 typedef $$TagBankV3TableTableCreateCompanionBuilder = TagBankV3TableCompanion
     Function({
   Value<int> id,
@@ -5978,17 +5600,33 @@ typedef $$KanjiBankV3TableTableCreateCompanionBuilder
     = KanjiBankV3TableCompanion Function({
   Value<int> id,
   required String kanji,
+  required int dictId,
 });
 typedef $$KanjiBankV3TableTableUpdateCompanionBuilder
     = KanjiBankV3TableCompanion Function({
   Value<int> id,
   Value<String> kanji,
+  Value<int> dictId,
 });
 
 final class $$KanjiBankV3TableTableReferences extends BaseReferences<
     _$DaKanjiDB, $KanjiBankV3TableTable, KanjiBankV3TableData> {
   $$KanjiBankV3TableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
+
+  static $IndexTableTable _dictIdTable(_$DaKanjiDB db) =>
+      db.indexTable.createAlias(
+          $_aliasNameGenerator(db.kanjiBankV3Table.dictId, db.indexTable.id));
+
+  $$IndexTableTableProcessedTableManager? get dictId {
+    if ($_item.dictId == null) return null;
+    final manager = $$IndexTableTableTableManager($_db, $_db.indexTable)
+        .filter((f) => f.id($_item.dictId!));
+    final item = $_typedResult.readTableOrNull(_dictIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
 
   static MultiTypedResultKey<$KanjiBankV3OnyomiKanjiRelationsTableTable,
           List<KanjiBankV3OnyomiKanjiRelationsTableData>>
@@ -6102,6 +5740,26 @@ class $$KanjiBankV3TableTableFilterComposer
 
   ColumnFilters<String> get kanji => $composableBuilder(
       column: $table.kanji, builder: (column) => ColumnFilters(column));
+
+  $$IndexTableTableFilterComposer get dictId {
+    final $$IndexTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.dictId,
+        referencedTable: $db.indexTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$IndexTableTableFilterComposer(
+              $db: $db,
+              $table: $db.indexTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   Expression<bool> kanjiBankV3OnyomiKanjiRelationsTableRefs(
       Expression<bool> Function(
@@ -6238,6 +5896,26 @@ class $$KanjiBankV3TableTableOrderingComposer
 
   ColumnOrderings<String> get kanji => $composableBuilder(
       column: $table.kanji, builder: (column) => ColumnOrderings(column));
+
+  $$IndexTableTableOrderingComposer get dictId {
+    final $$IndexTableTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.dictId,
+        referencedTable: $db.indexTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$IndexTableTableOrderingComposer(
+              $db: $db,
+              $table: $db.indexTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$KanjiBankV3TableTableAnnotationComposer
@@ -6254,6 +5932,26 @@ class $$KanjiBankV3TableTableAnnotationComposer
 
   GeneratedColumn<String> get kanji =>
       $composableBuilder(column: $table.kanji, builder: (column) => column);
+
+  $$IndexTableTableAnnotationComposer get dictId {
+    final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.dictId,
+        referencedTable: $db.indexTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$IndexTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.indexTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   Expression<T> kanjiBankV3OnyomiKanjiRelationsTableRefs<T extends Object>(
       Expression<T> Function(
@@ -6388,7 +6086,8 @@ class $$KanjiBankV3TableTableTableManager extends RootTableManager<
     (KanjiBankV3TableData, $$KanjiBankV3TableTableReferences),
     KanjiBankV3TableData,
     PrefetchHooks Function(
-        {bool kanjiBankV3OnyomiKanjiRelationsTableRefs,
+        {bool dictId,
+        bool kanjiBankV3OnyomiKanjiRelationsTableRefs,
         bool kanjiBankV3KunyomiKanjiRelationsTableRefs,
         bool kanjiBankV3TagsKanjiRelationsTableRefs,
         bool kanjiBankV3MeaningsKanjiRelationsTableRefs,
@@ -6407,18 +6106,22 @@ class $$KanjiBankV3TableTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> kanji = const Value.absent(),
+            Value<int> dictId = const Value.absent(),
           }) =>
               KanjiBankV3TableCompanion(
             id: id,
             kanji: kanji,
+            dictId: dictId,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String kanji,
+            required int dictId,
           }) =>
               KanjiBankV3TableCompanion.insert(
             id: id,
             kanji: kanji,
+            dictId: dictId,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
@@ -6427,7 +6130,8 @@ class $$KanjiBankV3TableTableTableManager extends RootTableManager<
                   ))
               .toList(),
           prefetchHooksCallback: (
-              {kanjiBankV3OnyomiKanjiRelationsTableRefs = false,
+              {dictId = false,
+              kanjiBankV3OnyomiKanjiRelationsTableRefs = false,
               kanjiBankV3KunyomiKanjiRelationsTableRefs = false,
               kanjiBankV3TagsKanjiRelationsTableRefs = false,
               kanjiBankV3MeaningsKanjiRelationsTableRefs = false,
@@ -6446,7 +6150,32 @@ class $$KanjiBankV3TableTableTableManager extends RootTableManager<
                 if (kanjiBankV3StatKanjiRelationsTableRefs)
                   db.kanjiBankV3StatKanjiRelationsTable
               ],
-              addJoins: null,
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (dictId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.dictId,
+                    referencedTable:
+                        $$KanjiBankV3TableTableReferences._dictIdTable(db),
+                    referencedColumn:
+                        $$KanjiBankV3TableTableReferences._dictIdTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiBankV3OnyomiKanjiRelationsTableRefs)
@@ -6530,7 +6259,8 @@ typedef $$KanjiBankV3TableTableProcessedTableManager = ProcessedTableManager<
     (KanjiBankV3TableData, $$KanjiBankV3TableTableReferences),
     KanjiBankV3TableData,
     PrefetchHooks Function(
-        {bool kanjiBankV3OnyomiKanjiRelationsTableRefs,
+        {bool dictId,
+        bool kanjiBankV3OnyomiKanjiRelationsTableRefs,
         bool kanjiBankV3KunyomiKanjiRelationsTableRefs,
         bool kanjiBankV3TagsKanjiRelationsTableRefs,
         bool kanjiBankV3MeaningsKanjiRelationsTableRefs,
@@ -6538,13 +6268,11 @@ typedef $$KanjiBankV3TableTableProcessedTableManager = ProcessedTableManager<
 typedef $$KanjiBankV3OnyomisTableTableCreateCompanionBuilder
     = KanjiBankV3OnyomisTableCompanion Function({
   Value<int> id,
-  required int dictId,
   required String onyomi,
 });
 typedef $$KanjiBankV3OnyomisTableTableUpdateCompanionBuilder
     = KanjiBankV3OnyomisTableCompanion Function({
   Value<int> id,
-  Value<int> dictId,
   Value<String> onyomi,
 });
 
@@ -6552,20 +6280,6 @@ final class $$KanjiBankV3OnyomisTableTableReferences extends BaseReferences<
     _$DaKanjiDB, $KanjiBankV3OnyomisTableTable, KanjiBankV3OnyomisTableData> {
   $$KanjiBankV3OnyomisTableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
-
-  static $IndexTableTable _dictIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias($_aliasNameGenerator(
-          db.kanjiBankV3OnyomisTable.dictId, db.indexTable.id));
-
-  $$IndexTableTableProcessedTableManager? get dictId {
-    if ($_item.dictId == null) return null;
-    final manager = $$IndexTableTableTableManager($_db, $_db.indexTable)
-        .filter((f) => f.id($_item.dictId!));
-    final item = $_typedResult.readTableOrNull(_dictIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
 
   static MultiTypedResultKey<$KanjiBankV3OnyomiKanjiRelationsTableTable,
           List<KanjiBankV3OnyomiKanjiRelationsTableData>>
@@ -6601,26 +6315,6 @@ class $$KanjiBankV3OnyomisTableTableFilterComposer
 
   ColumnFilters<String> get onyomi => $composableBuilder(
       column: $table.onyomi, builder: (column) => ColumnFilters(column));
-
-  $$IndexTableTableFilterComposer get dictId {
-    final $$IndexTableTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableFilterComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
 
   Expression<bool> kanjiBankV3OnyomiKanjiRelationsTableRefs(
       Expression<bool> Function(
@@ -6661,26 +6355,6 @@ class $$KanjiBankV3OnyomisTableTableOrderingComposer
 
   ColumnOrderings<String> get onyomi => $composableBuilder(
       column: $table.onyomi, builder: (column) => ColumnOrderings(column));
-
-  $$IndexTableTableOrderingComposer get dictId {
-    final $$IndexTableTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableOrderingComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
 }
 
 class $$KanjiBankV3OnyomisTableTableAnnotationComposer
@@ -6697,26 +6371,6 @@ class $$KanjiBankV3OnyomisTableTableAnnotationComposer
 
   GeneratedColumn<String> get onyomi =>
       $composableBuilder(column: $table.onyomi, builder: (column) => column);
-
-  $$IndexTableTableAnnotationComposer get dictId {
-    final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableAnnotationComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
 
   Expression<T> kanjiBankV3OnyomiKanjiRelationsTableRefs<T extends Object>(
       Expression<T> Function(
@@ -6754,8 +6408,7 @@ class $$KanjiBankV3OnyomisTableTableTableManager extends RootTableManager<
     $$KanjiBankV3OnyomisTableTableUpdateCompanionBuilder,
     (KanjiBankV3OnyomisTableData, $$KanjiBankV3OnyomisTableTableReferences),
     KanjiBankV3OnyomisTableData,
-    PrefetchHooks Function(
-        {bool dictId, bool kanjiBankV3OnyomiKanjiRelationsTableRefs})> {
+    PrefetchHooks Function({bool kanjiBankV3OnyomiKanjiRelationsTableRefs})> {
   $$KanjiBankV3OnyomisTableTableTableManager(
       _$DaKanjiDB db, $KanjiBankV3OnyomisTableTable table)
       : super(TableManagerState(
@@ -6772,22 +6425,18 @@ class $$KanjiBankV3OnyomisTableTableTableManager extends RootTableManager<
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            Value<int> dictId = const Value.absent(),
             Value<String> onyomi = const Value.absent(),
           }) =>
               KanjiBankV3OnyomisTableCompanion(
             id: id,
-            dictId: dictId,
             onyomi: onyomi,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            required int dictId,
             required String onyomi,
           }) =>
               KanjiBankV3OnyomisTableCompanion.insert(
             id: id,
-            dictId: dictId,
             onyomi: onyomi,
           ),
           withReferenceMapper: (p0) => p0
@@ -6797,41 +6446,14 @@ class $$KanjiBankV3OnyomisTableTableTableManager extends RootTableManager<
                   ))
               .toList(),
           prefetchHooksCallback: (
-              {dictId = false,
-              kanjiBankV3OnyomiKanjiRelationsTableRefs = false}) {
+              {kanjiBankV3OnyomiKanjiRelationsTableRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
                 if (kanjiBankV3OnyomiKanjiRelationsTableRefs)
                   db.kanjiBankV3OnyomiKanjiRelationsTable
               ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (dictId) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.dictId,
-                    referencedTable: $$KanjiBankV3OnyomisTableTableReferences
-                        ._dictIdTable(db),
-                    referencedColumn: $$KanjiBankV3OnyomisTableTableReferences
-                        ._dictIdTable(db)
-                        .id,
-                  ) as T;
-                }
-
-                return state;
-              },
+              addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiBankV3OnyomiKanjiRelationsTableRefs)
@@ -6869,7 +6491,7 @@ typedef $$KanjiBankV3OnyomisTableTableProcessedTableManager
         (KanjiBankV3OnyomisTableData, $$KanjiBankV3OnyomisTableTableReferences),
         KanjiBankV3OnyomisTableData,
         PrefetchHooks Function(
-            {bool dictId, bool kanjiBankV3OnyomiKanjiRelationsTableRefs})>;
+            {bool kanjiBankV3OnyomiKanjiRelationsTableRefs})>;
 typedef $$KanjiBankV3OnyomiKanjiRelationsTableTableCreateCompanionBuilder
     = KanjiBankV3OnyomiKanjiRelationsTableCompanion Function({
   Value<int> id,
@@ -7216,13 +6838,11 @@ typedef $$KanjiBankV3OnyomiKanjiRelationsTableTableProcessedTableManager
 typedef $$KanjiBankV3KunyomisTableTableCreateCompanionBuilder
     = KanjiBankV3KunyomisTableCompanion Function({
   Value<int> id,
-  required int dictId,
   required String kunyomi,
 });
 typedef $$KanjiBankV3KunyomisTableTableUpdateCompanionBuilder
     = KanjiBankV3KunyomisTableCompanion Function({
   Value<int> id,
-  Value<int> dictId,
   Value<String> kunyomi,
 });
 
@@ -7230,20 +6850,6 @@ final class $$KanjiBankV3KunyomisTableTableReferences extends BaseReferences<
     _$DaKanjiDB, $KanjiBankV3KunyomisTableTable, KanjiBankV3KunyomisTableData> {
   $$KanjiBankV3KunyomisTableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
-
-  static $IndexTableTable _dictIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias($_aliasNameGenerator(
-          db.kanjiBankV3KunyomisTable.dictId, db.indexTable.id));
-
-  $$IndexTableTableProcessedTableManager? get dictId {
-    if ($_item.dictId == null) return null;
-    final manager = $$IndexTableTableTableManager($_db, $_db.indexTable)
-        .filter((f) => f.id($_item.dictId!));
-    final item = $_typedResult.readTableOrNull(_dictIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
 
   static MultiTypedResultKey<$KanjiBankV3KunyomiKanjiRelationsTableTable,
           List<KanjiBankV3KunyomiKanjiRelationsTableData>>
@@ -7280,26 +6886,6 @@ class $$KanjiBankV3KunyomisTableTableFilterComposer
 
   ColumnFilters<String> get kunyomi => $composableBuilder(
       column: $table.kunyomi, builder: (column) => ColumnFilters(column));
-
-  $$IndexTableTableFilterComposer get dictId {
-    final $$IndexTableTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableFilterComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
 
   Expression<bool> kanjiBankV3KunyomiKanjiRelationsTableRefs(
       Expression<bool> Function(
@@ -7340,26 +6926,6 @@ class $$KanjiBankV3KunyomisTableTableOrderingComposer
 
   ColumnOrderings<String> get kunyomi => $composableBuilder(
       column: $table.kunyomi, builder: (column) => ColumnOrderings(column));
-
-  $$IndexTableTableOrderingComposer get dictId {
-    final $$IndexTableTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableOrderingComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
 }
 
 class $$KanjiBankV3KunyomisTableTableAnnotationComposer
@@ -7376,26 +6942,6 @@ class $$KanjiBankV3KunyomisTableTableAnnotationComposer
 
   GeneratedColumn<String> get kunyomi =>
       $composableBuilder(column: $table.kunyomi, builder: (column) => column);
-
-  $$IndexTableTableAnnotationComposer get dictId {
-    final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableAnnotationComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
 
   Expression<T> kanjiBankV3KunyomiKanjiRelationsTableRefs<T extends Object>(
       Expression<T> Function(
@@ -7433,8 +6979,7 @@ class $$KanjiBankV3KunyomisTableTableTableManager extends RootTableManager<
     $$KanjiBankV3KunyomisTableTableUpdateCompanionBuilder,
     (KanjiBankV3KunyomisTableData, $$KanjiBankV3KunyomisTableTableReferences),
     KanjiBankV3KunyomisTableData,
-    PrefetchHooks Function(
-        {bool dictId, bool kanjiBankV3KunyomiKanjiRelationsTableRefs})> {
+    PrefetchHooks Function({bool kanjiBankV3KunyomiKanjiRelationsTableRefs})> {
   $$KanjiBankV3KunyomisTableTableTableManager(
       _$DaKanjiDB db, $KanjiBankV3KunyomisTableTable table)
       : super(TableManagerState(
@@ -7451,22 +6996,18 @@ class $$KanjiBankV3KunyomisTableTableTableManager extends RootTableManager<
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            Value<int> dictId = const Value.absent(),
             Value<String> kunyomi = const Value.absent(),
           }) =>
               KanjiBankV3KunyomisTableCompanion(
             id: id,
-            dictId: dictId,
             kunyomi: kunyomi,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            required int dictId,
             required String kunyomi,
           }) =>
               KanjiBankV3KunyomisTableCompanion.insert(
             id: id,
-            dictId: dictId,
             kunyomi: kunyomi,
           ),
           withReferenceMapper: (p0) => p0
@@ -7476,41 +7017,14 @@ class $$KanjiBankV3KunyomisTableTableTableManager extends RootTableManager<
                   ))
               .toList(),
           prefetchHooksCallback: (
-              {dictId = false,
-              kanjiBankV3KunyomiKanjiRelationsTableRefs = false}) {
+              {kanjiBankV3KunyomiKanjiRelationsTableRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
                 if (kanjiBankV3KunyomiKanjiRelationsTableRefs)
                   db.kanjiBankV3KunyomiKanjiRelationsTable
               ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (dictId) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.dictId,
-                    referencedTable: $$KanjiBankV3KunyomisTableTableReferences
-                        ._dictIdTable(db),
-                    referencedColumn: $$KanjiBankV3KunyomisTableTableReferences
-                        ._dictIdTable(db)
-                        .id,
-                  ) as T;
-                }
-
-                return state;
-              },
+              addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiBankV3KunyomiKanjiRelationsTableRefs)
@@ -7551,7 +7065,7 @@ typedef $$KanjiBankV3KunyomisTableTableProcessedTableManager
         ),
         KanjiBankV3KunyomisTableData,
         PrefetchHooks Function(
-            {bool dictId, bool kanjiBankV3KunyomiKanjiRelationsTableRefs})>;
+            {bool kanjiBankV3KunyomiKanjiRelationsTableRefs})>;
 typedef $$KanjiBankV3KunyomiKanjiRelationsTableTableCreateCompanionBuilder
     = KanjiBankV3KunyomiKanjiRelationsTableCompanion Function({
   Value<int> id,
@@ -8236,13 +7750,11 @@ typedef $$KanjiBankV3TagsKanjiRelationsTableTableProcessedTableManager
 typedef $$KanjiBankV3MeaningsTableTableCreateCompanionBuilder
     = KanjiBankV3MeaningsTableCompanion Function({
   Value<int> id,
-  required int dictId,
   required String meaning,
 });
 typedef $$KanjiBankV3MeaningsTableTableUpdateCompanionBuilder
     = KanjiBankV3MeaningsTableCompanion Function({
   Value<int> id,
-  Value<int> dictId,
   Value<String> meaning,
 });
 
@@ -8250,20 +7762,6 @@ final class $$KanjiBankV3MeaningsTableTableReferences extends BaseReferences<
     _$DaKanjiDB, $KanjiBankV3MeaningsTableTable, KanjiBankV3MeaningsTableData> {
   $$KanjiBankV3MeaningsTableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
-
-  static $IndexTableTable _dictIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias($_aliasNameGenerator(
-          db.kanjiBankV3MeaningsTable.dictId, db.indexTable.id));
-
-  $$IndexTableTableProcessedTableManager? get dictId {
-    if ($_item.dictId == null) return null;
-    final manager = $$IndexTableTableTableManager($_db, $_db.indexTable)
-        .filter((f) => f.id($_item.dictId!));
-    final item = $_typedResult.readTableOrNull(_dictIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
 
   static MultiTypedResultKey<$KanjiBankV3MeaningsKanjiRelationsTableTable,
           List<KanjiBankV3MeaningsKanjiRelationsTableData>>
@@ -8300,26 +7798,6 @@ class $$KanjiBankV3MeaningsTableTableFilterComposer
 
   ColumnFilters<String> get meaning => $composableBuilder(
       column: $table.meaning, builder: (column) => ColumnFilters(column));
-
-  $$IndexTableTableFilterComposer get dictId {
-    final $$IndexTableTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableFilterComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
 
   Expression<bool> kanjiBankV3MeaningsKanjiRelationsTableRefs(
       Expression<bool> Function(
@@ -8360,26 +7838,6 @@ class $$KanjiBankV3MeaningsTableTableOrderingComposer
 
   ColumnOrderings<String> get meaning => $composableBuilder(
       column: $table.meaning, builder: (column) => ColumnOrderings(column));
-
-  $$IndexTableTableOrderingComposer get dictId {
-    final $$IndexTableTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableOrderingComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
 }
 
 class $$KanjiBankV3MeaningsTableTableAnnotationComposer
@@ -8396,26 +7854,6 @@ class $$KanjiBankV3MeaningsTableTableAnnotationComposer
 
   GeneratedColumn<String> get meaning =>
       $composableBuilder(column: $table.meaning, builder: (column) => column);
-
-  $$IndexTableTableAnnotationComposer get dictId {
-    final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableAnnotationComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
 
   Expression<T> kanjiBankV3MeaningsKanjiRelationsTableRefs<T extends Object>(
       Expression<T> Function(
@@ -8453,8 +7891,7 @@ class $$KanjiBankV3MeaningsTableTableTableManager extends RootTableManager<
     $$KanjiBankV3MeaningsTableTableUpdateCompanionBuilder,
     (KanjiBankV3MeaningsTableData, $$KanjiBankV3MeaningsTableTableReferences),
     KanjiBankV3MeaningsTableData,
-    PrefetchHooks Function(
-        {bool dictId, bool kanjiBankV3MeaningsKanjiRelationsTableRefs})> {
+    PrefetchHooks Function({bool kanjiBankV3MeaningsKanjiRelationsTableRefs})> {
   $$KanjiBankV3MeaningsTableTableTableManager(
       _$DaKanjiDB db, $KanjiBankV3MeaningsTableTable table)
       : super(TableManagerState(
@@ -8471,22 +7908,18 @@ class $$KanjiBankV3MeaningsTableTableTableManager extends RootTableManager<
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            Value<int> dictId = const Value.absent(),
             Value<String> meaning = const Value.absent(),
           }) =>
               KanjiBankV3MeaningsTableCompanion(
             id: id,
-            dictId: dictId,
             meaning: meaning,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            required int dictId,
             required String meaning,
           }) =>
               KanjiBankV3MeaningsTableCompanion.insert(
             id: id,
-            dictId: dictId,
             meaning: meaning,
           ),
           withReferenceMapper: (p0) => p0
@@ -8496,41 +7929,14 @@ class $$KanjiBankV3MeaningsTableTableTableManager extends RootTableManager<
                   ))
               .toList(),
           prefetchHooksCallback: (
-              {dictId = false,
-              kanjiBankV3MeaningsKanjiRelationsTableRefs = false}) {
+              {kanjiBankV3MeaningsKanjiRelationsTableRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
                 if (kanjiBankV3MeaningsKanjiRelationsTableRefs)
                   db.kanjiBankV3MeaningsKanjiRelationsTable
               ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (dictId) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.dictId,
-                    referencedTable: $$KanjiBankV3MeaningsTableTableReferences
-                        ._dictIdTable(db),
-                    referencedColumn: $$KanjiBankV3MeaningsTableTableReferences
-                        ._dictIdTable(db)
-                        .id,
-                  ) as T;
-                }
-
-                return state;
-              },
+              addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiBankV3MeaningsKanjiRelationsTableRefs)
@@ -8570,7 +7976,7 @@ typedef $$KanjiBankV3MeaningsTableTableProcessedTableManager
         ),
         KanjiBankV3MeaningsTableData,
         PrefetchHooks Function(
-            {bool dictId, bool kanjiBankV3MeaningsKanjiRelationsTableRefs})>;
+            {bool kanjiBankV3MeaningsKanjiRelationsTableRefs})>;
 typedef $$KanjiBankV3MeaningsKanjiRelationsTableTableCreateCompanionBuilder
     = KanjiBankV3MeaningsKanjiRelationsTableCompanion Function({
   Value<int> id,
@@ -9465,14 +8871,12 @@ typedef $$KanjiBankV3StatValuesTableTableProcessedTableManager
 typedef $$KanjiBankV3StatsTableTableCreateCompanionBuilder
     = KanjiBankV3StatsTableCompanion Function({
   Value<int> id,
-  required int dictId,
   required int statNameId,
   required int statValueId,
 });
 typedef $$KanjiBankV3StatsTableTableUpdateCompanionBuilder
     = KanjiBankV3StatsTableCompanion Function({
   Value<int> id,
-  Value<int> dictId,
   Value<int> statNameId,
   Value<int> statValueId,
 });
@@ -9481,20 +8885,6 @@ final class $$KanjiBankV3StatsTableTableReferences extends BaseReferences<
     _$DaKanjiDB, $KanjiBankV3StatsTableTable, KanjiBankV3StatsTableData> {
   $$KanjiBankV3StatsTableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
-
-  static $IndexTableTable _dictIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias($_aliasNameGenerator(
-          db.kanjiBankV3StatsTable.dictId, db.indexTable.id));
-
-  $$IndexTableTableProcessedTableManager? get dictId {
-    if ($_item.dictId == null) return null;
-    final manager = $$IndexTableTableTableManager($_db, $_db.indexTable)
-        .filter((f) => f.id($_item.dictId!));
-    final item = $_typedResult.readTableOrNull(_dictIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
 
   static $KanjiBankV3StatNamesTableTable _statNameIdTable(_$DaKanjiDB db) =>
       db.kanjiBankV3StatNamesTable.createAlias($_aliasNameGenerator(
@@ -9540,26 +8930,6 @@ class $$KanjiBankV3StatsTableTableFilterComposer
   });
   ColumnFilters<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnFilters(column));
-
-  $$IndexTableTableFilterComposer get dictId {
-    final $$IndexTableTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableFilterComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
 
   $$KanjiBankV3StatNamesTableTableFilterComposer get statNameId {
     final $$KanjiBankV3StatNamesTableTableFilterComposer composer =
@@ -9616,26 +8986,6 @@ class $$KanjiBankV3StatsTableTableOrderingComposer
   ColumnOrderings<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  $$IndexTableTableOrderingComposer get dictId {
-    final $$IndexTableTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableOrderingComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
   $$KanjiBankV3StatNamesTableTableOrderingComposer get statNameId {
     final $$KanjiBankV3StatNamesTableTableOrderingComposer composer =
         $composerBuilder(
@@ -9691,26 +9041,6 @@ class $$KanjiBankV3StatsTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  $$IndexTableTableAnnotationComposer get dictId {
-    final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.dictId,
-        referencedTable: $db.indexTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$IndexTableTableAnnotationComposer(
-              $db: $db,
-              $table: $db.indexTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
   $$KanjiBankV3StatNamesTableTableAnnotationComposer get statNameId {
     final $$KanjiBankV3StatNamesTableTableAnnotationComposer composer =
         $composerBuilder(
@@ -9765,7 +9095,7 @@ class $$KanjiBankV3StatsTableTableTableManager extends RootTableManager<
     $$KanjiBankV3StatsTableTableUpdateCompanionBuilder,
     (KanjiBankV3StatsTableData, $$KanjiBankV3StatsTableTableReferences),
     KanjiBankV3StatsTableData,
-    PrefetchHooks Function({bool dictId, bool statNameId, bool statValueId})> {
+    PrefetchHooks Function({bool statNameId, bool statValueId})> {
   $$KanjiBankV3StatsTableTableTableManager(
       _$DaKanjiDB db, $KanjiBankV3StatsTableTable table)
       : super(TableManagerState(
@@ -9782,25 +9112,21 @@ class $$KanjiBankV3StatsTableTableTableManager extends RootTableManager<
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            Value<int> dictId = const Value.absent(),
             Value<int> statNameId = const Value.absent(),
             Value<int> statValueId = const Value.absent(),
           }) =>
               KanjiBankV3StatsTableCompanion(
             id: id,
-            dictId: dictId,
             statNameId: statNameId,
             statValueId: statValueId,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            required int dictId,
             required int statNameId,
             required int statValueId,
           }) =>
               KanjiBankV3StatsTableCompanion.insert(
             id: id,
-            dictId: dictId,
             statNameId: statNameId,
             statValueId: statValueId,
           ),
@@ -9810,8 +9136,7 @@ class $$KanjiBankV3StatsTableTableTableManager extends RootTableManager<
                     $$KanjiBankV3StatsTableTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: (
-              {dictId = false, statNameId = false, statValueId = false}) {
+          prefetchHooksCallback: ({statNameId = false, statValueId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -9828,17 +9153,6 @@ class $$KanjiBankV3StatsTableTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic>>(state) {
-                if (dictId) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.dictId,
-                    referencedTable:
-                        $$KanjiBankV3StatsTableTableReferences._dictIdTable(db),
-                    referencedColumn: $$KanjiBankV3StatsTableTableReferences
-                        ._dictIdTable(db)
-                        .id,
-                  ) as T;
-                }
                 if (statNameId) {
                   state = state.withJoin(
                     currentTable: table,
@@ -9884,8 +9198,7 @@ typedef $$KanjiBankV3StatsTableTableProcessedTableManager
         $$KanjiBankV3StatsTableTableUpdateCompanionBuilder,
         (KanjiBankV3StatsTableData, $$KanjiBankV3StatsTableTableReferences),
         KanjiBankV3StatsTableData,
-        PrefetchHooks Function(
-            {bool dictId, bool statNameId, bool statValueId})>;
+        PrefetchHooks Function({bool statNameId, bool statValueId})>;
 typedef $$KanjiBankV3StatKanjiRelationsTableTableCreateCompanionBuilder
     = KanjiBankV3StatKanjiRelationsTableCompanion Function({
   Value<int> id,

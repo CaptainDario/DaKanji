@@ -16,6 +16,9 @@ class KanjiBankV3Table extends Table {
   /// the kanji character of this entry
   /// this column is indexed
   TextColumn get kanji => text().withLength(min: 1)();
+
+  /// The id of the dictionary this entry belongs to
+  IntColumn get dictId => integer().references(IndexTable, #id)();
 }
 
 /// Contains all onyomi reading elements and each entry links to
@@ -24,9 +27,6 @@ class KanjiBankV3OnyomisTable extends Table {
 
   /// id of this meaning
   IntColumn get id => integer().autoIncrement()();
-
-  /// The id of the dictionary this entry belongs to
-  IntColumn get dictId => integer().references(IndexTable, #id)();
 
   /// The onyomi reading of this entry
   TextColumn get onyomi => text().unique()();
@@ -40,9 +40,6 @@ class KanjiBankV3KunyomisTable extends Table {
   /// id of this meaning
   IntColumn get id => integer().autoIncrement()();
 
-  /// The id of the dictionary this entry belongs to
-  IntColumn get dictId => integer().references(IndexTable, #id)();
-
   /// The kunyomi reading of this entry
   TextColumn get kunyomi => text()();
 
@@ -55,9 +52,6 @@ class KanjiBankV3MeaningsTable extends Table {
   /// id of this meaning
   IntColumn get id => integer().autoIncrement()();
 
-  /// The id of the dictionary this entry belongs to
-  IntColumn get dictId => integer().references(IndexTable, #id)();
-
   /// The meaning of this entry
   TextColumn get meaning => text()();
 
@@ -69,9 +63,6 @@ class KanjiBankV3StatsTable extends Table {
 
   /// id of this meaning
   IntColumn get id => integer().autoIncrement()();
-
-  /// The id of the dictionary this entry belongs to
-  IntColumn get dictId => integer().references(IndexTable, #id)();
 
   /// `KanjiBankV3StatsName` entry of this meaning
   IntColumn get statNameId => integer().references(KanjiBankV3StatNamesTable, #id)();

@@ -77,7 +77,7 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db, int dictId) asyn
   // read and decode the json
   String jsonString = kanjiBankV3JsonPath.readAsStringSync();
   List jsonList = jsonDecode(jsonString);
-  print(jsonList.length);
+  print("Parinsg ${jsonList.length} kanji entries");
 
   KanjiBankV3ParserRefs refs = KanjiBankV3ParserRefs()
     ..dictId = dictId;
@@ -138,10 +138,13 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db, int dictId) asyn
 /// Caution: the results are store in the given `refs`
 Future<void> parseKanji(String jsonKanji, KanjiBankV3ParserRefs refs, DaKanjiDB db) async {
 
-  refs.kanjiInsertId = await db.kanjiBankV3Dao.getKanjiId(jsonKanji) ?? ++refs.kanjiId;
+  refs.kanjiInsertId =
+    await db.kanjiBankV3Dao.getKanjiId(jsonKanji, refs.dictId) ??
+      ++refs.kanjiId;
   refs.kanjiCompanions.add(KanjiBankV3TableCompanion(
     id: Value(refs.kanjiInsertId),
-    kanji: Value(jsonKanji)
+    kanji: Value(jsonKanji),
+    dictId: Value(refs.dictId)
   ));
 
 }
@@ -162,7 +165,6 @@ Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserRefs refs, DaKanjiD
       }
       refs.onyomiCompanions.add(KanjiBankV3OnyomisTableCompanion(
         id: Value(onyomiInsertId),
-        dictId: Value(refs.dictId),
         //kanjiBankV3ID: Value(refs.kanjiInsertId),
         onyomi: Value(onyomi)
       ));
@@ -191,7 +193,6 @@ Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserRefs refs, DaKanj
       }
       refs.kunyomiCompanions.add(KanjiBankV3KunyomisTableCompanion(
         id: Value(kunyomiInsertId),
-        dictId: Value(refs.dictId),
         //kanjiBankV3ID: Value(refs.kanjiInsertId),
         kunyomi: Value(kunyomi)
       ));
@@ -239,7 +240,6 @@ Future<void> parseMeaning(List<String> meanings, KanjiBankV3ParserRefs refs, DaK
       }
       refs.meaningsCompanions.add(KanjiBankV3MeaningsTableCompanion(
         id: Value(meaningInsertId),
-        dictId: Value(refs.dictId),
         //kanjiBankV3ID: Value(refs.kanjiInsertId),
         meaning: Value(meaning)
       ));
