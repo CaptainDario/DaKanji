@@ -22,10 +22,21 @@ class TagBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TagBankV3DaoMixin 
   TagBankV3Dao(super.db);
 
   /// Checks if the given `tag` is already present in the database
-  Future<int?> getCategoryId(String categoryName) async {
+  Future<int?> getTagId(String tag) async {
+
+    final result = await db.managers.tagBankV3Table
+      .filter((f) => f.name(tag))
+      .getSingleOrNull();
+
+    return result?.id;
+
+  }
+
+  /// Checks if the given `category` is already present in the database
+  Future<int?> getCategoryId(String category) async {
 
     final result = await db.managers.tagBankV3CategoryTable
-      .filter((f) => f.category(categoryName))
+      .filter((f) => f.category(category))
       .getSingleOrNull();
 
     return result?.id;

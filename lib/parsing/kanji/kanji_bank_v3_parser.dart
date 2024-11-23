@@ -86,7 +86,6 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db, int dictId) asyn
 
   refs.kanjiId = await db.kanjiBankV3Dao.maxKanjiId();
   refs.onyomiId = await db.kanjiBankV3Dao.maxOnyomiId();
-  refs.tagId = await db.kanjiBankV3Dao.maxTagId();
   refs.meaningId = await db.kanjiBankV3Dao.maxMeaningId();
 
   // populate the companion lists
@@ -218,11 +217,8 @@ Future<void> parseTag(String jsonTag, KanjiBankV3ParserRefs refs, DaKanjiDB db) 
     List<String> tags = jsonTag.toString().split(" ");
     for (String tag in tags) {
       
-      int? tagInsertId = refs.seenTags[tag];
-      if(tagInsertId == null){
-        tagInsertId = await db.kanjiBankV3Dao.getTagId(tag) ?? ++refs.tagId;
-        refs.seenTags[tag] = tagInsertId;
-      }
+      int tagInsertId = (await db.tagBankV3Dao.getTagId(tag))!;
+
       refs.tagCompanions.add(KanjiBankV3TagsTableCompanion(
         id: Value(tagInsertId),
         dictId: Value(refs.dictId),

@@ -54,9 +54,9 @@ Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db) async {
   }
 
   // parse the remaining files
-  //for (var file in validFiles) {
-  //  await parseDictionaryFile(Tuple3(file, db, dictEntry!));
-  //}
+  for (var file in validFiles) {
+    await parseDictionaryFile(Tuple3(file, db, dictEntry!));
+  }
 
 }
 
