@@ -14,3 +14,6 @@ dakanji_db_schema/schema.pdf
 # ignore stress test downloads
 stresstest/*
 !stresstest/.gitkeep
+
+# ignore files that are converted from non yomitan dicts
+input_files/**
