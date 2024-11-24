@@ -19,9 +19,16 @@ void main() {
     // convert krad / radk file
     final kradPath = 'input_files/kradzip/kradfile2';
     final radkPath = 'input_files/kradzip/radkfilex';
+    Stopwatch s = Stopwatch()..start();
     await convertRadicals(radkPath, kradPath, db);
+    print("Converting radicals took: ${s.elapsedMilliseconds}ms");
 
-    //db.dao
+    for (var kanji in ["丂", ""]) {
+
+      List<String> radicals = await db.radicalDao.getKanjiRadicals(kanji);
+      print(radicals);
+
+    }
 
   });
 }

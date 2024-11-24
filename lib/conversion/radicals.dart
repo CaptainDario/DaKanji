@@ -18,40 +18,46 @@ Future convertRadicals(String radkPath, String kradPath, DaKanjiDB db) async {
   final radkMap = convertRadkToMap(radkPath);
   Map<String, int> radicalIds = {};
 
-  // add all radicals to sqlite and get their ID
-  for (MapEntry<String, Tuple2<int, List<String>>> radkItem in radkMap.entries) {
-      
-    int id = await db.into(db.radicalsTable).insert(
-      RadicalsTableCompanion(
-        radical: Value(radkItem.key), strokeCount: Value(radkItem.value.item1))
-    );
-    radicalIds[radkItem.key] = id;
+  // 
+  List<RadicalKanjiRelationsTableCompanion> radKanRel = [];
 
-  }
-
-  // add all kanji and the links between kanji <--> radical
-  for (var kradItem in kradMap.entries) {
+  await db.transaction(() async {
     
-    // add the kanji into the db
-    int id = await db.into(db.radicalsKanjiTable).insert(
-      RadicalsKanjiTableCompanion(radicalKanji: Value(kradItem.key))
-    );
-
-    // create the realtionships between kanji and radical
-    for (var radical in kradItem.value) {
-
-      if(["", " "].contains(radical)) continue;
-      
-      await db.into(db.radicalKanjiRelationsTable).insert(
-        RadicalKanjiRelationsTableCompanion(
-          kanjiId: Value(id),
-          radicalId: Value(radicalIds[radical]!)
-        )
+    // add all radicals to sqlite and get their ID
+    for (MapEntry<String, Tuple2<int, List<String>>> radkItem in radkMap.entries) {
+        
+      int id = await db.into(db.radicalsTable).insert(
+        RadicalsTableCompanion(
+          radical: Value(radkItem.key), strokeCount: Value(radkItem.value.item1))
       );
+      radicalIds[radkItem.key] = id;
 
     }
 
-  }
+    // add all kanji and the links between kanji <--> radical
+    for (var kradItem in kradMap.entries) {
+      
+      // add the kanji into the db
+      int id = await db.into(db.radicalsKanjiTable).insert(
+        RadicalsKanjiTableCompanion(radicalKanji: Value(kradItem.key))
+      );
+
+      // create the realtionships between kanji and radical
+      for (var radical in kradItem.value) {
+
+        if(["", " "].contains(radical)) continue;
+
+        radKanRel.add(RadicalKanjiRelationsTableCompanion(
+          kanjiId: Value(id),
+          radicalId: Value(radicalIds[radical]!)
+        ));
+      }
+    }
+  },);
+
+  db.batch((batch) {
+    batch.insertAll(db.radicalKanjiRelationsTable, radKanRel);
+  });
 
 }
 
