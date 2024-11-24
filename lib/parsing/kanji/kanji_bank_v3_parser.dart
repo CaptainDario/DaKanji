@@ -144,7 +144,7 @@ Future<void> parseKanji(String jsonKanji, KanjiBankV3ParserRefs refs, DaKanjiDB 
       ++refs.kanjiId;
   refs.kanjiCompanions.add(KanjiBankV3TableCompanion(
     id: Value(refs.kanjiInsertId),
-    kanji: Value(jsonKanji),
+    dictionaryKanji: Value(jsonKanji),
     dictId: Value(refs.dictId)
   ));
 

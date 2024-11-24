@@ -4,7 +4,7 @@ import 'package:drift/drift.dart';
 
 
 /// Contains the main Kanji entries to which the other tables link
-@TableIndex(name: 'kanji', columns: {#kanji})
+@TableIndex(name: 'dictionaryKanji', columns: {#dictionaryKanji})
 class KanjiBankV3Table extends Table {
 
   @override
@@ -15,7 +15,7 @@ class KanjiBankV3Table extends Table {
 
   /// the kanji character of this entry
   /// this column is indexed
-  TextColumn get kanji => text().withLength(min: 1)();
+  TextColumn get dictionaryKanji => text().withLength(min: 1)();
 
   /// The id of the dictionary this entry belongs to
   IntColumn get dictId => integer().references(IndexTable, #id)();

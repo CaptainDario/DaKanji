@@ -30,7 +30,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   Future<int?> getKanjiId(String kanji, int dictId) async {
 
     final result = await db.managers.kanjiBankV3Table
-      .filter((f) => f.kanji(kanji) & f.dictId.id(dictId))
+      .filter((f) => f.dictionaryKanji(kanji) & f.dictId.id(dictId))
       .getSingleOrNull();
 
     return result?.id;

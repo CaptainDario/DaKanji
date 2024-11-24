@@ -3,6 +3,9 @@ import 'package:dakanji_db/database/index/index_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_dao.dart';
+import 'package:dakanji_db/database/radicals/radical_dao.dart';
+import 'package:dakanji_db/database/radicals/radical_relation_tables.dart';
+import 'package:dakanji_db/database/radicals/radical_tables.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_dao.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_relation_tables.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
@@ -15,6 +18,8 @@ part 'dakanji_db.g.dart';
 
 
 @DriftDatabase(tables: [
+    RadicalsKanjiTable, RadicalsTable, RadicalKanjiRelationsTable,
+
     IndexTable,
 
     TagBankV3Table,
@@ -30,6 +35,7 @@ part 'dakanji_db.g.dart';
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable, 
   ],
   daos: [
+    RadicalDao,
     IndexDao, TagBankV3Dao, KanjiBankV3Dao
   ]
 )
@@ -52,7 +58,7 @@ class DaKanjiDB extends _$DaKanjiDB {
         // causes "database locked" errors.
         // With write-ahead logging (WAL) enabled, a single writer and multiple
         // readers can operate on the database in parallel.
-        database.execute('pragma journal_mode = WAL;');
+        //database.execute('pragma journal_mode = WAL;');
       },
       readPool: 6
     );

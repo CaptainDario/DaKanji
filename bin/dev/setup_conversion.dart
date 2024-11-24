@@ -5,6 +5,7 @@ import 'package:tuple/tuple.dart';
 
 
 
+/// Enum for the different dictionaries that can be converted
 enum ConversionTarget {
 
   sample,
@@ -12,6 +13,7 @@ enum ConversionTarget {
 
 }
 
+/// Helper function that sets up the conversion for testing / dev purposes
 Tuple2<Directory, DaKanjiDB> setupConversion(ConversionTarget c) {
   
   // get path to the testing files
@@ -24,7 +26,6 @@ Tuple2<Directory, DaKanjiDB> setupConversion(ConversionTarget c) {
       dictPath = p.joinAll([Directory.current.path, "stresstest", "KANJIDIC_english"]);
       break;
   }
-  print("Reading json from $dictPath");
 
   // create the testing database (delete any existing database)
   String dbPath = p.joinAll([Directory.current.path, "tmp", "dakanji.db"]);

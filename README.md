@@ -114,17 +114,9 @@ Theses additional databases are first parsed from their own representation into 
 
 The [KanjiVG](https://kanjivg.tagaini.net/) project contains detailed stroke order diagrams of many kanji.
 
-[Download](https://github.com/KanjiVG/kanjivg/releases).
-
-UPDATE HERE WITH INSTRUCTIONS HOW TO PARSE THE PROJECT
-
 ##### RADKFILE/KRADFILE
 
 The [RADKFILE/KRADFILE](https://www.edrdg.org/krad/kradinf.html) project contains information about radicals used by kanjis.
-
-[**Download**](http://ftp.edrdg.org/pub/Nihongo/kradzip.zip)
-
-UPDATE HERE WITH INSTRUCTIONS HOW TO PARSE THE PROJECT
 
 ##### Tatoeba
 
