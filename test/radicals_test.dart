@@ -9,6 +9,15 @@ import '../bin/dev/setup_conversion.dart';
 
 
 
+/// List of kanjis of which the radicals should be looked up and the expected
+/// result
+List<Tuple2<String, List<String>>> radicalLookuptests = [
+  Tuple2("丂", ["一", "勹"]),
+  Tuple2("漢", ["⺡", "⺾", "口", "一", "大", "二"]),
+  Tuple2("鬱", ["缶", "木", "冖", "凵", "匕", "彡", "鬯"]),
+  Tuple2("暚", ["凵", "山", "日", "曰", "爪", "缶"]),
+];
+
 void main() {
   test('Radical conversion', () async {
     
@@ -17,18 +26,20 @@ void main() {
     final DaKanjiDB db = t.item2;
 
     // convert krad / radk file
-    final kradPath = 'input_files/kradzip/kradfile2';
-    final radkPath = 'input_files/kradzip/radkfilex';
+    final radicalsPath = 'input_files/';
     Stopwatch s = Stopwatch()..start();
-    await convertRadicals(radkPath, kradPath, db);
+    await convertRadicals(radicalsPath, db);
     print("Converting radicals took: ${s.elapsedMilliseconds}ms");
 
-    for (var kanji in ["丂", ""]) {
+    // test radical lookups
+    for (final testCase in radicalLookuptests) {
 
-      List<String> radicals = await db.radicalDao.getKanjiRadicals(kanji);
-      print(radicals);
+      List<String> radicals = await db.radicalDao.getKanjiRadicals(testCase.item1);
+      expect(radicals, testCase.item2);
 
     }
+
+    // test kanji lookup from radicals
 
   });
 }

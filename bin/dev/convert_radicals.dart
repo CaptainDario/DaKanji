@@ -13,9 +13,8 @@ void main() async {
   final db = t.item2;
 
   // convert krad / radk file
-  final kradPath = 'input_files/kradzip/kradfile2';
-  final radkPath = 'input_files/kradzip/radkfilex';
-  await convertRadicals(radkPath, kradPath, db);
+  final radicalPath = 'input_files/';
+  await convertRadicals(radicalPath, db);
 
   exit(0);
 

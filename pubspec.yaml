@@ -13,7 +13,6 @@ dependencies:
   sqlite3: 2.4.7
   archive: 3.6.1
   tuple: 2.0.2
-  euc: 1.0.6+8
 
 dev_dependencies:
   drift_dev: 2.21.0

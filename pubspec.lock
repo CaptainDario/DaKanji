@@ -215,14 +215,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.21.0"
-  euc:
-    dependency: "direct main"
-    description:
-      name: euc
-      sha256: "569b21c71ee5a3aa3e96f70512cd10d1fad7b438429fade65ec2a50038a09dc5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.6+8"
   ffi:
     dependency: transitive
     description:

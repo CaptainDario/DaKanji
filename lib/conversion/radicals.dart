@@ -1,123 +1,134 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:drift/drift.dart';
-import 'package:euc/euc.dart';
-import 'package:tuple/tuple.dart';
+import 'package:path/path.dart' as p;
 
+
+
+Map<String, String> codeLookup = {
+  "js01" : "⺅", // 化
+  "js02" : "𠆢", // 个
+  "js07" : "丷", // 并
+  "3331" : "⺉", // 刈
+  "js10" : "𠂉", // 乞
+  "6134" : "⻌", // 込
+  "js04" : "⺌", // 尚
+  "3D38" : "⺖", // 忙
+  "3F37" : "扌", // 扎
+  "4653" : "⺡", // 汁
+  "4A6D" : "⺨", // 犯
+  "js03" : "⺾", // 艾
+  "js05" : "⺹", // 老
+  "4944" : "⺣", // 杰
+  "504B" : "⺭", // 礼
+  "4D46" : "⽧", // 疔
+  "5072" : "⽱", // 禹
+  "5C33" : "⻂", // 初
+  "5474" : "⺲", // 買
+  "3557" : "啇", // 滴
+  "kozatoR" : "⻏", // 邦
+  "kozatoL" : "⻖", // 阡
+};
+
+Map<String, String> kanjiCodeLookup = {
+  "化" : "⺅",
+  "个" : "𠆢",
+  "并" : "丷",
+  "刈" : "⺉",
+  "乞" : "𠂉", 
+  "込" : "⻌", 
+  "尚" : "⺌", 
+  "忙" : "⺖", 
+  "扎" : "扌", 
+  "汁" : "⺡", 
+  "犯" : "⺨", 
+  "艾" : "⺾", 
+  "老" : "⺹", 
+  "杰" : "⺣", 
+  "礼" : "⺭", 
+  "疔" : "⽧", 
+  "禹" : "⽱", 
+  "初" : "⻂", 
+  "買" : "⺲", 
+  "滴" : "啇", 
+  "邦" : "⻏", 
+  "阡" : "⻖", 
+};
 
 
 /// Converts the radk and krad file at the given paths and adds them to the
 /// given DaKanji db
-Future convertRadicals(String radkPath, String kradPath, DaKanjiDB db) async {
+Future convertRadicals(String radicalPath, DaKanjiDB db) async {
 
-  // load krad - example entry:
-  //    丂 : [, 一, 勹]
-  final kradMap = convertKradToMap(kradPath);
-  // load radk: example entry
-  //    一: [1, [亜, 唖, 阿, 姶, 悪, 芦, 或, 袷, 夷, 椅, 畏, ...]
-  final radkMap = convertRadkToMap(radkPath);
-  Map<String, int> radicalIds = {};
+  // load radical files
+  String radkPath = Directory(radicalPath).listSync()
+    .where((e) => p.basename(e.path).startsWith("radkfile"))
+    .first.path;
+  Map radkMap = jsonDecode(File(radkPath).readAsStringSync())["radicals"];
+  String kradPath = Directory(radicalPath).listSync()
+    .where((e) => p.basename(e.path).startsWith("kradfile"))
+    .first.path;
+  Map kradMap = jsonDecode(File(kradPath).readAsStringSync())["kanji"];
 
-  // 
-  List<RadicalKanjiRelationsTableCompanion> radKanRel = [];
+  // Lists to store the companions to later batch insert them into SQLite
+  List<RadicalsTableCompanion> radComps = [
+    RadicalsTableCompanion(id: Value(1), radical: Value("龠"), strokeCount: Value(17))
+  ];
+  List<RadicalsKanjiTableCompanion> radKanComps = [];
+  List<RadicalKanjiRelationsTableCompanion> radKanRelComps = [];
 
-  await db.transaction(() async {
-    
-    // add all radicals to sqlite and get their ID
-    for (MapEntry<String, Tuple2<int, List<String>>> radkItem in radkMap.entries) {
-        
-      int id = await db.into(db.radicalsTable).insert(
-        RadicalsTableCompanion(
-          radical: Value(radkItem.key), strokeCount: Value(radkItem.value.item1))
-      );
-      radicalIds[radkItem.key] = id;
+  // ids of radicals in the sqlite db
+  Map<String, int> radicalIds = {
+    "龠" : 1
+  };
+  
 
-    }
-
-    // add all kanji and the links between kanji <--> radical
-    for (var kradItem in kradMap.entries) {
+  // add all radicals to sqlite and get their ID
+  int radId = radComps.length;
+  for (var radkItem in radkMap.entries) {
+    String radical = radkItem.value["code"] == null
+      ? radkItem.key
+      : codeLookup[radkItem.value["code"]];
       
-      // add the kanji into the db
-      int id = await db.into(db.radicalsKanjiTable).insert(
-        RadicalsKanjiTableCompanion(radicalKanji: Value(kradItem.key))
-      );
+    radComps.add(
+      RadicalsTableCompanion(
+        id: Value(++radId),
+        radical: Value(radical),
+        strokeCount: Value(radkItem.value["strokeCount"]))
+    );
+    radicalIds[radical] = radId;
+  }
 
-      // create the realtionships between kanji and radical
-      for (var radical in kradItem.value) {
+  // add all kanji and the links between kanji <--> radical
+  int kanjiId = 0;
+  for (var kradItem in kradMap.entries) {
+    
+    // add the kanji into the db
+    radKanComps.add(
+      RadicalsKanjiTableCompanion(id: Value(++kanjiId), radicalKanji: Value(kradItem.key))
+    );
 
-        if(["", " "].contains(radical)) continue;
+    // create the realtionships between kanji and radical
+    for (var radical in kradItem.value) {
 
-        radKanRel.add(RadicalKanjiRelationsTableCompanion(
-          kanjiId: Value(id),
-          radicalId: Value(radicalIds[radical]!)
-        ));
-      }
+      if(["", " "].contains(radical)) continue;
+
+      radKanRelComps.add(RadicalKanjiRelationsTableCompanion(
+        kanjiId: Value(kanjiId),
+        radicalId: Value(
+          (kanjiCodeLookup[radical] != null
+            ? radicalIds[kanjiCodeLookup[radical]]  
+            : radicalIds[radical])!
+        )
+      ));
     }
-  },);
+  }
 
-  db.batch((batch) {
-    batch.insertAll(db.radicalKanjiRelationsTable, radKanRel);
+  await db.batch((batch) {
+    batch.insertAll(db.radicalKanjiRelationsTable, radKanRelComps);
+    batch.insertAll(db.radicalsKanjiTable, radKanComps);
+    batch.insertAll(db.radicalsTable, radComps);
   });
-
-}
-
-/// Reads the Radk file at the given `filePath` and returns a map containing
-/// its contents
-Map<String, Tuple2<int, List<String>>> convertRadkToMap(String filePath){
-
-  // Open the file and read its contents with a specific encoding
-  final file = File(filePath);
-  final content = file.readAsBytesSync();
-  final decoded = EucJP().decode(content);
-  final lines = decoded.split("\n");
-
-  Map<String, Tuple2<int, List<String>>> radicalToKanji = {};
-  for (var i = 0; i < lines.length; i++) {
-    
-    String line = lines[i];
-    List<String> lineSplit = line.split(" ");
-
-    if(line.startsWith("#")){
-      continue;
-    }
-    else if(line.startsWith("\$")){
-      radicalToKanji[lineSplit[1]] = Tuple2(
-        int.parse(lineSplit[2]), lines[++i].split(""));
-    }
-    
-  }
-
-  return radicalToKanji;
-
-}
-
-/// Reads the Krad file at the given `filePath` and returns a map containing
-/// its contents
-Map<String, List<String>> convertKradToMap(String filePath){
-
-  // Open the file and read its contents with a specific encoding
-  final file = File(filePath);
-  final content = file.readAsBytesSync();
-  final decoded = EucJP().decode(content);
-  final lines = decoded.split("\n");
-
-  Map<String, List<String>> kanjiToRadical = {};
-  for (var i = 0; i < lines.length; i++) {
-
-    String line = lines[i];
-
-    if(line.startsWith("#") || line == ""){
-      continue;
-    }
-    
-    List<String> lineSplit = line.split(":");
-    String kanji = lineSplit[0];
-    List<String> radicals = lineSplit[1].split(" ");
-    
-    kanjiToRadical[kanji] = radicals;
-    
-  }
-
-  return kanjiToRadical;
 
 }

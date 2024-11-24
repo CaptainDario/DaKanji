@@ -114,10 +114,24 @@ Theses additional databases are first parsed from their own representation into 
 
 The [KanjiVG](https://kanjivg.tagaini.net/) project contains detailed stroke order diagrams of many kanji.
 
-##### RADKFILE/KRADFILE
+##### RADKFILE/KRADFILE ✅
 
 The [RADKFILE/KRADFILE](https://www.edrdg.org/krad/kradinf.html) project contains information about radicals used by kanjis.
 
-##### Tatoeba
+For easier processing DaKanji uses the [jmdict-simplified project](https://github.com/scriptin/jmdict-simplified) as a basis.
+
+##### Tatoeba (Any examples file in the right format)
 
 UPDATE HERE
+
+##### Kanjium
+
+###### Antonyms
+
+###### Kanjidict
+
+###### Lookalikes
+
+###### Synonyms
+
+##### KLC
