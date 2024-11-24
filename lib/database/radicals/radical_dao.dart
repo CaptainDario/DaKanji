@@ -45,5 +45,36 @@ class RadicalDao extends DatabaseAccessor<DaKanjiDB> with _$RadicalDaoMixin {
 
     return result;
   }
+
+  /// Gets all kanjis that ues the given radicals
+  Future<List<String>> getKanjisThatUseRadicals(List<String> radicals) async{
+
+    // First, get the radical IDs for the provided radical characters
+    final radicalQuery = select(radicalsTable)
+      ..where((tbl) => tbl.radical.isIn(radicals));
+    final radicalIds = await radicalQuery.map((row) => row.id).get();
+
+    // If no matching radicals found, return empty list
+    if (radicalIds.isEmpty) {
+      return [];
+    }
+
+    // Create a subquery to count how many of the requested radicals each kanji uses
+    final relationSubquery = selectOnly(radicalKanjiRelationsTable)
+      ..addColumns([radicalKanjiRelationsTable.kanjiId])
+      ..where(radicalKanjiRelationsTable.radicalId.isIn(radicalIds))
+      ..groupBy(
+        [radicalKanjiRelationsTable.kanjiId,],
+        having: countAll().equals(radicalIds.length)
+      );
+
+    // Get the kanji characters that use all the specified radicals
+    final kanjiQuery = select(radicalsKanjiTable)
+      ..where((tbl) => tbl.id.isInQuery(relationSubquery));
+
+    final results = await kanjiQuery.map((row) => row.radicalKanji).get();
+    return results;
+
+  }
   
 }

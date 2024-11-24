@@ -18,6 +18,14 @@ List<Tuple2<String, List<String>>> radicalLookuptests = [
   Tuple2("暚", ["凵", "山", "日", "曰", "爪", "缶"]),
 ];
 
+List<Tuple2<List<String>, dynamic>> kanjiLookuptests = [
+  Tuple2(["一"], 2713),
+  Tuple2(["一", "勹"], 111),
+  Tuple2(["⺡", "⺾", "口", "一", "大", "二"], "漢"),
+  Tuple2(["缶", "木", "冖", "凵", "匕", "彡", "鬯"], "鬱"),
+  Tuple2(["凵", "山", "日", "曰", "爪", "缶"], "暚"),
+];
+
 void main() {
   test('Radical conversion', () async {
     
@@ -40,6 +48,17 @@ void main() {
     }
 
     // test kanji lookup from radicals
+    for (var testCase in kanjiLookuptests) {
+
+      List<String> kanjis = await db.radicalDao.getKanjisThatUseRadicals(testCase.item1);
+      if(testCase.item2 is int){
+        expect(kanjis.length, testCase.item2);
+      }
+      else if(testCase.item2 is String){
+        expect(kanjis.first, testCase.item2);
+      }
+      
+    }
 
   });
 }
