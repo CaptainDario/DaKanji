@@ -42,15 +42,21 @@ void main() {
     // test radical lookups
     for (final testCase in radicalLookuptests) {
 
+      s.reset();
       List<String> radicals = await db.radicalDao.getKanjiRadicals(testCase.item1);
+      print("Looking up radicals of ${testCase.item1} took ${s.elapsedMilliseconds}ms");
+      
       expect(radicals, testCase.item2);
 
     }
 
     // test kanji lookup from radicals
     for (var testCase in kanjiLookuptests) {
-
+      
+      s.reset();
       List<String> kanjis = await db.radicalDao.getKanjisThatUseRadicals(testCase.item1);
+      print("Looking up kanjis that use ${testCase.item1} took ${s.elapsedMilliseconds}ms");
+
       if(testCase.item2 is int){
         expect(kanjis.length, testCase.item2);
       }
