@@ -18,6 +18,7 @@ List<Tuple2<String, List<String>>> radicalLookuptests = [
   Tuple2("暚", ["凵", "山", "日", "曰", "爪", "缶"]),
 ];
 
+/// List of radicals of which kanjis that use those should be looked up
 List<Tuple2<List<String>, dynamic>> kanjiLookuptests = [
   Tuple2(["一"], 2713),
   Tuple2(["一", "勹"], 111),
