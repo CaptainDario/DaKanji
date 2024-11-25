@@ -6,6 +6,8 @@ import 'package:path/path.dart' as p;
 
 
 
+/// map to lookup the code that is stored in the krad/radk file to an actual
+/// radical
 Map<String, String> codeLookup = {
   "js01" : "⺅", // 化
   "js02" : "𠆢", // 个
@@ -31,6 +33,8 @@ Map<String, String> codeLookup = {
   "kozatoL" : "⻖", // 阡
 };
 
+/// map to lookup the character that is used to indicate a radica in the krad/
+/// radk file to an actual radical
 Map<String, String> kanjiCodeLookup = {
   "化" : "⺅",
   "个" : "𠆢",
