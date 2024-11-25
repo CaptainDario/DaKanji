@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dakanji_db/database/dakanji_db.dart';
+import 'package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
 
 
@@ -12,62 +13,67 @@ class KanjiBankV3ParserRefs {
   /// The SQLite id of the dictionary that is currently being parsed
   int dictId = 0;
 
-  // TODO - add documentation
-  ///
+  /// List of [KanjiBankV3TableCompanion] that should be batch inserted
   List<KanjiBankV3TableCompanion> kanjiCompanions = [];
-  /// 
+  /// The currently highest id in the [KanjiBankV3Table]
   int kanjiId = 0;
-  /// 
+  /// The id used to insert the last kanji into the [KanjiBankV3TableCompanion]
   int kanjiInsertId = 0;
 
-  ///
+  /// List of [KanjiBankV3OnyomisTableCompanion] that should be batch inserted
   List<KanjiBankV3OnyomisTableCompanion> onyomiCompanions  = [];
-  /// 
+  /// The currently highest id in the [KanjiBankV3OnyomisTable]
   int onyomiId = 0;
-  ///
+  /// List of [KanjiBankV3OnyomiKanjiRelationsTableCompanion] that should be batch inserted
   List<KanjiBankV3OnyomiKanjiRelationsTableCompanion> onyomiRelCompanions = [];
-  ///
+  /// A local cache for onyomis. Every onyomi should only be looked up once
+  /// in the database
   Map<String, int> seenOnyomis = {};
   
-  ///
+  /// List of [KanjiBankV3KunyomisTableCompanion] that should be batch inserted
   List<KanjiBankV3KunyomisTableCompanion> kunyomiCompanions  = [];
-  /// 
+  /// The currently highest id in the [KanjiBankV3KunyomisTable]
   int kunyomiId = 0;
-  ///
+  /// List of [KanjiBankV3KunyomiKanjiRelationsTableCompanion] that should be batch inserted
   List<KanjiBankV3KunyomiKanjiRelationsTableCompanion> kunyomiRelCompanions = [];
-  ///
+  /// A local cache for kunyomis. Every kunyomi should only be looked up once
+  /// in the database
   Map<String, int> seenKunyomis = {};
-
-  /// 
-  int tagId = 0;
-  ///
+  
+  /// List of [KanjiBankV3TagsKanjiRelationsTableCompanion] that should be batch inserted
   List<KanjiBankV3TagsKanjiRelationsTableCompanion> tagRelCompanions = [];
-  ///
+  /// The currently highest id in the [KanjiBankV3TagsKanjiRelationsTableData]
+  int tagId = 0;
+  /// A local cache for tags. Every tag should only be looked up once
+  /// in the database
   Map<String, int> seenTags = {};
-
-  ///
+  
+  /// List of [KanjiBankV3MeaningsTableCompanion] that should be batch inserted
   List<KanjiBankV3MeaningsTableCompanion> meaningsCompanions  = [];
-  /// 
+  /// The currently highest id in the [KanjiBankV3MeaningsTable]
   int meaningId = 0;
-  ///
+  /// List of [KanjiBankV3MeaningsKanjiRelationsTableCompanion] that should be batch inserted
   List<KanjiBankV3MeaningsKanjiRelationsTableCompanion> meaningRelCompanions = [];
-  ///
+  /// A local cache for meanings. Every meaning should only be looked up once
+  /// in the database
   Map<String, int> seenMeanings = {};
 
-
-  ///
+  
+  /// List of [KanjiBankV3StatNamesTableCompanion] that should be batch inserted
   List<KanjiBankV3StatNamesTableCompanion> statNamesCompanions  = [];
-  ///
+  /// List of [KanjiBankV3StatValuesTableCompanion] that should be batch inserted
   List<KanjiBankV3StatValuesTableCompanion> statValuesCompanions  = [];
-  ///
+  /// The currently highest id in the [KanjiBankV3StatValuesTable]
   int statNamesId = 0;
-  ///
+  /// The currently highest id in the [KanjiBankV3StatNamesTable]
   int statValuesId = 0;
-  ///
+  /// List of [KanjiBankV3StatKanjiRelationsTableCompanion] that should be batch inserted
   List<KanjiBankV3StatKanjiRelationsTableCompanion> statValueRelCompanions = [];
-  ///
+  /// A local cache for stat names. Every stat name should only be looked up
+  /// once in the database
   Map<String, int> seenStatNames = {};
-  ///
+  /// A local cache for stat values. Every stat value should only be looked up
+  /// once in the database
   Map<String, int> seenStatValues = {};
 
 }
