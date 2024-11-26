@@ -49,7 +49,7 @@ class DaKanjiDB extends _$DaKanjiDB {
   // and a constructor telling drift where the database should be stored.
   // These are described in the getting started guide: https://drift.simonbinder.eu/getting-started/#open
   DaKanjiDB({
-    String? path,
+    this.path,
     QueryExecutor? executor,
   }) : super(executor ?? _openConnection(path!));
 
@@ -76,8 +76,8 @@ class DaKanjiDB extends _$DaKanjiDB {
   Future deleteDB() async {
 
     await close();
-
-    File(path!).deleteSync();
+    String p = path!;
+    File(p).deleteSync();
 
   }
 
