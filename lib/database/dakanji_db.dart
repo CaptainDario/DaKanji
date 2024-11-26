@@ -50,10 +50,13 @@ class DaKanjiDB extends _$DaKanjiDB {
   // These are described in the getting started guide: https://drift.simonbinder.eu/getting-started/#open
   DaKanjiDB({
     String? path,
-    QueryExecutor? executor
+    QueryExecutor? executor,
   }) : super(executor ?? _openConnection(path!));
+
   @override
   int get schemaVersion => 1;
+  /// The path of this db
+  String? path;
 
   static QueryExecutor _openConnection(String path) {
     return NativeDatabase.createInBackground(
@@ -67,6 +70,15 @@ class DaKanjiDB extends _$DaKanjiDB {
       },
       readPool: 6
     );
+  }
+
+  /// **WARNING**: This closes the database and deletes ALL its content
+  Future deleteDB() async {
+
+    await close();
+
+    File(path!).deleteSync();
+
   }
 
 }
