@@ -76,8 +76,10 @@ class DaKanjiDB extends _$DaKanjiDB {
   Future deleteDB() async {
 
     await close();
-    String p = path!;
-    File(p).deleteSync();
+    File file = File(path!);
+    if(file.existsSync()){
+      file.deleteSync();
+    }
 
   }
 
