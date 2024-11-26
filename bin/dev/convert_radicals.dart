@@ -14,7 +14,7 @@ void main() async {
 
   // convert krad / radk file
   final radicalPath = 'input_files/';
-  await convertRadicals(radicalPath, db);
+  await addRadicalsToDB(radicalPath, db);
 
   exit(0);
 

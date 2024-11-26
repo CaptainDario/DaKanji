@@ -63,7 +63,7 @@ Map<String, String> kanjiCodeLookup = {
 
 /// Converts the radk and krad file at the given paths and adds them to the
 /// given DaKanji db
-Future convertRadicals(String radicalPath, DaKanjiDB db) async {
+Future addRadicalsToDB(String radicalPath, DaKanjiDB db) async {
 
   // load radical files
   String radkPath = Directory(radicalPath).listSync()
