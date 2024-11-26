@@ -1,6 +1,7 @@
 name: dakanji_db
 description: Scripts to populate DaKanji's database
 repository: https://github.com/captaindario/dakanji-db
+publish_to: none
 version: 4.0.0
 
 environment:
@@ -11,11 +12,13 @@ dependencies:
   path: 1.9.1
   drift: 2.21.0
   sqlite3: 2.4.7
-  archive: 3.6.1
+  archive:
+    git:
+      url: https://github.com/brendan-duncan/archive
   tuple: 2.0.2
 
 dev_dependencies:
-  drift_dev: 2.21.0
+  drift_dev: 2.21.2
   build_runner: 2.4.13
 
   lints: 4.0.0

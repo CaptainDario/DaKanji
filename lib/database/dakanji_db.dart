@@ -3,6 +3,8 @@ import 'package:dakanji_db/database/index/index_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_dao.dart';
+import 'package:dakanji_db/database/kanji_vg/kanji_vg_dao.dart';
+import 'package:dakanji_db/database/kanji_vg/kanji_vg_tables.dart';
 import 'package:dakanji_db/database/radicals/radical_dao.dart';
 import 'package:dakanji_db/database/radicals/radical_relation_tables.dart';
 import 'package:dakanji_db/database/radicals/radical_tables.dart';
@@ -12,6 +14,7 @@ import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
 import 'dart:io';
 import 'package:drift/native.dart';
+import 'package:dakanji_db/converters/zlib_text_converter.dart';
 
 part 'dakanji_db.g.dart';
 
@@ -19,6 +22,7 @@ part 'dakanji_db.g.dart';
 
 @DriftDatabase(tables: [
     RadicalsKanjiTable, RadicalsTable, RadicalKanjiRelationsTable,
+    KanjiVGTable,
 
     IndexTable,
 
@@ -35,9 +39,10 @@ part 'dakanji_db.g.dart';
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable, 
   ],
   daos: [
-    RadicalDao,
+    RadicalDao, KanjiVGDao,
     IndexDao, TagBankV3Dao, KanjiBankV3Dao
-  ]
+  ],
+  
 )
 class DaKanjiDB extends _$DaKanjiDB {
   // After generating code, this class needs to define a schemaVersion getter

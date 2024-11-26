@@ -668,6 +668,247 @@ class RadicalKanjiRelationsTableCompanion
   }
 }
 
+class $KanjiVGTableTable extends KanjiVGTable
+    with TableInfo<$KanjiVGTableTable, KanjiVGTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiVGTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _kanjiVGKanjiMeta =
+      const VerificationMeta('kanjiVGKanji');
+  @override
+  late final GeneratedColumn<String> kanjiVGKanji =
+      GeneratedColumn<String>('kanji_v_g_kanji', aliasedName, false,
+          additionalChecks: GeneratedColumn.checkTextLength(
+            minTextLength: 1,
+          ),
+          type: DriftSqlType.string,
+          requiredDuringInsert: true);
+  static const VerificationMeta _kanjiVGSVGMeta =
+      const VerificationMeta('kanjiVGSVG');
+  @override
+  late final GeneratedColumnWithTypeConverter<String, Uint8List> kanjiVGSVG =
+      GeneratedColumn<Uint8List>('kanji_v_g_s_v_g', aliasedName, false,
+              type: DriftSqlType.blob, requiredDuringInsert: true)
+          .withConverter<String>($KanjiVGTableTable.$converterkanjiVGSVG);
+  @override
+  List<GeneratedColumn> get $columns => [id, kanjiVGKanji, kanjiVGSVG];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_v_g_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<KanjiVGTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('kanji_v_g_kanji')) {
+      context.handle(
+          _kanjiVGKanjiMeta,
+          kanjiVGKanji.isAcceptableOrUnknown(
+              data['kanji_v_g_kanji']!, _kanjiVGKanjiMeta));
+    } else if (isInserting) {
+      context.missing(_kanjiVGKanjiMeta);
+    }
+    context.handle(_kanjiVGSVGMeta, const VerificationResult.success());
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  KanjiVGTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiVGTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      kanjiVGKanji: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}kanji_v_g_kanji'])!,
+      kanjiVGSVG: $KanjiVGTableTable.$converterkanjiVGSVG.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.blob, data['${effectivePrefix}kanji_v_g_s_v_g'])!),
+    );
+  }
+
+  @override
+  $KanjiVGTableTable createAlias(String alias) {
+    return $KanjiVGTableTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<String, Uint8List> $converterkanjiVGSVG =
+      const CompressedStringConverter();
+}
+
+class KanjiVGTableData extends DataClass
+    implements Insertable<KanjiVGTableData> {
+  /// id of this entry
+  final int id;
+
+  /// the kanji character of this entry
+  ///
+  /// **Note:** this column is indexed
+  final String kanjiVGKanji;
+
+  /// The svg data of this kanji
+  final String kanjiVGSVG;
+  const KanjiVGTableData(
+      {required this.id, required this.kanjiVGKanji, required this.kanjiVGSVG});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['kanji_v_g_kanji'] = Variable<String>(kanjiVGKanji);
+    {
+      map['kanji_v_g_s_v_g'] = Variable<Uint8List>(
+          $KanjiVGTableTable.$converterkanjiVGSVG.toSql(kanjiVGSVG));
+    }
+    return map;
+  }
+
+  KanjiVGTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiVGTableCompanion(
+      id: Value(id),
+      kanjiVGKanji: Value(kanjiVGKanji),
+      kanjiVGSVG: Value(kanjiVGSVG),
+    );
+  }
+
+  factory KanjiVGTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiVGTableData(
+      id: serializer.fromJson<int>(json['id']),
+      kanjiVGKanji: serializer.fromJson<String>(json['kanjiVGKanji']),
+      kanjiVGSVG: serializer.fromJson<String>(json['kanjiVGSVG']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'kanjiVGKanji': serializer.toJson<String>(kanjiVGKanji),
+      'kanjiVGSVG': serializer.toJson<String>(kanjiVGSVG),
+    };
+  }
+
+  KanjiVGTableData copyWith(
+          {int? id, String? kanjiVGKanji, String? kanjiVGSVG}) =>
+      KanjiVGTableData(
+        id: id ?? this.id,
+        kanjiVGKanji: kanjiVGKanji ?? this.kanjiVGKanji,
+        kanjiVGSVG: kanjiVGSVG ?? this.kanjiVGSVG,
+      );
+  KanjiVGTableData copyWithCompanion(KanjiVGTableCompanion data) {
+    return KanjiVGTableData(
+      id: data.id.present ? data.id.value : this.id,
+      kanjiVGKanji: data.kanjiVGKanji.present
+          ? data.kanjiVGKanji.value
+          : this.kanjiVGKanji,
+      kanjiVGSVG:
+          data.kanjiVGSVG.present ? data.kanjiVGSVG.value : this.kanjiVGSVG,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiVGTableData(')
+          ..write('id: $id, ')
+          ..write('kanjiVGKanji: $kanjiVGKanji, ')
+          ..write('kanjiVGSVG: $kanjiVGSVG')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, kanjiVGKanji, kanjiVGSVG);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiVGTableData &&
+          other.id == this.id &&
+          other.kanjiVGKanji == this.kanjiVGKanji &&
+          other.kanjiVGSVG == this.kanjiVGSVG);
+}
+
+class KanjiVGTableCompanion extends UpdateCompanion<KanjiVGTableData> {
+  final Value<int> id;
+  final Value<String> kanjiVGKanji;
+  final Value<String> kanjiVGSVG;
+  const KanjiVGTableCompanion({
+    this.id = const Value.absent(),
+    this.kanjiVGKanji = const Value.absent(),
+    this.kanjiVGSVG = const Value.absent(),
+  });
+  KanjiVGTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String kanjiVGKanji,
+    required String kanjiVGSVG,
+  })  : kanjiVGKanji = Value(kanjiVGKanji),
+        kanjiVGSVG = Value(kanjiVGSVG);
+  static Insertable<KanjiVGTableData> custom({
+    Expression<int>? id,
+    Expression<String>? kanjiVGKanji,
+    Expression<Uint8List>? kanjiVGSVG,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (kanjiVGKanji != null) 'kanji_v_g_kanji': kanjiVGKanji,
+      if (kanjiVGSVG != null) 'kanji_v_g_s_v_g': kanjiVGSVG,
+    });
+  }
+
+  KanjiVGTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? kanjiVGKanji,
+      Value<String>? kanjiVGSVG}) {
+    return KanjiVGTableCompanion(
+      id: id ?? this.id,
+      kanjiVGKanji: kanjiVGKanji ?? this.kanjiVGKanji,
+      kanjiVGSVG: kanjiVGSVG ?? this.kanjiVGSVG,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (kanjiVGKanji.present) {
+      map['kanji_v_g_kanji'] = Variable<String>(kanjiVGKanji.value);
+    }
+    if (kanjiVGSVG.present) {
+      map['kanji_v_g_s_v_g'] = Variable<Uint8List>(
+          $KanjiVGTableTable.$converterkanjiVGSVG.toSql(kanjiVGSVG.value));
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiVGTableCompanion(')
+          ..write('id: $id, ')
+          ..write('kanjiVGKanji: $kanjiVGKanji, ')
+          ..write('kanjiVGSVG: $kanjiVGSVG')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $IndexTableTable extends IndexTable
     with TableInfo<$IndexTableTable, IndexTableData> {
   @override
@@ -4868,6 +5109,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
   late final $RadicalKanjiRelationsTableTable radicalKanjiRelationsTable =
       $RadicalKanjiRelationsTableTable(this);
+  late final $KanjiVGTableTable kanjiVGTable = $KanjiVGTableTable(this);
   late final $IndexTableTable indexTable = $IndexTableTable(this);
   late final $TagBankV3TableTable tagBankV3Table = $TagBankV3TableTable(this);
   late final $TagBankV3CategoryTableTable tagBankV3CategoryTable =
@@ -4908,11 +5150,14 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       'CREATE INDEX radicalKanji ON radicals_kanji_table (radical_kanji)');
   late final Index radical =
       Index('radical', 'CREATE INDEX radical ON radicals_table (radical)');
+  late final Index kanjiVGKanji = Index('kanjiVGKanji',
+      'CREATE INDEX kanjiVGKanji ON kanji_v_g_table (kanji_v_g_kanji)');
   late final Index name =
       Index('name', 'CREATE INDEX name ON tag_bank_v3_table (name)');
   late final Index dictionaryKanji = Index('dictionaryKanji',
       'CREATE INDEX dictionaryKanji ON kanji_bank_v3_table (dictionary_kanji)');
   late final RadicalDao radicalDao = RadicalDao(this as DaKanjiDB);
+  late final KanjiVGDao kanjiVGDao = KanjiVGDao(this as DaKanjiDB);
   late final IndexDao indexDao = IndexDao(this as DaKanjiDB);
   late final TagBankV3Dao tagBankV3Dao = TagBankV3Dao(this as DaKanjiDB);
   late final KanjiBankV3Dao kanjiBankV3Dao = KanjiBankV3Dao(this as DaKanjiDB);
@@ -4924,6 +5169,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         radicalsKanjiTable,
         radicalsTable,
         radicalKanjiRelationsTable,
+        kanjiVGTable,
         indexTable,
         tagBankV3Table,
         tagBankV3CategoryTable,
@@ -4942,6 +5188,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         kanjiBankV3StatKanjiRelationsTable,
         radicalKanji,
         radical,
+        kanjiVGKanji,
         name,
         dictionaryKanji
       ];
@@ -5732,6 +5979,147 @@ typedef $$RadicalKanjiRelationsTableTableProcessedTableManager
         ),
         RadicalKanjiRelationsTableData,
         PrefetchHooks Function({bool kanjiId, bool radicalId})>;
+typedef $$KanjiVGTableTableCreateCompanionBuilder = KanjiVGTableCompanion
+    Function({
+  Value<int> id,
+  required String kanjiVGKanji,
+  required String kanjiVGSVG,
+});
+typedef $$KanjiVGTableTableUpdateCompanionBuilder = KanjiVGTableCompanion
+    Function({
+  Value<int> id,
+  Value<String> kanjiVGKanji,
+  Value<String> kanjiVGSVG,
+});
+
+class $$KanjiVGTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+  $$KanjiVGTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get kanjiVGKanji => $composableBuilder(
+      column: $table.kanjiVGKanji, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<String, String, Uint8List> get kanjiVGSVG =>
+      $composableBuilder(
+          column: $table.kanjiVGSVG,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+}
+
+class $$KanjiVGTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+  $$KanjiVGTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get kanjiVGKanji => $composableBuilder(
+      column: $table.kanjiVGKanji,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<Uint8List> get kanjiVGSVG => $composableBuilder(
+      column: $table.kanjiVGSVG, builder: (column) => ColumnOrderings(column));
+}
+
+class $$KanjiVGTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+  $$KanjiVGTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get kanjiVGKanji => $composableBuilder(
+      column: $table.kanjiVGKanji, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<String, Uint8List> get kanjiVGSVG =>
+      $composableBuilder(
+          column: $table.kanjiVGSVG, builder: (column) => column);
+}
+
+class $$KanjiVGTableTableTableManager extends RootTableManager<
+    _$DaKanjiDB,
+    $KanjiVGTableTable,
+    KanjiVGTableData,
+    $$KanjiVGTableTableFilterComposer,
+    $$KanjiVGTableTableOrderingComposer,
+    $$KanjiVGTableTableAnnotationComposer,
+    $$KanjiVGTableTableCreateCompanionBuilder,
+    $$KanjiVGTableTableUpdateCompanionBuilder,
+    (
+      KanjiVGTableData,
+      BaseReferences<_$DaKanjiDB, $KanjiVGTableTable, KanjiVGTableData>
+    ),
+    KanjiVGTableData,
+    PrefetchHooks Function()> {
+  $$KanjiVGTableTableTableManager(_$DaKanjiDB db, $KanjiVGTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiVGTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$KanjiVGTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$KanjiVGTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> kanjiVGKanji = const Value.absent(),
+            Value<String> kanjiVGSVG = const Value.absent(),
+          }) =>
+              KanjiVGTableCompanion(
+            id: id,
+            kanjiVGKanji: kanjiVGKanji,
+            kanjiVGSVG: kanjiVGSVG,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String kanjiVGKanji,
+            required String kanjiVGSVG,
+          }) =>
+              KanjiVGTableCompanion.insert(
+            id: id,
+            kanjiVGKanji: kanjiVGKanji,
+            kanjiVGSVG: kanjiVGSVG,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$KanjiVGTableTableProcessedTableManager = ProcessedTableManager<
+    _$DaKanjiDB,
+    $KanjiVGTableTable,
+    KanjiVGTableData,
+    $$KanjiVGTableTableFilterComposer,
+    $$KanjiVGTableTableOrderingComposer,
+    $$KanjiVGTableTableAnnotationComposer,
+    $$KanjiVGTableTableCreateCompanionBuilder,
+    $$KanjiVGTableTableUpdateCompanionBuilder,
+    (
+      KanjiVGTableData,
+      BaseReferences<_$DaKanjiDB, $KanjiVGTableTable, KanjiVGTableData>
+    ),
+    KanjiVGTableData,
+    PrefetchHooks Function()>;
 typedef $$IndexTableTableCreateCompanionBuilder = IndexTableCompanion Function({
   Value<int> id,
   required String title,
@@ -11027,6 +11415,8 @@ class $DaKanjiDBManager {
       get radicalKanjiRelationsTable =>
           $$RadicalKanjiRelationsTableTableTableManager(
               _db, _db.radicalKanjiRelationsTable);
+  $$KanjiVGTableTableTableManager get kanjiVGTable =>
+      $$KanjiVGTableTableTableManager(_db, _db.kanjiVGTable);
   $$IndexTableTableTableManager get indexTable =>
       $$IndexTableTableTableManager(_db, _db.indexTable);
   $$TagBankV3TableTableTableManager get tagBankV3Table =>
