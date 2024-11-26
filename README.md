@@ -110,7 +110,7 @@ Additionally, some other databases are included in DaKanji
 
 Theses additional databases are first parsed from their own representation into a yomitan format and then imported into dakanji.db.
 
-##### KanjiVG
+##### KanjiVG ✅
 
 The [KanjiVG](https://kanjivg.tagaini.net/) project contains detailed stroke order diagrams of many kanji.
 

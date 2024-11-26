@@ -84,7 +84,7 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db, int dictId) asyn
   // read and decode the json
   String jsonString = kanjiBankV3JsonPath.readAsStringSync();
   List jsonList = jsonDecode(jsonString);
-  print("Parinsg ${jsonList.length} kanji entries");
+  print("Parsing ${jsonList.length} kanji entries");
 
   KanjiBankV3ParserRefs refs = KanjiBankV3ParserRefs()
     ..dictId = dictId;
@@ -105,7 +105,7 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db, int dictId) asyn
     
   }
 
-  // Perform the insertion inside a transaction
+  // Perform the insertion inside a batch
   await db.batch((batch) {
     
     batch.insertAll(db.kanjiBankV3Table, refs.kanjiCompanions,

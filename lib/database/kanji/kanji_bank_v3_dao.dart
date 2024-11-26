@@ -1,3 +1,4 @@
+import "package:dakanji_db/database/kanji/kanji_bank_entry.dart";
 import "package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart";
 import "package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart";
 import "package:drift/drift.dart";
@@ -25,7 +26,89 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   // this constructor is required so that the main database can create an instance
   // of this object.
   KanjiBankV3Dao(super.db);
+  
 
+  /// Returns all kanji entries that match contain any of the given Kanji
+  Future<List<KanjiBankEntry>?> getKanjiBankEntriesFromKanji(List<String> kanji) async {
+
+    final query = (selectOnly(kanjiBankV3Table)
+      .join([
+        // onyomi
+        innerJoin(
+          kanjiBankV3OnyomiKanjiRelationsTable,
+          kanjiBankV3OnyomiKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
+        ),
+        innerJoin(
+          kanjiBankV3OnyomisTable,
+          kanjiBankV3OnyomiKanjiRelationsTable.onyomiId.equalsExp(kanjiBankV3OnyomisTable.id)
+        ),
+        // kunyomi
+        innerJoin(
+          kanjiBankV3KunyomiKanjiRelationsTable,
+          kanjiBankV3KunyomiKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
+        ),
+        innerJoin(
+          kanjiBankV3KunyomisTable,
+          kanjiBankV3KunyomiKanjiRelationsTable.kunyomiId.equalsExp(kanjiBankV3KunyomisTable.id)
+        ),
+        // tags
+        innerJoin(
+          kanjiBankV3TagsKanjiRelationsTable,
+          kanjiBankV3TagsKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
+        ),
+        innerJoin(
+          tagBankV3Table,
+          kanjiBankV3TagsKanjiRelationsTable.tagId.equalsExp(tagBankV3Table.id)
+        ),
+        // meanings
+        innerJoin(
+          kanjiBankV3MeaningsKanjiRelationsTable,
+          kanjiBankV3MeaningsKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
+        ),
+        innerJoin(
+          kanjiBankV3MeaningsTable,
+          kanjiBankV3MeaningsKanjiRelationsTable.meaningId.equalsExp(kanjiBankV3MeaningsTable.id)
+        ),
+        //TODO stats names
+      ]))
+      ..where(db.kanjiBankV3Table.dictionaryKanji.isIn(kanji))
+      ..addColumns([
+        db.kanjiBankV3Table.dictionaryKanji,
+        kanjiBankV3OnyomisTable.onyomi.groupConcat(distinct: true),
+        kanjiBankV3KunyomisTable.kunyomi.groupConcat(distinct: true),
+        tagBankV3Table.name.groupConcat(distinct: true),
+        kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true),
+      ]);
+
+    // Fetching data from the query
+    final result = await query.get();
+
+    // Process and return the result
+    return result.map((row) {
+      final kanji = row.read<String>(kanjiBankV3Table.dictionaryKanji);
+      
+      // Read the concatenated results
+      final onyomi = row.read(kanjiBankV3OnyomisTable.onyomi.groupConcat(distinct: true));
+      final kunyomi = row.read(kanjiBankV3KunyomisTable.kunyomi.groupConcat(distinct: true));
+      final tag = row.read(tagBankV3Table.name.groupConcat(distinct: true));
+      final meaning = row.read(kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true));
+      // TODO stat names
+
+      return KanjiBankEntry(
+        kanji: kanji!,
+        onyomis: onyomi?.split(","),
+        kunyomis: kunyomi?.split(","),
+        /// TODO properly parse tags -> use tag_bank_entry class
+        tags: tag?.split(","),
+        meanings: meaning?.split(","),
+        // TODO stat names
+        stats: {}
+      );
+    }).toList();
+
+  }
+
+  // ---------------------------------------------------------------------------
   /// Checks if the given `kanji` is already present in the database
   Future<int?> getKanjiId(String kanji, int dictId) async {
 
@@ -92,6 +175,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
   }
 
+  // ---------------------------------------------------------------------------
   /// Get the maximum id of the kanji table
   Future<int> maxKanjiId() async {
     

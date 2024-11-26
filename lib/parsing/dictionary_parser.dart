@@ -39,6 +39,7 @@ Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db) async {
     validDictionaryFiles.any((ext) => p.basename(f.path).contains(ext))
   )
   .map((f) => File(f.path)).toList();
+  //print("Found the following files that can be imported: \n$validFiles");
 
   // parse the index file -> get dict index
   int dictId = await parseIndex(

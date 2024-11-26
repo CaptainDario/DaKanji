@@ -1,5 +1,4 @@
 import 'package:dakanji_db/conversion/kanji_vg.dart';
-import 'package:dakanji_db/conversion/radicals.dart';
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:test/test.dart';
 import 'package:tuple/tuple.dart';
