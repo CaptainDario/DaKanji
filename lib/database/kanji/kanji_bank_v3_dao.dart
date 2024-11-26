@@ -78,6 +78,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         kanjiBankV3KunyomisTable.kunyomi.groupConcat(distinct: true),
         tagBankV3Table.name.groupConcat(distinct: true),
         kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true),
+        // TODO add stats
       ]);
 
     // Fetching data from the query
