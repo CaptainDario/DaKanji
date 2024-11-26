@@ -17,5 +17,5 @@ class KanjiVGTable extends Table {
   TextColumn get kanjiVGKanji => text().withLength(min: 1)();
 
   /// The svg data of this kanji
-  BlobColumn get kanjiVGSVG => blob().map(const CompressedStringConverter())();
+  BlobColumn get kanjiVGSVG => blob().map(const ZlibStringConverter())();
 }

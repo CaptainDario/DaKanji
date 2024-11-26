@@ -749,7 +749,7 @@ class $KanjiVGTableTable extends KanjiVGTable
   }
 
   static TypeConverter<String, Uint8List> $converterkanjiVGSVG =
-      const CompressedStringConverter();
+      const ZlibStringConverter();
 }
 
 class KanjiVGTableData extends DataClass

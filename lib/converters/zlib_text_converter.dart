@@ -3,8 +3,8 @@ import 'package:archive/archive.dart';
 import 'dart:convert';
 
 // Define a custom TypeConverter for compressed strings
-class CompressedStringConverter extends TypeConverter<String, Uint8List> {
-  const CompressedStringConverter();
+class ZlibStringConverter extends TypeConverter<String, Uint8List> {
+  const ZlibStringConverter();
   
   @override
   String fromSql(Uint8List fromDb) {
