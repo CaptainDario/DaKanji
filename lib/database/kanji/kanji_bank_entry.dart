@@ -1,3 +1,4 @@
+import 'package:dakanji_db/database/kanji/kanji_bank_entry_stat.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'kanji_bank_entry.freezed.dart';
@@ -22,7 +23,7 @@ class KanjiBankEntry with _$KanjiBankEntry {
       /// The meanings of this entry
       required List<String>? meanings,
       /// The stats of this entry
-      required Map<String, String>? stats
+      required List<KanjiBankEntryStat>? stats
     }) = _KanjiBankEntry;
 
   factory KanjiBankEntry.fromJson(Map<String, Object?> json)

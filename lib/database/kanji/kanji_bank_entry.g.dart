@@ -18,9 +18,9 @@ _$KanjiBankEntryImpl _$$KanjiBankEntryImplFromJson(Map<String, dynamic> json) =>
       meanings: (json['meanings'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      stats: (json['stats'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ),
+      stats: (json['stats'] as List<dynamic>?)
+          ?.map((e) => KanjiBankEntryStat.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$KanjiBankEntryImplToJson(

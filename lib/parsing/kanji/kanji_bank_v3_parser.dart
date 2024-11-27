@@ -58,11 +58,14 @@ class KanjiBankV3ParserRefs {
   /// in the database
   Map<String, int> seenMeanings = {};
 
-  
+  /// List of [KanjiBankV3StatsTableCompanion] that should be batch inserted
+  List<KanjiBankV3StatsTableCompanion> statCompanions = [];
   /// List of [KanjiBankV3StatNamesTableCompanion] that should be batch inserted
   List<KanjiBankV3StatNamesTableCompanion> statNamesCompanions  = [];
   /// List of [KanjiBankV3StatValuesTableCompanion] that should be batch inserted
   List<KanjiBankV3StatValuesTableCompanion> statValuesCompanions  = [];
+  /// The currently highest id in the [KanjiBankV3StatsTable]
+  int statsId = 0;
   /// The currently highest id in the [KanjiBankV3StatValuesTable]
   int statNamesId = 0;
   /// The currently highest id in the [KanjiBankV3StatNamesTable]
@@ -89,9 +92,12 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db, int dictId) asyn
   KanjiBankV3ParserRefs refs = KanjiBankV3ParserRefs()
     ..dictId = dictId;
 
-  refs.kanjiId = await db.kanjiBankV3Dao.maxKanjiId();
-  refs.onyomiId = await db.kanjiBankV3Dao.maxOnyomiId();
-  refs.meaningId = await db.kanjiBankV3Dao.maxMeaningId();
+  refs.kanjiId      = await db.kanjiBankV3Dao.maxKanjiId();
+  refs.onyomiId     = await db.kanjiBankV3Dao.maxOnyomiId();
+  refs.meaningId    = await db.kanjiBankV3Dao.maxMeaningId();
+  refs.statsId      = await db.kanjiBankV3Dao.maxStatsId();
+  refs.statValuesId = await db.kanjiBankV3Dao.maxStatsValueId();
+  refs.statNamesId  = await db.kanjiBankV3Dao.maxStatsNameId();
 
   // populate the companion lists
   for (var i = 0; i < jsonList.length; i++) {
@@ -108,33 +114,23 @@ Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db, int dictId) asyn
   // Perform the insertion inside a batch
   await db.batch((batch) {
     
-    batch.insertAll(db.kanjiBankV3Table, refs.kanjiCompanions,
-      mode: InsertMode.insertOrIgnore);
+    batch.insertAll(db.kanjiBankV3Table, refs.kanjiCompanions,);
 
-    batch.insertAll(db.kanjiBankV3OnyomisTable, refs.onyomiCompanions,
-      mode: InsertMode.insertOrIgnore);
-    batch.insertAll(db.kanjiBankV3OnyomiKanjiRelationsTable, refs.onyomiRelCompanions,
-      mode: InsertMode.insertOrIgnore);
+    batch.insertAll(db.kanjiBankV3OnyomisTable, refs.onyomiCompanions,);
+    batch.insertAll(db.kanjiBankV3OnyomiKanjiRelationsTable, refs.onyomiRelCompanions,);
 
-    batch.insertAll(db.kanjiBankV3KunyomisTable, refs.kunyomiCompanions,
-      mode: InsertMode.insertOrIgnore);
-    batch.insertAll(db.kanjiBankV3KunyomiKanjiRelationsTable, refs.kunyomiRelCompanions,
-      mode: InsertMode.insertOrIgnore);
+    batch.insertAll(db.kanjiBankV3KunyomisTable, refs.kunyomiCompanions,);
+    batch.insertAll(db.kanjiBankV3KunyomiKanjiRelationsTable, refs.kunyomiRelCompanions,);
 
-    batch.insertAll(db.kanjiBankV3TagsKanjiRelationsTable, refs.tagRelCompanions,
-      mode: InsertMode.insertOrIgnore);
+    batch.insertAll(db.kanjiBankV3TagsKanjiRelationsTable, refs.tagRelCompanions,);
 
-    batch.insertAll(db.kanjiBankV3MeaningsTable, refs.meaningsCompanions,
-      mode: InsertMode.insertOrIgnore);
-    batch.insertAll(db.kanjiBankV3MeaningsKanjiRelationsTable, refs.meaningRelCompanions,
-      mode: InsertMode.insertOrIgnore);
+    batch.insertAll(db.kanjiBankV3MeaningsTable, refs.meaningsCompanions,);
+    batch.insertAll(db.kanjiBankV3MeaningsKanjiRelationsTable, refs.meaningRelCompanions,);
     
-    batch.insertAll(db.kanjiBankV3StatValuesTable, refs.statValuesCompanions,
-      mode: InsertMode.insertOrIgnore);
-    batch.insertAll(db.kanjiBankV3StatNamesTable, refs.statNamesCompanions,
-      mode: InsertMode.insertOrIgnore);
-      batch.insertAll(db.kanjiBankV3StatKanjiRelationsTable, refs.statValueRelCompanions,
-      mode: InsertMode.insertOrIgnore);
+    batch.insertAll(db.kanjiBankV3StatsTable, refs.statCompanions,);
+    batch.insertAll(db.kanjiBankV3StatValuesTable, refs.statValuesCompanions,);
+    batch.insertAll(db.kanjiBankV3StatNamesTable, refs.statNamesCompanions,);
+    batch.insertAll(db.kanjiBankV3StatKanjiRelationsTable, refs.statValueRelCompanions,);
 
   });
 
@@ -265,30 +261,41 @@ Future<void> parseMeaning(List<String> meanings, KanjiBankV3ParserRefs refs, DaK
 Future<void> parseStats(Map<String, String> stats, KanjiBankV3ParserRefs refs, DaKanjiDB db) async {
 
   if(stats.isNotEmpty){
+
     for (MapEntry<String, String> stat in stats.entries) {
+
+      refs.statsId += 1;
       
       int? statValueInsertId = refs.seenStatValues[stat.value];
       if(statValueInsertId == null){
-        statValueInsertId = await db.kanjiBankV3Dao.getStatsValueId(stat.value) ?? ++refs.statValuesId;
+        statValueInsertId = ++refs.statValuesId;
         refs.seenStatValues[stat.value] = statValueInsertId;
+
+        refs.statValuesCompanions.add(KanjiBankV3StatValuesTableCompanion(
+          id: Value(statValueInsertId),
+          statValue: Value(stat.value)
+        ));
       }
+      
       int? statNameInsertId = refs.seenStatNames[stat.key];
       if(statNameInsertId == null){
-        statNameInsertId = await db.kanjiBankV3Dao.getStatsNameId(stat.key) ?? ++refs.statNamesId;
+        statNameInsertId = ++refs.statNamesId;
         refs.seenStatNames[stat.key] = statNameInsertId;
+
+        refs.statNamesCompanions.add(KanjiBankV3StatNamesTableCompanion(
+          id: Value(statNameInsertId),
+          statName: Value(stat.key)
+        ));
       }
 
-      refs.statValuesCompanions.add(KanjiBankV3StatValuesTableCompanion(
-        id: Value(statValueInsertId),
-        statValue: Value(stat.value)
-      ));
-      refs.statNamesCompanions.add(KanjiBankV3StatNamesTableCompanion(
-        id: Value(statNameInsertId),
-        statName: Value(stat.key)
+      refs.statCompanions.add(KanjiBankV3StatsTableCompanion(
+        id: Value(refs.statsId),
+        statNameId: Value(statNameInsertId),
+        statValueId: Value(statValueInsertId),
       ));
       refs.statValueRelCompanions.add(KanjiBankV3StatKanjiRelationsTableCompanion(
         kanjiId: Value(refs.kanjiInsertId),
-        statValueId: Value(statValueInsertId)
+        statId: Value(refs.statsId),
       ));
     
     }

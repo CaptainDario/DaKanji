@@ -36,7 +36,7 @@ mixin _$KanjiBankEntry {
   List<String>? get meanings => throw _privateConstructorUsedError;
 
   /// The stats of this entry
-  Map<String, String>? get stats => throw _privateConstructorUsedError;
+  List<KanjiBankEntryStat>? get stats => throw _privateConstructorUsedError;
 
   /// Serializes this KanjiBankEntry to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $KanjiBankEntryCopyWith<$Res> {
       List<String>? kunyomis,
       List<String>? tags,
       List<String>? meanings,
-      Map<String, String>? stats});
+      List<KanjiBankEntryStat>? stats});
 }
 
 /// @nodoc
@@ -109,7 +109,7 @@ class _$KanjiBankEntryCopyWithImpl<$Res, $Val extends KanjiBankEntry>
       stats: freezed == stats
           ? _value.stats
           : stats // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>?,
+              as List<KanjiBankEntryStat>?,
     ) as $Val);
   }
 }
@@ -128,7 +128,7 @@ abstract class _$$KanjiBankEntryImplCopyWith<$Res>
       List<String>? kunyomis,
       List<String>? tags,
       List<String>? meanings,
-      Map<String, String>? stats});
+      List<KanjiBankEntryStat>? stats});
 }
 
 /// @nodoc
@@ -175,7 +175,7 @@ class __$$KanjiBankEntryImplCopyWithImpl<$Res>
       stats: freezed == stats
           ? _value.stats
           : stats // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>?,
+              as List<KanjiBankEntryStat>?,
     ));
   }
 }
@@ -216,7 +216,7 @@ class _$KanjiBankEntryImpl implements _KanjiBankEntry {
 
   /// The stats of this entry
   @override
-  final Map<String, String>? stats;
+  final List<KanjiBankEntryStat>? stats;
 
   @override
   String toString() {
@@ -271,7 +271,7 @@ abstract class _KanjiBankEntry implements KanjiBankEntry {
       required final List<String>? kunyomis,
       required final List<String>? tags,
       required final List<String>? meanings,
-      required final Map<String, String>? stats}) = _$KanjiBankEntryImpl;
+      required final List<KanjiBankEntryStat>? stats}) = _$KanjiBankEntryImpl;
 
   factory _KanjiBankEntry.fromJson(Map<String, dynamic> json) =
       _$KanjiBankEntryImpl.fromJson;
@@ -298,7 +298,7 @@ abstract class _KanjiBankEntry implements KanjiBankEntry {
 
   /// The stats of this entry
   @override
-  Map<String, String>? get stats;
+  List<KanjiBankEntryStat>? get stats;
 
   /// Create a copy of KanjiBankEntry
   /// with the given fields replaced by the non-null parameter values.

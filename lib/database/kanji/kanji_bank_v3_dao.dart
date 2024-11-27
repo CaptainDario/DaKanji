@@ -1,4 +1,5 @@
 import "package:dakanji_db/database/kanji/kanji_bank_entry.dart";
+import "package:dakanji_db/database/kanji/kanji_bank_entry_stat.dart";
 import "package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart";
 import "package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart";
 import "package:drift/drift.dart";
@@ -69,7 +70,23 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
           kanjiBankV3MeaningsTable,
           kanjiBankV3MeaningsKanjiRelationsTable.meaningId.equalsExp(kanjiBankV3MeaningsTable.id)
         ),
-        //TODO stats names
+        // Stat names / values
+        innerJoin(
+          kanjiBankV3StatKanjiRelationsTable,
+          kanjiBankV3StatKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
+        ),
+        innerJoin(
+          kanjiBankV3StatsTable,
+          kanjiBankV3StatKanjiRelationsTable.statId.equalsExp(kanjiBankV3StatsTable.id)
+        ),
+        innerJoin(
+          kanjiBankV3StatNamesTable,
+          kanjiBankV3StatNamesTable.id.equalsExp(kanjiBankV3StatsTable.statNameId,),
+        ),
+        innerJoin(
+          kanjiBankV3StatValuesTable,
+          kanjiBankV3StatValuesTable.id.equalsExp(kanjiBankV3StatsTable.statValueId,),
+        ),
       ]))
       ..where(db.kanjiBankV3Table.dictionaryKanji.isIn(kanji))
       ..addColumns([
@@ -78,7 +95,9 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         kanjiBankV3KunyomisTable.kunyomi.groupConcat(distinct: true),
         tagBankV3Table.name.groupConcat(distinct: true),
         kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true),
-        // TODO add stats
+
+        kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true),
+        kanjiBankV3StatNamesTable.statName.groupConcat(distinct: true)
       ]);
 
     // Fetching data from the query
@@ -89,11 +108,12 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
       final kanji = row.read<String>(kanjiBankV3Table.dictionaryKanji);
       
       // Read the concatenated results
-      final onyomi = row.read(kanjiBankV3OnyomisTable.onyomi.groupConcat(distinct: true));
-      final kunyomi = row.read(kanjiBankV3KunyomisTable.kunyomi.groupConcat(distinct: true));
-      final tag = row.read(tagBankV3Table.name.groupConcat(distinct: true));
-      final meaning = row.read(kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true));
-      // TODO stat names
+      final onyomi     = row.read(kanjiBankV3OnyomisTable.onyomi.groupConcat(distinct: true));
+      final kunyomi    = row.read(kanjiBankV3KunyomisTable.kunyomi.groupConcat(distinct: true));
+      final tag        = row.read(tagBankV3Table.name.groupConcat(distinct: true));
+      final meaning    = row.read(kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true));
+      final statValues = row.read(kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true));
+      final statNames  = row.read(kanjiBankV3StatNamesTable.statName.groupConcat(distinct: true));
 
       return KanjiBankEntry(
         kanji: kanji!,
@@ -102,8 +122,12 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         /// TODO properly parse tags -> use tag_bank_entry class
         tags: tag?.split(","),
         meanings: meaning?.split(","),
-        // TODO stat names
-        stats: {}
+        stats: statValues != null && statNames != null
+          ? List.generate(statValues.split(",").length, (i) => KanjiBankEntryStat(
+            name: statNames.split(",")[i],
+            value: statValues.split(",")[i],
+          ))
+          : []
       );
     }).toList();
 
@@ -218,6 +242,17 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
     // Extract the value of the max column using the alias
     return result.read(kanjiBankV3MeaningsTable.id.max()) ?? 0;
   }
+
+  /// Get the maximum id of the stats table
+  Future<int> maxStatsId() async {
+    final query = selectOnly(kanjiBankV3StatsTable)
+      ..addColumns([kanjiBankV3StatsTable.id.max()]);
+    final result = await query.getSingle();
+
+    // Extract the value of the max column using the alias
+    return result.read(kanjiBankV3StatsTable.id.max()) ?? 0;
+  }
+
 
   /// Get the maximum id of the stats name table
   Future<int> maxStatsNameId() async {

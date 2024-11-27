@@ -57,8 +57,8 @@ class KanjiBankV3StatKanjiRelationsTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
-  /// the id of the associated stats value
-  IntColumn get statValueId => integer().references(KanjiBankV3StatValuesTable, #id)();
+  /// the id of the associated stats element
+  IntColumn get statId => integer().references(KanjiBankV3StatsTable, #id)();
   /// the id of the associated kanji
   IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
 
