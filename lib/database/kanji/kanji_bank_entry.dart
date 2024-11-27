@@ -1,4 +1,5 @@
 import 'package:dakanji_db/database/kanji/kanji_bank_entry_stat.dart';
+import 'package:dakanji_db/database/tag/tag_bank_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'kanji_bank_entry.freezed.dart';
@@ -19,7 +20,7 @@ class KanjiBankEntry with _$KanjiBankEntry {
       /// The kunyomi readings of this entry
       required List<String>? kunyomis,
       /// The tags of this entry
-      required List<String>? tags,
+      required List<TagBankEntry>? tags,
       /// The meanings of this entry
       required List<String>? meanings,
       /// The stats of this entry

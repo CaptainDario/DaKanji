@@ -104,32 +104,44 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
     final result = await query.get();
 
     // Process and return the result
-    return result.map((row) {
+    return (await Future.wait(result.map((row) async {
       final kanji = row.read<String>(kanjiBankV3Table.dictionaryKanji);
       
       // Read the concatenated results
-      final onyomi     = row.read(kanjiBankV3OnyomisTable.onyomi.groupConcat(distinct: true));
-      final kunyomi    = row.read(kanjiBankV3KunyomisTable.kunyomi.groupConcat(distinct: true));
-      final tag        = row.read(tagBankV3Table.name.groupConcat(distinct: true));
-      final meaning    = row.read(kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true));
-      final statValues = row.read(kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true));
-      final statNames  = row.read(kanjiBankV3StatNamesTable.statName.groupConcat(distinct: true));
+      final onyomi     = row.read(
+        kanjiBankV3OnyomisTable.onyomi.groupConcat(distinct: true))
+        ?.split(",");
+      final kunyomi    = row.read(
+        kanjiBankV3KunyomisTable.kunyomi.groupConcat(distinct: true))
+        ?.split(",");
+      var tags         = await Future.wait((row.read(
+        tagBankV3Table.name.groupConcat(distinct: true))
+        ?.split(","))
+        !.map((e) async => await db.tagBankV3Dao.getTagByName(e),));
+      final meaning    = row.read(
+        kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true))
+        ?.split(",");
+      final statValues = row.read(
+        kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true))
+        ?.split(",");
+      final statNames  = row.read(
+        kanjiBankV3StatNamesTable.statName.groupConcat(distinct: true))
+        ?.split(",");
 
       return KanjiBankEntry(
         kanji: kanji!,
-        onyomis: onyomi?.split(","),
-        kunyomis: kunyomi?.split(","),
-        /// TODO properly parse tags -> use tag_bank_entry class
-        tags: tag?.split(","),
-        meanings: meaning?.split(","),
+        onyomis: onyomi,
+        kunyomis: kunyomi,
+        tags: tags,
+        meanings: meaning,
         stats: statValues != null && statNames != null
-          ? List.generate(statValues.split(",").length, (i) => KanjiBankEntryStat(
-            name: statNames.split(",")[i],
-            value: statValues.split(",")[i],
+          ? List.generate(statValues.length, (i) => KanjiBankEntryStat(
+            name: statNames[i],
+            value: statValues[i],
           ))
           : []
       );
-    }).toList();
+    }))).toList();
 
   }
 

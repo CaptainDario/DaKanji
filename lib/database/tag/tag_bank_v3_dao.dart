@@ -1,3 +1,4 @@
+import "package:dakanji_db/database/tag/tag_bank_entry.dart";
 import "package:dakanji_db/database/tag/tag_bank_v3_relation_tables.dart";
 import "package:dakanji_db/database/tag/tag_bank_v3_tables.dart";
 import "package:drift/drift.dart";
@@ -20,6 +21,43 @@ class TagBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TagBankV3DaoMixin 
   // this constructor is required so that the main database can create an instance
   // of this object.
   TagBankV3Dao(super.db);
+
+
+  /// 
+  Future<TagBankEntry> getTagByName(String tagName) async {
+    final query = select(tagBankV3Table).join([
+      // Join with the tag-category relations table
+      innerJoin(
+        tagBankV3TagCategoryRelationsTable,
+        tagBankV3TagCategoryRelationsTable.tagId.equalsExp(tagBankV3Table.id),
+      ),
+      // Join with the category table
+      innerJoin(
+        tagBankV3CategoryTable,
+        tagBankV3CategoryTable.id.equalsExp(tagBankV3TagCategoryRelationsTable.categoryId),
+      ),
+    ])
+      ..where(tagBankV3Table.name.equals(tagName)); // Filter by tag name
+
+    final result = await query.map((row) {
+      final tag = row.readTable(tagBankV3Table);
+      final category = row.readTable(tagBankV3CategoryTable);
+
+      return TagBankEntry(
+        name: tagName,
+        categories: category.category,
+        sortingOrder: tag.sortingOrder,
+        notes: tag.notes,
+        score: tag.score);
+    }).get();
+
+    if(result.length > 1){
+      throw Exception("Tag lookup found multiple tags using the same name");
+    }
+
+    return result.first;
+  }
+
 
   /// Checks if the given `tag` is already present in the database
   Future<int?> getTagId(String tag) async {

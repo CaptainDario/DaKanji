@@ -30,7 +30,7 @@ mixin _$KanjiBankEntry {
   List<String>? get kunyomis => throw _privateConstructorUsedError;
 
   /// The tags of this entry
-  List<String>? get tags => throw _privateConstructorUsedError;
+  List<TagBankEntry>? get tags => throw _privateConstructorUsedError;
 
   /// The meanings of this entry
   List<String>? get meanings => throw _privateConstructorUsedError;
@@ -58,7 +58,7 @@ abstract class $KanjiBankEntryCopyWith<$Res> {
       {String kanji,
       List<String>? onyomis,
       List<String>? kunyomis,
-      List<String>? tags,
+      List<TagBankEntry>? tags,
       List<String>? meanings,
       List<KanjiBankEntryStat>? stats});
 }
@@ -101,7 +101,7 @@ class _$KanjiBankEntryCopyWithImpl<$Res, $Val extends KanjiBankEntry>
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<TagBankEntry>?,
       meanings: freezed == meanings
           ? _value.meanings
           : meanings // ignore: cast_nullable_to_non_nullable
@@ -126,7 +126,7 @@ abstract class _$$KanjiBankEntryImplCopyWith<$Res>
       {String kanji,
       List<String>? onyomis,
       List<String>? kunyomis,
-      List<String>? tags,
+      List<TagBankEntry>? tags,
       List<String>? meanings,
       List<KanjiBankEntryStat>? stats});
 }
@@ -167,7 +167,7 @@ class __$$KanjiBankEntryImplCopyWithImpl<$Res>
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<TagBankEntry>?,
       meanings: freezed == meanings
           ? _value.meanings
           : meanings // ignore: cast_nullable_to_non_nullable
@@ -208,7 +208,7 @@ class _$KanjiBankEntryImpl implements _KanjiBankEntry {
 
   /// The tags of this entry
   @override
-  final List<String>? tags;
+  final List<TagBankEntry>? tags;
 
   /// The meanings of this entry
   @override
@@ -269,7 +269,7 @@ abstract class _KanjiBankEntry implements KanjiBankEntry {
       {required final String kanji,
       required final List<String>? onyomis,
       required final List<String>? kunyomis,
-      required final List<String>? tags,
+      required final List<TagBankEntry>? tags,
       required final List<String>? meanings,
       required final List<KanjiBankEntryStat>? stats}) = _$KanjiBankEntryImpl;
 
@@ -290,7 +290,7 @@ abstract class _KanjiBankEntry implements KanjiBankEntry {
 
   /// The tags of this entry
   @override
-  List<String>? get tags;
+  List<TagBankEntry>? get tags;
 
   /// The meanings of this entry
   @override

@@ -14,7 +14,9 @@ _$KanjiBankEntryImpl _$$KanjiBankEntryImplFromJson(Map<String, dynamic> json) =>
       kunyomis: (json['kunyomis'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      tags: (json['tags'] as List<dynamic>?)
+          ?.map((e) => TagBankEntry.fromJson(e as Map<String, dynamic>))
+          .toList(),
       meanings: (json['meanings'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
