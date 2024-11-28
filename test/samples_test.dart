@@ -30,6 +30,8 @@ void main() {
       List? result = await db.kanjiBankV3Dao.getKanjiBankEntriesFromKanji(testCase.item1);
       print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
       print(result);
+
+      // TODO ADD TEST
     }
 
   });
