@@ -145,6 +145,37 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
   }
 
+
+  // ---------------------------------------------------------------------------
+  /// Get all onyomis and their ids 
+  Future<List<KanjiBankV3OnyomisTableData>> getAllOnyomis() async {
+    return await select(kanjiBankV3OnyomisTable).get();
+  }
+  /// Get all kunyomis and their ids 
+  Future<List<KanjiBankV3KunyomisTableData>> getAllKunyomis() async {
+    return await select(kanjiBankV3KunyomisTable).get();
+  }
+
+  /// Get all tags and their ids 
+  Future<List<TagBankV3TableData>> getAllTags() async {
+    return await select(tagBankV3Table).get();
+  }
+   
+  /// Get all meanings and their ids 
+  Future<List<KanjiBankV3MeaningsTableData>> getAllMeanings() async {
+    return await select(kanjiBankV3MeaningsTable).get();
+  }
+
+  /// Get all stat values and their ids 
+  Future<List<KanjiBankV3StatValuesTableData>> getAllStatValues() async {
+    return await select(kanjiBankV3StatValuesTable).get();
+  }
+
+  /// Get all stat names and their ids 
+  Future<List<KanjiBankV3StatNamesTableData>> getAllStatNames() async {
+    return await select(kanjiBankV3StatNamesTable).get();
+  }
+
   // ---------------------------------------------------------------------------
   /// Checks if the given `kanji` is already present in the database
   Future<int?> getKanjiId(String kanji, int dictId) async {
