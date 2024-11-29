@@ -29,22 +29,38 @@ Install it like this
 
 The official (base dictionary that is shipped with DaKanji) consists of the following dictionaries
 
-* Availalbe online
-  * Jitendex (base dictionary)
-  * JLPT (jlpt annotations)
-  * JPDB frquency (word frequencies)
-  * KANJIDIC (kanji definitions)
-  * Kanjium pitch accents
+* Yomitan format
+  * Jitendex
+    * Base dictionary
+  * [JLPT](https://github.com/stephenmk/yomitan-jlpt-vocab)
+    * Word level JLPT annotations
+  * JPDB frquency
+    * Word frequencies
+  * KANJIDIC
+    * Kanji definitions
 * Custom parsed
-  * RADK
-  * KRAD
-  * KanjiVG
-  * Tatoeba
+  * Kanji
+    * [RADK](https://github.com/scriptin/jmdict-simplified)
+      * Project contains information about radicals used by kanjis.
+    * [KRAD](https://github.com/scriptin/jmdict-simplified)
+      * Project contains information about radicals used by kanjis.
+    * [KanjiVG](https://kanjivg.tagaini.net/)
+      * Project contains detailed stroke order diagrams of many kanji.
+    * [Kanjium](https://github.com/mifunetoshiro/kanjium)
+      * Pitch accents
+      * Antonyms
+      * Synonyms
+      * Kanjidict
+  * Audio
+    * [Yomitan Audio](https://github.com/yomidevs/local-audio-yomichan)
+  * Examples
+    * Tatoeba
 
-To download the current state of each source and build a new `dakanji.db`,
-run
+To build DaKanji DB first download each of the aforementioned databaes and place them in `./input_files`
 
-```
+Now the DB can be build by running
+
+``` bash
 dart run ./bin/build_dakanji_db.dart
 ```
 
@@ -70,7 +86,7 @@ Make sure that
 * the drift code is up to date
 * the sqlite file is up to date
 
-### Supported dictionaries
+### Supported databases
 
 The main idea of this rewrite is to allow users to import their own yomitan json dictionaries.
 Additionally, some other databases are included in DaKanji
@@ -106,32 +122,6 @@ Additionally, some other databases are included in DaKanji
   * File name pattern: `term_meta_bank_${number}.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-term-meta-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js)
 
-#### Additional databases
+#### Example sentences
 
-Theses additional databases are first parsed from their own representation into a yomitan format and then imported into dakanji.db.
-
-##### KanjiVG ✅
-
-The [KanjiVG](https://kanjivg.tagaini.net/) project contains detailed stroke order diagrams of many kanji.
-
-##### RADKFILE/KRADFILE ✅
-
-The [RADKFILE/KRADFILE](https://www.edrdg.org/krad/kradinf.html) project contains information about radicals used by kanjis.
-
-For easier processing DaKanji uses the [jmdict-simplified project](https://github.com/scriptin/jmdict-simplified) as a basis.
-
-##### Tatoeba (Any examples file in the right format)
-
-UPDATE HERE
-
-##### Kanjium
-
-###### Antonyms
-
-###### Kanjidict
-
-###### Lookalikes
-
-###### Synonyms
-
-##### KLC
+DaKanji also allows users to import their own example sentence databases.
