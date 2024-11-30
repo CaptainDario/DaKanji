@@ -12,6 +12,7 @@ import 'package:da_kanji_mobile/entities/conjugation/conjugation_descriptions.da
 import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/conjugation_column.dart';
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 /// `ExpansionTile` that shows conjugations of `word` (verb, adjective)
 class ConjugationExpansionTile extends StatefulWidget {
@@ -66,17 +67,39 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
   /// The part of speech of the word so the conjugation patterns can be determined
   List<Pos> pos = [];
 
+  /// [LinkedScrollControllerGroup] to keep the conjugation tables in sync
+  LinkedScrollControllerGroup controllerGroup = LinkedScrollControllerGroup();
+  /// List of all [ScrollController]s that are used for the conjugation tables
+  List<ScrollController> controllers = [];
+
 
   @override
   void initState() {
+
     initConjugations();
+    initScrollControllers();
+
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant ConjugationExpansionTile oldWidget) {
+    
     initConjugations();
+    initScrollControllers();
+    
     super.didUpdateWidget(oldWidget);
+  }
+
+  /// Initializes the synced scroll controllers for the conjugations
+  void initScrollControllers(){
+
+    controllerGroup = LinkedScrollControllerGroup();
+    controllers.clear();
+    for (var i = 0; i < tabTitles.length; i++) {
+      controllers.add(controllerGroup.addAndGet());
+    }
+
   }
 
   @override
@@ -108,6 +131,7 @@ class _ConjugationExpansionTileState extends State<ConjugationExpansionTile>
                 controller: tabController,
                 children: List.generate(tabTitles.length, (i) =>
                   SingleChildScrollView(
+                    controller: controllers[i],
                     clipBehavior: Clip.antiAlias,
                     child: ConjugationColumn(
                       conjugationTitles: conjugationTitles,

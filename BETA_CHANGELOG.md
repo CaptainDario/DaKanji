@@ -1,5 +1,20 @@
 # DaKanji Beta - changelog
 
+## v3.5.0b1 - ワードリストと暗記改善 (31.12.2024)
+
+The release of 3.4.6 took so long and contains so many new features that
+a release as 3.5.0 makes more sense.
+
+Improvements:
+
+- Dictionary
+  - Verb conjugation tables are synced across tabs
+  - Some parts of search where case sensitive
+
+Fixed:
+
+- Dictionary
+
 ## v3.4.6b6 - ワードリストと暗記改善 (23.10.2024)
 
 Fixed:
