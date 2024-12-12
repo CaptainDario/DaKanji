@@ -3,6 +3,8 @@ import 'package:dakanji_db/database/index/index_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_dao.dart';
+import 'package:dakanji_db/database/kanji_meta/kanji_meta_bank_v3_dao.dart';
+import 'package:dakanji_db/database/kanji_meta/kanji_meta_bank_v3_tables.dart';
 import 'package:dakanji_db/database/kanji_vg/kanji_vg_dao.dart';
 import 'package:dakanji_db/database/kanji_vg/kanji_vg_tables.dart';
 import 'package:dakanji_db/database/radicals/radical_dao.dart';
@@ -36,11 +38,15 @@ part 'dakanji_db.g.dart';
     KanjiBankV3TagsKanjiRelationsTable,
     KanjiBankV3MeaningsTable, KanjiBankV3MeaningsKanjiRelationsTable,
     KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
-    KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable, 
+    KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable,
+
+    KanjiMetaBankV3Table,
+    KanjiMetaBankV3TypeTable, KanjiMetaBankV3DataTable
   ],
   daos: [
     RadicalDao, KanjiVGDao,
-    IndexDao, TagBankV3Dao, KanjiBankV3Dao
+    IndexDao, TagBankV3Dao, KanjiBankV3Dao,
+    KanjiMetaBankV3Dao
   ],
   
 )
