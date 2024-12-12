@@ -1,10 +1,7 @@
 import 'dart:convert';
 
 import 'package:dakanji_db/database/dakanji_db.dart';
-import 'package:dakanji_db/database/kanji_meta/kanji_meta_bank_entry.dart';
-import 'package:dakanji_db/database/kanji_meta/kanji_meta_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
-import 'package:path/path.dart';
 import 'package:universal_io/io.dart';
 
 
