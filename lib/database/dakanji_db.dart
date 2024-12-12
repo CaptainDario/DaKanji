@@ -14,7 +14,7 @@ import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
 import 'dart:io';
 import 'package:drift/native.dart';
-import 'package:dakanji_db/converters/zlib_text_converter.dart';
+import 'package:dakanji_db/helper/zlib_text_converter.dart';
 
 part 'dakanji_db.g.dart';
 

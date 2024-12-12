@@ -1,5 +1,5 @@
 
-import 'package:dakanji_db/converters/zlib_text_converter.dart';
+import 'package:dakanji_db/helper/zlib_text_converter.dart';
 import 'package:drift/drift.dart';
 
 
