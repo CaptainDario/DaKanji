@@ -10,7 +10,7 @@ import 'package:drift/drift.dart';
 Future<int> parseIndexFile(File indexJsonPath, DaKanjiDB db) async {
 
   String jsonString = indexJsonPath.readAsStringSync();
-  await parseIndex(jsonString, db);
+  return await parseIndex(jsonString, db);
 
 }
 
