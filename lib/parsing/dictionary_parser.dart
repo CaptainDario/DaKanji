@@ -1,3 +1,4 @@
+import 'package:dakanji_db/parsing/kanji_meta/kanji_meta_bank_v3_parser.dart';
 import 'package:universal_io/io.dart';
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:dakanji_db/parsing/index/index_parser.dart';
@@ -13,19 +14,22 @@ List<String> validDictionaryFiles = [
   indexFile,
   tagBankFile,
   kanjiBankFile,
+  kanjiMetaBankFile
 ];
 
 /// The name of the dictionary index file
 String indexFile = "index.json";
-/// The naming patter for kanji bank terms
-String kanjiBankFile = "kanji_bank";
-/// The naming patter for tag bank terms
+/// The naming pattern for tag bank terms
 String tagBankFile = "tag_bank";
+/// The naming pattern for kanji bank terms
+String kanjiBankFile = "kanji_bank";
+/// the naming pattern for kanji meta bank terms
+String kanjiMetaBankFile = "kanji_meta_bank";
 
 /// Parses the given yomitan dictionary zip
 Future parseDictionaryZip (File dictZip, DaKanjiDB db) async {
 
-  // TODO implement
+
 
 }
 
@@ -39,7 +43,6 @@ Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db) async {
     validDictionaryFiles.any((ext) => p.basename(f.path).contains(ext))
   )
   .map((f) => File(f.path)).toList();
-  //print("Found the following files that can be imported: \n$validFiles");
 
   // parse the index file -> get dict index
   int dictId = await parseIndexFile(
@@ -51,10 +54,10 @@ Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db) async {
   // parse the tags
   Iterable<File> tagFiles = validFiles.where((e) => p.basename(e.path).contains(tagBankFile));
   for (var tagFile in tagFiles) {
-    await parseTagBankv3File(tagFile, db);
+    await parseTagBankV3File(tagFile, db);
   }
 
-  // parse the remaining files
+  // parse the kanji bank files
   for (var file in validFiles) {
     await parseDictionaryFile(Tuple3(file, db, dictEntry!));
   }
@@ -68,13 +71,18 @@ Future parseDictionaryFile(Tuple3<File, DaKanjiDB, IndexTableData> args) async {
   DaKanjiDB db = args.item2;
   IndexTableData ind = args.item3;
 
-  // parse all files that are `kanji_bank`
+  // parse `kanji_bank`-files
   if(p.basename(dictFile.path).contains(kanjiBankFile)){
-
     print("Parsing ${p.basename(dictFile.path)} as `$kanjiBankFile`");
-    await parseKanjiBankV3File(dictFile, db, ind.id);
-    
+    await parseKanjiBankV3File(dictFile, db, ind.id); 
   }
+
+  // parse `kanji_bank_meta`-files
+  if(p.basename(dictFile.path).contains(kanjiMetaBankFile)){
+    print("Parsing ${p.basename(dictFile.path)} as `$kanjiMetaBankFile`");
+    await parseKanjiMetaBankV3File(dictFile, db, ind.id); 
+  }
+
   // TODO other dictionary file types
 
 }

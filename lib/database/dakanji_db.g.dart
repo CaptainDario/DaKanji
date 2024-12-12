@@ -5298,16 +5298,20 @@ class $KanjiMetaBankV3TableTable extends KanjiMetaBankV3Table
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _dictIdMeta = const VerificationMeta('dictId');
   @override
   late final GeneratedColumn<int> dictId = GeneratedColumn<int>(
       'dict_id', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _termMeta = const VerificationMeta('term');
+  static const VerificationMeta _kanjiMeta = const VerificationMeta('kanji');
   @override
-  late final GeneratedColumn<String> term =
-      GeneratedColumn<String>('term', aliasedName, false,
+  late final GeneratedColumn<String> kanji =
+      GeneratedColumn<String>('kanji', aliasedName, false,
           additionalChecks: GeneratedColumn.checkTextLength(
             minTextLength: 1,
           ),
@@ -5321,13 +5325,20 @@ class $KanjiMetaBankV3TableTable extends KanjiMetaBankV3Table
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES kanji_meta_bank_v3_type_table (id)'));
-  static const VerificationMeta _dataIdMeta = const VerificationMeta('dataId');
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
   @override
-  late final GeneratedColumn<int> dataId = GeneratedColumn<int>(
-      'data_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+  late final GeneratedColumn<int> value = GeneratedColumn<int>(
+      'value', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _displayValueMeta =
+      const VerificationMeta('displayValue');
   @override
-  List<GeneratedColumn> get $columns => [id, dictId, term, typeId, dataId];
+  late final GeneratedColumn<String> displayValue = GeneratedColumn<String>(
+      'display_value', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, dictId, kanji, typeId, value, displayValue];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -5348,11 +5359,11 @@ class $KanjiMetaBankV3TableTable extends KanjiMetaBankV3Table
     } else if (isInserting) {
       context.missing(_dictIdMeta);
     }
-    if (data.containsKey('term')) {
+    if (data.containsKey('kanji')) {
       context.handle(
-          _termMeta, term.isAcceptableOrUnknown(data['term']!, _termMeta));
+          _kanjiMeta, kanji.isAcceptableOrUnknown(data['kanji']!, _kanjiMeta));
     } else if (isInserting) {
-      context.missing(_termMeta);
+      context.missing(_kanjiMeta);
     }
     if (data.containsKey('type_id')) {
       context.handle(_typeIdMeta,
@@ -5360,11 +5371,15 @@ class $KanjiMetaBankV3TableTable extends KanjiMetaBankV3Table
     } else if (isInserting) {
       context.missing(_typeIdMeta);
     }
-    if (data.containsKey('data_id')) {
-      context.handle(_dataIdMeta,
-          dataId.isAcceptableOrUnknown(data['data_id']!, _dataIdMeta));
-    } else if (isInserting) {
-      context.missing(_dataIdMeta);
+    if (data.containsKey('value')) {
+      context.handle(
+          _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
+    }
+    if (data.containsKey('display_value')) {
+      context.handle(
+          _displayValueMeta,
+          displayValue.isAcceptableOrUnknown(
+              data['display_value']!, _displayValueMeta));
     }
     return context;
   }
@@ -5380,12 +5395,14 @@ class $KanjiMetaBankV3TableTable extends KanjiMetaBankV3Table
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       dictId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}dict_id'])!,
-      term: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}term'])!,
+      kanji: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}kanji'])!,
       typeId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}type_id'])!,
-      dataId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}data_id'])!,
+      value: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}value']),
+      displayValue: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}display_value']),
     );
   }
 
@@ -5403,28 +5420,37 @@ class KanjiMetaBankV3TableData extends DataClass
   /// id of the dictionary this entry belongs to
   final int dictId;
 
-  /// the term this meta entry belongs to
-  final String term;
+  /// the kanji this meta entry belongs to
+  final String kanji;
 
   /// the id of this term's type entry
   final int typeId;
 
-  /// the id of the data entry
-  final int dataId;
+  /// the value of this entry
+  final int? value;
+
+  /// the display value of this entry
+  final String? displayValue;
   const KanjiMetaBankV3TableData(
       {required this.id,
       required this.dictId,
-      required this.term,
+      required this.kanji,
       required this.typeId,
-      required this.dataId});
+      this.value,
+      this.displayValue});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['dict_id'] = Variable<int>(dictId);
-    map['term'] = Variable<String>(term);
+    map['kanji'] = Variable<String>(kanji);
     map['type_id'] = Variable<int>(typeId);
-    map['data_id'] = Variable<int>(dataId);
+    if (!nullToAbsent || value != null) {
+      map['value'] = Variable<int>(value);
+    }
+    if (!nullToAbsent || displayValue != null) {
+      map['display_value'] = Variable<String>(displayValue);
+    }
     return map;
   }
 
@@ -5432,9 +5458,13 @@ class KanjiMetaBankV3TableData extends DataClass
     return KanjiMetaBankV3TableCompanion(
       id: Value(id),
       dictId: Value(dictId),
-      term: Value(term),
+      kanji: Value(kanji),
       typeId: Value(typeId),
-      dataId: Value(dataId),
+      value:
+          value == null && nullToAbsent ? const Value.absent() : Value(value),
+      displayValue: displayValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayValue),
     );
   }
 
@@ -5444,9 +5474,10 @@ class KanjiMetaBankV3TableData extends DataClass
     return KanjiMetaBankV3TableData(
       id: serializer.fromJson<int>(json['id']),
       dictId: serializer.fromJson<int>(json['dictId']),
-      term: serializer.fromJson<String>(json['term']),
+      kanji: serializer.fromJson<String>(json['kanji']),
       typeId: serializer.fromJson<int>(json['typeId']),
-      dataId: serializer.fromJson<int>(json['dataId']),
+      value: serializer.fromJson<int?>(json['value']),
+      displayValue: serializer.fromJson<String?>(json['displayValue']),
     );
   }
   @override
@@ -5455,29 +5486,40 @@ class KanjiMetaBankV3TableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'dictId': serializer.toJson<int>(dictId),
-      'term': serializer.toJson<String>(term),
+      'kanji': serializer.toJson<String>(kanji),
       'typeId': serializer.toJson<int>(typeId),
-      'dataId': serializer.toJson<int>(dataId),
+      'value': serializer.toJson<int?>(value),
+      'displayValue': serializer.toJson<String?>(displayValue),
     };
   }
 
   KanjiMetaBankV3TableData copyWith(
-          {int? id, int? dictId, String? term, int? typeId, int? dataId}) =>
+          {int? id,
+          int? dictId,
+          String? kanji,
+          int? typeId,
+          Value<int?> value = const Value.absent(),
+          Value<String?> displayValue = const Value.absent()}) =>
       KanjiMetaBankV3TableData(
         id: id ?? this.id,
         dictId: dictId ?? this.dictId,
-        term: term ?? this.term,
+        kanji: kanji ?? this.kanji,
         typeId: typeId ?? this.typeId,
-        dataId: dataId ?? this.dataId,
+        value: value.present ? value.value : this.value,
+        displayValue:
+            displayValue.present ? displayValue.value : this.displayValue,
       );
   KanjiMetaBankV3TableData copyWithCompanion(
       KanjiMetaBankV3TableCompanion data) {
     return KanjiMetaBankV3TableData(
       id: data.id.present ? data.id.value : this.id,
       dictId: data.dictId.present ? data.dictId.value : this.dictId,
-      term: data.term.present ? data.term.value : this.term,
+      kanji: data.kanji.present ? data.kanji.value : this.kanji,
       typeId: data.typeId.present ? data.typeId.value : this.typeId,
-      dataId: data.dataId.present ? data.dataId.value : this.dataId,
+      value: data.value.present ? data.value.value : this.value,
+      displayValue: data.displayValue.present
+          ? data.displayValue.value
+          : this.displayValue,
     );
   }
 
@@ -5486,78 +5528,87 @@ class KanjiMetaBankV3TableData extends DataClass
     return (StringBuffer('KanjiMetaBankV3TableData(')
           ..write('id: $id, ')
           ..write('dictId: $dictId, ')
-          ..write('term: $term, ')
+          ..write('kanji: $kanji, ')
           ..write('typeId: $typeId, ')
-          ..write('dataId: $dataId')
+          ..write('value: $value, ')
+          ..write('displayValue: $displayValue')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, dictId, term, typeId, dataId);
+  int get hashCode =>
+      Object.hash(id, dictId, kanji, typeId, value, displayValue);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiMetaBankV3TableData &&
           other.id == this.id &&
           other.dictId == this.dictId &&
-          other.term == this.term &&
+          other.kanji == this.kanji &&
           other.typeId == this.typeId &&
-          other.dataId == this.dataId);
+          other.value == this.value &&
+          other.displayValue == this.displayValue);
 }
 
 class KanjiMetaBankV3TableCompanion
     extends UpdateCompanion<KanjiMetaBankV3TableData> {
   final Value<int> id;
   final Value<int> dictId;
-  final Value<String> term;
+  final Value<String> kanji;
   final Value<int> typeId;
-  final Value<int> dataId;
+  final Value<int?> value;
+  final Value<String?> displayValue;
   const KanjiMetaBankV3TableCompanion({
     this.id = const Value.absent(),
     this.dictId = const Value.absent(),
-    this.term = const Value.absent(),
+    this.kanji = const Value.absent(),
     this.typeId = const Value.absent(),
-    this.dataId = const Value.absent(),
+    this.value = const Value.absent(),
+    this.displayValue = const Value.absent(),
   });
   KanjiMetaBankV3TableCompanion.insert({
     this.id = const Value.absent(),
     required int dictId,
-    required String term,
+    required String kanji,
     required int typeId,
-    required int dataId,
+    this.value = const Value.absent(),
+    this.displayValue = const Value.absent(),
   })  : dictId = Value(dictId),
-        term = Value(term),
-        typeId = Value(typeId),
-        dataId = Value(dataId);
+        kanji = Value(kanji),
+        typeId = Value(typeId);
   static Insertable<KanjiMetaBankV3TableData> custom({
     Expression<int>? id,
     Expression<int>? dictId,
-    Expression<String>? term,
+    Expression<String>? kanji,
     Expression<int>? typeId,
-    Expression<int>? dataId,
+    Expression<int>? value,
+    Expression<String>? displayValue,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (dictId != null) 'dict_id': dictId,
-      if (term != null) 'term': term,
+      if (kanji != null) 'kanji': kanji,
       if (typeId != null) 'type_id': typeId,
-      if (dataId != null) 'data_id': dataId,
+      if (value != null) 'value': value,
+      if (displayValue != null) 'display_value': displayValue,
     });
   }
 
   KanjiMetaBankV3TableCompanion copyWith(
       {Value<int>? id,
       Value<int>? dictId,
-      Value<String>? term,
+      Value<String>? kanji,
       Value<int>? typeId,
-      Value<int>? dataId}) {
+      Value<int?>? value,
+      Value<String?>? displayValue}) {
     return KanjiMetaBankV3TableCompanion(
       id: id ?? this.id,
       dictId: dictId ?? this.dictId,
-      term: term ?? this.term,
+      kanji: kanji ?? this.kanji,
       typeId: typeId ?? this.typeId,
-      dataId: dataId ?? this.dataId,
+      value: value ?? this.value,
+      displayValue: displayValue ?? this.displayValue,
     );
   }
 
@@ -5570,243 +5621,11 @@ class KanjiMetaBankV3TableCompanion
     if (dictId.present) {
       map['dict_id'] = Variable<int>(dictId.value);
     }
-    if (term.present) {
-      map['term'] = Variable<String>(term.value);
+    if (kanji.present) {
+      map['kanji'] = Variable<String>(kanji.value);
     }
     if (typeId.present) {
       map['type_id'] = Variable<int>(typeId.value);
-    }
-    if (dataId.present) {
-      map['data_id'] = Variable<int>(dataId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiMetaBankV3TableCompanion(')
-          ..write('id: $id, ')
-          ..write('dictId: $dictId, ')
-          ..write('term: $term, ')
-          ..write('typeId: $typeId, ')
-          ..write('dataId: $dataId')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $KanjiMetaBankV3DataTableTable extends KanjiMetaBankV3DataTable
-    with
-        TableInfo<$KanjiMetaBankV3DataTableTable,
-            KanjiMetaBankV3DataTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $KanjiMetaBankV3DataTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _valueMeta = const VerificationMeta('value');
-  @override
-  late final GeneratedColumn<int> value = GeneratedColumn<int>(
-      'value', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _displayValueMeta =
-      const VerificationMeta('displayValue');
-  @override
-  late final GeneratedColumn<String> displayValue =
-      GeneratedColumn<String>('display_value', aliasedName, false,
-          additionalChecks: GeneratedColumn.checkTextLength(
-            minTextLength: 1,
-          ),
-          type: DriftSqlType.string,
-          requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [id, value, displayValue];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'kanji_meta_bank_v3_data_table';
-  @override
-  VerificationContext validateIntegrity(
-      Insertable<KanjiMetaBankV3DataTableData> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('value')) {
-      context.handle(
-          _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
-    } else if (isInserting) {
-      context.missing(_valueMeta);
-    }
-    if (data.containsKey('display_value')) {
-      context.handle(
-          _displayValueMeta,
-          displayValue.isAcceptableOrUnknown(
-              data['display_value']!, _displayValueMeta));
-    } else if (isInserting) {
-      context.missing(_displayValueMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  KanjiMetaBankV3DataTableData map(Map<String, dynamic> data,
-      {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiMetaBankV3DataTableData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      value: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}value'])!,
-      displayValue: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}display_value'])!,
-    );
-  }
-
-  @override
-  $KanjiMetaBankV3DataTableTable createAlias(String alias) {
-    return $KanjiMetaBankV3DataTableTable(attachedDatabase, alias);
-  }
-}
-
-class KanjiMetaBankV3DataTableData extends DataClass
-    implements Insertable<KanjiMetaBankV3DataTableData> {
-  /// id of this entry
-  final int id;
-
-  /// the value of this entry
-  final int value;
-
-  /// the display value of this entry
-  final String displayValue;
-  const KanjiMetaBankV3DataTableData(
-      {required this.id, required this.value, required this.displayValue});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['value'] = Variable<int>(value);
-    map['display_value'] = Variable<String>(displayValue);
-    return map;
-  }
-
-  KanjiMetaBankV3DataTableCompanion toCompanion(bool nullToAbsent) {
-    return KanjiMetaBankV3DataTableCompanion(
-      id: Value(id),
-      value: Value(value),
-      displayValue: Value(displayValue),
-    );
-  }
-
-  factory KanjiMetaBankV3DataTableData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiMetaBankV3DataTableData(
-      id: serializer.fromJson<int>(json['id']),
-      value: serializer.fromJson<int>(json['value']),
-      displayValue: serializer.fromJson<String>(json['displayValue']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'value': serializer.toJson<int>(value),
-      'displayValue': serializer.toJson<String>(displayValue),
-    };
-  }
-
-  KanjiMetaBankV3DataTableData copyWith(
-          {int? id, int? value, String? displayValue}) =>
-      KanjiMetaBankV3DataTableData(
-        id: id ?? this.id,
-        value: value ?? this.value,
-        displayValue: displayValue ?? this.displayValue,
-      );
-  KanjiMetaBankV3DataTableData copyWithCompanion(
-      KanjiMetaBankV3DataTableCompanion data) {
-    return KanjiMetaBankV3DataTableData(
-      id: data.id.present ? data.id.value : this.id,
-      value: data.value.present ? data.value.value : this.value,
-      displayValue: data.displayValue.present
-          ? data.displayValue.value
-          : this.displayValue,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiMetaBankV3DataTableData(')
-          ..write('id: $id, ')
-          ..write('value: $value, ')
-          ..write('displayValue: $displayValue')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, value, displayValue);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is KanjiMetaBankV3DataTableData &&
-          other.id == this.id &&
-          other.value == this.value &&
-          other.displayValue == this.displayValue);
-}
-
-class KanjiMetaBankV3DataTableCompanion
-    extends UpdateCompanion<KanjiMetaBankV3DataTableData> {
-  final Value<int> id;
-  final Value<int> value;
-  final Value<String> displayValue;
-  const KanjiMetaBankV3DataTableCompanion({
-    this.id = const Value.absent(),
-    this.value = const Value.absent(),
-    this.displayValue = const Value.absent(),
-  });
-  KanjiMetaBankV3DataTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int value,
-    required String displayValue,
-  })  : value = Value(value),
-        displayValue = Value(displayValue);
-  static Insertable<KanjiMetaBankV3DataTableData> custom({
-    Expression<int>? id,
-    Expression<int>? value,
-    Expression<String>? displayValue,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (value != null) 'value': value,
-      if (displayValue != null) 'display_value': displayValue,
-    });
-  }
-
-  KanjiMetaBankV3DataTableCompanion copyWith(
-      {Value<int>? id, Value<int>? value, Value<String>? displayValue}) {
-    return KanjiMetaBankV3DataTableCompanion(
-      id: id ?? this.id,
-      value: value ?? this.value,
-      displayValue: displayValue ?? this.displayValue,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
     }
     if (value.present) {
       map['value'] = Variable<int>(value.value);
@@ -5819,8 +5638,11 @@ class KanjiMetaBankV3DataTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('KanjiMetaBankV3DataTableCompanion(')
+    return (StringBuffer('KanjiMetaBankV3TableCompanion(')
           ..write('id: $id, ')
+          ..write('dictId: $dictId, ')
+          ..write('kanji: $kanji, ')
+          ..write('typeId: $typeId, ')
           ..write('value: $value, ')
           ..write('displayValue: $displayValue')
           ..write(')'))
@@ -5877,8 +5699,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       $KanjiMetaBankV3TypeTableTable(this);
   late final $KanjiMetaBankV3TableTable kanjiMetaBankV3Table =
       $KanjiMetaBankV3TableTable(this);
-  late final $KanjiMetaBankV3DataTableTable kanjiMetaBankV3DataTable =
-      $KanjiMetaBankV3DataTableTable(this);
   late final Index radicalKanji = Index('radicalKanji',
       'CREATE INDEX radicalKanji ON radicals_kanji_table (radical_kanji)');
   late final Index radical =
@@ -5889,8 +5709,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       Index('name', 'CREATE INDEX name ON tag_bank_v3_table (name)');
   late final Index dictionaryKanji = Index('dictionaryKanji',
       'CREATE INDEX dictionaryKanji ON kanji_bank_v3_table (dictionary_kanji)');
-  late final Index term =
-      Index('term', 'CREATE INDEX term ON kanji_meta_bank_v3_table (term)');
+  late final Index kanji =
+      Index('kanji', 'CREATE INDEX kanji ON kanji_meta_bank_v3_table (kanji)');
   late final RadicalDao radicalDao = RadicalDao(this as DaKanjiDB);
   late final KanjiVGDao kanjiVGDao = KanjiVGDao(this as DaKanjiDB);
   late final IndexDao indexDao = IndexDao(this as DaKanjiDB);
@@ -5925,13 +5745,12 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         kanjiBankV3StatKanjiRelationsTable,
         kanjiMetaBankV3TypeTable,
         kanjiMetaBankV3Table,
-        kanjiMetaBankV3DataTable,
         radicalKanji,
         radical,
         kanjiVGKanji,
         name,
         dictionaryKanji,
-        term
+        kanji
       ];
 }
 
@@ -12374,17 +12193,19 @@ typedef $$KanjiMetaBankV3TableTableCreateCompanionBuilder
     = KanjiMetaBankV3TableCompanion Function({
   Value<int> id,
   required int dictId,
-  required String term,
+  required String kanji,
   required int typeId,
-  required int dataId,
+  Value<int?> value,
+  Value<String?> displayValue,
 });
 typedef $$KanjiMetaBankV3TableTableUpdateCompanionBuilder
     = KanjiMetaBankV3TableCompanion Function({
   Value<int> id,
   Value<int> dictId,
-  Value<String> term,
+  Value<String> kanji,
   Value<int> typeId,
-  Value<int> dataId,
+  Value<int?> value,
+  Value<String?> displayValue,
 });
 
 final class $$KanjiMetaBankV3TableTableReferences extends BaseReferences<
@@ -12423,11 +12244,14 @@ class $$KanjiMetaBankV3TableTableFilterComposer
   ColumnFilters<int> get dictId => $composableBuilder(
       column: $table.dictId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get term => $composableBuilder(
-      column: $table.term, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get kanji => $composableBuilder(
+      column: $table.kanji, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get dataId => $composableBuilder(
-      column: $table.dataId, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get displayValue => $composableBuilder(
+      column: $table.displayValue, builder: (column) => ColumnFilters(column));
 
   $$KanjiMetaBankV3TypeTableTableFilterComposer get typeId {
     final $$KanjiMetaBankV3TypeTableTableFilterComposer composer =
@@ -12466,11 +12290,15 @@ class $$KanjiMetaBankV3TableTableOrderingComposer
   ColumnOrderings<int> get dictId => $composableBuilder(
       column: $table.dictId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get term => $composableBuilder(
-      column: $table.term, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get kanji => $composableBuilder(
+      column: $table.kanji, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get dataId => $composableBuilder(
-      column: $table.dataId, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get displayValue => $composableBuilder(
+      column: $table.displayValue,
+      builder: (column) => ColumnOrderings(column));
 
   $$KanjiMetaBankV3TypeTableTableOrderingComposer get typeId {
     final $$KanjiMetaBankV3TypeTableTableOrderingComposer composer =
@@ -12509,11 +12337,14 @@ class $$KanjiMetaBankV3TableTableAnnotationComposer
   GeneratedColumn<int> get dictId =>
       $composableBuilder(column: $table.dictId, builder: (column) => column);
 
-  GeneratedColumn<String> get term =>
-      $composableBuilder(column: $table.term, builder: (column) => column);
+  GeneratedColumn<String> get kanji =>
+      $composableBuilder(column: $table.kanji, builder: (column) => column);
 
-  GeneratedColumn<int> get dataId =>
-      $composableBuilder(column: $table.dataId, builder: (column) => column);
+  GeneratedColumn<int> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+
+  GeneratedColumn<String> get displayValue => $composableBuilder(
+      column: $table.displayValue, builder: (column) => column);
 
   $$KanjiMetaBankV3TypeTableTableAnnotationComposer get typeId {
     final $$KanjiMetaBankV3TypeTableTableAnnotationComposer composer =
@@ -12565,30 +12396,34 @@ class $$KanjiMetaBankV3TableTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> dictId = const Value.absent(),
-            Value<String> term = const Value.absent(),
+            Value<String> kanji = const Value.absent(),
             Value<int> typeId = const Value.absent(),
-            Value<int> dataId = const Value.absent(),
+            Value<int?> value = const Value.absent(),
+            Value<String?> displayValue = const Value.absent(),
           }) =>
               KanjiMetaBankV3TableCompanion(
             id: id,
             dictId: dictId,
-            term: term,
+            kanji: kanji,
             typeId: typeId,
-            dataId: dataId,
+            value: value,
+            displayValue: displayValue,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required int dictId,
-            required String term,
+            required String kanji,
             required int typeId,
-            required int dataId,
+            Value<int?> value = const Value.absent(),
+            Value<String?> displayValue = const Value.absent(),
           }) =>
               KanjiMetaBankV3TableCompanion.insert(
             id: id,
             dictId: dictId,
-            term: term,
+            kanji: kanji,
             typeId: typeId,
-            dataId: dataId,
+            value: value,
+            displayValue: displayValue,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
@@ -12648,151 +12483,6 @@ typedef $$KanjiMetaBankV3TableTableProcessedTableManager
         (KanjiMetaBankV3TableData, $$KanjiMetaBankV3TableTableReferences),
         KanjiMetaBankV3TableData,
         PrefetchHooks Function({bool typeId})>;
-typedef $$KanjiMetaBankV3DataTableTableCreateCompanionBuilder
-    = KanjiMetaBankV3DataTableCompanion Function({
-  Value<int> id,
-  required int value,
-  required String displayValue,
-});
-typedef $$KanjiMetaBankV3DataTableTableUpdateCompanionBuilder
-    = KanjiMetaBankV3DataTableCompanion Function({
-  Value<int> id,
-  Value<int> value,
-  Value<String> displayValue,
-});
-
-class $$KanjiMetaBankV3DataTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiMetaBankV3DataTableTable> {
-  $$KanjiMetaBankV3DataTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get value => $composableBuilder(
-      column: $table.value, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get displayValue => $composableBuilder(
-      column: $table.displayValue, builder: (column) => ColumnFilters(column));
-}
-
-class $$KanjiMetaBankV3DataTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiMetaBankV3DataTableTable> {
-  $$KanjiMetaBankV3DataTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get value => $composableBuilder(
-      column: $table.value, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get displayValue => $composableBuilder(
-      column: $table.displayValue,
-      builder: (column) => ColumnOrderings(column));
-}
-
-class $$KanjiMetaBankV3DataTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiMetaBankV3DataTableTable> {
-  $$KanjiMetaBankV3DataTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<int> get value =>
-      $composableBuilder(column: $table.value, builder: (column) => column);
-
-  GeneratedColumn<String> get displayValue => $composableBuilder(
-      column: $table.displayValue, builder: (column) => column);
-}
-
-class $$KanjiMetaBankV3DataTableTableTableManager extends RootTableManager<
-    _$DaKanjiDB,
-    $KanjiMetaBankV3DataTableTable,
-    KanjiMetaBankV3DataTableData,
-    $$KanjiMetaBankV3DataTableTableFilterComposer,
-    $$KanjiMetaBankV3DataTableTableOrderingComposer,
-    $$KanjiMetaBankV3DataTableTableAnnotationComposer,
-    $$KanjiMetaBankV3DataTableTableCreateCompanionBuilder,
-    $$KanjiMetaBankV3DataTableTableUpdateCompanionBuilder,
-    (
-      KanjiMetaBankV3DataTableData,
-      BaseReferences<_$DaKanjiDB, $KanjiMetaBankV3DataTableTable,
-          KanjiMetaBankV3DataTableData>
-    ),
-    KanjiMetaBankV3DataTableData,
-    PrefetchHooks Function()> {
-  $$KanjiMetaBankV3DataTableTableTableManager(
-      _$DaKanjiDB db, $KanjiMetaBankV3DataTableTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$KanjiMetaBankV3DataTableTableFilterComposer(
-                  $db: db, $table: table),
-          createOrderingComposer: () =>
-              $$KanjiMetaBankV3DataTableTableOrderingComposer(
-                  $db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$KanjiMetaBankV3DataTableTableAnnotationComposer(
-                  $db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> value = const Value.absent(),
-            Value<String> displayValue = const Value.absent(),
-          }) =>
-              KanjiMetaBankV3DataTableCompanion(
-            id: id,
-            value: value,
-            displayValue: displayValue,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required int value,
-            required String displayValue,
-          }) =>
-              KanjiMetaBankV3DataTableCompanion.insert(
-            id: id,
-            value: value,
-            displayValue: displayValue,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$KanjiMetaBankV3DataTableTableProcessedTableManager
-    = ProcessedTableManager<
-        _$DaKanjiDB,
-        $KanjiMetaBankV3DataTableTable,
-        KanjiMetaBankV3DataTableData,
-        $$KanjiMetaBankV3DataTableTableFilterComposer,
-        $$KanjiMetaBankV3DataTableTableOrderingComposer,
-        $$KanjiMetaBankV3DataTableTableAnnotationComposer,
-        $$KanjiMetaBankV3DataTableTableCreateCompanionBuilder,
-        $$KanjiMetaBankV3DataTableTableUpdateCompanionBuilder,
-        (
-          KanjiMetaBankV3DataTableData,
-          BaseReferences<_$DaKanjiDB, $KanjiMetaBankV3DataTableTable,
-              KanjiMetaBankV3DataTableData>
-        ),
-        KanjiMetaBankV3DataTableData,
-        PrefetchHooks Function()>;
 
 class $DaKanjiDBManager {
   final _$DaKanjiDB _db;
@@ -12863,7 +12553,4 @@ class $DaKanjiDBManager {
           _db, _db.kanjiMetaBankV3TypeTable);
   $$KanjiMetaBankV3TableTableTableManager get kanjiMetaBankV3Table =>
       $$KanjiMetaBankV3TableTableTableManager(_db, _db.kanjiMetaBankV3Table);
-  $$KanjiMetaBankV3DataTableTableTableManager get kanjiMetaBankV3DataTable =>
-      $$KanjiMetaBankV3DataTableTableTableManager(
-          _db, _db.kanjiMetaBankV3DataTable);
 }

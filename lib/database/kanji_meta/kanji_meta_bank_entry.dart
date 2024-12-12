@@ -7,21 +7,21 @@ part 'kanji_meta_bank_entry.g.dart';
 
 @Freezed(makeCollectionsUnmodifiable: false)
 /// Class representing one meta entry of the database
-class KanjiMetaBankEntry with _$KanjiMetaBankEntry {
+class KanjiMetaBankV3Entry with _$KanjiMetaBankV3Entry {
 
-  const factory KanjiMetaBankEntry(
+  const factory KanjiMetaBankV3Entry(
     {
-      /// The term of this entry
-      required String term,
-      /// The category of this entry
-      required String category,
+      /// The kanji of this entry
+      required String kanji,
+      /// The type of this entry
+      required String type,
       /// the numeric value of thsi entry
       int? value,
       /// The display value of this entry
       String? displayValue,
-    }) = _KanjiMetaBankEntry;
+    }) = _KanjiMetaBankV3Entry;
 
-  factory KanjiMetaBankEntry.fromJson(Map<String, Object?> json)
-    => _$KanjiMetaBankEntryFromJson(json);
+  factory KanjiMetaBankV3Entry.fromJson(Map<String, Object?> json)
+    => _$KanjiMetaBankV3EntryFromJson(json);
 
 }

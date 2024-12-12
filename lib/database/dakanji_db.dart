@@ -40,8 +40,7 @@ part 'dakanji_db.g.dart';
     KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable,
 
-    KanjiMetaBankV3Table,
-    KanjiMetaBankV3TypeTable, KanjiMetaBankV3DataTable
+    KanjiMetaBankV3Table, KanjiMetaBankV3TypeTable
   ],
   daos: [
     RadicalDao, KanjiVGDao,
@@ -72,7 +71,7 @@ class DaKanjiDB extends _$DaKanjiDB {
         // causes "database locked" errors.
         // With write-ahead logging (WAL) enabled, a single writer and multiple
         // readers can operate on the database in parallel.
-        database.execute('pragma journal_mode = WAL;');
+        //database.execute('pragma journal_mode = WAL;');
       },
       readPool: 6
     );

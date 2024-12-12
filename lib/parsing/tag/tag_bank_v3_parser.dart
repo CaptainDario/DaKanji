@@ -7,7 +7,7 @@ import 'package:drift/drift.dart';
 
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseTagBankv3File(File indexJsonFile, DaKanjiDB db) async {
+Future parseTagBankV3File(File indexJsonFile, DaKanjiDB db) async {
 
   // read and decode the json
   String jsonString = indexJsonFile.readAsStringSync();

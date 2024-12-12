@@ -21,4 +21,24 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
   
 
 
+
+  // ---------------------------------------------------------------------------
+  /// Get all types and their ids 
+  Future<List<KanjiMetaBankV3TypeTableData>> getAllTypes() async {
+    return await select(kanjiMetaBankV3TypeTable).get();
+  }
+
+    // ---------------------------------------------------------------------------
+  /// Get the maximum id of the kanji table
+  Future<int> maxKanjiMetaBankV3TypeId() async {
+    
+    final query = await (selectOnly(kanjiMetaBankV3TypeTable)
+        ..addColumns([kanjiMetaBankV3TypeTable.id.max()]))
+      .getSingle();
+
+    // Extract the max ID value, defaulting to 0 if null
+    return query.read(kanjiMetaBankV3TypeTable.id.max()) ?? 0;
+
+  }
+
 }
