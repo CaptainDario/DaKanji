@@ -79,7 +79,7 @@ The scripts in `ADD PATH HERE` are used to test the performance of the database 
 
 You can generate a schema of the dakanji_db by running
 
-`./.venv/bin/eralchemy -i sqlite:///./tmp/dakanji.db -o dakanji_db_schema/schema.pdf`
+`.venv/bin/eralchemy -i sqlite:///./tmp/dakanji.db -o dakanji_db_schema/schema.pdf`
 
 Make sure that
 
@@ -101,11 +101,11 @@ Additionally, some other databases are included in DaKanji
   * Meaning: Metadata about the dictionary. Please include as much detail as possible.
   * File name pattern: `index.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-index-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js)
-* [dictionary-kanji-bank-v3-schema.json](yomitan_schema/dictionary-kanji-bank-v3-schema.json) - 🚧
+* [dictionary-kanji-bank-v3-schema.json](yomitan_schema/dictionary-kanji-bank-v3-schema.json) - ✅
   * Meaning: Information used in the kanji viewer - meanings, readings, statistics, and codepoints.
   * File name pattern: `kanji_bank_${number}.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-kanji-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js)
-* [dictionary-kanji-meta-bank-v3-schema.json](yomitan_schema/dictionary-kanji-meta-bank-v3-schema.json) - ❌
+* [dictionary-kanji-meta-bank-v3-schema.json](yomitan_schema/dictionary-kanji-meta-bank-v3-schema.json) - ✅
   * Meaning: Stores kanji frequency data.
   * File name pattern: `kanji_meta-bank_${number}.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-kanji-meta-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js)
