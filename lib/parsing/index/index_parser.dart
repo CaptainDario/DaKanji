@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:drift/drift.dart';
@@ -7,11 +7,18 @@ import 'package:drift/drift.dart';
 
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future<int> parseIndex(File indexJsonPath, DaKanjiDB db) async {
+Future<int> parseIndexFile(File indexJsonPath, DaKanjiDB db) async {
+
+  String jsonString = indexJsonPath.readAsStringSync();
+  await parseIndex(jsonString, db);
+
+}
+
+/// parses the given json's contents and adds it to the given [DaKanjiDB]
+Future<int> parseIndex(String indexJson, DaKanjiDB db) async {
 
   // read and decode the json
-  String jsonString = indexJsonPath.readAsStringSync();
-  Map jsonMap = jsonDecode(jsonString);
+  Map jsonMap = jsonDecode(indexJson);
 
   IndexTableCompanion comp = IndexTableCompanion(
     title: Value(jsonMap["title"]),

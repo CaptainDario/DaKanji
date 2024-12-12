@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 import 'package:dakanji_db/conversion/kanji_vg.dart';
 import 'package:dakanji_db/conversion/radicals.dart';

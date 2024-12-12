@@ -2,7 +2,7 @@ import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:dakanji_db/parsing/dictionary_parser.dart';
 import 'package:test/test.dart';
 import 'package:tuple/tuple.dart';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 import '../bin/paths.dart';
 

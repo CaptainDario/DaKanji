@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart';
@@ -81,12 +81,21 @@ class KanjiBankV3ParserRefs {
 
 }
 
+
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseKanjiBankV3(File kanjiBankV3JsonPath, DaKanjiDB db, int dictId) async {
+Future parseKanjiBankV3File(File kanjiBankV3JsonFile, DaKanjiDB db, int dictId) async {
+
+  String jsonString = kanjiBankV3JsonFile.readAsStringSync();
+
+  await parseKanjiBankV3(jsonString, db, dictId);
+
+}
+
+/// parses the given json's contents and adds it to the given [DaKanjiDB]
+Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async {
 
   // read and decode the json
-  String jsonString = kanjiBankV3JsonPath.readAsStringSync();
-  List jsonList = jsonDecode(jsonString);
+  List jsonList = jsonDecode(kanjiBankV3Json);
   print("Parsing ${jsonList.length} kanji entries");
 
   KanjiBankV3ParserRefs refs = KanjiBankV3ParserRefs()

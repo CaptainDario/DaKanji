@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:universal_io/io.dart';
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:dakanji_db/parsing/index/index_parser.dart';
 import 'package:dakanji_db/parsing/kanji/kanji_bank_v3_parser.dart';
@@ -42,7 +42,7 @@ Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db) async {
   //print("Found the following files that can be imported: \n$validFiles");
 
   // parse the index file -> get dict index
-  int dictId = await parseIndex(
+  int dictId = await parseIndexFile(
     validFiles.where((e) => p.basename(e.path) == indexFile).first,
     db
   );
@@ -51,7 +51,7 @@ Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db) async {
   // parse the tags
   Iterable<File> tagFiles = validFiles.where((e) => p.basename(e.path).contains(tagBankFile));
   for (var tagFile in tagFiles) {
-    await parseTagBankv3(tagFile, db);
+    await parseTagBankv3File(tagFile, db);
   }
 
   // parse the remaining files
@@ -72,7 +72,7 @@ Future parseDictionaryFile(Tuple3<File, DaKanjiDB, IndexTableData> args) async {
   if(p.basename(dictFile.path).contains(kanjiBankFile)){
 
     print("Parsing ${p.basename(dictFile.path)} as `$kanjiBankFile`");
-    await parseKanjiBankV3(dictFile, db, ind.id);
+    await parseKanjiBankV3File(dictFile, db, ind.id);
     
   }
   // TODO other dictionary file types

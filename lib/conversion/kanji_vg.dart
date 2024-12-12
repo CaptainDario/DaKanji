@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:drift/drift.dart';

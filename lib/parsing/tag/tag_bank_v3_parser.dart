@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:drift/drift.dart';
@@ -7,11 +7,20 @@ import 'package:drift/drift.dart';
 
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseTagBankv3(File indexJsonPath, DaKanjiDB db) async {
+Future parseTagBankv3File(File indexJsonFile, DaKanjiDB db) async {
 
   // read and decode the json
-  String jsonString = indexJsonPath.readAsStringSync();
-  List jsonList = jsonDecode(jsonString);
+  String jsonString = indexJsonFile.readAsStringSync();
+
+  await parseTagBankv3(jsonString, db);
+
+}
+
+/// parses the given json's contents and adds it to the given [DaKanjiDB]
+Future parseTagBankv3(String json, DaKanjiDB db) async {
+
+  // Parse the given string
+  List jsonList = jsonDecode(json);
 
   // List of all tags in the database file
   List<TagBankV3TableCompanion> tagComps = [];
