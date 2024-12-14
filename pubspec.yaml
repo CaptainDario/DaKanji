@@ -13,7 +13,7 @@ version: 3.4.6+118
 
 environment:
   sdk: ">=3.0.0"
-  flutter: "3.24.4"
+  flutter: "3.27.0"
 
 platforms:
   android:
@@ -70,7 +70,7 @@ dependencies:
   vector_graphics: 1.1.11+1         # included in svg_flutter
   app_links: 6.3.2                 # android, iOS, web, macos, windows (msix), linux
 
-  fvp: 0.27.0
+  fvp: 0.28.0
   chewie: 1.8.5
   video_player: 2.9.1
   flutter_subtitle: 0.0.5
@@ -97,7 +97,9 @@ dependencies:
   dart_style: 2.3.7
   archive: 3.6.1
   local_assets_server: 2.0.2+12
-  kana_kit: 
+  kana_kit:
+  mecab_dart:
+    path: plugins/mecab_dart
 
   flutter_ankidroid:
     path: ./plugins/flutter_ankidroid
@@ -122,8 +124,6 @@ dependencies:
   isar_flutter_libs: # contains Isar Core
     version: 3.1.8
     hosted: https://pub.isar-community.dev/
-  mecab_dart:                                   # android, iOS, macos, windows, linux
-    path: ./plugins/mecab_dart/
 
   # packages that should only target specific platforms
   android_intent_plus: 5.1.0      # android
@@ -160,7 +160,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  analyzer: 6.8.0
+  analyzer: 6.11.0
   custom_lint: 0.6.4
   msix: 3.16.8
   flutter_lints: 4.0.0
@@ -278,6 +278,6 @@ flutter:
     # tf lite models
     - assets/tflite_models/
     # downloadable: mecab
-    - assets/ipadic.zip
+    - assets/mecab_dict.zip
     # downloadable: dictionary
     - assets/dict/
