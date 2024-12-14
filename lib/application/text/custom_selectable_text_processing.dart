@@ -3,6 +3,7 @@ import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_dart/mecab_dart.dart';
 import 'package:tuple/tuple.dart';
+import 'package:mecab_dart/token_node.dart';
 
 
 
@@ -13,7 +14,8 @@ List<String> selectMaxLengthWord(List<TokenNode> mecabTokens){
   List<String> ret = [mecabTokens.first.surface];
 
   // if this is the beginning of a verb
-  // todo handle adjectives
+  // TODO handle adjectives
+  // TODO improve selection
   if(mecabTokens.first.features[1] == startPos){
     for (var i = 1; i < mecabTokens.length; i++) {
     
@@ -52,13 +54,13 @@ Tuple3 processText(String text, Mecab mecab, KanaKit kanaKit){
     if(!kanaKit.isJapanese(analyzedText[i].surface) ||
       kanaKit.isKana(analyzedText[i].surface) ||
       analyzedText[i].features.length < 8 ||
-      analyzedText[i].features[7] == analyzedText[i].surface
+      analyzedText[i].features[9] == analyzedText[i].surface
     )
     {
       mecabReadings.add(" ");
     }
     else{
-      mecabReadings.add(kanaKit.toHiragana(analyzedText[i].features[7]));
+      mecabReadings.add(analyzedText[i].features[9]);
     }
 
     mecabPOS.add(analyzedText[i].features.sublist(0, 4).join("-"));
@@ -66,6 +68,7 @@ Tuple3 processText(String text, Mecab mecab, KanaKit kanaKit){
     // check if this is a word that can be deconjugated
     List<String> nextWord = selectMaxLengthWord(analyzedText.sublist(i)); 
     mecabSurfaces.add(nextWord.join());
+    print(nextWord);
     i += nextWord.length-1;
 
     // add line breaks to mecab output

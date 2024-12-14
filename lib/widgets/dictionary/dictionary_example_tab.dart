@@ -12,6 +12,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:mecab_dart/mecab_dart.dart';
+import 'package:mecab_dart/token_node.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:

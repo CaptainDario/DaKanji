@@ -188,8 +188,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   // Mecab
   GetIt.I.registerSingleton<Mecab>(Mecab());
 
-  await GetIt.I<Mecab>().init(
-    "", true, dicDir: "$supportDirectory/assets/ipadic/");
+  await GetIt.I<Mecab>().init("$supportDirectory/assets/mecab_dict/", true);
 
   g_documentsServicesInitialized = true;
 }
@@ -214,7 +213,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
     "assets/dict/examples.isar",
     "assets/dict/krad.isar",
     "assets/dict/radk.isar",
-    "assets/ipadic"
+    "assets/mecab_dict"
   ].map((f) => File(f)).toList();
 
   for (var asset in assets) {

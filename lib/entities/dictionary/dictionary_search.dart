@@ -1,7 +1,6 @@
 // Package imports:
 import 'package:async/async.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:kana_kit/kana_kit.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/dictionary/dictionary_search.dart';
