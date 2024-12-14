@@ -14,14 +14,14 @@ PODS:
   - fvp (0.27.0):
     - Flutter
     - FlutterMacOS
-    - mdk (~> 0.29.1)
+    - mdk (~> 0.30.0)
   - in_app_review (0.2.0):
     - FlutterMacOS
   - irondash_engine_context (0.0.1):
     - FlutterMacOS
   - isar_flutter_libs (1.0.0):
     - FlutterMacOS
-  - mdk (0.29.1)
+  - mdk (0.30.1)
   - mecab_dart (0.0.1):
     - FlutterMacOS
   - multi_window_macos (0.0.1):
@@ -77,9 +77,6 @@ PODS:
     - FlutterMacOS
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
-  - video_player_avfoundation (0.0.1):
-    - Flutter
-    - FlutterMacOS
   - wakelock_plus (0.0.1):
     - FlutterMacOS
   - window_manager (0.2.0):
@@ -114,7 +111,6 @@ DEPENDENCIES:
   - super_native_extensions (from `Flutter/ephemeral/.symlinks/plugins/super_native_extensions/macos`)
   - tflite_flutter (from `Flutter/ephemeral/.symlinks/plugins/tflite_flutter/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
-  - video_player_avfoundation (from `Flutter/ephemeral/.symlinks/plugins/video_player_avfoundation/darwin`)
   - wakelock_plus (from `Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
   - window_manager_plus (from `Flutter/ephemeral/.symlinks/plugins/window_manager_plus/macos`)
@@ -179,8 +175,6 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/tflite_flutter/macos
   url_launcher_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
-  video_player_avfoundation:
-    :path: Flutter/ephemeral/.symlinks/plugins/video_player_avfoundation/darwin
   wakelock_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos
   window_manager:
@@ -195,11 +189,11 @@ SPEC CHECKSUMS:
   dynamic_color: 2eaa27267de1ca20d879fbd6e01259773fb1670f
   flutter_inappwebview_macos: bdf207b8f4ebd58e86ae06cd96b147de99a67c9b
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  fvp: b843e46165476a3702ec3c80f781488ef5089964
+  fvp: e2a89a4b8c310b01cb81580f37b4cbd10f1cefd7
   in_app_review: a850789fad746e89bce03d4aeee8078b45a53fd0
   irondash_engine_context: da62996ee25616d2f01bbeb85dc115d813359478
   isar_flutter_libs: 43385c99864c168fadba7c9adeddc5d38838ca6a
-  mdk: 3c49affb38303cf86fd9f8ea1e05fe029c4dc194
+  mdk: 5b3a56ae10c666309c1796bd72968e91db4d670a
   mecab_dart: 5082f14a3f6a9d0cf0b22a26a9ac2bfec2326064
   multi_window_macos: dffe0ffd4274adcc78c8482323d3742fada1aed7
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
@@ -219,7 +213,6 @@ SPEC CHECKSUMS:
   super_native_extensions: 85efee3a7495b46b04befcfc86ed12069264ebf3
   tflite_flutter: b186ea3c62c076a90652f47c01005fe36c75171e
   url_launcher_macos: 5f437abeda8c85500ceb03f5c1938a8c5a705399
-  video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
   wakelock_plus: 4783562c9a43d209c458cb9b30692134af456269
   window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
   window_manager_plus: 18e39c7256dbb1e9bbc810417a5506de91f7129b
