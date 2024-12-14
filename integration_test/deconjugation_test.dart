@@ -39,6 +39,7 @@ const List<Tuple2<String, String>> verbs = [
   Tuple2("食べさせられない", "食べる"),
   Tuple2("食べている", "食べる"),
   Tuple2("食べます", "食べる"),
+  Tuple2("食べています", "食べる"),
 
   Tuple2("飲む", "飲む"),
   Tuple2("飲まない", "飲む"),
@@ -55,8 +56,8 @@ const List<Tuple2<String, String>> verbs = [
   Tuple2("飲まなければ", "飲む"),
   Tuple2("飲んだら", "飲む"),
   Tuple2("飲まなかったら", "飲む"),
-  //Tuple2("飲める", "飲む"),
-  //Tuple2("飲めない", "飲む"),
+  Tuple2("飲める", "飲む"),
+  Tuple2("飲めない", "飲む"),
   Tuple2("飲まれる", "飲む"),
   Tuple2("飲まれない", "飲む"),
   Tuple2("飲ませる", "飲む"),
@@ -90,7 +91,7 @@ void main() {
     });
 
     for (int i = 0; i < verbs.length; i++) {
-      String deconjugated = deconjugate(verbs[i].item1);
+      List<String> deconjugated = getDeconjugatedTerms(verbs[i].item1);
 
       expect(deconjugated, verbs[i].item2);  
     }
