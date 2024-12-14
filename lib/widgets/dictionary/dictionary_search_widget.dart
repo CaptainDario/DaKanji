@@ -3,7 +3,6 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_alt_search_flushbar.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +24,6 @@ import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/filter_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/radical_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
@@ -607,7 +604,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     }
 
     KanaKit k = GetIt.I<KanaKit>();
-    String deconjugated = "";
+    List<String> deconjugated = [];
     // try to deconjugate the input if
     // 1. allowed
     // 2. convertable to hiragana (or is already japanese)
@@ -615,7 +612,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     if(allowDeconjugation &&!text.contains(" ") && 
       (k.isJapanese(text) || k.isJapanese(k.toKana(text))))
     {
-      deconjugated = deconjugate(k.isJapanese(text) ? text : k.toHiragana(k.toKana(text)));
+      deconjugated = getDeconjugatedTerms(k.isJapanese(text) ? text : k.toHiragana(k.toKana(text)));
+
     }
 
     // if romaji conversion setting is enabled, convert query to hiragana
@@ -628,13 +626,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     // if the search query was changed show a snackbar and give the option to
     // use the original search
-    if(deconjugated != "" && deconjugated != text){
+    if(deconjugated.isNotEmpty && 
+      !(deconjugated.length == 1 && deconjugated[0] == text)){
 
       deconjugationFlushbar = DictionaryAltSearchFlushbar(
           text,
           queryKana != text ? queryKana : null,
-          deconjugated != text && deconjugated != queryKana
-            ? deconjugated : null,
+          deconjugated,
           onAltSearchTapped
         )
         .build(context)..show(context).then((value) {
@@ -644,7 +642,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       );
     }
     else{
-      deconjugated = text;
+      deconjugated[0] = text;
     }
 
     // update search variables and search
@@ -653,7 +651,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       await GetIt.I<DictionarySearch>().search(
         text,
         queryKana != text ? queryKana : null,
-        deconjugated != text ? deconjugated : null) ?? [];
+        deconjugated) ?? [];
   }
 
   /// when the user taps on an alternative search term from the flushbar

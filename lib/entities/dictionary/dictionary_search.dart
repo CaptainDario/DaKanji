@@ -30,7 +30,7 @@ class DictionarySearch {
   bool _isSearching = false;
   /// The last query that was blocked by a running search
   /// Consists of <query, kana query, deconjugated query>
-  Tuple3<String, String?, String?>? _lastBlockedQuery;
+  Tuple3<String, String?, List<String>?>? _lastBlockedQuery;
   /// Should the search be converted to hiragana
   bool convertToHiragana;
 
@@ -57,7 +57,7 @@ class DictionarySearch {
 
   /// Queries the database and sorts the results using multiple isolates.
   Future<List<JMdict>?> search(
-    String query, String? queryKana, String? queryDeconjugated) async {
+    String query, String? queryKana, List<String>? queryDeconjugated) async {
     _checkInitialized();
 
     // do not search if a search is already running but remember the last blocked query
@@ -101,7 +101,7 @@ class DictionarySearch {
     if(_lastBlockedQuery != null){
       String t1 = _lastBlockedQuery!.item1;
       String? t2 = _lastBlockedQuery!.item2;
-      String? t3 = _lastBlockedQuery!.item3;
+      List<String>? t3 = _lastBlockedQuery!.item3;
       _lastBlockedQuery = null;
       result = (await search(t1, t2, t3)) ?? [];
       _lastBlockedQuery = null;

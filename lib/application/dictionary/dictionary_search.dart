@@ -24,12 +24,12 @@ import 'package:tuple/tuple.dart';
 /// First level sorting criteria:
 ///   1. word frequency
 List<List<JMdict>> sortJmdictList(
-  List<JMdict> entries, String query, String? queryKana, String? queryDeconjugated,
+  List<JMdict> entries, String query, String? queryKana, List<String>? queryDeconjugated,
   List<String> languages
 ){
 
   /// number of citeria used to sort the list
-  int n = 3 * 3;
+  int n = (1 + (queryKana == null ? 0 : 1) + (queryDeconjugated?.length ?? 0)) * 3;
 
   /// lists with n sub lists to sort search results
   List<List<JMdict>> matches = List.generate(n, (i) => <JMdict>[]);
@@ -95,11 +95,11 @@ List<List<JMdict>> sortJmdictList(
 ///   2 - how many characters are in the match but not in `queryText` <br/>
 ///   3 - the index where the search matched <br/>
 Tuple3<int, int, int> rankMatches(List<List<String>> matches,
-  String queryText, String? queryKana, String? queryDeconjugated) {
+  String queryText, String? queryKana, List<String>? queryDeconjugated) {
 
   int result = -1, lenDiff = -1; List<int> matchIndeces = [-1, -1];
 
-  List<String> allSearches = [queryText, queryKana, queryDeconjugated].nonNulls.toList();
+  List<String> allSearches = [queryText, queryKana, ...(queryDeconjugated??<String>[])].nonNulls.toList();
   
   // convert query and matches to lower case; find where the query matched
   queryText = queryText.toLowerCase();

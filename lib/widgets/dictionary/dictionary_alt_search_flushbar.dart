@@ -15,7 +15,7 @@ class DictionaryAltSearchFlushbar {
   /// the search term text converted to kana (if possible)
   final String? queryKana;
   /// the search term text converted to kana and deconjugated (if possible)
-  final String? deconjugated;
+  final List<String>? deconjugated;
   /// Callback that is executed when the user taps on a search text as
   /// alternative search
   final Function(String text) onTapped;
@@ -29,7 +29,7 @@ class DictionaryAltSearchFlushbar {
 
   Flushbar build(BuildContext context) {
 
-    Iterable<String> options = [text, queryKana, deconjugated].nonNulls;
+    Iterable<String> options = [text, queryKana, ...(deconjugated ?? <String>[])].nonNulls;
 
     return Flushbar(
       backgroundColor: Colors.white,

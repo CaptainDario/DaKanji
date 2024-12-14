@@ -109,7 +109,7 @@ class DictionarySearchIsolate {
   }
 
   /// Queries the dictionay inside an isolate
-  Future<List> query(String query, String? queryKana, String? queryDeconjugated,
+  Future<List> query(String query, String? queryKana, List<String>? queryDeconjugated,
     List<String> filters) async {
     
     _checkInitialized();
@@ -170,12 +170,12 @@ Future<void> _searchInIsar(SendPort p) async {
       break;
     }
     
-    if (message is Tuple4<String, String?, String?, List<String>>) {
+    if (message is Tuple4<String, String?, List<String>?, List<String>>) {
       Stopwatch s = Stopwatch()..start();
       
       String query = message.item1;
       String? queryKana = message.item2;
-      String? queryDeconjugated = message.item3;
+      List<String>? queryDeconjugated = message.item3;
       List<String> filters = message.item4;
 
       List<JMdict> searchResults = 

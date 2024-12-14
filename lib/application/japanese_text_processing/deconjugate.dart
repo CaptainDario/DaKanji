@@ -107,7 +107,7 @@ List<String> getDeconjugatedTerms(String word){
 
     }
   }
-  ret.add(fullDeconjugation.join());
+  ret.insert(0, fullDeconjugation.join());
 
   // remove duplicates
   ret = ret.toSet().toList();
