@@ -237,16 +237,26 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               : null,
                             child: KeyboardActions(
                               config: KeyboardActionsConfig(
+                                keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
+                                keyboardBarColor: Theme.of(context).brightness == Brightness.dark
+                                  ? g_Dakanji_grey
+                                  : Colors.white,
                                 actions: [
                                   KeyboardActionsItem(
+                                    displayArrows: false,
                                     focusNode: textinputFocusNode,
                                     toolbarButtons: [
                                     (node) {
-                                      return GestureDetector(
+                                      return InkWell(
                                         onTap: () => node.unfocus(),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(Icons.close),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Icon(
+                                            Icons.close,
+                                            color: Theme.of(context).brightness == Brightness.dark
+                                              ? Colors.white
+                                              : g_Dakanji_grey
+                                          ),
                                         ),
                                       );
                                     }
