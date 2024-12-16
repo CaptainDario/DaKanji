@@ -12,7 +12,7 @@
 #include <gtk/gtk_plugin.h>
 #include <irondash_engine_context/irondash_engine_context_plugin.h>
 #include <isar_flutter_libs/isar_flutter_libs_plugin.h>
-#include <mecab_for_dart/mecab_for_dart_plugin.h>
+#include <mecab_dart/mecab_dart_plugin.h>
 #include <multi_window_linux/multi_window_linux_plugin.h>
 #include <printing/printing_plugin.h>
 #include <rive_common/rive_plugin.h>
@@ -42,9 +42,9 @@ void fl_register_plugins(FlPluginRegistry* registry) {
   g_autoptr(FlPluginRegistrar) isar_flutter_libs_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "IsarFlutterLibsPlugin");
   isar_flutter_libs_plugin_register_with_registrar(isar_flutter_libs_registrar);
-  g_autoptr(FlPluginRegistrar) mecab_for_dart_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "MecabForDartPlugin");
-  mecab_for_dart_plugin_register_with_registrar(mecab_for_dart_registrar);
+  g_autoptr(FlPluginRegistrar) mecab_dart_registrar =
+      fl_plugin_registry_get_registrar_for_plugin(registry, "MecabDartPlugin");
+  mecab_dart_plugin_register_with_registrar(mecab_dart_registrar);
   g_autoptr(FlPluginRegistrar) multi_window_linux_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "MultiWindowLinuxPlugin");
   multi_window_linux_plugin_register_with_registrar(multi_window_linux_registrar);
