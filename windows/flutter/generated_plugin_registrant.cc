@@ -13,7 +13,7 @@
 #include <fvp/fvp_plugin_c_api.h>
 #include <irondash_engine_context/irondash_engine_context_plugin_c_api.h>
 #include <isar_flutter_libs/isar_flutter_libs_plugin.h>
-#include <mecab_for_dart/mecab_dart_plugin_c_api.h>
+#include <mecab_for_dart/mecab_for_dart_plugin_c_api.h>
 #include <permission_handler_windows/permission_handler_windows_plugin.h>
 #include <printing/printing_plugin.h>
 #include <rive_common/rive_plugin.h>
@@ -40,8 +40,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("IrondashEngineContextPluginCApi"));
   IsarFlutterLibsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("IsarFlutterLibsPlugin"));
-  MecabDartPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("MecabDartPluginCApi"));
+  MecabForDartPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("MecabForDartPluginCApi"));
   PermissionHandlerWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
   PrintingPluginRegisterWithRegistrar(

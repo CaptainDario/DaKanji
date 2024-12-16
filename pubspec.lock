@@ -1196,7 +1196,7 @@ packages:
       path: "plugins/mecab_for_dart"
       relative: true
     source: path
-    version: "1.0.1"
+    version: "1.0.4"
   meta:
     dependency: "direct main"
     description:
