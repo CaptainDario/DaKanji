@@ -9,7 +9,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   gtk
   irondash_engine_context
   isar_flutter_libs
-  mecab_dart
+  mecab_for_dart
   multi_window_linux
   printing
   rive_common

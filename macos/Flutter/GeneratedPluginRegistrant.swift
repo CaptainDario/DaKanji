@@ -14,7 +14,7 @@ import fvp
 import in_app_review
 import irondash_engine_context
 import isar_flutter_libs
-import mecab_dart
+import mecab_for_dart
 import multi_window_macos
 import package_info_plus
 import path_provider_foundation
