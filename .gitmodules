@@ -13,6 +13,6 @@
 [submodule "plugins/flutter_browser_app"]
 	path = plugins/flutter_browser_app
 	url = https://github.com/CaptainDario/flutter_browser_app
-[submodule "plugins/mecab_dart"]
-	path = plugins/mecab_dart
-	url = https://github.com/CaptainDario/mecab_dart
+[submodule "plugins/mecab_for_dart"]
+	path = plugins/mecab_for_dart
+	url = https://github.com/CaptainDario/mecab_for_dart
