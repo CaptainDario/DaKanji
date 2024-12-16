@@ -1,9 +1,9 @@
 // Package imports:
 import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_dart/mecab_dart.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:tuple/tuple.dart';
-import 'package:mecab_dart/token_node.dart';
+import 'package:mecab_for_dart/token_node.dart';
 
 
 
@@ -68,7 +68,6 @@ Tuple3 processText(String text, Mecab mecab, KanaKit kanaKit){
     // check if this is a word that can be deconjugated
     List<String> nextWord = selectMaxLengthWord(analyzedText.sublist(i)); 
     mecabSurfaces.add(nextWord.join());
-    print(nextWord);
     i += nextWord.length-1;
 
     // add line breaks to mecab output

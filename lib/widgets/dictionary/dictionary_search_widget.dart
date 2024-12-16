@@ -641,9 +641,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         }
       );
     }
-    else{
-      deconjugated[0] = text;
-    }
 
     // update search variables and search
     widget.context.read<DictSearch>().currentSearch = text;

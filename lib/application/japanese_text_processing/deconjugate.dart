@@ -1,8 +1,8 @@
 // Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_dart/mecab_dart.dart';
-import 'package:mecab_dart/token_node.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:mecab_for_dart/token_node.dart';
 
 
 
