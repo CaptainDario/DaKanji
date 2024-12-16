@@ -98,8 +98,8 @@ dependencies:
   archive: 3.6.1
   local_assets_server: 2.0.2+12
   kana_kit:
-  mecab_dart:
-    path: plugins/mecab_dart
+  mecab_for_dart:
+    path: plugins/mecab_for_dart
 
   flutter_ankidroid:
     path: ./plugins/flutter_ankidroid
