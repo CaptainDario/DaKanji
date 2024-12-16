@@ -64,7 +64,7 @@ dependencies:
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
   pdf: 3.11.1
-  rive: 0.13.13
+  rive: 0.13.15
   printing: 5.13.3
   path_parsing: 1.0.1               # included in svg_flutter
   vector_graphics: 1.1.11+1         # included in svg_flutter
@@ -257,8 +257,8 @@ flutter:
     - assets/images/yahoo_logo.png
     - assets/icons/flutter_browser_icon.png
     # reader
-    - plugins/foliate-js/web/reader/foliate-js/
-    - plugins/foliate-js/web/reader/foliate-js/ui/
+    - plugins/foliate-js/
+    - plugins/foliate-js/ui/
     # dictionary screen
     - assets/dict/krad.zip
     - assets/dict/radk.zip
