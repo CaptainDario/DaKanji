@@ -111,6 +111,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
         break;
       }
       catch (e){
+        debugPrint(e.toString());
         await AwesomeDialog(
           // ignore: use_build_context_synchronously
           context: context,
