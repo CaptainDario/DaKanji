@@ -38,6 +38,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
+  ankidroid_for_flutter:
+    dependency: "direct main"
+    description:
+      path: "../ankidroid_for_flutter"
+      relative: true
+    source: path
+    version: "1.0.0"
   another_flushbar:
     dependency: "direct main"
     description:
@@ -89,11 +96,10 @@ packages:
   archive:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "0b5e29658ccb6a0ca0e60320049db72c0807676f"
-      url: "https://github.com/brendan-duncan/archive"
-    source: git
+      name: archive
+      sha256: "08064924cbf0ab88280a0c3f60db9dd24fec693927e725ecb176f16c629d1cb8"
+      url: "https://pub.dev"
+    source: hosted
     version: "4.0.1"
   args:
     dependency: transitive
@@ -299,10 +305,10 @@ packages:
     dependency: "direct main"
     description:
       name: clipboard_watcher
-      sha256: a6c98d9a30c47d1c5655ed48c46f554b04545da018f28992fb2540d1d14d863a
+      sha256: "6a9f11ecfe983e9a211458c37c62a9c2830e6ae0db4afc65f1e9fecdd2c204a3"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.1"
+    version: "0.3.0"
   clock:
     dependency: transitive
     description:
@@ -619,13 +625,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_ankidroid:
-    dependency: "direct main"
-    description:
-      path: "plugins/flutter_ankidroid"
-      relative: true
-    source: path
-    version: "0.8.1"
   flutter_browser:
     dependency: "direct main"
     description:
@@ -1193,11 +1192,10 @@ packages:
   mecab_for_dart:
     dependency: "direct main"
     description:
-      name: mecab_for_dart
-      sha256: fcf0748145ba74d8f5efef99708e91f3427cf07c5a164836392295c328e823f3
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.6"
+      path: "../mecab_for_dart"
+      relative: true
+    source: path
+    version: "1.0.7"
   meta:
     dependency: "direct main"
     description:
@@ -1887,10 +1885,10 @@ packages:
     dependency: "direct main"
     description:
       name: super_clipboard
-      sha256: cfeb142360fac67e0da1ca339accb892eb790c6528a218a008eef1709d96ed0f
+      sha256: "4a6ae6dfaa282ec1f2bff750976f535517ed8ca842d5deae13985eb11c00ac1f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.22"
+    version: "0.8.24"
   super_native_extensions:
     dependency: transitive
     description:
@@ -1936,10 +1934,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c3a2f0580ec7cd6ef39aa0966443b048b76f5360
+      resolved-ref: "1680ba59a863c23f8fe58475f3fb3620b85e8627"
       url: "https://github.com/CaptainDario/flutter-tflite"
     source: git
-    version: "0.10.3"
+    version: "0.11.0"
   time:
     dependency: transitive
     description:

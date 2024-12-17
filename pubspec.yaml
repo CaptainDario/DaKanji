@@ -79,7 +79,8 @@ dependencies:
   tflite_flutter: #0.10.4
     git:
       url: https://github.com/CaptainDario/flutter-tflite
-      hash: 2c4c912
+      branch: master
+      hash: 1680ba59a863c23f8fe58475f3fb3620b85e8627
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
   async: 2.11.0
@@ -90,18 +91,19 @@ dependencies:
   quiver: 3.2.2
   another_flushbar: 1.12.30
   screenshot: 3.0.0
-  super_clipboard: 0.8.22
+  super_clipboard: 0.8.24
   keyboard_actions: 4.2.0
   meta: 1.16.0
   collection: 1.19.0
   dart_style: 2.3.7
-  archive: 3.6.1
+  archive: 4.0.1
   local_assets_server: 2.0.2+12
   kana_kit:
-  mecab_for_dart: 1.0.6
+  mecab_for_dart:
+    path: ../mecab_for_dart
 
-  flutter_ankidroid:
-    path: ./plugins/flutter_ankidroid
+  ankidroid_for_flutter:
+    path: ../ankidroid_for_flutter/
   liquid_swipe:
     path: ./plugins/DaKanji-dependencies/liquid_swipe_flutter
   database_builder:
@@ -113,7 +115,7 @@ dependencies:
     path: ./plugins/flutter_browser_app/
 
   in_app_review: 2.0.9                  # android, iOS, MacOS, windows (limited)
-  clipboard_watcher: 0.2.1              # android, iOS, macos, windows, linux
+  clipboard_watcher: 0.3.0              # android, iOS, macos, windows, linux
   store_checker: 1.6.0                  # ios, android
 
   #isar: android, iOS, macos, windows, linux
@@ -137,9 +139,7 @@ dependency_overrides:
   meta: 1.16.0
   collection: 1.19.0
   dart_style: 2.3.7
-  archive:
-    git:
-      url: https://github.com/brendan-duncan/archive
+  archive: 4.0.1
 
 msix_config:
   display_name: DaKanji
@@ -277,6 +277,6 @@ flutter:
     # tf lite models
     - assets/tflite_models/
     # downloadable: mecab
-    - assets/mecab_dict.zip
+    #- assets/mecab_dict.zip
     # downloadable: dictionary
-    - assets/dict/
+    #- assets/dict/
