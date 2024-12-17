@@ -1,5 +1,5 @@
 // Package imports:
-import 'package:flutter_ankidroid/flutter_ankidroid.dart';
+import 'package:ankidroid_for_flutter/ankidroid_for_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
