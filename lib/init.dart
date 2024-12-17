@@ -197,7 +197,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
 /// Checks if a different version of
 /// * the dictionary DB
 /// * the examples DB
-/// * mecab's ipadic
+/// * mecab's dictionary
 /// is needed for this release. If so, copy the new one from assets / donwload
 /// from GitHub. The context is used for showing a popup 
 Future<void> initDocumentsAssets(BuildContext context) async {
