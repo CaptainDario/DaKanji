@@ -4,16 +4,14 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   clipboard_watcher
-  dynamic_color
-  fvp
   gtk
   irondash_engine_context
   isar_flutter_libs
-  mecab_for_dart
-  multi_window_linux
+  mecab_dart
+  media_kit_libs_linux
+  media_kit_video
   printing
-  rive_common
-  screen_retriever_linux
+  screen_retriever
   sentry_flutter
   sqlite3_flutter_libs
   super_native_extensions
@@ -22,6 +20,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
+  media_kit_native_event_loop
   tflite_flutter
 )
 
