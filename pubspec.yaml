@@ -99,11 +99,10 @@ dependencies:
   archive: 4.0.1
   local_assets_server: 2.0.2+12
   kana_kit:
-  mecab_for_dart:
-    path: ../mecab_for_dart
 
-  ankidroid_for_flutter:
-    path: ../ankidroid_for_flutter/
+  # packages that I maintain
+  mecab_for_dart: 1.0.7
+  ankidroid_for_flutter: 1.0.1
   liquid_swipe:
     path: ./plugins/DaKanji-dependencies/liquid_swipe_flutter
   database_builder:
