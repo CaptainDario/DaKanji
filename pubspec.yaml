@@ -104,7 +104,7 @@ dependencies:
   flutter_ankidroid:
     path: ./plugins/flutter_ankidroid
   liquid_swipe:
-    path: ./plugins/DaKanji-Dependencies/liquid_swipe_flutter
+    path: ./plugins/DaKanji-dependencies/liquid_swipe_flutter
   database_builder:
     path: ./plugins/DaKanji-Dictionary/database_builder
   
