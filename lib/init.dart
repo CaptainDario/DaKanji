@@ -12,7 +12,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_dart/mecab_dart.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
