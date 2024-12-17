@@ -7,16 +7,14 @@
 #include "generated_plugin_registrant.h"
 
 #include <clipboard_watcher/clipboard_watcher_plugin.h>
-#include <dynamic_color/dynamic_color_plugin.h>
-#include <fvp/fvp_plugin.h>
 #include <gtk/gtk_plugin.h>
 #include <irondash_engine_context/irondash_engine_context_plugin.h>
 #include <isar_flutter_libs/isar_flutter_libs_plugin.h>
 #include <mecab_dart/mecab_dart_plugin.h>
-#include <multi_window_linux/multi_window_linux_plugin.h>
+#include <media_kit_libs_linux/media_kit_libs_linux_plugin.h>
+#include <media_kit_video/media_kit_video_plugin.h>
 #include <printing/printing_plugin.h>
-#include <rive_common/rive_plugin.h>
-#include <screen_retriever_linux/screen_retriever_linux_plugin.h>
+#include <screen_retriever/screen_retriever_plugin.h>
 #include <sentry_flutter/sentry_flutter_plugin.h>
 #include <sqlite3_flutter_libs/sqlite3_flutter_libs_plugin.h>
 #include <super_native_extensions/super_native_extensions_plugin.h>
@@ -27,12 +25,6 @@ void fl_register_plugins(FlPluginRegistry* registry) {
   g_autoptr(FlPluginRegistrar) clipboard_watcher_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "ClipboardWatcherPlugin");
   clipboard_watcher_plugin_register_with_registrar(clipboard_watcher_registrar);
-  g_autoptr(FlPluginRegistrar) dynamic_color_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "DynamicColorPlugin");
-  dynamic_color_plugin_register_with_registrar(dynamic_color_registrar);
-  g_autoptr(FlPluginRegistrar) fvp_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "FvpPlugin");
-  fvp_plugin_register_with_registrar(fvp_registrar);
   g_autoptr(FlPluginRegistrar) gtk_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "GtkPlugin");
   gtk_plugin_register_with_registrar(gtk_registrar);
@@ -45,18 +37,18 @@ void fl_register_plugins(FlPluginRegistry* registry) {
   g_autoptr(FlPluginRegistrar) mecab_dart_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "MecabDartPlugin");
   mecab_dart_plugin_register_with_registrar(mecab_dart_registrar);
-  g_autoptr(FlPluginRegistrar) multi_window_linux_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "MultiWindowLinuxPlugin");
-  multi_window_linux_plugin_register_with_registrar(multi_window_linux_registrar);
+  g_autoptr(FlPluginRegistrar) media_kit_libs_linux_registrar =
+      fl_plugin_registry_get_registrar_for_plugin(registry, "MediaKitLibsLinuxPlugin");
+  media_kit_libs_linux_plugin_register_with_registrar(media_kit_libs_linux_registrar);
+  g_autoptr(FlPluginRegistrar) media_kit_video_registrar =
+      fl_plugin_registry_get_registrar_for_plugin(registry, "MediaKitVideoPlugin");
+  media_kit_video_plugin_register_with_registrar(media_kit_video_registrar);
   g_autoptr(FlPluginRegistrar) printing_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "PrintingPlugin");
   printing_plugin_register_with_registrar(printing_registrar);
-  g_autoptr(FlPluginRegistrar) rive_common_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "RivePlugin");
-  rive_plugin_register_with_registrar(rive_common_registrar);
-  g_autoptr(FlPluginRegistrar) screen_retriever_linux_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "ScreenRetrieverLinuxPlugin");
-  screen_retriever_linux_plugin_register_with_registrar(screen_retriever_linux_registrar);
+  g_autoptr(FlPluginRegistrar) screen_retriever_registrar =
+      fl_plugin_registry_get_registrar_for_plugin(registry, "ScreenRetrieverPlugin");
+  screen_retriever_plugin_register_with_registrar(screen_retriever_registrar);
   g_autoptr(FlPluginRegistrar) sentry_flutter_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "SentryFlutterPlugin");
   sentry_flutter_plugin_register_with_registrar(sentry_flutter_registrar);
