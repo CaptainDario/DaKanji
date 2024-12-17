@@ -1193,10 +1193,11 @@ packages:
   mecab_for_dart:
     dependency: "direct main"
     description:
-      path: "plugins/mecab_for_dart"
-      relative: true
-    source: path
-    version: "1.0.1"
+      name: mecab_for_dart
+      sha256: fcf0748145ba74d8f5efef99708e91f3427cf07c5a164836392295c328e823f3
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.6"
   meta:
     dependency: "direct main"
     description:

@@ -8,7 +8,7 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.4.6+118
+version: 3.5.0+118
 
 
 environment:
@@ -98,8 +98,7 @@ dependencies:
   archive: 3.6.1
   local_assets_server: 2.0.2+12
   kana_kit:
-  mecab_for_dart:
-    path: ./plugins/mecab_for_dart
+  mecab_for_dart: 1.0.6
 
   flutter_ankidroid:
     path: ./plugins/flutter_ankidroid
