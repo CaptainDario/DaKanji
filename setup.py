@@ -96,9 +96,9 @@ def move_assets():
         if(f.startswith(tuple(move_to_blobs))):
             shutil.copy(f"{tmp_dir}/{f}", "blobs/")
         
-        # move ipadic assets
-        if(f.startswith("ipadic")):
-            shutil.copy(f"{tmp_dir}/ipadic.zip", "assets/")
+        # move mecab_dict to assets
+        if(f.startswith("mecab_dict")):
+            shutil.copy(f"{tmp_dir}/mecab_dict.zip", "assets/")
 
         # move tf lite assets
         if(f.startswith(tuple(move_to_tf_lite))):

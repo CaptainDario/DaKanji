@@ -24,7 +24,7 @@ import screen_retriever_macos
 import sentry_flutter
 import share_plus
 import shared_preferences_foundation
-import sqflite
+import sqflite_darwin
 import sqlite3_flutter_libs
 import store_checker
 import super_native_extensions
