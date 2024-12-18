@@ -5871,6 +5871,16 @@ class $TermMetaBankV3TableTable extends TermMetaBankV3Table
           ),
           type: DriftSqlType.string,
           requiredDuringInsert: true);
+  static const VerificationMeta _readingMeta =
+      const VerificationMeta('reading');
+  @override
+  late final GeneratedColumn<String> reading =
+      GeneratedColumn<String>('reading', aliasedName, true,
+          additionalChecks: GeneratedColumn.checkTextLength(
+            minTextLength: 1,
+          ),
+          type: DriftSqlType.string,
+          requiredDuringInsert: false);
   static const VerificationMeta _typeIdMeta = const VerificationMeta('typeId');
   @override
   late final GeneratedColumn<int> typeId = GeneratedColumn<int>(
@@ -5893,7 +5903,7 @@ class $TermMetaBankV3TableTable extends TermMetaBankV3Table
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, dictId, term, typeId, freqValue, freqDisplayValue];
+      [id, dictId, term, reading, typeId, freqValue, freqDisplayValue];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -5919,6 +5929,10 @@ class $TermMetaBankV3TableTable extends TermMetaBankV3Table
           _termMeta, term.isAcceptableOrUnknown(data['term']!, _termMeta));
     } else if (isInserting) {
       context.missing(_termMeta);
+    }
+    if (data.containsKey('reading')) {
+      context.handle(_readingMeta,
+          reading.isAcceptableOrUnknown(data['reading']!, _readingMeta));
     }
     if (data.containsKey('type_id')) {
       context.handle(_typeIdMeta,
@@ -5952,6 +5966,8 @@ class $TermMetaBankV3TableTable extends TermMetaBankV3Table
           .read(DriftSqlType.int, data['${effectivePrefix}dict_id'])!,
       term: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}term'])!,
+      reading: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}reading']),
       typeId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}type_id'])!,
       freqValue: attachedDatabase.typeMapping
@@ -5978,6 +5994,9 @@ class TermMetaBankV3TableData extends DataClass
   /// the term this meta entry belongs to
   final String term;
 
+  /// the reading of this term
+  final String? reading;
+
   /// the id of this term's type entry
   final int typeId;
 
@@ -5990,6 +6009,7 @@ class TermMetaBankV3TableData extends DataClass
       {required this.id,
       required this.dictId,
       required this.term,
+      this.reading,
       required this.typeId,
       this.freqValue,
       this.freqDisplayValue});
@@ -5999,6 +6019,9 @@ class TermMetaBankV3TableData extends DataClass
     map['id'] = Variable<int>(id);
     map['dict_id'] = Variable<int>(dictId);
     map['term'] = Variable<String>(term);
+    if (!nullToAbsent || reading != null) {
+      map['reading'] = Variable<String>(reading);
+    }
     map['type_id'] = Variable<int>(typeId);
     if (!nullToAbsent || freqValue != null) {
       map['freq_value'] = Variable<int>(freqValue);
@@ -6014,6 +6037,9 @@ class TermMetaBankV3TableData extends DataClass
       id: Value(id),
       dictId: Value(dictId),
       term: Value(term),
+      reading: reading == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reading),
       typeId: Value(typeId),
       freqValue: freqValue == null && nullToAbsent
           ? const Value.absent()
@@ -6031,6 +6057,7 @@ class TermMetaBankV3TableData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       dictId: serializer.fromJson<int>(json['dictId']),
       term: serializer.fromJson<String>(json['term']),
+      reading: serializer.fromJson<String?>(json['reading']),
       typeId: serializer.fromJson<int>(json['typeId']),
       freqValue: serializer.fromJson<int?>(json['freqValue']),
       freqDisplayValue: serializer.fromJson<String?>(json['freqDisplayValue']),
@@ -6043,6 +6070,7 @@ class TermMetaBankV3TableData extends DataClass
       'id': serializer.toJson<int>(id),
       'dictId': serializer.toJson<int>(dictId),
       'term': serializer.toJson<String>(term),
+      'reading': serializer.toJson<String?>(reading),
       'typeId': serializer.toJson<int>(typeId),
       'freqValue': serializer.toJson<int?>(freqValue),
       'freqDisplayValue': serializer.toJson<String?>(freqDisplayValue),
@@ -6053,6 +6081,7 @@ class TermMetaBankV3TableData extends DataClass
           {int? id,
           int? dictId,
           String? term,
+          Value<String?> reading = const Value.absent(),
           int? typeId,
           Value<int?> freqValue = const Value.absent(),
           Value<String?> freqDisplayValue = const Value.absent()}) =>
@@ -6060,6 +6089,7 @@ class TermMetaBankV3TableData extends DataClass
         id: id ?? this.id,
         dictId: dictId ?? this.dictId,
         term: term ?? this.term,
+        reading: reading.present ? reading.value : this.reading,
         typeId: typeId ?? this.typeId,
         freqValue: freqValue.present ? freqValue.value : this.freqValue,
         freqDisplayValue: freqDisplayValue.present
@@ -6071,6 +6101,7 @@ class TermMetaBankV3TableData extends DataClass
       id: data.id.present ? data.id.value : this.id,
       dictId: data.dictId.present ? data.dictId.value : this.dictId,
       term: data.term.present ? data.term.value : this.term,
+      reading: data.reading.present ? data.reading.value : this.reading,
       typeId: data.typeId.present ? data.typeId.value : this.typeId,
       freqValue: data.freqValue.present ? data.freqValue.value : this.freqValue,
       freqDisplayValue: data.freqDisplayValue.present
@@ -6085,6 +6116,7 @@ class TermMetaBankV3TableData extends DataClass
           ..write('id: $id, ')
           ..write('dictId: $dictId, ')
           ..write('term: $term, ')
+          ..write('reading: $reading, ')
           ..write('typeId: $typeId, ')
           ..write('freqValue: $freqValue, ')
           ..write('freqDisplayValue: $freqDisplayValue')
@@ -6093,8 +6125,8 @@ class TermMetaBankV3TableData extends DataClass
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, dictId, term, typeId, freqValue, freqDisplayValue);
+  int get hashCode => Object.hash(
+      id, dictId, term, reading, typeId, freqValue, freqDisplayValue);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -6102,6 +6134,7 @@ class TermMetaBankV3TableData extends DataClass
           other.id == this.id &&
           other.dictId == this.dictId &&
           other.term == this.term &&
+          other.reading == this.reading &&
           other.typeId == this.typeId &&
           other.freqValue == this.freqValue &&
           other.freqDisplayValue == this.freqDisplayValue);
@@ -6112,6 +6145,7 @@ class TermMetaBankV3TableCompanion
   final Value<int> id;
   final Value<int> dictId;
   final Value<String> term;
+  final Value<String?> reading;
   final Value<int> typeId;
   final Value<int?> freqValue;
   final Value<String?> freqDisplayValue;
@@ -6119,6 +6153,7 @@ class TermMetaBankV3TableCompanion
     this.id = const Value.absent(),
     this.dictId = const Value.absent(),
     this.term = const Value.absent(),
+    this.reading = const Value.absent(),
     this.typeId = const Value.absent(),
     this.freqValue = const Value.absent(),
     this.freqDisplayValue = const Value.absent(),
@@ -6127,6 +6162,7 @@ class TermMetaBankV3TableCompanion
     this.id = const Value.absent(),
     required int dictId,
     required String term,
+    this.reading = const Value.absent(),
     required int typeId,
     this.freqValue = const Value.absent(),
     this.freqDisplayValue = const Value.absent(),
@@ -6137,6 +6173,7 @@ class TermMetaBankV3TableCompanion
     Expression<int>? id,
     Expression<int>? dictId,
     Expression<String>? term,
+    Expression<String>? reading,
     Expression<int>? typeId,
     Expression<int>? freqValue,
     Expression<String>? freqDisplayValue,
@@ -6145,6 +6182,7 @@ class TermMetaBankV3TableCompanion
       if (id != null) 'id': id,
       if (dictId != null) 'dict_id': dictId,
       if (term != null) 'term': term,
+      if (reading != null) 'reading': reading,
       if (typeId != null) 'type_id': typeId,
       if (freqValue != null) 'freq_value': freqValue,
       if (freqDisplayValue != null) 'freq_display_value': freqDisplayValue,
@@ -6155,6 +6193,7 @@ class TermMetaBankV3TableCompanion
       {Value<int>? id,
       Value<int>? dictId,
       Value<String>? term,
+      Value<String?>? reading,
       Value<int>? typeId,
       Value<int?>? freqValue,
       Value<String?>? freqDisplayValue}) {
@@ -6162,6 +6201,7 @@ class TermMetaBankV3TableCompanion
       id: id ?? this.id,
       dictId: dictId ?? this.dictId,
       term: term ?? this.term,
+      reading: reading ?? this.reading,
       typeId: typeId ?? this.typeId,
       freqValue: freqValue ?? this.freqValue,
       freqDisplayValue: freqDisplayValue ?? this.freqDisplayValue,
@@ -6179,6 +6219,9 @@ class TermMetaBankV3TableCompanion
     }
     if (term.present) {
       map['term'] = Variable<String>(term.value);
+    }
+    if (reading.present) {
+      map['reading'] = Variable<String>(reading.value);
     }
     if (typeId.present) {
       map['type_id'] = Variable<int>(typeId.value);
@@ -6198,6 +6241,7 @@ class TermMetaBankV3TableCompanion
           ..write('id: $id, ')
           ..write('dictId: $dictId, ')
           ..write('term: $term, ')
+          ..write('reading: $reading, ')
           ..write('typeId: $typeId, ')
           ..write('freqValue: $freqValue, ')
           ..write('freqDisplayValue: $freqDisplayValue')
@@ -13274,6 +13318,7 @@ typedef $$TermMetaBankV3TableTableCreateCompanionBuilder
   Value<int> id,
   required int dictId,
   required String term,
+  Value<String?> reading,
   required int typeId,
   Value<int?> freqValue,
   Value<String?> freqDisplayValue,
@@ -13283,6 +13328,7 @@ typedef $$TermMetaBankV3TableTableUpdateCompanionBuilder
   Value<int> id,
   Value<int> dictId,
   Value<String> term,
+  Value<String?> reading,
   Value<int> typeId,
   Value<int?> freqValue,
   Value<String?> freqDisplayValue,
@@ -13326,6 +13372,9 @@ class $$TermMetaBankV3TableTableFilterComposer
 
   ColumnFilters<String> get term => $composableBuilder(
       column: $table.term, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get reading => $composableBuilder(
+      column: $table.reading, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<int> get freqValue => $composableBuilder(
       column: $table.freqValue, builder: (column) => ColumnFilters(column));
@@ -13374,6 +13423,9 @@ class $$TermMetaBankV3TableTableOrderingComposer
   ColumnOrderings<String> get term => $composableBuilder(
       column: $table.term, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<String> get reading => $composableBuilder(
+      column: $table.reading, builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<int> get freqValue => $composableBuilder(
       column: $table.freqValue, builder: (column) => ColumnOrderings(column));
 
@@ -13420,6 +13472,9 @@ class $$TermMetaBankV3TableTableAnnotationComposer
 
   GeneratedColumn<String> get term =>
       $composableBuilder(column: $table.term, builder: (column) => column);
+
+  GeneratedColumn<String> get reading =>
+      $composableBuilder(column: $table.reading, builder: (column) => column);
 
   GeneratedColumn<int> get freqValue =>
       $composableBuilder(column: $table.freqValue, builder: (column) => column);
@@ -13478,6 +13533,7 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
             Value<int> id = const Value.absent(),
             Value<int> dictId = const Value.absent(),
             Value<String> term = const Value.absent(),
+            Value<String?> reading = const Value.absent(),
             Value<int> typeId = const Value.absent(),
             Value<int?> freqValue = const Value.absent(),
             Value<String?> freqDisplayValue = const Value.absent(),
@@ -13486,6 +13542,7 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
             id: id,
             dictId: dictId,
             term: term,
+            reading: reading,
             typeId: typeId,
             freqValue: freqValue,
             freqDisplayValue: freqDisplayValue,
@@ -13494,6 +13551,7 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
             Value<int> id = const Value.absent(),
             required int dictId,
             required String term,
+            Value<String?> reading = const Value.absent(),
             required int typeId,
             Value<int?> freqValue = const Value.absent(),
             Value<String?> freqDisplayValue = const Value.absent(),
@@ -13502,6 +13560,7 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
             id: id,
             dictId: dictId,
             term: term,
+            reading: reading,
             typeId: typeId,
             freqValue: freqValue,
             freqDisplayValue: freqDisplayValue,

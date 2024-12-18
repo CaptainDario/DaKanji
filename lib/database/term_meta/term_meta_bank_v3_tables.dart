@@ -15,6 +15,9 @@ class TermMetaBankV3Table extends Table {
   /// the term this meta entry belongs to
   TextColumn get term => text().withLength(min: 1)();
 
+  /// the reading of this term
+  TextColumn get reading => text().withLength(min: 1).nullable()();
+
   /// the id of this term's type entry
   IntColumn get typeId => integer().references(TermMetaBankV3TypeTable, #id)();
 

@@ -1,4 +1,5 @@
 import 'package:dakanji_db/parsing/kanji_meta/kanji_meta_bank_v3_parser.dart';
+import 'package:dakanji_db/parsing/term_meta/term_meta_bank_v3_parser.dart';
 import 'package:universal_io/io.dart';
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:dakanji_db/parsing/index/index_parser.dart';
@@ -13,18 +14,22 @@ import 'package:tuple/tuple.dart';
 List<String> validDictionaryFiles = [
   indexFile,
   tagBankFile,
-  kanjiBankFile,
-  kanjiMetaBankFile
+  kanjiBankFile, kanjiMetaBankFile,
+  termBankFile, termMetaBankFile
 ];
 
-/// The name of the dictionary index file
+/// The name of the dictionary index files
 String indexFile = "index.json";
-/// The naming pattern for tag bank terms
+/// The naming pattern for tag bank files
 String tagBankFile = "tag_bank";
-/// The naming pattern for kanji bank terms
+/// The naming pattern for kanji bank files
 String kanjiBankFile = "kanji_bank";
-/// the naming pattern for kanji meta bank terms
+/// the naming pattern for kanji meta bank files
 String kanjiMetaBankFile = "kanji_meta_bank";
+/// the naming pattern for term bank terms
+String termBankFile = "term_bank";
+/// the naming pattern for term meta bank files
+String termMetaBankFile = "term_meta_bank";
 
 /// Parses the given yomitan dictionary zip
 Future parseDictionaryZip (File dictZip, DaKanjiDB db) async {
@@ -71,18 +76,26 @@ Future parseDictionaryFile(Tuple3<File, DaKanjiDB, IndexTableData> args) async {
   DaKanjiDB db = args.item2;
   IndexTableData ind = args.item3;
 
+  // TODO parse audio files
+
   // parse `kanji_bank`-files
   if(p.basename(dictFile.path).contains(kanjiBankFile)){
     print("Parsing ${p.basename(dictFile.path)} as `$kanjiBankFile`");
     await parseKanjiBankV3File(dictFile, db, ind.id); 
   }
 
-  // parse `kanji_bank_meta`-files
+  // parse `kanji_meta_bank`-files
   if(p.basename(dictFile.path).contains(kanjiMetaBankFile)){
     print("Parsing ${p.basename(dictFile.path)} as `$kanjiMetaBankFile`");
     await parseKanjiMetaBankV3File(dictFile, db, ind.id); 
   }
 
-  // TODO other dictionary file types
+  // TODO parse `term_bank`-files
+
+  // parse `term_meta_bank`-files
+  if(p.basename(dictFile.path).contains(termMetaBankFile)){
+    print("Parsing ${p.basename(dictFile.path)} as `$termMetaBankFile`");
+    await parseTermMetaBankV3File(dictFile, db, ind.id); 
+  }
 
 }
