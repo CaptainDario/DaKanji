@@ -1,21 +1,20 @@
 
+import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
 import 'package:dakanji_db/helper/zlib_text_converter.dart';
 import 'package:drift/drift.dart';
 
 
 
 /// Contains the kanji entries and links to the radicals table
-@TableIndex(name: 'kanjiVGKanji', columns: {#kanjiVGKanji})
 class KanjiVGTable extends Table {
   
   /// id of this entry
   IntColumn get id => integer().autoIncrement()();
 
-  /// the kanji character of this entry
-  /// 
-  /// **Note:** this column is indexed
-  TextColumn get kanjiVGKanji => text().withLength(min: 1)();
+  /// The id of the kanji character in the `KanjiTable`
+  IntColumn get kanjiId => integer().references(KanjiTable, #id)();
 
   /// The svg data of this kanji
   BlobColumn get kanjiVGSVG => blob().map(const ZlibStringConverter())();
+
 }

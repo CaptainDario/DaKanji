@@ -13,6 +13,7 @@ class KanjiBankV3Table extends Table {
   /// id of this entry
   IntColumn get id => integer()();
 
+  // TODO link to kanji table
   /// the kanji character of this entry
   /// this column is indexed
   TextColumn get dictionaryKanji => text().withLength(min: 1)();
@@ -28,6 +29,7 @@ class KanjiBankV3OnyomisTable extends Table {
   /// id of this meaning
   IntColumn get id => integer().autoIncrement()();
 
+  /// TODO link to reading table
   /// The onyomi reading of this entry
   TextColumn get onyomi => text().unique()();
 
@@ -40,6 +42,7 @@ class KanjiBankV3KunyomisTable extends Table {
   /// id of this meaning
   IntColumn get id => integer().autoIncrement()();
 
+  /// TODO link to reading table
   /// The kunyomi reading of this entry
   TextColumn get kunyomi => text()();
 

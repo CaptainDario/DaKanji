@@ -11,11 +11,14 @@ Future<void> addKanjiVGToDB(String folderPath, DaKanjiDB db) async {
 
   Map<String, String> kanjiVGMap = convertKanjiVGFolderToMap(folderPath);
 
+  // get all entries that are currently in the kanji db
+  
+
   await db.transaction(() async {
     for (var kanjiVG in kanjiVGMap.entries) {
       await db.into(db.kanjiVGTable).insert(
         KanjiVGTableCompanion(
-          kanjiVGKanji: Value(kanjiVG.key),
+          kanjiId: Value(kanjiVG.key),
           kanjiVGSVG: Value(kanjiVG.value)
         )
       );

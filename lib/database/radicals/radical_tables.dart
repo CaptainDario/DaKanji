@@ -9,6 +9,7 @@ class RadicalsKanjiTable extends Table {
   /// id of this entry
   IntColumn get id => integer().autoIncrement()();
 
+  // TODO link to kanji table
   /// the kanji character of this entry
   /// 
   /// **Note:** this column is indexed

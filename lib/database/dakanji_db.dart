@@ -1,3 +1,6 @@
+import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
+import 'package:dakanji_db/database/general_tables/reading_tables.dart';
+import 'package:dakanji_db/database/general_tables/term_tables.dart';
 import 'package:dakanji_db/database/index/index_dao.dart';
 import 'package:dakanji_db/database/index/index_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart';
@@ -25,6 +28,9 @@ part 'dakanji_db.g.dart';
 
 
 @DriftDatabase(tables: [
+
+    KanjiTable, TermTable, ReadingTable,
+
     RadicalsKanjiTable, RadicalsTable, RadicalKanjiRelationsTable,
     KanjiVGTable,
 
@@ -43,7 +49,11 @@ part 'dakanji_db.g.dart';
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable,
 
     KanjiMetaBankV3Table, KanjiMetaBankV3TypeTable,
-    TermMetaBankV3Table
+    
+    TermMetaBankV3Table,
+    TermMetaBankV3TypeTable,
+    TermMetaBankV3PitchTable,
+    TermMetaBankV3IpaTable, TermMetaBankV3IpaTagTable
   ],
   daos: [
     RadicalDao, KanjiVGDao,

@@ -12,6 +12,7 @@ class KanjiMetaBankV3Table extends Table {
   /// id of the dictionary this entry belongs to
   IntColumn get dictId => integer()();
 
+  // TODO link to kanji table
   /// the kanji this meta entry belongs to
   TextColumn get kanji => text().withLength(min: 1)();
 
