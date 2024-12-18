@@ -11,8 +11,8 @@ _$KanjiMetaBankV3EntryImpl _$$KanjiMetaBankV3EntryImplFromJson(
     _$KanjiMetaBankV3EntryImpl(
       kanji: json['kanji'] as String,
       type: json['type'] as String,
-      value: (json['value'] as num?)?.toInt(),
-      displayValue: json['displayValue'] as String?,
+      freqValue: (json['freqValue'] as num?)?.toInt(),
+      freqDisplayValue: json['freqDisplayValue'] as String?,
     );
 
 Map<String, dynamic> _$$KanjiMetaBankV3EntryImplToJson(
@@ -20,6 +20,6 @@ Map<String, dynamic> _$$KanjiMetaBankV3EntryImplToJson(
     <String, dynamic>{
       'kanji': instance.kanji,
       'type': instance.type,
-      'value': instance.value,
-      'displayValue': instance.displayValue,
+      'freqValue': instance.freqValue,
+      'freqDisplayValue': instance.freqDisplayValue,
     };

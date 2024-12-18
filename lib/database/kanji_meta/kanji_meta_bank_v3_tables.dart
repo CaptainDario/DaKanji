@@ -18,11 +18,11 @@ class KanjiMetaBankV3Table extends Table {
   /// the id of this term's type entry
   IntColumn get typeId => integer().references(KanjiMetaBankV3TypeTable, #id)();
 
-  /// the value of this entry
-  IntColumn get value => integer().nullable()();
+  /// this entry's numeric frequency value
+  IntColumn get freqValue => integer().nullable()();
 
-  /// the display value of this entry
-  TextColumn get displayValue => text().nullable()();
+  /// this entry's dispaly frequency value
+  TextColumn get freqDisplayValue => text().nullable()();
   
 }
 

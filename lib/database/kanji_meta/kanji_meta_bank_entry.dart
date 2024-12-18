@@ -15,10 +15,10 @@ class KanjiMetaBankV3Entry with _$KanjiMetaBankV3Entry {
       required String kanji,
       /// The type of this entry
       required String type,
-      /// the numeric value of thsi entry
-      int? value,
-      /// The display value of this entry
-      String? displayValue,
+      /// the numeric value of this entry's frequency
+      int? freqValue,
+      /// The display value of this entry's frequency
+      String? freqDisplayValue,
     }) = _KanjiMetaBankV3Entry;
 
   factory KanjiMetaBankV3Entry.fromJson(Map<String, Object?> json)
