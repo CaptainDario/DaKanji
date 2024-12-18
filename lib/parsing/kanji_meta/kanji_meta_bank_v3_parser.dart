@@ -34,16 +34,16 @@ Future parseKanjiMetaBankV3(String kanjiMetaBankJson, DaKanjiDB db, int dictId) 
 
     String kanji = jsonEntry[0]; String type = jsonEntry[1];
 
-    int? value; String? displayValue;
+    int? freqValue; String? freqDisplayValue;
     if(jsonEntry[2] is int){
-      value = jsonEntry[2];
+      freqValue = jsonEntry[2];
     }
     else if(jsonEntry[2] is String){
-      displayValue = jsonEntry[2];
+      freqDisplayValue = jsonEntry[2];
     }
     else if(jsonEntry[2] is Map){
-      value        = jsonEntry[2]['value'];
-      displayValue = jsonEntry[2]['displayValue'];
+      freqValue        = jsonEntry[2]['value'];
+      freqDisplayValue = jsonEntry[2]['displayValue'];
     }
 
     // check if the type is already in the db
@@ -59,8 +59,8 @@ Future parseKanjiMetaBankV3(String kanjiMetaBankJson, DaKanjiDB db, int dictId) 
 
     kanjiMetaBankComps.add(KanjiMetaBankV3TableCompanion(
       kanji: Value(kanji), typeId: Value(typeId), dictId: Value(dictId),
-      value: value == null ? Value.absent() : Value(value),
-      displayValue: displayValue == null ? Value.absent() : Value(displayValue)
+      freqValue: freqValue == null ? Value.absent() : Value(freqValue),
+      freqDisplayValue: freqDisplayValue == null ? Value.absent() : Value(freqDisplayValue)
     ));
 
   }

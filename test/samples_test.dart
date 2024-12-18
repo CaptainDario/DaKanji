@@ -71,9 +71,9 @@ final kanjiBankTetsCaseExpectations = [
 final kanjiMetaBankTetsCases = ["打"];
 /// kanjiMetaBankV3 test case expected values
 final kanjiMetaBankTetsCaseExpectations = [
-  KanjiMetaBankV3Entry(kanji: "打", type: "freq", value: 1, displayValue: null),
-  KanjiMetaBankV3Entry(kanji: "打", type: "freq", value: null, displayValue: "three"),
-  KanjiMetaBankV3Entry(kanji: "打", type: "freq", value: 5, displayValue: null),
+  KanjiMetaBankV3Entry(kanji: "打", type: "freq", freqValue: 1, freqDisplayValue: null),
+  KanjiMetaBankV3Entry(kanji: "打", type: "freq", freqValue: null, freqDisplayValue: "three"),
+  KanjiMetaBankV3Entry(kanji: "打", type: "freq", freqValue: 5, freqDisplayValue: null),
 ];
 
 

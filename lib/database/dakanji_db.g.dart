@@ -5325,20 +5325,21 @@ class $KanjiMetaBankV3TableTable extends KanjiMetaBankV3Table
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES kanji_meta_bank_v3_type_table (id)'));
-  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  static const VerificationMeta _freqValueMeta =
+      const VerificationMeta('freqValue');
   @override
-  late final GeneratedColumn<int> value = GeneratedColumn<int>(
-      'value', aliasedName, true,
+  late final GeneratedColumn<int> freqValue = GeneratedColumn<int>(
+      'freq_value', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _displayValueMeta =
-      const VerificationMeta('displayValue');
+  static const VerificationMeta _freqDisplayValueMeta =
+      const VerificationMeta('freqDisplayValue');
   @override
-  late final GeneratedColumn<String> displayValue = GeneratedColumn<String>(
-      'display_value', aliasedName, true,
+  late final GeneratedColumn<String> freqDisplayValue = GeneratedColumn<String>(
+      'freq_display_value', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, dictId, kanji, typeId, value, displayValue];
+      [id, dictId, kanji, typeId, freqValue, freqDisplayValue];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -5371,15 +5372,15 @@ class $KanjiMetaBankV3TableTable extends KanjiMetaBankV3Table
     } else if (isInserting) {
       context.missing(_typeIdMeta);
     }
-    if (data.containsKey('value')) {
-      context.handle(
-          _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
+    if (data.containsKey('freq_value')) {
+      context.handle(_freqValueMeta,
+          freqValue.isAcceptableOrUnknown(data['freq_value']!, _freqValueMeta));
     }
-    if (data.containsKey('display_value')) {
+    if (data.containsKey('freq_display_value')) {
       context.handle(
-          _displayValueMeta,
-          displayValue.isAcceptableOrUnknown(
-              data['display_value']!, _displayValueMeta));
+          _freqDisplayValueMeta,
+          freqDisplayValue.isAcceptableOrUnknown(
+              data['freq_display_value']!, _freqDisplayValueMeta));
     }
     return context;
   }
@@ -5399,10 +5400,10 @@ class $KanjiMetaBankV3TableTable extends KanjiMetaBankV3Table
           .read(DriftSqlType.string, data['${effectivePrefix}kanji'])!,
       typeId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}type_id'])!,
-      value: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}value']),
-      displayValue: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}display_value']),
+      freqValue: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}freq_value']),
+      freqDisplayValue: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}freq_display_value']),
     );
   }
 
@@ -5426,18 +5427,18 @@ class KanjiMetaBankV3TableData extends DataClass
   /// the id of this term's type entry
   final int typeId;
 
-  /// the value of this entry
-  final int? value;
+  /// this entry's numeric frequency value
+  final int? freqValue;
 
-  /// the display value of this entry
-  final String? displayValue;
+  /// this entry's dispaly frequency value
+  final String? freqDisplayValue;
   const KanjiMetaBankV3TableData(
       {required this.id,
       required this.dictId,
       required this.kanji,
       required this.typeId,
-      this.value,
-      this.displayValue});
+      this.freqValue,
+      this.freqDisplayValue});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -5445,11 +5446,11 @@ class KanjiMetaBankV3TableData extends DataClass
     map['dict_id'] = Variable<int>(dictId);
     map['kanji'] = Variable<String>(kanji);
     map['type_id'] = Variable<int>(typeId);
-    if (!nullToAbsent || value != null) {
-      map['value'] = Variable<int>(value);
+    if (!nullToAbsent || freqValue != null) {
+      map['freq_value'] = Variable<int>(freqValue);
     }
-    if (!nullToAbsent || displayValue != null) {
-      map['display_value'] = Variable<String>(displayValue);
+    if (!nullToAbsent || freqDisplayValue != null) {
+      map['freq_display_value'] = Variable<String>(freqDisplayValue);
     }
     return map;
   }
@@ -5460,11 +5461,12 @@ class KanjiMetaBankV3TableData extends DataClass
       dictId: Value(dictId),
       kanji: Value(kanji),
       typeId: Value(typeId),
-      value:
-          value == null && nullToAbsent ? const Value.absent() : Value(value),
-      displayValue: displayValue == null && nullToAbsent
+      freqValue: freqValue == null && nullToAbsent
           ? const Value.absent()
-          : Value(displayValue),
+          : Value(freqValue),
+      freqDisplayValue: freqDisplayValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(freqDisplayValue),
     );
   }
 
@@ -5476,8 +5478,8 @@ class KanjiMetaBankV3TableData extends DataClass
       dictId: serializer.fromJson<int>(json['dictId']),
       kanji: serializer.fromJson<String>(json['kanji']),
       typeId: serializer.fromJson<int>(json['typeId']),
-      value: serializer.fromJson<int?>(json['value']),
-      displayValue: serializer.fromJson<String?>(json['displayValue']),
+      freqValue: serializer.fromJson<int?>(json['freqValue']),
+      freqDisplayValue: serializer.fromJson<String?>(json['freqDisplayValue']),
     );
   }
   @override
@@ -5488,8 +5490,8 @@ class KanjiMetaBankV3TableData extends DataClass
       'dictId': serializer.toJson<int>(dictId),
       'kanji': serializer.toJson<String>(kanji),
       'typeId': serializer.toJson<int>(typeId),
-      'value': serializer.toJson<int?>(value),
-      'displayValue': serializer.toJson<String?>(displayValue),
+      'freqValue': serializer.toJson<int?>(freqValue),
+      'freqDisplayValue': serializer.toJson<String?>(freqDisplayValue),
     };
   }
 
@@ -5498,16 +5500,17 @@ class KanjiMetaBankV3TableData extends DataClass
           int? dictId,
           String? kanji,
           int? typeId,
-          Value<int?> value = const Value.absent(),
-          Value<String?> displayValue = const Value.absent()}) =>
+          Value<int?> freqValue = const Value.absent(),
+          Value<String?> freqDisplayValue = const Value.absent()}) =>
       KanjiMetaBankV3TableData(
         id: id ?? this.id,
         dictId: dictId ?? this.dictId,
         kanji: kanji ?? this.kanji,
         typeId: typeId ?? this.typeId,
-        value: value.present ? value.value : this.value,
-        displayValue:
-            displayValue.present ? displayValue.value : this.displayValue,
+        freqValue: freqValue.present ? freqValue.value : this.freqValue,
+        freqDisplayValue: freqDisplayValue.present
+            ? freqDisplayValue.value
+            : this.freqDisplayValue,
       );
   KanjiMetaBankV3TableData copyWithCompanion(
       KanjiMetaBankV3TableCompanion data) {
@@ -5516,10 +5519,10 @@ class KanjiMetaBankV3TableData extends DataClass
       dictId: data.dictId.present ? data.dictId.value : this.dictId,
       kanji: data.kanji.present ? data.kanji.value : this.kanji,
       typeId: data.typeId.present ? data.typeId.value : this.typeId,
-      value: data.value.present ? data.value.value : this.value,
-      displayValue: data.displayValue.present
-          ? data.displayValue.value
-          : this.displayValue,
+      freqValue: data.freqValue.present ? data.freqValue.value : this.freqValue,
+      freqDisplayValue: data.freqDisplayValue.present
+          ? data.freqDisplayValue.value
+          : this.freqDisplayValue,
     );
   }
 
@@ -5530,15 +5533,15 @@ class KanjiMetaBankV3TableData extends DataClass
           ..write('dictId: $dictId, ')
           ..write('kanji: $kanji, ')
           ..write('typeId: $typeId, ')
-          ..write('value: $value, ')
-          ..write('displayValue: $displayValue')
+          ..write('freqValue: $freqValue, ')
+          ..write('freqDisplayValue: $freqDisplayValue')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode =>
-      Object.hash(id, dictId, kanji, typeId, value, displayValue);
+      Object.hash(id, dictId, kanji, typeId, freqValue, freqDisplayValue);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -5547,8 +5550,8 @@ class KanjiMetaBankV3TableData extends DataClass
           other.dictId == this.dictId &&
           other.kanji == this.kanji &&
           other.typeId == this.typeId &&
-          other.value == this.value &&
-          other.displayValue == this.displayValue);
+          other.freqValue == this.freqValue &&
+          other.freqDisplayValue == this.freqDisplayValue);
 }
 
 class KanjiMetaBankV3TableCompanion
@@ -5557,23 +5560,23 @@ class KanjiMetaBankV3TableCompanion
   final Value<int> dictId;
   final Value<String> kanji;
   final Value<int> typeId;
-  final Value<int?> value;
-  final Value<String?> displayValue;
+  final Value<int?> freqValue;
+  final Value<String?> freqDisplayValue;
   const KanjiMetaBankV3TableCompanion({
     this.id = const Value.absent(),
     this.dictId = const Value.absent(),
     this.kanji = const Value.absent(),
     this.typeId = const Value.absent(),
-    this.value = const Value.absent(),
-    this.displayValue = const Value.absent(),
+    this.freqValue = const Value.absent(),
+    this.freqDisplayValue = const Value.absent(),
   });
   KanjiMetaBankV3TableCompanion.insert({
     this.id = const Value.absent(),
     required int dictId,
     required String kanji,
     required int typeId,
-    this.value = const Value.absent(),
-    this.displayValue = const Value.absent(),
+    this.freqValue = const Value.absent(),
+    this.freqDisplayValue = const Value.absent(),
   })  : dictId = Value(dictId),
         kanji = Value(kanji),
         typeId = Value(typeId);
@@ -5582,16 +5585,16 @@ class KanjiMetaBankV3TableCompanion
     Expression<int>? dictId,
     Expression<String>? kanji,
     Expression<int>? typeId,
-    Expression<int>? value,
-    Expression<String>? displayValue,
+    Expression<int>? freqValue,
+    Expression<String>? freqDisplayValue,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (dictId != null) 'dict_id': dictId,
       if (kanji != null) 'kanji': kanji,
       if (typeId != null) 'type_id': typeId,
-      if (value != null) 'value': value,
-      if (displayValue != null) 'display_value': displayValue,
+      if (freqValue != null) 'freq_value': freqValue,
+      if (freqDisplayValue != null) 'freq_display_value': freqDisplayValue,
     });
   }
 
@@ -5600,15 +5603,15 @@ class KanjiMetaBankV3TableCompanion
       Value<int>? dictId,
       Value<String>? kanji,
       Value<int>? typeId,
-      Value<int?>? value,
-      Value<String?>? displayValue}) {
+      Value<int?>? freqValue,
+      Value<String?>? freqDisplayValue}) {
     return KanjiMetaBankV3TableCompanion(
       id: id ?? this.id,
       dictId: dictId ?? this.dictId,
       kanji: kanji ?? this.kanji,
       typeId: typeId ?? this.typeId,
-      value: value ?? this.value,
-      displayValue: displayValue ?? this.displayValue,
+      freqValue: freqValue ?? this.freqValue,
+      freqDisplayValue: freqDisplayValue ?? this.freqDisplayValue,
     );
   }
 
@@ -5627,11 +5630,11 @@ class KanjiMetaBankV3TableCompanion
     if (typeId.present) {
       map['type_id'] = Variable<int>(typeId.value);
     }
-    if (value.present) {
-      map['value'] = Variable<int>(value.value);
+    if (freqValue.present) {
+      map['freq_value'] = Variable<int>(freqValue.value);
     }
-    if (displayValue.present) {
-      map['display_value'] = Variable<String>(displayValue.value);
+    if (freqDisplayValue.present) {
+      map['freq_display_value'] = Variable<String>(freqDisplayValue.value);
     }
     return map;
   }
@@ -5643,8 +5646,561 @@ class KanjiMetaBankV3TableCompanion
           ..write('dictId: $dictId, ')
           ..write('kanji: $kanji, ')
           ..write('typeId: $typeId, ')
-          ..write('value: $value, ')
-          ..write('displayValue: $displayValue')
+          ..write('freqValue: $freqValue, ')
+          ..write('freqDisplayValue: $freqDisplayValue')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TermMetaBankV3TypeTableTable extends TermMetaBankV3TypeTable
+    with TableInfo<$TermMetaBankV3TypeTableTable, TermMetaBankV3TypeTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermMetaBankV3TypeTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type =
+      GeneratedColumn<String>('type', aliasedName, false,
+          additionalChecks: GeneratedColumn.checkTextLength(
+            minTextLength: 1,
+          ),
+          type: DriftSqlType.string,
+          requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, type];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_meta_bank_v3_type_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<TermMetaBankV3TypeTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TermMetaBankV3TypeTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermMetaBankV3TypeTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      type: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
+    );
+  }
+
+  @override
+  $TermMetaBankV3TypeTableTable createAlias(String alias) {
+    return $TermMetaBankV3TypeTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermMetaBankV3TypeTableData extends DataClass
+    implements Insertable<TermMetaBankV3TypeTableData> {
+  /// id of this entry
+  final int id;
+
+  /// the type of this meta information
+  final String type;
+  const TermMetaBankV3TypeTableData({required this.id, required this.type});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['type'] = Variable<String>(type);
+    return map;
+  }
+
+  TermMetaBankV3TypeTableCompanion toCompanion(bool nullToAbsent) {
+    return TermMetaBankV3TypeTableCompanion(
+      id: Value(id),
+      type: Value(type),
+    );
+  }
+
+  factory TermMetaBankV3TypeTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermMetaBankV3TypeTableData(
+      id: serializer.fromJson<int>(json['id']),
+      type: serializer.fromJson<String>(json['type']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'type': serializer.toJson<String>(type),
+    };
+  }
+
+  TermMetaBankV3TypeTableData copyWith({int? id, String? type}) =>
+      TermMetaBankV3TypeTableData(
+        id: id ?? this.id,
+        type: type ?? this.type,
+      );
+  TermMetaBankV3TypeTableData copyWithCompanion(
+      TermMetaBankV3TypeTableCompanion data) {
+    return TermMetaBankV3TypeTableData(
+      id: data.id.present ? data.id.value : this.id,
+      type: data.type.present ? data.type.value : this.type,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3TypeTableData(')
+          ..write('id: $id, ')
+          ..write('type: $type')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, type);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermMetaBankV3TypeTableData &&
+          other.id == this.id &&
+          other.type == this.type);
+}
+
+class TermMetaBankV3TypeTableCompanion
+    extends UpdateCompanion<TermMetaBankV3TypeTableData> {
+  final Value<int> id;
+  final Value<String> type;
+  const TermMetaBankV3TypeTableCompanion({
+    this.id = const Value.absent(),
+    this.type = const Value.absent(),
+  });
+  TermMetaBankV3TypeTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String type,
+  }) : type = Value(type);
+  static Insertable<TermMetaBankV3TypeTableData> custom({
+    Expression<int>? id,
+    Expression<String>? type,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (type != null) 'type': type,
+    });
+  }
+
+  TermMetaBankV3TypeTableCompanion copyWith(
+      {Value<int>? id, Value<String>? type}) {
+    return TermMetaBankV3TypeTableCompanion(
+      id: id ?? this.id,
+      type: type ?? this.type,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3TypeTableCompanion(')
+          ..write('id: $id, ')
+          ..write('type: $type')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TermMetaBankV3TableTable extends TermMetaBankV3Table
+    with TableInfo<$TermMetaBankV3TableTable, TermMetaBankV3TableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermMetaBankV3TableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _dictIdMeta = const VerificationMeta('dictId');
+  @override
+  late final GeneratedColumn<int> dictId = GeneratedColumn<int>(
+      'dict_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _termMeta = const VerificationMeta('term');
+  @override
+  late final GeneratedColumn<String> term =
+      GeneratedColumn<String>('term', aliasedName, false,
+          additionalChecks: GeneratedColumn.checkTextLength(
+            minTextLength: 1,
+          ),
+          type: DriftSqlType.string,
+          requiredDuringInsert: true);
+  static const VerificationMeta _typeIdMeta = const VerificationMeta('typeId');
+  @override
+  late final GeneratedColumn<int> typeId = GeneratedColumn<int>(
+      'type_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES term_meta_bank_v3_type_table (id)'));
+  static const VerificationMeta _freqValueMeta =
+      const VerificationMeta('freqValue');
+  @override
+  late final GeneratedColumn<int> freqValue = GeneratedColumn<int>(
+      'freq_value', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _freqDisplayValueMeta =
+      const VerificationMeta('freqDisplayValue');
+  @override
+  late final GeneratedColumn<String> freqDisplayValue = GeneratedColumn<String>(
+      'freq_display_value', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, dictId, term, typeId, freqValue, freqDisplayValue];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_meta_bank_v3_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<TermMetaBankV3TableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('dict_id')) {
+      context.handle(_dictIdMeta,
+          dictId.isAcceptableOrUnknown(data['dict_id']!, _dictIdMeta));
+    } else if (isInserting) {
+      context.missing(_dictIdMeta);
+    }
+    if (data.containsKey('term')) {
+      context.handle(
+          _termMeta, term.isAcceptableOrUnknown(data['term']!, _termMeta));
+    } else if (isInserting) {
+      context.missing(_termMeta);
+    }
+    if (data.containsKey('type_id')) {
+      context.handle(_typeIdMeta,
+          typeId.isAcceptableOrUnknown(data['type_id']!, _typeIdMeta));
+    } else if (isInserting) {
+      context.missing(_typeIdMeta);
+    }
+    if (data.containsKey('freq_value')) {
+      context.handle(_freqValueMeta,
+          freqValue.isAcceptableOrUnknown(data['freq_value']!, _freqValueMeta));
+    }
+    if (data.containsKey('freq_display_value')) {
+      context.handle(
+          _freqDisplayValueMeta,
+          freqDisplayValue.isAcceptableOrUnknown(
+              data['freq_display_value']!, _freqDisplayValueMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TermMetaBankV3TableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermMetaBankV3TableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      dictId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}dict_id'])!,
+      term: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}term'])!,
+      typeId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}type_id'])!,
+      freqValue: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}freq_value']),
+      freqDisplayValue: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}freq_display_value']),
+    );
+  }
+
+  @override
+  $TermMetaBankV3TableTable createAlias(String alias) {
+    return $TermMetaBankV3TableTable(attachedDatabase, alias);
+  }
+}
+
+class TermMetaBankV3TableData extends DataClass
+    implements Insertable<TermMetaBankV3TableData> {
+  /// id of this entry
+  final int id;
+
+  /// id of the dictionary this entry belongs to
+  final int dictId;
+
+  /// the term this meta entry belongs to
+  final String term;
+
+  /// the id of this term's type entry
+  final int typeId;
+
+  /// the value of this entry
+  final int? freqValue;
+
+  /// the display value of this entry
+  final String? freqDisplayValue;
+  const TermMetaBankV3TableData(
+      {required this.id,
+      required this.dictId,
+      required this.term,
+      required this.typeId,
+      this.freqValue,
+      this.freqDisplayValue});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['dict_id'] = Variable<int>(dictId);
+    map['term'] = Variable<String>(term);
+    map['type_id'] = Variable<int>(typeId);
+    if (!nullToAbsent || freqValue != null) {
+      map['freq_value'] = Variable<int>(freqValue);
+    }
+    if (!nullToAbsent || freqDisplayValue != null) {
+      map['freq_display_value'] = Variable<String>(freqDisplayValue);
+    }
+    return map;
+  }
+
+  TermMetaBankV3TableCompanion toCompanion(bool nullToAbsent) {
+    return TermMetaBankV3TableCompanion(
+      id: Value(id),
+      dictId: Value(dictId),
+      term: Value(term),
+      typeId: Value(typeId),
+      freqValue: freqValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(freqValue),
+      freqDisplayValue: freqDisplayValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(freqDisplayValue),
+    );
+  }
+
+  factory TermMetaBankV3TableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermMetaBankV3TableData(
+      id: serializer.fromJson<int>(json['id']),
+      dictId: serializer.fromJson<int>(json['dictId']),
+      term: serializer.fromJson<String>(json['term']),
+      typeId: serializer.fromJson<int>(json['typeId']),
+      freqValue: serializer.fromJson<int?>(json['freqValue']),
+      freqDisplayValue: serializer.fromJson<String?>(json['freqDisplayValue']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'dictId': serializer.toJson<int>(dictId),
+      'term': serializer.toJson<String>(term),
+      'typeId': serializer.toJson<int>(typeId),
+      'freqValue': serializer.toJson<int?>(freqValue),
+      'freqDisplayValue': serializer.toJson<String?>(freqDisplayValue),
+    };
+  }
+
+  TermMetaBankV3TableData copyWith(
+          {int? id,
+          int? dictId,
+          String? term,
+          int? typeId,
+          Value<int?> freqValue = const Value.absent(),
+          Value<String?> freqDisplayValue = const Value.absent()}) =>
+      TermMetaBankV3TableData(
+        id: id ?? this.id,
+        dictId: dictId ?? this.dictId,
+        term: term ?? this.term,
+        typeId: typeId ?? this.typeId,
+        freqValue: freqValue.present ? freqValue.value : this.freqValue,
+        freqDisplayValue: freqDisplayValue.present
+            ? freqDisplayValue.value
+            : this.freqDisplayValue,
+      );
+  TermMetaBankV3TableData copyWithCompanion(TermMetaBankV3TableCompanion data) {
+    return TermMetaBankV3TableData(
+      id: data.id.present ? data.id.value : this.id,
+      dictId: data.dictId.present ? data.dictId.value : this.dictId,
+      term: data.term.present ? data.term.value : this.term,
+      typeId: data.typeId.present ? data.typeId.value : this.typeId,
+      freqValue: data.freqValue.present ? data.freqValue.value : this.freqValue,
+      freqDisplayValue: data.freqDisplayValue.present
+          ? data.freqDisplayValue.value
+          : this.freqDisplayValue,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3TableData(')
+          ..write('id: $id, ')
+          ..write('dictId: $dictId, ')
+          ..write('term: $term, ')
+          ..write('typeId: $typeId, ')
+          ..write('freqValue: $freqValue, ')
+          ..write('freqDisplayValue: $freqDisplayValue')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, dictId, term, typeId, freqValue, freqDisplayValue);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermMetaBankV3TableData &&
+          other.id == this.id &&
+          other.dictId == this.dictId &&
+          other.term == this.term &&
+          other.typeId == this.typeId &&
+          other.freqValue == this.freqValue &&
+          other.freqDisplayValue == this.freqDisplayValue);
+}
+
+class TermMetaBankV3TableCompanion
+    extends UpdateCompanion<TermMetaBankV3TableData> {
+  final Value<int> id;
+  final Value<int> dictId;
+  final Value<String> term;
+  final Value<int> typeId;
+  final Value<int?> freqValue;
+  final Value<String?> freqDisplayValue;
+  const TermMetaBankV3TableCompanion({
+    this.id = const Value.absent(),
+    this.dictId = const Value.absent(),
+    this.term = const Value.absent(),
+    this.typeId = const Value.absent(),
+    this.freqValue = const Value.absent(),
+    this.freqDisplayValue = const Value.absent(),
+  });
+  TermMetaBankV3TableCompanion.insert({
+    this.id = const Value.absent(),
+    required int dictId,
+    required String term,
+    required int typeId,
+    this.freqValue = const Value.absent(),
+    this.freqDisplayValue = const Value.absent(),
+  })  : dictId = Value(dictId),
+        term = Value(term),
+        typeId = Value(typeId);
+  static Insertable<TermMetaBankV3TableData> custom({
+    Expression<int>? id,
+    Expression<int>? dictId,
+    Expression<String>? term,
+    Expression<int>? typeId,
+    Expression<int>? freqValue,
+    Expression<String>? freqDisplayValue,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (dictId != null) 'dict_id': dictId,
+      if (term != null) 'term': term,
+      if (typeId != null) 'type_id': typeId,
+      if (freqValue != null) 'freq_value': freqValue,
+      if (freqDisplayValue != null) 'freq_display_value': freqDisplayValue,
+    });
+  }
+
+  TermMetaBankV3TableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? dictId,
+      Value<String>? term,
+      Value<int>? typeId,
+      Value<int?>? freqValue,
+      Value<String?>? freqDisplayValue}) {
+    return TermMetaBankV3TableCompanion(
+      id: id ?? this.id,
+      dictId: dictId ?? this.dictId,
+      term: term ?? this.term,
+      typeId: typeId ?? this.typeId,
+      freqValue: freqValue ?? this.freqValue,
+      freqDisplayValue: freqDisplayValue ?? this.freqDisplayValue,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (dictId.present) {
+      map['dict_id'] = Variable<int>(dictId.value);
+    }
+    if (term.present) {
+      map['term'] = Variable<String>(term.value);
+    }
+    if (typeId.present) {
+      map['type_id'] = Variable<int>(typeId.value);
+    }
+    if (freqValue.present) {
+      map['freq_value'] = Variable<int>(freqValue.value);
+    }
+    if (freqDisplayValue.present) {
+      map['freq_display_value'] = Variable<String>(freqDisplayValue.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3TableCompanion(')
+          ..write('id: $id, ')
+          ..write('dictId: $dictId, ')
+          ..write('term: $term, ')
+          ..write('typeId: $typeId, ')
+          ..write('freqValue: $freqValue, ')
+          ..write('freqDisplayValue: $freqDisplayValue')
           ..write(')'))
         .toString();
   }
@@ -5699,6 +6255,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       $KanjiMetaBankV3TypeTableTable(this);
   late final $KanjiMetaBankV3TableTable kanjiMetaBankV3Table =
       $KanjiMetaBankV3TableTable(this);
+  late final $TermMetaBankV3TypeTableTable termMetaBankV3TypeTable =
+      $TermMetaBankV3TypeTableTable(this);
+  late final $TermMetaBankV3TableTable termMetaBankV3Table =
+      $TermMetaBankV3TableTable(this);
   late final Index radicalKanji = Index('radicalKanji',
       'CREATE INDEX radicalKanji ON radicals_kanji_table (radical_kanji)');
   late final Index radical =
@@ -5711,6 +6271,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       'CREATE INDEX dictionaryKanji ON kanji_bank_v3_table (dictionary_kanji)');
   late final Index kanji =
       Index('kanji', 'CREATE INDEX kanji ON kanji_meta_bank_v3_table (kanji)');
+  late final Index term =
+      Index('term', 'CREATE INDEX term ON term_meta_bank_v3_table (term)');
   late final RadicalDao radicalDao = RadicalDao(this as DaKanjiDB);
   late final KanjiVGDao kanjiVGDao = KanjiVGDao(this as DaKanjiDB);
   late final IndexDao indexDao = IndexDao(this as DaKanjiDB);
@@ -5718,6 +6280,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final KanjiBankV3Dao kanjiBankV3Dao = KanjiBankV3Dao(this as DaKanjiDB);
   late final KanjiMetaBankV3Dao kanjiMetaBankV3Dao =
       KanjiMetaBankV3Dao(this as DaKanjiDB);
+  late final TermMetaBankV3Dao termMetaBankV3Dao =
+      TermMetaBankV3Dao(this as DaKanjiDB);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5745,12 +6309,15 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         kanjiBankV3StatKanjiRelationsTable,
         kanjiMetaBankV3TypeTable,
         kanjiMetaBankV3Table,
+        termMetaBankV3TypeTable,
+        termMetaBankV3Table,
         radicalKanji,
         radical,
         kanjiVGKanji,
         name,
         dictionaryKanji,
-        kanji
+        kanji,
+        term
       ];
 }
 
@@ -12195,8 +12762,8 @@ typedef $$KanjiMetaBankV3TableTableCreateCompanionBuilder
   required int dictId,
   required String kanji,
   required int typeId,
-  Value<int?> value,
-  Value<String?> displayValue,
+  Value<int?> freqValue,
+  Value<String?> freqDisplayValue,
 });
 typedef $$KanjiMetaBankV3TableTableUpdateCompanionBuilder
     = KanjiMetaBankV3TableCompanion Function({
@@ -12204,8 +12771,8 @@ typedef $$KanjiMetaBankV3TableTableUpdateCompanionBuilder
   Value<int> dictId,
   Value<String> kanji,
   Value<int> typeId,
-  Value<int?> value,
-  Value<String?> displayValue,
+  Value<int?> freqValue,
+  Value<String?> freqDisplayValue,
 });
 
 final class $$KanjiMetaBankV3TableTableReferences extends BaseReferences<
@@ -12247,11 +12814,12 @@ class $$KanjiMetaBankV3TableTableFilterComposer
   ColumnFilters<String> get kanji => $composableBuilder(
       column: $table.kanji, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get value => $composableBuilder(
-      column: $table.value, builder: (column) => ColumnFilters(column));
+  ColumnFilters<int> get freqValue => $composableBuilder(
+      column: $table.freqValue, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get displayValue => $composableBuilder(
-      column: $table.displayValue, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get freqDisplayValue => $composableBuilder(
+      column: $table.freqDisplayValue,
+      builder: (column) => ColumnFilters(column));
 
   $$KanjiMetaBankV3TypeTableTableFilterComposer get typeId {
     final $$KanjiMetaBankV3TypeTableTableFilterComposer composer =
@@ -12293,11 +12861,11 @@ class $$KanjiMetaBankV3TableTableOrderingComposer
   ColumnOrderings<String> get kanji => $composableBuilder(
       column: $table.kanji, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get value => $composableBuilder(
-      column: $table.value, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<int> get freqValue => $composableBuilder(
+      column: $table.freqValue, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get displayValue => $composableBuilder(
-      column: $table.displayValue,
+  ColumnOrderings<String> get freqDisplayValue => $composableBuilder(
+      column: $table.freqDisplayValue,
       builder: (column) => ColumnOrderings(column));
 
   $$KanjiMetaBankV3TypeTableTableOrderingComposer get typeId {
@@ -12340,11 +12908,11 @@ class $$KanjiMetaBankV3TableTableAnnotationComposer
   GeneratedColumn<String> get kanji =>
       $composableBuilder(column: $table.kanji, builder: (column) => column);
 
-  GeneratedColumn<int> get value =>
-      $composableBuilder(column: $table.value, builder: (column) => column);
+  GeneratedColumn<int> get freqValue =>
+      $composableBuilder(column: $table.freqValue, builder: (column) => column);
 
-  GeneratedColumn<String> get displayValue => $composableBuilder(
-      column: $table.displayValue, builder: (column) => column);
+  GeneratedColumn<String> get freqDisplayValue => $composableBuilder(
+      column: $table.freqDisplayValue, builder: (column) => column);
 
   $$KanjiMetaBankV3TypeTableTableAnnotationComposer get typeId {
     final $$KanjiMetaBankV3TypeTableTableAnnotationComposer composer =
@@ -12398,32 +12966,32 @@ class $$KanjiMetaBankV3TableTableTableManager extends RootTableManager<
             Value<int> dictId = const Value.absent(),
             Value<String> kanji = const Value.absent(),
             Value<int> typeId = const Value.absent(),
-            Value<int?> value = const Value.absent(),
-            Value<String?> displayValue = const Value.absent(),
+            Value<int?> freqValue = const Value.absent(),
+            Value<String?> freqDisplayValue = const Value.absent(),
           }) =>
               KanjiMetaBankV3TableCompanion(
             id: id,
             dictId: dictId,
             kanji: kanji,
             typeId: typeId,
-            value: value,
-            displayValue: displayValue,
+            freqValue: freqValue,
+            freqDisplayValue: freqDisplayValue,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required int dictId,
             required String kanji,
             required int typeId,
-            Value<int?> value = const Value.absent(),
-            Value<String?> displayValue = const Value.absent(),
+            Value<int?> freqValue = const Value.absent(),
+            Value<String?> freqDisplayValue = const Value.absent(),
           }) =>
               KanjiMetaBankV3TableCompanion.insert(
             id: id,
             dictId: dictId,
             kanji: kanji,
             typeId: typeId,
-            value: value,
-            displayValue: displayValue,
+            freqValue: freqValue,
+            freqDisplayValue: freqDisplayValue,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
@@ -12483,6 +13051,518 @@ typedef $$KanjiMetaBankV3TableTableProcessedTableManager
         (KanjiMetaBankV3TableData, $$KanjiMetaBankV3TableTableReferences),
         KanjiMetaBankV3TableData,
         PrefetchHooks Function({bool typeId})>;
+typedef $$TermMetaBankV3TypeTableTableCreateCompanionBuilder
+    = TermMetaBankV3TypeTableCompanion Function({
+  Value<int> id,
+  required String type,
+});
+typedef $$TermMetaBankV3TypeTableTableUpdateCompanionBuilder
+    = TermMetaBankV3TypeTableCompanion Function({
+  Value<int> id,
+  Value<String> type,
+});
+
+final class $$TermMetaBankV3TypeTableTableReferences extends BaseReferences<
+    _$DaKanjiDB, $TermMetaBankV3TypeTableTable, TermMetaBankV3TypeTableData> {
+  $$TermMetaBankV3TypeTableTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$TermMetaBankV3TableTable,
+      List<TermMetaBankV3TableData>> _termMetaBankV3TableRefsTable(
+          _$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(db.termMetaBankV3Table,
+          aliasName: $_aliasNameGenerator(
+              db.termMetaBankV3TypeTable.id, db.termMetaBankV3Table.typeId));
+
+  $$TermMetaBankV3TableTableProcessedTableManager get termMetaBankV3TableRefs {
+    final manager =
+        $$TermMetaBankV3TableTableTableManager($_db, $_db.termMetaBankV3Table)
+            .filter((f) => f.typeId.id($_item.id));
+
+    final cache =
+        $_typedResult.readTableOrNull(_termMetaBankV3TableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$TermMetaBankV3TypeTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3TypeTableTable> {
+  $$TermMetaBankV3TypeTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> termMetaBankV3TableRefs(
+      Expression<bool> Function($$TermMetaBankV3TableTableFilterComposer f) f) {
+    final $$TermMetaBankV3TableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.termMetaBankV3Table,
+        getReferencedColumn: (t) => t.typeId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TermMetaBankV3TableTableFilterComposer(
+              $db: $db,
+              $table: $db.termMetaBankV3Table,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$TermMetaBankV3TypeTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3TypeTableTable> {
+  $$TermMetaBankV3TypeTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnOrderings(column));
+}
+
+class $$TermMetaBankV3TypeTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3TypeTableTable> {
+  $$TermMetaBankV3TypeTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  Expression<T> termMetaBankV3TableRefs<T extends Object>(
+      Expression<T> Function($$TermMetaBankV3TableTableAnnotationComposer a)
+          f) {
+    final $$TermMetaBankV3TableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3Table,
+            getReferencedColumn: (t) => t.typeId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3TableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3Table,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$TermMetaBankV3TypeTableTableTableManager extends RootTableManager<
+    _$DaKanjiDB,
+    $TermMetaBankV3TypeTableTable,
+    TermMetaBankV3TypeTableData,
+    $$TermMetaBankV3TypeTableTableFilterComposer,
+    $$TermMetaBankV3TypeTableTableOrderingComposer,
+    $$TermMetaBankV3TypeTableTableAnnotationComposer,
+    $$TermMetaBankV3TypeTableTableCreateCompanionBuilder,
+    $$TermMetaBankV3TypeTableTableUpdateCompanionBuilder,
+    (TermMetaBankV3TypeTableData, $$TermMetaBankV3TypeTableTableReferences),
+    TermMetaBankV3TypeTableData,
+    PrefetchHooks Function({bool termMetaBankV3TableRefs})> {
+  $$TermMetaBankV3TypeTableTableTableManager(
+      _$DaKanjiDB db, $TermMetaBankV3TypeTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermMetaBankV3TypeTableTableFilterComposer(
+                  $db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TermMetaBankV3TypeTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TermMetaBankV3TypeTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> type = const Value.absent(),
+          }) =>
+              TermMetaBankV3TypeTableCompanion(
+            id: id,
+            type: type,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String type,
+          }) =>
+              TermMetaBankV3TypeTableCompanion.insert(
+            id: id,
+            type: type,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TermMetaBankV3TypeTableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({termMetaBankV3TableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (termMetaBankV3TableRefs) db.termMetaBankV3Table
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (termMetaBankV3TableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable:
+                            $$TermMetaBankV3TypeTableTableReferences
+                                ._termMetaBankV3TableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TermMetaBankV3TypeTableTableReferences(
+                                    db, table, p0)
+                                .termMetaBankV3TableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.typeId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TermMetaBankV3TypeTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$DaKanjiDB,
+        $TermMetaBankV3TypeTableTable,
+        TermMetaBankV3TypeTableData,
+        $$TermMetaBankV3TypeTableTableFilterComposer,
+        $$TermMetaBankV3TypeTableTableOrderingComposer,
+        $$TermMetaBankV3TypeTableTableAnnotationComposer,
+        $$TermMetaBankV3TypeTableTableCreateCompanionBuilder,
+        $$TermMetaBankV3TypeTableTableUpdateCompanionBuilder,
+        (TermMetaBankV3TypeTableData, $$TermMetaBankV3TypeTableTableReferences),
+        TermMetaBankV3TypeTableData,
+        PrefetchHooks Function({bool termMetaBankV3TableRefs})>;
+typedef $$TermMetaBankV3TableTableCreateCompanionBuilder
+    = TermMetaBankV3TableCompanion Function({
+  Value<int> id,
+  required int dictId,
+  required String term,
+  required int typeId,
+  Value<int?> freqValue,
+  Value<String?> freqDisplayValue,
+});
+typedef $$TermMetaBankV3TableTableUpdateCompanionBuilder
+    = TermMetaBankV3TableCompanion Function({
+  Value<int> id,
+  Value<int> dictId,
+  Value<String> term,
+  Value<int> typeId,
+  Value<int?> freqValue,
+  Value<String?> freqDisplayValue,
+});
+
+final class $$TermMetaBankV3TableTableReferences extends BaseReferences<
+    _$DaKanjiDB, $TermMetaBankV3TableTable, TermMetaBankV3TableData> {
+  $$TermMetaBankV3TableTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $TermMetaBankV3TypeTableTable _typeIdTable(_$DaKanjiDB db) =>
+      db.termMetaBankV3TypeTable.createAlias($_aliasNameGenerator(
+          db.termMetaBankV3Table.typeId, db.termMetaBankV3TypeTable.id));
+
+  $$TermMetaBankV3TypeTableTableProcessedTableManager? get typeId {
+    if ($_item.typeId == null) return null;
+    final manager = $$TermMetaBankV3TypeTableTableTableManager(
+            $_db, $_db.termMetaBankV3TypeTable)
+        .filter((f) => f.id($_item.typeId!));
+    final item = $_typedResult.readTableOrNull(_typeIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
+class $$TermMetaBankV3TableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3TableTable> {
+  $$TermMetaBankV3TableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get dictId => $composableBuilder(
+      column: $table.dictId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get term => $composableBuilder(
+      column: $table.term, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get freqValue => $composableBuilder(
+      column: $table.freqValue, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get freqDisplayValue => $composableBuilder(
+      column: $table.freqDisplayValue,
+      builder: (column) => ColumnFilters(column));
+
+  $$TermMetaBankV3TypeTableTableFilterComposer get typeId {
+    final $$TermMetaBankV3TypeTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.typeId,
+            referencedTable: $db.termMetaBankV3TypeTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3TypeTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3TypeTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+}
+
+class $$TermMetaBankV3TableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3TableTable> {
+  $$TermMetaBankV3TableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get dictId => $composableBuilder(
+      column: $table.dictId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get term => $composableBuilder(
+      column: $table.term, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get freqValue => $composableBuilder(
+      column: $table.freqValue, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get freqDisplayValue => $composableBuilder(
+      column: $table.freqDisplayValue,
+      builder: (column) => ColumnOrderings(column));
+
+  $$TermMetaBankV3TypeTableTableOrderingComposer get typeId {
+    final $$TermMetaBankV3TypeTableTableOrderingComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.typeId,
+            referencedTable: $db.termMetaBankV3TypeTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3TypeTableTableOrderingComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3TypeTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+}
+
+class $$TermMetaBankV3TableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3TableTable> {
+  $$TermMetaBankV3TableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get dictId =>
+      $composableBuilder(column: $table.dictId, builder: (column) => column);
+
+  GeneratedColumn<String> get term =>
+      $composableBuilder(column: $table.term, builder: (column) => column);
+
+  GeneratedColumn<int> get freqValue =>
+      $composableBuilder(column: $table.freqValue, builder: (column) => column);
+
+  GeneratedColumn<String> get freqDisplayValue => $composableBuilder(
+      column: $table.freqDisplayValue, builder: (column) => column);
+
+  $$TermMetaBankV3TypeTableTableAnnotationComposer get typeId {
+    final $$TermMetaBankV3TypeTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.typeId,
+            referencedTable: $db.termMetaBankV3TypeTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3TypeTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3TypeTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+}
+
+class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
+    _$DaKanjiDB,
+    $TermMetaBankV3TableTable,
+    TermMetaBankV3TableData,
+    $$TermMetaBankV3TableTableFilterComposer,
+    $$TermMetaBankV3TableTableOrderingComposer,
+    $$TermMetaBankV3TableTableAnnotationComposer,
+    $$TermMetaBankV3TableTableCreateCompanionBuilder,
+    $$TermMetaBankV3TableTableUpdateCompanionBuilder,
+    (TermMetaBankV3TableData, $$TermMetaBankV3TableTableReferences),
+    TermMetaBankV3TableData,
+    PrefetchHooks Function({bool typeId})> {
+  $$TermMetaBankV3TableTableTableManager(
+      _$DaKanjiDB db, $TermMetaBankV3TableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermMetaBankV3TableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TermMetaBankV3TableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TermMetaBankV3TableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> dictId = const Value.absent(),
+            Value<String> term = const Value.absent(),
+            Value<int> typeId = const Value.absent(),
+            Value<int?> freqValue = const Value.absent(),
+            Value<String?> freqDisplayValue = const Value.absent(),
+          }) =>
+              TermMetaBankV3TableCompanion(
+            id: id,
+            dictId: dictId,
+            term: term,
+            typeId: typeId,
+            freqValue: freqValue,
+            freqDisplayValue: freqDisplayValue,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int dictId,
+            required String term,
+            required int typeId,
+            Value<int?> freqValue = const Value.absent(),
+            Value<String?> freqDisplayValue = const Value.absent(),
+          }) =>
+              TermMetaBankV3TableCompanion.insert(
+            id: id,
+            dictId: dictId,
+            term: term,
+            typeId: typeId,
+            freqValue: freqValue,
+            freqDisplayValue: freqDisplayValue,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TermMetaBankV3TableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({typeId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (typeId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.typeId,
+                    referencedTable:
+                        $$TermMetaBankV3TableTableReferences._typeIdTable(db),
+                    referencedColumn: $$TermMetaBankV3TableTableReferences
+                        ._typeIdTable(db)
+                        .id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TermMetaBankV3TableTableProcessedTableManager = ProcessedTableManager<
+    _$DaKanjiDB,
+    $TermMetaBankV3TableTable,
+    TermMetaBankV3TableData,
+    $$TermMetaBankV3TableTableFilterComposer,
+    $$TermMetaBankV3TableTableOrderingComposer,
+    $$TermMetaBankV3TableTableAnnotationComposer,
+    $$TermMetaBankV3TableTableCreateCompanionBuilder,
+    $$TermMetaBankV3TableTableUpdateCompanionBuilder,
+    (TermMetaBankV3TableData, $$TermMetaBankV3TableTableReferences),
+    TermMetaBankV3TableData,
+    PrefetchHooks Function({bool typeId})>;
 
 class $DaKanjiDBManager {
   final _$DaKanjiDB _db;
@@ -12553,4 +13633,9 @@ class $DaKanjiDBManager {
           _db, _db.kanjiMetaBankV3TypeTable);
   $$KanjiMetaBankV3TableTableTableManager get kanjiMetaBankV3Table =>
       $$KanjiMetaBankV3TableTableTableManager(_db, _db.kanjiMetaBankV3Table);
+  $$TermMetaBankV3TypeTableTableTableManager get termMetaBankV3TypeTable =>
+      $$TermMetaBankV3TypeTableTableTableManager(
+          _db, _db.termMetaBankV3TypeTable);
+  $$TermMetaBankV3TableTableTableManager get termMetaBankV3Table =>
+      $$TermMetaBankV3TableTableTableManager(_db, _db.termMetaBankV3Table);
 }

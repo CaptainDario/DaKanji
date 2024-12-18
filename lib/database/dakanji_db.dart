@@ -13,6 +13,8 @@ import 'package:dakanji_db/database/radicals/radical_tables.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_dao.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_relation_tables.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
+import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_dao.dart';
+import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 import 'package:drift/native.dart';
@@ -40,12 +42,14 @@ part 'dakanji_db.g.dart';
     KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable,
 
-    KanjiMetaBankV3Table, KanjiMetaBankV3TypeTable
+    KanjiMetaBankV3Table, KanjiMetaBankV3TypeTable,
+    TermMetaBankV3Table
   ],
   daos: [
     RadicalDao, KanjiVGDao,
-    IndexDao, TagBankV3Dao, KanjiBankV3Dao,
-    KanjiMetaBankV3Dao
+    IndexDao, TagBankV3Dao,
+    KanjiBankV3Dao, KanjiMetaBankV3Dao,
+    TermMetaBankV3Dao
   ],
   
 )
