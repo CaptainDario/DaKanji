@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dakanji_db/database/dakanji_db.dart';
+import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
@@ -28,16 +29,62 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
   // store data in list to bulk add them
   List<TermMetaBankV3TableCompanion> termMetaBankComps = [];
   List<TermMetaBankV3TypeTableCompanion> termMetaBankTypeComps = [];
+  List<TermMetaBankV3PitchTableCompanion> termMetaBankPitchComps = [];
+  List<TermMetaBankV3IpaTableCompanion> termMetaBankIpaComps = [];
 
   // parse the entires
   for (var jsonEntry in jsonList) {
 
-    List parsed = parseTermMetaBankEntry(jsonEntry);
-    String term = parsed[0];
-    String type = parsed[1];
-    String? reading = parsed[2];
-    int? freqValue = parsed[3];
-    String? freqDisplayValue = parsed[4];
+    String term = jsonEntry[0];
+    String type = jsonEntry[1];
+
+    String? reading;
+
+    int? freqValue; String? freqDisplayValue;
+
+
+    if(jsonEntry[2] is int){
+      freqValue = jsonEntry[2];
+    }
+    else if(jsonEntry[2] is String){
+      freqDisplayValue = jsonEntry[2];
+    }
+    else if(jsonEntry[2] is Map){
+
+      reading = jsonEntry[2]["reading"];
+
+      if(type == "freq"){
+
+        final freq = jsonEntry[2]["frequency"];
+
+        if(freq is int){ freqValue = freq; }
+        else if(freq is String){ freqDisplayValue = freq; }
+        else if(freq is Map){
+          freqValue        = jsonEntry[2]['value'];
+          freqDisplayValue = jsonEntry[2]['displayValue'];
+        }
+        
+      }
+      else if(type == "pitch"){
+        for (var pitch in jsonEntry[2]["pitches"]) {
+          termMetaBankPitchComps.add(TermMetaBankV3PitchTableCompanion(
+            id: Value(0),
+            position: Value(pitch["position"]),
+            tagId: pitch[""],
+            nasal: Value(pitch["nasal"]),
+            devoice: pitch[""],
+          ));
+        }
+      }
+      else if (type == "ipa"){
+        for (var ipa in jsonEntry[2]["transcriptions"]) {
+          termMetaBankIpaComps.add(TermMetaBankV3IpaTableCompanion(
+            id: Value(0),
+            ipa: Value(ipa["ipa"])
+          ));
+        }
+      }
+    }
 
     // check if the type is already in the db
     int? typeId = allTypes[type];
@@ -56,7 +103,6 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
       reading: Value(reading),
       freqValue: Value(freqValue),
       freqDisplayValue: Value(freqDisplayValue),
-
     ));
 
   }
@@ -69,56 +115,3 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
 
 }
 
-/// Parses one entry of a term_meta_bank and returns it as a [List<dynamic>].
-/// The order in that list is
-/// 
-/// 1. term
-/// 2. type
-/// 3. reading
-/// 4. freqValue
-/// 5. freqDisplayValue
-List<dynamic> parseTermMetaBankEntry(dynamic jsonEntry) {
-
-  String term = jsonEntry[0];
-  String type = jsonEntry[1];
-
-  int? freqValue;
-  String? freqDisplayValue;
-  String? reading;
-
-  if(jsonEntry[2] is int){
-    freqValue = jsonEntry[2];
-  }
-  else if(jsonEntry[2] is String){
-    freqDisplayValue = jsonEntry[2];
-  }
-  else if(jsonEntry[2] is Map){
-
-    reading = jsonEntry[2]["reading"];
-
-    if(type == "freq"){
-
-      final freq = jsonEntry[2]["frequency"];
-
-      if(freq is int){
-        freqValue = freq;
-      }
-      else if(freq is String){
-        freqDisplayValue = freq;
-      }
-      else if(freq is Map){
-        freqValue        = jsonEntry[2]['value'];
-        freqDisplayValue = jsonEntry[2]['displayValue'];
-      }
-      
-    }
-    else if(type == "pitch"){
-
-    }
-    else if (type == "ipa"){
-
-    }
-  }
-
-  return [term, type, reading, freqValue, freqDisplayValue];
-}
