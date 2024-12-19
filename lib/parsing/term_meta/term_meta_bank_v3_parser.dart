@@ -101,7 +101,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
       typeId: Value(typeId), dictId: Value(dictId),
       // TODO use termId
       termId: Value(0),
-      reading: Value(reading),
+      readingId: Value(0),
       freqValue: Value(freqValue),
       freqDisplayValue: Value(freqDisplayValue),
     ));

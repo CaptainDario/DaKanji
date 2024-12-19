@@ -1,3 +1,6 @@
+import 'package:dakanji_db/database/general_tables/reading_tables.dart';
+import 'package:dakanji_db/database/general_tables/term_tables.dart';
+import 'package:dakanji_db/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
 
 
@@ -9,15 +12,13 @@ class TermMetaBankV3Table extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// id of the dictionary this entry belongs to
-  IntColumn get dictId => integer()();
+  IntColumn get dictId => integer().references(IndexTable, #id)();
 
-  /// TODO link to term table
-  /// the term
-  IntColumn get termId => integer()();
+  /// the ID of the term this meta data belongs to
+  IntColumn get termId => integer().references(TermTable, #id)();
 
-  // TODO link to readings table
-  /// the reading of this term
-  TextColumn get reading => text().withLength(min: 1).nullable()();
+  /// the ID of the reading of this term
+  IntColumn get readingId => integer().references(ReadingTable, #id).nullable()();
 
   /// the id of this term's type entry
   IntColumn get typeId => integer().references(TermMetaBankV3TypeTable, #id)();
@@ -40,7 +41,7 @@ class TermMetaBankV3TypeTable extends Table {
   IntColumn get id => integer()();
 
   /// the type of this meta information
-  TextColumn get type => text().withLength(min: 1)();
+  TextColumn get type => text().unique()();
 
 }
 
@@ -56,15 +57,28 @@ class TermMetaBankV3PitchTable extends Table {
   /// The position of the pitch accent
   IntColumn get position => integer()();
 
-  /// TODO link to tag table
   /// the tag of this pitch entry
-  IntColumn get tagId => integer().nullable()();
+  IntColumn get tagId => integer().references(TermMetaBankV3PitchTagTable, #id).nullable()();
 
   /// the nasal value of this pitch entry
   IntColumn get nasal => integer().nullable()();
 
   /// the devoice value of this pitch entry
   IntColumn get devoice => integer().nullable()();
+
+}
+
+/// Class that stores the pitch's tag data for meta bank entries
+class TermMetaBankV3PitchTagTable extends Table {
+
+  @override
+  Set<Column> get primaryKey => {id};
+  
+  /// id of this entry
+  IntColumn get id => integer()();
+
+  /// The pitch tag
+  TextColumn get tag => text()();
 
 }
 
@@ -78,7 +92,10 @@ class TermMetaBankV3IpaTable extends Table {
   IntColumn get id => integer()();
 
   /// The ipa transcription
-  TextColumn get ipa => text().withLength(min: 1)();
+  TextColumn get ipa => text()();
+
+  /// the tag of this ipa entry
+  IntColumn get tagId => integer().references(TermMetaBankV3IpaTagTable, #id)();
 
 }
 
@@ -92,6 +109,6 @@ class TermMetaBankV3IpaTagTable extends Table {
   IntColumn get id => integer()();
 
   /// The ipa tag
-  TextColumn get tag => text().withLength(min: 1)();
+  TextColumn get tag => text()();
 
 }
