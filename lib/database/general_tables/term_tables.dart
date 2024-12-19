@@ -10,6 +10,6 @@ class TermTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// the term of this entry
-  TextColumn get term => text().withLength(min: 1)();
+  TextColumn get term => text().unique()();
 
 }

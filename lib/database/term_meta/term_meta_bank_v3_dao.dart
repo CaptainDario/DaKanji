@@ -24,40 +24,7 @@ class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV
   /// Returns all term entries that match contain any of the given terms
   Future<List<TermMetaBankV3Entry>?> getTermMetaBankEntriesFromTerms(List<String> terms) async {
   
-    final query = (selectOnly(termMetaBankV3Table)
-      .join([
-        // onyomi
-        innerJoin(
-          termMetaBankV3TypeTable,
-          termMetaBankV3TypeTable.id.equalsExp(termMetaBankV3Table.typeId)
-        ),
-      ]))
-      ..where(db.termMetaBankV3Table.term.isIn(terms))
-      ..addColumns([
-        db.termMetaBankV3Table.term,
-        db.termMetaBankV3TypeTable.type,
-        db.termMetaBankV3Table.freqValue,
-        db.termMetaBankV3Table.freqDisplayValue
-      ]);
 
-    // Fetching data from the query
-    final result = await query.get();
-
-    // Process and return the result
-    return (await Future.wait(result.map((row) async {
-
-      final term         = row.read<String>(termMetaBankV3Table.term);
-      final type         = row.read<String>(termMetaBankV3TypeTable.type);
-      final value        = row.read<int>(termMetaBankV3Table.freqValue);
-      final displayValue = row.read<String>(termMetaBankV3Table.freqDisplayValue);
-
-      return TermMetaBankV3Entry(
-        term: term!,
-        type: type!,
-        value: value,
-        displayValue: displayValue
-      );
-    }))).toList();
 
   }
 

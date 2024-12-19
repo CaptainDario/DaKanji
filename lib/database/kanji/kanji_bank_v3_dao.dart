@@ -32,6 +32,11 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   /// Returns all kanji entries that match contain any of the given Kanji
   Future<List<KanjiBankEntry>?> getKanjiBankEntriesFromKanji(List<String> kanji) async {
 
+    // TODO update
+    return [];
+
+    /*
+
     final query = (selectOnly(kanjiBankV3Table)
       .join([
         // onyomi
@@ -143,6 +148,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
       );
     }))).toList();
 
+    */
   }
 
 
@@ -180,11 +186,16 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   /// Checks if the given `kanji` is already present in the database
   Future<int?> getKanjiId(String kanji, int dictId) async {
 
+    // TODO update
+    return -1;
+
+    /*
     final result = await db.managers.kanjiBankV3Table
       .filter((f) => f.dictionaryKanji(kanji) & f.dictId.id(dictId))
       .getSingleOrNull();
 
     return result?.id;
+    */
 
   }
 

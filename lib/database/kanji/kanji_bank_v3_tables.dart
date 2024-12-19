@@ -1,10 +1,10 @@
+import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
 import 'package:dakanji_db/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
 
 
 
 /// Contains the main Kanji entries to which the other tables link
-@TableIndex(name: 'dictionaryKanji', columns: {#dictionaryKanji})
 class KanjiBankV3Table extends Table {
 
   @override
@@ -13,10 +13,8 @@ class KanjiBankV3Table extends Table {
   /// id of this entry
   IntColumn get id => integer()();
 
-  // TODO link to kanji table
-  /// the kanji character of this entry
-  /// this column is indexed
-  TextColumn get dictionaryKanji => text().withLength(min: 1)();
+  /// id of the kanji character of this entry
+  IntColumn get kanjiId => integer().references(KanjiTable, #id)();
 
   /// The id of the dictionary this entry belongs to
   IntColumn get dictId => integer().references(IndexTable, #id)();

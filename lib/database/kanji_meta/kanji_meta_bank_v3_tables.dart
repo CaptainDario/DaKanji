@@ -3,7 +3,6 @@ import 'package:drift/drift.dart';
 
 
 /// Table that store the main term of a meta term bank and links to its data
-@TableIndex(name: 'kanji', columns: {#kanji})
 class KanjiMetaBankV3Table extends Table {
   
   /// id of this entry
@@ -14,7 +13,7 @@ class KanjiMetaBankV3Table extends Table {
 
   // TODO link to kanji table
   /// the kanji this meta entry belongs to
-  TextColumn get kanji => text().withLength(min: 1)();
+  TextColumn get kanjiId => text().withLength(min: 1)();
 
   /// the id of this term's type entry
   IntColumn get typeId => integer().references(KanjiMetaBankV3TypeTable, #id)();

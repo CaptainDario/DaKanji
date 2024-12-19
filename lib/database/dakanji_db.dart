@@ -1,5 +1,8 @@
+import 'package:dakanji_db/database/general_tables/kanji_dao.dart';
 import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
+import 'package:dakanji_db/database/general_tables/reading_dao.dart';
 import 'package:dakanji_db/database/general_tables/reading_tables.dart';
+import 'package:dakanji_db/database/general_tables/term_dao.dart';
 import 'package:dakanji_db/database/general_tables/term_tables.dart';
 import 'package:dakanji_db/database/index/index_dao.dart';
 import 'package:dakanji_db/database/index/index_tables.dart';
@@ -56,6 +59,7 @@ part 'dakanji_db.g.dart';
     TermMetaBankV3IpaTable, TermMetaBankV3IpaTagTable
   ],
   daos: [
+    KanjiDao, TermDao, ReadingDao,
     RadicalDao, KanjiVGDao,
     IndexDao, TagBankV3Dao,
     KanjiBankV3Dao, KanjiMetaBankV3Dao,

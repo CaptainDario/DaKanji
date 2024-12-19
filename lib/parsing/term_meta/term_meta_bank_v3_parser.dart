@@ -99,7 +99,8 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
 
     termMetaBankComps.add(TermMetaBankV3TableCompanion(
       typeId: Value(typeId), dictId: Value(dictId),
-      term: Value(term),
+      // TODO use termId
+      termId: Value(0),
       reading: Value(reading),
       freqValue: Value(freqValue),
       freqDisplayValue: Value(freqDisplayValue),

@@ -75,12 +75,17 @@ Future addRadicalsToDB(String radicalPath, DaKanjiDB db) async {
     .first.path;
   Map kradMap = jsonDecode(File(kradPath).readAsStringSync())["kanji"];
 
+  // get all entries that are currently in the kanji db
+  final kanjis = { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };
+  int maxKanjiId = await db.kanjiDao.maxKanjiId();
+
   // Lists to store the companions to later batch insert them into SQLite
   List<RadicalsTableCompanion> radComps = [
     RadicalsTableCompanion(id: Value(1), radical: Value("龠"), strokeCount: Value(17))
   ];
   List<RadicalsKanjiTableCompanion> radKanComps = [];
   List<RadicalKanjiRelationsTableCompanion> radKanRelComps = [];
+  List<KanjiTableCompanion> kanjiTableComps = [];
 
   // ids of radicals in the sqlite db
   Map<String, int> radicalIds = {
@@ -108,9 +113,21 @@ Future addRadicalsToDB(String radicalPath, DaKanjiDB db) async {
   int kanjiId = 0;
   for (var kradItem in kradMap.entries) {
     
+    if(kanjis[kradItem.key] == null){
+
+      kanjis[kradItem.key] = ++maxKanjiId;
+      kanjiTableComps.add(KanjiTableCompanion(
+        id: Value(maxKanjiId),
+        kanji: Value(kradItem.key)
+      ));
+    
+    }
+
     // add the kanji into the db
     radKanComps.add(
-      RadicalsKanjiTableCompanion(id: Value(++kanjiId), radicalKanji: Value(kradItem.key))
+      RadicalsKanjiTableCompanion(
+        id: Value(++kanjiId),
+        kanjiId: Value(kanjis[kradItem.key]!))
     );
 
     // create the realtionships between kanji and radical
@@ -127,12 +144,15 @@ Future addRadicalsToDB(String radicalPath, DaKanjiDB db) async {
         )
       ));
     }
+
+    //
   }
 
   await db.batch((batch) {
     batch.insertAll(db.radicalKanjiRelationsTable, radKanRelComps);
     batch.insertAll(db.radicalsKanjiTable, radKanComps);
     batch.insertAll(db.radicalsTable, radComps);
+    batch.insertAll(db.kanjiTable, kanjiTableComps);
   });
 
 }

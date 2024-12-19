@@ -3,7 +3,6 @@ import 'package:drift/drift.dart';
 
 
 /// Table that store the main term of a meta term bank and links to its data
-@TableIndex(name: 'term', columns: {#term})
 class TermMetaBankV3Table extends Table {
   
   /// id of this entry
@@ -14,7 +13,7 @@ class TermMetaBankV3Table extends Table {
 
   /// TODO link to term table
   /// the term
-  TextColumn get term => text().withLength(min: 1)();
+  IntColumn get termId => integer()();
 
   // TODO link to readings table
   /// the reading of this term

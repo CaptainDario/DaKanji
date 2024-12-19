@@ -32,9 +32,9 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
           kanjiMetaBankV3TypeTable.id.equalsExp(kanjiMetaBankV3Table.typeId)
         ),
       ]))
-      ..where(db.kanjiMetaBankV3Table.kanji.isIn(kanji))
+      ..where(db.kanjiMetaBankV3Table.kanjiId.isIn(kanji))
       ..addColumns([
-        db.kanjiMetaBankV3Table.kanji,
+        db.kanjiMetaBankV3Table.kanjiId,
         db.kanjiMetaBankV3TypeTable.type,
         db.kanjiMetaBankV3Table.freqValue,
         db.kanjiMetaBankV3Table.freqDisplayValue
@@ -46,7 +46,7 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
     // Process and return the result
     return (await Future.wait(result.map((row) async {
 
-      final kanji            = row.read<String>(kanjiMetaBankV3Table.kanji);
+      final kanji            = row.read<String>(kanjiMetaBankV3Table.kanjiId);
       final type             = row.read<String>(kanjiMetaBankV3TypeTable.type);
       final freqValue        = row.read<int>(kanjiMetaBankV3Table.freqValue);
       final freqDisplayValue = row.read<String>(kanjiMetaBankV3Table.freqDisplayValue);

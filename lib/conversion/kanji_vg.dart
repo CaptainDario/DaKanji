@@ -9,20 +9,39 @@ import 'package:drift/drift.dart';
 /// [DaKanjiDB]
 Future<void> addKanjiVGToDB(String folderPath, DaKanjiDB db) async {
 
+  // convert kanji vg to map
   Map<String, String> kanjiVGMap = convertKanjiVGFolderToMap(folderPath);
 
   // get all entries that are currently in the kanji db
-  
+  final kanjis = { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };
+  int maxKanjiId = await db.kanjiDao.maxKanjiId();
 
-  await db.transaction(() async {
-    for (var kanjiVG in kanjiVGMap.entries) {
-      await db.into(db.kanjiVGTable).insert(
-        KanjiVGTableCompanion(
-          kanjiId: Value(kanjiVG.key),
-          kanjiVGSVG: Value(kanjiVG.value)
-        )
-      );
+  List<KanjiTableCompanion> kanjiTableComps = [];
+  List<KanjiVGTableCompanion> kanjiVGTableComps = [];
+  for (var kanjiVG in kanjiVGMap.entries) {
+
+    if(kanjis[kanjiVG.key] == null){
+
+      kanjis[kanjiVG.key] = ++maxKanjiId;
+      kanjiTableComps.add(KanjiTableCompanion(
+        id: Value(maxKanjiId),
+        kanji: Value(kanjiVG.key)
+      ));
+    
     }
+
+    kanjiVGTableComps.add(
+      KanjiVGTableCompanion(
+        kanjiId: Value(kanjis[kanjiVG.key]!),
+        kanjiVGSVG: Value(kanjiVG.value)
+      )
+    );
+
+  }
+
+  await db.batch((batch) {
+    batch.insertAll(db.kanjiTable, kanjiTableComps);
+    batch.insertAll(db.kanjiVGTable, kanjiVGTableComps);
   },);
 
 }

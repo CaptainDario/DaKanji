@@ -23,6 +23,9 @@ class RadicalDao extends DatabaseAccessor<DaKanjiDB> with _$RadicalDaoMixin {
 
   /// Gets all radicals that are associated with the given kanji
   Future<List<String>> getKanjiRadicals(String kanji) async {
+    // TODO update function
+    return [];
+    /*
     // Query the database
     final query = db.select(db.radicalsTable)
       .join([
@@ -44,11 +47,14 @@ class RadicalDao extends DatabaseAccessor<DaKanjiDB> with _$RadicalDaoMixin {
     }).get();
 
     return result;
+    */
   }
 
   /// Gets all kanjis that ues the given radicals
-  Future<List<String>> getKanjisThatUseRadicals(List<String> radicals) async{
+  Future<List<String>> getKanjisThatUseRadicals(List<String> radicals) async {
 
+    // TODO update function
+    /*
     // First, get the radical IDs for the provided radical characters
     final radicalQuery = select(radicalsTable)
       ..where((tbl) => tbl.radical.isIn(radicals));
@@ -74,6 +80,9 @@ class RadicalDao extends DatabaseAccessor<DaKanjiDB> with _$RadicalDaoMixin {
 
     final results = await kanjiQuery.map((row) => row.radicalKanji).get();
     return results;
+    */
+
+    return [];
 
   }
   

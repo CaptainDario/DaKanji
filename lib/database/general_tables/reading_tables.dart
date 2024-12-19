@@ -10,6 +10,6 @@ class ReadingTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// the reading of this entry
-  TextColumn get reading => text().withLength(min: 1)();
+  TextColumn get reading => text().unique()();
 
 }

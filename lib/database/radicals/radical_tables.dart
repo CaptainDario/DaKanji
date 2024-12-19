@@ -1,19 +1,16 @@
+import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
 import 'package:drift/drift.dart';
 
 
 
 /// Contains the kanji entries and links to the radicals table
-@TableIndex(name: 'radicalKanji', columns: {#radicalKanji})
 class RadicalsKanjiTable extends Table {
   
   /// id of this entry
   IntColumn get id => integer().autoIncrement()();
 
-  // TODO link to kanji table
-  /// the kanji character of this entry
-  /// 
-  /// **Note:** this column is indexed
-  TextColumn get radicalKanji => text().withLength(min: 1)();
+  /// ID of the kanji character this radical belongs to
+  IntColumn get kanjiId => integer().references(KanjiTable, #id)();
 }
 
 /// Contains the kanji entries and links to the radicals table

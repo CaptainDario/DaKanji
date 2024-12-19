@@ -10,6 +10,6 @@ class KanjiTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// the kanji character of this entry
-  TextColumn get kanji => text().withLength(min: 1)();
+  TextColumn get kanji => text().unique().withLength(min: 1)();
 
 }

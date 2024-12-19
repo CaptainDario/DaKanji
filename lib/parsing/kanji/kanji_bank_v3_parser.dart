@@ -13,12 +13,17 @@ class KanjiBankV3ParserRefs {
   /// The SQLite id of the dictionary that is currently being parsed
   int dictId = 0;
 
-  /// List of [KanjiBankV3TableCompanion] that should be batch inserted
-  List<KanjiBankV3TableCompanion> kanjiCompanions = [];
-  /// The currently highest id in the [KanjiBankV3Table]
+  ///
+  List<KanjiTableCompanion> kanjiCompanions = [];
+  ///
   int kanjiId = 0;
-  /// The id used to insert the last kanji into the [KanjiBankV3TableCompanion]
-  int kanjiInsertId = 0;
+  ///
+  Map<String, int> kanjisInDB = {};
+
+  /// List of [KanjiBankV3TableCompanion] that should be batch inserted
+  List<KanjiBankV3TableCompanion> kanjiBankCompanions = [];
+  /// The currently highest id in the [KanjiBankV3Table]
+  int kanjiBankId = 0;
 
   /// List of [KanjiBankV3OnyomisTableCompanion] that should be batch inserted
   List<KanjiBankV3OnyomisTableCompanion> onyomiCompanions  = [];
@@ -28,7 +33,7 @@ class KanjiBankV3ParserRefs {
   List<KanjiBankV3OnyomiKanjiRelationsTableCompanion> onyomiRelCompanions = [];
   /// A local cache for onyomis. Every onyomi should only be looked up once
   /// in the database
-  Map<String, int> seenOnyomis = {};
+  Map<String, int> onyomisInDB = {};
   
   /// List of [KanjiBankV3KunyomisTableCompanion] that should be batch inserted
   List<KanjiBankV3KunyomisTableCompanion> kunyomiCompanions  = [];
@@ -38,7 +43,7 @@ class KanjiBankV3ParserRefs {
   List<KanjiBankV3KunyomiKanjiRelationsTableCompanion> kunyomiRelCompanions = [];
   /// A local cache for kunyomis. Every kunyomi should only be looked up once
   /// in the database
-  Map<String, int> seenKunyomis = {};
+  Map<String, int> kunyomisInDB = {};
   
   /// List of [KanjiBankV3TagsKanjiRelationsTableCompanion] that should be batch inserted
   List<KanjiBankV3TagsKanjiRelationsTableCompanion> tagRelCompanions = [];
@@ -46,7 +51,7 @@ class KanjiBankV3ParserRefs {
   int tagId = 0;
   /// A local cache for tags. Every tag should only be looked up once
   /// in the database
-  Map<String, int> seenTags = {};
+  Map<String, int> tagsInDB = {};
   
   /// List of [KanjiBankV3MeaningsTableCompanion] that should be batch inserted
   List<KanjiBankV3MeaningsTableCompanion> meaningsCompanions  = [];
@@ -56,7 +61,7 @@ class KanjiBankV3ParserRefs {
   List<KanjiBankV3MeaningsKanjiRelationsTableCompanion> meaningRelCompanions = [];
   /// A local cache for meanings. Every meaning should only be looked up once
   /// in the database
-  Map<String, int> seenMeanings = {};
+  Map<String, int> meaningsInDB = {};
 
   /// List of [KanjiBankV3StatsTableCompanion] that should be batch inserted
   List<KanjiBankV3StatsTableCompanion> statCompanions = [];
@@ -74,10 +79,10 @@ class KanjiBankV3ParserRefs {
   List<KanjiBankV3StatKanjiRelationsTableCompanion> statValueRelCompanions = [];
   /// A local cache for stat names. Every stat name should only be looked up
   /// once in the database
-  Map<String, int> seenStatNames = {};
+  Map<String, int> statNamesInDB = {};
   /// A local cache for stat values. Every stat value should only be looked up
   /// once in the database
-  Map<String, int> seenStatValues = {};
+  Map<String, int> statValuesInDB = {};
 
 }
 
@@ -102,21 +107,24 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
     ..dictId = dictId;
   
   // get all ids and values from the db for O(1) access
-  refs.seenOnyomis  =
+  refs.kanjisInDB =
+    { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };
+  refs.onyomisInDB  =
     { for (var e in await db.kanjiBankV3Dao.getAllOnyomis()) e.onyomi : e.id };
-  refs.seenKunyomis =
+  refs.kunyomisInDB =
     { for (var e in await db.kanjiBankV3Dao.getAllKunyomis()) e.kunyomi : e.id };
-  refs.seenMeanings =
+  refs.meaningsInDB =
     { for (var e in await db.kanjiBankV3Dao.getAllMeanings()) e.meaning : e.id };
-  refs.seenTags = 
+  refs.tagsInDB = 
     { for (var e in await db.kanjiBankV3Dao.getAllTags()) e.name : e.id };
-  refs.seenStatNames = 
+  refs.statNamesInDB = 
     { for (var e in await db.kanjiBankV3Dao.getAllStatNames()) e.statName : e.id };
-  refs.seenStatValues =
+  refs.statValuesInDB =
     { for (var e in await db.kanjiBankV3Dao.getAllStatValues()) e.statValue : e.id };
 
   // get current maximum values
-  refs.kanjiId      = await db.kanjiBankV3Dao.maxKanjiId();
+  refs.kanjiId      = await db.kanjiDao.maxKanjiId();
+  refs.kanjiBankId  = await db.kanjiBankV3Dao.maxKanjiId();
   refs.kunyomiId    = await db.kanjiBankV3Dao.maxKunyomiId();
   refs.onyomiId     = await db.kanjiBankV3Dao.maxOnyomiId();
   refs.meaningId    = await db.kanjiBankV3Dao.maxMeaningId();
@@ -142,7 +150,7 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
   s.reset();
   await db.batch((batch) {
     
-    batch.insertAll(db.kanjiBankV3Table, refs.kanjiCompanions,);
+    batch.insertAll(db.kanjiBankV3Table, refs.kanjiBankCompanions,);
 
     batch.insertAll(db.kanjiBankV3OnyomisTable, refs.onyomiCompanions,);
     batch.insertAll(db.kanjiBankV3OnyomiKanjiRelationsTable, refs.onyomiRelCompanions,);
@@ -170,9 +178,19 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
 /// Caution: the results are store in the given `refs`
 Future<void> parseKanji(String jsonKanji, KanjiBankV3ParserRefs refs, DaKanjiDB db) async {
 
-  refs.kanjiInsertId = ++refs.kanjiId;
-  refs.kanjiCompanions.add(KanjiBankV3TableCompanion(
-    id: Value(refs.kanjiInsertId), dictionaryKanji: Value(jsonKanji),
+  if(refs.kanjisInDB[jsonKanji] == null){
+
+    refs.kanjisInDB[jsonKanji] = ++refs.kanjiId;
+    refs.kanjiCompanions.add(KanjiTableCompanion(
+      id: Value(++refs.kanjiId),
+      kanji: Value(jsonKanji)
+    ));
+  
+  }
+
+  refs.kanjiBankCompanions.add(KanjiBankV3TableCompanion(
+    id: Value(++refs.kanjiBankId),
+    kanjiId: Value(refs.kanjiId),
     dictId: Value(refs.dictId)
   ));
 
@@ -188,10 +206,10 @@ Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserRefs refs, DaKanjiD
     for (String onyomi in onyomis) {
       
       // is this onyomi already in the db?
-      int? onyomiInsertId = refs.seenOnyomis[onyomi];
+      int? onyomiInsertId = refs.onyomisInDB[onyomi];
       if(onyomiInsertId == null){
         onyomiInsertId = ++refs.onyomiId;
-        refs.seenOnyomis[onyomi] = onyomiInsertId;
+        refs.onyomisInDB[onyomi] = onyomiInsertId;
 
         refs.onyomiCompanions.add(KanjiBankV3OnyomisTableCompanion(
           id: Value(onyomiInsertId), onyomi: Value(onyomi)
@@ -199,7 +217,7 @@ Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserRefs refs, DaKanjiD
       }
       
       refs.onyomiRelCompanions.add(KanjiBankV3OnyomiKanjiRelationsTableCompanion(
-        kanjiId: Value(refs.kanjiInsertId), onyomiId: Value(onyomiInsertId)
+        kanjiId: Value(refs.kanjiBankId), onyomiId: Value(onyomiInsertId)
       ));
     
     }
@@ -216,17 +234,17 @@ Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserRefs refs, DaKanj
     for (String kunyomi in kunyomis) {
       
       // is this kunyomi already in the DB?
-      int? kunyomiInsertId = refs.seenKunyomis[kunyomi];
+      int? kunyomiInsertId = refs.kunyomisInDB[kunyomi];
       if(kunyomiInsertId == null){
         kunyomiInsertId = ++refs.kunyomiId;
-        refs.seenKunyomis[kunyomi] = kunyomiInsertId;
+        refs.kunyomisInDB[kunyomi] = kunyomiInsertId;
 
         refs.kunyomiCompanions.add(KanjiBankV3KunyomisTableCompanion(
           id: Value(kunyomiInsertId), kunyomi: Value(kunyomi)
         ));
       }
       refs.kunyomiRelCompanions.add(KanjiBankV3KunyomiKanjiRelationsTableCompanion(
-        kanjiId: Value(refs.kanjiInsertId), kunyomiId: Value(kunyomiInsertId)
+        kanjiId: Value(refs.kanjiBankId), kunyomiId: Value(kunyomiInsertId)
       ));
     
     }
@@ -242,10 +260,10 @@ Future<void> parseTag(String jsonTag, KanjiBankV3ParserRefs refs, DaKanjiDB db) 
     List<String> tags = jsonTag.toString().split(" ");
     for (String tag in tags) {
       
-      int tagInsertId = refs.seenTags[tag]!;
+      int tagInsertId = refs.tagsInDB[tag]!;
 
       refs.tagRelCompanions.add(KanjiBankV3TagsKanjiRelationsTableCompanion(
-        kanjiId: Value(refs.kanjiInsertId), tagId: Value(tagInsertId)
+        kanjiId: Value(refs.kanjiBankId), tagId: Value(tagInsertId)
       ));
     
     }
@@ -260,17 +278,17 @@ Future<void> parseMeaning(List<String> meanings, KanjiBankV3ParserRefs refs, DaK
   if(meanings.isNotEmpty){
     for (String meaning in meanings) {
       
-      int? meaningInsertId = refs.seenMeanings[meaning];
+      int? meaningInsertId = refs.meaningsInDB[meaning];
       if(meaningInsertId == null){
         meaningInsertId = ++refs.meaningId;
-        refs.seenMeanings[meaning] = meaningInsertId;
+        refs.meaningsInDB[meaning] = meaningInsertId;
 
         refs.meaningsCompanions.add(KanjiBankV3MeaningsTableCompanion(
           id: Value(meaningInsertId), meaning: Value(meaning)
         ));
       }
       refs.meaningRelCompanions.add(KanjiBankV3MeaningsKanjiRelationsTableCompanion(
-        kanjiId: Value(refs.kanjiInsertId),meaningId: Value(meaningInsertId)
+        kanjiId: Value(refs.kanjiBankId),meaningId: Value(meaningInsertId)
       ));
     
     }
@@ -288,10 +306,10 @@ Future<void> parseStats(Map<String, String> stats, KanjiBankV3ParserRefs refs, D
 
       refs.statsId += 1;
       
-      int? statValueInsertId = refs.seenStatValues[stat.value];
+      int? statValueInsertId = refs.statValuesInDB[stat.value];
       if(statValueInsertId == null){
         statValueInsertId = ++refs.statValuesId;
-        refs.seenStatValues[stat.value] = statValueInsertId;
+        refs.statValuesInDB[stat.value] = statValueInsertId;
 
         refs.statValuesCompanions.add(KanjiBankV3StatValuesTableCompanion(
           id: Value(statValueInsertId),
@@ -299,10 +317,10 @@ Future<void> parseStats(Map<String, String> stats, KanjiBankV3ParserRefs refs, D
         ));
       }
       
-      int? statNameInsertId = refs.seenStatNames[stat.key];
+      int? statNameInsertId = refs.statNamesInDB[stat.key];
       if(statNameInsertId == null){
         statNameInsertId = ++refs.statNamesId;
-        refs.seenStatNames[stat.key] = statNameInsertId;
+        refs.statNamesInDB[stat.key] = statNameInsertId;
 
         refs.statNamesCompanions.add(KanjiBankV3StatNamesTableCompanion(
           id: Value(statNameInsertId),
@@ -316,7 +334,7 @@ Future<void> parseStats(Map<String, String> stats, KanjiBankV3ParserRefs refs, D
         statValueId: Value(statValueInsertId),
       ));
       refs.statValueRelCompanions.add(KanjiBankV3StatKanjiRelationsTableCompanion(
-        kanjiId: Value(refs.kanjiInsertId),
+        kanjiId: Value(refs.kanjiBankId),
         statId: Value(refs.statsId),
       ));
     
