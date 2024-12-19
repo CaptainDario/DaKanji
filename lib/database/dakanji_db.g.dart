@@ -560,196 +560,6 @@ class ReadingTableCompanion extends UpdateCompanion<ReadingTableData> {
   }
 }
 
-class $RadicalsKanjiTableTable extends RadicalsKanjiTable
-    with TableInfo<$RadicalsKanjiTableTable, RadicalsKanjiTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $RadicalsKanjiTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _kanjiIdMeta =
-      const VerificationMeta('kanjiId');
-  @override
-  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
-      'kanji_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES kanji_table (id)'));
-  @override
-  List<GeneratedColumn> get $columns => [id, kanjiId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'radicals_kanji_table';
-  @override
-  VerificationContext validateIntegrity(
-      Insertable<RadicalsKanjiTableData> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('kanji_id')) {
-      context.handle(_kanjiIdMeta,
-          kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta));
-    } else if (isInserting) {
-      context.missing(_kanjiIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  RadicalsKanjiTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return RadicalsKanjiTableData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      kanjiId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}kanji_id'])!,
-    );
-  }
-
-  @override
-  $RadicalsKanjiTableTable createAlias(String alias) {
-    return $RadicalsKanjiTableTable(attachedDatabase, alias);
-  }
-}
-
-class RadicalsKanjiTableData extends DataClass
-    implements Insertable<RadicalsKanjiTableData> {
-  /// id of this entry
-  final int id;
-
-  /// ID of the kanji character this radical belongs to
-  final int kanjiId;
-  const RadicalsKanjiTableData({required this.id, required this.kanjiId});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['kanji_id'] = Variable<int>(kanjiId);
-    return map;
-  }
-
-  RadicalsKanjiTableCompanion toCompanion(bool nullToAbsent) {
-    return RadicalsKanjiTableCompanion(
-      id: Value(id),
-      kanjiId: Value(kanjiId),
-    );
-  }
-
-  factory RadicalsKanjiTableData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return RadicalsKanjiTableData(
-      id: serializer.fromJson<int>(json['id']),
-      kanjiId: serializer.fromJson<int>(json['kanjiId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'kanjiId': serializer.toJson<int>(kanjiId),
-    };
-  }
-
-  RadicalsKanjiTableData copyWith({int? id, int? kanjiId}) =>
-      RadicalsKanjiTableData(
-        id: id ?? this.id,
-        kanjiId: kanjiId ?? this.kanjiId,
-      );
-  RadicalsKanjiTableData copyWithCompanion(RadicalsKanjiTableCompanion data) {
-    return RadicalsKanjiTableData(
-      id: data.id.present ? data.id.value : this.id,
-      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('RadicalsKanjiTableData(')
-          ..write('id: $id, ')
-          ..write('kanjiId: $kanjiId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, kanjiId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is RadicalsKanjiTableData &&
-          other.id == this.id &&
-          other.kanjiId == this.kanjiId);
-}
-
-class RadicalsKanjiTableCompanion
-    extends UpdateCompanion<RadicalsKanjiTableData> {
-  final Value<int> id;
-  final Value<int> kanjiId;
-  const RadicalsKanjiTableCompanion({
-    this.id = const Value.absent(),
-    this.kanjiId = const Value.absent(),
-  });
-  RadicalsKanjiTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int kanjiId,
-  }) : kanjiId = Value(kanjiId);
-  static Insertable<RadicalsKanjiTableData> custom({
-    Expression<int>? id,
-    Expression<int>? kanjiId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (kanjiId != null) 'kanji_id': kanjiId,
-    });
-  }
-
-  RadicalsKanjiTableCompanion copyWith({Value<int>? id, Value<int>? kanjiId}) {
-    return RadicalsKanjiTableCompanion(
-      id: id ?? this.id,
-      kanjiId: kanjiId ?? this.kanjiId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (kanjiId.present) {
-      map['kanji_id'] = Variable<int>(kanjiId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('RadicalsKanjiTableCompanion(')
-          ..write('id: $id, ')
-          ..write('kanjiId: $kanjiId')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $RadicalsTableTable extends RadicalsTable
     with TableInfo<$RadicalsTableTable, RadicalsTableData> {
   @override
@@ -1005,8 +815,8 @@ class $RadicalKanjiRelationsTableTable extends RadicalKanjiRelationsTable
       'kanji_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES radicals_kanji_table (id)'));
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES kanji_table (id)'));
   static const VerificationMeta _radicalIdMeta =
       const VerificationMeta('radicalId');
   @override
@@ -1074,7 +884,7 @@ class RadicalKanjiRelationsTableData extends DataClass
   /// id of this relation
   final int id;
 
-  /// the id of the associated kanji reading
+  /// the id of the associated kanji
   final int kanjiId;
 
   /// the id of the associated radical
@@ -5841,17 +5651,19 @@ class $KanjiMetaBankV3TableTable extends KanjiMetaBankV3Table
   @override
   late final GeneratedColumn<int> dictId = GeneratedColumn<int>(
       'dict_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES index_table (id)'));
   static const VerificationMeta _kanjiIdMeta =
       const VerificationMeta('kanjiId');
   @override
-  late final GeneratedColumn<String> kanjiId =
-      GeneratedColumn<String>('kanji_id', aliasedName, false,
-          additionalChecks: GeneratedColumn.checkTextLength(
-            minTextLength: 1,
-          ),
-          type: DriftSqlType.string,
-          requiredDuringInsert: true);
+  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
+      'kanji_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES kanji_table (id)'));
   static const VerificationMeta _typeIdMeta = const VerificationMeta('typeId');
   @override
   late final GeneratedColumn<int> typeId = GeneratedColumn<int>(
@@ -5932,7 +5744,7 @@ class $KanjiMetaBankV3TableTable extends KanjiMetaBankV3Table
       dictId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}dict_id'])!,
       kanjiId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}kanji_id'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}kanji_id'])!,
       typeId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}type_id'])!,
       freqValue: attachedDatabase.typeMapping
@@ -5957,7 +5769,7 @@ class KanjiMetaBankV3TableData extends DataClass
   final int dictId;
 
   /// the kanji this meta entry belongs to
-  final String kanjiId;
+  final int kanjiId;
 
   /// the id of this term's type entry
   final int typeId;
@@ -5979,7 +5791,7 @@ class KanjiMetaBankV3TableData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['dict_id'] = Variable<int>(dictId);
-    map['kanji_id'] = Variable<String>(kanjiId);
+    map['kanji_id'] = Variable<int>(kanjiId);
     map['type_id'] = Variable<int>(typeId);
     if (!nullToAbsent || freqValue != null) {
       map['freq_value'] = Variable<int>(freqValue);
@@ -6011,7 +5823,7 @@ class KanjiMetaBankV3TableData extends DataClass
     return KanjiMetaBankV3TableData(
       id: serializer.fromJson<int>(json['id']),
       dictId: serializer.fromJson<int>(json['dictId']),
-      kanjiId: serializer.fromJson<String>(json['kanjiId']),
+      kanjiId: serializer.fromJson<int>(json['kanjiId']),
       typeId: serializer.fromJson<int>(json['typeId']),
       freqValue: serializer.fromJson<int?>(json['freqValue']),
       freqDisplayValue: serializer.fromJson<String?>(json['freqDisplayValue']),
@@ -6023,7 +5835,7 @@ class KanjiMetaBankV3TableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'dictId': serializer.toJson<int>(dictId),
-      'kanjiId': serializer.toJson<String>(kanjiId),
+      'kanjiId': serializer.toJson<int>(kanjiId),
       'typeId': serializer.toJson<int>(typeId),
       'freqValue': serializer.toJson<int?>(freqValue),
       'freqDisplayValue': serializer.toJson<String?>(freqDisplayValue),
@@ -6033,7 +5845,7 @@ class KanjiMetaBankV3TableData extends DataClass
   KanjiMetaBankV3TableData copyWith(
           {int? id,
           int? dictId,
-          String? kanjiId,
+          int? kanjiId,
           int? typeId,
           Value<int?> freqValue = const Value.absent(),
           Value<String?> freqDisplayValue = const Value.absent()}) =>
@@ -6093,7 +5905,7 @@ class KanjiMetaBankV3TableCompanion
     extends UpdateCompanion<KanjiMetaBankV3TableData> {
   final Value<int> id;
   final Value<int> dictId;
-  final Value<String> kanjiId;
+  final Value<int> kanjiId;
   final Value<int> typeId;
   final Value<int?> freqValue;
   final Value<String?> freqDisplayValue;
@@ -6108,7 +5920,7 @@ class KanjiMetaBankV3TableCompanion
   KanjiMetaBankV3TableCompanion.insert({
     this.id = const Value.absent(),
     required int dictId,
-    required String kanjiId,
+    required int kanjiId,
     required int typeId,
     this.freqValue = const Value.absent(),
     this.freqDisplayValue = const Value.absent(),
@@ -6118,7 +5930,7 @@ class KanjiMetaBankV3TableCompanion
   static Insertable<KanjiMetaBankV3TableData> custom({
     Expression<int>? id,
     Expression<int>? dictId,
-    Expression<String>? kanjiId,
+    Expression<int>? kanjiId,
     Expression<int>? typeId,
     Expression<int>? freqValue,
     Expression<String>? freqDisplayValue,
@@ -6136,7 +5948,7 @@ class KanjiMetaBankV3TableCompanion
   KanjiMetaBankV3TableCompanion copyWith(
       {Value<int>? id,
       Value<int>? dictId,
-      Value<String>? kanjiId,
+      Value<int>? kanjiId,
       Value<int>? typeId,
       Value<int?>? freqValue,
       Value<String?>? freqDisplayValue}) {
@@ -6160,7 +5972,7 @@ class KanjiMetaBankV3TableCompanion
       map['dict_id'] = Variable<int>(dictId.value);
     }
     if (kanjiId.present) {
-      map['kanji_id'] = Variable<String>(kanjiId.value);
+      map['kanji_id'] = Variable<int>(kanjiId.value);
     }
     if (typeId.present) {
       map['type_id'] = Variable<int>(typeId.value);
@@ -7478,8 +7290,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $KanjiTableTable kanjiTable = $KanjiTableTable(this);
   late final $TermTableTable termTable = $TermTableTable(this);
   late final $ReadingTableTable readingTable = $ReadingTableTable(this);
-  late final $RadicalsKanjiTableTable radicalsKanjiTable =
-      $RadicalsKanjiTableTable(this);
   late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
   late final $RadicalKanjiRelationsTableTable radicalKanjiRelationsTable =
       $RadicalKanjiRelationsTableTable(this);
@@ -7564,7 +7374,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         kanjiTable,
         termTable,
         readingTable,
-        radicalsKanjiTable,
         radicalsTable,
         radicalKanjiRelationsTable,
         kanjiVGTable,
@@ -7612,20 +7421,21 @@ final class $$KanjiTableTableReferences
     extends BaseReferences<_$DaKanjiDB, $KanjiTableTable, KanjiTableData> {
   $$KanjiTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<$RadicalsKanjiTableTable,
-      List<RadicalsKanjiTableData>> _radicalsKanjiTableRefsTable(
-          _$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(db.radicalsKanjiTable,
-          aliasName: $_aliasNameGenerator(
-              db.kanjiTable.id, db.radicalsKanjiTable.kanjiId));
+  static MultiTypedResultKey<$RadicalKanjiRelationsTableTable,
+          List<RadicalKanjiRelationsTableData>>
+      _radicalKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
+          MultiTypedResultKey.fromTable(db.radicalKanjiRelationsTable,
+              aliasName: $_aliasNameGenerator(
+                  db.kanjiTable.id, db.radicalKanjiRelationsTable.kanjiId));
 
-  $$RadicalsKanjiTableTableProcessedTableManager get radicalsKanjiTableRefs {
-    final manager =
-        $$RadicalsKanjiTableTableTableManager($_db, $_db.radicalsKanjiTable)
-            .filter((f) => f.kanjiId.id($_item.id));
+  $$RadicalKanjiRelationsTableTableProcessedTableManager
+      get radicalKanjiRelationsTableRefs {
+    final manager = $$RadicalKanjiRelationsTableTableTableManager(
+            $_db, $_db.radicalKanjiRelationsTable)
+        .filter((f) => f.kanjiId.id($_item.id));
 
-    final cache =
-        $_typedResult.readTableOrNull(_radicalsKanjiTableRefsTable($_db));
+    final cache = $_typedResult
+        .readTableOrNull(_radicalKanjiRelationsTableRefsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
@@ -7661,6 +7471,25 @@ final class $$KanjiTableTableReferences
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
+
+  static MultiTypedResultKey<$KanjiMetaBankV3TableTable,
+      List<KanjiMetaBankV3TableData>> _kanjiMetaBankV3TableRefsTable(
+          _$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(db.kanjiMetaBankV3Table,
+          aliasName: $_aliasNameGenerator(
+              db.kanjiTable.id, db.kanjiMetaBankV3Table.kanjiId));
+
+  $$KanjiMetaBankV3TableTableProcessedTableManager
+      get kanjiMetaBankV3TableRefs {
+    final manager =
+        $$KanjiMetaBankV3TableTableTableManager($_db, $_db.kanjiMetaBankV3Table)
+            .filter((f) => f.kanjiId.id($_item.id));
+
+    final cache =
+        $_typedResult.readTableOrNull(_kanjiMetaBankV3TableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
 }
 
 class $$KanjiTableTableFilterComposer
@@ -7678,24 +7507,27 @@ class $$KanjiTableTableFilterComposer
   ColumnFilters<String> get kanji => $composableBuilder(
       column: $table.kanji, builder: (column) => ColumnFilters(column));
 
-  Expression<bool> radicalsKanjiTableRefs(
-      Expression<bool> Function($$RadicalsKanjiTableTableFilterComposer f) f) {
-    final $$RadicalsKanjiTableTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.radicalsKanjiTable,
-        getReferencedColumn: (t) => t.kanjiId,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$RadicalsKanjiTableTableFilterComposer(
-              $db: $db,
-              $table: $db.radicalsKanjiTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
+  Expression<bool> radicalKanjiRelationsTableRefs(
+      Expression<bool> Function(
+              $$RadicalKanjiRelationsTableTableFilterComposer f)
+          f) {
+    final $$RadicalKanjiRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.radicalKanjiRelationsTable,
+            getReferencedColumn: (t) => t.kanjiId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$RadicalKanjiRelationsTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.radicalKanjiRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
     return f(composer);
   }
 
@@ -7740,6 +7572,28 @@ class $$KanjiTableTableFilterComposer
             ));
     return f(composer);
   }
+
+  Expression<bool> kanjiMetaBankV3TableRefs(
+      Expression<bool> Function($$KanjiMetaBankV3TableTableFilterComposer f)
+          f) {
+    final $$KanjiMetaBankV3TableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.kanjiMetaBankV3Table,
+        getReferencedColumn: (t) => t.kanjiId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$KanjiMetaBankV3TableTableFilterComposer(
+              $db: $db,
+              $table: $db.kanjiMetaBankV3Table,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$KanjiTableTableOrderingComposer
@@ -7773,20 +7627,22 @@ class $$KanjiTableTableAnnotationComposer
   GeneratedColumn<String> get kanji =>
       $composableBuilder(column: $table.kanji, builder: (column) => column);
 
-  Expression<T> radicalsKanjiTableRefs<T extends Object>(
-      Expression<T> Function($$RadicalsKanjiTableTableAnnotationComposer a) f) {
-    final $$RadicalsKanjiTableTableAnnotationComposer composer =
+  Expression<T> radicalKanjiRelationsTableRefs<T extends Object>(
+      Expression<T> Function(
+              $$RadicalKanjiRelationsTableTableAnnotationComposer a)
+          f) {
+    final $$RadicalKanjiRelationsTableTableAnnotationComposer composer =
         $composerBuilder(
             composer: this,
             getCurrentColumn: (t) => t.id,
-            referencedTable: $db.radicalsKanjiTable,
+            referencedTable: $db.radicalKanjiRelationsTable,
             getReferencedColumn: (t) => t.kanjiId,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$RadicalsKanjiTableTableAnnotationComposer(
+                $$RadicalKanjiRelationsTableTableAnnotationComposer(
                   $db: $db,
-                  $table: $db.radicalsKanjiTable,
+                  $table: $db.radicalKanjiRelationsTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -7836,6 +7692,29 @@ class $$KanjiTableTableAnnotationComposer
             ));
     return f(composer);
   }
+
+  Expression<T> kanjiMetaBankV3TableRefs<T extends Object>(
+      Expression<T> Function($$KanjiMetaBankV3TableTableAnnotationComposer a)
+          f) {
+    final $$KanjiMetaBankV3TableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.kanjiMetaBankV3Table,
+            getReferencedColumn: (t) => t.kanjiId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$KanjiMetaBankV3TableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.kanjiMetaBankV3Table,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
 }
 
 class $$KanjiTableTableTableManager extends RootTableManager<
@@ -7850,9 +7729,10 @@ class $$KanjiTableTableTableManager extends RootTableManager<
     (KanjiTableData, $$KanjiTableTableReferences),
     KanjiTableData,
     PrefetchHooks Function(
-        {bool radicalsKanjiTableRefs,
+        {bool radicalKanjiRelationsTableRefs,
         bool kanjiVGTableRefs,
-        bool kanjiBankV3TableRefs})> {
+        bool kanjiBankV3TableRefs,
+        bool kanjiMetaBankV3TableRefs})> {
   $$KanjiTableTableTableManager(_$DaKanjiDB db, $KanjiTableTable table)
       : super(TableManagerState(
           db: db,
@@ -7886,27 +7766,30 @@ class $$KanjiTableTableTableManager extends RootTableManager<
                   ))
               .toList(),
           prefetchHooksCallback: (
-              {radicalsKanjiTableRefs = false,
+              {radicalKanjiRelationsTableRefs = false,
               kanjiVGTableRefs = false,
-              kanjiBankV3TableRefs = false}) {
+              kanjiBankV3TableRefs = false,
+              kanjiMetaBankV3TableRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
-                if (radicalsKanjiTableRefs) db.radicalsKanjiTable,
+                if (radicalKanjiRelationsTableRefs)
+                  db.radicalKanjiRelationsTable,
                 if (kanjiVGTableRefs) db.kanjiVGTable,
-                if (kanjiBankV3TableRefs) db.kanjiBankV3Table
+                if (kanjiBankV3TableRefs) db.kanjiBankV3Table,
+                if (kanjiMetaBankV3TableRefs) db.kanjiMetaBankV3Table
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
-                  if (radicalsKanjiTableRefs)
+                  if (radicalKanjiRelationsTableRefs)
                     await $_getPrefetchedData(
                         currentTable: table,
                         referencedTable: $$KanjiTableTableReferences
-                            ._radicalsKanjiTableRefsTable(db),
+                            ._radicalKanjiRelationsTableRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$KanjiTableTableReferences(db, table, p0)
-                                .radicalsKanjiTableRefs,
+                                .radicalKanjiRelationsTableRefs,
                         referencedItemsForCurrentItem: (item,
                                 referencedItems) =>
                             referencedItems.where((e) => e.kanjiId == item.id),
@@ -7934,6 +7817,18 @@ class $$KanjiTableTableTableManager extends RootTableManager<
                         referencedItemsForCurrentItem: (item,
                                 referencedItems) =>
                             referencedItems.where((e) => e.kanjiId == item.id),
+                        typedResults: items),
+                  if (kanjiMetaBankV3TableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$KanjiTableTableReferences
+                            ._kanjiMetaBankV3TableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$KanjiTableTableReferences(db, table, p0)
+                                .kanjiMetaBankV3TableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.kanjiId == item.id),
                         typedResults: items)
                 ];
               },
@@ -7954,9 +7849,10 @@ typedef $$KanjiTableTableProcessedTableManager = ProcessedTableManager<
     (KanjiTableData, $$KanjiTableTableReferences),
     KanjiTableData,
     PrefetchHooks Function(
-        {bool radicalsKanjiTableRefs,
+        {bool radicalKanjiRelationsTableRefs,
         bool kanjiVGTableRefs,
-        bool kanjiBankV3TableRefs})>;
+        bool kanjiBankV3TableRefs,
+        bool kanjiMetaBankV3TableRefs})>;
 typedef $$TermTableTableCreateCompanionBuilder = TermTableCompanion Function({
   Value<int> id,
   required String term,
@@ -8199,319 +8095,6 @@ typedef $$ReadingTableTableProcessedTableManager = ProcessedTableManager<
     ),
     ReadingTableData,
     PrefetchHooks Function()>;
-typedef $$RadicalsKanjiTableTableCreateCompanionBuilder
-    = RadicalsKanjiTableCompanion Function({
-  Value<int> id,
-  required int kanjiId,
-});
-typedef $$RadicalsKanjiTableTableUpdateCompanionBuilder
-    = RadicalsKanjiTableCompanion Function({
-  Value<int> id,
-  Value<int> kanjiId,
-});
-
-final class $$RadicalsKanjiTableTableReferences extends BaseReferences<
-    _$DaKanjiDB, $RadicalsKanjiTableTable, RadicalsKanjiTableData> {
-  $$RadicalsKanjiTableTableReferences(
-      super.$_db, super.$_table, super.$_typedResult);
-
-  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
-      db.kanjiTable.createAlias($_aliasNameGenerator(
-          db.radicalsKanjiTable.kanjiId, db.kanjiTable.id));
-
-  $$KanjiTableTableProcessedTableManager? get kanjiId {
-    if ($_item.kanjiId == null) return null;
-    final manager = $$KanjiTableTableTableManager($_db, $_db.kanjiTable)
-        .filter((f) => f.id($_item.kanjiId!));
-    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-
-  static MultiTypedResultKey<$RadicalKanjiRelationsTableTable,
-          List<RadicalKanjiRelationsTableData>>
-      _radicalKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
-          MultiTypedResultKey.fromTable(db.radicalKanjiRelationsTable,
-              aliasName: $_aliasNameGenerator(db.radicalsKanjiTable.id,
-                  db.radicalKanjiRelationsTable.kanjiId));
-
-  $$RadicalKanjiRelationsTableTableProcessedTableManager
-      get radicalKanjiRelationsTableRefs {
-    final manager = $$RadicalKanjiRelationsTableTableTableManager(
-            $_db, $_db.radicalKanjiRelationsTable)
-        .filter((f) => f.kanjiId.id($_item.id));
-
-    final cache = $_typedResult
-        .readTableOrNull(_radicalKanjiRelationsTableRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-}
-
-class $$RadicalsKanjiTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $RadicalsKanjiTableTable> {
-  $$RadicalsKanjiTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  $$KanjiTableTableFilterComposer get kanjiId {
-    final $$KanjiTableTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.kanjiId,
-        referencedTable: $db.kanjiTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$KanjiTableTableFilterComposer(
-              $db: $db,
-              $table: $db.kanjiTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  Expression<bool> radicalKanjiRelationsTableRefs(
-      Expression<bool> Function(
-              $$RadicalKanjiRelationsTableTableFilterComposer f)
-          f) {
-    final $$RadicalKanjiRelationsTableTableFilterComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.radicalKanjiRelationsTable,
-            getReferencedColumn: (t) => t.kanjiId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$RadicalKanjiRelationsTableTableFilterComposer(
-                  $db: $db,
-                  $table: $db.radicalKanjiRelationsTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-}
-
-class $$RadicalsKanjiTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $RadicalsKanjiTableTable> {
-  $$RadicalsKanjiTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  $$KanjiTableTableOrderingComposer get kanjiId {
-    final $$KanjiTableTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.kanjiId,
-        referencedTable: $db.kanjiTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$KanjiTableTableOrderingComposer(
-              $db: $db,
-              $table: $db.kanjiTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$RadicalsKanjiTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $RadicalsKanjiTableTable> {
-  $$RadicalsKanjiTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  $$KanjiTableTableAnnotationComposer get kanjiId {
-    final $$KanjiTableTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.kanjiId,
-        referencedTable: $db.kanjiTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$KanjiTableTableAnnotationComposer(
-              $db: $db,
-              $table: $db.kanjiTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-
-  Expression<T> radicalKanjiRelationsTableRefs<T extends Object>(
-      Expression<T> Function(
-              $$RadicalKanjiRelationsTableTableAnnotationComposer a)
-          f) {
-    final $$RadicalKanjiRelationsTableTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.radicalKanjiRelationsTable,
-            getReferencedColumn: (t) => t.kanjiId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$RadicalKanjiRelationsTableTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.radicalKanjiRelationsTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-}
-
-class $$RadicalsKanjiTableTableTableManager extends RootTableManager<
-    _$DaKanjiDB,
-    $RadicalsKanjiTableTable,
-    RadicalsKanjiTableData,
-    $$RadicalsKanjiTableTableFilterComposer,
-    $$RadicalsKanjiTableTableOrderingComposer,
-    $$RadicalsKanjiTableTableAnnotationComposer,
-    $$RadicalsKanjiTableTableCreateCompanionBuilder,
-    $$RadicalsKanjiTableTableUpdateCompanionBuilder,
-    (RadicalsKanjiTableData, $$RadicalsKanjiTableTableReferences),
-    RadicalsKanjiTableData,
-    PrefetchHooks Function(
-        {bool kanjiId, bool radicalKanjiRelationsTableRefs})> {
-  $$RadicalsKanjiTableTableTableManager(
-      _$DaKanjiDB db, $RadicalsKanjiTableTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$RadicalsKanjiTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$RadicalsKanjiTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$RadicalsKanjiTableTableAnnotationComposer(
-                  $db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> kanjiId = const Value.absent(),
-          }) =>
-              RadicalsKanjiTableCompanion(
-            id: id,
-            kanjiId: kanjiId,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required int kanjiId,
-          }) =>
-              RadicalsKanjiTableCompanion.insert(
-            id: id,
-            kanjiId: kanjiId,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$RadicalsKanjiTableTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: (
-              {kanjiId = false, radicalKanjiRelationsTableRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (radicalKanjiRelationsTableRefs)
-                  db.radicalKanjiRelationsTable
-              ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (kanjiId) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.kanjiId,
-                    referencedTable:
-                        $$RadicalsKanjiTableTableReferences._kanjiIdTable(db),
-                    referencedColumn: $$RadicalsKanjiTableTableReferences
-                        ._kanjiIdTable(db)
-                        .id,
-                  ) as T;
-                }
-
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (radicalKanjiRelationsTableRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable: $$RadicalsKanjiTableTableReferences
-                            ._radicalKanjiRelationsTableRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$RadicalsKanjiTableTableReferences(db, table, p0)
-                                .radicalKanjiRelationsTableRefs,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.kanjiId == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
-}
-
-typedef $$RadicalsKanjiTableTableProcessedTableManager = ProcessedTableManager<
-    _$DaKanjiDB,
-    $RadicalsKanjiTableTable,
-    RadicalsKanjiTableData,
-    $$RadicalsKanjiTableTableFilterComposer,
-    $$RadicalsKanjiTableTableOrderingComposer,
-    $$RadicalsKanjiTableTableAnnotationComposer,
-    $$RadicalsKanjiTableTableCreateCompanionBuilder,
-    $$RadicalsKanjiTableTableUpdateCompanionBuilder,
-    (RadicalsKanjiTableData, $$RadicalsKanjiTableTableReferences),
-    RadicalsKanjiTableData,
-    PrefetchHooks Function(
-        {bool kanjiId, bool radicalKanjiRelationsTableRefs})>;
 typedef $$RadicalsTableTableCreateCompanionBuilder = RadicalsTableCompanion
     Function({
   Value<int> id,
@@ -8764,15 +8347,14 @@ final class $$RadicalKanjiRelationsTableTableReferences extends BaseReferences<
   $$RadicalKanjiRelationsTableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
 
-  static $RadicalsKanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
-      db.radicalsKanjiTable.createAlias($_aliasNameGenerator(
-          db.radicalKanjiRelationsTable.kanjiId, db.radicalsKanjiTable.id));
+  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
+      db.kanjiTable.createAlias($_aliasNameGenerator(
+          db.radicalKanjiRelationsTable.kanjiId, db.kanjiTable.id));
 
-  $$RadicalsKanjiTableTableProcessedTableManager? get kanjiId {
+  $$KanjiTableTableProcessedTableManager? get kanjiId {
     if ($_item.kanjiId == null) return null;
-    final manager =
-        $$RadicalsKanjiTableTableTableManager($_db, $_db.radicalsKanjiTable)
-            .filter((f) => f.id($_item.kanjiId!));
+    final manager = $$KanjiTableTableTableManager($_db, $_db.kanjiTable)
+        .filter((f) => f.id($_item.kanjiId!));
     final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -8806,18 +8388,18 @@ class $$RadicalKanjiRelationsTableTableFilterComposer
   ColumnFilters<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnFilters(column));
 
-  $$RadicalsKanjiTableTableFilterComposer get kanjiId {
-    final $$RadicalsKanjiTableTableFilterComposer composer = $composerBuilder(
+  $$KanjiTableTableFilterComposer get kanjiId {
+    final $$KanjiTableTableFilterComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.kanjiId,
-        referencedTable: $db.radicalsKanjiTable,
+        referencedTable: $db.kanjiTable,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
                 {$addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer}) =>
-            $$RadicalsKanjiTableTableFilterComposer(
+            $$KanjiTableTableFilterComposer(
               $db: $db,
-              $table: $db.radicalsKanjiTable,
+              $table: $db.kanjiTable,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -8859,18 +8441,18 @@ class $$RadicalKanjiRelationsTableTableOrderingComposer
   ColumnOrderings<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  $$RadicalsKanjiTableTableOrderingComposer get kanjiId {
-    final $$RadicalsKanjiTableTableOrderingComposer composer = $composerBuilder(
+  $$KanjiTableTableOrderingComposer get kanjiId {
+    final $$KanjiTableTableOrderingComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.kanjiId,
-        referencedTable: $db.radicalsKanjiTable,
+        referencedTable: $db.kanjiTable,
         getReferencedColumn: (t) => t.id,
         builder: (joinBuilder,
                 {$addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer}) =>
-            $$RadicalsKanjiTableTableOrderingComposer(
+            $$KanjiTableTableOrderingComposer(
               $db: $db,
-              $table: $db.radicalsKanjiTable,
+              $table: $db.kanjiTable,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -8912,24 +8494,23 @@ class $$RadicalKanjiRelationsTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  $$RadicalsKanjiTableTableAnnotationComposer get kanjiId {
-    final $$RadicalsKanjiTableTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.kanjiId,
-            referencedTable: $db.radicalsKanjiTable,
-            getReferencedColumn: (t) => t.id,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$RadicalsKanjiTableTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.radicalsKanjiTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
+  $$KanjiTableTableAnnotationComposer get kanjiId {
+    final $$KanjiTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.kanjiId,
+        referencedTable: $db.kanjiTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$KanjiTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.kanjiTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return composer;
   }
 
@@ -9375,6 +8956,25 @@ final class $$IndexTableTableReferences
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
+
+  static MultiTypedResultKey<$KanjiMetaBankV3TableTable,
+      List<KanjiMetaBankV3TableData>> _kanjiMetaBankV3TableRefsTable(
+          _$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(db.kanjiMetaBankV3Table,
+          aliasName: $_aliasNameGenerator(
+              db.indexTable.id, db.kanjiMetaBankV3Table.dictId));
+
+  $$KanjiMetaBankV3TableTableProcessedTableManager
+      get kanjiMetaBankV3TableRefs {
+    final manager =
+        $$KanjiMetaBankV3TableTableTableManager($_db, $_db.kanjiMetaBankV3Table)
+            .filter((f) => f.dictId.id($_item.id));
+
+    final cache =
+        $_typedResult.readTableOrNull(_kanjiMetaBankV3TableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
 }
 
 class $$IndexTableTableFilterComposer
@@ -9449,6 +9049,28 @@ class $$IndexTableTableFilterComposer
             $$KanjiBankV3TableTableFilterComposer(
               $db: $db,
               $table: $db.kanjiBankV3Table,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> kanjiMetaBankV3TableRefs(
+      Expression<bool> Function($$KanjiMetaBankV3TableTableFilterComposer f)
+          f) {
+    final $$KanjiMetaBankV3TableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.kanjiMetaBankV3Table,
+        getReferencedColumn: (t) => t.dictId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$KanjiMetaBankV3TableTableFilterComposer(
+              $db: $db,
+              $table: $db.kanjiMetaBankV3Table,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -9596,6 +9218,29 @@ class $$IndexTableTableAnnotationComposer
             ));
     return f(composer);
   }
+
+  Expression<T> kanjiMetaBankV3TableRefs<T extends Object>(
+      Expression<T> Function($$KanjiMetaBankV3TableTableAnnotationComposer a)
+          f) {
+    final $$KanjiMetaBankV3TableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.kanjiMetaBankV3Table,
+            getReferencedColumn: (t) => t.dictId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$KanjiMetaBankV3TableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.kanjiMetaBankV3Table,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
 }
 
 class $$IndexTableTableTableManager extends RootTableManager<
@@ -9609,7 +9254,8 @@ class $$IndexTableTableTableManager extends RootTableManager<
     $$IndexTableTableUpdateCompanionBuilder,
     (IndexTableData, $$IndexTableTableReferences),
     IndexTableData,
-    PrefetchHooks Function({bool kanjiBankV3TableRefs})> {
+    PrefetchHooks Function(
+        {bool kanjiBankV3TableRefs, bool kanjiMetaBankV3TableRefs})> {
   $$IndexTableTableTableManager(_$DaKanjiDB db, $IndexTableTable table)
       : super(TableManagerState(
           db: db,
@@ -9698,11 +9344,14 @@ class $$IndexTableTableTableManager extends RootTableManager<
                     $$IndexTableTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: ({kanjiBankV3TableRefs = false}) {
+          prefetchHooksCallback: (
+              {kanjiBankV3TableRefs = false,
+              kanjiMetaBankV3TableRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
-                if (kanjiBankV3TableRefs) db.kanjiBankV3Table
+                if (kanjiBankV3TableRefs) db.kanjiBankV3Table,
+                if (kanjiMetaBankV3TableRefs) db.kanjiMetaBankV3Table
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
@@ -9715,6 +9364,18 @@ class $$IndexTableTableTableManager extends RootTableManager<
                         managerFromTypedResult: (p0) =>
                             $$IndexTableTableReferences(db, table, p0)
                                 .kanjiBankV3TableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.dictId == item.id),
+                        typedResults: items),
+                  if (kanjiMetaBankV3TableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$IndexTableTableReferences
+                            ._kanjiMetaBankV3TableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$IndexTableTableReferences(db, table, p0)
+                                .kanjiMetaBankV3TableRefs,
                         referencedItemsForCurrentItem: (item,
                                 referencedItems) =>
                             referencedItems.where((e) => e.dictId == item.id),
@@ -9737,7 +9398,8 @@ typedef $$IndexTableTableProcessedTableManager = ProcessedTableManager<
     $$IndexTableTableUpdateCompanionBuilder,
     (IndexTableData, $$IndexTableTableReferences),
     IndexTableData,
-    PrefetchHooks Function({bool kanjiBankV3TableRefs})>;
+    PrefetchHooks Function(
+        {bool kanjiBankV3TableRefs, bool kanjiMetaBankV3TableRefs})>;
 typedef $$TagBankV3TableTableCreateCompanionBuilder = TagBankV3TableCompanion
     Function({
   Value<int> id,
@@ -14907,7 +14569,7 @@ typedef $$KanjiMetaBankV3TableTableCreateCompanionBuilder
     = KanjiMetaBankV3TableCompanion Function({
   Value<int> id,
   required int dictId,
-  required String kanjiId,
+  required int kanjiId,
   required int typeId,
   Value<int?> freqValue,
   Value<String?> freqDisplayValue,
@@ -14916,7 +14578,7 @@ typedef $$KanjiMetaBankV3TableTableUpdateCompanionBuilder
     = KanjiMetaBankV3TableCompanion Function({
   Value<int> id,
   Value<int> dictId,
-  Value<String> kanjiId,
+  Value<int> kanjiId,
   Value<int> typeId,
   Value<int?> freqValue,
   Value<String?> freqDisplayValue,
@@ -14926,6 +14588,34 @@ final class $$KanjiMetaBankV3TableTableReferences extends BaseReferences<
     _$DaKanjiDB, $KanjiMetaBankV3TableTable, KanjiMetaBankV3TableData> {
   $$KanjiMetaBankV3TableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
+
+  static $IndexTableTable _dictIdTable(_$DaKanjiDB db) =>
+      db.indexTable.createAlias($_aliasNameGenerator(
+          db.kanjiMetaBankV3Table.dictId, db.indexTable.id));
+
+  $$IndexTableTableProcessedTableManager? get dictId {
+    if ($_item.dictId == null) return null;
+    final manager = $$IndexTableTableTableManager($_db, $_db.indexTable)
+        .filter((f) => f.id($_item.dictId!));
+    final item = $_typedResult.readTableOrNull(_dictIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
+      db.kanjiTable.createAlias($_aliasNameGenerator(
+          db.kanjiMetaBankV3Table.kanjiId, db.kanjiTable.id));
+
+  $$KanjiTableTableProcessedTableManager? get kanjiId {
+    if ($_item.kanjiId == null) return null;
+    final manager = $$KanjiTableTableTableManager($_db, $_db.kanjiTable)
+        .filter((f) => f.id($_item.kanjiId!));
+    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
 
   static $KanjiMetaBankV3TypeTableTable _typeIdTable(_$DaKanjiDB db) =>
       db.kanjiMetaBankV3TypeTable.createAlias($_aliasNameGenerator(
@@ -14955,18 +14645,52 @@ class $$KanjiMetaBankV3TableTableFilterComposer
   ColumnFilters<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get dictId => $composableBuilder(
-      column: $table.dictId, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get kanjiId => $composableBuilder(
-      column: $table.kanjiId, builder: (column) => ColumnFilters(column));
-
   ColumnFilters<int> get freqValue => $composableBuilder(
       column: $table.freqValue, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get freqDisplayValue => $composableBuilder(
       column: $table.freqDisplayValue,
       builder: (column) => ColumnFilters(column));
+
+  $$IndexTableTableFilterComposer get dictId {
+    final $$IndexTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.dictId,
+        referencedTable: $db.indexTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$IndexTableTableFilterComposer(
+              $db: $db,
+              $table: $db.indexTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$KanjiTableTableFilterComposer get kanjiId {
+    final $$KanjiTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.kanjiId,
+        referencedTable: $db.kanjiTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$KanjiTableTableFilterComposer(
+              $db: $db,
+              $table: $db.kanjiTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   $$KanjiMetaBankV3TypeTableTableFilterComposer get typeId {
     final $$KanjiMetaBankV3TypeTableTableFilterComposer composer =
@@ -15002,18 +14726,52 @@ class $$KanjiMetaBankV3TableTableOrderingComposer
   ColumnOrderings<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get dictId => $composableBuilder(
-      column: $table.dictId, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get kanjiId => $composableBuilder(
-      column: $table.kanjiId, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<int> get freqValue => $composableBuilder(
       column: $table.freqValue, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get freqDisplayValue => $composableBuilder(
       column: $table.freqDisplayValue,
       builder: (column) => ColumnOrderings(column));
+
+  $$IndexTableTableOrderingComposer get dictId {
+    final $$IndexTableTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.dictId,
+        referencedTable: $db.indexTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$IndexTableTableOrderingComposer(
+              $db: $db,
+              $table: $db.indexTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$KanjiTableTableOrderingComposer get kanjiId {
+    final $$KanjiTableTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.kanjiId,
+        referencedTable: $db.kanjiTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$KanjiTableTableOrderingComposer(
+              $db: $db,
+              $table: $db.kanjiTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   $$KanjiMetaBankV3TypeTableTableOrderingComposer get typeId {
     final $$KanjiMetaBankV3TypeTableTableOrderingComposer composer =
@@ -15049,17 +14807,51 @@ class $$KanjiMetaBankV3TableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get dictId =>
-      $composableBuilder(column: $table.dictId, builder: (column) => column);
-
-  GeneratedColumn<String> get kanjiId =>
-      $composableBuilder(column: $table.kanjiId, builder: (column) => column);
-
   GeneratedColumn<int> get freqValue =>
       $composableBuilder(column: $table.freqValue, builder: (column) => column);
 
   GeneratedColumn<String> get freqDisplayValue => $composableBuilder(
       column: $table.freqDisplayValue, builder: (column) => column);
+
+  $$IndexTableTableAnnotationComposer get dictId {
+    final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.dictId,
+        referencedTable: $db.indexTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$IndexTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.indexTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$KanjiTableTableAnnotationComposer get kanjiId {
+    final $$KanjiTableTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.kanjiId,
+        referencedTable: $db.kanjiTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$KanjiTableTableAnnotationComposer(
+              $db: $db,
+              $table: $db.kanjiTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   $$KanjiMetaBankV3TypeTableTableAnnotationComposer get typeId {
     final $$KanjiMetaBankV3TypeTableTableAnnotationComposer composer =
@@ -15094,7 +14886,7 @@ class $$KanjiMetaBankV3TableTableTableManager extends RootTableManager<
     $$KanjiMetaBankV3TableTableUpdateCompanionBuilder,
     (KanjiMetaBankV3TableData, $$KanjiMetaBankV3TableTableReferences),
     KanjiMetaBankV3TableData,
-    PrefetchHooks Function({bool typeId})> {
+    PrefetchHooks Function({bool dictId, bool kanjiId, bool typeId})> {
   $$KanjiMetaBankV3TableTableTableManager(
       _$DaKanjiDB db, $KanjiMetaBankV3TableTable table)
       : super(TableManagerState(
@@ -15111,7 +14903,7 @@ class $$KanjiMetaBankV3TableTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> dictId = const Value.absent(),
-            Value<String> kanjiId = const Value.absent(),
+            Value<int> kanjiId = const Value.absent(),
             Value<int> typeId = const Value.absent(),
             Value<int?> freqValue = const Value.absent(),
             Value<String?> freqDisplayValue = const Value.absent(),
@@ -15127,7 +14919,7 @@ class $$KanjiMetaBankV3TableTableTableManager extends RootTableManager<
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required int dictId,
-            required String kanjiId,
+            required int kanjiId,
             required int typeId,
             Value<int?> freqValue = const Value.absent(),
             Value<String?> freqDisplayValue = const Value.absent(),
@@ -15146,7 +14938,8 @@ class $$KanjiMetaBankV3TableTableTableManager extends RootTableManager<
                     $$KanjiMetaBankV3TableTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: ({typeId = false}) {
+          prefetchHooksCallback: (
+              {dictId = false, kanjiId = false, typeId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -15163,6 +14956,28 @@ class $$KanjiMetaBankV3TableTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic>>(state) {
+                if (dictId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.dictId,
+                    referencedTable:
+                        $$KanjiMetaBankV3TableTableReferences._dictIdTable(db),
+                    referencedColumn: $$KanjiMetaBankV3TableTableReferences
+                        ._dictIdTable(db)
+                        .id,
+                  ) as T;
+                }
+                if (kanjiId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.kanjiId,
+                    referencedTable:
+                        $$KanjiMetaBankV3TableTableReferences._kanjiIdTable(db),
+                    referencedColumn: $$KanjiMetaBankV3TableTableReferences
+                        ._kanjiIdTable(db)
+                        .id,
+                  ) as T;
+                }
                 if (typeId) {
                   state = state.withJoin(
                     currentTable: table,
@@ -15197,7 +15012,7 @@ typedef $$KanjiMetaBankV3TableTableProcessedTableManager
         $$KanjiMetaBankV3TableTableUpdateCompanionBuilder,
         (KanjiMetaBankV3TableData, $$KanjiMetaBankV3TableTableReferences),
         KanjiMetaBankV3TableData,
-        PrefetchHooks Function({bool typeId})>;
+        PrefetchHooks Function({bool dictId, bool kanjiId, bool typeId})>;
 typedef $$TermMetaBankV3TypeTableTableCreateCompanionBuilder
     = TermMetaBankV3TypeTableCompanion Function({
   Value<int> id,
@@ -16167,8 +15982,6 @@ class $DaKanjiDBManager {
       $$TermTableTableTableManager(_db, _db.termTable);
   $$ReadingTableTableTableManager get readingTable =>
       $$ReadingTableTableTableManager(_db, _db.readingTable);
-  $$RadicalsKanjiTableTableTableManager get radicalsKanjiTable =>
-      $$RadicalsKanjiTableTableTableManager(_db, _db.radicalsKanjiTable);
   $$RadicalsTableTableTableManager get radicalsTable =>
       $$RadicalsTableTableTableManager(_db, _db.radicalsTable);
   $$RadicalKanjiRelationsTableTableTableManager

@@ -23,11 +23,15 @@ Future parseKanjiMetaBankV3(String kanjiMetaBankJson, DaKanjiDB db, int dictId) 
   // read all necessary data from the db
   Map allTypes =
     { for (var e in await db.kanjiMetaBankV3Dao.getAllTypes()) e.type : e.id };
-  int currentMaxTypeId = await db.kanjiMetaBankV3Dao.maxKanjiMetaBankV3TypeId();
+  int maxTypeId = await db.kanjiMetaBankV3Dao.maxKanjiMetaBankV3TypeId();
+  Map<String, int> kanjisInDB = 
+    { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };
+  int maxKanjiId = await db.kanjiDao.maxKanjiId();
 
   // store data in list to bulk add them
   List<KanjiMetaBankV3TableCompanion> kanjiMetaBankComps = [];
   List<KanjiMetaBankV3TypeTableCompanion> kanjiMetaBankTypeComps = [];
+  List<KanjiTableCompanion> kanjiComps = [];
 
   // parse the entires
   for (var jsonEntry in jsonList) {
@@ -47,18 +51,26 @@ Future parseKanjiMetaBankV3(String kanjiMetaBankJson, DaKanjiDB db, int dictId) 
     }
 
     // check if the type is already in the db
-    int? typeId = allTypes[type];
-    if(typeId == null){
+    if(allTypes[type] == null){
       kanjiMetaBankTypeComps.add(
         KanjiMetaBankV3TypeTableCompanion(
-          id: Value(++currentMaxTypeId), type: Value(type)
+          id: Value(++maxTypeId), type: Value(type)
         )
       );
-      typeId = currentMaxTypeId;
+    }
+
+    // check if the kanji is already in the db
+    if(kanjisInDB[kanji] == null){
+      kanjiComps.add(
+        KanjiTableCompanion(
+          id: Value(++maxTypeId), kanji: Value(kanji)
+        )
+      );
     }
 
     kanjiMetaBankComps.add(KanjiMetaBankV3TableCompanion(
-      kanjiId: Value(kanji), typeId: Value(typeId), dictId: Value(dictId),
+      kanjiId: Value(kanjisInDB[kanji]!),
+      typeId: Value(maxTypeId), dictId: Value(dictId),
       freqValue: freqValue == null ? Value.absent() : Value(freqValue),
       freqDisplayValue: freqDisplayValue == null ? Value.absent() : Value(freqDisplayValue)
     ));

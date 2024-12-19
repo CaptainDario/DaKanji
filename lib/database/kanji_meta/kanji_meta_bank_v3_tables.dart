@@ -1,3 +1,5 @@
+import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
+import 'package:dakanji_db/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
 
 
@@ -9,11 +11,10 @@ class KanjiMetaBankV3Table extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// id of the dictionary this entry belongs to
-  IntColumn get dictId => integer()();
+  IntColumn get dictId => integer().references(IndexTable, #id)();
 
-  // TODO link to kanji table
   /// the kanji this meta entry belongs to
-  TextColumn get kanjiId => text().withLength(min: 1)();
+  IntColumn get kanjiId => integer().references(KanjiTable, #id)();
 
   /// the id of this term's type entry
   IntColumn get typeId => integer().references(KanjiMetaBankV3TypeTable, #id)();

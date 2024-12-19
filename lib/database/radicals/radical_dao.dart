@@ -12,7 +12,7 @@ part 'radical_dao.g.dart';
 // fields for the tables. The <MyDatabase> type annotation is the database class
 // that should use this dao.
 @DriftAccessor(tables: [
-  RadicalsKanjiTable, RadicalsTable, RadicalKanjiRelationsTable
+  RadicalsTable, RadicalKanjiRelationsTable
 ])
 class RadicalDao extends DatabaseAccessor<DaKanjiDB> with _$RadicalDaoMixin {
   

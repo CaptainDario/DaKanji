@@ -24,6 +24,7 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
   /// Returns all kanji entries that match contain any of the given Kanji
   Future<List<KanjiMetaBankV3Entry>?> getKanjiMetaBankEntriesFromKanji(List<String> kanji) async {
   
+    /*
     final query = (selectOnly(kanjiMetaBankV3Table)
       .join([
         // onyomi
@@ -59,6 +60,7 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
       );
     }))).toList();
 
+    */
   }
 
   // ---------------------------------------------------------------------------

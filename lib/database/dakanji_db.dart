@@ -34,7 +34,7 @@ part 'dakanji_db.g.dart';
 
     KanjiTable, TermTable, ReadingTable,
 
-    RadicalsKanjiTable, RadicalsTable, RadicalKanjiRelationsTable,
+    RadicalsTable, RadicalKanjiRelationsTable,
     KanjiVGTable,
 
     IndexTable,

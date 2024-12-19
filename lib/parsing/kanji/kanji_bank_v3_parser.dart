@@ -116,7 +116,7 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
   refs.meaningsInDB =
     { for (var e in await db.kanjiBankV3Dao.getAllMeanings()) e.meaning : e.id };
   refs.tagsInDB = 
-    { for (var e in await db.kanjiBankV3Dao.getAllTags()) e.name : e.id };
+    { for (var e in await db.tagBankV3Dao.getAllTags()) e.name : e.id };
   refs.statNamesInDB = 
     { for (var e in await db.kanjiBankV3Dao.getAllStatNames()) e.statName : e.id };
   refs.statValuesInDB =

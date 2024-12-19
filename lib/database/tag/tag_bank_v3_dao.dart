@@ -81,7 +81,12 @@ class TagBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TagBankV3DaoMixin 
 
   }
 
-    /// Get the maximum id of the tag table
+  /// Get all tags and their ids 
+  Future<List<TagBankV3TableData>> getAllTags() async {
+    return await select(tagBankV3Table).get();
+  }
+
+  /// Get the maximum id of the tag table
   Future<int> maxTagId() async {
 
     final query = selectOnly(tagBankV3Table)

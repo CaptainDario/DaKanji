@@ -161,11 +161,6 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   Future<List<KanjiBankV3KunyomisTableData>> getAllKunyomis() async {
     return await select(kanjiBankV3KunyomisTable).get();
   }
-
-  /// Get all tags and their ids 
-  Future<List<TagBankV3TableData>> getAllTags() async {
-    return await select(tagBankV3Table).get();
-  }
    
   /// Get all meanings and their ids 
   Future<List<KanjiBankV3MeaningsTableData>> getAllMeanings() async {
