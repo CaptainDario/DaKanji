@@ -23,12 +23,18 @@ class KanjiVGDao extends DatabaseAccessor<DaKanjiDB> with _$KanjiVGDaoMixin {
   /// Gets the KanjiVG of the given kanji
   Future<String?> getKanjiVG(String kanji) async {
 
-    // TODO update this function
-    /*final result = await db.managers.kanjiVGTable
-      .filter((f) => f.kanjiVGKanji(kanji))
-      .getSingleOrNull();
+    final query = select(kanjiVGTable).join(
+      [
+        innerJoin(
+          kanjiTable,
+          kanjiTable.id.equalsExp(kanjiVGTable.kanjiId),
+        ),
+      ],
+    )
+      ..where(kanjiTable.kanji.equals(kanji));
 
-    return result?.kanjiVGSVG;*/
+    final result = await query.getSingleOrNull();
+    return result?.readTable(kanjiVGTable).kanjiVGSVG;
 
   }
   
