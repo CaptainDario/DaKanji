@@ -104,7 +104,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         onyomiT.reading.groupConcat(distinct: true),
         kunyomiT.reading.groupConcat(distinct: true),
         tagBankV3Table.name.groupConcat(distinct: true),
-        //kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true),
+        meaningTable.meaning.groupConcat(distinct: true),
 
         kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true),
         kanjiBankV3StatNamesTable.statName.groupConcat(distinct: true)
@@ -126,13 +126,13 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
       final kunyomi    = row.read(
         kunyomiT.reading.groupConcat(distinct: true))
         ?.split(",");
-      var tags         = await Future.wait((row.read(
+      final tags       = await Future.wait((row.read(
         tagBankV3Table.name.groupConcat(distinct: true))
         ?.split(","))
         !.map((e) async => await db.tagBankV3Dao.getTagByName(e),));
-      //final meaning    = row.read(
-      //  kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true))
-      //  ?.split(",");
+      final meanings   = row.read(
+        meaningTable.meaning.groupConcat(distinct: true))
+        ?.split(",");
       final statValues = row.read(
         kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true))
         ?.split(",");
@@ -145,8 +145,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         onyomis: onyomi,
         kunyomis: kunyomi,
         tags: tags,
-        //TODO update
-        meanings: [],
+        meanings: meanings,
         stats: statValues != null && statNames != null
           ? List.generate(statValues.length, (i) => KanjiBankEntryStat(
             name: statNames[i],
