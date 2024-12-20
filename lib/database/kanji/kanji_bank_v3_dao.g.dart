@@ -8,16 +8,13 @@ mixin _$KanjiBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $IndexTableTable get indexTable => attachedDatabase.indexTable;
   $KanjiBankV3TableTable get kanjiBankV3Table =>
       attachedDatabase.kanjiBankV3Table;
-  $KanjiBankV3OnyomisTableTable get kanjiBankV3OnyomisTable =>
-      attachedDatabase.kanjiBankV3OnyomisTable;
-  $KanjiBankV3OnyomiKanjiRelationsTableTable
-      get kanjiBankV3OnyomiKanjiRelationsTable =>
-          attachedDatabase.kanjiBankV3OnyomiKanjiRelationsTable;
-  $KanjiBankV3KunyomisTableTable get kanjiBankV3KunyomisTable =>
-      attachedDatabase.kanjiBankV3KunyomisTable;
-  $KanjiBankV3KunyomiKanjiRelationsTableTable
-      get kanjiBankV3KunyomiKanjiRelationsTable =>
-          attachedDatabase.kanjiBankV3KunyomiKanjiRelationsTable;
+  $ReadingTableTable get readingTable => attachedDatabase.readingTable;
+  $KanjiBankV3KunyomiReadingRelationsTableTable
+      get kanjiBankV3KunyomiReadingRelationsTable =>
+          attachedDatabase.kanjiBankV3KunyomiReadingRelationsTable;
+  $KanjiBankV3OnyomiReadingRelationsTableTable
+      get kanjiBankV3OnyomiReadingRelationsTable =>
+          attachedDatabase.kanjiBankV3OnyomiReadingRelationsTable;
   $TagBankV3TableTable get tagBankV3Table => attachedDatabase.tagBankV3Table;
   $KanjiBankV3TagsKanjiRelationsTableTable
       get kanjiBankV3TagsKanjiRelationsTable =>

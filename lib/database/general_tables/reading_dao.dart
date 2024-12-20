@@ -22,4 +22,16 @@ class ReadingDao extends DatabaseAccessor<DaKanjiDB> with _$ReadingDaoMixin {
     return await select(readingTable).get();
   }
   
+  /// Get the maximum id of the reading table
+  Future<int> maxReadingId() async {
+    
+    final query = await (selectOnly(readingTable)
+        ..addColumns([readingTable.id.max()]))
+      .getSingle();
+
+    // Extract the max ID value, defaulting to 0 if null
+    return query.read(readingTable.id.max()) ?? 0;
+
+  }
+
 }

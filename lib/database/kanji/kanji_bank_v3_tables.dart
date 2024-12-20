@@ -18,32 +18,7 @@ class KanjiBankV3Table extends Table {
 
   /// The id of the dictionary this entry belongs to
   IntColumn get dictId => integer().references(IndexTable, #id)();
-}
-
-/// Contains all onyomi reading elements and each entry links to
-/// `KanjiBankV3Table` elements
-class KanjiBankV3OnyomisTable extends Table {
-
-  /// id of this meaning
-  IntColumn get id => integer().autoIncrement()();
-
-  /// TODO link to reading table
-  /// The onyomi reading of this entry
-  TextColumn get onyomi => text().unique()();
-
-}
-
-/// Contains all kunyomi reading elements and each entry links to
-/// `KanjiBankV3Table` elements
-class KanjiBankV3KunyomisTable extends Table {
-
-  /// id of this meaning
-  IntColumn get id => integer().autoIncrement()();
-
-  /// TODO link to reading table
-  /// The kunyomi reading of this entry
-  TextColumn get kunyomi => text()();
-
+  
 }
 
 /// Contains all kanji meaning elements and each entry links to
@@ -53,6 +28,7 @@ class KanjiBankV3MeaningsTable extends Table {
   /// id of this meaning
   IntColumn get id => integer().autoIncrement()();
 
+  // TODO use meaning table?
   /// The meaning of this entry
   TextColumn get meaning => text()();
 

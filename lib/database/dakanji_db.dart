@@ -33,7 +33,9 @@ part 'dakanji_db.g.dart';
 
 @DriftDatabase(tables: [
 
-    KanjiTable, TermTable, ReadingTable,
+    KanjiTable,
+    TermTable,
+    ReadingTable,
 
     RadicalsTable, RadicalKanjiRelationsTable,
     KanjiVGTable,
@@ -45,8 +47,7 @@ part 'dakanji_db.g.dart';
     TagBankV3TagCategoryRelationsTable,
 
     KanjiBankV3Table,
-    KanjiBankV3OnyomisTable, KanjiBankV3OnyomiKanjiRelationsTable,
-    KanjiBankV3KunyomisTable, KanjiBankV3KunyomiKanjiRelationsTable,
+    KanjiBankV3KunyomiReadingRelationsTable, KanjiBankV3OnyomiReadingRelationsTable,
     KanjiBankV3TagsKanjiRelationsTable,
     KanjiBankV3MeaningsTable, KanjiBankV3MeaningsKanjiRelationsTable,
     KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,

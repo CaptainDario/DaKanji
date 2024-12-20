@@ -15,8 +15,7 @@ part 'kanji_bank_v3_dao.g.dart';
 // that should use this dao.
 @DriftAccessor(tables: [
     KanjiBankV3Table,
-    KanjiBankV3OnyomisTable, KanjiBankV3OnyomiKanjiRelationsTable,
-    KanjiBankV3KunyomisTable, KanjiBankV3KunyomiKanjiRelationsTable,
+    KanjiBankV3KunyomiReadingRelationsTable, KanjiBankV3OnyomiReadingRelationsTable,
     KanjiBankV3TagsKanjiRelationsTable,
     KanjiBankV3MeaningsTable, KanjiBankV3MeaningsKanjiRelationsTable,
     KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
@@ -32,30 +31,28 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   /// Returns all kanji entries that match contain any of the given Kanji
   Future<List<KanjiBankEntry>?> getKanjiBankEntriesFromKanji(List<String> kanji) async {
 
-    // TODO update
-    return [];
-
-    /*
+    final onyomiT  = alias(readingTable, 'onyomi');
+    final kunyomiT = alias(readingTable, 'kunyomi');
 
     final query = (selectOnly(kanjiBankV3Table)
       .join([
         // onyomi
         innerJoin(
-          kanjiBankV3OnyomiKanjiRelationsTable,
-          kanjiBankV3OnyomiKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
+          kanjiBankV3OnyomiReadingRelationsTable,
+          kanjiBankV3OnyomiReadingRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
         ),
         innerJoin(
-          kanjiBankV3OnyomisTable,
-          kanjiBankV3OnyomiKanjiRelationsTable.onyomiId.equalsExp(kanjiBankV3OnyomisTable.id)
+          onyomiT,
+          kanjiBankV3OnyomiReadingRelationsTable.onyomiReadingId.equalsExp(readingTable.id)
         ),
         // kunyomi
         innerJoin(
-          kanjiBankV3KunyomiKanjiRelationsTable,
-          kanjiBankV3KunyomiKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
+          kanjiBankV3KunyomiReadingRelationsTable,
+          kanjiBankV3KunyomiReadingRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
         ),
         innerJoin(
-          kanjiBankV3KunyomisTable,
-          kanjiBankV3KunyomiKanjiRelationsTable.kunyomiId.equalsExp(kanjiBankV3KunyomisTable.id)
+          kunyomiT,
+          kanjiBankV3KunyomiReadingRelationsTable.kunyomiReadingId.equalsExp(readingTable.id)
         ),
         // tags
         innerJoin(
@@ -93,11 +90,11 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
           kanjiBankV3StatValuesTable.id.equalsExp(kanjiBankV3StatsTable.statValueId,),
         ),
       ]))
-      ..where(db.kanjiBankV3Table.dictionaryKanji.isIn(kanji))
+      ..where(db.kanjiTable.kanji.isIn(kanji))
       ..addColumns([
-        db.kanjiBankV3Table.dictionaryKanji,
-        kanjiBankV3OnyomisTable.onyomi.groupConcat(distinct: true),
-        kanjiBankV3KunyomisTable.kunyomi.groupConcat(distinct: true),
+        db.kanjiTable.kanji,
+        onyomiT.reading.groupConcat(distinct: true),
+        kunyomiT.reading.groupConcat(distinct: true),
         tagBankV3Table.name.groupConcat(distinct: true),
         kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true),
 
@@ -110,14 +107,14 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
     // Process and return the result
     return (await Future.wait(result.map((row) async {
-      final kanji = row.read<String>(kanjiBankV3Table.dictionaryKanji);
+      final kanji = row.read<String>(kanjiTable.kanji);
       
       // Read the concatenated results
       final onyomi     = row.read(
-        kanjiBankV3OnyomisTable.onyomi.groupConcat(distinct: true))
+        onyomiT.reading.groupConcat(distinct: true))
         ?.split(",");
       final kunyomi    = row.read(
-        kanjiBankV3KunyomisTable.kunyomi.groupConcat(distinct: true))
+        kunyomiT.reading.groupConcat(distinct: true))
         ?.split(",");
       var tags         = await Future.wait((row.read(
         tagBankV3Table.name.groupConcat(distinct: true))
@@ -148,18 +145,13 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
       );
     }))).toList();
 
-    */
   }
 
 
   // ---------------------------------------------------------------------------
-  /// Get all onyomis and their ids 
-  Future<List<KanjiBankV3OnyomisTableData>> getAllOnyomis() async {
-    return await select(kanjiBankV3OnyomisTable).get();
-  }
-  /// Get all kunyomis and their ids 
-  Future<List<KanjiBankV3KunyomisTableData>> getAllKunyomis() async {
-    return await select(kanjiBankV3KunyomisTable).get();
+  /// Get all readings and their ids 
+  Future<List<ReadingTableData>> getAllReadings() async {
+    return await select(readingTable).get();
   }
    
   /// Get all meanings and their ids 
@@ -179,37 +171,21 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
   // ---------------------------------------------------------------------------
   /// Checks if the given `kanji` is already present in the database
-  Future<int?> getKanjiId(String kanji, int dictId) async {
+  Future<int?> getKanjiId(String kanji) async {
 
-    // TODO update
-    return -1;
-
-    /*
-    final result = await db.managers.kanjiBankV3Table
-      .filter((f) => f.dictionaryKanji(kanji) & f.dictId.id(dictId))
+    final result = await db.managers.kanjiTable
+      .filter((f) => f.kanji(kanji))
       .getSingleOrNull();
 
     return result?.id;
-    */
 
   }
 
   /// Checks if the given `onyomi` is already present in the database
-  Future<int?> getOnyomiId(String onyomi) async {
-
-    final result = await db.managers.kanjiBankV3OnyomisTable
-      .filter((f) => f.onyomi(onyomi))
-      .getSingleOrNull();
-
-    return result?.id;
-
-  }
-
-  /// Checks if the given `kunyomi` is already present in the database
-  Future<int?> getKunyomiId(String kunyomi) async {
-
-    final result = await db.managers.kanjiBankV3KunyomisTable
-      .filter((f) => f.kunyomi(kunyomi))
+  Future<int?> getReadingId(String onyomi) async {
+    
+    final result = await db.managers.readingTable
+      .filter((f) => f.reading(onyomi))
       .getSingleOrNull();
 
     return result?.id;
@@ -264,22 +240,12 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
   /// Get the maximum id of the onyomi table
   Future<int> maxOnyomiId() async {
-    final query = selectOnly(kanjiBankV3OnyomisTable)
-        ..addColumns([kanjiBankV3OnyomisTable.id.max()]);
+    final query = selectOnly(readingTable)
+        ..addColumns([readingTable.id.max()]);
     final result = await query.getSingle();
 
     // Extract the value of the max column using the alias
-    return result.read(kanjiBankV3OnyomisTable.id.max()) ?? 0;
-  }
-
-  /// Get the maximum id of the kunyomi table
-  Future<int> maxKunyomiId() async {
-    final query = selectOnly(kanjiBankV3KunyomisTable)
-        ..addColumns([kanjiBankV3KunyomisTable.id.max()]);
-    final result = await query.getSingle();
-
-    // Extract the value of the max column using the alias
-    return result.read(kanjiBankV3KunyomisTable.id.max()) ?? 0;
+    return result.read(readingTable.id.max()) ?? 0;
   }
 
   /// Get the maximum id of the meanings table

@@ -25,25 +25,17 @@ class KanjiBankV3ParserRefs {
   /// The currently highest id in the [KanjiBankV3Table]
   int kanjiBankId = 0;
 
-  /// List of [KanjiBankV3OnyomisTableCompanion] that should be batch inserted
-  List<KanjiBankV3OnyomisTableCompanion> onyomiCompanions  = [];
-  /// The currently highest id in the [KanjiBankV3OnyomisTable]
-  int onyomiId = 0;
-  /// List of [KanjiBankV3OnyomiKanjiRelationsTableCompanion] that should be batch inserted
-  List<KanjiBankV3OnyomiKanjiRelationsTableCompanion> onyomiRelCompanions = [];
-  /// A local cache for onyomis. Every onyomi should only be looked up once
+  /// List of [ReadingTableCompanion] that should be batch inserted
+  List<ReadingTableCompanion> readingCompanions  = [];
+  /// The currently highest id in the [ReadingTable]
+  int readingId = 0;
+  /// List of [KanjiBankV3OnyomiReadingRelationsTableCompanion] that should be batch inserted
+  List<KanjiBankV3OnyomiReadingRelationsTableCompanion> kanjiOnyomiReadingRelCompanions = [];
+  /// List of [KanjiBankV3KunyomiReadingRelationsTableCompanion] that should be batch inserted
+  List<KanjiBankV3KunyomiReadingRelationsTableCompanion> kanjiKunyomiReadingRelCompanions = [];
+  /// A local cache for readings. Every reading should only be looked up once
   /// in the database
-  Map<String, int> onyomisInDB = {};
-  
-  /// List of [KanjiBankV3KunyomisTableCompanion] that should be batch inserted
-  List<KanjiBankV3KunyomisTableCompanion> kunyomiCompanions  = [];
-  /// The currently highest id in the [KanjiBankV3KunyomisTable]
-  int kunyomiId = 0;
-  /// List of [KanjiBankV3KunyomiKanjiRelationsTableCompanion] that should be batch inserted
-  List<KanjiBankV3KunyomiKanjiRelationsTableCompanion> kunyomiRelCompanions = [];
-  /// A local cache for kunyomis. Every kunyomi should only be looked up once
-  /// in the database
-  Map<String, int> kunyomisInDB = {};
+  Map<String, int> readingsInDB = {};
   
   /// List of [KanjiBankV3TagsKanjiRelationsTableCompanion] that should be batch inserted
   List<KanjiBankV3TagsKanjiRelationsTableCompanion> tagRelCompanions = [];
@@ -109,10 +101,8 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
   // get all ids and values from the db for O(1) access
   refs.kanjisInDB =
     { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };
-  refs.onyomisInDB  =
-    { for (var e in await db.kanjiBankV3Dao.getAllOnyomis()) e.onyomi : e.id };
-  refs.kunyomisInDB =
-    { for (var e in await db.kanjiBankV3Dao.getAllKunyomis()) e.kunyomi : e.id };
+  refs.readingsInDB  =
+    { for (var e in await db.kanjiBankV3Dao.getAllReadings()) e.reading : e.id };
   refs.meaningsInDB =
     { for (var e in await db.kanjiBankV3Dao.getAllMeanings()) e.meaning : e.id };
   refs.tagsInDB = 
@@ -125,8 +115,7 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
   // get current maximum values
   refs.kanjiId      = await db.kanjiDao.maxKanjiId();
   refs.kanjiBankId  = await db.kanjiBankV3Dao.maxKanjiId();
-  refs.kunyomiId    = await db.kanjiBankV3Dao.maxKunyomiId();
-  refs.onyomiId     = await db.kanjiBankV3Dao.maxOnyomiId();
+  refs.readingId     = await db.readingDao.maxReadingId();
   refs.meaningId    = await db.kanjiBankV3Dao.maxMeaningId();
   refs.statsId      = await db.kanjiBankV3Dao.maxStatsId();
   refs.statValuesId = await db.kanjiBankV3Dao.maxStatsValueId();
@@ -152,11 +141,9 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
     
     batch.insertAll(db.kanjiBankV3Table, refs.kanjiBankCompanions,);
 
-    batch.insertAll(db.kanjiBankV3OnyomisTable, refs.onyomiCompanions,);
-    batch.insertAll(db.kanjiBankV3OnyomiKanjiRelationsTable, refs.onyomiRelCompanions,);
-
-    batch.insertAll(db.kanjiBankV3KunyomisTable, refs.kunyomiCompanions,);
-    batch.insertAll(db.kanjiBankV3KunyomiKanjiRelationsTable, refs.kunyomiRelCompanions,);
+    batch.insertAll(db.readingTable, refs.readingCompanions,);
+    batch.insertAll(db.kanjiBankV3KunyomiReadingRelationsTable, refs.kanjiKunyomiReadingRelCompanions,);
+    batch.insertAll(db.kanjiBankV3OnyomiReadingRelationsTable, refs.kanjiOnyomiReadingRelCompanions,);
 
     batch.insertAll(db.kanjiBankV3TagsKanjiRelationsTable, refs.tagRelCompanions,);
 
@@ -206,18 +193,16 @@ Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserRefs refs, DaKanjiD
     for (String onyomi in onyomis) {
       
       // is this onyomi already in the db?
-      int? onyomiInsertId = refs.onyomisInDB[onyomi];
-      if(onyomiInsertId == null){
-        onyomiInsertId = ++refs.onyomiId;
-        refs.onyomisInDB[onyomi] = onyomiInsertId;
+      if(refs.readingsInDB[onyomi] == null){
+        refs.readingsInDB[onyomi] = ++refs.readingId;
 
-        refs.onyomiCompanions.add(KanjiBankV3OnyomisTableCompanion(
-          id: Value(onyomiInsertId), onyomi: Value(onyomi)
+        refs.readingCompanions.add(ReadingTableCompanion(
+          id: Value(refs.readingId), reading: Value(onyomi)
         ));
       }
       
-      refs.onyomiRelCompanions.add(KanjiBankV3OnyomiKanjiRelationsTableCompanion(
-        kanjiId: Value(refs.kanjiBankId), onyomiId: Value(onyomiInsertId)
+      refs.kanjiOnyomiReadingRelCompanions.add(KanjiBankV3OnyomiReadingRelationsTableCompanion(
+        kanjiId: Value(refs.kanjiBankId), onyomiReadingId: Value(refs.readingId)
       ));
     
     }
@@ -234,17 +219,15 @@ Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserRefs refs, DaKanj
     for (String kunyomi in kunyomis) {
       
       // is this kunyomi already in the DB?
-      int? kunyomiInsertId = refs.kunyomisInDB[kunyomi];
-      if(kunyomiInsertId == null){
-        kunyomiInsertId = ++refs.kunyomiId;
-        refs.kunyomisInDB[kunyomi] = kunyomiInsertId;
+      if(refs.readingsInDB[kunyomi] == null){
+        refs.readingsInDB[kunyomi] = ++refs.readingId;
 
-        refs.kunyomiCompanions.add(KanjiBankV3KunyomisTableCompanion(
-          id: Value(kunyomiInsertId), kunyomi: Value(kunyomi)
+        refs.readingCompanions.add(ReadingTableCompanion(
+          id: Value(refs.readingId), reading: Value(kunyomi)
         ));
       }
-      refs.kunyomiRelCompanions.add(KanjiBankV3KunyomiKanjiRelationsTableCompanion(
-        kanjiId: Value(refs.kanjiBankId), kunyomiId: Value(kunyomiInsertId)
+      refs.kanjiKunyomiReadingRelCompanions.add(KanjiBankV3KunyomiReadingRelationsTableCompanion(
+        kanjiId: Value(refs.kanjiBankId), kunyomiReadingId: Value(refs.readingId)
       ));
     
     }
