@@ -115,7 +115,7 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
   // get current maximum values
   refs.kanjiId      = await db.kanjiDao.maxKanjiId();
   refs.kanjiBankId  = await db.kanjiBankV3Dao.maxKanjiId();
-  refs.readingId     = await db.readingDao.maxReadingId();
+  refs.readingId    = await db.readingDao.maxReadingId();
   refs.meaningId    = await db.kanjiBankV3Dao.maxMeaningId();
   refs.statsId      = await db.kanjiBankV3Dao.maxStatsId();
   refs.statValuesId = await db.kanjiBankV3Dao.maxStatsValueId();
@@ -139,6 +139,7 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
   s.reset();
   await db.batch((batch) {
     
+    batch.insertAll(db.kanjiTable, refs.kanjiCompanions);
     batch.insertAll(db.kanjiBankV3Table, refs.kanjiBankCompanions,);
 
     batch.insertAll(db.readingTable, refs.readingCompanions,);

@@ -33,9 +33,7 @@ part 'dakanji_db.g.dart';
 
 @DriftDatabase(tables: [
 
-    KanjiTable,
-    TermTable,
-    ReadingTable,
+    KanjiTable, TermTable, ReadingTable,
 
     RadicalsTable, RadicalKanjiRelationsTable,
     KanjiVGTable,

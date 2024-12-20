@@ -2,6 +2,7 @@ import "package:dakanji_db/database/kanji/kanji_bank_entry.dart";
 import "package:dakanji_db/database/kanji/kanji_bank_entry_stat.dart";
 import "package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart";
 import "package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart";
+import "package:dakanji_db/database/tag/tag_bank_entry.dart";
 import "package:drift/drift.dart";
 
 import "../dakanji_db.dart";
@@ -36,6 +37,11 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
     final query = (selectOnly(kanjiBankV3Table)
       .join([
+        // kanji
+        innerJoin(
+          kanjiTable,
+          kanjiTable.id.equalsExp(kanjiBankV3Table.kanjiId)
+        ),
         // onyomi
         innerJoin(
           kanjiBankV3OnyomiReadingRelationsTable,
@@ -43,7 +49,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         ),
         innerJoin(
           onyomiT,
-          kanjiBankV3OnyomiReadingRelationsTable.onyomiReadingId.equalsExp(readingTable.id)
+          kanjiBankV3OnyomiReadingRelationsTable.onyomiReadingId.equalsExp(onyomiT.id)
         ),
         // kunyomi
         innerJoin(
@@ -52,7 +58,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         ),
         innerJoin(
           kunyomiT,
-          kanjiBankV3KunyomiReadingRelationsTable.kunyomiReadingId.equalsExp(readingTable.id)
+          kanjiBankV3KunyomiReadingRelationsTable.kunyomiReadingId.equalsExp(kunyomiT.id)
         ),
         // tags
         innerJoin(
@@ -90,9 +96,9 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
           kanjiBankV3StatValuesTable.id.equalsExp(kanjiBankV3StatsTable.statValueId,),
         ),
       ]))
-      ..where(db.kanjiTable.kanji.isIn(kanji))
+      ..where(kanjiTable.kanji.isIn(kanji))
       ..addColumns([
-        db.kanjiTable.kanji,
+        kanjiTable.kanji,
         onyomiT.reading.groupConcat(distinct: true),
         kunyomiT.reading.groupConcat(distinct: true),
         tagBankV3Table.name.groupConcat(distinct: true),
@@ -104,10 +110,12 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
     // Fetching data from the query
     final result = await query.get();
+    print(result.first.rawData.data);
 
     // Process and return the result
     return (await Future.wait(result.map((row) async {
       final kanji = row.read<String>(kanjiTable.kanji);
+      print(kanji);
       
       // Read the concatenated results
       final onyomi     = row.read(

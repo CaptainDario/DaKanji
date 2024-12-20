@@ -52,24 +52,26 @@ Future parseKanjiMetaBankV3(String kanjiMetaBankJson, DaKanjiDB db, int dictId) 
 
     // check if the type is already in the db
     if(allTypes[type] == null){
+      allTypes[type] = ++maxTypeId;
       kanjiMetaBankTypeComps.add(
         KanjiMetaBankV3TypeTableCompanion(
-          id: Value(++maxTypeId), type: Value(type)
+          id: Value(maxTypeId), type: Value(type)
         )
       );
     }
 
     // check if the kanji is already in the db
     if(kanjisInDB[kanji] == null){
+      kanjisInDB[kanji] = ++maxKanjiId;
       kanjiComps.add(
         KanjiTableCompanion(
-          id: Value(++maxTypeId), kanji: Value(kanji)
+          id: Value(maxKanjiId), kanji: Value(kanji)
         )
       );
     }
 
     kanjiMetaBankComps.add(KanjiMetaBankV3TableCompanion(
-      kanjiId: Value(kanjisInDB[kanji]!),
+      kanjiId: Value(maxKanjiId),
       typeId: Value(maxTypeId), dictId: Value(dictId),
       freqValue: freqValue == null ? Value.absent() : Value(freqValue),
       freqDisplayValue: freqDisplayValue == null ? Value.absent() : Value(freqDisplayValue)

@@ -1,6 +1,7 @@
 import 'package:dakanji_db/conversion/radicals.dart';
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:test/test.dart';
+import 'package:universal_io/io.dart';
 
 import '../bin/paths.dart';
 import 'radicals_test_values.dart';
@@ -8,6 +9,7 @@ import 'radicals_test_values.dart';
 
 
 void main() {
+
   test('Radical conversion', () async {
     
     // setup 
@@ -47,4 +49,5 @@ void main() {
     }
 
   });
+
 }

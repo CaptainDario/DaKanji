@@ -1,20 +1,22 @@
 import 'package:dakanji_db/conversion/kanji_vg.dart';
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:test/test.dart';
+import 'package:universal_io/io.dart';
 
 import '../bin/paths.dart';
 import 'kanji_vg_test_values.dart';
 
 
 
-void main() {
+void main() async {
+
   test('KanjiVG conversion', () async {
     
     // setup 
     DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
     await db.deleteDB();
 
-    // convert krad / radk file
+    // convert kanjivg database
     Stopwatch s = Stopwatch()..start();
     await addKanjiVGToDB(kanjiVGPath, db);
     print("Converting svg took: ${s.elapsedMilliseconds}ms");
@@ -35,4 +37,5 @@ void main() {
     }
 
   });
+
 }

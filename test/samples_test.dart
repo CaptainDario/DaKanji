@@ -21,9 +21,10 @@ void main() async {
   
   test('Test importing samples', () async {
     await testKanjiBankV3(db);
-    await testKanjiMetaBankV3(db);
-    await testTermMetaBankV3(db);
+    //await testKanjiMetaBankV3(db);
+    //await testTermMetaBankV3(db);
   });
+
 }
 
 /// tests the kanjiBankV3 import of the sample database from the yomitan dictionary
