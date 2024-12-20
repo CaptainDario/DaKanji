@@ -45,9 +45,9 @@ class KanjiBankV3ParserRefs {
   /// in the database
   Map<String, int> tagsInDB = {};
   
-  /// List of [KanjiBankV3MeaningsTableCompanion] that should be batch inserted
-  List<KanjiBankV3MeaningsTableCompanion> meaningsCompanions  = [];
-  /// The currently highest id in the [KanjiBankV3MeaningsTable]
+  /// List of [MeaningTableCompanion] that should be batch inserted
+  List<MeaningTableCompanion> meaningsCompanions  = [];
+  /// The currently highest id in the [MeaningTable]
   int meaningId = 0;
   /// List of [KanjiBankV3MeaningsKanjiRelationsTableCompanion] that should be batch inserted
   List<KanjiBankV3MeaningsKanjiRelationsTableCompanion> meaningRelCompanions = [];
@@ -104,7 +104,7 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
   refs.readingsInDB  =
     { for (var e in await db.kanjiBankV3Dao.getAllReadings()) e.reading : e.id };
   refs.meaningsInDB =
-    { for (var e in await db.kanjiBankV3Dao.getAllMeanings()) e.meaning : e.id };
+    { for (var e in await db.meaningDao.getAllMeanings()) e.meaning : e.id };
   refs.tagsInDB = 
     { for (var e in await db.tagBankV3Dao.getAllTags()) e.name : e.id };
   refs.statNamesInDB = 
@@ -148,7 +148,7 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
 
     batch.insertAll(db.kanjiBankV3TagsKanjiRelationsTable, refs.tagRelCompanions,);
 
-    batch.insertAll(db.kanjiBankV3MeaningsTable, refs.meaningsCompanions,);
+    batch.insertAll(db.meaningTable, refs.meaningsCompanions,);
     batch.insertAll(db.kanjiBankV3MeaningsKanjiRelationsTable, refs.meaningRelCompanions,);
     
     batch.insertAll(db.kanjiBankV3StatsTable, refs.statCompanions,);
@@ -267,7 +267,7 @@ Future<void> parseMeaning(List<String> meanings, KanjiBankV3ParserRefs refs, DaK
         meaningInsertId = ++refs.meaningId;
         refs.meaningsInDB[meaning] = meaningInsertId;
 
-        refs.meaningsCompanions.add(KanjiBankV3MeaningsTableCompanion(
+        refs.meaningsCompanions.add(MeaningTableCompanion(
           id: Value(meaningInsertId), meaning: Value(meaning)
         ));
       }

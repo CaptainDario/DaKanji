@@ -1,3 +1,4 @@
+import 'package:dakanji_db/database/general_tables/meaning_tables.dart';
 import 'package:dakanji_db/database/general_tables/reading_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
@@ -47,7 +48,7 @@ class KanjiBankV3MeaningsKanjiRelationsTable extends Table {
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
   /// the id of the associated meaning
-  IntColumn get meaningId => integer().references(KanjiBankV3MeaningsTable, #id)();
+  IntColumn get meaningId => integer().references(MeaningTable, #id)();
   /// the id of the associated kanji
   IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
 

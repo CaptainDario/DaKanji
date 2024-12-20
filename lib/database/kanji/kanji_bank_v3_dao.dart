@@ -18,7 +18,7 @@ part 'kanji_bank_v3_dao.g.dart';
     KanjiBankV3Table,
     KanjiBankV3KunyomiReadingRelationsTable, KanjiBankV3OnyomiReadingRelationsTable,
     KanjiBankV3TagsKanjiRelationsTable,
-    KanjiBankV3MeaningsTable, KanjiBankV3MeaningsKanjiRelationsTable,
+    KanjiBankV3MeaningsKanjiRelationsTable,
     KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable, 
 ])
@@ -75,8 +75,8 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
           kanjiBankV3MeaningsKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
         ),
         innerJoin(
-          kanjiBankV3MeaningsTable,
-          kanjiBankV3MeaningsKanjiRelationsTable.meaningId.equalsExp(kanjiBankV3MeaningsTable.id)
+          meaningTable,
+          kanjiBankV3MeaningsKanjiRelationsTable.meaningId.equalsExp(meaningTable.id)
         ),
         // Stat names / values
         innerJoin(
@@ -102,7 +102,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         onyomiT.reading.groupConcat(distinct: true),
         kunyomiT.reading.groupConcat(distinct: true),
         tagBankV3Table.name.groupConcat(distinct: true),
-        kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true),
+        //kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true),
 
         kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true),
         kanjiBankV3StatNamesTable.statName.groupConcat(distinct: true)
@@ -128,9 +128,9 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         tagBankV3Table.name.groupConcat(distinct: true))
         ?.split(","))
         !.map((e) async => await db.tagBankV3Dao.getTagByName(e),));
-      final meaning    = row.read(
-        kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true))
-        ?.split(",");
+      //final meaning    = row.read(
+      //  kanjiBankV3MeaningsTable.meaning.groupConcat(distinct: true))
+      //  ?.split(",");
       final statValues = row.read(
         kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true))
         ?.split(",");
@@ -143,7 +143,8 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         onyomis: onyomi,
         kunyomis: kunyomi,
         tags: tags,
-        meanings: meaning,
+        //TODO update
+        meanings: [],
         stats: statValues != null && statNames != null
           ? List.generate(statValues.length, (i) => KanjiBankEntryStat(
             name: statNames[i],
@@ -160,11 +161,6 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   /// Get all readings and their ids 
   Future<List<ReadingTableData>> getAllReadings() async {
     return await select(readingTable).get();
-  }
-   
-  /// Get all meanings and their ids 
-  Future<List<KanjiBankV3MeaningsTableData>> getAllMeanings() async {
-    return await select(kanjiBankV3MeaningsTable).get();
   }
 
   /// Get all stat values and their ids 
@@ -183,28 +179,6 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
     final result = await db.managers.kanjiTable
       .filter((f) => f.kanji(kanji))
-      .getSingleOrNull();
-
-    return result?.id;
-
-  }
-
-  /// Checks if the given `onyomi` is already present in the database
-  Future<int?> getReadingId(String onyomi) async {
-    
-    final result = await db.managers.readingTable
-      .filter((f) => f.reading(onyomi))
-      .getSingleOrNull();
-
-    return result?.id;
-
-  }
-
-  /// Checks if the given `meaning` is already present in the database
-  Future<int?> getMeaningId(String meaning) async {
-
-    final result = await db.managers.kanjiBankV3MeaningsTable
-      .filter((f) => f.meaning(meaning))
       .getSingleOrNull();
 
     return result?.id;
@@ -258,12 +232,12 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
 
   /// Get the maximum id of the meanings table
   Future<int> maxMeaningId() async {
-    final query = selectOnly(kanjiBankV3MeaningsTable)
-        ..addColumns([kanjiBankV3MeaningsTable.id.max()]);
+    final query = selectOnly(meaningTable)
+        ..addColumns([meaningTable.id.max()]);
     final result = await query.getSingle();
 
     // Extract the value of the max column using the alias
-    return result.read(kanjiBankV3MeaningsTable.id.max()) ?? 0;
+    return result.read(meaningTable.id.max()) ?? 0;
   }
 
   /// Get the maximum id of the stats table

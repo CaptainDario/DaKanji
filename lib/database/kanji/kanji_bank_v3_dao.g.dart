@@ -19,8 +19,7 @@ mixin _$KanjiBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $KanjiBankV3TagsKanjiRelationsTableTable
       get kanjiBankV3TagsKanjiRelationsTable =>
           attachedDatabase.kanjiBankV3TagsKanjiRelationsTable;
-  $KanjiBankV3MeaningsTableTable get kanjiBankV3MeaningsTable =>
-      attachedDatabase.kanjiBankV3MeaningsTable;
+  $MeaningTableTable get meaningTable => attachedDatabase.meaningTable;
   $KanjiBankV3MeaningsKanjiRelationsTableTable
       get kanjiBankV3MeaningsKanjiRelationsTable =>
           attachedDatabase.kanjiBankV3MeaningsKanjiRelationsTable;

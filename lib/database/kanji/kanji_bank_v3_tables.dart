@@ -1,4 +1,5 @@
 import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
+import 'package:dakanji_db/database/general_tables/meaning_tables.dart';
 import 'package:dakanji_db/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
 
@@ -21,27 +22,14 @@ class KanjiBankV3Table extends Table {
   
 }
 
-/// Contains all kanji meaning elements and each entry links to
-/// `KanjiBankV3Table` elements
-class KanjiBankV3MeaningsTable extends Table {
-
-  /// id of this meaning
-  IntColumn get id => integer().autoIncrement()();
-
-  // TODO use meaning table?
-  /// The meaning of this entry
-  TextColumn get meaning => text()();
-
-}
-
 /// Contains all kanji stat's. Each entry links to a
 /// [KanjiBankV3StatValuesTable] and a [KanjiBankV3StatNamesTable]
 class KanjiBankV3StatsTable extends Table {
 
-  /// id of this meaning
+  /// id of this stat
   IntColumn get id => integer().autoIncrement()();
 
-  /// `KanjiBankV3StatsName` entry of this meaning
+  /// `KanjiBankV3StatsName` entry that belongs to this entry
   IntColumn get statNameId => integer().references(KanjiBankV3StatNamesTable, #id)();
 
   /// The value of this entrie's stat
