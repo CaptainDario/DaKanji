@@ -23,22 +23,20 @@ class RadicalDao extends DatabaseAccessor<DaKanjiDB> with _$RadicalDaoMixin {
 
   /// Gets all radicals that are associated with the given kanji
   Future<List<String>> getKanjiRadicals(String kanji) async {
-    // TODO update function
-    return [];
-    /*
+
     // Query the database
-    final query = db.select(db.radicalsTable)
+    final query = db.select(kanjiTable)
       .join([
         innerJoin(
-          db.radicalKanjiRelationsTable,
-          db.radicalKanjiRelationsTable.radicalId.equalsExp(db.radicalsTable.id),
+          radicalKanjiRelationsTable,
+          radicalKanjiRelationsTable.kanjiId.equalsExp(kanjiTable.id)
         ),
         innerJoin(
-          db.radicalsKanjiTable,
-          db.radicalKanjiRelationsTable.kanjiId.equalsExp(db.radicalsKanjiTable.id),
+          radicalsTable,
+          radicalKanjiRelationsTable.radicalId.equalsExp(radicalsTable.id)
         ),
       ])
-      ..where(db.radicalsKanjiTable.radicalKanji.equals(kanji));
+      ..where(db.kanjiTable.kanji.equals(kanji));
 
     // Map the results to get only the radical characters
     final result = await query.map((row) {
@@ -47,43 +45,45 @@ class RadicalDao extends DatabaseAccessor<DaKanjiDB> with _$RadicalDaoMixin {
     }).get();
 
     return result;
-    */
+
   }
 
-  /// Gets all kanjis that ues the given radicals
+  /// Gets all kanjis that use *all* of the given radicals
   Future<List<String>> getKanjisThatUseRadicals(List<String> radicals) async {
-
-    // TODO update function
-    /*
-    // First, get the radical IDs for the provided radical characters
-    final radicalQuery = select(radicalsTable)
-      ..where((tbl) => tbl.radical.isIn(radicals));
-    final radicalIds = await radicalQuery.map((row) => row.id).get();
-
-    // If no matching radicals found, return empty list
-    if (radicalIds.isEmpty) {
-      return [];
-    }
-
-    // Create a subquery to count how many of the requested radicals each kanji uses
-    final relationSubquery = selectOnly(radicalKanjiRelationsTable)
-      ..addColumns([radicalKanjiRelationsTable.kanjiId])
-      ..where(radicalKanjiRelationsTable.radicalId.isIn(radicalIds))
-      ..groupBy(
-        [radicalKanjiRelationsTable.kanjiId,],
-        having: countAll().equals(radicalIds.length)
-      );
+    
+    if (radicals.isEmpty) { return []; }
 
     // Get the kanji characters that use all the specified radicals
-    final kanjiQuery = select(radicalsKanjiTable)
-      ..where((tbl) => tbl.id.isInQuery(relationSubquery));
+    final kanjiQuery = selectOnly(kanjiTable).join(
+      [
+        innerJoin(
+          radicalKanjiRelationsTable,
+          radicalKanjiRelationsTable.kanjiId.equalsExp(kanjiTable.id)
+        ),
+        innerJoin(
+          radicalsTable,
+          radicalKanjiRelationsTable.radicalId.equalsExp(radicalsTable.id)
+        ),
+      ],
+    )
+    ..addColumns([
+      kanjiTable.kanji, radicalsTable.radical, radicalsTable.strokeCount
+    ])
+    ..groupBy(
+      [kanjiTable.kanji],
+      having: countAll().equals(radicals.length)
+    )
+    ..where(
+      radicalsTable.radical.isIn(radicals)
+    );
 
-    final results = await kanjiQuery.map((row) => row.radicalKanji).get();
+    final results = (await kanjiQuery.get())
+      .map((e) => e.read(kanjiTable.kanji)!,)
+      .toList();
+
     return results;
-    */
-
-    return [];
 
   }
+
   
 }

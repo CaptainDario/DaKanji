@@ -90,7 +90,6 @@ Future addRadicalsToDB(String radicalPath, DaKanjiDB db) async {
   Map<String, int> radicalIds = {
     "龠" : 1
   };
-  
 
   // add all radicals to sqlite and get their ID
   int radId = radComps.length;

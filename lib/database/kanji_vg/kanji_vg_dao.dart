@@ -31,7 +31,7 @@ class KanjiVGDao extends DatabaseAccessor<DaKanjiDB> with _$KanjiVGDaoMixin {
         ),
       ],
     )
-      ..where(kanjiTable.kanji.equals(kanji));
+    ..where(kanjiTable.kanji.equals(kanji));
 
     final result = await query.getSingleOrNull();
     return result?.readTable(kanjiVGTable).kanjiVGSVG;
