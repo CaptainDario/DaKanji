@@ -1,12 +1,12 @@
-import 'package:dakanji_db/database/dakanji_db.dart';
-import 'package:dakanji_db/parsing/dictionary_parser.dart';
+// Package imports:
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
+// Project imports:
+import 'package:dakanji_db/database/dakanji_db.dart';
+import 'package:dakanji_db/parsing/dictionary_parser.dart';
 import '../bin/paths.dart';
 import 'samples_test_values.dart';
-
-
 
 void main() async {
   

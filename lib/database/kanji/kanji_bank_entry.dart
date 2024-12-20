@@ -1,6 +1,9 @@
+// Package imports:
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
 import 'package:dakanji_db/database/kanji/kanji_bank_entry_stat.dart';
 import 'package:dakanji_db/database/tag/tag_bank_entry.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'kanji_bank_entry.freezed.dart';
 part 'kanji_bank_entry.g.dart';

@@ -1,8 +1,9 @@
-import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
-import 'package:dakanji_db/database/radicals/radical_tables.dart';
+// Package imports:
 import 'package:drift/drift.dart';
 
-
+// Project imports:
+import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
+import 'package:dakanji_db/database/radicals/radical_tables.dart';
 
 /// Contains the relationships between kanjis and radicals
 class RadicalKanjiRelationsTable extends Table {

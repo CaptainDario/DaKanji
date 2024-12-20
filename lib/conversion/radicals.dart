@@ -1,10 +1,13 @@
+// Dart imports:
 import 'dart:convert';
-import 'package:universal_io/io.dart';
-import 'package:dakanji_db/database/dakanji_db.dart';
+
+// Package imports:
 import 'package:drift/drift.dart';
 import 'package:path/path.dart' as p;
+import 'package:universal_io/io.dart';
 
-
+// Project imports:
+import 'package:dakanji_db/database/dakanji_db.dart';
 
 /// map to lookup the code that is stored in the krad/radk file to an actual
 /// radical

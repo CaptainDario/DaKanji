@@ -1,7 +1,6 @@
-import 'package:universal_io/io.dart';
+// Package imports:
 import 'package:path/path.dart' as p;
-
-
+import 'package:universal_io/io.dart';
 
 /// the path where the dakanji database should be created and populated
 final dakanjiDbPath = p.joinAll([Directory.current.path, "tmp", "dakanji.db"]);

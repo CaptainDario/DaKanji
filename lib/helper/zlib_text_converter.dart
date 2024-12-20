@@ -1,6 +1,9 @@
-import 'package:drift/drift.dart';
-import 'package:archive/archive.dart';
+// Dart imports:
 import 'dart:convert';
+
+// Package imports:
+import 'package:archive/archive.dart';
+import 'package:drift/drift.dart';
 
 // Define a custom TypeConverter for compressed strings
 class ZlibStringConverter extends TypeConverter<String, Uint8List> {

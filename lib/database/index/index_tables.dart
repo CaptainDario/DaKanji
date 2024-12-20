@@ -1,6 +1,5 @@
+// Package imports:
 import 'package:drift/drift.dart';
-
-
 
 /// Contains the main Kanji entries to which the other tables link
 class IndexTable extends Table {

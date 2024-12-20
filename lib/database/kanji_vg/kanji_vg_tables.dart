@@ -1,9 +1,9 @@
-
-import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
-import 'package:dakanji_db/helper/zlib_text_converter.dart';
+// Package imports:
 import 'package:drift/drift.dart';
 
-
+// Project imports:
+import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
+import 'package:dakanji_db/helper/zlib_text_converter.dart';
 
 /// Contains the kanji entries and links to the radicals table
 class KanjiVGTable extends Table {

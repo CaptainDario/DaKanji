@@ -23,6 +23,7 @@ dependencies:
 dev_dependencies:
   drift_dev: 2.21.2
   build_runner: 2.4.13
+  import_sorter: 4.6.0
   freezed: 2.5.7
   lints: 4.0.0
   test: 1.25.8

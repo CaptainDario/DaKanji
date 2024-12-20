@@ -1,6 +1,5 @@
+// Package imports:
 import 'package:drift/drift.dart';
-
-
 
 /// Contains the kanji entries and links to the radicals table
 @TableIndex(name: 'reading', columns: {#reading})

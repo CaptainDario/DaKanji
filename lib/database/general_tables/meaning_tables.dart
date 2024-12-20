@@ -1,6 +1,5 @@
+// Package imports:
 import 'package:drift/drift.dart';
-
-
 
 /// Contains the meanins entries to which other tables link
 @TableIndex(name: 'meaning', columns: {#meaning})

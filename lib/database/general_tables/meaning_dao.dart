@@ -1,6 +1,8 @@
-import "package:dakanji_db/database/general_tables/meaning_tables.dart";
+// Package imports:
 import "package:drift/drift.dart";
 
+// Project imports:
+import "package:dakanji_db/database/general_tables/meaning_tables.dart";
 import "../dakanji_db.dart";
 
 part 'meaning_dao.g.dart';

@@ -1,9 +1,9 @@
-import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
-import 'package:dakanji_db/database/general_tables/meaning_tables.dart';
-import 'package:dakanji_db/database/index/index_tables.dart';
+// Package imports:
 import 'package:drift/drift.dart';
 
-
+// Project imports:
+import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
+import 'package:dakanji_db/database/index/index_tables.dart';
 
 /// Contains the main Kanji entries to which the other tables link
 class KanjiBankV3Table extends Table {

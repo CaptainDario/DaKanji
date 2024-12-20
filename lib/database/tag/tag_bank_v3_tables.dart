@@ -1,6 +1,5 @@
+// Package imports:
 import 'package:drift/drift.dart';
-
-
 
 /// Contains the tag defintions
 @TableIndex(name: 'name', columns: {#name})

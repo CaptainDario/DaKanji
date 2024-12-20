@@ -1,10 +1,11 @@
+// Package imports:
+import 'package:drift/drift.dart';
+
+// Project imports:
 import 'package:dakanji_db/database/general_tables/meaning_tables.dart';
 import 'package:dakanji_db/database/general_tables/reading_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
-import 'package:drift/drift.dart';
-
-
 
 /// Contains the relationships between readings (onyomi) and kanjis
 class KanjiBankV3OnyomiReadingRelationsTable extends Table {

@@ -1,11 +1,13 @@
+// Dart imports:
 import 'dart:convert';
 
-import 'package:dakanji_db/database/dakanji_db.dart';
-import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_tables.dart';
+// Package imports:
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
-
+// Project imports:
+import 'package:dakanji_db/database/dakanji_db.dart';
+import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_tables.dart';
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
 Future parseTermMetaBankV3File(File termMetaBankFile, DaKanjiDB db, int dictId) async {
