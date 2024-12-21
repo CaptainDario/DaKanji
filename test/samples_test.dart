@@ -21,8 +21,8 @@ void main() async {
   
   test('Test importing samples', () async {
     //await testKanjiBankV3(db);
-    //await testKanjiMetaBankV3(db);
-    await testTermMetaBankV3(db);
+    await testKanjiMetaBankV3(db);
+    //await testTermMetaBankV3(db);
   });
 
 }
@@ -36,6 +36,7 @@ Future testKanjiBankV3(DaKanjiDB db) async {
     print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
     print(result);
 
+    expect(result.length, kanjiBankTetsCaseExpectations.length);
     for (var entry in result) {
       expect(kanjiBankTetsCaseExpectations.contains(entry), true);
     }
@@ -49,8 +50,9 @@ Future testKanjiMetaBankV3(DaKanjiDB db) async {
     Stopwatch s = Stopwatch()..start();
     List result = (await db.kanjiMetaBankV3Dao.getKanjiMetaBankEntriesFromKanji([testCase]))!;
     print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
-    print(result);
+    print("testesrtaeta $result");
 
+    expect(result.length, kanjiMetaBankTetsCaseExpectations.length);
     for (var entry in result) {
       expect(kanjiMetaBankTetsCaseExpectations.contains(entry), true);
     }
@@ -66,6 +68,7 @@ Future testTermMetaBankV3(DaKanjiDB db) async {
     print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
     print(result);
 
+    expect(result.length, termMetaBankTetsCaseExpectations.length);
     for (var entry in result) {
       expect(termMetaBankTetsCaseExpectations.contains(entry), true);
     }

@@ -3,6 +3,8 @@ import 'package:dakanji_db/database/kanji/kanji_bank_entry.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_entry_stat.dart';
 import 'package:dakanji_db/database/kanji_meta/kanji_meta_bank_entry.dart';
 import 'package:dakanji_db/database/tag/tag_bank_entry.dart';
+import 'package:dakanji_db/database/term_meta/term_meta_bank_entry.dart';
+import 'package:dakanji_db/database/term_meta/term_meta_bank_ipa_entry.dart';
 
 /// ----------------------------------------------------------------------------
 /// Test cases for the kanji bank
@@ -75,9 +77,17 @@ final kanjiMetaBankTetsCaseExpectations = [
 /// ----------------------------------------------------------------------------
 /// Test cases for the kanji meta bank
 final termMetaBankTetsCases = [
-  // TODO add tests
+  "好き"
 ];
 /// kanjiMetaBankV3 test case expected values
 final termMetaBankTetsCaseExpectations = [
-  // TODO add tests
+  TermMetaBankV3Entry(
+    term: "好き",
+    type: "ipa",
+    reading: "すき",
+    ipa: TermMetaBankV3IpaEntry(
+      ipa: "[sɨᵝkʲi]",
+      tags: ["東京"]
+    )
+  )
 ];
