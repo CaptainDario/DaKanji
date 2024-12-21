@@ -26,11 +26,18 @@ mixin _$TermMetaBankV3Entry {
   /// The type of this entry
   String get type => throw _privateConstructorUsedError;
 
-  /// the numeric value of this entry
-  int? get value => throw _privateConstructorUsedError;
+  /// The reading of this entry
+  String? get reading => throw _privateConstructorUsedError;
 
-  /// The display value of this entry
-  String? get displayValue => throw _privateConstructorUsedError;
+  /// Frequency of this entry
+  TermMetaBankV3FrequencyEntry? get frequency =>
+      throw _privateConstructorUsedError;
+
+  /// Pitch data of this entry
+  TermMetaBankV3PitchEntry? get pitch => throw _privateConstructorUsedError;
+
+  /// Ipa transcription data of this entry
+  TermMetaBankV3IpaEntry? get ipa => throw _privateConstructorUsedError;
 
   /// Serializes this TermMetaBankV3Entry to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +55,17 @@ abstract class $TermMetaBankV3EntryCopyWith<$Res> {
           TermMetaBankV3Entry value, $Res Function(TermMetaBankV3Entry) then) =
       _$TermMetaBankV3EntryCopyWithImpl<$Res, TermMetaBankV3Entry>;
   @useResult
-  $Res call({String term, String type, int? value, String? displayValue});
+  $Res call(
+      {String term,
+      String type,
+      String? reading,
+      TermMetaBankV3FrequencyEntry? frequency,
+      TermMetaBankV3PitchEntry? pitch,
+      TermMetaBankV3IpaEntry? ipa});
+
+  $TermMetaBankV3FrequencyEntryCopyWith<$Res>? get frequency;
+  $TermMetaBankV3PitchEntryCopyWith<$Res>? get pitch;
+  $TermMetaBankV3IpaEntryCopyWith<$Res>? get ipa;
 }
 
 /// @nodoc
@@ -68,8 +85,10 @@ class _$TermMetaBankV3EntryCopyWithImpl<$Res, $Val extends TermMetaBankV3Entry>
   $Res call({
     Object? term = null,
     Object? type = null,
-    Object? value = freezed,
-    Object? displayValue = freezed,
+    Object? reading = freezed,
+    Object? frequency = freezed,
+    Object? pitch = freezed,
+    Object? ipa = freezed,
   }) {
     return _then(_value.copyWith(
       term: null == term
@@ -80,15 +99,66 @@ class _$TermMetaBankV3EntryCopyWithImpl<$Res, $Val extends TermMetaBankV3Entry>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      value: freezed == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as int?,
-      displayValue: freezed == displayValue
-          ? _value.displayValue
-          : displayValue // ignore: cast_nullable_to_non_nullable
+      reading: freezed == reading
+          ? _value.reading
+          : reading // ignore: cast_nullable_to_non_nullable
               as String?,
+      frequency: freezed == frequency
+          ? _value.frequency
+          : frequency // ignore: cast_nullable_to_non_nullable
+              as TermMetaBankV3FrequencyEntry?,
+      pitch: freezed == pitch
+          ? _value.pitch
+          : pitch // ignore: cast_nullable_to_non_nullable
+              as TermMetaBankV3PitchEntry?,
+      ipa: freezed == ipa
+          ? _value.ipa
+          : ipa // ignore: cast_nullable_to_non_nullable
+              as TermMetaBankV3IpaEntry?,
     ) as $Val);
+  }
+
+  /// Create a copy of TermMetaBankV3Entry
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TermMetaBankV3FrequencyEntryCopyWith<$Res>? get frequency {
+    if (_value.frequency == null) {
+      return null;
+    }
+
+    return $TermMetaBankV3FrequencyEntryCopyWith<$Res>(_value.frequency!,
+        (value) {
+      return _then(_value.copyWith(frequency: value) as $Val);
+    });
+  }
+
+  /// Create a copy of TermMetaBankV3Entry
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TermMetaBankV3PitchEntryCopyWith<$Res>? get pitch {
+    if (_value.pitch == null) {
+      return null;
+    }
+
+    return $TermMetaBankV3PitchEntryCopyWith<$Res>(_value.pitch!, (value) {
+      return _then(_value.copyWith(pitch: value) as $Val);
+    });
+  }
+
+  /// Create a copy of TermMetaBankV3Entry
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TermMetaBankV3IpaEntryCopyWith<$Res>? get ipa {
+    if (_value.ipa == null) {
+      return null;
+    }
+
+    return $TermMetaBankV3IpaEntryCopyWith<$Res>(_value.ipa!, (value) {
+      return _then(_value.copyWith(ipa: value) as $Val);
+    });
   }
 }
 
@@ -100,7 +170,20 @@ abstract class _$$TermMetaBankV3EntryImplCopyWith<$Res>
       __$$TermMetaBankV3EntryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String term, String type, int? value, String? displayValue});
+  $Res call(
+      {String term,
+      String type,
+      String? reading,
+      TermMetaBankV3FrequencyEntry? frequency,
+      TermMetaBankV3PitchEntry? pitch,
+      TermMetaBankV3IpaEntry? ipa});
+
+  @override
+  $TermMetaBankV3FrequencyEntryCopyWith<$Res>? get frequency;
+  @override
+  $TermMetaBankV3PitchEntryCopyWith<$Res>? get pitch;
+  @override
+  $TermMetaBankV3IpaEntryCopyWith<$Res>? get ipa;
 }
 
 /// @nodoc
@@ -118,8 +201,10 @@ class __$$TermMetaBankV3EntryImplCopyWithImpl<$Res>
   $Res call({
     Object? term = null,
     Object? type = null,
-    Object? value = freezed,
-    Object? displayValue = freezed,
+    Object? reading = freezed,
+    Object? frequency = freezed,
+    Object? pitch = freezed,
+    Object? ipa = freezed,
   }) {
     return _then(_$TermMetaBankV3EntryImpl(
       term: null == term
@@ -130,14 +215,22 @@ class __$$TermMetaBankV3EntryImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      value: freezed == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as int?,
-      displayValue: freezed == displayValue
-          ? _value.displayValue
-          : displayValue // ignore: cast_nullable_to_non_nullable
+      reading: freezed == reading
+          ? _value.reading
+          : reading // ignore: cast_nullable_to_non_nullable
               as String?,
+      frequency: freezed == frequency
+          ? _value.frequency
+          : frequency // ignore: cast_nullable_to_non_nullable
+              as TermMetaBankV3FrequencyEntry?,
+      pitch: freezed == pitch
+          ? _value.pitch
+          : pitch // ignore: cast_nullable_to_non_nullable
+              as TermMetaBankV3PitchEntry?,
+      ipa: freezed == ipa
+          ? _value.ipa
+          : ipa // ignore: cast_nullable_to_non_nullable
+              as TermMetaBankV3IpaEntry?,
     ));
   }
 }
@@ -146,7 +239,12 @@ class __$$TermMetaBankV3EntryImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TermMetaBankV3EntryImpl implements _TermMetaBankV3Entry {
   const _$TermMetaBankV3EntryImpl(
-      {required this.term, required this.type, this.value, this.displayValue});
+      {required this.term,
+      required this.type,
+      this.reading,
+      this.frequency,
+      this.pitch,
+      this.ipa});
 
   factory _$TermMetaBankV3EntryImpl.fromJson(Map<String, dynamic> json) =>
       _$$TermMetaBankV3EntryImplFromJson(json);
@@ -159,17 +257,25 @@ class _$TermMetaBankV3EntryImpl implements _TermMetaBankV3Entry {
   @override
   final String type;
 
-  /// the numeric value of this entry
+  /// The reading of this entry
   @override
-  final int? value;
+  final String? reading;
 
-  /// The display value of this entry
+  /// Frequency of this entry
   @override
-  final String? displayValue;
+  final TermMetaBankV3FrequencyEntry? frequency;
+
+  /// Pitch data of this entry
+  @override
+  final TermMetaBankV3PitchEntry? pitch;
+
+  /// Ipa transcription data of this entry
+  @override
+  final TermMetaBankV3IpaEntry? ipa;
 
   @override
   String toString() {
-    return 'TermMetaBankV3Entry(term: $term, type: $type, value: $value, displayValue: $displayValue)';
+    return 'TermMetaBankV3Entry(term: $term, type: $type, reading: $reading, frequency: $frequency, pitch: $pitch, ipa: $ipa)';
   }
 
   @override
@@ -179,14 +285,17 @@ class _$TermMetaBankV3EntryImpl implements _TermMetaBankV3Entry {
             other is _$TermMetaBankV3EntryImpl &&
             (identical(other.term, term) || other.term == term) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.value, value) || other.value == value) &&
-            (identical(other.displayValue, displayValue) ||
-                other.displayValue == displayValue));
+            (identical(other.reading, reading) || other.reading == reading) &&
+            (identical(other.frequency, frequency) ||
+                other.frequency == frequency) &&
+            (identical(other.pitch, pitch) || other.pitch == pitch) &&
+            (identical(other.ipa, ipa) || other.ipa == ipa));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, term, type, value, displayValue);
+  int get hashCode =>
+      Object.hash(runtimeType, term, type, reading, frequency, pitch, ipa);
 
   /// Create a copy of TermMetaBankV3Entry
   /// with the given fields replaced by the non-null parameter values.
@@ -209,8 +318,10 @@ abstract class _TermMetaBankV3Entry implements TermMetaBankV3Entry {
   const factory _TermMetaBankV3Entry(
       {required final String term,
       required final String type,
-      final int? value,
-      final String? displayValue}) = _$TermMetaBankV3EntryImpl;
+      final String? reading,
+      final TermMetaBankV3FrequencyEntry? frequency,
+      final TermMetaBankV3PitchEntry? pitch,
+      final TermMetaBankV3IpaEntry? ipa}) = _$TermMetaBankV3EntryImpl;
 
   factory _TermMetaBankV3Entry.fromJson(Map<String, dynamic> json) =
       _$TermMetaBankV3EntryImpl.fromJson;
@@ -223,13 +334,21 @@ abstract class _TermMetaBankV3Entry implements TermMetaBankV3Entry {
   @override
   String get type;
 
-  /// the numeric value of this entry
+  /// The reading of this entry
   @override
-  int? get value;
+  String? get reading;
 
-  /// The display value of this entry
+  /// Frequency of this entry
   @override
-  String? get displayValue;
+  TermMetaBankV3FrequencyEntry? get frequency;
+
+  /// Pitch data of this entry
+  @override
+  TermMetaBankV3PitchEntry? get pitch;
+
+  /// Ipa transcription data of this entry
+  @override
+  TermMetaBankV3IpaEntry? get ipa;
 
   /// Create a copy of TermMetaBankV3Entry
   /// with the given fields replaced by the non-null parameter values.

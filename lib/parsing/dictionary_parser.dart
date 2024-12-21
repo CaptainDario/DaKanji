@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db/parsing/term_meta/term_meta_bank_v3_parser.dart';
 import 'package:path/path.dart' as p;
 import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
@@ -93,11 +94,10 @@ Future parseDictionaryFile(Tuple3<File, DaKanjiDB, IndexTableData> args) async {
 
   // TODO parse `term_bank`-files
 
-  // TODO parse `meta_term_bank`-files
   // parse `term_meta_bank`-files
-  /*if(p.basename(dictFile.path).contains(termMetaBankFile)){
+  if(p.basename(dictFile.path).contains(termMetaBankFile)){
     print("Parsing ${p.basename(dictFile.path)} as `$termMetaBankFile`");
     await parseTermMetaBankV3File(dictFile, db, ind.id); 
-  }*/
+  }
 
 }

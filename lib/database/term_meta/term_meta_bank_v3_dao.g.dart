@@ -9,6 +9,12 @@ mixin _$TermMetaBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $ReadingTableTable get readingTable => attachedDatabase.readingTable;
   $TermMetaBankV3TypeTableTable get termMetaBankV3TypeTable =>
       attachedDatabase.termMetaBankV3TypeTable;
+  $TermMetaBankV3PitchTableTable get termMetaBankV3PitchTable =>
+      attachedDatabase.termMetaBankV3PitchTable;
+  $TermMetaBankV3IpaTableTable get termMetaBankV3IpaTable =>
+      attachedDatabase.termMetaBankV3IpaTable;
   $TermMetaBankV3TableTable get termMetaBankV3Table =>
       attachedDatabase.termMetaBankV3Table;
+  $TermMetaBankV3TagTableTable get termMetaBankV3TagTable =>
+      attachedDatabase.termMetaBankV3TagTable;
 }

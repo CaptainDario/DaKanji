@@ -19,8 +19,8 @@ class ReadingDao extends DatabaseAccessor<DaKanjiDB> with _$ReadingDaoMixin {
   // of this object.
   ReadingDao(super.db);
 
-  /// Get all terms and their ids 
-  Future<List<ReadingTableData>> getAllTerms() async {
+  /// Get all readings and their ids 
+  Future<List<ReadingTableData>> getAllReadings() async {
     return await select(readingTable).get();
   }
   

@@ -14,7 +14,8 @@ part 'term_meta_bank_v3_dao.g.dart';
 // fields for the tables. The <MyDatabase> type annotation is the database class
 // that should use this dao.
 @DriftAccessor(tables: [
-    TermMetaBankV3Table,
+    TermMetaBankV3Table, TermMetaBankV3PitchTable, TermMetaBankV3IpaTable,
+    TermMetaBankV3TagTable
 ])
 class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV3DaoMixin {
   
@@ -36,8 +37,23 @@ class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV
     return await select(termMetaBankV3TypeTable).get();
   }
 
-    // ---------------------------------------------------------------------------
-  /// Get the maximum id of the kanji table
+  /// Get all pitchs and their ids 
+  Future<List<TermMetaBankV3PitchTableData>> getAllPitchs() async {
+    return await select(termMetaBankV3PitchTable).get();
+  }
+
+  /// Get all ipa transcriptions and their ids 
+  Future<List<TermMetaBankV3IpaTableData>> getAllIpas() async {
+    return await select(termMetaBankV3IpaTable).get();
+  }
+
+  /// Get all tags and their ids 
+  Future<List<TermMetaBankV3TagTableData>> getAllTags() async {
+    return await select(termMetaBankV3TagTable).get();
+  }
+
+  // ---------------------------------------------------------------------------
+  /// Get the maximum type id 
   Future<int> maxTermMetaBankV3TypeId() async {
     
     final query = await (selectOnly(termMetaBankV3TypeTable)
@@ -46,6 +62,42 @@ class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV
 
     // Extract the max ID value, defaulting to 0 if null
     return query.read(termMetaBankV3TypeTable.id.max()) ?? 0;
+
+  }
+
+  /// Get the maximum pitch id 
+  Future<int> maxTermMetaBankV3PitchId() async {
+    
+    final query = await (selectOnly(termMetaBankV3PitchTable)
+        ..addColumns([termMetaBankV3PitchTable.id.max()]))
+      .getSingle();
+
+    // Extract the max ID value, defaulting to 0 if null
+    return query.read(termMetaBankV3PitchTable.id.max()) ?? 0;
+
+  }
+
+  /// Get the maximum ipa id 
+  Future<int> maxTermMetaBankV3IpaId() async {
+    
+    final query = await (selectOnly(termMetaBankV3IpaTable)
+        ..addColumns([termMetaBankV3IpaTable.id.max()]))
+      .getSingle();
+
+    // Extract the max ID value, defaulting to 0 if null
+    return query.read(termMetaBankV3IpaTable.id.max()) ?? 0;
+
+  }
+
+  /// Get the maximum tag id 
+  Future<int> maxTermMetaBankV3TagId() async {
+    
+    final query = await (selectOnly(termMetaBankV3TagTable)
+        ..addColumns([termMetaBankV3TagTable.id.max()]))
+      .getSingle();
+
+    // Extract the max ID value, defaulting to 0 if null
+    return query.read(termMetaBankV3TagTable.id.max()) ?? 0;
 
   }
 

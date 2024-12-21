@@ -5809,6 +5809,459 @@ class TermMetaBankV3TypeTableCompanion
   }
 }
 
+class $TermMetaBankV3PitchTableTable extends TermMetaBankV3PitchTable
+    with
+        TableInfo<$TermMetaBankV3PitchTableTable,
+            TermMetaBankV3PitchTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermMetaBankV3PitchTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _positionMeta =
+      const VerificationMeta('position');
+  @override
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+      'position', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _nasalMeta = const VerificationMeta('nasal');
+  @override
+  late final GeneratedColumn<int> nasal = GeneratedColumn<int>(
+      'nasal', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _devoiceMeta =
+      const VerificationMeta('devoice');
+  @override
+  late final GeneratedColumn<int> devoice = GeneratedColumn<int>(
+      'devoice', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [id, position, nasal, devoice];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_meta_bank_v3_pitch_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<TermMetaBankV3PitchTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('position')) {
+      context.handle(_positionMeta,
+          position.isAcceptableOrUnknown(data['position']!, _positionMeta));
+    } else if (isInserting) {
+      context.missing(_positionMeta);
+    }
+    if (data.containsKey('nasal')) {
+      context.handle(
+          _nasalMeta, nasal.isAcceptableOrUnknown(data['nasal']!, _nasalMeta));
+    }
+    if (data.containsKey('devoice')) {
+      context.handle(_devoiceMeta,
+          devoice.isAcceptableOrUnknown(data['devoice']!, _devoiceMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TermMetaBankV3PitchTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermMetaBankV3PitchTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      position: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}position'])!,
+      nasal: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}nasal']),
+      devoice: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}devoice']),
+    );
+  }
+
+  @override
+  $TermMetaBankV3PitchTableTable createAlias(String alias) {
+    return $TermMetaBankV3PitchTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermMetaBankV3PitchTableData extends DataClass
+    implements Insertable<TermMetaBankV3PitchTableData> {
+  /// id of this entry
+  final int id;
+
+  /// The position of the pitch accent
+  final int position;
+
+  /// the nasal value of this pitch entry
+  final int? nasal;
+
+  /// the devoice value of this pitch entry
+  final int? devoice;
+  const TermMetaBankV3PitchTableData(
+      {required this.id, required this.position, this.nasal, this.devoice});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['position'] = Variable<int>(position);
+    if (!nullToAbsent || nasal != null) {
+      map['nasal'] = Variable<int>(nasal);
+    }
+    if (!nullToAbsent || devoice != null) {
+      map['devoice'] = Variable<int>(devoice);
+    }
+    return map;
+  }
+
+  TermMetaBankV3PitchTableCompanion toCompanion(bool nullToAbsent) {
+    return TermMetaBankV3PitchTableCompanion(
+      id: Value(id),
+      position: Value(position),
+      nasal:
+          nasal == null && nullToAbsent ? const Value.absent() : Value(nasal),
+      devoice: devoice == null && nullToAbsent
+          ? const Value.absent()
+          : Value(devoice),
+    );
+  }
+
+  factory TermMetaBankV3PitchTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermMetaBankV3PitchTableData(
+      id: serializer.fromJson<int>(json['id']),
+      position: serializer.fromJson<int>(json['position']),
+      nasal: serializer.fromJson<int?>(json['nasal']),
+      devoice: serializer.fromJson<int?>(json['devoice']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'position': serializer.toJson<int>(position),
+      'nasal': serializer.toJson<int?>(nasal),
+      'devoice': serializer.toJson<int?>(devoice),
+    };
+  }
+
+  TermMetaBankV3PitchTableData copyWith(
+          {int? id,
+          int? position,
+          Value<int?> nasal = const Value.absent(),
+          Value<int?> devoice = const Value.absent()}) =>
+      TermMetaBankV3PitchTableData(
+        id: id ?? this.id,
+        position: position ?? this.position,
+        nasal: nasal.present ? nasal.value : this.nasal,
+        devoice: devoice.present ? devoice.value : this.devoice,
+      );
+  TermMetaBankV3PitchTableData copyWithCompanion(
+      TermMetaBankV3PitchTableCompanion data) {
+    return TermMetaBankV3PitchTableData(
+      id: data.id.present ? data.id.value : this.id,
+      position: data.position.present ? data.position.value : this.position,
+      nasal: data.nasal.present ? data.nasal.value : this.nasal,
+      devoice: data.devoice.present ? data.devoice.value : this.devoice,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3PitchTableData(')
+          ..write('id: $id, ')
+          ..write('position: $position, ')
+          ..write('nasal: $nasal, ')
+          ..write('devoice: $devoice')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, position, nasal, devoice);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermMetaBankV3PitchTableData &&
+          other.id == this.id &&
+          other.position == this.position &&
+          other.nasal == this.nasal &&
+          other.devoice == this.devoice);
+}
+
+class TermMetaBankV3PitchTableCompanion
+    extends UpdateCompanion<TermMetaBankV3PitchTableData> {
+  final Value<int> id;
+  final Value<int> position;
+  final Value<int?> nasal;
+  final Value<int?> devoice;
+  const TermMetaBankV3PitchTableCompanion({
+    this.id = const Value.absent(),
+    this.position = const Value.absent(),
+    this.nasal = const Value.absent(),
+    this.devoice = const Value.absent(),
+  });
+  TermMetaBankV3PitchTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int position,
+    this.nasal = const Value.absent(),
+    this.devoice = const Value.absent(),
+  }) : position = Value(position);
+  static Insertable<TermMetaBankV3PitchTableData> custom({
+    Expression<int>? id,
+    Expression<int>? position,
+    Expression<int>? nasal,
+    Expression<int>? devoice,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (position != null) 'position': position,
+      if (nasal != null) 'nasal': nasal,
+      if (devoice != null) 'devoice': devoice,
+    });
+  }
+
+  TermMetaBankV3PitchTableCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? position,
+      Value<int?>? nasal,
+      Value<int?>? devoice}) {
+    return TermMetaBankV3PitchTableCompanion(
+      id: id ?? this.id,
+      position: position ?? this.position,
+      nasal: nasal ?? this.nasal,
+      devoice: devoice ?? this.devoice,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (nasal.present) {
+      map['nasal'] = Variable<int>(nasal.value);
+    }
+    if (devoice.present) {
+      map['devoice'] = Variable<int>(devoice.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3PitchTableCompanion(')
+          ..write('id: $id, ')
+          ..write('position: $position, ')
+          ..write('nasal: $nasal, ')
+          ..write('devoice: $devoice')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TermMetaBankV3IpaTableTable extends TermMetaBankV3IpaTable
+    with TableInfo<$TermMetaBankV3IpaTableTable, TermMetaBankV3IpaTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermMetaBankV3IpaTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _ipaMeta = const VerificationMeta('ipa');
+  @override
+  late final GeneratedColumn<String> ipa = GeneratedColumn<String>(
+      'ipa', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, ipa];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_meta_bank_v3_ipa_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<TermMetaBankV3IpaTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('ipa')) {
+      context.handle(
+          _ipaMeta, ipa.isAcceptableOrUnknown(data['ipa']!, _ipaMeta));
+    } else if (isInserting) {
+      context.missing(_ipaMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TermMetaBankV3IpaTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermMetaBankV3IpaTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      ipa: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}ipa'])!,
+    );
+  }
+
+  @override
+  $TermMetaBankV3IpaTableTable createAlias(String alias) {
+    return $TermMetaBankV3IpaTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermMetaBankV3IpaTableData extends DataClass
+    implements Insertable<TermMetaBankV3IpaTableData> {
+  /// id of this entry
+  final int id;
+
+  /// The ipa transcription
+  final String ipa;
+  const TermMetaBankV3IpaTableData({required this.id, required this.ipa});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['ipa'] = Variable<String>(ipa);
+    return map;
+  }
+
+  TermMetaBankV3IpaTableCompanion toCompanion(bool nullToAbsent) {
+    return TermMetaBankV3IpaTableCompanion(
+      id: Value(id),
+      ipa: Value(ipa),
+    );
+  }
+
+  factory TermMetaBankV3IpaTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermMetaBankV3IpaTableData(
+      id: serializer.fromJson<int>(json['id']),
+      ipa: serializer.fromJson<String>(json['ipa']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'ipa': serializer.toJson<String>(ipa),
+    };
+  }
+
+  TermMetaBankV3IpaTableData copyWith({int? id, String? ipa}) =>
+      TermMetaBankV3IpaTableData(
+        id: id ?? this.id,
+        ipa: ipa ?? this.ipa,
+      );
+  TermMetaBankV3IpaTableData copyWithCompanion(
+      TermMetaBankV3IpaTableCompanion data) {
+    return TermMetaBankV3IpaTableData(
+      id: data.id.present ? data.id.value : this.id,
+      ipa: data.ipa.present ? data.ipa.value : this.ipa,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3IpaTableData(')
+          ..write('id: $id, ')
+          ..write('ipa: $ipa')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, ipa);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermMetaBankV3IpaTableData &&
+          other.id == this.id &&
+          other.ipa == this.ipa);
+}
+
+class TermMetaBankV3IpaTableCompanion
+    extends UpdateCompanion<TermMetaBankV3IpaTableData> {
+  final Value<int> id;
+  final Value<String> ipa;
+  const TermMetaBankV3IpaTableCompanion({
+    this.id = const Value.absent(),
+    this.ipa = const Value.absent(),
+  });
+  TermMetaBankV3IpaTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String ipa,
+  }) : ipa = Value(ipa);
+  static Insertable<TermMetaBankV3IpaTableData> custom({
+    Expression<int>? id,
+    Expression<String>? ipa,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (ipa != null) 'ipa': ipa,
+    });
+  }
+
+  TermMetaBankV3IpaTableCompanion copyWith(
+      {Value<int>? id, Value<String>? ipa}) {
+    return TermMetaBankV3IpaTableCompanion(
+      id: id ?? this.id,
+      ipa: ipa ?? this.ipa,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (ipa.present) {
+      map['ipa'] = Variable<String>(ipa.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3IpaTableCompanion(')
+          ..write('id: $id, ')
+          ..write('ipa: $ipa')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $TermMetaBankV3TableTable extends TermMetaBankV3Table
     with TableInfo<$TermMetaBankV3TableTable, TermMetaBankV3TableData> {
   @override
@@ -5869,9 +6322,35 @@ class $TermMetaBankV3TableTable extends TermMetaBankV3Table
   late final GeneratedColumn<String> freqDisplayValue = GeneratedColumn<String>(
       'freq_display_value', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _pitchIdMeta =
+      const VerificationMeta('pitchId');
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, dictId, termId, readingId, typeId, freqValue, freqDisplayValue];
+  late final GeneratedColumn<int> pitchId = GeneratedColumn<int>(
+      'pitch_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES term_meta_bank_v3_pitch_table (id)'));
+  static const VerificationMeta _ipaIdMeta = const VerificationMeta('ipaId');
+  @override
+  late final GeneratedColumn<int> ipaId = GeneratedColumn<int>(
+      'ipa_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES term_meta_bank_v3_ipa_table (id)'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        dictId,
+        termId,
+        readingId,
+        typeId,
+        freqValue,
+        freqDisplayValue,
+        pitchId,
+        ipaId
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -5918,6 +6397,14 @@ class $TermMetaBankV3TableTable extends TermMetaBankV3Table
           freqDisplayValue.isAcceptableOrUnknown(
               data['freq_display_value']!, _freqDisplayValueMeta));
     }
+    if (data.containsKey('pitch_id')) {
+      context.handle(_pitchIdMeta,
+          pitchId.isAcceptableOrUnknown(data['pitch_id']!, _pitchIdMeta));
+    }
+    if (data.containsKey('ipa_id')) {
+      context.handle(
+          _ipaIdMeta, ipaId.isAcceptableOrUnknown(data['ipa_id']!, _ipaIdMeta));
+    }
     return context;
   }
 
@@ -5942,6 +6429,10 @@ class $TermMetaBankV3TableTable extends TermMetaBankV3Table
           .read(DriftSqlType.int, data['${effectivePrefix}freq_value']),
       freqDisplayValue: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}freq_display_value']),
+      pitchId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}pitch_id']),
+      ipaId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}ipa_id']),
     );
   }
 
@@ -5973,6 +6464,12 @@ class TermMetaBankV3TableData extends DataClass
 
   /// the display value of this entry
   final String? freqDisplayValue;
+
+  /// the ID of the pitch of this term
+  final int? pitchId;
+
+  /// the ID of the id of this term
+  final int? ipaId;
   const TermMetaBankV3TableData(
       {required this.id,
       required this.dictId,
@@ -5980,7 +6477,9 @@ class TermMetaBankV3TableData extends DataClass
       this.readingId,
       required this.typeId,
       this.freqValue,
-      this.freqDisplayValue});
+      this.freqDisplayValue,
+      this.pitchId,
+      this.ipaId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -5996,6 +6495,12 @@ class TermMetaBankV3TableData extends DataClass
     }
     if (!nullToAbsent || freqDisplayValue != null) {
       map['freq_display_value'] = Variable<String>(freqDisplayValue);
+    }
+    if (!nullToAbsent || pitchId != null) {
+      map['pitch_id'] = Variable<int>(pitchId);
+    }
+    if (!nullToAbsent || ipaId != null) {
+      map['ipa_id'] = Variable<int>(ipaId);
     }
     return map;
   }
@@ -6015,6 +6520,11 @@ class TermMetaBankV3TableData extends DataClass
       freqDisplayValue: freqDisplayValue == null && nullToAbsent
           ? const Value.absent()
           : Value(freqDisplayValue),
+      pitchId: pitchId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pitchId),
+      ipaId:
+          ipaId == null && nullToAbsent ? const Value.absent() : Value(ipaId),
     );
   }
 
@@ -6029,6 +6539,8 @@ class TermMetaBankV3TableData extends DataClass
       typeId: serializer.fromJson<int>(json['typeId']),
       freqValue: serializer.fromJson<int?>(json['freqValue']),
       freqDisplayValue: serializer.fromJson<String?>(json['freqDisplayValue']),
+      pitchId: serializer.fromJson<int?>(json['pitchId']),
+      ipaId: serializer.fromJson<int?>(json['ipaId']),
     );
   }
   @override
@@ -6042,6 +6554,8 @@ class TermMetaBankV3TableData extends DataClass
       'typeId': serializer.toJson<int>(typeId),
       'freqValue': serializer.toJson<int?>(freqValue),
       'freqDisplayValue': serializer.toJson<String?>(freqDisplayValue),
+      'pitchId': serializer.toJson<int?>(pitchId),
+      'ipaId': serializer.toJson<int?>(ipaId),
     };
   }
 
@@ -6052,7 +6566,9 @@ class TermMetaBankV3TableData extends DataClass
           Value<int?> readingId = const Value.absent(),
           int? typeId,
           Value<int?> freqValue = const Value.absent(),
-          Value<String?> freqDisplayValue = const Value.absent()}) =>
+          Value<String?> freqDisplayValue = const Value.absent(),
+          Value<int?> pitchId = const Value.absent(),
+          Value<int?> ipaId = const Value.absent()}) =>
       TermMetaBankV3TableData(
         id: id ?? this.id,
         dictId: dictId ?? this.dictId,
@@ -6063,6 +6579,8 @@ class TermMetaBankV3TableData extends DataClass
         freqDisplayValue: freqDisplayValue.present
             ? freqDisplayValue.value
             : this.freqDisplayValue,
+        pitchId: pitchId.present ? pitchId.value : this.pitchId,
+        ipaId: ipaId.present ? ipaId.value : this.ipaId,
       );
   TermMetaBankV3TableData copyWithCompanion(TermMetaBankV3TableCompanion data) {
     return TermMetaBankV3TableData(
@@ -6075,6 +6593,8 @@ class TermMetaBankV3TableData extends DataClass
       freqDisplayValue: data.freqDisplayValue.present
           ? data.freqDisplayValue.value
           : this.freqDisplayValue,
+      pitchId: data.pitchId.present ? data.pitchId.value : this.pitchId,
+      ipaId: data.ipaId.present ? data.ipaId.value : this.ipaId,
     );
   }
 
@@ -6087,14 +6607,16 @@ class TermMetaBankV3TableData extends DataClass
           ..write('readingId: $readingId, ')
           ..write('typeId: $typeId, ')
           ..write('freqValue: $freqValue, ')
-          ..write('freqDisplayValue: $freqDisplayValue')
+          ..write('freqDisplayValue: $freqDisplayValue, ')
+          ..write('pitchId: $pitchId, ')
+          ..write('ipaId: $ipaId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-      id, dictId, termId, readingId, typeId, freqValue, freqDisplayValue);
+  int get hashCode => Object.hash(id, dictId, termId, readingId, typeId,
+      freqValue, freqDisplayValue, pitchId, ipaId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -6105,7 +6627,9 @@ class TermMetaBankV3TableData extends DataClass
           other.readingId == this.readingId &&
           other.typeId == this.typeId &&
           other.freqValue == this.freqValue &&
-          other.freqDisplayValue == this.freqDisplayValue);
+          other.freqDisplayValue == this.freqDisplayValue &&
+          other.pitchId == this.pitchId &&
+          other.ipaId == this.ipaId);
 }
 
 class TermMetaBankV3TableCompanion
@@ -6117,6 +6641,8 @@ class TermMetaBankV3TableCompanion
   final Value<int> typeId;
   final Value<int?> freqValue;
   final Value<String?> freqDisplayValue;
+  final Value<int?> pitchId;
+  final Value<int?> ipaId;
   const TermMetaBankV3TableCompanion({
     this.id = const Value.absent(),
     this.dictId = const Value.absent(),
@@ -6125,6 +6651,8 @@ class TermMetaBankV3TableCompanion
     this.typeId = const Value.absent(),
     this.freqValue = const Value.absent(),
     this.freqDisplayValue = const Value.absent(),
+    this.pitchId = const Value.absent(),
+    this.ipaId = const Value.absent(),
   });
   TermMetaBankV3TableCompanion.insert({
     this.id = const Value.absent(),
@@ -6134,6 +6662,8 @@ class TermMetaBankV3TableCompanion
     required int typeId,
     this.freqValue = const Value.absent(),
     this.freqDisplayValue = const Value.absent(),
+    this.pitchId = const Value.absent(),
+    this.ipaId = const Value.absent(),
   })  : dictId = Value(dictId),
         termId = Value(termId),
         typeId = Value(typeId);
@@ -6145,6 +6675,8 @@ class TermMetaBankV3TableCompanion
     Expression<int>? typeId,
     Expression<int>? freqValue,
     Expression<String>? freqDisplayValue,
+    Expression<int>? pitchId,
+    Expression<int>? ipaId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -6154,6 +6686,8 @@ class TermMetaBankV3TableCompanion
       if (typeId != null) 'type_id': typeId,
       if (freqValue != null) 'freq_value': freqValue,
       if (freqDisplayValue != null) 'freq_display_value': freqDisplayValue,
+      if (pitchId != null) 'pitch_id': pitchId,
+      if (ipaId != null) 'ipa_id': ipaId,
     });
   }
 
@@ -6164,7 +6698,9 @@ class TermMetaBankV3TableCompanion
       Value<int?>? readingId,
       Value<int>? typeId,
       Value<int?>? freqValue,
-      Value<String?>? freqDisplayValue}) {
+      Value<String?>? freqDisplayValue,
+      Value<int?>? pitchId,
+      Value<int?>? ipaId}) {
     return TermMetaBankV3TableCompanion(
       id: id ?? this.id,
       dictId: dictId ?? this.dictId,
@@ -6173,6 +6709,8 @@ class TermMetaBankV3TableCompanion
       typeId: typeId ?? this.typeId,
       freqValue: freqValue ?? this.freqValue,
       freqDisplayValue: freqDisplayValue ?? this.freqDisplayValue,
+      pitchId: pitchId ?? this.pitchId,
+      ipaId: ipaId ?? this.ipaId,
     );
   }
 
@@ -6200,6 +6738,12 @@ class TermMetaBankV3TableCompanion
     if (freqDisplayValue.present) {
       map['freq_display_value'] = Variable<String>(freqDisplayValue.value);
     }
+    if (pitchId.present) {
+      map['pitch_id'] = Variable<int>(pitchId.value);
+    }
+    if (ipaId.present) {
+      map['ipa_id'] = Variable<int>(ipaId.value);
+    }
     return map;
   }
 
@@ -6212,506 +6756,9 @@ class TermMetaBankV3TableCompanion
           ..write('readingId: $readingId, ')
           ..write('typeId: $typeId, ')
           ..write('freqValue: $freqValue, ')
-          ..write('freqDisplayValue: $freqDisplayValue')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $TermMetaBankV3PitchTagTableTable extends TermMetaBankV3PitchTagTable
-    with
-        TableInfo<$TermMetaBankV3PitchTagTableTable,
-            TermMetaBankV3PitchTagTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $TermMetaBankV3PitchTagTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _tagMeta = const VerificationMeta('tag');
-  @override
-  late final GeneratedColumn<String> tag = GeneratedColumn<String>(
-      'tag', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [id, tag];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'term_meta_bank_v3_pitch_tag_table';
-  @override
-  VerificationContext validateIntegrity(
-      Insertable<TermMetaBankV3PitchTagTableData> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('tag')) {
-      context.handle(
-          _tagMeta, tag.isAcceptableOrUnknown(data['tag']!, _tagMeta));
-    } else if (isInserting) {
-      context.missing(_tagMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  TermMetaBankV3PitchTagTableData map(Map<String, dynamic> data,
-      {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermMetaBankV3PitchTagTableData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      tag: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}tag'])!,
-    );
-  }
-
-  @override
-  $TermMetaBankV3PitchTagTableTable createAlias(String alias) {
-    return $TermMetaBankV3PitchTagTableTable(attachedDatabase, alias);
-  }
-}
-
-class TermMetaBankV3PitchTagTableData extends DataClass
-    implements Insertable<TermMetaBankV3PitchTagTableData> {
-  /// id of this entry
-  final int id;
-
-  /// The pitch tag
-  final String tag;
-  const TermMetaBankV3PitchTagTableData({required this.id, required this.tag});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['tag'] = Variable<String>(tag);
-    return map;
-  }
-
-  TermMetaBankV3PitchTagTableCompanion toCompanion(bool nullToAbsent) {
-    return TermMetaBankV3PitchTagTableCompanion(
-      id: Value(id),
-      tag: Value(tag),
-    );
-  }
-
-  factory TermMetaBankV3PitchTagTableData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermMetaBankV3PitchTagTableData(
-      id: serializer.fromJson<int>(json['id']),
-      tag: serializer.fromJson<String>(json['tag']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'tag': serializer.toJson<String>(tag),
-    };
-  }
-
-  TermMetaBankV3PitchTagTableData copyWith({int? id, String? tag}) =>
-      TermMetaBankV3PitchTagTableData(
-        id: id ?? this.id,
-        tag: tag ?? this.tag,
-      );
-  TermMetaBankV3PitchTagTableData copyWithCompanion(
-      TermMetaBankV3PitchTagTableCompanion data) {
-    return TermMetaBankV3PitchTagTableData(
-      id: data.id.present ? data.id.value : this.id,
-      tag: data.tag.present ? data.tag.value : this.tag,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermMetaBankV3PitchTagTableData(')
-          ..write('id: $id, ')
-          ..write('tag: $tag')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, tag);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TermMetaBankV3PitchTagTableData &&
-          other.id == this.id &&
-          other.tag == this.tag);
-}
-
-class TermMetaBankV3PitchTagTableCompanion
-    extends UpdateCompanion<TermMetaBankV3PitchTagTableData> {
-  final Value<int> id;
-  final Value<String> tag;
-  const TermMetaBankV3PitchTagTableCompanion({
-    this.id = const Value.absent(),
-    this.tag = const Value.absent(),
-  });
-  TermMetaBankV3PitchTagTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String tag,
-  }) : tag = Value(tag);
-  static Insertable<TermMetaBankV3PitchTagTableData> custom({
-    Expression<int>? id,
-    Expression<String>? tag,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (tag != null) 'tag': tag,
-    });
-  }
-
-  TermMetaBankV3PitchTagTableCompanion copyWith(
-      {Value<int>? id, Value<String>? tag}) {
-    return TermMetaBankV3PitchTagTableCompanion(
-      id: id ?? this.id,
-      tag: tag ?? this.tag,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (tag.present) {
-      map['tag'] = Variable<String>(tag.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermMetaBankV3PitchTagTableCompanion(')
-          ..write('id: $id, ')
-          ..write('tag: $tag')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $TermMetaBankV3PitchTableTable extends TermMetaBankV3PitchTable
-    with
-        TableInfo<$TermMetaBankV3PitchTableTable,
-            TermMetaBankV3PitchTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $TermMetaBankV3PitchTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _positionMeta =
-      const VerificationMeta('position');
-  @override
-  late final GeneratedColumn<int> position = GeneratedColumn<int>(
-      'position', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
-  @override
-  late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
-      'tag_id', aliasedName, true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES term_meta_bank_v3_pitch_tag_table (id)'));
-  static const VerificationMeta _nasalMeta = const VerificationMeta('nasal');
-  @override
-  late final GeneratedColumn<int> nasal = GeneratedColumn<int>(
-      'nasal', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _devoiceMeta =
-      const VerificationMeta('devoice');
-  @override
-  late final GeneratedColumn<int> devoice = GeneratedColumn<int>(
-      'devoice', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  @override
-  List<GeneratedColumn> get $columns => [id, position, tagId, nasal, devoice];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'term_meta_bank_v3_pitch_table';
-  @override
-  VerificationContext validateIntegrity(
-      Insertable<TermMetaBankV3PitchTableData> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('position')) {
-      context.handle(_positionMeta,
-          position.isAcceptableOrUnknown(data['position']!, _positionMeta));
-    } else if (isInserting) {
-      context.missing(_positionMeta);
-    }
-    if (data.containsKey('tag_id')) {
-      context.handle(
-          _tagIdMeta, tagId.isAcceptableOrUnknown(data['tag_id']!, _tagIdMeta));
-    }
-    if (data.containsKey('nasal')) {
-      context.handle(
-          _nasalMeta, nasal.isAcceptableOrUnknown(data['nasal']!, _nasalMeta));
-    }
-    if (data.containsKey('devoice')) {
-      context.handle(_devoiceMeta,
-          devoice.isAcceptableOrUnknown(data['devoice']!, _devoiceMeta));
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  TermMetaBankV3PitchTableData map(Map<String, dynamic> data,
-      {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermMetaBankV3PitchTableData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      position: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}position'])!,
-      tagId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}tag_id']),
-      nasal: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}nasal']),
-      devoice: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}devoice']),
-    );
-  }
-
-  @override
-  $TermMetaBankV3PitchTableTable createAlias(String alias) {
-    return $TermMetaBankV3PitchTableTable(attachedDatabase, alias);
-  }
-}
-
-class TermMetaBankV3PitchTableData extends DataClass
-    implements Insertable<TermMetaBankV3PitchTableData> {
-  /// id of this entry
-  final int id;
-
-  /// The position of the pitch accent
-  final int position;
-
-  /// the tag of this pitch entry
-  final int? tagId;
-
-  /// the nasal value of this pitch entry
-  final int? nasal;
-
-  /// the devoice value of this pitch entry
-  final int? devoice;
-  const TermMetaBankV3PitchTableData(
-      {required this.id,
-      required this.position,
-      this.tagId,
-      this.nasal,
-      this.devoice});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['position'] = Variable<int>(position);
-    if (!nullToAbsent || tagId != null) {
-      map['tag_id'] = Variable<int>(tagId);
-    }
-    if (!nullToAbsent || nasal != null) {
-      map['nasal'] = Variable<int>(nasal);
-    }
-    if (!nullToAbsent || devoice != null) {
-      map['devoice'] = Variable<int>(devoice);
-    }
-    return map;
-  }
-
-  TermMetaBankV3PitchTableCompanion toCompanion(bool nullToAbsent) {
-    return TermMetaBankV3PitchTableCompanion(
-      id: Value(id),
-      position: Value(position),
-      tagId:
-          tagId == null && nullToAbsent ? const Value.absent() : Value(tagId),
-      nasal:
-          nasal == null && nullToAbsent ? const Value.absent() : Value(nasal),
-      devoice: devoice == null && nullToAbsent
-          ? const Value.absent()
-          : Value(devoice),
-    );
-  }
-
-  factory TermMetaBankV3PitchTableData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermMetaBankV3PitchTableData(
-      id: serializer.fromJson<int>(json['id']),
-      position: serializer.fromJson<int>(json['position']),
-      tagId: serializer.fromJson<int?>(json['tagId']),
-      nasal: serializer.fromJson<int?>(json['nasal']),
-      devoice: serializer.fromJson<int?>(json['devoice']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'position': serializer.toJson<int>(position),
-      'tagId': serializer.toJson<int?>(tagId),
-      'nasal': serializer.toJson<int?>(nasal),
-      'devoice': serializer.toJson<int?>(devoice),
-    };
-  }
-
-  TermMetaBankV3PitchTableData copyWith(
-          {int? id,
-          int? position,
-          Value<int?> tagId = const Value.absent(),
-          Value<int?> nasal = const Value.absent(),
-          Value<int?> devoice = const Value.absent()}) =>
-      TermMetaBankV3PitchTableData(
-        id: id ?? this.id,
-        position: position ?? this.position,
-        tagId: tagId.present ? tagId.value : this.tagId,
-        nasal: nasal.present ? nasal.value : this.nasal,
-        devoice: devoice.present ? devoice.value : this.devoice,
-      );
-  TermMetaBankV3PitchTableData copyWithCompanion(
-      TermMetaBankV3PitchTableCompanion data) {
-    return TermMetaBankV3PitchTableData(
-      id: data.id.present ? data.id.value : this.id,
-      position: data.position.present ? data.position.value : this.position,
-      tagId: data.tagId.present ? data.tagId.value : this.tagId,
-      nasal: data.nasal.present ? data.nasal.value : this.nasal,
-      devoice: data.devoice.present ? data.devoice.value : this.devoice,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermMetaBankV3PitchTableData(')
-          ..write('id: $id, ')
-          ..write('position: $position, ')
-          ..write('tagId: $tagId, ')
-          ..write('nasal: $nasal, ')
-          ..write('devoice: $devoice')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, position, tagId, nasal, devoice);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TermMetaBankV3PitchTableData &&
-          other.id == this.id &&
-          other.position == this.position &&
-          other.tagId == this.tagId &&
-          other.nasal == this.nasal &&
-          other.devoice == this.devoice);
-}
-
-class TermMetaBankV3PitchTableCompanion
-    extends UpdateCompanion<TermMetaBankV3PitchTableData> {
-  final Value<int> id;
-  final Value<int> position;
-  final Value<int?> tagId;
-  final Value<int?> nasal;
-  final Value<int?> devoice;
-  const TermMetaBankV3PitchTableCompanion({
-    this.id = const Value.absent(),
-    this.position = const Value.absent(),
-    this.tagId = const Value.absent(),
-    this.nasal = const Value.absent(),
-    this.devoice = const Value.absent(),
-  });
-  TermMetaBankV3PitchTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int position,
-    this.tagId = const Value.absent(),
-    this.nasal = const Value.absent(),
-    this.devoice = const Value.absent(),
-  }) : position = Value(position);
-  static Insertable<TermMetaBankV3PitchTableData> custom({
-    Expression<int>? id,
-    Expression<int>? position,
-    Expression<int>? tagId,
-    Expression<int>? nasal,
-    Expression<int>? devoice,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (position != null) 'position': position,
-      if (tagId != null) 'tag_id': tagId,
-      if (nasal != null) 'nasal': nasal,
-      if (devoice != null) 'devoice': devoice,
-    });
-  }
-
-  TermMetaBankV3PitchTableCompanion copyWith(
-      {Value<int>? id,
-      Value<int>? position,
-      Value<int?>? tagId,
-      Value<int?>? nasal,
-      Value<int?>? devoice}) {
-    return TermMetaBankV3PitchTableCompanion(
-      id: id ?? this.id,
-      position: position ?? this.position,
-      tagId: tagId ?? this.tagId,
-      nasal: nasal ?? this.nasal,
-      devoice: devoice ?? this.devoice,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (position.present) {
-      map['position'] = Variable<int>(position.value);
-    }
-    if (tagId.present) {
-      map['tag_id'] = Variable<int>(tagId.value);
-    }
-    if (nasal.present) {
-      map['nasal'] = Variable<int>(nasal.value);
-    }
-    if (devoice.present) {
-      map['devoice'] = Variable<int>(devoice.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermMetaBankV3PitchTableCompanion(')
-          ..write('id: $id, ')
-          ..write('position: $position, ')
-          ..write('tagId: $tagId, ')
-          ..write('nasal: $nasal, ')
-          ..write('devoice: $devoice')
+          ..write('freqDisplayValue: $freqDisplayValue, ')
+          ..write('pitchId: $pitchId, ')
+          ..write('ipaId: $ipaId')
           ..write(')'))
         .toString();
   }
@@ -6958,14 +7005,12 @@ class TermMetaBankV3PitchRelationsTableCompanion
   }
 }
 
-class $TermMetaBankV3IpaTagTableTable extends TermMetaBankV3IpaTagTable
-    with
-        TableInfo<$TermMetaBankV3IpaTagTableTable,
-            TermMetaBankV3IpaTagTableData> {
+class $TermMetaBankV3TagTableTable extends TermMetaBankV3TagTable
+    with TableInfo<$TermMetaBankV3TagTableTable, TermMetaBankV3TagTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $TermMetaBankV3IpaTagTableTable(this.attachedDatabase, [this._alias]);
+  $TermMetaBankV3TagTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -6975,17 +7020,19 @@ class $TermMetaBankV3IpaTagTableTable extends TermMetaBankV3IpaTagTable
   @override
   late final GeneratedColumn<String> tag = GeneratedColumn<String>(
       'tag', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
   @override
   List<GeneratedColumn> get $columns => [id, tag];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'term_meta_bank_v3_ipa_tag_table';
+  static const String $name = 'term_meta_bank_v3_tag_table';
   @override
   VerificationContext validateIntegrity(
-      Insertable<TermMetaBankV3IpaTagTableData> instance,
+      Insertable<TermMetaBankV3TagTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -7004,10 +7051,10 @@ class $TermMetaBankV3IpaTagTableTable extends TermMetaBankV3IpaTagTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  TermMetaBankV3IpaTagTableData map(Map<String, dynamic> data,
+  TermMetaBankV3TagTableData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermMetaBankV3IpaTagTableData(
+    return TermMetaBankV3TagTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       tag: attachedDatabase.typeMapping
@@ -7016,19 +7063,19 @@ class $TermMetaBankV3IpaTagTableTable extends TermMetaBankV3IpaTagTable
   }
 
   @override
-  $TermMetaBankV3IpaTagTableTable createAlias(String alias) {
-    return $TermMetaBankV3IpaTagTableTable(attachedDatabase, alias);
+  $TermMetaBankV3TagTableTable createAlias(String alias) {
+    return $TermMetaBankV3TagTableTable(attachedDatabase, alias);
   }
 }
 
-class TermMetaBankV3IpaTagTableData extends DataClass
-    implements Insertable<TermMetaBankV3IpaTagTableData> {
+class TermMetaBankV3TagTableData extends DataClass
+    implements Insertable<TermMetaBankV3TagTableData> {
   /// id of this entry
   final int id;
 
-  /// The ipa tag
+  /// The tag of this table transcription
   final String tag;
-  const TermMetaBankV3IpaTagTableData({required this.id, required this.tag});
+  const TermMetaBankV3TagTableData({required this.id, required this.tag});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -7037,17 +7084,17 @@ class TermMetaBankV3IpaTagTableData extends DataClass
     return map;
   }
 
-  TermMetaBankV3IpaTagTableCompanion toCompanion(bool nullToAbsent) {
-    return TermMetaBankV3IpaTagTableCompanion(
+  TermMetaBankV3TagTableCompanion toCompanion(bool nullToAbsent) {
+    return TermMetaBankV3TagTableCompanion(
       id: Value(id),
       tag: Value(tag),
     );
   }
 
-  factory TermMetaBankV3IpaTagTableData.fromJson(Map<String, dynamic> json,
+  factory TermMetaBankV3TagTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermMetaBankV3IpaTagTableData(
+    return TermMetaBankV3TagTableData(
       id: serializer.fromJson<int>(json['id']),
       tag: serializer.fromJson<String>(json['tag']),
     );
@@ -7061,14 +7108,14 @@ class TermMetaBankV3IpaTagTableData extends DataClass
     };
   }
 
-  TermMetaBankV3IpaTagTableData copyWith({int? id, String? tag}) =>
-      TermMetaBankV3IpaTagTableData(
+  TermMetaBankV3TagTableData copyWith({int? id, String? tag}) =>
+      TermMetaBankV3TagTableData(
         id: id ?? this.id,
         tag: tag ?? this.tag,
       );
-  TermMetaBankV3IpaTagTableData copyWithCompanion(
-      TermMetaBankV3IpaTagTableCompanion data) {
-    return TermMetaBankV3IpaTagTableData(
+  TermMetaBankV3TagTableData copyWithCompanion(
+      TermMetaBankV3TagTableCompanion data) {
+    return TermMetaBankV3TagTableData(
       id: data.id.present ? data.id.value : this.id,
       tag: data.tag.present ? data.tag.value : this.tag,
     );
@@ -7076,7 +7123,7 @@ class TermMetaBankV3IpaTagTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('TermMetaBankV3IpaTagTableData(')
+    return (StringBuffer('TermMetaBankV3TagTableData(')
           ..write('id: $id, ')
           ..write('tag: $tag')
           ..write(')'))
@@ -7088,24 +7135,24 @@ class TermMetaBankV3IpaTagTableData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is TermMetaBankV3IpaTagTableData &&
+      (other is TermMetaBankV3TagTableData &&
           other.id == this.id &&
           other.tag == this.tag);
 }
 
-class TermMetaBankV3IpaTagTableCompanion
-    extends UpdateCompanion<TermMetaBankV3IpaTagTableData> {
+class TermMetaBankV3TagTableCompanion
+    extends UpdateCompanion<TermMetaBankV3TagTableData> {
   final Value<int> id;
   final Value<String> tag;
-  const TermMetaBankV3IpaTagTableCompanion({
+  const TermMetaBankV3TagTableCompanion({
     this.id = const Value.absent(),
     this.tag = const Value.absent(),
   });
-  TermMetaBankV3IpaTagTableCompanion.insert({
+  TermMetaBankV3TagTableCompanion.insert({
     this.id = const Value.absent(),
     required String tag,
   }) : tag = Value(tag);
-  static Insertable<TermMetaBankV3IpaTagTableData> custom({
+  static Insertable<TermMetaBankV3TagTableData> custom({
     Expression<int>? id,
     Expression<String>? tag,
   }) {
@@ -7115,9 +7162,9 @@ class TermMetaBankV3IpaTagTableCompanion
     });
   }
 
-  TermMetaBankV3IpaTagTableCompanion copyWith(
+  TermMetaBankV3TagTableCompanion copyWith(
       {Value<int>? id, Value<String>? tag}) {
-    return TermMetaBankV3IpaTagTableCompanion(
+    return TermMetaBankV3TagTableCompanion(
       id: id ?? this.id,
       tag: tag ?? this.tag,
     );
@@ -7137,7 +7184,7 @@ class TermMetaBankV3IpaTagTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('TermMetaBankV3IpaTagTableCompanion(')
+    return (StringBuffer('TermMetaBankV3TagTableCompanion(')
           ..write('id: $id, ')
           ..write('tag: $tag')
           ..write(')'))
@@ -7145,22 +7192,34 @@ class TermMetaBankV3IpaTagTableCompanion
   }
 }
 
-class $TermMetaBankV3IpaTableTable extends TermMetaBankV3IpaTable
-    with TableInfo<$TermMetaBankV3IpaTableTable, TermMetaBankV3IpaTableData> {
+class $TermMetaBankV3PitchTagRelationsTableTable
+    extends TermMetaBankV3PitchTagRelationsTable
+    with
+        TableInfo<$TermMetaBankV3PitchTagRelationsTableTable,
+            TermMetaBankV3PitchTagRelationsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $TermMetaBankV3IpaTableTable(this.attachedDatabase, [this._alias]);
+  $TermMetaBankV3PitchTagRelationsTableTable(this.attachedDatabase,
+      [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _ipaMeta = const VerificationMeta('ipa');
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _pitchIdMeta =
+      const VerificationMeta('pitchId');
   @override
-  late final GeneratedColumn<String> ipa = GeneratedColumn<String>(
-      'ipa', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+  late final GeneratedColumn<int> pitchId = GeneratedColumn<int>(
+      'pitch_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES term_meta_bank_v3_pitch_table (id)'));
   static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
   @override
   late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
@@ -7168,28 +7227,28 @@ class $TermMetaBankV3IpaTableTable extends TermMetaBankV3IpaTable
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES term_meta_bank_v3_ipa_tag_table (id)'));
+          'REFERENCES term_meta_bank_v3_tag_table (id)'));
   @override
-  List<GeneratedColumn> get $columns => [id, ipa, tagId];
+  List<GeneratedColumn> get $columns => [id, pitchId, tagId];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'term_meta_bank_v3_ipa_table';
+  static const String $name = 'term_meta_bank_v3_pitch_tag_relations_table';
   @override
   VerificationContext validateIntegrity(
-      Insertable<TermMetaBankV3IpaTableData> instance,
+      Insertable<TermMetaBankV3PitchTagRelationsTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('ipa')) {
-      context.handle(
-          _ipaMeta, ipa.isAcceptableOrUnknown(data['ipa']!, _ipaMeta));
+    if (data.containsKey('pitch_id')) {
+      context.handle(_pitchIdMeta,
+          pitchId.isAcceptableOrUnknown(data['pitch_id']!, _pitchIdMeta));
     } else if (isInserting) {
-      context.missing(_ipaMeta);
+      context.missing(_pitchIdMeta);
     }
     if (data.containsKey('tag_id')) {
       context.handle(
@@ -7203,60 +7262,61 @@ class $TermMetaBankV3IpaTableTable extends TermMetaBankV3IpaTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  TermMetaBankV3IpaTableData map(Map<String, dynamic> data,
+  TermMetaBankV3PitchTagRelationsTableData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermMetaBankV3IpaTableData(
+    return TermMetaBankV3PitchTagRelationsTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      ipa: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}ipa'])!,
+      pitchId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}pitch_id'])!,
       tagId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}tag_id'])!,
     );
   }
 
   @override
-  $TermMetaBankV3IpaTableTable createAlias(String alias) {
-    return $TermMetaBankV3IpaTableTable(attachedDatabase, alias);
+  $TermMetaBankV3PitchTagRelationsTableTable createAlias(String alias) {
+    return $TermMetaBankV3PitchTagRelationsTableTable(attachedDatabase, alias);
   }
 }
 
-class TermMetaBankV3IpaTableData extends DataClass
-    implements Insertable<TermMetaBankV3IpaTableData> {
-  /// id of this entry
+class TermMetaBankV3PitchTagRelationsTableData extends DataClass
+    implements Insertable<TermMetaBankV3PitchTagRelationsTableData> {
+  /// id of this relation
   final int id;
 
-  /// The ipa transcription
-  final String ipa;
+  /// the id of the associated pitch entry
+  final int pitchId;
 
-  /// the tag of this ipa entry
+  /// the id of the tag
   final int tagId;
-  const TermMetaBankV3IpaTableData(
-      {required this.id, required this.ipa, required this.tagId});
+  const TermMetaBankV3PitchTagRelationsTableData(
+      {required this.id, required this.pitchId, required this.tagId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['ipa'] = Variable<String>(ipa);
+    map['pitch_id'] = Variable<int>(pitchId);
     map['tag_id'] = Variable<int>(tagId);
     return map;
   }
 
-  TermMetaBankV3IpaTableCompanion toCompanion(bool nullToAbsent) {
-    return TermMetaBankV3IpaTableCompanion(
+  TermMetaBankV3PitchTagRelationsTableCompanion toCompanion(bool nullToAbsent) {
+    return TermMetaBankV3PitchTagRelationsTableCompanion(
       id: Value(id),
-      ipa: Value(ipa),
+      pitchId: Value(pitchId),
       tagId: Value(tagId),
     );
   }
 
-  factory TermMetaBankV3IpaTableData.fromJson(Map<String, dynamic> json,
+  factory TermMetaBankV3PitchTagRelationsTableData.fromJson(
+      Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermMetaBankV3IpaTableData(
+    return TermMetaBankV3PitchTagRelationsTableData(
       id: serializer.fromJson<int>(json['id']),
-      ipa: serializer.fromJson<String>(json['ipa']),
+      pitchId: serializer.fromJson<int>(json['pitchId']),
       tagId: serializer.fromJson<int>(json['tagId']),
     );
   }
@@ -7265,80 +7325,81 @@ class TermMetaBankV3IpaTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'ipa': serializer.toJson<String>(ipa),
+      'pitchId': serializer.toJson<int>(pitchId),
       'tagId': serializer.toJson<int>(tagId),
     };
   }
 
-  TermMetaBankV3IpaTableData copyWith({int? id, String? ipa, int? tagId}) =>
-      TermMetaBankV3IpaTableData(
+  TermMetaBankV3PitchTagRelationsTableData copyWith(
+          {int? id, int? pitchId, int? tagId}) =>
+      TermMetaBankV3PitchTagRelationsTableData(
         id: id ?? this.id,
-        ipa: ipa ?? this.ipa,
+        pitchId: pitchId ?? this.pitchId,
         tagId: tagId ?? this.tagId,
       );
-  TermMetaBankV3IpaTableData copyWithCompanion(
-      TermMetaBankV3IpaTableCompanion data) {
-    return TermMetaBankV3IpaTableData(
+  TermMetaBankV3PitchTagRelationsTableData copyWithCompanion(
+      TermMetaBankV3PitchTagRelationsTableCompanion data) {
+    return TermMetaBankV3PitchTagRelationsTableData(
       id: data.id.present ? data.id.value : this.id,
-      ipa: data.ipa.present ? data.ipa.value : this.ipa,
+      pitchId: data.pitchId.present ? data.pitchId.value : this.pitchId,
       tagId: data.tagId.present ? data.tagId.value : this.tagId,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('TermMetaBankV3IpaTableData(')
+    return (StringBuffer('TermMetaBankV3PitchTagRelationsTableData(')
           ..write('id: $id, ')
-          ..write('ipa: $ipa, ')
+          ..write('pitchId: $pitchId, ')
           ..write('tagId: $tagId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, ipa, tagId);
+  int get hashCode => Object.hash(id, pitchId, tagId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is TermMetaBankV3IpaTableData &&
+      (other is TermMetaBankV3PitchTagRelationsTableData &&
           other.id == this.id &&
-          other.ipa == this.ipa &&
+          other.pitchId == this.pitchId &&
           other.tagId == this.tagId);
 }
 
-class TermMetaBankV3IpaTableCompanion
-    extends UpdateCompanion<TermMetaBankV3IpaTableData> {
+class TermMetaBankV3PitchTagRelationsTableCompanion
+    extends UpdateCompanion<TermMetaBankV3PitchTagRelationsTableData> {
   final Value<int> id;
-  final Value<String> ipa;
+  final Value<int> pitchId;
   final Value<int> tagId;
-  const TermMetaBankV3IpaTableCompanion({
+  const TermMetaBankV3PitchTagRelationsTableCompanion({
     this.id = const Value.absent(),
-    this.ipa = const Value.absent(),
+    this.pitchId = const Value.absent(),
     this.tagId = const Value.absent(),
   });
-  TermMetaBankV3IpaTableCompanion.insert({
+  TermMetaBankV3PitchTagRelationsTableCompanion.insert({
     this.id = const Value.absent(),
-    required String ipa,
+    required int pitchId,
     required int tagId,
-  })  : ipa = Value(ipa),
+  })  : pitchId = Value(pitchId),
         tagId = Value(tagId);
-  static Insertable<TermMetaBankV3IpaTableData> custom({
+  static Insertable<TermMetaBankV3PitchTagRelationsTableData> custom({
     Expression<int>? id,
-    Expression<String>? ipa,
+    Expression<int>? pitchId,
     Expression<int>? tagId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (ipa != null) 'ipa': ipa,
+      if (pitchId != null) 'pitch_id': pitchId,
       if (tagId != null) 'tag_id': tagId,
     });
   }
 
-  TermMetaBankV3IpaTableCompanion copyWith(
-      {Value<int>? id, Value<String>? ipa, Value<int>? tagId}) {
-    return TermMetaBankV3IpaTableCompanion(
+  TermMetaBankV3PitchTagRelationsTableCompanion copyWith(
+      {Value<int>? id, Value<int>? pitchId, Value<int>? tagId}) {
+    return TermMetaBankV3PitchTagRelationsTableCompanion(
       id: id ?? this.id,
-      ipa: ipa ?? this.ipa,
+      pitchId: pitchId ?? this.pitchId,
       tagId: tagId ?? this.tagId,
     );
   }
@@ -7349,8 +7410,8 @@ class TermMetaBankV3IpaTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (ipa.present) {
-      map['ipa'] = Variable<String>(ipa.value);
+    if (pitchId.present) {
+      map['pitch_id'] = Variable<int>(pitchId.value);
     }
     if (tagId.present) {
       map['tag_id'] = Variable<int>(tagId.value);
@@ -7360,9 +7421,9 @@ class TermMetaBankV3IpaTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('TermMetaBankV3IpaTableCompanion(')
+    return (StringBuffer('TermMetaBankV3PitchTagRelationsTableCompanion(')
           ..write('id: $id, ')
-          ..write('ipa: $ipa, ')
+          ..write('pitchId: $pitchId, ')
           ..write('tagId: $tagId')
           ..write(')'))
         .toString();
@@ -7609,6 +7670,243 @@ class TermMetaBankV3IpaRelationsTableCompanion
   }
 }
 
+class $TermMetaBankV3IpaTagRelationsTableTable
+    extends TermMetaBankV3IpaTagRelationsTable
+    with
+        TableInfo<$TermMetaBankV3IpaTagRelationsTableTable,
+            TermMetaBankV3IpaTagRelationsTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermMetaBankV3IpaTagRelationsTableTable(this.attachedDatabase,
+      [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _ipaIdMeta = const VerificationMeta('ipaId');
+  @override
+  late final GeneratedColumn<int> ipaId = GeneratedColumn<int>(
+      'ipa_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES term_meta_bank_v3_ipa_table (id)'));
+  static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
+  @override
+  late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
+      'tag_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES term_meta_bank_v3_tag_table (id)'));
+  @override
+  List<GeneratedColumn> get $columns => [id, ipaId, tagId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_meta_bank_v3_ipa_tag_relations_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<TermMetaBankV3IpaTagRelationsTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('ipa_id')) {
+      context.handle(
+          _ipaIdMeta, ipaId.isAcceptableOrUnknown(data['ipa_id']!, _ipaIdMeta));
+    } else if (isInserting) {
+      context.missing(_ipaIdMeta);
+    }
+    if (data.containsKey('tag_id')) {
+      context.handle(
+          _tagIdMeta, tagId.isAcceptableOrUnknown(data['tag_id']!, _tagIdMeta));
+    } else if (isInserting) {
+      context.missing(_tagIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TermMetaBankV3IpaTagRelationsTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermMetaBankV3IpaTagRelationsTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      ipaId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}ipa_id'])!,
+      tagId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}tag_id'])!,
+    );
+  }
+
+  @override
+  $TermMetaBankV3IpaTagRelationsTableTable createAlias(String alias) {
+    return $TermMetaBankV3IpaTagRelationsTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermMetaBankV3IpaTagRelationsTableData extends DataClass
+    implements Insertable<TermMetaBankV3IpaTagRelationsTableData> {
+  /// id of this relation
+  final int id;
+
+  /// the id of the associated ipa entry
+  final int ipaId;
+
+  /// the id of the tag
+  final int tagId;
+  const TermMetaBankV3IpaTagRelationsTableData(
+      {required this.id, required this.ipaId, required this.tagId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['ipa_id'] = Variable<int>(ipaId);
+    map['tag_id'] = Variable<int>(tagId);
+    return map;
+  }
+
+  TermMetaBankV3IpaTagRelationsTableCompanion toCompanion(bool nullToAbsent) {
+    return TermMetaBankV3IpaTagRelationsTableCompanion(
+      id: Value(id),
+      ipaId: Value(ipaId),
+      tagId: Value(tagId),
+    );
+  }
+
+  factory TermMetaBankV3IpaTagRelationsTableData.fromJson(
+      Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermMetaBankV3IpaTagRelationsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      ipaId: serializer.fromJson<int>(json['ipaId']),
+      tagId: serializer.fromJson<int>(json['tagId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'ipaId': serializer.toJson<int>(ipaId),
+      'tagId': serializer.toJson<int>(tagId),
+    };
+  }
+
+  TermMetaBankV3IpaTagRelationsTableData copyWith(
+          {int? id, int? ipaId, int? tagId}) =>
+      TermMetaBankV3IpaTagRelationsTableData(
+        id: id ?? this.id,
+        ipaId: ipaId ?? this.ipaId,
+        tagId: tagId ?? this.tagId,
+      );
+  TermMetaBankV3IpaTagRelationsTableData copyWithCompanion(
+      TermMetaBankV3IpaTagRelationsTableCompanion data) {
+    return TermMetaBankV3IpaTagRelationsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      ipaId: data.ipaId.present ? data.ipaId.value : this.ipaId,
+      tagId: data.tagId.present ? data.tagId.value : this.tagId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3IpaTagRelationsTableData(')
+          ..write('id: $id, ')
+          ..write('ipaId: $ipaId, ')
+          ..write('tagId: $tagId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, ipaId, tagId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermMetaBankV3IpaTagRelationsTableData &&
+          other.id == this.id &&
+          other.ipaId == this.ipaId &&
+          other.tagId == this.tagId);
+}
+
+class TermMetaBankV3IpaTagRelationsTableCompanion
+    extends UpdateCompanion<TermMetaBankV3IpaTagRelationsTableData> {
+  final Value<int> id;
+  final Value<int> ipaId;
+  final Value<int> tagId;
+  const TermMetaBankV3IpaTagRelationsTableCompanion({
+    this.id = const Value.absent(),
+    this.ipaId = const Value.absent(),
+    this.tagId = const Value.absent(),
+  });
+  TermMetaBankV3IpaTagRelationsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int ipaId,
+    required int tagId,
+  })  : ipaId = Value(ipaId),
+        tagId = Value(tagId);
+  static Insertable<TermMetaBankV3IpaTagRelationsTableData> custom({
+    Expression<int>? id,
+    Expression<int>? ipaId,
+    Expression<int>? tagId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (ipaId != null) 'ipa_id': ipaId,
+      if (tagId != null) 'tag_id': tagId,
+    });
+  }
+
+  TermMetaBankV3IpaTagRelationsTableCompanion copyWith(
+      {Value<int>? id, Value<int>? ipaId, Value<int>? tagId}) {
+    return TermMetaBankV3IpaTagRelationsTableCompanion(
+      id: id ?? this.id,
+      ipaId: ipaId ?? this.ipaId,
+      tagId: tagId ?? this.tagId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (ipaId.present) {
+      map['ipa_id'] = Variable<int>(ipaId.value);
+    }
+    if (tagId.present) {
+      map['tag_id'] = Variable<int>(tagId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3IpaTagRelationsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('ipaId: $ipaId, ')
+          ..write('tagId: $tagId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$DaKanjiDB extends GeneratedDatabase {
   _$DaKanjiDB(QueryExecutor e) : super(e);
   $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
@@ -7656,22 +7954,26 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       $KanjiMetaBankV3TableTable(this);
   late final $TermMetaBankV3TypeTableTable termMetaBankV3TypeTable =
       $TermMetaBankV3TypeTableTable(this);
-  late final $TermMetaBankV3TableTable termMetaBankV3Table =
-      $TermMetaBankV3TableTable(this);
-  late final $TermMetaBankV3PitchTagTableTable termMetaBankV3PitchTagTable =
-      $TermMetaBankV3PitchTagTableTable(this);
   late final $TermMetaBankV3PitchTableTable termMetaBankV3PitchTable =
       $TermMetaBankV3PitchTableTable(this);
+  late final $TermMetaBankV3IpaTableTable termMetaBankV3IpaTable =
+      $TermMetaBankV3IpaTableTable(this);
+  late final $TermMetaBankV3TableTable termMetaBankV3Table =
+      $TermMetaBankV3TableTable(this);
   late final $TermMetaBankV3PitchRelationsTableTable
       termMetaBankV3PitchRelationsTable =
       $TermMetaBankV3PitchRelationsTableTable(this);
-  late final $TermMetaBankV3IpaTagTableTable termMetaBankV3IpaTagTable =
-      $TermMetaBankV3IpaTagTableTable(this);
-  late final $TermMetaBankV3IpaTableTable termMetaBankV3IpaTable =
-      $TermMetaBankV3IpaTableTable(this);
+  late final $TermMetaBankV3TagTableTable termMetaBankV3TagTable =
+      $TermMetaBankV3TagTableTable(this);
+  late final $TermMetaBankV3PitchTagRelationsTableTable
+      termMetaBankV3PitchTagRelationsTable =
+      $TermMetaBankV3PitchTagRelationsTableTable(this);
   late final $TermMetaBankV3IpaRelationsTableTable
       termMetaBankV3IpaRelationsTable =
       $TermMetaBankV3IpaRelationsTableTable(this);
+  late final $TermMetaBankV3IpaTagRelationsTableTable
+      termMetaBankV3IpaTagRelationsTable =
+      $TermMetaBankV3IpaTagRelationsTableTable(this);
   late final Index kanji =
       Index('kanji', 'CREATE INDEX kanji ON kanji_table (kanji)');
   late final Index term =
@@ -7725,13 +8027,14 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         kanjiMetaBankV3TypeTable,
         kanjiMetaBankV3Table,
         termMetaBankV3TypeTable,
-        termMetaBankV3Table,
-        termMetaBankV3PitchTagTable,
         termMetaBankV3PitchTable,
-        termMetaBankV3PitchRelationsTable,
-        termMetaBankV3IpaTagTable,
         termMetaBankV3IpaTable,
+        termMetaBankV3Table,
+        termMetaBankV3PitchRelationsTable,
+        termMetaBankV3TagTable,
+        termMetaBankV3PitchTagRelationsTable,
         termMetaBankV3IpaRelationsTable,
+        termMetaBankV3IpaTagRelationsTable,
         kanji,
         term,
         reading,
@@ -15524,6 +15827,824 @@ typedef $$TermMetaBankV3TypeTableTableProcessedTableManager
         (TermMetaBankV3TypeTableData, $$TermMetaBankV3TypeTableTableReferences),
         TermMetaBankV3TypeTableData,
         PrefetchHooks Function({bool termMetaBankV3TableRefs})>;
+typedef $$TermMetaBankV3PitchTableTableCreateCompanionBuilder
+    = TermMetaBankV3PitchTableCompanion Function({
+  Value<int> id,
+  required int position,
+  Value<int?> nasal,
+  Value<int?> devoice,
+});
+typedef $$TermMetaBankV3PitchTableTableUpdateCompanionBuilder
+    = TermMetaBankV3PitchTableCompanion Function({
+  Value<int> id,
+  Value<int> position,
+  Value<int?> nasal,
+  Value<int?> devoice,
+});
+
+final class $$TermMetaBankV3PitchTableTableReferences extends BaseReferences<
+    _$DaKanjiDB, $TermMetaBankV3PitchTableTable, TermMetaBankV3PitchTableData> {
+  $$TermMetaBankV3PitchTableTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$TermMetaBankV3TableTable,
+      List<TermMetaBankV3TableData>> _termMetaBankV3TableRefsTable(
+          _$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(db.termMetaBankV3Table,
+          aliasName: $_aliasNameGenerator(
+              db.termMetaBankV3PitchTable.id, db.termMetaBankV3Table.pitchId));
+
+  $$TermMetaBankV3TableTableProcessedTableManager get termMetaBankV3TableRefs {
+    final manager =
+        $$TermMetaBankV3TableTableTableManager($_db, $_db.termMetaBankV3Table)
+            .filter((f) => f.pitchId.id($_item.id));
+
+    final cache =
+        $_typedResult.readTableOrNull(_termMetaBankV3TableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$TermMetaBankV3PitchRelationsTableTable,
+          List<TermMetaBankV3PitchRelationsTableData>>
+      _termMetaBankV3PitchRelationsTableRefsTable(_$DaKanjiDB db) =>
+          MultiTypedResultKey.fromTable(db.termMetaBankV3PitchRelationsTable,
+              aliasName: $_aliasNameGenerator(db.termMetaBankV3PitchTable.id,
+                  db.termMetaBankV3PitchRelationsTable.pitchId));
+
+  $$TermMetaBankV3PitchRelationsTableTableProcessedTableManager
+      get termMetaBankV3PitchRelationsTableRefs {
+    final manager = $$TermMetaBankV3PitchRelationsTableTableTableManager(
+            $_db, $_db.termMetaBankV3PitchRelationsTable)
+        .filter((f) => f.pitchId.id($_item.id));
+
+    final cache = $_typedResult
+        .readTableOrNull(_termMetaBankV3PitchRelationsTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$TermMetaBankV3PitchTagRelationsTableTable,
+          List<TermMetaBankV3PitchTagRelationsTableData>>
+      _termMetaBankV3PitchTagRelationsTableRefsTable(_$DaKanjiDB db) =>
+          MultiTypedResultKey.fromTable(db.termMetaBankV3PitchTagRelationsTable,
+              aliasName: $_aliasNameGenerator(db.termMetaBankV3PitchTable.id,
+                  db.termMetaBankV3PitchTagRelationsTable.pitchId));
+
+  $$TermMetaBankV3PitchTagRelationsTableTableProcessedTableManager
+      get termMetaBankV3PitchTagRelationsTableRefs {
+    final manager = $$TermMetaBankV3PitchTagRelationsTableTableTableManager(
+            $_db, $_db.termMetaBankV3PitchTagRelationsTable)
+        .filter((f) => f.pitchId.id($_item.id));
+
+    final cache = $_typedResult
+        .readTableOrNull(_termMetaBankV3PitchTagRelationsTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$TermMetaBankV3PitchTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTableTable> {
+  $$TermMetaBankV3PitchTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get position => $composableBuilder(
+      column: $table.position, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get nasal => $composableBuilder(
+      column: $table.nasal, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get devoice => $composableBuilder(
+      column: $table.devoice, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> termMetaBankV3TableRefs(
+      Expression<bool> Function($$TermMetaBankV3TableTableFilterComposer f) f) {
+    final $$TermMetaBankV3TableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.termMetaBankV3Table,
+        getReferencedColumn: (t) => t.pitchId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TermMetaBankV3TableTableFilterComposer(
+              $db: $db,
+              $table: $db.termMetaBankV3Table,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> termMetaBankV3PitchRelationsTableRefs(
+      Expression<bool> Function(
+              $$TermMetaBankV3PitchRelationsTableTableFilterComposer f)
+          f) {
+    final $$TermMetaBankV3PitchRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3PitchRelationsTable,
+            getReferencedColumn: (t) => t.pitchId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3PitchRelationsTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3PitchRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+
+  Expression<bool> termMetaBankV3PitchTagRelationsTableRefs(
+      Expression<bool> Function(
+              $$TermMetaBankV3PitchTagRelationsTableTableFilterComposer f)
+          f) {
+    final $$TermMetaBankV3PitchTagRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3PitchTagRelationsTable,
+            getReferencedColumn: (t) => t.pitchId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3PitchTagRelationsTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3PitchTagRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$TermMetaBankV3PitchTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTableTable> {
+  $$TermMetaBankV3PitchTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get position => $composableBuilder(
+      column: $table.position, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get nasal => $composableBuilder(
+      column: $table.nasal, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get devoice => $composableBuilder(
+      column: $table.devoice, builder: (column) => ColumnOrderings(column));
+}
+
+class $$TermMetaBankV3PitchTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTableTable> {
+  $$TermMetaBankV3PitchTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+
+  GeneratedColumn<int> get nasal =>
+      $composableBuilder(column: $table.nasal, builder: (column) => column);
+
+  GeneratedColumn<int> get devoice =>
+      $composableBuilder(column: $table.devoice, builder: (column) => column);
+
+  Expression<T> termMetaBankV3TableRefs<T extends Object>(
+      Expression<T> Function($$TermMetaBankV3TableTableAnnotationComposer a)
+          f) {
+    final $$TermMetaBankV3TableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3Table,
+            getReferencedColumn: (t) => t.pitchId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3TableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3Table,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+
+  Expression<T> termMetaBankV3PitchRelationsTableRefs<T extends Object>(
+      Expression<T> Function(
+              $$TermMetaBankV3PitchRelationsTableTableAnnotationComposer a)
+          f) {
+    final $$TermMetaBankV3PitchRelationsTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3PitchRelationsTable,
+            getReferencedColumn: (t) => t.pitchId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3PitchRelationsTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3PitchRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+
+  Expression<T> termMetaBankV3PitchTagRelationsTableRefs<T extends Object>(
+      Expression<T> Function(
+              $$TermMetaBankV3PitchTagRelationsTableTableAnnotationComposer a)
+          f) {
+    final $$TermMetaBankV3PitchTagRelationsTableTableAnnotationComposer
+        composer = $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3PitchTagRelationsTable,
+            getReferencedColumn: (t) => t.pitchId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3PitchTagRelationsTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3PitchTagRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$TermMetaBankV3PitchTableTableTableManager extends RootTableManager<
+    _$DaKanjiDB,
+    $TermMetaBankV3PitchTableTable,
+    TermMetaBankV3PitchTableData,
+    $$TermMetaBankV3PitchTableTableFilterComposer,
+    $$TermMetaBankV3PitchTableTableOrderingComposer,
+    $$TermMetaBankV3PitchTableTableAnnotationComposer,
+    $$TermMetaBankV3PitchTableTableCreateCompanionBuilder,
+    $$TermMetaBankV3PitchTableTableUpdateCompanionBuilder,
+    (TermMetaBankV3PitchTableData, $$TermMetaBankV3PitchTableTableReferences),
+    TermMetaBankV3PitchTableData,
+    PrefetchHooks Function(
+        {bool termMetaBankV3TableRefs,
+        bool termMetaBankV3PitchRelationsTableRefs,
+        bool termMetaBankV3PitchTagRelationsTableRefs})> {
+  $$TermMetaBankV3PitchTableTableTableManager(
+      _$DaKanjiDB db, $TermMetaBankV3PitchTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermMetaBankV3PitchTableTableFilterComposer(
+                  $db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TermMetaBankV3PitchTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TermMetaBankV3PitchTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> position = const Value.absent(),
+            Value<int?> nasal = const Value.absent(),
+            Value<int?> devoice = const Value.absent(),
+          }) =>
+              TermMetaBankV3PitchTableCompanion(
+            id: id,
+            position: position,
+            nasal: nasal,
+            devoice: devoice,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int position,
+            Value<int?> nasal = const Value.absent(),
+            Value<int?> devoice = const Value.absent(),
+          }) =>
+              TermMetaBankV3PitchTableCompanion.insert(
+            id: id,
+            position: position,
+            nasal: nasal,
+            devoice: devoice,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TermMetaBankV3PitchTableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: (
+              {termMetaBankV3TableRefs = false,
+              termMetaBankV3PitchRelationsTableRefs = false,
+              termMetaBankV3PitchTagRelationsTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (termMetaBankV3TableRefs) db.termMetaBankV3Table,
+                if (termMetaBankV3PitchRelationsTableRefs)
+                  db.termMetaBankV3PitchRelationsTable,
+                if (termMetaBankV3PitchTagRelationsTableRefs)
+                  db.termMetaBankV3PitchTagRelationsTable
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (termMetaBankV3TableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable:
+                            $$TermMetaBankV3PitchTableTableReferences
+                                ._termMetaBankV3TableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TermMetaBankV3PitchTableTableReferences(
+                                    db, table, p0)
+                                .termMetaBankV3TableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.pitchId == item.id),
+                        typedResults: items),
+                  if (termMetaBankV3PitchRelationsTableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable:
+                            $$TermMetaBankV3PitchTableTableReferences
+                                ._termMetaBankV3PitchRelationsTableRefsTable(
+                                    db),
+                        managerFromTypedResult: (p0) =>
+                            $$TermMetaBankV3PitchTableTableReferences(
+                                    db, table, p0)
+                                .termMetaBankV3PitchRelationsTableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.pitchId == item.id),
+                        typedResults: items),
+                  if (termMetaBankV3PitchTagRelationsTableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable:
+                            $$TermMetaBankV3PitchTableTableReferences
+                                ._termMetaBankV3PitchTagRelationsTableRefsTable(
+                                    db),
+                        managerFromTypedResult: (p0) =>
+                            $$TermMetaBankV3PitchTableTableReferences(
+                                    db, table, p0)
+                                .termMetaBankV3PitchTagRelationsTableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.pitchId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TermMetaBankV3PitchTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$DaKanjiDB,
+        $TermMetaBankV3PitchTableTable,
+        TermMetaBankV3PitchTableData,
+        $$TermMetaBankV3PitchTableTableFilterComposer,
+        $$TermMetaBankV3PitchTableTableOrderingComposer,
+        $$TermMetaBankV3PitchTableTableAnnotationComposer,
+        $$TermMetaBankV3PitchTableTableCreateCompanionBuilder,
+        $$TermMetaBankV3PitchTableTableUpdateCompanionBuilder,
+        (
+          TermMetaBankV3PitchTableData,
+          $$TermMetaBankV3PitchTableTableReferences
+        ),
+        TermMetaBankV3PitchTableData,
+        PrefetchHooks Function(
+            {bool termMetaBankV3TableRefs,
+            bool termMetaBankV3PitchRelationsTableRefs,
+            bool termMetaBankV3PitchTagRelationsTableRefs})>;
+typedef $$TermMetaBankV3IpaTableTableCreateCompanionBuilder
+    = TermMetaBankV3IpaTableCompanion Function({
+  Value<int> id,
+  required String ipa,
+});
+typedef $$TermMetaBankV3IpaTableTableUpdateCompanionBuilder
+    = TermMetaBankV3IpaTableCompanion Function({
+  Value<int> id,
+  Value<String> ipa,
+});
+
+final class $$TermMetaBankV3IpaTableTableReferences extends BaseReferences<
+    _$DaKanjiDB, $TermMetaBankV3IpaTableTable, TermMetaBankV3IpaTableData> {
+  $$TermMetaBankV3IpaTableTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$TermMetaBankV3TableTable,
+      List<TermMetaBankV3TableData>> _termMetaBankV3TableRefsTable(
+          _$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(db.termMetaBankV3Table,
+          aliasName: $_aliasNameGenerator(
+              db.termMetaBankV3IpaTable.id, db.termMetaBankV3Table.ipaId));
+
+  $$TermMetaBankV3TableTableProcessedTableManager get termMetaBankV3TableRefs {
+    final manager =
+        $$TermMetaBankV3TableTableTableManager($_db, $_db.termMetaBankV3Table)
+            .filter((f) => f.ipaId.id($_item.id));
+
+    final cache =
+        $_typedResult.readTableOrNull(_termMetaBankV3TableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$TermMetaBankV3IpaRelationsTableTable,
+          List<TermMetaBankV3IpaRelationsTableData>>
+      _termMetaBankV3IpaRelationsTableRefsTable(_$DaKanjiDB db) =>
+          MultiTypedResultKey.fromTable(db.termMetaBankV3IpaRelationsTable,
+              aliasName: $_aliasNameGenerator(db.termMetaBankV3IpaTable.id,
+                  db.termMetaBankV3IpaRelationsTable.ipaId));
+
+  $$TermMetaBankV3IpaRelationsTableTableProcessedTableManager
+      get termMetaBankV3IpaRelationsTableRefs {
+    final manager = $$TermMetaBankV3IpaRelationsTableTableTableManager(
+            $_db, $_db.termMetaBankV3IpaRelationsTable)
+        .filter((f) => f.ipaId.id($_item.id));
+
+    final cache = $_typedResult
+        .readTableOrNull(_termMetaBankV3IpaRelationsTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$TermMetaBankV3IpaTagRelationsTableTable,
+          List<TermMetaBankV3IpaTagRelationsTableData>>
+      _termMetaBankV3IpaTagRelationsTableRefsTable(_$DaKanjiDB db) =>
+          MultiTypedResultKey.fromTable(db.termMetaBankV3IpaTagRelationsTable,
+              aliasName: $_aliasNameGenerator(db.termMetaBankV3IpaTable.id,
+                  db.termMetaBankV3IpaTagRelationsTable.ipaId));
+
+  $$TermMetaBankV3IpaTagRelationsTableTableProcessedTableManager
+      get termMetaBankV3IpaTagRelationsTableRefs {
+    final manager = $$TermMetaBankV3IpaTagRelationsTableTableTableManager(
+            $_db, $_db.termMetaBankV3IpaTagRelationsTable)
+        .filter((f) => f.ipaId.id($_item.id));
+
+    final cache = $_typedResult
+        .readTableOrNull(_termMetaBankV3IpaTagRelationsTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$TermMetaBankV3IpaTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTableTable> {
+  $$TermMetaBankV3IpaTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get ipa => $composableBuilder(
+      column: $table.ipa, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> termMetaBankV3TableRefs(
+      Expression<bool> Function($$TermMetaBankV3TableTableFilterComposer f) f) {
+    final $$TermMetaBankV3TableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.termMetaBankV3Table,
+        getReferencedColumn: (t) => t.ipaId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TermMetaBankV3TableTableFilterComposer(
+              $db: $db,
+              $table: $db.termMetaBankV3Table,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> termMetaBankV3IpaRelationsTableRefs(
+      Expression<bool> Function(
+              $$TermMetaBankV3IpaRelationsTableTableFilterComposer f)
+          f) {
+    final $$TermMetaBankV3IpaRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3IpaRelationsTable,
+            getReferencedColumn: (t) => t.ipaId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaRelationsTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+
+  Expression<bool> termMetaBankV3IpaTagRelationsTableRefs(
+      Expression<bool> Function(
+              $$TermMetaBankV3IpaTagRelationsTableTableFilterComposer f)
+          f) {
+    final $$TermMetaBankV3IpaTagRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3IpaTagRelationsTable,
+            getReferencedColumn: (t) => t.ipaId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaTagRelationsTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaTagRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$TermMetaBankV3IpaTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTableTable> {
+  $$TermMetaBankV3IpaTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get ipa => $composableBuilder(
+      column: $table.ipa, builder: (column) => ColumnOrderings(column));
+}
+
+class $$TermMetaBankV3IpaTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTableTable> {
+  $$TermMetaBankV3IpaTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get ipa =>
+      $composableBuilder(column: $table.ipa, builder: (column) => column);
+
+  Expression<T> termMetaBankV3TableRefs<T extends Object>(
+      Expression<T> Function($$TermMetaBankV3TableTableAnnotationComposer a)
+          f) {
+    final $$TermMetaBankV3TableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3Table,
+            getReferencedColumn: (t) => t.ipaId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3TableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3Table,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+
+  Expression<T> termMetaBankV3IpaRelationsTableRefs<T extends Object>(
+      Expression<T> Function(
+              $$TermMetaBankV3IpaRelationsTableTableAnnotationComposer a)
+          f) {
+    final $$TermMetaBankV3IpaRelationsTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3IpaRelationsTable,
+            getReferencedColumn: (t) => t.ipaId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaRelationsTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+
+  Expression<T> termMetaBankV3IpaTagRelationsTableRefs<T extends Object>(
+      Expression<T> Function(
+              $$TermMetaBankV3IpaTagRelationsTableTableAnnotationComposer a)
+          f) {
+    final $$TermMetaBankV3IpaTagRelationsTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3IpaTagRelationsTable,
+            getReferencedColumn: (t) => t.ipaId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaTagRelationsTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaTagRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$TermMetaBankV3IpaTableTableTableManager extends RootTableManager<
+    _$DaKanjiDB,
+    $TermMetaBankV3IpaTableTable,
+    TermMetaBankV3IpaTableData,
+    $$TermMetaBankV3IpaTableTableFilterComposer,
+    $$TermMetaBankV3IpaTableTableOrderingComposer,
+    $$TermMetaBankV3IpaTableTableAnnotationComposer,
+    $$TermMetaBankV3IpaTableTableCreateCompanionBuilder,
+    $$TermMetaBankV3IpaTableTableUpdateCompanionBuilder,
+    (TermMetaBankV3IpaTableData, $$TermMetaBankV3IpaTableTableReferences),
+    TermMetaBankV3IpaTableData,
+    PrefetchHooks Function(
+        {bool termMetaBankV3TableRefs,
+        bool termMetaBankV3IpaRelationsTableRefs,
+        bool termMetaBankV3IpaTagRelationsTableRefs})> {
+  $$TermMetaBankV3IpaTableTableTableManager(
+      _$DaKanjiDB db, $TermMetaBankV3IpaTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermMetaBankV3IpaTableTableFilterComposer(
+                  $db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TermMetaBankV3IpaTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TermMetaBankV3IpaTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> ipa = const Value.absent(),
+          }) =>
+              TermMetaBankV3IpaTableCompanion(
+            id: id,
+            ipa: ipa,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String ipa,
+          }) =>
+              TermMetaBankV3IpaTableCompanion.insert(
+            id: id,
+            ipa: ipa,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TermMetaBankV3IpaTableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: (
+              {termMetaBankV3TableRefs = false,
+              termMetaBankV3IpaRelationsTableRefs = false,
+              termMetaBankV3IpaTagRelationsTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (termMetaBankV3TableRefs) db.termMetaBankV3Table,
+                if (termMetaBankV3IpaRelationsTableRefs)
+                  db.termMetaBankV3IpaRelationsTable,
+                if (termMetaBankV3IpaTagRelationsTableRefs)
+                  db.termMetaBankV3IpaTagRelationsTable
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (termMetaBankV3TableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$TermMetaBankV3IpaTableTableReferences
+                            ._termMetaBankV3TableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TermMetaBankV3IpaTableTableReferences(
+                                    db, table, p0)
+                                .termMetaBankV3TableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.ipaId == item.id),
+                        typedResults: items),
+                  if (termMetaBankV3IpaRelationsTableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$TermMetaBankV3IpaTableTableReferences
+                            ._termMetaBankV3IpaRelationsTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TermMetaBankV3IpaTableTableReferences(
+                                    db, table, p0)
+                                .termMetaBankV3IpaRelationsTableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.ipaId == item.id),
+                        typedResults: items),
+                  if (termMetaBankV3IpaTagRelationsTableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$TermMetaBankV3IpaTableTableReferences
+                            ._termMetaBankV3IpaTagRelationsTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TermMetaBankV3IpaTableTableReferences(
+                                    db, table, p0)
+                                .termMetaBankV3IpaTagRelationsTableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.ipaId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TermMetaBankV3IpaTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$DaKanjiDB,
+        $TermMetaBankV3IpaTableTable,
+        TermMetaBankV3IpaTableData,
+        $$TermMetaBankV3IpaTableTableFilterComposer,
+        $$TermMetaBankV3IpaTableTableOrderingComposer,
+        $$TermMetaBankV3IpaTableTableAnnotationComposer,
+        $$TermMetaBankV3IpaTableTableCreateCompanionBuilder,
+        $$TermMetaBankV3IpaTableTableUpdateCompanionBuilder,
+        (TermMetaBankV3IpaTableData, $$TermMetaBankV3IpaTableTableReferences),
+        TermMetaBankV3IpaTableData,
+        PrefetchHooks Function(
+            {bool termMetaBankV3TableRefs,
+            bool termMetaBankV3IpaRelationsTableRefs,
+            bool termMetaBankV3IpaTagRelationsTableRefs})>;
 typedef $$TermMetaBankV3TableTableCreateCompanionBuilder
     = TermMetaBankV3TableCompanion Function({
   Value<int> id,
@@ -15533,6 +16654,8 @@ typedef $$TermMetaBankV3TableTableCreateCompanionBuilder
   required int typeId,
   Value<int?> freqValue,
   Value<String?> freqDisplayValue,
+  Value<int?> pitchId,
+  Value<int?> ipaId,
 });
 typedef $$TermMetaBankV3TableTableUpdateCompanionBuilder
     = TermMetaBankV3TableCompanion Function({
@@ -15543,6 +16666,8 @@ typedef $$TermMetaBankV3TableTableUpdateCompanionBuilder
   Value<int> typeId,
   Value<int?> freqValue,
   Value<String?> freqDisplayValue,
+  Value<int?> pitchId,
+  Value<int?> ipaId,
 });
 
 final class $$TermMetaBankV3TableTableReferences extends BaseReferences<
@@ -15602,6 +16727,36 @@ final class $$TermMetaBankV3TableTableReferences extends BaseReferences<
             $_db, $_db.termMetaBankV3TypeTable)
         .filter((f) => f.id($_item.typeId!));
     final item = $_typedResult.readTableOrNull(_typeIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $TermMetaBankV3PitchTableTable _pitchIdTable(_$DaKanjiDB db) =>
+      db.termMetaBankV3PitchTable.createAlias($_aliasNameGenerator(
+          db.termMetaBankV3Table.pitchId, db.termMetaBankV3PitchTable.id));
+
+  $$TermMetaBankV3PitchTableTableProcessedTableManager? get pitchId {
+    if ($_item.pitchId == null) return null;
+    final manager = $$TermMetaBankV3PitchTableTableTableManager(
+            $_db, $_db.termMetaBankV3PitchTable)
+        .filter((f) => f.id($_item.pitchId!));
+    final item = $_typedResult.readTableOrNull(_pitchIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $TermMetaBankV3IpaTableTable _ipaIdTable(_$DaKanjiDB db) =>
+      db.termMetaBankV3IpaTable.createAlias($_aliasNameGenerator(
+          db.termMetaBankV3Table.ipaId, db.termMetaBankV3IpaTable.id));
+
+  $$TermMetaBankV3IpaTableTableProcessedTableManager? get ipaId {
+    if ($_item.ipaId == null) return null;
+    final manager = $$TermMetaBankV3IpaTableTableTableManager(
+            $_db, $_db.termMetaBankV3IpaTable)
+        .filter((f) => f.id($_item.ipaId!));
+    final item = $_typedResult.readTableOrNull(_ipaIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: [item]));
@@ -15738,6 +16893,48 @@ class $$TermMetaBankV3TableTableFilterComposer
                 $$TermMetaBankV3TypeTableTableFilterComposer(
                   $db: $db,
                   $table: $db.termMetaBankV3TypeTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+
+  $$TermMetaBankV3PitchTableTableFilterComposer get pitchId {
+    final $$TermMetaBankV3PitchTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.pitchId,
+            referencedTable: $db.termMetaBankV3PitchTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3PitchTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3PitchTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+
+  $$TermMetaBankV3IpaTableTableFilterComposer get ipaId {
+    final $$TermMetaBankV3IpaTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.ipaId,
+            referencedTable: $db.termMetaBankV3IpaTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -15894,6 +17091,48 @@ class $$TermMetaBankV3TableTableOrderingComposer
                 ));
     return composer;
   }
+
+  $$TermMetaBankV3PitchTableTableOrderingComposer get pitchId {
+    final $$TermMetaBankV3PitchTableTableOrderingComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.pitchId,
+            referencedTable: $db.termMetaBankV3PitchTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3PitchTableTableOrderingComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3PitchTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+
+  $$TermMetaBankV3IpaTableTableOrderingComposer get ipaId {
+    final $$TermMetaBankV3IpaTableTableOrderingComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.ipaId,
+            referencedTable: $db.termMetaBankV3IpaTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaTableTableOrderingComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
 }
 
 class $$TermMetaBankV3TableTableAnnotationComposer
@@ -15995,6 +17234,48 @@ class $$TermMetaBankV3TableTableAnnotationComposer
     return composer;
   }
 
+  $$TermMetaBankV3PitchTableTableAnnotationComposer get pitchId {
+    final $$TermMetaBankV3PitchTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.pitchId,
+            referencedTable: $db.termMetaBankV3PitchTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3PitchTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3PitchTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+
+  $$TermMetaBankV3IpaTableTableAnnotationComposer get ipaId {
+    final $$TermMetaBankV3IpaTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.ipaId,
+            referencedTable: $db.termMetaBankV3IpaTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+
   Expression<T> termMetaBankV3PitchRelationsTableRefs<T extends Object>(
       Expression<T> Function(
               $$TermMetaBankV3PitchRelationsTableTableAnnotationComposer a)
@@ -16060,6 +17341,8 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
         bool termId,
         bool readingId,
         bool typeId,
+        bool pitchId,
+        bool ipaId,
         bool termMetaBankV3PitchRelationsTableRefs,
         bool termMetaBankV3IpaRelationsTableRefs})> {
   $$TermMetaBankV3TableTableTableManager(
@@ -16083,6 +17366,8 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
             Value<int> typeId = const Value.absent(),
             Value<int?> freqValue = const Value.absent(),
             Value<String?> freqDisplayValue = const Value.absent(),
+            Value<int?> pitchId = const Value.absent(),
+            Value<int?> ipaId = const Value.absent(),
           }) =>
               TermMetaBankV3TableCompanion(
             id: id,
@@ -16092,6 +17377,8 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
             typeId: typeId,
             freqValue: freqValue,
             freqDisplayValue: freqDisplayValue,
+            pitchId: pitchId,
+            ipaId: ipaId,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
@@ -16101,6 +17388,8 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
             required int typeId,
             Value<int?> freqValue = const Value.absent(),
             Value<String?> freqDisplayValue = const Value.absent(),
+            Value<int?> pitchId = const Value.absent(),
+            Value<int?> ipaId = const Value.absent(),
           }) =>
               TermMetaBankV3TableCompanion.insert(
             id: id,
@@ -16110,6 +17399,8 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
             typeId: typeId,
             freqValue: freqValue,
             freqDisplayValue: freqDisplayValue,
+            pitchId: pitchId,
+            ipaId: ipaId,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
@@ -16122,6 +17413,8 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
               termId = false,
               readingId = false,
               typeId = false,
+              pitchId = false,
+              ipaId = false,
               termMetaBankV3PitchRelationsTableRefs = false,
               termMetaBankV3IpaRelationsTableRefs = false}) {
             return PrefetchHooks(
@@ -16189,6 +17482,27 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
                         .id,
                   ) as T;
                 }
+                if (pitchId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.pitchId,
+                    referencedTable:
+                        $$TermMetaBankV3TableTableReferences._pitchIdTable(db),
+                    referencedColumn: $$TermMetaBankV3TableTableReferences
+                        ._pitchIdTable(db)
+                        .id,
+                  ) as T;
+                }
+                if (ipaId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.ipaId,
+                    referencedTable:
+                        $$TermMetaBankV3TableTableReferences._ipaIdTable(db),
+                    referencedColumn:
+                        $$TermMetaBankV3TableTableReferences._ipaIdTable(db).id,
+                  ) as T;
+                }
 
                 return state;
               },
@@ -16241,609 +17555,10 @@ typedef $$TermMetaBankV3TableTableProcessedTableManager = ProcessedTableManager<
         bool termId,
         bool readingId,
         bool typeId,
+        bool pitchId,
+        bool ipaId,
         bool termMetaBankV3PitchRelationsTableRefs,
         bool termMetaBankV3IpaRelationsTableRefs})>;
-typedef $$TermMetaBankV3PitchTagTableTableCreateCompanionBuilder
-    = TermMetaBankV3PitchTagTableCompanion Function({
-  Value<int> id,
-  required String tag,
-});
-typedef $$TermMetaBankV3PitchTagTableTableUpdateCompanionBuilder
-    = TermMetaBankV3PitchTagTableCompanion Function({
-  Value<int> id,
-  Value<String> tag,
-});
-
-final class $$TermMetaBankV3PitchTagTableTableReferences extends BaseReferences<
-    _$DaKanjiDB,
-    $TermMetaBankV3PitchTagTableTable,
-    TermMetaBankV3PitchTagTableData> {
-  $$TermMetaBankV3PitchTagTableTableReferences(
-      super.$_db, super.$_table, super.$_typedResult);
-
-  static MultiTypedResultKey<$TermMetaBankV3PitchTableTable,
-      List<TermMetaBankV3PitchTableData>> _termMetaBankV3PitchTableRefsTable(
-          _$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(db.termMetaBankV3PitchTable,
-          aliasName: $_aliasNameGenerator(db.termMetaBankV3PitchTagTable.id,
-              db.termMetaBankV3PitchTable.tagId));
-
-  $$TermMetaBankV3PitchTableTableProcessedTableManager
-      get termMetaBankV3PitchTableRefs {
-    final manager = $$TermMetaBankV3PitchTableTableTableManager(
-            $_db, $_db.termMetaBankV3PitchTable)
-        .filter((f) => f.tagId.id($_item.id));
-
-    final cache =
-        $_typedResult.readTableOrNull(_termMetaBankV3PitchTableRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-}
-
-class $$TermMetaBankV3PitchTagTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTagTableTable> {
-  $$TermMetaBankV3PitchTagTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get tag => $composableBuilder(
-      column: $table.tag, builder: (column) => ColumnFilters(column));
-
-  Expression<bool> termMetaBankV3PitchTableRefs(
-      Expression<bool> Function($$TermMetaBankV3PitchTableTableFilterComposer f)
-          f) {
-    final $$TermMetaBankV3PitchTableTableFilterComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.termMetaBankV3PitchTable,
-            getReferencedColumn: (t) => t.tagId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3PitchTableTableFilterComposer(
-                  $db: $db,
-                  $table: $db.termMetaBankV3PitchTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-}
-
-class $$TermMetaBankV3PitchTagTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTagTableTable> {
-  $$TermMetaBankV3PitchTagTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get tag => $composableBuilder(
-      column: $table.tag, builder: (column) => ColumnOrderings(column));
-}
-
-class $$TermMetaBankV3PitchTagTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTagTableTable> {
-  $$TermMetaBankV3PitchTagTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get tag =>
-      $composableBuilder(column: $table.tag, builder: (column) => column);
-
-  Expression<T> termMetaBankV3PitchTableRefs<T extends Object>(
-      Expression<T> Function(
-              $$TermMetaBankV3PitchTableTableAnnotationComposer a)
-          f) {
-    final $$TermMetaBankV3PitchTableTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.termMetaBankV3PitchTable,
-            getReferencedColumn: (t) => t.tagId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3PitchTableTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.termMetaBankV3PitchTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-}
-
-class $$TermMetaBankV3PitchTagTableTableTableManager extends RootTableManager<
-    _$DaKanjiDB,
-    $TermMetaBankV3PitchTagTableTable,
-    TermMetaBankV3PitchTagTableData,
-    $$TermMetaBankV3PitchTagTableTableFilterComposer,
-    $$TermMetaBankV3PitchTagTableTableOrderingComposer,
-    $$TermMetaBankV3PitchTagTableTableAnnotationComposer,
-    $$TermMetaBankV3PitchTagTableTableCreateCompanionBuilder,
-    $$TermMetaBankV3PitchTagTableTableUpdateCompanionBuilder,
-    (
-      TermMetaBankV3PitchTagTableData,
-      $$TermMetaBankV3PitchTagTableTableReferences
-    ),
-    TermMetaBankV3PitchTagTableData,
-    PrefetchHooks Function({bool termMetaBankV3PitchTableRefs})> {
-  $$TermMetaBankV3PitchTagTableTableTableManager(
-      _$DaKanjiDB db, $TermMetaBankV3PitchTagTableTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$TermMetaBankV3PitchTagTableTableFilterComposer(
-                  $db: db, $table: table),
-          createOrderingComposer: () =>
-              $$TermMetaBankV3PitchTagTableTableOrderingComposer(
-                  $db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$TermMetaBankV3PitchTagTableTableAnnotationComposer(
-                  $db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<String> tag = const Value.absent(),
-          }) =>
-              TermMetaBankV3PitchTagTableCompanion(
-            id: id,
-            tag: tag,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required String tag,
-          }) =>
-              TermMetaBankV3PitchTagTableCompanion.insert(
-            id: id,
-            tag: tag,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$TermMetaBankV3PitchTagTableTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({termMetaBankV3PitchTableRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (termMetaBankV3PitchTableRefs) db.termMetaBankV3PitchTable
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (termMetaBankV3PitchTableRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable:
-                            $$TermMetaBankV3PitchTagTableTableReferences
-                                ._termMetaBankV3PitchTableRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$TermMetaBankV3PitchTagTableTableReferences(
-                                    db, table, p0)
-                                .termMetaBankV3PitchTableRefs,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.tagId == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
-}
-
-typedef $$TermMetaBankV3PitchTagTableTableProcessedTableManager = ProcessedTableManager<
-    _$DaKanjiDB,
-    $TermMetaBankV3PitchTagTableTable,
-    TermMetaBankV3PitchTagTableData,
-    $$TermMetaBankV3PitchTagTableTableFilterComposer,
-    $$TermMetaBankV3PitchTagTableTableOrderingComposer,
-    $$TermMetaBankV3PitchTagTableTableAnnotationComposer,
-    $$TermMetaBankV3PitchTagTableTableCreateCompanionBuilder,
-    $$TermMetaBankV3PitchTagTableTableUpdateCompanionBuilder,
-    (
-      TermMetaBankV3PitchTagTableData,
-      $$TermMetaBankV3PitchTagTableTableReferences
-    ),
-    TermMetaBankV3PitchTagTableData,
-    PrefetchHooks Function({bool termMetaBankV3PitchTableRefs})>;
-typedef $$TermMetaBankV3PitchTableTableCreateCompanionBuilder
-    = TermMetaBankV3PitchTableCompanion Function({
-  Value<int> id,
-  required int position,
-  Value<int?> tagId,
-  Value<int?> nasal,
-  Value<int?> devoice,
-});
-typedef $$TermMetaBankV3PitchTableTableUpdateCompanionBuilder
-    = TermMetaBankV3PitchTableCompanion Function({
-  Value<int> id,
-  Value<int> position,
-  Value<int?> tagId,
-  Value<int?> nasal,
-  Value<int?> devoice,
-});
-
-final class $$TermMetaBankV3PitchTableTableReferences extends BaseReferences<
-    _$DaKanjiDB, $TermMetaBankV3PitchTableTable, TermMetaBankV3PitchTableData> {
-  $$TermMetaBankV3PitchTableTableReferences(
-      super.$_db, super.$_table, super.$_typedResult);
-
-  static $TermMetaBankV3PitchTagTableTable _tagIdTable(_$DaKanjiDB db) =>
-      db.termMetaBankV3PitchTagTable.createAlias($_aliasNameGenerator(
-          db.termMetaBankV3PitchTable.tagId,
-          db.termMetaBankV3PitchTagTable.id));
-
-  $$TermMetaBankV3PitchTagTableTableProcessedTableManager? get tagId {
-    if ($_item.tagId == null) return null;
-    final manager = $$TermMetaBankV3PitchTagTableTableTableManager(
-            $_db, $_db.termMetaBankV3PitchTagTable)
-        .filter((f) => f.id($_item.tagId!));
-    final item = $_typedResult.readTableOrNull(_tagIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-
-  static MultiTypedResultKey<$TermMetaBankV3PitchRelationsTableTable,
-          List<TermMetaBankV3PitchRelationsTableData>>
-      _termMetaBankV3PitchRelationsTableRefsTable(_$DaKanjiDB db) =>
-          MultiTypedResultKey.fromTable(db.termMetaBankV3PitchRelationsTable,
-              aliasName: $_aliasNameGenerator(db.termMetaBankV3PitchTable.id,
-                  db.termMetaBankV3PitchRelationsTable.pitchId));
-
-  $$TermMetaBankV3PitchRelationsTableTableProcessedTableManager
-      get termMetaBankV3PitchRelationsTableRefs {
-    final manager = $$TermMetaBankV3PitchRelationsTableTableTableManager(
-            $_db, $_db.termMetaBankV3PitchRelationsTable)
-        .filter((f) => f.pitchId.id($_item.id));
-
-    final cache = $_typedResult
-        .readTableOrNull(_termMetaBankV3PitchRelationsTableRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-}
-
-class $$TermMetaBankV3PitchTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTableTable> {
-  $$TermMetaBankV3PitchTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get position => $composableBuilder(
-      column: $table.position, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get nasal => $composableBuilder(
-      column: $table.nasal, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get devoice => $composableBuilder(
-      column: $table.devoice, builder: (column) => ColumnFilters(column));
-
-  $$TermMetaBankV3PitchTagTableTableFilterComposer get tagId {
-    final $$TermMetaBankV3PitchTagTableTableFilterComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.tagId,
-            referencedTable: $db.termMetaBankV3PitchTagTable,
-            getReferencedColumn: (t) => t.id,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3PitchTagTableTableFilterComposer(
-                  $db: $db,
-                  $table: $db.termMetaBankV3PitchTagTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return composer;
-  }
-
-  Expression<bool> termMetaBankV3PitchRelationsTableRefs(
-      Expression<bool> Function(
-              $$TermMetaBankV3PitchRelationsTableTableFilterComposer f)
-          f) {
-    final $$TermMetaBankV3PitchRelationsTableTableFilterComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.termMetaBankV3PitchRelationsTable,
-            getReferencedColumn: (t) => t.pitchId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3PitchRelationsTableTableFilterComposer(
-                  $db: $db,
-                  $table: $db.termMetaBankV3PitchRelationsTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-}
-
-class $$TermMetaBankV3PitchTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTableTable> {
-  $$TermMetaBankV3PitchTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get position => $composableBuilder(
-      column: $table.position, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get nasal => $composableBuilder(
-      column: $table.nasal, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get devoice => $composableBuilder(
-      column: $table.devoice, builder: (column) => ColumnOrderings(column));
-
-  $$TermMetaBankV3PitchTagTableTableOrderingComposer get tagId {
-    final $$TermMetaBankV3PitchTagTableTableOrderingComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.tagId,
-            referencedTable: $db.termMetaBankV3PitchTagTable,
-            getReferencedColumn: (t) => t.id,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3PitchTagTableTableOrderingComposer(
-                  $db: $db,
-                  $table: $db.termMetaBankV3PitchTagTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return composer;
-  }
-}
-
-class $$TermMetaBankV3PitchTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTableTable> {
-  $$TermMetaBankV3PitchTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<int> get position =>
-      $composableBuilder(column: $table.position, builder: (column) => column);
-
-  GeneratedColumn<int> get nasal =>
-      $composableBuilder(column: $table.nasal, builder: (column) => column);
-
-  GeneratedColumn<int> get devoice =>
-      $composableBuilder(column: $table.devoice, builder: (column) => column);
-
-  $$TermMetaBankV3PitchTagTableTableAnnotationComposer get tagId {
-    final $$TermMetaBankV3PitchTagTableTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.tagId,
-            referencedTable: $db.termMetaBankV3PitchTagTable,
-            getReferencedColumn: (t) => t.id,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3PitchTagTableTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.termMetaBankV3PitchTagTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return composer;
-  }
-
-  Expression<T> termMetaBankV3PitchRelationsTableRefs<T extends Object>(
-      Expression<T> Function(
-              $$TermMetaBankV3PitchRelationsTableTableAnnotationComposer a)
-          f) {
-    final $$TermMetaBankV3PitchRelationsTableTableAnnotationComposer composer =
-        $composerBuilder(
-            composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.termMetaBankV3PitchRelationsTable,
-            getReferencedColumn: (t) => t.pitchId,
-            builder: (joinBuilder,
-                    {$addJoinBuilderToRootComposer,
-                    $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3PitchRelationsTableTableAnnotationComposer(
-                  $db: $db,
-                  $table: $db.termMetaBankV3PitchRelationsTable,
-                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                  joinBuilder: joinBuilder,
-                  $removeJoinBuilderFromRootComposer:
-                      $removeJoinBuilderFromRootComposer,
-                ));
-    return f(composer);
-  }
-}
-
-class $$TermMetaBankV3PitchTableTableTableManager extends RootTableManager<
-    _$DaKanjiDB,
-    $TermMetaBankV3PitchTableTable,
-    TermMetaBankV3PitchTableData,
-    $$TermMetaBankV3PitchTableTableFilterComposer,
-    $$TermMetaBankV3PitchTableTableOrderingComposer,
-    $$TermMetaBankV3PitchTableTableAnnotationComposer,
-    $$TermMetaBankV3PitchTableTableCreateCompanionBuilder,
-    $$TermMetaBankV3PitchTableTableUpdateCompanionBuilder,
-    (TermMetaBankV3PitchTableData, $$TermMetaBankV3PitchTableTableReferences),
-    TermMetaBankV3PitchTableData,
-    PrefetchHooks Function(
-        {bool tagId, bool termMetaBankV3PitchRelationsTableRefs})> {
-  $$TermMetaBankV3PitchTableTableTableManager(
-      _$DaKanjiDB db, $TermMetaBankV3PitchTableTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$TermMetaBankV3PitchTableTableFilterComposer(
-                  $db: db, $table: table),
-          createOrderingComposer: () =>
-              $$TermMetaBankV3PitchTableTableOrderingComposer(
-                  $db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$TermMetaBankV3PitchTableTableAnnotationComposer(
-                  $db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> position = const Value.absent(),
-            Value<int?> tagId = const Value.absent(),
-            Value<int?> nasal = const Value.absent(),
-            Value<int?> devoice = const Value.absent(),
-          }) =>
-              TermMetaBankV3PitchTableCompanion(
-            id: id,
-            position: position,
-            tagId: tagId,
-            nasal: nasal,
-            devoice: devoice,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required int position,
-            Value<int?> tagId = const Value.absent(),
-            Value<int?> nasal = const Value.absent(),
-            Value<int?> devoice = const Value.absent(),
-          }) =>
-              TermMetaBankV3PitchTableCompanion.insert(
-            id: id,
-            position: position,
-            tagId: tagId,
-            nasal: nasal,
-            devoice: devoice,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$TermMetaBankV3PitchTableTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: (
-              {tagId = false, termMetaBankV3PitchRelationsTableRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (termMetaBankV3PitchRelationsTableRefs)
-                  db.termMetaBankV3PitchRelationsTable
-              ],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (tagId) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.tagId,
-                    referencedTable: $$TermMetaBankV3PitchTableTableReferences
-                        ._tagIdTable(db),
-                    referencedColumn: $$TermMetaBankV3PitchTableTableReferences
-                        ._tagIdTable(db)
-                        .id,
-                  ) as T;
-                }
-
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (termMetaBankV3PitchRelationsTableRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable:
-                            $$TermMetaBankV3PitchTableTableReferences
-                                ._termMetaBankV3PitchRelationsTableRefsTable(
-                                    db),
-                        managerFromTypedResult: (p0) =>
-                            $$TermMetaBankV3PitchTableTableReferences(
-                                    db, table, p0)
-                                .termMetaBankV3PitchRelationsTableRefs,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.pitchId == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
-}
-
-typedef $$TermMetaBankV3PitchTableTableProcessedTableManager
-    = ProcessedTableManager<
-        _$DaKanjiDB,
-        $TermMetaBankV3PitchTableTable,
-        TermMetaBankV3PitchTableData,
-        $$TermMetaBankV3PitchTableTableFilterComposer,
-        $$TermMetaBankV3PitchTableTableOrderingComposer,
-        $$TermMetaBankV3PitchTableTableAnnotationComposer,
-        $$TermMetaBankV3PitchTableTableCreateCompanionBuilder,
-        $$TermMetaBankV3PitchTableTableUpdateCompanionBuilder,
-        (
-          TermMetaBankV3PitchTableData,
-          $$TermMetaBankV3PitchTableTableReferences
-        ),
-        TermMetaBankV3PitchTableData,
-        PrefetchHooks Function(
-            {bool tagId, bool termMetaBankV3PitchRelationsTableRefs})>;
 typedef $$TermMetaBankV3PitchRelationsTableTableCreateCompanionBuilder
     = TermMetaBankV3PitchRelationsTableCompanion Function({
   Value<int> id,
@@ -17187,47 +17902,64 @@ typedef $$TermMetaBankV3PitchRelationsTableTableProcessedTableManager
         ),
         TermMetaBankV3PitchRelationsTableData,
         PrefetchHooks Function({bool pitchId, bool termMetaId})>;
-typedef $$TermMetaBankV3IpaTagTableTableCreateCompanionBuilder
-    = TermMetaBankV3IpaTagTableCompanion Function({
+typedef $$TermMetaBankV3TagTableTableCreateCompanionBuilder
+    = TermMetaBankV3TagTableCompanion Function({
   Value<int> id,
   required String tag,
 });
-typedef $$TermMetaBankV3IpaTagTableTableUpdateCompanionBuilder
-    = TermMetaBankV3IpaTagTableCompanion Function({
+typedef $$TermMetaBankV3TagTableTableUpdateCompanionBuilder
+    = TermMetaBankV3TagTableCompanion Function({
   Value<int> id,
   Value<String> tag,
 });
 
-final class $$TermMetaBankV3IpaTagTableTableReferences extends BaseReferences<
-    _$DaKanjiDB,
-    $TermMetaBankV3IpaTagTableTable,
-    TermMetaBankV3IpaTagTableData> {
-  $$TermMetaBankV3IpaTagTableTableReferences(
+final class $$TermMetaBankV3TagTableTableReferences extends BaseReferences<
+    _$DaKanjiDB, $TermMetaBankV3TagTableTable, TermMetaBankV3TagTableData> {
+  $$TermMetaBankV3TagTableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<$TermMetaBankV3IpaTableTable,
-      List<TermMetaBankV3IpaTableData>> _termMetaBankV3IpaTableRefsTable(
-          _$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(db.termMetaBankV3IpaTable,
-          aliasName: $_aliasNameGenerator(db.termMetaBankV3IpaTagTable.id,
-              db.termMetaBankV3IpaTable.tagId));
+  static MultiTypedResultKey<$TermMetaBankV3PitchTagRelationsTableTable,
+          List<TermMetaBankV3PitchTagRelationsTableData>>
+      _termMetaBankV3PitchTagRelationsTableRefsTable(_$DaKanjiDB db) =>
+          MultiTypedResultKey.fromTable(db.termMetaBankV3PitchTagRelationsTable,
+              aliasName: $_aliasNameGenerator(db.termMetaBankV3TagTable.id,
+                  db.termMetaBankV3PitchTagRelationsTable.tagId));
 
-  $$TermMetaBankV3IpaTableTableProcessedTableManager
-      get termMetaBankV3IpaTableRefs {
-    final manager = $$TermMetaBankV3IpaTableTableTableManager(
-            $_db, $_db.termMetaBankV3IpaTable)
+  $$TermMetaBankV3PitchTagRelationsTableTableProcessedTableManager
+      get termMetaBankV3PitchTagRelationsTableRefs {
+    final manager = $$TermMetaBankV3PitchTagRelationsTableTableTableManager(
+            $_db, $_db.termMetaBankV3PitchTagRelationsTable)
         .filter((f) => f.tagId.id($_item.id));
 
-    final cache =
-        $_typedResult.readTableOrNull(_termMetaBankV3IpaTableRefsTable($_db));
+    final cache = $_typedResult
+        .readTableOrNull(_termMetaBankV3PitchTagRelationsTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$TermMetaBankV3IpaTagRelationsTableTable,
+          List<TermMetaBankV3IpaTagRelationsTableData>>
+      _termMetaBankV3IpaTagRelationsTableRefsTable(_$DaKanjiDB db) =>
+          MultiTypedResultKey.fromTable(db.termMetaBankV3IpaTagRelationsTable,
+              aliasName: $_aliasNameGenerator(db.termMetaBankV3TagTable.id,
+                  db.termMetaBankV3IpaTagRelationsTable.tagId));
+
+  $$TermMetaBankV3IpaTagRelationsTableTableProcessedTableManager
+      get termMetaBankV3IpaTagRelationsTableRefs {
+    final manager = $$TermMetaBankV3IpaTagRelationsTableTableTableManager(
+            $_db, $_db.termMetaBankV3IpaTagRelationsTable)
+        .filter((f) => f.tagId.id($_item.id));
+
+    final cache = $_typedResult
+        .readTableOrNull(_termMetaBankV3IpaTagRelationsTableRefsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
 }
 
-class $$TermMetaBankV3IpaTagTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTagTableTable> {
-  $$TermMetaBankV3IpaTagTableTableFilterComposer({
+class $$TermMetaBankV3TagTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3TagTableTable> {
+  $$TermMetaBankV3TagTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -17240,21 +17972,46 @@ class $$TermMetaBankV3IpaTagTableTableFilterComposer
   ColumnFilters<String> get tag => $composableBuilder(
       column: $table.tag, builder: (column) => ColumnFilters(column));
 
-  Expression<bool> termMetaBankV3IpaTableRefs(
-      Expression<bool> Function($$TermMetaBankV3IpaTableTableFilterComposer f)
+  Expression<bool> termMetaBankV3PitchTagRelationsTableRefs(
+      Expression<bool> Function(
+              $$TermMetaBankV3PitchTagRelationsTableTableFilterComposer f)
           f) {
-    final $$TermMetaBankV3IpaTableTableFilterComposer composer =
+    final $$TermMetaBankV3PitchTagRelationsTableTableFilterComposer composer =
         $composerBuilder(
             composer: this,
             getCurrentColumn: (t) => t.id,
-            referencedTable: $db.termMetaBankV3IpaTable,
+            referencedTable: $db.termMetaBankV3PitchTagRelationsTable,
             getReferencedColumn: (t) => t.tagId,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3IpaTableTableFilterComposer(
+                $$TermMetaBankV3PitchTagRelationsTableTableFilterComposer(
                   $db: $db,
-                  $table: $db.termMetaBankV3IpaTable,
+                  $table: $db.termMetaBankV3PitchTagRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+
+  Expression<bool> termMetaBankV3IpaTagRelationsTableRefs(
+      Expression<bool> Function(
+              $$TermMetaBankV3IpaTagRelationsTableTableFilterComposer f)
+          f) {
+    final $$TermMetaBankV3IpaTagRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3IpaTagRelationsTable,
+            getReferencedColumn: (t) => t.tagId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaTagRelationsTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaTagRelationsTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -17264,9 +18021,9 @@ class $$TermMetaBankV3IpaTagTableTableFilterComposer
   }
 }
 
-class $$TermMetaBankV3IpaTagTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTagTableTable> {
-  $$TermMetaBankV3IpaTagTableTableOrderingComposer({
+class $$TermMetaBankV3TagTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3TagTableTable> {
+  $$TermMetaBankV3TagTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -17280,9 +18037,9 @@ class $$TermMetaBankV3IpaTagTableTableOrderingComposer
       column: $table.tag, builder: (column) => ColumnOrderings(column));
 }
 
-class $$TermMetaBankV3IpaTagTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTagTableTable> {
-  $$TermMetaBankV3IpaTagTableTableAnnotationComposer({
+class $$TermMetaBankV3TagTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3TagTableTable> {
+  $$TermMetaBankV3TagTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -17295,21 +18052,46 @@ class $$TermMetaBankV3IpaTagTableTableAnnotationComposer
   GeneratedColumn<String> get tag =>
       $composableBuilder(column: $table.tag, builder: (column) => column);
 
-  Expression<T> termMetaBankV3IpaTableRefs<T extends Object>(
-      Expression<T> Function($$TermMetaBankV3IpaTableTableAnnotationComposer a)
+  Expression<T> termMetaBankV3PitchTagRelationsTableRefs<T extends Object>(
+      Expression<T> Function(
+              $$TermMetaBankV3PitchTagRelationsTableTableAnnotationComposer a)
           f) {
-    final $$TermMetaBankV3IpaTableTableAnnotationComposer composer =
-        $composerBuilder(
+    final $$TermMetaBankV3PitchTagRelationsTableTableAnnotationComposer
+        composer = $composerBuilder(
             composer: this,
             getCurrentColumn: (t) => t.id,
-            referencedTable: $db.termMetaBankV3IpaTable,
+            referencedTable: $db.termMetaBankV3PitchTagRelationsTable,
             getReferencedColumn: (t) => t.tagId,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3IpaTableTableAnnotationComposer(
+                $$TermMetaBankV3PitchTagRelationsTableTableAnnotationComposer(
                   $db: $db,
-                  $table: $db.termMetaBankV3IpaTable,
+                  $table: $db.termMetaBankV3PitchTagRelationsTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+
+  Expression<T> termMetaBankV3IpaTagRelationsTableRefs<T extends Object>(
+      Expression<T> Function(
+              $$TermMetaBankV3IpaTagRelationsTableTableAnnotationComposer a)
+          f) {
+    final $$TermMetaBankV3IpaTagRelationsTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.termMetaBankV3IpaTagRelationsTable,
+            getReferencedColumn: (t) => t.tagId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaTagRelationsTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaTagRelationsTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -17319,37 +18101,39 @@ class $$TermMetaBankV3IpaTagTableTableAnnotationComposer
   }
 }
 
-class $$TermMetaBankV3IpaTagTableTableTableManager extends RootTableManager<
+class $$TermMetaBankV3TagTableTableTableManager extends RootTableManager<
     _$DaKanjiDB,
-    $TermMetaBankV3IpaTagTableTable,
-    TermMetaBankV3IpaTagTableData,
-    $$TermMetaBankV3IpaTagTableTableFilterComposer,
-    $$TermMetaBankV3IpaTagTableTableOrderingComposer,
-    $$TermMetaBankV3IpaTagTableTableAnnotationComposer,
-    $$TermMetaBankV3IpaTagTableTableCreateCompanionBuilder,
-    $$TermMetaBankV3IpaTagTableTableUpdateCompanionBuilder,
-    (TermMetaBankV3IpaTagTableData, $$TermMetaBankV3IpaTagTableTableReferences),
-    TermMetaBankV3IpaTagTableData,
-    PrefetchHooks Function({bool termMetaBankV3IpaTableRefs})> {
-  $$TermMetaBankV3IpaTagTableTableTableManager(
-      _$DaKanjiDB db, $TermMetaBankV3IpaTagTableTable table)
+    $TermMetaBankV3TagTableTable,
+    TermMetaBankV3TagTableData,
+    $$TermMetaBankV3TagTableTableFilterComposer,
+    $$TermMetaBankV3TagTableTableOrderingComposer,
+    $$TermMetaBankV3TagTableTableAnnotationComposer,
+    $$TermMetaBankV3TagTableTableCreateCompanionBuilder,
+    $$TermMetaBankV3TagTableTableUpdateCompanionBuilder,
+    (TermMetaBankV3TagTableData, $$TermMetaBankV3TagTableTableReferences),
+    TermMetaBankV3TagTableData,
+    PrefetchHooks Function(
+        {bool termMetaBankV3PitchTagRelationsTableRefs,
+        bool termMetaBankV3IpaTagRelationsTableRefs})> {
+  $$TermMetaBankV3TagTableTableTableManager(
+      _$DaKanjiDB db, $TermMetaBankV3TagTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$TermMetaBankV3IpaTagTableTableFilterComposer(
+              $$TermMetaBankV3TagTableTableFilterComposer(
                   $db: db, $table: table),
           createOrderingComposer: () =>
-              $$TermMetaBankV3IpaTagTableTableOrderingComposer(
+              $$TermMetaBankV3TagTableTableOrderingComposer(
                   $db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$TermMetaBankV3IpaTagTableTableAnnotationComposer(
+              $$TermMetaBankV3TagTableTableAnnotationComposer(
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> tag = const Value.absent(),
           }) =>
-              TermMetaBankV3IpaTagTableCompanion(
+              TermMetaBankV3TagTableCompanion(
             id: id,
             tag: tag,
           ),
@@ -17357,35 +18141,52 @@ class $$TermMetaBankV3IpaTagTableTableTableManager extends RootTableManager<
             Value<int> id = const Value.absent(),
             required String tag,
           }) =>
-              TermMetaBankV3IpaTagTableCompanion.insert(
+              TermMetaBankV3TagTableCompanion.insert(
             id: id,
             tag: tag,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
                     e.readTable(table),
-                    $$TermMetaBankV3IpaTagTableTableReferences(db, table, e)
+                    $$TermMetaBankV3TagTableTableReferences(db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: ({termMetaBankV3IpaTableRefs = false}) {
+          prefetchHooksCallback: (
+              {termMetaBankV3PitchTagRelationsTableRefs = false,
+              termMetaBankV3IpaTagRelationsTableRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
-                if (termMetaBankV3IpaTableRefs) db.termMetaBankV3IpaTable
+                if (termMetaBankV3PitchTagRelationsTableRefs)
+                  db.termMetaBankV3PitchTagRelationsTable,
+                if (termMetaBankV3IpaTagRelationsTableRefs)
+                  db.termMetaBankV3IpaTagRelationsTable
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
-                  if (termMetaBankV3IpaTableRefs)
+                  if (termMetaBankV3PitchTagRelationsTableRefs)
                     await $_getPrefetchedData(
                         currentTable: table,
-                        referencedTable:
-                            $$TermMetaBankV3IpaTagTableTableReferences
-                                ._termMetaBankV3IpaTableRefsTable(db),
+                        referencedTable: $$TermMetaBankV3TagTableTableReferences
+                            ._termMetaBankV3PitchTagRelationsTableRefsTable(db),
                         managerFromTypedResult: (p0) =>
-                            $$TermMetaBankV3IpaTagTableTableReferences(
+                            $$TermMetaBankV3TagTableTableReferences(
                                     db, table, p0)
-                                .termMetaBankV3IpaTableRefs,
+                                .termMetaBankV3PitchTagRelationsTableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.tagId == item.id),
+                        typedResults: items),
+                  if (termMetaBankV3IpaTagRelationsTableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$TermMetaBankV3TagTableTableReferences
+                            ._termMetaBankV3IpaTagRelationsTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TermMetaBankV3TagTableTableReferences(
+                                    db, table, p0)
+                                .termMetaBankV3IpaTagRelationsTableRefs,
                         referencedItemsForCurrentItem: (item,
                                 referencedItems) =>
                             referencedItems.where((e) => e.tagId == item.id),
@@ -17397,78 +18198,78 @@ class $$TermMetaBankV3IpaTagTableTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$TermMetaBankV3IpaTagTableTableProcessedTableManager
+typedef $$TermMetaBankV3TagTableTableProcessedTableManager
     = ProcessedTableManager<
         _$DaKanjiDB,
-        $TermMetaBankV3IpaTagTableTable,
-        TermMetaBankV3IpaTagTableData,
-        $$TermMetaBankV3IpaTagTableTableFilterComposer,
-        $$TermMetaBankV3IpaTagTableTableOrderingComposer,
-        $$TermMetaBankV3IpaTagTableTableAnnotationComposer,
-        $$TermMetaBankV3IpaTagTableTableCreateCompanionBuilder,
-        $$TermMetaBankV3IpaTagTableTableUpdateCompanionBuilder,
-        (
-          TermMetaBankV3IpaTagTableData,
-          $$TermMetaBankV3IpaTagTableTableReferences
-        ),
-        TermMetaBankV3IpaTagTableData,
-        PrefetchHooks Function({bool termMetaBankV3IpaTableRefs})>;
-typedef $$TermMetaBankV3IpaTableTableCreateCompanionBuilder
-    = TermMetaBankV3IpaTableCompanion Function({
+        $TermMetaBankV3TagTableTable,
+        TermMetaBankV3TagTableData,
+        $$TermMetaBankV3TagTableTableFilterComposer,
+        $$TermMetaBankV3TagTableTableOrderingComposer,
+        $$TermMetaBankV3TagTableTableAnnotationComposer,
+        $$TermMetaBankV3TagTableTableCreateCompanionBuilder,
+        $$TermMetaBankV3TagTableTableUpdateCompanionBuilder,
+        (TermMetaBankV3TagTableData, $$TermMetaBankV3TagTableTableReferences),
+        TermMetaBankV3TagTableData,
+        PrefetchHooks Function(
+            {bool termMetaBankV3PitchTagRelationsTableRefs,
+            bool termMetaBankV3IpaTagRelationsTableRefs})>;
+typedef $$TermMetaBankV3PitchTagRelationsTableTableCreateCompanionBuilder
+    = TermMetaBankV3PitchTagRelationsTableCompanion Function({
   Value<int> id,
-  required String ipa,
+  required int pitchId,
   required int tagId,
 });
-typedef $$TermMetaBankV3IpaTableTableUpdateCompanionBuilder
-    = TermMetaBankV3IpaTableCompanion Function({
+typedef $$TermMetaBankV3PitchTagRelationsTableTableUpdateCompanionBuilder
+    = TermMetaBankV3PitchTagRelationsTableCompanion Function({
   Value<int> id,
-  Value<String> ipa,
+  Value<int> pitchId,
   Value<int> tagId,
 });
 
-final class $$TermMetaBankV3IpaTableTableReferences extends BaseReferences<
-    _$DaKanjiDB, $TermMetaBankV3IpaTableTable, TermMetaBankV3IpaTableData> {
-  $$TermMetaBankV3IpaTableTableReferences(
+final class $$TermMetaBankV3PitchTagRelationsTableTableReferences
+    extends BaseReferences<
+        _$DaKanjiDB,
+        $TermMetaBankV3PitchTagRelationsTableTable,
+        TermMetaBankV3PitchTagRelationsTableData> {
+  $$TermMetaBankV3PitchTagRelationsTableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
 
-  static $TermMetaBankV3IpaTagTableTable _tagIdTable(_$DaKanjiDB db) =>
-      db.termMetaBankV3IpaTagTable.createAlias($_aliasNameGenerator(
-          db.termMetaBankV3IpaTable.tagId, db.termMetaBankV3IpaTagTable.id));
+  static $TermMetaBankV3PitchTableTable _pitchIdTable(_$DaKanjiDB db) =>
+      db.termMetaBankV3PitchTable.createAlias($_aliasNameGenerator(
+          db.termMetaBankV3PitchTagRelationsTable.pitchId,
+          db.termMetaBankV3PitchTable.id));
 
-  $$TermMetaBankV3IpaTagTableTableProcessedTableManager? get tagId {
+  $$TermMetaBankV3PitchTableTableProcessedTableManager? get pitchId {
+    if ($_item.pitchId == null) return null;
+    final manager = $$TermMetaBankV3PitchTableTableTableManager(
+            $_db, $_db.termMetaBankV3PitchTable)
+        .filter((f) => f.id($_item.pitchId!));
+    final item = $_typedResult.readTableOrNull(_pitchIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $TermMetaBankV3TagTableTable _tagIdTable(_$DaKanjiDB db) =>
+      db.termMetaBankV3TagTable.createAlias($_aliasNameGenerator(
+          db.termMetaBankV3PitchTagRelationsTable.tagId,
+          db.termMetaBankV3TagTable.id));
+
+  $$TermMetaBankV3TagTableTableProcessedTableManager? get tagId {
     if ($_item.tagId == null) return null;
-    final manager = $$TermMetaBankV3IpaTagTableTableTableManager(
-            $_db, $_db.termMetaBankV3IpaTagTable)
+    final manager = $$TermMetaBankV3TagTableTableTableManager(
+            $_db, $_db.termMetaBankV3TagTable)
         .filter((f) => f.id($_item.tagId!));
     final item = $_typedResult.readTableOrNull(_tagIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: [item]));
   }
-
-  static MultiTypedResultKey<$TermMetaBankV3IpaRelationsTableTable,
-          List<TermMetaBankV3IpaRelationsTableData>>
-      _termMetaBankV3IpaRelationsTableRefsTable(_$DaKanjiDB db) =>
-          MultiTypedResultKey.fromTable(db.termMetaBankV3IpaRelationsTable,
-              aliasName: $_aliasNameGenerator(db.termMetaBankV3IpaTable.id,
-                  db.termMetaBankV3IpaRelationsTable.ipaId));
-
-  $$TermMetaBankV3IpaRelationsTableTableProcessedTableManager
-      get termMetaBankV3IpaRelationsTableRefs {
-    final manager = $$TermMetaBankV3IpaRelationsTableTableTableManager(
-            $_db, $_db.termMetaBankV3IpaRelationsTable)
-        .filter((f) => f.ipaId.id($_item.id));
-
-    final cache = $_typedResult
-        .readTableOrNull(_termMetaBankV3IpaRelationsTableRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
 }
 
-class $$TermMetaBankV3IpaTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTableTable> {
-  $$TermMetaBankV3IpaTableTableFilterComposer({
+class $$TermMetaBankV3PitchTagRelationsTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTagRelationsTableTable> {
+  $$TermMetaBankV3PitchTagRelationsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -17478,22 +18279,19 @@ class $$TermMetaBankV3IpaTableTableFilterComposer
   ColumnFilters<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get ipa => $composableBuilder(
-      column: $table.ipa, builder: (column) => ColumnFilters(column));
-
-  $$TermMetaBankV3IpaTagTableTableFilterComposer get tagId {
-    final $$TermMetaBankV3IpaTagTableTableFilterComposer composer =
+  $$TermMetaBankV3PitchTableTableFilterComposer get pitchId {
+    final $$TermMetaBankV3PitchTableTableFilterComposer composer =
         $composerBuilder(
             composer: this,
-            getCurrentColumn: (t) => t.tagId,
-            referencedTable: $db.termMetaBankV3IpaTagTable,
+            getCurrentColumn: (t) => t.pitchId,
+            referencedTable: $db.termMetaBankV3PitchTable,
             getReferencedColumn: (t) => t.id,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3IpaTagTableTableFilterComposer(
+                $$TermMetaBankV3PitchTableTableFilterComposer(
                   $db: $db,
-                  $table: $db.termMetaBankV3IpaTagTable,
+                  $table: $db.termMetaBankV3PitchTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -17502,34 +18300,31 @@ class $$TermMetaBankV3IpaTableTableFilterComposer
     return composer;
   }
 
-  Expression<bool> termMetaBankV3IpaRelationsTableRefs(
-      Expression<bool> Function(
-              $$TermMetaBankV3IpaRelationsTableTableFilterComposer f)
-          f) {
-    final $$TermMetaBankV3IpaRelationsTableTableFilterComposer composer =
+  $$TermMetaBankV3TagTableTableFilterComposer get tagId {
+    final $$TermMetaBankV3TagTableTableFilterComposer composer =
         $composerBuilder(
             composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.termMetaBankV3IpaRelationsTable,
-            getReferencedColumn: (t) => t.ipaId,
+            getCurrentColumn: (t) => t.tagId,
+            referencedTable: $db.termMetaBankV3TagTable,
+            getReferencedColumn: (t) => t.id,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3IpaRelationsTableTableFilterComposer(
+                $$TermMetaBankV3TagTableTableFilterComposer(
                   $db: $db,
-                  $table: $db.termMetaBankV3IpaRelationsTable,
+                  $table: $db.termMetaBankV3TagTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
                       $removeJoinBuilderFromRootComposer,
                 ));
-    return f(composer);
+    return composer;
   }
 }
 
-class $$TermMetaBankV3IpaTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTableTable> {
-  $$TermMetaBankV3IpaTableTableOrderingComposer({
+class $$TermMetaBankV3PitchTagRelationsTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTagRelationsTableTable> {
+  $$TermMetaBankV3PitchTagRelationsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -17539,22 +18334,40 @@ class $$TermMetaBankV3IpaTableTableOrderingComposer
   ColumnOrderings<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get ipa => $composableBuilder(
-      column: $table.ipa, builder: (column) => ColumnOrderings(column));
-
-  $$TermMetaBankV3IpaTagTableTableOrderingComposer get tagId {
-    final $$TermMetaBankV3IpaTagTableTableOrderingComposer composer =
+  $$TermMetaBankV3PitchTableTableOrderingComposer get pitchId {
+    final $$TermMetaBankV3PitchTableTableOrderingComposer composer =
         $composerBuilder(
             composer: this,
-            getCurrentColumn: (t) => t.tagId,
-            referencedTable: $db.termMetaBankV3IpaTagTable,
+            getCurrentColumn: (t) => t.pitchId,
+            referencedTable: $db.termMetaBankV3PitchTable,
             getReferencedColumn: (t) => t.id,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3IpaTagTableTableOrderingComposer(
+                $$TermMetaBankV3PitchTableTableOrderingComposer(
                   $db: $db,
-                  $table: $db.termMetaBankV3IpaTagTable,
+                  $table: $db.termMetaBankV3PitchTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+
+  $$TermMetaBankV3TagTableTableOrderingComposer get tagId {
+    final $$TermMetaBankV3TagTableTableOrderingComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.tagId,
+            referencedTable: $db.termMetaBankV3TagTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3TagTableTableOrderingComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3TagTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -17564,9 +18377,9 @@ class $$TermMetaBankV3IpaTableTableOrderingComposer
   }
 }
 
-class $$TermMetaBankV3IpaTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTableTable> {
-  $$TermMetaBankV3IpaTableTableAnnotationComposer({
+class $$TermMetaBankV3PitchTagRelationsTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTagRelationsTableTable> {
+  $$TermMetaBankV3PitchTagRelationsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -17576,22 +18389,19 @@ class $$TermMetaBankV3IpaTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get ipa =>
-      $composableBuilder(column: $table.ipa, builder: (column) => column);
-
-  $$TermMetaBankV3IpaTagTableTableAnnotationComposer get tagId {
-    final $$TermMetaBankV3IpaTagTableTableAnnotationComposer composer =
+  $$TermMetaBankV3PitchTableTableAnnotationComposer get pitchId {
+    final $$TermMetaBankV3PitchTableTableAnnotationComposer composer =
         $composerBuilder(
             composer: this,
-            getCurrentColumn: (t) => t.tagId,
-            referencedTable: $db.termMetaBankV3IpaTagTable,
+            getCurrentColumn: (t) => t.pitchId,
+            referencedTable: $db.termMetaBankV3PitchTable,
             getReferencedColumn: (t) => t.id,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3IpaTagTableTableAnnotationComposer(
+                $$TermMetaBankV3PitchTableTableAnnotationComposer(
                   $db: $db,
-                  $table: $db.termMetaBankV3IpaTagTable,
+                  $table: $db.termMetaBankV3PitchTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
@@ -17600,92 +18410,89 @@ class $$TermMetaBankV3IpaTableTableAnnotationComposer
     return composer;
   }
 
-  Expression<T> termMetaBankV3IpaRelationsTableRefs<T extends Object>(
-      Expression<T> Function(
-              $$TermMetaBankV3IpaRelationsTableTableAnnotationComposer a)
-          f) {
-    final $$TermMetaBankV3IpaRelationsTableTableAnnotationComposer composer =
+  $$TermMetaBankV3TagTableTableAnnotationComposer get tagId {
+    final $$TermMetaBankV3TagTableTableAnnotationComposer composer =
         $composerBuilder(
             composer: this,
-            getCurrentColumn: (t) => t.id,
-            referencedTable: $db.termMetaBankV3IpaRelationsTable,
-            getReferencedColumn: (t) => t.ipaId,
+            getCurrentColumn: (t) => t.tagId,
+            referencedTable: $db.termMetaBankV3TagTable,
+            getReferencedColumn: (t) => t.id,
             builder: (joinBuilder,
                     {$addJoinBuilderToRootComposer,
                     $removeJoinBuilderFromRootComposer}) =>
-                $$TermMetaBankV3IpaRelationsTableTableAnnotationComposer(
+                $$TermMetaBankV3TagTableTableAnnotationComposer(
                   $db: $db,
-                  $table: $db.termMetaBankV3IpaRelationsTable,
+                  $table: $db.termMetaBankV3TagTable,
                   $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                   joinBuilder: joinBuilder,
                   $removeJoinBuilderFromRootComposer:
                       $removeJoinBuilderFromRootComposer,
                 ));
-    return f(composer);
+    return composer;
   }
 }
 
-class $$TermMetaBankV3IpaTableTableTableManager extends RootTableManager<
-    _$DaKanjiDB,
-    $TermMetaBankV3IpaTableTable,
-    TermMetaBankV3IpaTableData,
-    $$TermMetaBankV3IpaTableTableFilterComposer,
-    $$TermMetaBankV3IpaTableTableOrderingComposer,
-    $$TermMetaBankV3IpaTableTableAnnotationComposer,
-    $$TermMetaBankV3IpaTableTableCreateCompanionBuilder,
-    $$TermMetaBankV3IpaTableTableUpdateCompanionBuilder,
-    (TermMetaBankV3IpaTableData, $$TermMetaBankV3IpaTableTableReferences),
-    TermMetaBankV3IpaTableData,
-    PrefetchHooks Function(
-        {bool tagId, bool termMetaBankV3IpaRelationsTableRefs})> {
-  $$TermMetaBankV3IpaTableTableTableManager(
-      _$DaKanjiDB db, $TermMetaBankV3IpaTableTable table)
+class $$TermMetaBankV3PitchTagRelationsTableTableTableManager
+    extends RootTableManager<
+        _$DaKanjiDB,
+        $TermMetaBankV3PitchTagRelationsTableTable,
+        TermMetaBankV3PitchTagRelationsTableData,
+        $$TermMetaBankV3PitchTagRelationsTableTableFilterComposer,
+        $$TermMetaBankV3PitchTagRelationsTableTableOrderingComposer,
+        $$TermMetaBankV3PitchTagRelationsTableTableAnnotationComposer,
+        $$TermMetaBankV3PitchTagRelationsTableTableCreateCompanionBuilder,
+        $$TermMetaBankV3PitchTagRelationsTableTableUpdateCompanionBuilder,
+        (
+          TermMetaBankV3PitchTagRelationsTableData,
+          $$TermMetaBankV3PitchTagRelationsTableTableReferences
+        ),
+        TermMetaBankV3PitchTagRelationsTableData,
+        PrefetchHooks Function({bool pitchId, bool tagId})> {
+  $$TermMetaBankV3PitchTagRelationsTableTableTableManager(
+      _$DaKanjiDB db, $TermMetaBankV3PitchTagRelationsTableTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$TermMetaBankV3IpaTableTableFilterComposer(
+              $$TermMetaBankV3PitchTagRelationsTableTableFilterComposer(
                   $db: db, $table: table),
           createOrderingComposer: () =>
-              $$TermMetaBankV3IpaTableTableOrderingComposer(
+              $$TermMetaBankV3PitchTagRelationsTableTableOrderingComposer(
                   $db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$TermMetaBankV3IpaTableTableAnnotationComposer(
+              $$TermMetaBankV3PitchTagRelationsTableTableAnnotationComposer(
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            Value<String> ipa = const Value.absent(),
+            Value<int> pitchId = const Value.absent(),
             Value<int> tagId = const Value.absent(),
           }) =>
-              TermMetaBankV3IpaTableCompanion(
+              TermMetaBankV3PitchTagRelationsTableCompanion(
             id: id,
-            ipa: ipa,
+            pitchId: pitchId,
             tagId: tagId,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            required String ipa,
+            required int pitchId,
             required int tagId,
           }) =>
-              TermMetaBankV3IpaTableCompanion.insert(
+              TermMetaBankV3PitchTagRelationsTableCompanion.insert(
             id: id,
-            ipa: ipa,
+            pitchId: pitchId,
             tagId: tagId,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
                     e.readTable(table),
-                    $$TermMetaBankV3IpaTableTableReferences(db, table, e)
+                    $$TermMetaBankV3PitchTagRelationsTableTableReferences(
+                        db, table, e)
                   ))
               .toList(),
-          prefetchHooksCallback: (
-              {tagId = false, termMetaBankV3IpaRelationsTableRefs = false}) {
+          prefetchHooksCallback: ({pitchId = false, tagId = false}) {
             return PrefetchHooks(
               db: db,
-              explicitlyWatchedTables: [
-                if (termMetaBankV3IpaRelationsTableRefs)
-                  db.termMetaBankV3IpaRelationsTable
-              ],
+              explicitlyWatchedTables: [],
               addJoins: <
                   T extends TableManagerState<
                       dynamic,
@@ -17699,56 +18506,59 @@ class $$TermMetaBankV3IpaTableTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic>>(state) {
+                if (pitchId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.pitchId,
+                    referencedTable:
+                        $$TermMetaBankV3PitchTagRelationsTableTableReferences
+                            ._pitchIdTable(db),
+                    referencedColumn:
+                        $$TermMetaBankV3PitchTagRelationsTableTableReferences
+                            ._pitchIdTable(db)
+                            .id,
+                  ) as T;
+                }
                 if (tagId) {
                   state = state.withJoin(
                     currentTable: table,
                     currentColumn: table.tagId,
                     referencedTable:
-                        $$TermMetaBankV3IpaTableTableReferences._tagIdTable(db),
-                    referencedColumn: $$TermMetaBankV3IpaTableTableReferences
-                        ._tagIdTable(db)
-                        .id,
+                        $$TermMetaBankV3PitchTagRelationsTableTableReferences
+                            ._tagIdTable(db),
+                    referencedColumn:
+                        $$TermMetaBankV3PitchTagRelationsTableTableReferences
+                            ._tagIdTable(db)
+                            .id,
                   ) as T;
                 }
 
                 return state;
               },
               getPrefetchedDataCallback: (items) async {
-                return [
-                  if (termMetaBankV3IpaRelationsTableRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable: $$TermMetaBankV3IpaTableTableReferences
-                            ._termMetaBankV3IpaRelationsTableRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$TermMetaBankV3IpaTableTableReferences(
-                                    db, table, p0)
-                                .termMetaBankV3IpaRelationsTableRefs,
-                        referencedItemsForCurrentItem: (item,
-                                referencedItems) =>
-                            referencedItems.where((e) => e.ipaId == item.id),
-                        typedResults: items)
-                ];
+                return [];
               },
             );
           },
         ));
 }
 
-typedef $$TermMetaBankV3IpaTableTableProcessedTableManager
+typedef $$TermMetaBankV3PitchTagRelationsTableTableProcessedTableManager
     = ProcessedTableManager<
         _$DaKanjiDB,
-        $TermMetaBankV3IpaTableTable,
-        TermMetaBankV3IpaTableData,
-        $$TermMetaBankV3IpaTableTableFilterComposer,
-        $$TermMetaBankV3IpaTableTableOrderingComposer,
-        $$TermMetaBankV3IpaTableTableAnnotationComposer,
-        $$TermMetaBankV3IpaTableTableCreateCompanionBuilder,
-        $$TermMetaBankV3IpaTableTableUpdateCompanionBuilder,
-        (TermMetaBankV3IpaTableData, $$TermMetaBankV3IpaTableTableReferences),
-        TermMetaBankV3IpaTableData,
-        PrefetchHooks Function(
-            {bool tagId, bool termMetaBankV3IpaRelationsTableRefs})>;
+        $TermMetaBankV3PitchTagRelationsTableTable,
+        TermMetaBankV3PitchTagRelationsTableData,
+        $$TermMetaBankV3PitchTagRelationsTableTableFilterComposer,
+        $$TermMetaBankV3PitchTagRelationsTableTableOrderingComposer,
+        $$TermMetaBankV3PitchTagRelationsTableTableAnnotationComposer,
+        $$TermMetaBankV3PitchTagRelationsTableTableCreateCompanionBuilder,
+        $$TermMetaBankV3PitchTagRelationsTableTableUpdateCompanionBuilder,
+        (
+          TermMetaBankV3PitchTagRelationsTableData,
+          $$TermMetaBankV3PitchTagRelationsTableTableReferences
+        ),
+        TermMetaBankV3PitchTagRelationsTableData,
+        PrefetchHooks Function({bool pitchId, bool tagId})>;
 typedef $$TermMetaBankV3IpaRelationsTableTableCreateCompanionBuilder
     = TermMetaBankV3IpaRelationsTableCompanion Function({
   Value<int> id,
@@ -18092,6 +18902,352 @@ typedef $$TermMetaBankV3IpaRelationsTableTableProcessedTableManager
         ),
         TermMetaBankV3IpaRelationsTableData,
         PrefetchHooks Function({bool ipaId, bool termMetaId})>;
+typedef $$TermMetaBankV3IpaTagRelationsTableTableCreateCompanionBuilder
+    = TermMetaBankV3IpaTagRelationsTableCompanion Function({
+  Value<int> id,
+  required int ipaId,
+  required int tagId,
+});
+typedef $$TermMetaBankV3IpaTagRelationsTableTableUpdateCompanionBuilder
+    = TermMetaBankV3IpaTagRelationsTableCompanion Function({
+  Value<int> id,
+  Value<int> ipaId,
+  Value<int> tagId,
+});
+
+final class $$TermMetaBankV3IpaTagRelationsTableTableReferences
+    extends BaseReferences<
+        _$DaKanjiDB,
+        $TermMetaBankV3IpaTagRelationsTableTable,
+        TermMetaBankV3IpaTagRelationsTableData> {
+  $$TermMetaBankV3IpaTagRelationsTableTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $TermMetaBankV3IpaTableTable _ipaIdTable(_$DaKanjiDB db) =>
+      db.termMetaBankV3IpaTable.createAlias($_aliasNameGenerator(
+          db.termMetaBankV3IpaTagRelationsTable.ipaId,
+          db.termMetaBankV3IpaTable.id));
+
+  $$TermMetaBankV3IpaTableTableProcessedTableManager? get ipaId {
+    if ($_item.ipaId == null) return null;
+    final manager = $$TermMetaBankV3IpaTableTableTableManager(
+            $_db, $_db.termMetaBankV3IpaTable)
+        .filter((f) => f.id($_item.ipaId!));
+    final item = $_typedResult.readTableOrNull(_ipaIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $TermMetaBankV3TagTableTable _tagIdTable(_$DaKanjiDB db) =>
+      db.termMetaBankV3TagTable.createAlias($_aliasNameGenerator(
+          db.termMetaBankV3IpaTagRelationsTable.tagId,
+          db.termMetaBankV3TagTable.id));
+
+  $$TermMetaBankV3TagTableTableProcessedTableManager? get tagId {
+    if ($_item.tagId == null) return null;
+    final manager = $$TermMetaBankV3TagTableTableTableManager(
+            $_db, $_db.termMetaBankV3TagTable)
+        .filter((f) => f.id($_item.tagId!));
+    final item = $_typedResult.readTableOrNull(_tagIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
+class $$TermMetaBankV3IpaTagRelationsTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTagRelationsTableTable> {
+  $$TermMetaBankV3IpaTagRelationsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  $$TermMetaBankV3IpaTableTableFilterComposer get ipaId {
+    final $$TermMetaBankV3IpaTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.ipaId,
+            referencedTable: $db.termMetaBankV3IpaTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+
+  $$TermMetaBankV3TagTableTableFilterComposer get tagId {
+    final $$TermMetaBankV3TagTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.tagId,
+            referencedTable: $db.termMetaBankV3TagTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3TagTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3TagTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+}
+
+class $$TermMetaBankV3IpaTagRelationsTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTagRelationsTableTable> {
+  $$TermMetaBankV3IpaTagRelationsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  $$TermMetaBankV3IpaTableTableOrderingComposer get ipaId {
+    final $$TermMetaBankV3IpaTableTableOrderingComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.ipaId,
+            referencedTable: $db.termMetaBankV3IpaTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaTableTableOrderingComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+
+  $$TermMetaBankV3TagTableTableOrderingComposer get tagId {
+    final $$TermMetaBankV3TagTableTableOrderingComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.tagId,
+            referencedTable: $db.termMetaBankV3TagTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3TagTableTableOrderingComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3TagTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+}
+
+class $$TermMetaBankV3IpaTagRelationsTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTagRelationsTableTable> {
+  $$TermMetaBankV3IpaTagRelationsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$TermMetaBankV3IpaTableTableAnnotationComposer get ipaId {
+    final $$TermMetaBankV3IpaTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.ipaId,
+            referencedTable: $db.termMetaBankV3IpaTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3IpaTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3IpaTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+
+  $$TermMetaBankV3TagTableTableAnnotationComposer get tagId {
+    final $$TermMetaBankV3TagTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.tagId,
+            referencedTable: $db.termMetaBankV3TagTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$TermMetaBankV3TagTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.termMetaBankV3TagTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
+}
+
+class $$TermMetaBankV3IpaTagRelationsTableTableTableManager
+    extends RootTableManager<
+        _$DaKanjiDB,
+        $TermMetaBankV3IpaTagRelationsTableTable,
+        TermMetaBankV3IpaTagRelationsTableData,
+        $$TermMetaBankV3IpaTagRelationsTableTableFilterComposer,
+        $$TermMetaBankV3IpaTagRelationsTableTableOrderingComposer,
+        $$TermMetaBankV3IpaTagRelationsTableTableAnnotationComposer,
+        $$TermMetaBankV3IpaTagRelationsTableTableCreateCompanionBuilder,
+        $$TermMetaBankV3IpaTagRelationsTableTableUpdateCompanionBuilder,
+        (
+          TermMetaBankV3IpaTagRelationsTableData,
+          $$TermMetaBankV3IpaTagRelationsTableTableReferences
+        ),
+        TermMetaBankV3IpaTagRelationsTableData,
+        PrefetchHooks Function({bool ipaId, bool tagId})> {
+  $$TermMetaBankV3IpaTagRelationsTableTableTableManager(
+      _$DaKanjiDB db, $TermMetaBankV3IpaTagRelationsTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermMetaBankV3IpaTagRelationsTableTableFilterComposer(
+                  $db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TermMetaBankV3IpaTagRelationsTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TermMetaBankV3IpaTagRelationsTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> ipaId = const Value.absent(),
+            Value<int> tagId = const Value.absent(),
+          }) =>
+              TermMetaBankV3IpaTagRelationsTableCompanion(
+            id: id,
+            ipaId: ipaId,
+            tagId: tagId,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int ipaId,
+            required int tagId,
+          }) =>
+              TermMetaBankV3IpaTagRelationsTableCompanion.insert(
+            id: id,
+            ipaId: ipaId,
+            tagId: tagId,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TermMetaBankV3IpaTagRelationsTableTableReferences(
+                        db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({ipaId = false, tagId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (ipaId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.ipaId,
+                    referencedTable:
+                        $$TermMetaBankV3IpaTagRelationsTableTableReferences
+                            ._ipaIdTable(db),
+                    referencedColumn:
+                        $$TermMetaBankV3IpaTagRelationsTableTableReferences
+                            ._ipaIdTable(db)
+                            .id,
+                  ) as T;
+                }
+                if (tagId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.tagId,
+                    referencedTable:
+                        $$TermMetaBankV3IpaTagRelationsTableTableReferences
+                            ._tagIdTable(db),
+                    referencedColumn:
+                        $$TermMetaBankV3IpaTagRelationsTableTableReferences
+                            ._tagIdTable(db)
+                            .id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TermMetaBankV3IpaTagRelationsTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$DaKanjiDB,
+        $TermMetaBankV3IpaTagRelationsTableTable,
+        TermMetaBankV3IpaTagRelationsTableData,
+        $$TermMetaBankV3IpaTagRelationsTableTableFilterComposer,
+        $$TermMetaBankV3IpaTagRelationsTableTableOrderingComposer,
+        $$TermMetaBankV3IpaTagRelationsTableTableAnnotationComposer,
+        $$TermMetaBankV3IpaTagRelationsTableTableCreateCompanionBuilder,
+        $$TermMetaBankV3IpaTagRelationsTableTableUpdateCompanionBuilder,
+        (
+          TermMetaBankV3IpaTagRelationsTableData,
+          $$TermMetaBankV3IpaTagRelationsTableTableReferences
+        ),
+        TermMetaBankV3IpaTagRelationsTableData,
+        PrefetchHooks Function({bool ipaId, bool tagId})>;
 
 class $DaKanjiDBManager {
   final _$DaKanjiDB _db;
@@ -18162,27 +19318,31 @@ class $DaKanjiDBManager {
   $$TermMetaBankV3TypeTableTableTableManager get termMetaBankV3TypeTable =>
       $$TermMetaBankV3TypeTableTableTableManager(
           _db, _db.termMetaBankV3TypeTable);
-  $$TermMetaBankV3TableTableTableManager get termMetaBankV3Table =>
-      $$TermMetaBankV3TableTableTableManager(_db, _db.termMetaBankV3Table);
-  $$TermMetaBankV3PitchTagTableTableTableManager
-      get termMetaBankV3PitchTagTable =>
-          $$TermMetaBankV3PitchTagTableTableTableManager(
-              _db, _db.termMetaBankV3PitchTagTable);
   $$TermMetaBankV3PitchTableTableTableManager get termMetaBankV3PitchTable =>
       $$TermMetaBankV3PitchTableTableTableManager(
           _db, _db.termMetaBankV3PitchTable);
+  $$TermMetaBankV3IpaTableTableTableManager get termMetaBankV3IpaTable =>
+      $$TermMetaBankV3IpaTableTableTableManager(
+          _db, _db.termMetaBankV3IpaTable);
+  $$TermMetaBankV3TableTableTableManager get termMetaBankV3Table =>
+      $$TermMetaBankV3TableTableTableManager(_db, _db.termMetaBankV3Table);
   $$TermMetaBankV3PitchRelationsTableTableTableManager
       get termMetaBankV3PitchRelationsTable =>
           $$TermMetaBankV3PitchRelationsTableTableTableManager(
               _db, _db.termMetaBankV3PitchRelationsTable);
-  $$TermMetaBankV3IpaTagTableTableTableManager get termMetaBankV3IpaTagTable =>
-      $$TermMetaBankV3IpaTagTableTableTableManager(
-          _db, _db.termMetaBankV3IpaTagTable);
-  $$TermMetaBankV3IpaTableTableTableManager get termMetaBankV3IpaTable =>
-      $$TermMetaBankV3IpaTableTableTableManager(
-          _db, _db.termMetaBankV3IpaTable);
+  $$TermMetaBankV3TagTableTableTableManager get termMetaBankV3TagTable =>
+      $$TermMetaBankV3TagTableTableTableManager(
+          _db, _db.termMetaBankV3TagTable);
+  $$TermMetaBankV3PitchTagRelationsTableTableTableManager
+      get termMetaBankV3PitchTagRelationsTable =>
+          $$TermMetaBankV3PitchTagRelationsTableTableTableManager(
+              _db, _db.termMetaBankV3PitchTagRelationsTable);
   $$TermMetaBankV3IpaRelationsTableTableTableManager
       get termMetaBankV3IpaRelationsTable =>
           $$TermMetaBankV3IpaRelationsTableTableTableManager(
               _db, _db.termMetaBankV3IpaRelationsTable);
+  $$TermMetaBankV3IpaTagRelationsTableTableTableManager
+      get termMetaBankV3IpaTagRelationsTable =>
+          $$TermMetaBankV3IpaTagRelationsTableTableTableManager(
+              _db, _db.termMetaBankV3IpaTagRelationsTable);
 }

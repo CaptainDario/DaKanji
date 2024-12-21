@@ -60,8 +60,8 @@ part 'dakanji_db.g.dart';
     
     TermMetaBankV3Table,
     TermMetaBankV3TypeTable, 
-    TermMetaBankV3PitchTable, TermMetaBankV3PitchRelationsTable,
-    TermMetaBankV3IpaTable, TermMetaBankV3IpaTagTable, TermMetaBankV3IpaRelationsTable
+    TermMetaBankV3PitchTable, TermMetaBankV3PitchRelationsTable, TermMetaBankV3PitchTagRelationsTable,
+    TermMetaBankV3IpaTable, TermMetaBankV3IpaRelationsTable, TermMetaBankV3IpaTagRelationsTable
   ],
   daos: [
     KanjiDao, TermDao, ReadingDao, MeaningDao,

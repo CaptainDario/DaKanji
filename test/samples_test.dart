@@ -20,9 +20,9 @@ void main() async {
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   test('Test importing samples', () async {
-    await testKanjiBankV3(db);
+    //await testKanjiBankV3(db);
     //await testKanjiMetaBankV3(db);
-    //await testTermMetaBankV3(db);
+    await testTermMetaBankV3(db);
   });
 
 }

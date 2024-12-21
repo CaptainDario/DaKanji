@@ -11,8 +11,19 @@ _$TermMetaBankV3EntryImpl _$$TermMetaBankV3EntryImplFromJson(
     _$TermMetaBankV3EntryImpl(
       term: json['term'] as String,
       type: json['type'] as String,
-      value: (json['value'] as num?)?.toInt(),
-      displayValue: json['displayValue'] as String?,
+      reading: json['reading'] as String?,
+      frequency: json['frequency'] == null
+          ? null
+          : TermMetaBankV3FrequencyEntry.fromJson(
+              json['frequency'] as Map<String, dynamic>),
+      pitch: json['pitch'] == null
+          ? null
+          : TermMetaBankV3PitchEntry.fromJson(
+              json['pitch'] as Map<String, dynamic>),
+      ipa: json['ipa'] == null
+          ? null
+          : TermMetaBankV3IpaEntry.fromJson(
+              json['ipa'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$TermMetaBankV3EntryImplToJson(
@@ -20,6 +31,8 @@ Map<String, dynamic> _$$TermMetaBankV3EntryImplToJson(
     <String, dynamic>{
       'term': instance.term,
       'type': instance.type,
-      'value': instance.value,
-      'displayValue': instance.displayValue,
+      'reading': instance.reading,
+      'frequency': instance.frequency,
+      'pitch': instance.pitch,
+      'ipa': instance.ipa,
     };

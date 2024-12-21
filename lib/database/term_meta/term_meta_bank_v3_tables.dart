@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
 
 // Project imports:
@@ -29,6 +30,12 @@ class TermMetaBankV3Table extends Table {
 
   /// the display value of this entry
   TextColumn get freqDisplayValue => text().nullable()();
+
+  /// the ID of the pitch of this term
+  IntColumn get pitchId => integer().references(TermMetaBankV3PitchTable, #id).nullable()();
+
+  /// the ID of the id of this term
+  IntColumn get ipaId => integer().references(TermMetaBankV3IpaTable, #id).nullable()();
   
 }
 
@@ -58,28 +65,11 @@ class TermMetaBankV3PitchTable extends Table {
   /// The position of the pitch accent
   IntColumn get position => integer()();
 
-  /// the tag of this pitch entry
-  IntColumn get tagId => integer().references(TermMetaBankV3PitchTagTable, #id).nullable()();
-
   /// the nasal value of this pitch entry
   IntColumn get nasal => integer().nullable()();
 
   /// the devoice value of this pitch entry
   IntColumn get devoice => integer().nullable()();
-
-}
-
-/// Class that stores the pitch's tag data for meta bank entries
-class TermMetaBankV3PitchTagTable extends Table {
-
-  @override
-  Set<Column> get primaryKey => {id};
-  
-  /// id of this entry
-  IntColumn get id => integer()();
-
-  /// The pitch tag
-  TextColumn get tag => text()();
 
 }
 
@@ -95,13 +85,10 @@ class TermMetaBankV3IpaTable extends Table {
   /// The ipa transcription
   TextColumn get ipa => text()();
 
-  /// the tag of this ipa entry
-  IntColumn get tagId => integer().references(TermMetaBankV3IpaTagTable, #id)();
-
 }
 
-/// Class that stores the ipa reading tag data for meta bank entries
-class TermMetaBankV3IpaTagTable extends Table {
+/// Class that stores the meta term tags
+class TermMetaBankV3TagTable extends Table {
 
   @override
   Set<Column> get primaryKey => {id};
@@ -109,7 +96,7 @@ class TermMetaBankV3IpaTagTable extends Table {
   /// id of this entry
   IntColumn get id => integer()();
 
-  /// The ipa tag
-  TextColumn get tag => text()();
+  /// The tag of this table transcription
+  TextColumn get tag => text().unique()();
 
 }
