@@ -24,9 +24,8 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
   
 
   /// Returns all kanji entries that match contain any of the given Kanji
-  Future<List<KanjiMetaBankV3Entry>?> getKanjiMetaBankEntriesFromKanji(List<String> kanji) async {
+  Future<List<KanjiMetaBankV3Entry>?> getKanjiMetaBankEntriesFromKanji(List<String> kanjis) async {
   
-    /*
     final query = (selectOnly(kanjiMetaBankV3Table)
       .join([
         // onyomi
@@ -34,10 +33,15 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
           kanjiMetaBankV3TypeTable,
           kanjiMetaBankV3TypeTable.id.equalsExp(kanjiMetaBankV3Table.typeId)
         ),
+        // kanji
+        innerJoin(
+          kanjiTable,
+          kanjiTable.id.equalsExp(kanjiMetaBankV3Table.kanjiId)
+        )
       ]))
-      ..where(db.kanjiMetaBankV3Table.kanjiId.isIn(kanji))
+      ..where(db.kanjiTable.kanji.isIn(kanjis))
       ..addColumns([
-        db.kanjiMetaBankV3Table.kanjiId,
+        db.kanjiTable.kanji,
         db.kanjiMetaBankV3TypeTable.type,
         db.kanjiMetaBankV3Table.freqValue,
         db.kanjiMetaBankV3Table.freqDisplayValue
@@ -45,11 +49,12 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
 
     // Fetching data from the query
     final result = await query.get();
+    print(result);
 
     // Process and return the result
     return (await Future.wait(result.map((row) async {
 
-      final kanji            = row.read<String>(kanjiMetaBankV3Table.kanjiId);
+      final kanji            = row.read<String>(kanjiTable.kanji);
       final type             = row.read<String>(kanjiMetaBankV3TypeTable.type);
       final freqValue        = row.read<int>(kanjiMetaBankV3Table.freqValue);
       final freqDisplayValue = row.read<String>(kanjiMetaBankV3Table.freqDisplayValue);
@@ -62,7 +67,6 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
       );
     }))).toList();
 
-    */
   }
 
   // ---------------------------------------------------------------------------
@@ -72,7 +76,7 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
   }
 
     // ---------------------------------------------------------------------------
-  /// Get the maximum id of the kanji table
+  /// Get the maximum id of the type table
   Future<int> maxKanjiMetaBankV3TypeId() async {
     
     final query = await (selectOnly(kanjiMetaBankV3TypeTable)
