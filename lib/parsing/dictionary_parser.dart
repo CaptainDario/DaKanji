@@ -1,5 +1,4 @@
 // Package imports:
-import 'package:dakanji_db/parsing/term_meta/term_meta_bank_v3_parser.dart';
 import 'package:path/path.dart' as p;
 import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
@@ -10,7 +9,7 @@ import 'package:dakanji_db/parsing/index/index_parser.dart';
 import 'package:dakanji_db/parsing/kanji/kanji_bank_v3_parser.dart';
 import 'package:dakanji_db/parsing/kanji_meta/kanji_meta_bank_v3_parser.dart';
 import 'package:dakanji_db/parsing/tag/tag_bank_v3_parser.dart';
-
+import 'package:dakanji_db/parsing/term_meta/term_meta_bank_v3_parser.dart';
 
 /// A list containing the names of files that are valid yomtain files
 List<String> validDictionaryFiles = [

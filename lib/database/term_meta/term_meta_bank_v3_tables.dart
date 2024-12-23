@@ -1,5 +1,4 @@
 // Package imports:
-import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
 
 // Project imports:
@@ -30,12 +29,6 @@ class TermMetaBankV3Table extends Table {
 
   /// the display value of this entry
   TextColumn get freqDisplayValue => text().nullable()();
-
-  /// the ID of the pitch of this term
-  IntColumn get pitchId => integer().references(TermMetaBankV3PitchTable, #id).nullable()();
-
-  /// the ID of the id of this term
-  IntColumn get ipaId => integer().references(TermMetaBankV3IpaTable, #id).nullable()();
   
 }
 

@@ -1,8 +1,9 @@
 // Package imports:
-import 'package:dakanji_db/database/term_meta/term_meta_bank_frequency_entry.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
 import 'package:dakanji_db/database/term_meta/term_meta_bank_ipa_entry.dart';
 import 'package:dakanji_db/database/term_meta/term_meta_bank_pitch_entry.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'term_meta_bank_entry.freezed.dart';
 part 'term_meta_bank_entry.g.dart';
@@ -21,12 +22,14 @@ class TermMetaBankV3Entry with _$TermMetaBankV3Entry {
       required String type,
       /// The reading of this entry
       String? reading,
-      /// Frequency of this entry
-      TermMetaBankV3FrequencyEntry? frequency,
+      /// the frequency of this entry as a numeric value
+      int? frequency,
+      /// the frequency of this entry as a string for displaying
+      String? frequencyDisplayValue,
       /// Pitch data of this entry
-      TermMetaBankV3PitchEntry? pitch,
+      List<TermMetaBankV3PitchEntry>? pitchs,
       /// Ipa transcription data of this entry
-      TermMetaBankV3IpaEntry? ipa
+      List<TermMetaBankV3IpaEntry>? ipas
     }) = _TermMetaBankV3Entry;
 
   factory TermMetaBankV3Entry.fromJson(Map<String, Object?> json)

@@ -7,9 +7,6 @@ import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:dakanji_db/database/dakanji_db.dart';
-import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_tables.dart';
-
-
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
 Future parseTermMetaBankV3File(File termMetaBankFile, DaKanjiDB db, int dictId) async {
@@ -71,6 +68,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
         term: Value(jsonEntry[0])
       ));
     }
+
     // parse type
     int typeInsertId = allTypes[jsonEntry[1]] ?? ++currentMaxTypeId;
     if(allTypes[jsonEntry[1]] == null){
@@ -106,26 +104,37 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
 
       if(jsonEntry[1] == "freq"){
 
-        final freq = jsonEntry[2]["frequency"];
+        final freq = jsonEntry[2];
 
         if(freq is int){ freqValue = freq; }
         else if(freq is String){ freqDisplayValue = freq; }
         else if(freq is Map){
+
           freqValue        = jsonEntry[2]['value'];
           freqDisplayValue = jsonEntry[2]['displayValue'];
+
+          final frequency = freq["frequency"];
+          if(frequency is int){ freqValue = frequency; }
+          else if(frequency is String){ freqDisplayValue = frequency; }
+          else if(frequency is Map) {
+            freqValue        = jsonEntry[2]['value'];
+            freqDisplayValue = jsonEntry[2]['displayValue'];
+          }
         }      
       }
       else if(jsonEntry[1] == "pitch"){
         for (var pitch in jsonEntry[2]["pitches"]) {
 
+          pitchInsertId = ++currentMaxPitchId;
+          
           termMetaBankPitchComps.add(TermMetaBankV3PitchTableCompanion(
-            id: Value(++currentMaxPitchId),
+            id: Value(pitchInsertId),
             position: Value(pitch["position"]),
             nasal: Value(pitch["nasal"]),
             devoice: Value(pitch["devoice"]),
           ));
           termMetaBankPitchRelsComps.add(TermMetaBankV3PitchRelationsTableCompanion(
-            pitchId: Value(currentMaxPitchId),
+            pitchId: Value(pitchInsertId),
             termMetaId: Value(currentMaxTermMetaId),
           ));
 
@@ -138,7 +147,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
               ));
             }
             termMetaBankPitchTagRelsComps.add(TermMetaBankV3PitchTagRelationsTableCompanion(
-              pitchId: Value(currentMaxPitchId),
+              pitchId: Value(pitchInsertId),
               tagId: Value(tagInsertId)
             ));
           }
@@ -147,12 +156,14 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
       else if (jsonEntry[1] == "ipa"){
         for (var transcription in jsonEntry[2]["transcriptions"]) {
 
+          ipaInsertId = ++currentMaxIpaId;
+
           termMetaBankIpaComps.add(TermMetaBankV3IpaTableCompanion(
-            id: Value(++currentMaxIpaId),
+            id: Value(++ipaInsertId),
             ipa: Value(transcription["ipa"]),
           ));
           termMetaBankIpaRelsComps.add(TermMetaBankV3IpaRelationsTableCompanion(
-            ipaId: Value(currentMaxIpaId),
+            ipaId: Value(ipaInsertId),
             termMetaId: Value(currentMaxTermMetaId),
           ));
 
@@ -165,7 +176,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
               ));
             }
             termMetaBankIpaTagRelsComps.add(TermMetaBankV3IpaTagRelationsTableCompanion(
-              ipaId: Value(currentMaxIpaId),
+              ipaId: Value(ipaInsertId),
               tagId: Value(tagInsertId)
             ));
           }
@@ -181,8 +192,6 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
       readingId: Value(readingInsertId),
       freqValue: Value(freqValue),
       freqDisplayValue: Value(freqDisplayValue),
-      pitchId: Value(pitchInsertId),
-      ipaId: Value(ipaInsertId)
     ));
 
   }
