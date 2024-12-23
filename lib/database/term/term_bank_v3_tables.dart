@@ -1,0 +1,64 @@
+// Package imports:
+import 'package:dakanji_db/database/general_tables/reading_tables.dart';
+import 'package:dakanji_db/database/general_tables/term_tables.dart';
+import 'package:drift/drift.dart';
+
+
+
+/// Table that stores term bank entries to which other tables link
+class TermBankV3Table extends Table {
+
+  @override
+  Set<Column> get primaryKey => {id};
+  
+  /// id of this entry
+  IntColumn get id => integer()();
+
+  /// The ID of the text for the term.
+  IntColumn get termId => integer().references(TermTable, #id)();
+
+  /// ID reading of the term, or an empty string if the reading is the same as
+  /// the term.
+  IntColumn get readingId => integer().references(ReadingTable, #id)();
+
+  /// Score used to determine popularity. Negative values are more rare and
+  /// positive values are more frequent. This score is also used to sort search
+  /// results.
+  IntColumn get popularity => integer()();
+
+  // TODO definitions
+
+  /// Sequence number for the term. Terms with the same sequence number can be
+  /// shown together when the "resultOutputMode" option is set to "merge".
+  IntColumn get sequenceNumber => integer()();
+
+}
+
+/// Table that stores tags for definitions
+class TermBankV3DefinitionTagsTable extends Table {
+
+  @override
+  Set<Column> get primaryKey => {id};
+  
+  /// id of this entry
+  IntColumn get id => integer()();
+
+  /// Tags for the definition
+  TextColumn get definitionTag => text()();
+
+}
+
+/// Table that stores rule identifiers for definitions
+class TermBankV3RuleIdentifierTable extends Table {
+
+  @override
+  Set<Column> get primaryKey => {id};
+  
+  /// id of this entry
+  IntColumn get id => integer()();
+
+  /// Rule identifiers for the definition which is used to validate
+  /// deinflection. An empty string should be used for words which aren't inflected.
+  TextColumn get ruleIdentifier => text()();
+
+}

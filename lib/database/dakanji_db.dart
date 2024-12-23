@@ -1,4 +1,6 @@
 // Package imports:
+import 'package:dakanji_db/database/term/term_bank_v3_relation_tables.dart';
+import 'package:dakanji_db/database/term/term_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:universal_io/io.dart';
@@ -58,6 +60,11 @@ part 'dakanji_db.g.dart';
 
     KanjiMetaBankV3Table, KanjiMetaBankV3TypeTable,
     
+    TermMetaBankV3Table,
+    TermBankV3DefinitionTagsTable, TermBankV3DefinitionTagRelationsTable,
+    TermBankV3RuleIdentifierTable, TermBankV3RuleIdentifiersRelationsTable,
+    TermBankV3TagBankRelationsTable,
+
     TermMetaBankV3Table,
     TermMetaBankV3TypeTable, 
     TermMetaBankV3PitchTable, TermMetaBankV3PitchRelationsTable, TermMetaBankV3PitchTagRelationsTable,
