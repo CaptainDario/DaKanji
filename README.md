@@ -117,7 +117,7 @@ Additionally, some other databases are included in DaKanji
   * Meaning: Stores dictionary readings, definitions, etc.
   * File name pattern: `term_bank_${number}.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-term-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js#items_items_i5_items_oneOf_i0)
-* [dictionary-term-meta-bank-v3-schema.json](yomitan_schema/dictionary-term-meta-bank-v3-schema.json) - ❌
+* [dictionary-term-meta-bank-v3-schema.json](yomitan_schema/dictionary-term-meta-bank-v3-schema.json) - ✅
   * Meaning: Stores meta information about terms, such as frequency data and pitch accent data.
   * File name pattern: `term_meta_bank_${number}.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-term-meta-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js)
