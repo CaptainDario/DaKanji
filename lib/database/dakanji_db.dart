@@ -1,4 +1,7 @@
 // Package imports:
+import 'package:dakanji_db/database/example/example_dao.dart';
+import 'package:dakanji_db/database/example/example_relation_tables.dart';
+import 'package:dakanji_db/database/example/example_tables.dart';
 import 'package:dakanji_db/database/term/term_bank_v3_dao.dart';
 import 'package:dakanji_db/database/term/term_bank_v3_relation_tables.dart';
 import 'package:dakanji_db/database/term/term_bank_v3_tables.dart';
@@ -70,7 +73,11 @@ part 'dakanji_db.g.dart';
     TermMetaBankV3TypeTable, 
     TermMetaBankV3PitchTable, TermMetaBankV3PitchRelationsTable, TermMetaBankV3PitchTagRelationsTable,
     TermMetaBankV3IpaTable, TermMetaBankV3IpaRelationsTable, TermMetaBankV3IpaTagRelationsTable,
-    TermMetaBankV3TagTable
+    TermMetaBankV3TagTable,
+
+    ExampleTable,
+    ExampleTranslationTable, ExampleTranslationTable,
+    ExampleTermRelationsTable, ExampleTranslationRelationsTable
   ],
   daos: [
     KanjiDao, TermDao, ReadingDao, MeaningDao,
@@ -79,6 +86,7 @@ part 'dakanji_db.g.dart';
     KanjiBankV3Dao, KanjiMetaBankV3Dao,
     TermBankV3Dao,
     TermMetaBankV3Dao,
+    ExampleDao
   ],
   
 )

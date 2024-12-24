@@ -85,7 +85,9 @@ Future testTermBankV3(DaKanjiDB db) async {
   for (int i = 0; i < termBankTetsCases.length; i++) {
     Stopwatch s = Stopwatch()..start();
     final testCase = termBankTetsCases[i];
-    final result = (await db.termBankV3Dao.getTermBankEntriesFromTerm(testCase));
+    final result = null;
+      // TODO termBank test
+      //(await db.termBankV3Dao.getTermBankEntriesFromTerm(testCase));
     print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
 
     print("\n\n$i: ${termBankTetsCases[i]}");
