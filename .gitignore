@@ -15,5 +15,8 @@ dakanji_db_schema/schema.pdf
 stresstest/*
 !stresstest/.gitkeep
 
+# code counter
+.VSCodeCounter/**
+
 # ignore files that are converted from non yomitan dicts
 input_files/**
