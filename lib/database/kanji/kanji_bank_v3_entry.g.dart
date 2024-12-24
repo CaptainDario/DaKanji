@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'kanji_bank_entry.dart';
+part of 'kanji_bank_v3_entry.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$KanjiBankEntryImpl _$$KanjiBankEntryImplFromJson(Map<String, dynamic> json) =>
-    _$KanjiBankEntryImpl(
+_$KanjiBankV3EntryImpl _$$KanjiBankV3EntryImplFromJson(
+        Map<String, dynamic> json) =>
+    _$KanjiBankV3EntryImpl(
       kanji: json['kanji'] as String,
       onyomis:
           (json['onyomis'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -15,18 +16,18 @@ _$KanjiBankEntryImpl _$$KanjiBankEntryImplFromJson(Map<String, dynamic> json) =>
           ?.map((e) => e as String)
           .toList(),
       tags: (json['tags'] as List<dynamic>?)
-          ?.map((e) => TagBankEntry.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => TagBankV3Entry.fromJson(e as Map<String, dynamic>))
           .toList(),
       meanings: (json['meanings'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
       stats: (json['stats'] as List<dynamic>?)
-          ?.map((e) => KanjiBankEntryStat.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => KanjiBankV3EntryStat.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$KanjiBankEntryImplToJson(
-        _$KanjiBankEntryImpl instance) =>
+Map<String, dynamic> _$$KanjiBankV3EntryImplToJson(
+        _$KanjiBankV3EntryImpl instance) =>
     <String, dynamic>{
       'kanji': instance.kanji,
       'onyomis': instance.onyomis,

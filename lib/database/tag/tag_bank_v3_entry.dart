@@ -1,16 +1,16 @@
 // Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'tag_bank_entry.freezed.dart';
-part 'tag_bank_entry.g.dart';
+part 'tag_bank_v3_entry.freezed.dart';
+part 'tag_bank_v3_entry.g.dart';
 
 
 
 @Freezed()
-/// Class representing one stat of a kanji entry of DaKanjiDB
-class TagBankEntry with _$TagBankEntry {
+/// Class representing one stat of a tag entry of DaKanjiDB
+class TagBankV3Entry with _$TagBankV3Entry {
 
-  const factory TagBankEntry(
+  const factory TagBankV3Entry(
     {
 
       /// Tag name.
@@ -26,9 +26,9 @@ class TagBankEntry with _$TagBankEntry {
       /// results.
       required int score,
 
-    }) = _TagBankEntry;
+    }) = _TagBankV3Entry;
 
-  factory TagBankEntry.fromJson(Map<String, Object?> json)
-    => _$TagBankEntryFromJson(json);
+  factory TagBankV3Entry.fromJson(Map<String, Object?> json)
+    => _$TagBankV3EntryFromJson(json);
 
 }

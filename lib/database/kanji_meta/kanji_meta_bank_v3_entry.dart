@@ -1,8 +1,8 @@
 // Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'kanji_meta_bank_entry.freezed.dart';
-part 'kanji_meta_bank_entry.g.dart';
+part 'kanji_meta_bank_v3_entry.freezed.dart';
+part 'kanji_meta_bank_v3_entry.g.dart';
 
 
 

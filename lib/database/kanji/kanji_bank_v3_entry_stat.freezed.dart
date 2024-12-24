@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'kanji_bank_entry_stat.dart';
+part of 'kanji_bank_v3_entry_stat.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,48 +14,49 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-KanjiBankEntryStat _$KanjiBankEntryStatFromJson(Map<String, dynamic> json) {
-  return _KanjiBankEntryStat.fromJson(json);
+KanjiBankV3EntryStat _$KanjiBankV3EntryStatFromJson(Map<String, dynamic> json) {
+  return _KanjiBankV3EntryStat.fromJson(json);
 }
 
 /// @nodoc
-mixin _$KanjiBankEntryStat {
+mixin _$KanjiBankV3EntryStat {
   /// The name of this stat
   String get name => throw _privateConstructorUsedError;
 
   /// The value of this stat
   String get value => throw _privateConstructorUsedError;
 
-  /// Serializes this KanjiBankEntryStat to a JSON map.
+  /// Serializes this KanjiBankV3EntryStat to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of KanjiBankEntryStat
+  /// Create a copy of KanjiBankV3EntryStat
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $KanjiBankEntryStatCopyWith<KanjiBankEntryStat> get copyWith =>
+  $KanjiBankV3EntryStatCopyWith<KanjiBankV3EntryStat> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $KanjiBankEntryStatCopyWith<$Res> {
-  factory $KanjiBankEntryStatCopyWith(
-          KanjiBankEntryStat value, $Res Function(KanjiBankEntryStat) then) =
-      _$KanjiBankEntryStatCopyWithImpl<$Res, KanjiBankEntryStat>;
+abstract class $KanjiBankV3EntryStatCopyWith<$Res> {
+  factory $KanjiBankV3EntryStatCopyWith(KanjiBankV3EntryStat value,
+          $Res Function(KanjiBankV3EntryStat) then) =
+      _$KanjiBankV3EntryStatCopyWithImpl<$Res, KanjiBankV3EntryStat>;
   @useResult
   $Res call({String name, String value});
 }
 
 /// @nodoc
-class _$KanjiBankEntryStatCopyWithImpl<$Res, $Val extends KanjiBankEntryStat>
-    implements $KanjiBankEntryStatCopyWith<$Res> {
-  _$KanjiBankEntryStatCopyWithImpl(this._value, this._then);
+class _$KanjiBankV3EntryStatCopyWithImpl<$Res,
+        $Val extends KanjiBankV3EntryStat>
+    implements $KanjiBankV3EntryStatCopyWith<$Res> {
+  _$KanjiBankV3EntryStatCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of KanjiBankEntryStat
+  /// Create a copy of KanjiBankV3EntryStat
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -77,25 +78,25 @@ class _$KanjiBankEntryStatCopyWithImpl<$Res, $Val extends KanjiBankEntryStat>
 }
 
 /// @nodoc
-abstract class _$$KanjiBankEntryStatImplCopyWith<$Res>
-    implements $KanjiBankEntryStatCopyWith<$Res> {
-  factory _$$KanjiBankEntryStatImplCopyWith(_$KanjiBankEntryStatImpl value,
-          $Res Function(_$KanjiBankEntryStatImpl) then) =
-      __$$KanjiBankEntryStatImplCopyWithImpl<$Res>;
+abstract class _$$KanjiBankV3EntryStatImplCopyWith<$Res>
+    implements $KanjiBankV3EntryStatCopyWith<$Res> {
+  factory _$$KanjiBankV3EntryStatImplCopyWith(_$KanjiBankV3EntryStatImpl value,
+          $Res Function(_$KanjiBankV3EntryStatImpl) then) =
+      __$$KanjiBankV3EntryStatImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, String value});
 }
 
 /// @nodoc
-class __$$KanjiBankEntryStatImplCopyWithImpl<$Res>
-    extends _$KanjiBankEntryStatCopyWithImpl<$Res, _$KanjiBankEntryStatImpl>
-    implements _$$KanjiBankEntryStatImplCopyWith<$Res> {
-  __$$KanjiBankEntryStatImplCopyWithImpl(_$KanjiBankEntryStatImpl _value,
-      $Res Function(_$KanjiBankEntryStatImpl) _then)
+class __$$KanjiBankV3EntryStatImplCopyWithImpl<$Res>
+    extends _$KanjiBankV3EntryStatCopyWithImpl<$Res, _$KanjiBankV3EntryStatImpl>
+    implements _$$KanjiBankV3EntryStatImplCopyWith<$Res> {
+  __$$KanjiBankV3EntryStatImplCopyWithImpl(_$KanjiBankV3EntryStatImpl _value,
+      $Res Function(_$KanjiBankV3EntryStatImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of KanjiBankEntryStat
+  /// Create a copy of KanjiBankV3EntryStat
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -103,7 +104,7 @@ class __$$KanjiBankEntryStatImplCopyWithImpl<$Res>
     Object? name = null,
     Object? value = null,
   }) {
-    return _then(_$KanjiBankEntryStatImpl(
+    return _then(_$KanjiBankV3EntryStatImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -118,11 +119,11 @@ class __$$KanjiBankEntryStatImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$KanjiBankEntryStatImpl implements _KanjiBankEntryStat {
-  const _$KanjiBankEntryStatImpl({required this.name, required this.value});
+class _$KanjiBankV3EntryStatImpl implements _KanjiBankV3EntryStat {
+  const _$KanjiBankV3EntryStatImpl({required this.name, required this.value});
 
-  factory _$KanjiBankEntryStatImpl.fromJson(Map<String, dynamic> json) =>
-      _$$KanjiBankEntryStatImplFromJson(json);
+  factory _$KanjiBankV3EntryStatImpl.fromJson(Map<String, dynamic> json) =>
+      _$$KanjiBankV3EntryStatImplFromJson(json);
 
   /// The name of this stat
   @override
@@ -134,14 +135,14 @@ class _$KanjiBankEntryStatImpl implements _KanjiBankEntryStat {
 
   @override
   String toString() {
-    return 'KanjiBankEntryStat(name: $name, value: $value)';
+    return 'KanjiBankV3EntryStat(name: $name, value: $value)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$KanjiBankEntryStatImpl &&
+            other is _$KanjiBankV3EntryStatImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.value, value) || other.value == value));
   }
@@ -150,30 +151,31 @@ class _$KanjiBankEntryStatImpl implements _KanjiBankEntryStat {
   @override
   int get hashCode => Object.hash(runtimeType, name, value);
 
-  /// Create a copy of KanjiBankEntryStat
+  /// Create a copy of KanjiBankV3EntryStat
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$KanjiBankEntryStatImplCopyWith<_$KanjiBankEntryStatImpl> get copyWith =>
-      __$$KanjiBankEntryStatImplCopyWithImpl<_$KanjiBankEntryStatImpl>(
-          this, _$identity);
+  _$$KanjiBankV3EntryStatImplCopyWith<_$KanjiBankV3EntryStatImpl>
+      get copyWith =>
+          __$$KanjiBankV3EntryStatImplCopyWithImpl<_$KanjiBankV3EntryStatImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$KanjiBankEntryStatImplToJson(
+    return _$$KanjiBankV3EntryStatImplToJson(
       this,
     );
   }
 }
 
-abstract class _KanjiBankEntryStat implements KanjiBankEntryStat {
-  const factory _KanjiBankEntryStat(
+abstract class _KanjiBankV3EntryStat implements KanjiBankV3EntryStat {
+  const factory _KanjiBankV3EntryStat(
       {required final String name,
-      required final String value}) = _$KanjiBankEntryStatImpl;
+      required final String value}) = _$KanjiBankV3EntryStatImpl;
 
-  factory _KanjiBankEntryStat.fromJson(Map<String, dynamic> json) =
-      _$KanjiBankEntryStatImpl.fromJson;
+  factory _KanjiBankV3EntryStat.fromJson(Map<String, dynamic> json) =
+      _$KanjiBankV3EntryStatImpl.fromJson;
 
   /// The name of this stat
   @override
@@ -183,10 +185,10 @@ abstract class _KanjiBankEntryStat implements KanjiBankEntryStat {
   @override
   String get value;
 
-  /// Create a copy of KanjiBankEntryStat
+  /// Create a copy of KanjiBankV3EntryStat
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$KanjiBankEntryStatImplCopyWith<_$KanjiBankEntryStatImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$KanjiBankV3EntryStatImplCopyWith<_$KanjiBankV3EntryStatImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

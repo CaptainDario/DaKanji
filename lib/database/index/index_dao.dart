@@ -13,8 +13,8 @@ part 'index_dao.g.dart';
 @DriftAccessor(tables: [IndexTable])
 class IndexDao extends DatabaseAccessor<DaKanjiDB> with _$IndexDaoMixin {
   
-  // this constructor is required so that the main database can create an instance
-  // of this object.
+  // this constructor is required so that the main database can create an
+  // instance of this object.
   IndexDao(super.db);
 
   /// returns the entry with `id` if found otherwise `null`

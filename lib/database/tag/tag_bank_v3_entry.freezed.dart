@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'tag_bank_entry.dart';
+part of 'tag_bank_v3_entry.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-TagBankEntry _$TagBankEntryFromJson(Map<String, dynamic> json) {
-  return _TagBankEntry.fromJson(json);
+TagBankV3Entry _$TagBankV3EntryFromJson(Map<String, dynamic> json) {
+  return _TagBankV3Entry.fromJson(json);
 }
 
 /// @nodoc
-mixin _$TagBankEntry {
+mixin _$TagBankV3Entry {
   /// Tag name.
   String get name => throw _privateConstructorUsedError;
 
@@ -37,21 +37,21 @@ mixin _$TagBankEntry {
   /// results.
   int get score => throw _privateConstructorUsedError;
 
-  /// Serializes this TagBankEntry to a JSON map.
+  /// Serializes this TagBankV3Entry to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of TagBankEntry
+  /// Create a copy of TagBankV3Entry
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $TagBankEntryCopyWith<TagBankEntry> get copyWith =>
+  $TagBankV3EntryCopyWith<TagBankV3Entry> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TagBankEntryCopyWith<$Res> {
-  factory $TagBankEntryCopyWith(
-          TagBankEntry value, $Res Function(TagBankEntry) then) =
-      _$TagBankEntryCopyWithImpl<$Res, TagBankEntry>;
+abstract class $TagBankV3EntryCopyWith<$Res> {
+  factory $TagBankV3EntryCopyWith(
+          TagBankV3Entry value, $Res Function(TagBankV3Entry) then) =
+      _$TagBankV3EntryCopyWithImpl<$Res, TagBankV3Entry>;
   @useResult
   $Res call(
       {String name,
@@ -62,16 +62,16 @@ abstract class $TagBankEntryCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TagBankEntryCopyWithImpl<$Res, $Val extends TagBankEntry>
-    implements $TagBankEntryCopyWith<$Res> {
-  _$TagBankEntryCopyWithImpl(this._value, this._then);
+class _$TagBankV3EntryCopyWithImpl<$Res, $Val extends TagBankV3Entry>
+    implements $TagBankV3EntryCopyWith<$Res> {
+  _$TagBankV3EntryCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of TagBankEntry
+  /// Create a copy of TagBankV3Entry
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -108,11 +108,11 @@ class _$TagBankEntryCopyWithImpl<$Res, $Val extends TagBankEntry>
 }
 
 /// @nodoc
-abstract class _$$TagBankEntryImplCopyWith<$Res>
-    implements $TagBankEntryCopyWith<$Res> {
-  factory _$$TagBankEntryImplCopyWith(
-          _$TagBankEntryImpl value, $Res Function(_$TagBankEntryImpl) then) =
-      __$$TagBankEntryImplCopyWithImpl<$Res>;
+abstract class _$$TagBankV3EntryImplCopyWith<$Res>
+    implements $TagBankV3EntryCopyWith<$Res> {
+  factory _$$TagBankV3EntryImplCopyWith(_$TagBankV3EntryImpl value,
+          $Res Function(_$TagBankV3EntryImpl) then) =
+      __$$TagBankV3EntryImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -124,14 +124,14 @@ abstract class _$$TagBankEntryImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TagBankEntryImplCopyWithImpl<$Res>
-    extends _$TagBankEntryCopyWithImpl<$Res, _$TagBankEntryImpl>
-    implements _$$TagBankEntryImplCopyWith<$Res> {
-  __$$TagBankEntryImplCopyWithImpl(
-      _$TagBankEntryImpl _value, $Res Function(_$TagBankEntryImpl) _then)
+class __$$TagBankV3EntryImplCopyWithImpl<$Res>
+    extends _$TagBankV3EntryCopyWithImpl<$Res, _$TagBankV3EntryImpl>
+    implements _$$TagBankV3EntryImplCopyWith<$Res> {
+  __$$TagBankV3EntryImplCopyWithImpl(
+      _$TagBankV3EntryImpl _value, $Res Function(_$TagBankV3EntryImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of TagBankEntry
+  /// Create a copy of TagBankV3Entry
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -142,7 +142,7 @@ class __$$TagBankEntryImplCopyWithImpl<$Res>
     Object? notes = null,
     Object? score = null,
   }) {
-    return _then(_$TagBankEntryImpl(
+    return _then(_$TagBankV3EntryImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -169,16 +169,16 @@ class __$$TagBankEntryImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$TagBankEntryImpl implements _TagBankEntry {
-  const _$TagBankEntryImpl(
+class _$TagBankV3EntryImpl implements _TagBankV3Entry {
+  const _$TagBankV3EntryImpl(
       {required this.name,
       required this.categories,
       required this.sortingOrder,
       required this.notes,
       required this.score});
 
-  factory _$TagBankEntryImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TagBankEntryImplFromJson(json);
+  factory _$TagBankV3EntryImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TagBankV3EntryImplFromJson(json);
 
   /// Tag name.
   @override
@@ -204,14 +204,14 @@ class _$TagBankEntryImpl implements _TagBankEntry {
 
   @override
   String toString() {
-    return 'TagBankEntry(name: $name, categories: $categories, sortingOrder: $sortingOrder, notes: $notes, score: $score)';
+    return 'TagBankV3Entry(name: $name, categories: $categories, sortingOrder: $sortingOrder, notes: $notes, score: $score)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TagBankEntryImpl &&
+            other is _$TagBankV3EntryImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.categories, categories) ||
                 other.categories == categories) &&
@@ -226,32 +226,33 @@ class _$TagBankEntryImpl implements _TagBankEntry {
   int get hashCode =>
       Object.hash(runtimeType, name, categories, sortingOrder, notes, score);
 
-  /// Create a copy of TagBankEntry
+  /// Create a copy of TagBankV3Entry
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$TagBankEntryImplCopyWith<_$TagBankEntryImpl> get copyWith =>
-      __$$TagBankEntryImplCopyWithImpl<_$TagBankEntryImpl>(this, _$identity);
+  _$$TagBankV3EntryImplCopyWith<_$TagBankV3EntryImpl> get copyWith =>
+      __$$TagBankV3EntryImplCopyWithImpl<_$TagBankV3EntryImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TagBankEntryImplToJson(
+    return _$$TagBankV3EntryImplToJson(
       this,
     );
   }
 }
 
-abstract class _TagBankEntry implements TagBankEntry {
-  const factory _TagBankEntry(
+abstract class _TagBankV3Entry implements TagBankV3Entry {
+  const factory _TagBankV3Entry(
       {required final String name,
       required final String categories,
       required final int sortingOrder,
       required final String notes,
-      required final int score}) = _$TagBankEntryImpl;
+      required final int score}) = _$TagBankV3EntryImpl;
 
-  factory _TagBankEntry.fromJson(Map<String, dynamic> json) =
-      _$TagBankEntryImpl.fromJson;
+  factory _TagBankV3Entry.fromJson(Map<String, dynamic> json) =
+      _$TagBankV3EntryImpl.fromJson;
 
   /// Tag name.
   @override
@@ -275,10 +276,10 @@ abstract class _TagBankEntry implements TagBankEntry {
   @override
   int get score;
 
-  /// Create a copy of TagBankEntry
+  /// Create a copy of TagBankV3Entry
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TagBankEntryImplCopyWith<_$TagBankEntryImpl> get copyWith =>
+  _$$TagBankV3EntryImplCopyWith<_$TagBankV3EntryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

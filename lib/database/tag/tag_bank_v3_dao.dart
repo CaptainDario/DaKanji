@@ -2,7 +2,7 @@
 import "package:drift/drift.dart";
 
 // Project imports:
-import "package:dakanji_db/database/tag/tag_bank_entry.dart";
+import "package:dakanji_db/database/tag/tag_bank_v3_entry.dart";
 import "package:dakanji_db/database/tag/tag_bank_v3_relation_tables.dart";
 import "package:dakanji_db/database/tag/tag_bank_v3_tables.dart";
 import "../dakanji_db.dart";
@@ -26,7 +26,7 @@ class TagBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TagBankV3DaoMixin 
 
 
   /// 
-  Future<TagBankEntry> getTagByName(String tagName) async {
+  Future<TagBankV3Entry> getTagByName(String tagName) async {
     final query = select(tagBankV3Table).join([
       // Join with the tag-category relations table
       innerJoin(
@@ -45,7 +45,7 @@ class TagBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TagBankV3DaoMixin 
       final tag = row.readTable(tagBankV3Table);
       final category = row.readTable(tagBankV3CategoryTable);
 
-      return TagBankEntry(
+      return TagBankV3Entry(
         name: tagName,
         categories: category.category,
         sortingOrder: tag.sortingOrder,

@@ -2,8 +2,8 @@
 import "package:drift/drift.dart";
 
 // Project imports:
-import "package:dakanji_db/database/kanji/kanji_bank_entry.dart";
-import "package:dakanji_db/database/kanji/kanji_bank_entry_stat.dart";
+import "package:dakanji_db/database/kanji/kanji_bank_v3_entry.dart";
+import "package:dakanji_db/database/kanji/kanji_bank_v3_entry_stat.dart";
 import "package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart";
 import "package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart";
 import "../dakanji_db.dart";
@@ -31,7 +31,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   
 
   /// Returns all kanji entries that match contain any of the given Kanji
-  Future<List<KanjiBankEntry>?> getKanjiBankEntriesFromKanji(List<String> kanji) async {
+  Future<List<KanjiBankV3Entry>?> getKanjiBankEntriesFromKanji(List<String> kanji) async {
 
     final onyomiT  = alias(readingTable, 'onyomi');
     final kunyomiT = alias(readingTable, 'kunyomi');
@@ -139,14 +139,14 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         kanjiBankV3StatNamesTable.statName.groupConcat(distinct: true))
         ?.split(",");
 
-      return KanjiBankEntry(
+      return KanjiBankV3Entry(
         kanji: kanji!,
         onyomis: onyomi,
         kunyomis: kunyomi,
         tags: tags,
         meanings: meanings,
         stats: statValues != null && statNames != null
-          ? List.generate(statValues.length, (i) => KanjiBankEntryStat(
+          ? List.generate(statValues.length, (i) => KanjiBankV3EntryStat(
             name: statNames[i],
             value: statValues[i],
           ))

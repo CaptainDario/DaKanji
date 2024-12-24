@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'kanji_meta_bank_entry.dart';
+part of 'kanji_meta_bank_v3_entry.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

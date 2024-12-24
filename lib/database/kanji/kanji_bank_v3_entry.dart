@@ -2,19 +2,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/kanji/kanji_bank_entry_stat.dart';
-import 'package:dakanji_db/database/tag/tag_bank_entry.dart';
+import 'package:dakanji_db/database/kanji/kanji_bank_v3_entry_stat.dart';
+import 'package:dakanji_db/database/tag/tag_bank_v3_entry.dart';
 
-part 'kanji_bank_entry.freezed.dart';
-part 'kanji_bank_entry.g.dart';
+part 'kanji_bank_v3_entry.freezed.dart';
+part 'kanji_bank_v3_entry.g.dart';
 
 
 
 @Freezed(makeCollectionsUnmodifiable: false)
 /// Class representing one kanji entry of the database
-class KanjiBankEntry with _$KanjiBankEntry {
+class KanjiBankV3Entry with _$KanjiBankV3Entry {
 
-  const factory KanjiBankEntry(
+  const factory KanjiBankV3Entry(
     {
       /// The kanji character of this entry
       required String kanji,
@@ -23,14 +23,14 @@ class KanjiBankEntry with _$KanjiBankEntry {
       /// The kunyomi readings of this entry
       required List<String>? kunyomis,
       /// The tags of this entry
-      required List<TagBankEntry>? tags,
+      required List<TagBankV3Entry>? tags,
       /// The meanings of this entry
       required List<String>? meanings,
       /// The stats of this entry
-      required List<KanjiBankEntryStat>? stats
-    }) = _KanjiBankEntry;
+      required List<KanjiBankV3EntryStat>? stats
+    }) = _KanjiBankV3Entry;
 
-  factory KanjiBankEntry.fromJson(Map<String, Object?> json)
-    => _$KanjiBankEntryFromJson(json);
+  factory KanjiBankV3Entry.fromJson(Map<String, Object?> json)
+    => _$KanjiBankV3EntryFromJson(json);
 
 }
