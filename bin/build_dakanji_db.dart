@@ -12,7 +12,7 @@ void main() async {
 
   // setup 
   DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
-  await db.deleteDB();
+  await db.clearDB();
 
   await kanjiVG(db);
 

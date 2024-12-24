@@ -1,8 +1,9 @@
 // Project imports:
-import 'package:dakanji_db/database/kanji/kanji_bank_entry.dart';
-import 'package:dakanji_db/database/kanji/kanji_bank_entry_stat.dart';
-import 'package:dakanji_db/database/kanji_meta/kanji_meta_bank_entry.dart';
-import 'package:dakanji_db/database/tag/tag_bank_entry.dart';
+import 'package:dakanji_db/database/kanji/kanji_bank_v3_entry.dart';
+import 'package:dakanji_db/database/kanji/kanji_bank_v3_entry_stat.dart';
+import 'package:dakanji_db/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
+import 'package:dakanji_db/database/tag/tag_bank_v3_entry.dart';
+import 'package:dakanji_db/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db/database/term_meta/term_meta_bank_entry.dart';
 import 'package:dakanji_db/database/term_meta/term_meta_bank_ipa_entry.dart';
 import 'package:dakanji_db/database/term_meta/term_meta_bank_pitch_entry.dart';
@@ -15,18 +16,18 @@ final kanjiBankTetsCases = [
 
 /// kanji bank test case expected values
 final kanjiBankTetsCaseExpectations = [
-  KanjiBankEntry(
+  KanjiBankV3Entry(
     kanji: "打",
     onyomis: ["ダ", "ダアス"],
     kunyomis: ["う.つ", "う.ち-", "ぶ.つ"],
     tags: [
-      TagBankEntry(
+      TagBankV3Entry(
         name: "K1",
         categories: "default",
         sortingOrder: 0,
         notes: "example kanji tag 1",
         score: 0),
-      TagBankEntry(
+      TagBankV3Entry(
         name: "K2",
         categories: "default",
         sortingOrder: 0, 
@@ -41,23 +42,23 @@ final kanjiBankTetsCaseExpectations = [
       "utsu meaning 5"
     ],
     stats: [
-      KanjiBankEntryStat(
+      KanjiBankV3EntryStat(
         name: "kstat1",
         value: "kanji stat 1 value"
       ), 
-      KanjiBankEntryStat(
+      KanjiBankV3EntryStat(
         name: "kstat2",
         value: "kanji stat 2 value"
       ),
-      KanjiBankEntryStat(
+      KanjiBankV3EntryStat(
         name: "kstat3",
         value: "kanji stat 3 value"
       ),
-      KanjiBankEntryStat(
+      KanjiBankV3EntryStat(
         name: "kstat4",
         value: "kanji stat 4 value"
       ),
-      KanjiBankEntryStat(
+      KanjiBankV3EntryStat(
         name: "kstat5",
         value: "kanji stat 5 value"
       )
@@ -235,4 +236,26 @@ final termMetaBankTetsCaseExpectations = [
       ),
     ]
   ),
+];
+
+/// ----------------------------------------------------------------------------
+/// Test cases for the kanji meta bank
+final termBankTetsCases = ["打"];
+/// kanjiMetaBankV3 test case expected values
+final termBankTetsCaseExpectations = [
+  TermBankV3Entry(
+    term: "打",
+    reading: "だ",
+    definitionTags: ["n"],
+    ruleIdentifiers: ["n"],
+    popularity: 1,
+    definitions: ["da definition 1", "da definition 2"],
+    sequenceNumber: 1,
+    tags: [
+      TagBankV3Entry(
+        name: "E1", categories: "default", sortingOrder: 0,
+        notes: "example tag 1", score: 0
+      )
+    ]
+  )
 ];

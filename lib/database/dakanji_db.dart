@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db/database/term/term_bank_v3_dao.dart';
 import 'package:dakanji_db/database/term/term_bank_v3_relation_tables.dart';
 import 'package:dakanji_db/database/term/term_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
@@ -60,22 +61,24 @@ part 'dakanji_db.g.dart';
 
     KanjiMetaBankV3Table, KanjiMetaBankV3TypeTable,
     
-    TermMetaBankV3Table,
+    TermBankV3Table,
     TermBankV3DefinitionTagsTable, TermBankV3DefinitionTagRelationsTable,
-    TermBankV3RuleIdentifierTable, TermBankV3RuleIdentifiersRelationsTable,
+    TermBankV3RuleIdentifierTable, TermBankV3RuleIdentifierRelationsTable,
     TermBankV3TagBankRelationsTable,
 
     TermMetaBankV3Table,
     TermMetaBankV3TypeTable, 
     TermMetaBankV3PitchTable, TermMetaBankV3PitchRelationsTable, TermMetaBankV3PitchTagRelationsTable,
-    TermMetaBankV3IpaTable, TermMetaBankV3IpaRelationsTable, TermMetaBankV3IpaTagRelationsTable
+    TermMetaBankV3IpaTable, TermMetaBankV3IpaRelationsTable, TermMetaBankV3IpaTagRelationsTable,
+    TermMetaBankV3TagTable
   ],
   daos: [
     KanjiDao, TermDao, ReadingDao, MeaningDao,
     RadicalDao, KanjiVGDao,
     IndexDao, TagBankV3Dao,
     KanjiBankV3Dao, KanjiMetaBankV3Dao,
-    TermMetaBankV3Dao
+    TermBankV3Dao,
+    TermMetaBankV3Dao,
   ],
   
 )
@@ -107,7 +110,7 @@ class DaKanjiDB extends _$DaKanjiDB {
     );
   }
 
-  /// **WARNING**: This closes the database and deletes ALL its content
+  /// **WARNING**: This closes the database and DELETES the file
   Future deleteDB() async {
 
     await close();
@@ -116,6 +119,17 @@ class DaKanjiDB extends _$DaKanjiDB {
       file.deleteSync();
     }
 
+  }
+
+  /// **WARNING**: This DELETES all contents of the db
+  Future clearDB() async {
+    await transaction(() async {
+      // you only need this if you've manually enabled foreign keys
+      // await customStatement('PRAGMA foreign_keys = OFF');
+      for (final table in allTables) {
+        await delete(table).go();
+      }
+    });
   }
 
 }

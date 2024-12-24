@@ -12,20 +12,20 @@ class TermBankV3DefinitionTagRelationsTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   /// the id of the associated defintion tag
   IntColumn get definitionTagId => integer().references(TermBankV3DefinitionTagsTable, #id)();
-  /// the id of the associated term
-  IntColumn get termId => integer().references(TermBankV3Table, #id)();
+  /// the id of the associated term in the term bank
+  IntColumn get termBankId => integer().references(TermBankV3Table, #id)();
 
 }
 
 /// Contains the relationships between rule identifiers and terms
-class TermBankV3RuleIdentifiersRelationsTable extends Table {
+class TermBankV3RuleIdentifierRelationsTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
   /// the id of the associated rule identifier reading
   IntColumn get ruleIdentifierId => integer().references(TermBankV3RuleIdentifierTable, #id)();
-  /// the id of the associated term
-  IntColumn get termId => integer().references(TermBankV3Table, #id)();
+  /// the id of the associated term in the term bank
+  IntColumn get termBankId => integer().references(TermBankV3Table, #id)();
 
 }
 
@@ -36,7 +36,7 @@ class TermBankV3TagBankRelationsTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   /// the id of the associated tag bank entry
   IntColumn get tagBankId => integer().references(TagBankV3Table, #id)();
-  /// the id of the associated term
-  IntColumn get termId => integer().references(TermBankV3Table, #id)();
+  /// the id of the associated term in the term bank
+  IntColumn get termBankId => integer().references(TermBankV3Table, #id)();
 
 }

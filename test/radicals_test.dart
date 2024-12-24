@@ -13,7 +13,7 @@ void main() {
     
     // setup 
     DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
-    await db.deleteDB();
+    await db.clearDB();
 
     // convert krad / radk file
     Stopwatch s = Stopwatch()..start();

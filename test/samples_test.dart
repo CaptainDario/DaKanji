@@ -12,7 +12,7 @@ void main() async {
   
   // create the testing database (delete any existing database)
   DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
-  await db.deleteDB();
+  db.clearDB();
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
