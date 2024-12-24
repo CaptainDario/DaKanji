@@ -22,7 +22,8 @@ void main() async {
   test('Test importing samples', () async {
     //await testKanjiBankV3(db);
     //await testKanjiMetaBankV3(db);
-    await testTermMetaBankV3(db);
+    //await testTermMetaBankV3(db);
+    await testTermBankV3(db);
   });
 
 }
@@ -59,7 +60,7 @@ Future testKanjiMetaBankV3(DaKanjiDB db) async {
   }
 }
 
-/// tests the kanjiMetaBankV3 import of the sample database from the yomitan dictionary
+/// tests the termMetaBankV3 import of the sample database from the yomitan dictionary
 Future testTermMetaBankV3(DaKanjiDB db) async {
   // Check some kanji bank queries
   for (int i = 0; i < termMetaBankTetsCases.length; i++) {
@@ -74,6 +75,25 @@ Future testTermMetaBankV3(DaKanjiDB db) async {
     }
     expect(result.isNotEmpty , true);
     final pass = result.any((e) => termMetaBankTetsCaseExpectations[i] == e);
+    expect(pass, true);
+  }
+}
+
+/// tests the termBankV3 import of the sample database from the yomitan dictionary
+Future testTermBankV3(DaKanjiDB db) async {
+  // Check some kanji bank queries
+  for (int i = 0; i < termBankTetsCases.length; i++) {
+    Stopwatch s = Stopwatch()..start();
+    final testCase = termBankTetsCases[i];
+    final result = (await db.termBankV3Dao.getTermBankEntriesFromTerm(testCase));
+    print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
+
+    print("\n\n$i: ${termBankTetsCases[i]}");
+    for (var res in result) {
+      print(res);
+    }
+    expect(result.isNotEmpty , true);
+    final pass = result.any((e) => termBankTetsCaseExpectations[i] == e);
     expect(pass, true);
   }
 }
