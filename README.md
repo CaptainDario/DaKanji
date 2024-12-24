@@ -54,7 +54,7 @@ The official (base dictionary that is shipped with DaKanji) consists of the foll
   * Audio
     * [Yomitan Audio](https://github.com/yomidevs/local-audio-yomichan)
   * Examples
-    * Tatoeba
+    * Tatoeba (based on DaKanji example format)
 
 To build DaKanji DB first download each of the aforementioned databaes and place them in `./input_files`
 
