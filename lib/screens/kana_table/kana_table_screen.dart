@@ -77,7 +77,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
   /// The animation controller for the kana info card
   late AnimationController _controller;
   /// The player for the kana sound
-  final mdk.Player kanaSoundPlayer = mdk.Player();
+  final mdk.Player kanaSoundPlayer = mdk.Player()..audioBackends = ["AudioTrack"];
 
 
   @override

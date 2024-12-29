@@ -77,7 +77,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// the directory in which the audio files are stored
   late Directory audioFilesDir;
   /// Playback of audio files
-  final mdk.Player player = mdk.Player();
+  final mdk.Player player = mdk.Player()..audioBackends = ["AudioTrack"];
   /// Is currently the google image search expanded
   bool googleImagesIsExpanded = false;
   /// Is the conjugation table currently expanded

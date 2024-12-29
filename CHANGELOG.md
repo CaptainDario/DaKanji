@@ -32,6 +32,7 @@ Fixed:
 - DoJG: Zooming and scrolling using the mouse wheel conflicts each other
 - Anki
   - The order of languages when sending to Anki has been ignored
+- Some audio files cut of on Android devices
 
 -------------------------------------------------------------------------
 
