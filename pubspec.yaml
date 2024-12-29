@@ -96,7 +96,7 @@ dependencies:
   meta: 1.16.0
   collection: 1.19.0
   dart_style: 2.3.7
-  archive: 4.0.1
+  archive: 4.0.2
   local_assets_server: 2.0.2+12
   kana_kit:
 
@@ -138,7 +138,7 @@ dependency_overrides:
   meta: 1.16.0
   collection: 1.19.0
   dart_style: 2.3.7
-  archive: 4.0.1
+  archive: 4.0.2
 
 msix_config:
   display_name: DaKanji
