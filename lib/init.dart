@@ -188,7 +188,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   // Mecab
   GetIt.I.registerSingleton<Mecab>(Mecab());
 
-  await GetIt.I<Mecab>().init("$supportDirectory/assets/mecab_dict/", true);
+  await GetIt.I<Mecab>().init(p.joinAll([supportDirectory, "assets", "mecab_dict"]), true);
 
   g_documentsServicesInitialized = true;
 }
