@@ -20,3 +20,6 @@ stresstest/*
 
 # ignore files that are converted from non yomitan dicts
 input_files/**
+
+# ignore mecab dictionary
+bin/ipadic/**

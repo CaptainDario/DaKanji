@@ -125,3 +125,19 @@ Additionally, some other databases are included in DaKanji
 #### Example sentences
 
 DaKanji also allows users to import their own example sentence databases.
+For this two different types are importable.
+
+##### Japanese with translation
+
+For this type of example sentences any text file that is structured like the following example can be imported
+
+```
+iso8306 language code
+
+```
+
+an example can be found in []()
+
+##### Japanese only
+
+test

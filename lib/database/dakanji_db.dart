@@ -2,6 +2,8 @@
 import 'package:dakanji_db/database/example/example_dao.dart';
 import 'package:dakanji_db/database/example/example_relation_tables.dart';
 import 'package:dakanji_db/database/example/example_tables.dart';
+import 'package:dakanji_db/database/general_tables/language_code_dao.dart';
+import 'package:dakanji_db/database/general_tables/language_code_table.dart';
 import 'package:dakanji_db/database/term/term_bank_v3_dao.dart';
 import 'package:dakanji_db/database/term/term_bank_v3_relation_tables.dart';
 import 'package:dakanji_db/database/term/term_bank_v3_tables.dart';
@@ -44,7 +46,7 @@ part 'dakanji_db.g.dart';
 
 @DriftDatabase(tables: [
 
-    KanjiTable, TermTable, ReadingTable, MeaningTable,
+    KanjiTable, TermTable, ReadingTable, MeaningTable, LanguageCodeTable,
 
     RadicalsTable, RadicalKanjiRelationsTable,
     KanjiVGTable,
@@ -80,7 +82,7 @@ part 'dakanji_db.g.dart';
     ExampleTermRelationsTable, ExampleTranslationRelationsTable
   ],
   daos: [
-    KanjiDao, TermDao, ReadingDao, MeaningDao,
+    KanjiDao, TermDao, ReadingDao, MeaningDao, LanguageCodeDao,
     RadicalDao, KanjiVGDao,
     IndexDao, TagBankV3Dao,
     KanjiBankV3Dao, KanjiMetaBankV3Dao,

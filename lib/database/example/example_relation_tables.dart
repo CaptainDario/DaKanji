@@ -5,7 +5,8 @@ import 'package:drift/drift.dart';
 
 
 
-/// Contains the relationships between examples and terms that they contain
+/// Contains the relationships between examples and the terms that the examples
+/// contain
 class ExampleTermRelationsTable extends Table {
 
   /// id of this relation

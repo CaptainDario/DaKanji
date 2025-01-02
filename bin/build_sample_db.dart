@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db/parsing/example_parser.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
@@ -10,11 +11,16 @@ void main() async {
 
   // setup 
   DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
-  await db.clearDB();
+  await db.deleteDB();
 
-  // convert the test files
+  // convert the yomitan test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(samplesPath), db);
+  await parseDictionaryFolder(Directory(yomitanSamplePath), db);
+  print("Conversion took ${s.elapsedMilliseconds} ms");
+
+  // convert the example test files
+  s = Stopwatch()..reset()..start();
+  await parseExampleFolder(Directory(exampleSamplePath), db);
   print("Conversion took ${s.elapsedMilliseconds} ms");
 
   exit(0);

@@ -746,6 +746,200 @@ class MeaningTableCompanion extends UpdateCompanion<MeaningTableData> {
   }
 }
 
+class $LanguageCodeTableTable extends LanguageCodeTable
+    with TableInfo<$LanguageCodeTableTable, LanguageCodeTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LanguageCodeTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _languageCodeMeta =
+      const VerificationMeta('languageCode');
+  @override
+  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
+      'language_code', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
+  @override
+  List<GeneratedColumn> get $columns => [id, languageCode];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'language_code_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<LanguageCodeTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('language_code')) {
+      context.handle(
+          _languageCodeMeta,
+          languageCode.isAcceptableOrUnknown(
+              data['language_code']!, _languageCodeMeta));
+    } else if (isInserting) {
+      context.missing(_languageCodeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LanguageCodeTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LanguageCodeTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      languageCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}language_code'])!,
+    );
+  }
+
+  @override
+  $LanguageCodeTableTable createAlias(String alias) {
+    return $LanguageCodeTableTable(attachedDatabase, alias);
+  }
+}
+
+class LanguageCodeTableData extends DataClass
+    implements Insertable<LanguageCodeTableData> {
+  /// id of this entry
+  final int id;
+
+  /// the example of this entry
+  final String languageCode;
+  const LanguageCodeTableData({required this.id, required this.languageCode});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['language_code'] = Variable<String>(languageCode);
+    return map;
+  }
+
+  LanguageCodeTableCompanion toCompanion(bool nullToAbsent) {
+    return LanguageCodeTableCompanion(
+      id: Value(id),
+      languageCode: Value(languageCode),
+    );
+  }
+
+  factory LanguageCodeTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LanguageCodeTableData(
+      id: serializer.fromJson<int>(json['id']),
+      languageCode: serializer.fromJson<String>(json['languageCode']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'languageCode': serializer.toJson<String>(languageCode),
+    };
+  }
+
+  LanguageCodeTableData copyWith({int? id, String? languageCode}) =>
+      LanguageCodeTableData(
+        id: id ?? this.id,
+        languageCode: languageCode ?? this.languageCode,
+      );
+  LanguageCodeTableData copyWithCompanion(LanguageCodeTableCompanion data) {
+    return LanguageCodeTableData(
+      id: data.id.present ? data.id.value : this.id,
+      languageCode: data.languageCode.present
+          ? data.languageCode.value
+          : this.languageCode,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LanguageCodeTableData(')
+          ..write('id: $id, ')
+          ..write('languageCode: $languageCode')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, languageCode);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LanguageCodeTableData &&
+          other.id == this.id &&
+          other.languageCode == this.languageCode);
+}
+
+class LanguageCodeTableCompanion
+    extends UpdateCompanion<LanguageCodeTableData> {
+  final Value<int> id;
+  final Value<String> languageCode;
+  const LanguageCodeTableCompanion({
+    this.id = const Value.absent(),
+    this.languageCode = const Value.absent(),
+  });
+  LanguageCodeTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String languageCode,
+  }) : languageCode = Value(languageCode);
+  static Insertable<LanguageCodeTableData> custom({
+    Expression<int>? id,
+    Expression<String>? languageCode,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (languageCode != null) 'language_code': languageCode,
+    });
+  }
+
+  LanguageCodeTableCompanion copyWith(
+      {Value<int>? id, Value<String>? languageCode}) {
+    return LanguageCodeTableCompanion(
+      id: id ?? this.id,
+      languageCode: languageCode ?? this.languageCode,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (languageCode.present) {
+      map['language_code'] = Variable<String>(languageCode.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LanguageCodeTableCompanion(')
+          ..write('id: $id, ')
+          ..write('languageCode: $languageCode')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $RadicalsTableTable extends RadicalsTable
     with TableInfo<$RadicalsTableTable, RadicalsTableData> {
   @override
@@ -9288,9 +9482,7 @@ class $ExampleTableTable extends ExampleTable
   @override
   late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
       'example_sentence', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
+      type: DriftSqlType.string, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, exampleSentence];
   @override
@@ -9475,24 +9667,24 @@ class $ExampleTranslationTableTable extends ExampleTranslationTable
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _exampleSentenceTranslationMeta =
-      const VerificationMeta('exampleSentenceTranslation');
+  static const VerificationMeta _exampleTranslationMeta =
+      const VerificationMeta('exampleTranslation');
   @override
-  late final GeneratedColumn<String> exampleSentenceTranslation =
-      GeneratedColumn<String>(
-          'example_sentence_translation', aliasedName, false,
-          type: DriftSqlType.string,
-          requiredDuringInsert: true,
-          defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
-  static const VerificationMeta _languageIdMeta =
-      const VerificationMeta('languageId');
+  late final GeneratedColumn<String> exampleTranslation =
+      GeneratedColumn<String>('example_translation', aliasedName, false,
+          type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _languageCodeIdMeta =
+      const VerificationMeta('languageCodeId');
   @override
-  late final GeneratedColumn<int> languageId = GeneratedColumn<int>(
-      'language_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+  late final GeneratedColumn<int> languageCodeId = GeneratedColumn<int>(
+      'language_code_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES language_code_table (id)'));
   @override
   List<GeneratedColumn> get $columns =>
-      [id, exampleSentenceTranslation, languageId];
+      [id, exampleTranslation, languageCodeId];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -9507,22 +9699,21 @@ class $ExampleTranslationTableTable extends ExampleTranslationTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('example_sentence_translation')) {
+    if (data.containsKey('example_translation')) {
       context.handle(
-          _exampleSentenceTranslationMeta,
-          exampleSentenceTranslation.isAcceptableOrUnknown(
-              data['example_sentence_translation']!,
-              _exampleSentenceTranslationMeta));
+          _exampleTranslationMeta,
+          exampleTranslation.isAcceptableOrUnknown(
+              data['example_translation']!, _exampleTranslationMeta));
     } else if (isInserting) {
-      context.missing(_exampleSentenceTranslationMeta);
+      context.missing(_exampleTranslationMeta);
     }
-    if (data.containsKey('language_id')) {
+    if (data.containsKey('language_code_id')) {
       context.handle(
-          _languageIdMeta,
-          languageId.isAcceptableOrUnknown(
-              data['language_id']!, _languageIdMeta));
+          _languageCodeIdMeta,
+          languageCodeId.isAcceptableOrUnknown(
+              data['language_code_id']!, _languageCodeIdMeta));
     } else if (isInserting) {
-      context.missing(_languageIdMeta);
+      context.missing(_languageCodeIdMeta);
     }
     return context;
   }
@@ -9536,11 +9727,10 @@ class $ExampleTranslationTableTable extends ExampleTranslationTable
     return ExampleTranslationTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      exampleSentenceTranslation: attachedDatabase.typeMapping.read(
-          DriftSqlType.string,
-          data['${effectivePrefix}example_sentence_translation'])!,
-      languageId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}language_id'])!,
+      exampleTranslation: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}example_translation'])!,
+      languageCodeId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}language_code_id'])!,
     );
   }
 
@@ -9556,29 +9746,28 @@ class ExampleTranslationTableData extends DataClass
   final int id;
 
   /// the example of this entry
-  final String exampleSentenceTranslation;
+  final String exampleTranslation;
 
-  /// The language of this entry
-  final int languageId;
+  /// The id of the language code (iso 639 2T) of this translation
+  final int languageCodeId;
   const ExampleTranslationTableData(
       {required this.id,
-      required this.exampleSentenceTranslation,
-      required this.languageId});
+      required this.exampleTranslation,
+      required this.languageCodeId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['example_sentence_translation'] =
-        Variable<String>(exampleSentenceTranslation);
-    map['language_id'] = Variable<int>(languageId);
+    map['example_translation'] = Variable<String>(exampleTranslation);
+    map['language_code_id'] = Variable<int>(languageCodeId);
     return map;
   }
 
   ExampleTranslationTableCompanion toCompanion(bool nullToAbsent) {
     return ExampleTranslationTableCompanion(
       id: Value(id),
-      exampleSentenceTranslation: Value(exampleSentenceTranslation),
-      languageId: Value(languageId),
+      exampleTranslation: Value(exampleTranslation),
+      languageCodeId: Value(languageCodeId),
     );
   }
 
@@ -9587,9 +9776,9 @@ class ExampleTranslationTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ExampleTranslationTableData(
       id: serializer.fromJson<int>(json['id']),
-      exampleSentenceTranslation:
-          serializer.fromJson<String>(json['exampleSentenceTranslation']),
-      languageId: serializer.fromJson<int>(json['languageId']),
+      exampleTranslation:
+          serializer.fromJson<String>(json['exampleTranslation']),
+      languageCodeId: serializer.fromJson<int>(json['languageCodeId']),
     );
   }
   @override
@@ -9597,29 +9786,28 @@ class ExampleTranslationTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'exampleSentenceTranslation':
-          serializer.toJson<String>(exampleSentenceTranslation),
-      'languageId': serializer.toJson<int>(languageId),
+      'exampleTranslation': serializer.toJson<String>(exampleTranslation),
+      'languageCodeId': serializer.toJson<int>(languageCodeId),
     };
   }
 
   ExampleTranslationTableData copyWith(
-          {int? id, String? exampleSentenceTranslation, int? languageId}) =>
+          {int? id, String? exampleTranslation, int? languageCodeId}) =>
       ExampleTranslationTableData(
         id: id ?? this.id,
-        exampleSentenceTranslation:
-            exampleSentenceTranslation ?? this.exampleSentenceTranslation,
-        languageId: languageId ?? this.languageId,
+        exampleTranslation: exampleTranslation ?? this.exampleTranslation,
+        languageCodeId: languageCodeId ?? this.languageCodeId,
       );
   ExampleTranslationTableData copyWithCompanion(
       ExampleTranslationTableCompanion data) {
     return ExampleTranslationTableData(
       id: data.id.present ? data.id.value : this.id,
-      exampleSentenceTranslation: data.exampleSentenceTranslation.present
-          ? data.exampleSentenceTranslation.value
-          : this.exampleSentenceTranslation,
-      languageId:
-          data.languageId.present ? data.languageId.value : this.languageId,
+      exampleTranslation: data.exampleTranslation.present
+          ? data.exampleTranslation.value
+          : this.exampleTranslation,
+      languageCodeId: data.languageCodeId.present
+          ? data.languageCodeId.value
+          : this.languageCodeId,
     );
   }
 
@@ -9627,61 +9815,59 @@ class ExampleTranslationTableData extends DataClass
   String toString() {
     return (StringBuffer('ExampleTranslationTableData(')
           ..write('id: $id, ')
-          ..write('exampleSentenceTranslation: $exampleSentenceTranslation, ')
-          ..write('languageId: $languageId')
+          ..write('exampleTranslation: $exampleTranslation, ')
+          ..write('languageCodeId: $languageCodeId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, exampleSentenceTranslation, languageId);
+  int get hashCode => Object.hash(id, exampleTranslation, languageCodeId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ExampleTranslationTableData &&
           other.id == this.id &&
-          other.exampleSentenceTranslation == this.exampleSentenceTranslation &&
-          other.languageId == this.languageId);
+          other.exampleTranslation == this.exampleTranslation &&
+          other.languageCodeId == this.languageCodeId);
 }
 
 class ExampleTranslationTableCompanion
     extends UpdateCompanion<ExampleTranslationTableData> {
   final Value<int> id;
-  final Value<String> exampleSentenceTranslation;
-  final Value<int> languageId;
+  final Value<String> exampleTranslation;
+  final Value<int> languageCodeId;
   const ExampleTranslationTableCompanion({
     this.id = const Value.absent(),
-    this.exampleSentenceTranslation = const Value.absent(),
-    this.languageId = const Value.absent(),
+    this.exampleTranslation = const Value.absent(),
+    this.languageCodeId = const Value.absent(),
   });
   ExampleTranslationTableCompanion.insert({
     this.id = const Value.absent(),
-    required String exampleSentenceTranslation,
-    required int languageId,
-  })  : exampleSentenceTranslation = Value(exampleSentenceTranslation),
-        languageId = Value(languageId);
+    required String exampleTranslation,
+    required int languageCodeId,
+  })  : exampleTranslation = Value(exampleTranslation),
+        languageCodeId = Value(languageCodeId);
   static Insertable<ExampleTranslationTableData> custom({
     Expression<int>? id,
-    Expression<String>? exampleSentenceTranslation,
-    Expression<int>? languageId,
+    Expression<String>? exampleTranslation,
+    Expression<int>? languageCodeId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (exampleSentenceTranslation != null)
-        'example_sentence_translation': exampleSentenceTranslation,
-      if (languageId != null) 'language_id': languageId,
+      if (exampleTranslation != null) 'example_translation': exampleTranslation,
+      if (languageCodeId != null) 'language_code_id': languageCodeId,
     });
   }
 
   ExampleTranslationTableCompanion copyWith(
       {Value<int>? id,
-      Value<String>? exampleSentenceTranslation,
-      Value<int>? languageId}) {
+      Value<String>? exampleTranslation,
+      Value<int>? languageCodeId}) {
     return ExampleTranslationTableCompanion(
       id: id ?? this.id,
-      exampleSentenceTranslation:
-          exampleSentenceTranslation ?? this.exampleSentenceTranslation,
-      languageId: languageId ?? this.languageId,
+      exampleTranslation: exampleTranslation ?? this.exampleTranslation,
+      languageCodeId: languageCodeId ?? this.languageCodeId,
     );
   }
 
@@ -9691,12 +9877,11 @@ class ExampleTranslationTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (exampleSentenceTranslation.present) {
-      map['example_sentence_translation'] =
-          Variable<String>(exampleSentenceTranslation.value);
+    if (exampleTranslation.present) {
+      map['example_translation'] = Variable<String>(exampleTranslation.value);
     }
-    if (languageId.present) {
-      map['language_id'] = Variable<int>(languageId.value);
+    if (languageCodeId.present) {
+      map['language_code_id'] = Variable<int>(languageCodeId.value);
     }
     return map;
   }
@@ -9705,8 +9890,8 @@ class ExampleTranslationTableCompanion
   String toString() {
     return (StringBuffer('ExampleTranslationTableCompanion(')
           ..write('id: $id, ')
-          ..write('exampleSentenceTranslation: $exampleSentenceTranslation, ')
-          ..write('languageId: $languageId')
+          ..write('exampleTranslation: $exampleTranslation, ')
+          ..write('languageCodeId: $languageCodeId')
           ..write(')'))
         .toString();
   }
@@ -10196,6 +10381,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $TermTableTable termTable = $TermTableTable(this);
   late final $ReadingTableTable readingTable = $ReadingTableTable(this);
   late final $MeaningTableTable meaningTable = $MeaningTableTable(this);
+  late final $LanguageCodeTableTable languageCodeTable =
+      $LanguageCodeTableTable(this);
   late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
   late final $RadicalKanjiRelationsTableTable radicalKanjiRelationsTable =
       $RadicalKanjiRelationsTableTable(this);
@@ -10287,19 +10474,22 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       Index('reading', 'CREATE INDEX reading ON reading_table (reading)');
   late final Index meaning =
       Index('meaning', 'CREATE INDEX meaning ON meaning_table (meaning)');
+  late final Index languageCode = Index('languageCode',
+      'CREATE INDEX languageCode ON language_code_table (language_code)');
   late final Index radical =
       Index('radical', 'CREATE INDEX radical ON radicals_table (radical)');
   late final Index name =
       Index('name', 'CREATE INDEX name ON tag_bank_v3_table (name)');
   late final Index exampleSentence = Index('exampleSentence',
       'CREATE INDEX exampleSentence ON example_table (example_sentence)');
-  late final Index exampleSentenceTranslation = Index(
-      'exampleSentenceTranslation',
-      'CREATE INDEX exampleSentenceTranslation ON example_translation_table (example_sentence_translation)');
+  late final Index exampleTranslation = Index('exampleTranslation',
+      'CREATE INDEX exampleTranslation ON example_translation_table (example_translation)');
   late final KanjiDao kanjiDao = KanjiDao(this as DaKanjiDB);
   late final TermDao termDao = TermDao(this as DaKanjiDB);
   late final ReadingDao readingDao = ReadingDao(this as DaKanjiDB);
   late final MeaningDao meaningDao = MeaningDao(this as DaKanjiDB);
+  late final LanguageCodeDao languageCodeDao =
+      LanguageCodeDao(this as DaKanjiDB);
   late final RadicalDao radicalDao = RadicalDao(this as DaKanjiDB);
   late final KanjiVGDao kanjiVGDao = KanjiVGDao(this as DaKanjiDB);
   late final IndexDao indexDao = IndexDao(this as DaKanjiDB);
@@ -10320,6 +10510,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         termTable,
         readingTable,
         meaningTable,
+        languageCodeTable,
         radicalsTable,
         radicalKanjiRelationsTable,
         kanjiVGTable,
@@ -10361,10 +10552,11 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         term,
         reading,
         meaning,
+        languageCode,
         radical,
         name,
         exampleSentence,
-        exampleSentenceTranslation
+        exampleTranslation
       ];
 }
 
@@ -11862,6 +12054,223 @@ typedef $$MeaningTableTableProcessedTableManager = ProcessedTableManager<
     (MeaningTableData, $$MeaningTableTableReferences),
     MeaningTableData,
     PrefetchHooks Function({bool kanjiBankV3MeaningsKanjiRelationsTableRefs})>;
+typedef $$LanguageCodeTableTableCreateCompanionBuilder
+    = LanguageCodeTableCompanion Function({
+  Value<int> id,
+  required String languageCode,
+});
+typedef $$LanguageCodeTableTableUpdateCompanionBuilder
+    = LanguageCodeTableCompanion Function({
+  Value<int> id,
+  Value<String> languageCode,
+});
+
+final class $$LanguageCodeTableTableReferences extends BaseReferences<
+    _$DaKanjiDB, $LanguageCodeTableTable, LanguageCodeTableData> {
+  $$LanguageCodeTableTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$ExampleTranslationTableTable,
+      List<ExampleTranslationTableData>> _exampleTranslationTableRefsTable(
+          _$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(db.exampleTranslationTable,
+          aliasName: $_aliasNameGenerator(db.languageCodeTable.id,
+              db.exampleTranslationTable.languageCodeId));
+
+  $$ExampleTranslationTableTableProcessedTableManager
+      get exampleTranslationTableRefs {
+    final manager = $$ExampleTranslationTableTableTableManager(
+            $_db, $_db.exampleTranslationTable)
+        .filter((f) => f.languageCodeId.id($_item.id));
+
+    final cache =
+        $_typedResult.readTableOrNull(_exampleTranslationTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$LanguageCodeTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
+  $$LanguageCodeTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get languageCode => $composableBuilder(
+      column: $table.languageCode, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> exampleTranslationTableRefs(
+      Expression<bool> Function($$ExampleTranslationTableTableFilterComposer f)
+          f) {
+    final $$ExampleTranslationTableTableFilterComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.exampleTranslationTable,
+            getReferencedColumn: (t) => t.languageCodeId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$ExampleTranslationTableTableFilterComposer(
+                  $db: $db,
+                  $table: $db.exampleTranslationTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$LanguageCodeTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
+  $$LanguageCodeTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get languageCode => $composableBuilder(
+      column: $table.languageCode,
+      builder: (column) => ColumnOrderings(column));
+}
+
+class $$LanguageCodeTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
+  $$LanguageCodeTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get languageCode => $composableBuilder(
+      column: $table.languageCode, builder: (column) => column);
+
+  Expression<T> exampleTranslationTableRefs<T extends Object>(
+      Expression<T> Function($$ExampleTranslationTableTableAnnotationComposer a)
+          f) {
+    final $$ExampleTranslationTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.exampleTranslationTable,
+            getReferencedColumn: (t) => t.languageCodeId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$ExampleTranslationTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.exampleTranslationTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$LanguageCodeTableTableTableManager extends RootTableManager<
+    _$DaKanjiDB,
+    $LanguageCodeTableTable,
+    LanguageCodeTableData,
+    $$LanguageCodeTableTableFilterComposer,
+    $$LanguageCodeTableTableOrderingComposer,
+    $$LanguageCodeTableTableAnnotationComposer,
+    $$LanguageCodeTableTableCreateCompanionBuilder,
+    $$LanguageCodeTableTableUpdateCompanionBuilder,
+    (LanguageCodeTableData, $$LanguageCodeTableTableReferences),
+    LanguageCodeTableData,
+    PrefetchHooks Function({bool exampleTranslationTableRefs})> {
+  $$LanguageCodeTableTableTableManager(
+      _$DaKanjiDB db, $LanguageCodeTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LanguageCodeTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LanguageCodeTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LanguageCodeTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> languageCode = const Value.absent(),
+          }) =>
+              LanguageCodeTableCompanion(
+            id: id,
+            languageCode: languageCode,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String languageCode,
+          }) =>
+              LanguageCodeTableCompanion.insert(
+            id: id,
+            languageCode: languageCode,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$LanguageCodeTableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({exampleTranslationTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (exampleTranslationTableRefs) db.exampleTranslationTable
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (exampleTranslationTableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$LanguageCodeTableTableReferences
+                            ._exampleTranslationTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$LanguageCodeTableTableReferences(db, table, p0)
+                                .exampleTranslationTableRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.languageCodeId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$LanguageCodeTableTableProcessedTableManager = ProcessedTableManager<
+    _$DaKanjiDB,
+    $LanguageCodeTableTable,
+    LanguageCodeTableData,
+    $$LanguageCodeTableTableFilterComposer,
+    $$LanguageCodeTableTableOrderingComposer,
+    $$LanguageCodeTableTableAnnotationComposer,
+    $$LanguageCodeTableTableCreateCompanionBuilder,
+    $$LanguageCodeTableTableUpdateCompanionBuilder,
+    (LanguageCodeTableData, $$LanguageCodeTableTableReferences),
+    LanguageCodeTableData,
+    PrefetchHooks Function({bool exampleTranslationTableRefs})>;
 typedef $$RadicalsTableTableCreateCompanionBuilder = RadicalsTableCompanion
     Function({
   Value<int> id,
@@ -23962,20 +24371,35 @@ typedef $$ExampleTableTableProcessedTableManager = ProcessedTableManager<
 typedef $$ExampleTranslationTableTableCreateCompanionBuilder
     = ExampleTranslationTableCompanion Function({
   Value<int> id,
-  required String exampleSentenceTranslation,
-  required int languageId,
+  required String exampleTranslation,
+  required int languageCodeId,
 });
 typedef $$ExampleTranslationTableTableUpdateCompanionBuilder
     = ExampleTranslationTableCompanion Function({
   Value<int> id,
-  Value<String> exampleSentenceTranslation,
-  Value<int> languageId,
+  Value<String> exampleTranslation,
+  Value<int> languageCodeId,
 });
 
 final class $$ExampleTranslationTableTableReferences extends BaseReferences<
     _$DaKanjiDB, $ExampleTranslationTableTable, ExampleTranslationTableData> {
   $$ExampleTranslationTableTableReferences(
       super.$_db, super.$_table, super.$_typedResult);
+
+  static $LanguageCodeTableTable _languageCodeIdTable(_$DaKanjiDB db) =>
+      db.languageCodeTable.createAlias($_aliasNameGenerator(
+          db.exampleTranslationTable.languageCodeId, db.languageCodeTable.id));
+
+  $$LanguageCodeTableTableProcessedTableManager? get languageCodeId {
+    if ($_item.languageCodeId == null) return null;
+    final manager =
+        $$LanguageCodeTableTableTableManager($_db, $_db.languageCodeTable)
+            .filter((f) => f.id($_item.languageCodeId!));
+    final item = $_typedResult.readTableOrNull(_languageCodeIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
 
   static MultiTypedResultKey<$ExampleTranslationRelationsTableTable,
           List<ExampleTranslationRelationsTableData>>
@@ -24009,12 +24433,29 @@ class $$ExampleTranslationTableTableFilterComposer
   ColumnFilters<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get exampleSentenceTranslation => $composableBuilder(
-      column: $table.exampleSentenceTranslation,
+  ColumnFilters<String> get exampleTranslation => $composableBuilder(
+      column: $table.exampleTranslation,
       builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get languageId => $composableBuilder(
-      column: $table.languageId, builder: (column) => ColumnFilters(column));
+  $$LanguageCodeTableTableFilterComposer get languageCodeId {
+    final $$LanguageCodeTableTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.languageCodeId,
+        referencedTable: $db.languageCodeTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$LanguageCodeTableTableFilterComposer(
+              $db: $db,
+              $table: $db.languageCodeTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 
   Expression<bool> exampleTranslationRelationsTableRefs(
       Expression<bool> Function(
@@ -24053,12 +24494,29 @@ class $$ExampleTranslationTableTableOrderingComposer
   ColumnOrderings<int> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get exampleSentenceTranslation => $composableBuilder(
-      column: $table.exampleSentenceTranslation,
+  ColumnOrderings<String> get exampleTranslation => $composableBuilder(
+      column: $table.exampleTranslation,
       builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get languageId => $composableBuilder(
-      column: $table.languageId, builder: (column) => ColumnOrderings(column));
+  $$LanguageCodeTableTableOrderingComposer get languageCodeId {
+    final $$LanguageCodeTableTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.languageCodeId,
+        referencedTable: $db.languageCodeTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$LanguageCodeTableTableOrderingComposer(
+              $db: $db,
+              $table: $db.languageCodeTable,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$ExampleTranslationTableTableAnnotationComposer
@@ -24073,11 +24531,29 @@ class $$ExampleTranslationTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get exampleSentenceTranslation => $composableBuilder(
-      column: $table.exampleSentenceTranslation, builder: (column) => column);
+  GeneratedColumn<String> get exampleTranslation => $composableBuilder(
+      column: $table.exampleTranslation, builder: (column) => column);
 
-  GeneratedColumn<int> get languageId => $composableBuilder(
-      column: $table.languageId, builder: (column) => column);
+  $$LanguageCodeTableTableAnnotationComposer get languageCodeId {
+    final $$LanguageCodeTableTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.languageCodeId,
+            referencedTable: $db.languageCodeTable,
+            getReferencedColumn: (t) => t.id,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$LanguageCodeTableTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.languageCodeTable,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return composer;
+  }
 
   Expression<T> exampleTranslationRelationsTableRefs<T extends Object>(
       Expression<T> Function(
@@ -24115,7 +24591,8 @@ class $$ExampleTranslationTableTableTableManager extends RootTableManager<
     $$ExampleTranslationTableTableUpdateCompanionBuilder,
     (ExampleTranslationTableData, $$ExampleTranslationTableTableReferences),
     ExampleTranslationTableData,
-    PrefetchHooks Function({bool exampleTranslationRelationsTableRefs})> {
+    PrefetchHooks Function(
+        {bool languageCodeId, bool exampleTranslationRelationsTableRefs})> {
   $$ExampleTranslationTableTableTableManager(
       _$DaKanjiDB db, $ExampleTranslationTableTable table)
       : super(TableManagerState(
@@ -24132,23 +24609,23 @@ class $$ExampleTranslationTableTableTableManager extends RootTableManager<
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            Value<String> exampleSentenceTranslation = const Value.absent(),
-            Value<int> languageId = const Value.absent(),
+            Value<String> exampleTranslation = const Value.absent(),
+            Value<int> languageCodeId = const Value.absent(),
           }) =>
               ExampleTranslationTableCompanion(
             id: id,
-            exampleSentenceTranslation: exampleSentenceTranslation,
-            languageId: languageId,
+            exampleTranslation: exampleTranslation,
+            languageCodeId: languageCodeId,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
-            required String exampleSentenceTranslation,
-            required int languageId,
+            required String exampleTranslation,
+            required int languageCodeId,
           }) =>
               ExampleTranslationTableCompanion.insert(
             id: id,
-            exampleSentenceTranslation: exampleSentenceTranslation,
-            languageId: languageId,
+            exampleTranslation: exampleTranslation,
+            languageCodeId: languageCodeId,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
@@ -24157,14 +24634,41 @@ class $$ExampleTranslationTableTableTableManager extends RootTableManager<
                   ))
               .toList(),
           prefetchHooksCallback: (
-              {exampleTranslationRelationsTableRefs = false}) {
+              {languageCodeId = false,
+              exampleTranslationRelationsTableRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
                 if (exampleTranslationRelationsTableRefs)
                   db.exampleTranslationRelationsTable
               ],
-              addJoins: null,
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (languageCodeId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.languageCodeId,
+                    referencedTable: $$ExampleTranslationTableTableReferences
+                        ._languageCodeIdTable(db),
+                    referencedColumn: $$ExampleTranslationTableTableReferences
+                        ._languageCodeIdTable(db)
+                        .id,
+                  ) as T;
+                }
+
+                return state;
+              },
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (exampleTranslationRelationsTableRefs)
@@ -24200,7 +24704,8 @@ typedef $$ExampleTranslationTableTableProcessedTableManager
         $$ExampleTranslationTableTableUpdateCompanionBuilder,
         (ExampleTranslationTableData, $$ExampleTranslationTableTableReferences),
         ExampleTranslationTableData,
-        PrefetchHooks Function({bool exampleTranslationRelationsTableRefs})>;
+        PrefetchHooks Function(
+            {bool languageCodeId, bool exampleTranslationRelationsTableRefs})>;
 typedef $$ExampleTermRelationsTableTableCreateCompanionBuilder
     = ExampleTermRelationsTableCompanion Function({
   Value<int> id,
@@ -24878,6 +25383,8 @@ class $DaKanjiDBManager {
       $$ReadingTableTableTableManager(_db, _db.readingTable);
   $$MeaningTableTableTableManager get meaningTable =>
       $$MeaningTableTableTableManager(_db, _db.meaningTable);
+  $$LanguageCodeTableTableTableManager get languageCodeTable =>
+      $$LanguageCodeTableTableTableManager(_db, _db.languageCodeTable);
   $$RadicalsTableTableTableManager get radicalsTable =>
       $$RadicalsTableTableTableManager(_db, _db.radicalsTable);
   $$RadicalKanjiRelationsTableTableTableManager

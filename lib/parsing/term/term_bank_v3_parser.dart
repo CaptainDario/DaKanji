@@ -113,7 +113,7 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
       }
     }
 
-    // TODO definitions
+    // TODO parse definitions
 
     // create TermBankEntry
     termBankComps.add(TermBankV3TableCompanion(

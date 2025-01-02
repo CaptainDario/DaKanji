@@ -12,11 +12,11 @@ void main() async {
   
   // create the testing database (delete any existing database)
   DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
-  db.clearDB();
+  db.deleteDB();
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(samplesPath), db);
+  await parseDictionaryFolder(Directory(exampleSamplePath), db);
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   test('Test importing samples', () async {
