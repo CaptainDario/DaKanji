@@ -154,6 +154,7 @@ def main():
     subprocess.run(["git", "pull"], shell=True)
 
     init_submodules()
+    setup_dakanji_env()
 
     if("--help" in args or "-h" in args):
         print("""
