@@ -122,6 +122,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                         ),
                           GridView.builder(
                             shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: noKanjiButtons,
                               //crossAxisSpacing: 8,
