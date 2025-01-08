@@ -14,7 +14,7 @@ move_to_dict  = ["dict", "examples", "krad", "radk"]
 move_to_tf_lite = ["CNN_single_char.tflite"]
 files_to_exclude = ["audios.zip", "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
 files_to_exclude_win = [
-    "libtensorflowlite_c-mac.dylib",
+    "libtensorflowlite_c.dylib",
     "libtensorflowlite_c_arm64.so", "libtensorflowlite_c_x86.so",
 ]
 files_to_exclude_mac = [
@@ -25,7 +25,7 @@ files_to_exclude_mac = [
 files_to_exclude_lin = [
     "libmecab_arm64.dll", "libmecab_x86.dll",
     "libtensorflowlite_c_arm64.dll", "libtensorflowlite_c_x86.dll",
-    "libtensorflowlite_c-mac.dylib",
+    "libtensorflowlite_c.dylib",
 ]
 
 release_url = None
