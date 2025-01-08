@@ -117,13 +117,18 @@ def init_submodules():
     subprocess.run(["git", "submodule", "init"])
     subprocess.run(["git", "submodule", "update"])
 
-    os.chdir("plugins/DaKanji-dependencies")
+    base_dir = os.getcwd()
+
+    os.chdir(f"{base_dir}/plugins/DaKanji-dependencies/flutter_appavailability")
     subprocess.run(["flutter", "pub", "get"], shell=True)
 
-    os.chdir("../DaKanji-Dictionary")
+    os.chdir(f"{base_dir}/plugins/DaKanji-dependencies/liquid_swipe_flutter")
     subprocess.run(["flutter", "pub", "get"], shell=True)
 
-    os.chdir("../flutter_browser_app")
+    os.chdir(f"{base_dir}/plugins/DaKanji-Dictionary/database_builder")
+    subprocess.run(["flutter", "pub", "get"], shell=True)
+
+    os.chdir(f"{base_dir}/plugins/flutter_browser_app")
     subprocess.run(["flutter", "pub", "get"], shell=True)
 
     os.chdir("../..")
