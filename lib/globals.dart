@@ -100,8 +100,7 @@ int g_IsarExampleMaxMiB = Platform.isIOS ? 384 : 512;
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
 
 /// variable that indicates if a webivew is available on this platform
-final bool g_webViewSupported =
-  Platform.isAndroid || Platform.isIOS || Platform.isMacOS;
+late final bool g_webViewSupported
 
 /// variable that is true if app is running on a mobile platform
 final bool g_desktopPlatform = 

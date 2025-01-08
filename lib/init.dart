@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:kana_kit/kana_kit.dart';
@@ -52,6 +53,9 @@ import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 
 /// Initializes the app, by initializing all the providers, services, etc.
 Future<bool> init() async {
+
+  // check webview support
+  g_webViewSupported = (await WebViewEnvironment.getAvailableVersion()) != null;
 
   // wait for localization to be ready
   await EasyLocalization.ensureInitialized();
