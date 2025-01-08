@@ -276,6 +276,6 @@ flutter:
     # tf lite models
     - assets/tflite_models/
     # downloadable: mecab
-    #- assets/mecab_dict.zip
+    - assets/mecab_dict.zip
     # downloadable: dictionary
-    #- assets/dict/
+    - assets/dict/
