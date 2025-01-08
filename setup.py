@@ -118,13 +118,13 @@ def init_submodules():
     subprocess.run(["git", "submodule", "update"])
 
     os.chdir("plugins/DaKanji-dependencies")
-    subprocess.run(["flutter", "pub", "get"])
+    subprocess.run(["flutter", "pub", "get"], shell=True)
 
     os.chdir("../DaKanji-Dictionary")
-    subprocess.run(["flutter", "pub", "get"])
+    subprocess.run(["flutter", "pub", "get"], shell=True)
 
     os.chdir("../flutter_browser_app")
-    subprocess.run(["flutter", "pub", "get"])
+    subprocess.run(["flutter", "pub", "get"], shell=True)
 
     os.chdir("../..")
 
@@ -177,8 +177,8 @@ def main():
         print("Deleting temporary folder")
         shutil.rmtree(tmp_dir)
 
-    subprocess.run(["flutter", "pub", "get"])
-    subprocess.run(["dart", "run", "build_runner", "build", "--delete-conflicting-outputs"])
+    subprocess.run(["flutter", "pub", "get"], shell=True)
+    subprocess.run(["dart", "run", "build_runner", "build", "--delete-conflicting-outputs"], shell=True)
 
     print("Setup done! Run: \n flutter run")
     
