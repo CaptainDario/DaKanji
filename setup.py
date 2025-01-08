@@ -128,6 +128,21 @@ def init_submodules():
 
     os.chdir("../..")
 
+def setup_dakanji_env():
+
+    env_exists = os.path.exists("dakanji.env")
+
+    if(not env_exists):
+       
+        i = input("No dakanji.env file found!\n This will disable all online functionality, do you want to continue? (y)")
+
+        if(i == "y"):
+            shutil.copyfile("dakanji.env.template", "dakanji.env")
+        else:
+            print("aborting setup")
+            sys.exit(-1)
+
+
 def main():
 
     print("Setting up DaKanji")
@@ -159,6 +174,7 @@ def main():
         shutil.rmtree(tmp_dir)
 
     subprocess.run(["flutter", "pub", "get"])
+    subprocess.run(["dart", "run", "build_runner", "build", "--delete-conflicting-outputs"])
 
     print("Setup done! Run: \n flutter run")
     
