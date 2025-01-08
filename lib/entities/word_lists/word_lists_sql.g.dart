@@ -609,65 +609,83 @@ typedef $$WordListNodesSQLTableUpdateCompanionBuilder
 });
 
 class $$WordListNodesSQLTableFilterComposer
-    extends FilterComposer<_$WordListsSQLDatabase, $WordListNodesSQLTable> {
-  $$WordListNodesSQLTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$WordListsSQLDatabase, $WordListNodesSQLTable> {
+  $$WordListNodesSQLTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<List<int>, List<int>, String>
-      get childrenIDs => $state.composableBuilder(
-          column: $state.table.childrenIDs,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
+      get childrenIDs => $composableBuilder(
+          column: $table.childrenIDs,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
   ColumnWithTypeConverterFilters<WordListNodeType, WordListNodeType, int>
-      get type => $state.composableBuilder(
-          column: $state.table.type,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
+      get type => $composableBuilder(
+          column: $table.type,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
-  ColumnFilters<bool> get isExpanded => $state.composableBuilder(
-      column: $state.table.isExpanded,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<bool> get isExpanded => $composableBuilder(
+      column: $table.isExpanded, builder: (column) => ColumnFilters(column));
 }
 
 class $$WordListNodesSQLTableOrderingComposer
-    extends OrderingComposer<_$WordListsSQLDatabase, $WordListNodesSQLTable> {
-  $$WordListNodesSQLTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$WordListsSQLDatabase, $WordListNodesSQLTable> {
+  $$WordListNodesSQLTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get childrenIDs => $state.composableBuilder(
-      column: $state.table.childrenIDs,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get childrenIDs => $composableBuilder(
+      column: $table.childrenIDs, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get type => $state.composableBuilder(
-      column: $state.table.type,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get isExpanded => $state.composableBuilder(
-      column: $state.table.isExpanded,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<bool> get isExpanded => $composableBuilder(
+      column: $table.isExpanded, builder: (column) => ColumnOrderings(column));
+}
+
+class $$WordListNodesSQLTableAnnotationComposer
+    extends Composer<_$WordListsSQLDatabase, $WordListNodesSQLTable> {
+  $$WordListNodesSQLTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<int>, String> get childrenIDs =>
+      $composableBuilder(
+          column: $table.childrenIDs, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<WordListNodeType, int> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<bool> get isExpanded => $composableBuilder(
+      column: $table.isExpanded, builder: (column) => column);
 }
 
 class $$WordListNodesSQLTableTableManager extends RootTableManager<
@@ -676,6 +694,7 @@ class $$WordListNodesSQLTableTableManager extends RootTableManager<
     WordListNodesSQLData,
     $$WordListNodesSQLTableFilterComposer,
     $$WordListNodesSQLTableOrderingComposer,
+    $$WordListNodesSQLTableAnnotationComposer,
     $$WordListNodesSQLTableCreateCompanionBuilder,
     $$WordListNodesSQLTableUpdateCompanionBuilder,
     (
@@ -690,10 +709,12 @@ class $$WordListNodesSQLTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$WordListNodesSQLTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$WordListNodesSQLTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$WordListNodesSQLTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WordListNodesSQLTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WordListNodesSQLTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> name = const Value.absent(),
@@ -735,6 +756,7 @@ typedef $$WordListNodesSQLTableProcessedTableManager = ProcessedTableManager<
     WordListNodesSQLData,
     $$WordListNodesSQLTableFilterComposer,
     $$WordListNodesSQLTableOrderingComposer,
+    $$WordListNodesSQLTableAnnotationComposer,
     $$WordListNodesSQLTableCreateCompanionBuilder,
     $$WordListNodesSQLTableUpdateCompanionBuilder,
     (
@@ -760,41 +782,60 @@ typedef $$WordListEntriesSQLTableUpdateCompanionBuilder
 });
 
 class $$WordListEntriesSQLTableFilterComposer
-    extends FilterComposer<_$WordListsSQLDatabase, $WordListEntriesSQLTable> {
-  $$WordListEntriesSQLTableFilterComposer(super.$state);
-  ColumnFilters<int> get wordListID => $state.composableBuilder(
-      column: $state.table.wordListID,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$WordListsSQLDatabase, $WordListEntriesSQLTable> {
+  $$WordListEntriesSQLTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get wordListID => $composableBuilder(
+      column: $table.wordListID, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get dictEntryID => $state.composableBuilder(
-      column: $state.table.dictEntryID,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get dictEntryID => $composableBuilder(
+      column: $table.dictEntryID, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<DateTime> get timeAdded => $state.composableBuilder(
-      column: $state.table.timeAdded,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<DateTime> get timeAdded => $composableBuilder(
+      column: $table.timeAdded, builder: (column) => ColumnFilters(column));
 }
 
 class $$WordListEntriesSQLTableOrderingComposer
-    extends OrderingComposer<_$WordListsSQLDatabase, $WordListEntriesSQLTable> {
-  $$WordListEntriesSQLTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get wordListID => $state.composableBuilder(
-      column: $state.table.wordListID,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$WordListsSQLDatabase, $WordListEntriesSQLTable> {
+  $$WordListEntriesSQLTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get wordListID => $composableBuilder(
+      column: $table.wordListID, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get dictEntryID => $state.composableBuilder(
-      column: $state.table.dictEntryID,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get dictEntryID => $composableBuilder(
+      column: $table.dictEntryID, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<DateTime> get timeAdded => $state.composableBuilder(
-      column: $state.table.timeAdded,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<DateTime> get timeAdded => $composableBuilder(
+      column: $table.timeAdded, builder: (column) => ColumnOrderings(column));
+}
+
+class $$WordListEntriesSQLTableAnnotationComposer
+    extends Composer<_$WordListsSQLDatabase, $WordListEntriesSQLTable> {
+  $$WordListEntriesSQLTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get wordListID => $composableBuilder(
+      column: $table.wordListID, builder: (column) => column);
+
+  GeneratedColumn<int> get dictEntryID => $composableBuilder(
+      column: $table.dictEntryID, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get timeAdded =>
+      $composableBuilder(column: $table.timeAdded, builder: (column) => column);
 }
 
 class $$WordListEntriesSQLTableTableManager extends RootTableManager<
@@ -803,6 +844,7 @@ class $$WordListEntriesSQLTableTableManager extends RootTableManager<
     WordListEntriesSQLData,
     $$WordListEntriesSQLTableFilterComposer,
     $$WordListEntriesSQLTableOrderingComposer,
+    $$WordListEntriesSQLTableAnnotationComposer,
     $$WordListEntriesSQLTableCreateCompanionBuilder,
     $$WordListEntriesSQLTableUpdateCompanionBuilder,
     (
@@ -817,10 +859,13 @@ class $$WordListEntriesSQLTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$WordListEntriesSQLTableFilterComposer(ComposerState(db, table)),
-          orderingComposer: $$WordListEntriesSQLTableOrderingComposer(
-              ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$WordListEntriesSQLTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WordListEntriesSQLTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WordListEntriesSQLTableAnnotationComposer(
+                  $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> wordListID = const Value.absent(),
             Value<int> dictEntryID = const Value.absent(),
@@ -858,6 +903,7 @@ typedef $$WordListEntriesSQLTableProcessedTableManager = ProcessedTableManager<
     WordListEntriesSQLData,
     $$WordListEntriesSQLTableFilterComposer,
     $$WordListEntriesSQLTableOrderingComposer,
+    $$WordListEntriesSQLTableAnnotationComposer,
     $$WordListEntriesSQLTableCreateCompanionBuilder,
     $$WordListEntriesSQLTableUpdateCompanionBuilder,
     (

@@ -266,41 +266,61 @@ typedef $$SearchHistorySQLTableUpdateCompanionBuilder
 });
 
 class $$SearchHistorySQLTableFilterComposer
-    extends FilterComposer<_$SearchHistorySQLDatabase, $SearchHistorySQLTable> {
-  $$SearchHistorySQLTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$SearchHistorySQLDatabase, $SearchHistorySQLTable> {
+  $$SearchHistorySQLTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<DateTime> get dateSearched => $state.composableBuilder(
-      column: $state.table.dateSearched,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<DateTime> get dateSearched => $composableBuilder(
+      column: $table.dateSearched, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get dictEntryID => $state.composableBuilder(
-      column: $state.table.dictEntryID,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get dictEntryID => $composableBuilder(
+      column: $table.dictEntryID, builder: (column) => ColumnFilters(column));
 }
 
-class $$SearchHistorySQLTableOrderingComposer extends OrderingComposer<
-    _$SearchHistorySQLDatabase, $SearchHistorySQLTable> {
-  $$SearchHistorySQLTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+class $$SearchHistorySQLTableOrderingComposer
+    extends Composer<_$SearchHistorySQLDatabase, $SearchHistorySQLTable> {
+  $$SearchHistorySQLTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<DateTime> get dateSearched => $state.composableBuilder(
-      column: $state.table.dateSearched,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<DateTime> get dateSearched => $composableBuilder(
+      column: $table.dateSearched,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get dictEntryID => $state.composableBuilder(
-      column: $state.table.dictEntryID,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get dictEntryID => $composableBuilder(
+      column: $table.dictEntryID, builder: (column) => ColumnOrderings(column));
+}
+
+class $$SearchHistorySQLTableAnnotationComposer
+    extends Composer<_$SearchHistorySQLDatabase, $SearchHistorySQLTable> {
+  $$SearchHistorySQLTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateSearched => $composableBuilder(
+      column: $table.dateSearched, builder: (column) => column);
+
+  GeneratedColumn<int> get dictEntryID => $composableBuilder(
+      column: $table.dictEntryID, builder: (column) => column);
 }
 
 class $$SearchHistorySQLTableTableManager extends RootTableManager<
@@ -309,6 +329,7 @@ class $$SearchHistorySQLTableTableManager extends RootTableManager<
     SearchHistorySQLData,
     $$SearchHistorySQLTableFilterComposer,
     $$SearchHistorySQLTableOrderingComposer,
+    $$SearchHistorySQLTableAnnotationComposer,
     $$SearchHistorySQLTableCreateCompanionBuilder,
     $$SearchHistorySQLTableUpdateCompanionBuilder,
     (
@@ -323,10 +344,12 @@ class $$SearchHistorySQLTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$SearchHistorySQLTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$SearchHistorySQLTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$SearchHistorySQLTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SearchHistorySQLTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SearchHistorySQLTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<DateTime> dateSearched = const Value.absent(),
@@ -360,6 +383,7 @@ typedef $$SearchHistorySQLTableProcessedTableManager = ProcessedTableManager<
     SearchHistorySQLData,
     $$SearchHistorySQLTableFilterComposer,
     $$SearchHistorySQLTableOrderingComposer,
+    $$SearchHistorySQLTableAnnotationComposer,
     $$SearchHistorySQLTableCreateCompanionBuilder,
     $$SearchHistorySQLTableUpdateCompanionBuilder,
     (
