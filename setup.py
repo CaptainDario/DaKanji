@@ -130,7 +130,7 @@ def init_submodules():
 
 def setup_dakanji_env():
 
-    env_exists = os.path.exists("dakanji.env")
+    env_exists = os.path.isfile("dakanji.env")
 
     if(not env_exists):
        
