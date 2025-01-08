@@ -4,6 +4,7 @@ import urllib.request
 import shutil
 import re
 import sys
+import subprocess
 
 
 repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases/tags/"
@@ -109,13 +110,31 @@ def move_assets():
         if(f.startswith(tuple(move_to_dict))):
             shutil.copy(f"{tmp_dir}/{f}", "assets/dict/")
 
+def init_submodules():
 
+    print("Initalizing packages")
 
-if __name__ == "__main__":
+    subprocess.run(["git", "submodule", "init"])
+    subprocess.run(["git", "submodule", "update"])
+
+    os.chdir("plugins/DaKanji-dependencies")
+    subprocess.run(["flutter", "pub", "get"])
+
+    os.chdir("../DaKanji-Dictionary")
+    subprocess.run(["flutter", "pub", "get"])
+
+    os.chdir("../flutter_browser_app")
+    subprocess.run(["flutter", "pub", "get"])
+
+    os.chdir("../..")
+
+def main():
 
     print("Setting up DaKanji")
 
     args = sys.argv[1:]
+
+    init_submodules()
 
     if("--help" in args or "-h" in args):
         print("""
@@ -139,5 +158,10 @@ if __name__ == "__main__":
         print("Deleting temporary folder")
         shutil.rmtree(tmp_dir)
 
+    subprocess.run(["flutter", "pub", "get"])
+
     print("Setup done! Run: \n flutter run")
     
+if __name__ == "__main__":
+
+    main()
