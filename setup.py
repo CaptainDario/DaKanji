@@ -150,7 +150,7 @@ def main():
     args = sys.argv[1:]
 
     # switch to dev branch
-    subprocess.run(["git", "branch", "dev"], shell=True)
+    subprocess.run(["git", "checkout", "dev"], shell=True)
     subprocess.run(["git", "pull"], shell=True)
 
     init_submodules()
