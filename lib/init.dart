@@ -55,7 +55,8 @@ import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
 Future<bool> init() async {
 
   // check webview support
-  g_webViewSupported = (await WebViewEnvironment.getAvailableVersion()) != null;
+  g_webViewSupported = Platform.isAndroid || Platform.isIOS || Platform.isMacOS ||
+    (Platform.isWindows && (await WebViewEnvironment.getAvailableVersion()) != null);
 
   // wait for localization to be ready
   await EasyLocalization.ensureInitialized();
