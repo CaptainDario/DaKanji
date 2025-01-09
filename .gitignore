@@ -21,5 +21,6 @@ stresstest/*
 # ignore files that are converted from non yomitan dicts
 input_files/**
 
-# ignore mecab dictionary
-bin/ipadic/**
+# ignore files to run mecab in pure dart
+ipadic/**
+libmecab.dylib

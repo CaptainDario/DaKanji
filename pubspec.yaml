@@ -19,8 +19,8 @@ dependencies:
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
   universal_io: ^2.2.2
-  #mecab_for_dart:
-  #  path: /Users/darioklepoch/dev/DaKanji/mecab_for_dart/
+  mecab_for_dart:
+    path: /Users/darioklepoch/dev/DaKanji/mecab_for_dart/
 
 dev_dependencies:
   drift_dev: ^2.21.2
