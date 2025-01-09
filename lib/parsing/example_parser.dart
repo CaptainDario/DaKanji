@@ -1,6 +1,6 @@
 // Package imports:
-import 'package:dakanji_db/parsing/example/example_parser.dart';
-import 'package:dakanji_db/parsing/example/multi_example_parser.dart';
+import 'package:dakanji_db/parsing/example/example_bank_parser.dart';
+import 'package:dakanji_db/parsing/example/example_text_parser.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
@@ -10,17 +10,17 @@ import 'package:dakanji_db/database/dakanji_db.dart';
 
 
 /// A list containing the names of files that are valid yomtain files
-List<String> validExampleFiles = [exampleFile, multiExampleFile];
+List<String> validExampleFiles = [exampleFile, exampleTextFile];
 
-/// The naming pattern for japanese only example files
-String exampleFile = "example_bank_";
 /// The naming pattern for multi example files
-String multiExampleFile = "multi_example_bank_";
+String exampleFile = "example_bank_";
+/// The naming pattern for japanese only example files
+String exampleTextFile = "example_text_";
 
 /// Parses the given yomitan dictionary zip
-Future parseDictionaryZip (File dictZip, DaKanjiDB db) async {
+Future parseExampleZip (File dictZip, DaKanjiDB db) async {
 
-
+  // TODO
 
 }
 
@@ -34,19 +34,19 @@ Future parseExampleFolder(Directory exampleDir, DaKanjiDB db) async {
   )
   .map((f) => File(f.path)).toList();
 
-  // parse the kanji bank files
+  // parse the example bank files
   for (var file in validFiles) {
     
-    // parse `kanji_bank`-files
+    // parse `example_bank`-files
     if(p.basename(file.path).contains(exampleFile)){
       print("Parsing ${p.basename(file.path)} as `$exampleFile`");
       await parseExampleFile(file, db); 
     }
 
-    // parse `kanji_meta_bank`-files
-    if(p.basename(file.path).contains(multiExampleFile)){
-      print("Parsing ${p.basename(file.path)} as `$multiExampleFile`");
-      await parseMultiExampleFile(file, db); 
+    // parse `example_text`-files
+    if(p.basename(file.path).contains(exampleTextFile)){
+      print("Parsing ${p.basename(file.path)} as `$exampleTextFile`");
+      await parseExampleTextFile(file, db); 
     }
 
   }
