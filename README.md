@@ -113,7 +113,7 @@ Additionally, some other databases are included in DaKanji
   * Meaning: Defines tags for kanji and term dictionaries, like parts of speech or kanken level.
   * File name pattern: `tag_bank_${number}.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-tag-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js)
-* [dictionary-term-bank-v3-schema.json](yomitan_schema/dictionary-term-bank-v3-schema.json) - ❌
+* [dictionary-term-bank-v3-schema.json](yomitan_schema/dictionary-term-bank-v3-schema.json) - 🚧
   * Meaning: Stores dictionary readings, definitions, etc.
   * File name pattern: `term_bank_${number}.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-term-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js#items_items_i5_items_oneOf_i0)
@@ -129,15 +129,21 @@ For this two different types are importable.
 
 ##### Japanese with translation
 
-For this type of example sentences any text file that is structured like the following example can be imported
+For this type of example sentences any text file that is structured like the following example can be imported:
 
 ```
-iso8306 language code
-
+jpn	eng	spa	deu
+きみにちょっとしたものをもってきたよ。	I brought you a little something.	Te traje algo pequeño.	Ich habe dir eine Kleinigkeit mitgebracht.
+何かしてみましょう。	Let's try something.	Hagamos algo.	Lass uns etwas probieren.
+私は眠らなければなりません。	I have to go to sleep.		Ich muss schlafen gehen.
 ```
 
-an example can be found in []()
+Here it should be noted that he header should contain languages given by their `iso8306 language code` separated by tabs (the first language must be japanese!).
+The following lines should be the example sentence and their translation.
+If a translation is not available in a certain language, two tabs should be included like in the last line above.
 
-##### Japanese only
+A longer example can be found in [the samples folder](./samples/example_sentences/example_bank_1.tsv)
 
-test
+##### Extract examples from Japanese text
+
+DaKanji can also extract sample sentences from a longer text file. This file should contain a full Japanese text like in [this sample](./samples/example_sentences/example_text_1.txt).
