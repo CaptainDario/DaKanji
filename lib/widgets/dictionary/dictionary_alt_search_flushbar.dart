@@ -29,7 +29,8 @@ class DictionaryAltSearchFlushbar {
 
   Flushbar build(BuildContext context) {
 
-    Iterable<String> options = [text, queryKana, ...(deconjugated ?? <String>[])].nonNulls;
+    List<String> options = [text, queryKana, ...(deconjugated ?? <String>[])]
+      .nonNulls.toList();
 
     return Flushbar(
       backgroundColor: Colors.white,
@@ -44,17 +45,17 @@ class DictionaryAltSearchFlushbar {
                   color: Colors.black
                 ),
                 children: [
-                  for (String t in options)
+                  for (int i=0; i<options.length; i++)
                     ...[
                       TextSpan(
-                        text: t,
+                        text: options[i],
                         style: TextStyle(
                           color: Theme.of(context).highlightColor
                         ),
                         recognizer: TapGestureRecognizer()..onTap =
-                          () => onTapped(t),
+                          () => onTapped(options[i]),
                       ),
-                      if(t != options.last)
+                      if(i < options.length-1)
                         const TextSpan(
                           text: "; ",
                           style: TextStyle(
