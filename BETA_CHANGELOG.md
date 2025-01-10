@@ -1,5 +1,16 @@
 # DaKanji Beta - changelog
 
+## v3.5.0 - ワードリストと暗記改善 (25.07.2024)
+
+Fixed:
+
+- Dictionary
+  - Some searches breaking search
+  - Search results wrong
+  - Change serach result prioritization
+
+-------------------------------------------------------------------------
+
 ## v3.5.0b1 - ワードリストと暗記改善 (31.12.2024)
 
 The release of 3.4.6 took so long and contains so many new features that
@@ -15,6 +26,8 @@ Fixed:
 
 - Dictionary
 
+-------------------------------------------------------------------------
+
 ## v3.4.6b6 - ワードリストと暗記改善 (23.10.2024)
 
 Fixed:
@@ -24,11 +37,15 @@ Fixed:
   - First search is slow on android
   - When opening from the drawing screen tapping a search result does not close the search results
 
+-------------------------------------------------------------------------
+
 ## v3.4.6b5 - ワードリストと暗記改善 (15.10.2024)
 
 Fixed:
 
 - Dictionary - Searched for: should not show the same term multiple times
+
+-------------------------------------------------------------------------
 
 ## v3.4.6b4 - ワードリストと暗記改善 (15.10.2024)
 
@@ -40,11 +57,15 @@ Fixed:
   - Scrolling floating words is too fast with spen
   - Searched for: should not show the same term multiple times
 
+-------------------------------------------------------------------------
+
 ## v3.4.6b3 - ワードリストと暗記改善 (13.10.2024)
 
 Fixed:
 
 - Sorting of search results
+
+-------------------------------------------------------------------------
 
 ## v3.4.6b2 - ワードリストと暗記改善 (11.10.2024)
 
@@ -56,9 +77,13 @@ Fixed:
   - Different searching bugs fixed
   - Colors of the "searched for"-snackbar improved to make it clearer that they are tappable
 
+-------------------------------------------------------------------------
+
 ## v3.4.6b1 - ワードリストと暗記改善 (11.10.2024)
 
 See normal changelog
+
+-------------------------------------------------------------------------
 
 ## v3.4.5b1 - ワードリストと暗記改善 (11.09.2024)
 
@@ -70,6 +95,8 @@ Fixed:
 
 - Windows drawing recognition does not work
 
+-------------------------------------------------------------------------
+
 ## v3.4.4b1 - ワードリストと暗記改善 (25.07.2024)
 
 Fixed:
@@ -77,6 +104,8 @@ Fixed:
 - Windows drawing recognition does not work
 - DoJG search does not work
 - Falling words block UI interaction
+
+-------------------------------------------------------------------------
 
 ## v3.4.3b1 - ワードリストと暗記改善
 
@@ -92,6 +121,8 @@ Improvements:
   - App does not work in MS Store
   - DoJG: Impossible to scroll back when image full screen on desktop
 
+-------------------------------------------------------------------------
+
 ## v3.4.2b3 - ワードリストと暗記改善 (05.07.2024)
 
 Fixed:
@@ -104,6 +135,8 @@ Fixed:
 - DoJG screen search text color
 - Potential race condition in SQLite when restarting the app
 - MacOS: closing the app did not terminate the app
+
+-------------------------------------------------------------------------
 
 ## v3.4.2b2 - ワードリストと暗記改善 (01.07.2024)
 
@@ -137,6 +170,8 @@ Removed:
 
 - Search result navigation with arrow keys
 
+-------------------------------------------------------------------------
+
 ## v3.4.2b1 - ワードリストと暗記改善 (21.06.2024)
 
 Fixed:
@@ -147,6 +182,8 @@ Fixed:
 - DoJG deep links
 - DoJG screen search text color
 - Potential race condition in SQLite when restarting the app
+
+-------------------------------------------------------------------------
 
 ## v3.4.1+102b1 - ワードリストと暗記 (15.05.2024)
 
@@ -160,6 +197,8 @@ Fixed:
 - Mecab not loading on iOS/MacOS
 - Sharing entries as image does not respect the current theme
 
+-------------------------------------------------------------------------
+
 ## v3.4.0+100b7 - ワードリストと暗記 (05.05.2024)
 
 - Improvements
@@ -167,10 +206,14 @@ Fixed:
     - When a folder does not contain any word lists make it unselectable
     - If deselecting all word lists in a folder uncheck it
 
+-------------------------------------------------------------------------
+
 ## v3.4.0+99b6 - ワードリストと暗記 (29.04.2024)
 
 - Improvements
   - The folder where DaKanji stores necessary data has been moved to a location that a user usually does not use [#85](https://github.com/CaptainDario/DaKanji/issues/85)
+
+-------------------------------------------------------------------------
 
 ## v3.4.0+98b5 - ワードリストと暗記 (19.04.2024)
 
@@ -197,6 +240,8 @@ Fixed:
   - Exporting word list crash on Android
   - Export to anki dialog not closing when pressing cancle
 
+-------------------------------------------------------------------------
+
 ## v3.4.0+97b4 - ワードリストと暗記 (14.04.2024)
 
 - Changed: Anki manual platform sections are collapsed
@@ -206,12 +251,16 @@ Fixed:
 - Changed: when clicking on deep links, only allow one DaKanji instance
 - Fixed: Anki manual links open a non working webview
 
+-------------------------------------------------------------------------
+
 ## v3.4.0+96b3 - ワードリストと暗記 (11.04.2024)
 
 - Fixed: Anki setup "no deck selected" message was not localized
 - Changed: Exported cards have translations on the front
 - Added: DaKanji note type has a note field on the front and back
 - Added: Setting to disable the add to anki dialog
+
+-------------------------------------------------------------------------
 
 ## v3.4.0+95b2 - ワードリストと暗記 (10.04.2024)
 
@@ -220,15 +269,21 @@ Fixed:
 - Fixed: Renaming word lists using Japanese keyboard
 - Fixed: moving word list node to the bottom of the tree
 
+-------------------------------------------------------------------------
+
 ## v3.4.0+94b1 - ワードリストと暗記 (10.04.2024)
 
 See normal changelog
+
+-------------------------------------------------------------------------
 
 ## v3.3.0+77b3 - 仮名 (13.01.2024)
 
 - Removed unused dependencies
 - Responsive manual buttons
 - Initial deep link is only read once
+
+-------------------------------------------------------------------------
 
 ## v3.3.0+76b2 - 仮名 (09.01.2024)
 
@@ -243,6 +298,8 @@ Beta 2 - Changes
     - Text screen selection buttons when no text is selected / available
     - DoJG asking twice to import
 
+-------------------------------------------------------------------------
+
 ## v3.3.0+75b1 - 仮名 (26.11.2023)
 
 New Features:
@@ -252,6 +309,8 @@ New Features:
   - Mnemonics for the main kana
   - Sounds for all available kana
 
+-------------------------------------------------------------------------
+
 ## v3.2.0+71b12 - 文法 (19.11.2023)
 
 - No separator between pitch accent patterns
@@ -259,10 +318,14 @@ New Features:
 - Improved DoJG searching
 - Improved DoJG navigation and updated manual
 
+-------------------------------------------------------------------------
+
 ## v3.2.0+70b11 - 文法 (7.11.2023)
 
 - DoJG
   - Import screen raised parent data exception
+
+-------------------------------------------------------------------------
 
 ## v3.2.0+69b10 - 文法 (9.11.2023)
 
@@ -272,6 +335,8 @@ New Features:
   - Text misaligned
   - Allow zooming in images of DoJG
   - Double tap to open DoJG image in fullscreen
+
+-------------------------------------------------------------------------
 
 ## v3.2.0+68b9 - 文法 (7.11.2023)
 
@@ -289,6 +354,8 @@ Fixed:
   - DeepL not loading
   - Tapping popup closed it when it was already open
 
+-------------------------------------------------------------------------
+
 ## v3.2.0+67b8 - 文法 (5.11.2023)
 
 Improvements:
@@ -297,6 +364,8 @@ Improvements:
   - Radical search
     - Speed of searching kanjis that use all current radicals improved
     - Show **only** radicals (no kanjis) when no radical is selected
+
+-------------------------------------------------------------------------
 
 ## v3.2.0+66b7 - 文法 (4.11.2023)
 
@@ -321,6 +390,8 @@ Fixed:
     - Separator line does not always disappear when closing the search bar
     - When closing searchbar using back button, divider disappeared immediately
 
+-------------------------------------------------------------------------
+
 ## v3.2.0+65b6 - 文法 (3.11.2023)
 
 - Text screen selection buttons
@@ -331,6 +402,8 @@ Fixed:
   - Android https scheme not working
   - Fixed: clipboard deep link
   - Fixed: opening the draw screen when it is already open breaks it  
+
+-------------------------------------------------------------------------
 
 ## v3.2.0+64b5 - 文法 (29.10.2023)
 
@@ -345,6 +418,8 @@ Fixed:
 - Dictionary / Text / Clipboard deconjugation message shown at top of the screen
 - Make text screen buttons fade at the side to indicate that they are scrollable
 - Manual not scrollable on tiny/narrow screens
+
+-------------------------------------------------------------------------
 
 ## v3.2.0+63b4 - 文法 (29.10.2023)
 
