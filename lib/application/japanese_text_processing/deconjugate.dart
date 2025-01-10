@@ -93,13 +93,13 @@ List<String> getDeconjugatedTerms(String word){
   for (int i = nodes.length-1; i >= 0; i--){
     // if this token is the beginning of a word
     if(compareMecabOuts(nodes[i].features, mecabPosWordStart)){
-      ret.add(nodes[i].features[7]);
+      ret.add(nodes[i].features[10]);
     }
     // deconjugate the full word by only modifying the ending
     if(!compareMecabOut(nodes[i].features, [inflectionDependentWord])){
 
       if(fullDeconjugation.isEmpty) {
-        fullDeconjugation.insert(0, nodes[i].features[7]);
+        fullDeconjugation.insert(0, nodes[i].features[10]);
       }
       else {
         fullDeconjugation.insert(0, nodes[i].surface);

@@ -591,16 +591,24 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// Searches in the dictionary and updates all search results and variables
   /// setState() needs to be called to update the ui.
   Future<void> updateSearchResults(
-    String text, bool convertToHiragana, bool allowDeconjugation) async {
+    String query, bool convertToHiragana, bool allowDeconjugation) async {
 
     // hide all flushbars from previous searches
-    if(!(deconjugationFlushbar?.isDismissed() ?? true)) deconjugationFlushbar?.dismiss();
+    //if(!(deconjugationFlushbar?.isDismissed() ?? true)) deconjugationFlushbar?.dismiss();
 
     // only search in dictionary if the query is not empty (remove filters to check this)
-    if(text.split(" ").where((e) => !e.startsWith("#")).join() == ""){
+    if(query.split(" ").where((e) => !e.startsWith("#")).join() == ""){
       widget.context.read<DictSearch>().currentSearch = "";
       widget.context.read<DictSearch>().searchResults = [];
       return;
+    }
+
+    // if romaji conversion setting is enabled, convert query to hiragana
+    String? queryKana; KanaKit kKitRomaji = const KanaKit();
+    if(convertToHiragana) {
+      String t = kKitRomaji.toHiragana(kKitRomaji.toKana(query));
+      // assure that the outcome is japanese
+      if(kKitRomaji.isJapanese(t)) queryKana = t;
     }
 
     KanaKit k = GetIt.I<KanaKit>();
@@ -609,29 +617,24 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     // 1. allowed
     // 2. convertable to hiragana (or is already japanese)
     // 3. does not have spaces
-    if(allowDeconjugation &&!text.contains(" ") && 
-      (k.isJapanese(text) || k.isJapanese(k.toKana(text))))
+    if(allowDeconjugation &&!query.contains(" ") && 
+      (k.isJapanese(query) || k.isJapanese(k.toKana(query))))
     {
-      deconjugated = getDeconjugatedTerms(k.isJapanese(text) ? text : k.toHiragana(k.toKana(text)));
+      deconjugated = getDeconjugatedTerms(k.isJapanese(query)
+        ? query
+        : k.toHiragana(k.toKana(query)));
 
-    }
-
-    // if romaji conversion setting is enabled, convert query to hiragana
-    String? queryKana; KanaKit kKitRomaji = const KanaKit();
-    if(convertToHiragana) {
-      String t = kKitRomaji.toHiragana(kKitRomaji.toKana(text));
-      // assure that the outcome is japanese
-      if(kKitRomaji.isJapanese(t)) queryKana = t;
+      deconjugated.remove(queryKana);
+      deconjugated.remove(query);
     }
 
     // if the search query was changed show a snackbar and give the option to
     // use the original search
-    if(deconjugated.isNotEmpty && 
-      !(deconjugated.length == 1 && deconjugated[0] == text)){
+    if(queryKana != query || deconjugated.isNotEmpty){
 
       deconjugationFlushbar = DictionaryAltSearchFlushbar(
-          text,
-          queryKana != text ? queryKana : null,
+          query,
+          queryKana != query ? queryKana : null,
           deconjugated,
           onAltSearchTapped
         )
@@ -643,12 +646,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     }
 
     // update search variables and search
-    widget.context.read<DictSearch>().currentSearch = text;
+    widget.context.read<DictSearch>().currentSearch = query;
     widget.context.read<DictSearch>().searchResults =
       await GetIt.I<DictionarySearch>().search(
-        text,
-        queryKana != text ? queryKana : null,
-        deconjugated) ?? [];
+        query,
+        queryKana != query ? queryKana : null,
+        deconjugated
+      ) ?? [];
   }
 
   /// when the user taps on an alternative search term from the flushbar

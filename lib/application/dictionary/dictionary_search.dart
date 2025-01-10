@@ -38,30 +38,25 @@ List<List<JMdict>> sortJmdictList(
   /// how many characters are the query and the matched result apart
   List<List<int>> lenDifferences = List.generate(n, (i) => <int>[]);
 
-
   // if no wildcard is used, iterate over the entries and create a ranking for each
   if(!query.contains(RegExp(r"\?|\*"))){
     // iterate over the entries and create a ranking for each
     for (JMdict entry in entries) {
-      // KANJI matched (normal query)
+      // KANJI matched (normal query) ?
       Tuple3 ranked = rankMatches([entry.kanjiIndexes], query, queryKana, queryDeconjugated);
       
-      // READING matched
+      // READING matched ?
       if(ranked.item1 == -1){
         ranked = rankMatches([entry.hiraganas], query, queryKana, queryDeconjugated);
-      }
-      
-      // MEANING matched
+      }  
+      // MEANING matched ?
       if(ranked.item1 == -1){
         // filter all entries that have langauge that is enabled and join them to a list
         List<List<String>> k = entry.meanings.where(
           (LanguageMeanings e) => languages.contains(e.language)
         ).map((e) => 
-          e.meanings.map((e) => 
-            e.attributes.nonNulls
-          ).flattened.toList()
-        )
-        .toList();
+          e.meanings.map((e) => e.attributes.nonNulls).flattened.toList()
+        ).toList();
         
         ranked = rankMatches(k, query, queryKana, queryDeconjugated);
       }
@@ -72,16 +67,16 @@ List<List<JMdict>> sortJmdictList(
         lenDifferences[ranked.item1].add(ranked.item2);
       }
     }
-
-    // sort the results
-    for (var i = 0; i < n; i++) {
-      matches[i] = sortEntries(matches[i], matchIndices[i], lenDifferences[i]);
-    }
     
   }
   // if a wildcard was used just sort by frequency
   else {
     matches[0] = entries..sort((a, b) => b.frequency.compareTo(a.frequency));
+  }
+
+  // sort the results
+  for (var i = 0; i < n; i++) {
+    matches[i] = sortEntries(matches[i], matchIndices[i], lenDifferences[i]);
   }
 
   return matches;
@@ -91,7 +86,7 @@ List<List<JMdict>> sortJmdictList(
 /// explained by `sortJmdictList`.
 ///
 /// Returns a Tuple with the structure: <br/>
-///   1 - if it was a full (0), start(1) or other(2) match <br/>
+///   1 -  <br/>
 ///   2 - how many characters are in the match but not in `queryText` <br/>
 ///   3 - the index where the search matched <br/>
 Tuple3<int, int, int> rankMatches(List<List<String>> matches,
@@ -118,21 +113,22 @@ Tuple3<int, int, int> rankMatches(List<List<String>> matches,
       // check for full match
       if(allSearches[i] == matches[matchIndeces[0]][matchIndeces[1]] &&
         (result == -1 || result > i)){
-        result = 0 + i*allSearches.length;
+        result = 0 + i*(allSearches.length-1);
       }
       // does the found dict entry start with the search term
       else if(matches[matchIndeces[0]][matchIndeces[1]].startsWith(allSearches[i]) &&
         (result == -1 || result > i)){
-        result = 1 + i*allSearches.length;
+        result = 1 + i*(allSearches.length-1);
       }
       // the query matches somwhere in the entry
       else if (matches[matchIndeces[0]][matchIndeces[1]].contains(allSearches[i]) &&
         (result == -1 || result > i)){
-        result = 2 + i*allSearches.length;
+        result = 2 + i*(allSearches.length-1);
       }
       /// calculate the difference in length between the query and the result
       lenDiff = matches[matchIndeces[0]][matchIndeces[1]].length - allSearches[i].length;
 
+      if(result != -1) break;
     }
   }
   
