@@ -142,7 +142,7 @@ class _MiscSettingsState extends State<MiscSettings> {
           ),
         // url for sharing dakanji
         ResponsiveDropDownTile(
-          text: "Sharing pattern",
+          text: LocaleKeys.SettingsScreen_misc_sharing_pattern.tr(),
           value: settings.misc.sharingScheme,
           items: settings.misc.sharingSchemes,
           onChanged: (value) async {
