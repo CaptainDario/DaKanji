@@ -185,7 +185,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
       ).toList(),
       GetIt.I<Isars>().dictionary.directory!,
       GetIt.I<Isars>().dictionary.name,
-      GetIt.I<Settings>().dictionary.convertToHiragana
+      GetIt.I<Settings>().dictionary.convertToHiraganaBeforeSearch
     ), dispose: (param) => param.kill(),
   );
   await GetIt.I<DictionarySearch>().init();

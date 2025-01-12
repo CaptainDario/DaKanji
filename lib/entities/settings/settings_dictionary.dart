@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:da_kanji_mobile/locales_keys.dart';
 part 'settings_dictionary.g.dart';
 
 
@@ -76,20 +77,40 @@ class SettingsDictionary with ChangeNotifier {
   /// Should the word frequency be shown in the dict UI
   bool showWordFruequency = d_showWordFruequency;
 
+  /// The deafult value for `searchResultSearchPriorities`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
-  static const bool d_searchDeconjugate = true;
-  @JsonKey(defaultValue: d_searchDeconjugate)
-  /// Should the search term be deconjugated before searching
-  bool searchDeconjugate = d_searchDeconjugate;
+  static const List<String> d_searchResultSortPriorities = [
+    LocaleKeys.SettingsScreen_dict_term,
+    LocaleKeys.SettingsScreen_dict_convert_to_kana,
+    LocaleKeys.SettingsScreen_dict_base_form,
+  ];
+  /// All languages that are available in the dictionary in the useres order
+  @JsonKey(defaultValue: d_searchResultSortPriorities)
+  List<String> searchResultSortPriorities = d_searchResultSortPriorities;
 
+  /// The default value for `selectedSearchResultSortPriorities` 
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
-  static const bool d_convertToHiragana = true;
-  @JsonKey(defaultValue: d_convertToHiragana)
-  /// Should the search term be converted to kana if it is written in romaji
-  /// before searching
-  bool convertToHiragana = d_convertToHiragana;
+  static const List<String> d_selectedSearchResultSortPriorities = d_searchResultSortPriorities;
+  /// The search result sorting order priorities
+  @JsonKey(defaultValue: d_selectedSearchResultSortPriorities)
+  List<String> _selectedSearchResultSortPriorities = d_searchResultSortPriorities;
+  /// The search result sorting order priorities
+  List<String> get selectedSearchResultSortPriorities => _selectedSearchResultSortPriorities;
+  /// The search result sorting order priorities
+  set selectedSearchResultSortPriorities(List<String> searchResultSortPriorities) {
+    _selectedSearchResultSortPriorities = searchResultSortPriorities;
+    notifyListeners();
+  }
+  /// Should search terms be converted to hiragana when searching
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool get convertToHiraganaBeforeSearch => selectedSearchResultSortPriorities
+    .contains(LocaleKeys.SettingsScreen_dict_convert_to_kana);
+  /// Should search terms be deconjugated when searching
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool get deconjugateBeforeSearch => selectedSearchResultSortPriorities
+    .contains(LocaleKeys.SettingsScreen_dict_base_form);
 
   /// The deafult value for `selectedFallingWordsLevels`
   @JsonKey(includeFromJson: false, includeToJson: false)

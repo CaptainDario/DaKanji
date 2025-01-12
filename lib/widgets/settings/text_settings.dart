@@ -61,7 +61,7 @@ class _TextSettingsState extends State<TextSettings> {
         ),
         // try to deconjugate words before searching
         ResponsiveCheckBoxTile(
-          text: LocaleKeys.SettingsScreen_dict_deconjugate.tr(),
+          text: LocaleKeys.SettingsScreen_dict_base_form.tr(),
           value: settings.text.searchDeconjugate,
           leadingIcon: Icons.info_outline,
           onTileTapped: (value) {
@@ -80,7 +80,7 @@ class _TextSettingsState extends State<TextSettings> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: MarkdownBody(
-                    data: LocaleKeys.SettingsScreen_dict_deconjugate_body.tr(),
+                    data: LocaleKeys.SettingsScreen_dict_base_form_description.tr(),
                   ),
                 )
               )

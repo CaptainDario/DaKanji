@@ -87,7 +87,7 @@ class _MiscSettingsState extends State<MiscSettings> {
         ),
         // font size
         ResponsiveSliderTile(
-          text: "Font size scaling factor",
+          text: LocaleKeys.SettingsScreen_misc_font_size_scale.tr(),
           value: settings.misc.fontSizeScale,
           min: 0.4,
           max: 4.0,

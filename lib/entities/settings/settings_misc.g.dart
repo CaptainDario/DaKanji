@@ -10,6 +10,7 @@ SettingsMisc _$SettingsMiscFromJson(Map<String, dynamic> json) => SettingsMisc()
   ..selectedStartupScreen = (json['selectedStartupScreen'] as num).toInt()
   ..selectedLocale = json['selectedLocale'] as String
   ..windowWidth = (json['windowWidth'] as num?)?.toInt() ?? 480
+  ..fontSizeScale = (json['fontSizeScale'] as num).toDouble()
   ..windowHeight = (json['windowHeight'] as num?)?.toInt() ?? 480
   ..selectedTheme = json['selectedTheme'] as String
   ..alwaysOnTop = json['alwaysOnTop'] as bool
@@ -25,6 +26,7 @@ Map<String, dynamic> _$SettingsMiscToJson(SettingsMisc instance) =>
       'selectedStartupScreen': instance.selectedStartupScreen,
       'selectedLocale': instance.selectedLocale,
       'windowWidth': instance.windowWidth,
+      'fontSizeScale': instance.fontSizeScale,
       'windowHeight': instance.windowHeight,
       'selectedTheme': instance.selectedTheme,
       'alwaysOnTop': instance.alwaysOnTop,

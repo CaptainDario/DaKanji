@@ -156,75 +156,82 @@ class _DictionarySettingsState extends State<DictionarySettings> {
             });
           },
         ),
-        // try to deconjugate words before searching
-        ResponsiveCheckBoxTile(
-          text: LocaleKeys.SettingsScreen_dict_deconjugate.tr(),
-          value: settings.dictionary.searchDeconjugate,
-          leadingIcon: Icons.info_outline,
-          onTileTapped: (value) {
-            setState(() {
-              settings.dictionary.searchDeconjugate = value;
-              settings.save();
-            });
-          },
-          onLeadingIconPressed: () async {
-            AwesomeDialog(
-              context: context,
-              dialogType: DialogType.noHeader,
-              btnOkColor: g_Dakanji_green,
-              btnOkOnPress: (){},
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MarkdownBody(
-                    data: LocaleKeys.SettingsScreen_dict_deconjugate_body.tr(),
-                  ),
-                )
-              )
-            ).show();
-          },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
-        ),
-        // Convert to kana before searching
-        ResponsiveCheckBoxTile(
-          text: LocaleKeys.SettingsScreen_dict_kanaize.tr(),
-          value: settings.dictionary.convertToHiragana,
-          leadingIcon: Icons.info_outline,
-          onTileTapped: (value) async {
-            if(restartingDictSearch) return;
-            restartingDictSearch = true;
+        // Search result sort order daggable list
+        ResponsiveFilterChips(
+          description: LocaleKeys.SettingsScreen_dict_separate_search_results.tr(),
+          detailedDescription: MarkdownBody(
+            data:
+"""
+${LocaleKeys.SettingsScreen_dict_search_sorting_information.tr()}
 
-            setState(() {
-              settings.dictionary.convertToHiragana = value;
-              settings.save();
-            });
-            GetIt.I<DictionarySearch>().convertToHiragana = value;
-            await GetIt.I<DictionarySearch>().kill();
-            await GetIt.I<DictionarySearch>().init();
+### ${LocaleKeys.SettingsScreen_dict_term.tr()}
+${LocaleKeys.SettingsScreen_dict_term_description.tr()}
 
-            restartingDictSearch = false;
+### ${LocaleKeys.SettingsScreen_dict_convert_to_kana.tr()}
+${LocaleKeys.SettingsScreen_dict_convert_to_kana_description.tr()}
+
+### ${LocaleKeys.SettingsScreen_dict_base_form.tr()}
+${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
+"""
+          ),
+          chipWidget: (int index) {
+
+            bool isSelected = settings.dictionary.selectedSearchResultSortPriorities
+              .contains(settings.dictionary.searchResultSortPriorities[index]);
+
+            int iWithoutUnselected = settings.dictionary.searchResultSortPriorities
+              .sublist(0, index+1)
+              .where((e) => settings.dictionary.selectedSearchResultSortPriorities
+                .contains(e)
+              ).length;
+
+            return Text(
+              (isSelected ? "$iWithoutUnselected. " : "") + 
+              settings.dictionary.searchResultSortPriorities[index].tr()
+            );
           },
-          onLeadingIconPressed: () async {
-            AwesomeDialog(
-              context: context,
-              dialogType: DialogType.noHeader,
-              btnOkColor: g_Dakanji_green,
-              btnOkOnPress: (){},
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MarkdownBody(
-                    data: LocaleKeys.SettingsScreen_dict_kanaize_body.tr(),
-                  ),
-                )
-              )
-            ).show();
+          selected: (index) {
+            return settings.dictionary.selectedSearchResultSortPriorities
+              .contains(settings.dictionary.searchResultSortPriorities[index]);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
+          numChips: settings.dictionary.searchResultSortPriorities.length,
+          onReorder: (oldIndex, newIndex) {
+            // update order of list with languages
+            String priority = settings.dictionary.searchResultSortPriorities.removeAt(oldIndex);
+            settings.dictionary.searchResultSortPriorities.insert(newIndex, priority);
+    
+            // update list of selected languages
+            settings.dictionary.selectedSearchResultSortPriorities =
+              settings.dictionary.searchResultSortPriorities.where((e) => 
+                settings.dictionary.selectedSearchResultSortPriorities.contains(e)
+              ).toList();
+              
+            settings.save();
+          },
+          onFilterChipTap: (selected, index) async {
+            String priority = settings.dictionary.searchResultSortPriorities[index];
+
+            // do not allow removing the last priority
+            if(settings.dictionary.selectedSearchResultSortPriorities.length == 1 &&
+              settings.dictionary.selectedSearchResultSortPriorities.contains(priority)) {
+              return;
+            }
+
+            if(!settings.dictionary.selectedSearchResultSortPriorities.contains(priority)) {
+              settings.dictionary.selectedSearchResultSortPriorities = 
+                settings.dictionary.searchResultSortPriorities.where((element) => 
+                  [priority, ...settings.dictionary.selectedSearchResultSortPriorities].contains(element)
+                ).toList();
+            }
+            else {
+              settings.dictionary.selectedSearchResultSortPriorities.remove(priority);
+            }
+
+            await settings.save();
+            setState(() {});
+            
+          },
         ),
-        // TODO importance draggable and remove "convert inputs to base form"
-        // "convert search term to kana"
-        //
         // Separate search results by matching term
         ResponsiveCheckBoxTile(
           text: "Separate search results by matching term",

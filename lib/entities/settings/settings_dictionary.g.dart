@@ -24,8 +24,19 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
       ..addToListFromSearchResults =
           json['addToListFromSearchResults'] as bool? ?? false
       ..showWordFruequency = json['showWordFruequency'] as bool? ?? false
-      ..searchDeconjugate = json['searchDeconjugate'] as bool? ?? true
-      ..convertToHiragana = json['convertToHiragana'] as bool? ?? true
+      ..searchResultSortPriorities =
+          (json['searchResultSortPriorities'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              [
+                'SettingsScreen.dict_term',
+                'SettingsScreen.dict_kanaize',
+                'SettingsScreen.dict_deconjugate'
+              ]
+      ..selectedSearchResultSortPriorities =
+          (json['selectedSearchResultSortPriorities'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList()
       ..selectedFallingWordsLevels =
           (json['selectedFallingWordsLevels'] as List<dynamic>?)
                   ?.map((e) => e as String)
@@ -48,8 +59,9 @@ Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
       'addToAnkiFromSearchResults': instance.addToAnkiFromSearchResults,
       'addToListFromSearchResults': instance.addToListFromSearchResults,
       'showWordFruequency': instance.showWordFruequency,
-      'searchDeconjugate': instance.searchDeconjugate,
-      'convertToHiragana': instance.convertToHiragana,
+      'searchResultSortPriorities': instance.searchResultSortPriorities,
+      'selectedSearchResultSortPriorities':
+          instance.selectedSearchResultSortPriorities,
       'selectedFallingWordsLevels': instance.selectedFallingWordsLevels,
       'playKanjiAnimationWhenOpened': instance.playKanjiAnimationWhenOpened,
       'kanjiAnimationStrokesPerSecond': instance.kanjiAnimationStrokesPerSecond,
