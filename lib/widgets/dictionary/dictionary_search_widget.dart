@@ -390,6 +390,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                                   style: TextStyle(
                                     fontSize: 20,
                                   ),
+                                  textScaler: TextScaler.noScaling,
                                 ),
                               ),
                             ),
