@@ -10,11 +10,16 @@ class DictSearch with ChangeNotifier {
 
   /// the string that is currently searched
   String currentSearch = "";
+  /// the string (converted to kana) that is currently searched
+  String currentKanaSearch = "";
+  /// the strings (alternatives such as misspellings and deconjugations) that
+  /// are curreently searched
+  List<String> currentAlternativeSearches = [];
 
   /// a list of all search results
-  List<JMdict> _searchResults = [];
-  List<JMdict> get searchResults => _searchResults;
-  set searchResults(List<JMdict> newResults){
+  List<List<JMdict>> _searchResults = [];
+  List<List<JMdict>> get searchResults => _searchResults;
+  set searchResults(List<List<JMdict>> newResults){
     _searchResults = newResults;
     notifyListeners();
   }
