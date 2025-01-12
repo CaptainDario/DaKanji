@@ -2863,18 +2863,35 @@
       "es": "DaKanji utiliza la frecuencia de palabras para clasificar las entradas de su diccionario. Esta frecuencia de palabras es una estimación del uso de una palabra y se basa en diferentes fuentes de datos:\n\n* Wikipedia, que representa el texto enciclopédico.\n* Subtítulos, de OPUS OpenSubtitles 2018 y SUBTLEX\n* Texto web, de OSCAR\n* Twitter, que representa medios sociales breves\n* Reddit, que representa comentarios de Internet potencialmente más largos\n\nEl número que se muestra en DaKanji es una variación de la frecuencia real de las palabras denominada [frecuencia Zipf](https://en.wikipedia.org/wiki/Zipf%27s_law), cuyo objetivo es obtener la frecuencia de las palabras en una escala logarítmica de fácil comprensión. La frecuencia Zipf de una palabra es el logaritmo en base 10 del número de veces que aparece por cada mil millones de palabras. Una palabra con valor Zipf 6 aparece una vez por cada mil palabras, por ejemplo, y una palabra con valor Zipf 3 aparece una vez por cada millón de palabras.\nLos valores Zipf razonables están entre 0 y 8, pero el valor Zipf mínimo que aparece en DaKanji es 1,0. Utilizamos 0 como valor Zipf por defecto para las palabras que no aparecen en las fuentes de datos, aunque debería significar una aparición por cada mil millones de palabras.\n[Leer más...](https://github.com/rspeer/wordfreq)",
       "pl": "DaKanji używa częstotliwości słów, aby uszeregować swoje hasła słownikowe. Ta częstotliwość jest szacunkową oceną użycia słowa i jest oparta na różnych źródłach danych:\n\n* Wikipedia, reprezentująca tekst encyklopedyczny\n* Napisy, z OPUS OpenSubtitles 2018 i SUBTLEX\n* Tekst internetowy, z OSCAR\n* Twitter, reprezentujący media społecznościowe o krótkiej formie\n* Reddit, reprezentujący potencjalnie dłuższe komentarze internetowe\n\nLiczba pokazana w DaKanji jest wariacją na temat rzeczywistej częstotliwości słów zwaną [Częstotliwość Zipfa](https://en.wikipedia.org/wiki/Zipf%27s_law), która ma na celu zwrócenie częstotliwości słów w przyjaznej dla człowieka skali logarytmicznej. Częstotliwość Zipfa dla danego słowa jest logarytmem podstawy 10 z liczby jego wystąpień na miliard słów. Na przykład słowo o wartości Zipf 6 pojawia się raz na tysiąc słów, a słowo o wartości Zipf 3 pojawia się raz na milion słów.\nRozsądne wartości Zipf są pomiędzy 0 a 8, ale minimalna wartość Zipf występująca w DaKanji to 1.0. Używamy 0 jako domyślnej wartości Zipf dla słów, które nie pojawiają się w źródłach danych, chociaż powinno to oznaczać jedno wystąpienie na miliard słów.\n[Czytaj więcej...](https://github.com/rspeer/wordfreq)"
     },
-    "dict_deconjugate": {
-      "en": "Convert inputs to base form",
-      "de": "Konvertierung der Eingaben in die Basisform",
-      "ru": "Преобразование входных данных в базовую форму",
-      "ja": "検索内容を基本形に変換する",
-      "zh": "将输入转换为基本形式",
-      "it": "Convertire gli input in forma base",
-      "fr": "Convertir les entrées en forme de base",
-      "es": "Convertir entradas en forma básica",
-      "pl": "Przekształcenie danych wejściowych na postać bezokolicznikową"
+    "dict_search_sorting_information": {
+      "en": "This is a description of how the search results are sorted."
     },
-    "dict_deconjugate_body": {
+    "dict_term": {
+      "en": "Search term",
+      "de": "Suchbegriff",
+      "ru": "Поисковый термин",
+      "ja": "検索用語",
+      "zh": "搜索词",
+      "it": "Termine di ricerca",
+      "fr": "Terme de recherche",
+      "es": "Término de búsqueda",
+      "pl": "Wyszukiwane hasło"
+    },
+    "dict_term_description": {
+      "en": "The search term exactly as the user typed it."
+    },
+    "dict_base_form": {
+      "en": "Term's baseform",
+      "de": "Grundform des Terms",
+      "ru": "Форма основания термина",
+      "ja": "用語のベースフォーム",
+      "zh": "术语的基本形式",
+      "it": "Forma base del termine",
+      "fr": "Forme de base du terme",
+      "es": "Forma base del término",
+      "pl": "Forma bazowa terminu"
+    },
+    "dict_base_form_description": {
       "en": "This setting enables the 'deconjugation' of verbs, adjectives, and copula. When it is enabled, DaKanji tries to convert the search term into its base form. For example, 食べます、食べられる、食べない all are converted into 食べる.\n\nFor intermediate learners, the recommendation is to turn off this setting.",
       "de": "Diese Einstellung aktiviert die \"Dekonjugation\" von Verben, Adjektiven und Kopula. Wenn sie aktiviert ist, versucht DaKanji, den Suchbegriff in seine Grundform umzuwandeln. Zum Beispiel werden 食べます、食べられる、食べない alle in 食べる umgewandelt.\nFür fortgeschrittene Lernende wird empfohlen, diese Einstellung zu deaktivieren.",
       "ru": "Этот параметр включает 'деконъюгацию' глаголов, прилагательных и копул. Когда она включена, DaKanji пытается преобразовать поисковый термин в его базовую форму. Например, 食べます、食べられる、食べない все преобразуется в 食べる.\nДля учащихся среднего уровня рекомендуется отключить эту настройку.",
@@ -2885,18 +2902,18 @@
       "es": "Esta opción activa la \"desconjugación\" de verbos, adjetivos y cópulas. Cuando está activada, DaKanji intenta convertir el término buscado en su forma base. Por ejemplo, 食べます、食べられる、食べない se convierte en 食べる.\nPara los alumnos de nivel intermedio, la recomendación es desactivar este ajuste.",
       "pl": "To ustawienie umożliwia 'dekonjugację' czasowników, przymiotników i copula. Kiedy jest włączone, DaKanji próbuje przekonwertować szukany termin na jego formę podstawową. Na przykład, 食べます、食べられる、食べない wszystkie są konwertowane na 食べる.\nDla średnio zaawansowanych zalecane jest wyłączenie tego ustawienia."
     },
-    "dict_kanaize": {
-      "en": "Convert search term to kana",
-      "de": "Suchbegriff in Kana umwandeln",
-      "ru": "Преобразование поискового термина в кану",
-      "ja": "検索内容をかなに変換する",
-      "zh": "将搜索词转换为假名",
-      "it": "Convertire i termini di ricerca in kana",
-      "fr": "Convertir les termes de recherche en kana",
-      "es": "Convertir el término de búsqueda en kana",
-      "pl": "Konwertuj wyszukiwane hasła do kany"
+    "dict_convert_to_kana": {
+      "en": "Term converted to kana",
+      "de": "In Kana umgewandelter Term",
+      "ru": "Термин, преобразованный в кану",
+      "ja": "かな変換された用語",
+      "zh": "转换为假名的术语",
+      "it": "Termine convertito in kana",
+      "fr": "Terme converti en kana",
+      "es": "Término convertido a kana",
+      "pl": "Termin przekonwertowany na kana"
     },
-    "dict_kanaize_body": {
+    "dict_convert_to_kana_description": {
       "en": "When enabling this setting, DaKanji converts any search term to a uniform kana representation before looking it up. This means that the query 'taberu' will be converted to たべる and will find 食べる, but it can also lead to unintended matches.\n\nFor example searching 'man' will be converted to まん and therfore, matches 万 and the english word 'man'.\n\nNote: this is a global setting and is applied everywhere the dictionary is used",
       "de": "Wenn Sie diese Einstellung aktivieren, wandelt DaKanji jeden Suchbegriff in eine einheitliche Kana-Darstellung um, bevor er gesucht wird. Das bedeutet, dass die Anfrage \"taberu\" in たべる umgewandelt wird und 食べる findet, aber es kann auch zu unbeabsichtigten Übereinstimmungen führen.\n\nZum Beispiel wird die Suche nach \"man\" in まん umgewandelt und findet somit 万 und das englische Wort \"man\".\n\nHinweis: Dies ist eine globale Einstellung und wird überall angewendet, wo das Wörterbuch verwendet wird.",
       "ru": "При включении этой настройки DaKanji преобразует любой поисковый запрос в унифицированное представление каны, прежде чем искать его. Это означает, что запрос 'taberu' будет преобразован в たべる и будет найден 食べる, но это также может привести к непреднамеренным совпадениям.\n\nНапример, запрос 'man' будет преобразован в まん и, следовательно, найдет 万 и английское слово 'man'.\n\nПримечание: это глобальная настройка, которая применяется везде, где используется словарь",
@@ -2906,6 +2923,17 @@
       "fr": "Lorsque ce paramètre est activé, DaKanji convertit tout terme de recherche en une représentation kana uniforme avant de le rechercher. Cela signifie que la requête 'taberu' sera convertie en たべる et trouvera 食べる, mais cela peut également conduire à des correspondances inattendues.\n\nPar exemple, la recherche \"man\" sera convertie en まん et correspondra donc à 万 et au mot anglais \"man\".\n\nRemarque : il s'agit d'un paramètre global qui s'applique partout où le dictionnaire est utilisé.",
       "es": "Al activar esta opción, DaKanji convierte cualquier término de búsqueda a una representación kana uniforme antes de buscarlo. Esto significa que la consulta \"taberu\" se convertirá a たべる y encontrará 食べる, pero también puede dar lugar a coincidencias no deseadas.\n\nPor ejemplo, al buscar \"man\" se convertirá en まん y, por lo tanto, coincidirá con 万 y la palabra inglesa \"man\".\n\nNota: esta configuración es global y se aplica en todos los lugares en los que se utiliza el diccionario.",
       "pl": "Po włączeniu tego ustawienia, DaKanji konwertuje każde wyszukiwane słowo na jednolitą reprezentację kana przed wyszukaniem go. Oznacza to, że zapytanie 'taberu' zostanie przekonwertowane na たべる i znajdzie 食べる, ale może to również prowadzić do niezamierzonych dopasowań.\n\nNa przykład wyszukiwanie 'man' zostanie przekonwertowane na まん i dlatego dopasuje 万 i angielskie słowo 'man'.\n\nUwaga: jest to ustawienie globalne i jest stosowane wszędzie tam, gdzie słownik jest używany"
+    },
+    "dict_separate_search_results": {
+      "en": "Sort order of search results (drag to reorder, tap to disable)",
+      "de": "Sortierreihenfolge der Suchergebnisse (Ziehen zum Neuordnen, Tippen zum Deaktivieren)",
+      "ru": "Порядок сортировки результатов поиска (перетащите, чтобы изменить порядок, коснитесь, чтобы отключить)",
+      "ja": "検索結果の並び替え（ドラッグで並び替え、タップで並び替え不可）",
+      "zh": "搜索结果的排序顺序（拖动可重新排序，轻点可禁用）",
+      "it": "Ordinamento dei risultati della ricerca (trascinare per riordinare, toccare per disabilitare)",
+      "fr": "Ordre de tri des résultats de la recherche (faire glisser pour réorganiser, toucher pour désactiver)",
+      "es": "Ordenación de los resultados de búsqueda (arrastre para reordenar, pulse para desactivar)",
+      "pl": "Kolejność sortowania wyników wyszukiwania (przeciągnij, aby zmienić kolejność, dotknij, aby wyłączyć)"
     },
     "dict_add_to_anki_from_search_results": {
       "en": "Add to anki from search results",
@@ -2920,7 +2948,7 @@
     },
     "dict_add_to_list_from_search_results": {
       "en": "Add to list from search results",
-      "de": "Zur Liste aus Suchergebnissen hinzufügen",
+      "de": "Zu Liste aus Suchergebnissen hinzufügen",
       "ru": "Добавить в список из результатов поиска",
       "ja": "検索結果からリストに追加",
       "zh": "从搜索结果添加到列表",
@@ -3489,6 +3517,17 @@
       "fr": "langue (@:SettingsScreen.restarts_app)",
       "es": "idioma (@:SettingsScreen.restarts_app)",
       "pl": "język (@:SettingsScreen.restarts_app)"
+    },
+    "misc_font_size_scale": {
+      "en": "Font size scaling factor",
+      "de": "Skalierungsfaktor für die Schriftgröße",
+      "ru": "Коэффициент масштабирования размера шрифта",
+      "ja": "フォント・サイズの倍率",
+      "zh": "字体大小缩放系数",
+      "it": "Fattore di scala della dimensione del carattere",
+      "fr": "Facteur d'échelle de la taille de la police",
+      "es": "Factor de escala del tamaño de fuente",
+      "pl": "Współczynnik skalowania rozmiaru czcionki"
     },
     "misc_default_screen": {
       "en": "Initial screen when starting the app",
