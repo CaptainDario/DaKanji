@@ -11,19 +11,12 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/settings/anki_settings_column.dart';
+import 'package:provider/provider.dart';
 
 /// All settings realted to anki
 class AnkiSettings extends StatefulWidget {
     
-  /// DaKanji settings object
-  final Settings settings;
-
-  const AnkiSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const AnkiSettings({super.key});
 
   @override
   State<AnkiSettings> createState() => _AnkiSettingsState();
@@ -32,12 +25,15 @@ class AnkiSettings extends StatefulWidget {
 class _AnkiSettingsState extends State<AnkiSettings> {
   @override
   Widget build(BuildContext context) {
+
+    Settings settings = context.watch<Settings>();
+
     return ResponsiveHeaderTile(
       LocaleKeys.SettingsScreen_anki_title.tr(),
       DaKanjiCustomIcons.anki,
       autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
-        AnkiSettingsColumn(widget.settings)  
+        AnkiSettingsColumn(settings)  
       ],
     );
   }

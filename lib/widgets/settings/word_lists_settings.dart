@@ -29,18 +29,11 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_til
 import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
 import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists_selection_dialog.dart';
+import 'package:provider/provider.dart';
 
 class WordListSettings extends StatefulWidget {
     
-  /// DaKanji settings object
-  final Settings settings;
-
-  const WordListSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const WordListSettings({super.key});
 
   @override
   State<WordListSettings> createState() => _WordListSettingsState();
@@ -50,6 +43,9 @@ class _WordListSettingsState extends State<WordListSettings> {
 
   @override
   Widget build(BuildContext context) {
+
+    Settings settings = context.watch<Settings>();
+
     return ResponsiveHeaderTile(
       LocaleKeys.WordListsScreen_title.tr(),
       DaKanjiIcons.wordLists,
@@ -57,29 +53,29 @@ class _WordListSettingsState extends State<WordListSettings> {
       children: [
         // show word frequency in search results / dictionary
         ShowWordFrequencySetting(
-          widget.settings.wordLists.showWordFruequency,
+          settings.wordLists.showWordFruequency,
           onTileTapped: (value) {
             setState(() {
-              widget.settings.wordLists.showWordFruequency = value;
-              widget.settings.save();
+              settings.wordLists.showWordFruequency = value;
+              settings.save();
             });
           },
         ),
         // which langauges should be included
         ExportLanguagesIncludeChips(
           text: LocaleKeys.SettingsScreen_word_lists_languages_to_include_in_export.tr(),
-          includedLanguages: widget.settings.wordLists.includedLanguages,
-          selectedTranslationLanguages: widget.settings.dictionary.selectedTranslationLanguages,
-          settings: widget.settings,
-          setIncludeLanguagesItem: widget.settings.wordLists.setIncludeLanguagesItem,
+          includedLanguages: settings.wordLists.includedLanguages,
+          selectedTranslationLanguages: settings.dictionary.selectedTranslationLanguages,
+          settings: settings,
+          setIncludeLanguagesItem: settings.wordLists.setIncludeLanguagesItem,
         ),
         // To which lists should be added when quick adding
         ResponsiveIconButtonTile(
-          text: "${LocaleKeys.SettingsScreen_word_lists_quick_add_lists.tr()} ${widget.settings.wordLists.quickAddListIDs.length}",
+          text: "${LocaleKeys.SettingsScreen_word_lists_quick_add_lists.tr()} ${settings.wordLists.quickAddListIDs.length}",
           icon: Icons.perm_device_information_outlined,
           onButtonPressed: () async {
 
-            List<int> selectedItems = widget.settings.wordLists.quickAddListIDs;
+            List<int> selectedItems = settings.wordLists.quickAddListIDs;
 
             await showWordListSelectionDialog(context,
               wordlists: GetIt.I<WordListsSQLDatabase>(),
@@ -90,11 +86,11 @@ class _WordListSettingsState extends State<WordListSettings> {
                   .where((e) => e.value.type == WordListNodeType.wordList)
                   .map((e) => e.id).toList();
 
-                widget.settings.wordLists.quickAddListIDs = listsToAddTo;
+                settings.wordLists.quickAddListIDs = listsToAddTo;
 
                 Navigator.of(context).pop();
 
-                await widget.settings.save();
+                await settings.save();
                 setState(() { });
               },
             );
@@ -103,7 +99,7 @@ class _WordListSettingsState extends State<WordListSettings> {
         // PDF:  how many different translations from entries should be included
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_word_lists_pdf_max_meanings_per_vocabulary.tr(),
-          value: widget.settings.wordLists.pdfMaxMeaningsPerVocabulary.toDouble(),
+          value: settings.wordLists.pdfMaxMeaningsPerVocabulary.toDouble(),
           min: 1,
           max: 50,
           divisions: 50,
@@ -112,15 +108,15 @@ class _WordListSettingsState extends State<WordListSettings> {
           
           onChanged: (value) {
             setState(() {
-              widget.settings.wordLists.pdfMaxMeaningsPerVocabulary = value.toInt();
-              widget.settings.save();
+              settings.wordLists.pdfMaxMeaningsPerVocabulary = value.toInt();
+              settings.save();
             });
           },
         ),
         // PDF: how many words per meaning
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_word_lists_pdf_max_words_per_meaning.tr(),
-          value: widget.settings.wordLists.pdfMaxWordsPerMeaning.toDouble(),
+          value: settings.wordLists.pdfMaxWordsPerMeaning.toDouble(),
           min: 1,
           max: 50,
           divisions: 50,
@@ -129,15 +125,15 @@ class _WordListSettingsState extends State<WordListSettings> {
 
           onChanged: (value) {
             setState(() {
-              widget.settings.wordLists.pdfMaxWordsPerMeaning = value.toInt();
-              widget.settings.save();
+              settings.wordLists.pdfMaxWordsPerMeaning = value.toInt();
+              settings.save();
             });
           },
         ),
         // PDF translations
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_word_lists_pdf_max_lines_per_meaning.tr(),
-          value: widget.settings.wordLists.pdfMaxLinesPerMeaning.toDouble(),
+          value: settings.wordLists.pdfMaxLinesPerMeaning.toDouble(),
           min: 1,
           max: 50,
           divisions: 50,
@@ -146,19 +142,19 @@ class _WordListSettingsState extends State<WordListSettings> {
 
           onChanged: (value) {
             setState(() {
-              widget.settings.wordLists.pdfMaxLinesPerMeaning = value.toInt();
-              widget.settings.save();
+              settings.wordLists.pdfMaxLinesPerMeaning = value.toInt();
+              settings.save();
             });
           },
         ),
         //pdf include kana
         ResponsiveCheckBoxTile(
           text:  LocaleKeys.SettingsScreen_word_lists_pdf_include_kana.tr(),
-          value: widget.settings.wordLists.pdfIncludeKana,
+          value: settings.wordLists.pdfIncludeKana,
           onTileTapped: (value) {
             setState(() {
-              widget.settings.wordLists.pdfIncludeKana = value;
-              widget.settings.save();
+              settings.wordLists.pdfIncludeKana = value;
+              settings.save();
             });
           },
         ),
@@ -166,10 +162,10 @@ class _WordListSettingsState extends State<WordListSettings> {
         // Screensaver: should it automatically start after the set interval
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_word_lists_screensaver_auto_show.tr(),
-          value: widget.settings.wordLists.autoStartScreensaver,
+          value: settings.wordLists.autoStartScreensaver,
           onTileTapped: (value) {
-            widget.settings.wordLists.autoStartScreensaver = value;
-            widget.settings.save();
+            settings.wordLists.autoStartScreensaver = value;
+            settings.save();
           },
         ),
         // Screen saver: show
@@ -177,7 +173,7 @@ class _WordListSettingsState extends State<WordListSettings> {
           text: LocaleKeys.SettingsScreen_word_lists_screensaver_show.tr(),
           icon: Icons.play_arrow,
           onButtonPressed: () async {
-            startScreensaver(widget.settings.wordLists.screenSaverWordLists);
+            startScreensaver(settings.wordLists.screenSaverWordLists);
           },
         ),
         // Screen saver: Which word lists to use
@@ -188,9 +184,9 @@ class _WordListSettingsState extends State<WordListSettings> {
             await showWordListSelectionDialog(
               context,
               onSelectionConfirmed: (selection) async {
-                widget.settings.wordLists.screenSaverWordLists =
+                settings.wordLists.screenSaverWordLists =
                   selection.map((e) => e.id).toList();
-                widget.settings.save();
+                settings.save();
                 Navigator.of(context, rootNavigator: false).pop();
               },
             );
@@ -200,25 +196,25 @@ class _WordListSettingsState extends State<WordListSettings> {
         if(g_desktopPlatform)
           ResponsiveSliderTile(
             text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_start.tr(),
-            value: widget.settings.wordLists.screenSaverSecondsToStart.toDouble(),
+            value: settings.wordLists.screenSaverSecondsToStart.toDouble(),
             min: 1,
             max: 60*10,
             showLabelAsInt: true,
             onChanged: (value) async {
-              widget.settings.wordLists.screenSaverSecondsToStart = value.toInt();
-              await widget.settings.save();
+              settings.wordLists.screenSaverSecondsToStart = value.toInt();
+              await settings.save();
             },
           ),
         // Screen Saver: seconds to next card
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_next_card.tr(),
-          value: widget.settings.wordLists.screenSaverSecondsToNextCard.toDouble(),
+          value: settings.wordLists.screenSaverSecondsToNextCard.toDouble(),
           min: 1,
           max: 120,
           showLabelAsInt: true,
           onChanged: (value) async {
-            widget.settings.wordLists.screenSaverSecondsToNextCard = value.toInt();
-            await widget.settings.save();
+            settings.wordLists.screenSaverSecondsToNextCard = value.toInt();
+            await settings.save();
           },
         ),
         // readd defaults
@@ -245,7 +241,7 @@ class _WordListSettingsState extends State<WordListSettings> {
           icon: Icons.replay_outlined,
           onButtonPressed: () {
             GetIt.I<UserData>().showTutorialWordLists = true;
-            widget.settings.save();
+            settings.save();
             Phoenix.rebirth(context);
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,

@@ -16,18 +16,11 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:provider/provider.dart';
 
 class ClipboardSettings extends StatefulWidget {
-    
-  /// DaKanji settings object
-  final Settings settings;
 
-  const ClipboardSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const ClipboardSettings({super.key});
 
   @override
   State<ClipboardSettings> createState() => _ClipboardSettingsState();
@@ -36,6 +29,9 @@ class ClipboardSettings extends StatefulWidget {
 class _ClipboardSettingsState extends State<ClipboardSettings> {
   @override
   Widget build(BuildContext context) {
+
+    Settings settings = context.watch<Settings>();
+
     return ResponsiveHeaderTile(
       LocaleKeys.ClipboardScreen_title.tr(),
       Icons.paste,
@@ -44,12 +40,12 @@ class _ClipboardSettingsState extends State<ClipboardSettings> {
         // try to deconjugate words before searching
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_dict_deconjugate.tr(),
-          value: widget.settings.clipboard.searchDeconjugate,
+          value: settings.clipboard.searchDeconjugate,
           leadingIcon: Icons.info_outline,
           onTileTapped: (value) {
             setState(() {
-              widget.settings.clipboard.searchDeconjugate = value;
-              widget.settings.save();
+              settings.clipboard.searchDeconjugate = value;
+              settings.save();
             });
           },
           onLeadingIconPressed: () async {
@@ -76,7 +72,7 @@ class _ClipboardSettingsState extends State<ClipboardSettings> {
           icon: Icons.replay_outlined,
           onButtonPressed: () {
             GetIt.I<UserData>().showTutorialClipboard = true;
-            widget.settings.save();
+            settings.save();
             Phoenix.rebirth(context);
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,

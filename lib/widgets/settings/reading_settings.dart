@@ -14,26 +14,23 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:provider/provider.dart';
 
 class ReadingSettings extends StatefulWidget {
-    
-  /// DaKanji settings object
-  final Settings settings;
 
-  const ReadingSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const ReadingSettings({super.key});
 
   @override
   State<ReadingSettings> createState() => _ReadingSettingsState();
 }
 
 class _ReadingSettingsState extends State<ReadingSettings> {
+
   @override
   Widget build(BuildContext context) {
+
+    Settings settings = context.watch<Settings>();
+
     return ResponsiveHeaderTile(
       LocaleKeys.ReadingScreen_title.tr(),
       DaKanjiIcons.reading,
@@ -45,7 +42,7 @@ class _ReadingSettingsState extends State<ReadingSettings> {
           icon: Icons.replay_outlined,
           onButtonPressed: () {
             GetIt.I<UserData>().showTutorialReading = true;
-            widget.settings.save();
+            settings.save();
             Phoenix.rebirth(context);
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,

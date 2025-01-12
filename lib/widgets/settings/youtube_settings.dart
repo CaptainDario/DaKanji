@@ -14,26 +14,23 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:provider/provider.dart';
 
 class YoutubeSettings extends StatefulWidget {
     
-  /// DaKanji settings object
-  final Settings settings;
-
-  const YoutubeSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const YoutubeSettings({super.key});
 
   @override
   State<YoutubeSettings> createState() => _YoutubeSettingsState();
 }
 
 class _YoutubeSettingsState extends State<YoutubeSettings> {
+
   @override
   Widget build(BuildContext context) {
+
+    Settings settings = context.watch<Settings>();
+
     return ResponsiveHeaderTile(
       LocaleKeys.YoutubeScreen_title.tr(),
       DaKanjiIcons.youtube,
@@ -45,7 +42,7 @@ class _YoutubeSettingsState extends State<YoutubeSettings> {
           icon: Icons.replay_outlined,
           onButtonPressed: () {
             GetIt.I<UserData>().showTutorialYoutube = true;
-            widget.settings.save();
+            settings.save();
             Phoenix.rebirth(context);
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,

@@ -14,26 +14,23 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:provider/provider.dart';
 
 class VideoSettings extends StatefulWidget {
-    
-  /// DaKanji settings object
-  final Settings settings;
 
-  const VideoSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const VideoSettings({super.key});
 
   @override
   State<VideoSettings> createState() => _VideoSettingsState();
 }
 
 class _VideoSettingsState extends State<VideoSettings> {
+
   @override
   Widget build(BuildContext context) {
+
+    Settings settings = context.watch<Settings>();
+
     return ResponsiveHeaderTile(
       LocaleKeys.VideoScreen_title.tr(),
       DaKanjiIcons.video,
@@ -45,7 +42,7 @@ class _VideoSettingsState extends State<VideoSettings> {
           icon: Icons.replay_outlined,
           onButtonPressed: () {
             GetIt.I<UserData>().showTutorialVideo = true;
-            widget.settings.save();
+            settings.save();
             Phoenix.rebirth(context);
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,

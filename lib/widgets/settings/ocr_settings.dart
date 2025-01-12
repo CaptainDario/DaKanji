@@ -14,26 +14,24 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:provider/provider.dart';
 
 class OcrSettings extends StatefulWidget {
     
-  /// DaKanji settings object
-  final Settings settings;
 
-  const OcrSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const OcrSettings({super.key});
 
   @override
   State<OcrSettings> createState() => _OcrSettingsState();
 }
 
 class _OcrSettingsState extends State<OcrSettings> {
+
   @override
   Widget build(BuildContext context) {
+
+    Settings settings = context.watch<Settings>();
+
     return ResponsiveHeaderTile(
       LocaleKeys.OcrScreen_title.tr(),
       DaKanjiIcons.ocr,
@@ -45,7 +43,7 @@ class _OcrSettingsState extends State<OcrSettings> {
           icon: Icons.replay_outlined,
           onButtonPressed: () {
             GetIt.I<UserData>().showTutorialOcr = true;
-            widget.settings.save();
+            settings.save();
             Phoenix.rebirth(context);
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,

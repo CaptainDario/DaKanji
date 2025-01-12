@@ -14,26 +14,23 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:provider/provider.dart';
 
 class KanjiTableSettings extends StatefulWidget {
     
-  /// DaKanji settings object
-  final Settings settings;
-
-  const KanjiTableSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const KanjiTableSettings({super.key});
 
   @override
   State<KanjiTableSettings> createState() => _KanjiTableSettingsState();
 }
 
 class _KanjiTableSettingsState extends State<KanjiTableSettings> {
+
   @override
   Widget build(BuildContext context) {
+
+    Settings settings = context.watch<Settings>();
+
     return ResponsiveHeaderTile(
       LocaleKeys.KanjiTableScreen_title.tr(),
       DaKanjiCustomIcons.kanji_table,
@@ -45,7 +42,7 @@ class _KanjiTableSettingsState extends State<KanjiTableSettings> {
           icon: Icons.replay_outlined,
           onButtonPressed: () {
             GetIt.I<UserData>().showTutorialKanjiTable = true;
-            widget.settings.save();
+            settings.save();
             Phoenix.rebirth(context);
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,

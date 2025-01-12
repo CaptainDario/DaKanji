@@ -85,7 +85,7 @@ class SettingsMisc with ChangeNotifier {
   // ignore: constant_identifier_names
   static const String d_selectedLocale = "en";
   /// The currently selected locale
-  @JsonKey(defaultValue: d_selectedTheme)
+  @JsonKey(defaultValue: d_selectedLocale)
   String _selectedLocale = d_selectedLocale;
   /// The currently selected locale
   String get selectedLocale => _selectedLocale;
@@ -103,6 +103,20 @@ class SettingsMisc with ChangeNotifier {
   @JsonKey(defaultValue: d_windowWidth)
   int windowWidth = d_windowWidth;
 
+  /// The default value for `fontSizeScale`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const double d_fontSizeScale = 1;
+  /// global font scaling factor
+  @JsonKey(defaultValue: d_fontSizeScale)
+  double _fontSizeScale = d_fontSizeScale;
+  /// global font scaling factor
+  double get fontSizeScale => _fontSizeScale;
+  /// global font scaling factor
+  set fontSizeScale(double fontSizeScale) {
+    _fontSizeScale = fontSizeScale;
+    notifyListeners();
+  }
 
   /// The default value for `windowHeight`
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -110,7 +124,7 @@ class SettingsMisc with ChangeNotifier {
   static const int d_windowHeight = 720;
   /// height of the current window
   @JsonKey(defaultValue: d_windowWidth)
-  int windowHeight = 720;
+  int windowHeight = d_windowHeight;
 
 
   /// The default value for `selectedTheme` 

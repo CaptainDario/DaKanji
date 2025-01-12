@@ -16,18 +16,11 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
+import 'package:provider/provider.dart';
 
 class KanaTableSettings extends StatefulWidget {
-    
-  /// DaKanji settings object
-  final Settings settings;
 
-  const KanaTableSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const KanaTableSettings({super.key});
 
   @override
   State<KanaTableSettings> createState() => _KanaTableSettingsState();
@@ -36,6 +29,8 @@ class KanaTableSettings extends StatefulWidget {
 class _KanaTableSettingsState extends State<KanaTableSettings> {
   @override
   Widget build(BuildContext context) {
+
+    Settings settings = context.watch<Settings>();
     
     return ResponsiveHeaderTile(
       LocaleKeys.KanaTableScreen_title.tr(),
@@ -44,23 +39,23 @@ class _KanaTableSettingsState extends State<KanaTableSettings> {
       children: [
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_kana_table_play_audio.tr(),
-          value: widget.settings.kanaTable.playAudio,
+          value: settings.kanaTable.playAudio,
           autoSizeGroup: g_SettingsAutoSizeGroup,
           onTileTapped: (value) async {
             setState(() {
-              widget.settings.kanaTable.playAudio = value;
-              widget.settings.save();
+              settings.kanaTable.playAudio = value;
+              settings.save();
             });
           },
         ),
         // play animation when opening kana popup
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_kana_table_play_kana_animation_when_opened.tr(),
-          value: widget.settings.kanaTable.playKanaAnimationWhenOpened,
+          value: settings.kanaTable.playKanaAnimationWhenOpened,
           onTileTapped: (value) {
             setState(() {
-              widget.settings.kanaTable.playKanaAnimationWhenOpened = value;
-              widget.settings.save();
+              settings.kanaTable.playKanaAnimationWhenOpened = value;
+              settings.save();
             });
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,
@@ -69,14 +64,14 @@ class _KanaTableSettingsState extends State<KanaTableSettings> {
         // animation speed
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_dict_kanji_animation_strokes_per_second.tr(),
-          value: widget.settings.kanaTable.kanaAnimationStrokesPerSecond,
+          value: settings.kanaTable.kanaAnimationStrokesPerSecond,
           min: 0.1,
           max: 10.0,
           autoSizeGroup: g_SettingsAutoSizeGroup,
           onChanged: (value) {
             setState(() {
-              widget.settings.kanaTable.kanaAnimationStrokesPerSecond = value;
-              widget.settings.save();
+              settings.kanaTable.kanaAnimationStrokesPerSecond = value;
+              settings.save();
             });
           },
         ),
@@ -84,11 +79,11 @@ class _KanaTableSettingsState extends State<KanaTableSettings> {
         // animation continues playing after double tap
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_dict_resume_animation_after_stop_swipe.tr(),
-          value: widget.settings.kanaTable.resumeAnimationAfterStopSwipe,
+          value: settings.kanaTable.resumeAnimationAfterStopSwipe,
           onTileTapped: (value) {
             setState(() {
-              widget.settings.kanaTable.resumeAnimationAfterStopSwipe = value;
-              widget.settings.save();
+              settings.kanaTable.resumeAnimationAfterStopSwipe = value;
+              settings.save();
             });
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,
@@ -99,7 +94,7 @@ class _KanaTableSettingsState extends State<KanaTableSettings> {
           icon: Icons.replay_outlined,
           onButtonPressed: () {
             GetIt.I<UserData>().showTutorialKanaTable = true;
-            widget.settings.save();
+            settings.save();
             Phoenix.rebirth(context);
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,

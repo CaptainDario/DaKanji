@@ -17,26 +17,23 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_tile.dart';
+import 'package:provider/provider.dart';
 
 class DoJGSettings extends StatefulWidget {
     
-  /// DaKanji settings object
-  final Settings settings;
-
-  const DoJGSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const DoJGSettings({super.key});
 
   @override
   State<DoJGSettings> createState() => _DoJGSettingsState();
 }
 
 class _DoJGSettingsState extends State<DoJGSettings> {
+  
   @override
   Widget build(BuildContext context) {
+
+    Settings settings = context.watch<Settings>();
+
     return ResponsiveHeaderTile(
       LocaleKeys.DojgScreen_title.tr(),
       DaKanjiCustomIcons.dojg,
@@ -72,7 +69,7 @@ class _DoJGSettingsState extends State<DoJGSettings> {
           icon: Icons.replay_outlined,
           onButtonPressed: () {
             GetIt.I<UserData>().showTutorialDojg = true;
-            widget.settings.save();
+            settings.save();
             Phoenix.rebirth(context);
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,

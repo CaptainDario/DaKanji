@@ -77,47 +77,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
         currentScreen: Screens.settings,
         drawerClosed: !widget.openedByDrawer,
         // ListView of all available settings
-        child: ChangeNotifierProvider.value(
-          value: GetIt.I<Settings>(),
-          child: Consumer<Settings>(
-            builder: (context, settings, child) {
-              return SingleChildScrollView(
-                controller: scrollController,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      
-                      DrawingSettings(settings),
-                      DictionarySettings(settings),
+        child: SingleChildScrollView(
+          controller: scrollController,
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                
+                DrawingSettings(),
+                DictionarySettings(),
 
-                      if(kDebugMode)
-                        ReadingSettings(settings),
-                      if(kDebugMode)
-                        VideoSettings(settings),
-                      if(kDebugMode)
-                        WebbrowserSettings(settings),
-                      if(kDebugMode)
-                        YoutubeSettings(settings),
-                      if(kDebugMode)
-                        OcrSettings(settings),
+                if(kDebugMode)
+                  ReadingSettings(),
+                if(kDebugMode)
+                  VideoSettings(),
+                if(kDebugMode)
+                  WebbrowserSettings(),
+                if(kDebugMode)
+                  YoutubeSettings(),
+                if(kDebugMode)
+                  OcrSettings(),
 
-                      TextSettings(settings),
-                      DoJGSettings(settings),
-                      KanjiTableSettings(settings),
-                      KanaTableSettings(settings),
-                      WordListSettings(settings),     
-                      AnkiSettings(settings),
-                      ClipboardSettings(settings),
-                      MiscSettings(settings),
-                      
-                    ],
-                  ),
-                ),
-              );
-            }
+                TextSettings(),
+                DoJGSettings(),
+                KanjiTableSettings(),
+                KanaTableSettings(),
+                WordListSettings(),     
+                AnkiSettings(),
+                ClipboardSettings(),
+                MiscSettings(),
+                
+              ],
+            ),
           ),
-        ),
+        )
+            
       )
     );
   }

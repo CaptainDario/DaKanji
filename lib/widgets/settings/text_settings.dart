@@ -17,26 +17,23 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:provider/provider.dart';
 
 class TextSettings extends StatefulWidget {
     
-  /// DaKanji settings object
-  final Settings settings;
-
-  const TextSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const TextSettings({super.key});
 
   @override
   State<TextSettings> createState() => _TextSettingsState();
 }
 
 class _TextSettingsState extends State<TextSettings> {
+
   @override
   Widget build(BuildContext context) {
+  
+    Settings settings = context.watch<Settings>();
+  
     return ResponsiveHeaderTile(
       LocaleKeys.TextScreen_title.tr(),
       DaKanjiIcons.text,
@@ -45,32 +42,32 @@ class _TextSettingsState extends State<TextSettings> {
         // disable text selection buttons
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_text_show_selection_buttons.tr(),
-          value: widget.settings.text.selectionButtonsEnabled,
+          value: settings.text.selectionButtonsEnabled,
           onTileTapped: (value) async {
-            widget.settings.text.selectionButtonsEnabled = value;
-            await widget.settings.save();
+            settings.text.selectionButtonsEnabled = value;
+            await settings.save();
           },
         ),
         // should the text screen open with the processed text
         // maximized
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_text_open_in_fullscreen.tr(),
-          value: widget.settings.text.openInFullscreen,
+          value: settings.text.openInFullscreen,
           onTileTapped: (value) async {
-            widget.settings.text.openInFullscreen = value;
-            await widget.settings.save();
+            settings.text.openInFullscreen = value;
+            await settings.save();
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // try to deconjugate words before searching
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_dict_deconjugate.tr(),
-          value: widget.settings.text.searchDeconjugate,
+          value: settings.text.searchDeconjugate,
           leadingIcon: Icons.info_outline,
           onTileTapped: (value) {
             setState(() {
-              widget.settings.text.searchDeconjugate = value;
-              widget.settings.save();
+              settings.text.searchDeconjugate = value;
+              settings.save();
             });
           },
           onLeadingIconPressed: () async {
@@ -97,7 +94,7 @@ class _TextSettingsState extends State<TextSettings> {
           icon: Icons.replay_outlined,
           onButtonPressed: () {
             GetIt.I<UserData>().showTutorialText = true;
-            widget.settings.save();
+            settings.save();
             Phoenix.rebirth(context);
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,
