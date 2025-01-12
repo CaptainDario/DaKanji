@@ -146,16 +146,6 @@ class _DictionarySettingsState extends State<DictionarySettings> {
             });
           }
         ),
-        // show word frequency in search results / dictionary
-        ShowWordFrequencySetting(
-          settings.dictionary.showWordFruequency,
-          onTileTapped: (value) {
-            setState(() {
-              settings.dictionary.showWordFruequency = value;
-              settings.save();
-            });
-          },
-        ),
         // Search result sort order daggable list
         ResponsiveFilterChips(
           description: LocaleKeys.SettingsScreen_dict_separate_search_results.tr(),
@@ -293,7 +283,16 @@ ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
             setState(() {});
           },
         ),
-
+        // show word frequency in search results / dictionary
+        ShowWordFrequencySetting(
+          settings.dictionary.showWordFruequency,
+          onTileTapped: (value) {
+            setState(() {
+              settings.dictionary.showWordFruequency = value;
+              settings.save();
+            });
+          },
+        ),
         // play animation when opening kanji tab
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_dict_play_kanji_animation_when_opened.tr(),
