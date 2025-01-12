@@ -7,7 +7,10 @@ Note: **This update resets the Anki integration, please run the setup again**
 
 Added:
 
-- Dictionary: Add to anki / list from search results
+- Dictionary:
+  - Add to anki / list from search results
+  - Search result sorting priority setting
+  - Show search separation headers
 - Anki: Examples sentences can be added to notes
 
 Improvements:

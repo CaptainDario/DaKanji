@@ -2,12 +2,18 @@
 
 ## v3.5.0 - ワードリストと暗記改善 (25.07.2024)
 
+Added:
+  Dictionary:
+    - Search result sorting priority setting
+    - Show search separation headers
+
 Fixed:
 
 - Dictionary
   - Some searches breaking search
   - Search results wrong
   - Change serach result prioritization
+  - Missing translations
 
 -------------------------------------------------------------------------
 
