@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,9 +14,13 @@ import 'search_result_card.dart';
 class SearchResultList extends StatefulWidget {
 
   /// The search results that should be shown in the list
-  final List<JMdict> searchResults;
+  final List<List<JMdict>> searchResults;
+  /// A list that contains headers to display that should match `searchResults`
+  /// in length.
+  /// `null` can be used to exclude a header
+  final List<String?> headers;
   /// should the searchResults be shown in reverse
-  final bool reversed;
+  //final bool reversed;
   /// If true the word frequency will be displayed
   final bool showWordFrequency;
   /// Should the entries of this list always be animated in ie.: with every
@@ -36,7 +41,8 @@ class SearchResultList extends StatefulWidget {
   const SearchResultList(
     {
       required this.searchResults,
-      this.reversed = false,
+      required this.headers,
+      //this.reversed = false,
       this.showWordFrequency = false,
       this.alwaysAnimateIn = true,
       this.init,
@@ -56,6 +62,8 @@ class _SearchResultListState extends State<SearchResultList> {
   Key? slideInAnimationKey;
   /// List of focus nodes that each corresponds to on search result entry 
   List searchResultsFocusses = [];
+  /// total number of search results
+  int noSearchResults = -1;
   /// Controller that can be used to hadle this instance
   late SearchResultListController controller;
 
@@ -83,8 +91,14 @@ class _SearchResultListState extends State<SearchResultList> {
   }
 
   void init(){
+    noSearchResults = widget.searchResults.isEmpty
+      ? 0
+      : widget.searchResults
+        .map((e) => e.length,)
+        .reduce((l1, l2) => l1+l2);
+      
     searchResultsFocusses =
-      List.generate(widget.searchResults.length, (index) => FocusNode());
+      List.generate(noSearchResults, (index) => FocusNode());
     widget.init?.call(controller);
   }
 
@@ -97,15 +111,29 @@ class _SearchResultListState extends State<SearchResultList> {
   @override
   Widget build(BuildContext context) {
 
+    if(widget.searchResults.isEmpty) return const SizedBox();
+
     return AnimationLimiter(
       key: slideInAnimationKey,
       child: LayoutBuilder(
         builder: (context, constraints) {
+
           return ListView.builder(
-            itemCount: widget.searchResults.length,
+            itemCount: noSearchResults,
             itemBuilder: ((context, index) {
-              // determine index based on reversed or not
-              int i = widget.reversed ? widget.searchResults.length-index-1 : index;
+              // get the current element
+              int resultCnt = 0; int resultListIdx = 0;
+              late JMdict result; bool showHeader = false;
+              for (var i  = 0; i < widget.searchResults.length; i++) {
+                for (var j = 0; j < widget.searchResults[i].length; j++) {
+                  if(resultCnt++ == index){
+                    result = widget.searchResults[i][j];
+                    resultListIdx = i;
+                    showHeader = j==0;
+                    break;
+                  }
+                }
+              }
           
               return AnimationConfiguration.staggeredList(
                 position: index,
@@ -113,9 +141,9 @@ class _SearchResultListState extends State<SearchResultList> {
                   curve: Curves.decelerate,
                   horizontalOffset: constraints.maxWidth,
                   delay: const Duration(milliseconds: 100),
-                  key: Key("${widget.searchResults[i].id}$i"),
+                  key: Key("${result.id}$index"),
                   child: Dismissible(
-                    key: ValueKey(widget.searchResults[i]),
+                    key: ValueKey(result),
                     direction: widget.onDismissed != null
                       ? DismissDirection.endToStart
                       : DismissDirection.none,
@@ -129,16 +157,33 @@ class _SearchResultListState extends State<SearchResultList> {
                       ),
                     ),
                     onDismissed: (DismissDirection direction) {
-                      widget.onDismissed?.call(direction, widget.searchResults[i], i);
+                      widget.onDismissed?.call(direction, result, index);
                     },
-                    child: SearchResultCard(
-                      dictEntry: widget.searchResults[i],
-                      focusNode: searchResultsFocusses[i],
-                      resultIndex: i,
-                      showWordFrequency: widget.showWordFrequency,
-                      onPressed: (selection) {
-                        widget.onSearchResultPressed?.call(selection);
-                      } 
+                    child: ConditionalParentWidget(
+                      condition: widget.headers[resultListIdx] != null && showHeader,
+                      conditionalBuilder: (child) {
+                        return Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
+                              child: Align(
+                                alignment: AlignmentDirectional.centerStart,
+                                child: Text(widget.headers[resultListIdx]!),
+                              ),
+                            ),
+                            child
+                          ],
+                        );
+                      },
+                      child: SearchResultCard(
+                        dictEntry: result,
+                        focusNode: searchResultsFocusses[index],
+                        resultIndex: index,
+                        showWordFrequency: widget.showWordFrequency,
+                        onPressed: (selection) {
+                          widget.onSearchResultPressed?.call(selection);
+                        } 
+                      ),
                     ),
                   ),
                 ),

@@ -416,6 +416,20 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           // search results if the user entered text
                           ? SearchResultList(
                             searchResults: widget.context.watch<DictSearch>().searchResults,
+                            headers: GetIt.I<Settings>().dictionary.showSearchMatchSeparation
+                              ? [
+                                widget.context.watch<DictSearch>().currentSearch,
+                                "${widget.context.watch<DictSearch>().currentSearch}*",
+                                "*${widget.context.watch<DictSearch>().currentSearch}*",
+                                widget.context.watch<DictSearch>().currentKanaSearch,
+                                "${widget.context.watch<DictSearch>().currentKanaSearch}*",
+                                "*${widget.context.watch<DictSearch>().currentKanaSearch}*",
+                                for (var search in widget.context.watch<DictSearch>().currentAlternativeSearches)
+                                  ...[search, "$search*", "*$search*"]
+                              ]
+                              : List.generate(
+                                6+widget.context.watch<DictSearch>().currentAlternativeSearches.length,
+                                (e) => null),
                             onSearchResultPressed: (entry) async {
                               onSearchResultPressed(entry);
                             },
@@ -442,7 +456,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                               }
               
                               return SearchResultList(
-                                searchResults: searchHistory,
+                                searchResults: [searchHistory],
+                                headers: const [null],
                                 showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                                 alwaysAnimateIn: false,
                                 init: (controller) {},
@@ -574,6 +589,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     if(searchInputController.text != ""){
       searchInputController.text = "";
       widget.context.read<DictSearch>().currentSearch = "";
+      widget.context.read<DictSearch>().currentKanaSearch = "";
+      widget.context.read<DictSearch>().currentAlternativeSearches = [];
       widget.context.read<DictSearch>().searchResults = [];
       searchTextFieldFocusNode.requestFocus();
     }
@@ -599,6 +616,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     // only search in dictionary if the query is not empty (remove filters to check this)
     if(query.split(" ").where((e) => !e.startsWith("#")).join() == ""){
       widget.context.read<DictSearch>().currentSearch = "";
+      widget.context.read<DictSearch>().currentKanaSearch = "";
+      widget.context.read<DictSearch>().currentAlternativeSearches = [];
       widget.context.read<DictSearch>().searchResults = [];
       return;
     }
@@ -647,6 +666,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     // update search variables and search
     widget.context.read<DictSearch>().currentSearch = query;
+      widget.context.read<DictSearch>().currentKanaSearch = queryKana ?? "";
+      widget.context.read<DictSearch>().currentAlternativeSearches = deconjugated;
     widget.context.read<DictSearch>().searchResults =
       await GetIt.I<DictionarySearch>().search(
         query,

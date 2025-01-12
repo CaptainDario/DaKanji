@@ -226,6 +226,18 @@ class _DictionarySettingsState extends State<DictionarySettings> {
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
+        // Separate search results by matching term
+        ResponsiveCheckBoxTile(
+          text: "Separate search results by matching term",
+          value: widget.settings.dictionary.showSearchMatchSeparation,
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.dictionary.showSearchMatchSeparation = value;
+              widget.settings.save();
+            });
+          },
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+        ),
         // Add to anki from search results
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_dict_add_to_anki_from_search_results.tr(),

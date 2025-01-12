@@ -289,7 +289,8 @@ class _WordListScreenState extends State<WordListScreen> {
             }
         
             return SearchResultList(
-              searchResults: snapshot.data!.toList(),
+              searchResults: [snapshot.data!.toList()],
+              headers: const [null],
               alwaysAnimateIn: animate,
               onDismissed: isDefault 
                 ? null

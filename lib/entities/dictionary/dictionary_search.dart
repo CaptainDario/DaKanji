@@ -33,7 +33,6 @@ class DictionarySearch {
   Tuple3<String, String?, List<String>?>? _lastBlockedQuery;
   /// Should the search be converted to hiragana
   bool convertToHiragana;
-
   
 
 
@@ -56,7 +55,7 @@ class DictionarySearch {
   }
 
   /// Queries the database and sorts the results using multiple isolates.
-  Future<List<JMdict>?> search(
+  Future<List<List<JMdict>>?> search(
     String query, String? queryKana, List<String>? queryDeconjugated) async {
     _checkInitialized();
 
@@ -93,7 +92,7 @@ class DictionarySearch {
     List<List<JMdict>> sortResult = sortJmdictList(
       searchResult, query, queryKana, queryDeconjugated, languages
     );
-    var result = sortResult.expand((element) => element).toList();
+    //var result = sortResult.expand((element) => element).toList();
     _isSearching = false;
 
     // if one or more queries were made while this one was running, run the last
@@ -103,11 +102,11 @@ class DictionarySearch {
       String? t2 = _lastBlockedQuery!.item2;
       List<String>? t3 = _lastBlockedQuery!.item3;
       _lastBlockedQuery = null;
-      result = (await search(t1, t2, t3)) ?? [];
+      sortResult = (await search(t1, t2, t3)) ?? [];
       _lastBlockedQuery = null;
     }
     
-    return result;
+    return sortResult;
   }
 
   /// Extracts the filters from a query

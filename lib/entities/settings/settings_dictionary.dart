@@ -49,6 +49,14 @@ class SettingsDictionary with ChangeNotifier {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
+  static const bool d_showSearchMatchSeparation = false;
+  @JsonKey(defaultValue: d_showSearchMatchSeparation)
+  /// Should the search results have a separating header depending on how the
+  /// result matched
+  bool showSearchMatchSeparation = d_showSearchMatchSeparation;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
   static const bool d_addToAnkiFromSearchResults = false;
   @JsonKey(defaultValue: d_addToAnkiFromSearchResults)
   /// Should the word frequency be shown in the dict UI
