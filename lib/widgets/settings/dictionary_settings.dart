@@ -159,7 +159,8 @@ class _DictionarySettingsState extends State<DictionarySettings> {
         // Search result sort order daggable list
         ResponsiveFilterChips(
           description: LocaleKeys.SettingsScreen_dict_separate_search_results.tr(),
-          detailedDescription: MarkdownBody(
+          detailedDescription: Markdown(
+            shrinkWrap: true,
             data:
 """
 ${LocaleKeys.SettingsScreen_dict_search_sorting_information.tr()}
