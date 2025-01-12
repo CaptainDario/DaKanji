@@ -381,6 +381,7 @@
     "misc_font_size_scale": "Fattore di scala della dimensione del carattere",
     "misc_language": "lingua (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Salva la dimensione attuale della finestra",
+    "misc_sharing_pattern": "Schema da utilizzare per la condivisione dei contenuti.",
     "misc_theme": "tema (@:SettingsScreen.restarts_app)",
     "misc_title": "Varie",
     "misc_window_on_top": "L'applicazione deve essere sempre in cima",

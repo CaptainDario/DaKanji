@@ -364,6 +364,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_misc_font_size_scale = 'SettingsScreen.misc_font_size_scale';
   static const SettingsScreen_misc_language = 'SettingsScreen.misc_language';
   static const SettingsScreen_misc_settings_window_size = 'SettingsScreen.misc_settings_window_size';
+  static const SettingsScreen_misc_sharing_pattern = 'SettingsScreen.misc_sharing_pattern';
   static const SettingsScreen_misc_theme = 'SettingsScreen.misc_theme';
   static const SettingsScreen_misc_title = 'SettingsScreen.misc_title';
   static const SettingsScreen_misc_window_on_top = 'SettingsScreen.misc_window_on_top';

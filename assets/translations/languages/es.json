@@ -381,6 +381,7 @@
     "misc_font_size_scale": "Factor de escala del tama\u00f1o de fuente",
     "misc_language": "idioma (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Guardar el tama\u00f1o actual de la ventana",
+    "misc_sharing_pattern": "Esquema a utilizar al compartir contenidos.",
     "misc_theme": "tema (@:SettingsScreen.restarts_app)",
     "misc_title": "Miscel\u00e1neo",
     "misc_window_on_top": "\u00bfDebe la aplicaci\u00f3n estar siempre encima",

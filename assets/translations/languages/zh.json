@@ -381,6 +381,7 @@
     "misc_font_size_scale": "\u5b57\u4f53\u5927\u5c0f\u7f29\u653e\u7cfb\u6570",
     "misc_language": "\u8bed\u8a00 (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "\u4fdd\u5b58\u5f53\u524d\u7a97\u53e3\u5c3a\u5bf8",
+    "misc_sharing_pattern": "\u5171\u4eab\u5185\u5bb9\u65f6\u4f7f\u7528\u7684\u6a21\u5f0f\u3002",
     "misc_theme": "\u4e3b\u9898 (@:SettingsScreen.restarts_app)",
     "misc_title": "\u6742\u9879",
     "misc_window_on_top": "\u5e94\u7528\u7a0b\u5e8f\u662f\u5426\u5e94\u8be5\u603b\u662f\u5728\u4e0a\u9762",

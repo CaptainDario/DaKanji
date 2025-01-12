@@ -381,6 +381,7 @@
     "misc_font_size_scale": "Font size scaling factor",
     "misc_language": "language",
     "misc_settings_window_size": "Save current window size",
+    "misc_sharing_pattern": "Schema to use when sharing content.",
     "misc_theme": "theme (@:SettingsScreen.restarts_app)",
     "misc_title": "Miscellaneous",
     "misc_window_on_top": "Should the application always be on top of others",

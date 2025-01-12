@@ -381,6 +381,7 @@
     "misc_font_size_scale": "Skalierungsfaktor f\u00fcr die Schriftgr\u00f6\u00dfe",
     "misc_language": "Sprache (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Speicher die momentanige Fenster gr\u00f6\u00dfe",
+    "misc_sharing_pattern": "Schema wenn Inhalten geteilt werden.",
     "misc_theme": "Thema (@:SettingsScreen.restarts_app)",
     "misc_title": "Verschiedenes",
     "misc_window_on_top": "Sollte die Anwendung immer \u00fcber anderen sein",

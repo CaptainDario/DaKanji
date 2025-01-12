@@ -3562,6 +3562,17 @@
       "es": "La transparencia de la aplicación",
       "pl": "Transparentność aplikacji"
     },
+    "misc_sharing_pattern": {
+      "en": "Schema to use when sharing content.",
+      "de": "Schema wenn Inhalten geteilt werden.",
+      "ru": "Схема, которую нужно использовать при совместном использовании контента.",
+      "ja": "コンテンツを共有する際に使用するスキーマ。",
+      "zh": "共享内容时使用的模式。",
+      "it": "Schema da utilizzare per la condivisione dei contenuti.",
+      "fr": "Schéma à utiliser lors du partage de contenu.",
+      "es": "Esquema a utilizar al compartir contenidos.",
+      "pl": "Schemat używany podczas udostępniania treści."
+    },
     "advanced_settings_title": {
       "en": "Advanced settings",
       "de": "Erweiterte Einstellungen",

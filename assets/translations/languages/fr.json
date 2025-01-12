@@ -381,6 +381,7 @@
     "misc_font_size_scale": "Facteur d'\u00e9chelle de la taille de la police",
     "misc_language": "langue (@:SettingsScreen.restarts_app)",
     "misc_settings_window_size": "Sauvegarder la taille actuelle de la fen\u00eatre",
+    "misc_sharing_pattern": "Sch\u00e9ma \u00e0 utiliser lors du partage de contenu.",
     "misc_theme": "th\u00e8me (@:SettingsScreen.restarts_app)",
     "misc_title": "Divers",
     "misc_window_on_top": "L'application doit-elle toujours \u00eatre en t\u00eate",
