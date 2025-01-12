@@ -79,7 +79,7 @@ List<List<JMdict>> sortJmdictList(
     matches[i] = sortEntries(matches[i], matchIndices[i], lenDifferences[i]);
   }
 
-  return matches;
+  return matches; // sensei
 }
 
 /// Sorts a string list based on `queryText`. The sorting criteria are
@@ -113,17 +113,17 @@ Tuple3<int, int, int> rankMatches(List<List<String>> matches,
       // check for full match
       if(allSearches[i] == matches[matchIndeces[0]][matchIndeces[1]] &&
         (result == -1 || result > i)){
-        result = 0 + i*(allSearches.length-1);
+        result = 0 + i*3;
       }
       // does the found dict entry start with the search term
       else if(matches[matchIndeces[0]][matchIndeces[1]].startsWith(allSearches[i]) &&
         (result == -1 || result > i)){
-        result = 1 + i*(allSearches.length-1);
+        result = 1 + i*3;
       }
       // the query matches somwhere in the entry
       else if (matches[matchIndeces[0]][matchIndeces[1]].contains(allSearches[i]) &&
         (result == -1 || result > i)){
-        result = 2 + i*(allSearches.length-1);
+        result = 2 + i*3;
       }
       /// calculate the difference in length between the query and the result
       lenDiff = matches[matchIndeces[0]][matchIndeces[1]].length - allSearches[i].length;
