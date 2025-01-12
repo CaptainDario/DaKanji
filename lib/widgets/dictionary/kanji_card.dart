@@ -199,7 +199,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                 )
                                 : Container(
                                   decoration: BoxDecoration(
-                                    border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
+                                    border: Border.all(width: 2, color: Colors.grey.withValues(alpha: 0.5))
                                   ),
                                   child: FittedBox(
                                     child: Text(
@@ -323,7 +323,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                               ScaffoldMessenger.of(context).showSnackBar(
                                                 SnackBar(
                                                   content: Text(
-                                                    "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} $radical"
+                                                    "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} $radical",
                                                   )
                                                 )
                                               );
@@ -343,12 +343,15 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                                 )
                                               );
                                             },
-                                            child: Text(radical),
+                                            child: Text(
+                                              radical,
+                                              textScaler: TextScaler.noScaling,
+                                            ),
                                           )
                                         ),
                                         if(radical != radicals.last)
                                           const TextSpan(
-                                            text: ", "
+                                            text: ", ",
                                           )
                                       ]
                                   ]
