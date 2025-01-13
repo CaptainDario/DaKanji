@@ -359,6 +359,7 @@
     "dict_play_kanji_animation_when_opened": "\u30a2\u30cb\u30e1\u30fc\u30b7\u30e7\u30f3\u3092\u81ea\u52d5\u958b\u59cb",
     "dict_resume_animation_after_stop_swipe": "\u30b9\u30ef\u30a4\u30d7\u5f8c\u306b\u30a2\u30cb\u30e1\u30fc\u30b7\u30e7\u30f3\u3092\u518d\u958b",
     "dict_search_sorting_information": "",
+    "dict_search_sorting_information_description": "",
     "dict_separate_search_results": "\u691c\u7d22\u7d50\u679c\u306e\u4e26\u3073\u66ff\u3048\uff08\u30c9\u30e9\u30c3\u30b0\u3067\u4e26\u3073\u66ff\u3048\u3001\u30bf\u30c3\u30d7\u3067\u4e26\u3073\u66ff\u3048\u4e0d\u53ef\uff09",
     "dict_show_wikipedia_definitions": "wikipedia\u306e\u5b9a\u7fa9\u3092\u8868\u793a",
     "dict_show_word_freq": "\u5358\u8a9e\u306e\u4f7f\u7528\u983b\u5ea6\u3092\u8868\u793a",

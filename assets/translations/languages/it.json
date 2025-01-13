@@ -359,6 +359,7 @@
     "dict_play_kanji_animation_when_opened": "Avvio automatico dell'animazione Kanji",
     "dict_resume_animation_after_stop_swipe": "Riprendere l'animazione dopo il passaggio del dito",
     "dict_search_sorting_information": "",
+    "dict_search_sorting_information_description": "",
     "dict_separate_search_results": "Ordinamento dei risultati della ricerca (trascinare per riordinare, toccare per disabilitare)",
     "dict_show_wikipedia_definitions": "Mostra le definizioni da wikipedia",
     "dict_show_word_freq": "Mostra la frequenza delle parole",

@@ -149,21 +149,27 @@ class _DictionarySettingsState extends State<DictionarySettings> {
         // Search result sort order daggable list
         ResponsiveFilterChips(
           description: LocaleKeys.SettingsScreen_dict_separate_search_results.tr(),
-          detailedDescription: Markdown(
-            shrinkWrap: true,
-            data:
+          detailedDescription: SizedBox(
+            height: MediaQuery.sizeOf(context).height*0.8,
+            child: SingleChildScrollView(
+              
+              child: MarkdownBody(
+                data:
 """
-${LocaleKeys.SettingsScreen_dict_search_sorting_information.tr()}
+# ${LocaleKeys.SettingsScreen_dict_search_sorting_information.tr()}
+${LocaleKeys.SettingsScreen_dict_search_sorting_information_description.tr()}
 
-### ${LocaleKeys.SettingsScreen_dict_term.tr()}
+## ${LocaleKeys.SettingsScreen_dict_term.tr()}
 ${LocaleKeys.SettingsScreen_dict_term_description.tr()}
 
-### ${LocaleKeys.SettingsScreen_dict_convert_to_kana.tr()}
+## ${LocaleKeys.SettingsScreen_dict_convert_to_kana.tr()}
 ${LocaleKeys.SettingsScreen_dict_convert_to_kana_description.tr()}
 
-### ${LocaleKeys.SettingsScreen_dict_base_form.tr()}
+## ${LocaleKeys.SettingsScreen_dict_base_form.tr()}
 ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
 """
+              ),
+            ),
           ),
           chipWidget: (int index) {
 
