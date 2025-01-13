@@ -1,4 +1,6 @@
 // Package imports:
+import 'dart:math';
+
 import 'package:async/async.dart';
 import 'package:database_builder/database_builder.dart';
 
@@ -92,6 +94,9 @@ class DictionarySearch {
     List<List<JMdict>> sortResult = sortJmdictList(
       searchResult, query, allQueries, languages
     );
+    sortResult = sortResult.map((e) => 
+      e.sublist(0, min(200, e.length))).toList();
+    
     //var result = sortResult.expand((element) => element).toList();
     _isSearching = false;
 

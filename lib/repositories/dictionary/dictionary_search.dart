@@ -11,7 +11,7 @@ import 'package:isar/isar.dart';
 /// 
 /// Note: potential optimizations: <br/>
 /// * include ID in kanji / kana / meanings index to split load between isolates
-QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
+QueryBuilder<JMdict, JMdict, QAfterSortBy> buildJMDictQuery(
   Isar isar, int idRangeStart, int idRangeEnd, int noIsolates,
   String query, List<String> allQueries,
   List<String> filters, List<String> langs)
@@ -91,8 +91,8 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
       )
     )
   // filter out entries 
-  .sortByFrequencyDesc()
-  .limit(200 ~/ noIsolates);
+  .sortByFrequencyDesc();
+  //.limit(200 ~/ noIsolates);
 }
 
 
