@@ -648,15 +648,14 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       deconjugated.remove(queryKana);
       deconjugated.remove(query);
     }
+    deconjugated.removeWhere((e) => e.isEmpty);
 
     // if the search query was changed show a snackbar and give the option to
     // use the original search
     if(queryKana != query || deconjugated.isNotEmpty){
 
       deconjugationFlushbar = DictionaryAltSearchFlushbar(
-          query,
-          queryKana != query ? queryKana : null,
-          deconjugated,
+          selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated),
           onAltSearchTapped
         )
         .build(context)..show(context).then((value) {
@@ -672,25 +671,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       widget.context.read<DictSearch>().currentAlternativeSearches = deconjugated;
     widget.context.read<DictSearch>().searchResults =
       await GetIt.I<DictionarySearch>().search(
-        query,
-        () {
-          List<String> allQueries = [];
-
-          List<String> sel = context.read<Settings>().dictionary.selectedSearchResultSortPriorities;
-          for (var i = 0; i < sel.length; i++) {
-            if(sel[i] == LocaleKeys.SettingsScreen_dict_term){
-              allQueries.add(query);
-            }
-            else if(sel[i] == LocaleKeys.SettingsScreen_dict_convert_to_kana && queryKana != null){
-              allQueries.add(queryKana);
-            } 
-            else if(sel[i] == LocaleKeys.SettingsScreen_dict_base_form){
-              allQueries.addAll(deconjugated);
-            }
-          }
-          
-          return allQueries;
-        } ()
+        query, selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated)
       ) ?? [];
   }
 
@@ -700,6 +681,31 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     searchInputController.text = text;
     await updateSearchResults(text, false, false);
     deconjugationFlushbar?.dismiss();
+
+  }
+
+  /// Based on the selected search result sort priorities, returns a list of
+  /// the actual search terms following the user'spriorities
+  List<String> selectedSortPrioritiesToActualQueries(
+    String query, String? queryKana, List<String> deconjugated
+  ){
+
+    List<String> allQueries = [];
+
+    List<String> sel = context.read<Settings>().dictionary.selectedSearchResultSortPriorities;
+    for (var i = 0; i < sel.length; i++) {
+      if(sel[i] == LocaleKeys.SettingsScreen_dict_term){
+        allQueries.add(query);
+      }
+      else if(sel[i] == LocaleKeys.SettingsScreen_dict_convert_to_kana && queryKana != null){
+        allQueries.add(queryKana);
+      } 
+      else if(sel[i] == LocaleKeys.SettingsScreen_dict_base_form){
+        allQueries.addAll(deconjugated);
+      }
+    }
+    
+    return allQueries;
 
   }
 }

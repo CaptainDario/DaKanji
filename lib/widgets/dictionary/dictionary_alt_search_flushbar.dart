@@ -11,26 +11,17 @@ import 'package:easy_localization/easy_localization.dart';
 class DictionaryAltSearchFlushbar {
 
   /// the search term text
-  final String text;
-  /// the search term text converted to kana (if possible)
-  final String? queryKana;
-  /// the search term text converted to kana and deconjugated (if possible)
-  final List<String>? deconjugated;
+  final List<String> queries;
   /// Callback that is executed when the user taps on a search text as
   /// alternative search
   final Function(String text) onTapped;
 
   DictionaryAltSearchFlushbar(
-    this.text,
-    this.queryKana,
-    this.deconjugated,
+    this.queries,
     this.onTapped,
   );
 
   Flushbar build(BuildContext context) {
-
-    List<String> options = [text, queryKana, ...(deconjugated ?? <String>[])]
-      .nonNulls.toList();
 
     return Flushbar(
       backgroundColor: Colors.white,
@@ -45,17 +36,17 @@ class DictionaryAltSearchFlushbar {
                   color: Colors.black
                 ),
                 children: [
-                  for (int i=0; i<options.length; i++)
+                  for (int i=0; i<queries.length; i++)
                     ...[
                       TextSpan(
-                        text: options[i],
+                        text: "${i+1}. ${queries[i]}",
                         style: TextStyle(
                           color: Theme.of(context).highlightColor
                         ),
                         recognizer: TapGestureRecognizer()..onTap =
-                          () => onTapped(options[i]),
+                          () => onTapped(queries[i]),
                       ),
-                      if(i < options.length-1)
+                      if(i < queries.length-1)
                         const TextSpan(
                           text: "; ",
                           style: TextStyle(
