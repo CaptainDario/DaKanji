@@ -50,35 +50,39 @@ class _ResponsiveFilterChipsState extends State<ResponsiveFilterChips> {
     return Column(
       children: [
         if(widget.description != null || widget.detailedDescription != null)
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if(widget.detailedDescription != null)
-                IconButton(
-                  icon: const Icon(Icons.info_outline),
-                  onPressed: () async {
-                    await AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.noHeader,
-                      body: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: widget.detailedDescription,
-                      )
-                    ).show();
-                  },
-                ),
-              if(widget.description != null)
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                  child: Align(
-                    alignment: Alignment.centerLeft, 
-                    child: AutoSizeText(
-                      widget.description!,
-                      group: g_SettingsAutoSizeGroup,
-                    )
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if(widget.detailedDescription != null)
+                  IconButton(
+                    icon: const Icon(Icons.info_outline),
+                    onPressed: () async {
+                      await AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.noHeader,
+                        body: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: widget.detailedDescription,
+                        )
+                      ).show();
+                    },
                   ),
-                ),
-            ],
+                if(widget.description != null)
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                      child: Align(
+                        alignment: Alignment.centerLeft, 
+                        child: Text(
+                          widget.description!,
+                        )
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         Align(
           alignment: Alignment.centerLeft,
