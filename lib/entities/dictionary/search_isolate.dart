@@ -109,7 +109,7 @@ class DictionarySearchIsolate {
   }
 
   /// Queries the dictionay inside an isolate
-  Future<List> query(String query, String? queryKana, List<String>? queryDeconjugated,
+  Future<List> query(String query, List<String> allQueries,
     List<String> filters) async {
     
     _checkInitialized();
@@ -117,7 +117,7 @@ class DictionarySearchIsolate {
     List result = [];
 
     if(query != ""){
-      isolateSendPort!.send(Tuple4(query, queryKana, queryDeconjugated, filters));
+      isolateSendPort!.send(Tuple3(query, allQueries, filters));
       result = await events!.next;
     }
     else{
@@ -170,22 +170,21 @@ Future<void> _searchInIsar(SendPort p) async {
       break;
     }
     
-    if (message is Tuple4<String, String?, List<String>?, List<String>>) {
+    if (message is Tuple3<String, List<String>, List<String>>) {
       Stopwatch s = Stopwatch()..start();
       
       String query = message.item1;
-      String? queryKana = message.item2;
-      List<String>? queryDeconjugated = message.item3;
-      List<String> filters = message.item4;
+      List<String> allQueries = message.item2;
+      List<String> filters = message.item3;
 
       List<JMdict> searchResults = 
         buildJMDictQuery(isar, idRangeStart, idRangeEnd, noIsolates,
-          query, queryKana, queryDeconjugated, filters, langs)
+          query, allQueries, filters, langs)
         .findAllSync();
 
       // Send the result to the main isolate.
       p.send(searchResults);
-      debugPrint("Query: $query, QueryKana: $queryKana, QueryDeconjugated: $queryDeconjugated, filters: $filters, results: ${searchResults.length}, time: ${s.elapsed}");
+      debugPrint("Query: $query, AllQueries: $allQueries, filters: $filters, results: ${searchResults.length}, time: ${s.elapsed}");
     }    
   }
 

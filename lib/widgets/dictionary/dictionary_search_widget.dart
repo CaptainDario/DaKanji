@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_alt_search_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -672,8 +673,24 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     widget.context.read<DictSearch>().searchResults =
       await GetIt.I<DictionarySearch>().search(
         query,
-        queryKana != query ? queryKana : null,
-        deconjugated
+        () {
+          List<String> allQueries = [];
+
+          List<String> sel = context.read<Settings>().dictionary.selectedSearchResultSortPriorities;
+          for (var i = 0; i < sel.length; i++) {
+            if(sel[i] == LocaleKeys.SettingsScreen_dict_term){
+              allQueries.add(query);
+            }
+            else if(sel[i] == LocaleKeys.SettingsScreen_dict_convert_to_kana && queryKana != null){
+              allQueries.add(queryKana);
+            } 
+            else if(sel[i] == LocaleKeys.SettingsScreen_dict_base_form){
+              allQueries.addAll(deconjugated);
+            }
+          }
+          print(allQueries);
+          return allQueries;
+        } ()
       ) ?? [];
   }
 

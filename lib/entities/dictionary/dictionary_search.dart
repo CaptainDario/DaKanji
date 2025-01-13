@@ -30,7 +30,7 @@ class DictionarySearch {
   bool _isSearching = false;
   /// The last query that was blocked by a running search
   /// Consists of <query, kana query, deconjugated query>
-  Tuple3<String, String?, List<String>?>? _lastBlockedQuery;
+  Tuple2<String, List<String>>? _lastBlockedQuery;
   /// Should the search be converted to hiragana
   bool convertToHiragana;
   
@@ -56,12 +56,12 @@ class DictionarySearch {
 
   /// Queries the database and sorts the results using multiple isolates.
   Future<List<List<JMdict>>?> search(
-    String query, String? queryKana, List<String>? queryDeconjugated) async {
+    String query, List<String> allQueries) async {
     _checkInitialized();
 
     // do not search if a search is already running but remember the last blocked query
     if(_isSearching){
-      _lastBlockedQuery = Tuple3(query, queryKana, queryDeconjugated);
+      _lastBlockedQuery = Tuple2(query, allQueries);
       return null;
     }
     _isSearching = true;
@@ -80,7 +80,7 @@ class DictionarySearch {
     FutureGroup<List> searchGroup = FutureGroup();
     for (var i = 0; i < noIsolates; i++) {
       searchGroup.add(_searchIsolates[i].query(
-        query, queryKana, queryDeconjugated, filters
+        query, allQueries, filters
       ));
     }
     searchGroup.close();
@@ -90,7 +90,7 @@ class DictionarySearch {
       List<JMdict>.from((await searchGroup.future).expand((e) => e));
     // sort and merge the results
     List<List<JMdict>> sortResult = sortJmdictList(
-      searchResult, query, queryKana, queryDeconjugated, languages
+      searchResult, query, allQueries, languages
     );
     //var result = sortResult.expand((element) => element).toList();
     _isSearching = false;
@@ -99,10 +99,9 @@ class DictionarySearch {
     // one
     if(_lastBlockedQuery != null){
       String t1 = _lastBlockedQuery!.item1;
-      String? t2 = _lastBlockedQuery!.item2;
-      List<String>? t3 = _lastBlockedQuery!.item3;
+      List<String>? t2 = _lastBlockedQuery!.item2;
       _lastBlockedQuery = null;
-      sortResult = (await search(t1, t2, t3)) ?? [];
+      sortResult = (await search(t1, t2)) ?? [];
       _lastBlockedQuery = null;
     }
     

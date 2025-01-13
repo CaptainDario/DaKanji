@@ -24,12 +24,12 @@ import 'package:tuple/tuple.dart';
 /// First level sorting criteria:
 ///   1. word frequency
 List<List<JMdict>> sortJmdictList(
-  List<JMdict> entries, String query, String? queryKana, List<String>? queryDeconjugated,
+  List<JMdict> entries, String query, List<String> allQueries,
   List<String> languages
 ){
 
   /// number of citeria used to sort the list
-  int n = (1 + (queryKana == null ? 0 : 1) + (queryDeconjugated?.length ?? 0)) * 3;
+  int n = (allQueries.length) * 3;
 
   /// lists with n sub lists to sort search results
   List<List<JMdict>> matches = List.generate(n, (i) => <JMdict>[]);
@@ -43,11 +43,11 @@ List<List<JMdict>> sortJmdictList(
     // iterate over the entries and create a ranking for each
     for (JMdict entry in entries) {
       // KANJI matched (normal query) ?
-      Tuple3 ranked = rankMatches([entry.kanjiIndexes], query, queryKana, queryDeconjugated);
+      Tuple3 ranked = rankMatches([entry.kanjiIndexes], allQueries);
       
       // READING matched ?
       if(ranked.item1 == -1){
-        ranked = rankMatches([entry.hiraganas], query, queryKana, queryDeconjugated);
+        ranked = rankMatches([entry.hiraganas], allQueries);
       }  
       // MEANING matched ?
       if(ranked.item1 == -1){
@@ -58,7 +58,7 @@ List<List<JMdict>> sortJmdictList(
           e.meanings.map((e) => e.attributes.nonNulls).flattened.toList()
         ).toList();
         
-        ranked = rankMatches(k, query, queryKana, queryDeconjugated);
+        ranked = rankMatches(k, allQueries);
       }
       // the query was found in this entry
       if(ranked.item1 != -1){
@@ -89,19 +89,16 @@ List<List<JMdict>> sortJmdictList(
 ///   1 -  <br/>
 ///   2 - how many characters are in the match but not in `queryText` <br/>
 ///   3 - the index where the search matched <br/>
-Tuple3<int, int, int> rankMatches(List<List<String>> matches,
-  String queryText, String? queryKana, List<String>? queryDeconjugated) {
+Tuple3<int, int, int> rankMatches(List<List<String>> matches, List<String> allQueries) {
 
   int result = -1, lenDiff = -1; List<int> matchIndeces = [-1, -1];
 
-  List<String> allSearches = [queryText, queryKana, ...(queryDeconjugated??<String>[])].nonNulls.toList();
-  
   // convert query and matches to lower case; find where the query matched
-  queryText = queryText.toLowerCase();
+  allQueries = allQueries.map((e) => e.toLowerCase(),).toList();
   for (var i = 0; i < matches.length; i++) {
     for (var j = 0; j < matches[i].length; j++) {
       matches[i][j] = matches[i][j].toLowerCase();
-      if(matches[i][j].contains(RegExp(allSearches.join("|")))){
+      if(matches[i][j].contains(RegExp(allQueries.join("|")))){
         matchIndeces = [i, j];
         break;
       }
@@ -109,24 +106,24 @@ Tuple3<int, int, int> rankMatches(List<List<String>> matches,
   }  
 
   if(matchIndeces[0] != -1 && matchIndeces[1] != -1){
-    for (var i = 0; i < allSearches.length; i++) {
+    for (var i = 0; i < allQueries.length; i++) {
       // check for full match
-      if(allSearches[i] == matches[matchIndeces[0]][matchIndeces[1]] &&
+      if(allQueries[i] == matches[matchIndeces[0]][matchIndeces[1]] &&
         (result == -1 || result > i)){
         result = 0 + i*3;
       }
       // does the found dict entry start with the search term
-      else if(matches[matchIndeces[0]][matchIndeces[1]].startsWith(allSearches[i]) &&
+      else if(matches[matchIndeces[0]][matchIndeces[1]].startsWith(allQueries[i]) &&
         (result == -1 || result > i)){
         result = 1 + i*3;
       }
       // the query matches somwhere in the entry
-      else if (matches[matchIndeces[0]][matchIndeces[1]].contains(allSearches[i]) &&
+      else if (matches[matchIndeces[0]][matchIndeces[1]].contains(allQueries[i]) &&
         (result == -1 || result > i)){
         result = 2 + i*3;
       }
       /// calculate the difference in length between the query and the result
-      lenDiff = matches[matchIndeces[0]][matchIndeces[1]].length - allSearches[i].length;
+      lenDiff = matches[matchIndeces[0]][matchIndeces[1]].length - allQueries[i].length;
 
       if(result != -1) break;
     }
