@@ -156,7 +156,9 @@ class _DictionarySettingsState extends State<DictionarySettings> {
                 data:
 """
 # ${LocaleKeys.SettingsScreen_dict_search_sorting_information.tr()}
-${LocaleKeys.SettingsScreen_dict_search_sorting_information_description.tr()}
+${LocaleKeys.SettingsScreen_dict_search_sorting_information_description_1.tr()}
+${LocaleKeys.SettingsScreen_dict_search_sorting_information_description_2.tr()}
+${LocaleKeys.SettingsScreen_dict_search_sorting_information_description_3.tr()}
 
 ## ${LocaleKeys.SettingsScreen_dict_term.tr()}
 ${LocaleKeys.SettingsScreen_dict_term_description.tr()}
