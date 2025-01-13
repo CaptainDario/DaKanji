@@ -11,10 +11,10 @@ import 'package:isar/isar.dart';
 /// 
 /// Note: potential optimizations: <br/>
 /// * include ID in kanji / kana / meanings index to split load between isolates
-QueryBuilder<JMdict, JMdict, QAfterSortBy> buildJMDictQuery(
+QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
   Isar isar, int idRangeStart, int idRangeEnd, int noIsolates,
   String query, List<String> allQueries,
-  List<String> filters, List<String> langs)
+  List<String> filters, List<String> langs, int limitSearchResults)
 {
 
   // check if the search contains a wildcard
@@ -91,8 +91,8 @@ QueryBuilder<JMdict, JMdict, QAfterSortBy> buildJMDictQuery(
       )
     )
   // filter out entries 
-  .sortByFrequencyDesc();
-  //.limit(200 ~/ noIsolates);
+  .sortByFrequencyDesc()
+  .optional(limitSearchResults != 0, (q) => q.limit(limitSearchResults));
 }
 
 

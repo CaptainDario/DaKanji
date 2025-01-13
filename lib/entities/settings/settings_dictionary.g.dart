@@ -30,8 +30,8 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
                   .toList() ??
               [
                 'SettingsScreen.dict_term',
-                'SettingsScreen.dict_kanaize',
-                'SettingsScreen.dict_deconjugate'
+                'SettingsScreen.dict_convert_to_kana',
+                'SettingsScreen.dict_base_form'
               ]
       ..selectedSearchResultSortPriorities =
           (json['selectedSearchResultSortPriorities'] as List<dynamic>)
@@ -44,6 +44,8 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
               ['N5', 'N4', 'N3']
       ..playKanjiAnimationWhenOpened =
           json['playKanjiAnimationWhenOpened'] as bool? ?? true
+      ..limitSearchResults =
+          (json['limitSearchResults'] as num?)?.toInt() ?? 100
       ..kanjiAnimationStrokesPerSecond =
           (json['kanjiAnimationStrokesPerSecond'] as num?)?.toDouble() ?? 5.0
       ..resumeAnimationAfterStopSwipe =
@@ -64,6 +66,7 @@ Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
           instance.selectedSearchResultSortPriorities,
       'selectedFallingWordsLevels': instance.selectedFallingWordsLevels,
       'playKanjiAnimationWhenOpened': instance.playKanjiAnimationWhenOpened,
+      'limitSearchResults': instance.limitSearchResults,
       'kanjiAnimationStrokesPerSecond': instance.kanjiAnimationStrokesPerSecond,
       'resumeAnimationAfterStopSwipe': instance.resumeAnimationAfterStopSwipe,
       'googleImageSearchQuery': instance.googleImageSearchQuery,

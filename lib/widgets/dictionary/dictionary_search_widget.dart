@@ -671,7 +671,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       widget.context.read<DictSearch>().currentAlternativeSearches = deconjugated;
     widget.context.read<DictSearch>().searchResults =
       await GetIt.I<DictionarySearch>().search(
-        query, selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated)
+        query, selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated),
+        context.read<Settings>().dictionary.limitSearchResults
       ) ?? [];
   }
 

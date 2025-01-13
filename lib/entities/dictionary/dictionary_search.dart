@@ -39,7 +39,8 @@ class DictionarySearch {
 
 
   DictionarySearch(
-    this.noIsolates, this.languages, this.directory, this.name, this.convertToHiragana
+    this.noIsolates, this.languages, this.directory, this.name,
+    this.convertToHiragana,
   );
 
 
@@ -58,7 +59,7 @@ class DictionarySearch {
 
   /// Queries the database and sorts the results using multiple isolates.
   Future<List<List<JMdict>>?> search(
-    String query, List<String> allQueries) async {
+    String query, List<String> allQueries, int limitSearchResults) async {
     _checkInitialized();
 
     // do not search if a search is already running but remember the last blocked query
@@ -82,7 +83,7 @@ class DictionarySearch {
     FutureGroup<List> searchGroup = FutureGroup();
     for (var i = 0; i < noIsolates; i++) {
       searchGroup.add(_searchIsolates[i].query(
-        query, allQueries, filters
+        query, allQueries, filters, limitSearchResults
       ));
     }
     searchGroup.close();
@@ -106,7 +107,7 @@ class DictionarySearch {
       String t1 = _lastBlockedQuery!.item1;
       List<String>? t2 = _lastBlockedQuery!.item2;
       _lastBlockedQuery = null;
-      sortResult = (await search(t1, t2)) ?? [];
+      sortResult = (await search(t1, t2, limitSearchResults)) ?? [];
       _lastBlockedQuery = null;
     }
     

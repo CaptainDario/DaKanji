@@ -110,14 +110,15 @@ class DictionarySearchIsolate {
 
   /// Queries the dictionay inside an isolate
   Future<List> query(String query, List<String> allQueries,
-    List<String> filters) async {
+    List<String> filters, int limitSearchResults) async {
     
     _checkInitialized();
 
     List result = [];
 
     if(query != ""){
-      isolateSendPort!.send(Tuple3(query, allQueries, filters));
+      isolateSendPort!.send(Tuple4(query, allQueries,
+        filters, limitSearchResults));
       result = await events!.next;
     }
     else{
@@ -170,16 +171,17 @@ Future<void> _searchInIsar(SendPort p) async {
       break;
     }
     
-    if (message is Tuple3<String, List<String>, List<String>>) {
+    if (message is Tuple4<String, List<String>, List<String>, int>) {
       Stopwatch s = Stopwatch()..start();
       
       String query = message.item1;
       List<String> allQueries = message.item2;
       List<String> filters = message.item3;
+      int limitSearchResults = message.item4;
 
       List<JMdict> searchResults = 
         buildJMDictQuery(isar, idRangeStart, idRangeEnd, noIsolates,
-          query, allQueries, filters, langs)
+          query, allQueries, filters, langs, limitSearchResults)
         .findAllSync();
 
       // Send the result to the main isolate.

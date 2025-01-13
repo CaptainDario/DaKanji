@@ -139,9 +139,9 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_anki_default_no_translations.tr(),
           value: widget.settings.anki.noTranslations.toDouble(),
-          min: 1,
-          max: 50,
-          divisions: 50,
+          min: 0,
+          max: 10,
+          divisions: 11,
           showLabelAsInt: true,
           autoSizeGroup: g_SettingsAutoSizeGroup,
           onChanged: (value) {

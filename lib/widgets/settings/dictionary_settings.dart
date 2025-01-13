@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -299,6 +298,18 @@ ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
             });
           },
         ),
+        // limit search results
+        ResponsiveCheckBoxTile(
+          text: "Limit search results (enable if you encounter slow downs)",
+          value: settings.dictionary.limitSearchResults != 0,
+          autoSizeGroup: g_SettingsAutoSizeGroup,
+          onTileTapped: (value) {
+            setState(() {
+              settings.dictionary.limitSearchResults = value ? 100 : 0;
+              settings.save();
+            });
+          },
+        ),
         // play animation when opening kanji tab
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_dict_play_kanji_animation_when_opened.tr(),
@@ -311,7 +322,6 @@ ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
           },
           autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
-
         // animation speed
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_dict_kanji_animation_strokes_per_second.tr(),

@@ -130,6 +130,14 @@ class SettingsDictionary with ChangeNotifier {
   @JsonKey(defaultValue: d_playKanjiAnimationWhenOpened)
   bool playKanjiAnimationWhenOpened = d_playKanjiAnimationWhenOpened;
 
+  /// Should the dictionary search results be limited to improve performance
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_limitSearchResults = 100;
+  /// Should the dictionary search results be limited to improve performance
+  @JsonKey(defaultValue: d_limitSearchResults)
+  int limitSearchResults = d_limitSearchResults;
+
   /// How many strokes should be drawn during the animation
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
