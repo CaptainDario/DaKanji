@@ -1,11 +1,13 @@
 # DaKanji Beta - changelog
 
-## v3.5.0 - ワードリストと暗記改善 (25.07.2024)
+## v3.5.0b2 - ワードリストと暗記改善 (31.01.2025)
 
 Added:
-  Dictionary:
-    - Search result sorting priority setting
-    - Show search separation headers
+
+- Dictionary:
+  - Search result sorting priority setting
+  - Show search separation headers setting
+  - Limit search results setting
 
 Fixed:
 

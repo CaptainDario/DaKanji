@@ -10,7 +10,9 @@ Added:
 - Dictionary:
   - Add to anki / list from search results
   - Search result sorting priority setting
-  - Show search separation headers
+  - Show search separation headers setting
+  - Limit search results setting
+
 - Anki: Examples sentences can be added to notes
 
 Improvements:
