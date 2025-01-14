@@ -59,6 +59,6 @@ class _OcrWidgetState extends State<OcrWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Text("OCR");
+    return const Text("OCR");
   }
 }

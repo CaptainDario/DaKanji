@@ -223,7 +223,7 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(Icons.close)
+                          icon: const Icon(Icons.close)
                         ),
                       )
                     ),

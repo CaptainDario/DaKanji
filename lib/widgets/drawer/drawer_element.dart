@@ -2,11 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
-import 'package:da_kanji_mobile/globals.dart';
 
 /// One list tile for drawer
 /// 

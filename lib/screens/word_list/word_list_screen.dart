@@ -264,7 +264,6 @@ class _WordListScreenState extends State<WordListScreen> {
                           case WordListAction.copyFromOther:
                             copyEntriesFromOtherList();
                             break;
-                          default:
                         }
                       },
                     ),

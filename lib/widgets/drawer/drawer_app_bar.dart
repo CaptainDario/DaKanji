@@ -2,12 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/screens.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 class DrawerAppBar extends StatelessWidget {

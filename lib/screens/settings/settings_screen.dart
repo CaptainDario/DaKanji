@@ -3,12 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/screens.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/settings/anki_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/clipboard_settings.dart';

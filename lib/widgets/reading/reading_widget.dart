@@ -59,6 +59,6 @@ class _ReadingWidgetState extends State<ReadingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Reader();
+    return const Reader();
   }
 }
