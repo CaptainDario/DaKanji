@@ -148,7 +148,7 @@ class _KanjiVGWidgetState extends State<KanjiVGWidget> with TickerProviderStateM
         width: min(widget.height, widget.width),
         decoration: widget.borderAround
           ? BoxDecoration(
-            border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
+            border: Border.all(width: 2, color: Colors.grey.withValues(alpha: 0.5))
           )
           : null,
         child: AnimatedBuilder(

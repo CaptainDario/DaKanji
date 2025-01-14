@@ -240,7 +240,7 @@ class _WordListsState extends State<WordLists> {
                           height: 40,
                           duration: Duration(milliseconds: hoveringAnimationColorDuration),
                           color: itemDraggingOverToolbar
-                            ? g_Dakanji_green.withOpacity(0.5)
+                            ? g_Dakanji_green.withValues(alpha: 0.5)
                             : Colors.transparent,
                           child: Row(
                             children: [
@@ -465,7 +465,7 @@ class _WordListsState extends State<WordLists> {
                                                   15.0*(childrenDFS[i].level-1)+8, 0, 0, 0
                                                 ),
                                                 color: draggingOverDividerIndex == i
-                                                  ? g_Dakanji_green.withOpacity(0.5)
+                                                  ? g_Dakanji_green.withValues(alpha: 0.5)
                                                   : Colors.transparent
                                               );
                                             }
@@ -553,7 +553,7 @@ class _WordListsState extends State<WordLists> {
                           height: 48,
                           duration: Duration(milliseconds: hoveringAnimationColorDuration),
                           color: itemDraggingOverBottom
-                            ? g_Dakanji_green.withOpacity(0.5)
+                            ? g_Dakanji_green.withValues(alpha: 0.5)
                             : Colors.transparent,
                           width: MediaQuery.of(context).size.width,
                           child: Row(

@@ -245,9 +245,9 @@ class _DojgEntryListState extends State<DojgEntryList> {
                                 renderBorder: false,
                                 isSelected: currentVolumeSelection,
                                 fillColor: Colors.transparent,
-                                hoverColor: Colors.grey.withOpacity(0.2),
+                                hoverColor: Colors.grey.withValues(alpha: 0.2),
                                 selectedColor: Colors.white,
-                                color: Colors.grey.withOpacity(0.4),
+                                color: Colors.grey.withValues(alpha: 0.4),
                                 onPressed: (index) {
                                   setState(() {
                                     currentVolumeSelection[index] = !currentVolumeSelection[index];

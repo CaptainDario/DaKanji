@@ -1,8 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
+
 
 class ResponsiveSliderTile extends StatefulWidget {
   
@@ -23,8 +22,6 @@ class ResponsiveSliderTile extends StatefulWidget {
   final String? infoText;
   /// Should the label that indicates the current value be rounded to an int value
   final bool showLabelAsInt;
-  /// The autoSizeGroup to use for the text
-  final AutoSizeGroup? autoSizeGroup;
   /// callback which is executed when the user moves the slider
   final Function (double value)? onChanged;
   /// callback which is executed when the user stops moving the slider
@@ -42,7 +39,6 @@ class ResponsiveSliderTile extends StatefulWidget {
       this.leadingIcon,
       this.infoText,
       this.showLabelAsInt = false,
-      this.autoSizeGroup,
       this.onChanged,
       this.onChangeEnd,
       this.onLeadingIconPressed,

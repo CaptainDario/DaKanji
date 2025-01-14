@@ -1,8 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 
 class ResponsiveIconTile extends StatefulWidget {
 
@@ -10,8 +8,6 @@ class ResponsiveIconTile extends StatefulWidget {
   final String text;
   /// the icon for this tile
   final Icon icon;
-  /// The autoSizeGroup to use for the text
-  final AutoSizeGroup? autoSizeGroup;
   /// callback that is executed when the user presses on the tile
   final Function? onTilePressed;
 
@@ -20,7 +16,6 @@ class ResponsiveIconTile extends StatefulWidget {
     {
       required this.text,
       required this.icon,
-      this.autoSizeGroup,
       this.onTilePressed,
       super.key
     }

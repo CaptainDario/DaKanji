@@ -308,7 +308,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
                                       ? Colors.black
                                       : Colors.white
                                     : const Color.fromARGB(255, 3, 160, 98)
-                                  ).withOpacity(entry.parallax)
+                                  ).withValues(alpha: entry.parallax)
                                 ),
                               ),
                             ),

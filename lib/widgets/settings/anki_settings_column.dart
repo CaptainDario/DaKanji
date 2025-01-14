@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -58,7 +57,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
         // the default deck to add cards to
         ResponsiveDropDownTile(
           text: LocaleKeys.SettingsScreen_anki_default_deck.tr(),
-          autoSizeGroup: AutoSizeGroup(),
           value: widget.settings.anki.defaultDeck,
           items: widget.settings.anki.availableDecks.contains(widget.settings.anki.defaultDeck) ||
             widget.settings.anki.defaultDeck == null

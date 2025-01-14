@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
@@ -26,8 +25,6 @@ class ResponsiveDropDownTile extends StatefulWidget {
   final Function ()? onTap;
   /// callback which will be executed eveytime when the selection changed
   final Function (String? value)? onChanged;
-  /// The autoSizeGroup for this Tile
-  final AutoSizeGroup? autoSizeGroup;
   /// max lines of the dropdown
   final int dropDownMaxLines;
 
@@ -42,7 +39,6 @@ class ResponsiveDropDownTile extends StatefulWidget {
       this.leadingButtonPressed,
       this.onTap,
       this.onChanged,
-      this.autoSizeGroup,
       this.dropDownMaxLines=0,
       super.key
     }

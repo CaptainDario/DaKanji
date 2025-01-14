@@ -234,7 +234,7 @@ class _WordListNodeState extends State<WordListNode> {
               height: 48,
               duration: Duration(milliseconds: widget.hoveringAnimationColorDuration),
               color: itemDraggingOverThis
-                ? g_Dakanji_green.withOpacity(0.5)
+                ? g_Dakanji_green.withValues(alpha: 0.5)
                 : Colors.transparent,
               padding: EdgeInsets.fromLTRB(
                 15.0*(widget.node.level-1)+8, 0, 0, 0

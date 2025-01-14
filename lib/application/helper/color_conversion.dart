@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];
   final swatch = <int, Color>{};
-  final int r = color.red, g = color.green, b = color.blue;
+  final int r = (color.r*255).round(), g = (color.g*255).round(), b = (color.b*255).round();
 
   for (int i = 1; i < 10; i++) {
     strengths.add(0.1 * i);
@@ -23,5 +23,5 @@ MaterialColor createMaterialColor(Color color) {
 }
 
 String colorToHtmlString(Color color){
-  return "rgb(${color.red}, ${color.green}, ${color.blue})";
+  return "rgb(${(color.r*255).round()}, ${(color.g*255).round()}, ${(color.b*255).round()})";
 }

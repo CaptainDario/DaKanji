@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
@@ -215,38 +214,40 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                     int noChars = GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.length;
 
                     return Center(
-                      child: AutoSizeText.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: GetIt.I<DrawScreenState>().drawingLookup.charPrefix
-                            ),
-                            TextSpan(
-                              text: noChars > 0 ?
-                                GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.substring(
-                                  0, noChars-1
-                                ) : null
-                            ),
-                            TextSpan(
-                              text: noChars > 0 ?
-                                GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer[noChars-1] :
-                                null,
-                              style: TextStyle(
-                                fontSize: _scaleInNewCharAnimation.value * 100
-                              )
-                            ),
-                            TextSpan(
-                              text: GetIt.I<DrawScreenState>().drawingLookup.charPostfix
-                            ),
-                          ],
-                        ),
-                        softWrap: false,
-                        maxLines: 1,
-                        overflow: TextOverflow.fade,
-                        style: TextStyle(
-                          fontFamily: g_japaneseFontFamily,
-                          color: Theme.of(context).textTheme.bodyLarge!.color,
-                          fontSize: 100,
+                      child: FittedBox(
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: GetIt.I<DrawScreenState>().drawingLookup.charPrefix
+                              ),
+                              TextSpan(
+                                text: noChars > 0 ?
+                                  GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer.substring(
+                                    0, noChars-1
+                                  ) : null
+                              ),
+                              TextSpan(
+                                text: noChars > 0 ?
+                                  GetIt.I<DrawScreenState>().kanjiBuffer.kanjiBuffer[noChars-1] :
+                                  null,
+                                style: TextStyle(
+                                  fontSize: _scaleInNewCharAnimation.value * 100
+                                )
+                              ),
+                              TextSpan(
+                                text: GetIt.I<DrawScreenState>().drawingLookup.charPostfix
+                              ),
+                            ],
+                          ),
+                          softWrap: false,
+                          maxLines: 1,
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                            fontFamily: g_japaneseFontFamily,
+                            color: Theme.of(context).textTheme.bodyLarge!.color,
+                            fontSize: 100,
+                          ),
                         ),
                       ),
                     );

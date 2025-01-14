@@ -330,8 +330,8 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                         animation: _controller,
                         builder: (context, child) {
                           return Container(
-                            color: Colors.black.withOpacity(
-                              lerpDouble(0, 0.5, _controller.value) ?? 0
+                            color: Colors.black.withValues(
+                              alpha: lerpDouble(0, 0.5, _controller.value) ?? 0
                             )
                           );
                         }
