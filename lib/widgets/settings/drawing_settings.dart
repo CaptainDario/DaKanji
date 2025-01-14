@@ -38,7 +38,6 @@ class _DrawingSettingsState extends State<DrawingSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.SettingsScreen_draw_title.tr(),
       DaKanjiIcons.drawing,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // Dictionary Options
         ResponsiveDropDownTile(
@@ -50,7 +49,6 @@ class _DrawingSettingsState extends State<DrawingSettings> {
               ?? settings.drawing.dictionaries[0];
             settings.save();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // custom URL input
         if(settings.drawing.selectedDictionary == settings.drawing.webDictionaries[3])
@@ -79,7 +77,6 @@ class _DrawingSettingsState extends State<DrawingSettings> {
             settings.drawing.invertShortLongPress = newValue ?? false;
             settings.save();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // double tap empties canvas
         ResponsiveCheckBoxTile(
@@ -89,7 +86,6 @@ class _DrawingSettingsState extends State<DrawingSettings> {
             settings.drawing.emptyCanvasAfterDoubleTap = newValue ?? false;
             settings.save();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         if(g_webViewSupported)
           ResponsiveCheckBoxTile(
@@ -99,7 +95,6 @@ class _DrawingSettingsState extends State<DrawingSettings> {
               settings.drawing.useWebview = value;
               settings.save();
             },
-            autoSizeGroup: g_SettingsAutoSizeGroup,
           ),
         
         // reshow tutorial
@@ -111,7 +106,6 @@ class _DrawingSettingsState extends State<DrawingSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

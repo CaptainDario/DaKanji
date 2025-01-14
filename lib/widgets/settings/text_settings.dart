@@ -37,7 +37,6 @@ class _TextSettingsState extends State<TextSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.TextScreen_title.tr(),
       DaKanjiIcons.text,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // disable text selection buttons
         ResponsiveCheckBoxTile(
@@ -57,7 +56,6 @@ class _TextSettingsState extends State<TextSettings> {
             settings.text.openInFullscreen = value;
             await settings.save();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // try to deconjugate words before searching
         ResponsiveCheckBoxTile(
@@ -86,7 +84,6 @@ class _TextSettingsState extends State<TextSettings> {
               )
             ).show();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // reshow tutorial
         ResponsiveIconButtonTile(
@@ -97,7 +94,6 @@ class _TextSettingsState extends State<TextSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

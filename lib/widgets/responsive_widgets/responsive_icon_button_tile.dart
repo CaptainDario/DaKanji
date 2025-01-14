@@ -43,41 +43,29 @@ class _ResponsiveIconButtonTileState extends State<ResponsiveIconButtonTile> {
 
     return Material(
       child: InkWell(
-        onTap: () {
-        },
-        child: SizedBox(
-          height: tileHeight,
+        onTap: () {},
+        child: Container(
           width: width,
+          constraints: BoxConstraints(minHeight: tileHeight),
           child: Row(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Container(
-                  height: (tileHeight*0.75),
-                  alignment: Alignment.centerLeft,
-                  child: AutoSizeText(
-                    widget.text,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.start,
-                    maxLines: 2,
-                    group: widget.autoSizeGroup
-                  )
+                child: Text(
+                  widget.text,
+                  textAlign: TextAlign.start,
                 ),
               ),
-              Center(
-                child: SizedBox(
-                  height: tileHeight*0.75,
-                  child: FittedBox(
-                    child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          if(widget.onButtonPressed != null) widget.onButtonPressed!();
-                        });
-                      },
-                      icon: Icon(
-                        widget.icon,
-                      )
-                    ),
-                  ),
+              FittedBox(
+                child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      if(widget.onButtonPressed != null) widget.onButtonPressed!();
+                    });
+                  },
+                  icon: Icon(
+                    widget.icon,
+                  )
                 ),
               ),
             ]

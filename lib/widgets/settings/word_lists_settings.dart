@@ -49,7 +49,6 @@ class _WordListSettingsState extends State<WordListSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.WordListsScreen_title.tr(),
       DaKanjiIcons.wordLists,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // show word frequency in search results / dictionary
         ShowWordFrequencySetting(
@@ -104,7 +103,6 @@ class _WordListSettingsState extends State<WordListSettings> {
           max: 50,
           divisions: 50,
           showLabelAsInt: true,
-          autoSizeGroup: g_SettingsAutoSizeGroup,
           
           onChanged: (value) {
             setState(() {
@@ -121,7 +119,6 @@ class _WordListSettingsState extends State<WordListSettings> {
           max: 50,
           divisions: 50,
           showLabelAsInt: true,
-          autoSizeGroup: g_SettingsAutoSizeGroup,
 
           onChanged: (value) {
             setState(() {
@@ -138,7 +135,6 @@ class _WordListSettingsState extends State<WordListSettings> {
           max: 50,
           divisions: 50,
           showLabelAsInt: true,
-          autoSizeGroup: g_SettingsAutoSizeGroup,
 
           onChanged: (value) {
             setState(() {
@@ -244,7 +240,6 @@ class _WordListSettingsState extends State<WordListSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

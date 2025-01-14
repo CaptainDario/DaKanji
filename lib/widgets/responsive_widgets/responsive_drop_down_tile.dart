@@ -62,16 +62,14 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
     double tileHeight = (height * 0.1).clamp(0, 45);
     double width = MediaQuery.of(context).size.width;
 
-
     return Material(
       child: InkWell(
-        onTap: () {
-          
-        },
-        child: SizedBox(
-          height: tileHeight,
+        onTap: () {},
+        child: Container(
           width: width,
+          constraints: BoxConstraints(minHeight: tileHeight),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               if(widget.leadingButtonIcon != null)
                 IconButton(
@@ -81,16 +79,8 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                   icon: Icon(widget.leadingButtonIcon!)
                 ),
               Expanded(
-                child: Container(
-                  height: (tileHeight*0.75).clamp(0, 30),
-                  alignment: Alignment.centerLeft,
-                  child: AutoSizeText(
-                    widget.text,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.start,
-                    group: g_SettingsAutoSizeGroup,
-                    minFontSize: g_MinFontSize,
-                  )
+                child: Text(
+                  widget.text,
                 ),
               ),
               SizedBox(width: (width*0.05).clamp(0, 10),),
@@ -100,14 +90,15 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                   
                   return DropdownMenuItem<String>(
                     value: text,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width*0.35,
-                      child: AutoSizeText(
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxWidth: width*0.4
+                      ),
+                      child: Text(
                         widget.translateItemTexts ? text.tr() : text, 
-                        maxLines: 3,
-                        minFontSize: g_MinFontSize,
-                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
+                        overflow: TextOverflow.visible,
+                        softWrap: true,
                       ),
                     ),
                   );

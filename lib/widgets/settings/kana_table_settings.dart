@@ -35,12 +35,10 @@ class _KanaTableSettingsState extends State<KanaTableSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.KanaTableScreen_title.tr(),
       DaKanjiCustomIcons.kana_table,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_kana_table_play_audio.tr(),
           value: settings.kanaTable.playAudio,
-          autoSizeGroup: g_SettingsAutoSizeGroup,
           onTileTapped: (value) async {
             setState(() {
               settings.kanaTable.playAudio = value;
@@ -58,7 +56,6 @@ class _KanaTableSettingsState extends State<KanaTableSettings> {
               settings.save();
             });
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
 
         // animation speed
@@ -67,7 +64,6 @@ class _KanaTableSettingsState extends State<KanaTableSettings> {
           value: settings.kanaTable.kanaAnimationStrokesPerSecond,
           min: 0.1,
           max: 10.0,
-          autoSizeGroup: g_SettingsAutoSizeGroup,
           onChanged: (value) {
             setState(() {
               settings.kanaTable.kanaAnimationStrokesPerSecond = value;
@@ -86,7 +82,6 @@ class _KanaTableSettingsState extends State<KanaTableSettings> {
               settings.save();
             });
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // reshow tutorial
         ResponsiveIconButtonTile(
@@ -97,7 +92,6 @@ class _KanaTableSettingsState extends State<KanaTableSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

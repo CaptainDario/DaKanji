@@ -43,7 +43,6 @@ dependencies:
   lottie: 3.1.2
   flutter_svg: 2.0.10+1
   onboarding_overlay : 3.2.2
-  auto_size_text: 3.0.0
   feedback: 3.1.0
   flutter_staggered_animations: 1.1.1
   graphview: 1.2.0

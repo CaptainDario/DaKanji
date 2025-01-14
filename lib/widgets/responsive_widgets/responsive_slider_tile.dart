@@ -55,46 +55,56 @@ class ResponsiveSliderTile extends StatefulWidget {
 }
 
 class _ResponsiveSliderTileState extends State<ResponsiveSliderTile> {
+  
+
+  
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        if(widget.onLeadingIconPressed != null)
-          IconButton(
-            onPressed: () => widget.onLeadingIconPressed?.call(),
-            icon: Icon(widget.leadingIcon)
-          ),
-        Expanded(
-          flex: 5,
-          child: AutoSizeText(
-            widget.text,
-            group: widget.autoSizeGroup,
-          )
-        ),
-        Expanded(
-          flex: 0,
-          child: SliderTheme(
-            data: const SliderThemeData(showValueIndicator: ShowValueIndicator.always),
-            child: Slider(
-              value: widget.value,
-              min: widget.min,
-              max: widget.max,
-              label: widget.showLabelAsInt
-                ? widget.value.round().toString()
-                : widget.value.toStringAsFixed(2),
-              divisions: widget.divisions,
-              
-              onChanged: (double value) {
-                widget.onChanged?.call(value);
-              },
-              onChangeEnd: (value) {
-                widget.onChangeEnd?.call(value);
-              },
+
+    double height = MediaQuery.of(context).size.height;
+    double tileHeight = (height * 0.1).clamp(0, 45);
+    double width = MediaQuery.of(context).size.width;
+
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        width: width,
+        constraints: BoxConstraints(minHeight: tileHeight),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            if(widget.onLeadingIconPressed != null)
+              IconButton(
+                onPressed: () => widget.onLeadingIconPressed?.call(),
+                icon: Icon(widget.leadingIcon)
+              ),
+            Flexible(
+              child: Text(
+                widget.text,
+              ),
             ),
-          ),
+            SliderTheme(
+              data: const SliderThemeData(showValueIndicator: ShowValueIndicator.always),
+              child: Slider(
+                value: widget.value,
+                min: widget.min,
+                max: widget.max,
+                label: widget.showLabelAsInt
+                  ? widget.value.round().toString()
+                  : widget.value.toStringAsFixed(2),
+                divisions: widget.divisions,
+                
+                onChanged: (double value) {
+                  widget.onChanged?.call(value);
+                },
+                onChangeEnd: (value) {
+                  widget.onChangeEnd?.call(value);
+                },
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

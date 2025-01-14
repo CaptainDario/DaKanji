@@ -35,7 +35,6 @@ class _OcrSettingsState extends State<OcrSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.OcrScreen_title.tr(),
       DaKanjiIcons.ocr,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // reshow tutorial
         ResponsiveIconButtonTile(
@@ -46,7 +45,6 @@ class _OcrSettingsState extends State<OcrSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

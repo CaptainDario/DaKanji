@@ -48,22 +48,17 @@ class _ResponsiveIconTileState extends State<ResponsiveIconTile> {
         onTap: () {
           widget.onTilePressed?.call();
         },
-        child: SizedBox(
-          height: tileHeight,
+        child: Container(
+          constraints: BoxConstraints(
+            minHeight: tileHeight
+          ),
           width: width,
           child: Row(
             children: [
               Expanded(
-                child: Container(
-                  height: (tileHeight*0.75),
-                  alignment: Alignment.centerLeft,
-                  child: AutoSizeText(
-                    widget.text,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.start,
-                    maxLines: 2,
-                    group: widget.autoSizeGroup
-                  )
+                child: Text(
+                  widget.text,
+                  textAlign: TextAlign.start,
                 ),
               ),
               Center(

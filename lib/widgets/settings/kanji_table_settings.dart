@@ -34,7 +34,6 @@ class _KanjiTableSettingsState extends State<KanjiTableSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.KanjiTableScreen_title.tr(),
       DaKanjiCustomIcons.kanji_table,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // reshow tutorial
         ResponsiveIconButtonTile(
@@ -45,7 +44,6 @@ class _KanjiTableSettingsState extends State<KanjiTableSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

@@ -53,7 +53,8 @@ class _ResponsiveFilterChipsState extends State<ResponsiveFilterChips> {
           SizedBox(
             width: MediaQuery.sizeOf(context).width,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 if(widget.detailedDescription != null)
                   IconButton(
@@ -71,14 +72,8 @@ class _ResponsiveFilterChipsState extends State<ResponsiveFilterChips> {
                   ),
                 if(widget.description != null)
                   Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                      child: Align(
-                        alignment: Alignment.centerLeft, 
-                        child: Text(
-                          widget.description!,
-                        )
-                      ),
+                    child: Text(
+                      widget.description!,
                     ),
                   ),
               ],

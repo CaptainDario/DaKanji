@@ -210,13 +210,6 @@ const g_theKanjiMapUrl = "https://thekanjimap.com/";
 /// url to open a kanji in japanesegraph.com
 const g_japaneseGraphUrl = "https://japanesegraph.com/";
 
-/// AutoSizeGroup for the settings screen -> all list entries have same font size
-AutoSizeGroup g_SettingsAutoSizeGroup = AutoSizeGroup();
-/// AutoSizeGroup for the drawer -> all list entries have same font size
-AutoSizeGroup g_DrawerAutoSizeGroup = AutoSizeGroup();
-/// Global minimum font size for autosizing texts
-double g_MinFontSize = 8;
-
 /// Some japanese sample text
 const String g_SampleText = """東京に暮らす男子高校生・瀧は、夢を見ることをきっかけに田舎町の女子高生・三葉と入れ替わるようになる。
 

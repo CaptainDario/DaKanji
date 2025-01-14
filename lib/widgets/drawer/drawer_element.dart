@@ -105,14 +105,16 @@ class DrawerElement extends StatelessWidget {
                 SizedBox(
                   width: drawerWidth*0.6,
                   height: tileHeight*0.5,
-                  child: AutoSizeText(
-                    title,
-                    group: g_DrawerAutoSizeGroup,
-                    minFontSize: g_MinFontSize,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: selected ? Theme.of(context).highlightColor : null,
+                  child: FittedBox(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: selected ? Theme.of(context).highlightColor : null,
+                      ),
                     ),
                   ),
                 ),

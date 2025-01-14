@@ -34,7 +34,6 @@ class _WebbrowserSettingsState extends State<WebbrowserSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.WebbrowserScreen_title.tr(),
       DaKanjiIcons.webbrowser,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // reshow tutorial
         ResponsiveIconButtonTile(
@@ -45,7 +44,6 @@ class _WebbrowserSettingsState extends State<WebbrowserSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

@@ -31,7 +31,6 @@ class _AnkiSettingsState extends State<AnkiSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.SettingsScreen_anki_title.tr(),
       DaKanjiCustomIcons.anki,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         AnkiSettingsColumn(settings)  
       ],

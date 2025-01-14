@@ -54,40 +54,31 @@ class _ResponsiveCheckBoxTileState extends State<ResponsiveCheckBoxTile> {
             widget.onTileTapped?.call(checked);
           });
         },
-        child: SizedBox(
-          height: tileHeight,
+        child: Container(
           width: width,
+          constraints: BoxConstraints(minHeight: tileHeight),
           child: Row(
             children: [
               if(widget.leadingIcon != null)
-                Center(
-                  child: SizedBox(
-                    child: FittedBox(
-                      child: IconButton(
-                        splashRadius: tileHeight*0.5,
-                        onPressed: () {
-                          setState(() {
-                            if(widget.onLeadingIconPressed != null) widget.onLeadingIconPressed!();
-                          });
-                        },
-                        icon: Icon(
-                          widget.leadingIcon,
-                        )
-                      ),
+                SizedBox(
+                  child: FittedBox(
+                    child: IconButton(
+                      splashRadius: tileHeight*0.5,
+                      onPressed: () {
+                        setState(() {
+                          if(widget.onLeadingIconPressed != null) widget.onLeadingIconPressed!();
+                        });
+                      },
+                      icon: Icon(
+                        widget.leadingIcon,
+                      )
                     ),
                   ),
                 ),
               Expanded(
-                child: Container(
-                  height: (tileHeight*0.75),
-                  alignment: Alignment.centerLeft,
-                  child: AutoSizeText(
-                    widget.text,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.start,
-                    maxLines: 2,
-                    group: widget.autoSizeGroup
-                  )
+                child: Text(
+                  widget.text,
+                  textAlign: TextAlign.start,
                 ),
               ),
               Checkbox(

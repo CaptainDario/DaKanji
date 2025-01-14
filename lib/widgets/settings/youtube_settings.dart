@@ -34,7 +34,6 @@ class _YoutubeSettingsState extends State<YoutubeSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.YoutubeScreen_title.tr(),
       DaKanjiIcons.youtube,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // reshow tutorial
         ResponsiveIconButtonTile(
@@ -45,7 +44,6 @@ class _YoutubeSettingsState extends State<YoutubeSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

@@ -125,7 +125,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
               widget.settings.save();
             });
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // which langauges should be included
         ExportLanguagesIncludeChips(
@@ -143,7 +142,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
           max: 10,
           divisions: 11,
           showLabelAsInt: true,
-          autoSizeGroup: g_SettingsAutoSizeGroup,
           onChanged: (value) {
             setState(() {
               widget.settings.anki.noTranslations = value.toInt();
@@ -170,7 +168,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
           max: 5,
           divisions: 5,
           showLabelAsInt: true,
-          autoSizeGroup: g_SettingsAutoSizeGroup,
           onChanged: (value) {
             setState(() {
               widget.settings.anki.noExamples = value.toInt();
@@ -188,7 +185,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
               widget.settings.save();
             });
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // include google image (disabled for now)
         if(false)
@@ -202,7 +198,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
                 widget.settings.save();
               });
             },
-            autoSizeGroup: g_SettingsAutoSizeGroup,
           ),
         // include audio (disabled for now)
         if(false)
@@ -216,7 +211,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
                 widget.settings.save();
               });
             },
-            autoSizeGroup: g_SettingsAutoSizeGroup,
           ),
         // include screenshot (disabled for now)
         if(false)
@@ -230,7 +224,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
               widget.settings.save();
             });
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

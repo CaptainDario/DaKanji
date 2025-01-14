@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -45,15 +46,9 @@ class AdvancedSettings extends StatefulWidget {
 class _AdvancedSettingsState extends State<AdvancedSettings> {
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      tilePadding: const EdgeInsets.all(0),
-      title: Align(
-        alignment: Alignment.centerLeft,
-        child: AutoSizeText(
-          LocaleKeys.SettingsScreen_advanced_settings_title.tr(),
-          group: g_SettingsAutoSizeGroup,
-        ),
-      ),
+    return ResponsiveHeaderTile(
+      LocaleKeys.SettingsScreen_advanced_settings_title.tr(),
+      Icons.warning,
       children: [
         // optimize backends
         ResponsiveIconButtonTile(
@@ -62,7 +57,6 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
           onButtonPressed: () {
             optimizeBackendsPopup(context).show();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // number of search isolates
         ResponsiveSliderTile(
@@ -99,7 +93,6 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
             GetIt.I<DictionarySearch>().noIsolates = value.toInt();
             await GetIt.I<DictionarySearch>().init();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // Reset settings
         ResponsiveIconButtonTile(
@@ -188,7 +181,6 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
             widget.settings.advanced.useThanosSnap = newValue;
             widget.settings.save();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // matrix color setting
         ResponsiveCheckBoxTile(
@@ -198,7 +190,6 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
             widget.settings.advanced.iAmInTheMatrix = newValue;
             widget.settings.save();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

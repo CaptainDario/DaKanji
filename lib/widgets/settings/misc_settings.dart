@@ -39,7 +39,6 @@ class _MiscSettingsState extends State<MiscSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.SettingsScreen_misc_title.tr(),
       DaKanjiIcons.misc,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // theme
         ResponsiveDropDownTile(
@@ -53,7 +52,6 @@ class _MiscSettingsState extends State<MiscSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // screen to show when app starts
         ResponsiveDropDownTile(
@@ -69,7 +67,6 @@ class _MiscSettingsState extends State<MiscSettings> {
               settings.save();
             }
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // app languages
         ResponsiveDropDownTile(
@@ -83,16 +80,14 @@ class _MiscSettingsState extends State<MiscSettings> {
               settings.save();
             }
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // font size
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_misc_font_size_scale.tr(),
           value: settings.misc.fontSizeScale,
           min: 0.4,
-          max: 4.0,
+          max: 2.0,
           
-          autoSizeGroup: g_SettingsAutoSizeGroup,
           onChanged: (value) {
             setState(() {
               settings.misc.fontSizeScale = value;
@@ -113,7 +108,6 @@ class _MiscSettingsState extends State<MiscSettings> {
 
               settings.save();
             },
-            autoSizeGroup: g_SettingsAutoSizeGroup,
           ),
         // window always on top
         if(g_desktopPlatform)
@@ -125,7 +119,6 @@ class _MiscSettingsState extends State<MiscSettings> {
               settings.misc.alwaysOnTop = checked;
               settings.save();
             },
-            autoSizeGroup: g_SettingsAutoSizeGroup,
           ),
         // window opacity
         if(g_desktopPlatform)
@@ -138,7 +131,6 @@ class _MiscSettingsState extends State<MiscSettings> {
               settings.misc.windowOpacity = value;
               settings.save();
             },
-            autoSizeGroup: g_SettingsAutoSizeGroup,
           ),
         // url for sharing dakanji
         ResponsiveDropDownTile(

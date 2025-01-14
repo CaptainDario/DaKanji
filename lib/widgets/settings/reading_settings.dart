@@ -34,7 +34,6 @@ class _ReadingSettingsState extends State<ReadingSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.ReadingScreen_title.tr(),
       DaKanjiIcons.reading,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // reshow tutorial
         ResponsiveIconButtonTile(
@@ -45,7 +44,6 @@ class _ReadingSettingsState extends State<ReadingSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

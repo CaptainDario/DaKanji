@@ -35,7 +35,6 @@ class _ClipboardSettingsState extends State<ClipboardSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.ClipboardScreen_title.tr(),
       Icons.paste,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // try to deconjugate words before searching
         ResponsiveCheckBoxTile(
@@ -64,7 +63,6 @@ class _ClipboardSettingsState extends State<ClipboardSettings> {
               )
             ).show();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // reshow tutorial
         ResponsiveIconButtonTile(
@@ -75,7 +73,6 @@ class _ClipboardSettingsState extends State<ClipboardSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

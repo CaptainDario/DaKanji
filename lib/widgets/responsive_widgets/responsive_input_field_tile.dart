@@ -56,8 +56,9 @@ class _ResponsiveInputFieldTileState extends State<ResponsiveInputFieldTile> {
       child: InkWell(
         onTap: () {
         },
-        child: SizedBox(
-          height: tileHeight,
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+          constraints: BoxConstraints(minHeight: tileHeight),
           width: width,
           child: Row(
             children: [
@@ -80,8 +81,8 @@ class _ResponsiveInputFieldTileState extends State<ResponsiveInputFieldTile> {
                   ),
                 ),
               Expanded(
-                child: SizedBox(
-                  height: (tileHeight*0.75),
+                child: Container(
+                  constraints: BoxConstraints(minHeight: tileHeight*0.75),
                   child: TextField(
                     controller: _controller,
                     enabled: widget.enabled,

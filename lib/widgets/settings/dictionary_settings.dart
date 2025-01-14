@@ -52,7 +52,6 @@ class _DictionarySettingsState extends State<DictionarySettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.DictionaryScreen_title.tr(),
       DaKanjiIcons.dictionary,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // Language selection
         ResponsiveFilterChips(
@@ -240,7 +239,6 @@ ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
               settings.save();
             });
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // Add to anki from search results
         ResponsiveCheckBoxTile(
@@ -252,7 +250,6 @@ ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
               settings.save();
             });
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // Add to list from search results
         ResponsiveCheckBoxTile(
@@ -264,7 +261,6 @@ ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
               settings.save();
             });
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         const SizedBox(height: 8),
         // Floating words selection
@@ -304,7 +300,6 @@ ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
         ResponsiveCheckBoxTile(
           text: "Limit search results (enable if you encounter slow downs)",
           value: settings.dictionary.limitSearchResults != 0,
-          autoSizeGroup: g_SettingsAutoSizeGroup,
           onTileTapped: (value) {
             setState(() {
               settings.dictionary.limitSearchResults = value ? 100 : 0;
@@ -322,7 +317,6 @@ ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
               settings.save();
             });
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // animation speed
         ResponsiveSliderTile(
@@ -330,7 +324,6 @@ ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
           value: settings.dictionary.kanjiAnimationStrokesPerSecond,
           min: 0.1,
           max: 10.0,
-          autoSizeGroup: g_SettingsAutoSizeGroup,
           onChanged: (value) {
             setState(() {
               settings.dictionary.kanjiAnimationStrokesPerSecond = value;
@@ -349,7 +342,6 @@ ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
               settings.save();
             });
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
 
         // custom google image search
@@ -382,7 +374,6 @@ ${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

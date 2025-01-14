@@ -34,7 +34,6 @@ class _VideoSettingsState extends State<VideoSettings> {
     return ResponsiveHeaderTile(
       LocaleKeys.VideoScreen_title.tr(),
       DaKanjiIcons.video,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
       children: [
         // reshow tutorial
         ResponsiveIconButtonTile(
@@ -45,7 +44,6 @@ class _VideoSettingsState extends State<VideoSettings> {
             settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );
