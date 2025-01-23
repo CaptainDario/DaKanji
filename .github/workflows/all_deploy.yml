@@ -114,12 +114,8 @@ jobs:
           python3 .github/workflows/building.py create_latest_changes_txt
 
       - name: delete previous beta releases
-        uses: dev-drprasad/delete-tag-and-release@v1.0
-        with:
-          delete_release: true 
-          tag_name: gh_action
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete gh_action -y
           
       - name: Create github beta release
         env:
