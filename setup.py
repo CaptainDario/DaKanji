@@ -160,13 +160,13 @@ def help() -> str:
 
 def main():
 
+    args = sys.argv[1:]
+
     if("--help" in args or "-h" in args):
         print(help())
         sys.exit(0)
 
     print("Setting up DaKanji")
-
-    args = sys.argv[1:]
 
     # switch to dev branch
     subprocess.run(["git", "checkout", "dev"], shell=True)
