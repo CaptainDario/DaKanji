@@ -241,8 +241,8 @@ flutter:
     - assets/images/yahoo_logo.png
     - assets/icons/flutter_browser_icon.png
     # reader
-    - plugins/foliate-js/
-    - plugins/foliate-js/ui/
+    #- plugins/foliate-js/
+    #- plugins/foliate-js/ui/
     # dictionary screen
     - assets/dict/krad.zip
     - assets/dict/radk.zip
