@@ -1,6 +1,3 @@
-[submodule "plugins/foliate-js"]
-	path = plugins/foliate-js
-	url = https://github.com/johnfactotum/foliate-js
 [submodule "plugins/DaKanji-dependencies"]
 	path = plugins/DaKanji-dependencies
 	url = https://github.com/CaptainDario/DaKanji-dependencies
