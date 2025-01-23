@@ -66,6 +66,15 @@ jobs:
           
       - name: Restore packages
         run: flutter pub get
+      
+      - name: Setup DaKanji env.dart
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
+          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
+          POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
+        run: |
+          python3 ./.github/workflows/create_dakanji_env.py
+          flutter pub run build_runner build --delete-conflicting-outputs
 
       # get / set dakanji assets from cache
       - name: Check dakanji assets in cache
@@ -88,15 +97,7 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: tmp
-          key: dakanji-assets    
-      - name: Setup DaKanji env.dart
-        env:
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
-          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
-          POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
-        run: |
-          python3 ./.github/workflows/create_dakanji_env.py
-          flutter pub run build_runner build --delete-conflicting-outputs
+          key: dakanji-assets
 
       # TESTS  
       #- name: Run integration tests
