@@ -43,11 +43,11 @@ jobs:
       - name: Download DaKanji assets if necessary
         if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
         run: |
-          python3 setup.py --download-all --no-delete
+          python3 setup.py --download-all --no-delete --ignore-no-env
       - name: Move DaKanji assets if in cache
         if: steps.cache-dakanji-assets-restore.outputs.cache-hit == 'true'
         run: |
-          python3 setup.py --no-download 
+          python3 setup.py --no-download --ignore-no-env
       - name: Save dakanji assets to cache if not saved
         if: steps.cache-dakanji-assets-restore.outputs.cache-hit != 'true'
         id: cache-dakanji-assets-save
