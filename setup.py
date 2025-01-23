@@ -134,6 +134,8 @@ def init_submodules():
     os.chdir("../..")
 
 def setup_dakanji_env():
+    """
+    """
 
     env_exists = os.path.isfile("dakanji.env")
 
@@ -147,8 +149,20 @@ def setup_dakanji_env():
             print("aborting setup")
             sys.exit(-1)
 
+def help() -> str:
+    return """
+        --download-all  : download all assets, this includes assets that are not needed to run dakanji on THIS platform
+        --no_download   : Does NOT download any assets and expects to find all assets in a folder called 'tmp'
+        --no-delete     : Do not delete the tmp folder
+        --ignore-no-env : Should the setup continue even if no dakanji.env file is found
+        """
+
 
 def main():
+
+    if("--help" in args or "-h" in args):
+        print(help())
+        sys.exit(0)
 
     print("Setting up DaKanji")
 
@@ -159,25 +173,21 @@ def main():
     subprocess.run(["git", "pull"], shell=True)
 
     init_submodules()
-    setup_dakanji_env()
+    if("--ignore-no-env" not in args):
+        setup_dakanji_env()    
 
-    if("--help" in args or "-h" in args):
-        print("""
-        --download-all : download all assets, this includes assets that are not needed to run dakanji on THIS platform
-        --no_download  : Does NOT download any assets and expects to find all assets in a folder called 'tmp'
-        --no-delete    : Do not delete the tmp folder
-        """)
-        sys.exit(0)
-
+    # should all assets be downloaded regardelss of platform
     if("--download-all" not in args):
         exclude_files_per_platform()
     
+    # Should the assets NOT be downloaded
     if("--no-download" not in args):
         release_url = get_release_url()
         download_assets(release_url)
 
     move_assets()
 
+    # delete the tmp folder if not specified
     if("--no-delete" not in args):
         # delete temp dir
         print("Deleting temporary folder")
