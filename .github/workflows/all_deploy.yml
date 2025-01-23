@@ -101,9 +101,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-      - name: Set env variables
         with:
           submodules: 'true'
+      - name: Set env variables
         run: |
           python3 .github/workflows/building.py set_env_flutter_version
           python3 .github/workflows/building.py set_env_dakanji_version
