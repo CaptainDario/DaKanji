@@ -63,7 +63,7 @@ dependencies:
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
   pdf: 3.11.1
-  rive: 0.13.15
+  rive: 0.13.20
   printing: 5.13.3
   path_parsing: 1.0.1               # included in svg_flutter
   vector_graphics: 1.1.11+1         # included in svg_flutter
