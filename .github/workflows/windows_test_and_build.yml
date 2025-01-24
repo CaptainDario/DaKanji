@@ -86,6 +86,10 @@ jobs:
           path: tmp
           key: dakanji-assets
 
+      - name: Run integration tests
+        run: |
+          python3 ./integration_test/run_tests.py
+
       - name: build exe
         run: flutter build windows --release -v
 
