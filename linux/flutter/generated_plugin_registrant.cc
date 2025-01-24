@@ -15,7 +15,6 @@
 #include <mecab_for_dart/mecab_for_dart_plugin.h>
 #include <multi_window_linux/multi_window_linux_plugin.h>
 #include <printing/printing_plugin.h>
-#include <rive_common/rive_plugin.h>
 #include <screen_retriever_linux/screen_retriever_linux_plugin.h>
 #include <sentry_flutter/sentry_flutter_plugin.h>
 #include <sqlite3_flutter_libs/sqlite3_flutter_libs_plugin.h>
@@ -51,9 +50,6 @@ void fl_register_plugins(FlPluginRegistry* registry) {
   g_autoptr(FlPluginRegistrar) printing_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "PrintingPlugin");
   printing_plugin_register_with_registrar(printing_registrar);
-  g_autoptr(FlPluginRegistrar) rive_common_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "RivePlugin");
-  rive_plugin_register_with_registrar(rive_common_registrar);
   g_autoptr(FlPluginRegistrar) screen_retriever_linux_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "ScreenRetrieverLinuxPlugin");
   screen_retriever_linux_plugin_register_with_registrar(screen_retriever_linux_registrar);

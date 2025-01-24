@@ -12,7 +12,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   mecab_for_dart
   multi_window_linux
   printing
-  rive_common
   screen_retriever_linux
   sentry_flutter
   sqlite3_flutter_libs
