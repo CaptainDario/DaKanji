@@ -37,14 +37,13 @@ app.*.map.json
 
 # ignore keys
 key.properties
+android/app/key.jks
 keys/**
+keys/DaKanjiRecognizer.jks
 
 # python
 python
 .venv/**
-
-# keys
-android/app/key.jks
 
 # ignore none mock tflite models
 CNN_single_char.tflite
@@ -77,9 +76,6 @@ assets/mecab_dict.zip
 ./plugins/kagome_dart/*
 macos/libtensorflowlite_c-mac.dylib
 
-# ignore all keys in keys folder
-keys/DaKanjiRecognizer.jks
-
 # ignore built snaps and the none template snapcraft.yaml
 *.snap
 
@@ -109,7 +105,7 @@ flatpak/DaKanji.tar.gz
 flatpak/bundle.zip
 com.DaAppLab.DaKanji.flatpak
 
-# keys
+# environment files
 dakanji.env
 **/env.g.dart
 
