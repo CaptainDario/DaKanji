@@ -97,9 +97,9 @@ jobs:
         if: ${{github.event.inputs.upload_to_stores == 'beta'}}
         env:
           TENANT_ID: ${{ secrets.MS_STORE_TENANT_ID }}
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          SELLER_ID: ${{ secrets.SELLER_ID }}
+          CLIENT_ID: ${{ secrets.MS_STORE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.MS_STORE_CLIENT_SECRET }}
+          SELLER_ID: ${{ secrets.MS_STORE_SELLER_ID }}
         run: |
           msstore reconfigure --tenantId ${{ env.TENANT_ID }} --clientId ${{ env.CLIENT_ID }} --clientSecret ${{ env.CLIENT_SECRET }} --sellerId ${{ env.SELLER_ID }}
           msstore publish -v artifacts\DaKanji_${{env.DAKANJI_VERSION}}_store.msix
