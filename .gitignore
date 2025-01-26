@@ -40,6 +40,7 @@ key.properties
 android/app/key.jks
 keys/**
 keys/DaKanjiRecognizer.jks
+!keys/create_msix_cert.ps1
 
 # python
 python
