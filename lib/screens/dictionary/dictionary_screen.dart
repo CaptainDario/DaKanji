@@ -91,6 +91,7 @@ class _DictionaryScreenState
         initialEntryId: widget.initialEntryId,
         convertToKana: GetIt.I<Settings>().dictionary.convertToHiraganaBeforeSearch,
         allowDeconjugation: GetIt.I<Settings>().dictionary.deconjugateBeforeSearch,
+        backNavigationImmediatelyPopsWidget: false,
       )
     );
   }

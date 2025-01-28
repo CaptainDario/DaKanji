@@ -28,6 +28,7 @@ class WordListViewEntryScreen extends StatelessWidget {
         false,
         initialEntryId: entry.id,
         includeFallingWords: false,
+        backNavigationImmediatelyPopsWidget: true,
       ),
     );
   }

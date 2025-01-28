@@ -157,6 +157,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                           isExpanded: true,
                           convertToKana: false,
                           allowDeconjugation: widget.allowDeconjugation,
+                          backNavigationImmediatelyPopsWidget: false,
                         ),
                         if(GetIt.I<UserData>().dojgImported || GetIt.I<UserData>().dojgWithMediaImported)
                           Padding(

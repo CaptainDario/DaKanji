@@ -49,6 +49,9 @@ class DictionarySearchWidget extends StatefulWidget {
   final bool convertToKana;
   /// should queries be deconjugated
   final bool allowDeconjugation;
+  /// When navigating back (OS navigation and navigator.pop) immediately closes
+  /// this widget and does not firstly collapse searchbar 
+  final bool backNavigationImmediatelyPopsWidget;
   /// The current build context
   final BuildContext context;
 
@@ -61,6 +64,7 @@ class DictionarySearchWidget extends StatefulWidget {
       this.includeDrawButton = true,
       required this.convertToKana,
       this.allowDeconjugation = true,
+      required this.backNavigationImmediatelyPopsWidget,
       required this.context,
       super.key
     }
@@ -189,9 +193,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputWildcardsStep,
       ],
       child: PopScope(
-        canPop: context.read<DictSearch>().selectedResult == null &&
-                !searchBarAnimationController.isCompleted,
+        canPop: (!searchBarAnimationController.isCompleted &&
+                context.read<DictSearch>().selectedResult == null)
+                || widget.backNavigationImmediatelyPopsWidget,
         onPopInvokedWithResult: (didPop, result) {
+
           if(searchBarAnimationController.isCompleted) {
             collapseSearchBar();
           }

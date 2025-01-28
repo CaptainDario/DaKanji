@@ -37,7 +37,10 @@ class Dictionary extends StatefulWidget {
   /// should the button for opening the drawing screen be included
   final bool includeDrawButton;
   /// Is the search expanded when instantiating this widget
-  final bool isExpanded; 
+  final bool isExpanded;
+  /// When navigating back (OS navigation and navigator.pop) immediately closes
+  /// this widget and does not firstly collapse searchbar 
+  final bool backNavigationImmediatelyPopsWidget;
   
   /// Should the search term be deconjugated before searching
   final bool allowDeconjugation;
@@ -54,6 +57,7 @@ class Dictionary extends StatefulWidget {
       this.isExpanded = false,
       this.allowDeconjugation=true,
       this.convertToKana=true,
+      required this.backNavigationImmediatelyPopsWidget,
       super.key
     }
   );
@@ -171,6 +175,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                   convertToKana: widget.convertToKana,
                                   allowDeconjugation: widget.allowDeconjugation,
                                   context: context,
+                                  backNavigationImmediatelyPopsWidget: widget.backNavigationImmediatelyPopsWidget,
                                 ),
                               ),
                             ),
@@ -307,6 +312,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       convertToKana: widget.convertToKana,
                       allowDeconjugation: widget.allowDeconjugation,
                       context: context,
+                      backNavigationImmediatelyPopsWidget: widget.backNavigationImmediatelyPopsWidget,
                     ),
                   ),
                 ),
