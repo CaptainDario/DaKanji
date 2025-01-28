@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:archive/archive_io.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:path/path.dart' as p;
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
@@ -18,9 +19,9 @@ import 'package:universal_io/io.dart';
 Future<void> storeWordListsAsTextFilesForMigration() async {
 
   Stopwatch s = Stopwatch()..start();
-  Directory wordListMigrationDirectory = Directory(p.joinAll([
+  File wordListMigrationFile = File(p.joinAll([
     g_DakanjiPathManager.dakanjiSupportDirectory.path, "v4_word_list_migration"]));
-  wordListMigrationDirectory.createSync();
+  wordListMigrationFile.createSync();
 
   final wordListIds = (await GetIt.I<WordListsSQLDatabase>().wordListNodesSQL
     .select().get())
@@ -28,19 +29,19 @@ Future<void> storeWordListsAsTextFilesForMigration() async {
       [WordListNodeType.wordList, WordListNodeType.wordListDefault].contains(e.type))
     .map((e) => Tuple2(e.id, e.name)).toList();
 
+  List<List<JMdict>> allEntries = [];
   for (var i = 0; i < wordListIds.length; i++) {
     // get ids of the entries in word lists
     List<int> ids = await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(
       wordListIds[i].item1);
     // get dict entries
     List<JMdict> entries = await wordListIdsToJMdict(ids, null);
-     
-    var f =File(p.joinAll([wordListMigrationDirectory.path, wordListIds[i].item2]))
-      ..createSync();
-    // TODO serialization
-    //f.writeAsStringSync(jsonEncode(entries));
-    print("List ${i} done");
+    if(entries.isEmpty) continue;
+
+    allEntries.add(entries);
   }
+  wordListMigrationFile.writeAsBytes(
+    const GZipEncoder().encode(utf8.encode(jsonEncode(allEntries))));
 
   print("Creating backup took: ${s.elapsed}");
 
