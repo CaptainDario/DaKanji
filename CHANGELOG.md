@@ -25,6 +25,7 @@ Improvements:
   - Image search and DeepL supported on MacOS and Windows
   - Back navigation clears search and resets current entry
   - Readability of kanji stroke order diagrams
+- Word lists: significantly improved export speed
 - Text: Improved handling of conjugations
 - Radical search: show kanjis separated by stroke order
 - Kana table: playback on android does not cut off
