@@ -25,7 +25,7 @@ Future sendListToAnkiFromWordListNode(TreeNode<WordListsData> node, bool allowDu
     .langsToInclude(GetIt.I<Settings>().dictionary.selectedTranslationLanguages);
 
   // find all elements from the word list in the database
-  List<JMdict> jmdicts = (await wordListEntriesForExport(entryIDs, langsToInclude));
+  List<JMdict> jmdicts = (await wordListIdsToJMdict(entryIDs, langsToInclude));
   List<AnkiNote> notes = [];
   for (var jmdict in jmdicts) {
     AnkiNote note = AnkiNote.fromJMDict(

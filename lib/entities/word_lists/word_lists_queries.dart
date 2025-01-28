@@ -12,37 +12,43 @@ import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 
 /// Get all `JMDict` entries from the database that are in the word list given
-/// by their IDs. Remove all translations that are not in `langsToInclude` and sort
-/// the translations matching `langsToInclude`. Lastly retruns the list of
-/// entries
-Future<List<JMdict>> wordListEntriesForExport(List<int> wordIds, List<String> langsToInclude) async {
+/// by their IDs.
+/// 
+/// if `langsToInclude != null` remove all translations that are not in
+/// `langsToInclude` and sort the translations matching `langsToInclude`.
+/// if `langsToInclude == null` returns all entries with all data
+/// 
+/// Lastly retruns the list of entries created as described above
+Future<List<JMdict>> wordListIdsToJMdict(List<int> wordIds, List<String>? langsToInclude) async {
 
   if(wordIds.isEmpty) return[];
 
-  List<JMdict> entries = await GetIt.I<Isars>().dictionary.jmdict
-  // get all entries
-  .where()
-    .anyOf(wordIds, (q, element) => q.idEqualTo(element))
-  .filter()
-    // only include them in the list if they have a translation in a selected language
-    .anyOf(langsToInclude, (q, l) => 
-      q.meaningsElement((m) => 
-        m.languageEqualTo(l)
-      )
-    )
-  .findAll();
+  List<JMdict> entries = (await GetIt.I<Isars>().dictionary.jmdict.getAll(wordIds))
+    .nonNulls.toList();
 
-  for (JMdict entry in entries) {
-    // remove all translations that are not in `langsToInclude` and create a 
-    entry.meanings = entry.meanings.where(
-      (element) => langsToInclude.contains(element.language)
-    ).toList();
-    // sort the translations matching `langsToInclude`
-    entry.meanings.sort((a, b) =>
-      langsToInclude.indexOf(a.language!).compareTo(langsToInclude.indexOf(b.language!))
-    );
-    // only include the first `maxTranslations` translations
-    entry.meanings = entry.meanings.sublist(0, min(3, entry.meanings.length));
+  if(langsToInclude != null) {
+    int i = 0;
+    while (i < entries.length) {
+      
+      JMdict entry = entries[i];
+
+      // remove all translations that are not in `langsToInclude` and create a 
+      entry.meanings = entry.meanings.where(
+        (element) => langsToInclude.contains(element.language)
+      ).toList();
+      if(entry.meanings.isEmpty){
+        entries.removeAt(i);
+        continue;
+      }
+      // sort the translations matching `langsToInclude`
+      entry.meanings.sort((a, b) =>
+        langsToInclude.indexOf(a.language!).compareTo(langsToInclude.indexOf(b.language!))
+      );
+      // only include the first `maxTranslations` translations
+      entry.meanings = entry.meanings.sublist(0, min(3, entry.meanings.length));
+
+      i++;
+    }
   }
 
   return entries;
