@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/application/migrate/migrate.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -116,6 +117,9 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       }
     }
+
+    // migrate data if necessary
+    migrate(GetIt.I<UserData>().versionUsed, g_Version); 
   }
 
   /// Opens a popup that informs the user that an update is available
