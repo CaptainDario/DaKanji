@@ -20,6 +20,7 @@ import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
@@ -221,6 +222,8 @@ Future<void> initDocumentsAssets(BuildContext context) async {
     "assets/mecab_dict"
   ].map((f) => File(f)).toList();
 
+  // While getting the assets do not turn of the screen
+  WakelockPlus.enable();
   for (var asset in assets) {
     if(!checkAssetExists(documentsDir, asset)
       || asset == assets[0] && GetIt.I<UserData>().getNewDict //dict
@@ -235,6 +238,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
       downloadAllowed = true;
     }
   }
+  WakelockPlus.enable();
 
 }
 

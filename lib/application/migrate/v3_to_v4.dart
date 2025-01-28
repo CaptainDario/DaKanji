@@ -38,7 +38,7 @@ Future<void> storeWordListsAsTextFilesForMigration() async {
     var f =File(p.joinAll([wordListMigrationDirectory.path, wordListIds[i].item2]))
       ..createSync();
     // TODO serialization
-    f.writeAsStringSync(jsonEncode(entries));
+    //f.writeAsStringSync(jsonEncode(entries));
     print("List ${i} done");
   }
 

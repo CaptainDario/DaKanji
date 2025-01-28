@@ -96,6 +96,7 @@ dependencies:
   dart_style: 2.3.7
   archive: 4.0.2
   local_assets_server: 2.0.2+12
+  wakelock_plus: 1.2.10
   kana_kit:
 
   # packages that I maintain

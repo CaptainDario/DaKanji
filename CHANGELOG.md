@@ -30,6 +30,8 @@ Improvements:
 - Radical search: show kanjis separated by stroke order
 - Kana table: playback on android does not cut off
 - Anki: Setting to decide how adding a duplicate should be handled
+- Keep screen turned on while screensaver is running
+- While downloading initial data, keep screen on
 - Various small UI improvements
 
 Fixed:
