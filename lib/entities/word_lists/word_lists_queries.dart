@@ -4,7 +4,6 @@ import 'dart:math';
 // Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
-import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
