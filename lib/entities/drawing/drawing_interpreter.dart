@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
 import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 

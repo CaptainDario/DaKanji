@@ -3,7 +3,7 @@ import 'dart:isolate';
 
 // Package imports:
 import 'package:async/async.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:

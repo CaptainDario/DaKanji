@@ -74,11 +74,9 @@ dependencies:
   flutter_subtitle: 0.0.5
 
   flutter_widget_from_html_core: 0.15.2
-  tflite_flutter: #0.10.4
-    git:
-      url: https://github.com/CaptainDario/flutter-tflite
-      branch: master
-      hash: 1680ba59a863c23f8fe58475f3fb3620b85e8627
+  lite_rt_for_flutter:
+    path: /Users/darioklepoch/dev/flutter_packages/lite_rt_for_flutter
+      
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
   async: 2.11.0
