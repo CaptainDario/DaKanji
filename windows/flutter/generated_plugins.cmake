@@ -10,7 +10,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   fvp
   irondash_engine_context
   isar_flutter_libs
-  mecab_for_dart
+  mecab_for_flutter
   permission_handler_windows
   printing
   rive_common

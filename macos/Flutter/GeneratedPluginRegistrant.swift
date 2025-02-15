@@ -14,7 +14,7 @@ import fvp
 import in_app_review
 import irondash_engine_context
 import isar_flutter_libs
-import mecab_for_dart
+import mecab_for_flutter
 import multi_window_macos
 import package_info_plus
 import path_provider_foundation
@@ -43,7 +43,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   InAppReviewPlugin.register(with: registry.registrar(forPlugin: "InAppReviewPlugin"))
   IrondashEngineContextPlugin.register(with: registry.registrar(forPlugin: "IrondashEngineContextPlugin"))
   IsarFlutterLibsPlugin.register(with: registry.registrar(forPlugin: "IsarFlutterLibsPlugin"))
-  MecabForDartPlugin.register(with: registry.registrar(forPlugin: "MecabForDartPlugin"))
+  MecabForFlutterPlugin.register(with: registry.registrar(forPlugin: "MecabForFlutterPlugin"))
   MultiWindowMacosPlugin.register(with: registry.registrar(forPlugin: "MultiWindowMacosPlugin"))
   FPPPackageInfoPlusPlugin.register(with: registry.registrar(forPlugin: "FPPPackageInfoPlusPlugin"))
   PathProviderPlugin.register(with: registry.registrar(forPlugin: "PathProviderPlugin"))
