@@ -13,7 +13,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:mecab_for_flutter/mecab_flutter.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
@@ -194,7 +194,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
   // Mecab
   GetIt.I.registerSingleton<Mecab>(Mecab());
 
-  await GetIt.I<Mecab>().init(p.joinAll([supportDirectory, "assets", "mecab_dict"]), true);
+  await GetIt.I<Mecab>().initFlutter(p.joinAll([supportDirectory, "assets", "mecab_dict"]), true);
 
   g_documentsServicesInitialized = true;
 }

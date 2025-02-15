@@ -11,7 +11,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:

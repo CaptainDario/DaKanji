@@ -98,7 +98,8 @@ dependencies:
   kana_kit:
 
   # packages that I maintain
-  mecab_for_dart: 1.0.7
+  mecab_for_dart: 1.1.3
+  mecab_for_flutter: 1.0.3
   ankidroid_for_flutter: 1.0.1
   liquid_swipe:
     path: ./plugins/DaKanji-dependencies/liquid_swipe_flutter

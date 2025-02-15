@@ -10,7 +10,7 @@ import 'package:flutter_subtitle/flutter_subtitle.dart' hide Subtitle;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:video_player/video_player.dart';
 
 // Project imports:
