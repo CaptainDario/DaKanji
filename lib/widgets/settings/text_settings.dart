@@ -47,16 +47,6 @@ class _TextSettingsState extends State<TextSettings> {
             await settings.save();
           },
         ),
-        // should the text screen open with the processed text
-        // maximized
-        ResponsiveCheckBoxTile(
-          text: LocaleKeys.SettingsScreen_text_open_in_fullscreen.tr(),
-          value: settings.text.openInFullscreen,
-          onTileTapped: (value) async {
-            settings.text.openInFullscreen = value;
-            await settings.save();
-          },
-        ),
         // try to deconjugate words before searching
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_dict_base_form.tr(),
