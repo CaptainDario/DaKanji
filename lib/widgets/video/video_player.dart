@@ -182,8 +182,7 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: CustomSelectableText(
-                                    words: value,
-                                    rubys: mecabReadings,
+                                    
                                     showRubys: true,
                                     init: (controller) => customSelectableTextController = controller,
                                     textColor: Colors.black,
