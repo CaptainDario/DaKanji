@@ -37,7 +37,7 @@ List<String> selectMaxLengthWord(List<TokenNode> mecabTokens){
 
 /// Processes the given `text` with mecab. Returns the result as a tuple
 /// mecabReadings, mecabSurfaces and mecabPOS
-Tuple3 processText(String text, Mecab mecab, KanaKit kanaKit){
+Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab mecab, KanaKit kanaKit){
   
   // analyze text with mecab
   List<TokenNode> analyzedText = mecab.parse(text);
