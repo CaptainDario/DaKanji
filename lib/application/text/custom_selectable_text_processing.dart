@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
+import 'package:da_kanji_mobile/application/japanese_text_processing/furigana_matching.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:tuple/tuple.dart';
@@ -64,8 +65,6 @@ Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab 
       mecabReadings.add(" ");
     }
     else{
-      // TODO match kanji and reading
-
       mecabReadings.add(analyzedText[i].features[9]);
     }
 
@@ -77,6 +76,8 @@ Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab 
     i += nextWord.length-1;
 
     txtCnt += nextWord.join().length;
+
+    
   }
 
   // if there are line breaks at the end of the text add them
