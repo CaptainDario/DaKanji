@@ -281,6 +281,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           decoration: const InputDecoration(
                             border: InputBorder.none
                           ),
+                          scribbleEnabled: true,
                           controller: searchInputController,
                           maxLines: 1,
                           style: const TextStyle(
