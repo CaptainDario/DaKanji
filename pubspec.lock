@@ -1212,21 +1212,21 @@ packages:
     source: hosted
     version: "0.11.1"
   mecab_for_dart:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: mecab_for_dart
-      sha256: d0a94d3b62e004b8c3dd524871ed069a2fe8906c7012a6c0c997b066105bee38
+      sha256: f9d7306fd7798eadf76722ad324ca70cff8b7c37c4464a6111c9e37d8d5e6f80
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.3"
+    version: "1.1.5"
   mecab_for_flutter:
     dependency: "direct main"
     description:
       name: mecab_for_flutter
-      sha256: b5479e0ff2ba2f52410c5982436f07e484a734ff7234cc77745c0c494280eba3
+      sha256: b7f0b8349b047e69b78062ea5afe4c089d44d1ebca93df3bacf6ee50a70119bc
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   meta:
     dependency: "direct main"
     description:

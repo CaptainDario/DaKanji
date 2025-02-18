@@ -76,6 +76,8 @@ dependencies:
   flutter_widget_from_html_core: 0.15.2
   lite_rt_for_flutter:
     path: /Users/darioklepoch/dev/flutter_packages/lite_rt_for_flutter
+  lite_rt_for_flutter_libs_macos:
+    path: /Users/darioklepoch/dev/flutter_packages/lite_rt_for_flutter_libs/base/lite_rt_for_flutter_libs_macos
       
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
@@ -98,7 +100,6 @@ dependencies:
   kana_kit:
 
   # packages that I maintain
-  mecab_for_dart: 1.1.3
   mecab_for_flutter: 1.0.3
   ankidroid_for_flutter: 1.0.1
   liquid_swipe:
