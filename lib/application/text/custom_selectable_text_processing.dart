@@ -49,6 +49,11 @@ Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab 
   List<String> mecabPOS = [];
   int txtCnt = 0;
   for (var i = 0; i < analyzedText.length; i++) {
+    // add line breaks to mecab output
+    while(text[txtCnt] == "\n"){
+      mecabPOS.add(""); mecabSurfaces.add("\n"); mecabReadings.add("");
+      txtCnt += 1;
+    }
     // remove furigana when: non Japanese, kana only, no reading, reading == word
     if(!kanaKit.isJapanese(analyzedText[i].surface) ||
       kanaKit.isKana(analyzedText[i].surface) ||
@@ -59,6 +64,8 @@ Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab 
       mecabReadings.add(" ");
     }
     else{
+      // TODO match kanji and reading
+
       mecabReadings.add(analyzedText[i].features[9]);
     }
 
@@ -69,16 +76,13 @@ Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab 
     mecabSurfaces.add(nextWord.join());
     i += nextWord.length-1;
 
-    // add line breaks to mecab output
-    if(i < analyzedText.length-1 && text[txtCnt + analyzedText[i].surface.length] == "\n"){
-      while(text[txtCnt + analyzedText[i].surface.length] == "\n"){
-        mecabPOS.add("");
-        mecabSurfaces.add("\n");
-        mecabReadings.add("");
-        txtCnt += 1;
-      }
-    }
     txtCnt += nextWord.join().length;
+  }
+
+  // if there are line breaks at the end of the text add them
+  while(txtCnt < text.length && text[txtCnt] == "\n"){
+    mecabPOS.add(""); mecabSurfaces.add("\n"); mecabReadings.add("");
+    txtCnt += 1;
   }
 
   return Tuple3(mecabReadings, mecabSurfaces, mecabPOS);
