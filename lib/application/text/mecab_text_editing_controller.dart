@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:da_kanji_mobile/application/japanese_text_processing/furigana_matching.dart';
+import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
 import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
 import 'package:da_kanji_mobile/application/text/pos.dart';
 import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
@@ -58,6 +59,9 @@ class MecabTextEditingController extends TextEditingController {
   /// The text that was used to build this text last time
   String lastText = "";
 
+  int lastTap = DateTime.now().millisecondsSinceEpoch;
+  int consecutiveTaps = 0;
+
 
   @override
   TextSpan buildTextSpan({
@@ -91,8 +95,8 @@ class MecabTextEditingController extends TextEditingController {
           else {
             String furigana = furiganaPairs[k].kanji != ""
               ? furiganaPairs[k].reading : " ";
-            double spacing = addSpaces && (j == mecabSurfaces[i].length-1) ?
-              spacingSize : 0;
+            double spacing = (j == chars.length-1 && k == furiganaPairs.length-1)
+              && addSpaces ? spacingSize : 0;
 
             /// calculate width difference between text and ruby
             double horizontalPadding = 0;
@@ -106,12 +110,30 @@ class MecabTextEditingController extends TextEditingController {
 
             children.add(WidgetSpan(
               child: GestureDetector(
-                onTap: () => onSingleTap(mecabSurStartIdx, mecabSurEndIdx),
+                onTapDown: (details)  {
+                  int now = DateTime.now().millisecondsSinceEpoch;
+                  if (now - lastTap > 300) {
+                    consecutiveTaps = 1;
+                    lastTap = now;
+                  }  
+                  else {
+                    consecutiveTaps++;
+                  }
+                  if(consecutiveTaps == 1) {
+                    onSingleTap(mecabSurStartIdx, mecabSurEndIdx);
+                  }
+                  else if(consecutiveTaps == 2) {
+                    onDoubleTap(mecabSurStartIdx, mecabSurEndIdx);
+                  }
+                  else if (consecutiveTaps == 3){
+                    onTripleTap(mecabSurStartIdx, mecabSurEndIdx);
+                  }
+                },
                 // Do nothing on long press so that long press works as placing
                 // the cursor
                 onLongPress: () {},
                 child: Padding(
-                  // add a small space after to wide furigana to make them 
+                  // add a small space after too wide furigana to make them 
                   // easier to separate visually
                   padding: EdgeInsets.fromLTRB(
                     j == 0 ? horizontalPadding : 0,
@@ -198,16 +220,26 @@ class MecabTextEditingController extends TextEditingController {
 
   /// Callback that is executed when the user does a single tap
   void onDoubleTap(int wordStartIdx, int wordEndIdx) {
-    // TODO
-    selection = TextSelection(
-      baseOffset: wordStartIdx, extentOffset: wordEndIdx);
+    for (var match in sentenceRegex.allMatches(text)) {
+      if (match.start <= wordStartIdx && wordStartIdx <= match.end) {
+        selection = TextSelection(
+          baseOffset: match.start, 
+          extentOffset: match.end
+        );
+        break;
+      }
+    }
   }
 
   /// Callback that is executed when the user does a single tap
   void onTripleTap(int wordStartIdx, int wordEndIdx) {
-    // TODO
-    selection = TextSelection(
-      baseOffset: wordStartIdx, extentOffset: wordEndIdx);
+    for (var match in paragraphRegex.allMatches(text)) {
+      if (match.start <= wordStartIdx && wordStartIdx <= match.end) {
+        selection = TextSelection(
+          baseOffset: match.start, extentOffset: match.end-1);
+        break;
+      }
+    }
   }
 
   /// Calculates the size of the given text using the given scale
@@ -223,4 +255,3 @@ class MecabTextEditingController extends TextEditingController {
   }
 
 }
-

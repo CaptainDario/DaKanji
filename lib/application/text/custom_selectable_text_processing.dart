@@ -1,6 +1,5 @@
 // Package imports:
 import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
-import 'package:da_kanji_mobile/application/japanese_text_processing/furigana_matching.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:tuple/tuple.dart';

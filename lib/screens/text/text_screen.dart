@@ -12,7 +12,6 @@ import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
@@ -81,8 +80,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   String selectedText = "";
   /// the text that is currently in the input field
   String? inputText;
-  /// the controller to manipulate the CustomSelectableText
-  late CustomSelectableTextController customSelectableTextController;
   /// scroll controller for the text analysis buttons
   final ScrollController _analysisOptionsScrollController = ScrollController();
 
@@ -169,9 +166,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                   textColor: Theme.of(context).brightness == Brightness.light
                                     ? Colors.black
                                     : Colors.white,
-                                  init: (controller){
-                                    customSelectableTextController = controller;
-                                  },
                                   onSelectionChange: onCustomSelectableTextChange,
                                   onLongPress: onCustomSelectableTextLongPressed,
                                   onTapOutsideOfText: (Offset location) {
@@ -239,7 +233,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                         ClipboardData? clipboardData = await Clipboard.getData('text/plain');
                                         String clipboardString = clipboardData?.text ?? "";
                                         setState(() {
-                                          customSelectableTextController.resetSelection();
+                                          //TODO
                                           inputText = clipboardString;
                                         });
                                       },
@@ -250,9 +244,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                       offIcon: Icons.copy,
                                       onIcon: Icons.copy,
                                       onPressed: () {
-                              
-                                        String currentSelection =
-                                          customSelectableTextController.getCurrentSelectionString();
+                                        //TODO
+                                        String currentSelection = "";
                                         Clipboard.setData(
                                           ClipboardData(text:currentSelection)
                                         ).then((_){
@@ -273,11 +266,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           onIcon: Icons.arrow_back,
                                           offIcon: Icons.arrow_back,
                                           onPressed: () {
-                                            customSelectableTextController.shrinkSelectionRight(0);
+                                            //TODO
+                                            //customSelectableTextController.shrinkSelectionRight(0);
                                             assurePopupOpen();
                                           },
                                           onLongPressed: () {
-                                            customSelectableTextController.shrinkSelectionRight(1);
+                                            //TODO
+                                            //customSelectableTextController.shrinkSelectionRight(1);
                                             assurePopupOpen();
                                           },
                                         ),
@@ -287,11 +282,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           onIcon: Icons.arrow_forward,
                                           offIcon: Icons.arrow_forward,
                                           onPressed: () {
-                                            customSelectableTextController.growSelectionRight(growBy: 0);
+                                            //TODO
+                                            //customSelectableTextController.growSelectionRight(growBy: 0);
                                             assurePopupOpen();
                                           },
                                           onLongPressed: () {
-                                            customSelectableTextController.growSelectionRight(growBy: 1);
+                                            //TODO
+                                            //customSelectableTextController.growSelectionRight(growBy: 1);
                                             assurePopupOpen();
                                           },
                                         ),
@@ -301,11 +298,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           onIcon: Icons.arrow_left,
                                           offIcon: Icons.arrow_left,
                                           onPressed: () {
-                                            customSelectableTextController.selectPrevious();
+                                            //TODO
+                                            //customSelectableTextController.selectPrevious();
                                             assurePopupOpen();
                                           },
                                           onLongPressed: () {
-                                            customSelectableTextController.selectPrevious(previousChar: true);
+                                            //TODO
+                                            //customSelectableTextController.selectPrevious(previousChar: true);
                                             assurePopupOpen();
                                           },
                                         ),
@@ -316,12 +315,14 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           offIcon: Icons.arrow_right,
                                           // word
                                           onPressed: () {
-                                            customSelectableTextController.selectNext();
+                                            //TODO
+                                            //customSelectableTextController.selectNext();
                                             assurePopupOpen();
                                           },
                                           // char
                                           onLongPressed: () {
-                                            customSelectableTextController.selectNext(nextChar: true);
+                                            //TODO
+                                            //customSelectableTextController.selectNext(nextChar: true);
                                             assurePopupOpen();
                                           },
                                         ),

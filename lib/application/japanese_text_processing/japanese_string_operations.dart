@@ -9,6 +9,23 @@ final RegExp kanjiRegex = RegExp("([$kanjiRegexGroupString])");
 /// Regex that matches everything except Japnaese characters ie.: Kanji / Kana
 final RegExp japaneseCharacterRegex =
   RegExp("[$kanaRegexGroupString$kanjiRegexGroupString]", multiLine: true);
+/// matches full and half width punctuations
+const String punctuations = "。|？|！|\\.|\\!|\\?";
+/// matches japanese ending parantheses
+const String japaneseParantheses = "』|」";
+/// matches any whitespace
+const String anyWhiteSpace = "\\s|　";
+/// Regex that matches a sentence
+RegExp sentenceRegex = RegExp(
+  "(?:[^$anyWhiteSpace])+?(?:(?!($punctuations)$japaneseParantheses)$punctuations|\\n|\$)",
+  multiLine: true
+);
+/// Regex that matches a paragraph
+RegExp paragraphRegex = RegExp(
+  r"(.+?):?(\n\n|$)",
+  multiLine: false,
+  dotAll: true
+);
 
 
 /// Given the list of string `words` removes all kana from it and returns a list
