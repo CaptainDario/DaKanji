@@ -74,104 +74,116 @@ class MecabTextEditingController extends TextEditingController {
     children = []; int count = 0;
     for (var i = 0; i < mecabSurfaces.length; i++) {
       int mecabSurStartIdx = count; int mecabSurEndIdx = count+mecabSurfaces[i].length;
-      List<FuriganaPair> split = matchFurigana(mecabSurfaces[i], mecabReadings[i]);
-      print(split);
-      for (var j = 0; j < mecabSurfaces[i].length; j++) {
-        
-        // proper line breaking
-        if (mecabSurfaces[i][j]=='\n'){
-          children.add(const TextSpan(text:'\n'));
-        }
-        else {
-          double spacing = addSpaces && (j == mecabSurfaces[i].length-1) ?
-            spacingSize : 0;
+      List<FuriganaPair> furiganaPairs =  
+        matchFurigana(mecabSurfaces[i], mecabReadings[i]);
 
-          /// calculate width difference between text and ruby
-          double horizontalPadding = 0;
-          if(showRubys){
-            // check if ruby is wider than text
-            horizontalPadding = ((mecabReadings[i].length*rubyCharacterSize.width) - 
-            (mecabSurfaces[i].length*textCharacterSize.width)) / 2;
-            // add some small spacing to the width to assure better visual separation
-            horizontalPadding = max(0, horizontalPadding+furiganaNotFitSpacing);
+      /// The index for the current character in `mecabSurfaces`'s second-dim
+      int mecabSurfaceIdx = 0;
+      for (var k = 0; k < furiganaPairs.length; k++) {
+        String chars = furiganaPairs[k].kanji != ""
+          ? furiganaPairs[k].kanji
+          : furiganaPairs[k].reading;
+        for (var j = 0; j < chars.length; j++) {
+          // proper line breaking
+          if (mecabSurfaces[i][mecabSurfaceIdx]=='\n'){
+            children.add(const TextSpan(text:'\n'));
           }
+          else {
+            String furigana = furiganaPairs[k].kanji != ""
+              ? furiganaPairs[k].reading : " ";
+            double spacing = addSpaces && (j == mecabSurfaces[i].length-1) ?
+              spacingSize : 0;
 
-          children.add(WidgetSpan(
-            child: GestureDetector(
-              onTap: () => onSingleTap(mecabSurStartIdx, mecabSurEndIdx),
-              // Do nothing on long press so that long press works as placing
-              // the cursor
-              onLongPress: () {},
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  j == 0 ? horizontalPadding : 0,
-                  0,
-                  (j == mecabSurfaces[i].length-1
-                    ? horizontalPadding : 0) + spacing,
-                  0
-                ),
-                // include ruby in this widget if it is either
-                // * the center character in word with uneven length
-                // * first character after half word length 
-                // and the ruby option is enabled
-                child: ConditionalParentWidget(
-                  condition: j == (mecabSurfaces[i].length/2).floor()
-                    && mecabReadings[i] != " "
-                    && showRubys,
-                  // the main text
-                  child: Text(
-                    textScaler: TextScaler.linear(textScaleFactor),
-                    style: TextStyle(
-                      color: showColors ? posColors[i] : null
-                    ),
-                    strutStyle: const StrutStyle(
-                      forceStrutHeight: true, 
-                      leading: 0, // No extra spacing
-                    ),
-                    mecabSurfaces[i][j]
+            /// calculate width difference between text and ruby
+            double horizontalPadding = 0;
+            if(showRubys){
+              // check if ruby is wider than text
+              horizontalPadding = ((mecabReadings[i].length*rubyCharacterSize.width) - 
+              (mecabSurfaces[i].length*textCharacterSize.width)) / 2;
+              // add some small spacing to the width to assure better visual separation
+              horizontalPadding = max(0, horizontalPadding+furiganaNotFitSpacing);
+            }
+
+            children.add(WidgetSpan(
+              child: GestureDetector(
+                onTap: () => onSingleTap(mecabSurStartIdx, mecabSurEndIdx),
+                // Do nothing on long press so that long press works as placing
+                // the cursor
+                onLongPress: () {},
+                child: Padding(
+                  // add a small space after to wide furigana to make them 
+                  // easier to separate visually
+                  padding: EdgeInsets.fromLTRB(
+                    j == 0 ? horizontalPadding : 0,
+                    0,
+                    (j == mecabSurfaces[i].length-1
+                      ? horizontalPadding : 0) + spacing,
+                    0
                   ),
-                  conditionalBuilder: (child) {
-                    // Column to render the text and the ruby
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        // Set the width of the ruby to the width of the actual
-                        // text so that there is no spacing 'inside' a word
-                        // But also let the ruby overflow the width 
-                        SizedOverflowBox(
-                          size: Size(textCharacterSize.width, 0),
-                          // Move the ruby text ...
-                          child: Transform.translate(
-                            offset: Offset(
-                              // ... to the center of the word if the word is
-                              // of uneven length
-                              mecabSurfaces[i].length%2==0
-                                ? (-textCharacterSize.width/2)
-                                : 0,
-                              // ... to the top of the text
-                              -rubyCharacterSize.height/2
-                            ),
-                            child: Text(
-                              textScaler: TextScaler.linear(rubyScaleFactor),
-                              maxLines: 1,
-                              softWrap: false,
-                              overflow: TextOverflow.visible,
-                              mecabReadings[i]
+                  // include ruby in this widget if it is either
+                  // * the center character in word with uneven length
+                  // * first character after half word length 
+                  // and the ruby option is enabled
+                  child: ConditionalParentWidget(
+                    condition: furigana != " " && 
+                      j == (furiganaPairs[k].kanji.length/2).floor()
+                      && showRubys
+                      ,
+                    // the main text
+                    child: Text(
+                      textScaler: TextScaler.linear(textScaleFactor),
+                      style: TextStyle(
+                        color: showColors ? posColors[i] : null
+                      ),
+                      strutStyle: const StrutStyle(
+                        forceStrutHeight: true, 
+                        leading: 0, // No extra spacing
+                      ),
+                      mecabSurfaces[i][mecabSurfaceIdx]
+                    ),
+                    conditionalBuilder: (child) {
+                      // Column to render the text and the ruby
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          // Set the width of the ruby to the width of the actual
+                          // text so that there is no spacing 'inside' a word
+                          // But also let the ruby overflow the width 
+                          SizedOverflowBox(
+                            size: Size(textCharacterSize.width, 0),
+                            // Move the ruby text ...
+                            child: Transform.translate(
+                              offset: Offset(
+                                // ... to the center of the word if the word is
+                                // of uneven length
+                                furiganaPairs[k].kanji.length%2==0
+                                  ? (-textCharacterSize.width/2)
+                                  : 0,
+                                // ... to the top of the text
+                                -rubyCharacterSize.height/2
+                              ),
+                              child: Text(
+                                textScaler: TextScaler.linear(rubyScaleFactor),
+                                maxLines: 1,
+                                softWrap: false,
+                                overflow: TextOverflow.visible,
+                                furigana
+                              ),
                             ),
                           ),
-                        ),
-                        child
-                      ],
-                    );
-                  },
-                )
-              ),
-            )
-          ));
+                          child
+                        ],
+                      );
+                    },
+                  )
+                ),
+              )
+            ));
+          }
+          count++; mecabSurfaceIdx++;
         }
-        count += 1;
       }
     }
 
