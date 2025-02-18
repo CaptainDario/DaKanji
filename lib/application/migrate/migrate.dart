@@ -1,7 +1,6 @@
+// Project imports:
 import 'package:da_kanji_mobile/application/migrate/v3_to_v4.dart';
 import 'package:da_kanji_mobile/entities/releases/version.dart';
-
-
 
 /// Checks if any migration is necessary and if so runs the them
 Future migrate(Version? last, Version current) async {

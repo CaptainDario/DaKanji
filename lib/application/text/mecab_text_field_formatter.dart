@@ -1,6 +1,5 @@
+// Flutter imports:
 import 'package:flutter/services.dart';
-
-
 
 /// InputFormatter that replaces some characters for better compatability with
 /// MeCab

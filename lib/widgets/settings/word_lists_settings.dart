@@ -11,6 +11,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
+import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/app/restart.dart';
@@ -29,7 +30,6 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_til
 import 'package:da_kanji_mobile/widgets/settings/export_include_languages_chips.dart';
 import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists_selection_dialog.dart';
-import 'package:provider/provider.dart';
 
 class WordListSettings extends StatefulWidget {
     

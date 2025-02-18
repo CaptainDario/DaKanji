@@ -1,8 +1,10 @@
-import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
+// Package imports:
 import 'package:kana_kit/kana_kit.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
 
-
+/// Simple dataclass that combines a kanji and its reading 
 class FuriganaPair {
   String kanji;
   String reading;

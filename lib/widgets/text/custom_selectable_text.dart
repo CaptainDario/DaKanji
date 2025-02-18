@@ -1,9 +1,9 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/application/text/mecab_text_field_formatter.dart';
-import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
 import 'package:flutter/material.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
+import 'package:da_kanji_mobile/application/text/mecab_text_field_formatter.dart';
 
 /// Widget that implements custom text selection and furigana rendering
 class CustomSelectableText extends StatefulWidget {

@@ -18,9 +18,9 @@ import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';

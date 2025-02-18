@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-
 class ResponsiveIconTile extends StatefulWidget {
 
   /// leading text

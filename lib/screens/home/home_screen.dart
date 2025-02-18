@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/application/migrate/migrate.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/helper/stores.dart';
+import 'package:da_kanji_mobile/application/migrate/migrate.dart';
 import 'package:da_kanji_mobile/application/routing/deep_links.dart';
 import 'package:da_kanji_mobile/entities/releases/version.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';

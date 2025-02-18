@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:isolate';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,6 +12,7 @@ import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/repositories/dictionary/dictionary_search.dart';
 
 class DictionarySearchIsolate {

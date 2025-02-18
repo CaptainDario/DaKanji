@@ -6,8 +6,6 @@ import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_data.dart';
 
-
-
 /// Class to communicate with AnkiDroid (anki on android)
 class AnkiAndroid {
 

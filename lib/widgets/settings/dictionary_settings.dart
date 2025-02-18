@@ -9,6 +9,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
@@ -28,7 +29,6 @@ import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart
 import 'package:da_kanji_mobile/widgets/settings/info_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
-import 'package:provider/provider.dart';
 
 class DictionarySettings extends StatefulWidget {
   

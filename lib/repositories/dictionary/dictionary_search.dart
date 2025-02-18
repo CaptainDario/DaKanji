@@ -2,8 +2,6 @@
 import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';
 
-
-
 ///  Builds a search query for the JMDict database in ISAR
 /// 
 /// Searches in the given `isar` for entries with an id between `idRangeStart`

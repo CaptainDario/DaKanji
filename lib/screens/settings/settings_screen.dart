@@ -2,8 +2,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-// Package imports:
-
 // Project imports:
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
@@ -22,6 +20,9 @@ import 'package:da_kanji_mobile/widgets/settings/video_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/webbrowser_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/word_lists_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/youtube_settings.dart';
+
+// Package imports:
+
 
 /// The "settings"-screen.
 /// 

@@ -1,16 +1,16 @@
 // Import the test package and Counter class
 
-import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:tuple/tuple.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import '../integration_test/test_utils.dart';
-
-
 
 const List<Tuple2<String, String>> verbs = [
   Tuple2("", ""),
