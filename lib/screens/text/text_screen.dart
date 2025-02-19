@@ -363,7 +363,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// Callback that is executed when the shrink button is pressed
   void onShrinkPressed(){
 
-    //mecabTextEditingController.shrinkSelectionRight(0);
+    mecabTextEditingController.modifySelectionByTokens(-1);
     assurePopupOpen();
 
   }
@@ -371,7 +371,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// Callback that is executed when the shrink button is long pressed
   void onShrinkLongPressed(){
 
-    //mecabTextEditingController.shrinkSelectionRight(0);
+    mecabTextEditingController.modifySelectionByCharacters(-1);
     assurePopupOpen();
 
   }

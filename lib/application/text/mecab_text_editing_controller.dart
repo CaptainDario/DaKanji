@@ -321,6 +321,9 @@ class MecabTextEditingController extends TextEditingController {
 
   }
 
+  /// Returns a [Tuple2] with
+  ///   * item1 - the start index of the selection
+  ///   * item2 - the end index of the selections
   Tuple2<int, int> _getStartAndEnd(){
     return Tuple2(
       min(selection.baseOffset, selection.extentOffset),
@@ -328,7 +331,7 @@ class MecabTextEditingController extends TextEditingController {
     );
   }
 
-  /// Modifies the seleciton by `noTokens`.
+  /// Modifies the selection by `noTokens`.
   /// Positive values grow the selecton and negative values shrink it.
   /// 
   /// Notes:
@@ -336,25 +339,64 @@ class MecabTextEditingController extends TextEditingController {
   ///   * 
   void modifySelectionByTokens(int noTokens){
 
-    // TODO shrinking selection of one token
+    // do not move
+    if(noTokens == 0 ) return;
 
-    int nextTokenIdx = getTokenAtTextIndex(selection.extentOffset);
-    String nextTokens = mecabSurfaces.sublist(
-      nextTokenIdx, nextTokenIdx+1).join("");
+    Tuple2 pos = _getStartAndEnd();
+    int currentTokenIdx = getTokenAtTextIndex(pos.item2)+1;
+    int targetTokenIdx  = currentTokenIdx + noTokens;
+
+    // set maximum selection if target is longer than the text
+    if(targetTokenIdx > mecabSurfaces.length) targetTokenIdx = mecabSurfaces.length;
+
+    // get the string by which the selection should be modified
+    String modifyBy = mecabSurfaces.sublist(
+      noTokens < 0 ? targetTokenIdx : currentTokenIdx,
+      noTokens > 0 ? targetTokenIdx : currentTokenIdx,
+    ).join();
+    int modifyByLen = (noTokens > 0 ? 1 : -1) * modifyBy.length;
+
+    // if shrinking the selection by more than its current size, move to prev.
+    // token
+    if(modifyBy.length > pos.item2-pos.item1 && modifyByLen < 0){
+      moveSelectionByTokens(-1);
+      return;
+    }
 
     selection = selection.copyWith(
-      extentOffset: selection.extentOffset+nextTokens.length);
-
+      baseOffset: null, extentOffset: pos.item2+modifyByLen);
+    
   }
 
   /// Modifies the current selection by `noChars`.
   /// Positive values grow the selecton and negative values shrink it.
   void modifySelectionByCharacters(int noChars){
 
-    // TODO shrinking selection of one token
+    // do not move
+    if(noChars == 0) return;
+
+    Tuple2<int, int> pos = _getStartAndEnd();
+
+    // if the selection only contains one character, move it by one
+    if(pos.item2 - pos.item1 == 1){
+      // if at the beginning wrap around
+      if(pos.item1 == 0 && noChars < 0){
+        selection = selection.copyWith(
+          baseOffset: text.length-1, extentOffset: text.length);
+      }
+      // else move to the previous one
+      else {
+        selection = selection.copyWith(
+          baseOffset: pos.item1-1, extentOffset: pos.item1);
+      }
+      return;
+    }
+
+    // set maximum selection if target is longer than the text
+    if(pos.item2+noChars > text.length) noChars = text.length - pos.item2;
 
     selection = selection.copyWith(
-      extentOffset: selection.extentOffset+noChars);
+      extentOffset: pos.item2+noChars);
   }
 
   /// Moves the current selection by `noTokens`.
