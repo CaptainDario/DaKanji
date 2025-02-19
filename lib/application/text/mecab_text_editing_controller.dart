@@ -362,9 +362,21 @@ class MecabTextEditingController extends TextEditingController {
   /// 
   /// Notes:
   ///   * one token corresponds to one mecab surface
-  void moveSelectionByTokens(int noChars){
+  void moveSelectionByTokens(int noTokens){
 
+    // do not move
+    if(noTokens == 0) return;
 
+    // Check where the selection currently is and if moving for- or backwards
+    Tuple2 pos = _getStartAndEnd();
+
+    int idxTargetToken = getTokenAtTextIndex(pos.item2) + noTokens;
+    int lenTargetToken = mecabSurfaces[idxTargetToken].length;
+    int targetTokenStart = mecabSurfaces.sublist(0, idxTargetToken).join().length;
+
+    selection = selection.copyWith(
+      baseOffset: targetTokenStart, extentOffset: targetTokenStart+lenTargetToken
+    );
 
   }
 

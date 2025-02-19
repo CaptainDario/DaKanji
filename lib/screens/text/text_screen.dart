@@ -395,8 +395,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// Callback that is executed when the previous button is pressed
   void onPreviousPressed(){
 
-    // TODO 
-    mecabTextEditingController.moveSelectionByCharacters(-1);
+    mecabTextEditingController.moveSelectionByTokens(-1);
     assurePopupOpen();
 
   }
@@ -412,8 +411,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// Callback that is executed when the next button is pressed
   void onNextPressed(){
 
-    // TODO 
-    mecabTextEditingController.moveSelectionByCharacters(1);
+    mecabTextEditingController.moveSelectionByTokens(1);
     assurePopupOpen();
 
   }
