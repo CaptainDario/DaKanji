@@ -13,11 +13,11 @@ class CustomSelectableText extends StatefulWidget {
     this.editable = true,
     this.initialText,
 
+    this.init,
+
     this.showRubys = false,
     this.addSpaces = false,
     this.showColors = false,
-
-    this.textColor = Colors.black,
   
     this.onSelectionChange,
     this.onTap,
@@ -32,15 +32,16 @@ class CustomSelectableText extends StatefulWidget {
   /// The text that should be displayed when creating this widget
   final String? initialText;
 
+  /// Function that is called after initializtion and provides the 
+  /// [TextEditingController] of this input field
+  final void Function(MecabTextEditingController controller)? init;
+
   /// should the rubys be shown or not
   final bool showRubys;
   /// should spaces be added to the text between words
   final bool addSpaces;
   /// should the text be rendered in colors matching the POS
   final bool showColors;
-
-  /// The color in which the text should be rendered
-  final Color textColor;
 
   /// callback that should be executed when the currently selected text chagnes
   /// provides the current `TextSelection` as parameter
@@ -67,12 +68,11 @@ class CustomSelectableText extends StatefulWidget {
 
 class _CustomSelectableTextState extends State<CustomSelectableText> {
 
-  /// the cursor to use when hovering over text
-  final MouseCursor _cursor = SystemMouseCursors.text;
+
   /// The controller used for displaying the Japanese text
   late MecabTextEditingController textInputController;
-
-
+  /// The focus node of this widget
+  FocusNode f = FocusNode();
 
 
   @override
@@ -100,44 +100,28 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   @override
   Widget build(BuildContext context) {
 
-    return Focus(
-      focusNode: FocusNode(),
-      canRequestFocus: true,
-      child: MouseRegion(
-        cursor: _cursor,
-        hitTestBehavior: HitTestBehavior.translucent,
-        child: Container(
-          clipBehavior: Clip.hardEdge,
-          decoration: const BoxDecoration(
-            color: Colors.transparent,
-          ),
-          child: Align(
-            alignment: Alignment.bottomLeft,
-            child: TextField(
-              cursorHeight: textInputController.textCharacterSize.height,
-              decoration: InputDecoration(
-                hintText: "Start typing or use the tools below...",
-              ),
-              enabled: widget.editable,
-              clipBehavior: Clip.none,
-              scribbleEnabled: true,
-              maxLines: null,
-              // allow line breaks
-              keyboardType: TextInputType.multiline,
-              textInputAction: TextInputAction.newline,
-              // adjust the line height based on if rubys show or not
-              style: TextStyle(
-                height: widget.showRubys ? 2.5 : 2
-              ),
-              // do not allow some characters
-              inputFormatters: [
-                MecabTextFieldFormatter()
-              ],
-              controller: textInputController,
-            ),
-          ),
-        ),
+    return TextField(
+      focusNode: f,
+      cursorHeight: textInputController.textCharacterSize.height,
+      decoration: InputDecoration(
+        hintText: "Start typing or use the tools below...",
       ),
+      enabled: widget.editable,
+      //clipBehavior: Clip.none,
+      scribbleEnabled: true,
+      maxLines: null,
+      // allow line breaks
+      keyboardType: TextInputType.multiline,
+      textInputAction: TextInputAction.newline,
+      // adjust the line height based on if rubys show or not
+      style: TextStyle(
+        height: widget.showRubys ? 2.5 : 2
+      ),
+      // do not allow some characters
+      inputFormatters: [
+        MecabTextFieldFormatter()
+      ],
+      controller: textInputController,
     );
   }
 }
