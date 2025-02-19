@@ -15,6 +15,7 @@ import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_st
 import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
 import 'package:da_kanji_mobile/application/text/pos.dart';
 import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
+import 'package:tuple/tuple.dart';
 
 /// [TextEditingController] that can show rubys over Japanese text and also
 /// colorize words based on their PoS based on analysis of MeCab
@@ -27,6 +28,42 @@ class MecabTextEditingController extends TextEditingController {
   bool addSpaces;
   /// should the text be rendered in colors matching the POS
   bool showColors;
+
+  /// callback that should be executed when the currently selected text chagnes
+  /// provides the current `TextSelection` as parameter
+  final void Function(TextSelection)? onSelectionChange;
+  /// callback that is executed when a single tap is executed on the text
+  /// provides the `TextSelection` where the tap appeared as parameter
+  final void Function(TextSelection)? onTap;
+  /// callbach that is executed when a long press is executed on the text
+  /// provides the `TextSelection` where the tap appeared as parameter
+  final void Function(TextSelection)? onLongPress;
+  /// callback that is executed when a double tap is executed on the text
+  /// provides the `TextSelection` where the tap appeared as parameter
+  final void Function(TextSelection)? onDoubleTap;
+  /// callback that is executed when a triple tap is executed on the text
+  /// provides the `TextSelection` where the tap appeared as parameter
+  final void Function(TextSelection)? onTripleTap;
+
+  MecabTextEditingController({
+    this.showRubys = false,
+    this.addSpaces = false,
+    this.showColors = false,
+
+    this.onSelectionChange,
+    this.onTap,
+    this.onLongPress,
+    this.onDoubleTap,
+    this.onTripleTap,
+  });
+  
+  @override
+  set selection(TextSelection newSelection){
+    if(super.selection != newSelection){
+      super.selection = newSelection;
+      _onSelectionChange();
+    }
+  }
 
   /// factor by which the text is scaled
   static double textScaleFactor = 1.4;
@@ -43,12 +80,6 @@ class MecabTextEditingController extends TextEditingController {
   /// The size of a ruby character
   late Size rubyCharacterSize = getTextSize("口", rubyScaleFactor);
 
-  MecabTextEditingController({
-    this.showRubys = false,
-    this.addSpaces = false,
-    this.showColors = false,
-  });
-
   /// The mecab readings of the current text
   List<String> mecabReadings = [];
   /// The mecab surfaces of the current text
@@ -63,9 +94,10 @@ class MecabTextEditingController extends TextEditingController {
   /// The text that was used to build this text last time
   String lastText = "";
 
+  /// When did the last tap happen
   int lastTap = DateTime.now().millisecondsSinceEpoch;
+  /// How many consecutive taps happend
   int consecutiveTaps = 0;
-
 
   @override
   TextSpan buildTextSpan({
@@ -124,18 +156,19 @@ class MecabTextEditingController extends TextEditingController {
                     consecutiveTaps++;
                   }
                   if(consecutiveTaps == 1) {
-                    onSingleTap(mecabSurStartIdx, mecabSurEndIdx);
+                    _onSingleTap(mecabSurStartIdx, mecabSurEndIdx);
                   }
                   else if(consecutiveTaps == 2) {
-                    onDoubleTap(mecabSurStartIdx, mecabSurEndIdx);
+                    _onDoubleTap(mecabSurStartIdx, mecabSurEndIdx);
                   }
                   else if (consecutiveTaps == 3){
-                    onTripleTap(mecabSurStartIdx, mecabSurEndIdx);
+                    _onTripleTap(mecabSurStartIdx, mecabSurEndIdx);
                   }
                 },
                 // Do nothing on long press so that long press works as placing
                 // the cursor
-                onLongPress: () {},
+                onLongPress: () => _onLongPress(mecabSurStartIdx, mecabSurEndIdx),
+                //onSecondaryLongPress: ,
                 child: Padding(
                   // add a small space after too wide furigana to make them 
                   // easier to separate visually
@@ -216,14 +249,33 @@ class MecabTextEditingController extends TextEditingController {
     return TextSpan(children: children);
   }
 
-  /// Callback that is executed when the user does a single tap
-  void onSingleTap(int wordStartIdx, int wordEndIdx) {
-    selection = TextSelection(
-      baseOffset: wordStartIdx, extentOffset: wordEndIdx);
+  /// Callback that is executed when the selection changes
+  void _onSelectionChange(){
+
+    print("Selection changed");
+    onSelectionChange?.call(selection);
+
+  }
+
+  /// Callback that is executed when the user does a long press
+  void _onLongPress(int wordStartIdx, int wordEndIdx) {
+
+    onLongPress?.call(selection);
+
   }
 
   /// Callback that is executed when the user does a single tap
-  void onDoubleTap(int wordStartIdx, int wordEndIdx) {
+  void _onSingleTap(int wordStartIdx, int wordEndIdx) {
+
+    selection = TextSelection(
+      baseOffset: wordStartIdx, extentOffset: wordEndIdx);
+    onTap?.call(selection);
+
+  }
+
+  /// Callback that is executed when the user does a single tap
+  void _onDoubleTap(int wordStartIdx, int wordEndIdx) {
+
     for (var match in sentenceRegex.allMatches(text)) {
       if (match.start <= wordStartIdx && wordStartIdx <= match.end) {
         selection = TextSelection(
@@ -233,10 +285,13 @@ class MecabTextEditingController extends TextEditingController {
         break;
       }
     }
+    onDoubleTap?.call(selection);
+
   }
 
   /// Callback that is executed when the user does a single tap
-  void onTripleTap(int wordStartIdx, int wordEndIdx) {
+  void _onTripleTap(int wordStartIdx, int wordEndIdx) {
+
     for (var match in paragraphRegex.allMatches(text)) {
       if (match.start <= wordStartIdx && wordStartIdx <= match.end) {
         selection = TextSelection(
@@ -244,6 +299,95 @@ class MecabTextEditingController extends TextEditingController {
         break;
       }
     }
+    onTripleTap?.call(selection);
+
+  }
+
+  /// Returns the index of the token in `mecabSurfaces` that is at position 
+  /// `textIndex` in `text`
+  /// if `textIndex` is not in `mecabSurfaces.length` returns -1
+  int getTokenAtTextIndex(int textIndex){
+
+    int tokenLength = 0;
+    for (var i = 0; i < mecabSurfaces.length; i++) {
+      if(tokenLength <= textIndex &&
+        textIndex <= tokenLength + mecabSurfaces[i].length){
+        return i;
+      }
+      tokenLength += mecabSurfaces[i].length;
+    }
+
+    return -1;
+
+  }
+
+  Tuple2<int, int> _getStartAndEnd(){
+    return Tuple2(
+      min(selection.baseOffset, selection.extentOffset),
+      max(selection.baseOffset, selection.extentOffset)
+    );
+  }
+
+  /// Modifies the seleciton by `noTokens`.
+  /// Positive values grow the selecton and negative values shrink it.
+  /// 
+  /// Notes:
+  ///   * one token corresponds to one mecab surface
+  ///   * 
+  void modifySelectionByTokens(int noTokens){
+
+    // TODO shrinking selection of one token
+
+    int nextTokenIdx = getTokenAtTextIndex(selection.extentOffset);
+    String nextTokens = mecabSurfaces.sublist(
+      nextTokenIdx, nextTokenIdx+1).join("");
+
+    selection = selection.copyWith(
+      extentOffset: selection.extentOffset+nextTokens.length);
+
+  }
+
+  /// Modifies the current selection by `noChars`.
+  /// Positive values grow the selecton and negative values shrink it.
+  void modifySelectionByCharacters(int noChars){
+
+    // TODO shrinking selection of one token
+
+    selection = selection.copyWith(
+      extentOffset: selection.extentOffset+noChars);
+  }
+
+  /// Moves the current selection by `noTokens`.
+  /// Positive values grow the selecton and negative values shrink it.
+  /// 
+  /// Notes:
+  ///   * one token corresponds to one mecab surface
+  void moveSelectionByTokens(int noChars){
+
+
+
+  }
+
+  /// Moves the current selection by `noChars`.
+  /// Positive values grow the selecton and negative values shrink it.
+  void moveSelectionByCharacters(int noChars){
+
+    // do not move
+    if(noChars == 0) return;
+
+    // Check where the selection currently is and if moving for- or backwards
+    Tuple2 pos = _getStartAndEnd();
+    int moveFrom = noChars > 0 ? pos.item2 : pos.item1+1;
+
+    // if moving 'before' the text, move selection to the end
+    if(pos.item1 == 0 && noChars < 0) moveFrom = text.length+1;
+    // if moving 'past' the text, move selection to the beginning
+    if(pos.item2 == text.length && noChars > 0) moveFrom = 0;
+
+    // move the selection
+    selection = selection.copyWith(
+      baseOffset  : moveFrom+(noChars-1), extentOffset: moveFrom+noChars);
+
   }
 
   /// Calculates the size of the given text using the given scale

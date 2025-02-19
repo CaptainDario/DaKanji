@@ -83,8 +83,19 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       showRubys: widget.showRubys,
       addSpaces: widget.addSpaces,
       showColors: widget.showColors,
+      onTap: widget.onTap,
+      onDoubleTap: widget.onDoubleTap,
+      onTripleTap: widget.onTripleTap,
+      onSelectionChange: (TextSelection selecion) {
+        f.requestFocus();
+        widget.onSelectionChange?.call(selecion);
+      },
+      onLongPress: widget.onLongPress
     );
+
     if(widget.initialText!=null) textInputController.text = widget.initialText!;
+
+    widget.init?.call(textInputController);
   }
 
   @override

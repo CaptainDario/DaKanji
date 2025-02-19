@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -76,6 +77,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
 
   /// FocusNode for the text input
   FocusNode textinputFocusNode = FocusNode();
+
+  late MecabTextEditingController mecabTextEditingController;
   /// the currently selected text
   String selectedText = "";
   /// the text that is currently in the input field
@@ -124,8 +127,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
 
-    //processText(inputText, GetIt.I<Mecab>(), GetIt.I<KanaKit>());
-
     return DaKanjiDrawer(
       currentScreen: Screens.text,
       useBackArrowAppBar: widget.useBackArrowAppBar,
@@ -157,15 +158,16 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                               focusNodes: widget.includeTutorial
                                 ? GetIt.I<Tutorials>().textScreenTutorial.processedTextSteps
                                 : null,
-                              child: Center(
+                              child: Align(
+                                alignment: Alignment.bottomLeft,
                                 child: CustomSelectableText(
                                   initialText: inputText,
                                   showRubys: showRubys,
                                   addSpaces: addSpaces,
                                   showColors: colorizePos,
-                                  textColor: Theme.of(context).brightness == Brightness.light
-                                    ? Colors.black
-                                    : Colors.white,
+                                  init: (controller) {
+                                    mecabTextEditingController = controller;
+                                  },
                                   onSelectionChange: onCustomSelectableTextChange,
                                   onLongPress: onCustomSelectableTextLongPressed,
                                   onTapOutsideOfText: (Offset location) {
@@ -229,33 +231,14 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                       true,
                                       offIcon: Icons.paste,
                                       onIcon: Icons.paste,
-                                      onPressed: () async {
-                                        ClipboardData? clipboardData = await Clipboard.getData('text/plain');
-                                        String clipboardString = clipboardData?.text ?? "";
-                                        setState(() {
-                                          //TODO
-                                          inputText = clipboardString;
-                                        });
-                                      },
+                                      onPressed: onPastePressed,
                                     ),
                                     // copy button
                                     AnalysisOptionButton(
                                       true,
                                       offIcon: Icons.copy,
                                       onIcon: Icons.copy,
-                                      onPressed: () {
-                                        //TODO
-                                        String currentSelection = "";
-                                        Clipboard.setData(
-                                          ClipboardData(text:currentSelection)
-                                        ).then((_){
-                                          // ignore: use_build_context_synchronously
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(
-                                              content: Text("${LocaleKeys.TextScreen_copy_button_copy.tr()} $currentSelection"))
-                                            );
-                                        });
-                                      },
+                                      onPressed: onCopyPressed,
                                     ),
                                     
                                     if(GetIt.I<Settings>().text.selectionButtonsEnabled)
@@ -265,66 +248,32 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           true,
                                           onIcon: Icons.arrow_back,
                                           offIcon: Icons.arrow_back,
-                                          onPressed: () {
-                                            //TODO
-                                            //customSelectableTextController.shrinkSelectionRight(0);
-                                            assurePopupOpen();
-                                          },
-                                          onLongPressed: () {
-                                            //TODO
-                                            //customSelectableTextController.shrinkSelectionRight(1);
-                                            assurePopupOpen();
-                                          },
+                                          onPressed: onShrinkPressed,
+                                          onLongPressed: onShrinkLongPressed
                                         ),
                                         // grow selection button
                                         AnalysisOptionButton(
                                           true,
                                           onIcon: Icons.arrow_forward,
                                           offIcon: Icons.arrow_forward,
-                                          onPressed: () {
-                                            //TODO
-                                            //customSelectableTextController.growSelectionRight(growBy: 0);
-                                            assurePopupOpen();
-                                          },
-                                          onLongPressed: () {
-                                            //TODO
-                                            //customSelectableTextController.growSelectionRight(growBy: 1);
-                                            assurePopupOpen();
-                                          },
+                                          onPressed: onGrowPressed,
+                                          onLongPressed: onGrowLongPressed,
                                         ),
                                         // select previous token / char
                                         AnalysisOptionButton(
                                           true,
                                           onIcon: Icons.arrow_left,
                                           offIcon: Icons.arrow_left,
-                                          onPressed: () {
-                                            //TODO
-                                            //customSelectableTextController.selectPrevious();
-                                            assurePopupOpen();
-                                          },
-                                          onLongPressed: () {
-                                            //TODO
-                                            //customSelectableTextController.selectPrevious(previousChar: true);
-                                            assurePopupOpen();
-                                          },
+                                          onPressed: onPreviousPressed, // token
+                                          onLongPressed: onPreviousLongPressed // char
                                         ),
                                         // select next token / char
                                         AnalysisOptionButton(
                                           true,
                                           onIcon: Icons.arrow_right,
                                           offIcon: Icons.arrow_right,
-                                          // word
-                                          onPressed: () {
-                                            //TODO
-                                            //customSelectableTextController.selectNext();
-                                            assurePopupOpen();
-                                          },
-                                          // char
-                                          onLongPressed: () {
-                                            //TODO
-                                            //customSelectableTextController.selectNext(nextChar: true);
-                                            assurePopupOpen();
-                                          },
+                                          onPressed: onNextPressed, // token
+                                          onLongPressed: onNextLongPressed, // char
                                         ),
                                       ]
                                   ],
@@ -370,17 +319,110 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     // get the part that the user selected
     
     setState(() {
-      selectedText = "";
+      selectedText = mecabTextEditingController.text.substring(
+        selection.baseOffset, selection.extentOffset
+      );
     });
   }
 
   /// Callback when the user long presses the a word in the text
   void onCustomSelectableTextLongPressed(TextSelection selection){
+    // TODO something
     // remove current snackbar if any
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
+  }
 
+  /// Callback that is executed when the user presses the paste button
+  void onPastePressed() async {
 
+    ClipboardData? clipboardData = await Clipboard.getData('text/plain');
+    String clipboardString = clipboardData?.text ?? "";
+    mecabTextEditingController.text = clipboardString;
+                                      
+  }
+
+  /// Callback that is executed when the user presses the copy button
+  void onCopyPressed() {
+
+    String currentSelection = mecabTextEditingController.text.substring(
+      mecabTextEditingController.selection.baseOffset,
+      mecabTextEditingController.selection.extentOffset);
+    Clipboard.setData(
+      ClipboardData(text:currentSelection)
+    ).then((_){
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("${LocaleKeys.TextScreen_copy_button_copy.tr()} $currentSelection"))
+        );
+    });
+
+  }
+
+  /// Callback that is executed when the shrink button is pressed
+  void onShrinkPressed(){
+
+    //mecabTextEditingController.shrinkSelectionRight(0);
+    assurePopupOpen();
+
+  }
+
+  /// Callback that is executed when the shrink button is long pressed
+  void onShrinkLongPressed(){
+
+    //mecabTextEditingController.shrinkSelectionRight(0);
+    assurePopupOpen();
+
+  }
+
+  /// Callback that is executed when the grow button is pressed
+  void onGrowPressed(){
+
+    mecabTextEditingController.modifySelectionByTokens(1);
+    assurePopupOpen();
+
+  }
+
+  /// Callback that is executed when the grow button is long pressed
+  void onGrowLongPressed(){
+
+    mecabTextEditingController.modifySelectionByCharacters(1);
+    assurePopupOpen();
+
+  }
+
+  /// Callback that is executed when the previous button is pressed
+  void onPreviousPressed(){
+
+    // TODO 
+    mecabTextEditingController.moveSelectionByCharacters(-1);
+    assurePopupOpen();
+
+  }
+
+  /// Callback that is executed when the previous button is long pressed
+  void onPreviousLongPressed(){
+
+    mecabTextEditingController.moveSelectionByCharacters(-1);
+    assurePopupOpen();
+
+  }
+
+  /// Callback that is executed when the next button is pressed
+  void onNextPressed(){
+
+    // TODO 
+    mecabTextEditingController.moveSelectionByCharacters(1);
+    assurePopupOpen();
+
+  }
+
+  /// Callback that is executed when the next button is long pressed
+  void onNextLongPressed(){
+
+    mecabTextEditingController.moveSelectionByCharacters(1);
+    assurePopupOpen();
 
   }
 
