@@ -10,7 +10,7 @@ import 'package:tuple/tuple.dart';
 import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
-import '../integration_test/test_utils.dart';
+import '../../integration_test/test_utils.dart';
 
 const List<Tuple2<String, String>> verbs = [
   Tuple2("", ""),
