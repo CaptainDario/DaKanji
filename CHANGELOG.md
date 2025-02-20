@@ -17,6 +17,12 @@ Added:
 
 Improvements:
 
+- Text (MAJOR overhaul!)
+  - Text input renders furigana (no need for two text widgets!)
+  - Conjugations are now grouped together (食べ、たかっ、た -> 食べたかった)
+  - Vastly improved selection handling
+  - Only show furigana for kanjis
+  - Space text instead of resizing furigana
 - Dictionary
   - New deconjugation engine, handles more deconjugation patterns
   - Improved searching
@@ -26,7 +32,6 @@ Improvements:
   - Back navigation clears search and resets current entry
   - Readability of kanji stroke order diagrams
 - Word lists: significantly improved export speed
-- Text: Improved handling of conjugations
 - Radical search: show kanjis separated by stroke order
 - Kana table: playback on android does not cut off
 - Anki: Setting to decide how adding a duplicate should be handled

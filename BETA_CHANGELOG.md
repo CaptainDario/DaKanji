@@ -1,5 +1,18 @@
 # DaKanji Beta - changelog
 
+## v3.5.0b3 - ワードリストと暗記改善 (22.02.2025)
+
+Improvements:
+
+- Text(MAJOR overhaul!)
+  - Text input renders furigana (no need for two text widgets!)
+  - Conjugations are now grouped together (食べ、たかっ、た -> 食べたかった)
+  - Vastly improved selection handling
+  - Only show furigana for kanjis
+  - Space text instead of resizing furigana
+
+-------------------------------------------------------------------------
+
 ## v3.5.0b2 - ワードリストと暗記改善 (31.01.2025)
 
 Added:
