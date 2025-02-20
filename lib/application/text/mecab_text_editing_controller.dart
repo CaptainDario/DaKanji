@@ -252,7 +252,6 @@ class MecabTextEditingController extends TextEditingController {
   /// Callback that is executed when the selection changes
   void _onSelectionChange(){
 
-    print("Selection changed");
     onSelectionChange?.call(selection);
 
   }
