@@ -2,6 +2,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
+import 'package:da_kanji_mobile/entities/dictionary_filters/filter_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -29,6 +31,8 @@ import 'package:da_kanji_mobile/widgets/dictionary/filter_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/radical_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
+
+
 
 /// The search widget for the dictionary.
 /// 
@@ -281,7 +285,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           decoration: const InputDecoration(
                             border: InputBorder.none
                           ),
-                          scribbleEnabled: true,
+                          stylusHandwritingEnabled: true,
                           controller: searchInputController,
                           maxLines: 1,
                           style: const TextStyle(
@@ -425,23 +429,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           // search results if the user entered text
                           ? SearchResultList(
                             searchResults: widget.context.watch<DictSearch>().searchResults,
-                            headers: GetIt.I<Settings>().dictionary.showSearchMatchSeparation
-                              ? [
-                                widget.context.watch<DictSearch>().currentSearch,
-                                "${widget.context.watch<DictSearch>().currentSearch}*",
-                                "*${widget.context.watch<DictSearch>().currentSearch}*",
-                                widget.context.watch<DictSearch>().currentKanaSearch,
-                                "${widget.context.watch<DictSearch>().currentKanaSearch}*",
-                                "*${widget.context.watch<DictSearch>().currentKanaSearch}*",
-                                for (var search in widget.context.watch<DictSearch>().currentAlternativeSearches)
-                                  ...[search, "$search*", "*$search*"]
-                              ]
-                              : List.generate(
-                                6+widget.context.watch<DictSearch>().currentAlternativeSearches.length,
-                                (e) => null),
-                            onSearchResultPressed: (entry) async {
-                              onSearchResultPressed(entry);
-                            },
+                            headers: getSearchResultHeaders(),
+                            onSearchResultPressed: onSearchResultPressed,
                             showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                             init: (controller) {},
                           )
@@ -619,11 +608,15 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   Future<void> updateSearchResults(
     String query, bool convertToHiragana, bool allowDeconjugation) async {
 
+    // separate query and filters
+    List<String> filters = getFilters(query);
+    query = getQueryWithoutFilters(query);
+
     // hide all flushbars from previous searches
     //if(!(deconjugationFlushbar?.isDismissed() ?? true)) deconjugationFlushbar?.dismiss();
 
-    // only search in dictionary if the query is not empty (remove filters to check this)
-    if(query.split(" ").where((e) => !e.startsWith("#")).join() == ""){
+    // only search in dictionary if the query is not empty
+    if(query == ""){
       widget.context.read<DictSearch>().currentSearch = "";
       widget.context.read<DictSearch>().currentKanaSearch = "";
       widget.context.read<DictSearch>().currentAlternativeSearches = [];
@@ -638,14 +631,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       // assure that the outcome is japanese
       if(kKitRomaji.isJapanese(t)) queryKana = t;
     }
-
-    KanaKit k = GetIt.I<KanaKit>();
-    List<String> deconjugated = [];
+    
     // try to deconjugate the input if
-    // 1. allowed
-    // 2. convertable to hiragana (or is already japanese)
+    // 1. setting is enabled
+    // 2. convertable to hiragana (or is already Japanese)
     // 3. does not have spaces
-    if(allowDeconjugation &&!query.contains(" ") && 
+    List<String> deconjugated = []; KanaKit k = GetIt.I<KanaKit>();
+    if(allowDeconjugation && !query.contains(" ") && 
       (k.isJapanese(query) || k.isJapanese(k.toKana(query))))
     {
       deconjugated = getDeconjugatedTerms(k.isJapanese(query)
@@ -672,14 +664,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       );
     }
 
-    // update search variables and search
+    // update search variables
     widget.context.read<DictSearch>().currentSearch = query;
-      widget.context.read<DictSearch>().currentKanaSearch = queryKana ?? "";
-      widget.context.read<DictSearch>().currentAlternativeSearches = deconjugated;
+    widget.context.read<DictSearch>().currentKanaSearch = queryKana ?? "";
+    widget.context.read<DictSearch>().currentAlternativeSearches = deconjugated;
+
+    // search
     widget.context.read<DictSearch>().searchResults =
       await GetIt.I<DictionarySearch>().search(
-        query, selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated),
-        context.read<Settings>().dictionary.limitSearchResults
+        selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated),
+        filters,
+        context.read<Settings>().dictionary.limitSearchResults,
       ) ?? [];
   }
 
@@ -716,5 +711,50 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     return allQueries;
 
   }
+
+  /// Gets all filters that are in `query` and returns them
+  List<String> getFilters(String query){
+
+    List<String> separated = query.split(" ");
+    List<String> filters = separated
+      .where((e) => e.startsWith("#"))
+      .map((e) => jmDictAllFilters[e.replaceFirst("#", "")].toString())
+      .toList();
+
+    return filters;
+
+  }
+
+  /// Removes all filters in `query` and returns the query without them
+  String getQueryWithoutFilters(String query){
+
+    List<String> separated = query.split(" ");
+    String queryWithoutFilters = separated
+      .where((e) => !e.startsWith("#")).join();
+
+    return queryWithoutFilters;
+
+  }
+
+  /// Returns a list with the headers used for showing which search query 
+  /// matched so that this result shows
+  List<String?> getSearchResultHeaders(){
+
+    return GetIt.I<Settings>().dictionary.showSearchMatchSeparation
+      ? [
+        widget.context.read<DictSearch>().currentSearch,
+        "${widget.context.read<DictSearch>().currentSearch}*",
+        "*${widget.context.read<DictSearch>().currentSearch}*",
+        widget.context.read<DictSearch>().currentKanaSearch,
+        "${widget.context.read<DictSearch>().currentKanaSearch}*",
+        "*${widget.context.read<DictSearch>().currentKanaSearch}*",
+        for (var search in widget.context.read<DictSearch>().currentAlternativeSearches)
+          ...[search, "$search*", "*$search*"]
+      ]
+      : List.generate(
+        6+(widget.context.read<DictSearch>().currentAlternativeSearches.length*3),
+        (e) => null);
+  }
+
 }
 
