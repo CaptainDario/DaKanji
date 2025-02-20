@@ -181,7 +181,6 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
                                   child: CustomSelectableText(
                                     
                                     showRubys: true,
-                                    textColor: Colors.black,
                                     onSelectionChange: (p0) {
                                       currentSelection.value = currentSubtitle
                                         .replaceAll(" ", "")
