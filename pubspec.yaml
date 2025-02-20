@@ -30,7 +30,6 @@ dependencies:
   linked_scroll_controller: 0.2.0
   shared_preferences: 2.3.2
   url_launcher: 6.3.1
-  url_launcher_android: 6.3.14
   flutter_phoenix: 1.1.1
   image: 4.5.2
   flutter_markdown: 0.7.3+1
