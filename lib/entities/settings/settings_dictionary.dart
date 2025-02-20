@@ -52,7 +52,7 @@ class SettingsDictionary with ChangeNotifier {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
-  static const bool d_showSearchMatchSeparation = false;
+  static const bool d_showSearchMatchSeparation = true;
   @JsonKey(defaultValue: d_showSearchMatchSeparation)
   /// Should the search results have a separating header depending on how the
   /// result matched
