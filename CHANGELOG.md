@@ -12,6 +12,7 @@ Added:
   - Search result sorting priority setting
   - Show search separation headers setting
   - Limit search results setting
+  - Handwriting input on android
 
 - Anki: Examples sentences can be added to notes
 

@@ -2,7 +2,12 @@
 
 ## v3.5.0b3 - ワードリストと暗記改善 (22.02.2025)
 
-Improvements:
+### Added
+  
+- Dictionary
+  - Handwriting input on android
+
+### Improvements
 
 - Text(MAJOR overhaul!)
   - Text input renders furigana (no need for two text widgets!)
@@ -10,6 +15,11 @@ Improvements:
   - Vastly improved selection handling
   - Only show furigana for kanjis
   - Space text instead of resizing furigana
+
+### Fixed
+
+- Dictionary
+  - Wildcard search
 
 -------------------------------------------------------------------------
 
