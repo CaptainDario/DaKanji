@@ -51,7 +51,7 @@ Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab 
 
     for (var i = 0; i < analyzedText.length; i++) {
       // check if this is a word that can be deconjugated
-      List<String> maxLengthWord = selectMaxLengthWord(analyzedText..sublist(i)); 
+      List<String> maxLengthWord = selectMaxLengthWord(analyzedText.sublist(i)); 
       mecabSurfaces.add(maxLengthWord.join());
       
       // remove furigana when: non Japanese, kana only, no reading, reading == word
