@@ -89,6 +89,7 @@ ios/build/**
 # android build files
 android/app/build/intermediates
 android/app/build/outputs
+android/app/.cxx/
 
 # flatpak
 build-dir
