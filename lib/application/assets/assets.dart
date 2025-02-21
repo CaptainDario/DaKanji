@@ -107,7 +107,8 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
 
     while(true){
       try{
-        await downloadAssetFromGithubRelease(file, url,);
+        bool downloaded = await downloadAssetFromGithubRelease(file, url,);
+        if(!downloaded) { throw Exception(); }
         break;
       }
       catch (e){
@@ -162,7 +163,7 @@ void extractAssetArchiveToDisk(Tuple2 params) async {
 
 /// Downloads the given `assetName` from the GitHub (`url`), uses the release
 /// matching this version
-Future<void> downloadAssetFromGithubRelease(File destination, String url) async 
+Future<bool> downloadAssetFromGithubRelease(File destination, String url) async 
 {
   // get all releases
   Dio dio = Dio(); String downloadUrl = "";
@@ -171,13 +172,14 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
     .then((value) {
       return value;
     }).catchError((error, stackTrace) {
+      debugPrint(error.toString());
       downloadError = true;
       return Response(requestOptions: RequestOptions());
     });
 
   if(downloadError) {
     debugPrint("Encountered error while downloading: $downloadError");
-    return;
+    return false;
   }
 
   String extension = destination.uri.pathSegments.last.split(".").length > 1
@@ -211,13 +213,14 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
       }
     }
   ).onError((error, stackTrace) {
+    debugPrint(error.toString());
     downloadError = true;
     return Response(requestOptions: RequestOptions());
   });
 
   if(downloadError) {
     debugPrint("Encountered error while downloading: $downloadError");
-    return;
+    return false;
   }
 
   debugPrint("Downloaded $fileName to ${destination.path}");
@@ -227,4 +230,6 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
   
   // delete the zip file
   File("${destination.path}.zip").deleteSync();
+
+  return true;
 }
