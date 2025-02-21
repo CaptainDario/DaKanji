@@ -56,16 +56,6 @@ parts:
       - unzip
     override-prime: ''
 
-  copy-tf-lite:
-    after:
-      - flutter-git
-    plugin: dump
-    source: ./blobs
-    stage:
-    - bin/blobs/libtensorflowlite_c_x86.so
-    organize:
-      libtensorflowlite_c_x86.so: bin/blobs/libtensorflowlite_c_x86.so
-
   zenity:
     plugin: nil
     stage-packages:
@@ -74,7 +64,6 @@ parts:
   dakanji:
     after:
       - flutter-git
-      - copy-tf-lite
       - zenity
     source: .
     plugin: nil
