@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -115,11 +117,11 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       focusNode: f,
       cursorHeight: textInputController.textCharacterSize.height,
       decoration: InputDecoration(
-        hintText: "Start typing or use the tools below...",
+        hintText: LocaleKeys.TextScreen_input_text_here.tr(),
       ),
       enabled: widget.editable,
       //clipBehavior: Clip.none,
-      scribbleEnabled: true,
+      stylusHandwritingEnabled: true,
       maxLines: null,
       // allow line breaks
       keyboardType: TextInputType.multiline,
