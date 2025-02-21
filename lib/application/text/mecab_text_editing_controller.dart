@@ -323,7 +323,7 @@ class MecabTextEditingController extends TextEditingController {
   /// Returns a [Tuple2] with
   ///   * item1 - the start index of the selection
   ///   * item2 - the end index of the selections
-  Tuple2<int, int> _getStartAndEnd(){
+  Tuple2<int, int> getStartAndEnd(){
     return Tuple2(
       min(selection.baseOffset, selection.extentOffset),
       max(selection.baseOffset, selection.extentOffset)
@@ -341,7 +341,7 @@ class MecabTextEditingController extends TextEditingController {
     // do not move
     if(noTokens == 0 ) return;
 
-    Tuple2 pos = _getStartAndEnd();
+    Tuple2 pos = getStartAndEnd();
     int currentTokenIdx = getTokenAtTextIndex(pos.item2)+1;
     int targetTokenIdx  = currentTokenIdx + noTokens;
 
@@ -374,7 +374,7 @@ class MecabTextEditingController extends TextEditingController {
     // do not move
     if(noChars == 0) return;
 
-    Tuple2<int, int> pos = _getStartAndEnd();
+    Tuple2<int, int> pos = getStartAndEnd();
 
     // if the selection only contains one character, move it by one
     if(pos.item2 - pos.item1 == 1){
@@ -409,7 +409,7 @@ class MecabTextEditingController extends TextEditingController {
     if(noTokens == 0) return;
 
     // Check where the selection currently is and if moving for- or backwards
-    Tuple2 pos = _getStartAndEnd();
+    Tuple2 pos = getStartAndEnd();
 
     int idxTargetToken = getTokenAtTextIndex(pos.item2) + noTokens;
     int lenTargetToken = mecabSurfaces[idxTargetToken].length;
@@ -429,7 +429,7 @@ class MecabTextEditingController extends TextEditingController {
     if(noChars == 0) return;
 
     // Check where the selection currently is and if moving for- or backwards
-    Tuple2 pos = _getStartAndEnd();
+    Tuple2 pos = getStartAndEnd();
     int moveFrom = noChars > 0 ? pos.item2 : pos.item1+1;
 
     // if moving 'before' the text, move selection to the end

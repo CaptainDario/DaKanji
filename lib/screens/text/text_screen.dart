@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'dart:async';
+
+import 'package:clipboard_watcher/clipboard_watcher.dart';
 import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +24,7 @@ import 'package:da_kanji_mobile/widgets/text/analysis_option_button.dart';
 import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
+import 'package:universal_io/io.dart';
 
 
 
@@ -54,11 +58,15 @@ class TextScreen extends StatefulWidget {
   State<TextScreen> createState() => _TextScreenState();
 }
 
-class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
+class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
+  ClipboardListener, WidgetsBindingObserver {
 
 
   /// the padding used between all widgets
   final double padding = 8.0;
+
+  /// Should continously be copied from the clipboard
+  bool continouslyCopy = false;
 
   /// if the option for showing furigana above words is enabled
   bool showRubys = false;
@@ -77,6 +85,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// FocusNode for the text input
   FocusNode textinputFocusNode = FocusNode();
 
+  /// custom [TextEditingController] for the text input
   late MecabTextEditingController mecabTextEditingController;
   /// the currently selected text
   String selectedText = "";
@@ -85,7 +94,15 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// scroll controller for the text analysis buttons
   final ScrollController _analysisOptionsScrollController = ScrollController();
 
+  /// Timer that refreshes the UI every 1s (android only)
+  Timer? refreshClipboardTimer;
 
+
+  /// when app comes back to foregorund update dict
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    setState(() {});
+  }
   
   @override
   void initState() {
@@ -106,6 +123,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     // if there is initial text, set it
     if(widget.initialText != null) inputText = widget.initialText!;
 
+    initTutorial();
+    initClipboardWatcher();
+  }
+
+  void initTutorial(){
     // after first frame
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
       // init tutorial
@@ -120,6 +142,51 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
         }
       }
     });
+  }
+
+  @override
+  void onClipboardChanged() async {
+
+    if(!continouslyCopy) return;
+
+    String data = (await Clipboard.getData('text/plain'))?.text ?? "";
+    
+    if(data != "" && data != mecabTextEditingController.text){
+      mecabTextEditingController.text = data;
+    }
+  }
+
+  /// Initializes the clipboard watching
+  void initClipboardWatcher(){
+    // android / iOS do not allow for continous clipboard reading
+    //   -> periodically read clipboard till there is new value
+    if(Platform.isAndroid || Platform.isIOS){
+      refreshClipboardTimer = Timer.periodic(const 
+        Duration(milliseconds: 500), (timer) async {
+          onClipboardChanged();
+        }
+      );
+    }
+    // on other platforms always listen to clipboard
+    else{
+      clipboardWatcher.addListener(this);
+      // start watch
+      clipboardWatcher.start();
+    }
+  }
+
+  @override
+  void dispose() {
+    if(refreshClipboardTimer != null){
+      refreshClipboardTimer!.cancel();
+    }
+    else{
+      clipboardWatcher.removeListener(this);
+      // stop watch
+      clipboardWatcher.stop();
+    }
+
+    super.dispose();
   }
 
 
@@ -235,9 +302,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                     // paste text button
                                     AnalysisOptionButton(
                                       true,
-                                      offIcon: Icons.paste,
-                                      onIcon: Icons.paste,
+                                      offIcon: continouslyCopy ? Icons.sync : Icons.paste,
+                                      onIcon: continouslyCopy ? Icons.sync : Icons.paste,
                                       onPressed: onPastePressed,
+                                      onLongPressed: onPasteLongPressed,
                                     ),
                                     // copy button
                                     AnalysisOptionButton(
@@ -358,18 +426,30 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
   /// Callback that is executed when the user presses the copy button
   void onCopyPressed() {
 
+    final s = mecabTextEditingController.getStartAndEnd();
+
     String currentSelection = mecabTextEditingController.text.substring(
-      mecabTextEditingController.selection.baseOffset,
-      mecabTextEditingController.selection.extentOffset);
-    Clipboard.setData(
-      ClipboardData(text:currentSelection)
-    ).then((_){
+      s.item1 == -1 ? 0 : s.item1,
+      s.item2 == -1 ? mecabTextEditingController.text.length : s.item2);
+    
+    Clipboard.setData(ClipboardData(text:currentSelection)).then((_){
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("${LocaleKeys.TextScreen_copy_button_copy.tr()} $currentSelection"))
+          content: Text(
+            "${LocaleKeys.TextScreen_copy_button_copy.tr()} $currentSelection",
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+          ))
         );
     });
+
+  }
+
+  /// Callback that is executed when the user long presses the copy button
+  void onPasteLongPressed() {
+
+    setState(() { continouslyCopy = !continouslyCopy; });
 
   }
 

@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
 import 'package:da_kanji_mobile/entities/dictionary_filters/filter_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
