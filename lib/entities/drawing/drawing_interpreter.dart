@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -29,11 +30,9 @@ class DrawingInterpreter with ChangeNotifier{
   bool wasInitialized = false;
 
   /// The path to the tf lite asset
-  final String _tfLiteAssetPath = "assets/tflite_models/CNN_single_char.tflite";
-  /// The path to the mock tf lite asset (small size can be included in repo)
-  final String _mockTFLiteAssetPath = "assets/tflite_models/mock_CNN_single_char.tflite";
+  final String _tfLiteAssetPath = "${g_DakanjiPathManager.singleCharCNNDirectory.absolute.path}/model.tflite";
   /// The path to the labels asset
-  final String _labelAssetPath = "assets/tflite_models/CNN_single_char_labels.txt";
+  final String _labelAssetPath = "${g_DakanjiPathManager.singleCharCNNDirectory.absolute.path}/labels.txt";
   /// The asset path to the used asset for creating the interpreter
   late final String _usedTFLiteAssetPath;
 
@@ -69,18 +68,11 @@ class DrawingInterpreter with ChangeNotifier{
     }
     
     // load data
-    try {
-      await rootBundle.loadBuffer(_tfLiteAssetPath);
-      _usedTFLiteAssetPath = _tfLiteAssetPath;
-    } catch(_) {
-      _usedTFLiteAssetPath = _mockTFLiteAssetPath;
-    }
-    
     data = DrawingData(await loadLabels());
-
+    InferenceBackend iB = await getBackend();
     interpreter = await initInterpreterFromBackend(
-      await getBackend(),
-      _usedTFLiteAssetPath
+      iB,
+      _tfLiteAssetPath
     );
 
     // create and setup isolate
@@ -144,7 +136,7 @@ class DrawingInterpreter with ChangeNotifier{
 
   /// load the labels from file
   Future<List<String>> loadLabels() async {
-    var l = await rootBundle.loadString(_labelAssetPath);
+    var l = File(_labelAssetPath).readAsStringSync();
     return l.split("");
   }
 

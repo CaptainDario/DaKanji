@@ -65,6 +65,9 @@ class DrawingIsolate {
     final port = ReceivePort();
     sendPort.send(port.sendPort);
 
+    // init lite rt
+    initLiteRTFlutter();
+
     /// a queue a of messages that are send from the main isolate
     StreamQueue mainMessageQueue = StreamQueue(port);
 
