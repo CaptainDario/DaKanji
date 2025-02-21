@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:math';
-
 // Flutter imports:
 import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
 import 'package:flutter/foundation.dart';
@@ -24,6 +21,8 @@ import 'package:da_kanji_mobile/widgets/text/analysis_option_button.dart';
 import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
+
+
 
 /// The "draw"-screen.
 /// 
@@ -156,7 +155,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                           Expanded(
                             child: MultiFocus(
                               focusNodes: widget.includeTutorial
-                                ? GetIt.I<Tutorials>().textScreenTutorial.processedTextSteps
+                                ? GetIt.I<Tutorials>().textScreenTutorial.textInputSteps
                                 : null,
                               child: Align(
                                 alignment: Alignment.bottomLeft,
@@ -225,6 +224,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
                                           setState(() {colorizePos = !colorizePos;})
                                         ),
                                       )
+                                    ),
+                                    // delete text button
+                                    AnalysisOptionButton(
+                                      true,
+                                      offIcon: Icons.close,
+                                      onIcon: Icons.close,
+                                      onPressed: onDeletePressed,
                                     ),
                                     // paste text button
                                     AnalysisOptionButton(
@@ -331,6 +337,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin {
     // remove current snackbar if any
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
+  }
+
+  /// Callback that is executed when the user presses the paste button
+  void onDeletePressed() async {
+
+    mecabTextEditingController.text = "";
+                                      
   }
 
   /// Callback that is executed when the user presses the paste button
