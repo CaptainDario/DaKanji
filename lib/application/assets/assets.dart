@@ -225,7 +225,11 @@ Future<bool> downloadAssetFromGithubRelease(File destination, String url) async
 
   debugPrint("Downloaded $fileName to ${destination.path}");
 
-  await extractFileToDisk("${destination.path}.zip", destination.parent.path);
+  await compute(
+    (Tuple2<String, String> paths) async {
+      await extractFileToDisk(paths.item1, paths.item2);
+    },
+    Tuple2("${destination.path}.zip", destination.parent.path));
   debugPrint("Extracted $destination");
   
   // delete the zip file
