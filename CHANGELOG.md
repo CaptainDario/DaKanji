@@ -13,7 +13,8 @@ Added:
   - Show search separation headers setting
   - Limit search results setting
   - Handwriting input on android
-
+- Settings
+  - Font size #104
 - Anki: Examples sentences can be added to notes
 
 Improvements:
@@ -31,7 +32,7 @@ Improvements:
     - Ignore white space at the beginning and end of search terms
   - Image search and DeepL supported on MacOS and Windows
   - Back navigation clears search and resets current entry
-  - Readability of kanji stroke order diagrams
+  - Readability of kanji stroke order diagrams #104
 - Word lists: significantly improved export speed
 - Radical search: show kanjis separated by stroke order
 - Kana table: playback on android does not cut off
@@ -40,6 +41,8 @@ Improvements:
 - While downloading initial data, keep screen on
 - Various small UI improvements
 - Reduced install size
+- Unpack assets in isolate #72
+
 Fixed:
 
 - Windows drawing recognition does not work
