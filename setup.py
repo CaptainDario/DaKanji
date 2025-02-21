@@ -14,18 +14,12 @@ move_to_dict  = ["dict", "examples", "krad", "radk"]
 move_to_tf_lite = ["CNN_single_char.tflite"]
 files_to_exclude = ["audios.zip", "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
 files_to_exclude_win = [
-    "libtensorflowlite_c.dylib",
-    "libtensorflowlite_c_arm64.so", "libtensorflowlite_c_x86.so",
+    "libmecab_arm64.dylib",
 ]
 files_to_exclude_mac = [
-    "libmecab_arm64.dll", "libmecab_x86.dll",
-    "libtensorflowlite_c_x86.so",  "libtensorflowlite_c_arm64.so",
-    "libtensorflowlite_c_x86.dll", "libtensorflowlite_c_arm64.dll"
 ]
 files_to_exclude_lin = [
-    "libmecab_arm64.dll", "libmecab_x86.dll",
-    "libtensorflowlite_c_arm64.dll", "libtensorflowlite_c_x86.dll",
-    "libtensorflowlite_c.dylib",
+    "libmecab_arm64.dylib",
 ]
 
 release_url = None
@@ -93,9 +87,9 @@ def move_assets():
     print("Moving downloaded assets")
     for f in os.listdir(tmp_dir):
 
-        # move dynamic libraries to blobs
-        if(f.startswith(tuple(move_to_blobs))):
-            shutil.copy(f"{tmp_dir}/{f}", "blobs/")
+        # move mecab dynamic libraries to blobs to allow standalone testing
+        if(f.startswith("libmecab")):
+            shutil.copy(f"{tmp_dir}/{f}", "test/text/")
         
         # move mecab_dict to assets
         if(f.startswith("mecab_dict")):
