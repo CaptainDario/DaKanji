@@ -120,7 +120,6 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
         hintText: LocaleKeys.TextScreen_input_text_here.tr(),
       ),
       enabled: widget.editable,
-      //clipBehavior: Clip.none,
       stylusHandwritingEnabled: true,
       maxLines: null,
       // allow line breaks

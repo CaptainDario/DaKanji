@@ -15,7 +15,8 @@ List<String> selectMaxLengthWord(List<TokenNode> mecabTokens){
   List<String> ret = [mecabTokens.first.surface];
 
   // if this is the beginning of a verb / adjective
-  if(compareMecabOuts(mecabTokens.first.features, mecabPosWordStart)){
+  if(mecabTokens.length > 1 &&
+    compareMecabOuts(mecabTokens.first.features, mecabPosWordStart)){
     for (var i = 1; i < mecabTokens.length; i++) {
     
       // search for all its parts
@@ -37,6 +38,12 @@ List<String> selectMaxLengthWord(List<TokenNode> mecabTokens){
 /// mecabReadings, mecabSurfaces and mecabPOS
 Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab mecab, KanaKit kanaKit){
   
+  // do nothing on "empty" string
+  if(text.isEmpty) return const Tuple3([], [], []);
+  if(text.replaceAll(RegExp(r"\s*"), "") == "") {
+    return Tuple3([" "], [text], [" "]);
+  }
+
   // split the text by newline as mecab does not retain those
   List<String> subTexts = text.split("\n");
 
@@ -44,12 +51,20 @@ Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab 
   List<String> mecabSurfaces = [];
   List<String> mecabPOS = [];
   for (int j=0; j<subTexts.length; j++) {
+
     // analyze text with mecab
     List<TokenNode> analyzedText = mecab.parse(subTexts[j]);
     // remove EOS symbol
     analyzedText.removeLast(); 
 
     for (var i = 0; i < analyzedText.length; i++) {
+
+      // if mecab fails to analyze, return empty
+      if(analyzedText[i].features.isEmpty){
+        mecabReadings.add(" "); mecabSurfaces.add("　"); mecabPOS.add(" ");
+        continue;
+      }
+
       // check if this is a word that can be deconjugated
       List<String> maxLengthWord = selectMaxLengthWord(analyzedText.sublist(i)); 
       mecabSurfaces.add(maxLengthWord.join());

@@ -6,8 +6,10 @@ String iAdjective = "形容詞";
 String naAdjective = "形状詞";
 /// noun
 String noun = "名詞";
-// PoS for particles
+/// PoS for particles
 String particle = "助詞";
+/// White space
+String whiteSpace = "空白";
 
 List<String> mecabPosDeconjugate = [
   verb, iAdjective, naAdjective,
