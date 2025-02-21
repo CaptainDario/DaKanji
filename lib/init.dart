@@ -208,8 +208,8 @@ Future<void> initDocumentsServices(BuildContext context) async {
 /// from GitHub. The context is used for showing a popup 
 Future<void> initDocumentsAssets(BuildContext context) async {
 
-  String documentsDir = g_DakanjiPathManager.dakanjiSupportDirectory.path;
-  debugPrint("documents directory: ${documentsDir.toString()}");
+  String supportDir = g_DakanjiPathManager.dakanjiSupportDirectory.path;
+  debugPrint("documents directory: ${supportDir.toString()}");
 
   // copy assets from assets to documents directory, or download them from GH
   bool downloadAllowed = false;
@@ -219,20 +219,21 @@ Future<void> initDocumentsAssets(BuildContext context) async {
     "assets/dict/examples.isar",
     "assets/dict/krad.isar",
     "assets/dict/radk.isar",
-    "assets/mecab_dict"
+    "assets/mecab_dict",
+    "assets/ml/CNN_single_char"
   ].map((f) => File(f)).toList();
 
   // While getting the assets do not turn of the screen
   WakelockPlus.enable();
   for (var asset in assets) {
-    if(!checkAssetExists(documentsDir, asset)
+    if(!checkAssetExists(supportDir, asset)
       || asset == assets[0] && GetIt.I<UserData>().getNewDict //dict
       || asset == assets[1] && GetIt.I<UserData>().getNewExamples //examples
       || asset == assets[2] && GetIt.I<UserData>().getNewRadicals // krad
       || asset == assets[3] && GetIt.I<UserData>().getNewRadicals // radk
     ){
       await getAsset(
-        asset, p.joinAll([documentsDir, ...asset.uri.pathSegments]),
+        asset, p.joinAll([supportDir, ...asset.uri.pathSegments]),
         g_GithubApiDependenciesRelase, context, !downloadAllowed
       );
       downloadAllowed = true;

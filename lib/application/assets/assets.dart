@@ -222,10 +222,7 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
 
   debugPrint("Downloaded $fileName to ${destination.path}");
 
-  await extractFileToDisk(
-    "${destination.path}.zip",
-    destination.parent.path
-  );
+  await extractFileToDisk("${destination.path}.zip", destination.parent.path);
   debugPrint("Extracted $destination");
   
   // delete the zip file

@@ -267,8 +267,7 @@ flutter:
     - pubspec.yaml
     - CREDITS.md
 
-    # large files
-    # tf lite models
+    # large files (downloaded at app start)
     #- assets/tflite_models/
     #- assets/mecab_dict.zip
     #- assets/dict/

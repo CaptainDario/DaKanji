@@ -39,7 +39,7 @@ Improvements:
 - Keep screen turned on while screensaver is running
 - While downloading initial data, keep screen on
 - Various small UI improvements
-
+- Reduced install size
 Fixed:
 
 - Windows drawing recognition does not work
