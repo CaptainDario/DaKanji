@@ -242,9 +242,6 @@ flutter:
     # reader
     #- plugins/foliate-js/
     #- plugins/foliate-js/ui/
-    # dictionary screen
-    - assets/dict/krad.zip
-    - assets/dict/radk.zip
     # onboarding graphics
     - assets/images/onboarding/onboarding_1_1.vec
     - assets/images/onboarding/onboarding_1_2.vec
@@ -272,8 +269,6 @@ flutter:
 
     # large files
     # tf lite models
-    - assets/tflite_models/
-    # downloadable: mecab
-    - assets/mecab_dict.zip
-    # downloadable: dictionary
-    - assets/dict/
+    #- assets/tflite_models/
+    #- assets/mecab_dict.zip
+    #- assets/dict/
