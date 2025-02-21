@@ -430,6 +430,7 @@ abstract class  LocaleKeys {
   static const TextScreen_pos_prefix = 'TextScreen.pos_prefix';
   static const TextScreen_pos_suffix = 'TextScreen.pos_suffix';
   static const TextScreen_pos_verb = 'TextScreen.pos_verb';
+  static const TextScreen_text_input_placeholder = 'TextScreen.text_input_placeholder';
   static const TextScreen_title = 'TextScreen.title';
   static const TextScreen_tutorial_begin_text = 'TextScreen.tutorial_begin_text';
   static const TextScreen_tutorial_begin_title = 'TextScreen.tutorial_begin_title';

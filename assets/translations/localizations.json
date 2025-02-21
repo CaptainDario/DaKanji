@@ -2370,6 +2370,17 @@
       "es": "Este botón cambia el texto procesado a pantalla completa.",
       "pl": "Ten przycisk przełącza przetwarzany tekst na pełny ekran."
     },
+    "text_input_placeholder": {
+      "en": "Type here...",
+      "de": "Schreiben Sie hier...",
+      "ru": "Введите здесь...",
+      "ja": "ここに入力...",
+      "zh": "在此键入...",
+      "it": "Digitare qui...",
+      "fr": "Tapez ici...",
+      "es": "Escriba aquí...",
+      "pl": "Wpisz tutaj..."
+    },
     "copy_button_copy": {
       "en": "Copied:",
       "de": "Kopiert:",

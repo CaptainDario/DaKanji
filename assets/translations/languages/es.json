@@ -449,6 +449,7 @@
     "pos_prefix": "",
     "pos_suffix": "",
     "pos_verb": "",
+    "text_input_placeholder": "Escriba aqu\u00ed...",
     "title": "Texto",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": "\u00a1Bienvenido al tratamiento de textos!",

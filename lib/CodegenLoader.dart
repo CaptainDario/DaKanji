@@ -2,10 +2,8 @@
 
 // ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters
 
-// Dart imports:
 import 'dart:ui';
 
-// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -399,6 +397,7 @@ class CodegenLoader extends AssetLoader{
   "TextScreen": {
     "copy_button_copy": "已复制：",
     "input_text_here": "在这里输入文字...",
+    "text_input_placeholder": "在此键入...",
     "title": "文本",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
     "tutorial_begin_title": "欢迎来到文本处理!",
@@ -908,6 +907,7 @@ static const Map<String,dynamic> ja = {
     "pos_prefix": "接頭辞",
     "pos_suffix": "接尾辞",
     "pos_verb": "動詞",
+    "text_input_placeholder": "ここに入力...",
     "title": "テキスト",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
     "tutorial_begin_title": "テキストにようこそ!",
@@ -1423,6 +1423,7 @@ static const Map<String,dynamic> de = {
     "pos_prefix": "Präfix",
     "pos_suffix": "Suffix",
     "pos_verb": "Verb",
+    "text_input_placeholder": "Schreiben Sie hier...",
     "title": "Text",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
     "tutorial_begin_title": "Willkommen bei der Textverarbeitung!",
@@ -1886,6 +1887,7 @@ static const Map<String,dynamic> ru = {
   "TextScreen": {
     "copy_button_copy": "Копирование:",
     "input_text_here": "Введите текст здесь...",
+    "text_input_placeholder": "Введите здесь...",
     "title": "Текст",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
     "tutorial_begin_title": "Добро пожаловать в обработку текста!",
@@ -2407,6 +2409,7 @@ static const Map<String,dynamic> pl = {
     "pos_prefix": "przedrostek",
     "pos_suffix": "przyrostek",
     "pos_verb": "czasownik",
+    "text_input_placeholder": "Wpisz tutaj...",
     "title": "Tekst",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
     "tutorial_begin_title": "Zapraszamy do przetwaczanie tekstu!",
@@ -2932,6 +2935,7 @@ static const Map<String,dynamic> en = {
     "pos_prefix": "prefix",
     "pos_suffix": "suffix",
     "pos_verb": "verb",
+    "text_input_placeholder": "Type here...",
     "title": "Text",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the text processing!",
@@ -3431,6 +3435,7 @@ static const Map<String,dynamic> it = {
   "TextScreen": {
     "copy_button_copy": "Copiato:",
     "input_text_here": "Inserire il testo qui...",
+    "text_input_placeholder": "Digitare qui...",
     "title": "Testo",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
     "tutorial_begin_title": "Benvenuti nell'elaborazione del testo!",
@@ -3894,6 +3899,7 @@ static const Map<String,dynamic> fr = {
   "TextScreen": {
     "copy_button_copy": "Copié :",
     "input_text_here": "Entrez le texte ici...",
+    "text_input_placeholder": "Tapez ici...",
     "title": "Texte",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
     "tutorial_begin_title": "Bienvenue dans le traitement de texte !",
@@ -4363,6 +4369,7 @@ static const Map<String,dynamic> es = {
   "TextScreen": {
     "copy_button_copy": "Copiado:",
     "input_text_here": "Introduzca aquí el texto...",
+    "text_input_placeholder": "Escriba aquí...",
     "title": "Texto",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": "¡Bienvenido al tratamiento de textos!",

@@ -449,6 +449,7 @@
     "pos_prefix": "",
     "pos_suffix": "",
     "pos_verb": "",
+    "text_input_placeholder": "\u5728\u6b64\u952e\u5165...",
     "title": "\u6587\u672c",
     "tutorial_begin_text": "\u6211\u4eec\u5c06\u5411\u4f60\u5c55\u793a\u4e00\u4e2a\u5feb\u901f\u6559\u7a0b\uff0c\u8ba9\u4f60\u5f00\u59cb\u3002",
     "tutorial_begin_title": "\u6b22\u8fce\u6765\u5230\u6587\u672c\u5904\u7406!",

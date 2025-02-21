@@ -449,6 +449,7 @@
     "pos_prefix": "Pr\u00e4fix",
     "pos_suffix": "Suffix",
     "pos_verb": "Verb",
+    "text_input_placeholder": "Schreiben Sie hier...",
     "title": "Text",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
     "tutorial_begin_title": "Willkommen bei der Textverarbeitung!",

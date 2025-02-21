@@ -449,6 +449,7 @@
     "pos_prefix": "",
     "pos_suffix": "",
     "pos_verb": "",
+    "text_input_placeholder": "Digitare qui...",
     "title": "Testo",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
     "tutorial_begin_title": "Benvenuti nell'elaborazione del testo!",

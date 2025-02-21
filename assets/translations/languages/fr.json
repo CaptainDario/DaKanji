@@ -449,6 +449,7 @@
     "pos_prefix": "",
     "pos_suffix": "",
     "pos_verb": "",
+    "text_input_placeholder": "Tapez ici...",
     "title": "Texte",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
     "tutorial_begin_title": "Bienvenue dans le traitement de texte !",

@@ -449,6 +449,7 @@
     "pos_prefix": "prefix",
     "pos_suffix": "suffix",
     "pos_verb": "verb",
+    "text_input_placeholder": "Type here...",
     "title": "Text",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the text processing!",
