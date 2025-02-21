@@ -18,7 +18,7 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
               .map((e) => e as String)
               .toList()
       ..showSearchMatchSeparation =
-          json['showSearchMatchSeparation'] as bool? ?? false
+          json['showSearchMatchSeparation'] as bool? ?? true
       ..addToAnkiFromSearchResults =
           json['addToAnkiFromSearchResults'] as bool? ?? false
       ..addToListFromSearchResults =
