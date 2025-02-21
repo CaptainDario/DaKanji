@@ -13,7 +13,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   mecab_for_flutter
   permission_handler_windows
   printing
-  rive_common
   screen_retriever_windows
   share_plus
   sqlite3_flutter_libs

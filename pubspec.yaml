@@ -36,7 +36,6 @@ dependencies:
   get_it: 7.7.0
   provider: 6.1.2
   universal_io: 2.2.2
-  awesome_dialog: 3.2.1
   easy_localization: 3.0.7
   flutter_layout_grid: 2.0.7
   tuple: 2.0.2
@@ -102,6 +101,9 @@ dependencies:
   # packages that I maintain
   mecab_for_flutter: 1.0.4
   ankidroid_for_flutter: 1.0.2
+  awesome_dialog: 
+    git:
+      url: https://github.com/CaptainDario/awesomeDialogs
   liquid_swipe:
     path: ./plugins/DaKanji-dependencies/liquid_swipe_flutter
   database_builder:
@@ -134,8 +136,7 @@ dependencies:
   flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows
   flutter_native_splash: 2.4.1   # android, iOS, web
 
-dependency_overrides:
-  rive: 0.12.4
+#dependency_overrides:
 
 msix_config:
   display_name: DaKanji
