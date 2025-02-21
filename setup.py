@@ -9,10 +9,9 @@ import subprocess
 
 repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases/tags/"
 tmp_dir = "tmp"
-move_to_blobs = ["libtensorflow", "libmecab"]
-move_to_dict  = ["dict", "examples", "krad", "radk"]
-move_to_tf_lite = ["CNN_single_char.tflite"]
-files_to_exclude = ["audios.zip", "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
+files_to_exclude = ["audios.zip",
+                    "CNN_single_char.zip", "dictionary.zip", "examples.zip", "krad.zip", "mecab_dict.zip", "radk.zip",
+                    "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
 files_to_exclude_win = [
     "libmecab_arm64.dylib",
 ]
@@ -90,19 +89,6 @@ def move_assets():
         # move mecab dynamic libraries to blobs to allow standalone testing
         if(f.startswith("libmecab")):
             shutil.copy(f"{tmp_dir}/{f}", "test/text/")
-        
-        # move mecab_dict to assets
-        if(f.startswith("mecab_dict")):
-            shutil.copy(f"{tmp_dir}/mecab_dict.zip", "assets/")
-
-        # move tf lite assets
-        if(f.startswith(tuple(move_to_tf_lite))):
-            shutil.copy(f"{tmp_dir}/{f}", "assets/tflite_models/")
-        
-        
-        # move the dictionary related assets
-        if(f.startswith(tuple(move_to_dict))):
-            shutil.copy(f"{tmp_dir}/{f}", "assets/dict/")
 
 def init_submodules():
 
