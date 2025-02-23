@@ -101,10 +101,14 @@ class _MiscSettingsState extends State<MiscSettings> {
             text: LocaleKeys.SettingsScreen_misc_settings_window_size.tr(),
             icon: Icons.screenshot_monitor,
             onButtonPressed: () async {
-              var info = await windowManager.getSize();
 
-              settings.misc.windowHeight = info.height.toInt();
-              settings.misc.windowWidth = info.width.toInt();
+              Size size = await windowManager.getSize();
+              settings.misc.windowHeight = size.height.toInt();
+              settings.misc.windowWidth  = size.width.toInt();
+
+              Offset position = await windowManager.getPosition();
+              settings.misc.windowPosX = position.dx.toInt();
+              settings.misc.windowPosY = position.dy.toInt();
 
               settings.save();
             },
