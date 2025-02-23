@@ -22,7 +22,6 @@ class SettingsClipboard with ChangeNotifier implements DictionarySearchPriorityI
   // ignore: constant_identifier_names
   static const List<String> d_searchResultSortPriorities = [
     LocaleKeys.SettingsScreen_dict_term,
-    LocaleKeys.SettingsScreen_dict_convert_to_kana,
     LocaleKeys.SettingsScreen_dict_base_form,
   ];
   /// The search result sort priorities
@@ -46,10 +45,6 @@ class SettingsClipboard with ChangeNotifier implements DictionarySearchPriorityI
     _selectedSearchResultSortPriorities = searchResultSortPriorities;
     notifyListeners();
   }
-  /// Should search terms be converted to hiragana when searching
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  bool get convertToHiraganaBeforeSearch => selectedSearchResultSortPriorities
-    .contains(LocaleKeys.SettingsScreen_dict_convert_to_kana);
   /// Should search terms be deconjugated when searching
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool get deconjugateBeforeSearch => selectedSearchResultSortPriorities

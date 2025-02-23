@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/settings/dictionary_search_priority_setting.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -47,33 +48,10 @@ class _TextSettingsState extends State<TextSettings> {
             await settings.save();
           },
         ),
-        // try to deconjugate words before searching
-        ResponsiveCheckBoxTile(
-          text: LocaleKeys.SettingsScreen_dict_base_form.tr(),
-          value: settings.text.searchDeconjugate,
-          leadingIcon: Icons.info_outline,
-          onTileTapped: (value) {
-            setState(() {
-              settings.text.searchDeconjugate = value;
-              settings.save();
-            });
-          },
-          onLeadingIconPressed: () async {
-            AwesomeDialog(
-              context: context,
-              dialogType: DialogType.noHeader,
-              btnOkColor: g_Dakanji_green,
-              btnOkOnPress: (){},
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MarkdownBody(
-                    data: LocaleKeys.SettingsScreen_dict_base_form_description.tr(),
-                  ),
-                )
-              )
-            ).show();
-          },
+        // Search result sort order daggable list
+        DictionarySearchPrioritySetting(
+          settings.text,
+          settings.save
         ),
         // reshow tutorial
         ResponsiveIconButtonTile(
