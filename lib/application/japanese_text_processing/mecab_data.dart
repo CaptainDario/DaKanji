@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:da_kanji_mobile/entities/grammar/pos.dart';
+
 /// verb
 String verb = "動詞";
 /// i adjective
@@ -6,6 +11,8 @@ String iAdjective = "形容詞";
 String naAdjective = "形状詞";
 /// noun
 String noun = "名詞";
+/// pronoun
+String pronoun = "代名詞";
 /// PoS for particles
 String particle = "助詞";
 /// White space
@@ -26,6 +33,21 @@ String nonIndependent = "非自立可能";
 String suffix = "接尾辞";
 /// The verb / adjective that starts this word
 String startPos = "一般";
+
+
+/// Color for showing na-adjectives
+const Color naAdjectiveColor = Color(0xff7f0000);
+/// Color for showing nouns
+const Color nounColor = Color(0xffff0000);
+/// Color for showing verbs
+const Color verbColor = Color(0xffff8c00);
+/// Color for showing i-adjectives
+const Color iAdjectiveColor = Color(0xffffff00);
+/// Color for showing adverbs
+const Color adverbColor = Color(0xff0000cd);
+/// Color for showing particles
+const Color particleColor = Color(0xff00bfff);
+
 
 /// A list of mecab pos combinations that indicate a word start
 List<List<String>> mecabPosWordStart = [
@@ -89,4 +111,24 @@ bool compareMecabOuts(List<String> a, List<List<String>> mecabOuts){
   }
 
   return false;
+}
+
+/// Converts a ipadic style part of speech string to a unique color
+Color? posToColor(String pos){
+  Color? c;
+
+  if(pos.startsWith(naAdjective)) {
+    c = naAdjectiveColor;
+  } else if([noun, pronoun].any((e) => pos.startsWith(e))) {
+    c = nounColor;
+  } else if(pos.startsWith(verb)) {
+    c = verbColor;
+  } else if(pos.startsWith(iAdjective)) {
+    c = iAdjectiveColor;
+  } else if(pos.startsWith(particle)) {
+    c = particleColor;
+  } else{
+    //debugPrint("$pos is an unknown POS");
+  }
+  return c;
 }
