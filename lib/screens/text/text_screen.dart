@@ -292,18 +292,19 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
                                         ),
                                       )
                                     ),
-                                    // delete text button
-                                    AnalysisOptionButton(
-                                      true,
-                                      offIcon: Icons.close,
-                                      onIcon: Icons.close,
-                                      onPressed: onDeletePressed,
-                                    ),
                                     // paste text button
                                     AnalysisOptionButton(
                                       true,
-                                      offIcon: continouslyCopy ? Icons.sync : Icons.paste,
-                                      onIcon: continouslyCopy ? Icons.sync : Icons.paste,
+                                      offIcon: continouslyCopy
+                                        ? Icons.sync
+                                        : mecabTextEditingController!.text.isEmpty
+                                          ? Icons.paste
+                                          : Icons.close,
+                                      onIcon: continouslyCopy
+                                        ? Icons.sync
+                                        : mecabTextEditingController!.text.isEmpty
+                                          ? Icons.paste
+                                          : Icons.close,
                                       onPressed: onPastePressed,
                                       onLongPressed: onPasteLongPressed,
                                     ),
@@ -434,10 +435,19 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Callback that is executed when the user presses the paste button
   void onPastePressed() async {
 
-    ClipboardData? clipboardData = await Clipboard.getData('text/plain');
-    String clipboardString = clipboardData?.text ?? "";
-    mecabTextEditingController.text = clipboardString;
-                                      
+    // if there is text and not continously copying, delete the text
+    if(!continouslyCopy && mecabTextEditingController!.text.isNotEmpty){
+      mecabTextEditingController!.text = "";
+    }
+    // otherwise paste the current clipboard
+    else {
+      ClipboardData? clipboardData = await Clipboard.getData('text/plain');
+      String clipboardString = clipboardData?.text ?? "";
+      mecabTextEditingController!.text = clipboardString;
+    }
+
+   setState(() {});
+
   }
 
   /// Callback that is executed when the user presses the copy button
