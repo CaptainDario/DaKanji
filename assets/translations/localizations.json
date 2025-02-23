@@ -2272,7 +2272,7 @@
       "pl": "Tutaj możesz napisać lub wkleić dowolny tekst. Ten tekst będzie przetwarzany za pomocą różnych narzędzi."
     },
     "tutorial_processed_text_text": {
-      "en": "The processed text will be shown here. You can select parts of the text to look them up in the dictionary.",
+      "en": "You can select parts of the text to look it up in the dictionary.",
       "de": "Der bearbeitete Text wird hier angezeigt. Du kannst Teile des Textes markieren, um sie im Wörterbuch nachzuschlagen.",
       "ru": "Обработанный текст будет показан здесь. Вы можете выделить части текста, чтобы найти их в словаре.",
       "ja": "変換された文章はここに表示されます。単語を選択して、辞書で調べることも可能です",
@@ -2358,17 +2358,6 @@
       "fr": "Ce bouton affiche les mots du texte en différentes couleurs (la signification des couleurs est indiquée dans le manuel).",
       "es": "Este botón muestra las palabras del texto en diferentes colores (el significado de los colores puede verse en el manual).",
       "pl": "Ten przycisk oznacza części mowy w tekscie różnych kolorach (znaczenia kolorów można zobaczyć w instrukcji)."
-    },
-    "tutorial_fullscreen_text": {
-      "en": "This button switches the processed text to full screen.",
-      "de": "Mit dieser Schaltfläche wird der bearbeitete Text als Vollbild angezeigt.",
-      "ru": "Эта кнопка переключает обрабатываемый текст в полноэкранный режим.",
-      "ja": "テキストをフルスクリーンに切り替えます",
-      "zh": "这个按钮将处理后的文本切换到全屏。",
-      "it": "Questo pulsante consente di visualizzare il testo elaborato a schermo intero.",
-      "fr": "Ce bouton permet de faire passer le texte traité en plein écran.",
-      "es": "Este botón cambia el texto procesado a pantalla completa.",
-      "pl": "Ten przycisk przełącza przetwarzany tekst na pełny ekran."
     },
     "text_input_placeholder": {
       "en": "Type here...",
@@ -4340,6 +4329,28 @@
       "fr": "Boutons de sélection de texte",
       "es": "Botones de selección de texto",
       "pl": "Przyciski wyboru tekstu"
+    },
+    "text_paste_button_title": {
+      "en": "Paste button",
+      "de": "Einfügen",
+      "ru": "Кнопка \"Вставить",
+      "ja": "貼り付けボタン",
+      "zh": "粘贴按钮",
+      "it": "Pulsante Incolla",
+      "fr": "Bouton coller",
+      "es": "Botón Pegar",
+      "pl": "Przycisk Wklej"
+    },
+    "text_paste_button_text": {
+      "en": "Pressing this button pastes the content of the clipboard.\nLong-pressing this button switches to auto-paste and always pastes your clipboards content when it changes.",
+      "de": "Durch Drücken dieser Taste wird der Inhalt der Zwischenablage eingefügt.\nLanges Drücken dieser Taste schaltet auf automatisches Einfügen um und fügt den Inhalt der Zwischenablage immer dann ein, wenn er sich ändert.",
+      "ru": "Нажатие этой кнопки вставляет содержимое буфера обмена.\nДлительное нажатие этой кнопки переключает режим автоматической вставки и всегда вставляет содержимое буфера обмена при его изменении.",
+      "ja": "このボタンを押すとクリップボードの内容がペーストされます。\nこのボタンを長押しすると自動貼り付けに切り替わり、クリップボードの内容が変更されると常に貼り付けられます。",
+      "zh": "按下此按钮可粘贴剪贴板的内容。\n长按此按钮可切换到自动粘贴，并在剪贴板内容发生变化时始终进行粘贴。",
+      "it": "Premendo questo pulsante si incolla il contenuto degli appunti.\nPremendo a lungo questo pulsante si passa all'incollamento automatico e si incolla sempre il contenuto degli appunti quando cambia.",
+      "fr": "En appuyant sur ce bouton, vous collez le contenu du presse-papiers.\nUne pression prolongée sur ce bouton permet de passer au collage automatique et de toujours coller le contenu du presse-papiers lorsqu'il est modifié.",
+      "es": "Pulsando este botón se pega el contenido del portapapeles.\nPulsando prolongadamente este botón se cambia a pegado automático y siempre se pega el contenido del portapapeles cuando cambia.",
+      "pl": "Naciśnięcie tego przycisku powoduje wklejenie zawartości schowka.\nDługie naciśnięcie tego przycisku przełącza na automatyczne wklejanie i zawsze wkleja zawartość schowka, gdy się zmieni."
     },
     "text_selection_shrink_title": {
       "en": "Shrink selection",

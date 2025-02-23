@@ -262,6 +262,8 @@ abstract class  LocaleKeys {
   static const ManualScreen_misc_drawer_reorder_heading = 'ManualScreen.misc_drawer_reorder_heading';
   static const ManualScreen_misc_drawer_reorder_text = 'ManualScreen.misc_drawer_reorder_text';
   static const ManualScreen_misc_title = 'ManualScreen.misc_title';
+  static const ManualScreen_text_paste_button_text = 'ManualScreen.text_paste_button_text';
+  static const ManualScreen_text_paste_button_title = 'ManualScreen.text_paste_button_title';
   static const ManualScreen_text_selection_grow_text = 'ManualScreen.text_selection_grow_text';
   static const ManualScreen_text_selection_grow_title = 'ManualScreen.text_selection_grow_title';
   static const ManualScreen_text_selection_left_text = 'ManualScreen.text_selection_left_text';
@@ -435,7 +437,6 @@ abstract class  LocaleKeys {
   static const TextScreen_tutorial_begin_text = 'TextScreen.tutorial_begin_text';
   static const TextScreen_tutorial_begin_title = 'TextScreen.tutorial_begin_title';
   static const TextScreen_tutorial_colors_text = 'TextScreen.tutorial_colors_text';
-  static const TextScreen_tutorial_fullscreen_text = 'TextScreen.tutorial_fullscreen_text';
   static const TextScreen_tutorial_furigana_text = 'TextScreen.tutorial_furigana_text';
   static const TextScreen_tutorial_processed_text_double_tap = 'TextScreen.tutorial_processed_text_double_tap';
   static const TextScreen_tutorial_processed_text_long_press = 'TextScreen.tutorial_processed_text_long_press';
