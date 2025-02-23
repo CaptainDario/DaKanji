@@ -204,7 +204,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
             poupAnimationController: popupAnimationController,
             padding: 8.0,
             constraints: constraints,
-            allowDeconjugation: GetIt.I<Settings>().text.searchDeconjugate,
+            allowDeconjugation: GetIt.I<Settings>().text.deconjugateBeforeSearch,
             onPopupInitialized: (tabController) {
               popupTabController = tabController;
             },
