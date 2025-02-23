@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/settings/dictionary_search_priority_interface.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -16,7 +17,7 @@ part 'settings_dictionary.g.dart';
 /// To update the toJson code run
 /// `flutter pub run build_runner build --delete-conflicting-outputs`
 @JsonSerializable()
-class SettingsDictionary with ChangeNotifier {
+class SettingsDictionary with ChangeNotifier implements  DictionarySearchPriorityInterface{
 
   /// The deafult value for `translationLanguageCodes`
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -87,20 +88,23 @@ class SettingsDictionary with ChangeNotifier {
     LocaleKeys.SettingsScreen_dict_convert_to_kana,
     LocaleKeys.SettingsScreen_dict_base_form,
   ];
-  /// All languages that are available in the dictionary in the useres order
+  /// The search result sort priorities
   @JsonKey(defaultValue: d_searchResultSortPriorities)
+  @override
   List<String> searchResultSortPriorities = d_searchResultSortPriorities;
 
   /// The default value for `selectedSearchResultSortPriorities` 
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
   static const List<String> d_selectedSearchResultSortPriorities = d_searchResultSortPriorities;
-  /// The search result sorting order priorities
+  /// The search result sorting order priorities that are selected
   @JsonKey(defaultValue: d_selectedSearchResultSortPriorities)
   List<String> _selectedSearchResultSortPriorities = d_searchResultSortPriorities;
-  /// The search result sorting order priorities
+  /// The search result sorting order priorities that are selected
+  @override
   List<String> get selectedSearchResultSortPriorities => _selectedSearchResultSortPriorities;
-  /// The search result sorting order priorities
+  /// The search result sorting order priorities that are selected
+  @override
   set selectedSearchResultSortPriorities(List<String> searchResultSortPriorities) {
     _selectedSearchResultSortPriorities = searchResultSortPriorities;
     notifyListeners();
