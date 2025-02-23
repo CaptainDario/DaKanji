@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/init.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,7 @@ import 'package:da_kanji_mobile/entities/feedback_localization.dart';
 import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:window_manager/window_manager.dart';
 
 
 
@@ -30,6 +32,12 @@ Future<void> main() async {
 
   // wait for flutter to initialize
   WidgetsFlutterBinding.ensureInitialized();
+
+  // await desktop setup
+  if(g_desktopPlatform){
+    await windowManager.ensureInitialized();
+    await splashscreenDesktop();
+  }
 
   // register packages
   initLiteRTFlutter();

@@ -67,12 +67,6 @@ Future<bool> init() async {
 
   await initServices();
 
-  // init window Manager
-  if(g_desktopPlatform) {
-    await windowManager.ensureInitialized();
-    desktopWindowSetup();
-  }
-
   // deep links
   await initDeepLinksStream();
 
@@ -253,26 +247,34 @@ bool checkAssetExists(String documentsDir, FileSystemEntity asset){
 
 }
 
-/// Setup the DaKanji window on desktop platforms
-void desktopWindowSetup() {
-  
-  if(kReleaseMode) windowManager.center();
+/// Removes the menu bar and shows square window while the app is loading
+Future<void> splashscreenDesktop() async {
 
-  windowManager.setMinimumSize(g_minDesktopWindowSize);
-  windowManager.setTitle(g_AppTitle);
+  if(!kReleaseMode) await windowManager.center();
+  await windowManager.setAsFrameless();
+  await windowManager.setAlwaysOnTop(true);
+
+}
+
+/// Setup the DaKanji window on desktop platforms
+Future<void> desktopWindowSetup() async {
+
+  await windowManager.setMinimumSize(g_minDesktopWindowSize);
+  await windowManager.setTitle(g_AppTitle);
   
-  windowManager.setSize(Size(
+  await windowManager.setSize(Size(
     GetIt.I<Settings>().misc.windowWidth.toDouble(), 
     GetIt.I<Settings>().misc.windowHeight.toDouble()
   ));
 
-  windowManager.setPosition(Offset(
+  await windowManager.setPosition(Offset(
     GetIt.I<Settings>().misc.windowPosX.toDouble(), 
     GetIt.I<Settings>().misc.windowPosY.toDouble()
   ));
 
-  windowManager.setOpacity(GetIt.I<Settings>().misc.windowOpacity);
-  windowManager.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
+  await windowManager.setOpacity(GetIt.I<Settings>().misc.windowOpacity);
+  await windowManager.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
+  await windowManager.setTitleBarStyle(TitleBarStyle.normal);
 }
 
 /// Tests all TF Lite models for the backends that are available on the device

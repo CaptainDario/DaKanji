@@ -119,7 +119,10 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     // migrate data if necessary
-    migrate(GetIt.I<UserData>().versionUsed, g_Version); 
+    migrate(GetIt.I<UserData>().versionUsed, g_Version);
+
+    // setup is done move the desktop window
+    await desktopWindowSetup();
   }
 
   /// Opens a popup that informs the user that an update is available
