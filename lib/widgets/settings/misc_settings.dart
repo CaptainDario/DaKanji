@@ -113,7 +113,7 @@ class _MiscSettingsState extends State<MiscSettings> {
         if(g_desktopPlatform)
           ResponsiveCheckBoxTile(
             value: settings.misc.alwaysSaveWindowSize,
-            text: LocaleKeys.SettingsScreen_misc_settings_window_size.tr(),
+            text: LocaleKeys.SettingsScreen_misc_settings_always_save_window_size.tr(),
             onTileTapped: (bool value) async {
               settings.misc.alwaysSaveWindowSize = value;
               settings.save();
@@ -123,7 +123,7 @@ class _MiscSettingsState extends State<MiscSettings> {
         if(g_desktopPlatform)
           ResponsiveCheckBoxTile(
             value: settings.misc.alwaysSaveWindowPosition,
-            text: LocaleKeys.SettingsScreen_misc_settings_window_size.tr(),
+            text: LocaleKeys.SettingsScreen_misc_settings_always_save_window_position.tr(),
             onTileTapped: (bool value) async {
               settings.misc.alwaysSaveWindowPosition = value;
               settings.save();

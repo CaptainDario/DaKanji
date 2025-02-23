@@ -2380,90 +2380,6 @@
       "fr": "Copié :",
       "es": "Copiado:",
       "pl": "Skopiowane:"
-    },
-    "pos_suffix": {
-      "en": "suffix",
-      "de": "Suffix",
-      "ja": "接尾辞",
-      "pl": "przyrostek"
-    },
-    "pos_na_adj": {
-      "en": "na-adjective",
-      "de": "na-Adjektiv",
-      "ja": "な形容詞",
-      "pl": "przymiotnik na-"
-    },
-    "pos_noun": {
-      "en": "noun",
-      "de": "Substantiv",
-      "ja": "名詞",
-      "pl": "rzeczownik"
-    },
-    "pos_prefix": {
-      "en": "prefix",
-      "de": "Präfix",
-      "ja": "接頭辞",
-      "pl": "przedrostek"
-    },
-    "pos_verb": {
-      "en": "verb",
-      "de": "Verb",
-      "ja": "動詞",
-      "pl": "czasownik"
-    },
-    "pos_i_adjective": {
-      "en": "i-adjective",
-      "de": "i-Adjektiv",
-      "ja": "い形容詞",
-      "pl": "przymiotnik i-"
-    },
-    "pos_adverb": {
-      "en": "adverb",
-      "de": "Adverb",
-      "ja": "副詞",
-      "pl": "przysłowek"
-    },
-    "pos_adnominal": {
-      "en": "adnominal",
-      "de": "Adnominal",
-      "ja": "連体詞",
-      "pl": "przydawka"
-    },
-    "pos_conjunction": {
-      "en": "conjunction",
-      "de": "Konjunktion",
-      "ja": "接続詞",
-      "pl": "spójnik"
-    },
-    "pos_particle": {
-      "en": "particle",
-      "de": "Partikel",
-      "ja": "助詞",
-      "pl": "partykuła"
-    },
-    "pos_auxillary_verb": {
-      "en": "auxilary verb",
-      "de": "Hilfsverb",
-      "ja": "助動詞",
-      "pl": "czasownik pomocniczy"
-    },
-    "pos_exclamation": {
-      "en": "exclamation",
-      "de": "Ausruf",
-      "ja": "感嘆詞",
-      "pl": "wykrzyknienie"
-    },
-    "pos_filler": {
-      "en": "filler",
-      "de": "Füller",
-      "ja": "つなぎ言葉",
-      "pl": "wypełniacz"
-    },
-    "pos_interjection": {
-      "en": "interjection",
-      "de": "Zwischenruf",
-      "ja": "間投詞",
-      "pl": "wyraz cząstkowy"
     }
   },
   "Webpage": {
@@ -3555,6 +3471,28 @@
       "fr": "Sauvegarder la taille actuelle de la fenêtre",
       "es": "Guardar el tamaño actual de la ventana",
       "pl": "Zapisz bieżący rozmiar okna"
+    },
+    "misc_settings_always_save_window_size": {
+      "en": "Save window size on resize",
+      "de": "Fenstergröße bei Größenänderung speichern",
+      "ru": "Сохранение размера окна при изменении размера",
+      "ja": "リサイズ時にウィンドウサイズを保存",
+      "zh": "调整大小时保存窗口大小",
+      "it": "Salvataggio delle dimensioni della finestra in caso di ridimensionamento",
+      "fr": "Sauvegarde de la taille de la fenêtre lors du redimensionnement",
+      "es": "Guardar el tamaño de la ventana al cambiar el tamaño",
+      "pl": "Zapisywanie rozmiaru okna przy zmianie rozmiaru"
+    },
+    "misc_settings_always_save_window_position": {
+      "en": "Save window position on move",
+      "de": "Fensterposition beim Verschieben speichern",
+      "ru": "Сохранение позиции окна при перемещении",
+      "ja": "移動時のウィンドウ位置の保存",
+      "zh": "移动时保存窗口位置",
+      "it": "Salva la posizione della finestra durante lo spostamento",
+      "fr": "Sauvegarde de la position de la fenêtre lors d'un déplacement",
+      "es": "Guardar la posición de la ventana al moverla",
+      "pl": "Zapisywanie pozycji okna podczas przenoszenia"
     },
     "misc_language": {
       "en": "language",
