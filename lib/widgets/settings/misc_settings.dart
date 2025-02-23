@@ -119,6 +119,16 @@ class _MiscSettingsState extends State<MiscSettings> {
               settings.save();
             },
           ),
+        // always save window position
+        if(g_desktopPlatform)
+          ResponsiveCheckBoxTile(
+            value: settings.misc.alwaysSaveWindowPosition,
+            text: LocaleKeys.SettingsScreen_misc_settings_window_size.tr(),
+            onTileTapped: (bool value) async {
+              settings.misc.alwaysSaveWindowPosition = value;
+              settings.save();
+            },
+          ),
         // window always on top
         if(g_desktopPlatform)
           ResponsiveCheckBoxTile(

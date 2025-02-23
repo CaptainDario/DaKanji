@@ -13,6 +13,8 @@ SettingsMisc _$SettingsMiscFromJson(Map<String, dynamic> json) => SettingsMisc()
   ..selectedTheme = json['selectedTheme'] as String
   ..windowWidth = (json['windowWidth'] as num?)?.toInt() ?? 480
   ..windowHeight = (json['windowHeight'] as num?)?.toInt() ?? 720
+  ..windowPosX = (json['windowPosX'] as num?)?.toInt() ?? 480
+  ..windowPosY = (json['windowPosY'] as num?)?.toInt() ?? 480
   ..alwaysOnTop = json['alwaysOnTop'] as bool
   ..alwaysSaveWindowSize = json['alwaysSaveWindowSize'] as bool
   ..alwaysSaveWindowPosition = json['alwaysSaveWindowPosition'] as bool
@@ -31,6 +33,8 @@ Map<String, dynamic> _$SettingsMiscToJson(SettingsMisc instance) =>
       'selectedTheme': instance.selectedTheme,
       'windowWidth': instance.windowWidth,
       'windowHeight': instance.windowHeight,
+      'windowPosX': instance.windowPosX,
+      'windowPosY': instance.windowPosY,
       'alwaysOnTop': instance.alwaysOnTop,
       'alwaysSaveWindowSize': instance.alwaysSaveWindowSize,
       'alwaysSaveWindowPosition': instance.alwaysSaveWindowPosition,

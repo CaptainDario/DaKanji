@@ -144,6 +144,22 @@ class SettingsMisc with ChangeNotifier {
   @JsonKey(defaultValue: d_windowHeight)
   int windowHeight = d_windowHeight;
 
+  /// The default value for `windowPosX`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowPosX = 0;
+  /// the x position where the desktop window should be created
+  @JsonKey(defaultValue: d_windowPosX)
+  int windowPosX = d_windowPosX;
+
+  /// The default value for `windowPosY`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowPosY = 0;
+  /// the y position where the desktop window should be created
+  @JsonKey(defaultValue: d_windowPosY)
+  int windowPosY = d_windowPosY;
+
   /// should this window always be shown on top of other windows
   @JsonKey(defaultValue: false)
   bool _alwaysOnTop = false;
