@@ -314,7 +314,14 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
                                       onIcon: Icons.copy,
                                       onPressed: onCopyPressed,
                                     ),
-                                    
+                                    // info button
+                                    AnalysisOptionButton(
+                                      true,
+                                      offIcon: Icons.info_outline,
+                                      onIcon: Icons.info_outline,
+                                      onPressed: onInfoPressed,
+                                    ),
+                                    // text navigation button
                                     if(GetIt.I<Settings>().text.selectionButtonsEnabled)
                                       ...[
                                         // shrink selection button
@@ -399,19 +406,29 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
     });
   }
 
-  /// Callback when the user long presses the a word in the text
-  void onCustomSelectableTextLongPressed(TextSelection selection){
-    // TODO something
+  /// Callback when the user presses the info button
+  void onInfoPressed(){
+
+    if(mecabTextEditingController!.selection.isCollapsed) return;
+
     // remove current snackbar if any
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
-  }
 
-  /// Callback that is executed when the user presses the paste button
-  void onDeletePressed() async {
+    // get the pos of the current selection
+    int tokenIdx = mecabTextEditingController!.getTokenAtTextIndex(
+      mecabTextEditingController!.selection.baseOffset)+1;
+    String posText = mecabTextEditingController!.mecabPOS[tokenIdx]
+      .split("-")
+      .where((pos) => pos != "*")
+      .join(", ");
 
-    mecabTextEditingController.text = "";
-                                      
+    // show the PoS of the currently selected work
+    Flushbar(
+      messageText: SelectableText(posText),
+      duration: const Duration(milliseconds: 5000),)
+    .show(context);
+
   }
 
   /// Callback that is executed when the user presses the paste button
