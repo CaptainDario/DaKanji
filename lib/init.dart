@@ -250,6 +250,7 @@ bool checkAssetExists(String documentsDir, FileSystemEntity asset){
 /// Removes the menu bar and shows square window while the app is loading
 Future<void> splashscreenDesktop() async {
 
+  await windowManager.setSize(const Size(400, 400));
   if(!kReleaseMode) await windowManager.center();
   await windowManager.setAsFrameless();
   await windowManager.setAlwaysOnTop(true);
