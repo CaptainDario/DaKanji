@@ -92,7 +92,9 @@ Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab 
   
     }
     // readd new lines
-    mecabReadings.add(""); mecabSurfaces.add("\n"); mecabPOS.add("");
+    if(subTexts.length-1 != j){
+      mecabReadings.add(""); mecabSurfaces.add("\n"); mecabPOS.add("");
+    }
   }
 
   return Tuple3(mecabReadings, mecabSurfaces, mecabPOS);
