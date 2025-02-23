@@ -387,7 +387,7 @@
     "misc_language": "langue (@:SettingsScreen.restarts_app)",
     "misc_settings_always_save_window_position": "Sauvegarde de la position de la fen\u00eatre lors d'un d\u00e9placement",
     "misc_settings_always_save_window_size": "Sauvegarde de la taille de la fen\u00eatre lors du redimensionnement",
-    "misc_settings_window_size": "Sauvegarder la taille actuelle de la fen\u00eatre",
+    "misc_settings_window_size": "Sauvegarde de la taille et de la position actuelles de la fen\u00eatre",
     "misc_sharing_pattern": "Sch\u00e9ma \u00e0 utiliser lors du partage de contenu.",
     "misc_theme": "th\u00e8me (@:SettingsScreen.restarts_app)",
     "misc_title": "Divers",

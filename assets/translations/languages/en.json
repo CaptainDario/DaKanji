@@ -387,7 +387,7 @@
     "misc_language": "language",
     "misc_settings_always_save_window_position": "Save window position on move",
     "misc_settings_always_save_window_size": "Save window size on resize",
-    "misc_settings_window_size": "Save current window size",
+    "misc_settings_window_size": "Save current window size and position",
     "misc_sharing_pattern": "Schema to use when sharing content.",
     "misc_theme": "theme (@:SettingsScreen.restarts_app)",
     "misc_title": "Miscellaneous",

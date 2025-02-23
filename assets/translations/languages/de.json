@@ -387,7 +387,7 @@
     "misc_language": "Sprache (@:SettingsScreen.restarts_app)",
     "misc_settings_always_save_window_position": "Fensterposition beim Verschieben speichern",
     "misc_settings_always_save_window_size": "Fenstergr\u00f6\u00dfe bei Gr\u00f6\u00dfen\u00e4nderung speichern",
-    "misc_settings_window_size": "Speicher die momentanige Fenster gr\u00f6\u00dfe",
+    "misc_settings_window_size": "Aktuelle Fenstergr\u00f6\u00dfe und -position speichern",
     "misc_sharing_pattern": "Schema wenn Inhalten geteilt werden.",
     "misc_theme": "Thema (@:SettingsScreen.restarts_app)",
     "misc_title": "Verschiedenes",

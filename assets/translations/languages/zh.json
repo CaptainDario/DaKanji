@@ -387,7 +387,7 @@
     "misc_language": "\u8bed\u8a00 (@:SettingsScreen.restarts_app)",
     "misc_settings_always_save_window_position": "\u79fb\u52a8\u65f6\u4fdd\u5b58\u7a97\u53e3\u4f4d\u7f6e",
     "misc_settings_always_save_window_size": "\u8c03\u6574\u5927\u5c0f\u65f6\u4fdd\u5b58\u7a97\u53e3\u5927\u5c0f",
-    "misc_settings_window_size": "\u4fdd\u5b58\u5f53\u524d\u7a97\u53e3\u5c3a\u5bf8",
+    "misc_settings_window_size": "\u4fdd\u5b58\u5f53\u524d\u7a97\u53e3\u5927\u5c0f\u548c\u4f4d\u7f6e",
     "misc_sharing_pattern": "\u5171\u4eab\u5185\u5bb9\u65f6\u4f7f\u7528\u7684\u6a21\u5f0f\u3002",
     "misc_theme": "\u4e3b\u9898 (@:SettingsScreen.restarts_app)",
     "misc_title": "\u6742\u9879",

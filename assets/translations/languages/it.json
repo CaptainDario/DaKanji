@@ -387,7 +387,7 @@
     "misc_language": "lingua (@:SettingsScreen.restarts_app)",
     "misc_settings_always_save_window_position": "Salva la posizione della finestra durante lo spostamento",
     "misc_settings_always_save_window_size": "Salvataggio delle dimensioni della finestra in caso di ridimensionamento",
-    "misc_settings_window_size": "Salva la dimensione attuale della finestra",
+    "misc_settings_window_size": "Salva la dimensione e la posizione della finestra corrente",
     "misc_sharing_pattern": "Schema da utilizzare per la condivisione dei contenuti.",
     "misc_theme": "tema (@:SettingsScreen.restarts_app)",
     "misc_title": "Varie",

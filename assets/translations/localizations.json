@@ -3462,15 +3462,15 @@
       "pl": "Motyw(@:SettingsScreen.restarts_app)"
     },
     "misc_settings_window_size": {
-      "en": "Save current window size",
-      "de": "Speicher die momentanige Fenster größe",
-      "ru": "Сохранить текущий размер окна",
-      "ja": "現在のウィンドウサイズを保存",
-      "zh": "保存当前窗口尺寸",
-      "it": "Salva la dimensione attuale della finestra",
-      "fr": "Sauvegarder la taille actuelle de la fenêtre",
-      "es": "Guardar el tamaño actual de la ventana",
-      "pl": "Zapisz bieżący rozmiar okna"
+      "en": "Save current window size and position",
+      "de": "Aktuelle Fenstergröße und -position speichern",
+      "ru": "Сохранить текущий размер и положение окна",
+      "ja": "現在のウィンドウのサイズと位置を保存する",
+      "zh": "保存当前窗口大小和位置",
+      "it": "Salva la dimensione e la posizione della finestra corrente",
+      "fr": "Sauvegarde de la taille et de la position actuelles de la fenêtre",
+      "es": "Guardar el tamaño y la posición actuales de la ventana",
+      "pl": "Zapisywanie bieżącego rozmiaru i położenia okna"
     },
     "misc_settings_always_save_window_size": {
       "en": "Save window size on resize",
