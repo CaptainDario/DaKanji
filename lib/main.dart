@@ -23,7 +23,8 @@ import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
 
-// ignore: unused_import
+
+
 
 Future<void> main() async {
 

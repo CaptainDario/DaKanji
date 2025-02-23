@@ -95,14 +95,6 @@ class SettingsMisc with ChangeNotifier {
     notifyListeners();
   }
 
-  /// The default value for `windowWidth`
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  // ignore: constant_identifier_names
-  static const int d_windowWidth = 480;
-  /// width of the current window
-  @JsonKey(defaultValue: d_windowWidth)
-  int windowWidth = d_windowWidth;
-
   /// The default value for `fontSizeScale`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
@@ -117,15 +109,6 @@ class SettingsMisc with ChangeNotifier {
     _fontSizeScale = fontSizeScale;
     notifyListeners();
   }
-
-  /// The default value for `windowHeight`
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  // ignore: constant_identifier_names
-  static const int d_windowHeight = 720;
-  /// height of the current window
-  @JsonKey(defaultValue: d_windowWidth)
-  int windowHeight = d_windowHeight;
-
 
   /// The default value for `selectedTheme` 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -145,6 +128,21 @@ class SettingsMisc with ChangeNotifier {
     notifyListeners();
   }
 
+  /// The default value for `windowWidth`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowWidth = 480;
+  /// width of the current window
+  @JsonKey(defaultValue: d_windowWidth)
+  int windowWidth = d_windowWidth;
+
+  /// The default value for `windowHeight`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowHeight = 720;
+  /// height of the current window
+  @JsonKey(defaultValue: d_windowHeight)
+  int windowHeight = d_windowHeight;
 
   /// should this window always be shown on top of other windows
   @JsonKey(defaultValue: false)
@@ -157,6 +155,27 @@ class SettingsMisc with ChangeNotifier {
     notifyListeners();
   }
 
+  /// should the current window size always be saved when changing the size
+  @JsonKey(defaultValue: false)
+  bool _alwaysSaveWindowSize = false;
+  /// should the current window size always be saved when changing the size
+  bool get alwaysSaveWindowSize => _alwaysSaveWindowSize;
+  /// should the current window size always be saved when changing the size
+  set alwaysSaveWindowSize(bool newAlwaysSaveWindowSize) {
+    _alwaysSaveWindowSize = newAlwaysSaveWindowSize;
+    notifyListeners();
+  }
+
+  /// should the current window position always be saved when moving the window
+  @JsonKey(defaultValue: false)
+  bool _alwaysSaveWindowPosition = false;
+  /// should the current window position always be saved when moving the window
+  bool get alwaysSaveWindowPosition => _alwaysSaveWindowPosition;
+  /// should the current window position always be saved when moving the window
+  set alwaysSaveWindowPosition(bool newAlwaysSaveWindowPosition) {
+    _alwaysSaveWindowPosition = newAlwaysSaveWindowPosition;
+    notifyListeners();
+  }
 
   /// The window's opacity
   @JsonKey(defaultValue: 1.0)

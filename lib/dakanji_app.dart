@@ -39,6 +39,13 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    windowManager.addListener(this);
+  }
+
+  @override
+  void dispose() {
+    windowManager.removeListener(this);
+    super.dispose();
   }
 
   @override
@@ -64,6 +71,20 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
     super.onWindowClose();
     windowManager.destroy();
     
+  }
+  
+  @override
+  void onWindowResize() async {
+
+    super.onWindowResize();
+    
+    if(GetIt.I<Settings>().misc.alwaysSaveWindowSize){
+      Size currentSize = await windowManager.getSize();
+      GetIt.I<Settings>().misc.windowHeight = currentSize.height.toInt();
+      GetIt.I<Settings>().misc.windowWidth = currentSize.width.toInt();
+      GetIt.I<Settings>().save();
+    }
+
   }
   
   @override
