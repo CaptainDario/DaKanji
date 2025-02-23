@@ -86,6 +86,20 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
     }
 
   }
+
+  @override
+  void onWindowMove() async {
+
+    super.onWindowMove();
+
+    if(GetIt.I<Settings>().misc.alwaysSaveWindowPosition){
+      Offset currentPos = await windowManager.getPosition();
+      GetIt.I<Settings>().misc.windowPosX = currentPos.dx.toInt();
+      GetIt.I<Settings>().misc.windowPosY = currentPos.dy.toInt();
+      GetIt.I<Settings>().save();
+    }
+
+  }
   
   @override
   Widget build(BuildContext context) {
