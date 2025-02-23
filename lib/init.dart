@@ -266,7 +266,10 @@ void desktopWindowSetup() {
     GetIt.I<Settings>().misc.windowHeight.toDouble()
   ));
 
-  if(kReleaseMode) windowManager.center();
+  windowManager.setPosition(Offset(
+    GetIt.I<Settings>().misc.windowPosX.toDouble(), 
+    GetIt.I<Settings>().misc.windowPosY.toDouble()
+  ));
 
   windowManager.setOpacity(GetIt.I<Settings>().misc.windowOpacity);
   windowManager.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
