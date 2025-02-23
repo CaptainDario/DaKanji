@@ -1,11 +1,10 @@
 // Package imports:
-import 'package:da_kanji_mobile/application/japanese_text_processing/mecab_data.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 
-
-
+// Project imports:
+import 'package:da_kanji_mobile/application/japanese_text_processing/mecab_data.dart';
 
 /// Finds all parts of the given `word` and deconjugates them
 List<String> getDeconjugatedTerms(String word){

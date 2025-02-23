@@ -1,11 +1,11 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/settings/dictionary_search_priority_interface.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:json_annotation/json_annotation.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/entities/settings/dictionary_search_priority_interface.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 part 'settings_dictionary.g.dart';

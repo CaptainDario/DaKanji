@@ -1,11 +1,13 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
 import 'package:da_kanji_mobile/application/text/mecab_text_field_formatter.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// Widget that implements custom text selection and furigana rendering
 class CustomSelectableText extends StatefulWidget {

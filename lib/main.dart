@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/init.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +13,7 @@ import 'package:fvp/fvp.dart' as fvp;
 import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
+import 'package:window_manager/window_manager.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
@@ -22,11 +22,8 @@ import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/entities/feedback_localization.dart';
 import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
-import 'package:window_manager/window_manager.dart';
-
-
-
 
 Future<void> main() async {
 

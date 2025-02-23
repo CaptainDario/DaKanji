@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/entities/dictionary_filters/filter_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/entities/dictionary_filters/filter_options.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
@@ -30,8 +30,6 @@ import 'package:da_kanji_mobile/widgets/dictionary/filter_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/radical_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
-
-
 
 /// The search widget for the dictionary.
 /// 

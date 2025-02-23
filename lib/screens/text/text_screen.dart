@@ -1,19 +1,21 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:async';
 
-import 'package:another_flushbar/flushbar.dart';
-import 'package:clipboard_watcher/clipboard_watcher.dart';
-import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:another_flushbar/flushbar.dart';
+import 'package:clipboard_watcher/clipboard_watcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:universal_io/io.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
@@ -25,9 +27,6 @@ import 'package:da_kanji_mobile/widgets/text/analysis_option_button.dart';
 import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
-import 'package:universal_io/io.dart';
-
-
 
 /// The "draw"-screen.
 /// 

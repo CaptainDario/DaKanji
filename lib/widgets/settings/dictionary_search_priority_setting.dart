@@ -1,11 +1,14 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+
+// Project imports:
 import 'package:da_kanji_mobile/entities/settings/dictionary_search_priority_interface.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_filter_chips.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-
-
 
 class DictionarySearchPrioritySetting extends StatefulWidget {
 

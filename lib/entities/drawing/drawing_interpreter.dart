@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,6 +15,7 @@ import 'package:da_kanji_mobile/entities/drawing/drawing_isolate.dart';
 import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/entities/tf_lite/inference_stats.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/globals.dart';
 
 /// The tf lite interpreter to recognize the hand drawn kanji characters.
 /// 

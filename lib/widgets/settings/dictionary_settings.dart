@@ -1,7 +1,6 @@
 // Dart imports:
 
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/settings/dictionary_search_priority_setting.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -25,6 +24,7 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_til
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_input_field_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
+import 'package:da_kanji_mobile/widgets/settings/dictionary_search_priority_setting.dart';
 import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/info_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';

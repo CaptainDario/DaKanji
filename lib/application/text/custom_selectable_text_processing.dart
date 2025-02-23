@@ -1,10 +1,10 @@
 // Package imports:
-import 'package:da_kanji_mobile/application/japanese_text_processing/mecab_data.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:tuple/tuple.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/application/japanese_text_processing/mecab_data.dart';
 
 /// Finds and returns the maximum length word given by the list `mecabTokens`.
 /// The search starts at the first element of `mecabTokens`

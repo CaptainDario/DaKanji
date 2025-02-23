@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/settings/dictionary_search_priority_setting.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -19,6 +18,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
+import 'package:da_kanji_mobile/widgets/settings/dictionary_search_priority_setting.dart';
 
 class TextSettings extends StatefulWidget {
     
