@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'dart:async';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:clipboard_watcher/clipboard_watcher.dart';
 import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
 import 'package:flutter/foundation.dart';
@@ -86,7 +87,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   FocusNode textinputFocusNode = FocusNode();
 
   /// custom [TextEditingController] for the text input
-  late MecabTextEditingController mecabTextEditingController;
+  MecabTextEditingController? mecabTextEditingController;
+  
   /// the currently selected text
   String selectedText = "";
   /// the text that is currently in the input field
@@ -151,8 +153,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
 
     String data = (await Clipboard.getData('text/plain'))?.text ?? "";
     
-    if(data != "" && data != mecabTextEditingController.text){
-      mecabTextEditingController.text = data;
+    if(data != "" && data != mecabTextEditingController!.text){
+      mecabTextEditingController!.text = data;
     }
   }
 
@@ -233,9 +235,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
                                   showColors: colorizePos,
                                   init: (controller) {
                                     mecabTextEditingController = controller;
+                                    WidgetsBinding.instance.addPostFrameCallback(
+                                      (_) => setState(() {}));
                                   },
                                   onSelectionChange: onCustomSelectableTextChange,
-                                  onLongPress: onCustomSelectableTextLongPressed,
                                   onTapOutsideOfText: (Offset location) {
                                     if(popupAnimationController.isCompleted){
                                       popupAnimationController.reverse();
@@ -246,7 +249,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
                             ),
                           ),
                           // tools
-                          Align(
+                          if(mecabTextEditingController != null)
+                            Align(
                             alignment: Alignment.centerRight,
                             child: Scrollbar(
                               controller: _analysisOptionsScrollController,
@@ -401,7 +405,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
     // get the part that the user selected
     
     setState(() {
-      selectedText = mecabTextEditingController.text.substring(
+      selectedText = mecabTextEditingController!.text.substring(
         selection.baseOffset, selection.extentOffset
       );
     });
@@ -453,11 +457,11 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Callback that is executed when the user presses the copy button
   void onCopyPressed() {
 
-    final s = mecabTextEditingController.getStartAndEnd();
+    final s = mecabTextEditingController!.getStartAndEnd();
 
-    String currentSelection = mecabTextEditingController.text.substring(
+    String currentSelection = mecabTextEditingController!.text.substring(
       s.item1 == -1 ? 0 : s.item1,
-      s.item2 == -1 ? mecabTextEditingController.text.length : s.item2);
+      s.item2 == -1 ? mecabTextEditingController!.text.length : s.item2);
     
     Clipboard.setData(ClipboardData(text:currentSelection)).then((_){
       // ignore: use_build_context_synchronously
@@ -483,7 +487,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Callback that is executed when the shrink button is pressed
   void onShrinkPressed(){
 
-    mecabTextEditingController.modifySelectionByTokens(-1);
+    mecabTextEditingController!.modifySelectionByTokens(-1);
     assurePopupOpen();
 
   }
@@ -491,7 +495,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Callback that is executed when the shrink button is long pressed
   void onShrinkLongPressed(){
 
-    mecabTextEditingController.modifySelectionByCharacters(-1);
+    mecabTextEditingController!.modifySelectionByCharacters(-1);
     assurePopupOpen();
 
   }
@@ -499,7 +503,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Callback that is executed when the grow button is pressed
   void onGrowPressed(){
 
-    mecabTextEditingController.modifySelectionByTokens(1);
+    mecabTextEditingController!.modifySelectionByTokens(1);
     assurePopupOpen();
 
   }
@@ -507,7 +511,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Callback that is executed when the grow button is long pressed
   void onGrowLongPressed(){
 
-    mecabTextEditingController.modifySelectionByCharacters(1);
+    mecabTextEditingController!.modifySelectionByCharacters(1);
     assurePopupOpen();
 
   }
@@ -515,7 +519,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Callback that is executed when the previous button is pressed
   void onPreviousPressed(){
 
-    mecabTextEditingController.moveSelectionByTokens(-1);
+    mecabTextEditingController!.moveSelectionByTokens(-1);
     assurePopupOpen();
 
   }
@@ -523,7 +527,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Callback that is executed when the previous button is long pressed
   void onPreviousLongPressed(){
 
-    mecabTextEditingController.moveSelectionByCharacters(-1);
+    mecabTextEditingController!.moveSelectionByCharacters(-1);
     assurePopupOpen();
 
   }
@@ -531,7 +535,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Callback that is executed when the next button is pressed
   void onNextPressed(){
 
-    mecabTextEditingController.moveSelectionByTokens(1);
+    mecabTextEditingController!.moveSelectionByTokens(1);
     assurePopupOpen();
 
   }
@@ -539,7 +543,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Callback that is executed when the next button is long pressed
   void onNextLongPressed(){
 
-    mecabTextEditingController.moveSelectionByCharacters(1);
+    mecabTextEditingController!.moveSelectionByCharacters(1);
     assurePopupOpen();
 
   }
