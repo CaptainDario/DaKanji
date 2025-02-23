@@ -25,6 +25,7 @@ Improvements:
   - Vastly improved selection handling
   - Only show furigana for kanjis
   - Space text instead of resizing furigana
+  - Option to automatically read from clipboard #92
 - Dictionary
   - New deconjugation engine, handles more deconjugation patterns
   - Improved searching
