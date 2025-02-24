@@ -381,7 +381,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   void onTextFieldInit(controller) {
 
     mecabTextEditingController = controller;
-    if(context.read<Settings>().text.saveTextAcrossSessions){
+    if(!kDebugMode && context.read<Settings>().text.saveTextAcrossSessions){
       mecabTextEditingController!.text = context.read<Settings>().text.text;
     }
 
