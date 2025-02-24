@@ -12,11 +12,7 @@ SettingsClipboard _$SettingsClipboardFromJson(Map<String, dynamic> json) =>
           (json['searchResultSortPriorities'] as List<dynamic>?)
                   ?.map((e) => e as String)
                   .toList() ??
-              [
-                'SettingsScreen.dict_term',
-                'SettingsScreen.dict_convert_to_kana',
-                'SettingsScreen.dict_base_form'
-              ]
+              ['SettingsScreen.dict_term', 'SettingsScreen.dict_base_form']
       ..selectedSearchResultSortPriorities =
           (json['selectedSearchResultSortPriorities'] as List<dynamic>)
               .map((e) => e as String)
