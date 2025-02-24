@@ -27,7 +27,7 @@ class DictionaryAltSearchFlushbar {
   Flushbar build(BuildContext context) {
 
     return Flushbar(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       messageText: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

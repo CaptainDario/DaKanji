@@ -444,8 +444,9 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
     // show the PoS of the currently selected work
     Flushbar(
       messageText: SelectableText(posText),
-      duration: const Duration(milliseconds: 5000),)
-    .show(context);
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      duration: const Duration(milliseconds: 5000),
+    ).show(context);
 
   }
 
