@@ -26,6 +26,7 @@ Improvements:
   - Only show furigana for kanjis
   - Space text instead of resizing furigana
   - Option to automatically read from clipboard #92
+  - Automatically save popup winow size and position
 - Dictionary
   - New deconjugation engine, handles more deconjugation patterns
   - Improved searching
