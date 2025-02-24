@@ -1,8 +1,10 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_popup.dart';
+import 'package:provider/provider.dart';
 
 /// A widget that shows `TextAnalysisPopup` over its `children`.
 class TextAnalysisStack extends StatefulWidget {
@@ -60,7 +62,15 @@ class _TextAnalysisStackState extends State<TextAnalysisStack> with TickerProvid
 
   @override
   void initState() {
+
+    // read the last popup settings from disk
+    popupPositionLeft = context.read<Settings>().text.windowPosX.toDouble();
+    popupPositionTop  = context.read<Settings>().text.windowPosY.toDouble();
+    popupSizeWidth    = context.read<Settings>().text.windowWidth.toDouble();
+    popupSizeHeight   = context.read<Settings>().text.windowHeight.toDouble();
+
     super.initState();
+  
   }
 
   @override
@@ -128,6 +138,12 @@ class _TextAnalysisStackState extends State<TextAnalysisStack> with TickerProvid
                           popupPositionTop  += event.delta.dy;
                         }
                       });
+
+                      // save current popup window position
+                      context.read<Settings>().text.windowPosX = popupPositionLeft.toInt();
+                      context.read<Settings>().text.windowPosY = popupPositionTop.toInt();
+                      context.read<Settings>().save();
+                      
                     },
                     onResizedViaCorner: (event) {
                       setState(() {
@@ -145,6 +161,11 @@ class _TextAnalysisStackState extends State<TextAnalysisStack> with TickerProvid
                           popupSizeHeight += event.delta.dy;
                         }
                       });
+
+                      // save current popup window size
+                      context.read<Settings>().text.windowHeight = popupSizeHeight.toInt();
+                      context.read<Settings>().text.windowWidth  = popupSizeWidth.toInt();
+                      context.read<Settings>().save();
                     },
                   ),
                 ),

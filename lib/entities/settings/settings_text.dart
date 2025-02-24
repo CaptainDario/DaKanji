@@ -63,6 +63,38 @@ class SettingsText with ChangeNotifier implements DictionarySearchPriorityInterf
   bool get deconjugateBeforeSearch => selectedSearchResultSortPriorities
     .contains(LocaleKeys.SettingsScreen_dict_base_form);
 
+  /// The default value for `windowWidth`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowWidth = 480;
+  /// width of the popup window
+  @JsonKey(defaultValue: d_windowWidth)
+  int windowWidth = d_windowWidth;
+
+  /// The default value for `windowHeight`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowHeight = 720;
+  /// height of the popup window
+  @JsonKey(defaultValue: d_windowHeight)
+  int windowHeight = d_windowHeight;
+
+  /// The default value for `windowPosX`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowPosX = 0;
+  /// the x position where the popup window should be created
+  @JsonKey(defaultValue: d_windowPosX)
+  int windowPosX = d_windowPosX;
+
+  /// The default value for `windowPosY`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowPosY = 0;
+  /// the y position where the popup window should be created
+  @JsonKey(defaultValue: d_windowPosY)
+  int windowPosY = d_windowPosY;
+
   
   SettingsText ();
 
