@@ -2,10 +2,8 @@
 
 // ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters
 
-// Dart imports:
 import 'dart:ui';
 
-// Package imports:
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
 class CodegenLoader extends AssetLoader{
@@ -376,7 +374,7 @@ class CodegenLoader extends AssetLoader{
     "requires_restart": "需要重新启动",
     "restarts_app": "重新启动应用程序",
     "show_tutorial": "重新展示教程（@:SettingsScreen.restarts_app）。",
-    "text_open_in_fullscreen": "全屏打开",
+    "text_save_text": "跨会话保存文本",
     "text_show_selection_buttons": "显示文本选择按钮",
     "title": "设置",
     "word_lists_export": "导出单词表数据库",
@@ -673,7 +671,7 @@ static const Map<String,dynamic> ja = {
     "tutorial_speed_dial_yoon_special": "その他の拗音のオン・オフの切り替え"
   },
   "KanaTrainerScreen": {
-    "title": "カナ・トレーナー"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "漢字表",
@@ -865,7 +863,7 @@ static const Map<String,dynamic> ja = {
     "requires_restart": "再起動が必要です",
     "restarts_app": "アプリの再起動",
     "show_tutorial": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
-    "text_open_in_fullscreen": "全画面表示",
+    "text_save_text": "セッションをまたいでテキストを保存",
     "text_show_selection_buttons": "テキスト選択ボタンを表示",
     "title": "設定",
     "word_lists_export": "単語リストデータベースのエクスポート",
@@ -1380,7 +1378,7 @@ static const Map<String,dynamic> de = {
     "requires_restart": "erfordert Neustart",
     "restarts_app": "startet app neu",
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
-    "text_open_in_fullscreen": "Im Vollbildmodus öffnen",
+    "text_save_text": "Text sitzungsübergreifend speichern",
     "text_show_selection_buttons": "Buttons zur Textauswahl anzeigen",
     "title": "Einstellungen",
     "word_lists_export": "Wortlisten-Datenbank exportieren",
@@ -1847,7 +1845,7 @@ static const Map<String,dynamic> ru = {
     "requires_restart": "требует перезапуска",
     "restarts_app": "перезапускает приложение",
     "show_tutorial": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
-    "text_open_in_fullscreen": "Открыть в полноэкранном режиме",
+    "text_save_text": "Сохраняйте текст в разных сеансах",
     "text_show_selection_buttons": "Показать кнопки выделения текста",
     "title": "Настройки",
     "word_lists_export": "Экспорт базы данных списков слов",
@@ -2349,7 +2347,7 @@ static const Map<String,dynamic> pl = {
     "requires_restart": "wymaga ponownego uruchomienia",
     "restarts_app": "restart aplikacji",
     "show_tutorial": "Powtórz tutorial (@:SettingsScreen.restarts_app)",
-    "text_open_in_fullscreen": "Otwórz na pełnym ekranie",
+    "text_save_text": "Zapisywanie tekstu w różnych sesjach",
     "text_show_selection_buttons": "Pokaż przyciski wyboru tekstu",
     "title": "Ustawienia",
     "word_lists_export": "Eksport bazy danych list słów",
@@ -2863,7 +2861,7 @@ static const Map<String,dynamic> en = {
     "requires_restart": "requires restart",
     "restarts_app": "restarts app",
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
-    "text_open_in_fullscreen": "Open in fullscreen",
+    "text_save_text": "Save text across sessions",
     "text_show_selection_buttons": "Show text selection buttons",
     "title": "Settings",
     "word_lists_export": "Export word lists database",
@@ -3376,7 +3374,7 @@ static const Map<String,dynamic> it = {
     "requires_restart": "richiede il riavvio",
     "restarts_app": "riavvia l'applicazione",
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
-    "text_open_in_fullscreen": "Aprire a schermo intero",
+    "text_save_text": "Salvare il testo in tutte le sessioni",
     "text_show_selection_buttons": "Mostra i pulsanti di selezione del testo",
     "title": "Impostazioni",
     "word_lists_export": "Esportazione del database degli elenchi di parole",
@@ -3843,7 +3841,7 @@ static const Map<String,dynamic> fr = {
     "requires_restart": "nécessite un redémarrage",
     "restarts_app": "redémarre l'application",
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
-    "text_open_in_fullscreen": "Ouvrir en plein écran",
+    "text_save_text": "#ERROR!",
     "text_show_selection_buttons": "Afficher les boutons de sélection de texte",
     "title": "Paramètres",
     "word_lists_export": "Exporter la base de données des listes de mots",
@@ -3885,7 +3883,7 @@ static const Map<String,dynamic> fr = {
     "tutorial_text_input_text": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils."
   },
   "UserScreen": {
-    "title": "Compte",
+    "title": "#ERROR!",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
   },
   "VideoScreen": {
@@ -4310,7 +4308,7 @@ static const Map<String,dynamic> es = {
     "requires_restart": "requiere reinicio",
     "restarts_app": "reinicia la app",
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
-    "text_open_in_fullscreen": "Abrir a pantalla completa",
+    "text_save_text": "Guardar texto entre sesiones",
     "text_show_selection_buttons": "Mostrar botones de selección de texto",
     "title": "Ajustes",
     "word_lists_export": "Exportar base de datos de listas de palabras",
@@ -4411,7 +4409,7 @@ static const Map<String,dynamic> es = {
     "send_to_anki_progress": "Enviando a Anki, por favor espere...",
     "title": "Listas de palabras",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
+    "tutorial_begin_title": "#ERROR!",
     "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
     "tutorial_create_list": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
     "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",

@@ -20,7 +20,9 @@ SettingsText _$SettingsTextFromJson(Map<String, dynamic> json) => SettingsText()
   ..windowWidth = (json['windowWidth'] as num?)?.toInt() ?? 480
   ..windowHeight = (json['windowHeight'] as num?)?.toInt() ?? 720
   ..windowPosX = (json['windowPosX'] as num?)?.toInt() ?? 0
-  ..windowPosY = (json['windowPosY'] as num?)?.toInt() ?? 0;
+  ..windowPosY = (json['windowPosY'] as num?)?.toInt() ?? 0
+  ..saveTextAcrossSessions = json['saveTextAcrossSessions'] as bool
+  ..text = json['text'] as String;
 
 Map<String, dynamic> _$SettingsTextToJson(SettingsText instance) =>
     <String, dynamic>{
@@ -32,4 +34,6 @@ Map<String, dynamic> _$SettingsTextToJson(SettingsText instance) =>
       'windowHeight': instance.windowHeight,
       'windowPosX': instance.windowPosX,
       'windowPosY': instance.windowPosY,
+      'saveTextAcrossSessions': instance.saveTextAcrossSessions,
+      'text': instance.text,
     };

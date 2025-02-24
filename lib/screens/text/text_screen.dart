@@ -12,6 +12,7 @@ import 'package:clipboard_watcher/clipboard_watcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:provider/provider.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
@@ -232,11 +233,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
                                   showRubys: showRubys,
                                   addSpaces: addSpaces,
                                   showColors: colorizePos,
-                                  init: (controller) {
-                                    mecabTextEditingController = controller;
-                                    WidgetsBinding.instance.addPostFrameCallback(
-                                      (_) => setState(() {}));
-                                  },
+                                  init: onTextFieldInit,
                                   onSelectionChange: onCustomSelectableTextChange,
                                   onTapOutsideOfText: (Offset location) {
                                     if(popupAnimationController.isCompleted){
@@ -378,6 +375,23 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
         }
       )
     );
+  }
+
+  /// Called when the text field has been initialized
+  void onTextFieldInit(controller) {
+
+    mecabTextEditingController = controller;
+    if(context.read<Settings>().text.saveTextAcrossSessions){
+      mecabTextEditingController!.text = context.read<Settings>().text.text;
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  
+    mecabTextEditingController!.addListener(() {
+      context.read<Settings>().text.text = mecabTextEditingController!.text;
+      context.read<Settings>().save();
+    });
+
   }
 
   /// assures that the popup is open by opening it if it is closed

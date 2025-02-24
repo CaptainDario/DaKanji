@@ -204,7 +204,7 @@
     "tutorial_speed_dial_yoon_special": "\u305d\u306e\u4ed6\u306e\u62d7\u97f3\u306e\u30aa\u30f3\u30fb\u30aa\u30d5\u306e\u5207\u308a\u66ff\u3048"
   },
   "KanaTrainerScreen": {
-    "title": "\u30ab\u30ca\u30fb\u30c8\u30ec\u30fc\u30ca\u30fc"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "\u6f22\u5b57\u8868",
@@ -396,7 +396,7 @@
     "requires_restart": "\u518d\u8d77\u52d5\u304c\u5fc5\u8981\u3067\u3059",
     "restarts_app": "\u30a2\u30d7\u30ea\u306e\u518d\u8d77\u52d5",
     "show_tutorial": "\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb\u306e\u518d\u8868\u793a (@:SettingsScreen.restarts_app)",
-    "text_open_in_fullscreen": "\u5168\u753b\u9762\u8868\u793a",
+    "text_save_text": "\u30bb\u30c3\u30b7\u30e7\u30f3\u3092\u307e\u305f\u3044\u3067\u30c6\u30ad\u30b9\u30c8\u3092\u4fdd\u5b58",
     "text_show_selection_buttons": "\u30c6\u30ad\u30b9\u30c8\u9078\u629e\u30dc\u30bf\u30f3\u3092\u8868\u793a",
     "title": "\u8a2d\u5b9a",
     "word_lists_export": "\u5358\u8a9e\u30ea\u30b9\u30c8\u30c7\u30fc\u30bf\u30d9\u30fc\u30b9\u306e\u30a8\u30af\u30b9\u30dd\u30fc\u30c8",

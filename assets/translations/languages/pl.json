@@ -396,7 +396,7 @@
     "requires_restart": "wymaga ponownego uruchomienia",
     "restarts_app": "restart aplikacji",
     "show_tutorial": "Powt\u00f3rz tutorial (@:SettingsScreen.restarts_app)",
-    "text_open_in_fullscreen": "Otw\u00f3rz na pe\u0142nym ekranie",
+    "text_save_text": "Zapisywanie tekstu w r\u00f3\u017cnych sesjach",
     "text_show_selection_buttons": "Poka\u017c przyciski wyboru tekstu",
     "title": "Ustawienia",
     "word_lists_export": "Eksport bazy danych list s\u0142\u00f3w",

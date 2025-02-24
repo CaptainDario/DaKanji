@@ -2020,7 +2020,7 @@
       "en": "Kana Trainer",
       "de": "Kana Trainer",
       "ru": "Тренер Кана",
-      "ja": "カナ・トレーナー",
+      "ja": "#ERROR!",
       "zh": "卡纳培训师",
       "it": "Allenatore Kana",
       "fr": "Formateur Kana",
@@ -3010,16 +3010,16 @@
       "es": "Mostrar botones de selección de texto",
       "pl": "Pokaż przyciski wyboru tekstu"
     },
-    "text_open_in_fullscreen": {
-      "en": "Open in fullscreen",
-      "de": "Im Vollbildmodus öffnen",
-      "ru": "Открыть в полноэкранном режиме",
-      "ja": "全画面表示",
-      "zh": "全屏打开",
-      "it": "Aprire a schermo intero",
-      "fr": "Ouvrir en plein écran",
-      "es": "Abrir a pantalla completa",
-      "pl": "Otwórz na pełnym ekranie"
+    "text_save_text": {
+      "en": "Save text across sessions",
+      "de": "Text sitzungsübergreifend speichern",
+      "ru": "Сохраняйте текст в разных сеансах",
+      "ja": "セッションをまたいでテキストを保存",
+      "zh": "跨会话保存文本",
+      "it": "Salvare il testo in tutte le sessioni",
+      "fr": "#ERROR!",
+      "es": "Guardar texto entre sesiones",
+      "pl": "Zapisywanie tekstu w różnych sesjach"
     },
     "anki_title": {
       "en": "Anki",
@@ -4519,7 +4519,7 @@
       "ja": "アカウント",
       "zh": "账户",
       "it": "Conto",
-      "fr": "Compte",
+      "fr": "#ERROR!",
       "es": "Cuenta",
       "pl": "Konto"
     },
@@ -4571,7 +4571,7 @@
       "zh": "欢迎来到单词列表屏幕！",
       "it": "Benvenuti nella schermata degli elenchi di parole!",
       "fr": "Bienvenue dans l'écran des listes de mots !",
-      "es": "Bienvenido a la pantalla de listas de palabras.",
+      "es": "#ERROR!",
       "pl": "Witamy na ekranie list słów!"
     },
     "tutorial_begin_text": {

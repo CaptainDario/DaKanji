@@ -95,6 +95,20 @@ class SettingsText with ChangeNotifier implements DictionarySearchPriorityInterf
   @JsonKey(defaultValue: d_windowPosY)
   int windowPosY = d_windowPosY;
 
+  /// should the text in the text field be saved across tabs and restarts
+  @JsonKey(defaultValue: true)
+  bool _saveTextAcrossSessions = true;
+  /// should the text in the text field be saved across tabs and restarts
+  bool get saveTextAcrossSessions => _saveTextAcrossSessions;
+  /// should the text in the text field be saved across tabs and restarts
+  set saveTextAcrossSessions(bool newSaveTextAcrossSessions) {
+    _saveTextAcrossSessions = newSaveTextAcrossSessions;
+    notifyListeners();
+  }
+
+  /// The text curently in the text field
+  String text = "";
+
   
   SettingsText ();
 

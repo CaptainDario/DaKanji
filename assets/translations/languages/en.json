@@ -396,7 +396,7 @@
     "requires_restart": "requires restart",
     "restarts_app": "restarts app",
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
-    "text_open_in_fullscreen": "Open in fullscreen",
+    "text_save_text": "Save text across sessions",
     "text_show_selection_buttons": "Show text selection buttons",
     "title": "Settings",
     "word_lists_export": "Export word lists database",
