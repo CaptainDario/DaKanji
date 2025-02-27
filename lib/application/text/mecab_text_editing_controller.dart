@@ -85,7 +85,7 @@ class MecabTextEditingController extends TextEditingController {
   /// The mecab surfaces of the current text
   List<String> mecabSurfaces = [];
   /// the PoS of the current text
-  List<String> mecabPOS = [];
+  List<List<String>> mecabPOS = [];
   /// Coloring of 
   List<Color?> posColors = [];
 

@@ -437,7 +437,6 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
     int tokenIdx = mecabTextEditingController!.getTokenAtTextIndex(
       mecabTextEditingController!.selection.baseOffset)+1;
     String posText = mecabTextEditingController!.mecabPOS[tokenIdx]
-      .split("-")
       .where((pos) => pos != "*")
       .join(", ");
 
@@ -445,7 +444,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
     Flushbar(
       messageText: SelectableText(posText),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      duration: const Duration(milliseconds: 5000),
+      duration: const Duration(milliseconds: 10000),
     ).show(context);
 
   }

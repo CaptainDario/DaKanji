@@ -6,42 +6,80 @@ import 'package:tuple/tuple.dart';
 // Project imports:
 import 'package:da_kanji_mobile/application/japanese_text_processing/mecab_data.dart';
 
+
+
 /// Finds and returns the maximum length word given by the list `mecabTokens`.
 /// The search starts at the first element of `mecabTokens`
 /// 
 /// returns the first [TokeNode] if it is a standalone token
-List<String> selectMaxLengthWord(List<TokenNode> mecabTokens){
+/// Otherwise returns a list of all tokennodes 
+List<TokenNode> selectMaxLengthWord(List<TokenNode> mecabTokens){
 
-  List<String> ret = [mecabTokens.first.surface];
+  List<TokenNode> nodes = [mecabTokens.first];
 
-  // if this is the beginning of a verb / adjective
-  if(mecabTokens.length > 1 &&
-    compareMecabOuts(mecabTokens.first.features, mecabPosWordStart)){
-    for (var i = 1; i < mecabTokens.length; i++) {
-    
-      // search for all its parts
-      List<String> nextFeatures = mecabTokens[i].features.sublist(0, 4);
-      if (compareMecabOuts(nextFeatures, wordContinuationPOS)){
-        
-        ret.add(mecabTokens[i].surface);
+  if(mecabTokens.length == 1) return nodes;
 
-      }
-      else { break; }
-    } 
+  // join conjugations
+  int i = 1;
+  while (
+    mecabTokens.first.features[4]!="*" && mecabTokens[i].features[4]!="*")
+  {
+
+    nodes.add(mecabTokens[i]);
+
+    if(++i == mecabTokens.length) return nodes;
+
   }
 
-  return ret;
+  // add suffixes / inflection dependent words
+  while (mecabTokens[i].features.first == suffix ||
+        (mecabTokens[i].features.first == inflectionDependentWord &&
+         mecabTokens[i].surface == "な")) {
+    nodes.add(mecabTokens[i]);
+
+    if(++i == mecabTokens.length) return nodes;
+  }
+
+  return nodes;
+
+}
+
+///
+List<String> posFromTokeNodes(List<TokenNode> nodes){
+
+  // check for na-adjectives
+  bool naAdjectivePossible = false;
+  for (var i = 0; i < nodes.length; i++) {
+    for (var j = 0; j < nodes[i].features.length; j++) {
+
+      // words that are definitely na-adj.
+      if(nodes[i].features[j].contains(naAdjective) &&
+        !nodes[i].features[j].contains(naAdjectivePossibility)){
+        return [naAdjective];
+      }
+      // words that are maybe na-adj.
+      if(naAdjectivePossible && nodes[i].surface == "な") {
+        return [naAdjective];
+      }
+      if(nodes[i].features[j].contains(naAdjectivePossibility)){
+        naAdjectivePossible = true;
+      }
+
+    }
+  }
+
+  return nodes.first.features.sublist(0, 4);
 
 }
 
 /// Processes the given `text` with mecab. Returns the result as a tuple
 /// mecabReadings, mecabSurfaces and mecabPOS
-Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab mecab, KanaKit kanaKit){
+Tuple3<List<String>, List<String>, List<List<String>>> processText(String text, Mecab mecab, KanaKit kanaKit){
   
   // do nothing on "empty" string
   if(text.isEmpty) return const Tuple3([], [], []);
   if(text.replaceAll(RegExp(r"\s*"), "") == "") {
-    return Tuple3([" "], [text], [" "]);
+    return Tuple3([" "], [text], []);
   }
 
   // split the text by newline as mecab does not retain those
@@ -49,7 +87,7 @@ Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab 
 
   List<String> mecabReadings = [];
   List<String> mecabSurfaces = [];
-  List<String> mecabPOS = [];
+  List<List<String>> mecabPOS = [];
   for (int j=0; j<subTexts.length; j++) {
 
     // analyze text with mecab
@@ -61,13 +99,15 @@ Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab 
 
       // if mecab fails to analyze, return empty
       if(analyzedText[i].features.isEmpty){
-        mecabReadings.add(" "); mecabSurfaces.add("　"); mecabPOS.add(" ");
+        mecabReadings.add(" "); mecabSurfaces.add("　"); mecabPOS.add([]);
         continue;
       }
 
       // check if this is a word that can be deconjugated
-      List<String> maxLengthWord = selectMaxLengthWord(analyzedText.sublist(i)); 
-      mecabSurfaces.add(maxLengthWord.join());
+      List<TokenNode> maxLengthWord = selectMaxLengthWord(analyzedText.sublist(i));
+      mecabSurfaces.add(maxLengthWord.map((e) => e.surface).join());
+      List<String> pos = posFromTokeNodes(maxLengthWord);
+      mecabPOS.add(pos);
       
       // remove furigana when: non Japanese, kana only, no reading, reading == word
       if(!kanaKit.isJapanese(analyzedText[i].surface) ||
@@ -85,15 +125,13 @@ Tuple3<List<String>, List<String>, List<String>> processText(String text, Mecab 
         }
         mecabReadings.add(fullReading); 
       }
-
-      mecabPOS.add(analyzedText[i].features.sublist(0, 4).join("-"));
       
       i += maxLengthWord.length-1;
   
     }
     // readd new lines
     if(subTexts.length-1 != j){
-      mecabReadings.add(""); mecabSurfaces.add("\n"); mecabPOS.add("");
+      mecabReadings.add(""); mecabSurfaces.add("\n"); mecabPOS.add([]);
     }
   }
 

@@ -61,7 +61,7 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
   ValueNotifier<List<String>> mecabSurfaces = ValueNotifier<List<String>>([]);
   //List<String> mecabSurfaces = const [];
   /// the output part of speech elements of mecab
-  List<String> mecabPOS = const [];
+  List<List<String>> mecabPOS = const [];
   /// the output readings of mecab
   List<String> mecabReadings = const [];
 

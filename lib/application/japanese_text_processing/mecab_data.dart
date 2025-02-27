@@ -1,15 +1,18 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
-import 'package:da_kanji_mobile/entities/grammar/pos.dart';
+
 
 /// verb
 String verb = "動詞";
+/// adverb
+String adverb = "副詞";
 /// i adjective
 String iAdjective = "形容詞";
 /// na adjective
 String naAdjective = "形状詞";
+/// this word can be a na-adjective under certain circumstances 
+String naAdjectivePossibility = "形状詞可能";
 /// noun
 String noun = "名詞";
 /// pronoun
@@ -19,10 +22,6 @@ String particle = "助詞";
 /// White space
 String whiteSpace = "空白";
 
-List<String> mecabPosDeconjugate = [
-  verb, iAdjective, naAdjective,
-  //noun
-];
 
 /// Inflection dependent word
 String inflectionDependentWord = "助動詞";
@@ -37,7 +36,7 @@ String startPos = "一般";
 
 
 /// Color for showing na-adjectives
-const Color naAdjectiveColor = Color(0xff7f0000);
+const Color naAdjectiveColor = Color.fromARGB(255, 255, 113, 205);
 /// Color for showing nouns
 const Color nounColor = Color(0xffff0000);
 /// Color for showing verbs
@@ -45,15 +44,21 @@ const Color verbColor = Color(0xffff8c00);
 /// Color for showing i-adjectives
 const Color iAdjectiveColor = Color(0xffffff00);
 /// Color for showing adverbs
-const Color adverbColor = Color(0xff0000cd);
+const Color adverbColor = Color.fromARGB(255, 24, 245, 13);
 /// Color for showing particles
-const Color particleColor = Color(0xff00bfff);
+const Color particleColor = Color.fromARGB(255, 0, 216, 216);
 
+
+List<String> mecabPosDeconjugate = [
+  verb, iAdjective, naAdjective,
+  //noun
+];
 
 /// A list of mecab pos combinations that indicate a word start
 List<List<String>> mecabPosWordStart = [
   // verb
   [verb],
+  [particle, conjunctionParticle],
   // i-adj
   [iAdjective, startPos],
   [iAdjective, nonIndependent],
@@ -64,18 +69,6 @@ List<List<String>> mecabPosWordStart = [
   [noun]
 ];
 
-List<List<String>> wordContinuationPOS = [
-  // general
-  [inflectionDependentWord],
-  [particle, conjunctionParticle],
-  [suffix],
-  // verb
-  [verb, nonIndependent],
-  // i-adj
-  [iAdjective, nonIndependent],
-  // na-adj
-  [naAdjective, nonIndependent],
-];
 
 /// Compares `a` to `b`, if the strings are the same.
 /// If `b` is shorter than `a`, the comparison only checks
@@ -115,18 +108,22 @@ bool compareMecabOuts(List<String> a, List<List<String>> mecabOuts){
 }
 
 /// Converts a ipadic style part of speech string to a unique color
-Color? posToColor(String pos){
+Color? posToColor(List<String> pos){
   Color? c;
 
-  if(pos.startsWith(naAdjective)) {
+  if(pos.isEmpty) return null;
+
+  if(pos[0].contains(naAdjective)) {
     c = naAdjectiveColor;
-  } else if([noun, pronoun].any((e) => pos.startsWith(e))) {
+  } else if([noun, pronoun].any((e) => pos[0].startsWith(e))) {
     c = nounColor;
-  } else if(pos.startsWith(verb)) {
+  } else if(pos[0].startsWith(verb)) {
     c = verbColor;
-  } else if(pos.startsWith(iAdjective)) {
+  } else if(pos[0].startsWith(adverb)) {
+    c = adverbColor;
+  } else if(pos[0].startsWith(iAdjective)) {
     c = iAdjectiveColor;
-  } else if(pos.startsWith(particle)) {
+  } else if(pos[0].startsWith(particle)) {
     c = particleColor;
   } else{
     //debugPrint("$pos is an unknown POS");
