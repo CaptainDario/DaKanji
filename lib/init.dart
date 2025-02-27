@@ -260,6 +260,8 @@ Future<void> splashscreenDesktop() async {
 /// Setup the DaKanji window on desktop platforms
 Future<void> desktopWindowSetup() async {
 
+  if(!g_desktopPlatform) return;
+
   await windowManager.setMinimumSize(g_minDesktopWindowSize);
   await windowManager.setTitle(g_AppTitle);
   
