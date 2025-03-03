@@ -116,8 +116,7 @@ dependencies:
 
   in_app_review: 2.0.9                  # android, iOS, MacOS, windows (limited)
   clipboard_watcher: 0.3.0              # android, iOS, macos, windows, linux
-  store_checker:                        # ios, android
-    git: https://github.com/zachberger/store_checker
+  store_checker: 1.8.0                  # ios, android
 
   #isar: android, iOS, macos, windows, linux
   isar: 
@@ -168,6 +167,7 @@ dev_dependencies:
     version: 3.1.8
     hosted: https://pub.isar-community.dev/
   drift_dev: 2.23.1
+  test: 1.25.15
   
 flutter_icons:
   android: "launcher_icon"
