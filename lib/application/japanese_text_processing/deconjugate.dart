@@ -21,12 +21,6 @@ List<String> getDeconjugatedTerms(String word){
   List<TokenNode> nodes = GetIt.I<Mecab>().parse(word)..removeLast();
   List<TokenNode> maxLengthWord = selectMaxLengthWord(nodes);
 
-  print(maxLengthWord.map((e) {
-    for (var i = 0; i < e.features.length; i++) {
-      print("$i ${e.features[i]}");
-    }
-  }).toList());
-
   for (int i = maxLengthWord.length-1; i >= 0; i--){
     // deconjugate the full word by only modifying the ending
     if(!compareMecabOut(maxLengthWord[i].features, [inflectionDependentWord])){
@@ -42,11 +36,10 @@ List<String> getDeconjugatedTerms(String word){
           .map((List<String> f) => f..insert(0, nodes[i].surface))
           .toList();
       }
-
     }
   }
 
   // remove duplicates
-  print("TestL $deconjugations");
-  return deconjugations.map((e) => e.join(),).toList();
+  return deconjugations.map((e) => e.join())
+    .toSet().toList();
 }
