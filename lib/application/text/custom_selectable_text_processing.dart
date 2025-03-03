@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_for_flutter/mecab_for_flutter.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
