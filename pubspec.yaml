@@ -99,6 +99,7 @@ dependencies:
   kana_kit:
 
   # packages that I maintain
+  mecab_for_dart: 1.1.5
   mecab_for_flutter: 1.0.4
   ankidroid_for_flutter: 1.0.2
   awesome_dialog: 

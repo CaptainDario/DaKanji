@@ -1221,7 +1221,7 @@ packages:
     source: hosted
     version: "0.11.1"
   mecab_for_dart:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: mecab_for_dart
       sha256: f9d7306fd7798eadf76722ad324ca70cff8b7c37c4464a6111c9e37d8d5e6f80
