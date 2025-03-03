@@ -35,16 +35,13 @@ class DictionaryAltSearchFlushbar {
             child: RichText(
               text: TextSpan(
                 text: "${LocaleKeys.DictionaryScreen_search_searched.tr()} ",
-                style: const TextStyle(
-                  color: Colors.black
-                ),
                 children: [
                   for (int i=0; i<queries.length; i++)
                     ...[
                       TextSpan(
                         text: "${i+1}. ${queries[i]}",
-                        style: TextStyle(
-                          color: Theme.of(context).highlightColor
+                        style: const TextStyle(
+                          decoration: TextDecoration.underline
                         ),
                         recognizer: TapGestureRecognizer()..onTap =
                           () => onTapped(queries[i]),
@@ -52,9 +49,6 @@ class DictionaryAltSearchFlushbar {
                       if(i < queries.length-1)
                         const TextSpan(
                           text: "; ",
-                          style: TextStyle(
-                            color: Colors.black
-                          ),
                         ),
                     ],
                 ]
