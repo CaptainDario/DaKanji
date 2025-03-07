@@ -237,6 +237,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
                                   addSpaces: addSpaces,
                                   showColors: colorizePos,
                                   init: onTextFieldInit,
+                                  onLongPress: onCustomSelectableTextLongPress,
                                   onSelectionChange: onCustomSelectableTextChange,
                                   onTapOutsideOfText: (Offset location) {
                                     if(popupAnimationController.isCompleted){
@@ -432,6 +433,14 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
         selection.baseOffset, selection.extentOffset
       );
     });
+  }
+
+  /// Callback that is executed when the use long presses on the text widget
+  onCustomSelectableTextLongPress(TextSelection selection) {
+
+    mecabTextEditingController!.selection = TextSelection.collapsed(
+      offset: selection.baseOffset);
+    setState(() {});
   }
 
   /// Callback when the user presses the info button

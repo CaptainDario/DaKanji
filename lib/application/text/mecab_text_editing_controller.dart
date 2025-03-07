@@ -59,10 +59,8 @@ class MecabTextEditingController extends TextEditingController {
   
   @override
   set selection(TextSelection newSelection){
-    if(super.selection != newSelection){
-      super.selection = newSelection;
-      _onSelectionChange();
-    }
+    super.selection = newSelection;
+    _onSelectionChange();
   }
 
   /// factor by which the text is scaled
@@ -146,7 +144,8 @@ class MecabTextEditingController extends TextEditingController {
 
             children.add(WidgetSpan(
               child: GestureDetector(
-                onTapDown: (details)  {
+                behavior: HitTestBehavior.translucent,
+                onTap: ()  {
                   int now = DateTime.now().millisecondsSinceEpoch;
                   if (now - lastTap > 300) {
                     consecutiveTaps = 1;
@@ -164,6 +163,7 @@ class MecabTextEditingController extends TextEditingController {
                   else if (consecutiveTaps == 3){
                     _onTripleTap(mecabSurStartIdx, mecabSurEndIdx);
                   }
+                  print("Tapped");
                 },
                 // Do nothing on long press so that long press works as placing
                 // the cursor

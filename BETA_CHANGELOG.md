@@ -6,6 +6,8 @@
   - Close Popup by
     - tapping outside of text
     - double tapping popup header
+  - Changing selection with native controls does not update lookup
+  - Android selection buggy
 
 ## v3.5.0b3 - 改善 (3.03.2025)
 
