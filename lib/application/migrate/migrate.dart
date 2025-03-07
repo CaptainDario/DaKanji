@@ -12,7 +12,7 @@ Future migrate(Version? last, Version current) async {
   }
   // run migration from v3 to v4
   if(last?.major == 3 && current.major == 4){
-    // TODO add migration of word lists from v3 to v4
+    // TODO v4: add migration of word lists from v3 to v4
   }
 
 }

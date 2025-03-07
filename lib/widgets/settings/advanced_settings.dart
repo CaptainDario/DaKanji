@@ -49,14 +49,14 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
       LocaleKeys.SettingsScreen_advanced_settings_title.tr(),
       Icons.warning,
       children: [
-        // optimize backends
-        ResponsiveIconButtonTile(
-          text: LocaleKeys.SettingsScreen_advanced_settings_optimize_nn.tr(),
-          icon: Icons.saved_search_sharp,
-          onButtonPressed: () {
-            optimizeBackendsPopup(context).show();
-          },
-        ),
+        // TODO v4: reenable optimize backends
+        //ResponsiveIconButtonTile(
+        //  text: LocaleKeys.SettingsScreen_advanced_settings_optimize_nn.tr(),
+        //  icon: Icons.saved_search_sharp,
+        //  onButtonPressed: () {
+        //    optimizeBackendsPopup(context).show();
+        //  },
+        //),
         // number of search isolates
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_advanced_settings_number_search_procs.tr(),
