@@ -2,7 +2,6 @@
 import 'dart:math';
 
 // Package imports:
-import 'package:lite_rt_for_flutter/flutter_interpreter.dart';
 import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
 import 'package:sentry/sentry_io.dart';
 import 'package:universal_io/io.dart';
