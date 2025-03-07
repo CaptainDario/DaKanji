@@ -153,7 +153,7 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
           builder: (context, value, child) {
             return TextAnalysisStack(
               textToAnalyze: value,
-              poupAnimationController: popupAnimationController,
+              popupAnimationController: popupAnimationController,
               onPopupInitialized: (tabController) {
                 popupTabController = tabController;
               },

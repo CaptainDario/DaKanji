@@ -203,7 +203,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
         builder: (context, constraints) {
           return TextAnalysisStack(
             textToAnalyze: selectedText,
-            poupAnimationController: popupAnimationController,
+            popupAnimationController: popupAnimationController,
             padding: 8.0,
             constraints: constraints,
             allowDeconjugation: GetIt.I<Settings>().text.deconjugateBeforeSearch,
@@ -213,7 +213,10 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
             children: [
               // processed text
               Positioned.fill(
-                child: SizedBox(
+                child: GestureDetector(
+                  onTap: () {
+                    assurePopupClosed();
+                  },
                   child: Card(
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(
@@ -398,6 +401,13 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   void assurePopupOpen(){
     if(!popupAnimationController.isCompleted){
       popupAnimationController.forward();
+    }
+  }
+
+  /// assures that the popup is open by opening it if it is closed
+  void assurePopupClosed(){
+    if(!popupAnimationController.isDismissed){
+      popupAnimationController.reverse();
     }
   }
 
