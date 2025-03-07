@@ -67,18 +67,3 @@ List<FuriganaPair> matchFurigana(String text, String reading) {
   return result;
 }
 
-void main() {
-  List<Map<String, String>> testCases = [
-    {"kanji": "思い始め", "kana": "おもいはじめ"},
-    {"kanji": "東京", "kana": "トーキョー"},
-    {"kanji": "食べる", "kana": "たべる"},
-    {"kanji": "今日", "kana": "きょう"},
-    {"kanji": "友達", "kana": "ともだち"},
-  ];
-
-  for (var test in testCases) {
-    print("Input: ${test['kanji']} → ${test['kana']}");
-    print(matchFurigana(test["kanji"]!, test["kana"]!));
-    print("----");
-  }
-}
