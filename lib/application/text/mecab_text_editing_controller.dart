@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/japanese_text_processing/mecab_data_ui.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,7 +14,6 @@ import 'package:tuple/tuple.dart';
 // Project imports:
 import 'package:da_kanji_mobile/application/japanese_text_processing/furigana_matching.dart';
 import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
-import 'package:da_kanji_mobile/application/japanese_text_processing/mecab_data.dart';
 import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
 import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 

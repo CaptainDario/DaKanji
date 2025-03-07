@@ -11,6 +11,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
+import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -639,7 +640,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     {
       deconjugated = getDeconjugatedTerms(k.isJapanese(query)
         ? query
-        : k.toHiragana(k.toKana(query)));
+        : k.toHiragana(k.toKana(query)),
+        GetIt.I<Mecab>(), GetIt.I<KanaKit>());
 
       deconjugated.remove(queryKana);
       deconjugated.remove(query);

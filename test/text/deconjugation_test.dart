@@ -2,7 +2,6 @@
 
 // Package imports:
 import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
-import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:tuple/tuple.dart';
@@ -79,16 +78,14 @@ const List<Tuple2<String, List<String>>> verbs = [
 
 void main() async {
 
-  GetIt.I.registerSingleton<KanaKit>(const KanaKit());
   Mecab mecab = Mecab();
   await mecab.init("mecab_arm64.dylib", "unidic/", true);
-  //print(mecab.parse("食べる").first.features);
-  GetIt.I.registerSingleton<Mecab>(mecab);
 
   test('Testing deconjugation', () {
     for (int i = 0; i < verbs.length; i++) {
       print(verbs[i]);
-      List<String> deconjugated = getDeconjugatedTerms(verbs[i].item1);
+      List<String> deconjugated = getDeconjugatedTerms(
+        verbs[i].item1, mecab, const KanaKit());
 
       expect(deconjugated, verbs[i].item2);
     }

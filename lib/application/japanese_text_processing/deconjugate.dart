@@ -1,6 +1,5 @@
 // Package imports:
 import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
-import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
@@ -10,15 +9,15 @@ import 'package:da_kanji_mobile/application/japanese_text_processing/mecab_data.
 
 
 /// Finds all parts of the given `word` and deconjugates them
-List<String> getDeconjugatedTerms(String word){
+List<String> getDeconjugatedTerms(String word, Mecab mecab, KanaKit kanakit){
 
   List<List<String>> deconjugations = [];
 
   // is a Japanese word given ?
-  if(word == "" || !GetIt.I<KanaKit>().isJapanese(word)) return [];
+  if(word == "" || !kanakit.isJapanese(word)) return [];
 
   // parse using mecab
-  List<TokenNode> nodes = GetIt.I<Mecab>().parse(word)..removeLast();
+  List<TokenNode> nodes = mecab.parse(word)..removeLast();
   List<TokenNode> maxLengthWord = selectMaxLengthWord(nodes);
 
   for (int i = maxLengthWord.length-1; i >= 0; i--){
