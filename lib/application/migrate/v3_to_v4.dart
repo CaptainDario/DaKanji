@@ -45,7 +45,4 @@ Future<void> storeWordListsAsTextFilesForMigration() async {
   wordListMigrationFile.writeAsBytes(
     const GZipEncoder().encode(utf8.encode(jsonEncode(allEntries))));
 
-  print("Creating backup took: ${s.elapsed}");
-
-  
 }

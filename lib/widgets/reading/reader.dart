@@ -47,8 +47,6 @@ class _ReaderState extends State<Reader> {
     this.address = address.address;
     port = server.boundPort!;
     isListening = true;
-
-    print('http://${address.address}:$port/reader.html');
     
     return true;
   }
@@ -61,8 +59,6 @@ class _ReaderState extends State<Reader> {
 
         if(snapshot.hasData != true) return const SizedBox();
 
-        print("testest");
-
         return InAppWebView(
           initialUrlRequest: URLRequest(url: WebUri('http://$address:$port/reader.html')),
           initialSettings: InAppWebViewSettings(
@@ -73,7 +69,7 @@ class _ReaderState extends State<Reader> {
             webViewController = controller;
           },
           onConsoleMessage: (controller, consoleMessage) {
-            print(consoleMessage.message);
+
           },
         );
       }

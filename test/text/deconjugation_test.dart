@@ -2,6 +2,7 @@
 
 // Package imports:
 import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
+import 'package:flutter/material.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:tuple/tuple.dart';
@@ -83,7 +84,7 @@ void main() async {
 
   test('Testing deconjugation', () {
     for (int i = 0; i < verbs.length; i++) {
-      print(verbs[i]);
+      debugPrint(verbs[i].toString());
       List<String> deconjugated = getDeconjugatedTerms(
         verbs[i].item1, mecab, const KanaKit());
 
