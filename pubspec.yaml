@@ -123,8 +123,7 @@ dependencies:
 
   # packages that I maintain
   mecab_for_dart: 1.1.5
-  mecab_for_flutter:
-    path: /Users/darioklepoch/dev/flutter_packages/mecab_for_flutter
+  mecab_for_flutter: 1.0.4
   ankidroid_for_flutter: 1.0.2
   awesome_dialog: 
     git:
