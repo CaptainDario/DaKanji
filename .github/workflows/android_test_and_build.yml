@@ -28,7 +28,7 @@ on:
 
 
 env:
-  JAVA_VERSION: "17"
+  JAVA_VERSION: "21"
   PROPERTIES_PATH: "./android/key.properties"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
