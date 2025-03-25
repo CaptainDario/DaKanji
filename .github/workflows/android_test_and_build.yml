@@ -136,22 +136,22 @@ jobs:
           mv build/app/outputs/flutter-apk/app-x86_64-release.apk DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
           mv build/app/outputs/flutter-apk/app-release.apk DaKanji_${{env.DAKANJI_VERSION}}_fat.apk
       - name: Upload artifact arm64-v8a
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk
           path: DaKanji_${{env.DAKANJI_VERSION}}_arm64-v8a.apk
       - name: Upload artifact armeabi-v7a
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
           path: DaKanji_${{env.DAKANJI_VERSION}}_armeabi-v7a.apk
       - name: Upload artifact apk x86_64
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
           path: DaKanji_${{env.DAKANJI_VERSION}}_x86_64.apk
       - name: Upload artifact fat apk
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_fat.apk
           path: DaKanji_${{env.DAKANJI_VERSION}}_fat.apk
@@ -164,7 +164,7 @@ jobs:
           flutter pub get
           flutter build appbundle
       - name: Archive appbundle
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_bundle.zip
           path: build/app/outputs/bundle/release/app-release.aab

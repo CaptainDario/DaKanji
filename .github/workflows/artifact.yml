@@ -36,7 +36,7 @@ jobs:
           python3 ./.github/workflows/building.py set_env_dakanji_version
           touch DaKanji_${{env.DAKANJI_VERSION}}.snap
       - name: Upload snap as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}.snap
           path: DaKanji_${{env.DAKANJI_VERSION}}.snap
