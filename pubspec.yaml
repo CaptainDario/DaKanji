@@ -75,9 +75,32 @@ dependencies:
   flutter_widget_from_html_core: 0.15.2
   lite_rt_for_flutter:
     path: /Users/darioklepoch/dev/flutter_packages/lite_rt_for_flutter
+  
+  lite_rt_for_flutter_libs_android:
+    git:
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_android
+  lite_rt_for_flutter_libs_ios:
+    git:
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_ios
+  lite_rt_for_flutter_libs_linux:
+    git:
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_linux
   lite_rt_for_flutter_libs_macos:
-    path: /Users/darioklepoch/dev/flutter_packages/lite_rt_for_flutter_libs/base/lite_rt_for_flutter_libs_macos
-      
+    git:
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_macos
+  lite_rt_for_flutter_libs_windows:
+    git:
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_windows
+  lite_rt_for_flutter_libs_web_tfjs_tflite:
+    git:
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_web_tfjs_tflite
+
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
   async: 2.12.0

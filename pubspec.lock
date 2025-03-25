@@ -1146,10 +1146,11 @@ packages:
   lite_rt_for_dart:
     dependency: transitive
     description:
-      path: "../../flutter_packages/lite_rt_for_dart"
-      relative: true
-    source: path
-    version: "1.0.0"
+      name: lite_rt_for_dart
+      sha256: c5b7eb1d2469b600004e8fd29523de853a301537976866c168b1d39d7f73c3a6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   lite_rt_for_flutter:
     dependency: "direct main"
     description:
@@ -1157,13 +1158,60 @@ packages:
       relative: false
     source: path
     version: "0.0.1"
+  lite_rt_for_flutter_libs_android:
+    dependency: "direct main"
+    description:
+      path: "base/lite_rt_for_flutter_libs_android"
+      ref: HEAD
+      resolved-ref: "5610e0fdee0bf1c19c085dbb0e31aeb241a37362"
+      url: "https://github.com/captaindario/lite_rt_for_flutter_libs"
+    source: git
+    version: "0.0.1"
+  lite_rt_for_flutter_libs_ios:
+    dependency: "direct main"
+    description:
+      path: "base/lite_rt_for_flutter_libs_ios"
+      ref: HEAD
+      resolved-ref: "5610e0fdee0bf1c19c085dbb0e31aeb241a37362"
+      url: "https://github.com/captaindario/lite_rt_for_flutter_libs"
+    source: git
+    version: "0.0.1"
+  lite_rt_for_flutter_libs_linux:
+    dependency: "direct main"
+    description:
+      path: "base/lite_rt_for_flutter_libs_linux"
+      ref: HEAD
+      resolved-ref: "5610e0fdee0bf1c19c085dbb0e31aeb241a37362"
+      url: "https://github.com/captaindario/lite_rt_for_flutter_libs"
+    source: git
+    version: "0.0.1"
   lite_rt_for_flutter_libs_macos:
     dependency: "direct main"
     description:
-      path: "/Users/darioklepoch/dev/flutter_packages/lite_rt_for_flutter_libs/base/lite_rt_for_flutter_libs_macos"
-      relative: false
-    source: path
-    version: "2.17.0"
+      path: "base/lite_rt_for_flutter_libs_macos"
+      ref: HEAD
+      resolved-ref: "5610e0fdee0bf1c19c085dbb0e31aeb241a37362"
+      url: "https://github.com/captaindario/lite_rt_for_flutter_libs"
+    source: git
+    version: "0.0.1"
+  lite_rt_for_flutter_libs_web_tfjs_tflite:
+    dependency: "direct main"
+    description:
+      path: "base/lite_rt_for_flutter_libs_web_tfjs_tflite"
+      ref: HEAD
+      resolved-ref: "5610e0fdee0bf1c19c085dbb0e31aeb241a37362"
+      url: "https://github.com/captaindario/lite_rt_for_flutter_libs"
+    source: git
+    version: "0.0.1"
+  lite_rt_for_flutter_libs_windows:
+    dependency: "direct main"
+    description:
+      path: "base/lite_rt_for_flutter_libs_windows"
+      ref: HEAD
+      resolved-ref: "5610e0fdee0bf1c19c085dbb0e31aeb241a37362"
+      url: "https://github.com/captaindario/lite_rt_for_flutter_libs"
+    source: git
+    version: "0.0.1"
   local_assets_server:
     dependency: "direct main"
     description:
@@ -2008,6 +2056,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.8"
+  tflite_web:
+    dependency: transitive
+    description:
+      name: tflite_web
+      sha256: "2a50f23bbb1638e32ebe5068005008cb69d8d57e3d0edb755d13359ccbb3ff87"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2"
   time:
     dependency: transitive
     description:
