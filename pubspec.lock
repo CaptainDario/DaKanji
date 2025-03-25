@@ -1154,9 +1154,10 @@ packages:
   lite_rt_for_flutter:
     dependency: "direct main"
     description:
-      path: "/Users/darioklepoch/dev/flutter_packages/lite_rt_for_flutter"
-      relative: false
-    source: path
+      name: lite_rt_for_flutter
+      sha256: "6e419a785d792584ad27e274148685bff953e2d5d99598327b0f5119fff5859c"
+      url: "https://pub.dev"
+    source: hosted
     version: "0.0.1"
   lite_rt_for_flutter_libs_android:
     dependency: "direct main"
