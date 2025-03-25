@@ -1191,7 +1191,7 @@ packages:
     description:
       path: "base/lite_rt_for_flutter_libs_macos"
       ref: HEAD
-      resolved-ref: "5610e0fdee0bf1c19c085dbb0e31aeb241a37362"
+      resolved-ref: "2244f9f0ffd806128c626eadb3f37062805fd1d1"
       url: "https://github.com/captaindario/lite_rt_for_flutter_libs"
     source: git
     version: "0.0.1"
@@ -1280,10 +1280,9 @@ packages:
   mecab_for_flutter:
     dependency: "direct main"
     description:
-      name: mecab_for_flutter
-      sha256: bf76c92c8e3d52c751ee62414421f2c4669be32186976f7be6f7495c6157ace3
-      url: "https://pub.dev"
-    source: hosted
+      path: "/Users/darioklepoch/dev/flutter_packages/mecab_for_flutter"
+      relative: false
+    source: path
     version: "1.0.4"
   meta:
     dependency: "direct main"
