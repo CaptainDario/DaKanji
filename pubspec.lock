@@ -1280,10 +1280,11 @@ packages:
   mecab_for_flutter:
     dependency: "direct main"
     description:
-      path: "/Users/darioklepoch/dev/flutter_packages/mecab_for_flutter"
-      relative: false
-    source: path
-    version: "1.0.4"
+      name: mecab_for_flutter
+      sha256: "95f3607d99f3a3b8c426873dc4b9872b375799810681b891c3e99318678b4723"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   meta:
     dependency: "direct main"
     description:
