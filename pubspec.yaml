@@ -67,9 +67,9 @@ dependencies:
   vector_graphics: 1.1.11+1         # included in svg_flutter
   app_links: 6.3.2                 # android, iOS, web, macos, windows (msix), linux
 
-  fvp: 0.28.0
-  chewie: 1.8.5
-  video_player: 2.9.1
+  fvp: 0.30.0
+  chewie: 1.11.0
+  video_player: 2.9.3
   flutter_subtitle: 0.0.5
 
   flutter_widget_from_html_core: 0.15.2
