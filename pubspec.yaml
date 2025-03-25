@@ -73,8 +73,7 @@ dependencies:
   flutter_subtitle: 0.0.5
 
   flutter_widget_from_html_core: 0.15.2
-  lite_rt_for_flutter:
-    path: /Users/darioklepoch/dev/flutter_packages/lite_rt_for_flutter
+  lite_rt_for_flutter: 0.0.1
   
   lite_rt_for_flutter_libs_android:
     git:
