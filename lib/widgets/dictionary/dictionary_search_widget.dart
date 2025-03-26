@@ -729,7 +729,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     List<String> separated = query.split(" ");
     String queryWithoutFilters = separated
-      .where((e) => !e.startsWith("#")).join();
+      .where((e) => !e.startsWith("#")).join(" ");
 
     return queryWithoutFilters;
 
