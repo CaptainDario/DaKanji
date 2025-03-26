@@ -112,12 +112,12 @@ jobs:
       - name: build linux executable
         run: |
           flutter build linux --release -v
-          zip -r DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip build/linux/x64/release/bundle
+          zip -r DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_24_04.zip build/linux/x64/release/bundle
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
-          path: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
+          name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_24_04.zip
+          path: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_24_04.zip
 
       # build flatpak and upload artifact
       - name: Build and upload flatpak
