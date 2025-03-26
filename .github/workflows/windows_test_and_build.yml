@@ -103,7 +103,7 @@ jobs:
           -Path build/windows/x64/runner/Release/*
           -Destination DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
       - name: Archive exe production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
           path: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
@@ -133,7 +133,7 @@ jobs:
           -Path da_kanji_mobile.msix
           -NewName DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
       - name: Archive msix gh production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
           path: build\windows\x64\runner\Release\DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
@@ -143,7 +143,7 @@ jobs:
         run: |
           flutter pub run msix:create --build-windows=false --store
       - name: Archive msix store production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix
           path: build\windows\x64\runner\Release\da_kanji_mobile.msix

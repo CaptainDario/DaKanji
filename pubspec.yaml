@@ -8,7 +8,7 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.5.0+122
+version: 3.5.0+123
 
 
 environment:
@@ -67,9 +67,9 @@ dependencies:
   vector_graphics: 1.1.11+1         # included in svg_flutter
   app_links: 6.3.2                 # android, iOS, web, macos, windows (msix), linux
 
-  fvp: 0.28.0
-  chewie: 1.8.5
-  video_player: 2.9.1
+  fvp: 0.30.0
+  chewie: 1.11.0
+  video_player: 2.9.3
   flutter_subtitle: 0.0.5
 
   flutter_widget_from_html_core: 0.15.2
@@ -123,7 +123,7 @@ dependencies:
 
   # packages that I maintain
   mecab_for_dart: 1.1.5
-  mecab_for_flutter: 1.0.4
+  mecab_for_flutter: 1.0.5
   ankidroid_for_flutter: 1.0.2
   awesome_dialog: 
     git:

@@ -114,7 +114,7 @@ jobs:
           flutter build linux --release -v
           zip -r DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip build/linux/x64/release/bundle
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
           path: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
@@ -133,7 +133,7 @@ jobs:
 
           mv com.DaAppLab.DaKanji.flatpak ../DaKanji_${{env.DAKANJI_VERSION}}.flatpak
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}.flatpak
           path: DaKanji_${{env.DAKANJI_VERSION}}.flatpak
@@ -158,7 +158,7 @@ jobs:
         run: |
           mv ${{ steps.snapcraft.outputs.snap }} DaKanji_${{env.DAKANJI_VERSION}}.snap
       - name: Upload snap as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}.snap
           path: DaKanji_${{env.DAKANJI_VERSION}}.snap

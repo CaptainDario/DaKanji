@@ -69,6 +69,9 @@ class _TextAnalysisStackState extends State<TextAnalysisStack> with TickerProvid
     popupSizeWidth    = context.read<Settings>().text.windowWidth.toDouble();
     popupSizeHeight   = context.read<Settings>().text.windowHeight.toDouble();
 
+    if(popupPositionLeft < 0) popupPositionLeft = 0;
+    if(popupPositionTop < 0)  popupPositionTop  = 0;
+
     super.initState();
   
   }
