@@ -125,11 +125,9 @@ jobs:
         run: |
           sudo apt-get install flatpak flatpak-builder
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak install -y flathub org.freedesktop.Sdk//22.08 org.freedesktop.Platform//22.08
+          flatpak install -y flathub org.freedesktop.Sdk//24.08 org.freedesktop.Platform//24.08
           
-          flatpak-builder build-dir  com.DaAppLab.DaKanji.yml
-          flatpak-builder --repo=repo --force-clean build-dir com.DaAppLab.DaKanji.yml
-          flatpak build-bundle repo com.DaAppLab.DaKanji.flatpak com.DaAppLab.DaKanji
+          python3 ./build_flatpak.py
 
           mv com.DaAppLab.DaKanji.flatpak ../DaKanji_${{env.DAKANJI_VERSION}}.flatpak
       - name: Archive production artifacts
