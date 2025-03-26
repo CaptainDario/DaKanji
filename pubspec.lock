@@ -1181,8 +1181,8 @@ packages:
     dependency: "direct main"
     description:
       path: "base/lite_rt_for_flutter_libs_linux"
-      ref: HEAD
-      resolved-ref: "5610e0fdee0bf1c19c085dbb0e31aeb241a37362"
+      ref: "2244f9f0ffd806128c626eadb3f37062805fd1d1"
+      resolved-ref: "2244f9f0ffd806128c626eadb3f37062805fd1d1"
       url: "https://github.com/captaindario/lite_rt_for_flutter_libs"
     source: git
     version: "0.0.1"
@@ -2420,4 +2420,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.7.0 <4.0.0"
-  flutter: ">=3.29.0"
+  flutter: ">=3.29.2"
