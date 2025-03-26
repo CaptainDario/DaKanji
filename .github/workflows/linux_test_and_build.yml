@@ -127,7 +127,7 @@ jobs:
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
           flatpak install -y flathub org.freedesktop.Sdk//24.08 org.freedesktop.Platform//24.08
           
-          python3 ./build_flatpak.py
+          python3 build_flatpak.py
 
           mv com.DaAppLab.DaKanji.flatpak ../DaKanji_${{env.DAKANJI_VERSION}}.flatpak
       - name: Archive production artifacts
