@@ -101,11 +101,35 @@ class _MiscSettingsState extends State<MiscSettings> {
             text: LocaleKeys.SettingsScreen_misc_settings_window_size.tr(),
             icon: Icons.screenshot_monitor,
             onButtonPressed: () async {
-              var info = await windowManager.getSize();
 
-              settings.misc.windowHeight = info.height.toInt();
-              settings.misc.windowWidth = info.width.toInt();
+              Size size = await windowManager.getSize();
+              settings.misc.windowHeight = size.height.toInt();
+              settings.misc.windowWidth  = size.width.toInt();
 
+              Offset position = await windowManager.getPosition();
+              settings.misc.windowPosX = position.dx.toInt();
+              settings.misc.windowPosY = position.dy.toInt();
+
+              settings.save();
+            },
+          ),
+        // always save window size
+        if(g_desktopPlatform)
+          ResponsiveCheckBoxTile(
+            value: settings.misc.alwaysSaveWindowSize,
+            text: LocaleKeys.SettingsScreen_misc_settings_always_save_window_size.tr(),
+            onTileTapped: (bool value) async {
+              settings.misc.alwaysSaveWindowSize = value;
+              settings.save();
+            },
+          ),
+        // always save window position
+        if(g_desktopPlatform)
+          ResponsiveCheckBoxTile(
+            value: settings.misc.alwaysSaveWindowPosition,
+            text: LocaleKeys.SettingsScreen_misc_settings_always_save_window_position.tr(),
+            onTileTapped: (bool value) async {
+              settings.misc.alwaysSaveWindowPosition = value;
               settings.save();
             },
           ),

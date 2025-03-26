@@ -30,7 +30,7 @@ Future<List<File>> imagesFromWordListNode(
     .langsToInclude(GetIt.I<Settings>().dictionary.selectedTranslationLanguages);
 
   // find all elements from the word list in the database
-  List<JMdict> entries = await wordListEntriesForExport(entryIDs, langsToInclude);
+  List<JMdict> entries = await wordListIdsToJMdict(entryIDs, langsToInclude);
 
   for (var (i, entry) in entries.indexed) {
     

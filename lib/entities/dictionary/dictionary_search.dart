@@ -1,13 +1,14 @@
-// Package imports:
+// Dart imports:
 import 'dart:math';
 
+// Package imports:
 import 'package:async/async.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:tuple/tuple.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/dictionary/dictionary_search.dart';
-import 'package:da_kanji_mobile/entities/dictionary_filters/filter_options.dart';
-import 'package:tuple/tuple.dart';
+import 'package:da_kanji_mobile/application/dictionary/dictionary_search_sorting.dart';
+import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
 import 'search_isolate.dart';
 
 /// Class that spawns a number of isolates to search multi-processed in the
@@ -32,7 +33,7 @@ class DictionarySearch {
   bool _isSearching = false;
   /// The last query that was blocked by a running search
   /// Consists of <query, kana query, deconjugated query>
-  Tuple2<String, List<String>>? _lastBlockedQuery;
+  Tuple2<List<String>, List<String>>? _lastBlockedQuery;
   /// Should the search be converted to hiragana
   bool convertToHiragana;
   
@@ -58,32 +59,29 @@ class DictionarySearch {
   }
 
   /// Queries the database and sorts the results using multiple isolates.
-  Future<List<List<JMdict>>?> search(
-    String query, List<String> allQueries, int limitSearchResults) async {
+  Future<List<List<JMdict>>?> search(List<String> allQueries,
+    List<String> filters, int limitSearchResults) async {
     _checkInitialized();
 
     // do not search if a search is already running but remember the last blocked query
     if(_isSearching){
-      _lastBlockedQuery = Tuple2(query, allQueries);
+      _lastBlockedQuery = Tuple2(allQueries, filters);
       return null;
     }
     _isSearching = true;
 
     // check if the message contains wildcards and replace them appropriately
-    query = query.replaceAll(RegExp(r"\?|\﹖|\︖|\？"), "???");
+    allQueries = allQueries.map((e) =>
+      e.replaceAll(questionMarkRegex, "???")).toList();
     
     // replace full-width chars with normal ones
-    query = query.toHalfWidth();
-
-    // extract filters from query, and remove them from the query
-    List<String> filters = getFilters(query);
-    query = query.split(" ").where((e) => !e.startsWith("#")).join(" ");
+    allQueries = allQueries.map((e) => e.toHalfWidth()).toList();
 
     // search in `noIsolates` separte Isolates 
     FutureGroup<List> searchGroup = FutureGroup();
     for (var i = 0; i < noIsolates; i++) {
       searchGroup.add(_searchIsolates[i].query(
-        query, allQueries, filters, limitSearchResults
+        allQueries, filters, limitSearchResults
       ));
     }
     searchGroup.close();
@@ -93,8 +91,7 @@ class DictionarySearch {
       List<JMdict>.from((await searchGroup.future).expand((e) => e));
     // sort and merge the results
     List<List<JMdict>> sortResult = sortJmdictList(
-      searchResult, query, allQueries, languages
-    );
+      searchResult, allQueries, languages);
     sortResult = sortResult.map((e) => 
       e.sublist(0, min(200, e.length))).toList();
     
@@ -104,21 +101,14 @@ class DictionarySearch {
     // if one or more queries were made while this one was running, run the last
     // one
     if(_lastBlockedQuery != null){
-      String t1 = _lastBlockedQuery!.item1;
-      List<String>? t2 = _lastBlockedQuery!.item2;
+      List<String>? allQueries = _lastBlockedQuery!.item1;
+      List<String>? filters = _lastBlockedQuery!.item2;
       _lastBlockedQuery = null;
-      sortResult = (await search(t1, t2, limitSearchResults)) ?? [];
+      sortResult = (await search(allQueries, filters, limitSearchResults)) ?? [];
       _lastBlockedQuery = null;
     }
     
     return sortResult;
-  }
-
-  /// Extracts the filters from a query
-  List<String> getFilters(String query){
-    return query.split(" ")
-      .where((e) => e.startsWith("#"))
-      .map((e) => jmDictAllFilters[e.replaceFirst("#", "")].toString()).toList();
   }
 
   /// terminates all isolates and cleans memory

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:isolate';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,7 +12,8 @@ import 'package:isar/isar.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/repositories/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/repositories/dictionary/dictionary_search_queries.dart';
 
 class DictionarySearchIsolate {
 
@@ -109,16 +109,15 @@ class DictionarySearchIsolate {
   }
 
   /// Queries the dictionay inside an isolate
-  Future<List> query(String query, List<String> allQueries,
+  Future<List> query(List<String> allQueries,
     List<String> filters, int limitSearchResults) async {
     
     _checkInitialized();
 
     List result = [];
 
-    if(query != ""){
-      isolateSendPort!.send(Tuple4(query, allQueries,
-        filters, limitSearchResults));
+    if(allQueries.isNotEmpty){
+      isolateSendPort!.send(Tuple3(allQueries, filters, limitSearchResults));
       result = await events!.next;
     }
     else{
@@ -171,22 +170,21 @@ Future<void> _searchInIsar(SendPort p) async {
       break;
     }
     
-    if (message is Tuple4<String, List<String>, List<String>, int>) {
+    if (message is Tuple3<List<String>, List<String>, int>) {
       Stopwatch s = Stopwatch()..start();
       
-      String query = message.item1;
-      List<String> allQueries = message.item2;
-      List<String> filters = message.item3;
-      int limitSearchResults = message.item4;
+      List<String> allQueries = message.item1;
+      List<String> filters = message.item2;
+      int limitSearchResults = message.item3;
 
       List<JMdict> searchResults = 
         buildJMDictQuery(isar, idRangeStart, idRangeEnd, noIsolates,
-          query, allQueries, filters, langs, limitSearchResults)
+          allQueries, filters, langs, limitSearchResults)
         .findAllSync();
 
       // Send the result to the main isolate.
       p.send(searchResults);
-      debugPrint("Query: $query, AllQueries: $allQueries, filters: $filters, results: ${searchResults.length}, time: ${s.elapsed}");
+      debugPrint("AllQueries: $allQueries, filters: $filters, results: ${searchResults.length}, time: ${s.elapsed}");
     }    
   }
 

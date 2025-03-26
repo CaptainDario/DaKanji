@@ -9,7 +9,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   gtk
   irondash_engine_context
   isar_flutter_libs
-  mecab_for_dart
+  mecab_for_flutter
   multi_window_linux
   printing
   screen_retriever_linux
@@ -21,7 +21,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
-  tflite_flutter
+  lite_rt_for_flutter_libs_linux
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

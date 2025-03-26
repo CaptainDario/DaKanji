@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,6 +7,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/dictionary/search_result_list_controller.dart';
+import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 import 'search_result_card.dart';
 
 /// List that shows the search results of [DictSearch]

@@ -386,7 +386,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       ),
                       const SizedBox(height: 8,),
 
-                      // TODO: words that use this kanji
+                      // TODO v4: words that use this kanji
                       /*
                       Text.rich(
                         TextSpan(

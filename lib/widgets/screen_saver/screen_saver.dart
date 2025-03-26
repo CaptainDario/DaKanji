@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:window_manager/window_manager.dart';
 
 // Project imports:
@@ -58,6 +59,9 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
   @override
   void initState() {
 
+    // keep screen on
+    WakelockPlus.enable();
+
     if(g_desktopPlatform){
       WindowManager.instance.setFullScreen(true);
     }
@@ -93,6 +97,8 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
 
   @override
   void dispose() {
+
+    WakelockPlus.disable();
 
     if(g_desktopPlatform){
       WindowManager.instance.setFullScreen(false);

@@ -90,6 +90,7 @@ ios/build/**
 # android build files
 android/app/build/intermediates
 android/app/build/outputs
+android/app/.cxx/
 
 # flatpak
 build-dir
@@ -112,3 +113,7 @@ dakanji.env
 
 # python environment
 .venv
+
+# ignore some files that are needed for testing
+test/text/*.dylib
+test/text/unidic/

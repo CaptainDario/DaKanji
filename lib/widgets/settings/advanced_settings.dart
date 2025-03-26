@@ -2,7 +2,6 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -22,6 +21,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
@@ -49,14 +49,14 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
       LocaleKeys.SettingsScreen_advanced_settings_title.tr(),
       Icons.warning,
       children: [
-        // optimize backends
-        ResponsiveIconButtonTile(
-          text: LocaleKeys.SettingsScreen_advanced_settings_optimize_nn.tr(),
-          icon: Icons.saved_search_sharp,
-          onButtonPressed: () {
-            optimizeBackendsPopup(context).show();
-          },
-        ),
+        // TODO v4: reenable optimize backends
+        //ResponsiveIconButtonTile(
+        //  text: LocaleKeys.SettingsScreen_advanced_settings_optimize_nn.tr(),
+        //  icon: Icons.saved_search_sharp,
+        //  onButtonPressed: () {
+        //    optimizeBackendsPopup(context).show();
+        //  },
+        //),
         // number of search isolates
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_advanced_settings_number_search_procs.tr(),

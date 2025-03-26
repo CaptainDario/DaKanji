@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/japanese_text_processing/conjugate.dart';
@@ -12,7 +13,6 @@ import 'package:da_kanji_mobile/entities/conjugation/conjugation_descriptions.da
 import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/conjugation_column.dart';
-import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 /// `ExpansionTile` that shows conjugations of `word` (verb, adjective)
 class ConjugationExpansionTile extends StatefulWidget {

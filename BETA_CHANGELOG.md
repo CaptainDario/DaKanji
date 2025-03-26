@@ -1,6 +1,38 @@
 # DaKanji Beta - changelog
 
-## v3.5.0b2 - ワードリストと暗記改善 (31.01.2025)
+## v3.5.0b4 - 改善 (07.03.2025)
+
+- Text
+  - Close Popup by
+    - tapping outside of text
+    - double tapping popup header
+  - Changing selection with native controls does not update lookup
+  - Android selection buggy
+
+## v3.5.0b3 - 改善 (3.03.2025)
+
+### Added
+  
+- Dictionary
+  - Handwriting input on android
+
+### Improvements
+
+- Text(MAJOR overhaul!)
+  - Text input renders furigana (no need for two text widgets!)
+  - Conjugations are now grouped together (食べ、たかっ、た -> 食べたかった)
+  - Vastly improved selection handling
+  - Only show furigana for kanjis
+  - Space text instead of resizing furigana
+
+### Fixed
+
+- Dictionary
+  - Wildcard search
+
+-------------------------------------------------------------------------
+
+## v3.5.0b2 - 改善 (31.01.2025)
 
 Added:
 
@@ -19,7 +51,7 @@ Fixed:
 
 -------------------------------------------------------------------------
 
-## v3.5.0b1 - ワードリストと暗記改善 (31.12.2024)
+## v3.5.0b1 - 改善 (31.12.2024)
 
 The release of 3.4.6 took so long and contains so many new features that
 a release as 3.5.0 makes more sense.

@@ -2,8 +2,8 @@
 import 'dart:math';
 
 // Package imports:
+import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
 import 'package:sentry/sentry_io.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
@@ -377,8 +377,8 @@ Future<Map<InferenceBackend, double>> testInterpreterMac(
 /// Initializes the interpreter with NPU acceleration for Android.
 Future<Interpreter> nnapiInterpreter(String assetPath) async {
   final options = InterpreterOptions()..useNnApiForAndroid = true;
-  Interpreter i = await Interpreter.fromAsset(
-    assetPath, 
+  Interpreter i = Interpreter.fromFile(
+    File(assetPath), 
     options: options
   );
 
@@ -393,8 +393,8 @@ Future<Interpreter> gpuInterpreter(String assetPath) async {
     )
   );
   final options = InterpreterOptions()..addDelegate(gpuDelegateV2);
-  Interpreter i = await Interpreter.fromAsset(
-    assetPath,
+  Interpreter i = Interpreter.fromFile(
+    File(assetPath),
     options: options
   );
 
@@ -410,8 +410,8 @@ Future<Interpreter> metalInterpreterIOS(String assetPath) async {
     ),
   );
   var interpreterOptions = InterpreterOptions()..addDelegate(gpuDelegate);
-  Interpreter i = await Interpreter.fromAsset(
-    assetPath,
+  Interpreter i = Interpreter.fromFile(
+    File(assetPath),
     options: interpreterOptions
   );
   
@@ -434,8 +434,8 @@ Future<Interpreter> coreMLInterpreterIOS(
       )
     )
   );
-  Interpreter i = await Interpreter.fromAsset(
-    assetPath,
+  Interpreter i = Interpreter.fromFile(
+    File(assetPath),
     options: interpreterOptions
   );
 
@@ -446,8 +446,8 @@ Future<Interpreter> coreMLInterpreterIOS(
 Future<Interpreter> cpuInterpreter(String assetPath, int threads) async {
   final options = InterpreterOptions()
     ..threads = threads;
-  Interpreter i = await Interpreter.fromAsset(
-    assetPath, options: options);
+  Interpreter i = Interpreter.fromFile(
+    File(assetPath), options: options);
 
   return i;
 }
@@ -463,8 +463,8 @@ Future<Interpreter> xnnPackInterpreter(String assetPath, int threads) async {
       )
     )
   );
-  interpreter = await Interpreter.fromAsset(
-    assetPath,
+  interpreter = Interpreter.fromFile(
+    File(assetPath),
     options: options
   );
 

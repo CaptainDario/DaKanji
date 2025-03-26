@@ -1,8 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-
-
 class ResponsiveSliderTile extends StatefulWidget {
   
   /// the text to display

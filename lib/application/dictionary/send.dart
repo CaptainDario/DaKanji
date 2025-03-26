@@ -16,8 +16,6 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';
 import 'package:da_kanji_mobile/widgets/anki/anki_not_setup_dialog.dart';
 
-
-
 /// Function to quick add this entry to the word lists selected in the settings
 Future quickAddToWordList(JMdict entry, BuildContext context) async {
 

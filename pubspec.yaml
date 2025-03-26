@@ -8,12 +8,12 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.5.0+120
+version: 3.5.0+123
 
 
 environment:
   sdk: ">=3.0.0"
-  flutter: "3.27.0"
+  flutter: "3.29.2"
 
 platforms:
   android:
@@ -29,18 +29,17 @@ dependencies:
   # all platforms supported
   linked_scroll_controller: 0.2.0
   shared_preferences: 2.3.2
-  url_launcher: 6.3.0
+  url_launcher: 6.3.1
   flutter_phoenix: 1.1.1
-  image: 4.2.0
+  image: 4.5.2
   flutter_markdown: 0.7.3+1
   get_it: 7.7.0
   provider: 6.1.2
   universal_io: 2.2.2
-  awesome_dialog: 3.2.1
   easy_localization: 3.0.7
   flutter_layout_grid: 2.0.7
   tuple: 2.0.2
-  lottie: 3.1.2
+  lottie: 3.3.1
   flutter_svg: 2.0.10+1
   onboarding_overlay : 3.2.2
   feedback: 3.1.0
@@ -50,7 +49,7 @@ dependencies:
   reorderables: 0.6.0
   device_info_plus: 10.1.2
   share_plus: 10.0.2
-  file_picker: 8.1.2
+  file_picker: 8.3.7
   sqlite3: 2.4.6
   sqlite3_flutter_libs: 0.5.24
   drift: 2.23.1
@@ -62,29 +61,52 @@ dependencies:
   dio: 5.7.0
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
-  pdf: 3.11.1
+  pdf: 3.11.3
   printing: 5.13.3
   path_parsing: 1.0.1               # included in svg_flutter
   vector_graphics: 1.1.11+1         # included in svg_flutter
   app_links: 6.3.2                 # android, iOS, web, macos, windows (msix), linux
 
-  fvp: 0.28.0
-  chewie: 1.8.5
-  video_player: 2.9.1
+  fvp: 0.30.0
+  chewie: 1.11.0
+  video_player: 2.9.3
   flutter_subtitle: 0.0.5
 
   flutter_widget_from_html_core: 0.15.2
-  tflite_flutter: #0.10.4
+  lite_rt_for_flutter: 0.0.1
+  
+  lite_rt_for_flutter_libs_android:
     git:
-      url: https://github.com/CaptainDario/flutter-tflite
-      branch: master
-      hash: 1680ba59a863c23f8fe58475f3fb3620b85e8627
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_android
+  lite_rt_for_flutter_libs_ios:
+    git:
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_ios
+  lite_rt_for_flutter_libs_linux:
+    git:
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_linux
+      ref: 2244f9f0ffd806128c626eadb3f37062805fd1d1
+  lite_rt_for_flutter_libs_macos:
+    git:
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_macos
+  lite_rt_for_flutter_libs_windows:
+    git:
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_windows
+  lite_rt_for_flutter_libs_web_tfjs_tflite:
+    git:
+      url: https://github.com/captaindario/lite_rt_for_flutter_libs
+      path: base/lite_rt_for_flutter_libs_web_tfjs_tflite
+
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
-  async: 2.11.0
-  path: 1.9.0
+  async: 2.12.0
+  path: 1.9.1
   http: 1.2.2
-  path_provider: 2.1.4
+  path_provider: 2.1.5
   yaml: 3.1.2
   quiver: 3.2.2
   another_flushbar: 1.12.30
@@ -92,15 +114,20 @@ dependencies:
   super_clipboard: 0.8.24
   keyboard_actions: 4.2.0
   meta: 1.16.0
-  collection: 1.19.0
+  collection: 1.19.1
   dart_style: 2.3.7
   archive: 4.0.2
   local_assets_server: 2.0.2+12
+  wakelock_plus: 1.2.10
   kana_kit:
 
   # packages that I maintain
-  mecab_for_dart: 1.0.7
-  ankidroid_for_flutter: 1.0.1
+  mecab_for_dart: 1.1.5
+  mecab_for_flutter: 1.0.5
+  ankidroid_for_flutter: 1.0.2
+  awesome_dialog: 
+    git:
+      url: https://github.com/CaptainDario/awesomeDialogs
   liquid_swipe:
     path: ./plugins/DaKanji-dependencies/liquid_swipe_flutter
   database_builder:
@@ -113,7 +140,7 @@ dependencies:
 
   in_app_review: 2.0.9                  # android, iOS, MacOS, windows (limited)
   clipboard_watcher: 0.3.0              # android, iOS, macos, windows, linux
-  store_checker: 1.6.0                  # ios, android
+  store_checker: 1.8.0                  # ios, android
 
   #isar: android, iOS, macos, windows, linux
   isar: 
@@ -124,7 +151,7 @@ dependencies:
     hosted: https://pub.isar-community.dev/
 
   # packages that should only target specific platforms
-  android_intent_plus: 5.1.0      # android
+  android_intent_plus: 5.3.0      # android
   window_manager: 0.4.3           # desktop
   screen_retriever: 0.2.0         # desktop
 
@@ -132,12 +159,7 @@ dependencies:
   flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows
   flutter_native_splash: 2.4.1   # android, iOS, web
 
-dependency_overrides:
-  meta: 1.16.0
-  collection: 1.19.0
-  dart_style: 2.3.7
-  archive: 4.0.2
-  rive: 0.12.4
+#dependency_overrides:
 
 msix_config:
   display_name: DaKanji
@@ -170,6 +192,7 @@ dev_dependencies:
     version: 3.1.8
     hosted: https://pub.isar-community.dev/
   drift_dev: 2.23.1
+  test: 1.25.15
   
 flutter_icons:
   android: "launcher_icon"
@@ -244,9 +267,6 @@ flutter:
     # reader
     #- plugins/foliate-js/
     #- plugins/foliate-js/ui/
-    # dictionary screen
-    - assets/dict/krad.zip
-    - assets/dict/radk.zip
     # onboarding graphics
     - assets/images/onboarding/onboarding_1_1.vec
     - assets/images/onboarding/onboarding_1_2.vec
@@ -272,10 +292,7 @@ flutter:
     - pubspec.yaml
     - CREDITS.md
 
-    # large files
-    # tf lite models
-    - assets/tflite_models/
-    # downloadable: mecab
-    - assets/mecab_dict.zip
-    # downloadable: dictionary
-    - assets/dict/
+    # large files (downloaded at app start)
+    #- assets/tflite_models/
+    #- assets/mecab_dict.zip
+    #- assets/dict/

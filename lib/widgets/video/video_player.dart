@@ -10,11 +10,10 @@ import 'package:flutter_subtitle/flutter_subtitle.dart' hide Subtitle;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:video_player/video_player.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/text/custom_selectable_text_controller.dart';
 import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
 import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
@@ -62,11 +61,9 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
   ValueNotifier<List<String>> mecabSurfaces = ValueNotifier<List<String>>([]);
   //List<String> mecabSurfaces = const [];
   /// the output part of speech elements of mecab
-  List<String> mecabPOS = const [];
+  List<List<String>> mecabPOS = const [];
   /// the output readings of mecab
   List<String> mecabReadings = const [];
-  /// the controller to manipulate the CustomSelectableText
-  CustomSelectableTextController? customSelectableTextController;
 
   Offset subtitleOffset = Offset.zero;
 
@@ -156,7 +153,7 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
           builder: (context, value, child) {
             return TextAnalysisStack(
               textToAnalyze: value,
-              poupAnimationController: popupAnimationController,
+              popupAnimationController: popupAnimationController,
               onPopupInitialized: (tabController) {
                 popupTabController = tabController;
               },
@@ -182,11 +179,8 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: CustomSelectableText(
-                                    words: value,
-                                    rubys: mecabReadings,
+                                    
                                     showRubys: true,
-                                    init: (controller) => customSelectableTextController = controller,
-                                    textColor: Colors.black,
                                     onSelectionChange: (p0) {
                                       currentSelection.value = currentSubtitle
                                         .replaceAll(" ", "")

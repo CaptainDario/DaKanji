@@ -2,7 +2,6 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/dictionary/falling_word_stack_controller.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,6 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/application/dictionary/falling_word_stack_controller.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/entities/dictionary/floating_word.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
@@ -37,7 +37,10 @@ class Dictionary extends StatefulWidget {
   /// should the button for opening the drawing screen be included
   final bool includeDrawButton;
   /// Is the search expanded when instantiating this widget
-  final bool isExpanded; 
+  final bool isExpanded;
+  /// When navigating back (OS navigation and navigator.pop) immediately closes
+  /// this widget and does not firstly collapse searchbar 
+  final bool backNavigationImmediatelyPopsWidget;
   
   /// Should the search term be deconjugated before searching
   final bool allowDeconjugation;
@@ -54,6 +57,7 @@ class Dictionary extends StatefulWidget {
       this.isExpanded = false,
       this.allowDeconjugation=true,
       this.convertToKana=true,
+      required this.backNavigationImmediatelyPopsWidget,
       super.key
     }
   );
@@ -171,6 +175,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                   convertToKana: widget.convertToKana,
                                   allowDeconjugation: widget.allowDeconjugation,
                                   context: context,
+                                  backNavigationImmediatelyPopsWidget: widget.backNavigationImmediatelyPopsWidget,
                                 ),
                               ),
                             ),
@@ -307,6 +312,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       convertToKana: widget.convertToKana,
                       allowDeconjugation: widget.allowDeconjugation,
                       context: context,
+                      backNavigationImmediatelyPopsWidget: widget.backNavigationImmediatelyPopsWidget,
                     ),
                   ),
                 ),

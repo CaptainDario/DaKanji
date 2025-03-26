@@ -9,23 +9,16 @@ import subprocess
 
 repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases/tags/"
 tmp_dir = "tmp"
-move_to_blobs = ["libtensorflow", "libmecab"]
-move_to_dict  = ["dict", "examples", "krad", "radk"]
-move_to_tf_lite = ["CNN_single_char.tflite"]
-files_to_exclude = ["audios.zip", "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
+files_to_exclude = ["audios.zip",
+                    "CNN_single_char.zip", "dictionary.zip", "examples.zip", "krad.zip", "mecab_dict.zip", "radk.zip",
+                    "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
 files_to_exclude_win = [
-    "libtensorflowlite_c.dylib",
-    "libtensorflowlite_c_arm64.so", "libtensorflowlite_c_x86.so",
+    "libmecab_arm64.dylib",
 ]
 files_to_exclude_mac = [
-    "libmecab_arm64.dll", "libmecab_x86.dll",
-    "libtensorflowlite_c_x86.so",  "libtensorflowlite_c_arm64.so",
-    "libtensorflowlite_c_x86.dll", "libtensorflowlite_c_arm64.dll"
 ]
 files_to_exclude_lin = [
-    "libmecab_arm64.dll", "libmecab_x86.dll",
-    "libtensorflowlite_c_arm64.dll", "libtensorflowlite_c_x86.dll",
-    "libtensorflowlite_c.dylib",
+    "libmecab_arm64.dylib",
 ]
 
 release_url = None
@@ -93,22 +86,9 @@ def move_assets():
     print("Moving downloaded assets")
     for f in os.listdir(tmp_dir):
 
-        # move dynamic libraries to blobs
-        if(f.startswith(tuple(move_to_blobs))):
-            shutil.copy(f"{tmp_dir}/{f}", "blobs/")
-        
-        # move mecab_dict to assets
-        if(f.startswith("mecab_dict")):
-            shutil.copy(f"{tmp_dir}/mecab_dict.zip", "assets/")
-
-        # move tf lite assets
-        if(f.startswith(tuple(move_to_tf_lite))):
-            shutil.copy(f"{tmp_dir}/{f}", "assets/tflite_models/")
-        
-        
-        # move the dictionary related assets
-        if(f.startswith(tuple(move_to_dict))):
-            shutil.copy(f"{tmp_dir}/{f}", "assets/dict/")
+        # move mecab dynamic libraries to blobs to allow standalone testing
+        if(f.startswith("libmecab")):
+            shutil.copy(f"{tmp_dir}/{f}", "test/text/")
 
 def init_submodules():
 

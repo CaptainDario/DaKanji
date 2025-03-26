@@ -2,8 +2,6 @@
 import 'package:database_builder/database_builder.dart';
 import 'package:isar/isar.dart';
 
-
-
 ///  Builds a search query for the JMDict database in ISAR
 /// 
 /// Searches in the given `isar` for entries with an id between `idRangeStart`
@@ -13,18 +11,17 @@ import 'package:isar/isar.dart';
 /// * include ID in kanji / kana / meanings index to split load between isolates
 QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
   Isar isar, int idRangeStart, int idRangeEnd, int noIsolates,
-  String query, List<String> allQueries,
+  List<String> allQueries,
   List<String> filters, List<String> langs, int limitSearchResults)
 {
-
   // check if the search contains a wildcard
-  bool containsWildcard = query.contains(RegExp(r"\?|\*"));
+  bool containsWildcard = allQueries.first.contains(RegExp(r"\?|\*"));
 
   QueryBuilder<JMdict, JMdict, QFilterCondition> q;
   if(!containsWildcard) {
-    q = normalQuery(isar, idRangeStart, idRangeEnd, query, allQueries);
+    q = normalQuery(isar, idRangeStart, idRangeEnd, allQueries);
   } else {
-    q = wildcardQuery(isar, idRangeStart, idRangeEnd, query, allQueries);
+    q = wildcardQuery(isar, idRangeStart, idRangeEnd, allQueries);
   }    
 
   return q
@@ -77,13 +74,15 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
             q
             .optional(!containsWildcard, (q) =>
               q.meaningsElement((meaning) => 
-                meaning.attributesElementStartsWith(query, caseSensitive: false)
+                meaning.attributesElementStartsWith(allQueries.first, 
+                  caseSensitive: false)
               )
             )
             .or()
             .optional(containsWildcard, (q) => 
               q.meaningsElement((meaning) => 
-                meaning.attributesElementMatches(query, caseSensitive: false)
+                meaning.attributesElementMatches(allQueries.first,
+                  caseSensitive: false)
               )
             )
           )
@@ -98,7 +97,7 @@ QueryBuilder<JMdict, JMdict, QAfterLimit> buildJMDictQuery(
 
 QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
   Isar isar, int idRangeStart, int idRangeEnd,
-  String query, List<String> allQueries){
+  List<String> allQueries){
 
   return isar.jmdict.where()
     .anyOf(allQueries, (q, element)
@@ -107,7 +106,7 @@ QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
       .anyOf(allQueries, (q, element)
         => q.hiraganasElementStartsWith(element))
         .or()
-      .anyOf([query].nonNulls, (q, element)
+      .anyOf([allQueries.first], (q, element)
         => q.meaningsIndexesElementStartsWith(element))
   .filter()
     // limit this process to one chunk of size (entries.length / num_processes)
@@ -117,7 +116,7 @@ QueryBuilder<JMdict, JMdict, QFilterCondition> normalQuery(
 
 QueryBuilder<JMdict, JMdict, QAfterFilterCondition> wildcardQuery(
   Isar isar, int idRangeStart, int idRangeEnd,
-  String query, List<String> allQueries){
+  List<String> allQueries){
 
   return isar.jmdict.where()
       .idBetween(idRangeStart, idRangeEnd)
@@ -128,7 +127,7 @@ QueryBuilder<JMdict, JMdict, QAfterFilterCondition> wildcardQuery(
       .anyOf(allQueries, (q, element)
         => q.hiraganasElementMatches(element))
         .or()
-      .anyOf([query].nonNulls, (q, element)
+      .anyOf([allQueries.first], (q, element)
         => q.meaningsIndexesElementMatches(element, caseSensitive: false))
   ;
 

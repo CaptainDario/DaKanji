@@ -7,22 +7,26 @@ PODS:
     - FlutterMacOS
   - dynamic_color (0.0.2):
     - FlutterMacOS
+  - file_picker (0.0.1):
+    - FlutterMacOS
   - flutter_inappwebview_macos (0.0.1):
     - FlutterMacOS
     - OrderedSet (~> 6.0.3)
   - FlutterMacOS (1.0.0)
-  - fvp (0.27.0):
+  - fvp (0.30.0):
     - Flutter
     - FlutterMacOS
-    - mdk (~> 0.30.0)
+    - mdk (~> 0.31.0)
   - in_app_review (0.2.0):
     - FlutterMacOS
   - irondash_engine_context (0.0.1):
     - FlutterMacOS
   - isar_flutter_libs (1.0.0):
     - FlutterMacOS
-  - mdk (0.30.1)
-  - mecab_for_dart (0.0.1):
+  - lite_rt_for_flutter_libs_macos (0.0.1):
+    - FlutterMacOS
+  - mdk (0.31.0)
+  - mecab_for_flutter (0.0.1):
     - FlutterMacOS
   - multi_window_macos (0.0.1):
     - FlutterMacOS
@@ -33,8 +37,6 @@ PODS:
     - Flutter
     - FlutterMacOS
   - printing (1.0.0):
-    - FlutterMacOS
-  - rive_common (0.0.1):
     - FlutterMacOS
   - screen_retriever_macos (0.0.1):
     - FlutterMacOS
@@ -73,9 +75,10 @@ PODS:
     - FlutterMacOS
   - super_native_extensions (0.0.1):
     - FlutterMacOS
-  - tflite_flutter (0.0.1):
-    - FlutterMacOS
   - url_launcher_macos (0.0.1):
+    - FlutterMacOS
+  - video_player_avfoundation (0.0.1):
+    - Flutter
     - FlutterMacOS
   - wakelock_plus (0.0.1):
     - FlutterMacOS
@@ -89,18 +92,19 @@ DEPENDENCIES:
   - clipboard_watcher (from `Flutter/ephemeral/.symlinks/plugins/clipboard_watcher/macos`)
   - device_info_plus (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos`)
   - dynamic_color (from `Flutter/ephemeral/.symlinks/plugins/dynamic_color/macos`)
+  - file_picker (from `Flutter/ephemeral/.symlinks/plugins/file_picker/macos`)
   - flutter_inappwebview_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - fvp (from `Flutter/ephemeral/.symlinks/plugins/fvp/darwin`)
   - in_app_review (from `Flutter/ephemeral/.symlinks/plugins/in_app_review/macos`)
   - irondash_engine_context (from `Flutter/ephemeral/.symlinks/plugins/irondash_engine_context/macos`)
   - isar_flutter_libs (from `Flutter/ephemeral/.symlinks/plugins/isar_flutter_libs/macos`)
-  - mecab_for_dart (from `Flutter/ephemeral/.symlinks/plugins/mecab_for_dart/macos`)
+  - lite_rt_for_flutter_libs_macos (from `Flutter/ephemeral/.symlinks/plugins/lite_rt_for_flutter_libs_macos/macos`)
+  - mecab_for_flutter (from `Flutter/ephemeral/.symlinks/plugins/mecab_for_flutter/macos`)
   - multi_window_macos (from `Flutter/ephemeral/.symlinks/plugins/multi_window_macos/macos`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - printing (from `Flutter/ephemeral/.symlinks/plugins/printing/macos`)
-  - rive_common (from `Flutter/ephemeral/.symlinks/plugins/rive_common/macos`)
   - screen_retriever_macos (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever_macos/macos`)
   - sentry_flutter (from `Flutter/ephemeral/.symlinks/plugins/sentry_flutter/macos`)
   - share_plus (from `Flutter/ephemeral/.symlinks/plugins/share_plus/macos`)
@@ -109,8 +113,8 @@ DEPENDENCIES:
   - sqlite3_flutter_libs (from `Flutter/ephemeral/.symlinks/plugins/sqlite3_flutter_libs/macos`)
   - store_checker (from `Flutter/ephemeral/.symlinks/plugins/store_checker/macos`)
   - super_native_extensions (from `Flutter/ephemeral/.symlinks/plugins/super_native_extensions/macos`)
-  - tflite_flutter (from `Flutter/ephemeral/.symlinks/plugins/tflite_flutter/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
+  - video_player_avfoundation (from `Flutter/ephemeral/.symlinks/plugins/video_player_avfoundation/darwin`)
   - wakelock_plus (from `Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
   - window_manager_plus (from `Flutter/ephemeral/.symlinks/plugins/window_manager_plus/macos`)
@@ -131,6 +135,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos
   dynamic_color:
     :path: Flutter/ephemeral/.symlinks/plugins/dynamic_color/macos
+  file_picker:
+    :path: Flutter/ephemeral/.symlinks/plugins/file_picker/macos
   flutter_inappwebview_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview_macos/macos
   FlutterMacOS:
@@ -143,8 +149,10 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/irondash_engine_context/macos
   isar_flutter_libs:
     :path: Flutter/ephemeral/.symlinks/plugins/isar_flutter_libs/macos
-  mecab_for_dart:
-    :path: Flutter/ephemeral/.symlinks/plugins/mecab_for_dart/macos
+  lite_rt_for_flutter_libs_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/lite_rt_for_flutter_libs_macos/macos
+  mecab_for_flutter:
+    :path: Flutter/ephemeral/.symlinks/plugins/mecab_for_flutter/macos
   multi_window_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/multi_window_macos/macos
   package_info_plus:
@@ -153,8 +161,6 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
   printing:
     :path: Flutter/ephemeral/.symlinks/plugins/printing/macos
-  rive_common:
-    :path: Flutter/ephemeral/.symlinks/plugins/rive_common/macos
   screen_retriever_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/screen_retriever_macos/macos
   sentry_flutter:
@@ -171,10 +177,10 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/store_checker/macos
   super_native_extensions:
     :path: Flutter/ephemeral/.symlinks/plugins/super_native_extensions/macos
-  tflite_flutter:
-    :path: Flutter/ephemeral/.symlinks/plugins/tflite_flutter/macos
   url_launcher_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
+  video_player_avfoundation:
+    :path: Flutter/ephemeral/.symlinks/plugins/video_player_avfoundation/darwin
   wakelock_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos
   window_manager:
@@ -187,20 +193,21 @@ SPEC CHECKSUMS:
   clipboard_watcher: a71da520051c24c1b969a411b3e152d4dcc93ca5
   device_info_plus: ce1b7762849d3ec103d0e0517299f2db7ad60720
   dynamic_color: 2eaa27267de1ca20d879fbd6e01259773fb1670f
+  file_picker: e716a70a9fe5fd9e09ebc922d7541464289443af
   flutter_inappwebview_macos: bdf207b8f4ebd58e86ae06cd96b147de99a67c9b
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  fvp: e2a89a4b8c310b01cb81580f37b4cbd10f1cefd7
+  fvp: af80ddc7cb52ce62306d8e753b831051780853fd
   in_app_review: a850789fad746e89bce03d4aeee8078b45a53fd0
   irondash_engine_context: da62996ee25616d2f01bbeb85dc115d813359478
   isar_flutter_libs: 43385c99864c168fadba7c9adeddc5d38838ca6a
-  mdk: 5b3a56ae10c666309c1796bd72968e91db4d670a
-  mecab_for_dart: d4fb906b87bbfdc5914ecea7235045fa2946c85c
+  lite_rt_for_flutter_libs_macos: 44cd4ada4d859e2ae226dfd4e7f4ff2a066c66ae
+  mdk: 90571adbea8ee78c2d36c1954741acfef9fdacb6
+  mecab_for_flutter: ef1ca11a1cecf77834118d2452034743b37f212d
   multi_window_macos: dffe0ffd4274adcc78c8482323d3742fada1aed7
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
-  package_info_plus: fa739dd842b393193c5ca93c26798dff6e3d0e0c
+  package_info_plus: 12f1c5c2cfe8727ca46cbd0b26677728972d9a5b
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   printing: 1dd6a1fce2209ec240698e2439a4adbb9b427637
-  rive_common: 0f0aadf670f0c6a7872dfe3e6186f112a5319108
   screen_retriever_macos: 776e0fa5d42c6163d2bf772d22478df4b302b161
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   sentry_flutter: 0eb93e5279eb41e2392212afe1ccd2fecb4f8cbe
@@ -211,12 +218,12 @@ SPEC CHECKSUMS:
   sqlite3_flutter_libs: 5ca46c1a04eddfbeeb5b16566164aa7ad1616e7b
   store_checker: 387169de0dffe57b6370d54cc027e9f95051b57f
   super_native_extensions: 85efee3a7495b46b04befcfc86ed12069264ebf3
-  tflite_flutter: b186ea3c62c076a90652f47c01005fe36c75171e
-  url_launcher_macos: 5f437abeda8c85500ceb03f5c1938a8c5a705399
+  url_launcher_macos: c82c93949963e55b228a30115bd219499a6fe404
+  video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
   wakelock_plus: 4783562c9a43d209c458cb9b30692134af456269
   window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
   window_manager_plus: 18e39c7256dbb1e9bbc810417a5506de91f7129b
 
 PODFILE CHECKSUM: 8db8422821fdc0a6504ce149b58d8839fdb535b8
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

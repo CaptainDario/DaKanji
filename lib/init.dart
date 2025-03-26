@@ -13,11 +13,12 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:mecab_for_flutter/mecab_flutter.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
 
@@ -65,12 +66,6 @@ Future<bool> init() async {
   await g_DakanjiPathManager.init();
 
   await initServices();
-
-  // init window Manager
-  if(g_desktopPlatform) {
-    await windowManager.ensureInitialized();
-    desktopWindowSetup();
-  }
 
   // deep links
   await initDeepLinksStream();
@@ -193,7 +188,8 @@ Future<void> initDocumentsServices(BuildContext context) async {
   // Mecab
   GetIt.I.registerSingleton<Mecab>(Mecab());
 
-  await GetIt.I<Mecab>().init(p.joinAll([supportDirectory, "assets", "mecab_dict"]), true);
+  await GetIt.I<Mecab>().initFlutter(
+    p.joinAll([supportDirectory, "assets", "mecab_dict"]), true);
 
   g_documentsServicesInitialized = true;
 }
@@ -207,8 +203,8 @@ Future<void> initDocumentsServices(BuildContext context) async {
 /// from GitHub. The context is used for showing a popup 
 Future<void> initDocumentsAssets(BuildContext context) async {
 
-  String documentsDir = g_DakanjiPathManager.dakanjiSupportDirectory.path;
-  debugPrint("documents directory: ${documentsDir.toString()}");
+  String supportDir = g_DakanjiPathManager.dakanjiSupportDirectory.path;
+  debugPrint("documents directory: ${supportDir.toString()}");
 
   // copy assets from assets to documents directory, or download them from GH
   bool downloadAllowed = false;
@@ -218,23 +214,27 @@ Future<void> initDocumentsAssets(BuildContext context) async {
     "assets/dict/examples.isar",
     "assets/dict/krad.isar",
     "assets/dict/radk.isar",
-    "assets/mecab_dict"
+    "assets/mecab_dict",
+    "assets/ml/CNN_single_char"
   ].map((f) => File(f)).toList();
 
+  // While getting the assets do not turn of the screen
+  WakelockPlus.enable();
   for (var asset in assets) {
-    if(!checkAssetExists(documentsDir, asset)
+    if(!checkAssetExists(supportDir, asset)
       || asset == assets[0] && GetIt.I<UserData>().getNewDict //dict
       || asset == assets[1] && GetIt.I<UserData>().getNewExamples //examples
       || asset == assets[2] && GetIt.I<UserData>().getNewRadicals // krad
       || asset == assets[3] && GetIt.I<UserData>().getNewRadicals // radk
     ){
       await getAsset(
-        asset, p.joinAll([documentsDir, ...asset.uri.pathSegments]),
+        asset, p.joinAll([supportDir, ...asset.uri.pathSegments]),
         g_GithubApiDependenciesRelase, context, !downloadAllowed
       );
       downloadAllowed = true;
     }
   }
+  WakelockPlus.enable();
 
 }
 
@@ -248,23 +248,37 @@ bool checkAssetExists(String documentsDir, FileSystemEntity asset){
 
 }
 
-/// Setup the DaKanji window on desktop platforms
-void desktopWindowSetup() {
-  
-  if(kReleaseMode) windowManager.center();
+/// Removes the menu bar and shows square window while the app is loading
+Future<void> splashscreenDesktop() async {
 
-  windowManager.setMinimumSize(g_minDesktopWindowSize);
-  windowManager.setTitle(g_AppTitle);
+  await windowManager.setSize(const Size(600, 600));
+  if(!kReleaseMode) await windowManager.center();
+  await windowManager.setAsFrameless();
+  await windowManager.setAlwaysOnTop(true);
+
+}
+
+/// Setup the DaKanji window on desktop platforms
+Future<void> desktopWindowSetup() async {
+
+  if(!g_desktopPlatform) return;
+
+  await windowManager.setMinimumSize(g_minDesktopWindowSize);
+  await windowManager.setTitle(g_AppTitle);
   
-  windowManager.setSize(Size(
+  await windowManager.setSize(Size(
     GetIt.I<Settings>().misc.windowWidth.toDouble(), 
     GetIt.I<Settings>().misc.windowHeight.toDouble()
   ));
 
-  if(kReleaseMode) windowManager.center();
+  await windowManager.setPosition(Offset(
+    GetIt.I<Settings>().misc.windowPosX.toDouble(), 
+    GetIt.I<Settings>().misc.windowPosY.toDouble()
+  ));
 
-  windowManager.setOpacity(GetIt.I<Settings>().misc.windowOpacity);
-  windowManager.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
+  await windowManager.setOpacity(GetIt.I<Settings>().misc.windowOpacity);
+  await windowManager.setAlwaysOnTop(GetIt.I<Settings>().misc.alwaysOnTop);
+  await windowManager.setTitleBarStyle(TitleBarStyle.normal);
 }
 
 /// Tests all TF Lite models for the backends that are available on the device

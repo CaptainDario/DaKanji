@@ -120,10 +120,10 @@ class _YoutubeWidgetState extends State<YoutubeWidget> {
 
     if (captionUrl != null) {
       // Fetch and print subtitles from the URL
-      print("Subtitle URL found: $captionUrl");
+      debugPrint("Subtitle URL found: $captionUrl");
       await _printSubtitles(captionUrl);
     } else {
-      print("No subtitles available for this video.");
+      debugPrint("No subtitles available for this video.");
     }
   }
 
@@ -131,9 +131,9 @@ class _YoutubeWidgetState extends State<YoutubeWidget> {
     final response = await http.get(Uri.parse(subtitleUrl));
     if (response.statusCode == 200) {
       final subtitleContent = utf8.decode(response.bodyBytes);
-      print("Subtitles:\n$subtitleContent");
+      debugPrint("Subtitles:\n$subtitleContent");
     } else {
-      print("Failed to fetch subtitles.");
+      debugPrint("Failed to fetch subtitles.");
     }
   }
 }

@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/helper/stores.dart';
+import 'package:da_kanji_mobile/application/migrate/migrate.dart';
 import 'package:da_kanji_mobile/application/routing/deep_links.dart';
 import 'package:da_kanji_mobile/entities/releases/version.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
@@ -116,6 +117,12 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       }
     }
+
+    // migrate data if necessary
+    migrate(GetIt.I<UserData>().versionUsed, g_Version);
+
+    // setup is done move the desktop window
+    await desktopWindowSetup();
   }
 
   /// Opens a popup that informs the user that an update is available

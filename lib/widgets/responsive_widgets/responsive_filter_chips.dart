@@ -1,8 +1,8 @@
 // Flutter imports:
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:reorderables/reorderables.dart';
 
 // Project imports:

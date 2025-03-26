@@ -1,8 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-
-
 class ResponsiveIconButtonTile extends StatefulWidget {
 
   /// the description of this settings

@@ -13,10 +13,9 @@
 #include <fvp/fvp_plugin_c_api.h>
 #include <irondash_engine_context/irondash_engine_context_plugin_c_api.h>
 #include <isar_flutter_libs/isar_flutter_libs_plugin.h>
-#include <mecab_for_dart/mecab_for_dart_plugin_c_api.h>
+#include <mecab_for_flutter/mecab_for_flutter_plugin_c_api.h>
 #include <permission_handler_windows/permission_handler_windows_plugin.h>
 #include <printing/printing_plugin.h>
-#include <rive_common/rive_plugin.h>
 #include <screen_retriever_windows/screen_retriever_windows_plugin_c_api.h>
 #include <share_plus/share_plus_windows_plugin_c_api.h>
 #include <sqlite3_flutter_libs/sqlite3_flutter_libs_plugin.h>
@@ -40,14 +39,12 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("IrondashEngineContextPluginCApi"));
   IsarFlutterLibsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("IsarFlutterLibsPlugin"));
-  MecabForDartPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("MecabForDartPluginCApi"));
+  MecabForFlutterPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("MecabForFlutterPluginCApi"));
   PermissionHandlerWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
   PrintingPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("PrintingPlugin"));
-  RivePluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("RivePlugin"));
   ScreenRetrieverWindowsPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("ScreenRetrieverWindowsPluginCApi"));
   SharePlusWindowsPluginCApiRegisterWithRegistrar(

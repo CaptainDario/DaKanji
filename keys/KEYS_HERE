@@ -1,1 +1,6 @@
 All keys for signing apps should be placed here.
+
+android:
+
+keys/DaKanjiRecognizer.jks
+android/key.properties

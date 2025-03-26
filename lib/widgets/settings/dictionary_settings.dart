@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
@@ -24,11 +24,11 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_til
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_input_field_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
+import 'package:da_kanji_mobile/widgets/settings/dictionary_search_priority_setting.dart';
 import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/info_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
 import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
-import 'package:provider/provider.dart';
 
 class DictionarySettings extends StatefulWidget {
   
@@ -144,89 +144,9 @@ class _DictionarySettingsState extends State<DictionarySettings> {
           }
         ),
         // Search result sort order daggable list
-        ResponsiveFilterChips(
-          description: LocaleKeys.SettingsScreen_dict_separate_search_results.tr(),
-          detailedDescription: SizedBox(
-            height: MediaQuery.sizeOf(context).height*0.8,
-            child: SingleChildScrollView(
-              
-              child: MarkdownBody(
-                data:
-"""
-# ${LocaleKeys.SettingsScreen_dict_search_sorting_information.tr()}
-${LocaleKeys.SettingsScreen_dict_search_sorting_information_description_1.tr()}
-${LocaleKeys.SettingsScreen_dict_search_sorting_information_description_2.tr()}
-${LocaleKeys.SettingsScreen_dict_search_sorting_information_description_3.tr()}
-
-## ${LocaleKeys.SettingsScreen_dict_term.tr()}
-${LocaleKeys.SettingsScreen_dict_term_description.tr()}
-
-## ${LocaleKeys.SettingsScreen_dict_convert_to_kana.tr()}
-${LocaleKeys.SettingsScreen_dict_convert_to_kana_description.tr()}
-
-## ${LocaleKeys.SettingsScreen_dict_base_form.tr()}
-${LocaleKeys.SettingsScreen_dict_base_form_description.tr()}
-"""
-              ),
-            ),
-          ),
-          chipWidget: (int index) {
-
-            bool isSelected = settings.dictionary.selectedSearchResultSortPriorities
-              .contains(settings.dictionary.searchResultSortPriorities[index]);
-
-            int iWithoutUnselected = settings.dictionary.searchResultSortPriorities
-              .sublist(0, index+1)
-              .where((e) => settings.dictionary.selectedSearchResultSortPriorities
-                .contains(e)
-              ).length;
-
-            return Text(
-              (isSelected ? "$iWithoutUnselected. " : "") + 
-              settings.dictionary.searchResultSortPriorities[index].tr()
-            );
-          },
-          selected: (index) {
-            return settings.dictionary.selectedSearchResultSortPriorities
-              .contains(settings.dictionary.searchResultSortPriorities[index]);
-          },
-          numChips: settings.dictionary.searchResultSortPriorities.length,
-          onReorder: (oldIndex, newIndex) {
-            // update order of list with languages
-            String priority = settings.dictionary.searchResultSortPriorities.removeAt(oldIndex);
-            settings.dictionary.searchResultSortPriorities.insert(newIndex, priority);
-    
-            // update list of selected languages
-            settings.dictionary.selectedSearchResultSortPriorities =
-              settings.dictionary.searchResultSortPriorities.where((e) => 
-                settings.dictionary.selectedSearchResultSortPriorities.contains(e)
-              ).toList();
-              
-            settings.save();
-          },
-          onFilterChipTap: (selected, index) async {
-            String priority = settings.dictionary.searchResultSortPriorities[index];
-
-            // do not allow removing the last priority
-            if(settings.dictionary.selectedSearchResultSortPriorities.length == 1 &&
-              settings.dictionary.selectedSearchResultSortPriorities.contains(priority)) {
-              return;
-            }
-
-            if(!settings.dictionary.selectedSearchResultSortPriorities.contains(priority)) {
-              settings.dictionary.selectedSearchResultSortPriorities = 
-                settings.dictionary.searchResultSortPriorities.where((element) => 
-                  [priority, ...settings.dictionary.selectedSearchResultSortPriorities].contains(element)
-                ).toList();
-            }
-            else {
-              settings.dictionary.selectedSearchResultSortPriorities.remove(priority);
-            }
-
-            await settings.save();
-            setState(() {});
-            
-          },
+        DictionarySearchPrioritySetting(
+          settings.dictionary,
+          settings.save
         ),
         // Separate search results by matching term
         ResponsiveCheckBoxTile(

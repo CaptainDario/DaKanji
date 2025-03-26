@@ -5,6 +5,9 @@ import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:tuple/tuple.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
+
 /// Sorts a list of Jmdict entries given a query text.
 /// If it is a search *without* wildcards the order is determined
 /// by those sorting criteria:
@@ -24,9 +27,7 @@ import 'package:tuple/tuple.dart';
 /// First level sorting criteria:
 ///   1. word frequency
 List<List<JMdict>> sortJmdictList(
-  List<JMdict> entries, String query, List<String> allQueries,
-  List<String> languages
-){
+  List<JMdict> entries, List<String> allQueries, List<String> languages){
 
   /// number of citeria used to sort the list
   int n = (allQueries.length) * 3;
@@ -39,7 +40,7 @@ List<List<JMdict>> sortJmdictList(
   List<List<int>> lenDifferences = List.generate(n, (i) => <int>[]);
 
   // if no wildcard is used, iterate over the entries and create a ranking for each
-  if(!query.contains(RegExp(r"\?|\*"))){
+  if(!allQueries.first.contains(wildcardRegex)){
     // iterate over the entries and create a ranking for each
     for (JMdict entry in entries) {
       // KANJI matched (normal query) ?
@@ -67,16 +68,15 @@ List<List<JMdict>> sortJmdictList(
         lenDifferences[ranked.item1].add(ranked.item2);
       }
     }
-    
+    // sort the results
+    for (var i = 0; i < n; i++) {
+      matches[i] = sortEntries(matches[i], matchIndices[i], lenDifferences[i]);
+    }
   }
-  // if a wildcard was used just sort by frequency
+  // if a wildcard was used just sort by length and then frequency
   else {
-    matches[0] = entries..sort((a, b) => b.frequency.compareTo(a.frequency));
-  }
-
-  // sort the results
-  for (var i = 0; i < n; i++) {
-    matches[i] = sortEntries(matches[i], matchIndices[i], lenDifferences[i]);
+    matches[0] = entries
+      ..sort((a, b) => b.frequency.compareTo(a.frequency));
   }
 
   return matches; // sensei
@@ -168,4 +168,5 @@ List<JMdict> sortEntries(List<JMdict> a, List<int> b, List<int> c){
 
   return combined.map((e) => e.item1).toList();
 }
+
 

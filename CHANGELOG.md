@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v3.5.0 - ワードリストと暗記改善 (31.12.2024)
+## v3.5.0 - ワードリストと暗記改善 (14.04.2024)
 
 Note: **This update resets the Anki integration, please run the setup again**
 
@@ -12,11 +12,21 @@ Added:
   - Search result sorting priority setting
   - Show search separation headers setting
   - Limit search results setting
-
+  - Handwriting input on android
+- Settings
+  - Font size #104
 - Anki: Examples sentences can be added to notes
 
 Improvements:
 
+- Text (MAJOR overhaul!)
+  - Text input renders furigana (no need for two text widgets!)
+  - Conjugations are now grouped together (食べ、たかっ、た -> 食べたかった)
+  - Vastly improved selection handling
+  - Only show furigana for kanjis
+  - Space text instead of resizing furigana
+  - Option to automatically read from clipboard #92
+  - Automatically save popup winow size and position
 - Dictionary
   - New deconjugation engine, handles more deconjugation patterns
   - Improved searching
@@ -24,12 +34,16 @@ Improvements:
     - Ignore white space at the beginning and end of search terms
   - Image search and DeepL supported on MacOS and Windows
   - Back navigation clears search and resets current entry
-  - Readability of kanji stroke order diagrams
-- Text: Improved handling of conjugations
+  - Readability of kanji stroke order diagrams #104
+- Word lists: significantly improved export speed
 - Radical search: show kanjis separated by stroke order
 - Kana table: playback on android does not cut off
 - Anki: Setting to decide how adding a duplicate should be handled
+- Keep screen turned on while screensaver is running
+- While downloading initial data, keep screen on
 - Various small UI improvements
+- Reduced install size
+- Unpack assets in isolate #72
 
 Fixed:
 

@@ -1,10 +1,13 @@
-import 'package:another_flushbar/flushbar.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
+// Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:another_flushbar/flushbar.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
+// Project imports:
+import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// Flushbar that shows which terms have been searched and allows changing 
 /// the current search to one of them
@@ -24,7 +27,7 @@ class DictionaryAltSearchFlushbar {
   Flushbar build(BuildContext context) {
 
     return Flushbar(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       messageText: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -32,8 +35,10 @@ class DictionaryAltSearchFlushbar {
             child: RichText(
               text: TextSpan(
                 text: "${LocaleKeys.DictionaryScreen_search_searched.tr()} ",
-                style: const TextStyle(
-                  color: Colors.black
+                style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black,
                 ),
                 children: [
                   for (int i=0; i<queries.length; i++)
@@ -41,16 +46,21 @@ class DictionaryAltSearchFlushbar {
                       TextSpan(
                         text: "${i+1}. ${queries[i]}",
                         style: TextStyle(
-                          color: Theme.of(context).highlightColor
+                          color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
+                          decoration: TextDecoration.underline
                         ),
                         recognizer: TapGestureRecognizer()..onTap =
                           () => onTapped(queries[i]),
                       ),
                       if(i < queries.length-1)
-                        const TextSpan(
+                        TextSpan(
                           text: "; ",
                           style: TextStyle(
-                            color: Colors.black
+                            color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black,
                           ),
                         ),
                     ],

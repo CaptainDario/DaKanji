@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Generator for metainfo & .desktop files: 
+    https://www.freedesktop.org/software/appstream/metainfocreator/#/
+-->
+<component type="desktop-application">
+  <id>com.DaAppLab.DaKanji</id>
+  <name>DaKanji</name>
+  <summary>You are learning Japanese? Then you need to give "DaKanji" a try!</summary>
+  <developer>
+    <name>DaAppLab</name>
+  </developer>
+  <url type="homepage">https://dakanji.app/</url>
+  <url type="bugtracker">https://github.com/CaptainDario/DaKanji/issues</url>
+  <url type="help">https://discord.gg/gdqaux3r4P</url>
+  <metadata_license>MIT</metadata_license>
+  <project_license>LicenseRef-proprietary=https://raw.githubusercontent.com/CaptainDario/DaKanji/refs/heads/main/LICENSE</project_license>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+  <description>
+    <p>You are learning Japanese? Then you need to give "DaKanji" a try!</p>
+  </description>
+  <launchable type="desktop-id">com.DaAppLab.DaKanji.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_1.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_2.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_3.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_4.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/CaptainDario/DaKanji/main/readme/phone_5_5_mockups_5.png</image>
+    </screenshot>
+  </screenshots>
+  <releases></releases>
+</component>

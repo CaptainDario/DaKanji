@@ -2020,7 +2020,7 @@
       "en": "Kana Trainer",
       "de": "Kana Trainer",
       "ru": "Тренер Кана",
-      "ja": "カナ・トレーナー",
+      "ja": "#ERROR!",
       "zh": "卡纳培训师",
       "it": "Allenatore Kana",
       "fr": "Formateur Kana",
@@ -2272,7 +2272,7 @@
       "pl": "Tutaj możesz napisać lub wkleić dowolny tekst. Ten tekst będzie przetwarzany za pomocą różnych narzędzi."
     },
     "tutorial_processed_text_text": {
-      "en": "The processed text will be shown here. You can select parts of the text to look them up in the dictionary.",
+      "en": "You can select parts of the text to look it up in the dictionary.",
       "de": "Der bearbeitete Text wird hier angezeigt. Du kannst Teile des Textes markieren, um sie im Wörterbuch nachzuschlagen.",
       "ru": "Обработанный текст будет показан здесь. Вы можете выделить части текста, чтобы найти их в словаре.",
       "ja": "変換された文章はここに表示されます。単語を選択して、辞書で調べることも可能です",
@@ -2359,16 +2359,16 @@
       "es": "Este botón muestra las palabras del texto en diferentes colores (el significado de los colores puede verse en el manual).",
       "pl": "Ten przycisk oznacza części mowy w tekscie różnych kolorach (znaczenia kolorów można zobaczyć w instrukcji)."
     },
-    "tutorial_fullscreen_text": {
-      "en": "This button switches the processed text to full screen.",
-      "de": "Mit dieser Schaltfläche wird der bearbeitete Text als Vollbild angezeigt.",
-      "ru": "Эта кнопка переключает обрабатываемый текст в полноэкранный режим.",
-      "ja": "テキストをフルスクリーンに切り替えます",
-      "zh": "这个按钮将处理后的文本切换到全屏。",
-      "it": "Questo pulsante consente di visualizzare il testo elaborato a schermo intero.",
-      "fr": "Ce bouton permet de faire passer le texte traité en plein écran.",
-      "es": "Este botón cambia el texto procesado a pantalla completa.",
-      "pl": "Ten przycisk przełącza przetwarzany tekst na pełny ekran."
+    "text_input_placeholder": {
+      "en": "Type here...",
+      "de": "Schreiben Sie hier...",
+      "ru": "Введите здесь...",
+      "ja": "ここに入力...",
+      "zh": "在此键入...",
+      "it": "Digitare qui...",
+      "fr": "Tapez ici...",
+      "es": "Escriba aquí...",
+      "pl": "Wpisz tutaj..."
     },
     "copy_button_copy": {
       "en": "Copied:",
@@ -2380,90 +2380,6 @@
       "fr": "Copié :",
       "es": "Copiado:",
       "pl": "Skopiowane:"
-    },
-    "pos_suffix": {
-      "en": "suffix",
-      "de": "Suffix",
-      "ja": "接尾辞",
-      "pl": "przyrostek"
-    },
-    "pos_na_adj": {
-      "en": "na-adjective",
-      "de": "na-Adjektiv",
-      "ja": "な形容詞",
-      "pl": "przymiotnik na-"
-    },
-    "pos_noun": {
-      "en": "noun",
-      "de": "Substantiv",
-      "ja": "名詞",
-      "pl": "rzeczownik"
-    },
-    "pos_prefix": {
-      "en": "prefix",
-      "de": "Präfix",
-      "ja": "接頭辞",
-      "pl": "przedrostek"
-    },
-    "pos_verb": {
-      "en": "verb",
-      "de": "Verb",
-      "ja": "動詞",
-      "pl": "czasownik"
-    },
-    "pos_i_adjective": {
-      "en": "i-adjective",
-      "de": "i-Adjektiv",
-      "ja": "い形容詞",
-      "pl": "przymiotnik i-"
-    },
-    "pos_adverb": {
-      "en": "adverb",
-      "de": "Adverb",
-      "ja": "副詞",
-      "pl": "przysłowek"
-    },
-    "pos_adnominal": {
-      "en": "adnominal",
-      "de": "Adnominal",
-      "ja": "連体詞",
-      "pl": "przydawka"
-    },
-    "pos_conjunction": {
-      "en": "conjunction",
-      "de": "Konjunktion",
-      "ja": "接続詞",
-      "pl": "spójnik"
-    },
-    "pos_particle": {
-      "en": "particle",
-      "de": "Partikel",
-      "ja": "助詞",
-      "pl": "partykuła"
-    },
-    "pos_auxillary_verb": {
-      "en": "auxilary verb",
-      "de": "Hilfsverb",
-      "ja": "助動詞",
-      "pl": "czasownik pomocniczy"
-    },
-    "pos_exclamation": {
-      "en": "exclamation",
-      "de": "Ausruf",
-      "ja": "感嘆詞",
-      "pl": "wykrzyknienie"
-    },
-    "pos_filler": {
-      "en": "filler",
-      "de": "Füller",
-      "ja": "つなぎ言葉",
-      "pl": "wypełniacz"
-    },
-    "pos_interjection": {
-      "en": "interjection",
-      "de": "Zwischenruf",
-      "ja": "間投詞",
-      "pl": "wyraz cząstkowy"
     }
   },
   "Webpage": {
@@ -3094,16 +3010,16 @@
       "es": "Mostrar botones de selección de texto",
       "pl": "Pokaż przyciski wyboru tekstu"
     },
-    "text_open_in_fullscreen": {
-      "en": "Open in fullscreen",
-      "de": "Im Vollbildmodus öffnen",
-      "ru": "Открыть в полноэкранном режиме",
-      "ja": "全画面表示",
-      "zh": "全屏打开",
-      "it": "Aprire a schermo intero",
-      "fr": "Ouvrir en plein écran",
-      "es": "Abrir a pantalla completa",
-      "pl": "Otwórz na pełnym ekranie"
+    "text_save_text": {
+      "en": "Save text across sessions",
+      "de": "Text sitzungsübergreifend speichern",
+      "ru": "Сохраняйте текст в разных сеансах",
+      "ja": "セッションをまたいでテキストを保存",
+      "zh": "跨会话保存文本",
+      "it": "Salvare il testo in tutte le sessioni",
+      "fr": "#ERROR!",
+      "es": "Guardar texto entre sesiones",
+      "pl": "Zapisywanie tekstu w różnych sesjach"
     },
     "anki_title": {
       "en": "Anki",
@@ -3546,15 +3462,37 @@
       "pl": "Motyw(@:SettingsScreen.restarts_app)"
     },
     "misc_settings_window_size": {
-      "en": "Save current window size",
-      "de": "Speicher die momentanige Fenster größe",
-      "ru": "Сохранить текущий размер окна",
-      "ja": "現在のウィンドウサイズを保存",
-      "zh": "保存当前窗口尺寸",
-      "it": "Salva la dimensione attuale della finestra",
-      "fr": "Sauvegarder la taille actuelle de la fenêtre",
-      "es": "Guardar el tamaño actual de la ventana",
-      "pl": "Zapisz bieżący rozmiar okna"
+      "en": "Save current window size and position",
+      "de": "Aktuelle Fenstergröße und -position speichern",
+      "ru": "Сохранить текущий размер и положение окна",
+      "ja": "現在のウィンドウのサイズと位置を保存する",
+      "zh": "保存当前窗口大小和位置",
+      "it": "Salva la dimensione e la posizione della finestra corrente",
+      "fr": "Sauvegarde de la taille et de la position actuelles de la fenêtre",
+      "es": "Guardar el tamaño y la posición actuales de la ventana",
+      "pl": "Zapisywanie bieżącego rozmiaru i położenia okna"
+    },
+    "misc_settings_always_save_window_size": {
+      "en": "Save window size on resize",
+      "de": "Fenstergröße bei Größenänderung speichern",
+      "ru": "Сохранение размера окна при изменении размера",
+      "ja": "リサイズ時にウィンドウサイズを保存",
+      "zh": "调整大小时保存窗口大小",
+      "it": "Salvataggio delle dimensioni della finestra in caso di ridimensionamento",
+      "fr": "Sauvegarde de la taille de la fenêtre lors du redimensionnement",
+      "es": "Guardar el tamaño de la ventana al cambiar el tamaño",
+      "pl": "Zapisywanie rozmiaru okna przy zmianie rozmiaru"
+    },
+    "misc_settings_always_save_window_position": {
+      "en": "Save window position on move",
+      "de": "Fensterposition beim Verschieben speichern",
+      "ru": "Сохранение позиции окна при перемещении",
+      "ja": "移動時のウィンドウ位置の保存",
+      "zh": "移动时保存窗口位置",
+      "it": "Salva la posizione della finestra durante lo spostamento",
+      "fr": "Sauvegarde de la position de la fenêtre lors d'un déplacement",
+      "es": "Guardar la posición de la ventana al moverla",
+      "pl": "Zapisywanie pozycji okna podczas przenoszenia"
     },
     "misc_language": {
       "en": "language",
@@ -4330,6 +4268,28 @@
       "es": "Botones de selección de texto",
       "pl": "Przyciski wyboru tekstu"
     },
+    "text_paste_button_title": {
+      "en": "Paste button",
+      "de": "Einfügen",
+      "ru": "Кнопка \"Вставить",
+      "ja": "貼り付けボタン",
+      "zh": "粘贴按钮",
+      "it": "Pulsante Incolla",
+      "fr": "Bouton coller",
+      "es": "Botón Pegar",
+      "pl": "Przycisk Wklej"
+    },
+    "text_paste_button_text": {
+      "en": "Pressing this button pastes the content of the clipboard.\nLong-pressing this button switches to auto-paste and always pastes your clipboards content when it changes.",
+      "de": "Durch Drücken dieser Taste wird der Inhalt der Zwischenablage eingefügt.\nLanges Drücken dieser Taste schaltet auf automatisches Einfügen um und fügt den Inhalt der Zwischenablage immer dann ein, wenn er sich ändert.",
+      "ru": "Нажатие этой кнопки вставляет содержимое буфера обмена.\nДлительное нажатие этой кнопки переключает режим автоматической вставки и всегда вставляет содержимое буфера обмена при его изменении.",
+      "ja": "このボタンを押すとクリップボードの内容がペーストされます。\nこのボタンを長押しすると自動貼り付けに切り替わり、クリップボードの内容が変更されると常に貼り付けられます。",
+      "zh": "按下此按钮可粘贴剪贴板的内容。\n长按此按钮可切换到自动粘贴，并在剪贴板内容发生变化时始终进行粘贴。",
+      "it": "Premendo questo pulsante si incolla il contenuto degli appunti.\nPremendo a lungo questo pulsante si passa all'incollamento automatico e si incolla sempre il contenuto degli appunti quando cambia.",
+      "fr": "En appuyant sur ce bouton, vous collez le contenu du presse-papiers.\nUne pression prolongée sur ce bouton permet de passer au collage automatique et de toujours coller le contenu du presse-papiers lorsqu'il est modifié.",
+      "es": "Pulsando este botón se pega el contenido del portapapeles.\nPulsando prolongadamente este botón se cambia a pegado automático y siempre se pega el contenido del portapapeles cuando cambia.",
+      "pl": "Naciśnięcie tego przycisku powoduje wklejenie zawartości schowka.\nDługie naciśnięcie tego przycisku przełącza na automatyczne wklejanie i zawsze wkleja zawartość schowka, gdy się zmieni."
+    },
     "text_selection_shrink_title": {
       "en": "Shrink selection",
       "de": "Auswahl verkleinern",
@@ -4559,7 +4519,7 @@
       "ja": "アカウント",
       "zh": "账户",
       "it": "Conto",
-      "fr": "Compte",
+      "fr": "#ERROR!",
       "es": "Cuenta",
       "pl": "Konto"
     },
@@ -4611,7 +4571,7 @@
       "zh": "欢迎来到单词列表屏幕！",
       "it": "Benvenuti nella schermata degli elenchi di parole!",
       "fr": "Bienvenue dans l'écran des listes de mots !",
-      "es": "Bienvenido a la pantalla de listas de palabras.",
+      "es": "#ERROR!",
       "pl": "Witamy na ekranie list słów!"
     },
     "tutorial_begin_text": {
