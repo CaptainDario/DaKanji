@@ -1,6 +1,6 @@
 app-id: com.DaAppLab.DaKanji
 runtime: org.freedesktop.Platform
-runtime-version: '22.08'
+runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 command: DaKanji
 finish-args:
@@ -19,7 +19,7 @@ modules:
   build-commands:
   - pwd
   - ls DaKanji -la
-  - install -Dm644 DaKanji/com.DaAppLab.DaKanji.appdata.xml /app/share/appdata/com.DaAppLab.DaKanji.appdata.xml
+  - install -Dm644 DaKanji/com.DaAppLab.DaKanji.metainfo.xml /app/share/appdata/com.DaAppLab.DaKanji.metainfo.xml
   #- desktop-file-edit DaKanji/DaKanji.desktop --set-key=Exec --set-value="dakanji %u" --set-icon=com.DaAppLab.DaKanji
   - install -Dm644 DaKanji/LaunchImage@2x.png /app/share/icons/hicolor/512x512/apps/com.DaAppLab.DaKanji.png
   - install -Dm644 DaKanji/DaKanji.desktop /app/share/applications/com.DaAppLab.DaKanji.desktop
@@ -31,7 +31,7 @@ modules:
     path: ../build/linux/x64/release/bundle/
     dest: DaKanji
   - type: file
-    path: com.DaAppLab.DaKanji.appdata.xml
+    path: com.DaAppLab.DaKanji.metainfo.xml
     dest: DaKanji
   - type: file
     path: DaKanji.desktop
