@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v3.5.0 - ワードリストと暗記改善 (31.12.2024)
+## v3.5.0 - ワードリストと暗記改善 (14.04.2024)
 
 Note: **This update resets the Anki integration, please run the setup again**
 
