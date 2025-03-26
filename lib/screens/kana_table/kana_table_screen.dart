@@ -23,6 +23,7 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/kana_table/kana_grid.dart';
 import 'package:da_kanji_mobile/widgets/kana_table/kana_info_card.dart';
+import 'package:universal_io/io.dart';
 
 class KanaTableScreen extends StatefulWidget {
   
@@ -77,11 +78,14 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
   /// The animation controller for the kana info card
   late AnimationController _controller;
   /// The player for the kana sound
-  final mdk.Player kanaSoundPlayer = mdk.Player()..audioBackends = ["AudioTrack"];
+  final mdk.Player kanaSoundPlayer = mdk.Player();
 
 
   @override
   void initState() {
+
+    // TODO change according to issue
+    if(Platform.isAndroid) kanaSoundPlayer.audioBackends = ["AudioTrack"];
 
     menuFunctions = [
       dakuDialPressed,
