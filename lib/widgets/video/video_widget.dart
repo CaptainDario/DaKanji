@@ -48,10 +48,10 @@ class _VideoWidgetState extends State<VideoWidget> {
         // init tutorial
         final OnboardingState? onboarding = Onboarding.of(context);
         if(onboarding != null && 
-          GetIt.I<UserData>().showTutorialVideo) {
+          GetIt.I<UserData>().showTutorialImmersion) {
           onboarding.showWithSteps(
-            GetIt.I<Tutorials>().videoScreenTutorial.indexes![0],
-            GetIt.I<Tutorials>().videoScreenTutorial.indexes!
+            GetIt.I<Tutorials>().immersionScreenTutorial.indexes![0],
+            GetIt.I<Tutorials>().immersionScreenTutorial.indexes!
           );
         }
       }

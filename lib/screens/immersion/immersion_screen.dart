@@ -6,7 +6,7 @@ import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/reading/reading_widget.dart';
 
-class ReadingScreen extends StatefulWidget {
+class ImmersionScreen extends StatefulWidget {
 
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
@@ -14,7 +14,7 @@ class ReadingScreen extends StatefulWidget {
   final bool includeTutorial;
 
 
-  const ReadingScreen(
+  const ImmersionScreen(
     this.openedByDrawer,
     this.includeTutorial,
     {
@@ -23,16 +23,16 @@ class ReadingScreen extends StatefulWidget {
   );
 
   @override
-  State<ReadingScreen> createState() => _ReadingScreenState();
+  State<ImmersionScreen> createState() => _ImmersionScreenState();
 }
 
-class _ReadingScreenState extends State<ReadingScreen> {
+class _ImmersionScreenState extends State<ImmersionScreen> {
 
   @override
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
       drawerClosed: !widget.openedByDrawer,
-      currentScreen: Screens.reading,
+      currentScreen: Screens.immersion,
       child: ReadingWidget(
         widget.openedByDrawer,
         widget.includeTutorial
@@ -41,3 +41,5 @@ class _ReadingScreenState extends State<ReadingScreen> {
   }
 
 }
+
+

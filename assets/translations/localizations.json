@@ -34,63 +34,28 @@
       "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
     }
   },
-  "VideoScreen": {
+  "ImmersionScreen": {
     "title": {
-      "en": "Video",
-      "de": "Video",
-      "ru": "Видео",
-      "ja": "ビデオ",
-      "zh": "视频",
-      "it": "Video",
-      "fr": "Vidéo",
-      "es": "Vídeo",
-      "pl": "Wideo"
+      "en": "Immersion",
+      "de": "Immersion",
+      "ru": "Погружение",
+      "ja": "イマージョン",
+      "zh": "浸入式",
+      "it": "Immersione",
+      "fr": "Immersion",
+      "es": "Inmersión",
+      "pl": "Zanurzenie"
     },
     "tutorial_begin_title": {
-      "en": "Welcome to the video screen!",
-      "de": "Willkommen auf dem Videobildschirm!",
-      "ru": "Добро пожаловать на видеоэкран!",
-      "ja": "ビデオ画面へようこそ！",
-      "zh": "欢迎来到视频屏幕！",
-      "it": "Benvenuti nella schermata video!",
-      "fr": "Bienvenue sur l'écran vidéo !",
-      "es": "Bienvenido a la pantalla de vídeo",
-      "pl": "Witamy na ekranie wideo!"
-    },
-    "tutorial_begin_text": {
-      "en": "We will show you a quick tutorial to get you started.",
-      "de": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-      "ru": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-      "ja": "簡単なチュートリアルをお見せします",
-      "zh": "我们将向你展示一个快速教程，让你开始。",
-      "it": "Vi mostreremo una rapida esercitazione per iniziare.",
-      "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-      "es": "Vamos a mostrarte un corto tutorial para que empieces.",
-      "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
-    }
-  },
-  "ReadingScreen": {
-    "title": {
-      "en": "Reading",
-      "de": "Lesen",
-      "ru": "Чтение",
-      "ja": "読書",
-      "zh": "阅读",
-      "it": "Lettura",
-      "fr": "Lecture",
-      "es": "Lectura",
-      "pl": "Czytanie"
-    },
-    "tutorial_begin_title": {
-      "en": "Welcome to the reading screen!",
-      "de": "Willkommen auf dem Lesebildschirm!",
-      "ru": "Добро пожаловать на экран для чтения!",
-      "ja": "読書画面へようこそ！",
-      "zh": "欢迎来到阅读屏幕！",
-      "it": "Benvenuti nello schermo di lettura!",
-      "fr": "Bienvenue sur l'écran de lecture !",
-      "es": "¡Bienvenido a la pantalla de lectura!",
-      "pl": "Witamy na ekranie czytania!"
+      "en": "Welcome to the immersion screen!",
+      "de": "Willkommen auf dem Immersionsbildschirm!",
+      "ru": "Добро пожаловать на экран погружения!",
+      "ja": "イマージョン・スクリーンへようこそ！",
+      "zh": "欢迎来到浸入式屏幕！",
+      "it": "Benvenuti nella schermata di immersione!",
+      "fr": "Bienvenue à l'écran d'immersion !",
+      "es": "¡Bienvenido a la pantalla de inmersión!",
+      "pl": "Witamy na ekranie immersji!"
     },
     "tutorial_begin_text": {
       "en": "We will show you a quick tutorial to get you started.",
@@ -2020,7 +1985,7 @@
       "en": "Kana Trainer",
       "de": "Kana Trainer",
       "ru": "Тренер Кана",
-      "ja": "#ERROR!",
+      "ja": "カナ・トレーナー",
       "zh": "卡纳培训师",
       "it": "Allenatore Kana",
       "fr": "Formateur Kana",
@@ -3017,7 +2982,7 @@
       "ja": "セッションをまたいでテキストを保存",
       "zh": "跨会话保存文本",
       "it": "Salvare il testo in tutte le sessioni",
-      "fr": "#ERROR!",
+      "fr": "Sauvegarder le texte d'une session à l'autre",
       "es": "Guardar texto entre sesiones",
       "pl": "Zapisywanie tekstu w różnych sesjach"
     },
@@ -4519,7 +4484,7 @@
       "ja": "アカウント",
       "zh": "账户",
       "it": "Conto",
-      "fr": "#ERROR!",
+      "fr": "Compte",
       "es": "Cuenta",
       "pl": "Konto"
     },
@@ -4571,7 +4536,7 @@
       "zh": "欢迎来到单词列表屏幕！",
       "it": "Benvenuti nella schermata degli elenchi di parole!",
       "fr": "Bienvenue dans l'écran des listes de mots !",
-      "es": "#ERROR!",
+      "es": "Bienvenido a la pantalla de listas de palabras.",
       "pl": "Witamy na ekranie list słów!"
     },
     "tutorial_begin_text": {

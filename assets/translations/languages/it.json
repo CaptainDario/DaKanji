@@ -191,6 +191,11 @@
     "rate_this_app": "Tasso",
     "whats_new": "cosa c'\u00e8 di nuovo"
   },
+  "ImmersionScreen": {
+    "title": "Immersione",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata di immersione!"
+  },
   "KanaTableScreen": {
     "title": "Tavolo Kana",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
@@ -302,11 +307,6 @@
     "Onboarding_3_title": "Non sapete leggere una frase?",
     "Onboarding_4_text": "DaKanji ha tabelle di Kanji e Kana per consentirvi di studiarli in modo efficiente.",
     "Onboarding_4_title": "Studiare i kanji e i kana"
-  },
-  "ReadingScreen": {
-    "title": "Lettura",
-    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "Benvenuti nello schermo di lettura!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Reimpostare i file del dizionario",
@@ -457,11 +457,6 @@
     "title": "Conto",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
     "tutorial_begin_title": ""
-  },
-  "VideoScreen": {
-    "title": "Video",
-    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "Benvenuti nella schermata video!"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",

@@ -14,9 +14,8 @@ import 'package:da_kanji_mobile/widgets/settings/kana_table_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/kanji_table_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/misc_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/ocr_settings.dart';
-import 'package:da_kanji_mobile/widgets/settings/reading_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/text_settings.dart';
-import 'package:da_kanji_mobile/widgets/settings/video_settings.dart';
+import 'package:da_kanji_mobile/widgets/settings/immersion_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/webbrowser_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/word_lists_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/youtube_settings.dart';
@@ -86,9 +85,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 DictionarySettings(),
 
                 if(kDebugMode)
-                  ReadingSettings(),
-                if(kDebugMode)
-                  VideoSettings(),
+                  ImmersionSettings(),
                 if(kDebugMode)
                   WebbrowserSettings(),
                 if(kDebugMode)

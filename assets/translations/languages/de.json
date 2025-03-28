@@ -191,6 +191,11 @@
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
   },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Immersionsbildschirm!"
+  },
   "KanaTableScreen": {
     "title": "Kana Tabelle",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
@@ -302,11 +307,6 @@
     "Onboarding_3_title": "Du wei\u00dft nicht wie man einen Satz liest?",
     "Onboarding_4_text": "DaKanji verf\u00fcgt \u00fcber Kanji- und Kana-Tabellen, damit Sie sie effizient lernen k\u00f6nnen.",
     "Onboarding_4_title": "Kanji und Kana lernen"
-  },
-  "ReadingScreen": {
-    "title": "Lesen",
-    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "Willkommen auf dem Lesebildschirm!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "W\u00f6rterbuchdateien zur\u00fccksetzen",
@@ -457,11 +457,6 @@
     "title": "Konto",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
     "tutorial_begin_title": ""
-  },
-  "VideoScreen": {
-    "title": "Video",
-    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "Willkommen auf dem Videobildschirm!"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",

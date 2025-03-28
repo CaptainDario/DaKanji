@@ -15,15 +15,15 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 
-class VideoSettings extends StatefulWidget {
+class ImmersionSettings extends StatefulWidget {
 
-  const VideoSettings({super.key});
+  const ImmersionSettings({super.key});
 
   @override
-  State<VideoSettings> createState() => _VideoSettingsState();
+  State<ImmersionSettings> createState() => _ImmersionSettingsState();
 }
 
-class _VideoSettingsState extends State<VideoSettings> {
+class _ImmersionSettingsState extends State<ImmersionSettings> {
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _VideoSettingsState extends State<VideoSettings> {
     Settings settings = context.watch<Settings>();
 
     return ResponsiveHeaderTile(
-      LocaleKeys.VideoScreen_title.tr(),
+      LocaleKeys.ImmersionScreen_title.tr(),
       DaKanjiIcons.video,
       children: [
         // reshow tutorial
@@ -39,7 +39,7 @@ class _VideoSettingsState extends State<VideoSettings> {
           text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
           icon: Icons.replay_outlined,
           onButtonPressed: () {
-            GetIt.I<UserData>().showTutorialVideo = true;
+            GetIt.I<UserData>().showTutorialImmersion = true;
             settings.save();
             Phoenix.rebirth(context);
           },

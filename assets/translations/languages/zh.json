@@ -191,6 +191,11 @@
     "rate_this_app": "\u901f\u7387",
     "whats_new": "\u6700\u65b0\u4fe1\u606f"
   },
+  "ImmersionScreen": {
+    "title": "\u6d78\u5165\u5f0f",
+    "tutorial_begin_text": "\u6211\u4eec\u5c06\u5411\u4f60\u5c55\u793a\u4e00\u4e2a\u5feb\u901f\u6559\u7a0b\uff0c\u8ba9\u4f60\u5f00\u59cb\u3002",
+    "tutorial_begin_title": "\u6b22\u8fce\u6765\u5230\u6d78\u5165\u5f0f\u5c4f\u5e55\uff01"
+  },
   "KanaTableScreen": {
     "title": "\u5361\u7eb3\u684c",
     "tutorial_begin_text": "\u6211\u4eec\u5c06\u5411\u4f60\u5c55\u793a\u4e00\u4e2a\u5feb\u901f\u6559\u7a0b\uff0c\u8ba9\u4f60\u5f00\u59cb\u3002",
@@ -302,11 +307,6 @@
     "Onboarding_3_title": "\u4e0d\u77e5\u9053\u5982\u4f55\u8bfb\u61c2\u4e00\u4e2a\u53e5\u5b50\uff1f",
     "Onboarding_4_text": "DaKanji \u6709\u6c49\u5b57\u548c\u5047\u540d\u8868\uff0c\u53ef\u8ba9\u60a8\u9ad8\u6548\u5730\u5b66\u4e60\u6c49\u5b57\u548c\u5047\u540d\u3002",
     "Onboarding_4_title": "\u5b66\u4e60\u6c49\u5b57\u548c\u5047\u540d"
-  },
-  "ReadingScreen": {
-    "title": "\u9605\u8bfb",
-    "tutorial_begin_text": "\u6211\u4eec\u5c06\u5411\u4f60\u5c55\u793a\u4e00\u4e2a\u5feb\u901f\u6559\u7a0b\uff0c\u8ba9\u4f60\u5f00\u59cb\u3002",
-    "tutorial_begin_title": "\u6b22\u8fce\u6765\u5230\u9605\u8bfb\u5c4f\u5e55\uff01"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "\u91cd\u7f6e\u5b57\u5178\u6587\u4ef6",
@@ -457,11 +457,6 @@
     "title": "\u8d26\u6237",
     "tutorial_begin_text": "\u6211\u4eec\u5c06\u5411\u4f60\u5c55\u793a\u4e00\u4e2a\u5feb\u901f\u6559\u7a0b\uff0c\u8ba9\u4f60\u5f00\u59cb\u3002",
     "tutorial_begin_title": ""
-  },
-  "VideoScreen": {
-    "title": "\u89c6\u9891",
-    "tutorial_begin_text": "\u6211\u4eec\u5c06\u5411\u4f60\u5c55\u793a\u4e00\u4e2a\u5feb\u901f\u6559\u7a0b\uff0c\u8ba9\u4f60\u5f00\u59cb\u3002",
-    "tutorial_begin_title": "\u6b22\u8fce\u6765\u5230\u89c6\u9891\u5c4f\u5e55\uff01"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",

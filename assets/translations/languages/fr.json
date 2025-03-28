@@ -191,6 +191,11 @@
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
   },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
+    "tutorial_begin_title": "Bienvenue \u00e0 l'\u00e9cran d'immersion !"
+  },
   "KanaTableScreen": {
     "title": "Table Kana",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
@@ -303,11 +308,6 @@
     "Onboarding_4_text": "DaKanji contient des tableaux de Kanji et de Kana pour vous permettre de les \u00e9tudier efficacement.",
     "Onboarding_4_title": "\u00c9tudier les kanji et les kana"
   },
-  "ReadingScreen": {
-    "title": "Lecture",
-    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
-    "tutorial_begin_title": "Bienvenue sur l'\u00e9cran de lecture !"
-  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "R\u00e9initialiser les fichiers du dictionnaire",
     "advanced_settings_delete_dojg": "Supprimer les fichiers DoJG",
@@ -396,7 +396,7 @@
     "requires_restart": "n\u00e9cessite un red\u00e9marrage",
     "restarts_app": "red\u00e9marre l'application",
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
-    "text_save_text": "#ERROR!",
+    "text_save_text": "Sauvegarder le texte d'une session \u00e0 l'autre",
     "text_show_selection_buttons": "Afficher les boutons de s\u00e9lection de texte",
     "title": "Param\u00e8tres",
     "word_lists_export": "Exporter la base de donn\u00e9es des listes de mots",
@@ -454,14 +454,9 @@
     "tutorial_text_input_text": "Ici, vous pouvez \u00e9crire ou coller n'importe quel texte. Ce texte sera trait\u00e9 avec diff\u00e9rents outils."
   },
   "UserScreen": {
-    "title": "#ERROR!",
+    "title": "Compte",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
     "tutorial_begin_title": ""
-  },
-  "VideoScreen": {
-    "title": "Vid\u00e9o",
-    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
-    "tutorial_begin_title": "Bienvenue sur l'\u00e9cran vid\u00e9o !"
   },
   "WebbrowserScreen": {
     "title": "Navigateur Web",

@@ -169,6 +169,11 @@ class CodegenLoader extends AssetLoader{
     "rate_this_app": "速率",
     "whats_new": "最新信息"
   },
+  "ImmersionScreen": {
+    "title": "浸入式",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到浸入式屏幕！"
+  },
   "KanaTableScreen": {
     "title": "卡纳桌",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
@@ -280,11 +285,6 @@ class CodegenLoader extends AssetLoader{
     "Onboarding_3_title": "不知道如何读懂一个句子？",
     "Onboarding_4_text": "DaKanji 有汉字和假名表，可让您高效地学习汉字和假名。",
     "Onboarding_4_title": "学习汉字和假名"
-  },
-  "ReadingScreen": {
-    "title": "阅读",
-    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
-    "tutorial_begin_title": "欢迎来到阅读屏幕！"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "重置字典文件",
@@ -418,11 +418,6 @@ class CodegenLoader extends AssetLoader{
   "UserScreen": {
     "title": "账户",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
-  },
-  "VideoScreen": {
-    "title": "视频",
-    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
-    "tutorial_begin_title": "欢迎来到视频屏幕！"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -658,6 +653,11 @@ static const Map<String,dynamic> ja = {
     "rate_this_app": "評価",
     "whats_new": "最新情報"
   },
+  "ImmersionScreen": {
+    "title": "イマージョン",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "イマージョン・スクリーンへようこそ！"
+  },
   "KanaTableScreen": {
     "title": "かな一覧表",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
@@ -671,7 +671,7 @@ static const Map<String,dynamic> ja = {
     "tutorial_speed_dial_yoon_special": "その他の拗音のオン・オフの切り替え"
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "カナ・トレーナー"
   },
   "KanjiTableScreen": {
     "title": "漢字表",
@@ -769,11 +769,6 @@ static const Map<String,dynamic> ja = {
     "Onboarding_3_title": "文章の読み方がわからない？",
     "Onboarding_4_text": "Dakanjiには漢字表と仮名表があり、効率よく学習することができます。",
     "Onboarding_4_title": "漢字と仮名を学ぶ"
-  },
-  "ReadingScreen": {
-    "title": "読書",
-    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-    "tutorial_begin_title": "読書画面へようこそ！"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "辞書ファイルのリセット",
@@ -917,11 +912,6 @@ static const Map<String,dynamic> ja = {
   "UserScreen": {
     "title": "アカウント",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-  },
-  "VideoScreen": {
-    "title": "ビデオ",
-    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-    "tutorial_begin_title": "ビデオ画面へようこそ！"
   },
   "WebbrowserScreen": {
     "title": "ウェブブラウザ",
@@ -1173,6 +1163,11 @@ static const Map<String,dynamic> de = {
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
   },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Immersionsbildschirm!"
+  },
   "KanaTableScreen": {
     "title": "Kana Tabelle",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
@@ -1284,11 +1279,6 @@ static const Map<String,dynamic> de = {
     "Onboarding_3_title": "Du weißt nicht wie man einen Satz liest?",
     "Onboarding_4_text": "DaKanji verfügt über Kanji- und Kana-Tabellen, damit Sie sie effizient lernen können.",
     "Onboarding_4_title": "Kanji und Kana lernen"
-  },
-  "ReadingScreen": {
-    "title": "Lesen",
-    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "Willkommen auf dem Lesebildschirm!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Wörterbuchdateien zurücksetzen",
@@ -1422,11 +1412,6 @@ static const Map<String,dynamic> de = {
   "UserScreen": {
     "title": "Konto",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-  },
-  "VideoScreen": {
-    "title": "Video",
-    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "Willkommen auf dem Videobildschirm!"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -1640,6 +1625,11 @@ static const Map<String,dynamic> ru = {
     "rate_this_app": "Тариф",
     "whats_new": "что нового"
   },
+  "ImmersionScreen": {
+    "title": "Погружение",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран погружения!"
+  },
   "KanaTableScreen": {
     "title": "Стол Kana",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
@@ -1751,11 +1741,6 @@ static const Map<String,dynamic> ru = {
     "Onboarding_3_title": "Не умеете читать предложения?",
     "Onboarding_4_text": "DaKanji содержит таблицы кандзи и кана, позволяющие эффективно их изучать.",
     "Onboarding_4_title": "Изучение кандзи и каны"
-  },
-  "ReadingScreen": {
-    "title": "Чтение",
-    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-    "tutorial_begin_title": "Добро пожаловать на экран для чтения!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Сброс файлов словарей",
@@ -1889,11 +1874,6 @@ static const Map<String,dynamic> ru = {
   "UserScreen": {
     "title": "Счет",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-  },
-  "VideoScreen": {
-    "title": "Видео",
-    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-    "tutorial_begin_title": "Добро пожаловать на видеоэкран!"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -2142,6 +2122,11 @@ static const Map<String,dynamic> pl = {
     "rate_this_app": "Oceń",
     "whats_new": "co nowego"
   },
+  "ImmersionScreen": {
+    "title": "Zanurzenie",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie immersji!"
+  },
   "KanaTableScreen": {
     "title": "Stół Kana",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
@@ -2253,11 +2238,6 @@ static const Map<String,dynamic> pl = {
     "Onboarding_3_title": "Nie wiesz jak przeczytać zdanie?",
     "Onboarding_4_text": "DaKanji zawiera tabele Kanji i Kana, które pozwalają na efektywną naukę.",
     "Onboarding_4_title": "Nauka kanji i kana"
-  },
-  "ReadingScreen": {
-    "title": "Czytanie",
-    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
-    "tutorial_begin_title": "Witamy na ekranie czytania!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Resetowanie plików słownika",
@@ -2400,11 +2380,6 @@ static const Map<String,dynamic> pl = {
   "UserScreen": {
     "title": "Konto",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
-  },
-  "VideoScreen": {
-    "title": "Wideo",
-    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
-    "tutorial_begin_title": "Witamy na ekranie wideo!"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -2656,6 +2631,11 @@ static const Map<String,dynamic> en = {
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the immersion screen!"
+  },
   "KanaTableScreen": {
     "title": "Kana Table",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
@@ -2767,11 +2747,6 @@ static const Map<String,dynamic> en = {
     "Onboarding_3_title": "Do not know how to read a sentence?",
     "Onboarding_4_text": "DaKanji has Kanji and Kana tables to let you study them efficiently.",
     "Onboarding_4_title": "Study Kanji and Kana"
-  },
-  "ReadingScreen": {
-    "title": "Reading",
-    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
-    "tutorial_begin_title": "Welcome to the reading screen!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Reset dictionary files",
@@ -2916,11 +2891,6 @@ static const Map<String,dynamic> en = {
     "title": "Account",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the account screen!"
-  },
-  "VideoScreen": {
-    "title": "Video",
-    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
-    "tutorial_begin_title": "Welcome to the video screen!"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -3169,6 +3139,11 @@ static const Map<String,dynamic> it = {
     "rate_this_app": "Tasso",
     "whats_new": "cosa c'è di nuovo"
   },
+  "ImmersionScreen": {
+    "title": "Immersione",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata di immersione!"
+  },
   "KanaTableScreen": {
     "title": "Tavolo Kana",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
@@ -3280,11 +3255,6 @@ static const Map<String,dynamic> it = {
     "Onboarding_3_title": "Non sapete leggere una frase?",
     "Onboarding_4_text": "DaKanji ha tabelle di Kanji e Kana per consentirvi di studiarli in modo efficiente.",
     "Onboarding_4_title": "Studiare i kanji e i kana"
-  },
-  "ReadingScreen": {
-    "title": "Lettura",
-    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "Benvenuti nello schermo di lettura!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Reimpostare i file del dizionario",
@@ -3418,11 +3388,6 @@ static const Map<String,dynamic> it = {
   "UserScreen": {
     "title": "Conto",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-  },
-  "VideoScreen": {
-    "title": "Video",
-    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "Benvenuti nella schermata video!"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -3636,6 +3601,11 @@ static const Map<String,dynamic> fr = {
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
   },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue à l'écran d'immersion !"
+  },
   "KanaTableScreen": {
     "title": "Table Kana",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
@@ -3748,11 +3718,6 @@ static const Map<String,dynamic> fr = {
     "Onboarding_4_text": "DaKanji contient des tableaux de Kanji et de Kana pour vous permettre de les étudier efficacement.",
     "Onboarding_4_title": "Étudier les kanji et les kana"
   },
-  "ReadingScreen": {
-    "title": "Lecture",
-    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-    "tutorial_begin_title": "Bienvenue sur l'écran de lecture !"
-  },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Réinitialiser les fichiers du dictionnaire",
     "advanced_settings_delete_dojg": "Supprimer les fichiers DoJG",
@@ -3841,7 +3806,7 @@ static const Map<String,dynamic> fr = {
     "requires_restart": "nécessite un redémarrage",
     "restarts_app": "redémarre l'application",
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
-    "text_save_text": "#ERROR!",
+    "text_save_text": "Sauvegarder le texte d'une session à l'autre",
     "text_show_selection_buttons": "Afficher les boutons de sélection de texte",
     "title": "Paramètres",
     "word_lists_export": "Exporter la base de données des listes de mots",
@@ -3883,13 +3848,8 @@ static const Map<String,dynamic> fr = {
     "tutorial_text_input_text": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils."
   },
   "UserScreen": {
-    "title": "#ERROR!",
+    "title": "Compte",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-  },
-  "VideoScreen": {
-    "title": "Vidéo",
-    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-    "tutorial_begin_title": "Bienvenue sur l'écran vidéo !"
   },
   "WebbrowserScreen": {
     "title": "Navigateur Web",
@@ -4103,6 +4063,11 @@ static const Map<String,dynamic> es = {
     "rate_this_app": "Calificar",
     "whats_new": "qué hay de nuevo"
   },
+  "ImmersionScreen": {
+    "title": "Inmersión",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "¡Bienvenido a la pantalla de inmersión!"
+  },
   "KanaTableScreen": {
     "title": "Mesa Kana",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
@@ -4214,11 +4179,6 @@ static const Map<String,dynamic> es = {
     "Onboarding_3_title": "¿No sabe leer una frase?",
     "Onboarding_4_text": "DaKanji dispone de tablas de Kanji y Kana para que puedas estudiarlos de forma eficaz.",
     "Onboarding_4_title": "Estudiar kanji y kana"
-  },
-  "ReadingScreen": {
-    "title": "Lectura",
-    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "¡Bienvenido a la pantalla de lectura!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Restablecer archivos de diccionario",
@@ -4359,11 +4319,6 @@ static const Map<String,dynamic> es = {
     "title": "Cuenta",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
   },
-  "VideoScreen": {
-    "title": "Vídeo",
-    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "Bienvenido a la pantalla de vídeo"
-  },
   "WebbrowserScreen": {
     "title": "Navegador",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
@@ -4409,7 +4364,7 @@ static const Map<String,dynamic> es = {
     "send_to_anki_progress": "Enviando a Anki, por favor espere...",
     "title": "Listas de palabras",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
     "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
     "tutorial_create_list": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
     "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",

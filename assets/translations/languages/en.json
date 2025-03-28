@@ -191,6 +191,11 @@
     "rate_this_app": "Rate",
     "whats_new": "what's new"
   },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the immersion screen!"
+  },
   "KanaTableScreen": {
     "title": "Kana Table",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
@@ -302,11 +307,6 @@
     "Onboarding_3_title": "Do not know how to read a sentence?",
     "Onboarding_4_text": "DaKanji has Kanji and Kana tables to let you study them efficiently.",
     "Onboarding_4_title": "Study Kanji and Kana"
-  },
-  "ReadingScreen": {
-    "title": "Reading",
-    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
-    "tutorial_begin_title": "Welcome to the reading screen!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Reset dictionary files",
@@ -457,11 +457,6 @@
     "title": "Account",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the account screen!"
-  },
-  "VideoScreen": {
-    "title": "Video",
-    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
-    "tutorial_begin_title": "Welcome to the video screen!"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",

@@ -147,20 +147,14 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       true, sendFeedback),
     if(kDebugMode)
       DrawerEntry(
-        DaKanjiIcons.video, LocaleKeys.VideoScreen_title,
-        "/${Screens.video.name}", Screens.video,
+        Icons.remove_red_eye, LocaleKeys.ImmersionScreen_title,
+        "/${Screens.immersion.name}", Screens.immersion,
         null, null,
         kDebugMode, null),
     if(kDebugMode)
       DrawerEntry(
         DaKanjiIcons.youtube, LocaleKeys.YoutubeScreen_title,
         "/${Screens.youtube.name}", Screens.youtube,
-        null, null,
-        kDebugMode, null),
-    if(kDebugMode)
-      DrawerEntry(
-        DaKanjiIcons.reading, LocaleKeys.ReadingScreen_title,
-        "/${Screens.reading.name}", Screens.reading,
         null, null,
         kDebugMode, null),
     if(kDebugMode)

@@ -184,6 +184,10 @@ abstract class  LocaleKeys {
   static const HomeScreen_rate_this_app = 'HomeScreen.rate_this_app';
   static const HomeScreen_whats_new = 'HomeScreen.whats_new';
   static const HomeScreen = 'HomeScreen';
+  static const ImmersionScreen_title = 'ImmersionScreen.title';
+  static const ImmersionScreen_tutorial_begin_text = 'ImmersionScreen.tutorial_begin_text';
+  static const ImmersionScreen_tutorial_begin_title = 'ImmersionScreen.tutorial_begin_title';
+  static const ImmersionScreen = 'ImmersionScreen';
   static const KanaTableScreen_title = 'KanaTableScreen.title';
   static const KanaTableScreen_tutorial_begin_text = 'KanaTableScreen.tutorial_begin_text';
   static const KanaTableScreen_tutorial_begin_title = 'KanaTableScreen.tutorial_begin_title';
@@ -288,10 +292,6 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_4_text = 'OnBoarding.Onboarding_4_text';
   static const OnBoarding_Onboarding_4_title = 'OnBoarding.Onboarding_4_title';
   static const OnBoarding = 'OnBoarding';
-  static const ReadingScreen_title = 'ReadingScreen.title';
-  static const ReadingScreen_tutorial_begin_text = 'ReadingScreen.tutorial_begin_text';
-  static const ReadingScreen_tutorial_begin_title = 'ReadingScreen.tutorial_begin_title';
-  static const ReadingScreen = 'ReadingScreen';
   static const SettingsScreen_advanced_settings_delete_dict = 'SettingsScreen.advanced_settings_delete_dict';
   static const SettingsScreen_advanced_settings_delete_dojg = 'SettingsScreen.advanced_settings_delete_dojg';
   static const SettingsScreen_advanced_settings_delete_history = 'SettingsScreen.advanced_settings_delete_history';
@@ -438,10 +438,6 @@ abstract class  LocaleKeys {
   static const UserScreen_tutorial_begin_text = 'UserScreen.tutorial_begin_text';
   static const UserScreen_tutorial_begin_title = 'UserScreen.tutorial_begin_title';
   static const UserScreen = 'UserScreen';
-  static const VideoScreen_title = 'VideoScreen.title';
-  static const VideoScreen_tutorial_begin_text = 'VideoScreen.tutorial_begin_text';
-  static const VideoScreen_tutorial_begin_title = 'VideoScreen.tutorial_begin_title';
-  static const VideoScreen = 'VideoScreen';
   static const WebbrowserScreen_title = 'WebbrowserScreen.title';
   static const WebbrowserScreen_tutorial_begin_text = 'WebbrowserScreen.tutorial_begin_text';
   static const WebbrowserScreen_tutorial_begin_title = 'WebbrowserScreen.tutorial_begin_title';

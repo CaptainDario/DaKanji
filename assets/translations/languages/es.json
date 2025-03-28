@@ -191,6 +191,11 @@
     "rate_this_app": "Calificar",
     "whats_new": "qu\u00e9 hay de nuevo"
   },
+  "ImmersionScreen": {
+    "title": "Inmersi\u00f3n",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "\u00a1Bienvenido a la pantalla de inmersi\u00f3n!"
+  },
   "KanaTableScreen": {
     "title": "Mesa Kana",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
@@ -302,11 +307,6 @@
     "Onboarding_3_title": "\u00bfNo sabe leer una frase?",
     "Onboarding_4_text": "DaKanji dispone de tablas de Kanji y Kana para que puedas estudiarlos de forma eficaz.",
     "Onboarding_4_title": "Estudiar kanji y kana"
-  },
-  "ReadingScreen": {
-    "title": "Lectura",
-    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "\u00a1Bienvenido a la pantalla de lectura!"
   },
   "SettingsScreen": {
     "advanced_settings_delete_dict": "Restablecer archivos de diccionario",
@@ -458,11 +458,6 @@
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": ""
   },
-  "VideoScreen": {
-    "title": "V\u00eddeo",
-    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "Bienvenido a la pantalla de v\u00eddeo"
-  },
   "WebbrowserScreen": {
     "title": "Navegador",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
@@ -555,7 +550,7 @@
     "send_to_anki_progress": "Enviando a Anki, por favor espere...",
     "title": "Listas de palabras",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
     "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este bot\u00f3n o arrastrando una lista de palabras sobre otra. Tambi\u00e9n puede reorganizar sus carpetas y listas arrastr\u00e1ndolas.",
     "tutorial_create_list": "Con este bot\u00f3n puede crear una nueva lista de palabras. Mediante el bot\u00f3n de men\u00fa situado a la derecha de esta lista, tambi\u00e9n puede exportar su lista a diferentes formatos.",
     "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambi\u00e9n es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de b\u00fasqueda, etc..",

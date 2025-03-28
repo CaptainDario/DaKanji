@@ -95,13 +95,9 @@ class UserData{
   @JsonKey(defaultValue: true)
   bool showTutorialDojg = true;
 
-  /// should the tutorial of the video screen be shown
+  /// should the tutorial of the immersion screen be shown
   @JsonKey(defaultValue: true)
-  bool showTutorialVideo = true;
-
-  /// should the tutorial of the reading screen be shown
-  @JsonKey(defaultValue: true)
-  bool showTutorialReading = true;
+  bool showTutorialImmersion = true;
 
   /// should the tutorial of the ocr screen be shown
   @JsonKey(defaultValue: true)

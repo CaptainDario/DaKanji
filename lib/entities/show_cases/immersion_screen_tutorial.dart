@@ -7,15 +7,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorial.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
-class VideoScreenTutorial extends Tutorial {
+class ImmersionScreenTutorial extends Tutorial {
 
 
-  VideoScreenTutorial() {
+  ImmersionScreenTutorial() {
     titles = [
-      LocaleKeys.VideoScreen_tutorial_begin_title.tr(),
+      LocaleKeys.ImmersionScreen_tutorial_begin_title.tr(),
     ];
     bodies = [
-      LocaleKeys.VideoScreen_tutorial_begin_text.tr(),
+      LocaleKeys.ImmersionScreen_tutorial_begin_text.tr(),
     ];
     
     initTutorial();

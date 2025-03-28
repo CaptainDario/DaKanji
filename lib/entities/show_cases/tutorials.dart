@@ -11,9 +11,8 @@ import 'package:da_kanji_mobile/entities/show_cases/draw_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/kana_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/kanji_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/ocr_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/reading_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/text_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/video_screen_tutorial.dart';
+import 'package:da_kanji_mobile/entities/show_cases/immersion_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/webbrowser_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/word_lists_screen_tutorial.dart';
 import 'package:da_kanji_mobile/entities/show_cases/youtube_screen_tutorial.dart';
@@ -26,10 +25,8 @@ class Tutorials{
   late DictionaryScreenTutorial dictionaryScreenTutorial;
   /// the ocr screen tutorial
   late OcrScreenTutorial ocrScreenTutorial;
-  /// the reading screen tutorial
-  late ReadingScreenTutorial readingScreenTutorial;
-  /// the video screen tutorial
-  late VideoScreenTutorial videoScreenTutorial;
+  /// the immersion screen tutorial
+  late ImmersionScreenTutorial immersionScreenTutorial;
   /// the webbrowser screen tutorial
   late WebbrowserScreenTutorial webbrowserScreenTutorial;
   /// the youtube screen tutorial
@@ -95,24 +92,19 @@ class Tutorials{
       (e) => e + dojgScreenTutorial.indexes!.last + 1
     ).toList();
 
-    videoScreenTutorial = VideoScreenTutorial();
-    videoScreenTutorial.indexes = videoScreenTutorial.indexes!.map(
+    immersionScreenTutorial = ImmersionScreenTutorial();
+    immersionScreenTutorial.indexes = immersionScreenTutorial.indexes!.map(
       (e) => e + ocrScreenTutorial.indexes!.last + 1
     ).toList();
 
     webbrowserScreenTutorial = WebbrowserScreenTutorial();
     webbrowserScreenTutorial.indexes = webbrowserScreenTutorial.indexes!.map(
-      (e) => e + videoScreenTutorial.indexes!.last + 1
-    ).toList();
-
-    readingScreenTutorial = ReadingScreenTutorial();
-    readingScreenTutorial.indexes = readingScreenTutorial.indexes!.map(
-      (e) => e + webbrowserScreenTutorial.indexes!.last + 1
+      (e) => e + immersionScreenTutorial.indexes!.last + 1
     ).toList();
 
     youtubeScreenTutorial = YoutubeScreenTutorial();
     youtubeScreenTutorial.indexes = youtubeScreenTutorial.indexes!.map(
-      (e) => e + readingScreenTutorial.indexes!.last + 1
+      (e) => e + webbrowserScreenTutorial.indexes!.last + 1
     ).toList();
   }
 
@@ -126,9 +118,8 @@ class Tutorials{
       wordListsScreenTutorial.steps! + 
       dojgScreenTutorial.steps! + 
       ocrScreenTutorial.steps! + 
-      videoScreenTutorial.steps! +
+      immersionScreenTutorial.steps! +
       webbrowserScreenTutorial.steps! +
-      readingScreenTutorial.steps! +
       youtubeScreenTutorial.steps!;
   }
 }

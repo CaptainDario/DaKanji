@@ -19,11 +19,10 @@ import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
 import 'package:da_kanji_mobile/screens/manual/manual_screen.dart';
 import 'package:da_kanji_mobile/screens/ocr/ocr_screen.dart';
 import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
-import 'package:da_kanji_mobile/screens/reading/reading_screen.dart';
+import 'package:da_kanji_mobile/screens/immersion/immersion_screen.dart';
 import 'package:da_kanji_mobile/screens/settings/settings_screen.dart';
 import 'package:da_kanji_mobile/screens/test/test_screen.dart';
 import 'package:da_kanji_mobile/screens/text/text_screen.dart';
-import 'package:da_kanji_mobile/screens/video/video_screen.dart';
 import 'package:da_kanji_mobile/screens/webbrowser/webbrowser_screen.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
 import 'package:da_kanji_mobile/screens/youtube/youtube_screen.dart';
@@ -57,18 +56,13 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
       initialText: args.textInitialText,
     );
   }
-  else if(name == "/${Screens.reading.name}"){
-    newRoute = ReadingScreen(
+  else if(name == "/${Screens.immersion.name}"){
+    newRoute = ImmersionScreen(
       args.navigatedByDrawer, true,
     );
   }
   else if(name == "/${Screens.webbrowser.name}"){
     newRoute = WebBrowserScreen(
-      args.navigatedByDrawer, true,
-    );
-  }
-  else if(name == "/${Screens.video.name}"){
-    newRoute = VideoScreen(
       args.navigatedByDrawer, true,
     );
   }

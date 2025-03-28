@@ -26,14 +26,9 @@ void onTutorialStep (int index) async {
     GetIt.I<UserData>().showTutorialOcr = false;
     await GetIt.I<UserData>().save();
   }
-  else if(index == GetIt.I<Tutorials>().readingScreenTutorial.indexes!.last){
-    debugPrint("ReadingScreen tutorial done, saving...");
-    GetIt.I<UserData>().showTutorialReading = false;
-    await GetIt.I<UserData>().save();
-  }
-  else if(index == GetIt.I<Tutorials>().videoScreenTutorial.indexes!.last){
-    debugPrint("VideoScreen tutorial done, saving...");
-    GetIt.I<UserData>().showTutorialVideo = false;
+  else if(index == GetIt.I<Tutorials>().immersionScreenTutorial.indexes!.last){
+    debugPrint("ImmersionScreen tutorial done, saving...");
+    GetIt.I<UserData>().showTutorialImmersion = false;
     await GetIt.I<UserData>().save();
   }
   else if(index == GetIt.I<Tutorials>().webbrowserScreenTutorial.indexes!.last){
