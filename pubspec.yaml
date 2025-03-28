@@ -31,7 +31,7 @@ dependencies:
   shared_preferences: 2.3.2
   url_launcher: 6.3.1
   flutter_phoenix: 1.1.1
-  image: 4.5.2
+  image: 4.5.4
   flutter_markdown: 0.7.3+1
   get_it: 7.7.0
   provider: 6.1.2
@@ -116,7 +116,7 @@ dependencies:
   meta: 1.16.0
   collection: 1.19.1
   dart_style: 2.3.7
-  archive: 4.0.2
+  archive: 4.0.5
   local_assets_server: 2.0.2+12
   wakelock_plus: 1.2.10
   kana_kit:
@@ -160,6 +160,7 @@ dependencies:
   flutter_native_splash: 2.4.1   # android, iOS, web
 
 #dependency_overrides:
+  
 
 msix_config:
   display_name: DaKanji
