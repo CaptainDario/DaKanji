@@ -65,7 +65,7 @@ dependencies:
   printing: 5.13.3
   path_parsing: 1.0.1               # included in svg_flutter
   vector_graphics: 1.1.11+1         # included in svg_flutter
-  app_links: 6.3.2                 # android, iOS, web, macos, windows (msix), linux
+  app_links: 6.4.0                 # android, iOS, web, macos, windows (msix), linux
 
   fvp: 0.30.0
   chewie: 1.11.0
