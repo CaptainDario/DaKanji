@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:json_annotation/json_annotation.dart';
 
+// Project imports:
+import 'package:da_kanji_mobile/entities/settings/dictionary_search_priority_interface.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+
 part 'settings_clipboard.g.dart';
 
 
@@ -12,16 +16,41 @@ part 'settings_clipboard.g.dart';
 /// 
 /// To update the toJson code run `flutter pub run build_runner build --delete-conflicting-outputs`
 @JsonSerializable()
-class SettingsClipboard with ChangeNotifier {
+class SettingsClipboard with ChangeNotifier implements DictionarySearchPriorityInterface{
 
 
-  /// Should the search term be deconjugated before searching
+  /// The deafult value for `searchResultSearchPriorities`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
-  static const bool d_searchDeconjugate = true;
-  @JsonKey(defaultValue: d_searchDeconjugate)
-  /// Should the search term be deconjugated before searching
-  bool searchDeconjugate = d_searchDeconjugate;
+  static const List<String> d_searchResultSortPriorities = [
+    LocaleKeys.SettingsScreen_dict_term,
+    LocaleKeys.SettingsScreen_dict_base_form,
+  ];
+  /// The search result sort priorities
+  @JsonKey(defaultValue: d_searchResultSortPriorities)
+  @override
+  List<String> searchResultSortPriorities = d_searchResultSortPriorities;
+
+  /// The default value for `selectedSearchResultSortPriorities` 
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const List<String> d_selectedSearchResultSortPriorities = d_searchResultSortPriorities;
+  /// The search result sorting order priorities that are selected
+  @JsonKey(defaultValue: d_selectedSearchResultSortPriorities)
+  List<String> _selectedSearchResultSortPriorities = d_searchResultSortPriorities;
+  /// The search result sorting order priorities that are selected
+  @override
+  List<String> get selectedSearchResultSortPriorities => _selectedSearchResultSortPriorities;
+  /// The search result sorting order priorities that are selected
+  @override
+  set selectedSearchResultSortPriorities(List<String> searchResultSortPriorities) {
+    _selectedSearchResultSortPriorities = searchResultSortPriorities;
+    notifyListeners();
+  }
+  /// Should search terms be deconjugated when searching
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool get deconjugateBeforeSearch => selectedSearchResultSortPriorities
+    .contains(LocaleKeys.SettingsScreen_dict_base_form);
 
   
   SettingsClipboard ();

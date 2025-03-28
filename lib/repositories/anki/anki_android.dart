@@ -1,5 +1,5 @@
 // Package imports:
-import 'package:flutter_ankidroid/flutter_ankidroid.dart';
+import 'package:ankidroid_for_flutter/ankidroid_for_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
@@ -27,17 +27,27 @@ class AnkiAndroid {
   }
     
   /// Platform specific (desktop via anki connect) implementation of `add_note`
-  Future<int> addNoteAndroid(AnkiNote note) async {
+  Future<int> addNoteAndroid(AnkiNote note, allowDuplicates) async {
     
-    int modelId = (await (await ankidroid.getModelList(0)).asFuture)
-      .entries
+    // Get DaKanji Model ID
+    Map models = (await (await ankidroid.getModelList(0)).asFuture);
+    int modelId = models.entries
       .where((e) => e.value == ankiDataCardModelName)
       .first.key;
 
+    // Get the ID of the deck to add to
     int deckId = (await (await ankidroid.deckList()).asFuture)
       .entries
       .where((e) => e.value == note.deckName)
       .first.key;
+
+    // check for dupes
+    List fields = (await (await ankidroid.getFieldList(modelId)).asFuture);
+    String key = note.fields[fields.first]!;
+    List dupes = await (await ankidroid.findDuplicateNotesWithKey(
+      modelId, key)).asFuture;
+
+    if(dupes.isNotEmpty && !allowDuplicates) return -1;
 
     int result = await (await ankidroid.addNote(
       modelId,
@@ -51,7 +61,7 @@ class AnkiAndroid {
   }
 
   /// Platform specific (android via ankidroid) implementation of `add_notes`
-  Future<int> addNotesAndroid(List<AnkiNote> notes) async {
+  Future<int> addNotesAndroid(List<AnkiNote> notes, bool allowDuplicates) async {
     
     int modelId = (await (await ankidroid.getModelList(0)).asFuture)
       .entries
@@ -62,6 +72,21 @@ class AnkiAndroid {
       .entries
       .where((e) => e.value == notes.first.deckName)
       .first.key;
+
+    // check for dupes
+    if(!allowDuplicates){
+      //
+      List fields = (await (await ankidroid.getFieldList(modelId)).asFuture);
+      List<String> keys = notes.map((e) => e.fields[fields.first] as String).toList();
+
+      // find the duplicates for each note
+      int i = keys.length-1;
+      for (var key in keys.reversed) {
+        List dupe = await (await ankidroid.findDuplicateNotesWithKey(modelId, key)).asFuture;
+        if(dupe.isNotEmpty) notes.removeAt(i);
+        i--;
+      }
+    }
 
     int result = await (await ankidroid.addNotes(
       modelId,
@@ -80,7 +105,7 @@ class AnkiAndroid {
 
     Map models = (await (await ankidroid.modelList()).asFuture);
 
-    return models.values.contains("DaKanji");
+    return models.values.contains(ankiDataCardModelName);
 
   }
 

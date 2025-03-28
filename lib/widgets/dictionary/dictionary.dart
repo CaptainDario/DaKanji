@@ -11,6 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/application/dictionary/falling_word_stack_controller.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/entities/dictionary/floating_word.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
@@ -36,10 +37,15 @@ class Dictionary extends StatefulWidget {
   /// should the button for opening the drawing screen be included
   final bool includeDrawButton;
   /// Is the search expanded when instantiating this widget
-  final bool isExpanded; 
+  final bool isExpanded;
+  /// When navigating back (OS navigation and navigator.pop) immediately closes
+  /// this widget and does not firstly collapse searchbar 
+  final bool backNavigationImmediatelyPopsWidget;
   
   /// Should the search term be deconjugated before searching
   final bool allowDeconjugation;
+  /// Should the search term be converted to kana
+  final bool convertToKana;
 
   const Dictionary(
     this.includeTutorial,
@@ -50,6 +56,8 @@ class Dictionary extends StatefulWidget {
       this.includeDrawButton = true,
       this.isExpanded = false,
       this.allowDeconjugation=true,
+      this.convertToKana=true,
+      required this.backNavigationImmediatelyPopsWidget,
       super.key
     }
   );
@@ -64,6 +72,12 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   int tabsSideBySide = -1;
   /// Current search in the dictionary
   DictSearch search = DictSearch();
+  /// Tab controller for the dictionary tabs
+  TabController? dictionaryTabController;
+  /// Controller of the floating words
+  FloatingWordStackController? floatingWordStackController;
+  /// Has the initial search been set
+  bool initialSearchSet = false;
 
 
   @override
@@ -81,7 +95,10 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(covariant Dictionary oldWidget) {
     setState(() {
-      search.currentSearch = widget.initialSearch;
+      if(!initialSearchSet){
+        search.currentSearch = widget.initialSearch;
+        initialSearchSet = true;
+      }
     });
     super.didUpdateWidget(oldWidget);
   }
@@ -93,9 +110,24 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
       value: search,
       child: LayoutBuilder(
         builder: ((context, constraints) {
+
+          // reset the floating words when the search was emptied
+          if(search.currentSearch == "" && search.selectedResult == null) {
+            floatingWordStackController?.reset();
+          }
+          // hide the falling words when a search starts
+          if(search.currentSearch != "" &&
+            floatingWordStackController!.opacityAnimationController.isCompleted){
+            floatingWordStackController?.opacityAnimationController.reverse(from: 1);
+          }
           
           // calculate how many tabs should be placed side by side
           tabsSideBySide = min(4, (constraints.maxWidth / 600).floor() + 1);
+          int tabs = 4 - (tabsSideBySide == 3 ? 2 : tabsSideBySide);
+
+          if(dictionaryTabController == null || dictionaryTabController!.length != tabs){
+            dictionaryTabController = TabController(length: tabs, vsync: this);
+          }
     
           return Stack(
             children: [
@@ -116,143 +148,128 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       ),
                     ),
                   Expanded(
-                    child: Row(
-                      children: [
-                        // search bar spanning maxium 2 tabs (no function)
-                        if(tabsSideBySide > 2)
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DictionarySearchWidget(
-                                initialSearch: widget.initialSearch,
-                                expandedHeight: constraints.maxHeight - 24,
-                                isExpanded: true,
-                                canCollapse: false,
-                                includeDrawButton: widget.includeDrawButton,
-                                allowDeconjugation: widget.allowDeconjugation,
-                                context: context,
+                    child: FloatingWordStack(
+                      levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
+                      hide: search.selectedResult != null || !widget.includeFallingWords,
+                      onTap: (FloatingWord entry) {
+                        search.selectedResult =
+                          GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
+                      },
+                      onInitialized: (controller) {
+                        floatingWordStackController = controller;
+                      },
+                      child: Row(
+                        children: [
+                          // search bar spanning maxium 2 tabs (no function)
+                          if(tabsSideBySide > 2)
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DictionarySearchWidget(
+                                  //key: Key(search.selectedResult.toString()),
+                                  initialSearch: widget.initialSearch,
+                                  expandedHeight: constraints.maxHeight - 24,
+                                  isExpanded: true,
+                                  canCollapse: false,
+                                  includeDrawButton: widget.includeDrawButton,
+                                  convertToKana: widget.convertToKana,
+                                  allowDeconjugation: widget.allowDeconjugation,
+                                  context: context,
+                                  backNavigationImmediatelyPopsWidget: widget.backNavigationImmediatelyPopsWidget,
+                                ),
                               ),
                             ),
-                          ),
-                        // word 
-                        if(tabsSideBySide > 1)
-                          Expanded(
-                            child: Focus(
-                              focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.wordTabStep,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: FloatingWordStack(
-                                  levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                                  hide: search.selectedResult != null || !widget.includeFallingWords,
-                                  onTap: (FloatingWord entry) {
-                                    search.selectedResult =
-                                      GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
-                                  },
-                                  bottom: DictionaryWordTab(
+                          // word 
+                          if(tabsSideBySide > 1)
+                            Expanded(
+                              child: Focus(
+                                focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.wordTabStep,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: DictionaryWordTab(
                                     context.watch<DictSearch>().selectedResult,
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        // kanji
-                        if(tabsSideBySide > 3)
-                          Expanded(
-                            child: Focus(
-                              focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.kanjiTabStep,
-                              child: Align(
-                                alignment: Alignment.topCenter,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: FloatingWordStack(
-                                    levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                                    hide: search.selectedResult != null || !widget.includeFallingWords,
-                                    onTap: (FloatingWord entry) {
-                                      search.selectedResult =
-                                        GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
-                                    },
-                                    bottom: DictionaryKanjiTab(
+                          // kanji
+                          if(tabsSideBySide > 3)
+                            Expanded(
+                              child: Focus(
+                                focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.kanjiTabStep,
+                                child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: DictionaryKanjiTab(
                                       context.read<DictSearch>().selectedResult
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        // examples
-                        if(tabsSideBySide >= 4)
-                          Expanded(
-                            child: Focus(
-                              focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.examplesTabStep,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: FloatingWordStack(
-                                  levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                                  hide: search.selectedResult != null || !widget.includeFallingWords,
-                                  onTap: (FloatingWord entry) {
-                                    search.selectedResult =
-                                      GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
-                                  },
-                                  bottom: DictionaryExampleTab(
+                          // examples
+                          if(tabsSideBySide >= 4)
+                            Expanded(
+                              child: Focus(
+                                focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.examplesTabStep,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: DictionaryExampleTab(
                                     context.watch<DictSearch>().selectedResult
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                      
-                        // tab bar
-                        if(tabsSideBySide < 4)
-                          DefaultTabController(
-                            length: 4 - (tabsSideBySide == 3 ? 2 : tabsSideBySide),
-                            // set a duration to start the kanji animation after the transition
-                            animationDuration: const Duration(milliseconds: 200),
-                            child: Expanded(
-                              child: Column(
-                                children: [
-                                  // disable the TabBar if there is no result selected
-                                  IgnorePointer(
-                                    ignoring: context.read<DictSearch>().selectedResult == null,
-                                    child: TabBar(
-                                      labelColor: Theme.of(context).highlightColor,
-                                      unselectedLabelColor: Colors.grey,
-                                      indicatorColor: Theme.of(context).highlightColor,
-                                      tabs: [
-                                        if(tabsSideBySide < 2) 
-                                          Focus(
-                                            focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.wordTabStep,
-                                            child: Tab(
-                                              text: LocaleKeys.DictionaryScreen_word_tab.tr()
-                                              ),
-                                          ),
-                                        if(tabsSideBySide < 4) 
-                                          Focus(
-                                            focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.kanjiTabStep,
-                                            child: Tab(
-                                              text: LocaleKeys.DictionaryScreen_kanji_tab.tr()
-                                              ),
-                                          ),
-                                        if(tabsSideBySide < 4) 
-                                          Focus(
-                                            focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.examplesTabStep,
-                                            child: Tab(
-                                              text: LocaleKeys.DictionaryScreen_example_tab.tr()
+                        
+                          // tab bar
+                          if(tabsSideBySide < 4)
+                            /// provide the tab bar controller so that other widgets
+                            /// can listen to its state (ex. Kanji animation)
+                            ListenableProvider.value(
+                              value: dictionaryTabController,
+                              child: Expanded(
+                                child: Column(
+                                  children: [
+                                    // disable the TabBar if there is no result selected
+                                    IgnorePointer(
+                                      ignoring: context.read<DictSearch>().selectedResult == null,
+                                      child: TabBar(
+                                        controller: dictionaryTabController,
+                                        labelColor: Theme.of(context).highlightColor,
+                                        unselectedLabelColor: Colors.grey,
+                                        indicatorColor: Theme.of(context).highlightColor,
+                                        tabs: [
+                                          if(tabsSideBySide < 2) 
+                                            Focus(
+                                              focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.wordTabStep,
+                                              child: Tab(
+                                                text: LocaleKeys.DictionaryScreen_word_tab.tr()
+                                                ),
                                             ),
-                                          ),
-                                      ],
+                                          if(tabsSideBySide < 4) 
+                                            Focus(
+                                              focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.kanjiTabStep,
+                                              child: Tab(
+                                                text: LocaleKeys.DictionaryScreen_kanji_tab.tr()
+                                                ),
+                                            ),
+                                          if(tabsSideBySide < 4) 
+                                            Focus(
+                                              focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.examplesTabStep,
+                                              child: Tab(
+                                                text: LocaleKeys.DictionaryScreen_example_tab.tr()
+                                              ),
+                                            ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: FloatingWordStack(
-                                        levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                                        hide: search.selectedResult != null || !widget.includeFallingWords,
-                                        onTap: (FloatingWord entry) {
-                                          search.selectedResult =
-                                            GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
-                                        },
-                                        bottom: TabBarView(
+                                    // tab bar with the word, kanji, ... tabs
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TabBarView(
+                                          controller: dictionaryTabController,
                                           children: [
                                             if(tabsSideBySide < 2)
                                               DictionaryWordTab(
@@ -270,12 +287,12 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -292,8 +309,10 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       expandedHeight: constraints.maxHeight - 24,
                       isExpanded: widget.isExpanded,
                       includeDrawButton: widget.includeDrawButton,
+                      convertToKana: widget.convertToKana,
                       allowDeconjugation: widget.allowDeconjugation,
                       context: context,
+                      backNavigationImmediatelyPopsWidget: widget.backNavigationImmediatelyPopsWidget,
                     ),
                   ),
                 ),

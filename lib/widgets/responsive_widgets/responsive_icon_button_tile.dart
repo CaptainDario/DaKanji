@@ -1,9 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-
 class ResponsiveIconButtonTile extends StatefulWidget {
 
   /// the description of this settings
@@ -12,8 +9,6 @@ class ResponsiveIconButtonTile extends StatefulWidget {
   final IconData icon;
   /// callback which will be executed by every button press
   final Function? onButtonPressed;
-  /// The autoSizeGroup to use for the text
-  final AutoSizeGroup? autoSizeGroup;
 
 
   const ResponsiveIconButtonTile(
@@ -21,7 +16,6 @@ class ResponsiveIconButtonTile extends StatefulWidget {
       required this.text,
       required this.icon,
       this.onButtonPressed,
-      this.autoSizeGroup,
       super.key
     }
   );
@@ -43,41 +37,29 @@ class _ResponsiveIconButtonTileState extends State<ResponsiveIconButtonTile> {
 
     return Material(
       child: InkWell(
-        onTap: () {
-        },
-        child: SizedBox(
-          height: tileHeight,
+        onTap: () {},
+        child: Container(
           width: width,
+          constraints: BoxConstraints(minHeight: tileHeight),
           child: Row(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Container(
-                  height: (tileHeight*0.75),
-                  alignment: Alignment.centerLeft,
-                  child: AutoSizeText(
-                    widget.text,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.start,
-                    maxLines: 2,
-                    group: widget.autoSizeGroup
-                  )
+                child: Text(
+                  widget.text,
+                  textAlign: TextAlign.start,
                 ),
               ),
-              Center(
-                child: SizedBox(
-                  height: tileHeight*0.75,
-                  child: FittedBox(
-                    child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          if(widget.onButtonPressed != null) widget.onButtonPressed!();
-                        });
-                      },
-                      icon: Icon(
-                        widget.icon,
-                      )
-                    ),
-                  ),
+              FittedBox(
+                child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      if(widget.onButtonPressed != null) widget.onButtonPressed!();
+                    });
+                  },
+                  icon: Icon(
+                    widget.icon,
+                  )
                 ),
               ),
             ]

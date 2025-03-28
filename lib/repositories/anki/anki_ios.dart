@@ -32,20 +32,20 @@ class AnkiiOS {
     this.settingsAnki
   );
 
-  /// Returns a string that can be used to add teh given note to ankimobile
-  String addNoteSchemeFromAnkiNote(AnkiNote note){
+  /// Returns a string that can be used to add the given note to ankimobile
+  String addNoteSchemeFromAnkiNote(AnkiNote note, bool allowDuplicates){
 
     // anki://x-callback-url/addnote?
     String url = "$ankiMobileURLScheme/addnote?";
-    // profile=User%201&
-    // not used
-    // type=Basic
+    // set duplicate options
+    if(allowDuplicates) url += "dupes=1&";
+    // set note type
     url += "type=${note.noteType}&";
-    // deck=Default&
+    // set deck
     url += "deck=${note.deckName}&";
     // tags=<tags separated by space>
     url += "tags=${note.tags.join(" ")}&";
-    // fldFront=front%20text&
+    // add all fields
     for (MapEntry field in note.fields.entries) {
       url += "fld${field.key}=${field.value}&";
     }
@@ -56,9 +56,10 @@ class AnkiiOS {
   }
 
   /// Platform specific (desktop via anki connect) implementation of `add_note`
-  Future<void> addNoteIos(AnkiNote note) async {
+  Future<void> addNoteIos(AnkiNote note, bool allowDuplicates) async {
     
-    await launchUrlString(Uri.encodeFull(addNoteSchemeFromAnkiNote(note)));
+    await launchUrlString(
+      Uri.encodeFull(addNoteSchemeFromAnkiNote(note, allowDuplicates)));
 
     /// Wait until anki closes
     while (WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) {
@@ -68,10 +69,10 @@ class AnkiiOS {
   }
 
   /// Platform specific (iOS via ankiMobile) implementation of `add_notes`
-  Future<void> addNotesIos(List<AnkiNote> notes) async {
+  Future<void> addNotesIos(List<AnkiNote> notes, bool allowDuplicates) async {
 
     for (var note in notes) {
-      await addNoteIos(note);
+      await addNoteIos(note, allowDuplicates);
     }
 
   }

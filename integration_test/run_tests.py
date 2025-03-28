@@ -22,7 +22,7 @@ if __name__ == "__main__":
     if platform == "linux" or platform == "linux2":
         prefix = "xvfb-run"
         device = "linux"
-        additional_args += "--profile"
+        #additional_args += "--profile"
 
     # MacOS
     elif platform == "darwin":
@@ -31,12 +31,12 @@ if __name__ == "__main__":
             device = arg.replace("ios_", "")
         else:
             device = "macos"
-            additional_args += "--profile"
+            #additional_args += "--profile"
 
     # Windows
     elif platform == "win32":
         device = "windows"
-        additional_args += "--profile"
+        #additional_args += "--profile"
     
     if(arg == "android"):
         device = "emulator"
@@ -45,11 +45,12 @@ if __name__ == "__main__":
     # run all tests
     for file in os.listdir("integration_test"):
         if(file.endswith("_test.dart")):
-            command =  f"{prefix} flutter drive "
-            command += "--driver=test_driver/integration_test.dart "
-            command += "--target=integration_test/draw_screen_test.dart "
+            command =  f"{prefix} flutter test "
+            #command += "--driver=test_driver/integration_test.dart "
+            command += "integration_test/draw_screen_test.dart "
             command += f"-d {device} "
             command += additional_args
+            command += " -v"
             print(f"Executing: {command}")
             ret_val = subprocess.run(command, shell=True)
             if(ret_val.returncode != 0):

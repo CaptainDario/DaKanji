@@ -21,6 +21,26 @@ void onTutorialStep (int index) async {
     GetIt.I<UserData>().showTutorialDictionary = false;
     await GetIt.I<UserData>().save();
   }
+  else if(index == GetIt.I<Tutorials>().ocrScreenTutorial.indexes!.last){
+    debugPrint("OcrScreen tutorial done, saving...");
+    GetIt.I<UserData>().showTutorialOcr = false;
+    await GetIt.I<UserData>().save();
+  }
+  else if(index == GetIt.I<Tutorials>().immersionScreenTutorial.indexes!.last){
+    debugPrint("ImmersionScreen tutorial done, saving...");
+    GetIt.I<UserData>().showTutorialImmersion = false;
+    await GetIt.I<UserData>().save();
+  }
+  else if(index == GetIt.I<Tutorials>().webbrowserScreenTutorial.indexes!.last){
+    debugPrint("WebbrowserScreen tutorial done, saving...");
+    GetIt.I<UserData>().showTutorialWebbrowser = false;
+    await GetIt.I<UserData>().save();
+  }
+  else if(index == GetIt.I<Tutorials>().youtubeScreenTutorial.indexes!.last){
+    debugPrint("YoutubeScreen tutorial done, saving...");
+    GetIt.I<UserData>().showTutorialYoutube = false;
+    await GetIt.I<UserData>().save();
+  }
   else if(index == GetIt.I<Tutorials>().textScreenTutorial.indexes!.last){
     debugPrint("TextScreen tutorial done, saving...");
     GetIt.I<UserData>().showTutorialText = false;
@@ -34,11 +54,6 @@ void onTutorialStep (int index) async {
   else if(index == GetIt.I<Tutorials>().kanjiTableScreenTutorial.indexes!.last){
     debugPrint("Kanji table screen tutorial done, saving...");
     GetIt.I<UserData>().showTutorialKanjiTable = false;
-    await GetIt.I<UserData>().save();
-  }
-  else if(index == GetIt.I<Tutorials>().kanjiMapScreenTutorial.indexes!.last){
-    debugPrint("Kanji map screen tutorial done, saving...");
-    GetIt.I<UserData>().showTutorialKanjiMap = false;
     await GetIt.I<UserData>().save();
   }
   else if(index == GetIt.I<Tutorials>().kanaTableScreenTutorial.indexes!.last){

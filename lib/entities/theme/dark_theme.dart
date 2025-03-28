@@ -7,6 +7,8 @@ import 'package:da_kanji_mobile/globals.dart';
 
 final ThemeData darkTheme = ThemeData(
 
+  fontFamily: 'NotoSansJP',
+
   brightness: Brightness.dark,
 
   primarySwatch: createMaterialColor(g_Dakanji_green),

@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Package imports:
+import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
@@ -15,7 +16,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 
 /// Renders each word list entry to an image and stores it in the temp directory
 /// returns a List with all the [File]s created
-Future sendListToAnkiFromWordListNode(TreeNode<WordListsData> node) async {
+Future sendListToAnkiFromWordListNode(TreeNode<WordListsData> node, bool allowDuplicates) async {
 
   List<int> entryIDs =
     await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(node.id);
@@ -24,14 +25,22 @@ Future sendListToAnkiFromWordListNode(TreeNode<WordListsData> node) async {
     .langsToInclude(GetIt.I<Settings>().dictionary.selectedTranslationLanguages);
 
   // find all elements from the word list in the database
-  List<AnkiNote> notes = (await wordListEntriesForExport(entryIDs, langsToInclude))
-    .map((e) => AnkiNote.fromJMDict(
-      GetIt.I<Settings>().anki.defaultDeck!, e,
+  List<JMdict> jmdicts = (await wordListIdsToJMdict(entryIDs, langsToInclude));
+  List<AnkiNote> notes = [];
+  for (var jmdict in jmdicts) {
+    AnkiNote note = AnkiNote.fromJMDict(
+      GetIt.I<Settings>().anki.defaultDeck!, jmdict,
       langsToInclude: langsToInclude,
-      translationsPerLang: GetIt.I<Settings>().anki.noTranslations
-    ))
-    .toList();
+      translationsPerLang: GetIt.I<Settings>().anki.noTranslations,
+      includeExample: true
+    );
+    await note.setExamplesFromDict(jmdict,
+      langsToInclude: langsToInclude,
+      includeTranslations: GetIt.I<Settings>().anki.includeExampleTranslations,
+      numberOfExamples: GetIt.I<Settings>().anki.noExamples);
+    notes.add(note);
+  }
 
-  GetIt.I<Anki>().addNotes(notes);
+  GetIt.I<Anki>().addNotes(notes, allowDuplicates);
 
 }

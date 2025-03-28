@@ -38,6 +38,8 @@ class WordLists extends StatefulWidget {
   /// after selecting word lists / folders. Provides a list with all selected
   /// nodes
   final void Function(List<TreeNode<WordListsData>>)? onSelectionConfirmed;
+  /// A list that indicates which items' checkboxes should be checked
+  final List<int>? selectedItems;
 
   const WordLists(
     this.includeTutorial,
@@ -45,6 +47,7 @@ class WordLists extends StatefulWidget {
     {
       this.includeDefaults = true,
       this.onSelectionConfirmed,
+      this.selectedItems,
       super.key
     }
   );
@@ -85,6 +88,8 @@ class _WordListsState extends State<WordLists> {
 
   /// the current check state of the word list entries
   List<bool> checkedEntries = [];
+  /// has the initial selection be applied once
+  bool initialSelectionApplied = false;
 
   /// List of bools that indicate which nodes are currently not being shown
   /// When switching a false to a true the correseponding entry will be animated
@@ -180,6 +185,14 @@ class _WordListsState extends State<WordLists> {
           // the amount of checked entries changed -> set all to false
           if(childrenDFS.length != checkedEntries.length){
             checkedEntries = List.filled(childrenDFS.length, false);
+          
+            // apply the initial selection
+            if(!initialSelectionApplied && widget.selectedItems != null){
+              checkedEntries = childrenDFS
+                .map((e) => widget.selectedItems!.contains(e.id) ? true : false)
+                .toList();
+              initialSelectionApplied = true;
+            }
           }
           // update the state of the tree matching the current selection
           for (var i = 0; i < childrenDFS.length; i++) {
@@ -227,7 +240,7 @@ class _WordListsState extends State<WordLists> {
                           height: 40,
                           duration: Duration(milliseconds: hoveringAnimationColorDuration),
                           color: itemDraggingOverToolbar
-                            ? g_Dakanji_green.withOpacity(0.5)
+                            ? g_Dakanji_green.withValues(alpha: 0.5)
                             : Colors.transparent,
                           child: Row(
                             children: [
@@ -452,7 +465,7 @@ class _WordListsState extends State<WordLists> {
                                                   15.0*(childrenDFS[i].level-1)+8, 0, 0, 0
                                                 ),
                                                 color: draggingOverDividerIndex == i
-                                                  ? g_Dakanji_green.withOpacity(0.5)
+                                                  ? g_Dakanji_green.withValues(alpha: 0.5)
                                                   : Colors.transparent
                                               );
                                             }
@@ -540,7 +553,7 @@ class _WordListsState extends State<WordLists> {
                           height: 48,
                           duration: Duration(milliseconds: hoveringAnimationColorDuration),
                           color: itemDraggingOverBottom
-                            ? g_Dakanji_green.withOpacity(0.5)
+                            ? g_Dakanji_green.withValues(alpha: 0.5)
                             : Colors.transparent,
                           width: MediaQuery.of(context).size.width,
                           child: Row(
@@ -614,9 +627,9 @@ class _WordListsState extends State<WordLists> {
             // after the delay check that the input of the user has not changed
             if(animateListTileIn.length < i) return;
 
-            setState(() => animateListTileIn[i] = true);
+            if(mounted) setState(() => animateListTileIn[i] = true);
           } else {
-            setState(() => animateListTileIn[i] = true);
+            if(mounted) setState(() => animateListTileIn[i] = true);
           }
           
         }

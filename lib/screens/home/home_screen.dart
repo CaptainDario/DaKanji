@@ -6,10 +6,13 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/helper/stores.dart';
+import 'package:da_kanji_mobile/application/migrate/migrate.dart';
 import 'package:da_kanji_mobile/application/routing/deep_links.dart';
+import 'package:da_kanji_mobile/entities/releases/version.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
@@ -68,9 +71,18 @@ class _HomeScreenState extends State<HomeScreen> {
     // check if an update is available
     if(GetIt.I<UserData>().userRefusedUpdate == null ||
       DateTime.now().difference(GetIt.I<UserData>().userRefusedUpdate!).inDays > g_daysToWaitBeforeAskingForUpdate){
-      List<String> updates = await updateAvailable();
-      if(updates.isNotEmpty) {
+      
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<String> updates = prefs.getStringList("updateAvailable") ?? [];
+      Version updateVersion = Version.fromStringFull(prefs.getString("updateVersion") ?? "0.0.0+0");
+      
+      if(updates.isNotEmpty && updateVersion > g_Version) {
         await showUpdatePopup(updates);
+        prefs.setStringList("updateAvailable", []);
+        prefs.setString("updateVersion", "");
+      }
+      else{
+        updateAvailable();
       }
     }
 
@@ -91,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     else {
       // if there is a deep link at app start handle it
-      String? deepLink = await g_AppLinks.getInitialAppLinkString();
+      String? deepLink = await g_AppLinks.getInitialLinkString();
       if(deepLink != null && !g_initialDeepLinkHandled){
         g_initialDeepLinkHandled = true;
         handleDeepLink(deepLink);
@@ -105,6 +117,12 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       }
     }
+
+    // migrate data if necessary
+    migrate(GetIt.I<UserData>().versionUsed, g_Version);
+
+    // setup is done move the desktop window
+    await desktopWindowSetup();
   }
 
   /// Opens a popup that informs the user that an update is available

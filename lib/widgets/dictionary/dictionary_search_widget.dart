@@ -8,17 +8,17 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:another_flushbar/flushbar.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
+import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/entities/dictionary_filters/filter_options.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
@@ -26,6 +26,7 @@ import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart'
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/dictionary_alt_search_flushbar.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/filter_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/radical_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
@@ -46,8 +47,13 @@ class DictionarySearchWidget extends StatefulWidget {
   final bool canCollapse;
   /// should the button to navigate to the drawing screen be included
   final bool includeDrawButton;
+  /// should queries be converted to kana if possible
+  final bool convertToKana;
   /// should queries be deconjugated
   final bool allowDeconjugation;
+  /// When navigating back (OS navigation and navigator.pop) immediately closes
+  /// this widget and does not firstly collapse searchbar 
+  final bool backNavigationImmediatelyPopsWidget;
   /// The current build context
   final BuildContext context;
 
@@ -58,7 +64,9 @@ class DictionarySearchWidget extends StatefulWidget {
       this.isExpanded = false,
       this.canCollapse = true,
       this.includeDrawButton = true,
+      required this.convertToKana,
       this.allowDeconjugation = true,
+      required this.backNavigationImmediatelyPopsWidget,
       required this.context,
       super.key
     }
@@ -75,8 +83,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   TextEditingController searchInputController = TextEditingController();
   /// Used to check if `widget.initialQuery` changed
   String initialSearch = "";
-  /// Is the search list expanded or not
-  bool searchBarExpanded = false;
+  /// Is the search bar initially expanded
+  bool initiallyExpanded = false;
   /// Animation for closing and opening the search bar
   late Animation<double> searchBarAnimation;
   /// AnimationController for closing and opening the search bar
@@ -104,6 +112,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   @override
   void initState() {
     super.initState();
+
+    initiallyExpanded = widget.isExpanded;
 
     searchBarAnimationController = AnimationController(
       vsync: this,
@@ -134,12 +144,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       Navigator.of(context).pop();
       reopenPopupTimer?.cancel();
       reopenPopupTimer = Timer(const Duration(seconds: 1), () {
-        if(reshowRadicalPopup) {
-          showRadicalPopup();
-        }
-        if(reshowFilterPopup) {
-          showFilterPopup();
-        }
+        
+        if(reshowRadicalPopup) showRadicalPopup();
+        if(reshowFilterPopup) showFilterPopup();
 
         reshowFilterPopup = false; reshowRadicalPopup = false;
       });
@@ -151,9 +158,9 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// init this widget on init or rebuild
   void init(){
 
-    if(widget.isExpanded){
-      searchBarExpanded = true;
+    if(initiallyExpanded){
       searchBarAnimationController.value = 1.0;
+      initiallyExpanded = false;
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -164,7 +171,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       if(widget.initialSearch != initialSearch){
         searchInputController.text = widget.initialSearch;
         initialSearch = widget.initialSearch;
-        await updateSearchResults(initialSearch, widget.allowDeconjugation);
+        await updateSearchResults(initialSearch,
+          widget.convertToKana, widget.allowDeconjugation);
       }
       if(mounted) {
         setState(() {});
@@ -186,259 +194,312 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputStep,
         GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputWildcardsStep,
       ],
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Theme.of(context).brightness == Brightness.dark 
-              ? Colors.grey.shade800
-              : Colors.grey.shade300
-          ),
+      child: PopScope(
+        canPop: (!searchBarAnimationController.isCompleted &&
+                context.read<DictSearch>().selectedResult == null)
+                || widget.backNavigationImmediatelyPopsWidget,
+        onPopInvokedWithResult: (didPop, result) {
+
+          if(searchBarAnimationController.isCompleted) {
+            collapseSearchBar();
+          }
+          else if (context.read<DictSearch>().selectedResult != null){
+            context.read<DictSearch>().selectedResult = null;
+            searchInputController.text = "";
+            context.read<DictSearch>().currentSearch = "";
+            context.read<DictSearch>().searchResults = [];
+          }
+        },
+        child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(8)),
-          color: Theme.of(context).brightness == Brightness.dark
-            ? Theme.of(context).scaffoldBackgroundColor
-            : Colors.white,
-        ),
-        //color: Theme.of(context).cardColor,
-        child: Column(
-          children: [
-            // the search bar
-            Container(
-              decoration: BoxDecoration(
-                border: BorderDirectional(
-                  bottom: BorderSide(
-                    color: searchBarExpanded
-                      ? Theme.of(context).brightness == Brightness.dark 
-                        ? Colors.grey.shade800
-                        : Colors.grey.shade300 
-                      : Colors.transparent,
-                    style: BorderStyle.solid
-                  )
-                )
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Theme.of(context).brightness == Brightness.dark 
+                  ? Colors.grey.shade800
+                  : Colors.grey.shade300
               ),
-              child: Row(
-                key: searchTextInputKey,
-                children: [
-                  // magnifying glass / arrow back icon button
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 4.0),
-                    child: IconButton(
-                      splashRadius: 20,
-                      icon: Icon(searchBarExpanded && widget.canCollapse
-                        ? Icons.arrow_back
-                        : Icons.search),
-                      onPressed: () {
-                        if(!widget.canCollapse) return;
-                
-                        //close onscreen keyboard
-                        FocusManager.instance.primaryFocus?.unfocus();
-                
-                        setState(() {
-                
-                          if(!searchBarExpanded) {
-                            searchBarExpanded = true;
-                            searchBarAnimationController.forward();
-                          }
-                          else{
-                            searchBarAnimationController.reverse().then((value) {
-                              setState(() {
-                                searchBarExpanded = false;
-                              });
-                            });
-                          }
-                        });
-                      },
-                    ),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              color: Theme.of(context).brightness == Brightness.dark
+                ? Theme.of(context).scaffoldBackgroundColor
+                : Colors.white,
+            ),
+            child: Column(
+              children: [
+                // the search bar
+                Container(
+                  decoration: BoxDecoration(
+                    border: BorderDirectional(
+                      bottom: BorderSide(
+                        color: searchBarAnimationController.isCompleted
+                          ? Theme.of(context).brightness == Brightness.dark 
+                            ? Colors.grey.shade800
+                            : Colors.grey.shade300 
+                          : Colors.transparent,
+                        style: BorderStyle.solid
+                      )
+                    )
                   ),
-                  // text input
-                  Expanded(
-                    child: TextField(
-                      focusNode: searchTextFieldFocusNode,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none
-                      ),
-                      controller: searchInputController,
-                      maxLines: 1,
-                      style: const TextStyle(
-                        fontSize: 16
-                      ),
-                      onTap: () {
-                        searchTextFieldFocusNode.requestFocus();
-                        setState(() {
-                          searchBarExpanded = true;
-                          searchBarAnimationController.forward();
-                        });
-                      },
-                      onChanged: (text) async {
-                        await updateSearchResults(text, widget.allowDeconjugation);
-                        setState(() {});
-                      },
-                    ),
-                  ),
-                  // Copy / clear button
-                  Focus(
-                    focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputClearStep,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(1000000),
-                      onTap: onClipboardButtonPressed,
-                      child: SizedBox(
-                        width: 30,
-                        height: 30,
-                        child: Icon(
-                          searchInputController.text == ""
-                            ? Icons.paste
-                            : Icons.clear,
-                          size: 20,
+                  child: Row(
+                    key: searchTextInputKey,
+                    children: [
+                      // magnifying glass / arrow back icon button
+                      if(widget.canCollapse)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 4.0),
+                          child: AnimatedBuilder(
+                            animation: searchBarAnimationController,
+                            builder: (context, animation) {
+                              return IconButton(
+                                splashRadius: 20,
+                                icon: AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 100),
+                                  child: Icon(searchBarAnimationController.isForwardOrCompleted
+                                    ? Icons.arrow_back
+                                    : Icons.search,
+                                    key: Key(searchBarAnimationController.isForwardOrCompleted.toString()),),
+                                ),
+                                onPressed: () {
+                                  if(!widget.canCollapse) return;
+                                                  
+                                  //close onscreen keyboard
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                            
+                                  if(searchBarAnimationController.isDismissed) {
+                                    openSearchBar();
+                                  }
+                                  else{
+                                    collapseSearchBar();
+                                  }
+                                },
+                              );
+                            }
+                          ),
+                        ),
+                      // text input
+                      Expanded(
+                        child: TextField(
+                          focusNode: searchTextFieldFocusNode,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none
+                          ),
+                          stylusHandwritingEnabled: true,
+                          controller: searchInputController,
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontSize: 16
+                          ),
+                          onTap: () {
+                            searchTextFieldFocusNode.requestFocus();
+                            openSearchBar();
+                          },
+                          onChanged: (text) async {
+
+                            text = text.trim();
+                            
+                            await updateSearchResults(text,
+                              widget.allowDeconjugation,
+                              widget.convertToKana,);
+                            
+                            setState(() {});
+                          },
                         ),
                       ),
-                    ),
-                  ),
-                  // drawing screen button
-                  if(widget.includeDrawButton)
-                    Focus(
-                      focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(1000000),
-                        onTap: () {
-                          setState(() {
-                            searchBarExpanded = true;
-                          });
-                          GetIt.I<Settings>().drawing.selectedDictionary =
-                            GetIt.I<Settings>().drawing.inbuiltDictId;
-                          Navigator.pushNamedAndRemoveUntil(
-                            widget.context, 
-                            "/${Screens.drawing.name}",
-                            (route) => true,
-                            arguments: NavigationArguments(
-                              false,
-                              drawSearchPrefix: searchInputController.text.isNotEmpty
-                                ? searchInputController.text.substring(
-                                  0,
-                                  searchInputController.selection.baseOffset == -1
-                                    ? searchInputController.text.length
-                                    : searchInputController.selection.baseOffset
-                                )
-                                : "",
-                              drawSearchPostfix: searchInputController.text.isNotEmpty
-                                ? searchInputController.text.substring(
-                                  searchInputController.selection.baseOffset == -1
-                                    ? searchInputController.text.length
-                                    : searchInputController.selection.baseOffset
-                                )
-                                : ""
-                            )
-                          );
-                        },
-                        child: const SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: Icon(Icons.brush)
-                        ),
-                      ),
-                    ),
-                  // filter button 
-                  Focus(
-                    focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchFilterStep,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(1000000),
-                      onTap: showFilterPopup,
-                      child: const SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: Icon(
-                          Icons.filter_alt_outlined,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                  // radical button 
-                  Focus(
-                    focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchRadicalStep,
-                    child: InkWell(
-                    borderRadius: BorderRadius.circular(1000000),
-                      onTap: showRadicalPopup,
-                      child: Container(
-                        height: 30,
-                        width: 30,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Transform.translate(
-                            offset: const Offset(0, -2),
-                            child: const Text(
-                              "部",
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
+                      // Copy / clear button
+                      Focus(
+                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputClearStep,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(1000000),
+                          onTap: onClipboardButtonPressed,
+                          onLongPress: onClipboardButtonPressed,
+                          child: SizedBox(
+                            width: 30,
+                            height: 30,
+                            child: Icon(
+                              searchInputController.text == ""
+                                ? Icons.paste
+                                : Icons.clear,
+                              size: 20,
                             ),
                           ),
                         ),
-                      )
-                    ),
-                  ),
-                  const SizedBox(width: 4,)
-                ],
-              ),
-            ),
-            if(searchBarInputHeight != 0)
-              AnimatedBuilder(
-                animation: searchBarAnimation,
-                builder: (context, child) {
-                  return SizedBox(
-                    height: (widget.expandedHeight - searchBarInputHeight)
-                      * searchBarAnimation.value,
-                    child: child,
-                  );
-                },
-                child: Stack(
-                  children: [
-                    widget.context.read<DictSearch>().currentSearch != ""
-                      // search results if the user entered text
-                      ? SearchResultList(
-                        searchResults: widget.context.watch<DictSearch>().searchResults,
-                        onSearchResultPressed: onSearchResultPressed,
-                        showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
-                        init: (controller) {},
-                      )
-                      // otherwise the search history
-                      : StreamBuilder<List<SearchHistorySQLData>>(
-                        stream: GetIt.I<SearchHistorySQLDatabase>().watchAllSearchHistoryIDs(),
-                        builder: (context, snapshot) {
-    
-                          if(snapshot.data == null) return const SizedBox();
-    
-                          List<JMdict> searchHistory = [];
-                          List<int> sqlIDs = [];
-                          if(snapshot.hasData){
-                            final ids = snapshot.data!.map((e) => e.dictEntryID).toList();
-                            searchHistory = GetIt.I<Isars>().dictionary.jmdict
-                              .getAllSync(ids)
-                              .whereNotNull().toList();
-    
-                            sqlIDs = snapshot.data!.map((e) => e.id).toList();
-                          }
-    
-                          return SearchResultList(
-                            searchResults: searchHistory,
-                            showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
-                            alwaysAnimateIn: false,
-                            init: (controller) {},
-                            onSearchResultPressed: onSearchResultPressed,
-                            onDismissed: (direction, entry, idx) => 
-                              GetIt.I<SearchHistorySQLDatabase>().deleteEntry(
-                                sqlIDs[idx]
-                              ),
-                          );
-                        }
                       ),
-                  ],
-                )
-              )
-          ],
-        )
+                      // drawing screen button
+                      if(widget.includeDrawButton)
+                        Focus(
+                          focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(1000000),
+                            onTap: () {
+                              GetIt.I<Settings>().drawing.selectedDictionary =
+                                GetIt.I<Settings>().drawing.inbuiltDictId;
+                              Navigator.pushNamedAndRemoveUntil(
+                                widget.context, 
+                                "/${Screens.drawing.name}",
+                                (route) => true,
+                                arguments: NavigationArguments(
+                                  false,
+                                  drawSearchPrefix: searchInputController.text.isNotEmpty
+                                    ? searchInputController.text.substring(
+                                      0,
+                                      searchInputController.selection.baseOffset == -1
+                                        ? searchInputController.text.length
+                                        : searchInputController.selection.baseOffset
+                                    )
+                                    : "",
+                                  drawSearchPostfix: searchInputController.text.isNotEmpty
+                                    ? searchInputController.text.substring(
+                                      searchInputController.selection.baseOffset == -1
+                                        ? searchInputController.text.length
+                                        : searchInputController.selection.baseOffset
+                                    )
+                                    : ""
+                                )
+                              );
+                            },
+                            child: const SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: Icon(Icons.brush)
+                            ),
+                          ),
+                        ),
+                      // filter button 
+                      Focus(
+                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchFilterStep,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(1000000),
+                          onTap: showFilterPopup,
+                          child: const SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: Icon(
+                              Icons.filter_alt_outlined,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                      // radical button 
+                      Focus(
+                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchRadicalStep,
+                        child: InkWell(
+                        borderRadius: BorderRadius.circular(1000000),
+                          onTap: showRadicalPopup,
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Transform.translate(
+                                offset: const Offset(0, -2),
+                                child: const Text(
+                                  "部",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                  textScaler: TextScaler.noScaling,
+                                ),
+                              ),
+                            ),
+                          )
+                        ),
+                      ),
+                      const SizedBox(width: 4,)
+                    ],
+                  ),
+                ),
+                if(searchBarInputHeight != 0)
+                  AnimatedBuilder(
+                    animation: searchBarAnimationController,
+                    builder: (context, child) {
+                      return SizedBox(
+                        height: (widget.expandedHeight - searchBarInputHeight)
+                          * searchBarAnimationController.value,
+                        child: child,
+                      );
+                    },
+                    child: Stack(
+                      children: [
+                        widget.context.read<DictSearch>().currentSearch != ""
+                          // search results if the user entered text
+                          ? SearchResultList(
+                            searchResults: widget.context.watch<DictSearch>().searchResults,
+                            headers: getSearchResultHeaders(),
+                            onSearchResultPressed: onSearchResultPressed,
+                            showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
+                            init: (controller) {},
+                          )
+                          // otherwise the search history
+                          : StreamBuilder<List<SearchHistorySQLData>>(
+                            stream: GetIt.I<SearchHistorySQLDatabase>().watchAllSearchHistoryIDs(),
+                            builder: (context, snapshot) {
+              
+                              if(snapshot.data == null) return const SizedBox();
+              
+                              List<JMdict> searchHistory = [];
+                              List<int> sqlIDs = [];
+                              if(snapshot.hasData){
+                                final ids = snapshot.data!.map((e) => e.dictEntryID)
+                                  .toSet().toList();
+                                searchHistory = GetIt.I<Isars>().dictionary.jmdict
+                                  .getAllSync(ids)
+                                  .nonNulls.toList();
+              
+                                sqlIDs = snapshot.data!.map((e) => e.id).toList();
+                              }
+              
+                              return SearchResultList(
+                                searchResults: [searchHistory],
+                                headers: const [null],
+                                showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
+                                alwaysAnimateIn: false,
+                                init: (controller) {},
+                                onSearchResultPressed: onSearchResultPressed,
+                                onDismissed: (direction, entry, idx) => 
+                                  GetIt.I<SearchHistorySQLDatabase>().deleteEntry(
+                                    sqlIDs[idx]
+                                  ),
+                              );
+                            }
+                          ),
+                      ],
+                    )
+                  )
+              ],
+            )
+          ),
+        ),
       ),
     );
+  }
+
+  /// Opens the search bar, if it is not open
+  TickerFuture openSearchBar(){
+
+    if(searchBarAnimationController.isCompleted) TickerFuture.complete();
+    
+    final t = searchBarAnimationController.forward();
+
+    t.then((value) => setState(() {}),);
+
+    return t;
+
+  }
+
+  /// Collapses the search bar if it is not collapsed
+  Future collapseSearchBar() async {
+
+    if(searchBarAnimationController.isDismissed) return TickerFuture.complete();
+    
+    final t = searchBarAnimationController.reverse();
+
+    t.then((value) => setState(() {}),);
+
+    return t;
+
   }
 
   /// Deletes an entry from the search history when the user swipes (deletes)
@@ -462,7 +523,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       onDismissCallback: (dismissType) async {
         await updateSearchResults(
           searchInputController.text,
-          widget.allowDeconjugation
+          widget.allowDeconjugation,
+           widget.convertToKana,
         );
         filterPopupOpen = false;
       },
@@ -487,7 +549,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       onDismissCallback: (dismissType) async {
         await updateSearchResults(
           searchInputController.text,
-          widget.allowDeconjugation
+          widget.allowDeconjugation,
+          widget.convertToKana,
         );
         radicalPopupOpen = false;
       },
@@ -510,14 +573,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     // collapse the search bar
     if(widget.canCollapse){
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        
-        searchBarAnimationController.reverse(from: 1.0).then((value) {
-          setState(() {
-            searchBarExpanded = false;
-          });
-        });
-      }); 
+      collapseSearchBar();
     }
 
     // close the keyboard
@@ -529,6 +585,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     if(searchInputController.text != ""){
       searchInputController.text = "";
       widget.context.read<DictSearch>().currentSearch = "";
+      widget.context.read<DictSearch>().currentKanaSearch = "";
+      widget.context.read<DictSearch>().currentAlternativeSearches = [];
       widget.context.read<DictSearch>().searchResults = [];
       searchTextFieldFocusNode.requestFocus();
     }
@@ -536,89 +594,166 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       String data = (await Clipboard.getData('text/plain'))?.text ?? "";
       data = data.replaceAll("\n", " ");
       searchInputController.text = data;
-      await updateSearchResults(data, widget.allowDeconjugation);
+      await updateSearchResults(data, widget.convertToKana, widget.allowDeconjugation);
     }
-    searchBarExpanded = true;
-    searchBarAnimationController.forward();
+
+    openSearchBar();
     setState(() { });
   }
 
   /// Searches in the dictionary and updates all search results and variables
   /// setState() needs to be called to update the ui.
-  Future<void> updateSearchResults(String text, bool allowDeconjugation) async {
-    // only search in dictionary if the query is not empty (remove filters to check this)
-    if(text.split(" ").where((e) => !e.startsWith("#")).join() == ""){
+  Future<void> updateSearchResults(
+    String query, bool convertToHiragana, bool allowDeconjugation) async {
+
+    // separate query and filters
+    List<String> filters = getFilters(query);
+    query = getQueryWithoutFilters(query);
+
+    // hide all flushbars from previous searches
+    //if(!(deconjugationFlushbar?.isDismissed() ?? true)) deconjugationFlushbar?.dismiss();
+
+    // only search in dictionary if the query is not empty
+    if(query == ""){
       widget.context.read<DictSearch>().currentSearch = "";
+      widget.context.read<DictSearch>().currentKanaSearch = "";
+      widget.context.read<DictSearch>().currentAlternativeSearches = [];
       widget.context.read<DictSearch>().searchResults = [];
       return;
     }
 
-    KanaKit k = GetIt.I<KanaKit>();
-    String deconjugated = "";
-    // try to deconjugate the input if allowed
-    // convertable to hiragana (or is already japanese)
-    // does not have spaces
-    if(allowDeconjugation &&
-      (k.isJapanese(text) || k.isJapanese(k.toHiragana(text))) &&
-      !text.contains(" ")
-      )
-    {
-      deconjugated = deconjugate(k.isJapanese(text) ? text : k.toHiragana(text));
-      if(deconjugated != "" && k.isJapanese(deconjugated) && k.isRomaji(text)) {
-        deconjugated = k.toRomaji(deconjugated);
-      }
+    // if romaji conversion setting is enabled, convert query to hiragana
+    String? queryKana; KanaKit kKitRomaji = const KanaKit();
+    if(convertToHiragana) {
+      String t = kKitRomaji.toHiragana(kKitRomaji.toKana(query));
+      // assure that the outcome is japanese
+      if(kKitRomaji.isJapanese(t)) queryKana = t;
     }
+    
+    // try to deconjugate the input if
+    // 1. setting is enabled
+    // 2. convertable to hiragana (or is already Japanese)
+    // 3. does not have spaces
+    List<String> deconjugated = []; KanaKit k = GetIt.I<KanaKit>();
+    if(allowDeconjugation && !query.contains(" ") && 
+      (k.isJapanese(query) || k.isJapanese(k.toKana(query))))
+    {
+      deconjugated = getDeconjugatedTerms(k.isJapanese(query)
+        ? query
+        : k.toHiragana(k.toKana(query)),
+        GetIt.I<Mecab>(), GetIt.I<KanaKit>());
+
+      deconjugated.remove(queryKana);
+      deconjugated.remove(query);
+    }
+    deconjugated.removeWhere((e) => e.isEmpty);
 
     // if the search query was changed show a snackbar and give the option to
     // use the original search
-    if(deconjugated != "" && deconjugated != text){
-      deconjugationFlushbar?.dismiss();
-      deconjugationFlushbar = Flushbar(
-        backgroundColor: Colors.white,
-        messageText: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                "${LocaleKeys.DictionaryScreen_search_searched.tr()} $deconjugated",
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.black
-                ),
-              ),
-            ),
-            const SizedBox(width: 20,),
-            Expanded(
-              child: InkWell(
-                onTap: () async {
-                  await updateSearchResults(text, false);
-                },
-                child: Text(
-                  "${LocaleKeys.DictionaryScreen_search_search_for.tr()}  $text",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: Theme.of(widget.context).highlightColor
-                  ),                
-                ),
-              ),
-            )
-          ],
-        ),
-        flushbarPosition: FlushbarPosition.TOP,
-        isDismissible: true,
-        duration: const Duration(milliseconds: 4000),
-      )..show(context).then((value) {
-        deconjugationFlushbar = null;
-        return value;
-      });
-    }
-    else{
-      deconjugated = text;
+    if(queryKana != query || deconjugated.isNotEmpty){
+
+      deconjugationFlushbar = DictionaryAltSearchFlushbar(
+          selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated),
+          onAltSearchTapped
+        )
+        .build(context)..show(context).then((value) {
+          deconjugationFlushbar = null;
+          return value;
+        }
+      );
     }
 
-    // update search variables and search
-    widget.context.read<DictSearch>().currentSearch = deconjugated;
+    // update search variables
+    widget.context.read<DictSearch>().currentSearch = query;
+    widget.context.read<DictSearch>().currentKanaSearch = queryKana ?? "";
+    widget.context.read<DictSearch>().currentAlternativeSearches = deconjugated;
+
+    // search
     widget.context.read<DictSearch>().searchResults =
-      await GetIt.I<DictionarySearch>().query(deconjugated) ?? [];
+      await GetIt.I<DictionarySearch>().search(
+        selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated),
+        filters,
+        context.read<Settings>().dictionary.limitSearchResults,
+      ) ?? [];
   }
+
+  /// when the user taps on an alternative search term from the flushbar
+  void onAltSearchTapped(String text) async {
+
+    searchInputController.text = text;
+    await updateSearchResults(text, false, false);
+    deconjugationFlushbar?.dismiss();
+
+  }
+
+  /// Based on the selected search result sort priorities, returns a list of
+  /// the actual search terms following the user'spriorities
+  List<String> selectedSortPrioritiesToActualQueries(
+    String query, String? queryKana, List<String> deconjugated
+  ){
+
+    List<String> allQueries = [];
+
+    List<String> sel = context.read<Settings>().dictionary.selectedSearchResultSortPriorities;
+    for (var i = 0; i < sel.length; i++) {
+      if(sel[i] == LocaleKeys.SettingsScreen_dict_term){
+        allQueries.add(query);
+      }
+      else if(sel[i] == LocaleKeys.SettingsScreen_dict_convert_to_kana && queryKana != null){
+        allQueries.add(queryKana);
+      } 
+      else if(sel[i] == LocaleKeys.SettingsScreen_dict_base_form){
+        allQueries.addAll(deconjugated);
+      }
+    }
+    
+    return allQueries;
+
+  }
+
+  /// Gets all filters that are in `query` and returns them
+  List<String> getFilters(String query){
+
+    List<String> separated = query.split(" ");
+    List<String> filters = separated
+      .where((e) => e.startsWith("#"))
+      .map((e) => jmDictAllFilters[e.replaceFirst("#", "")].toString())
+      .toList();
+
+    return filters;
+
+  }
+
+  /// Removes all filters in `query` and returns the query without them
+  String getQueryWithoutFilters(String query){
+
+    List<String> separated = query.split(" ");
+    String queryWithoutFilters = separated
+      .where((e) => !e.startsWith("#")).join(" ");
+
+    return queryWithoutFilters;
+
+  }
+
+  /// Returns a list with the headers used for showing which search query 
+  /// matched so that this result shows
+  List<String?> getSearchResultHeaders(){
+
+    return GetIt.I<Settings>().dictionary.showSearchMatchSeparation
+      ? [
+        widget.context.read<DictSearch>().currentSearch,
+        "${widget.context.read<DictSearch>().currentSearch}*",
+        "*${widget.context.read<DictSearch>().currentSearch}*",
+        widget.context.read<DictSearch>().currentKanaSearch,
+        "${widget.context.read<DictSearch>().currentKanaSearch}*",
+        "*${widget.context.read<DictSearch>().currentKanaSearch}*",
+        for (var search in widget.context.read<DictSearch>().currentAlternativeSearches)
+          ...[search, "$search*", "*$search*"]
+      ]
+      : List.generate(
+        6+(widget.context.read<DictSearch>().currentAlternativeSearches.length*3),
+        (e) => null);
+  }
+
 }
+

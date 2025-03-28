@@ -2,9 +2,9 @@
 import "package:flutter/material.dart";
 
 // Package imports:
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/drawing/draw_screen_layout.dart';
@@ -24,7 +24,7 @@ class DrawScreenResponsiveLayout extends StatelessWidget {
   final Widget clearButton;
   final double canvasSize;
   final DrawScreenLayout layout;
-  final WebViewWidget? webView;
+  final InAppWebView? webView;
 
   const DrawScreenResponsiveLayout(
     this.drawingCanvas,

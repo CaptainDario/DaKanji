@@ -15,9 +15,9 @@ String modifyKanjiVGSvg(String svg,
   }
 ){
 
-  String textHexColor = textColor.value.toRadixString(16)
+  String textHexColor = textColor.toARGB32().toRadixString(16)
     .padLeft(6, '0').substring(2, 8);
-  String strokeHexColor = strokeColor.value.toRadixString(16)
+  String strokeHexColor = strokeColor.toARGB32().toRadixString(16)
     .padLeft(6, '0').substring(2, 8);
 
   String s = svg.replaceAll(
@@ -56,7 +56,7 @@ String themeMnemonicSvg(String svgString, bool darkTheme){
         colorStrings[cIdx],
         cIdx == closerToblack
           ? (darkTheme ? "ffffff" : "000000")
-          : g_Dakanji_red.value.toRadixString(16).substring(2)
+          : g_Dakanji_red.toARGB32().toRadixString(16).substring(2)
       )
     );
   }

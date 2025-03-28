@@ -88,14 +88,15 @@ Map<int, List<String>> getRadicalsByStrokeOrder(IsarCollection<Radk> radkIsar) {
 }
 
 
-/// Returns all kanjis that use all `radicals`, sorted by stroke order.
-List<String> getKanjisByRadical(List<String> radicals, IsarCollection<Krad> kradIsar) {
+/// Returns all kanjis that use all `radicals`, sorted by stroke count.
+/// For each 
+List<List<String>> getKanjisByRadical(List<String> radicals, IsarCollection<Krad> kradIsar) {
 
-  List<String> kanjisThatUseAllRadicals = [];
+  List<List<String>> ret = [];
 
   if(radicals.isNotEmpty) {
 
-    kanjisThatUseAllRadicals = kradIsar
+    List<Krad> kanjisThatUseAllRadicals = kradIsar
       .where()
         .anyKanjiStrokeCount()
       .filter()
@@ -103,12 +104,16 @@ List<String> getKanjisByRadical(List<String> radicals, IsarCollection<Krad> krad
       .sortByKanjiStrokeCount()
       .thenByKanji()
       .limit(250)
-      .kanjiProperty()
       .findAllSync();
+
+    ret = List.generate(kanjisThatUseAllRadicals.last.kanjiStrokeCount, (i) => []);
+    for (var krad in kanjisThatUseAllRadicals) {
+      ret[krad.kanjiStrokeCount-1].add(krad.kanji);
+    }
 
   }
   
-  return kanjisThatUseAllRadicals;
+  return ret;
 }
 
 /// Returns all radicals that can be used with the `radicals` to find other

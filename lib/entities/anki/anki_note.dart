@@ -2,12 +2,14 @@
 import 'dart:math';
 
 // Package imports:
-import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
+import 'package:get_it/get_it.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_data.dart';
+import 'package:da_kanji_mobile/widgets/dictionary/dictionary_example_tab.dart';
 
 /// Represents a DaKanji-style Anki note
 class AnkiNote{
@@ -36,6 +38,8 @@ class AnkiNote{
   String audio = "";
   /// Example sentence for this card
   String example = "";
+  /// All translations of the examples
+  String exampleTrans = "";
   /// Audio of `example`
   String exampleAudio = "";
 
@@ -75,6 +79,7 @@ class AnkiNote{
       ankiDataFieldDaKanjiLink  : dakanjiLink,
       ankiDataFieldAudio        : audio,
       ankiDataFieldExample      : example,
+      ankiDataFieldExampleTrans : exampleTrans,
       ankiDataFieldExampleAudio : exampleAudio,
       ankiDataFieldImage        : image
     };
@@ -91,6 +96,7 @@ class AnkiNote{
       this.dakanjiLink = "",
       this.audio = "",
       this.example = "",
+      this.exampleTrans = "",
       this.exampleAudio = "",
       this.image = ""
     }
@@ -102,19 +108,22 @@ class AnkiNote{
     this.deckName, JMdict entry,
     {
       required List<String> langsToInclude,
+      required bool includeExample,
       int translationsPerLang = 3
     }
   )
     : translations = {}
   {
 
-    for (var meaning in entry.meanings) {
+    for (String langCode in langsToInclude) {
 
-      if(!langsToInclude.contains(meaning.language!)) continue;
+      final meanings = entry.meanings.where((e) => e.language == langCode);
+      if(meanings.isEmpty) continue;
+      final meaning = meanings.first;
 
       translations.putIfAbsent(meaning.language!, () => []);
       List<String> langTrans = meaning.meanings
-        .map((e) => e.attributes.whereNotNull().join("; "))
+        .map((e) => e.attributes.nonNulls.join("; "))
         .toList();
       translations[meaning.language!]!.addAll(
         langTrans.sublist(0, min(translationsPerLang, langTrans.length))
@@ -129,12 +138,60 @@ class AnkiNote{
 
     //audio = ;
 
-    //example = ;
-
     //exampleAudio = ;
 
     //image = ;
 
+  }
+
+  /// Searches the examples database for sentences and adds them to this card if
+  /// any are found
+  Future setExamplesFromDict(
+    JMdict entry,
+    {
+      required List<String> langsToInclude,
+      required int numberOfExamples,
+      required bool includeTranslations,
+    }
+  ) async {
+
+    List<ExampleSentence> examples = await searchExamples(
+      langsToInclude, entry.kanjis, entry.readings, entry.hiraganas,
+      numberOfExamples, GetIt.I<Isars>().examples.directory
+    );
+
+    if(examples.isEmpty) return;
+
+    // get the positions where the entry matches the example
+    final spans = getMatchSpans(entry, examples);
+
+    example = ""; exampleTrans = "";
+    for (var i = 0; i < min(numberOfExamples, examples.length); i++) {
+
+      if(examples.length > 1) example += "${i+1}. ";
+      
+      // set the japanese example
+      for (var span in spans[i]) {
+        example += examples[i].sentence.replaceRange(span.item1, span.item2,
+          "<b>${examples[i].sentence.substring(span.item1, span.item2)}</b>");
+      }
+      example += "<br>";
+
+      // add the translations
+      if(includeTranslations){
+        for (var langCode in langsToInclude) {
+
+          final translations = examples[i].translations
+            .where((e) => e.language == langCode);
+          
+          if(translations.isNotEmpty) exampleTrans += "${translations.first.sentence}\n";
+
+        }
+      }
+
+      if(examples.length - 1 != i) example += "<br>";
+      
+    }
 
   }
 

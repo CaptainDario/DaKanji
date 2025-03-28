@@ -5,26 +5,26 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   clipboard_watcher
+  dynamic_color
+  flutter_inappwebview_windows
+  fvp
   irondash_engine_context
   isar_flutter_libs
-  mecab_dart
-  media_kit_libs_windows_video
-  media_kit_video
+  mecab_for_flutter
+  permission_handler_windows
   printing
-  rive_common
-  screen_brightness_windows
-  screen_retriever
-  sentry_flutter
+  screen_retriever_windows
   share_plus
   sqlite3_flutter_libs
   super_native_extensions
   url_launcher_windows
   window_manager
+  window_manager_plus
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
-  media_kit_native_event_loop
-  tflite_flutter
+  lite_rt_for_flutter_libs_windows
+  sentry_flutter
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

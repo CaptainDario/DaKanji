@@ -142,12 +142,12 @@ class WordListNodesSQLData extends DataClass
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     {
-      final converter = $WordListNodesSQLTable.$converterchildrenIDs;
-      map['children_i_ds'] = Variable<String>(converter.toSql(childrenIDs));
+      map['children_i_ds'] = Variable<String>(
+          $WordListNodesSQLTable.$converterchildrenIDs.toSql(childrenIDs));
     }
     {
-      final converter = $WordListNodesSQLTable.$convertertype;
-      map['type'] = Variable<int>(converter.toSql(type));
+      map['type'] =
+          Variable<int>($WordListNodesSQLTable.$convertertype.toSql(type));
     }
     map['is_expanded'] = Variable<bool>(isExpanded);
     return map;
@@ -201,6 +201,18 @@ class WordListNodesSQLData extends DataClass
         type: type ?? this.type,
         isExpanded: isExpanded ?? this.isExpanded,
       );
+  WordListNodesSQLData copyWithCompanion(WordListNodesSQLCompanion data) {
+    return WordListNodesSQLData(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      childrenIDs:
+          data.childrenIDs.present ? data.childrenIDs.value : this.childrenIDs,
+      type: data.type.present ? data.type.value : this.type,
+      isExpanded:
+          data.isExpanded.present ? data.isExpanded.value : this.isExpanded,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('WordListNodesSQLData(')
@@ -289,15 +301,13 @@ class WordListNodesSQLCompanion extends UpdateCompanion<WordListNodesSQLData> {
       map['name'] = Variable<String>(name.value);
     }
     if (childrenIDs.present) {
-      final converter = $WordListNodesSQLTable.$converterchildrenIDs;
-
-      map['children_i_ds'] =
-          Variable<String>(converter.toSql(childrenIDs.value));
+      map['children_i_ds'] = Variable<String>($WordListNodesSQLTable
+          .$converterchildrenIDs
+          .toSql(childrenIDs.value));
     }
     if (type.present) {
-      final converter = $WordListNodesSQLTable.$convertertype;
-
-      map['type'] = Variable<int>(converter.toSql(type.value));
+      map['type'] = Variable<int>(
+          $WordListNodesSQLTable.$convertertype.toSql(type.value));
     }
     if (isExpanded.present) {
       map['is_expanded'] = Variable<bool>(isExpanded.value);
@@ -458,6 +468,16 @@ class WordListEntriesSQLData extends DataClass
         dictEntryID: dictEntryID ?? this.dictEntryID,
         timeAdded: timeAdded ?? this.timeAdded,
       );
+  WordListEntriesSQLData copyWithCompanion(WordListEntriesSQLCompanion data) {
+    return WordListEntriesSQLData(
+      wordListID:
+          data.wordListID.present ? data.wordListID.value : this.wordListID,
+      dictEntryID:
+          data.dictEntryID.present ? data.dictEntryID.value : this.dictEntryID,
+      timeAdded: data.timeAdded.present ? data.timeAdded.value : this.timeAdded,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('WordListEntriesSQLData(')
@@ -557,6 +577,8 @@ class WordListEntriesSQLCompanion
 
 abstract class _$WordListsSQLDatabase extends GeneratedDatabase {
   _$WordListsSQLDatabase(QueryExecutor e) : super(e);
+  $WordListsSQLDatabaseManager get managers =>
+      $WordListsSQLDatabaseManager(this);
   late final $WordListNodesSQLTable wordListNodesSQL =
       $WordListNodesSQLTable(this);
   late final $WordListEntriesSQLTable wordListEntriesSQL =
@@ -567,4 +589,336 @@ abstract class _$WordListsSQLDatabase extends GeneratedDatabase {
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [wordListNodesSQL, wordListEntriesSQL];
+}
+
+typedef $$WordListNodesSQLTableCreateCompanionBuilder
+    = WordListNodesSQLCompanion Function({
+  Value<int> id,
+  required String name,
+  required List<int> childrenIDs,
+  required WordListNodeType type,
+  Value<bool> isExpanded,
+});
+typedef $$WordListNodesSQLTableUpdateCompanionBuilder
+    = WordListNodesSQLCompanion Function({
+  Value<int> id,
+  Value<String> name,
+  Value<List<int>> childrenIDs,
+  Value<WordListNodeType> type,
+  Value<bool> isExpanded,
+});
+
+class $$WordListNodesSQLTableFilterComposer
+    extends Composer<_$WordListsSQLDatabase, $WordListNodesSQLTable> {
+  $$WordListNodesSQLTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<List<int>, List<int>, String>
+      get childrenIDs => $composableBuilder(
+          column: $table.childrenIDs,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<WordListNodeType, WordListNodeType, int>
+      get type => $composableBuilder(
+          column: $table.type,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<bool> get isExpanded => $composableBuilder(
+      column: $table.isExpanded, builder: (column) => ColumnFilters(column));
+}
+
+class $$WordListNodesSQLTableOrderingComposer
+    extends Composer<_$WordListsSQLDatabase, $WordListNodesSQLTable> {
+  $$WordListNodesSQLTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get childrenIDs => $composableBuilder(
+      column: $table.childrenIDs, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isExpanded => $composableBuilder(
+      column: $table.isExpanded, builder: (column) => ColumnOrderings(column));
+}
+
+class $$WordListNodesSQLTableAnnotationComposer
+    extends Composer<_$WordListsSQLDatabase, $WordListNodesSQLTable> {
+  $$WordListNodesSQLTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<int>, String> get childrenIDs =>
+      $composableBuilder(
+          column: $table.childrenIDs, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<WordListNodeType, int> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<bool> get isExpanded => $composableBuilder(
+      column: $table.isExpanded, builder: (column) => column);
+}
+
+class $$WordListNodesSQLTableTableManager extends RootTableManager<
+    _$WordListsSQLDatabase,
+    $WordListNodesSQLTable,
+    WordListNodesSQLData,
+    $$WordListNodesSQLTableFilterComposer,
+    $$WordListNodesSQLTableOrderingComposer,
+    $$WordListNodesSQLTableAnnotationComposer,
+    $$WordListNodesSQLTableCreateCompanionBuilder,
+    $$WordListNodesSQLTableUpdateCompanionBuilder,
+    (
+      WordListNodesSQLData,
+      BaseReferences<_$WordListsSQLDatabase, $WordListNodesSQLTable,
+          WordListNodesSQLData>
+    ),
+    WordListNodesSQLData,
+    PrefetchHooks Function()> {
+  $$WordListNodesSQLTableTableManager(
+      _$WordListsSQLDatabase db, $WordListNodesSQLTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$WordListNodesSQLTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WordListNodesSQLTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WordListNodesSQLTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<List<int>> childrenIDs = const Value.absent(),
+            Value<WordListNodeType> type = const Value.absent(),
+            Value<bool> isExpanded = const Value.absent(),
+          }) =>
+              WordListNodesSQLCompanion(
+            id: id,
+            name: name,
+            childrenIDs: childrenIDs,
+            type: type,
+            isExpanded: isExpanded,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String name,
+            required List<int> childrenIDs,
+            required WordListNodeType type,
+            Value<bool> isExpanded = const Value.absent(),
+          }) =>
+              WordListNodesSQLCompanion.insert(
+            id: id,
+            name: name,
+            childrenIDs: childrenIDs,
+            type: type,
+            isExpanded: isExpanded,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$WordListNodesSQLTableProcessedTableManager = ProcessedTableManager<
+    _$WordListsSQLDatabase,
+    $WordListNodesSQLTable,
+    WordListNodesSQLData,
+    $$WordListNodesSQLTableFilterComposer,
+    $$WordListNodesSQLTableOrderingComposer,
+    $$WordListNodesSQLTableAnnotationComposer,
+    $$WordListNodesSQLTableCreateCompanionBuilder,
+    $$WordListNodesSQLTableUpdateCompanionBuilder,
+    (
+      WordListNodesSQLData,
+      BaseReferences<_$WordListsSQLDatabase, $WordListNodesSQLTable,
+          WordListNodesSQLData>
+    ),
+    WordListNodesSQLData,
+    PrefetchHooks Function()>;
+typedef $$WordListEntriesSQLTableCreateCompanionBuilder
+    = WordListEntriesSQLCompanion Function({
+  required int wordListID,
+  required int dictEntryID,
+  Value<DateTime> timeAdded,
+  Value<int> rowid,
+});
+typedef $$WordListEntriesSQLTableUpdateCompanionBuilder
+    = WordListEntriesSQLCompanion Function({
+  Value<int> wordListID,
+  Value<int> dictEntryID,
+  Value<DateTime> timeAdded,
+  Value<int> rowid,
+});
+
+class $$WordListEntriesSQLTableFilterComposer
+    extends Composer<_$WordListsSQLDatabase, $WordListEntriesSQLTable> {
+  $$WordListEntriesSQLTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get wordListID => $composableBuilder(
+      column: $table.wordListID, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get dictEntryID => $composableBuilder(
+      column: $table.dictEntryID, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get timeAdded => $composableBuilder(
+      column: $table.timeAdded, builder: (column) => ColumnFilters(column));
+}
+
+class $$WordListEntriesSQLTableOrderingComposer
+    extends Composer<_$WordListsSQLDatabase, $WordListEntriesSQLTable> {
+  $$WordListEntriesSQLTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get wordListID => $composableBuilder(
+      column: $table.wordListID, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get dictEntryID => $composableBuilder(
+      column: $table.dictEntryID, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get timeAdded => $composableBuilder(
+      column: $table.timeAdded, builder: (column) => ColumnOrderings(column));
+}
+
+class $$WordListEntriesSQLTableAnnotationComposer
+    extends Composer<_$WordListsSQLDatabase, $WordListEntriesSQLTable> {
+  $$WordListEntriesSQLTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get wordListID => $composableBuilder(
+      column: $table.wordListID, builder: (column) => column);
+
+  GeneratedColumn<int> get dictEntryID => $composableBuilder(
+      column: $table.dictEntryID, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get timeAdded =>
+      $composableBuilder(column: $table.timeAdded, builder: (column) => column);
+}
+
+class $$WordListEntriesSQLTableTableManager extends RootTableManager<
+    _$WordListsSQLDatabase,
+    $WordListEntriesSQLTable,
+    WordListEntriesSQLData,
+    $$WordListEntriesSQLTableFilterComposer,
+    $$WordListEntriesSQLTableOrderingComposer,
+    $$WordListEntriesSQLTableAnnotationComposer,
+    $$WordListEntriesSQLTableCreateCompanionBuilder,
+    $$WordListEntriesSQLTableUpdateCompanionBuilder,
+    (
+      WordListEntriesSQLData,
+      BaseReferences<_$WordListsSQLDatabase, $WordListEntriesSQLTable,
+          WordListEntriesSQLData>
+    ),
+    WordListEntriesSQLData,
+    PrefetchHooks Function()> {
+  $$WordListEntriesSQLTableTableManager(
+      _$WordListsSQLDatabase db, $WordListEntriesSQLTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$WordListEntriesSQLTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WordListEntriesSQLTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WordListEntriesSQLTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> wordListID = const Value.absent(),
+            Value<int> dictEntryID = const Value.absent(),
+            Value<DateTime> timeAdded = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              WordListEntriesSQLCompanion(
+            wordListID: wordListID,
+            dictEntryID: dictEntryID,
+            timeAdded: timeAdded,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required int wordListID,
+            required int dictEntryID,
+            Value<DateTime> timeAdded = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              WordListEntriesSQLCompanion.insert(
+            wordListID: wordListID,
+            dictEntryID: dictEntryID,
+            timeAdded: timeAdded,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$WordListEntriesSQLTableProcessedTableManager = ProcessedTableManager<
+    _$WordListsSQLDatabase,
+    $WordListEntriesSQLTable,
+    WordListEntriesSQLData,
+    $$WordListEntriesSQLTableFilterComposer,
+    $$WordListEntriesSQLTableOrderingComposer,
+    $$WordListEntriesSQLTableAnnotationComposer,
+    $$WordListEntriesSQLTableCreateCompanionBuilder,
+    $$WordListEntriesSQLTableUpdateCompanionBuilder,
+    (
+      WordListEntriesSQLData,
+      BaseReferences<_$WordListsSQLDatabase, $WordListEntriesSQLTable,
+          WordListEntriesSQLData>
+    ),
+    WordListEntriesSQLData,
+    PrefetchHooks Function()>;
+
+class $WordListsSQLDatabaseManager {
+  final _$WordListsSQLDatabase _db;
+  $WordListsSQLDatabaseManager(this._db);
+  $$WordListNodesSQLTableTableManager get wordListNodesSQL =>
+      $$WordListNodesSQLTableTableManager(_db, _db.wordListNodesSQL);
+  $$WordListEntriesSQLTableTableManager get wordListEntriesSQL =>
+      $$WordListEntriesSQLTableTableManager(_db, _db.wordListEntriesSQL);
 }

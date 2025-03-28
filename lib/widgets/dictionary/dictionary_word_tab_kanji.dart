@@ -68,13 +68,13 @@ class _DictionaryWordTabKanjiState extends State<DictionaryWordTabKanji> {
     hasKanji = widget.entry.kanjis.isNotEmpty;
 
     readingInfos = List<String>.from((widget.entry.readingInfo ?? [])
-        .whereNotNull().map((e) => e.attributes)
-        .flattened.whereNotNull().toSet().toList())
+        .nonNulls.map((e) => e.attributes)
+        .flattened.nonNulls.toSet().toList())
       .asMap().map((key, value) => MapEntry(value, key+1));
 
     kanjiInfos = List<String>.from((widget.entry.kanjiInfo ?? [])
-        .whereNotNull().map((e) => e.attributes)
-        .flattened.whereNotNull().toSet().toList())
+        .nonNulls.map((e) => e.attributes)
+        .flattened.nonNulls.toSet().toList())
       .asMap().map((key, value) => MapEntry(value, readingInfos.length+key+1));
   
     accents = [];

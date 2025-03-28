@@ -2,7 +2,6 @@
 import 'dart:io';
 
 // Package imports:
-import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 
 // Project imports:
@@ -207,7 +206,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
       // update the remaining affected nodes
       await batch((batch) {
-        for (var node in (affectedNodes).whereNotNull()){
+        for (var node in (affectedNodes).nonNulls){
           var sqlNode = companionFromTreeNode(node, true);
           batch.update(
             wordListNodesSQL, sqlNode,
@@ -235,7 +234,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   Future<void> updateNodes(List<TreeNode<WordListsData>?> nodes) async {
 
     await batch((batch) {
-      for (var node in nodes.whereNotNull()){
+      for (var node in nodes.nonNulls){
         var sqlNode = companionFromTreeNode(node, true);
         batch.update(
           wordListNodesSQL, sqlNode,
@@ -274,6 +273,19 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
     
 
   }
+  
+  /// Get all IDs of all nodes that the user defined
+  Future<List<int>> getAllNodeIDs(){
+
+    final idColumn = wordListNodesSQL.id; 
+    final query = selectOnly(wordListNodesSQL)
+      ..addColumns([idColumn]);
+      
+    return query.map(
+      (row) => row.read(idColumn)!)
+      .get();
+
+  } 
   // --- END : WordLists 
 
 

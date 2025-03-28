@@ -107,9 +107,11 @@ Future<bool> _logEventPosthogREST(String url, Map<String, String> header,
   }
   // cache the request when it was not successful to send it later
   catch (e) {
-    if(cacheEventOnfailure){
-      await cacheEvent(body);
-    }
+    success = false;
+  }
+
+  if(cacheEventOnfailure && !success){
+    await cacheEvent(body);
   }
 
   return success;
@@ -135,22 +137,21 @@ Future<void> retryCachedEvents() async {
   // load cached events
   final prefs = await SharedPreferences.getInstance();
   List<String> cachedEvents = prefs.getStringList(prefsPosthogCacheName) ?? [];
-  List<String> remainingEvents = cachedEvents;
   
-  if(cachedEvents == []) return;
+  if(cachedEvents.isEmpty) return;
 
   // try to resend all events
-  for (int i = 0; i < cachedEvents.length; i++) {
+  while (cachedEvents.isNotEmpty) {
     bool success = await logEvent(
-      posthogServiceURL, posthogHeader, jsonDecode(cachedEvents[i]),
+      posthogServiceURL, posthogHeader, jsonDecode(cachedEvents.first),
       cacheEventOnfailure: false);
 
     if(!success){
       return;
     }
     else{
-      remainingEvents.removeAt(i);
-      prefs.setStringList(prefsPosthogCacheName, remainingEvents);
+      cachedEvents.removeAt(0);
+      prefs.setStringList(prefsPosthogCacheName, cachedEvents);
     }
   }
 

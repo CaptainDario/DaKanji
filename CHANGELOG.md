@@ -1,13 +1,142 @@
 
 # DaKanji - changelog
 
-## v3.4.0 - ワードリストと暗記 (31.4.2024)
+## v3.5.0 - ワードリストと暗記改善 (14.04.2024)
+
+Note: **This update resets the Anki integration, please run the setup again**
+
+Added:
+
+- Dictionary:
+  - Add to anki / list from search results
+  - Search result sorting priority setting
+  - Show search separation headers setting
+  - Limit search results setting
+  - Handwriting input on android
+- Settings
+  - Font size #104
+- Anki: Examples sentences can be added to notes
+
+Improvements:
+
+- Text (MAJOR overhaul!)
+  - Text input renders furigana (no need for two text widgets!)
+  - Conjugations are now grouped together (食べ、たかっ、た -> 食べたかった)
+  - Vastly improved selection handling
+  - Only show furigana for kanjis
+  - Space text instead of resizing furigana
+  - Option to automatically read from clipboard #92
+  - Automatically save popup winow size and position
+- Dictionary
+  - New deconjugation engine, handles more deconjugation patterns
+  - Improved searching
+    - Searches for multiple possible search terms at the same time
+    - Ignore white space at the beginning and end of search terms
+  - Image search and DeepL supported on MacOS and Windows
+  - Back navigation clears search and resets current entry
+  - Readability of kanji stroke order diagrams #104
+- Word lists: significantly improved export speed
+- Radical search: show kanjis separated by stroke order
+- Kana table: playback on android does not cut off
+- Anki: Setting to decide how adding a duplicate should be handled
+- Keep screen turned on while screensaver is running
+- While downloading initial data, keep screen on
+- Various small UI improvements
+- Reduced install size
+- Unpack assets in isolate #72
+
+Fixed:
+
+- Windows drawing recognition does not work
+- Quick add to word list selection is always empty
+- DoJG: Zooming and scrolling using the mouse wheel conflicts each other
+- Anki
+  - The order of languages when sending to Anki has been ignored
+- Some audio files cut of on Android devices
+
+-------------------------------------------------------------------------
+
+## v3.4.4 - ワードリストと暗記改善 (25.07.2024)
+
+Fixed:
+
+- Windows drawing recognition does not work
+- DoJG search does not work
+- Falling words block UI interaction
+
+-------------------------------------------------------------------------
+
+## v3.4.3 - ワードリストと暗記改善 (10.07.2024)
+
+Added:
+
+- I am in the matrix
+
+Improvements:
+
+- Dictionary
+  - Back gesture clears the current search
+  - Falling words
+    - Not all controlled at the same time
+- Use fvp for media playback
+
+Fixed:
+
+- App does not work in MS Store
+- DoJG: Impossible to scroll back when image full screen on desktop
+
+-------------------------------------------------------------------------
+
+## v3.4.2 - ワードリストと暗記改善 (05.07.2024)
+
+Fixed:
+
+- Does not start on Windows
+- Pressing "rate" on linux causes an exception
+- File picker not opening in snap
+- Importing the dojg deck
+- DoJG deep links
+- DoJG screen search text color
+- Potential race condition in SQLite when restarting the app
+- MacOS: closing the app did not terminate the app
+
+-------------------------------------------------------------------------
+
+## v3.4.1 - ワードリストと暗記改善 (09.06.2024)
+
+Added:
+
+- Added drawer manual
+- Show word frequency in dictionary if selected
+- Quick send to anki
+- Quick add to wordlist
+
+Fixed / Improved:
+
+- Improved performance with Flutter 3.22
+- iOS keyboard is not dismissible on text screen
+- Spaces between PoS elements of dictionary entries
+- Updated sentry for better handled / unhandled tags
+- Word list sorting text hard to read in light mode
+- Anki integration on windows
+- Katakana origins images not loading
+- Mecab not loading on iOS/MacOS/certain configurations
+- Sharing entries as image does not respect the current theme
+- Onboarding: Pressing the next button does not trigger animations
+- Drawing: when pressing repeatedly the undo button the predictions are not cleared
+- Exception when checking for new release
+- Some texts used Chinese characters instead of Japanese
+- Kanji tab starts scrolled part-way down #95
+
+-------------------------------------------------------------------------
+
+## v3.4.0 - ワードリストと暗記 (9.5.2024)
 
 New Features:
 
 - Anki integration: Send words and word lists to Anki
 - Dictionary
-  - Share images of entry cards
+  - Share images of entry and kanji cards
   - Image search query customizable
   - Characters from drawing are now added at the cursor's position
 - Word Lists
@@ -28,6 +157,8 @@ Improvements:
     - Advanced
       - Optimize neural networks UI
 - Onboarding animations
+- The folder where DaKanji stores necessary data has been moved to a location that a user usually does not use [#85](https://github.com/CaptainDario/DaKanji/issues/85)
+- Dramatically decreased startup time in certain scenarios
 
 Fixed:
 

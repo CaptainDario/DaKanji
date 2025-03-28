@@ -32,6 +32,7 @@ void downloadAudio(BuildContext context) async {
         File(g_DakanjiPathManager.audiosDirectory.path),
         g_GithubApiDependenciesRelase,
       ).then((value) {
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pop();
       });
       AwesomeDialog(
@@ -106,10 +107,12 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
 
     while(true){
       try{
-        await downloadAssetFromGithubRelease(file, url,);
+        bool downloaded = await downloadAssetFromGithubRelease(file, url,);
+        if(!downloaded) { throw Exception(); }
         break;
       }
       catch (e){
+        debugPrint(e.toString());
         await AwesomeDialog(
           // ignore: use_build_context_synchronously
           context: context,
@@ -141,28 +144,44 @@ Future<void> copyFromAssets(FileSystemEntity assetPath, Directory dest) async {
   g_initAppInfoStream.add(
     "Unpacking: ${p.withoutExtension(assetPath.uri.pathSegments.lastWhere((e) => e!=""))}");
 
+  Stopwatch s = Stopwatch()..start();
   await compute(
     extractAssetArchiveToDisk,
     Tuple2(archive, dest.path),
     debugLabel: "Extraction isolate: ${dest.uri}"
   );
+  debugPrint(s.elapsed.toString());
 
 }
 
 /// Wrapper for `extractArchiveToDisk` to run it in an isolate
-void extractAssetArchiveToDisk(Tuple2 params){
+void extractAssetArchiveToDisk(Tuple2 params) async {
 
-  extractArchiveToDisk(params.item1, params.item2);
+  await extractArchiveToDisk(params.item1, params.item2);
 
 }
 
 /// Downloads the given `assetName` from the GitHub (`url`), uses the release
 /// matching this version
-Future<void> downloadAssetFromGithubRelease(File destination, String url) async 
+Future<bool> downloadAssetFromGithubRelease(File destination, String url) async 
 {
   // get all releases
   Dio dio = Dio(); String downloadUrl = "";
-  Response response = await dio.get(url);
+  bool downloadError = false;
+  Response? response = await dio.get(url)
+    .then((value) {
+      return value;
+    }).catchError((error, stackTrace) {
+      debugPrint(error.toString());
+      downloadError = true;
+      return Response(requestOptions: RequestOptions());
+    });
+
+  if(downloadError) {
+    debugPrint("Encountered error while downloading: $downloadError");
+    return false;
+  }
+
   String extension = destination.uri.pathSegments.last.split(".").length > 1
     ? ".${destination.uri.pathSegments.last.split(".").last}"
     : "";
@@ -183,6 +202,7 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
     
   // download the asset
   String fileName = destination.uri.pathSegments.last;
+  downloadError = false;
   await Dio().download(
     downloadUrl, "${destination.path}.zip",
     onReceiveProgress: (received, total) {
@@ -192,16 +212,28 @@ Future<void> downloadAssetFromGithubRelease(File destination, String url) async
         g_initAppInfoStream.add(progress);
       }
     }
-  );
+  ).onError((error, stackTrace) {
+    debugPrint(error.toString());
+    downloadError = true;
+    return Response(requestOptions: RequestOptions());
+  });
+
+  if(downloadError) {
+    debugPrint("Encountered error while downloading: $downloadError");
+    return false;
+  }
+
   debugPrint("Downloaded $fileName to ${destination.path}");
 
-  // unzip the asset
-  await extractFileToDisk(
-    "${destination.path}.zip",
-    destination.parent.path
-  );
+  await compute(
+    (Tuple2<String, String> paths) async {
+      await extractFileToDisk(paths.item1, paths.item2);
+    },
+    Tuple2("${destination.path}.zip", destination.parent.path));
   debugPrint("Extracted $destination");
   
   // delete the zip file
   File("${destination.path}.zip").deleteSync();
+
+  return true;
 }

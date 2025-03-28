@@ -39,6 +39,26 @@ class ManualTextScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    const Icon(Icons.paste, size: 18,),
+                    const Text(" / "),
+                    const Icon(Icons.sync, size: 18,),
+                    const SizedBox(width: 8,),
+                    Text(LocaleKeys.ManualScreen_text_paste_button_title.tr(), style: heading_2,),
+                  ]
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  LocaleKeys.ManualScreen_text_paste_button_text.tr(),
+                ),
+
+                const SizedBox(height: 15),
+
+                // shrink selection
+                const SizedBox(height: 15),
+            
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
                     const Icon(Icons.arrow_back, size: 18,),
                     const SizedBox(width: 8,),
                     Text(LocaleKeys.ManualScreen_text_selection_shrink_title.tr(), style: heading_2,),

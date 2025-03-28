@@ -19,6 +19,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/word_list/word_list_view_entry_screen.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
@@ -115,7 +116,7 @@ class _WordListScreenState extends State<WordListScreen> {
       .map((e) {
         return GetIt.I<Isars>().dictionary.jmdict
           .getAllSync(e.map((e) => e.item2).toList())
-          .whereNotNull();
+          .nonNulls;
       })
       // apply search term
       .map((event) => 
@@ -183,9 +184,20 @@ class _WordListScreenState extends State<WordListScreen> {
                     child: TextField(
                       controller: searchTextEditingController,
                       focusNode: searchInputFocusNode,
-                      decoration: searchInputFocusNode.hasPrimaryFocus
-                        ? const InputDecoration()
-                        : const InputDecoration.collapsed(hintText: ""),
+                      style: const TextStyle(color: Colors.white),
+                      cursorColor: Colors.white,
+                      decoration: const InputDecoration(
+                        hintText: "Search...",
+                        focusColor: Colors.white,
+                        hoverColor: Colors.white,
+                        hintStyle: TextStyle(color: Colors.grey),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)
+                        ),
+                      ),
                       onChanged: (value) {
                         setState(() {
                           animate = true;
@@ -208,10 +220,29 @@ class _WordListScreenState extends State<WordListScreen> {
                       });
                     },
                     value: currentSorting,
+                    selectedItemBuilder: (context) {
+                      return List.generate(WordListSorting.values.length, (i) =>
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          constraints: const BoxConstraints(minWidth: 50),
+                          child: Text(
+                            wordListSortingTranslations[WordListSorting.values[i]]!(),
+                            style: const TextStyle(color: Colors.white,),
+                          ),
+                        )
+                      );
+                    },
                     items: List.generate(WordListSorting.values.length, (i) =>
                       DropdownMenuItem<WordListSorting>(
                         value: WordListSorting.values[i],
-                        child: Text(wordListSortingTranslations[WordListSorting.values[i]]!()),
+                        child: Text(
+                          wordListSortingTranslations[WordListSorting.values[i]]!(),
+                          style: TextStyle(
+                            color: Theme.of(g_NavigatorKey.currentContext!).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black
+                          ),
+                        ),
                       )
                     ),
                   ),
@@ -233,7 +264,6 @@ class _WordListScreenState extends State<WordListScreen> {
                           case WordListAction.copyFromOther:
                             copyEntriesFromOtherList();
                             break;
-                          default:
                         }
                       },
                     ),
@@ -258,7 +288,8 @@ class _WordListScreenState extends State<WordListScreen> {
             }
         
             return SearchResultList(
-              searchResults: snapshot.data!.toList(),
+              searchResults: [snapshot.data!.toList()],
+              headers: const [null],
               alwaysAnimateIn: animate,
               onDismissed: isDefault 
                 ? null

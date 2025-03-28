@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/widgets/drawing/draw_screen_portrait.dart';
@@ -19,7 +19,7 @@ class DrawScreenPortraitWithWebview extends StatelessWidget {
   final Widget undoButton;
   final Widget clearButton;
   final double canvasSize;
-  final WebViewWidget? webView;
+  final InAppWebView? webView;
   
   const DrawScreenPortraitWithWebview(
     this.drawingCanvas,

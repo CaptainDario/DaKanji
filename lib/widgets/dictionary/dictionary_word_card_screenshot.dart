@@ -14,10 +14,14 @@ class DictionaryWordCardScreenshot extends StatefulWidget {
   final JMdict? entry;
   /// should the conjugation table be included in this widget
   final bool showConjugationTable;
+  /// The theme (dark / light) in which the screenshot should be taken
+  final ThemeData theme;
+
 
   const DictionaryWordCardScreenshot(
     this.entry,
     this.showConjugationTable,
+    this.theme,
     {
       super.key
     }
@@ -33,7 +37,7 @@ class _DictionaryWordCardScreenshotState extends State<DictionaryWordCardScreens
     return MediaQuery(
       data: const MediaQueryData(),
       child: Theme(
-        data: ThemeData.dark(),
+        data: widget.theme,
         child: SizedBox(
           width: 500,
           child: DictionaryWordCard(

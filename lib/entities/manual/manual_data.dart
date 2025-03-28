@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -13,6 +14,7 @@ import 'package:da_kanji_mobile/widgets/manual/manual_deep_links.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_dictionary.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_dojg.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_kana_table.dart';
+import 'package:da_kanji_mobile/widgets/manual/manual_misc.dart';
 import 'package:da_kanji_mobile/widgets/manual/manual_text.dart';
 
 /// Data class to store all data related to the manual
@@ -31,23 +33,23 @@ class ManualData {
   ManualData() {
 
     manualTitles = [
-      //"Drawing",
       LocaleKeys.DictionaryScreen_title.tr(),
       LocaleKeys.TextScreen_title.tr(),
       LocaleKeys.ManualScreen_anki_title.tr(),
       LocaleKeys.DojgScreen_title.tr(),
       LocaleKeys.KanaTableScreen_title.tr(),
-      LocaleKeys.ManualScreen_deep_links_title.tr()
+      LocaleKeys.ManualScreen_deep_links_title.tr(),
+      LocaleKeys.ManualScreen_misc_title.tr()
     ];
 
     manualIcons = [
-      //Icons.brush,
-      Icons.book,
-      Icons.text_snippet,
-      DaKanjiIcons.anki,
-      DaKanjiIcons.dojg,
-      DaKanjiIcons.kana_table,
-      Icons.link
+      DaKanjiIcons.dictionary,
+      DaKanjiIcons.text,
+      DaKanjiCustomIcons.anki,
+      DaKanjiCustomIcons.dojg,
+      DaKanjiCustomIcons.kana_table,
+      DaKanjiIcons.deepLinks,
+      DaKanjiIcons.misc
     ];
 
     manualPages = [
@@ -57,6 +59,7 @@ class ManualData {
       const ManualDojgPage(),
       const ManualKanaTablePage(),
       const ManualDeepLinks(),
+      const ManualMisc()
     ];
 
     manualTypes = [
@@ -66,6 +69,7 @@ class ManualData {
       ManualTypes.dojg,
       ManualTypes.kanaTable,
       ManualTypes.deepLinks,
+      ManualTypes.misc
     ];
 
   }

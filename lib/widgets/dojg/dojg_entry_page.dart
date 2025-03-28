@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:universal_io/io.dart';
 
@@ -24,7 +24,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dojg/dojg_key_sentence_table.dart';
 
 /// A page that shows all details about the given dojg entry
-class DojgEntryPage extends ConsumerStatefulWidget {
+class DojgEntryPage extends StatefulWidget {
 
   /// The DoJG entry of this page
   final DojgEntry dojgEntry;
@@ -45,11 +45,12 @@ class DojgEntryPage extends ConsumerStatefulWidget {
   );
 
   @override
-  ConsumerState<DojgEntryPage> createState() => _DojgEntryPageState();
+  State<DojgEntryPage> createState() => _DojgEntryPageState();
 }
 
-class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
+class _DojgEntryPageState extends State<DojgEntryPage> {
 
+  // how many pointers are currently on the screen
   int pointerCount = 0;
 
   @override
@@ -149,13 +150,12 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                                     text: "$exp   ",
                                     recognizer: TapGestureRecognizer()..onTap = (
                                       () {
-                                        ref.read(dojgSearchProvider.notifier)
-                                          .setCurrentSearchTerm(exp
+                                        context.read<DojgSearch>()
+                                          .currentSearchTerm = exp
                                             // remove characters that break the search
                                             .replaceAll(RegExp(r"[\(|\)|\d]"), "")
                                             // remove excess whitespace
-                                            .trim()
-                                          );
+                                            .trim();
                                         if(widget.isSeparateRoute){
                                           Navigator.of(context).pop();
                                         }
@@ -261,12 +261,19 @@ class _DojgEntryPageState extends ConsumerState<DojgEntryPage> {
                       onDoubleTap: () {
                         openDojgImageFullScreen();
                       },
-                      child: InteractiveViewer(
-                        panEnabled: true, // Set it to false
-                        boundaryMargin: const EdgeInsets.all(100),
-                        child: Image.file(File(
-                          p.joinAll([g_DakanjiPathManager.dojgDirectory.path, widget.dojgEntry.noteImageName!])
-                        )),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height-AppBar().preferredSize.height*3,
+                        width: MediaQuery.of(context).size.width,
+                        child: SingleChildScrollView(
+                          child: InteractiveViewer(
+                            panEnabled: true,
+                            scaleEnabled: true,
+                            maxScale: 5,
+                            child: Image.file(File(
+                              p.joinAll([g_DakanjiPathManager.dojgDirectory.path, widget.dojgEntry.noteImageName!])
+                            )),
+                          ),
+                        ),
                       ),
                     )
                   ],

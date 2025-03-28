@@ -41,26 +41,27 @@ class _ConjugationColumnState extends State<ConjugationColumn> {
     return widget.conjugationTitles.isEmpty
       ? Container()
       : Column(
-        children: List.generate(widget.conjugationSets.length, (i) => 
-          Column(
-            children: List.generate(widget.conjos[(i/2).floor()].length, (j) => 
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: VerbConjugationEntry(
-                  title: widget.conjugationTitles[(i/2).floor()][j],
-                  explanation: widget.conjugationExplanations[(i/2).floor()][j],
-                  conjugationType: i.isEven
-                    ? ConjugationType.plain
-                    : ConjugationType.polite,
-                  plainFormPositive: widget.conjos[(i/2).floor()][j][0],
-                  plainFormNegative: widget.conjos[(i/2).floor()][j][1],
-                  politeFormPositive: widget.conjos[(i/2).floor()][j][2], 
-                  politeFormNegative: widget.conjos[(i/2).floor()][j][3]
+        children: [ 
+          for (int i in widget.conjugationSets)
+            Column(
+              children: List.generate(widget.conjos[(i/2).floor()].length, (j) => 
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: VerbConjugationEntry(
+                    title: widget.conjugationTitles[(i/2).floor()][j],
+                    explanation: widget.conjugationExplanations[(i/2).floor()][j],
+                    conjugationType: i.isEven
+                      ? ConjugationType.plain
+                      : ConjugationType.polite,
+                    plainFormPositive: widget.conjos[(i/2).floor()][j][0],
+                    plainFormNegative: widget.conjos[(i/2).floor()][j][1],
+                    politeFormPositive: widget.conjos[(i/2).floor()][j][2], 
+                    politeFormNegative: widget.conjos[(i/2).floor()][j][3]
+                  ),
                 ),
-              ),
+              )
             )
-          )
-        )
+        ]
       );
   }
 

@@ -25,7 +25,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
 
       # get versions from pubspec
       - name: set env variables
@@ -34,7 +36,7 @@ jobs:
           python3 ./.github/workflows/building.py set_env_dakanji_version
           touch DaKanji_${{env.DAKANJI_VERSION}}.snap
       - name: Upload snap as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}.snap
           path: DaKanji_${{env.DAKANJI_VERSION}}.snap

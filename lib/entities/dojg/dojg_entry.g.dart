@@ -133,7 +133,7 @@ const DojgEntrySchema = CollectionSchema(
   getId: _dojgEntryGetId,
   getLinks: _dojgEntryGetLinks,
   attach: _dojgEntryAttach,
-  version: '3.1.0+1',
+  version: '3.1.8',
 );
 
 int _dojgEntryEstimateSize(

@@ -1,22 +1,22 @@
 // Dart imports:
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:window_manager/window_manager.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
 
@@ -59,7 +59,10 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
   @override
   void initState() {
 
-    if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
+    // keep screen on
+    WakelockPlus.enable();
+
+    if(g_desktopPlatform){
       WindowManager.instance.setFullScreen(true);
     }
 
@@ -95,7 +98,9 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
   @override
   void dispose() {
 
-    if(Platform.isLinux || Platform.isMacOS || Platform.isWindows){
+    WakelockPlus.disable();
+
+    if(g_desktopPlatform){
       WindowManager.instance.setFullScreen(false);
     }
 
@@ -110,7 +115,7 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
 
     entries = GetIt.I<Isars>().dictionary.jmdict
       .getAllSync(widget.entryIDs)
-      .whereNotNull()
+      .nonNulls
       .toList();
 
     setRandomEntry();

@@ -10,7 +10,9 @@ WordListsData _$WordListsDataFromJson(Map<String, dynamic> json) =>
     WordListsData(
       json['name'] as String,
       $enumDecode(_$WordListNodeTypeEnumMap, json['type']),
-      (json['wordIds'] as List<dynamic>).map((e) => e as int).toList(),
+      (json['wordIds'] as List<dynamic>)
+          .map((e) => (e as num).toInt())
+          .toList(),
       json['isExpanded'] as bool,
     )..isChecked = json['isChecked'] as bool;
 

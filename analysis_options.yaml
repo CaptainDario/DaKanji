@@ -18,6 +18,9 @@ analyzer:
     lib/globals.dart,
     lib/CodegenLoader.dart,
     assets/**,
+    plugins/**,
+    android/**,
+    build/**,
   ]
 
 linter:

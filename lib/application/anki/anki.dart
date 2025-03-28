@@ -12,6 +12,7 @@ import 'package:get_it/get_it.dart';
 import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_android.dart';
 import 'package:da_kanji_mobile/repositories/anki/anki_desktop.dart';
@@ -23,17 +24,17 @@ class Anki {
   /// User settings for anki
   SettingsAnki settingsAnki;
   /// Communication with anki desktop
-  AnkiDesktop? ankiDesktop;
+  late final AnkiDesktop? ankiDesktop;
   /// Communication with anki android
-  AnkiAndroid? ankiAndroid;
+  late final AnkiAndroid? ankiAndroid;
   /// Communication with anki ios
-  AnkiiOS? ankiiOS;
+  late final AnkiiOS? ankiiOS;
 
 
   Anki(
     this.settingsAnki
   ){
-    if(Platform.isLinux || Platform.isLinux || Platform.isMacOS){
+    if(g_desktopPlatform){
       ankiDesktop = AnkiDesktop(settingsAnki);
     }
     else if(Platform.isAndroid){
@@ -47,7 +48,7 @@ class Anki {
   /// Initializes this instance
   Future init() async {
 
-    if(Platform.isLinux || Platform.isLinux || Platform.isMacOS){
+    if(g_desktopPlatform){
       
     }
     else if(Platform.isAndroid){
@@ -62,11 +63,12 @@ class Anki {
   /// Addes the given note to Anki
   /// 
   /// Note: if the deck or model does not exist, it will be created
-  Future<bool> addNote(AnkiNote note) async {
+  Future<bool> addNote(AnkiNote note, bool allowDuplicates) async {
 
     // check that anki is available
     if(!await checkAnkiAvailable()){
       debugPrint("Anki not running");
+      return false;
     }
     // assure that the DaKanji card type is present
     if(!Platform.isIOS && !(await daKanjiModelExists())) {
@@ -74,14 +76,14 @@ class Anki {
     }
 
     // Add the note to Anki platform dependent
-    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
-      ankiDesktop!.addNoteDesktop(note);
+    if(g_desktopPlatform){
+      ankiDesktop!.addNoteDesktop(note, allowDuplicates);
     }
     else if(Platform.isIOS) {
-      ankiiOS!.addNoteIos(note);
+      ankiiOS!.addNoteIos(note, allowDuplicates);
     }
     else if(Platform.isAndroid) {
-      ankiAndroid!.addNoteAndroid(note);
+      ankiAndroid!.addNoteAndroid(note, allowDuplicates);
     }
     else {
       throw Exception("Unsupported platform");
@@ -93,26 +95,27 @@ class Anki {
   /// Addes the given note*s* to Anki
   /// 
   /// Note: if the deck or model does not exist, it will be created
-  Future addNotes(List<AnkiNote> notes) async {
+  Future addNotes(List<AnkiNote> notes, bool allowDuplicates) async {
 
     // check that anki is running
     if(!await checkAnkiAvailable()){
       debugPrint("Anki not running");
+      return false;
     }
     // assure that the DaKanji card type is present
-    if(Platform.isIOS && !(await daKanjiModelExists())) {
+    if(!Platform.isIOS && !(await daKanjiModelExists())) {
       await addDaKanjiModel();
     }
 
     // Add the note to Anki platform dependent
-    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
-      ankiDesktop!.addNotesDesktop(notes);
+    if(g_desktopPlatform){
+      ankiDesktop!.addNotesDesktop(notes, allowDuplicates);
     }
     else if(Platform.isIOS) {
-      ankiiOS!.addNotesIos(notes);
+      ankiiOS!.addNotesIos(notes, allowDuplicates);
     }
     else if(Platform.isAndroid) {
-      ankiAndroid!.addNotesAndroid(notes);
+      ankiAndroid!.addNotesAndroid(notes, allowDuplicates);
     }
     else {
       throw Exception("Unsupported platform");
@@ -130,7 +133,7 @@ class Anki {
     }
 
     // Add the card type to Anki platform dependent
-    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+    if(g_desktopPlatform){
       return ankiDesktop!.daKanjiModelExistsDesktop();
     }
     else if(Platform.isIOS) {
@@ -154,7 +157,7 @@ class Anki {
     }
 
     // Add the card type to Anki platform dependent
-    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+    if(g_desktopPlatform){
       ankiDesktop!.addDaKanjiModelDesktop();
     }
     else if(Platform.isIOS) {
@@ -177,7 +180,7 @@ class Anki {
     }
     
     // Add the card type to Anki platform dependent
-    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+    if(g_desktopPlatform){
       ankiDesktop!.addDeckDesktop(deckName);
     }
     else if(Platform.isIOS) {
@@ -202,7 +205,7 @@ class Anki {
     }
 
     // Add the card type to Anki platform dependent
-    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+    if(g_desktopPlatform){
       return ankiDesktop!.getDeckNamesDesktop();
     }
     else if(Platform.isIOS) {
@@ -218,7 +221,7 @@ class Anki {
 
   /// Checks if Anki is available on the current platform
   Future<bool> checkAnkiAvailable() async {
-    if(Platform.isMacOS || Platform.isWindows || Platform.isLinux){
+    if(g_desktopPlatform){
       return await ankiDesktop!.checkAnkiConnectAvailable();
     }
     else if(Platform.isIOS) {
@@ -291,3 +294,4 @@ class Anki {
   }
 
 }
+

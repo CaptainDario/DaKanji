@@ -12,19 +12,21 @@ import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
 import 'package:da_kanji_mobile/screens/dojg/dojg_screen.dart';
 import 'package:da_kanji_mobile/screens/drawing/draw_screen.dart';
 import 'package:da_kanji_mobile/screens/home/home_screen.dart';
-import 'package:da_kanji_mobile/screens/immersion/immersion_screen.dart';
 import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
 import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji_map/kanji_map_screen.dart';
 import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
 import 'package:da_kanji_mobile/screens/kanji_trainer/kanji_trainer_screen.dart';
 import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
 import 'package:da_kanji_mobile/screens/manual/manual_screen.dart';
+import 'package:da_kanji_mobile/screens/ocr/ocr_screen.dart';
 import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
+import 'package:da_kanji_mobile/screens/immersion/immersion_screen.dart';
 import 'package:da_kanji_mobile/screens/settings/settings_screen.dart';
 import 'package:da_kanji_mobile/screens/test/test_screen.dart';
 import 'package:da_kanji_mobile/screens/text/text_screen.dart';
+import 'package:da_kanji_mobile/screens/webbrowser/webbrowser_screen.dart';
 import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
+import 'package:da_kanji_mobile/screens/youtube/youtube_screen.dart';
 
 /// Returns the screen matching `name` 
 Widget getWidgetFromScreen(String? name, NavigationArguments args){
@@ -65,9 +67,26 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
       args.navigatedByDrawer, true,
     );
   }
+  else if(name == "/${Screens.webbrowser.name}"){
+    newRoute = WebBrowserScreen(
+      args.navigatedByDrawer, true,
+    );
+  }
+  else if(name == "/${Screens.ocr.name}"){
+    newRoute = OcrScreen(
+      args.navigatedByDrawer, true,
+    );
+  }
+  else if(name == "/${Screens.youtube.name}"){
+    newRoute = YoutubeScreen(
+      args.navigatedByDrawer, true,
+    );
+  }
   else if(name == "/${Screens.dojg.name}"){
     newRoute = DoJGScreen(
       args.navigatedByDrawer, true,
+      openFirstResult: args.dojgOpenFirstMatch,
+      initialSearch: args.dojgInitialSearch,
     );
   }
   else if(name == "/${Screens.clipboard.name}"){
@@ -77,11 +96,6 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
   }
   else if(name == "/${Screens.kanjiTrainer.name}"){
     newRoute = KanjiTrainerScreen(
-      args.navigatedByDrawer, true
-    );
-  }
-  else if(name == "/${Screens.kanjiMap.name}"){
-    newRoute = KanjiMapScreen(
       args.navigatedByDrawer, true
     );
   }

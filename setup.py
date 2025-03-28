@@ -4,14 +4,22 @@ import urllib.request
 import shutil
 import re
 import sys
+import subprocess
 
 
 repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases/tags/"
 tmp_dir = "tmp"
-move_to_blobs = ["libtensorflow", "libmecab"]
-move_to_dict  = ["dict", "examples", "krad", "radk"]
-move_to_tf_lite = ["CNN_single_char.tflite"]
-files_to_exclude = ["audios.zip", "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
+files_to_exclude = ["audios.zip",
+                    "CNN_single_char.zip", "dictionary.zip", "examples.zip", "krad.zip", "mecab_dict.zip", "radk.zip",
+                    "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
+files_to_exclude_win = [
+    "libmecab_arm64.dylib",
+]
+files_to_exclude_mac = [
+]
+files_to_exclude_lin = [
+    "libmecab_arm64.dylib",
+]
 
 release_url = None
 assets_version = None
@@ -22,16 +30,11 @@ def exclude_files_per_platform():
     """
 
     if(sys.platform.startswith("win32")):
-        files_to_exclude.append("libtensorflowlite_c-mac.dylib")
-        files_to_exclude.append("libtensorflowlite_c-linux.so")
+        files_to_exclude.extend(files_to_exclude_win)
     elif(sys.platform.startswith("darwin")):
-        files_to_exclude.append("libtensorflowlite_c-linux.so")
-        files_to_exclude.append("libtensorflowlite_c-win.dll")
-        files_to_exclude.append("libmecab.dll")
+        files_to_exclude.extend(files_to_exclude_mac)
     elif(sys.platform.startswith("linux")):
-        files_to_exclude.append("libtensorflowlite_c-mac.dylib")
-        files_to_exclude.append("libtensorflowlite_c-win.dll")
-        files_to_exclude.append("libmecab.dll")
+        files_to_exclude.extend(files_to_exclude_lin)
 
 def get_release_url():
     """ gets the url to the latest assets release of DaKanji
@@ -83,52 +86,98 @@ def move_assets():
     print("Moving downloaded assets")
     for f in os.listdir(tmp_dir):
 
-        # move dynamic libraries to blobs
-        if(f.startswith(tuple(move_to_blobs))):
-            shutil.copy(f"{tmp_dir}/{f}", "blobs/")
-        
-        # move ipadic assets
-        if(f.startswith("ipadic")):
-            shutil.copy(f"{tmp_dir}/ipadic.zip", "assets/")
+        # move mecab dynamic libraries to blobs to allow standalone testing
+        if(f.startswith("libmecab")):
+            shutil.copy(f"{tmp_dir}/{f}", "test/text/")
 
-        # move tf lite assets
-        if(f.startswith(tuple(move_to_tf_lite))):
-            shutil.copy(f"{tmp_dir}/{f}", "assets/tflite_models/")
-        
-        
-        # move the dictionary related assets
-        if(f.startswith(tuple(move_to_dict))):
-            shutil.copy(f"{tmp_dir}/{f}", "assets/dict/")
+def init_submodules():
+
+    print("Initalizing packages")
+
+    subprocess.run(["git", "submodule", "init"])
+    subprocess.run(["git", "submodule", "update"])
+
+    base_dir = os.getcwd()
+
+    os.chdir(f"{base_dir}/plugins/DaKanji-dependencies/flutter_appavailability")
+    subprocess.run(["flutter", "pub", "get"], shell=True)
+
+    os.chdir(f"{base_dir}/plugins/DaKanji-dependencies/liquid_swipe_flutter")
+    subprocess.run(["flutter", "pub", "get"], shell=True)
+
+    os.chdir(f"{base_dir}/plugins/DaKanji-Dictionary/database_builder")
+    subprocess.run(["flutter", "pub", "get"], shell=True)
+
+    os.chdir(f"{base_dir}/plugins/flutter_browser_app")
+    subprocess.run(["flutter", "pub", "get"], shell=True)
+
+    os.chdir("../..")
+
+def setup_dakanji_env():
+    """
+    """
+
+    env_exists = os.path.isfile("dakanji.env")
+
+    if(not env_exists):
+       
+        i = input("No dakanji.env file found!\n This will disable all online functionality, do you want to continue? (y)")
+
+        if(i == "y"):
+            shutil.copyfile("dakanji.env.template", "dakanji.env")
+        else:
+            print("aborting setup")
+            sys.exit(-1)
+
+def help() -> str:
+    return """
+        --download-all  : download all assets, this includes assets that are not needed to run dakanji on THIS platform
+        --no_download   : Does NOT download any assets and expects to find all assets in a folder called 'tmp'
+        --no-delete     : Do not delete the tmp folder
+        --ignore-no-env : Should the setup continue even if no dakanji.env file is found
+        """
 
 
-
-if __name__ == "__main__":
-
-    print("Setting up DaKanji")
+def main():
 
     args = sys.argv[1:]
 
     if("--help" in args or "-h" in args):
-        print("""
-        --download-all : download all assets, this includes assets that are not needed to run dakanji on THIS platform
-        --no_download  : Does NOT download any assets and expects to find all assets in a folder called 'tmp'
-        --no-delete    : Do not delete the tmp folder
-        """)
+        print(help())
         sys.exit(0)
 
+    print("Setting up DaKanji")
+
+    # switch to dev branch
+    subprocess.run(["git", "checkout", "dev"], shell=True)
+    subprocess.run(["git", "pull"], shell=True)
+
+    init_submodules()
+    if("--ignore-no-env" not in args):
+        setup_dakanji_env()    
+
+    # should all assets be downloaded regardelss of platform
     if("--download-all" not in args):
         exclude_files_per_platform()
     
+    # Should the assets NOT be downloaded
     if("--no-download" not in args):
         release_url = get_release_url()
         download_assets(release_url)
 
     move_assets()
 
+    # delete the tmp folder if not specified
     if("--no-delete" not in args):
         # delete temp dir
         print("Deleting temporary folder")
         shutil.rmtree(tmp_dir)
 
+    subprocess.run(["flutter", "pub", "get"], shell=True)
+    subprocess.run(["dart", "run", "build_runner", "build", "--delete-conflicting-outputs"], shell=True)
+
     print("Setup done! Run: \n flutter run")
     
+if __name__ == "__main__":
+
+    main()

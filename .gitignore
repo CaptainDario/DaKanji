@@ -37,14 +37,14 @@ app.*.map.json
 
 # ignore keys
 key.properties
+android/app/key.jks
 keys/**
+keys/DaKanjiRecognizer.jks
+!keys/create_msix_cert.ps1
 
 # python
 python
 .venv/**
-
-# keys
-android/app/key.jks
 
 # ignore none mock tflite models
 CNN_single_char.tflite
@@ -56,8 +56,9 @@ CNN_single_char.tflite
 .VSCodeCounter/
 
 # binaries in blob folder
-blobs/*
+blobs/**
 !blobs/.gitkeep
+macos/libtensorflowlite_c-mac.dylib
 
 # ignore the dictionary files but keep the folder
 assets/dict/*
@@ -65,17 +66,16 @@ assets/dict/*
 
 # ignore mecab files
 assets/ipadic
+assets/mecab_dict
 assets/__MACOSX
 assets/ipadic.zip
+assets/mecab_dict.zip
 
 # plugins to ignore
 # ignore custom tf lite flutter repo
 # plugins/tflite_flutter_plugin/
 ./plugins/kagome_dart/*
 macos/libtensorflowlite_c-mac.dylib
-
-# ignore all keys in keys folder
-keys/DaKanjiRecognizer.jks
 
 # ignore built snaps and the none template snapcraft.yaml
 *.snap
@@ -86,6 +86,11 @@ linux/flutter/ephemeral/**
 
 # ios build files
 ios/build/**
+
+# android build files
+android/app/build/intermediates
+android/app/build/outputs
+android/app/.cxx/
 
 # flatpak
 build-dir
@@ -102,6 +107,13 @@ flatpak/DaKanji.tar.gz
 flatpak/bundle.zip
 com.DaAppLab.DaKanji.flatpak
 
-# keys
+# environment files
 dakanji.env
 **/env.g.dart
+
+# python environment
+.venv
+
+# ignore some files that are needed for testing
+test/text/*.dylib
+test/text/unidic/

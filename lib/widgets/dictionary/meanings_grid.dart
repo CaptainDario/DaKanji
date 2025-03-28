@@ -137,7 +137,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                 children: [
                   // the actual meaning
                   SelectableText(
-                    widget.meanings.meanings[j].attributes.join(", "),
+                    widget.meanings.meanings[j].attributes.join("、"),
                     style: widget.style
                   ),
                   // refernces, ex.: 悪どい, アメラグ
@@ -194,7 +194,7 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                                       int id = int.parse(widget.meanings.antonyms![j]!.attributes[i]!);
                                       Navigator.pushNamedAndRemoveUntil(
                                         context,
-                                        "/dictionary",
+                                        "/${Screens.dictionary.name}",
                                         (route) => false,
                                         arguments: NavigationArguments(
                                           false,
@@ -236,16 +236,16 @@ class _MeaningsGridState extends State<MeaningsGrid> {
                       "${LocaleKeys.DictionaryScreen_word_field.tr()} ${widget.meanings.dialect![j]!.attributes.join(",")}",
                       style: informationStyle,
                     ),
-                  // additional information for about this sense: 表す
+                  // additional information about this sense: 表す
                   if(widget.meanings.senseInfo != null && widget.meanings.senseInfo![j] != null)
                     Text(
-                      "${LocaleKeys.DictionaryScreen_word_info.tr()} ${widget.meanings.senseInfo![j]!.attributes.join(",")}",
+                      "${LocaleKeys.DictionaryScreen_word_info.tr()} ${widget.meanings.senseInfo![j]!.attributes.join("\n").replaceAll(";", "\n")}",
                       style: informationStyle,
                     ),
                   // Part of Speech: 食べる
                   if(widget.meanings.partOfSpeech != null && widget.meanings.partOfSpeech![j] != null)
                     Text(
-                      widget.meanings.partOfSpeech![j]!.attributes.join(","),
+                      widget.meanings.partOfSpeech![j]!.attributes.join(", "),
                       style: informationStyle,
                     ),
                 ],

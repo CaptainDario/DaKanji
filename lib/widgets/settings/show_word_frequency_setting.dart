@@ -68,7 +68,6 @@ class _ShowWordFrequencySettingState extends State<ShowWordFrequencySetting> {
           )
         ).show();
       },
-      autoSizeGroup: g_SettingsAutoSizeGroup,
     );
   }
 }

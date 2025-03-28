@@ -35,7 +35,7 @@ const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
 /// The grey tone that dakanji uses
 const Color g_Dakanji_grey =  Color.fromARGB(255, 33, 33, 33);
 /// The blue tone that dakanji uses
-const Color g_Dakanji_blue =  Color.fromARGB(255, 9, 28, 42);
+const Color g_Dakanji_blue =  Color.fromARGB(255, 27, 3, 81);
 
 /// The font for Japanese text
 const String g_japaneseFontFamily = "NotoSansJP";
@@ -88,13 +88,24 @@ List<Version> g_NewRadicals = [
   Version(3, 2, 0, build: 67),
   Version(3, 3, 0, build: 76)
 ];
+/// Versions that require to setup the anki integration again
+List<Version> g_ResetAnki = [Version(3, 4, 6)];
+
+/// The maxMiB size of the dictionary isar
+int g_IsarDictMaxMiB = Platform.isIOS ? 384 : 512;
+/// The maxMiB size of the examples isar
+int g_IsarExampleMaxMiB = Platform.isIOS ? 384 : 512;
+
 /// all localizations that are available in DaKanji
 const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
+
 /// variable that indicates if a webivew is available on this platform
-final bool g_webViewSupported =
-  Platform.isAndroid || Platform.isIOS;
+late bool g_webViewSupported;
+
+/// variable that is true if app is running on a mobile platform
 final bool g_desktopPlatform = 
   Platform.isWindows || Platform.isMacOS || Platform.isLinux;
+
 /// browser user agent to fake a mobile device on desktop
 String g_mobileUserAgentArg = 'Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.66 Mobile Safari/537.36';
 
@@ -193,26 +204,27 @@ const g_forvo = "https://forvo.com/word/";
 /// URL to search for an images on google image search
 const g_GoogleImgSearchUrl = "https://www.google.com/search?tbm=isch&q=";
 /// url to look up a word in deepL 
-const g_deepLUrl = "https://www.deepl.com/translator#jp/en/";
+const g_deepLUrl = "https://www.deepl.com/en/translator#ja/en-us/";
 /// url to open a kanji in thekanjimap.com
 const g_theKanjiMapUrl = "https://thekanjimap.com/";
 /// url to open a kanji in japanesegraph.com
 const g_japaneseGraphUrl = "https://japanesegraph.com/";
 
-/// AutoSizeGroup for the settings screen -> all list entries have same font size
-AutoSizeGroup g_SettingsAutoSizeGroup = AutoSizeGroup();
-/// AutoSizeGroup for the drawer -> all list entries have same font size
-AutoSizeGroup g_DrawerAutoSizeGroup = AutoSizeGroup();
-/// Global minimum font size for autosizing texts
-double g_MinFontSize = 8;
-
 /// Some japanese sample text
-const String g_SampleText = """東京に暮らす男子高校生・瀧は、夢を見ることをきっかけに田舎町の女子高生・三葉と入れ替わるようになる。
+const String g_SampleText = """
+
+東京に暮らす男子高校生・瀧は、夢を見ることをきっかけに田舎町の女子高生・三葉と入れ替わるようになる。
 
 慣れない女子の身体、未知の田舎暮らしに戸惑いつつ、徐々に馴染んでいく瀧。
 身体の持ち主である三葉のことをもっと知りたいと瀧が思い始めたころ、普段と違う三葉を疑問に思った周りの人たちも彼女のことを考え出して――。
 
-新海誠監督長編アニメーション『君の名は。』の世界を掘り下げる、スニーカー文庫だけの特別編。""";
+食べられる
+食べられました
+欲しくない
+失礼な
+基本的
+
+""";
 /// The header that is included in every KanjiVG file
 const String kanjiVGHeader = """
 <?xml version="1.0" encoding="UTF-8"?>

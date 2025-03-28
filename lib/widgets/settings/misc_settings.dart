@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 // Project imports:
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -20,58 +22,51 @@ import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_til
 import 'package:da_kanji_mobile/widgets/settings/advanced_settings.dart';
 
 class MiscSettings extends StatefulWidget {
-    
-  /// DaKanji settings object
-  final Settings settings;
 
-  const MiscSettings(
-    this.settings,
-    {
-      super.key
-    }
-  );
+  const MiscSettings({super.key});
 
   @override
   State<MiscSettings> createState() => _MiscSettingsState();
 }
 
 class _MiscSettingsState extends State<MiscSettings> {
+
   @override
   Widget build(BuildContext context) {
+
+    Settings settings = context.watch<Settings>();
+
     return ResponsiveHeaderTile(
       LocaleKeys.SettingsScreen_misc_title.tr(),
-      Icons.settings,
-      autoSizeGroup: g_SettingsAutoSizeGroup,
+      DaKanjiIcons.misc,
       children: [
         // theme
         ResponsiveDropDownTile(
           text: LocaleKeys.SettingsScreen_misc_theme.tr(), 
-          value: widget.settings.misc.selectedTheme,
-          items: widget.settings.misc.themesLocaleKeys,
+          value: settings.misc.selectedTheme,
+          items: settings.misc.themesLocaleKeys,
           translateItemTexts: true,
           onChanged: (value) {
-            widget.settings.misc.selectedTheme = value ?? widget.settings.misc.themesLocaleKeys[0];
-            debugPrint(widget.settings.misc.selectedTheme);
-            widget.settings.save();
+            settings.misc.selectedTheme = value ?? settings.misc.themesLocaleKeys[0];
+            debugPrint(settings.misc.selectedTheme);
+            settings.save();
             Phoenix.rebirth(context);
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // screen to show when app starts
         ResponsiveDropDownTile(
           text: LocaleKeys.SettingsScreen_misc_default_screen.tr(),
-          value: widget.settings.misc.startupScreensLocales[widget.settings.misc.selectedStartupScreen].tr(),
-          items: widget.settings.misc.startupScreensLocales.map((e) => e.tr()).toList(),
+          value: settings.misc.startupScreensLocales[settings.misc.selectedStartupScreen].tr(),
+          items: settings.misc.startupScreensLocales.map((e) => e.tr()).toList(),
           onChanged: (newValue) {
             if (newValue != null){
-              int i = widget.settings.misc.startupScreensLocales.map(
+              int i = settings.misc.startupScreensLocales.map(
                 (e) => e.tr()
               ).toList().indexOf(newValue);
-              widget.settings.misc.selectedStartupScreen = i;
-              widget.settings.save();
+              settings.misc.selectedStartupScreen = i;
+              settings.save();
             }
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // app languages
         ResponsiveDropDownTile(
@@ -81,11 +76,24 @@ class _MiscSettingsState extends State<MiscSettings> {
           onChanged: (newValue) {
             if(newValue != null){
               context.setLocale(Locale(newValue));
-              widget.settings.misc.selectedLocale = newValue;
-              widget.settings.save();
+              settings.misc.selectedLocale = newValue;
+              settings.save();
             }
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
+        ),
+        // font size
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_misc_font_size_scale.tr(),
+          value: settings.misc.fontSizeScale,
+          min: 0.4,
+          max: 2.0,
+          
+          onChanged: (value) {
+            setState(() {
+              settings.misc.fontSizeScale = value;
+              settings.save();
+            });
+          },
         ),
         // window size
         if(g_desktopPlatform)
@@ -93,54 +101,75 @@ class _MiscSettingsState extends State<MiscSettings> {
             text: LocaleKeys.SettingsScreen_misc_settings_window_size.tr(),
             icon: Icons.screenshot_monitor,
             onButtonPressed: () async {
-              var info = await windowManager.getSize();
 
-              widget.settings.misc.windowHeight = info.height.toInt();
-              widget.settings.misc.windowWidth = info.width.toInt();
+              Size size = await windowManager.getSize();
+              settings.misc.windowHeight = size.height.toInt();
+              settings.misc.windowWidth  = size.width.toInt();
 
-              widget.settings.save();
+              Offset position = await windowManager.getPosition();
+              settings.misc.windowPosX = position.dx.toInt();
+              settings.misc.windowPosY = position.dy.toInt();
+
+              settings.save();
             },
-            autoSizeGroup: g_SettingsAutoSizeGroup,
+          ),
+        // always save window size
+        if(g_desktopPlatform)
+          ResponsiveCheckBoxTile(
+            value: settings.misc.alwaysSaveWindowSize,
+            text: LocaleKeys.SettingsScreen_misc_settings_always_save_window_size.tr(),
+            onTileTapped: (bool value) async {
+              settings.misc.alwaysSaveWindowSize = value;
+              settings.save();
+            },
+          ),
+        // always save window position
+        if(g_desktopPlatform)
+          ResponsiveCheckBoxTile(
+            value: settings.misc.alwaysSaveWindowPosition,
+            text: LocaleKeys.SettingsScreen_misc_settings_always_save_window_position.tr(),
+            onTileTapped: (bool value) async {
+              settings.misc.alwaysSaveWindowPosition = value;
+              settings.save();
+            },
           ),
         // window always on top
         if(g_desktopPlatform)
           ResponsiveCheckBoxTile(
-            value: widget.settings.misc.alwaysOnTop,
+            value: settings.misc.alwaysOnTop,
             text: LocaleKeys.SettingsScreen_misc_window_on_top.tr(),
             onTileTapped: (checked) async {
               windowManager.setAlwaysOnTop(checked);
-              widget.settings.misc.alwaysOnTop = checked;
-              widget.settings.save();
+              settings.misc.alwaysOnTop = checked;
+              settings.save();
             },
-            autoSizeGroup: g_SettingsAutoSizeGroup,
           ),
         // window opacity
         if(g_desktopPlatform)
           ResponsiveSliderTile(
             text: LocaleKeys.SettingsScreen_misc_window_opacity.tr(),
-            value: widget.settings.misc.windowOpacity,
+            value: settings.misc.windowOpacity,
             min: 0.2,
             onChanged: (double value) {
               windowManager.setOpacity(value);
-              widget.settings.misc.windowOpacity = value;
-              widget.settings.save();
+              settings.misc.windowOpacity = value;
+              settings.save();
             },
-            autoSizeGroup: g_SettingsAutoSizeGroup,
           ),
         // url for sharing dakanji
         ResponsiveDropDownTile(
-          text: "Sharing pattern",
-          value: widget.settings.misc.sharingScheme,
-          items: widget.settings.misc.sharingSchemes,
+          text: LocaleKeys.SettingsScreen_misc_sharing_pattern.tr(),
+          value: settings.misc.sharingScheme,
+          items: settings.misc.sharingSchemes,
           onChanged: (value) async {
             if(value == null){
               return;
             }
-            widget.settings.misc.sharingScheme = value;
-            await widget.settings.save();
+            settings.misc.sharingScheme = value;
+            await settings.save();
           },
         ),
-        AdvancedSettings(widget.settings)
+        AdvancedSettings(settings)
       ],
     );
   }

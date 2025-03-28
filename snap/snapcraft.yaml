@@ -8,10 +8,11 @@ issues: https://github.com/CaptainDario/DaKanji/issues
 source-code: https://github.com/CaptainDario/DaKanji
 
 confinement: strict
-base: core22
+base: core24
 grade: stable
-architectures:
-  - amd64
+platforms:
+  amd64:
+  arm64:
 assumes:
   - snapd2.60.3
 
@@ -28,16 +29,17 @@ apps:
     plugs:
       - network
       - home
+      - desktop
     slots:
       - dbus-dakanji
     environment:
-      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/blas:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/lapack:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/vdpau:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/dri
+      GTK_USE_PORTAL: 1
 
 parts:
 
   flutter-git:
     source: https://github.com/flutter/flutter.git
-    source-tag: "3.10.6"
+    source-tag: "3.29.1"
     plugin: nil
     override-build: |
       set -eux
@@ -55,28 +57,19 @@ parts:
       - unzip
     override-prime: ''
 
-  copy-tf-lite:
-    after:
-      - flutter-git
-    plugin: dump
-    source: ./blobs
-    stage:
-    - bin/blobs/libtensorflowlite_c-linux.so
-    organize:
-      libtensorflowlite_c-linux.so: bin/blobs/libtensorflowlite_c-linux.so
+  zenity:
+    plugin: nil
+    stage-packages:
+      - zenity
 
   dakanji:
     after:
       - flutter-git
-      - copy-tf-lite
+      - zenity
     source: .
     plugin: nil
     build-packages:
-      - libmpv-dev
       - jq
-    stage-packages:
-      - libmpv1
-      - libblas3
     override-build: |
       set -eux
       flutter pub get || true
@@ -87,17 +80,17 @@ parts:
 
   # Find files provided by the base and platform snap and ensure they aren't
   # duplicated in this snap
-  cleanup:
-    after: [dakanji]  # Make this part run last; list all your other parts here
-    plugin: nil
-    build-snaps: [gnome-42-2204]  # List all content-snaps you're using here
-    override-prime: |
-      set -eux
-      for snap in "gnome-42-2204"; do  # List all content-snaps you're using here
-        cd "/snap/$snap/current" && find . -type f,l -exec rm -f "$CRAFT_PRIME/{}" "$CRAFT_PRIME/usr/{}" \;
-      done
-      for CRUFT in bug lintian man; do
-        rm -rf $CRAFT_PRIME/usr/share/$CRUFT
-      done
-      find $CRAFT_PRIME/usr/share/doc/ -type f -not -name 'copyright' -delete
-      find $CRAFT_PRIME/usr/share -type d -empty -delete
+  #cleanup:
+  #  after: [dakanji]  # Make this part run last; list all your other parts here
+  #  plugin: nil
+  #  build-snaps: [gnome-42-2204]  # List all content-snaps you're using here
+  #  override-prime: |
+  #    set -eux
+  #    for snap in "gnome-42-2204"; do  # List all content-snaps you're using here
+  #      cd "/snap/$snap/current" && find . -type f,l -exec rm -f "$CRAFT_PRIME/{}" "$CRAFT_PRIME/usr/{}" \;
+  #    done
+  #    for CRUFT in bug lintian man; do
+  #      rm -rf $CRAFT_PRIME/usr/share/$CRUFT
+  #    done
+  #    find $CRAFT_PRIME/usr/share/doc/ -type f -not -name 'copyright' -delete
+  #    find $CRAFT_PRIME/usr/share -type d -empty -delete

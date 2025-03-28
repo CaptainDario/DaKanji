@@ -10,14 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fvp/mdk.dart' as mdk;
 import 'package:get_it/get_it.dart';
-import 'package:media_kit/media_kit.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/assets/assets.dart';
+import 'package:da_kanji_mobile/application/dictionary/send.dart';
 import 'package:da_kanji_mobile/application/screenshots/dictionary_word_card.dart';
 import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
@@ -58,7 +59,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
     LocaleKeys.DictionaryScreen_word_tab_menu_share.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_share_as_image.tr(),
+    LocaleKeys.DictionaryScreen_word_tab_menu_quick_add_to_list.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_add_to_list.tr(),
+    LocaleKeys.DictionaryScreen_word_tab_menu_quick_send_to_anki.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr(),
   ];
 
@@ -74,7 +77,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// the directory in which the audio files are stored
   late Directory audioFilesDir;
   /// Playback of audio files
-  final Player player = Player();
+  final mdk.Player player = mdk.Player();
   /// Is currently the google image search expanded
   bool googleImagesIsExpanded = false;
   /// Is the conjugation table currently expanded
@@ -86,9 +89,17 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   @override
   void initState() {
+
+    // TODO change according to issue
+    if(Platform.isAndroid) player.audioBackends = ["AudioTrack"];
+
+    player.loop = 0;
+
     initData();
     initDataAsync();
+
     super.initState();
+
   }
 
   @override
@@ -108,9 +119,9 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
       // get the pos for conjugating this word
       conjugationPos = widget.entry!.meanings.map((e) => e.partOfSpeech)
-        .whereNotNull().expand((e) => e)
-        .whereNotNull().expand((e) => e.attributes)
-        .whereNotNull().map((e) => posDescriptionToPosEnum[e]!)
+        .nonNulls.expand((e) => e)
+        .nonNulls.expand((e) => e.attributes)
+        .nonNulls.map((e) => posDescriptionToPosEnum[e]!)
         .toSet().toList();
     }
   }
@@ -135,115 +146,120 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     return Align(
       alignment: Alignment.topCenter,
       child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(
-                children: [
-                  Screenshot(
-                    controller: cardScreenShotController,
-                    child: DictionaryWordCard(
-                      widget.entry,
-                      onConjugationTableExpansionChanged: (state) {
-                        conjugationsIsExpanded = state;
-                      },
-                      onGooglSearchExpansionChanged: (state) {
-                        googleImagesIsExpanded = state;
-                      },
-                    ),
-                  ),
-                  // audio play button
-                  if(widget.entry!.audio != null)
-                    Positioned(
-                      top: 8,
-                      right: 48,
-                      child: IconButton(
-                        splashRadius: 25,
-                        icon: const Icon(Icons.play_arrow),
-                        onPressed: () async {
-                          if(!audioFilesDir.existsSync()) {
-                            downloadAudio(context);
-                          }
-                        
-                          player.open(Media('file:///${audioFilesDir.path}/${widget.entry!.audio}.mp3'));
-                          player.play();
-                        },
-                      )
-                    ),
-                  // more menu, to open this word in different web pages
-                  Positioned(
-                    right: 8,
-                    top: 8,
-                    child: PopupMenuButton(
-                      splashRadius: 25,
-                      icon: const Icon(Icons.more_vert),
-                      onSelected: (String selection) async {
-                        String url = "";
-                        // Wiki
-                        if(selection == menuItems[0]) {
-                          url = Uri.encodeFull("$g_WikipediaJpUrl$readingOrKanji");
-                        }
-                        else if(selection == menuItems[1]) {
-                          url = Uri.encodeFull("$g_WikipediaEnUrl${widget.entry!.meanings.firstWhere((e) => e.language == "eng").meanings[0].attributes[0]}");
-                        }
-                        else if(selection == menuItems[2]) {
-                          url = Uri.encodeFull("$g_WiktionaryUrl$readingOrKanji");
-                        }
-                        else if(selection == menuItems[3]) {
-                          url = Uri.encodeFull("$g_Massif$readingOrKanji");
-                        }
-                        else if(selection == menuItems[4]) {
-                          url = Uri.encodeFull("$g_forvo$readingOrKanji");
-                        }
-                        // send dakanji link
-                        else if(selection == menuItems[5]){
-                          await Share.share(
-                            "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
-                            sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
-                          );
-                        }
-                        // send dakanji link and image
-                        else if(selection == menuItems[6]){
-                          await sendWordCard();
-                        }
-                        // add to word list
-                        else if(selection == menuItems[7]) {
-                          await addToWordList();
-                        }
-                        else if(selection == menuItems[8]){
-                          if(!GetIt.I<UserData>().ankiSetup){
-                            await ankiNotSetupDialog(context).show();
-                          }
-                          else{
-                            await ankiDialog(context, widget.entry!)?.show();
-                          }
-                        }
-          
-                        if(url != "") {
-                          launchUrlString(
-                            url,
-                            mode: g_webViewSupported ? LaunchMode.inAppWebView : LaunchMode.platformDefault,
-                          );
-                        }
-                      },
-                      itemBuilder: (context) => menuItems.mapIndexed((i, e) {
-
-                        // FIX: #87 skip share as image on Linux
-                        if(i == 6 && Platform.isLinux) return null;
-
-                        return PopupMenuItem(
-                          value: menuItems[i],
-                          child: Text(menuItems[i])
-                        );
-                      }).whereNotNull().toList(),
-                    )
-                  ),
-                ],
+        key: Key(widget.entry!.id.toString()),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Stack(
+            children: [
+              DictionaryWordCard(
+                widget.entry,
+                onConjugationTableExpansionChanged: (state) {
+                  conjugationsIsExpanded = state;
+                },
+                onGooglSearchExpansionChanged: (state) {
+                  googleImagesIsExpanded = state;
+                },
               ),
-            ),
-          ],
+              // audio play button
+              if(widget.entry!.audio != null)
+                Positioned(
+                  top: 8,
+                  right: 48,
+                  child: IconButton(
+                    splashRadius: 25,
+                    icon: const Icon(Icons.play_arrow),
+                    onPressed: () async {
+                      if(!audioFilesDir.existsSync()) {
+                        downloadAudio(context);
+                      }
+                    
+                      
+                      player.setMedia(
+                        '${audioFilesDir.path}/${widget.entry!.audio}.mp3',
+                        mdk.MediaType.audio);
+                      player.state = mdk.PlaybackState.playing;
+                    },
+                  )
+                ),
+              // more menu, to open this word in different web pages
+              Positioned(
+                right: 8,
+                top: 8,
+                child: PopupMenuButton(
+                  splashRadius: 25,
+                  icon: const Icon(Icons.more_vert),
+                  onSelected: (String selection) async {
+                    String url = "";
+                    // Wiki
+                    if(selection == menuItems[0]) {
+                      url = Uri.encodeFull("$g_WikipediaJpUrl$readingOrKanji");
+                    }
+                    else if(selection == menuItems[1]) {
+                      url = Uri.encodeFull("$g_WikipediaEnUrl${widget.entry!.meanings.firstWhere((e) => e.language == "eng").meanings[0].attributes[0]}");
+                    }
+                    else if(selection == menuItems[2]) {
+                      url = Uri.encodeFull("$g_WiktionaryUrl$readingOrKanji");
+                    }
+                    else if(selection == menuItems[3]) {
+                      url = Uri.encodeFull("$g_Massif$readingOrKanji");
+                    }
+                    else if(selection == menuItems[4]) {
+                      url = Uri.encodeFull("$g_forvo$readingOrKanji");
+                    }
+                    // send dakanji link
+                    else if(selection == menuItems[5]){
+                      await Share.share(
+                        "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
+                        sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
+                      );
+                    }
+                    // send dakanji link and image
+                    else if(selection == menuItems[6]){
+                      await sendWordCard();
+                    }
+                    // quick add to word list
+                    else if(selection == menuItems[7]) {
+                      await quickAddToWordList(widget.entry!, context);
+                    }
+                    // add to word list
+                    else if(selection == menuItems[8]) {
+                      await addToWordList();
+                    }
+                    // quick send to anki
+                    else if(selection == menuItems[9]) {
+                      await quickSendToAnki(widget.entry!, context);
+                    }
+                    // send to anki
+                    else if(selection == menuItems[10]){
+                      if(!GetIt.I<UserData>().ankiSetup){
+                        await ankiNotSetupDialog(context).show();
+                      }
+                      else{
+                        await ankiDialog(context, widget.entry!)?.show();
+                      }
+                    }
+                  
+                    if(url != "") {
+                      launchUrlString(
+                        url,
+                        mode: g_webViewSupported ? LaunchMode.inAppWebView : LaunchMode.platformDefault,
+                      );
+                    }
+                  },
+                  itemBuilder: (context) => menuItems.mapIndexed((i, e) {
+        
+                    // FIX: #87 skip share as image on Linux
+                    if(i == 6 && Platform.isLinux) return null;
+        
+                    return PopupMenuItem(
+                      value: menuItems[i],
+                      child: Text(menuItems[i])
+                    );
+                  }).nonNulls.toList(),
+                )
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -284,7 +300,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     File f = await dictionaryWordCardToImage(
       widget.entry!,
       "${readingOrKanji}_${conjugationsIsExpanded ? "_conj" : ""}.png",
-      conjugationsIsExpanded);
+      conjugationsIsExpanded, Theme.of(context));
 
     await Share.shareXFiles(
       [XFile(f.path)],

@@ -21,15 +21,12 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		10F0E5462B57240F0098E471 /* libtensorflowlite_c-mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F0E5452B57240F0098E471 /* libtensorflowlite_c-mac.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
-		10F0E5472B57247D0098E471 /* libtensorflowlite_c-mac.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 10F0E5452B57240F0098E471 /* libtensorflowlite_c-mac.dylib */; };
-		10F0E5482B5724800098E471 /* libtensorflowlite_c-mac.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 10F0E5452B57240F0098E471 /* libtensorflowlite_c-mac.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		335BBD1B22A9A15E00E9071D /* GeneratedPluginRegistrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335BBD1A22A9A15E00E9071D /* GeneratedPluginRegistrant.swift */; };
 		33CC10F12044A3C60003C045 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC10F02044A3C60003C045 /* AppDelegate.swift */; };
 		33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F22044A3C60003C045 /* Assets.xcassets */; };
 		33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F42044A3C60003C045 /* MainMenu.xib */; };
 		33CC11132044BFA00003C045 /* MainFlutterWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC11122044BFA00003C045 /* MainFlutterWindow.swift */; };
-		CC6001E52509DFB577E3BE05 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED836384D21CCBD77774CEF7 /* Pods_Runner.framework */; };
+		9EAEEAD9C3A87A0EFDF4E76E /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C8F0DB3E56AA0F6881EA0FC /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +46,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				10F0E5482B5724800098E471 /* libtensorflowlite_c-mac.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -57,7 +53,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		10F0E5452B57240F0098E471 /* libtensorflowlite_c-mac.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libtensorflowlite_c-mac.dylib"; path = "../blobs/libtensorflowlite_c-mac.dylib"; sourceTree = "<group>"; };
 		333000ED22D3DE5D00554162 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
 		335BBD1A22A9A15E00E9071D /* GeneratedPluginRegistrant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedPluginRegistrant.swift; sourceTree = "<group>"; };
 		33CC10ED2044A3C60003C045 /* DaKanji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaKanji.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,12 +67,12 @@
 		33E51913231747F40026EE4D /* DebugProfile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DebugProfile.entitlements; sourceTree = "<group>"; };
 		33E51914231749380026EE4D /* Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Release.entitlements; sourceTree = "<group>"; };
 		33E5194F232828860026EE4D /* AppInfo.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppInfo.xcconfig; sourceTree = "<group>"; };
-		44160059D330650108AAEDD0 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		5BC17394A3FC30B565B6A7D3 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		8C8F0DB3E56AA0F6881EA0FC /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C9EE52F23E11F64D297D9F9 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
-		C667E6DE0E13B1700FC236CC /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
-		C96FA41B9DBE05DD68A7F714 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
-		ED836384D21CCBD77774CEF7 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB8F1EE28349886DBC39C7B2 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10F0E5462B57240F0098E471 /* libtensorflowlite_c-mac.dylib in Frameworks */,
-				CC6001E52509DFB577E3BE05 /* Pods_Runner.framework in Frameworks */,
+				9EAEEAD9C3A87A0EFDF4E76E /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,12 +101,11 @@
 		33CC10E42044A3C60003C045 = {
 			isa = PBXGroup;
 			children = (
-				10F0E5452B57240F0098E471 /* libtensorflowlite_c-mac.dylib */,
 				33FAB671232836740065AC1E /* Runner */,
 				33CEB47122A05771004F2AC0 /* Flutter */,
 				33CC10EE2044A3C60003C045 /* Products */,
 				F7A795B6FC5575E047B6EC94 /* Pods */,
-				41D49EFA69C51EB42ED716F5 /* Frameworks */,
+				3F16A3F796F9462C6642D5D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -159,10 +152,10 @@
 			path = Runner;
 			sourceTree = "<group>";
 		};
-		41D49EFA69C51EB42ED716F5 /* Frameworks */ = {
+		3F16A3F796F9462C6642D5D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				ED836384D21CCBD77774CEF7 /* Pods_Runner.framework */,
+				8C8F0DB3E56AA0F6881EA0FC /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -170,9 +163,9 @@
 		F7A795B6FC5575E047B6EC94 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				44160059D330650108AAEDD0 /* Pods-Runner.debug.xcconfig */,
-				C667E6DE0E13B1700FC236CC /* Pods-Runner.release.xcconfig */,
-				C96FA41B9DBE05DD68A7F714 /* Pods-Runner.profile.xcconfig */,
+				5BC17394A3FC30B565B6A7D3 /* Pods-Runner.debug.xcconfig */,
+				8C9EE52F23E11F64D297D9F9 /* Pods-Runner.release.xcconfig */,
+				FB8F1EE28349886DBC39C7B2 /* Pods-Runner.profile.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -184,13 +177,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 33CC10FB2044A3C60003C045 /* Build configuration list for PBXNativeTarget "Runner" */;
 			buildPhases = (
-				484F295801EB84556FDCFA05 /* [CP] Check Pods Manifest.lock */,
+				CDBAC6151B561CA823A57A03 /* [CP] Check Pods Manifest.lock */,
 				33CC10E92044A3C60003C045 /* Sources */,
 				33CC10EA2044A3C60003C045 /* Frameworks */,
 				33CC10EB2044A3C60003C045 /* Resources */,
 				3399D490228B24CF009A79C7 /* Run Script */,
 				10F0E53A2B56E75C0098E471 /* Embed Libraries */,
-				A0E689C4E6744BA78830A0DB /* [CP] Embed Pods Frameworks */,
+				ECF26B3322C9318DD5CDB556 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -253,7 +246,6 @@
 			files = (
 				33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */,
 				33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */,
-				10F0E5472B57247D0098E471 /* libtensorflowlite_c-mac.dylib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +290,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\"$FLUTTER_ROOT\"/packages/flutter_tools/bin/macos_assemble.sh && touch Flutter/ephemeral/tripwire";
 		};
-		484F295801EB84556FDCFA05 /* [CP] Check Pods Manifest.lock */ = {
+		CDBAC6151B561CA823A57A03 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -320,7 +312,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A0E689C4E6744BA78830A0DB /* [CP] Embed Pods Frameworks */ = {
+		ECF26B3322C9318DD5CDB556 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

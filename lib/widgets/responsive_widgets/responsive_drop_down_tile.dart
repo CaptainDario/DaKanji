@@ -2,11 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/globals.dart';
 
 /// A widget that shows a responsive drop down menu
 class ResponsiveDropDownTile extends StatefulWidget {
@@ -27,8 +25,6 @@ class ResponsiveDropDownTile extends StatefulWidget {
   final Function ()? onTap;
   /// callback which will be executed eveytime when the selection changed
   final Function (String? value)? onChanged;
-  /// The autoSizeGroup for this Tile
-  final AutoSizeGroup? autoSizeGroup;
   /// max lines of the dropdown
   final int dropDownMaxLines;
 
@@ -43,7 +39,6 @@ class ResponsiveDropDownTile extends StatefulWidget {
       this.leadingButtonPressed,
       this.onTap,
       this.onChanged,
-      this.autoSizeGroup,
       this.dropDownMaxLines=0,
       super.key
     }
@@ -62,16 +57,14 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
     double tileHeight = (height * 0.1).clamp(0, 45);
     double width = MediaQuery.of(context).size.width;
 
-
     return Material(
       child: InkWell(
-        onTap: () {
-          
-        },
-        child: SizedBox(
-          height: tileHeight,
+        onTap: () {},
+        child: Container(
           width: width,
+          constraints: BoxConstraints(minHeight: tileHeight),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               if(widget.leadingButtonIcon != null)
                 IconButton(
@@ -81,16 +74,8 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                   icon: Icon(widget.leadingButtonIcon!)
                 ),
               Expanded(
-                child: Container(
-                  height: (tileHeight*0.75).clamp(0, 30),
-                  alignment: Alignment.centerLeft,
-                  child: AutoSizeText(
-                    widget.text,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.start,
-                    group: g_SettingsAutoSizeGroup,
-                    minFontSize: g_MinFontSize,
-                  )
+                child: Text(
+                  widget.text,
                 ),
               ),
               SizedBox(width: (width*0.05).clamp(0, 10),),
@@ -100,14 +85,15 @@ class _ResponsiveDropDownTileState extends State<ResponsiveDropDownTile> {
                   
                   return DropdownMenuItem<String>(
                     value: text,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width*0.35,
-                      child: AutoSizeText(
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxWidth: width*0.4
+                      ),
+                      child: Text(
                         widget.translateItemTexts ? text.tr() : text, 
-                        maxLines: 3,
-                        minFontSize: g_MinFontSize,
-                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
+                        overflow: TextOverflow.visible,
+                        softWrap: true,
                       ),
                     ),
                   );

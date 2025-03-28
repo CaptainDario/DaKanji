@@ -8,7 +8,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/kana/kana.dart';
@@ -229,7 +229,7 @@ class _KanaInfoCardState extends State<KanaInfoCard> {
                           children: [
                             if(kana.flatten().contains(widget.kana))
                               for(int i = 0; i < 3; i++)
-                                if(!(katakana.flatten().contains(widget.kana) && i == 1))
+                                if(!(katakana.flatten().contains(widget.kana) && i == 2))
                                   SizedBox(
                                     height: (TextPainter(
                                         text: const TextSpan(text: "T", style: TextStyle(fontSize: 20)),

@@ -41,7 +41,7 @@ Future<pw.Document> pdfPortraitFromWordListNode(List<int> wordIDs, String name) 
   bool includeKana = wl.pdfIncludeKana;
 
   // find all elements from the word list in the database
-  List<JMdict> entries = await wordListEntriesForExport(wordIDs, langsToInclude);
+  List<JMdict> entries = await wordListIdsToJMdict(wordIDs, langsToInclude);
 
   // load the flag SVGs from disk
   Map<String, String> languageSVGs = {};

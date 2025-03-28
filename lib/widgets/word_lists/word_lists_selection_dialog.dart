@@ -16,9 +16,15 @@ import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as word_list
 
 
 /// Shows a dialog to the user where word lists can be selected, returns the
-/// selection
+/// selection. [wordLists] should contain all words that should be displayed
+/// and if [selectedItems] is not null it indicates which items should be 
+/// checked initially (given by their ID). [onSelectionConfirmed] is a callaback
+/// that is triggered after the user confirms the selection and provides the
+/// user's selection as arugment
 Future<List<TreeNode<WordListsData>>> showWordListSelectionDialog(BuildContext context,
   {
+    WordListsSQLDatabase? wordlists,
+    List<int>? selectedItems,
     Function(List<TreeNode<WordListsData>> selection)? onSelectionConfirmed,
     bool includeDefaults = false
   }) async {
@@ -35,7 +41,8 @@ Future<List<TreeNode<WordListsData>>> showWordListSelectionDialog(BuildContext c
       width: MediaQuery.of(context).size.width * 0.8,
       child: word_lists_ui.WordLists(
         false,
-        GetIt.I<WordListsSQLDatabase>(),
+        wordlists ?? GetIt.I<WordListsSQLDatabase>(),
+        selectedItems: selectedItems,
         includeDefaults: includeDefaults,
         onSelectionConfirmed: onSelectionConfirmed,
       ),

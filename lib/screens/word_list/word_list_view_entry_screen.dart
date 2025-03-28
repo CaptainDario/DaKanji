@@ -27,7 +27,9 @@ class WordListViewEntryScreen extends StatelessWidget {
       body: Dictionary(
         false,
         initialEntryId: entry.id,
-        includeFallingWords: false,),
+        includeFallingWords: false,
+        backNavigationImmediatelyPopsWidget: true,
+      ),
     );
   }
 }

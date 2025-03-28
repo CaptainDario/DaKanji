@@ -1,11 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:da_kanji_mobile/widgets/dictionary/floating_word_stack.dart';
+// Project imports:
 import 'package:da_kanji_mobile/main.dart' as app;
-
-
+import 'package:da_kanji_mobile/widgets/dictionary/floating_word_stack.dart';
 
 Future<void> waitTillFinder(WidgetTester tester, Finder finder, String waitingMessage) async {
   int cnt = 0;
@@ -17,6 +19,8 @@ Future<void> waitTillFinder(WidgetTester tester, Finder finder, String waitingMe
   }
 }
 
+/// This should be called in every integration test at the beginning
+/// to setup dakanji
 Future<void> initDaKanjiTest(WidgetTester tester, {Function? initCallback}) async {
 
   SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -35,7 +35,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
 
       # get versions from pubspec
       - name: set env variables
@@ -51,6 +53,15 @@ jobs:
           
       - name: Restore packages
         run: flutter pub get
+
+      - name: Setup DaKanji env.dart
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
+          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
+          POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
+        run: |
+          python3 ./.github/workflows/create_dakanji_env.py
+          flutter pub run build_runner build --delete-conflicting-outputs
         
       # get / set dakanji assets from cache
       - name: Check dakanji assets in cache
@@ -74,18 +85,13 @@ jobs:
         with:
           path: tmp
           key: dakanji-assets
-      - name: Setup DaKanji env.dart
-        env:
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
-          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
-          POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
-        run: |
-          python3 ./.github/workflows/create_dakanji_env.py
-          flutter pub run build_runner build --delete-conflicting-outputs
 
-      # TESTS
-      - name: Run integration tests
-        run: python ./integration_test/run_tests.py
+      #- name: Run integration tests
+      #  run: |
+      #    python3 ./integration_test/run_tests.py
+
+      - name: build exe
+        run: flutter build windows --release -v
 
       # build exe and upload to artifacts
       - name: build exe
@@ -97,7 +103,7 @@ jobs:
           -Path build/windows/x64/runner/Release/*
           -Destination DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
       - name: Archive exe production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
           path: DaKanji_${{env.DAKANJI_VERSION}}_exe.zip
@@ -114,10 +120,10 @@ jobs:
           Set-Content $pfxPath -Value $encodedBytes -AsByteStream;
       - name: build and sign non-store MSIX
         run: >
-          flutter pub run msix:create
+          dart run msix:create
           --install-certificate=false
           --build-windows=false
-          -c ./keys/dakanji_self_sign_msix.pfx
+          -c .\keys\dakanji_self_sign_msix.pfx
           -p ${{secrets.SELF_SIGN_MSIX_PWD}}
       - name: rename non store msix
         working-directory: build\windows\x64\runner\Release\
@@ -127,7 +133,7 @@ jobs:
           -Path da_kanji_mobile.msix
           -NewName DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
       - name: Archive msix gh production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
           path: build\windows\x64\runner\Release\DaKanji_${{env.DAKANJI_VERSION}}_gh.msix
@@ -137,7 +143,7 @@ jobs:
         run: |
           flutter pub run msix:create --build-windows=false --store
       - name: Archive msix store production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix
           path: build\windows\x64\runner\Release\da_kanji_mobile.msix

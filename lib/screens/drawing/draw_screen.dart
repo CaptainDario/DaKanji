@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/drawing/handle_predictions.dart';
@@ -62,9 +62,9 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
   bool showWelcomeToTheDrawingscreen = GetIt.I<UserData>().showTutorialDrawing;
   /// Future that completes and returns true when the drawing interpreter 
   /// has been initialized
-  Future<void>? initInterpter;
-
-  WebViewController? webViewController;
+  late Future<bool> initInterpter;
+  /// Controller for the webview to show online dictionaries
+  InAppWebViewController? inAppWebViewController;
 
 
   @override
@@ -81,7 +81,10 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
     // initialize the drawing interpreter if it has not been already
     if(!GetIt.I.isRegistered<DrawingInterpreter>()){
       GetIt.I.registerSingleton<DrawingInterpreter>(DrawingInterpreter(name: "DrawScreen"));
-      initInterpter = GetIt.I<DrawingInterpreter>().init().then((value) => true);
+      initInterpter = GetIt.I<DrawingInterpreter>().init().then((value) {setState((){}); return true;});
+    }
+    else{
+      initInterpter = Future.sync(() => true);
     }
 
     // init tutorial
@@ -132,7 +135,7 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
           builder: (context, snapshot) {
 
             // Assure that the drawing interpreter has been initialized
-            if(!snapshot.hasData) {
+            if(!snapshot.hasData && snapshot.data == true) {
               return Container();
             }
 
@@ -142,10 +145,10 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                 // set layout and canvas size
                 var t = getDrawScreenLayout(constraints);
                 if(drawScreenIncludesWebview(t.item1)){
-                  webViewController = WebViewController()
-                    ..loadRequest(Uri.parse(openWithSelectedDictionary(
-                      GetIt.I<DrawScreenState>().drawingLookup.chars
-                    )));
+                  //inAppWebViewController = WebViewController()
+                  //  ..loadRequest(Uri.parse(openWithSelectedDictionary(
+                  //    GetIt.I<DrawScreenState>().drawingLookup.chars
+                  //  )));
                 }
                 GetIt.I<DrawScreenState>().drawScreenLayout = t.item1;
                 GetIt.I<DrawScreenState>().canvasSize = t.item2;
@@ -173,10 +176,8 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
                   DrawScreenClearButton(_canvasSize!, widget.includeTutorial),
                   _canvasSize!,
                   GetIt.I<DrawScreenState>().drawScreenLayout,
-                  drawScreenIncludesWebview(t.item1) && webViewController != null
-                    ? WebViewWidget(
-                      controller: webViewController!,
-                    )
+                  drawScreenIncludesWebview(t.item1) && inAppWebViewController != null
+                    ? InAppWebView()
                     : null
                 );
               }
@@ -189,9 +190,10 @@ class _DrawScreenState extends State<DrawScreen> with TickerProviderStateMixin {
 
   void reloadWebViewUrl(){
     if(drawScreenIncludesWebview(GetIt.I<DrawScreenState>().drawScreenLayout)) {
-      webViewController!.loadRequest(Uri.parse(openWithSelectedDictionary(
-        GetIt.I<DrawScreenState>().drawingLookup.chars
-      )));
+      inAppWebViewController!.loadUrl(
+        urlRequest: URLRequest(url: WebUri.uri(Uri.parse(openWithSelectedDictionary(
+          GetIt.I<DrawScreenState>().drawingLookup.chars
+        )))));
     }
   }
 }

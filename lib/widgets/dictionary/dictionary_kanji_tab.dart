@@ -28,6 +28,7 @@ class DictionaryKanjiTab extends StatefulWidget {
 
 class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
 
+  /// List of kanji svgs to display
   List<KanjiSVG> kanjiVGs = [];
   /// list of all entries from kanji dic 2 that should be shown
   List<Kanjidic2> kanjiDic2s = [];
@@ -72,6 +73,8 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
     }
     else {
       return SingleChildScrollView(
+        controller: ScrollController(),
+        key: Key(widget.entry!.kanjis.toString()),
         child: Column(
           children: () {
             return List.generate(kanjiDic2s.length, 

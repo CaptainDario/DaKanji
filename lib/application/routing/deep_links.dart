@@ -22,7 +22,7 @@ import 'package:da_kanji_mobile/globals.dart';
 Future<void> initDeepLinksStream() async {
 
   // Subscribe to all events when app is started.
-  g_AppLinks.allUriLinkStream.listen((uri) {
+  g_AppLinks.uriLinkStream.listen((Uri uri) {
     if(uri.toString().startsWith(g_AppLinkDaKanji) || 
       uri.toString().startsWith(g_AppLinkHttps)){
       handleDeepLink(uri.toString());
@@ -34,6 +34,8 @@ Future<void> initDeepLinksStream() async {
 void handleDeepLink(String link){
 
   debugPrint("Deeplink: $link");
+
+  link = Uri.decodeFull(link);
 
   List<String> route = extractRouteFromLink(link);
   Map<String, String> args = extractArgsFromLink(link);
@@ -208,7 +210,8 @@ void handleDeepLinkDict(Map<String, String> linkArgs){
   }
   /// normal dictionary search
   else if(linkArgs.containsKey("search")){
-    navArgs.dictInitialSearch = Uri.decodeFull(linkArgs["search"]!);
+    String searchTerm = linkArgs["search"]!;
+    navArgs.dictInitialSearch = searchTerm;
   }
 
   g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(

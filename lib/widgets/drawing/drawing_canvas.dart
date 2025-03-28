@@ -258,14 +258,15 @@ class _DrawingCanvasState extends State<DrawingCanvas>
         GetIt.I<DrawScreenState>().strokes.deletingLastStroke = true;
       }
       // if the animation is already running delete a stroke
-      else if(GetIt.I<DrawScreenState>().strokes.deletingLastStroke && widget.strokes.strokeCount > 0){
+      else if(GetIt.I<DrawScreenState>().strokes.deletingLastStroke){
         widget.strokes.removeLastStroke();
         _canvasController.reverse(from: 1.0);
         
         // and stop the animation if it was the last stroke
         if(widget.strokes.strokeCount == 0){
           GetIt.I<DrawScreenState>().strokes.deletingLastStroke = false;
-          _canvasController.value = 1.0;
+          _canvasController.animateTo(1.0, duration: const Duration(milliseconds: 10)
+            ).then((value) => widget.onDeletedAllStrokes?.call());
         }
       }
       
