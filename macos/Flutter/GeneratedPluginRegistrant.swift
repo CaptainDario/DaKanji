@@ -12,6 +12,7 @@ import dynamic_color
 import file_picker
 import flutter_inappwebview_macos
 import fvp
+import google_sign_in_ios
 import in_app_review
 import irondash_engine_context
 import isar_flutter_libs
@@ -24,6 +25,7 @@ import screen_retriever_macos
 import sentry_flutter
 import share_plus
 import shared_preferences_foundation
+import sign_in_with_apple
 import sqflite_darwin
 import sqlite3_flutter_libs
 import store_checker
@@ -42,6 +44,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   FilePickerPlugin.register(with: registry.registrar(forPlugin: "FilePickerPlugin"))
   InAppWebViewFlutterPlugin.register(with: registry.registrar(forPlugin: "InAppWebViewFlutterPlugin"))
   FvpPlugin.register(with: registry.registrar(forPlugin: "FvpPlugin"))
+  FLTGoogleSignInPlugin.register(with: registry.registrar(forPlugin: "FLTGoogleSignInPlugin"))
   InAppReviewPlugin.register(with: registry.registrar(forPlugin: "InAppReviewPlugin"))
   IrondashEngineContextPlugin.register(with: registry.registrar(forPlugin: "IrondashEngineContextPlugin"))
   IsarFlutterLibsPlugin.register(with: registry.registrar(forPlugin: "IsarFlutterLibsPlugin"))
@@ -54,6 +57,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   SentryFlutterPlugin.register(with: registry.registrar(forPlugin: "SentryFlutterPlugin"))
   SharePlusMacosPlugin.register(with: registry.registrar(forPlugin: "SharePlusMacosPlugin"))
   SharedPreferencesPlugin.register(with: registry.registrar(forPlugin: "SharedPreferencesPlugin"))
+  SignInWithApplePlugin.register(with: registry.registrar(forPlugin: "SignInWithApplePlugin"))
   SqflitePlugin.register(with: registry.registrar(forPlugin: "SqflitePlugin"))
   Sqlite3FlutterLibsPlugin.register(with: registry.registrar(forPlugin: "Sqlite3FlutterLibsPlugin"))
   StoreCheckerPlugin.register(with: registry.registrar(forPlugin: "StoreCheckerPlugin"))

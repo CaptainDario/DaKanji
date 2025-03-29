@@ -418,19 +418,31 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                     alignment: Alignment.centerLeft,
                                     child: Container(
                                       padding: EdgeInsets.fromLTRB(
-                                        _drawerWidth*0.1, _drawerWidth*0.05,
+                                        _drawerWidth*0.05, _drawerWidth*0.05,
                                         0, _drawerWidth*0.05),
                                       child: Row(
                                         children: [
                                           Container(
-                                            height: 64,
-                                            width: 64,
+                                            height: 48,
+                                            width: 48,
                                             decoration: BoxDecoration(
-                                              color: Colors.green,
-                                              borderRadius: BorderRadius.circular(10000)
+                                              borderRadius: BorderRadius.circular(10000),
+                                              border: Border.all(
+                                                color: Colors.white, // Outline color
+                                                width: 2.0, // Outline width
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                "?",
+                                                style: TextStyle(
+                                                  fontFamily: "kouzan",
+                                                  fontSize: 30
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                          const SizedBox(width: 8,),
+                                          const SizedBox(width: 10,),
                                           Text(
                                             style: TextStyle(
                                               fontSize: 20,

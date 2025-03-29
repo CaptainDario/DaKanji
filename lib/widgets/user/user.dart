@@ -1,6 +1,8 @@
 
-import 'package:da_kanji_mobile/widgets/user/user_account.dart';
+import 'package:da_kanji_mobile/widgets/user/user_overview_page.dart';
+import 'package:da_kanji_mobile/widgets/user/user_account_page.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 
 
@@ -15,26 +17,12 @@ class _UserState extends State<User> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 16, 0, 0),
+      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              () {
-                if(TimeOfDay.now().hour < 12) { return "おはよう！"; }
-                else if(TimeOfDay.now().hour < 18) { return "こんにちは！"; }
-                else { return "こんばんは！";}
-              } (),
-              style: const TextStyle(
-                fontSize: 30,
-                fontFamily: "kouzan"
-              ),
-            ),
-          ),
-          const SizedBox(height: 16,),
+          const SizedBox(height: 0,),
           DefaultTabController(
-            length: 2,
+            length: 3,
             child: Expanded(
               child: Column(
                 children: [
@@ -44,18 +32,22 @@ class _UserState extends State<User> {
                     indicatorColor: Theme.of(context).highlightColor,
                     tabs: [
                       Tab(
-                        child: Text("Sync")
+                        child: Text("Overview")
                       ),
                       Tab(
-                        child: Text("Overview")
-                      )
+                        child: Text("Statistics")
+                      ),
+                      Tab(
+                        child: Text("Account")
+                      ),
                     ]
                   ),
                   Expanded(
                     child: TabBarView(
                       children: [
-                        UserAccount(),
-                        Container(height: 50,)
+                        UserOverviewPage(),
+                        Container(height: 50,),
+                        UserAccountPage(Supabase.instance.client),
                       ]
                     ),
                   )

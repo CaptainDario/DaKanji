@@ -15,10 +15,17 @@ abstract class Env {
     @EnviedField(varName: 'SENTRY_DSN', defaultValue: "", obfuscate: true)
     static String? SENTRY_DSN = _Env.SENTRY_DSN;
 
+
     @EnviedField(varName: 'POSTHOG_API_KEY_DEV', defaultValue: "", obfuscate: true)
     static String? POSTHOG_API_KEY_DEV = _Env.POSTHOG_API_KEY_DEV;
-
     @EnviedField(varName: 'POSTHOG_API_KEY_REL', defaultValue: "", obfuscate: true)
     static String? POSTHOG_API_KEY_REL = _Env.POSTHOG_API_KEY_REL;
 
+
+    @EnviedField(varName: 'SUPABASE_URL', defaultValue: "", obfuscate: true)
+    static String SUPABASE_URL = _Env.SUPABASE_URL;
+    @EnviedField(varName: 'SUPABASE_ANON', defaultValue: "", obfuscate: true)
+    static String SUPABASE_ANON = _Env.SUPABASE_ANON;
+    @EnviedField(varName: 'SUPABASE_SERVICE_ROLE', defaultValue: "", obfuscate: true)
+    static String? SUPABASE_SERVICE_ROLE = _Env.SUPABASE_SERVICE_ROLE;
 }

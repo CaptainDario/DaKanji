@@ -96,10 +96,10 @@ dependencies:
     git:
       url: https://github.com/captaindario/lite_rt_for_flutter_libs
       path: base/lite_rt_for_flutter_libs_windows
-  lite_rt_for_flutter_libs_web_tfjs_tflite:
-    git:
-      url: https://github.com/captaindario/lite_rt_for_flutter_libs
-      path: base/lite_rt_for_flutter_libs_web_tfjs_tflite
+  #lite_rt_for_flutter_libs_web_tfjs_tflite:
+  #  git:
+  #    url: https://github.com/captaindario/lite_rt_for_flutter_libs
+  #    path: base/lite_rt_for_flutter_libs_web_tfjs_tflite
 
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
@@ -120,6 +120,9 @@ dependencies:
   local_assets_server: 2.0.2+12
   wakelock_plus: 1.2.10
   kana_kit:
+  supabase_flutter: 2.8.4
+  supabase_auth_ui: 0.5.4
+  flutter_login: 5.0.0
 
   # packages that I maintain
   mecab_for_dart: 1.1.5

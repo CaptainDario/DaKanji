@@ -14,6 +14,7 @@ import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
@@ -39,6 +40,12 @@ Future<void> main() async {
   // register packages
   initLiteRTFlutter();
   fvp.registerWith();
+
+  // init supabase
+  await Supabase.initialize(
+    url: Env.SUPABASE_URL,
+    anonKey: Env.SUPABASE_ANON,
+  );
 
   // delete settings for debugging
   //if(kDebugMode) await clearPreferences();
