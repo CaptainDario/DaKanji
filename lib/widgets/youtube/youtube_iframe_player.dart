@@ -52,19 +52,19 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
   List<CaptionTrack> captionTracks = [];
   /// The actual subtitles that have been fetched
   List<SubtitleLine> subtitles = [];
-
+  /// the minimum subtitle width
   static const double minSubtitleWidth = 100;
   /// The width of the subtitle widget
   double subtitlesWidth = minSubtitleWidth;
-
+  /// the minimum subtitle height
   static const double minSubtitleHeight = 50;
   /// The height of the subtitle widget
   double subtitlesHeight = minSubtitleHeight;
   /// The subtitles that are currently being shown
   String? currentSubtitle;
-
+  /// x position of the subtitle
   late double subtitlePosX = MediaQuery.of(context).size.width / 2 - (subtitlesWidth/2);
-  
+  /// y position of the subtitle
   double subtitlePosY = 8;
   /// The details where the user started dragging
   TapDownDetails? subtitleDragStartDetails;
@@ -262,20 +262,24 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
                                 " / ${_controller.value.metaData.duration.toString().split(".")[0]}"
                               ),
                               const SizedBox(width: 8,),
-                              IconButton(
-                                icon: Icon(isMuted
-                                  ? Icons.volume_off
-                                  : Icons.volume_up),
-                                onPressed: () {
-                                  if(isMuted){
-                                    _controller.unMute();
-                                    isMuted = false;
-                                  }
-                                  else {
-                                    _controller.mute();
-                                    isMuted = true;
-                                  }
-                                },
+                              AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 150),
+                                key: ValueKey(isMuted),
+                                child: IconButton(
+                                  icon: Icon(isMuted
+                                    ? Icons.volume_off
+                                    : Icons.volume_up),
+                                  onPressed: () {
+                                    if(isMuted){
+                                      _controller.unMute();
+                                      isMuted = false;
+                                    }
+                                    else {
+                                      _controller.mute();
+                                      isMuted = true;
+                                    }
+                                  },
+                                ),
                               ),
                               const Expanded(child: SizedBox()),
                               SubtitleSelectionButton(
@@ -333,20 +337,17 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
             
               child: Stack(
                 children: [
-                  SizedBox(
+                  Container(
                     width: subtitlesWidth,
                     height: subtitlesHeight,
-                  ),
-                  Positioned(
-                    left: 0,
-                    top: 0,
-                    child: Container(
-                      width: subtitlesWidth,
-                      height: subtitlesHeight,
-                      color: Colors.black.withAlpha(150),
-                      child: Center(child: Text(currentSubtitle!)),
+                    color: Colors.black.withAlpha(150),
+                    child: FittedBox(
+                      child: Text(
+                        currentSubtitle!,
+                      ),
                     ),
                   ),
+                  // resizing corner
                   Positioned(
                     right: 0,
                     bottom: 0,
@@ -354,8 +355,10 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
                       onPanUpdate: (details) {
                         if(!(subtitlesHeight < minSubtitleHeight && details.delta.dy < 0) &&
                           !(subtitlePosY < 0 && details.delta.dy > 0)){
-                          subtitlesHeight += details.delta.dy;
-                          subtitlePosY -= details.delta.dy;
+                          setState(() {  
+                            subtitlesHeight += details.delta.dy;
+                            subtitlePosY -= details.delta.dy;
+                          });
                         }
                         if(!(subtitlesWidth < minSubtitleWidth && details.delta.dx < 0) &&
                           !(details.globalPosition.dx > MediaQuery.sizeOf(context).width)){
@@ -377,6 +380,7 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
       ],
     );
   }
+
 
   /// Starts a timer to hide the contorls after 3 seconds
   void startHideControlsTimer(){
