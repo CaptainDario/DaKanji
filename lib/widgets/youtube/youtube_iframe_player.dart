@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/video/subtitle_selection_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:youtube_caption_scraper/youtube_caption_scraper.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -51,10 +52,23 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
   List<CaptionTrack> captionTracks = [];
   /// The actual subtitles that have been fetched
   List<SubtitleLine> subtitles = [];
+
+  static const double minSubtitleWidth = 100;
   /// The width of the subtitle widget
-  double subtitlesWidth = 300;
+  double subtitlesWidth = minSubtitleWidth;
+
+  static const double minSubtitleHeight = 50;
+  /// The height of the subtitle widget
+  double subtitlesHeight = minSubtitleHeight;
   /// The subtitles that are currently being shown
   String? currentSubtitle;
+
+  late double subtitlePosX = MediaQuery.of(context).size.width / 2 - (subtitlesWidth/2);
+  
+  double subtitlePosY = 8;
+  /// The details where the user started dragging
+  TapDownDetails? subtitleDragStartDetails;
+  
 
   /// The animation controller to handle smoothly fading in and out the controls
   late AnimationController fadeControlsAnimationController;
@@ -67,8 +81,7 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
   /// Is the user currently skipping
   int isSkipping = 0;
 
-  /// The details where the user started dragging
-  DragStartDetails? dragStartDetails;
+  
 
 
   @override
@@ -100,7 +113,7 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
     return Stack(
       fit: StackFit.expand,
       children: [
-
+    
         Align(
           alignment: Alignment.topCenter,
           child: AnimatedBuilder(
@@ -300,20 +313,69 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
         // subtitles
         if(currentSubtitle != null)
           Positioned(
-            left: MediaQuery.of(context).size.width / 2 - (subtitlesWidth/2),
-            bottom: 25 + (!fadeControlsAnimationController.isDismissed ? 50 : 0),
-            child: Container(
-              width: subtitlesWidth,
-              height: 50,
-              color: Colors.black.withAlpha(150),
-              child: Text(
-                currentSubtitle!
+            left: subtitlePosX,
+            bottom: subtitlePosY,
+            child: GestureDetector(
+              onPanUpdate: (details) {
+                if(!(subtitlePosX < 0 && details.delta.dx < 0) &&
+                  !(subtitlePosX+subtitlesWidth > MediaQuery.sizeOf(context).width && details.delta.dx > 0)){
+                  setState(() {
+                    subtitlePosX += details.delta.dx;
+                  });
+                }
+                if(!(subtitlePosY < 0 && details.delta.dy > 0) &&
+                  !(subtitlePosY+subtitlesHeight > MediaQuery.sizeOf(context).height-kToolbarHeight && details.delta.dy < 0)){
+                    setState(() {
+                      subtitlePosY -= details.delta.dy;
+                    });
+                  }
+              },
+            
+              child: Stack(
+                children: [
+                  SizedBox(
+                    width: subtitlesWidth,
+                    height: subtitlesHeight,
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    child: Container(
+                      width: subtitlesWidth,
+                      height: subtitlesHeight,
+                      color: Colors.black.withAlpha(150),
+                      child: Center(child: Text(currentSubtitle!)),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    bottom: 0,
+                    child: GestureDetector(
+                      onPanUpdate: (details) {
+                        if(!(subtitlesHeight < minSubtitleHeight && details.delta.dy < 0) &&
+                          !(subtitlePosY < 0 && details.delta.dy > 0)){
+                          subtitlesHeight += details.delta.dy;
+                          subtitlePosY -= details.delta.dy;
+                        }
+                        if(!(subtitlesWidth < minSubtitleWidth && details.delta.dx < 0) &&
+                          !(details.globalPosition.dx > MediaQuery.sizeOf(context).width)){
+                          setState(() {
+                            subtitlesWidth += details.delta.dx;
+                          });
+                        }
+                      },
+                      child: SvgPicture.asset(
+                        "assets/icons/corner_resize.svg",
+                        colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn)
+                      ),
+                    ),
+                  )
+                ]
               ),
             )
           ),
       ],
     );
-
   }
 
   /// Starts a timer to hide the contorls after 3 seconds
