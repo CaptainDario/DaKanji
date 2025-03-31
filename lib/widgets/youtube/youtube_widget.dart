@@ -3,12 +3,12 @@ import 'dart:convert';
 
 // Flutter imports:
 import 'package:da_kanji_mobile/widgets/youtube/youtube_iframe_player.dart';
+import 'package:da_kanji_mobile/widgets/youtube/youtube_js_scripts.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
-import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
@@ -43,8 +43,6 @@ class _YoutubeWidgetState extends State<YoutubeWidget> {
 
   /// Controller of the webview for youtube
   InAppWebViewController? webViewController;
-
-  bool isOnVideoPage = false;
 
   double _currentPosition = 0.0;
 
@@ -91,94 +89,54 @@ class _YoutubeWidgetState extends State<YoutubeWidget> {
           initialUrlRequest: URLRequest(url: WebUri.uri(Uri.parse(youtubeVideoUrl))),
           initialSettings: InAppWebViewSettings(
             javaScriptEnabled: true,
-            
+            mediaPlaybackRequiresUserGesture: true
           ),
           onWebViewCreated: (controller) {
             webViewController = controller;
-
-            // Add JavaScript handler to receive current time
-            getCurrentTime();
           },
-          onLoadStop: (controller, url) async {
-            injectJS();
+          onAjaxProgress: (controller, ajaxRequest) async {
+
+            await controller.evaluateJavascript(source: """
+              document.querySelectorAll('video').forEach(video => video.pause());
+            """);
+            
+            if(isYouTubeVideoUrl(await controller.getUrl()))
+              print('aksuflkasbgflkabjsf');
+
+            return AjaxRequestAction.PROCEED;
           },
           onTitleChanged: (controller, title) async {
             
             WebUri? url = await controller.getUrl();
+            print(url);
         
             if (isYouTubeVideoUrl(url)) {
 
-              setState(() {
-                isOnVideoPage = true;
-              });
+              
+              return;
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Scaffold(
+                  body: YoutubeIframePlayer(
+                    url.toString(),
+                    onClosePressed: (){
+                      Navigator.pop(context);
+                    }
+                  )
+                );
+              }));
             }
             else {
-              setState(() { isOnVideoPage = false; });
+
             }
         
           },
           
         ),
 
-        if(isOnVideoPage)
-          Positioned(
-            right: 50,
-            left: 50,
-            bottom: 100,
-            child: GestureDetector(
-              onTap: getCurrentTime,
-              child: Container(
-                height: 50,
-                width: 50,
-                color: Colors.blueGrey.withAlpha(200),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Test"
-                  ),
-                ),
-              ),
-            )
-          )
       ],
     );
 
     
-  }
-
-  /// Call YouTube API to get the current video time
-  void getCurrentTime() async {
-    print(_currentPosition);
-  }
-
-  void injectJS() async {
-
-    webViewController?.evaluateJavascript(source: """
-      function getCurrentVideoPosition() {
-        if (typeof player !== 'undefined' && player && typeof player.getCurrentTime === 'function') {
-          return player.getCurrentTime();
-        } else {
-          return null;
-        }
-      }
-
-      setInterval(function() {
-        const position = getCurrentVideoPosition();
-        if (position !== null) {
-          window.flutter_inappwebview.callHandler('videoPosition', position);
-        }
-      }, 100); // Check every 100 milliseconds
-    """);
-
-    webViewController?.addJavaScriptHandler(
-      handlerName: 'videoPosition',
-      callback: (args) {
-        setState(() {
-          _currentPosition = args[0];
-        });
-      },
-    );
-
   }
 
   bool isYouTubeVideoUrl(WebUri? uri) {
