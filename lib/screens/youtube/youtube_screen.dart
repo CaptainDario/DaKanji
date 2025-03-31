@@ -34,13 +34,14 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
     return DaKanjiDrawer(
       drawerClosed: !widget.openedByDrawer,
       currentScreen: Screens.youtube,
-      child: YoutubeIframePlayer(
-        "https://www.youtube.com/watch?v=hz6oys4Eem4"
-      )
-      //YoutubeWidget(
-      //  widget.openedByDrawer,
-      //  widget.includeTutorial
-      //)
+      child: true 
+        ? YoutubeIframePlayer(
+          "https://www.youtube.com/watch?v=hz6oys4Eem4"
+        )
+        : YoutubeWidget(
+          widget.openedByDrawer,
+          widget.includeTutorial
+        )
     );
   }
 
