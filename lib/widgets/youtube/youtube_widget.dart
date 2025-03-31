@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/youtube/youtube_iframe_player.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,8 +15,8 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:youtube_caption_scraper/youtube_caption_scraper.dart';
 
-String youtubeVideoUrl = "https://www.youtube.com/watch?v=XnkQKn67qzM&t=74s";
 
 
 class YoutubeWidget extends StatefulWidget {
@@ -40,7 +41,16 @@ class YoutubeWidget extends StatefulWidget {
 
 class _YoutubeWidgetState extends State<YoutubeWidget> {
 
+  /// Controller of the webview for youtube
   InAppWebViewController? webViewController;
+
+  bool isOnVideoPage = false;
+
+  double _currentPosition = 0.0;
+
+  String youtubeVideoUrl = "https://www.youtube.com/";
+  
+
 
   @override
   void initState() {
@@ -48,6 +58,11 @@ class _YoutubeWidgetState extends State<YoutubeWidget> {
     showTutorialCallback();
   }
 
+  @override
+  void dispose() {
+    webViewController?.dispose();
+    super.dispose();
+  }
 
   void showTutorialCallback() {
     // after first frame
@@ -69,71 +84,120 @@ class _YoutubeWidgetState extends State<YoutubeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('YouTube Video & Subtitles'),
-        ),
-        body: InAppWebView(
+
+    return Stack(
+      children: [
+        InAppWebView(
           initialUrlRequest: URLRequest(url: WebUri.uri(Uri.parse(youtubeVideoUrl))),
+          initialSettings: InAppWebViewSettings(
+            javaScriptEnabled: true,
+            
+          ),
           onWebViewCreated: (controller) {
             webViewController = controller;
+
+            // Add JavaScript handler to receive current time
+            getCurrentTime();
           },
           onLoadStop: (controller, url) async {
-            String? htmlContent = await controller.evaluateJavascript(
-                source: "document.documentElement.outerHTML;");
-            if (htmlContent != null) {
-              _fetchSubtitles(htmlContent);
-            }
+            injectJS();
           },
+          onTitleChanged: (controller, title) async {
+            
+            WebUri? url = await controller.getUrl();
+        
+            if (isYouTubeVideoUrl(url)) {
+
+              setState(() {
+                isOnVideoPage = true;
+              });
+            }
+            else {
+              setState(() { isOnVideoPage = false; });
+            }
+        
+          },
+          
         ),
-      ),
+
+        if(isOnVideoPage)
+          Positioned(
+            right: 50,
+            left: 50,
+            bottom: 100,
+            child: GestureDetector(
+              onTap: getCurrentTime,
+              child: Container(
+                height: 50,
+                width: 50,
+                color: Colors.blueGrey.withAlpha(200),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Test"
+                  ),
+                ),
+              ),
+            )
+          )
+      ],
     );
+
+    
   }
 
-  void _fetchSubtitles(String htmlContent) async {
-    final document = html_parser.parse(htmlContent);
+  /// Call YouTube API to get the current video time
+  void getCurrentTime() async {
+    print(_currentPosition);
+  }
 
-    // Find script tags in the HTML content
-    final scripts = document.getElementsByTagName('script');
-    String? captionUrl;
+  void injectJS() async {
 
-    for (var script in scripts) {
-      if (script.text.contains('captions')) {
-        // Captions data is embedded in JSON format within a script
-        final regExp = RegExp(r'"captions":({.*?}),"videoDetails"');
-        final match = regExp.firstMatch(script.text);
-        if (match != null) {
-          // Extract JSON that contains the captions info
-          final captionsJson = jsonDecode(match.group(1)!);
-
-          // Navigate through the JSON to find subtitle URL
-          final captionTracks = captionsJson['playerCaptionsTracklistRenderer']
-              ['captionTracks'];
-          if (captionTracks != null && captionTracks.isNotEmpty) {
-            captionUrl = captionTracks[0]['baseUrl'];
-            break;
-          }
+    webViewController?.evaluateJavascript(source: """
+      function getCurrentVideoPosition() {
+        if (typeof player !== 'undefined' && player && typeof player.getCurrentTime === 'function') {
+          return player.getCurrentTime();
+        } else {
+          return null;
         }
       }
-    }
 
-    if (captionUrl != null) {
-      // Fetch and print subtitles from the URL
-      debugPrint("Subtitle URL found: $captionUrl");
-      await _printSubtitles(captionUrl);
-    } else {
-      debugPrint("No subtitles available for this video.");
-    }
+      setInterval(function() {
+        const position = getCurrentVideoPosition();
+        if (position !== null) {
+          window.flutter_inappwebview.callHandler('videoPosition', position);
+        }
+      }, 100); // Check every 100 milliseconds
+    """);
+
+    webViewController?.addJavaScriptHandler(
+      handlerName: 'videoPosition',
+      callback: (args) {
+        setState(() {
+          _currentPosition = args[0];
+        });
+      },
+    );
+
   }
 
-  Future<void> _printSubtitles(String subtitleUrl) async {
-    final response = await http.get(Uri.parse(subtitleUrl));
-    if (response.statusCode == 200) {
-      final subtitleContent = utf8.decode(response.bodyBytes);
-      debugPrint("Subtitles:\n$subtitleContent");
-    } else {
-      debugPrint("Failed to fetch subtitles.");
+  bool isYouTubeVideoUrl(WebUri? uri) {
+    if (uri == null) return false;
+
+    final host = uri.host.toLowerCase();
+    final path = uri.path;
+    final queryParameters = uri.queryParameters;
+
+    // Check for standard YouTube watch URLs
+    if ((host.contains("youtube.com") && path == "/watch" && queryParameters.containsKey("v")) ||
+        (host.contains("youtu.be") && path.isNotEmpty)) {
+      return true;
     }
+    return false;
   }
+
+  Future youtubeSubtitleToWebVTT() async {
+
+  }
+
 }

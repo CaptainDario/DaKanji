@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/youtube/youtube_iframe_player.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -33,10 +34,13 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
     return DaKanjiDrawer(
       drawerClosed: !widget.openedByDrawer,
       currentScreen: Screens.youtube,
-      child: YoutubeWidget(
-        widget.openedByDrawer,
-        widget.includeTutorial
+      child: YoutubeIframePlayer(
+        "https://www.youtube.com/watch?v=hz6oys4Eem4"
       )
+      //YoutubeWidget(
+      //  widget.openedByDrawer,
+      //  widget.includeTutorial
+      //)
     );
   }
 

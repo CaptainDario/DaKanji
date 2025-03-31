@@ -71,6 +71,8 @@ dependencies:
   chewie: 1.11.0
   video_player: 2.9.3
   flutter_subtitle: 0.0.5
+  youtube_player_flutter: 9.1.1
+  youtube_caption_scraper: 0.2.1
 
   flutter_widget_from_html_core: 0.15.2
   lite_rt_for_flutter: 0.0.1

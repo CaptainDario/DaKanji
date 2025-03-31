@@ -2418,6 +2418,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+  youtube_caption_scraper:
+    dependency: "direct main"
+    description:
+      name: youtube_caption_scraper
+      sha256: "9a1a00052b82fb36a9abb8a16833eb062ed23c892701db4382207c69dbbae6de"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
+  youtube_player_flutter:
+    dependency: "direct main"
+    description:
+      name: youtube_player_flutter
+      sha256: "4d14aa47f9c84929b5400a87ade4dcfdab87a2ca2e0b18ecc2ef852b1440e123"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.1.1"
 sdks:
   dart: ">=3.7.0 <4.0.0"
   flutter: ">=3.29.2"
