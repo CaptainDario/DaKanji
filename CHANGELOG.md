@@ -48,6 +48,7 @@ Improvements:
 Fixed:
 
 - Windows drawing recognition does not work
+- Various fixes regarding deep links
 - Quick add to word list selection is always empty
 - DoJG: Zooming and scrolling using the mouse wheel conflicts each other
 - Anki
