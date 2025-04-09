@@ -127,6 +127,13 @@ class SettingsDictionary with ChangeNotifier implements  DictionarySearchPriorit
   /// All levels that can be selected for the falling words in the dictionary
   @JsonKey(defaultValue: ["N5", "N4", "N3"])
   List<String> selectedFallingWordsLevels = ["N5", "N4", "N3"];
+  /// Speed of the falling words
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const double d_fallingWordsSpeed = 1.0;
+  /// Speed of the falling words
+  @JsonKey(defaultValue: d_fallingWordsSpeed)
+  double fallingWordsSpeed = d_fallingWordsSpeed;
 
   /// When opening the kanji page, should the animation be played
   @JsonKey(includeFromJson: false, includeToJson: false)

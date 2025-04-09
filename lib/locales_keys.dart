@@ -341,6 +341,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_dict_kanji_animation_strokes_per_second = 'SettingsScreen.dict_kanji_animation_strokes_per_second';
   static const SettingsScreen_dict_languages = 'SettingsScreen.dict_languages';
   static const SettingsScreen_dict_matrix_word_levels = 'SettingsScreen.dict_matrix_word_levels';
+  static const SettingsScreen_dict_matrix_word_speed = 'SettingsScreen.dict_matrix_word_speed';
   static const SettingsScreen_dict_play_kanji_animation_when_opened = 'SettingsScreen.dict_play_kanji_animation_when_opened';
   static const SettingsScreen_dict_resume_animation_after_stop_swipe = 'SettingsScreen.dict_resume_animation_after_stop_swipe';
   static const SettingsScreen_dict_search_sorting_information = 'SettingsScreen.dict_search_sorting_information';

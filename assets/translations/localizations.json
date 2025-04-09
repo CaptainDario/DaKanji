@@ -2898,6 +2898,17 @@
       "es": "Las palabras de la matriz utilizan el nivel JLPT",
       "pl": "Słowa matrycowe używają poziomu JLPT"
     },
+    "dict_matrix_word_speed": {
+      "en": "Matrix word speed",
+      "de": "Matrix-Wortgeschwindigkeit",
+      "ru": "Скорость матричного слова",
+      "ja": "マトリックスのワードスピード",
+      "zh": "矩阵字速",
+      "it": "Velocità di parola della matrice",
+      "fr": "Vitesse des mots de la matrice",
+      "es": "Velocidad de palabra de la matriz",
+      "pl": "Prędkość słowa matrycy"
+    },
     "dict_show_wikipedia_definitions": {
       "en": "Show definitions from wikipedia",
       "de": "Definitionen von wikipedia anzeigen",

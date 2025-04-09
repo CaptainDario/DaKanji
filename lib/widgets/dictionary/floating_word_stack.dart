@@ -16,6 +16,7 @@ import 'package:da_kanji_mobile/entities/dictionary/floating_word.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:provider/provider.dart';
 
 /// Widget that shows downwards floating words that can be tapped and scrolled
 class FloatingWordStack extends StatefulWidget {
@@ -186,10 +187,11 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
         double parallax = (rand.nextDouble()*0.5)+0.5;
         AnimationController controller = AnimationController(
           duration: Duration(
-            milliseconds: (((entryToBttomSeconds/(noEntriesY*2))
+            milliseconds: (((((entryToBttomSeconds/(noEntriesY*2))
               * ((noEntriesY*2)-y+1))
               + (2*entryToBttomSeconds*(1-parallax))
-            ).floor() * 2000
+            ) * 2000) * (2-context.read<Settings>().dictionary.fallingWordsSpeed))
+            .floor()
           ),
           vsync: this,
         );
@@ -197,7 +199,8 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
           parent: controller, 
           curve: Curves.easeInOut
         );
-        final entry = FloatingWord(dictEntries[dictEntryOffset++], position, parallax, controller, anim);
+        final entry = FloatingWord(dictEntries[dictEntryOffset++], position,
+                                    parallax, controller, anim);
         controller.addStatusListener((status) {
           // when the animation has finished
           if(status == AnimationStatus.completed){
