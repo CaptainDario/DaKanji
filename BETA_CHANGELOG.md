@@ -1,9 +1,13 @@
 # DaKanji Beta - changelog
 
-## v3.5.0b6 - 改善 (09.04.2025)
+## v3.5.0b7 - 改善 (09.04.2025)
 
 - Deep Links on Windows
 - Added setting to control the speed of the falling words
+
+## v3.5.0b6 - 改善 (28.03.2025)
+
+- Deep Links on Android
 
 ## v3.5.0b5 - 改善 (26.03.2025)
 
