@@ -42,6 +42,8 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
                   ?.map((e) => e as String)
                   .toList() ??
               ['N5', 'N4', 'N3']
+      ..fallingWordsSpeed =
+          (json['fallingWordsSpeed'] as num?)?.toDouble() ?? 1.0
       ..playKanjiAnimationWhenOpened =
           json['playKanjiAnimationWhenOpened'] as bool? ?? true
       ..limitSearchResults =
@@ -65,6 +67,7 @@ Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
       'selectedSearchResultSortPriorities':
           instance.selectedSearchResultSortPriorities,
       'selectedFallingWordsLevels': instance.selectedFallingWordsLevels,
+      'fallingWordsSpeed': instance.fallingWordsSpeed,
       'playKanjiAnimationWhenOpened': instance.playKanjiAnimationWhenOpened,
       'limitSearchResults': instance.limitSearchResults,
       'kanjiAnimationStrokesPerSecond': instance.kanjiAnimationStrokesPerSecond,

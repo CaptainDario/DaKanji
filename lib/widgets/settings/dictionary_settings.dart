@@ -205,6 +205,19 @@ class _DictionarySettingsState extends State<DictionarySettings> {
             setState(() {});
           },
         ),
+        
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_dict_matrix_word_speed.tr(),
+          min: 0.1,
+          max: 2.0,
+          value: settings.dictionary.fallingWordsSpeed,
+          onChanged: (value) {
+            setState(() {
+              settings.dictionary.fallingWordsSpeed = value;
+              settings.save();
+            });
+          },
+        ),
         // show word frequency in search results / dictionary
         ShowWordFrequencySetting(
           settings.dictionary.showWordFruequency,

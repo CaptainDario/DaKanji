@@ -358,6 +358,7 @@
     "dict_kanji_animation_strokes_per_second": "Animation : coups par seconde",
     "dict_languages": "Afficher les traductions dans (glisser pour r\u00e9organiser)",
     "dict_matrix_word_levels": "Les mots de la matrice utilisent le niveau JLPT",
+    "dict_matrix_word_speed": "Vitesse des mots de la matrice",
     "dict_play_kanji_animation_when_opened": "Lancer automatiquement l'animation des Kanji",
     "dict_resume_animation_after_stop_swipe": "Reprise de l'animation apr\u00e8s le balayage",
     "dict_search_sorting_information": "Comment les r\u00e9sultats de la recherche sont-ils tri\u00e9s ?",

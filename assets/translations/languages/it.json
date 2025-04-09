@@ -358,6 +358,7 @@
     "dict_kanji_animation_strokes_per_second": "Animazione: colpi al secondo",
     "dict_languages": "Mostra le traduzioni in (trascinare per riordinare)",
     "dict_matrix_word_levels": "Le parole della matrice utilizzano il livello JLPT",
+    "dict_matrix_word_speed": "Velocit\u00e0 di parola della matrice",
     "dict_play_kanji_animation_when_opened": "Avvio automatico dell'animazione Kanji",
     "dict_resume_animation_after_stop_swipe": "Riprendere l'animazione dopo il passaggio del dito",
     "dict_search_sorting_information": "Come vengono ordinati i risultati della ricerca?",

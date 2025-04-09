@@ -358,6 +358,7 @@
     "dict_kanji_animation_strokes_per_second": "\u52a8\u753b\uff1a\u6bcf\u79d2\u7b14\u753b",
     "dict_languages": "\u663e\u793a\u7ffb\u8bd1\u5728\uff08\u62d6\u52a8\u4ee5\u91cd\u65b0\u6392\u5e8f\uff09\u3002",
     "dict_matrix_word_levels": "\u77e9\u9635\u8bcd\u4f7f\u7528JLPT\u6c34\u5e73",
+    "dict_matrix_word_speed": "\u77e9\u9635\u5b57\u901f",
     "dict_play_kanji_animation_when_opened": "\u81ea\u52a8\u542f\u52a8\u6c49\u5b57\u52a8\u753b",
     "dict_resume_animation_after_stop_swipe": "\u8f7b\u626b\u540e\u6062\u590d\u52a8\u753b",
     "dict_search_sorting_information": "\u641c\u7d22\u7ed3\u679c\u5982\u4f55\u6392\u5e8f\uff1f",
