@@ -33,12 +33,14 @@ Future<void> initDeepLinksStream() async {
 /// Handles the deep link
 void handleDeepLink(String link){
 
+  Uri uri = Uri.parse(link);
+  List<String> route = uri.pathSegments;
+  Map<String, String> args = uri.queryParameters;
+
+  link = Uri.decodeFull(Uri.encodeFull(link).toString());
+
   debugPrint("Deeplink: $link");
-
-  link = Uri.decodeFull(link);
-
-  List<String> route = extractRouteFromLink(link);
-  Map<String, String> args = extractArgsFromLink(link);
+  
 
   if(route[0] == Screens.drawing.name){
     handleDeepLinkDrawing(args);
@@ -65,48 +67,6 @@ void handleDeepLink(String link){
     handleDeepLinkSettings(args);
   }
   
-}
-
-/// Extracts all route parts from a link and returns them
-List<String> extractRouteFromLink(String link){
-
-  List<String> route;
-
-  // remove the base and get the route
-  String routeString = link
-    .replaceFirst(g_AppLinkHttps, "")
-    .replaceFirst(g_AppLinkDaKanji, "");
-  routeString = routeString.split("?")[0];
-
-  // split route into separate parts
-  route = routeString.split("/");
-
-  return route;
-}
-
-/// Extracts all args from a link and returns them
-Map<String, String> extractArgsFromLink(String link){
-
-  Map<String, String> args = {};
-
-  // remove the base
-  String short = link
-    .replaceFirst(g_AppLinkHttps, "")
-    .replaceFirst(g_AppLinkDaKanji, "");
-
-  // split into separate args
-  List<String> split = short.split("?");
-  if(split.length > 1){
-    List<String> argsString  = split[1].split("&");
-
-    // split and convert args
-    for (String arg in argsString){
-      List<String> keyValue = arg.split("=");
-      args[keyValue[0]] = keyValue[1];
-    }
-  }
-
-  return args;
 }
 
 /// Handles deep links that are related to the dictionary
