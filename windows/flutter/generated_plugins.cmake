@@ -5,13 +5,11 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   clipboard_watcher
-  dynamic_color
   flutter_inappwebview_windows
   fvp
   irondash_engine_context
   isar_flutter_libs
   mecab_for_flutter
-  permission_handler_windows
   printing
   screen_retriever_windows
   share_plus
@@ -19,7 +17,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   super_native_extensions
   url_launcher_windows
   window_manager
-  window_manager_plus
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

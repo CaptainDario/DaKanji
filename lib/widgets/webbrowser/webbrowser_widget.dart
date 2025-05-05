@@ -1,14 +1,9 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_browser/browser.dart';
-import 'package:flutter_browser/main.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
-import 'package:path_provider/path_provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
@@ -52,24 +47,6 @@ class _WebbrowserWidgetState extends State<WebbrowserWidget> {
 
   Future<bool> initAsync() async {
    
-    if(g_WEBBROWSER_INITIALIZED) return true;
-
-    WEB_ARCHIVE_DIR = (await getApplicationSupportDirectory()).path;
-
-    TAB_VIEWER_BOTTOM_OFFSET_1 = 130.0;
-    TAB_VIEWER_BOTTOM_OFFSET_2 = 140.0;
-    TAB_VIEWER_BOTTOM_OFFSET_3 = 150.0;
-
-    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {
-      final availableVersion = await WebViewEnvironment.getAvailableVersion();
-      assert(availableVersion != null,
-      'Failed to find an installed WebView2 Runtime or non-stable Microsoft Edge installation.');
-
-      webViewEnvironment = await WebViewEnvironment.create(
-          settings: WebViewEnvironmentSettings(userDataFolder: 'flutter_browser_app'));
-    }
-
-    g_WEBBROWSER_INITIALIZED = true;
     return true;
 
   }
@@ -101,7 +78,7 @@ class _WebbrowserWidgetState extends State<WebbrowserWidget> {
 
         if(!g_WEBBROWSER_INITIALIZED) return const SizedBox();
 
-        return const Browser();
+        return const SizedBox();
       }
     );
   }
