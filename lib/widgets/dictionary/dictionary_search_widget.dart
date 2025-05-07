@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -635,7 +636,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     // 2. convertable to hiragana (or is already Japanese)
     // 3. does not have spaces
     List<String> deconjugated = []; KanaKit k = GetIt.I<KanaKit>();
-    if(allowDeconjugation && !query.contains(" ") && 
+    if(allowDeconjugation && !query.contains(RegExp("\\s|${rawWildcardRegex.pattern}")) && 
       (k.isJapanese(query) || k.isJapanese(k.toKana(query))))
     {
       deconjugated = getDeconjugatedTerms(k.isJapanese(query)
@@ -643,19 +644,22 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         : k.toHiragana(k.toKana(query)),
         GetIt.I<Mecab>(), GetIt.I<KanaKit>());
 
-      deconjugated.remove(queryKana);
-      deconjugated.remove(query);
+      deconjugated.removeWhere((e) =>
+        e == queryKana || e == query || e.isEmpty);
     }
-    deconjugated.removeWhere((e) => e.isEmpty);
+
+    print("$query $queryKana $deconjugated");
+
+    // use the sort order from the settings
+    List<String> searchTerms =
+      selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated);
 
     // if the search query was changed show a snackbar and give the option to
     // use the original search
     if(queryKana != query || deconjugated.isNotEmpty){
 
       deconjugationFlushbar = DictionaryAltSearchFlushbar(
-          selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated),
-          onAltSearchTapped
-        )
+          searchTerms, onAltSearchTapped)
         .build(context)..show(context).then((value) {
           deconjugationFlushbar = null;
           return value;
@@ -668,10 +672,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     widget.context.read<DictSearch>().currentKanaSearch = queryKana ?? "";
     widget.context.read<DictSearch>().currentAlternativeSearches = deconjugated;
 
+    print(queryKana);
     // search
     widget.context.read<DictSearch>().searchResults =
       await GetIt.I<DictionarySearch>().search(
-        selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated),
+        searchTerms,
         filters,
         context.read<Settings>().dictionary.limitSearchResults,
       ) ?? [];
