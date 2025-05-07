@@ -71,6 +71,12 @@ class _TextAnalysisStackState extends State<TextAnalysisStack> with TickerProvid
 
     if(popupPositionLeft < 0) popupPositionLeft = 0;
     if(popupPositionTop < 0)  popupPositionTop  = 0;
+    if(popupSizeWidth + popupPositionLeft > widget.constraints.maxWidth){
+      popupSizeWidth = popupSizeWidthMin;
+    }
+    if(popupSizeHeight + popupPositionTop > widget.constraints.maxHeight){
+      popupSizeHeight = popupSizeHeightMin;
+    }
 
     super.initState();
   
