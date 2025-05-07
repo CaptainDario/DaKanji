@@ -40,7 +40,7 @@ List<List<JMdict>> sortJmdictList(
   List<List<int>> lenDifferences = List.generate(n, (i) => <int>[]);
 
   // if no wildcard is used, iterate over the entries and create a ranking for each
-  if(!allQueries.first.contains(wildcardRegex)){
+  if(!allQueries.first.contains(rawWildcardRegex)){
     // iterate over the entries and create a ranking for each
     for (JMdict entry in entries) {
       // KANJI matched (normal query) ?
