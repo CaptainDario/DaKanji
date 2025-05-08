@@ -4,13 +4,11 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   clipboard_watcher
-  dynamic_color
   fvp
   gtk
   irondash_engine_context
   isar_flutter_libs
   mecab_for_flutter
-  multi_window_linux
   printing
   screen_retriever_linux
   sentry_flutter

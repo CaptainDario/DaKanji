@@ -32,8 +32,6 @@ RegExp questionMarkRegex = RegExp(r"\?|\﹖|\︖|\？");
 RegExp asteriksMarkRegex = RegExp(r"\*|\＊");
 /// Regex that matchs all raw wildcards
 RegExp rawWildcardRegex = RegExp('${questionMarkRegex.pattern}|${asteriksMarkRegex.pattern}');
-/// Regex that matchs all wildcards used in the wildcard
-RegExp wildcardRegex = RegExp(r"\?|\*");
 
 
 /// Given the list of string `words` removes all kana from it and returns a list
