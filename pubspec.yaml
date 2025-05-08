@@ -181,7 +181,7 @@ dev_dependencies:
     sdk: flutter
   analyzer: 6.11.0
   custom_lint: 0.6.4
-  msix: 3.16.8
+  msix: 3.16.9
   flutter_lints: 4.0.0
   import_sorter: ^5.0.0-releasecandidate.1
   json_serializable: 6.8.0
