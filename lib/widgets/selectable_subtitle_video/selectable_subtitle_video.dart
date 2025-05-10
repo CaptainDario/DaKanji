@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:da_kanji_mobile/widgets/selectable_subtitle_video/playback_speed_button.dart';
 import 'package:da_kanji_mobile/widgets/selectable_subtitle_video/selectable_subtitle_video_controller.dart';
+import 'package:da_kanji_mobile/widgets/selectable_subtitle_video/subtitle.dart';
 import 'package:da_kanji_mobile/widgets/selectable_subtitle_video/subtitle_selection_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,8 +39,10 @@ class SelectableSubtitleVideo extends StatefulWidget {
 class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
   with TickerProviderStateMixin{
 
-  late SelectableSubtitleVideoController _controller = widget.controller;
+  late final SelectableSubtitleVideoController _controller = widget.controller;
 
+  /// The actual subtitles that have been fetched
+  List<SubtitleLine> subtitles = [];
   /// The subtitles that are currently being shown
   String? currentSubtitle;
   /// the minimum subtitle width
@@ -76,6 +79,7 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
 
     fadeControlsAnimationController.value = 1.0;
     startHideControlsTimer();
+    _controller.positionChangeNotifier.addListener(setCurrentCaptions);
   }
 
   @override
@@ -235,6 +239,7 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
                                     " / ${_controller.value.metaData.duration.toString().split(".")[0]}"
                                   ),*/
                                   const SizedBox(width: 8,),
+                                  // MUTE
                                   AnimatedSwitcher(
                                     duration: const Duration(milliseconds: 150),
                                     key: ValueKey(watchCon.isMuted),
@@ -246,11 +251,11 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
                                     ),
                                   ),
                                   const Expanded(child: SizedBox()),
-                                  // TODO
-                                  //SubtitleSelectionButton(
-                                  //  languages: captionTracks.map((e) => e.name,).toList(),
-                                  //  onChanged: onSubtitleChanged,
-                                  //),
+                                  // SUBTITLES
+                                  SubtitleSelectionButton(
+                                    languages: watchCon.subtitleNames,
+                                    onChanged: onSubtitleChanged,
+                                  ),
                                   
                                   PlaybackSpeedButton(controller: watchCon,),
                                   const SizedBox(width: 8,),
@@ -384,16 +389,9 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
   }
 
   void onSubtitleChanged(String subtitleName) async {
-    // TODO
-    /*
-    if(!captionTracks.map((e) => e.name).toList().contains(subtitleName)){
-      currentSubtitle = null;
-    }
-    else{
-      subtitles = await captionScraper.getSubtitles(
-        captionTracks.where((e) => e.name == subtitleName).first
-      );
-    }*/
+
+    subtitles = await _controller.getSubtitlesFromSubtitleName(subtitleName);
+    setCurrentCaptions();
 
     setState(() { });
   }
@@ -401,9 +399,9 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
   /// Sets the captions for the *current* moment of the video
   void setCurrentCaptions(){
 
-    // TODO
-    /*
-    Duration currentPlaybackPos = _controller.value.position;
+    print(_controller.getCurrentPosition());
+
+    Duration currentPlaybackPos = _controller.getCurrentPosition();
 
     for (var i = 0; i < subtitles.length-1; i++) {
       if(subtitles[i].start < currentPlaybackPos &&
@@ -411,9 +409,9 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
           setState(() {
             currentSubtitle = subtitles[i].text;
           });
+          break;
         }
     }
-    */
 
   }
 

@@ -5,11 +5,9 @@ import 'dart:async';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/selectable_subtitle_video/selectable_subtitle_video.dart';
 import 'package:da_kanji_mobile/widgets/selectable_subtitle_video/selectable_subtitle_video_controller.dart';
-import 'package:da_kanji_mobile/widgets/selectable_subtitle_video/subtitle_selection_button.dart';
-import 'package:drift/drift.dart';
+import 'package:da_kanji_mobile/widgets/selectable_subtitle_video/subtitle.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:youtube_caption_scraper/youtube_caption_scraper.dart';
+import 'package:youtube_caption_scraper/youtube_caption_scraper.dart' as ytc;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 
@@ -43,58 +41,97 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
     flags: const YoutubePlayerFlags(
         //autoPlay: true,
         controlsVisibleAtStart: false,
-
+        mute: true,
         hideControls: true,
         disableDragSeek: true,
         enableCaption: false,
     ),
   );
   /// Scraper object to fetch the subtitles
-  final captionScraper = YouTubeCaptionScraper();
+  final captionScraper = ytc.YouTubeCaptionScraper();
   /// All subtitles tracks that have been fetched
-  List<CaptionTrack> captionTracks = [];
-  /// The actual subtitles that have been fetched
-  List<SubtitleLine> subtitles = [];
+  List<ytc.CaptionTrack> captionTracks = [];
   
 
-  @override
-  void initState() {
-    super.initState();
+  Future<bool> init() async {
+
+    await fetchSubtitleNames();
+
     _controller = SelectableSubtitleVideoController(
-      isPlaying: false,
+      position: Duration.zero,
+      positionChangeNotifier: _ytController,
+      getCurrentPosition: () => _ytController.value.position,
+
+      isPlaying: true,
       play: () => _ytController.play(),
       pause: () => _ytController.pause(),
 
       playbackRate: 1.0,
       setPlaybackRate: _ytController.setPlaybackRate,
 
-      isMuted: false,
+      isMuted: true,
       unMute: () => _ytController.unMute(),
       mute: () => _ytController.mute(),
+
+      subtitleNames: captionTracks.map((e) => e.name,).toList(),
+      getSubtitlesFromSubtitleName: getSubtitlesFromSubtitleName,
 
       seekBy: (int n) => _ytController.seekTo(
         _ytController.value.position + Duration(seconds: n))
     );
+
+    return true;
+
   }
 
+  /// Gets all available subtitles from youtube
+  Future<void> fetchSubtitleNames() async {
+  
+    try {
+      captionTracks = await captionScraper.getCaptionTracks(widget.videoUrl);
+    } catch (e) {
+      captionTracks = [];
+    }
+
+  }
+
+  Future<List<SubtitleLine>> getSubtitlesFromSubtitleName(String subtitleName) async {
+
+    return captionScraper.getSubtitles(
+      captionTracks.where((e) => e.name == subtitleName).first
+    )
+    .then((value) =>
+      value.map((e) => SubtitleLine.fromYoutubeCaptions(e),).toList(),
+    );
+
+  }
 
   @override
   Widget build(BuildContext context) {
 
 
-    return SelectableSubtitleVideo(
-      videoWidget: YoutubePlayer(
-        controller: _ytController,
-        
-        showVideoProgressIndicator: true,
-        progressIndicatorColor: g_Dakanji_red,
-        progressColors: const ProgressBarColors(
-          playedColor: g_Dakanji_red,
-          handleColor: g_Dakanji_red,
-        ),
-      ),
-      controller: _controller,
-      onClosePressed: widget.onClosePressed
+    return FutureBuilder(
+      future: init(),
+      builder: (context, snapshot) {
+
+        // if the initialization did not finish yet
+        if (!snapshot.hasData) return const SizedBox();
+
+        return SelectableSubtitleVideo(
+          videoWidget: YoutubePlayer(
+            controller: _ytController,
+            
+            showVideoProgressIndicator: true,
+            progressIndicatorColor: g_Dakanji_red,
+            progressColors: const ProgressBarColors(
+              playedColor: g_Dakanji_red,
+              handleColor: g_Dakanji_red,
+            ),
+          ),
+          controller: _controller,
+          onClosePressed: widget.onClosePressed
+        );
+      }
     );
   }
 
