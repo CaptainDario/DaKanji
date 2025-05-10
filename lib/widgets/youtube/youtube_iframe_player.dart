@@ -34,6 +34,7 @@ class YoutubeIframePlayer extends StatefulWidget {
 class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
   with TickerProviderStateMixin{
 
+
   late SelectableSubtitleVideoController _controller;
 
   late final YoutubePlayerController _ytController = YoutubePlayerController(
@@ -61,6 +62,7 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
       position: Duration.zero,
       positionChangeNotifier: _ytController,
       getCurrentPosition: () => _ytController.value.position,
+      getVideoDuration: () => _ytController.value.metaData.duration,
 
       isPlaying: true,
       play: () => _ytController.play(),
@@ -120,7 +122,6 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
         return SelectableSubtitleVideo(
           videoWidget: YoutubePlayer(
             controller: _ytController,
-            
             showVideoProgressIndicator: true,
             progressIndicatorColor: g_Dakanji_red,
             progressColors: const ProgressBarColors(

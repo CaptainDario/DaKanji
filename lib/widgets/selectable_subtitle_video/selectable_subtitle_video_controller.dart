@@ -8,9 +8,17 @@ class SelectableSubtitleVideoController with ChangeNotifier{
   /// [ChangeNotifier] that triggers when the current position in the video
   /// changes
   ChangeNotifier positionChangeNotifier;
-  /// This function should return the current position of the video that is 
-  /// being played
-  Duration Function() getCurrentPosition;
+  /// The length of the current video
+  Duration Function() getVideoDuration;
+
+  Duration _position;
+  /// The current position in the video
+  Duration get position => _position;
+  /// The current position in the video
+  set position(Duration newValue) {
+    _position = newValue;
+    notifyListeners();
+  }
 
   /// Is the video currently playing
   bool _isPlaying;
@@ -79,7 +87,8 @@ class SelectableSubtitleVideoController with ChangeNotifier{
   SelectableSubtitleVideoController({
     required this.positionChangeNotifier,
     required Duration position,
-    required this.getCurrentPosition,
+    required getCurrentPosition,
+    required this.getVideoDuration,
 
     required bool isPlaying,
     required Function play,
@@ -97,12 +106,15 @@ class SelectableSubtitleVideoController with ChangeNotifier{
 
     required this.seekBy
   }) :
-    _isPlaying = isPlaying,
+  _position       = position,
+    _isPlaying    = isPlaying,
     _playbackRate = playbackRate,
-    _isMuted = isMuted
+    _isMuted      = isMuted
   {
     // position
-
+    positionChangeNotifier.addListener(() {
+      this.position = getCurrentPosition();
+    });
 
     // PLAY / PAUSE
     this.pause = () {

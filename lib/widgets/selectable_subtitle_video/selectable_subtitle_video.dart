@@ -226,18 +226,14 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
                                 ],
                               ),*/
                               Row(
-                                children: [
-                                  // TODO
-                                  //CurrentPosition(controller: _controller,),
-                                  // TODO
-                                  /*
+                                children: [                                  
                                   Text(
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 12.0,
                                     ),
-                                    " / ${_controller.value.metaData.duration.toString().split(".")[0]}"
-                                  ),*/
+                                    "${formatPlaytime(watchCon.position)} / ${formatPlaytime(watchCon.getVideoDuration())}"
+                                  ),
                                   const SizedBox(width: 8,),
                                   // MUTE
                                   AnimatedSwitcher(
@@ -355,6 +351,9 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
     );
   }
 
+  String formatPlaytime(Duration duration){
+    return duration.toString().split(".")[0];
+  }
 
   /// Starts a timer to hide the contorls after 3 seconds
   void startHideControlsTimer(){
@@ -399,9 +398,7 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
   /// Sets the captions for the *current* moment of the video
   void setCurrentCaptions(){
 
-    print(_controller.getCurrentPosition());
-
-    Duration currentPlaybackPos = _controller.getCurrentPosition();
+    Duration currentPlaybackPos = _controller.position;
 
     for (var i = 0; i < subtitles.length-1; i++) {
       if(subtitles[i].start < currentPlaybackPos &&
