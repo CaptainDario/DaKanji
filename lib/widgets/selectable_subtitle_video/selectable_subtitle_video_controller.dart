@@ -79,6 +79,8 @@ class SelectableSubtitleVideoController with ChangeNotifier{
     _isSeeking = newValue;
     notifyListeners();
   }
+  /// Function that seeks in the current video to the moment `n`
+  late Function(Duration n) seekTo;
   /// Function that seeks in the current video by `n` seconds
   late Function(int n) seekBy;
   
@@ -104,9 +106,9 @@ class SelectableSubtitleVideoController with ChangeNotifier{
     required this.subtitleNames,
     required Future<List<SubtitleLine>> Function(String subtitleName) getSubtitlesFromSubtitleName,
 
-    required this.seekBy
+    required this.seekTo
   }) :
-  _position       = position,
+    _position       = position,
     _isPlaying    = isPlaying,
     _playbackRate = playbackRate,
     _isMuted      = isMuted
@@ -152,6 +154,10 @@ class SelectableSubtitleVideoController with ChangeNotifier{
     this.getSubtitlesFromSubtitleName = (String subtitleName) {
       return getSubtitlesFromSubtitleName(subtitleName);
     };
+
+    // SEEKING
+    seekBy = (int n) => seekTo(
+      getCurrentPosition().value.position + Duration(seconds: n));
 
   }
 

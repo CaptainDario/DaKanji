@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/selectable_subtitle_video/playback_speed_button.dart';
 import 'package:da_kanji_mobile/widgets/selectable_subtitle_video/selectable_subtitle_video_controller.dart';
 import 'package:da_kanji_mobile/widgets/selectable_subtitle_video/subtitle.dart';
@@ -212,61 +213,74 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
                             ],
                           ),
                         ),
-                  
-                      ///if(!fadeControlsAnimationController.isDismissed)
+                      if(!fadeControlsAnimationController.isDismissed)
+                        Positioned(
+                          left: 0,
+                          right: 0,
+                          bottom: 24,
+                          child: Slider(
+                            value: _controller.position.inSeconds.toDouble(),
+                            min: 0,
+                            max: _controller.getVideoDuration().inSeconds.toDouble(),
+                            activeColor: g_Dakanji_red,
+                            inactiveColor: Colors.grey,
+                            label: _controller.position.toString(),
+                            onChangeStart: (value) {
+                              if(hideControlsTimer != null) hideControlsTimer!.cancel();
+                            },
+                            onChanged: (double newValue) {
+                              _controller.seekTo(Duration(seconds: newValue.toInt()));
+                            },
+                            onChangeEnd: (value) {
+                              startHideControlsTimer();
+                            },
+                          )
+                        ),
+                      if(!fadeControlsAnimationController.isDismissed)
                         Positioned(
                           left: 8,
                           bottom: 8,
                           width: MediaQuery.sizeOf(context).width,
-                          child: Opacity(
-                            opacity: fadeControlsAnimationController.value,
-                            child: Column(
-                              children: [
-                                // TODO progress bar
-                                /*Row(
-                                  children: [
-                                    Expanded(child: ProgressBar(controller: _controller,)),
-                                    const SizedBox(width: 16,)
-                                  ],
-                                ),*/
-                                Row(
-                                  children: [                                  
-                                    Text(
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12.0,
-                                      ),
-                                      "${formatPlaytime(watchCon.position)} / ${formatPlaytime(watchCon.getVideoDuration())}"
+                          child: Column(
+                            children: [
+                              // progress bar
+                              Row(
+                                children: [                                  
+                                  Text(
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.0,
                                     ),
-                                    const SizedBox(width: 8,),
-                                    // MUTE
-                                    AnimatedSwitcher(
-                                      duration: const Duration(milliseconds: 150),
-                                      key: ValueKey(watchCon.isMuted),
-                                      child: IconButton(
-                                        icon: Icon(watchCon.isMuted
-                                          ? Icons.volume_off
-                                          : Icons.volume_up),
-                                        onPressed: () => readCon.toggleMute(),
-                                      ),
+                                    "${formatPlaytime(watchCon.position)} / ${formatPlaytime(watchCon.getVideoDuration())}"
+                                  ),
+                                  const SizedBox(width: 8,),
+                                  // MUTE
+                                  AnimatedSwitcher(
+                                    duration: const Duration(milliseconds: 150),
+                                    key: ValueKey(watchCon.isMuted),
+                                    child: IconButton(
+                                      icon: Icon(watchCon.isMuted
+                                        ? Icons.volume_off
+                                        : Icons.volume_up),
+                                      onPressed: () => readCon.toggleMute(),
                                     ),
-                                    const Expanded(child: SizedBox()),
-                                    // SUBTITLES
-                                    SubtitleSelectionButton(
-                                      subtitleNames: readCon.subtitleNames,
-                                      currentSubtitleSelection: currentSubtitleSelection,
-                                      onChanged: onSubtitleChanged,
-                                    ),
-                                    
-                                    PlaybackSpeedButton(controller: watchCon,),
-                                    const SizedBox(width: 8,),
-                                    // TODO
-                                    //FullScreenButton(controller: _controller),
-                                    const SizedBox(width: 16,),
-                                  ]
-                                ),
-                              ]
-                            ),
+                                  ),
+                                  const Expanded(child: SizedBox()),
+                                  // SUBTITLES
+                                  SubtitleSelectionButton(
+                                    subtitleNames: readCon.subtitleNames,
+                                    currentSubtitleSelection: currentSubtitleSelection,
+                                    onChanged: onSubtitleChanged,
+                                  ),
+                                  
+                                  PlaybackSpeedButton(controller: watchCon,),
+                                  const SizedBox(width: 8,),
+                                  // TODO
+                                  //FullScreenButton(controller: _controller),
+                                  const SizedBox(width: 16,),
+                                ]
+                              ),
+                            ]
                           )
                         ),
                     
@@ -407,7 +421,6 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
     subtitles = await _controller.getSubtitlesFromSubtitleName(subtitleName);
     setCurrentCaptions();
 
-    //setState(() { });
   }
 
   /// Sets the captions for the *current* moment of the video

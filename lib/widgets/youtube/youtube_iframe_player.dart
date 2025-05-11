@@ -78,8 +78,7 @@ class _YoutubeIframePlayerState extends State<YoutubeIframePlayer>
       subtitleNames: captionTracks.map((e) => e.name,).toList(),
       getSubtitlesFromSubtitleName: getSubtitlesFromSubtitleName,
 
-      seekBy: (int n) => _ytController.seekTo(
-        _ytController.value.position + Duration(seconds: n))
+      seekTo: _ytController.seekTo
     );
 
     return true;
