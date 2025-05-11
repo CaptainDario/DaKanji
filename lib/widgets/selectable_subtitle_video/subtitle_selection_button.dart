@@ -9,16 +9,21 @@ import 'package:flutter/material.dart';
 /// A widget to display playback speed changing button.
 class SubtitleSelectionButton extends StatefulWidget {
 
-  /// List of subtitle languages
-  final List<String> languages;
+  /// List of subtitle names
+  final List<String> subtitleNames;
 
+  /// The currently selected subtitle name
+  final String currentSubtitleSelection;
+
+  /// Callback that is executed when the selection changed
   final Function(String)? onChanged;
   
 
 
   /// Creates [SubtitleSelectionButton] widget.
   const SubtitleSelectionButton({
-    required this.languages,
+    required this.subtitleNames,
+    required this.currentSubtitleSelection,
     this.onChanged,
     super.key,
   });
@@ -31,16 +36,19 @@ class SubtitleSelectionButton extends StatefulWidget {
 class _SubtitleSelectionButtonState extends State<SubtitleSelectionButton> {
 
   /// All languages that can be selected
-  late List<String> languages = widget.languages + ["Off"];
-  /// The currently selected language
-  late String currentSelection = languages.last;
+  late List<String> languages = widget.subtitleNames + ["Off"];
 
+
+  @override
+  void dispose() {
+    print("DISPOSED");
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
       onSelected: (value) {
-        currentSelection = value;
         widget.onChanged?.call(value);
       },
       tooltip: 'Select subtitle',
@@ -49,7 +57,7 @@ class _SubtitleSelectionButtonState extends State<SubtitleSelectionButton> {
       },),
       child: Padding(
         padding: const EdgeInsets.all(8),
-        child: Icon(currentSelection == languages.last
+        child: Icon(widget.currentSubtitleSelection == languages.last
           ? Icons.subtitles_off
           : Icons.subtitles),
       ),
@@ -58,7 +66,7 @@ class _SubtitleSelectionButtonState extends State<SubtitleSelectionButton> {
 
   PopupMenuEntry<String> _popUpItem(String text) {
     return CheckedPopupMenuItem(
-      checked: currentSelection == text,
+      checked: widget.currentSubtitleSelection == text,
       value: text,
       child: Text(text),
     );

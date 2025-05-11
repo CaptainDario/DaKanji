@@ -45,6 +45,8 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
   List<SubtitleLine> subtitles = [];
   /// The subtitles that are currently being shown
   String? currentSubtitle;
+  /// The currently selected subtitle name
+  late String currentSubtitleSelection = "Off";
   /// the minimum subtitle width
   static const double minSubtitleWidth = 100;
   /// The width of the subtitle widget
@@ -211,56 +213,60 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
                           ),
                         ),
                   
-                      if(!fadeControlsAnimationController.isDismissed)
+                      ///if(!fadeControlsAnimationController.isDismissed)
                         Positioned(
                           left: 8,
                           bottom: 8,
                           width: MediaQuery.sizeOf(context).width,
-                          child: Column(
-                            children: [
-                              // TODO progress bar
-                              /*Row(
-                                children: [
-                                  Expanded(child: ProgressBar(controller: _controller,)),
-                                  const SizedBox(width: 16,)
-                                ],
-                              ),*/
-                              Row(
-                                children: [                                  
-                                  Text(
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12.0,
+                          child: Opacity(
+                            opacity: fadeControlsAnimationController.value,
+                            child: Column(
+                              children: [
+                                // TODO progress bar
+                                /*Row(
+                                  children: [
+                                    Expanded(child: ProgressBar(controller: _controller,)),
+                                    const SizedBox(width: 16,)
+                                  ],
+                                ),*/
+                                Row(
+                                  children: [                                  
+                                    Text(
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12.0,
+                                      ),
+                                      "${formatPlaytime(watchCon.position)} / ${formatPlaytime(watchCon.getVideoDuration())}"
                                     ),
-                                    "${formatPlaytime(watchCon.position)} / ${formatPlaytime(watchCon.getVideoDuration())}"
-                                  ),
-                                  const SizedBox(width: 8,),
-                                  // MUTE
-                                  AnimatedSwitcher(
-                                    duration: const Duration(milliseconds: 150),
-                                    key: ValueKey(watchCon.isMuted),
-                                    child: IconButton(
-                                      icon: Icon(watchCon.isMuted
-                                        ? Icons.volume_off
-                                        : Icons.volume_up),
-                                      onPressed: () => readCon.toggleMute(),
+                                    const SizedBox(width: 8,),
+                                    // MUTE
+                                    AnimatedSwitcher(
+                                      duration: const Duration(milliseconds: 150),
+                                      key: ValueKey(watchCon.isMuted),
+                                      child: IconButton(
+                                        icon: Icon(watchCon.isMuted
+                                          ? Icons.volume_off
+                                          : Icons.volume_up),
+                                        onPressed: () => readCon.toggleMute(),
+                                      ),
                                     ),
-                                  ),
-                                  const Expanded(child: SizedBox()),
-                                  // SUBTITLES
-                                  SubtitleSelectionButton(
-                                    languages: watchCon.subtitleNames,
-                                    onChanged: onSubtitleChanged,
-                                  ),
-                                  
-                                  PlaybackSpeedButton(controller: watchCon,),
-                                  const SizedBox(width: 8,),
-                                  // TODO
-                                  //FullScreenButton(controller: _controller),
-                                  const SizedBox(width: 16,),
-                                ]
-                              ),
-                            ]
+                                    const Expanded(child: SizedBox()),
+                                    // SUBTITLES
+                                    SubtitleSelectionButton(
+                                      subtitleNames: readCon.subtitleNames,
+                                      currentSubtitleSelection: currentSubtitleSelection,
+                                      onChanged: onSubtitleChanged,
+                                    ),
+                                    
+                                    PlaybackSpeedButton(controller: watchCon,),
+                                    const SizedBox(width: 8,),
+                                    // TODO
+                                    //FullScreenButton(controller: _controller),
+                                    const SizedBox(width: 16,),
+                                  ]
+                                ),
+                              ]
+                            ),
                           )
                         ),
                     
@@ -389,14 +395,25 @@ class _SelectableSubtitleVideoState extends State<SelectableSubtitleVideo>
 
   void onSubtitleChanged(String subtitleName) async {
 
+    currentSubtitleSelection = subtitleName;
+
+    if(subtitleName == "Off"){
+      setState(() {
+        currentSubtitle = null;
+      });
+      return;
+    }
+
     subtitles = await _controller.getSubtitlesFromSubtitleName(subtitleName);
     setCurrentCaptions();
 
-    setState(() { });
+    //setState(() { });
   }
 
   /// Sets the captions for the *current* moment of the video
   void setCurrentCaptions(){
+
+    if(currentSubtitleSelection == "Off") return;
 
     Duration currentPlaybackPos = _controller.position;
 
