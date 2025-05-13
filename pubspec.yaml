@@ -68,8 +68,7 @@ dependencies:
   app_links: 6.4.0                 # android, iOS, web, macos, windows (msix), linux
 
   fvp: 0.30.0
-  chewie: 1.11.0
-  video_player: 2.9.3
+  video_player: 2.9.5
   flutter_subtitle: 0.0.5
   youtube_player_flutter: 9.1.1
   youtube_caption_scraper: 0.2.1

@@ -3,20 +3,12 @@ import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:fvp/fvp.dart';
 
 // Package imports:
-import 'package:chewie/chewie.dart';
-import 'package:flutter_subtitle/flutter_subtitle.dart' hide Subtitle;
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
-import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_for_flutter/mecab_for_flutter.dart';
-import 'package:video_player/video_player.dart';
+import 'package:video_player/video_player.dart' as flutter_video_player;
 
 // Project imports:
-import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
-import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
-import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 
 class VideoPlayer extends StatefulWidget {
@@ -40,10 +32,8 @@ class VideoPlayer extends StatefulWidget {
 
 class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixin {
 
-  /// The controller of the chewie video player
-  late ChewieController chewieController;
   /// The flutter video player controller
-  late VideoPlayerController videoPlayerController;
+  late flutter_video_player.VideoPlayerController videoPlayerController;
 
   /// The subtitle that is currently being shown
   String currentSubtitle = "";
@@ -88,32 +78,33 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
   Future<bool> initPlayer() async {
 
     // load video
-    videoPlayerController = VideoPlayerController.file(widget.videoFile);
+    videoPlayerController = flutter_video_player.VideoPlayerController.file(widget.videoFile);
     
     await videoPlayerController.initialize();
 
-    chewieController = ChewieController(
-      fullScreenByDefault: true,
-      allowFullScreen: false,
-      videoPlayerController: videoPlayerController,
-      subtitleBuilder: (context, subtitle) {
-        
-        if(subtitle != currentSubtitle){
-          currentSubtitle = subtitle;
-          final res = processText(currentSubtitle,
-            GetIt.I<Mecab>(), GetIt.I<KanaKit>());
-            WidgetsBinding.instance.addPostFrameCallback(
-              (timeStamp) => mecabSurfaces.value = res.item2,
-            );
-          mecabReadings = res.item1;
-          mecabPOS      = res.item3;
-        }
-        return Container();
+    await videoPlayerController.play();
+    
+    
+    /*
+    subtitleBuilder: (context, subtitle) {
+      
+      if(subtitle != currentSubtitle){
+        currentSubtitle = subtitle;
+        final res = processText(currentSubtitle,
+          GetIt.I<Mecab>(), GetIt.I<KanaKit>());
+          WidgetsBinding.instance.addPostFrameCallback(
+            (timeStamp) => mecabSurfaces.value = res.item2,
+          );
+        mecabReadings = res.item1;
+        mecabPOS      = res.item3;
+      }
+      return Container();
 
-      },
-    );
+    },
+    */
 
     // load subtitles
+    /*
     var subtitleController = SubtitleController.string(
       widget.subsFile.readAsStringSync(),
       format: SubtitleFormat.srt);
@@ -126,6 +117,7 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
         text: e.text
       )).toList()
     );
+    */
 
     return true;
 
@@ -133,7 +125,6 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
 
   @override
   void dispose() {
-    chewieController.dispose();
     videoPlayerController.dispose();
     super.dispose();
   }
@@ -147,85 +138,19 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
 
         if(snapshot.data != true) return const DaKanjiLoadingIndicator();
 
-        return ValueListenableBuilder(
-          valueListenable: currentSelection,
-          child: Chewie(controller: chewieController),
-          builder: (context, value, child) {
-            return TextAnalysisStack(
-              textToAnalyze: value,
-              popupAnimationController: popupAnimationController,
-              onPopupInitialized: (tabController) {
-                popupTabController = tabController;
-              },
-              constraints: const BoxConstraints.expand(),
-              children: [
-                Stack(
-                  children: [
-                    child!,
-                    Positioned(
-                      bottom: 75 - subtitleOffset.dy,
-                      left: MediaQuery.of(context).size.width / 4 + subtitleOffset.dx,
-                      width: MediaQuery.of(context).size.width / 2,
-                      child: ValueListenableBuilder<List<String>>(
-                        valueListenable: mecabSurfaces,
-                        builder: (BuildContext context, List<String> value, Widget? child) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20), // Rounded corners
-                            ),
-                            child: Stack(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CustomSelectableText(
-                                    
-                                    showRubys: true,
-                                    onSelectionChange: (p0) {
-                                      currentSelection.value = currentSubtitle
-                                        .replaceAll(" ", "")
-                                        .substring(p0.baseOffset, p0.extentOffset);
-                                      popupAnimationController.forward();
-                                    },
-                                  ),
-                                ),
-                                // move handle
-                                Positioned(
-                                  left: 0,
-                                  top: 0,
-                                  child: Listener(
-                                    onPointerMove: (event) {
-                                      subtitleOffset += event.delta;
-                                      setState(() {});
-                                    },
-                                    child: SvgPicture.asset(
-                                      "assets/icons/corner_resize.svg",
-                                      colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn)
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Positioned(
-                      child: Visibility(
-                        visible: true,
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(Icons.close)
-                        ),
-                      )
-                    ),
-                  ]
-                ),
-              ]
-            );
-          }
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              child: AspectRatio(
+                aspectRatio: videoPlayerController.value.aspectRatio,
+                child: flutter_video_player.VideoPlayer(videoPlayerController)
+              )
+            )
+          ],
         );
       }
     );
