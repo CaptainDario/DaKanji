@@ -1,9 +1,11 @@
 // Dart imports:
 import 'dart:io';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:database_builder/database_builder.dart';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
@@ -28,7 +30,7 @@ Future<List<File>> imagesFromWordListNode(
     .langsToInclude(GetIt.I<Settings>().dictionary.selectedTranslationLanguages);
 
   // find all elements from the word list in the database
-  List<JMdict> entries = await wordListEntriesForExport(entryIDs, langsToInclude);
+  List<JMdict> entries = await wordListIdsToJMdict(entryIDs, langsToInclude);
 
   for (var (i, entry) in entries.indexed) {
     

@@ -1,9 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-
 /// A settings header tile that can be expanded to show settings
 class ResponsiveHeaderTile extends StatelessWidget {
   const ResponsiveHeaderTile(
@@ -11,15 +8,12 @@ class ResponsiveHeaderTile extends StatelessWidget {
     this.icon,
     {
       required this.children,
-      this.autoSizeGroup,
       super.key
     }
   );
 
   /// the text of the heading
   final String text;
-  /// the auto
-  final AutoSizeGroup? autoSizeGroup;
   /// A list of child widgets when this
   final List<Widget> children;
   /// the icon to display

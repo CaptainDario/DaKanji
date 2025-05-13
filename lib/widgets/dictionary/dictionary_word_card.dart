@@ -4,11 +4,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
@@ -87,9 +86,9 @@ class _DictionaryWordCardState extends State<DictionaryWordCard> {
 
       // get the pos for conjugating this word
       conjugationPos = widget.entry!.meanings.map((e) => e.partOfSpeech)
-        .whereNotNull().expand((e) => e)
-        .whereNotNull().expand((e) => e.attributes)
-        .whereNotNull().map((e) => posDescriptionToPosEnum[e]!)
+        .nonNulls.expand((e) => e)
+        .nonNulls.expand((e) => e.attributes)
+        .nonNulls.map((e) => posDescriptionToPosEnum[e]!)
         .toSet().toList();
     }
   }
@@ -161,14 +160,20 @@ class _DictionaryWordCardState extends State<DictionaryWordCard> {
                 children: [
                   AspectRatio(
                     aspectRatio: 1,
-                    child: WebViewWidget(
-                      controller: WebViewController()
-                        ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                        ..loadRequest(Uri.parse(
-                          "$g_GoogleImgSearchUrl${GetIt.I<Settings>().dictionary.googleImageSearchQuery.replaceAll(SettingsDictionary.d_googleImageSearchQuery, readingOrKanji ?? "")}")),
-                        gestureRecognizers: {
-                          Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
-                        },
+                    child: InAppWebView(
+                      gestureRecognizers: {
+                        Factory<OneSequenceGestureRecognizer>(()  
+                          => EagerGestureRecognizer())
+                      },
+                      onWebViewCreated: (controller) {
+
+                        String s = GetIt.I<Settings>()
+                          .dictionary.googleImageSearchQuery
+                          .replaceAll(SettingsDictionary.d_googleImageSearchQuery, readingOrKanji ?? "");
+                        controller.loadUrl(urlRequest: URLRequest(
+                          url: WebUri("$g_GoogleImgSearchUrl$s")
+                        ));
+                      },
                     )
                   )
                 ],

@@ -225,3 +225,75 @@ XmlDocument colorizeKanjiVGGroups(XmlDocument document){
 
   return document;
 }
+
+/// Changes the colors of the strokes and text of the given `kanjiVGEntry`
+/// and returns it.
+String colorizeKanjiVG (String kanjiVGEntry) {
+
+  // convert the KanjiVG entry to a Xml doc
+  final document = XmlDocument.parse(kanjiVGEntry);
+
+  //iterate over the strokes
+  int cnt = 0, cntInc = 13;
+  for (var element in document.findAllElements("path")) {
+    element.setAttribute("stroke", "hsl($cnt, 100%, 50%)");
+    element.setAttribute("stroke-width", "2");
+
+    cnt += cntInc;
+    if(cnt > 360) cnt = 0;
+  }
+
+  // iterate over the texts
+  cnt = 0;
+  for (var element in document.findAllElements("text")) {
+    element.setAttribute("stroke", "hsl($cnt, 100%, 50%)");
+    element.setAttribute("fill", "hsl($cnt, 100%, 50%)");
+    element.setAttribute("stroke-width", "0.5");
+
+    cnt += cntInc;
+    if(cnt > 360) cnt = 0;
+  }
+
+  return document.toString();
+}
+
+/// Changes the width of all strokes in the given kanjiVG entry by `width`
+/// and sets the color to `color`
+String changeStrokeWidthAndColor(String kanjiVGEntry, double width, String color) {
+
+  // convert the KanjiVG entry to a Xml doc
+  final document = XmlDocument.parse(kanjiVGEntry);
+
+  //iterate over the strokes
+  int cnt = 0, cntInc = 13;
+  for (var element in document.findAllElements("path")) {
+    element.setAttribute("stroke", color);
+    element.setAttribute("stroke-width", width.toString());
+
+    cnt += cntInc;
+    if(cnt > 360) cnt = 0;
+  }
+
+  return document.toString();
+}
+
+/// Changes the width of all texts in the given kanjiVG entry by `width`
+/// and sets the color to `color`
+String changeTextWidthAndColor(String kanjiVGEntry, double width, String color) {
+
+  // convert the KanjiVG entry to a Xml doc
+  final document = XmlDocument.parse(kanjiVGEntry);
+
+  // iterate over the texts
+  int cnt = 0, cntInc = 13;
+  for (var element in document.findAllElements("text")) {
+    element.setAttribute("stroke", color);
+    element.setAttribute("fill", color);
+    element.setAttribute("stroke-width", width.toString());
+
+    cnt += cntInc;
+    if(cnt > 360) cnt = 0;
+  }
+
+  return document.toString();
+}

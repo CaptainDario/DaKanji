@@ -31,7 +31,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
 
       # get versions from pubspec
       - name: set env variables
@@ -44,14 +46,18 @@ jobs:
         with:
           flutter-version: ${{env.FLUTTER_VERSION}}
           channel: stable
-
-      #- name: setup-cocoapods
-      #  uses: maxim-lobanov/setup-cocoapods@v1
-      #  with:
-      #    version: 1.14.3
           
       - name: Restore packages
         run: flutter pub get
+
+      - name: Setup DaKanji env.dart
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
+          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
+          POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
+        run: |
+          python3 ./.github/workflows/create_dakanji_env.py
+          flutter pub run build_runner build --delete-conflicting-outputs
         
       # get / set dakanji assets from cache
       - name: Check dakanji assets in cache
@@ -75,14 +81,6 @@ jobs:
         with:
           path: tmp
           key: dakanji-assets
-      - name: Setup DaKanji env.dart
-        env:
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
-          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
-          POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
-        run: |
-          python3 ./.github/workflows/create_dakanji_env.py
-          flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: enable macos
         run: flutter config --enable-macos-desktop
@@ -97,7 +95,7 @@ jobs:
           flutter build macos --release -v
           ditto -c -k --sequesterRsrc --keepParent build/macos/Build/Products/Release/DaKanji.app/ DaKanji_${{env.DAKANJI_VERSION}}_app.zip
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}_app.zip
           path: DaKanji_${{env.DAKANJI_VERSION}}_app.zip

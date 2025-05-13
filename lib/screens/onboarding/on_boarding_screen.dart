@@ -18,8 +18,6 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
 import 'package:da_kanji_mobile/widgets/onboarding/on_boarding_page.dart';
 
-
-
 /// The "home"-screen
 /// 
 /// If this is the first app start or a new feature was added shows the
@@ -201,6 +199,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                   GetIt.I<UserData>().save();
                   Future.delayed(const Duration(milliseconds: 500), () =>
                     Navigator.pushNamedAndRemoveUntil(
+                      // ignore: use_build_context_synchronously
                       context,
                       "/${Screens.dictionary.name}",
                       (route) => false

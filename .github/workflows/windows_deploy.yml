@@ -51,7 +51,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
 
       # get versions from pubspec
       - name: set env variables
@@ -83,8 +85,21 @@ jobs:
           gh release upload gh_action artifacts\DaKanji_${{env.DAKANJI_VERSION}}_gh.msix --clobber
 
       # get msix store artifact and upload it to MS store
-      #- name: get build artifacts for snap
-      #  uses: actions/download-artifact@v3
-      #  if: ${{github.event.inputs.upload_to_stores == 'beta'}}
-      #  with:
-      #    name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix
+      - name: get build artifacts for MS Store upload
+        uses: actions/download-artifact@v3
+        if: ${{github.event.inputs.upload_to_stores == 'beta'}}
+        with:
+          name: DaKanji_${{env.DAKANJI_VERSION}}_store.msix
+          path: artifacts
+        
+      - uses: microsoft/setup-msstore-cli@v1
+      - name: upload msix to MS store
+        if: ${{github.event.inputs.upload_to_stores == 'beta'}}
+        env:
+          TENANT_ID: ${{ secrets.MS_STORE_TENANT_ID }}
+          CLIENT_ID: ${{ secrets.MS_STORE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.MS_STORE_CLIENT_SECRET }}
+          SELLER_ID: ${{ secrets.MS_STORE_SELLER_ID }}
+        run: |
+          msstore reconfigure --tenantId ${{ env.TENANT_ID }} --clientId ${{ env.CLIENT_ID }} --clientSecret ${{ env.CLIENT_SECRET }} --sellerId ${{ env.SELLER_ID }}
+          msstore publish -v artifacts\DaKanji_${{env.DAKANJI_VERSION}}_store.msix

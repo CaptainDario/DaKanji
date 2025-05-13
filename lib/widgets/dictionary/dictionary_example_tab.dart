@@ -10,13 +10,14 @@ import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
-import 'package:mecab_dart/mecab_dart.dart';
+import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/example_sentence_card.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
@@ -61,33 +62,24 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
 
   /// Initializes the list of example sentences.
   /// Limit is the maximum number of examples to be loaded. -1 means no limit.
-  void initExamples({int limit = 10}){
+  Future initExamples({int limit = 10}) async {
 
     if(widget.entry != null){
       List<String> selectedLangs = 
         GetIt.I<Settings>().dictionary.selectedTranslationLanguages;
 
-      List<String> kanjiSplits = widget.entry!.kanjis.map((e) => 
-        GetIt.I<Mecab>().parse(e)
-          .where((e) => e.features.length > 6)
-          .map((e) => e.features[6]).toList()
-      )
-      .expand((e) => e)
-      .toList();
-
-      examplesSearch = (compute(searchExamples, Tuple7(
+      examples = await searchExamples(
         selectedLangs,
         widget.entry!.kanjis,
         widget.entry!.readings,
         widget.entry!.hiraganas,
-        kanjiSplits,
         limit,
         GetIt.I<Isars>().examples.directory
-      )).then((value) {
-        examples = value;
-        matchSpans = getMatchSpans();
-        return examples;
-      }));
+      );
+
+      matchSpans = getMatchSpans(widget.entry!, examples);
+      return examples;
+
     }    
   }
   
@@ -100,7 +92,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
     }
 
     return FutureBuilder(
-      future: examplesSearch,
+      future: initExamples(),
       builder: (context, snapshot) {
         // Is data loading
         if(!snapshot.hasData){
@@ -149,8 +141,11 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
     
   }
 
+}
+
   /// Get a list of lists of TextSpan that mark the entry's word in the example sentences
-  List<List<Tuple2<int, int>>> getMatchSpans(){
+  List<List<Tuple2<int, int>>> getMatchSpans(
+    JMdict entry, List<ExampleSentence> examples){
 
     List<List<Tuple2<int, int>>> matchSpans = [];
 
@@ -161,7 +156,7 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
       String example = examples[e].sentence;
       List<TokenNode> parsedExample = GetIt.I<Mecab>().parse(example);
 
-      for (List<String> items in [widget.entry!.kanjis, widget.entry!.readings, widget.entry!.hiraganas]){
+      for (List<String> items in [entry.kanjis, entry.readings, entry.hiraganas]){
         for (int k = 0; k < items.length; k++){
           String item = items[k];
 
@@ -187,13 +182,13 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
             continue;
           }
 
-          if(widget.entry!.kanjis.contains(parsedExample[i].features[6])){
+          if(entry.kanjis.contains(parsedExample[i].features[6])){
             matchSpans.last.add(currentSpan);
           }
-          else if(widget.entry!.readings.contains(parsedExample[i].features[6])){
+          else if(entry.readings.contains(parsedExample[i].features[6])){
             matchSpans.last.add(currentSpan);
           }
-          else if(widget.entry!.hiraganas.contains(parsedExample[i].features[6])){
+          else if(entry.hiraganas.contains(parsedExample[i].features[6])){
             matchSpans.last.add(currentSpan);
           }
         }
@@ -201,23 +196,21 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
     }
     return matchSpans;
   }
-}
 
 /// Searches for examples in the database that contain JMEntry.
-List<ExampleSentence> searchExamples(Tuple7 query){
+List<ExampleSentence> _searchExamples(Tuple6 query){
 
   List<String> selectedLangs = query.item1;
   List<String> kanjis = query.item2;
   List<String> readings = query.item3;
   List<String> hiraganas = query.item4;
-  //List<String> kanjiSplits = query.item5;
-  int limit = query.item6;
-  String isarPath = query.item7;
+  int limit = query.item5;
+  String isarPath = query.item6;
   
   // find all examples in ISAR that cotain this words kanji
   Isar examplesIsar = Isar.openSync(
     [ExampleSentenceSchema], directory: isarPath,
-    name: "examples", maxSizeMiB: 384
+    name: "examples", maxSizeMiB: g_IsarExampleMaxMiB
   );
   List<ExampleSentence> examples = examplesIsar.exampleSentences
     .where()
@@ -244,7 +237,7 @@ List<ExampleSentence> searchExamples(Tuple7 query){
       .filter()
         .anyOf(kanjis, (q, kanji) => q.sentenceContains(kanji))
       .or()
-        .anyOf(readings, (q, reading) => q.sentenceContains(reading))
+        .anyOf(readings, (q, reading) => q.sentenceContains(reading, caseSensitive: false))
         // apply language filters
         .translationsElement((q) => 
           q.anyOf(selectedLangs, (q, element) => 
@@ -271,4 +264,27 @@ List<ExampleSentence> searchExamples(Tuple7 query){
   });
 
   return examples;
+}
+
+/// Searches for example sentences, same as `_searchExamples` but does so in 
+/// an isolate to prevent blocking the UI. Therefore, this method should be
+/// preferred over `_searchExamples`
+Future<List<ExampleSentence>> searchExamples(
+  List<String> selectedLangs,
+  List<String> kanjis,
+  List<String> readings,
+  List<String> hiraganas,
+  int limit,
+  String? directory
+){
+
+  return compute(_searchExamples, Tuple6(
+    selectedLangs,
+    kanjis,
+    readings,
+    hiraganas,
+    limit,
+    directory
+  ));
+
 }

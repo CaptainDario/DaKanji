@@ -100,10 +100,10 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                           child: Container(
                             decoration: BoxDecoration(
                               color: selectedFilters.contains(item.key)
-                                ? g_Dakanji_green.withOpacity(0.5)
+                                ? g_Dakanji_green.withValues(alpha: 0.5)
                                 : null,
                               border: Border.all(
-                                color: Colors.grey.withOpacity(0.5),
+                                color: Colors.grey.withValues(alpha: 0.5),
                               ),
                               borderRadius: BorderRadius.circular(4),
                             ),
@@ -137,8 +137,8 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                                       fontSize: 13,
                                       color: selectedFilters.contains(item.key)
                                         ? Theme.of(context).brightness == Brightness.dark
-                                          ? Colors.white.withOpacity(0.5)
-                                          : Colors.black.withOpacity(0.5)
+                                          ? Colors.white.withValues(alpha: 0.5)
+                                          : Colors.black.withValues(alpha: 0.5)
                                         : Theme.of(context).brightness == Brightness.dark
                                           ? Colors.white
                                           : Colors.black
@@ -182,7 +182,7 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                             Navigator.of(context).pop();
                           },
                           borderRadius: BorderRadius.circular(5000),
-                          highlightColor: g_Dakanji_green.withOpacity(0.2),
+                          highlightColor: g_Dakanji_green.withValues(alpha: 0.2),
                           child: SizedBox(
                             height: 24,
                             width: 100,

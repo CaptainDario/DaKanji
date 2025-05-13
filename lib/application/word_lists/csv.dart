@@ -21,7 +21,7 @@ Future<String> csvFromWordListNode(TreeNode<WordListsData> node) async {
     .langsToInclude(GetIt.I<Settings>().dictionary.selectedTranslationLanguages);
 
   // find all elements from the word list in the database
-  List<JMdict> entries = await wordListEntriesForExport(entryIDs, langsToInclude);
+  List<JMdict> entries = await wordListIdsToJMdict(entryIDs, langsToInclude);
 
   // header
   csv += "kanji\treading\t${langsToInclude.join("\t")}\n";

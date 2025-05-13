@@ -23,6 +23,10 @@ class PathManager {
   late final Directory dojgDirectory;
   /// The directory where the audios are stored
   late final Directory audiosDirectory;
+  /// directory that contains all files necessary for ml inference
+  late final Directory mlDirectory;
+  /// The directory for the single char recognition cnn
+  late final Directory singleCharCNNDirectory;
 
 
   PathManager();
@@ -44,6 +48,10 @@ class PathManager {
     audiosDirectory = Directory(p.joinAll([dakanjiSupportDirectory.path, "audios"]));
 
     dojgDirectory = Directory(p.joinAll([dakanjiSupportDirectory.path, "dojg"]));
+
+    mlDirectory = Directory(p.joinAll([dakanjiSupportDirectory.path, "assets", "ml"]));
+
+    singleCharCNNDirectory = Directory(p.joinAll([mlDirectory.path, "CNN_single_char"]));
 
   }
  

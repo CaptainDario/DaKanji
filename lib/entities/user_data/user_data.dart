@@ -95,6 +95,22 @@ class UserData{
   @JsonKey(defaultValue: true)
   bool showTutorialDojg = true;
 
+  /// should the tutorial of the immersion screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialImmersion = true;
+
+  /// should the tutorial of the ocr screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialOcr = true;
+
+  /// should the tutorial of the webbrowser screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialWebbrowser = true;
+
+  /// should the tutorial of the youtube screen be shown
+  @JsonKey(defaultValue: true)
+  bool showTutorialYoutube = true;
+
   /// should the tutorial of the clipboard screen be shown
   @JsonKey(defaultValue: true)
   bool showTutorialClipboard = true;
@@ -187,6 +203,10 @@ class UserData{
       // any version newer than `versionUsed` has newer radicals data
       if(g_NewRadicals.any((v) => v > versionUsed!)){
         getNewRadicals = true;
+      }
+      // any version newer than `versionUsed` needs a anki reset
+      if(g_ResetAnki.any((v) => v > versionUsed!)){
+        ankiSetup = false;
       }
     }
     if(versionUsed! > g_Version){

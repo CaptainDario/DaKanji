@@ -161,7 +161,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
         children: [
           TextAnalysisPopup(
             text: currentClipboard.text!,
-            allowDeconjugation: GetIt.I<Settings>().clipboard.searchDeconjugate,
+            allowDeconjugation: GetIt.I<Settings>().clipboard.deconjugateBeforeSearch,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

@@ -7,12 +7,13 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:fvp/mdk.dart' as mdk;
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
-import 'package:fvp/mdk.dart' as mdk;
 
 // Project imports:
 import 'package:da_kanji_mobile/application/kana/kana.dart';
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/kana/kana.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
@@ -22,6 +23,7 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/kana_table/kana_grid.dart';
 import 'package:da_kanji_mobile/widgets/kana_table/kana_info_card.dart';
+import 'package:universal_io/io.dart';
 
 class KanaTableScreen extends StatefulWidget {
   
@@ -81,6 +83,9 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
 
   @override
   void initState() {
+
+    // TODO change according to issue
+    if(Platform.isAndroid) kanaSoundPlayer.audioBackends = ["AudioTrack"];
 
     menuFunctions = [
       dakuDialPressed,
@@ -153,7 +158,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
-              icon: Icons.settings,
+              icon: DaKanjiIcons.settings,
               openCloseDial: isDialOpen,
               activeIcon: Icons.close,
               iconTheme: const IconThemeData(color: Colors.white),
@@ -294,7 +299,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                     onTap: (String kana) async {
                       if(GetIt.I<Settings>().kanaTable.playAudio){
                         kanaSoundPlayer.setAsset(
-                          "assets//audios/kana/individuals/${convertToRomaji(kana)}.wav");
+                          "assets/audios/kana/individuals/${convertToRomaji(kana)}.wav");
                         kanaSoundPlayer.state = mdk.PlaybackState.playing;
                       }
                       setState(() {
@@ -329,8 +334,8 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                         animation: _controller,
                         builder: (context, child) {
                           return Container(
-                            color: Colors.black.withOpacity(
-                              lerpDouble(0, 0.5, _controller.value) ?? 0
+                            color: Colors.black.withValues(
+                              alpha: lerpDouble(0, 0.5, _controller.value) ?? 0
                             )
                           );
                         }
@@ -350,7 +355,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                         if(currentKana == null) return;
 
                         kanaSoundPlayer.setAsset(
-                          "assets//audios/kana/individuals/${convertToRomaji(currentKana!)}.wav");
+                          "assets/audios/kana/individuals/${convertToRomaji(currentKana!)}.wav");
                         kanaSoundPlayer.state = mdk.PlaybackState.playing;
                       },
                     ),

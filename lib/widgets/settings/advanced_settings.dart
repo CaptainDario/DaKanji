@@ -5,7 +5,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
@@ -22,6 +21,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
+import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/widgets/settings/optimize_backends_popup.dart';
@@ -45,25 +45,18 @@ class AdvancedSettings extends StatefulWidget {
 class _AdvancedSettingsState extends State<AdvancedSettings> {
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      tilePadding: const EdgeInsets.all(0),
-      title: Align(
-        alignment: Alignment.centerLeft,
-        child: AutoSizeText(
-          LocaleKeys.SettingsScreen_advanced_settings_title.tr(),
-          group: g_SettingsAutoSizeGroup,
-        ),
-      ),
+    return ResponsiveHeaderTile(
+      LocaleKeys.SettingsScreen_advanced_settings_title.tr(),
+      Icons.warning,
       children: [
-        // optimize backends
-        ResponsiveIconButtonTile(
-          text: LocaleKeys.SettingsScreen_advanced_settings_optimize_nn.tr(),
-          icon: Icons.saved_search_sharp,
-          onButtonPressed: () {
-            optimizeBackendsPopup(context).show();
-          },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
-        ),
+        // TODO v4: reenable optimize backends
+        //ResponsiveIconButtonTile(
+        //  text: LocaleKeys.SettingsScreen_advanced_settings_optimize_nn.tr(),
+        //  icon: Icons.saved_search_sharp,
+        //  onButtonPressed: () {
+        //    optimizeBackendsPopup(context).show();
+        //  },
+        //),
         // number of search isolates
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_advanced_settings_number_search_procs.tr(),
@@ -99,7 +92,6 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
             GetIt.I<DictionarySearch>().noIsolates = value.toInt();
             await GetIt.I<DictionarySearch>().init();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
         // Reset settings
         ResponsiveIconButtonTile(
@@ -188,7 +180,15 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
             widget.settings.advanced.useThanosSnap = newValue;
             widget.settings.save();
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
+        ),
+        // matrix color setting
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_advanced_settings_matrix.tr(),
+          value: widget.settings.advanced.iAmInTheMatrix,
+          onTileTapped: (newValue) {
+            widget.settings.advanced.iAmInTheMatrix = newValue;
+            widget.settings.save();
+          },
         ),
       ],
     );

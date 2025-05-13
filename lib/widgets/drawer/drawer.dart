@@ -12,6 +12,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/helper/feedback.dart';
+import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/entities/drawer/drawer_entries.dart';
 import 'package:da_kanji_mobile/entities/drawer/drawer_listener.dart';
@@ -72,90 +73,105 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
   /// all entries that are in the drawer
   List<DrawerEntry> drawerEntries = [
     DrawerEntry(
-      Icons.brush, LocaleKeys.DrawScreen_title,
+      DaKanjiIcons.drawing, LocaleKeys.DrawScreen_title,
       "/${Screens.drawing.name}", Screens.drawing,
       null, null,
       true, null),
     DrawerEntry(
-      Icons.book, LocaleKeys.DictionaryScreen_title,
+      DaKanjiIcons.dictionary, LocaleKeys.DictionaryScreen_title,
       "/${Screens.dictionary.name}", Screens.dictionary,
       null, null,
       true, null),
     DrawerEntry(
-      Icons.text_snippet, LocaleKeys.TextScreen_title,
+      DaKanjiIcons.text, LocaleKeys.TextScreen_title,
       "/${Screens.text.name}", Screens.text,
       null, null,
       true, null),
     DrawerEntry(
-      DaKanjiIcons.dojg, LocaleKeys.DojgScreen_title,
+      DaKanjiCustomIcons.dojg, LocaleKeys.DojgScreen_title,
       "/${Screens.dojg.name}", Screens.dojg,
       null, null,
       true, null),
     DrawerEntry(
-      DaKanjiIcons.kanji_table, LocaleKeys.KanjiTableScreen_title,
+      DaKanjiCustomIcons.kanji_table, LocaleKeys.KanjiTableScreen_title,
       "/${Screens.kanjiTable.name}", Screens.kanjiTable,
       null, null,
       true, null),
     if(kDebugMode)
       DrawerEntry(
-        DaKanjiIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title,
+        DaKanjiCustomIcons.kanji_trainer, LocaleKeys.KanjiTrainerScreen_title,
         "/${Screens.kanjiTrainer.name}", Screens.kanjiTrainer,
         null, null,
         kDebugMode, null),
-    if(kDebugMode)
-      DrawerEntry(
-        Icons.map, LocaleKeys.KanjiMapScreen_title,
-        "/${Screens.kanjiMap.name}", Screens.kanjiMap,
-        null, null,
-        kDebugMode, null),
     DrawerEntry(
-      DaKanjiIcons.kana_table, LocaleKeys.KanaTableScreen_title,
+      DaKanjiCustomIcons.kana_table, LocaleKeys.KanaTableScreen_title,
       "/${Screens.kanaTable.name}", Screens.kanaTable,
       null, null,
       true, null),
+    // in the future kana trainer
     if(kDebugMode)
       DrawerEntry(
-        DaKanjiIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title,
+        DaKanjiCustomIcons.kana_trainer, LocaleKeys.KanaTrainerScreen_title,
         "/${Screens.kanaTrainer.name}", Screens.kanaTrainer,
         null, null,
         kDebugMode, null),
     DrawerEntry(
-      Icons.list_outlined, LocaleKeys.WordListsScreen_title,
+      DaKanjiIcons.wordLists, LocaleKeys.WordListsScreen_title,
       "/${Screens.wordLists.name}", Screens.wordLists,
       null, const Alignment(0, -0.1),
       true, null),
     DrawerEntry(
-      Icons.copy_rounded, LocaleKeys.ClipboardScreen_title,
+      DaKanjiIcons.clipboard, LocaleKeys.ClipboardScreen_title,
       "/${Screens.clipboard.name}", Screens.clipboard,
       null, null,
       true, null),
     DrawerEntry(
-      Icons.settings_applications, LocaleKeys.SettingsScreen_title,
+      DaKanjiIcons.settings, LocaleKeys.SettingsScreen_title,
       "/${Screens.settings.name}", Screens.settings,
       null, null,
       true, null),
     DrawerEntry(
-      Icons.info, LocaleKeys.AboutScreen_title,
+      DaKanjiIcons.about, LocaleKeys.AboutScreen_title,
       "/${Screens.about.name}", Screens.about,
       null, null,
       true, null),
     DrawerEntry(
-      Icons.help, LocaleKeys.ManualScreen_title,
+      DaKanjiIcons.manual, LocaleKeys.ManualScreen_title,
       "/${Screens.manual.name}", Screens.manual,
       null, null,
       true, null),
-    DrawerEntry(Icons.feedback, LocaleKeys.FeedbackScreen_title, null, null,
+    DrawerEntry(
+      DaKanjiIcons.feedback, LocaleKeys.FeedbackScreen_title,
+      null, null,
       null, null,
       true, sendFeedback),
     if(kDebugMode)
       DrawerEntry(
-        Icons.visibility_sharp, LocaleKeys.ImmersionScreen_title,
+        Icons.remove_red_eye, LocaleKeys.ImmersionScreen_title,
         "/${Screens.immersion.name}", Screens.immersion,
         null, null,
         kDebugMode, null),
     if(kDebugMode)
       DrawerEntry(
-        const IconData(0x5d29, fontFamily: "kouzan"), LocaleKeys.KuzushijiScreen_title,
+        DaKanjiIcons.youtube, LocaleKeys.YoutubeScreen_title,
+        "/${Screens.youtube.name}", Screens.youtube,
+        null, null,
+        kDebugMode, null),
+    if(kDebugMode)
+      DrawerEntry(
+        DaKanjiIcons.webbrowser, LocaleKeys.WebbrowserScreen_title,
+        "/${Screens.webbrowser.name}", Screens.webbrowser,
+        null, null,
+        kDebugMode, null),
+    if(kDebugMode)
+      DrawerEntry(
+        DaKanjiIcons.ocr, LocaleKeys.OcrScreen_title,
+        "/${Screens.ocr.name}", Screens.ocr,
+        null, null,
+        kDebugMode, null),
+    if(kDebugMode)
+      DrawerEntry(
+        DaKanjiIcons.kuzushiji, LocaleKeys.KuzushijiScreen_title,
         "/${Screens.kuzushiji.name}", Screens.kuzushiji,
         0.7, const Alignment(-1000, 0),
         kDebugMode, null),

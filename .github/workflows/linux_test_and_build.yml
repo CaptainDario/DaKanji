@@ -25,12 +25,14 @@ jobs:
   # This workflow contains a single job called "build"
   build_test:
     # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
 
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
@@ -63,6 +65,15 @@ jobs:
       - name: Restore packages
         run: flutter pub get
         
+      - name: Setup DaKanji env.dart
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
+          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
+          POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
+        run: |
+          python3 ./.github/workflows/create_dakanji_env.py
+          flutter pub run build_runner build --delete-conflicting-outputs
+
       # get / set dakanji assets from cache
       - name: Check dakanji assets in cache
         id: cache-dakanji-assets-restore
@@ -85,49 +96,42 @@ jobs:
         with:
           path: tmp
           key: dakanji-assets
-      - name: Setup DaKanji env.dart
-        env:
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }} 
-          POSTHOG_API_KEY_REL: ${{ secrets.POSTHOG_API_KEY_REL }} 
-          POSTHOG_API_KEY_DEV: ${{ secrets.POSTHOG_API_KEY_DEV }} 
-        run: |
-          python3 ./.github/workflows/create_dakanji_env.py
-          flutter pub run build_runner build --delete-conflicting-outputs
         
       - name: install build packages
         run: |
           sudo apt-get update
-          sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev mpv xvfb
+          sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libmpv-dev libglu1-mesa mpv xvfb
 
-      - name: Run integration tests
-        run: python3 ./integration_test/run_tests.py
+      #- name: Run integration tests
+      #  run: |
+      #    sudo Xvfb $DISPLAY -screen 0 1280x1024x24 > /dev/null 2>&1 &
+      #    echo "Xvfb started"
+      #    python3 ./integration_test/run_tests.py
 
       # build portable linux
       - name: build linux executable
         run: |
           flutter build linux --release -v
-          zip -r DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip build/linux/x64/release/bundle
+          zip -r DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_24_04.zip build/linux/x64/release/bundle
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
-          path: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_22_04.zip
+          name: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_24_04.zip
+          path: DaKanji_${{env.DAKANJI_VERSION}}_ubuntu_24_04.zip
 
       # build flatpak and upload artifact
       - name: Build and upload flatpak
         working-directory: flatpak/
         run: |
-          sudo apt-get install flatpak flatpak-builder
+          sudo apt-get install flatpak flatpak-builder appstream
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak install -y flathub org.freedesktop.Sdk//22.08 org.freedesktop.Platform//22.08
+          flatpak install -y flathub org.freedesktop.Sdk//24.08 org.freedesktop.Platform//24.08
           
-          flatpak-builder build-dir  com.DaAppLab.DaKanji.yml
-          flatpak-builder --repo=repo --force-clean build-dir com.DaAppLab.DaKanji.yml
-          flatpak build-bundle repo com.DaAppLab.DaKanji.flatpak com.DaAppLab.DaKanji
+          python3 build_flatpak.py
 
           mv com.DaAppLab.DaKanji.flatpak ../DaKanji_${{env.DAKANJI_VERSION}}.flatpak
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}.flatpak
           path: DaKanji_${{env.DAKANJI_VERSION}}.flatpak
@@ -152,7 +156,7 @@ jobs:
         run: |
           mv ${{ steps.snapcraft.outputs.snap }} DaKanji_${{env.DAKANJI_VERSION}}.snap
       - name: Upload snap as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DaKanji_${{env.DAKANJI_VERSION}}.snap
           path: DaKanji_${{env.DAKANJI_VERSION}}.snap

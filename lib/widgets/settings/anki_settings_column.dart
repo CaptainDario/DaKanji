@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
@@ -12,7 +14,6 @@ import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_drop_down_tile.dart';
@@ -56,7 +57,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
         // the default deck to add cards to
         ResponsiveDropDownTile(
           text: LocaleKeys.SettingsScreen_anki_default_deck.tr(),
-          autoSizeGroup: AutoSizeGroup(),
           value: widget.settings.anki.defaultDeck,
           items: widget.settings.anki.availableDecks.contains(widget.settings.anki.defaultDeck) ||
             widget.settings.anki.defaultDeck == null
@@ -96,6 +96,34 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
             });
           },
         ),
+        // Allow Duplicates
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_anki_allow_duplicates.tr(),
+          value: widget.settings.anki.allowDuplicates,
+          leadingIcon: Icons.info,
+          onLeadingIconPressed: () async {
+            AwesomeDialog(
+              context: context,
+              dialogType: DialogType.noHeader,
+              btnOkColor: g_Dakanji_green,
+              btnOkOnPress: (){},
+              body: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MarkdownBody(
+                    data: LocaleKeys.SettingsScreen_anki_allow_duplicates_explanation.tr(),
+                  ),
+                )
+              )
+            ).show();
+          },
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.anki.allowDuplicates = value;
+              widget.settings.save();
+            });
+          },
+        ),
         // which langauges should be included
         ExportLanguagesIncludeChips(
           text: LocaleKeys.SettingsScreen_anki_languages_to_include.tr(),
@@ -108,11 +136,10 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
         ResponsiveSliderTile(
           text: LocaleKeys.SettingsScreen_anki_default_no_translations.tr(),
           value: widget.settings.anki.noTranslations.toDouble(),
-          min: 1,
-          max: 50,
-          divisions: 50,
+          min: 0,
+          max: 10,
+          divisions: 11,
           showLabelAsInt: true,
-          autoSizeGroup: g_SettingsAutoSizeGroup,
           onChanged: (value) {
             setState(() {
               widget.settings.anki.noTranslations = value.toInt();
@@ -131,6 +158,32 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
               widget.settings.save();
             },
           ),
+        // how many examples should be included
+        ResponsiveSliderTile(
+          text: LocaleKeys.SettingsScreen_anki_number_of_examples.tr(),
+          value: widget.settings.anki.noExamples.toDouble(),
+          min: 0,
+          max: 5,
+          divisions: 5,
+          showLabelAsInt: true,
+          onChanged: (value) {
+            setState(() {
+              widget.settings.anki.noExamples = value.toInt();
+              widget.settings.save();
+            });
+          },
+        ),
+        // Should the example's translations be included
+        ResponsiveCheckBoxTile(
+          text: LocaleKeys.SettingsScreen_anki_include_example_translations.tr(),
+          value: widget.settings.anki.includeExampleTranslations,
+          onTileTapped: (value) {
+            setState(() {
+              widget.settings.anki.includeExampleTranslations = value;
+              widget.settings.save();
+            });
+          },
+        ),
         // include google image (disabled for now)
         if(false)
           // ignore: dead_code
@@ -143,7 +196,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
                 widget.settings.save();
               });
             },
-            autoSizeGroup: g_SettingsAutoSizeGroup,
           ),
         // include audio (disabled for now)
         if(false)
@@ -157,7 +209,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
                 widget.settings.save();
               });
             },
-            autoSizeGroup: g_SettingsAutoSizeGroup,
           ),
         // include screenshot (disabled for now)
         if(false)
@@ -171,7 +222,6 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
               widget.settings.save();
             });
           },
-          autoSizeGroup: g_SettingsAutoSizeGroup,
         ),
       ],
     );

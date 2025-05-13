@@ -1,6 +1,7 @@
 
 
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 /// Riverpod provider that stores information about the DoJG search

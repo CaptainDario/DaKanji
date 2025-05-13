@@ -1,0 +1,10 @@
+[submodule "plugins/DaKanji-dependencies"]
+	path = plugins/DaKanji-dependencies
+	url = https://github.com/CaptainDario/DaKanji-dependencies
+[submodule "plugins/DaKanji-Dictionary"]
+	path = plugins/DaKanji-Dictionary
+	url = https://github.com/CaptainDario/DaKanji-Dictionary
+[submodule "plugins/flutter_browser_app"]
+	path = plugins/flutter_browser_app
+	url = https://github.com/CaptainDario/flutter_browser_app
+

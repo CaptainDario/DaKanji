@@ -1,11 +1,12 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:io';
-import 'package:collection/collection.dart';
-import 'package:flutter/gestures.dart';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
@@ -198,7 +199,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                 )
                                 : Container(
                                   decoration: BoxDecoration(
-                                    border: Border.all(width: 2, color: Colors.grey.withOpacity(0.5))
+                                    border: Border.all(width: 2, color: Colors.grey.withValues(alpha: 0.5))
                                   ),
                                   child: FittedBox(
                                     child: Text(
@@ -322,7 +323,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                               ScaffoldMessenger.of(context).showSnackBar(
                                                 SnackBar(
                                                   content: Text(
-                                                    "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} $radical"
+                                                    "${LocaleKeys.DictionaryScreen_kanji_copied.tr()} $radical",
                                                   )
                                                 )
                                               );
@@ -342,12 +343,15 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                                                 )
                                               );
                                             },
-                                            child: Text(radical),
+                                            child: Text(
+                                              radical,
+                                              textScaler: TextScaler.noScaling,
+                                            ),
                                           )
                                         ),
                                         if(radical != radicals.last)
                                           const TextSpan(
-                                            text: ", "
+                                            text: ", ",
                                           )
                                       ]
                                   ]
@@ -382,7 +386,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                       ),
                       const SizedBox(height: 8,),
 
-                      // TODO: words that use this kanji
+                      // TODO v4: words that use this kanji
                       /*
                       Text.rich(
                         TextSpan(
@@ -484,7 +488,7 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                             value: menuItems[i],
                             child: Text(menuItems[i])
                           );
-                        }).whereNotNull().toList(),
+                        }).nonNulls.toList(),
                         
                         /*(context) => List.generate(
                           menuItems.length,

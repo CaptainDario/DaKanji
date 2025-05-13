@@ -46,9 +46,9 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
   /// all radicals that are possible to select (they can be used to build a kanji)
   List<String> possibleRadicals = [];
   /// all kanjis that use all selected radicals
-  List<String> kanjisThatUseAllRadicals = [];
-
-  List<String> newKanjisThatUseAllRadicals = [];
+  List<List<String>> kanjisThatUseAllRadicals = [];
+  /// temporary storage of kanjis when new radicals have been selected
+  List<List<String>> newKanjisThatUseAllRadicals = [];
   /// radicals sorted by stroke order and returns a map of this
   late Map<int, List<String>> radicalsByStrokeOrder;
   /// Is the kanji part of the popup larger
@@ -101,41 +101,66 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                   context: context,
                   removeTop: true,
                   removeBottom: true,
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: noKanjiButtons,
-                      //crossAxisSpacing: 8,
-                      //mainAxisSpacing: 8
-                    ),
+                  child: ListView.builder(
+                    shrinkWrap: true,
                     itemCount: kanjisThatUseAllRadicals.length,
-                    itemBuilder: (context, index) {
-                      return AnimationConfiguration.staggeredGrid(
-                        position: index,
-                        columnCount: noKanjiButtons,
-                        child: ScaleAnimation(
-                          child: Card(
-                            child: InkWell(
-                              onTap: () {
-                                widget.searchController.text += kanjisThatUseAllRadicals[index];
-                              },
-                              borderRadius: BorderRadius.circular(8),
-                              child: Center(
-                                child: Text(
-                                  kanjisThatUseAllRadicals[index],
-                                  style: TextStyle(
-                                    fontSize: 28,
-                                    fontFamily: g_japaneseFontFamily,
-                                    color: Theme.of(context).brightness == Brightness.dark ?
-                                      Colors.white
-                                      : Colors.black,
-                                  ),
-                                ),
+                    itemBuilder: (context, strokeIndex) {
+                      return Column(
+                        children: [
+                          Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(16.0, 0, 0, 6),
+                            child: Text(
+                              "${strokeIndex+1}",
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold
                               ),
                             ),
                           ),
                         ),
+                          GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: noKanjiButtons,
+                              //crossAxisSpacing: 8,
+                              //mainAxisSpacing: 8
+                            ),
+                            itemCount: kanjisThatUseAllRadicals[strokeIndex].length,
+                            itemBuilder: (context, index) {
+                              return AnimationConfiguration.staggeredGrid(
+                                position: index,
+                                columnCount: noKanjiButtons,
+                                child: ScaleAnimation(
+                                  child: Card(
+                                    child: InkWell(
+                                      onTap: () {
+                                        widget.searchController.text += kanjisThatUseAllRadicals[strokeIndex][index];
+                                      },
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Center(
+                                        child: Text(
+                                          kanjisThatUseAllRadicals[strokeIndex][index],
+                                          style: TextStyle(
+                                            fontSize: 28,
+                                            fontFamily: g_japaneseFontFamily,
+                                            color: Theme.of(context).brightness == Brightness.dark ?
+                                              Colors.white
+                                              : Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       );
-                    },
+                    }
                   ),
                 ),
               ),
@@ -195,10 +220,10 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: selectedRadicals.contains(krad.value[index])
-                                        ? g_Dakanji_green.withOpacity(0.5)
+                                        ? g_Dakanji_green.withValues(alpha: 0.5)
                                         : null,
                                       border: Border.all(
-                                        color: Colors.grey.withOpacity(0.5),
+                                        color: Colors.grey.withValues(alpha: 0.5),
                                       ),
                                       borderRadius: BorderRadius.circular(4),
                                     ),
@@ -227,8 +252,8 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                             fontFamily: g_japaneseFontFamily,
                                             color: selectedRadicals.contains(krad.value[index])
                                               ? Theme.of(context).brightness == Brightness.dark
-                                                ? Colors.white.withOpacity(0.5)
-                                                : Colors.black.withOpacity(0.5)
+                                                ? Colors.white.withValues(alpha: 0.5)
+                                                : Colors.black.withValues(alpha: 0.5)
                                               : Theme.of(context).brightness == Brightness.dark
                                                 ? Colors.white
                                                 : Colors.black
@@ -291,7 +316,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                             Navigator.of(context).pop();
                           },
                           borderRadius: BorderRadius.circular(5000),
-                          highlightColor: g_Dakanji_green.withOpacity(0.2),
+                          highlightColor: g_Dakanji_green.withValues(alpha: 0.2),
                           child: SizedBox(
                             height: 24,
                             width: 100,

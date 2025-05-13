@@ -1,6 +1,7 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:typed_data';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,6 +18,7 @@ import 'package:da_kanji_mobile/application/word_lists/anki.dart';
 import 'package:da_kanji_mobile/application/word_lists/csv.dart';
 import 'package:da_kanji_mobile/application/word_lists/images.dart';
 import 'package:da_kanji_mobile/application/word_lists/pdf.dart';
+import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
@@ -232,7 +234,7 @@ class _WordListNodeState extends State<WordListNode> {
               height: 48,
               duration: Duration(milliseconds: widget.hoveringAnimationColorDuration),
               color: itemDraggingOverThis
-                ? g_Dakanji_green.withOpacity(0.5)
+                ? g_Dakanji_green.withValues(alpha: 0.5)
                 : Colors.transparent,
               padding: EdgeInsets.fromLTRB(
                 15.0*(widget.node.level-1)+8, 0, 0, 0
@@ -439,7 +441,8 @@ class _WordListNodeState extends State<WordListNode> {
       ).show();
 
       // send to anki PDF
-      await sendListToAnkiFromWordListNode(widget.node);
+      await sendListToAnkiFromWordListNode(widget.node,
+        GetIt.I<Settings>().anki.allowDuplicates);
 
       // close loading indicator
       // ignore: use_build_context_synchronously

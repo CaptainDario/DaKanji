@@ -85,7 +85,7 @@ class SettingsMisc with ChangeNotifier {
   // ignore: constant_identifier_names
   static const String d_selectedLocale = "en";
   /// The currently selected locale
-  @JsonKey(defaultValue: d_selectedTheme)
+  @JsonKey(defaultValue: d_selectedLocale)
   String _selectedLocale = d_selectedLocale;
   /// The currently selected locale
   String get selectedLocale => _selectedLocale;
@@ -95,23 +95,20 @@ class SettingsMisc with ChangeNotifier {
     notifyListeners();
   }
 
-  /// The default value for `windowWidth`
+  /// The default value for `fontSizeScale`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
-  static const int d_windowWidth = 480;
-  /// width of the current window
-  @JsonKey(defaultValue: d_windowWidth)
-  int windowWidth = d_windowWidth;
-
-
-  /// The default value for `windowHeight`
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  // ignore: constant_identifier_names
-  static const int d_windowHeight = 720;
-  /// height of the current window
-  @JsonKey(defaultValue: d_windowWidth)
-  int windowHeight = 720;
-
+  static const double d_fontSizeScale = 1;
+  /// global font scaling factor
+  @JsonKey(defaultValue: d_fontSizeScale)
+  double _fontSizeScale = d_fontSizeScale;
+  /// global font scaling factor
+  double get fontSizeScale => _fontSizeScale;
+  /// global font scaling factor
+  set fontSizeScale(double fontSizeScale) {
+    _fontSizeScale = fontSizeScale;
+    notifyListeners();
+  }
 
   /// The default value for `selectedTheme` 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -131,6 +128,37 @@ class SettingsMisc with ChangeNotifier {
     notifyListeners();
   }
 
+  /// The default value for `windowWidth`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowWidth = 480;
+  /// width of the current window
+  @JsonKey(defaultValue: d_windowWidth)
+  int windowWidth = d_windowWidth;
+
+  /// The default value for `windowHeight`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowHeight = 720;
+  /// height of the current window
+  @JsonKey(defaultValue: d_windowHeight)
+  int windowHeight = d_windowHeight;
+
+  /// The default value for `windowPosX`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowPosX = 0;
+  /// the x position where the desktop window should be created
+  @JsonKey(defaultValue: d_windowPosX)
+  int windowPosX = d_windowPosX;
+
+  /// The default value for `windowPosY`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_windowPosY = 0;
+  /// the y position where the desktop window should be created
+  @JsonKey(defaultValue: d_windowPosY)
+  int windowPosY = d_windowPosY;
 
   /// should this window always be shown on top of other windows
   @JsonKey(defaultValue: false)
@@ -143,6 +171,27 @@ class SettingsMisc with ChangeNotifier {
     notifyListeners();
   }
 
+  /// should the current window size always be saved when changing the size
+  @JsonKey(defaultValue: false)
+  bool _alwaysSaveWindowSize = false;
+  /// should the current window size always be saved when changing the size
+  bool get alwaysSaveWindowSize => _alwaysSaveWindowSize;
+  /// should the current window size always be saved when changing the size
+  set alwaysSaveWindowSize(bool newAlwaysSaveWindowSize) {
+    _alwaysSaveWindowSize = newAlwaysSaveWindowSize;
+    notifyListeners();
+  }
+
+  /// should the current window position always be saved when moving the window
+  @JsonKey(defaultValue: false)
+  bool _alwaysSaveWindowPosition = false;
+  /// should the current window position always be saved when moving the window
+  bool get alwaysSaveWindowPosition => _alwaysSaveWindowPosition;
+  /// should the current window position always be saved when moving the window
+  set alwaysSaveWindowPosition(bool newAlwaysSaveWindowPosition) {
+    _alwaysSaveWindowPosition = newAlwaysSaveWindowPosition;
+    notifyListeners();
+  }
 
   /// The window's opacity
   @JsonKey(defaultValue: 1.0)

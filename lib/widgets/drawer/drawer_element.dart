@@ -1,12 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
-import 'package:da_kanji_mobile/globals.dart';
+
+// Package imports:
+
 
 /// One list tile for drawer
 /// 
@@ -105,14 +104,16 @@ class DrawerElement extends StatelessWidget {
                 SizedBox(
                   width: drawerWidth*0.6,
                   height: tileHeight*0.5,
-                  child: AutoSizeText(
-                    title,
-                    group: g_DrawerAutoSizeGroup,
-                    minFontSize: g_MinFontSize,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: selected ? Theme.of(context).highlightColor : null,
+                  child: FittedBox(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: selected ? Theme.of(context).highlightColor : null,
+                      ),
                     ),
                   ),
                 ),

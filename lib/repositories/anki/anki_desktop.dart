@@ -25,7 +25,7 @@ class AnkiDesktop {
 
 
   /// Platform specific (desktop via anki connect) implementation of `add_note`
-  Future<http.Response> addNoteDesktop(AnkiNote note) async {
+  Future<http.Response> addNoteDesktop(AnkiNote note, bool allowDuplicates) async {
 
     // Create the body of the request
     Map<String, dynamic> body = {
@@ -37,12 +37,12 @@ class AnkiDesktop {
           "modelName": note.noteType,
           "fields": note.fields,
           "options": {
-            "allowDuplicate": false,
-            "duplicateScope": "deck",
-            "duplicateScopeOptions": {
-              "deckName": note.deckName,
-              "checkChildren": false
-            }
+            "allowDuplicate": allowDuplicates,
+            //"duplicateScope": "deck",
+            //"duplicateScopeOptions": {
+            //  "deckName": note.deckName,
+            //  "checkChildren": false
+            //}
           },
           "tags": note.tags
         }
@@ -58,7 +58,7 @@ class AnkiDesktop {
   }
 
   /// Platform specific (desktop via anki connect) implementation of `add_notes`
-  Future<http.Response> addNotesDesktop(List<AnkiNote> notes) async {
+  Future<http.Response> addNotesDesktop(List<AnkiNote> notes, bool allowDuplicates) async {
 
     List<Map> jsonNotes = [];
 
@@ -69,12 +69,12 @@ class AnkiDesktop {
         "modelName": note.noteType,
         "fields": note.fields,
         "options": {
-          "allowDuplicate": false,
-          "duplicateScope": "deck",
-          "duplicateScopeOptions": {
-            "deckName": note.deckName,
-            "checkChildren": false
-          }
+          "allowDuplicate": allowDuplicates,
+          //"duplicateScope": "deck",
+          //"duplicateScopeOptions": {
+          //  "deckName": note.deckName,
+          //  "checkChildren": false
+          //}
         },
         "tags": note.tags
       });
@@ -113,7 +113,7 @@ class AnkiDesktop {
     Map rMap = jsonDecode(r.body);
 
     if(rMap.containsKey("result")) {
-      return rMap["result"].contains("DaKanji");
+      return rMap["result"].contains(ankiDataCardModelName);
     } else {
       return false;
     }

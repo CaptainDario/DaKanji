@@ -1,0 +1,4 @@
+furigana==0.0.8
+ipadic==1.0.0
+jaconv==0.3
+mecab==0.996.5

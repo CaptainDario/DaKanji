@@ -1,9 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
-
 class ResponsiveSliderTile extends StatefulWidget {
   
   /// the text to display
@@ -23,8 +20,6 @@ class ResponsiveSliderTile extends StatefulWidget {
   final String? infoText;
   /// Should the label that indicates the current value be rounded to an int value
   final bool showLabelAsInt;
-  /// The autoSizeGroup to use for the text
-  final AutoSizeGroup? autoSizeGroup;
   /// callback which is executed when the user moves the slider
   final Function (double value)? onChanged;
   /// callback which is executed when the user stops moving the slider
@@ -42,7 +37,6 @@ class ResponsiveSliderTile extends StatefulWidget {
       this.leadingIcon,
       this.infoText,
       this.showLabelAsInt = false,
-      this.autoSizeGroup,
       this.onChanged,
       this.onChangeEnd,
       this.onLeadingIconPressed,
@@ -55,46 +49,56 @@ class ResponsiveSliderTile extends StatefulWidget {
 }
 
 class _ResponsiveSliderTileState extends State<ResponsiveSliderTile> {
+  
+
+  
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        if(widget.onLeadingIconPressed != null)
-          IconButton(
-            onPressed: () => widget.onLeadingIconPressed?.call(),
-            icon: Icon(widget.leadingIcon)
-          ),
-        Expanded(
-          flex: 5,
-          child: AutoSizeText(
-            widget.text,
-            group: widget.autoSizeGroup,
-          )
-        ),
-        Expanded(
-          flex: 0,
-          child: SliderTheme(
-            data: const SliderThemeData(showValueIndicator: ShowValueIndicator.always),
-            child: Slider(
-              value: widget.value,
-              min: widget.min,
-              max: widget.max,
-              label: widget.showLabelAsInt
-                ? widget.value.round().toString()
-                : widget.value.toStringAsFixed(2),
-              divisions: widget.divisions,
-              
-              onChanged: (double value) {
-                widget.onChanged?.call(value);
-              },
-              onChangeEnd: (value) {
-                widget.onChangeEnd?.call(value);
-              },
+
+    double height = MediaQuery.of(context).size.height;
+    double tileHeight = (height * 0.1).clamp(0, 45);
+    double width = MediaQuery.of(context).size.width;
+
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        width: width,
+        constraints: BoxConstraints(minHeight: tileHeight),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            if(widget.onLeadingIconPressed != null)
+              IconButton(
+                onPressed: () => widget.onLeadingIconPressed?.call(),
+                icon: Icon(widget.leadingIcon)
+              ),
+            Flexible(
+              child: Text(
+                widget.text,
+              ),
             ),
-          ),
+            SliderTheme(
+              data: const SliderThemeData(showValueIndicator: ShowValueIndicator.always),
+              child: Slider(
+                value: widget.value,
+                min: widget.min,
+                max: widget.max,
+                label: widget.showLabelAsInt
+                  ? widget.value.round().toString()
+                  : widget.value.toStringAsFixed(2),
+                divisions: widget.divisions,
+                
+                onChanged: (double value) {
+                  widget.onChanged?.call(value);
+                },
+                onChangeEnd: (value) {
+                  widget.onChangeEnd?.call(value);
+                },
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

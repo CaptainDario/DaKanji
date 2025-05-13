@@ -2,11 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:reorderables/reorderables.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/globals.dart';
 
 /// Widget that shows reorderable and selectable chips
 class ResponsiveFilterChips extends StatefulWidget {
@@ -19,6 +18,8 @@ class ResponsiveFilterChips extends StatefulWidget {
   final int numChips;
   /// Text that describes the chips (shown above the actual chips)
   final String? description;
+  /// A widget that describes the chips in more detail (popup button) 
+  final Widget? detailedDescription;
   /// Function that is called when user taps on a filter chip
   final void Function(bool selected, int index)? onFilterChipTap;
   /// Function that is called when user taps on a filter chip
@@ -30,6 +31,7 @@ class ResponsiveFilterChips extends StatefulWidget {
       required this.selected,
       required this.numChips,
       this.description,
+      this.detailedDescription,
       this.onFilterChipTap,
       this.onReorder,
       super.key
@@ -45,15 +47,34 @@ class _ResponsiveFilterChipsState extends State<ResponsiveFilterChips> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if(widget.description != null)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-            child: Align(
-              alignment: Alignment.centerLeft, 
-              child: AutoSizeText(
-                widget.description!,
-                group: g_SettingsAutoSizeGroup,
-              )
+        if(widget.description != null || widget.detailedDescription != null)
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                if(widget.detailedDescription != null)
+                  IconButton(
+                    icon: const Icon(Icons.info_outline),
+                    onPressed: () async {
+                      await AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.noHeader,
+                        body: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: widget.detailedDescription,
+                        )
+                      ).show();
+                    },
+                  ),
+                if(widget.description != null)
+                  Flexible(
+                    child: Text(
+                      widget.description!,
+                    ),
+                  ),
+              ],
             ),
           ),
         Align(

@@ -115,20 +115,5 @@ if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
     COMPONENT Runtime)
 endif()
 
-# get tf lite binaries
-message(STATUS "TF Lite detected processor architecture: ${CMAKE_SYSTEM_PROCESSOR}")
-if(CMAKE_SYSTEM_PROCESSOR STREQUAL "ARM64")
-  set(TF_LITE_SO_NAME libtensorflowlite_c_arm64.so)
-elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR
-        CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
-  set(TF_LITE_SO_NAME libtensorflowlite_c_x86.so)
-endif()
-
-install(
-  FILES ${PROJECT_BUILD_DIR}/../blobs/${TF_LITE_SO_NAME}
-  DESTINATION ${INSTALL_BUNDLE_DATA_DIR}/../blobs/
-  RENAME libtensorflowlite_c-linux.so
-)
-
 # mediakit
 target_link_libraries(${BINARY_NAME} PRIVATE ${MIMALLOC_LIB})

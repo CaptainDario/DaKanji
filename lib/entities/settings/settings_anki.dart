@@ -33,6 +33,21 @@ class SettingsAnki with ChangeNotifier {
     notifyListeners();
   }
 
+  /// The default value for `allowDuplicates`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_allowDuplicates = false;
+  /// When sending a note to anki, should duplicates be allowed
+  @JsonKey(defaultValue: d_allowDuplicates)
+  bool _allowDuplicates = d_allowDuplicates;
+  /// When sending a note to anki, should duplicates be allowed
+  bool get allowDuplicates => _allowDuplicates;
+  /// When sending a note to anki, should duplicates be allowed
+  set allowDuplicates(bool value) {
+    _allowDuplicates = value;
+    notifyListeners();
+  }
+
   /// All decks currently in anki
   @JsonKey(includeFromJson: false, includeToJson: false)
   List<String> availableDecks = [];
@@ -91,6 +106,36 @@ class SettingsAnki with ChangeNotifier {
   }
   /// The URL to connect to anki desktop
   Uri get desktopAnkiUri => Uri.http(Uri.encodeFull(_desktopAnkiURL));
+
+  /// The default value for `noTranslations`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const int d_noExamples = 1;
+  /// When creating a new note, how many examples should be included
+  @JsonKey(defaultValue: d_noTranslations)
+  int _noExamples = d_noExamples;
+  /// When creating a new note, how many examples should be included
+  int get noExamples => _noExamples;
+  /// When creating a new note, how many examples should be included
+  set noExamples(int value) {
+    _noExamples = value;
+    notifyListeners();
+  }
+  
+  /// The default value for `includeExampleTranslations`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_includeExampleTranslations = false;
+  /// When creating a new note, should the examples translations be included
+  @JsonKey(defaultValue: d_includeGoogleImage)
+  bool _includeExampleTranslations = d_includeExampleTranslations;
+  /// When creating a new note, should the examples translations be included
+  bool get includeExampleTranslations => _includeExampleTranslations;
+  /// When creating a new note, should the examples translations be included
+  set includeExampleTranslations(bool value) {
+    _includeExampleTranslations = value;
+    notifyListeners();
+  }
 
   /// The default value for `includeGoogleImage`
   @JsonKey(includeFromJson: false, includeToJson: false)

@@ -129,8 +129,8 @@ class Stats{
     if(userData.monthsUsageDays >= monthlyActiveDaysThreshold &&
       !userData.monthlyActiveUserTracked){
 
-      await logDefaultEvent("Monthly active user");
       userData.monthlyActiveUserTracked = true;
+      await logDefaultEvent("Monthly active user");
       await userData.save();
     }
   }
@@ -145,8 +145,8 @@ class Stats{
     if(userData.todayUsageSeconds >= dailyActiveSecondsThreshold &&
       !userData.dailyActiveUserTracked){
 
-      await logDefaultEvent("Daily active user");
       userData.dailyActiveUserTracked = true;
+      await logDefaultEvent("Daily active user");
       await userData.save();
     }
   }

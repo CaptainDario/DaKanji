@@ -29,18 +29,21 @@
 //     lib/application/manual/routing/deep_links.dart
 // 8. Add deep links to https://dakanji.app/deep-links/
 
+
 enum Screens{
   about,
   changelog,
   drawing,
   dictionary,
+  webbrowser,
+  youtube,
   immersion,
+  ocr,
   dojg,
   text,
   clipboard,
   kanjiTrainer,
   kanjiTable,
-  kanjiMap,
   kanaTable,
   kanaTrainer,
   kuzushiji,
@@ -52,3 +55,4 @@ enum Screens{
   manual,
   test
 }
+

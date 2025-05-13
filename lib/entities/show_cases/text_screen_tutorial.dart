@@ -11,17 +11,14 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 class TextScreenTutorial extends Tutorial {
 
   // All tutorial steps that belong to the TextScreen
-  late FocusNode textInputSteps;
-  late List<FocusNode> processedTextSteps;
+  late List<FocusNode> textInputSteps;
   late FocusNode spacesButtonSteps;
   late FocusNode furiganaSteps;
   late FocusNode colorButtonSteps;
-  late FocusNode fullscreenSteps;
 
   TextScreenTutorial() {
     titles = [
       LocaleKeys.TextScreen_tutorial_begin_title.tr(),
-      "",
       "",
       "",
       "",
@@ -43,18 +40,15 @@ class TextScreenTutorial extends Tutorial {
       LocaleKeys.TextScreen_tutorial_spaces_text.tr(),
       LocaleKeys.TextScreen_tutorial_furigana_text.tr(),
       LocaleKeys.TextScreen_tutorial_colors_text.tr(),
-      LocaleKeys.TextScreen_tutorial_fullscreen_text.tr(),
     ];
     
     initTutorial();
 
     /// get the different parts of the tutorial
-    textInputSteps = focusNodes![1];
-    processedTextSteps = focusNodes!.sublist(2, 7);
+    textInputSteps = focusNodes!.sublist(1, 7);
     spacesButtonSteps = focusNodes![7];
     furiganaSteps = focusNodes![8];
     colorButtonSteps = focusNodes![9];
-    fullscreenSteps = focusNodes![10];
   } 
 
 }

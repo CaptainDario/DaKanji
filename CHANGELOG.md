@@ -1,7 +1,77 @@
 
 # DaKanji - changelog
 
+## v3.5.0 - ワードリストと暗記改善 (14.04.2024)
+
+Note: **This update resets the Anki integration, please run the setup again**
+
+Added:
+
+- Dictionary:
+  - Add to anki / list from search results
+  - Search result sorting priority setting
+  - Show search separation headers setting
+  - Limit search results setting
+  - Handwriting input on android
+- Settings
+  - Font size #104
+- Anki: Examples sentences can be added to notes
+
+Improvements:
+
+- Text (MAJOR overhaul!)
+  - Text input renders furigana (no need for two text widgets!)
+  - Conjugations are now grouped together (食べ、たかっ、た -> 食べたかった)
+  - Vastly improved selection handling
+  - Only show furigana for kanjis
+  - Space text instead of resizing furigana
+  - Option to automatically read from clipboard #92
+  - Automatically save popup winow size and position
+- Dictionary
+  - New deconjugation engine, handles more deconjugation patterns
+  - Improved searching
+    - Searches for multiple possible search terms at the same time
+    - Ignore white space at the beginning and end of search terms
+  - Image search and DeepL supported on MacOS and Windows
+  - Back navigation clears search and resets current entry
+  - Readability of kanji stroke order diagrams #104
+- Word lists: significantly improved export speed
+- Radical search: show kanjis separated by stroke order
+- Kana table: playback on android does not cut off
+- Anki: Setting to decide how adding a duplicate should be handled
+- Keep screen turned on while screensaver is running
+- While downloading initial data, keep screen on
+- Various small UI improvements
+- Reduced install size
+- Unpack assets in isolate #72
+
+Fixed:
+
+- Windows drawing recognition does not work
+- Various fixes regarding deep links
+- Quick add to word list selection is always empty
+- DoJG: Zooming and scrolling using the mouse wheel conflicts each other
+- Anki
+  - The order of languages when sending to Anki has been ignored
+- Some audio files cut of on Android devices
+
+-------------------------------------------------------------------------
+
+## v3.4.4 - ワードリストと暗記改善 (25.07.2024)
+
+Fixed:
+
+- Windows drawing recognition does not work
+- DoJG search does not work
+- Falling words block UI interaction
+
+-------------------------------------------------------------------------
+
 ## v3.4.3 - ワードリストと暗記改善 (10.07.2024)
+
+Added:
+
+- I am in the matrix
 
 Improvements:
 
@@ -9,11 +79,12 @@ Improvements:
   - Back gesture clears the current search
   - Falling words
     - Not all controlled at the same time
-  - Use fvp for media playback
+- Use fvp for media playback
 
-- Fixed:
-  - App does not work in MS Store
-  - DoJG: Impossible to scroll back when image full screen on desktop
+Fixed:
+
+- App does not work in MS Store
+- DoJG: Impossible to scroll back when image full screen on desktop
 
 -------------------------------------------------------------------------
 

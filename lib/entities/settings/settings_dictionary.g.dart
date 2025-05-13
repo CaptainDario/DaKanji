@@ -17,16 +17,37 @@ SettingsDictionary _$SettingsDictionaryFromJson(Map<String, dynamic> json) =>
           (json['selectedTranslationLanguages'] as List<dynamic>)
               .map((e) => e as String)
               .toList()
+      ..showSearchMatchSeparation =
+          json['showSearchMatchSeparation'] as bool? ?? true
+      ..addToAnkiFromSearchResults =
+          json['addToAnkiFromSearchResults'] as bool? ?? false
+      ..addToListFromSearchResults =
+          json['addToListFromSearchResults'] as bool? ?? false
       ..showWordFruequency = json['showWordFruequency'] as bool? ?? false
-      ..searchDeconjugate = json['searchDeconjugate'] as bool? ?? true
-      ..convertToHiragana = json['convertToHiragana'] as bool? ?? true
+      ..searchResultSortPriorities =
+          (json['searchResultSortPriorities'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              [
+                'SettingsScreen.dict_term',
+                'SettingsScreen.dict_convert_to_kana',
+                'SettingsScreen.dict_base_form'
+              ]
+      ..selectedSearchResultSortPriorities =
+          (json['selectedSearchResultSortPriorities'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList()
       ..selectedFallingWordsLevels =
           (json['selectedFallingWordsLevels'] as List<dynamic>?)
                   ?.map((e) => e as String)
                   .toList() ??
               ['N5', 'N4', 'N3']
+      ..fallingWordsSpeed =
+          (json['fallingWordsSpeed'] as num?)?.toDouble() ?? 1.0
       ..playKanjiAnimationWhenOpened =
           json['playKanjiAnimationWhenOpened'] as bool? ?? true
+      ..limitSearchResults =
+          (json['limitSearchResults'] as num?)?.toInt() ?? 100
       ..kanjiAnimationStrokesPerSecond =
           (json['kanjiAnimationStrokesPerSecond'] as num?)?.toDouble() ?? 5.0
       ..resumeAnimationAfterStopSwipe =
@@ -38,11 +59,17 @@ Map<String, dynamic> _$SettingsDictionaryToJson(SettingsDictionary instance) =>
     <String, dynamic>{
       'translationLanguageCodes': instance.translationLanguageCodes,
       'selectedTranslationLanguages': instance.selectedTranslationLanguages,
+      'showSearchMatchSeparation': instance.showSearchMatchSeparation,
+      'addToAnkiFromSearchResults': instance.addToAnkiFromSearchResults,
+      'addToListFromSearchResults': instance.addToListFromSearchResults,
       'showWordFruequency': instance.showWordFruequency,
-      'searchDeconjugate': instance.searchDeconjugate,
-      'convertToHiragana': instance.convertToHiragana,
+      'searchResultSortPriorities': instance.searchResultSortPriorities,
+      'selectedSearchResultSortPriorities':
+          instance.selectedSearchResultSortPriorities,
       'selectedFallingWordsLevels': instance.selectedFallingWordsLevels,
+      'fallingWordsSpeed': instance.fallingWordsSpeed,
       'playKanjiAnimationWhenOpened': instance.playKanjiAnimationWhenOpened,
+      'limitSearchResults': instance.limitSearchResults,
       'kanjiAnimationStrokesPerSecond': instance.kanjiAnimationStrokesPerSecond,
       'resumeAnimationAfterStopSwipe': instance.resumeAnimationAfterStopSwipe,
       'googleImageSearchQuery': instance.googleImageSearchQuery,
