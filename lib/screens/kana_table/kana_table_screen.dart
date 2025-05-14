@@ -84,7 +84,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
   @override
   void initState() {
 
-    // TODO change according to issue
+    // use audio track for audio only playback on android
     if(Platform.isAndroid) kanaSoundPlayer.audioBackends = ["AudioTrack"];
 
     menuFunctions = [

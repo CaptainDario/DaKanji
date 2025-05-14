@@ -1,7 +1,7 @@
 
 # DaKanji - changelog
 
-## v3.5.0 - ワードリストと暗記改善 (14.04.2024)
+## v3.5.0 - ワードリストと暗記改善 (13.05.2024)
 
 Note: **This update resets the Anki integration, please run the setup again**
 
@@ -50,7 +50,7 @@ Fixed:
 - Windows drawing recognition does not work
 - Various fixes regarding deep links
 - Quick add to word list selection is always empty
-- DoJG: Zooming and scrolling using the mouse wheel conflicts each other
+- DoJG: Zooming and scrolling using the mouse wheel conflict each other
 - Anki
   - The order of languages when sending to Anki has been ignored
 - Some audio files cut of on Android devices
