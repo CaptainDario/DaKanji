@@ -90,7 +90,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   @override
   void initState() {
 
-    // TODO change according to issue
+    // use audio track for audio only playback on android
     if(Platform.isAndroid) player.audioBackends = ["AudioTrack"];
 
     player.loop = 0;
