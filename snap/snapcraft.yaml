@@ -30,6 +30,8 @@ apps:
       - network
       - home
       - desktop
+      - audio-playback
+      - audio-record
     slots:
       - dbus-dakanji
     environment:
@@ -39,7 +41,7 @@ parts:
 
   flutter-git:
     source: https://github.com/flutter/flutter.git
-    source-tag: "3.29.1"
+    source-tag: "3.29.3"
     plugin: nil
     override-build: |
       set -eux
@@ -77,20 +79,3 @@ parts:
       craftctl set version="$(jq -r '.version' build/flutter_assets/version.json)"
       mkdir -p $CRAFT_PART_INSTALL/bin
       cp -r build/linux/*/release/bundle/* $CRAFT_PART_INSTALL/bin/
-
-  # Find files provided by the base and platform snap and ensure they aren't
-  # duplicated in this snap
-  #cleanup:
-  #  after: [dakanji]  # Make this part run last; list all your other parts here
-  #  plugin: nil
-  #  build-snaps: [gnome-42-2204]  # List all content-snaps you're using here
-  #  override-prime: |
-  #    set -eux
-  #    for snap in "gnome-42-2204"; do  # List all content-snaps you're using here
-  #      cd "/snap/$snap/current" && find . -type f,l -exec rm -f "$CRAFT_PRIME/{}" "$CRAFT_PRIME/usr/{}" \;
-  #    done
-  #    for CRUFT in bug lintian man; do
-  #      rm -rf $CRAFT_PRIME/usr/share/$CRUFT
-  #    done
-  #    find $CRAFT_PRIME/usr/share/doc/ -type f -not -name 'copyright' -delete
-  #    find $CRAFT_PRIME/usr/share -type d -empty -delete
