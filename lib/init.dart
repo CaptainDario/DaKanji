@@ -206,7 +206,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
   String supportDir = g_DakanjiPathManager.dakanjiSupportDirectory.path;
   debugPrint("documents directory: ${supportDir.toString()}");
 
-  // copy assets from assets to documents directory, or download them from GH
+  // download assets from GH
   bool downloadAllowed = false;
 
   List<FileSystemEntity> assets = [
@@ -234,7 +234,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
       downloadAllowed = true;
     }
   }
-  WakelockPlus.enable();
+  WakelockPlus.disable();
 
 }
 
