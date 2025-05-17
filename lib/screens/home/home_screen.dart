@@ -104,13 +104,13 @@ class _HomeScreenState extends State<HomeScreen> {
     else {
       // if there is a deep link at app start handle it
       String? deepLink = await g_AppLinks.getInitialLinkString();
+      bool handled = false;
       if(deepLink != null && !g_initialDeepLinkHandled){
         g_initialDeepLinkHandled = true;
-        handleDeepLink(deepLink);
+        handled = handleDeepLink(deepLink);
       }
       // otherwise load the default screen
-      else{
-        // ignore: use_build_context_synchronously
+      if(!handled && mounted){
         Navigator.pushNamedAndRemoveUntil(context, 
           "/${GetIt.I<Settings>().misc.startupScreens[GetIt.I<Settings>().misc.selectedStartupScreen].name}", 
           (route) => false
