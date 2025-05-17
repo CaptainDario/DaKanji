@@ -30,8 +30,8 @@ Future<void> initDeepLinksStream() async {
   });
 }
 
-/// Handles the deep link
-void handleDeepLink(String link){
+/// Handles the deep link, returns true if it was handled, false otherwise
+bool handleDeepLink(String link){
 
   Uri uri = Uri.parse(link);
   List<String> route = uri.pathSegments;
@@ -39,8 +39,9 @@ void handleDeepLink(String link){
 
   link = Uri.decodeFull(Uri.encodeFull(link).toString());
 
-  debugPrint("Deeplink: $link");
+  debugPrint("Deeplink: $link with route: $route and args: $args");
   
+  if(route.isEmpty) return false;
 
   if(route[0] == Screens.drawing.name){
     handleDeepLinkDrawing(args);
@@ -66,6 +67,12 @@ void handleDeepLink(String link){
   else if(route[0] == Screens.settings.name){
     handleDeepLinkSettings(args);
   }
+  else {
+    debugPrint("Unknown deep link: $link");
+    return false;
+  }
+
+  return true;
   
 }
 
