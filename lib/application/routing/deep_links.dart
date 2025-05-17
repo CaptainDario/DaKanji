@@ -1,6 +1,3 @@
-
-
-
 // Dart imports:
 import 'dart:async';
 
@@ -16,6 +13,8 @@ import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
+
+
 
 /// Initialize the deep link stream, i.e. dakanji listening to the links that
 /// start with "dakanji://" or "https://dakanji.app/app/"
