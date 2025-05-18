@@ -172,7 +172,7 @@ msix_config:
   identity_name: 61015DaAppLab.DaKanji
   logo_path: ./assets/images/dakanji/icon.png
   capabilities: internetClient
-  execution-alias: DaKanji
+  execution-alias: dakanji
   languages: en-us, de-de, ru-ru, ja-jp, zh-cn, it-it, fr-fr, es-es, pl-pl
   
 dev_dependencies:

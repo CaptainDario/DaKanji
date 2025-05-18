@@ -49,7 +49,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
 
   // Replace "example" with the generated title found as parameter of `window.Create` in this file.
   // You may ignore the result if you need to create another window.
-  if (SendAppLinkToInstance(L"da_kanji_mobile")) {
+  // Using plugin to change the window name, thus use that name
+  if (SendAppLinkToInstance(L"dakanji")) {
     return EXIT_SUCCESS;
   }
 
