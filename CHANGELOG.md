@@ -14,8 +14,9 @@ Improvements:
 Fixed:
 
 - Anki integration on iOS
-- Empty deep links
+- Empty deep links (infinite loading)
 - App disabled sleep mode
+- Open Windows deep links in existing window
 
 ## v3.5.0 - ワードリストと暗記改善 (13.05.2024)
 
