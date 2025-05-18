@@ -1017,6 +1017,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
+  keyboard_detection:
+    dependency: "direct main"
+    description:
+      name: keyboard_detection
+      sha256: "8eba8e340595216872fbef9d1b97e1bf560d59110fe4847cca69cfa9a568a136"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.0"
   leak_tracker:
     dependency: transitive
     description:

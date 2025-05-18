@@ -8,7 +8,7 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.5.0+125
+version: 3.5.1+126
 
 
 environment:
@@ -103,6 +103,7 @@ dependencies:
 
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
+  keyboard_detection: 0.8.0
   async: 2.12.0
   path: 1.9.1
   http: 1.2.2
@@ -162,7 +163,7 @@ dependencies:
 
 msix_config:
   display_name: DaKanji
-  protocol_activation: dakanji
+  protocol_activation: dakanji, https
   app_uri_handler_hosts: dakanji.app, www.dakanji.app
   # package family name: 61015DaAppLab.DaKanji_t0074r350qa7p
   #msix_version: <<MSIX_VERSION>>
