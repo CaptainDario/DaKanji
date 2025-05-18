@@ -23,7 +23,7 @@ AwesomeDialog downloadPopup(
   return AwesomeDialog(
     context: context,
     desc: LocaleKeys.HomeScreen_download_popup_permission.tr()
-      .replaceAll("{DOWNLOAD_SIZE}", c_DOWNLOAD_SIZE.toString()),
+      .replaceAll("{DOWNLOAD_SIZE}", c_DOWNLOAD_SIZE.toStringAsFixed(1)),
     headerAnimationLoop: false,
     customHeader: Image.asset("assets/images/dakanji/icon.png"),
     dismissOnTouchOutside: dismissable,
