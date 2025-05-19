@@ -9,9 +9,15 @@ import subprocess
 
 repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases/tags/"
 tmp_dir = "tmp"
-files_to_exclude = ["audios.zip",
-                    "CNN_single_char.zip", "dictionary.zip", "examples.zip", "krad.zip", "mecab_dict.zip", "radk.zip",
-                    "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
+files_to_exclude = []
+default_files_to_exclude = ["audios.zip",
+    "CNN_single_char.zip",
+    "dictionary.zip",
+    "examples.zip",
+    "krad.zip",
+    "mecab_dict.zip",
+    "radk.zip",
+]
 files_to_exclude_win = [
     "libmecab_arm64.dylib",
 ]
@@ -28,6 +34,8 @@ assets_version = None
 def exclude_files_per_platform():
     """ Excludes files that are not needed for the current platform
     """
+
+    files_to_exclude = default_files_to_exclude
 
     if(sys.platform.startswith("win32")):
         files_to_exclude.extend(files_to_exclude_win)
