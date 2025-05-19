@@ -73,7 +73,7 @@ Improvements:
 
 - Dictionary
   - Verb conjugation tables are synced across tabs
-  - Some parts of search where case sensitive
+  - Some parts of search where case-sensitive
 
 Fixed:
 
@@ -107,7 +107,7 @@ Fixed:
 - Dictionary
   - Webview does not scroll in the dictionary
   - Android: Kana table no sound
-  - Scrolling floating words is too fast with spen
+  - Scrolling floating words is too fast with s-pen
   - Searched for: should not show the same term multiple times
 
 -------------------------------------------------------------------------
@@ -142,7 +142,7 @@ See normal changelog
 
 Improvements:
 
-- Images and DeepL on macos
+- Images and DeepL on macOS
 
 Fixed:
 
@@ -196,9 +196,9 @@ Fixed:
 Fixed:
 
 - Does not start on Windows
-- Pressing "rate" on linux causes exception
+- Pressing "rate" on Linux causes exception
 - File picker not opening in snap
-- Importing the dojg deck
+- Importing the DoJG deck
 - DoJG deep links
 - DoJG screen search text color
 - Potential race condition in SQLite when restarting the app
@@ -206,7 +206,7 @@ Fixed:
 Fixed:
 
 - Dictionary
-  - MacOS
+  - macOS
     - When typing in Japanese, writing suggestions could not be selected using keyboard
 - Kana table
   - Kana cut off on some aspect ratios
@@ -229,9 +229,9 @@ Removed:
 
 Fixed:
 
-- Pressing "rate" on linux causes exception
+- Pressing "rate" on Linux causes exception
 - File picker not opening in snap
-- Importing the dojg deck
+- Importing the DoJG deck
 - DoJG deep links
 - DoJG screen search text color
 - Potential race condition in SQLite when restarting the app

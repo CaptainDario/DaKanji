@@ -11,6 +11,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:clipboard_watcher/clipboard_watcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
+import 'package:keyboard_detection/keyboard_detection.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:universal_io/io.dart';
@@ -98,6 +99,17 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
 
   /// Timer that refreshes the UI every 1s (android only)
   Timer? refreshClipboardTimer;
+
+  late KeyboardDetectionController keyboardDetectionController = KeyboardDetectionController(
+    onChanged: (state) {
+      if(state == KeyboardState.visible){
+        setState(() {});
+      }
+      else if(state == KeyboardState.hidden){
+        setState(() {});
+      }
+    },
+  );
 
 
   /// when app comes back to foregorund update dict
@@ -199,184 +211,195 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
       currentScreen: Screens.text,
       useBackArrowAppBar: widget.useBackArrowAppBar,
       drawerClosed: !widget.openedByDrawer,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return TextAnalysisStack(
-            textToAnalyze: selectedText,
-            popupAnimationController: popupAnimationController,
-            padding: 8.0,
-            constraints: constraints,
-            allowDeconjugation: GetIt.I<Settings>().text.deconjugateBeforeSearch,
-            onPopupInitialized: (tabController) {
-              popupTabController = tabController;
-            },
-            children: [
-              // processed text
-              Positioned.fill(
-                child: GestureDetector(
-                  onTap: () {
-                    assurePopupClosed();
-                  },
-                  child: Card(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        padding, padding, padding, padding/2
-                      ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: MultiFocus(
-                              focusNodes: widget.includeTutorial
-                                ? GetIt.I<Tutorials>().textScreenTutorial.textInputSteps
-                                : null,
-                              child: Align(
-                                alignment: Alignment.bottomLeft,
-                                child: CustomSelectableText(
-                                  initialText: inputText,
-                                  showRubys: showRubys,
-                                  addSpaces: addSpaces,
-                                  showColors: colorizePos,
-                                  init: onTextFieldInit,
-                                  onLongPress: onCustomSelectableTextLongPress,
-                                  onSelectionChange: onCustomSelectableTextChange,
-                                  onTapOutsideOfText: (Offset location) {
-                                    if(popupAnimationController.isCompleted){
-                                      popupAnimationController.reverse();
-                                    }
-                                  },
+      child: KeyboardDetection(
+        controller: keyboardDetectionController,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return TextAnalysisStack(
+              textToAnalyze: selectedText,
+              popupAnimationController: popupAnimationController,
+              padding: 8.0,
+              constraints: constraints,
+              allowDeconjugation: GetIt.I<Settings>().text.deconjugateBeforeSearch,
+              onPopupInitialized: (tabController) {
+                popupTabController = tabController;
+              },
+              children: [
+                // processed text
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: keyboardDetectionController.state == KeyboardState.visible
+                    ? keyboardDetectionController.size +
+                      (Platform.isIOS ? 40 : 0)
+                    : 0,
+                  child: GestureDetector(
+                    onTap: () {
+                      assurePopupClosed();
+                    },
+                    child: Card(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          padding, padding, padding, padding/2
+                        ),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: MultiFocus(
+                                focusNodes: widget.includeTutorial
+                                  ? GetIt.I<Tutorials>().textScreenTutorial.textInputSteps
+                                  : null,
+                                child: Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: CustomSelectableText(
+                                    initialText: inputText,
+                                    showRubys: showRubys,
+                                    addSpaces: addSpaces,
+                                    showColors: colorizePos,
+                                    init: onTextFieldInit,
+                                    onTap: onCustomSelectableTextTap,
+                                    onLongPress: onCustomSelectableTextLongPress,
+                                    onSelectionChange: onCustomSelectableTextChange,
+                                    onTapOutsideOfText: (Offset location) {
+                                      if(popupAnimationController.isCompleted){
+                                        popupAnimationController.reverse();
+                                      }
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          // tools
-                          if(mecabTextEditingController != null)
-                            Align(
-                            alignment: Alignment.centerRight,
-                            child: Scrollbar(
-                              controller: _analysisOptionsScrollController,
-                              child: SingleChildScrollView(
+                            // tools
+                            if(mecabTextEditingController != null)
+                              Align(
+                              alignment: Alignment.centerRight,
+                              child: Scrollbar(
                                 controller: _analysisOptionsScrollController,
-                                scrollDirection: Axis.horizontal,
-                                child: Wrap(
-                                  runAlignment: WrapAlignment.end,
-                                  children: [
-                                    // spaces toggle
-                                    Focus(
-                                      focusNode: widget.includeTutorial ?
-                                        GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
-                                      child: AnalysisOptionButton(
-                                        addSpaces,
-                                        svgAssetPattern: "assets/icons/space_bar_*.svg",
-                                        onPressed: (() => 
-                                          setState(() {addSpaces = !addSpaces;})
+                                child: SingleChildScrollView(
+                                  controller: _analysisOptionsScrollController,
+                                  scrollDirection: Axis.horizontal,
+                                  child: Wrap(
+                                    runAlignment: WrapAlignment.end,
+                                    children: [
+                                      // spaces toggle
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
+                                        child: AnalysisOptionButton(
+                                          addSpaces,
+                                          svgAssetPattern: "assets/icons/space_bar_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {addSpaces = !addSpaces;})
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    // furigana toggle
-                                    Focus(
-                                      focusNode: widget.includeTutorial ?
-                                        GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
-                                      child: AnalysisOptionButton(
-                                        showRubys,
-                                        svgAssetPattern: "assets/icons/furigana_*.svg",
-                                        onPressed: (() => 
-                                          setState(() {showRubys = !showRubys;})
-                                        ),
-                                      )
-                                    ),
-                                    // button to colorize words matching POS
-                                    Focus(
-                                      focusNode: widget.includeTutorial ?
-                                        GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
-                                      child: AnalysisOptionButton(
-                                        colorizePos,
-                                        svgAssetPattern: "assets/icons/pos_*.svg",
-                                        onPressed: (() => 
-                                          setState(() {colorizePos = !colorizePos;})
-                                        ),
-                                      )
-                                    ),
-                                    // paste text button
-                                    AnalysisOptionButton(
-                                      true,
-                                      offIcon: continouslyCopy
-                                        ? Icons.sync
-                                        : mecabTextEditingController!.text.isEmpty
-                                          ? Icons.paste
-                                          : Icons.close,
-                                      onIcon: continouslyCopy
-                                        ? Icons.sync
-                                        : mecabTextEditingController!.text.isEmpty
-                                          ? Icons.paste
-                                          : Icons.close,
-                                      onPressed: onPastePressed,
-                                      onLongPressed: onPasteLongPressed,
-                                    ),
-                                    // copy button
-                                    AnalysisOptionButton(
-                                      true,
-                                      offIcon: Icons.copy,
-                                      onIcon: Icons.copy,
-                                      onPressed: onCopyPressed,
-                                    ),
-                                    // info button
-                                    AnalysisOptionButton(
-                                      true,
-                                      offIcon: Icons.info_outline,
-                                      onIcon: Icons.info_outline,
-                                      onPressed: onInfoPressed,
-                                    ),
-                                    // text navigation button
-                                    if(GetIt.I<Settings>().text.selectionButtonsEnabled)
-                                      ...[
-                                        // shrink selection button
-                                        AnalysisOptionButton(
-                                          true,
-                                          onIcon: Icons.arrow_back,
-                                          offIcon: Icons.arrow_back,
-                                          onPressed: onShrinkPressed,
-                                          onLongPressed: onShrinkLongPressed
-                                        ),
-                                        // grow selection button
-                                        AnalysisOptionButton(
-                                          true,
-                                          onIcon: Icons.arrow_forward,
-                                          offIcon: Icons.arrow_forward,
-                                          onPressed: onGrowPressed,
-                                          onLongPressed: onGrowLongPressed,
-                                        ),
-                                        // select previous token / char
-                                        AnalysisOptionButton(
-                                          true,
-                                          onIcon: Icons.arrow_left,
-                                          offIcon: Icons.arrow_left,
-                                          onPressed: onPreviousPressed, // token
-                                          onLongPressed: onPreviousLongPressed // char
-                                        ),
-                                        // select next token / char
-                                        AnalysisOptionButton(
-                                          true,
-                                          onIcon: Icons.arrow_right,
-                                          offIcon: Icons.arrow_right,
-                                          onPressed: onNextPressed, // token
-                                          onLongPressed: onNextLongPressed, // char
-                                        ),
-                                      ]
-                                  ],
+                                      // furigana toggle
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.furiganaSteps : null,
+                                        child: AnalysisOptionButton(
+                                          showRubys,
+                                          svgAssetPattern: "assets/icons/furigana_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {showRubys = !showRubys;})
+                                          ),
+                                        )
+                                      ),
+                                      // button to colorize words matching POS
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.colorButtonSteps : null,
+                                        child: AnalysisOptionButton(
+                                          colorizePos,
+                                          svgAssetPattern: "assets/icons/pos_*.svg",
+                                          onPressed: (() => 
+                                            setState(() {colorizePos = !colorizePos;})
+                                          ),
+                                        )
+                                      ),
+                                      // paste text button
+                                      AnalysisOptionButton(
+                                        true,
+                                        offIcon: continouslyCopy
+                                          ? Icons.sync
+                                          : mecabTextEditingController!.text.isEmpty
+                                            ? Icons.paste
+                                            : Icons.close,
+                                        onIcon: continouslyCopy
+                                          ? Icons.sync
+                                          : mecabTextEditingController!.text.isEmpty
+                                            ? Icons.paste
+                                            : Icons.close,
+                                        onPressed: onPastePressed,
+                                        onLongPressed: onPasteLongPressed,
+                                      ),
+                                      // copy button
+                                      AnalysisOptionButton(
+                                        true,
+                                        offIcon: Icons.copy,
+                                        onIcon: Icons.copy,
+                                        onPressed: onCopyPressed,
+                                      ),
+                                      // info button
+                                      AnalysisOptionButton(
+                                        true,
+                                        offIcon: Icons.info_outline,
+                                        onIcon: Icons.info_outline,
+                                        onPressed: onInfoPressed,
+                                      ),
+                                      // text navigation button
+                                      if(GetIt.I<Settings>().text.selectionButtonsEnabled)
+                                        ...[
+                                          // shrink selection button
+                                          AnalysisOptionButton(
+                                            true,
+                                            onIcon: Icons.arrow_back,
+                                            offIcon: Icons.arrow_back,
+                                            onPressed: onShrinkPressed,
+                                            onLongPressed: onShrinkLongPressed
+                                          ),
+                                          // grow selection button
+                                          AnalysisOptionButton(
+                                            true,
+                                            onIcon: Icons.arrow_forward,
+                                            offIcon: Icons.arrow_forward,
+                                            onPressed: onGrowPressed,
+                                            onLongPressed: onGrowLongPressed,
+                                          ),
+                                          // select previous token / char
+                                          AnalysisOptionButton(
+                                            true,
+                                            onIcon: Icons.arrow_left,
+                                            offIcon: Icons.arrow_left,
+                                            onPressed: onPreviousPressed, // token
+                                            onLongPressed: onPreviousLongPressed // char
+                                          ),
+                                          // select next token / char
+                                          AnalysisOptionButton(
+                                            true,
+                                            onIcon: Icons.arrow_right,
+                                            offIcon: Icons.arrow_right,
+                                            onPressed: onNextPressed, // token
+                                            onLongPressed: onNextLongPressed, // char
+                                          ),
+                                        ]
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              
-            ]
-          );
-        }
+                
+              ]
+            );
+          }
+        ),
       )
     );
   }
@@ -415,31 +438,40 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Callback that is called when the text selection of the CustomSelectableText
   /// changes
   void onCustomSelectableTextChange(TextSelection selection){
+
+    bool someTextIsSelected = (selection.end - selection.start).abs() != 0;
+
+    if(!mecabTextEditingController!.readOnly) return;
+
     // open the dict popup when text is slected and it is not opening
-    if(selection.start != selection.end &&
+    if(someTextIsSelected &&
       popupAnimationController.status != AnimationStatus.forward)
     {
       popupAnimationController.forward();
     }
-    // close the dict popup when there is no selection
-    if(selection.isCollapsed && popupAnimationController.isCompleted)
+    // If the popup is open but now there is no selection close the popup
+    if(!someTextIsSelected && !popupAnimationController.isDismissed)
     {
       popupAnimationController.reverse(from: 1.0);
     }
     // get the part that the user selected
-    
+    if(mecabTextEditingController!.text.length < selection.extentOffset ||
+      mecabTextEditingController!.text.length < selection.baseOffset) return;
+
     setState(() {
       selectedText = mecabTextEditingController!.text.substring(
-        selection.baseOffset, selection.extentOffset
+        selection.start, selection.end
       );
     });
+  }
+
+  onCustomSelectableTextTap(TextSelection selection) {
+    onCustomSelectableTextChange(selection);
   }
 
   /// Callback that is executed when the use long presses on the text widget
   onCustomSelectableTextLongPress(TextSelection selection) {
 
-    mecabTextEditingController!.selection = TextSelection.collapsed(
-      offset: selection.baseOffset);
     setState(() {});
   }
 
@@ -492,8 +524,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
     final s = mecabTextEditingController!.getStartAndEnd();
 
     String currentSelection = mecabTextEditingController!.text.substring(
-      s.item1 == -1 ? 0 : s.item1,
-      s.item2 == -1 ? mecabTextEditingController!.text.length : s.item2);
+      s.start == -1 ? 0 : s.start,
+      s.end == -1 ? mecabTextEditingController!.text.length : s.end);
     
     Clipboard.setData(ClipboardData(text:currentSelection)).then((_){
       // ignore: use_build_context_synchronously

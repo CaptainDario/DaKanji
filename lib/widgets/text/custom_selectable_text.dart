@@ -1,13 +1,14 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:easy_localization/easy_localization.dart';
-
 // Project imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
 import 'package:da_kanji_mobile/application/text/mecab_text_field_formatter.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 /// Widget that implements custom text selection and furigana rendering
 class CustomSelectableText extends StatefulWidget {
@@ -79,6 +80,13 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   FocusNode f = FocusNode();
 
 
+  void setReadOnly(bool newValue){
+
+    if(!widget.editable) return;
+
+    textInputController.readOnly = newValue;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -87,19 +95,36 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       showRubys: widget.showRubys,
       addSpaces: widget.addSpaces,
       showColors: widget.showColors,
-      onTap: widget.onTap,
+      readOnly: true,
+      onTap: (TextSelection selection) {
+        if(textInputController.text.isNotEmpty){
+          setState(() {
+            setReadOnly(true);  
+          });
+        }
+        widget.onTap?.call(selection);
+      },
       onDoubleTap: widget.onDoubleTap,
       onTripleTap: widget.onTripleTap,
       onSelectionChange: (TextSelection selecion) {
-        f.requestFocus();
         widget.onSelectionChange?.call(selecion);
       },
-      onLongPress: widget.onLongPress
+      onLongPress: (TextSelection selection) {
+        f.requestFocus();
+        setReadOnly(false);
+        widget.onLongPress?.call(selection);
+      },
     );
 
     if(widget.initialText!=null) textInputController.text = widget.initialText!;
 
     widget.init?.call(textInputController);
+  }
+
+  @override
+  void dispose() {
+    f.dispose();
+    super.dispose();
   }
 
   @override
@@ -115,27 +140,63 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   @override
   Widget build(BuildContext context) {
 
-    return TextField(
-      focusNode: f,
-      cursorHeight: textInputController.textCharacterSize.height,
-      decoration: InputDecoration(
-        hintText: LocaleKeys.TextScreen_input_text_here.tr(),
+    return KeyboardActions(
+      enable: textInputController.readOnly,
+      autoScroll: false,
+      disableScroll: true,
+      config: KeyboardActionsConfig(
+        keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
+        keyboardBarColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.grey[800]?.withAlpha(180)
+          : Colors.grey[400]?.withAlpha(180),
+        actions: [
+          KeyboardActionsItem(
+            focusNode: f,
+            displayDoneButton: false,
+            displayArrows: false,
+            toolbarButtons: [
+              (node) => IconButton(
+                onPressed: () => node.unfocus(),
+                icon: const Icon(Icons.close)
+              )
+            ]
+          ),
+        ],
       ),
-      enabled: widget.editable,
-      stylusHandwritingEnabled: true,
-      maxLines: null,
-      // allow line breaks
-      keyboardType: TextInputType.multiline,
-      textInputAction: TextInputAction.newline,
-      // adjust the line height based on if rubys show or not
-      style: TextStyle(
-        height: widget.showRubys ? 2.5 : 2
+      child: InputDecorator(
+        decoration: InputDecoration(
+          hintText: LocaleKeys.TextScreen_input_text_here.tr(),
+        ),
+        isEmpty: textInputController.text.isEmpty,
+        child: EditableText(
+          focusNode: f,
+          cursorHeight: textInputController.textCharacterSize.height,
+          showCursor: true,
+          cursorColor: g_Dakanji_red,
+          
+          backgroundCursorColor: g_Dakanji_red,
+          selectionColor: g_Dakanji_green.withAlpha(150),
+          showSelectionHandles: false,
+          readOnly: textInputController.readOnly,
+          selectionControls: MaterialTextSelectionControls(),
+          enableInteractiveSelection: false,
+          
+          stylusHandwritingEnabled: true,
+          maxLines: null,
+          // allow line breaks
+          keyboardType: TextInputType.multiline,
+          textInputAction: TextInputAction.newline,
+          // adjust the line height based on if rubys show or not
+          style: TextStyle(
+            height: widget.showRubys ? 2.5 : 2
+          ),
+          // do not allow some characters
+          inputFormatters: [
+            MecabTextFieldFormatter()
+          ],
+          controller: textInputController,
+        ),
       ),
-      // do not allow some characters
-      inputFormatters: [
-        MecabTextFieldFormatter()
-      ],
-      controller: textInputController,
     );
   }
 }

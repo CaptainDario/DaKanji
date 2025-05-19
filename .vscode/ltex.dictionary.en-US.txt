@@ -1,0 +1,10 @@
+DaKanji
+changelog
+furigana
+kanjis
+Webview
+snackbar
+DoJG
+fvp
+unselectable
+Anki

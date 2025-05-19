@@ -76,7 +76,6 @@ void downloadAudio(BuildContext context) async {
 Future<void> getAsset(FileSystemEntity asset, String dest, String url,
   BuildContext context, bool askToDownload) async
 {
-  // Search and create db file destination folder if not exist
 
   // if the file already exists delete it
   final file = File(p.joinAll([

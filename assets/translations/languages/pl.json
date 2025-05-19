@@ -183,7 +183,7 @@
     "downgrade_warning": "DaKanji zosta\u0142o obni\u017cone! To nie jest obs\u0142ugiwane dzia\u0142anie i jest bardzo prawdopodobne, \u017ce uszkodzi zapisane dane lub nawet sprawi, \u017ce DaKanji b\u0119dzie ca\u0142kowicie bezu\u017cyteczne! Zresetuj wszystkie dane w \"Ustawienia -> Ustawienia zaawansowane\" i uruchom ponownie aplikacj\u0119.",
     "download_failed_popup_retry": "Pon\u00f3w",
     "download_failed_popup_text": "Pobieranie nie powiod\u0142o si\u0119, upewnij si\u0119, \u017ce masz stabilne po\u0142\u0105czenie internetowe.",
-    "download_popup_permission": "Zanim zaczniesz, musimy pobra\u0107 kilka plik\u00f3w. B\u0119dzie to mia\u0142o miejsce tylko raz.\nUpewnij si\u0119, \u017ce masz stabilne po\u0142\u0105czenie internetowe i nie zamykaj aplikacji w trakcie pobierania.",
+    "download_popup_permission": "Musimy pobra\u0107 kilka plik\u00f3w, zanim b\u0119dzie mo\u017cna rozpocz\u0105\u0107 (~{DOWNLOAD_SIZE}MB). Zdarzy si\u0119 to tylko raz. Upewnij si\u0119, \u017ce masz stabilne po\u0142\u0105czenie internetowe i nie zamykaj aplikacji podczas pobierania.",
     "new_version_available_heading": "Nowa wersja dost\u0119pna!",
     "new_version_available_text": "Dost\u0119pna jest nowa wersja DaKanji!",
     "new_version_comparison": "Uruchamiasz {VERSION_NUMBER}, najnowsza wersja to {NEW_VERSION_NUMBER}.",
