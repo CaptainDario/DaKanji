@@ -1789,15 +1789,15 @@
       "pl": "Oceń"
     },
     "download_popup_permission": {
-      "en": "We need to download some files before you can get started. This will only happen once. Please make sure you have a stable internet connection and do not close the app while the download is in progress.",
-      "de": "Bevor Sie loslegen können, müssen wir einige Dateien herunterladen. Dies wird nur einmal geschehen.\nBitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben und schließen Sie die App nicht, während der Download läuft.",
-      "ru": "Прежде чем вы сможете приступить к работе, нам необходимо загрузить некоторые файлы. Это произойдет только один раз.\nПожалуйста, убедитесь, что у вас стабильное интернет-соединение, и не закрывайте приложение, пока идет загрузка.",
-      "ja": "初回のみ作業を開始する前にいくつかのファイルをダウンロードする必要があります。\n安定したインターネット接続を確保し、ダウンロード中にアプリを終了しないようご注意ください。",
-      "zh": "在你开始工作之前，我们需要下载一些文件。这只会发生一次。\n请确保你有一个稳定的网络连接，在下载过程中不要关闭应用程序。",
-      "it": "È necessario scaricare alcuni file prima di poter iniziare. Questa operazione verrà eseguita una sola volta.\nAssicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download è in corso.",
-      "fr": "Nous devons télécharger certains fichiers avant que vous puissiez commencer. Cela ne se produira qu'une seule fois.\nAssurez-vous de disposer d'une connexion Internet stable et ne fermez pas l'application pendant que le téléchargement est en cours.",
-      "es": "Tenemos que descargar algunos archivos antes de que puedas empezar. Esto sólo ocurrirá una vez.\nAsegúrate de tener una conexión a internet estable y no cierres la aplicación mientras se esté realizando la descarga.",
-      "pl": "Zanim zaczniesz, musimy pobrać kilka plików. Będzie to miało miejsce tylko raz.\nUpewnij się, że masz stabilne połączenie internetowe i nie zamykaj aplikacji w trakcie pobierania."
+      "en": "We need to download some files before you can get started (~{DOWNLOAD_SIZE}MB). This will only happen once. Please make sure you have a stable internet connection and do not close the app while the download is in progress.",
+      "de": "Bevor Sie loslegen können, müssen wir einige Dateien herunterladen (~{DOWNLOAD_SIZE}MB). Dies wird nur einmal geschehen. Bitte stellen Sie sicher, dass Sie eine stabile Internetverbindung haben und schließen Sie die App nicht, während der Download läuft.",
+      "ru": "Прежде чем вы сможете приступить к работе, нам необходимо загрузить несколько файлов (~{DOWNLOAD_SIZE}MB). Это произойдет только один раз. Пожалуйста, убедитесь, что у вас стабильное интернет-соединение, и не закрывайте приложение, пока идет загрузка.",
+      "ja": "始める前にいくつかのファイルをダウンロードする必要があります（~{DOWNLOAD_SIZE}MB）。ダウンロードは一度だけ行われます。ダウンロード中はアプリを閉じないでください。",
+      "zh": "在开始之前，我们需要下载一些文件（~{DOWNLOAD_SIZE}MB）。这只会发生一次。请确保您有稳定的网络连接，并且在下载过程中不要关闭应用程序。",
+      "it": "Prima di iniziare, è necessario scaricare alcuni file (~{DOWNLOAD_SIZE}MB). Questa operazione verrà eseguita una sola volta. Assicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download è in corso.",
+      "fr": "Nous devons télécharger certains fichiers avant que vous puissiez commencer (~{DOWNLOAD_SIZE}MB). Cela ne se produira qu'une seule fois. Assurez-vous d'avoir une connexion internet stable et ne fermez pas l'application pendant que le téléchargement est en cours.",
+      "es": "Tenemos que descargar algunos archivos antes de que pueda empezar (~{DOWNLOAD_SIZE}MB). Esto solo ocurrirá una vez. Asegúrate de tener una conexión a Internet estable y no cierres la aplicación mientras se realiza la descarga.",
+      "pl": "Musimy pobrać kilka plików, zanim będzie można rozpocząć (~{DOWNLOAD_SIZE}MB). Zdarzy się to tylko raz. Upewnij się, że masz stabilne połączenie internetowe i nie zamykaj aplikacji podczas pobierania."
     },
     "download_failed_popup_retry": {
       "en": "Retry",

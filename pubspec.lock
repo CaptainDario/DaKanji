@@ -904,10 +904,10 @@ packages:
     dependency: "direct main"
     description:
       name: in_app_review
-      sha256: "99869244d09adc76af16bf8fd731dd13cef58ecafd5917847589c49f378cbb30"
+      sha256: "36a06771b88fb0e79985b15e7f2ac0f1142e903fe72517f3c055d78bc3bc1819"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.9"
+    version: "2.0.10"
   in_app_review_platform_interface:
     dependency: transitive
     description:
@@ -1017,6 +1017,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
+  keyboard_detection:
+    dependency: "direct main"
+    description:
+      name: keyboard_detection
+      sha256: "8eba8e340595216872fbef9d1b97e1bf560d59110fe4847cca69cfa9a568a136"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.0"
   leak_tracker:
     dependency: transitive
     description:

@@ -395,11 +395,20 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                           children: [
                             GestureDetector(
                               onLongPress: () {},
+                              // DaKanji Logo at the top
                               child: SafeArea(
+                                top: true,
+                                bottom: false,
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
-                                    padding: EdgeInsets.fromLTRB(_drawerWidth*0.1, _drawerWidth*0.05, 0, _drawerWidth*0.1),
+                                    //color: Colors.green,
+                                    padding: EdgeInsets.fromLTRB(
+                                      _drawerWidth*0.1,
+                                      0,
+                                      0,
+                                      8
+                                    ),
                                     child: Image(
                                       width: _drawerWidth * 0.6,
                                       //height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
@@ -424,7 +433,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                   setState(() {});
                                 },
                                 children: <Widget>[
-                                  // DaKanji Logo at the top
+                                  
                                   for (final (j, i) in drawerElementsIndexOrder.indexed)
                                     if(drawerEntries[i].include)
                                       DrawerElement(

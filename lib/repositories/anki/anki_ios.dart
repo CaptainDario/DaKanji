@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -109,7 +110,7 @@ class AnkiiOS {
     ClipboardData? originalClipboard = await Clipboard.getData("text/plain");
     
     // Launch anki via AnkiMobile scheme
-    await launchUrlString("$ankiMobileURLScheme/infoForAdding?x-success=dakanji://",
+    await launchUrlString("$ankiMobileURLScheme/infoForAdding?x-success=$g_AppLinkDaKanji",
       mode: LaunchMode.externalApplication,
     );
     /// Wait until anki closes

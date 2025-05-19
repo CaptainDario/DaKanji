@@ -183,7 +183,7 @@
     "downgrade_warning": "Avete declassato DaKanji! Questa non \u00e8 un'azione supportata ed \u00e8 molto probabile che possa danneggiare i dati memorizzati o addirittura rendere DaKanji completamente inutilizzabile! Si prega di ripristinare tutti i dati in \"impostazioni -> impostazioni avanzate\" e di riavviare l'applicazione.",
     "download_failed_popup_retry": "Riprova",
     "download_failed_popup_text": "Il download non \u00e8 riuscito, assicurarsi di avere una connessione internet stabile.",
-    "download_popup_permission": "\u00c8 necessario scaricare alcuni file prima di poter iniziare. Questa operazione verr\u00e0 eseguita una sola volta.\nAssicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download \u00e8 in corso.",
+    "download_popup_permission": "Prima di iniziare, \u00e8 necessario scaricare alcuni file (~{DOWNLOAD_SIZE}MB). Questa operazione verr\u00e0 eseguita una sola volta. Assicuratevi di avere una connessione Internet stabile e non chiudete l'applicazione mentre il download \u00e8 in corso.",
     "new_version_available_heading": "Nuova versione disponibile!",
     "new_version_available_text": "\u00c8 disponibile una nuova versione di DaKanji!",
     "new_version_comparison": "Si sta eseguendo {NUMERO_VERSIONE}, la versione pi\u00f9 recente \u00e8 {NUMERO_NEW_VERSION}.",

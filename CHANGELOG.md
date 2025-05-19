@@ -1,6 +1,23 @@
 
 # DaKanji - changelog
 
+## v3.5.1 - ワードリストと暗記改善 (19.05.2024)
+
+Improvements:
+
+- Added download size to initial setup message
+- Resize text input when onscreen keyboard is shown
+- Text screen
+  - Close keyboard button on iOS
+  - Text controls on mobile
+
+Fixed:
+
+- Anki integration on iOS
+- Empty deep links (infinite loading)
+- App disabled sleep mode
+- Open Windows deep links in existing window
+
 ## v3.5.0 - ワードリストと暗記改善 (13.05.2024)
 
 Note: **This update resets the Anki integration, please run the setup again**
@@ -8,7 +25,7 @@ Note: **This update resets the Anki integration, please run the setup again**
 Added:
 
 - Dictionary:
-  - Add to anki / list from search results
+  - Add to Anki / list from search results
   - Search result sorting priority setting
   - Show search separation headers setting
   - Limit search results setting
@@ -21,7 +38,7 @@ Improvements:
 
 - Text (MAJOR overhaul!)
   - Text input renders furigana (no need for two text widgets!)
-  - Conjugations are now grouped together (食べ、たかっ、た -> 食べたかった)
+  - Conjugations are now grouped together (食べ、たかっ、た → 食べたかった)
   - Vastly improved selection handling
   - Only show furigana for kanjis
   - Space text instead of resizing furigana

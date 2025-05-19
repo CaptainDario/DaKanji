@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Package imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
@@ -134,7 +135,7 @@ class AnkiNote{
     
     kana = [entry.readings.first];
 
-    dakanjiLink = "dakanji://dictionary?id=${entry.id}";
+    dakanjiLink = "${g_AppLinkDaKanji}dictionary?id=${entry.id}";
 
     //audio = ;
 

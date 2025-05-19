@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/asset_sizes.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -21,7 +22,8 @@ AwesomeDialog downloadPopup(
 
   return AwesomeDialog(
     context: context,
-    desc: LocaleKeys.HomeScreen_download_popup_permission.tr(),
+    desc: LocaleKeys.HomeScreen_download_popup_permission.tr()
+      .replaceAll("{DOWNLOAD_SIZE}", c_INITIAL_DOWNLOAD_SIZE.toStringAsFixed(1)),
     headerAnimationLoop: false,
     customHeader: Image.asset("assets/images/dakanji/icon.png"),
     dismissOnTouchOutside: dismissable,

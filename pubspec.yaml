@@ -8,7 +8,7 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.5.0+125
+version: 3.5.1+126
 
 
 environment:
@@ -103,6 +103,7 @@ dependencies:
 
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
+  keyboard_detection: 0.8.0
   async: 2.12.0
   path: 1.9.1
   http: 1.2.2
@@ -136,7 +137,7 @@ dependencies:
   # Not all platforms supported
   flutter_inappwebview: 6.1.5
 
-  in_app_review: 2.0.9                  # android, iOS, MacOS, windows (limited)
+  in_app_review: 2.0.10                 # android, iOS, MacOS, windows (limited)
   clipboard_watcher: 0.3.0              # android, iOS, macos, windows, linux
   store_checker: 1.8.0                  # ios, android
 
@@ -162,7 +163,7 @@ dependencies:
 
 msix_config:
   display_name: DaKanji
-  protocol_activation: dakanji
+  protocol_activation: dakanji, https
   app_uri_handler_hosts: dakanji.app, www.dakanji.app
   # package family name: 61015DaAppLab.DaKanji_t0074r350qa7p
   #msix_version: <<MSIX_VERSION>>
@@ -171,7 +172,7 @@ msix_config:
   identity_name: 61015DaAppLab.DaKanji
   logo_path: ./assets/images/dakanji/icon.png
   capabilities: internetClient
-  execution-alias: DaKanji
+  execution-alias: dakanji
   languages: en-us, de-de, ru-ru, ja-jp, zh-cn, it-it, fr-fr, es-es, pl-pl
   
 dev_dependencies:

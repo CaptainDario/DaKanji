@@ -9,9 +9,15 @@ import subprocess
 
 repo_url = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases/tags/"
 tmp_dir = "tmp"
-files_to_exclude = ["audios.zip",
-                    "CNN_single_char.zip", "dictionary.zip", "examples.zip", "krad.zip", "mecab_dict.zip", "radk.zip",
-                    "libtensorflowlite_c_arm64.dylib", "libtensorflowlite_c_x86_64.dylib"]
+files_to_exclude = []
+default_files_to_exclude = ["audios.zip",
+    "CNN_single_char.zip",
+    "dictionary.zip",
+    "examples.zip",
+    "krad.zip",
+    "mecab_dict.zip",
+    "radk.zip",
+]
 files_to_exclude_win = [
     "libmecab_arm64.dylib",
 ]
@@ -28,6 +34,8 @@ assets_version = None
 def exclude_files_per_platform():
     """ Excludes files that are not needed for the current platform
     """
+
+    files_to_exclude = default_files_to_exclude
 
     if(sys.platform.startswith("win32")):
         files_to_exclude.extend(files_to_exclude_win)
@@ -48,26 +56,30 @@ def get_release_url():
 
     return repo_url + "v" + assets_version
 
-def download_assets(url: str):
-    """ Downloads all assets for DaKanji from the given url
+def get_asset_info(url: str):
+    """ Gets information about all assets for DaKanji from the given url
 
-    url : url to the assets release of DaKanji
+    Args
+        url : url to the assets release of DaKanji
     """
 
     # get url to latest download
     req = urllib.request.Request(url)
-    asset_names, asset_urls = [], []
+    asset_names, asset_urls, asset_sizes = [], [], []
     with urllib.request.urlopen(req) as response:
         the_page = json.loads(response.read())
-        print(json.dumps(the_page, sort_keys=True, indent=4))
+        #print(json.dumps(the_page, sort_keys=True, indent=4))
         for k, v in the_page.items():
             if(k == "assets"):
                 for asset in the_page[k]:
-                    for aK, aV in asset.items():
-                        if(aK == "browser_download_url"):
-                            asset_urls.append(aV)
-                        if(aK == "name"):
-                            asset_names.append(aV)
+                    asset_urls.append(asset["browser_download_url"])
+                    asset_names.append(asset["name"])
+                    asset_sizes.append(asset["size"])
+    return asset_names, asset_urls, asset_sizes
+
+def download_assets(url: str):
+
+    asset_names, asset_urls, _ = get_asset_info(url)                
 
     # download to temp dir and unzip
     if not os.path.exists(tmp_dir):

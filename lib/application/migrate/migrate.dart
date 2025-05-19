@@ -8,7 +8,7 @@ Future migrate(Version? last, Version current) async {
   // while on >= v3.5.0 backup all word list data to text files to allow 
   // migration to v4
   if(current.major == 3){
-    storeWordListsAsTextFilesForMigration();
+    //storeWordListsAsTextFilesForMigration();
   }
   // run migration from v3 to v4
   if(last?.major == 3 && current.major == 4){

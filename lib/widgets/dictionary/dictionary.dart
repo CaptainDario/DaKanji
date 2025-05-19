@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -112,11 +113,12 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
         builder: ((context, constraints) {
 
           // reset the floating words when the search was emptied
-          if(search.currentSearch == "" && search.selectedResult == null) {
+          if(search.currentSearch == "" && search.selectedResult == null && 
+            widget.includeFallingWords) {
             floatingWordStackController?.reset();
           }
           // hide the falling words when a search starts
-          if(search.currentSearch != "" &&
+          if(search.currentSearch != "" && widget.includeFallingWords &&
             floatingWordStackController!.opacityAnimationController.isCompleted){
             floatingWordStackController?.opacityAnimationController.reverse(from: 1);
           }
@@ -148,15 +150,21 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       ),
                     ),
                   Expanded(
-                    child: FloatingWordStack(
-                      levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                      hide: search.selectedResult != null || !widget.includeFallingWords,
-                      onTap: (FloatingWord entry) {
-                        search.selectedResult =
-                          GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
-                      },
-                      onInitialized: (controller) {
-                        floatingWordStackController = controller;
+                    child: ConditionalParentWidget(
+                      condition: widget.includeFallingWords,
+                      conditionalBuilder: (child) {
+                        return FloatingWordStack(
+                          levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
+                          hide: search.selectedResult != null,
+                          onTap: (FloatingWord entry) {
+                            search.selectedResult =
+                              GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
+                          },
+                          onInitialized: (controller) {
+                            floatingWordStackController = controller;
+                          },
+                          child: child,
+                        );
                       },
                       child: Row(
                         children: [

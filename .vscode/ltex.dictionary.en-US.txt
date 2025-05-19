@@ -7,3 +7,4 @@ snackbar
 DoJG
 fvp
 unselectable
+Anki

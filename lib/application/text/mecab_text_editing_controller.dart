@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_flutter/mecab_flutter.dart';
-import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/japanese_text_processing/furigana_matching.dart';
@@ -28,6 +27,8 @@ class MecabTextEditingController extends TextEditingController {
   bool addSpaces;
   /// should the text be rendered in colors matching the POS
   bool showColors;
+
+  bool readOnly = true;
 
   /// callback that should be executed when the currently selected text chagnes
   /// provides the current `TextSelection` as parameter
@@ -49,6 +50,7 @@ class MecabTextEditingController extends TextEditingController {
     this.showRubys = false,
     this.addSpaces = false,
     this.showColors = false,
+    required this.readOnly,
 
     this.onSelectionChange,
     this.onTap,
@@ -122,6 +124,8 @@ class MecabTextEditingController extends TextEditingController {
           ? furiganaPairs[k].kanji
           : furiganaPairs[k].reading;
         for (var j = 0; j < chars.length; j++) {
+          final localMecabSurfaceIdx = mecabSurfaceIdx;
+
           // proper line breaking
           if (mecabSurfaces[i][mecabSurfaceIdx]=='\n'){
             children.add(const TextSpan(text:'\n'));
@@ -141,13 +145,13 @@ class MecabTextEditingController extends TextEditingController {
               // add some small spacing to the width to assure better visual separation
               horizontalPadding = max(0, horizontalPadding+furiganaNotFitSpacing);
             }
-
+            
             children.add(WidgetSpan(
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: ()  {
                   int now = DateTime.now().millisecondsSinceEpoch;
-                  if (now - lastTap > 300) {
+                  if (now - lastTap > 400) {
                     consecutiveTaps = 1;
                     lastTap = now;
                   }  
@@ -163,12 +167,10 @@ class MecabTextEditingController extends TextEditingController {
                   else if (consecutiveTaps == 3){
                     _onTripleTap(mecabSurStartIdx, mecabSurEndIdx);
                   }
-                  print("Tapped");
                 },
-                // Do nothing on long press so that long press works as placing
-                // the cursor
-                onLongPress: () => _onLongPress(mecabSurStartIdx, mecabSurEndIdx),
-                //onSecondaryLongPress: ,
+                onLongPressStart: (details) {
+                  _onLongPress(mecabSurStartIdx, mecabSurEndIdx, localMecabSurfaceIdx);
+                },
                 child: Padding(
                   // add a small space after too wide furigana to make them 
                   // easier to separate visually
@@ -195,7 +197,6 @@ class MecabTextEditingController extends TextEditingController {
                         color: showColors ? posColors[i] : null
                       ),
                       strutStyle: const StrutStyle(
-                        forceStrutHeight: true, 
                         leading: 0, // No extra spacing
                       ),
                       mecabSurfaces[i][mecabSurfaceIdx]
@@ -221,7 +222,7 @@ class MecabTextEditingController extends TextEditingController {
                                   ? (-textCharacterSize.width/2)
                                   : 0,
                                 // ... to the top of the text
-                                -rubyCharacterSize.height/2
+                                0
                               ),
                               child: Text(
                                 textScaler: TextScaler.linear(rubyScaleFactor),
@@ -257,8 +258,9 @@ class MecabTextEditingController extends TextEditingController {
   }
 
   /// Callback that is executed when the user does a long press
-  void _onLongPress(int wordStartIdx, int wordEndIdx) {
+  void _onLongPress(int wordStartIdx, int wordEndIdx, int charIdx) {
 
+    selection = TextSelection.collapsed(offset: wordStartIdx+charIdx);
     onLongPress?.call(selection);
 
   }
@@ -272,7 +274,7 @@ class MecabTextEditingController extends TextEditingController {
 
   }
 
-  /// Callback that is executed when the user does a single tap
+  /// Callback that is executed when the user does a double tap
   void _onDoubleTap(int wordStartIdx, int wordEndIdx) {
 
     for (var match in sentenceRegex.allMatches(text)) {
@@ -320,13 +322,13 @@ class MecabTextEditingController extends TextEditingController {
 
   }
 
-  /// Returns a [Tuple2] with
-  ///   * item1 - the start index of the selection
-  ///   * item2 - the end index of the selections
-  Tuple2<int, int> getStartAndEnd(){
-    return Tuple2(
-      min(selection.baseOffset, selection.extentOffset),
-      max(selection.baseOffset, selection.extentOffset)
+  /// Returns a Record with
+  ///   * start - the start index of the selection
+  ///   * end - the end index of the selections
+  ({int start, int end}) getStartAndEnd(){
+    return (
+      start: min(selection.baseOffset, selection.extentOffset),
+      end: max(selection.baseOffset, selection.extentOffset)
     );
   }
 
@@ -341,8 +343,8 @@ class MecabTextEditingController extends TextEditingController {
     // do not move
     if(noTokens == 0 ) return;
 
-    Tuple2 pos = getStartAndEnd();
-    int currentTokenIdx = getTokenAtTextIndex(pos.item2)+1;
+    final pos = getStartAndEnd();
+    int currentTokenIdx = getTokenAtTextIndex(pos.end)+1;
     int targetTokenIdx  = currentTokenIdx + noTokens;
 
     // set maximum selection if target is longer than the text
@@ -357,13 +359,13 @@ class MecabTextEditingController extends TextEditingController {
 
     // if shrinking the selection by more than its current size, move to prev.
     // token
-    if(modifyBy.length > pos.item2-pos.item1 && modifyByLen < 0){
+    if(modifyBy.length > pos.end-pos.start && modifyByLen < 0){
       moveSelectionByTokens(-1);
       return;
     }
 
     selection = selection.copyWith(
-      baseOffset: null, extentOffset: pos.item2+modifyByLen);
+      baseOffset: null, extentOffset: pos.end+modifyByLen);
     
   }
 
@@ -374,28 +376,28 @@ class MecabTextEditingController extends TextEditingController {
     // do not move
     if(noChars == 0) return;
 
-    Tuple2<int, int> pos = getStartAndEnd();
+    final pos = getStartAndEnd();
 
     // if the selection only contains one character, move it by one
-    if(pos.item2 - pos.item1 == 1){
+    if(pos.end - pos.start == 1){
       // if at the beginning wrap around
-      if(pos.item1 == 0 && noChars < 0){
+      if(pos.start == 0 && noChars < 0){
         selection = selection.copyWith(
           baseOffset: text.length-1, extentOffset: text.length);
       }
       // else move to the previous one
       else {
         selection = selection.copyWith(
-          baseOffset: pos.item1-1, extentOffset: pos.item1);
+          baseOffset: pos.start-1, extentOffset: pos.start);
       }
       return;
     }
 
     // set maximum selection if target is longer than the text
-    if(pos.item2+noChars > text.length) noChars = text.length - pos.item2;
+    if(pos.end+noChars > text.length) noChars = text.length - pos.end;
 
     selection = selection.copyWith(
-      extentOffset: pos.item2+noChars);
+      extentOffset: pos.end+noChars);
   }
 
   /// Moves the current selection by `noTokens`.
@@ -409,9 +411,9 @@ class MecabTextEditingController extends TextEditingController {
     if(noTokens == 0) return;
 
     // Check where the selection currently is and if moving for- or backwards
-    Tuple2 pos = getStartAndEnd();
+    final pos = getStartAndEnd();
 
-    int idxTargetToken = getTokenAtTextIndex(pos.item2) + noTokens;
+    int idxTargetToken = getTokenAtTextIndex(pos.end) + noTokens;
     int lenTargetToken = mecabSurfaces[idxTargetToken].length;
     int targetTokenStart = mecabSurfaces.sublist(0, idxTargetToken).join().length;
 
@@ -429,13 +431,13 @@ class MecabTextEditingController extends TextEditingController {
     if(noChars == 0) return;
 
     // Check where the selection currently is and if moving for- or backwards
-    Tuple2 pos = getStartAndEnd();
-    int moveFrom = noChars > 0 ? pos.item2 : pos.item1+1;
+    final pos = getStartAndEnd();
+    int moveFrom = noChars > 0 ? pos.end : pos.start+1;
 
     // if moving 'before' the text, move selection to the end
-    if(pos.item1 == 0 && noChars < 0) moveFrom = text.length+1;
+    if(pos.start == 0 && noChars < 0) moveFrom = text.length+1;
     // if moving 'past' the text, move selection to the beginning
-    if(pos.item2 == text.length && noChars > 0) moveFrom = 0;
+    if(pos.end == text.length && noChars > 0) moveFrom = 0;
 
     // move the selection
     selection = selection.copyWith(
