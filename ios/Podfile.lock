@@ -53,7 +53,7 @@ PODS:
     - Flutter
     - FlutterMacOS
     - mdk (~> 0.31.0)
-  - in_app_review (0.2.0):
+  - in_app_review (2.0.0):
     - Flutter
   - integration_test (0.0.1):
     - Flutter
@@ -234,7 +234,7 @@ SPEC CHECKSUMS:
   flutter_inappwebview_ios: 6f63631e2c62a7c350263b13fa5427aedefe81d4
   flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
   fvp: af80ddc7cb52ce62306d8e753b831051780853fd
-  in_app_review: 318597b3a06c22bb46dc454d56828c85f444f99d
+  in_app_review: a31b5257259646ea78e0e35fc914979b0031d011
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   irondash_engine_context: 3458bf979b90d616ffb8ae03a150bafe2e860cc9
   isar_flutter_libs: fdf730ca925d05687f36d7f1d355e482529ed097

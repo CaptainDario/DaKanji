@@ -137,7 +137,7 @@ dependencies:
   # Not all platforms supported
   flutter_inappwebview: 6.1.5
 
-  in_app_review: 2.0.9                  # android, iOS, MacOS, windows (limited)
+  in_app_review: 2.0.10                 # android, iOS, MacOS, windows (limited)
   clipboard_watcher: 0.3.0              # android, iOS, macos, windows, linux
   store_checker: 1.8.0                  # ios, android
 
