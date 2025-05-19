@@ -12,7 +12,6 @@ const double c_MECAB_DICT_SIZE_MB = 42.5;
 const double c_RADK_SIZE_MB = 0.5;
 
 const List<double> g_DaKanjiAssetSizes = [
-	c_AUDIOS_SIZE_MB,
 	c_CNN_SINGLE_CHAR_SIZE_MB,
 	c_DICTIONARY_SIZE_MB,
 	c_EXAMPLES_SIZE_MB,
@@ -22,4 +21,4 @@ const List<double> g_DaKanjiAssetSizes = [
 ];
 
 /// Total size of all assets in MB
-final double c_DOWNLOAD_SIZE = g_DaKanjiAssetSizes.reduce((v1, v2) => v1 + v2);
+final double c_INITIAL_DOWNLOAD_SIZE = g_DaKanjiAssetSizes.reduce((v1, v2) => v1 + v2);

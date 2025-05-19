@@ -2,6 +2,7 @@ from typing import List
 
 from setup import get_asset_info, get_release_url
 
+not_initial_setup_files = ["audios.zip"]
 
 
 def write_asset_sizes_to_file(names : List[str], sizes : List[int]):
@@ -26,7 +27,9 @@ def write_asset_sizes_to_file(names : List[str], sizes : List[int]):
             if(name.endswith(".zip")):
                 var_name = f"c_{name[:-4].upper()}_SIZE_MB"
                 f.write(f"const double {var_name} = {((size/1024)/1024):.1f};\n")
-                var_names.append(var_name)
+
+                if(name not in not_initial_setup_files):
+                    var_names.append(var_name)
 
         # one list that contains all sizes
         f.write("\n")
@@ -35,7 +38,7 @@ def write_asset_sizes_to_file(names : List[str], sizes : List[int]):
 
         # total size
         f.write("/// Total size of all assets in MB\n")
-        f.write("final double c_DOWNLOAD_SIZE = g_DaKanjiAssetSizes.reduce((v1, v2) => v1 + v2);\n")
+        f.write("final double c_INITIAL_DOWNLOAD_SIZE = g_DaKanjiAssetSizes.reduce((v1, v2) => v1 + v2);\n")
 
 
 if __name__ == "__main__":
