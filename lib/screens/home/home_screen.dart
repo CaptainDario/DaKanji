@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     else {
       // if there is a deep link at app start handle it
-      String? deepLink = await g_AppLinks.getInitialLinkString();
+      Uri? deepLink = await g_AppLinks.getInitialLink();
       bool handled = false;
       if(deepLink != null && !g_initialDeepLinkHandled){
         g_initialDeepLinkHandled = true;
