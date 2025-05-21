@@ -89,7 +89,9 @@ List<Version> g_NewRadicals = [
   Version(3, 3, 0, build: 76)
 ];
 /// Versions that require to setup the anki integration again
-List<Version> g_ResetAnki = [Version(3, 5, 0), Version(3, 5, 1)];
+List<Version> g_ResetAnki = [
+  Version(3, 5, 0), Version(3, 5, 1), Version(3, 5, 2), Version(3, 5, 3)
+];
 
 /// The maxMiB size of the dictionary isar
 int g_IsarDictMaxMiB = Platform.isIOS ? 384 : 512;
