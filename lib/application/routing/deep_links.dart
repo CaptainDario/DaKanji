@@ -35,7 +35,7 @@ bool handleDeepLink(Uri uri){
   // extract route ...
   List<String> route = [];
   // ... from dakanji:// based links
-  if(uri.scheme == g_AppLinkDaKanji) {
+  if(g_AppLinkDaKanji.toString().startsWith(g_AppLinkDaKanji)) {
     route = uri.toString().substring(
       g_AppLinkDaKanji.length, uri.toString().indexOf("?")
     ).split("/");
