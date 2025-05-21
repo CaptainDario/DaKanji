@@ -41,7 +41,7 @@ parts:
 
   flutter-git:
     source: https://github.com/flutter/flutter.git
-    source-tag: "3.29.3"
+    source-tag: "3.32.0"
     plugin: nil
     override-build: |
       set -eux

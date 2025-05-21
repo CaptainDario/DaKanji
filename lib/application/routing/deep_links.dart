@@ -22,23 +22,32 @@ Future<void> initDeepLinksStream() async {
 
   // Subscribe to all events when app is started.
   g_AppLinks.uriLinkStream.listen((Uri uri) {
-    if(uri.toString().startsWith(g_AppLinkDaKanji) || 
-      uri.toString().startsWith(g_AppLinkHttps)){
-      handleDeepLink(uri.toString());
-    }
+    handleDeepLink(uri);
   });
 }
 
 /// Handles the deep link, returns true if it was handled, false otherwise
-bool handleDeepLink(String link){
+bool handleDeepLink(Uri uri){
 
-  Uri uri = Uri.parse(link);
-  List<String> route = uri.pathSegments;
+  // ensure uri is correctly encoded
+  uri = Uri.parse(Uri.encodeFull(uri.toString()));
+
+  // extract route ...
+  List<String> route = [];
+  // ... from dakanji:// based links
+  if(g_AppLinkDaKanji.toString().startsWith(g_AppLinkDaKanji)) {
+    route = uri.toString().substring(
+      g_AppLinkDaKanji.length, uri.toString().indexOf("?")
+    ).split("/");
+  }
+  // ... from https://dakanji.app/app/ based links
+  else if(uri.toString().startsWith(g_AppLinkHttps)) {
+    route = uri.pathSegments.sublist(1);
+  }
+  
   Map<String, String> args = uri.queryParameters;
 
-  link = Uri.decodeFull(Uri.encodeFull(link).toString());
-
-  debugPrint("Deeplink: $link with route: $route and args: $args");
+  debugPrint("Deeplink: ${uri.toString()} with route: $route and args: $args");
   
   if(route.isEmpty) return false;
 
@@ -67,7 +76,7 @@ bool handleDeepLink(String link){
     handleDeepLinkSettings(args);
   }
   else {
-    debugPrint("Unknown deep link: $link");
+    debugPrint("Unknown deep link: ${uri.toString()}");
     return false;
   }
 

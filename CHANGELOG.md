@@ -1,6 +1,13 @@
 
 # DaKanji - changelog
 
+## v3.5.2 - ワードリストと暗記改善 (21.05.2024)
+
+Fixed:
+
+- Drawing recognition on iOS
+- Deep Links
+
 ## v3.5.1 - ワードリストと暗記改善 (19.05.2024)
 
 Improvements:
