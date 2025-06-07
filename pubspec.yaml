@@ -104,7 +104,7 @@ dependencies:
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
   keyboard_detection: 0.8.0
-  async: 2.12.0
+  async: 2.13.0
   path: 1.9.1
   http: 1.2.2
   path_provider: 2.1.5
