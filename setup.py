@@ -120,9 +120,6 @@ def init_submodules():
     os.chdir(f"{base_dir}/plugins/DaKanji-Dictionary/database_builder")
     subprocess.run(["flutter", "pub", "get"], shell=True)
 
-    os.chdir(f"{base_dir}/plugins/flutter_browser_app")
-    subprocess.run(["flutter", "pub", "get"], shell=True)
-
     os.chdir("../..")
 
 def setup_dakanji_env():
