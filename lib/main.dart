@@ -45,7 +45,9 @@ Future<void> main() async {
 
   await SentryFlutter.init(
     (options) {
-      options.dsn = kReleaseMode ? Env.SENTRY_DSN : "";
+      options.dsn = (kReleaseMode && Env.SENTRY_DSN != "https://1234567890")
+        ? Env.SENTRY_DSN
+        : "";
       options.sendDefaultPii = false;
     },
     appRunner: () => runApp(
