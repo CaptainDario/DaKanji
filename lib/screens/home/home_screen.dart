@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // track first installs
     if(GetIt.I<UserData>().appOpenedTimes <= 1){
-      logDefaultEvent("New/Re install");
+      cacheDefaultEvent(installEventName);
       GetIt.I<UserData>().save();
     }
     // check if an update is available
