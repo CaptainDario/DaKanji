@@ -32,6 +32,8 @@ String postHogApiKey = (kDebugMode
 String dailyActiveUserEventName = "Daily active user";
 /// The name of the event that indicates a monthly active user
 String monthlyActiveUserEventName = "Monthly active user";
+/// The name of the event that indicates a new / re install
+String installEventName = "New/Re install";
 
 
 Future<Map> defaultEvent(String eventName) async {
