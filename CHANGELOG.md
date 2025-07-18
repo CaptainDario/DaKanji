@@ -6,6 +6,7 @@
 Fixed:
 
 - App not loading for some users
+- Radical search: Do not show empty sections
 - Example highlights
 - Smaller fixes
 
