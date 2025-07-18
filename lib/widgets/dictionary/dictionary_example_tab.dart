@@ -172,23 +172,27 @@ class _DictionaryExampleTabState extends State<DictionaryExampleTab> {
       }
       
       for (int i = 0; i < parsedExample.length; i++){
-        if(parsedExample[i].features.length > 5){
+        if(parsedExample[i].features.length > 8){
 
-          int lengthToCurrentWord = parsedExample.sublist(0, i).map((e) => e.surface).join("").length;
+          int lengthToCurrentWord = parsedExample.sublist(0, i)
+            .map((e) => e.surface)
+            .join("").length;
 
           // get the current span and check if a highlight has already been added for it
-          Tuple2<int, int> currentSpan = Tuple2(lengthToCurrentWord, lengthToCurrentWord+parsedExample[i].surface.length);
+          Tuple2<int, int> currentSpan = Tuple2(
+            lengthToCurrentWord,
+            lengthToCurrentWord+parsedExample[i].surface.length);
           if(matchSpans.last.contains(currentSpan)) {
             continue;
           }
 
-          if(entry.kanjis.contains(parsedExample[i].features[6])){
+          if(entry.kanjis.contains(parsedExample[i].features[7])){
             matchSpans.last.add(currentSpan);
           }
-          else if(entry.readings.contains(parsedExample[i].features[6])){
+          else if(entry.readings.contains(parsedExample[i].features[7])){
             matchSpans.last.add(currentSpan);
           }
-          else if(entry.hiraganas.contains(parsedExample[i].features[6])){
+          else if(entry.hiraganas.contains(parsedExample[i].features[7])){
             matchSpans.last.add(currentSpan);
           }
         }
