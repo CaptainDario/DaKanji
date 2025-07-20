@@ -1,5 +1,5 @@
 name: dakanji_db
-description: Scripts to populate DaKanji's database
+description: Library to populate and access DaKanji's database
 repository: https://github.com/captaindario/dakanji-db
 publish_to: none
 version: 4.0.0
@@ -12,15 +12,12 @@ dependencies:
   path: ^1.9.1
   drift: ^2.21.0
   sqlite3: ^2.4.7
-  archive:
-    git:
-      url: https://github.com/brendan-duncan/archive
+  archive: ^4.0.7
   tuple: ^2.0.2
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
   universal_io: ^2.2.2
-  mecab_for_dart:
-    path: /Users/darioklepoch/dev/DaKanji/mecab_for_dart/
+  mecab_for_dart: 1.1.5
 
 dev_dependencies:
   drift_dev: ^2.21.2
@@ -31,7 +28,4 @@ dev_dependencies:
   test: ^1.25.8
   json_serializable: ^6.9.0
 
-dependency_overrides:
-  archive:
-    git:
-      url: https://github.com/brendan-duncan/archive
+#dependency_overrides:
