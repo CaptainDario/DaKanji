@@ -6,12 +6,12 @@ import 'package:universal_io/io.dart';
 final dakanjiDbPath = p.joinAll([Directory.current.path, "tmp", "dakanji.db"]);
 
 /// Path to the folder that contains the sample from the yomitan repo
-final yomitanSamplePath = p.joinAll([Directory.current.path, "samples", "yomitan"]);
+final samples_yomitanPath = p.joinAll([Directory.current.path, "samples", "yomitan"]);
 /// Path to the folder that contains the example for the dakanji samples
-final exampleSamplePath = p.joinAll([Directory.current.path, "samples", "example_sentences"]);
+final samples_exampleSentencesPath = p.joinAll([Directory.current.path, "samples", "example_sentences"]);
 
 /// path to the kanjidic2 files that should be parsed
-final kanjidic2Path = p.joinAll([Directory.current.path, "stresstest", "KANJIDIC_english"]);
+final kanjidic2Path = p.joinAll([Directory.current.path, "input_files", "KANJIDIC_english"]);
 /// path to the kanjivg folder that should be parsed
 final kanjiVGPath = p.joinAll([Directory.current.path, "input_files", "kanji"]);
 /// path to the radical files that should be parsed

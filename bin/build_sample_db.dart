@@ -15,12 +15,12 @@ void main() async {
 
   // convert the yomitan test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(yomitanSamplePath), db);
+  await parseDictionaryFolder(Directory(samples_yomitanPath), db);
   print("Converting yomitan dict took ${s.elapsedMilliseconds} ms");
 
   // convert the example bank test files
   s = Stopwatch()..reset()..start();
-  await parseExampleFolder(Directory(exampleSamplePath), db);
+  await parseExampleFolder(Directory(samples_exampleSentencesPath), db);
   print("Converting example banks took ${s.elapsedMilliseconds} ms");
 
   exit(0);
