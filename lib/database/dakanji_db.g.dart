@@ -1431,8 +1431,6 @@ class $KanjiVGTableTable extends KanjiVGTable
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('REFERENCES kanji_table (id)'));
-  static const VerificationMeta _kanjiVGSVGMeta =
-      const VerificationMeta('kanjiVGSVG');
   @override
   late final GeneratedColumnWithTypeConverter<String, Uint8List> kanjiVGSVG =
       GeneratedColumn<Uint8List>('kanji_v_g_s_v_g', aliasedName, false,
@@ -1459,7 +1457,6 @@ class $KanjiVGTableTable extends KanjiVGTable
     } else if (isInserting) {
       context.missing(_kanjiIdMeta);
     }
-    context.handle(_kanjiVGSVGMeta, const VerificationResult.success());
     return context;
   }
 
@@ -10584,7 +10581,7 @@ final class $$KanjiTableTableReferences
       get radicalKanjiRelationsTableRefs {
     final manager = $$RadicalKanjiRelationsTableTableTableManager(
             $_db, $_db.radicalKanjiRelationsTable)
-        .filter((f) => f.kanjiId.id($_item.id));
+        .filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_radicalKanjiRelationsTableRefsTable($_db));
@@ -10600,7 +10597,7 @@ final class $$KanjiTableTableReferences
 
   $$KanjiVGTableTableProcessedTableManager get kanjiVGTableRefs {
     final manager = $$KanjiVGTableTableTableManager($_db, $_db.kanjiVGTable)
-        .filter((f) => f.kanjiId.id($_item.id));
+        .filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_kanjiVGTableRefsTable($_db));
     return ProcessedTableManager(
@@ -10616,7 +10613,7 @@ final class $$KanjiTableTableReferences
   $$KanjiBankV3TableTableProcessedTableManager get kanjiBankV3TableRefs {
     final manager =
         $$KanjiBankV3TableTableTableManager($_db, $_db.kanjiBankV3Table)
-            .filter((f) => f.kanjiId.id($_item.id));
+            .filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_kanjiBankV3TableRefsTable($_db));
@@ -10635,7 +10632,7 @@ final class $$KanjiTableTableReferences
       get kanjiMetaBankV3TableRefs {
     final manager =
         $$KanjiMetaBankV3TableTableTableManager($_db, $_db.kanjiMetaBankV3Table)
-            .filter((f) => f.kanjiId.id($_item.id));
+            .filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_kanjiMetaBankV3TableRefsTable($_db));
@@ -10935,7 +10932,8 @@ class $$KanjiTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (radicalKanjiRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<KanjiTableData, $KanjiTableTable,
+                            RadicalKanjiRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$KanjiTableTableReferences
                             ._radicalKanjiRelationsTableRefsTable(db),
@@ -10947,7 +10945,8 @@ class $$KanjiTableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.kanjiId == item.id),
                         typedResults: items),
                   if (kanjiVGTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<KanjiTableData, $KanjiTableTable,
+                            KanjiVGTableData>(
                         currentTable: table,
                         referencedTable: $$KanjiTableTableReferences
                             ._kanjiVGTableRefsTable(db),
@@ -10959,7 +10958,8 @@ class $$KanjiTableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.kanjiId == item.id),
                         typedResults: items),
                   if (kanjiBankV3TableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<KanjiTableData, $KanjiTableTable,
+                            KanjiBankV3TableData>(
                         currentTable: table,
                         referencedTable: $$KanjiTableTableReferences
                             ._kanjiBankV3TableRefsTable(db),
@@ -10971,7 +10971,8 @@ class $$KanjiTableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.kanjiId == item.id),
                         typedResults: items),
                   if (kanjiMetaBankV3TableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<KanjiTableData, $KanjiTableTable,
+                            KanjiMetaBankV3TableData>(
                         currentTable: table,
                         referencedTable: $$KanjiTableTableReferences
                             ._kanjiMetaBankV3TableRefsTable(db),
@@ -11027,7 +11028,7 @@ final class $$TermTableTableReferences
   $$TermBankV3TableTableProcessedTableManager get termBankV3TableRefs {
     final manager =
         $$TermBankV3TableTableTableManager($_db, $_db.termBankV3Table)
-            .filter((f) => f.termId.id($_item.id));
+            .filter((f) => f.termId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_termBankV3TableRefsTable($_db));
@@ -11045,7 +11046,7 @@ final class $$TermTableTableReferences
   $$TermMetaBankV3TableTableProcessedTableManager get termMetaBankV3TableRefs {
     final manager =
         $$TermMetaBankV3TableTableTableManager($_db, $_db.termMetaBankV3Table)
-            .filter((f) => f.termId.id($_item.id));
+            .filter((f) => f.termId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_termMetaBankV3TableRefsTable($_db));
@@ -11064,7 +11065,7 @@ final class $$TermTableTableReferences
       get exampleTermRelationsTableRefs {
     final manager = $$ExampleTermRelationsTableTableTableManager(
             $_db, $_db.exampleTermRelationsTable)
-        .filter((f) => f.termId.id($_item.id));
+        .filter((f) => f.termId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_exampleTermRelationsTableRefsTable($_db));
@@ -11317,7 +11318,8 @@ class $$TermTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (termBankV3TableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TermTableData, $TermTableTable,
+                            TermBankV3TableData>(
                         currentTable: table,
                         referencedTable: $$TermTableTableReferences
                             ._termBankV3TableRefsTable(db),
@@ -11329,7 +11331,8 @@ class $$TermTableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.termId == item.id),
                         typedResults: items),
                   if (termMetaBankV3TableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TermTableData, $TermTableTable,
+                            TermMetaBankV3TableData>(
                         currentTable: table,
                         referencedTable: $$TermTableTableReferences
                             ._termMetaBankV3TableRefsTable(db),
@@ -11341,7 +11344,8 @@ class $$TermTableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.termId == item.id),
                         typedResults: items),
                   if (exampleTermRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<TermTableData, $TermTableTable,
+                            ExampleTermRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TermTableTableReferences
                             ._exampleTermRelationsTableRefsTable(db),
@@ -11401,7 +11405,8 @@ final class $$ReadingTableTableReferences
       get kanjiBankV3KunyomiReadingRelationsTableRefs {
     final manager = $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager(
             $_db, $_db.kanjiBankV3KunyomiReadingRelationsTable)
-        .filter((f) => f.kunyomiReadingId.id($_item.id));
+        .filter(
+            (f) => f.kunyomiReadingId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
         _kanjiBankV3KunyomiReadingRelationsTableRefsTable($_db));
@@ -11421,7 +11426,8 @@ final class $$ReadingTableTableReferences
       get kanjiBankV3OnyomiReadingRelationsTableRefs {
     final manager = $$KanjiBankV3OnyomiReadingRelationsTableTableTableManager(
             $_db, $_db.kanjiBankV3OnyomiReadingRelationsTable)
-        .filter((f) => f.onyomiReadingId.id($_item.id));
+        .filter(
+            (f) => f.onyomiReadingId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
         _kanjiBankV3OnyomiReadingRelationsTableRefsTable($_db));
@@ -11438,7 +11444,7 @@ final class $$ReadingTableTableReferences
   $$TermBankV3TableTableProcessedTableManager get termBankV3TableRefs {
     final manager =
         $$TermBankV3TableTableTableManager($_db, $_db.termBankV3Table)
-            .filter((f) => f.readingId.id($_item.id));
+            .filter((f) => f.readingId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_termBankV3TableRefsTable($_db));
@@ -11456,7 +11462,7 @@ final class $$ReadingTableTableReferences
   $$TermMetaBankV3TableTableProcessedTableManager get termMetaBankV3TableRefs {
     final manager =
         $$TermMetaBankV3TableTableTableManager($_db, $_db.termMetaBankV3Table)
-            .filter((f) => f.readingId.id($_item.id));
+            .filter((f) => f.readingId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_termMetaBankV3TableRefsTable($_db));
@@ -11763,7 +11769,10 @@ class $$ReadingTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiBankV3KunyomiReadingRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            ReadingTableData,
+                            $ReadingTableTable,
+                            KanjiBankV3KunyomiReadingRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$ReadingTableTableReferences
                             ._kanjiBankV3KunyomiReadingRelationsTableRefsTable(
@@ -11776,7 +11785,10 @@ class $$ReadingTableTableTableManager extends RootTableManager<
                                 .where((e) => e.kunyomiReadingId == item.id),
                         typedResults: items),
                   if (kanjiBankV3OnyomiReadingRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            ReadingTableData,
+                            $ReadingTableTable,
+                            KanjiBankV3OnyomiReadingRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$ReadingTableTableReferences
                             ._kanjiBankV3OnyomiReadingRelationsTableRefsTable(
@@ -11789,7 +11801,8 @@ class $$ReadingTableTableTableManager extends RootTableManager<
                                 .where((e) => e.onyomiReadingId == item.id),
                         typedResults: items),
                   if (termBankV3TableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<ReadingTableData,
+                            $ReadingTableTable, TermBankV3TableData>(
                         currentTable: table,
                         referencedTable: $$ReadingTableTableReferences
                             ._termBankV3TableRefsTable(db),
@@ -11801,7 +11814,8 @@ class $$ReadingTableTableTableManager extends RootTableManager<
                                 .where((e) => e.readingId == item.id),
                         typedResults: items),
                   if (termMetaBankV3TableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<ReadingTableData,
+                            $ReadingTableTable, TermMetaBankV3TableData>(
                         currentTable: table,
                         referencedTable: $$ReadingTableTableReferences
                             ._termMetaBankV3TableRefsTable(db),
@@ -11862,7 +11876,7 @@ final class $$MeaningTableTableReferences
       get kanjiBankV3MeaningsKanjiRelationsTableRefs {
     final manager = $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager(
             $_db, $_db.kanjiBankV3MeaningsKanjiRelationsTable)
-        .filter((f) => f.meaningId.id($_item.id));
+        .filter((f) => f.meaningId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
         _kanjiBankV3MeaningsKanjiRelationsTableRefsTable($_db));
@@ -12023,7 +12037,10 @@ class $$MeaningTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiBankV3MeaningsKanjiRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            MeaningTableData,
+                            $MeaningTableTable,
+                            KanjiBankV3MeaningsKanjiRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$MeaningTableTableReferences
                             ._kanjiBankV3MeaningsKanjiRelationsTableRefsTable(
@@ -12081,7 +12098,7 @@ final class $$LanguageCodeTableTableReferences extends BaseReferences<
       get exampleTranslationTableRefs {
     final manager = $$ExampleTranslationTableTableTableManager(
             $_db, $_db.exampleTranslationTable)
-        .filter((f) => f.languageCodeId.id($_item.id));
+        .filter((f) => f.languageCodeId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_exampleTranslationTableRefsTable($_db));
@@ -12241,7 +12258,10 @@ class $$LanguageCodeTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (exampleTranslationTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            LanguageCodeTableData,
+                            $LanguageCodeTableTable,
+                            ExampleTranslationTableData>(
                         currentTable: table,
                         referencedTable: $$LanguageCodeTableTableReferences
                             ._exampleTranslationTableRefsTable(db),
@@ -12300,7 +12320,7 @@ final class $$RadicalsTableTableReferences extends BaseReferences<_$DaKanjiDB,
       get radicalKanjiRelationsTableRefs {
     final manager = $$RadicalKanjiRelationsTableTableTableManager(
             $_db, $_db.radicalKanjiRelationsTable)
-        .filter((f) => f.radicalId.id($_item.id));
+        .filter((f) => f.radicalId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_radicalKanjiRelationsTableRefsTable($_db));
@@ -12473,7 +12493,10 @@ class $$RadicalsTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (radicalKanjiRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            RadicalsTableData,
+                            $RadicalsTableTable,
+                            RadicalKanjiRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$RadicalsTableTableReferences
                             ._radicalKanjiRelationsTableRefsTable(db),
@@ -12527,10 +12550,11 @@ final class $$RadicalKanjiRelationsTableTableReferences extends BaseReferences<
       db.kanjiTable.createAlias($_aliasNameGenerator(
           db.radicalKanjiRelationsTable.kanjiId, db.kanjiTable.id));
 
-  $$KanjiTableTableProcessedTableManager? get kanjiId {
-    if ($_item.kanjiId == null) return null;
+  $$KanjiTableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
     final manager = $$KanjiTableTableTableManager($_db, $_db.kanjiTable)
-        .filter((f) => f.id($_item.kanjiId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -12541,10 +12565,11 @@ final class $$RadicalKanjiRelationsTableTableReferences extends BaseReferences<
       db.radicalsTable.createAlias($_aliasNameGenerator(
           db.radicalKanjiRelationsTable.radicalId, db.radicalsTable.id));
 
-  $$RadicalsTableTableProcessedTableManager? get radicalId {
-    if ($_item.radicalId == null) return null;
+  $$RadicalsTableTableProcessedTableManager get radicalId {
+    final $_column = $_itemColumn<int>('radical_id')!;
+
     final manager = $$RadicalsTableTableTableManager($_db, $_db.radicalsTable)
-        .filter((f) => f.id($_item.radicalId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_radicalIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -12855,10 +12880,11 @@ final class $$KanjiVGTableTableReferences
       db.kanjiTable.createAlias(
           $_aliasNameGenerator(db.kanjiVGTable.kanjiId, db.kanjiTable.id));
 
-  $$KanjiTableTableProcessedTableManager? get kanjiId {
-    if ($_item.kanjiId == null) return null;
+  $$KanjiTableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
     final manager = $$KanjiTableTableTableManager($_db, $_db.kanjiTable)
-        .filter((f) => f.id($_item.kanjiId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -13125,7 +13151,7 @@ final class $$IndexTableTableReferences
   $$KanjiBankV3TableTableProcessedTableManager get kanjiBankV3TableRefs {
     final manager =
         $$KanjiBankV3TableTableTableManager($_db, $_db.kanjiBankV3Table)
-            .filter((f) => f.dictId.id($_item.id));
+            .filter((f) => f.dictId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_kanjiBankV3TableRefsTable($_db));
@@ -13144,7 +13170,7 @@ final class $$IndexTableTableReferences
       get kanjiMetaBankV3TableRefs {
     final manager =
         $$KanjiMetaBankV3TableTableTableManager($_db, $_db.kanjiMetaBankV3Table)
-            .filter((f) => f.dictId.id($_item.id));
+            .filter((f) => f.dictId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_kanjiMetaBankV3TableRefsTable($_db));
@@ -13162,7 +13188,7 @@ final class $$IndexTableTableReferences
   $$TermMetaBankV3TableTableProcessedTableManager get termMetaBankV3TableRefs {
     final manager =
         $$TermMetaBankV3TableTableTableManager($_db, $_db.termMetaBankV3Table)
-            .filter((f) => f.dictId.id($_item.id));
+            .filter((f) => f.dictId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_termMetaBankV3TableRefsTable($_db));
@@ -13599,7 +13625,8 @@ class $$IndexTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiBankV3TableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<IndexTableData, $IndexTableTable,
+                            KanjiBankV3TableData>(
                         currentTable: table,
                         referencedTable: $$IndexTableTableReferences
                             ._kanjiBankV3TableRefsTable(db),
@@ -13611,7 +13638,8 @@ class $$IndexTableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.dictId == item.id),
                         typedResults: items),
                   if (kanjiMetaBankV3TableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<IndexTableData, $IndexTableTable,
+                            KanjiMetaBankV3TableData>(
                         currentTable: table,
                         referencedTable: $$IndexTableTableReferences
                             ._kanjiMetaBankV3TableRefsTable(db),
@@ -13623,7 +13651,8 @@ class $$IndexTableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.dictId == item.id),
                         typedResults: items),
                   if (termMetaBankV3TableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<IndexTableData, $IndexTableTable,
+                            TermMetaBankV3TableData>(
                         currentTable: table,
                         referencedTable: $$IndexTableTableReferences
                             ._termMetaBankV3TableRefsTable(db),
@@ -13689,7 +13718,7 @@ final class $$TagBankV3TableTableReferences extends BaseReferences<_$DaKanjiDB,
       get tagBankV3TagCategoryRelationsTableRefs {
     final manager = $$TagBankV3TagCategoryRelationsTableTableTableManager(
             $_db, $_db.tagBankV3TagCategoryRelationsTable)
-        .filter((f) => f.tagId.id($_item.id));
+        .filter((f) => f.tagId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_tagBankV3TagCategoryRelationsTableRefsTable($_db));
@@ -13708,7 +13737,7 @@ final class $$TagBankV3TableTableReferences extends BaseReferences<_$DaKanjiDB,
       get kanjiBankV3TagsKanjiRelationsTableRefs {
     final manager = $$KanjiBankV3TagsKanjiRelationsTableTableTableManager(
             $_db, $_db.kanjiBankV3TagsKanjiRelationsTable)
-        .filter((f) => f.tagId.id($_item.id));
+        .filter((f) => f.tagId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_kanjiBankV3TagsKanjiRelationsTableRefsTable($_db));
@@ -13727,7 +13756,7 @@ final class $$TagBankV3TableTableReferences extends BaseReferences<_$DaKanjiDB,
       get termBankV3TagBankRelationsTableRefs {
     final manager = $$TermBankV3TagBankRelationsTableTableTableManager(
             $_db, $_db.termBankV3TagBankRelationsTable)
-        .filter((f) => f.tagBankId.id($_item.id));
+        .filter((f) => f.tagBankId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termBankV3TagBankRelationsTableRefsTable($_db));
@@ -14033,7 +14062,10 @@ class $$TagBankV3TableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (tagBankV3TagCategoryRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TagBankV3TableData,
+                            $TagBankV3TableTable,
+                            TagBankV3TagCategoryRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TagBankV3TableTableReferences
                             ._tagBankV3TagCategoryRelationsTableRefsTable(db),
@@ -14045,7 +14077,10 @@ class $$TagBankV3TableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.tagId == item.id),
                         typedResults: items),
                   if (kanjiBankV3TagsKanjiRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TagBankV3TableData,
+                            $TagBankV3TableTable,
+                            KanjiBankV3TagsKanjiRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TagBankV3TableTableReferences
                             ._kanjiBankV3TagsKanjiRelationsTableRefsTable(db),
@@ -14057,7 +14092,10 @@ class $$TagBankV3TableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.tagId == item.id),
                         typedResults: items),
                   if (termBankV3TagBankRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TagBankV3TableData,
+                            $TagBankV3TableTable,
+                            TermBankV3TagBankRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TagBankV3TableTableReferences
                             ._termBankV3TagBankRelationsTableRefsTable(db),
@@ -14117,7 +14155,7 @@ final class $$TagBankV3CategoryTableTableReferences extends BaseReferences<
       get tagBankV3TagCategoryRelationsTableRefs {
     final manager = $$TagBankV3TagCategoryRelationsTableTableTableManager(
             $_db, $_db.tagBankV3TagCategoryRelationsTable)
-        .filter((f) => f.categoryId.id($_item.id));
+        .filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_tagBankV3TagCategoryRelationsTableRefsTable($_db));
@@ -14282,7 +14320,10 @@ class $$TagBankV3CategoryTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (tagBankV3TagCategoryRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TagBankV3CategoryTableData,
+                            $TagBankV3CategoryTableTable,
+                            TagBankV3TagCategoryRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TagBankV3CategoryTableTableReferences
                             ._tagBankV3TagCategoryRelationsTableRefsTable(db),
@@ -14339,10 +14380,11 @@ final class $$TagBankV3TagCategoryRelationsTableTableReferences
       db.tagBankV3Table.createAlias($_aliasNameGenerator(
           db.tagBankV3TagCategoryRelationsTable.tagId, db.tagBankV3Table.id));
 
-  $$TagBankV3TableTableProcessedTableManager? get tagId {
-    if ($_item.tagId == null) return null;
+  $$TagBankV3TableTableProcessedTableManager get tagId {
+    final $_column = $_itemColumn<int>('tag_id')!;
+
     final manager = $$TagBankV3TableTableTableManager($_db, $_db.tagBankV3Table)
-        .filter((f) => f.id($_item.tagId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_tagIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -14354,11 +14396,12 @@ final class $$TagBankV3TagCategoryRelationsTableTableReferences
           db.tagBankV3TagCategoryRelationsTable.categoryId,
           db.tagBankV3CategoryTable.id));
 
-  $$TagBankV3CategoryTableTableProcessedTableManager? get categoryId {
-    if ($_item.categoryId == null) return null;
+  $$TagBankV3CategoryTableTableProcessedTableManager get categoryId {
+    final $_column = $_itemColumn<int>('category_id')!;
+
     final manager = $$TagBankV3CategoryTableTableTableManager(
             $_db, $_db.tagBankV3CategoryTable)
-        .filter((f) => f.id($_item.categoryId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -14677,10 +14720,11 @@ final class $$KanjiBankV3TableTableReferences extends BaseReferences<
       db.kanjiTable.createAlias(
           $_aliasNameGenerator(db.kanjiBankV3Table.kanjiId, db.kanjiTable.id));
 
-  $$KanjiTableTableProcessedTableManager? get kanjiId {
-    if ($_item.kanjiId == null) return null;
+  $$KanjiTableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
     final manager = $$KanjiTableTableTableManager($_db, $_db.kanjiTable)
-        .filter((f) => f.id($_item.kanjiId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -14691,10 +14735,11 @@ final class $$KanjiBankV3TableTableReferences extends BaseReferences<
       db.indexTable.createAlias(
           $_aliasNameGenerator(db.kanjiBankV3Table.dictId, db.indexTable.id));
 
-  $$IndexTableTableProcessedTableManager? get dictId {
-    if ($_item.dictId == null) return null;
+  $$IndexTableTableProcessedTableManager get dictId {
+    final $_column = $_itemColumn<int>('dict_id')!;
+
     final manager = $$IndexTableTableTableManager($_db, $_db.indexTable)
-        .filter((f) => f.id($_item.dictId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_dictIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -14713,7 +14758,7 @@ final class $$KanjiBankV3TableTableReferences extends BaseReferences<
       get kanjiBankV3KunyomiReadingRelationsTableRefs {
     final manager = $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager(
             $_db, $_db.kanjiBankV3KunyomiReadingRelationsTable)
-        .filter((f) => f.kanjiId.id($_item.id));
+        .filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
         _kanjiBankV3KunyomiReadingRelationsTableRefsTable($_db));
@@ -14733,7 +14778,7 @@ final class $$KanjiBankV3TableTableReferences extends BaseReferences<
       get kanjiBankV3OnyomiReadingRelationsTableRefs {
     final manager = $$KanjiBankV3OnyomiReadingRelationsTableTableTableManager(
             $_db, $_db.kanjiBankV3OnyomiReadingRelationsTable)
-        .filter((f) => f.kanjiId.id($_item.id));
+        .filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
         _kanjiBankV3OnyomiReadingRelationsTableRefsTable($_db));
@@ -14752,7 +14797,7 @@ final class $$KanjiBankV3TableTableReferences extends BaseReferences<
       get kanjiBankV3TagsKanjiRelationsTableRefs {
     final manager = $$KanjiBankV3TagsKanjiRelationsTableTableTableManager(
             $_db, $_db.kanjiBankV3TagsKanjiRelationsTable)
-        .filter((f) => f.kanjiId.id($_item.id));
+        .filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_kanjiBankV3TagsKanjiRelationsTableRefsTable($_db));
@@ -14772,7 +14817,7 @@ final class $$KanjiBankV3TableTableReferences extends BaseReferences<
       get kanjiBankV3MeaningsKanjiRelationsTableRefs {
     final manager = $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager(
             $_db, $_db.kanjiBankV3MeaningsKanjiRelationsTable)
-        .filter((f) => f.kanjiId.id($_item.id));
+        .filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
         _kanjiBankV3MeaningsKanjiRelationsTableRefsTable($_db));
@@ -14791,7 +14836,7 @@ final class $$KanjiBankV3TableTableReferences extends BaseReferences<
       get kanjiBankV3StatKanjiRelationsTableRefs {
     final manager = $$KanjiBankV3StatKanjiRelationsTableTableTableManager(
             $_db, $_db.kanjiBankV3StatKanjiRelationsTable)
-        .filter((f) => f.kanjiId.id($_item.id));
+        .filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_kanjiBankV3StatKanjiRelationsTableRefsTable($_db));
@@ -15317,7 +15362,10 @@ class $$KanjiBankV3TableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiBankV3KunyomiReadingRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            KanjiBankV3TableData,
+                            $KanjiBankV3TableTable,
+                            KanjiBankV3KunyomiReadingRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$KanjiBankV3TableTableReferences
                             ._kanjiBankV3KunyomiReadingRelationsTableRefsTable(
@@ -15330,7 +15378,10 @@ class $$KanjiBankV3TableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.kanjiId == item.id),
                         typedResults: items),
                   if (kanjiBankV3OnyomiReadingRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            KanjiBankV3TableData,
+                            $KanjiBankV3TableTable,
+                            KanjiBankV3OnyomiReadingRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$KanjiBankV3TableTableReferences
                             ._kanjiBankV3OnyomiReadingRelationsTableRefsTable(
@@ -15343,7 +15394,10 @@ class $$KanjiBankV3TableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.kanjiId == item.id),
                         typedResults: items),
                   if (kanjiBankV3TagsKanjiRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            KanjiBankV3TableData,
+                            $KanjiBankV3TableTable,
+                            KanjiBankV3TagsKanjiRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$KanjiBankV3TableTableReferences
                             ._kanjiBankV3TagsKanjiRelationsTableRefsTable(db),
@@ -15355,7 +15409,10 @@ class $$KanjiBankV3TableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.kanjiId == item.id),
                         typedResults: items),
                   if (kanjiBankV3MeaningsKanjiRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            KanjiBankV3TableData,
+                            $KanjiBankV3TableTable,
+                            KanjiBankV3MeaningsKanjiRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$KanjiBankV3TableTableReferences
                             ._kanjiBankV3MeaningsKanjiRelationsTableRefsTable(
@@ -15368,7 +15425,10 @@ class $$KanjiBankV3TableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.kanjiId == item.id),
                         typedResults: items),
                   if (kanjiBankV3StatKanjiRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            KanjiBankV3TableData,
+                            $KanjiBankV3TableTable,
+                            KanjiBankV3StatKanjiRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$KanjiBankV3TableTableReferences
                             ._kanjiBankV3StatKanjiRelationsTableRefsTable(db),
@@ -15431,10 +15491,11 @@ final class $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
           db.kanjiBankV3KunyomiReadingRelationsTable.kunyomiReadingId,
           db.readingTable.id));
 
-  $$ReadingTableTableProcessedTableManager? get kunyomiReadingId {
-    if ($_item.kunyomiReadingId == null) return null;
+  $$ReadingTableTableProcessedTableManager get kunyomiReadingId {
+    final $_column = $_itemColumn<int>('kunyomi_reading_id')!;
+
     final manager = $$ReadingTableTableTableManager($_db, $_db.readingTable)
-        .filter((f) => f.id($_item.kunyomiReadingId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_kunyomiReadingIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -15446,11 +15507,12 @@ final class $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
           db.kanjiBankV3KunyomiReadingRelationsTable.kanjiId,
           db.kanjiBankV3Table.id));
 
-  $$KanjiBankV3TableTableProcessedTableManager? get kanjiId {
-    if ($_item.kanjiId == null) return null;
+  $$KanjiBankV3TableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
     final manager =
         $$KanjiBankV3TableTableTableManager($_db, $_db.kanjiBankV3Table)
-            .filter((f) => f.id($_item.kanjiId!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -15773,10 +15835,11 @@ final class $$KanjiBankV3OnyomiReadingRelationsTableTableReferences
           db.kanjiBankV3OnyomiReadingRelationsTable.onyomiReadingId,
           db.readingTable.id));
 
-  $$ReadingTableTableProcessedTableManager? get onyomiReadingId {
-    if ($_item.onyomiReadingId == null) return null;
+  $$ReadingTableTableProcessedTableManager get onyomiReadingId {
+    final $_column = $_itemColumn<int>('onyomi_reading_id')!;
+
     final manager = $$ReadingTableTableTableManager($_db, $_db.readingTable)
-        .filter((f) => f.id($_item.onyomiReadingId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_onyomiReadingIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -15788,11 +15851,12 @@ final class $$KanjiBankV3OnyomiReadingRelationsTableTableReferences
           db.kanjiBankV3OnyomiReadingRelationsTable.kanjiId,
           db.kanjiBankV3Table.id));
 
-  $$KanjiBankV3TableTableProcessedTableManager? get kanjiId {
-    if ($_item.kanjiId == null) return null;
+  $$KanjiBankV3TableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
     final manager =
         $$KanjiBankV3TableTableTableManager($_db, $_db.kanjiBankV3Table)
-            .filter((f) => f.id($_item.kanjiId!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -16114,10 +16178,11 @@ final class $$KanjiBankV3TagsKanjiRelationsTableTableReferences
       db.tagBankV3Table.createAlias($_aliasNameGenerator(
           db.kanjiBankV3TagsKanjiRelationsTable.tagId, db.tagBankV3Table.id));
 
-  $$TagBankV3TableTableProcessedTableManager? get tagId {
-    if ($_item.tagId == null) return null;
+  $$TagBankV3TableTableProcessedTableManager get tagId {
+    final $_column = $_itemColumn<int>('tag_id')!;
+
     final manager = $$TagBankV3TableTableTableManager($_db, $_db.tagBankV3Table)
-        .filter((f) => f.id($_item.tagId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_tagIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -16129,11 +16194,12 @@ final class $$KanjiBankV3TagsKanjiRelationsTableTableReferences
           db.kanjiBankV3TagsKanjiRelationsTable.kanjiId,
           db.kanjiBankV3Table.id));
 
-  $$KanjiBankV3TableTableProcessedTableManager? get kanjiId {
-    if ($_item.kanjiId == null) return null;
+  $$KanjiBankV3TableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
     final manager =
         $$KanjiBankV3TableTableTableManager($_db, $_db.kanjiBankV3Table)
-            .filter((f) => f.id($_item.kanjiId!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -16453,10 +16519,11 @@ final class $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences
           db.kanjiBankV3MeaningsKanjiRelationsTable.meaningId,
           db.meaningTable.id));
 
-  $$MeaningTableTableProcessedTableManager? get meaningId {
-    if ($_item.meaningId == null) return null;
+  $$MeaningTableTableProcessedTableManager get meaningId {
+    final $_column = $_itemColumn<int>('meaning_id')!;
+
     final manager = $$MeaningTableTableTableManager($_db, $_db.meaningTable)
-        .filter((f) => f.id($_item.meaningId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_meaningIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -16468,11 +16535,12 @@ final class $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences
           db.kanjiBankV3MeaningsKanjiRelationsTable.kanjiId,
           db.kanjiBankV3Table.id));
 
-  $$KanjiBankV3TableTableProcessedTableManager? get kanjiId {
-    if ($_item.kanjiId == null) return null;
+  $$KanjiBankV3TableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
     final manager =
         $$KanjiBankV3TableTableTableManager($_db, $_db.kanjiBankV3Table)
-            .filter((f) => f.id($_item.kanjiId!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -16798,7 +16866,7 @@ final class $$KanjiBankV3StatNamesTableTableReferences extends BaseReferences<
       get kanjiBankV3StatsTableRefs {
     final manager = $$KanjiBankV3StatsTableTableTableManager(
             $_db, $_db.kanjiBankV3StatsTable)
-        .filter((f) => f.statNameId.id($_item.id));
+        .filter((f) => f.statNameId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_kanjiBankV3StatsTableRefsTable($_db));
@@ -16959,7 +17027,10 @@ class $$KanjiBankV3StatNamesTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiBankV3StatsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            KanjiBankV3StatNamesTableData,
+                            $KanjiBankV3StatNamesTableTable,
+                            KanjiBankV3StatsTableData>(
                         currentTable: table,
                         referencedTable:
                             $$KanjiBankV3StatNamesTableTableReferences
@@ -17024,7 +17095,7 @@ final class $$KanjiBankV3StatValuesTableTableReferences extends BaseReferences<
       get kanjiBankV3StatsTableRefs {
     final manager = $$KanjiBankV3StatsTableTableTableManager(
             $_db, $_db.kanjiBankV3StatsTable)
-        .filter((f) => f.statValueId.id($_item.id));
+        .filter((f) => f.statValueId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_kanjiBankV3StatsTableRefsTable($_db));
@@ -17188,7 +17259,10 @@ class $$KanjiBankV3StatValuesTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiBankV3StatsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            KanjiBankV3StatValuesTableData,
+                            $KanjiBankV3StatValuesTableTable,
+                            KanjiBankV3StatsTableData>(
                         currentTable: table,
                         referencedTable:
                             $$KanjiBankV3StatValuesTableTableReferences
@@ -17247,11 +17321,12 @@ final class $$KanjiBankV3StatsTableTableReferences extends BaseReferences<
           db.kanjiBankV3StatsTable.statNameId,
           db.kanjiBankV3StatNamesTable.id));
 
-  $$KanjiBankV3StatNamesTableTableProcessedTableManager? get statNameId {
-    if ($_item.statNameId == null) return null;
+  $$KanjiBankV3StatNamesTableTableProcessedTableManager get statNameId {
+    final $_column = $_itemColumn<int>('stat_name_id')!;
+
     final manager = $$KanjiBankV3StatNamesTableTableTableManager(
             $_db, $_db.kanjiBankV3StatNamesTable)
-        .filter((f) => f.id($_item.statNameId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_statNameIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -17263,11 +17338,12 @@ final class $$KanjiBankV3StatsTableTableReferences extends BaseReferences<
           db.kanjiBankV3StatsTable.statValueId,
           db.kanjiBankV3StatValuesTable.id));
 
-  $$KanjiBankV3StatValuesTableTableProcessedTableManager? get statValueId {
-    if ($_item.statValueId == null) return null;
+  $$KanjiBankV3StatValuesTableTableProcessedTableManager get statValueId {
+    final $_column = $_itemColumn<int>('stat_value_id')!;
+
     final manager = $$KanjiBankV3StatValuesTableTableTableManager(
             $_db, $_db.kanjiBankV3StatValuesTable)
-        .filter((f) => f.id($_item.statValueId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_statValueIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -17285,7 +17361,7 @@ final class $$KanjiBankV3StatsTableTableReferences extends BaseReferences<
       get kanjiBankV3StatKanjiRelationsTableRefs {
     final manager = $$KanjiBankV3StatKanjiRelationsTableTableTableManager(
             $_db, $_db.kanjiBankV3StatKanjiRelationsTable)
-        .filter((f) => f.statId.id($_item.id));
+        .filter((f) => f.statId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_kanjiBankV3StatKanjiRelationsTableRefsTable($_db));
@@ -17613,7 +17689,10 @@ class $$KanjiBankV3StatsTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiBankV3StatKanjiRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            KanjiBankV3StatsTableData,
+                            $KanjiBankV3StatsTableTable,
+                            KanjiBankV3StatKanjiRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$KanjiBankV3StatsTableTableReferences
                             ._kanjiBankV3StatKanjiRelationsTableRefsTable(db),
@@ -17674,11 +17753,12 @@ final class $$KanjiBankV3StatKanjiRelationsTableTableReferences
           db.kanjiBankV3StatKanjiRelationsTable.statId,
           db.kanjiBankV3StatsTable.id));
 
-  $$KanjiBankV3StatsTableTableProcessedTableManager? get statId {
-    if ($_item.statId == null) return null;
+  $$KanjiBankV3StatsTableTableProcessedTableManager get statId {
+    final $_column = $_itemColumn<int>('stat_id')!;
+
     final manager = $$KanjiBankV3StatsTableTableTableManager(
             $_db, $_db.kanjiBankV3StatsTable)
-        .filter((f) => f.id($_item.statId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_statIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -17690,11 +17770,12 @@ final class $$KanjiBankV3StatKanjiRelationsTableTableReferences
           db.kanjiBankV3StatKanjiRelationsTable.kanjiId,
           db.kanjiBankV3Table.id));
 
-  $$KanjiBankV3TableTableProcessedTableManager? get kanjiId {
-    if ($_item.kanjiId == null) return null;
+  $$KanjiBankV3TableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
     final manager =
         $$KanjiBankV3TableTableTableManager($_db, $_db.kanjiBankV3Table)
-            .filter((f) => f.id($_item.kanjiId!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -18018,7 +18099,7 @@ final class $$KanjiMetaBankV3TypeTableTableReferences extends BaseReferences<
       get kanjiMetaBankV3TableRefs {
     final manager =
         $$KanjiMetaBankV3TableTableTableManager($_db, $_db.kanjiMetaBankV3Table)
-            .filter((f) => f.typeId.id($_item.id));
+            .filter((f) => f.typeId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_kanjiMetaBankV3TableRefsTable($_db));
@@ -18178,7 +18259,10 @@ class $$KanjiMetaBankV3TypeTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (kanjiMetaBankV3TableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            KanjiMetaBankV3TypeTableData,
+                            $KanjiMetaBankV3TypeTableTable,
+                            KanjiMetaBankV3TableData>(
                         currentTable: table,
                         referencedTable:
                             $$KanjiMetaBankV3TypeTableTableReferences
@@ -18242,10 +18326,11 @@ final class $$KanjiMetaBankV3TableTableReferences extends BaseReferences<
       db.indexTable.createAlias($_aliasNameGenerator(
           db.kanjiMetaBankV3Table.dictId, db.indexTable.id));
 
-  $$IndexTableTableProcessedTableManager? get dictId {
-    if ($_item.dictId == null) return null;
+  $$IndexTableTableProcessedTableManager get dictId {
+    final $_column = $_itemColumn<int>('dict_id')!;
+
     final manager = $$IndexTableTableTableManager($_db, $_db.indexTable)
-        .filter((f) => f.id($_item.dictId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_dictIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -18256,10 +18341,11 @@ final class $$KanjiMetaBankV3TableTableReferences extends BaseReferences<
       db.kanjiTable.createAlias($_aliasNameGenerator(
           db.kanjiMetaBankV3Table.kanjiId, db.kanjiTable.id));
 
-  $$KanjiTableTableProcessedTableManager? get kanjiId {
-    if ($_item.kanjiId == null) return null;
+  $$KanjiTableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
     final manager = $$KanjiTableTableTableManager($_db, $_db.kanjiTable)
-        .filter((f) => f.id($_item.kanjiId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -18270,11 +18356,12 @@ final class $$KanjiMetaBankV3TableTableReferences extends BaseReferences<
       db.kanjiMetaBankV3TypeTable.createAlias($_aliasNameGenerator(
           db.kanjiMetaBankV3Table.typeId, db.kanjiMetaBankV3TypeTable.id));
 
-  $$KanjiMetaBankV3TypeTableTableProcessedTableManager? get typeId {
-    if ($_item.typeId == null) return null;
+  $$KanjiMetaBankV3TypeTableTableProcessedTableManager get typeId {
+    final $_column = $_itemColumn<int>('type_id')!;
+
     final manager = $$KanjiMetaBankV3TypeTableTableTableManager(
             $_db, $_db.kanjiMetaBankV3TypeTable)
-        .filter((f) => f.id($_item.typeId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_typeIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -18688,10 +18775,11 @@ final class $$TermBankV3TableTableReferences extends BaseReferences<_$DaKanjiDB,
       db.termTable.createAlias(
           $_aliasNameGenerator(db.termBankV3Table.termId, db.termTable.id));
 
-  $$TermTableTableProcessedTableManager? get termId {
-    if ($_item.termId == null) return null;
+  $$TermTableTableProcessedTableManager get termId {
+    final $_column = $_itemColumn<int>('term_id')!;
+
     final manager = $$TermTableTableTableManager($_db, $_db.termTable)
-        .filter((f) => f.id($_item.termId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_termIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -18702,10 +18790,11 @@ final class $$TermBankV3TableTableReferences extends BaseReferences<_$DaKanjiDB,
       db.readingTable.createAlias($_aliasNameGenerator(
           db.termBankV3Table.readingId, db.readingTable.id));
 
-  $$ReadingTableTableProcessedTableManager? get readingId {
-    if ($_item.readingId == null) return null;
+  $$ReadingTableTableProcessedTableManager get readingId {
+    final $_column = $_itemColumn<int>('reading_id')!;
+
     final manager = $$ReadingTableTableTableManager($_db, $_db.readingTable)
-        .filter((f) => f.id($_item.readingId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_readingIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -18724,7 +18813,7 @@ final class $$TermBankV3TableTableReferences extends BaseReferences<_$DaKanjiDB,
       get termBankV3DefinitionTagRelationsTableRefs {
     final manager = $$TermBankV3DefinitionTagRelationsTableTableTableManager(
             $_db, $_db.termBankV3DefinitionTagRelationsTable)
-        .filter((f) => f.termBankId.id($_item.id));
+        .filter((f) => f.termBankId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termBankV3DefinitionTagRelationsTableRefsTable($_db));
@@ -18744,7 +18833,7 @@ final class $$TermBankV3TableTableReferences extends BaseReferences<_$DaKanjiDB,
       get termBankV3RuleIdentifierRelationsTableRefs {
     final manager = $$TermBankV3RuleIdentifierRelationsTableTableTableManager(
             $_db, $_db.termBankV3RuleIdentifierRelationsTable)
-        .filter((f) => f.termBankId.id($_item.id));
+        .filter((f) => f.termBankId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
         _termBankV3RuleIdentifierRelationsTableRefsTable($_db));
@@ -18763,7 +18852,7 @@ final class $$TermBankV3TableTableReferences extends BaseReferences<_$DaKanjiDB,
       get termBankV3TagBankRelationsTableRefs {
     final manager = $$TermBankV3TagBankRelationsTableTableTableManager(
             $_db, $_db.termBankV3TagBankRelationsTable)
-        .filter((f) => f.termBankId.id($_item.id));
+        .filter((f) => f.termBankId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termBankV3TagBankRelationsTableRefsTable($_db));
@@ -19212,7 +19301,10 @@ class $$TermBankV3TableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (termBankV3DefinitionTagRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermBankV3TableData,
+                            $TermBankV3TableTable,
+                            TermBankV3DefinitionTagRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TermBankV3TableTableReferences
                             ._termBankV3DefinitionTagRelationsTableRefsTable(
@@ -19225,7 +19317,10 @@ class $$TermBankV3TableTableTableManager extends RootTableManager<
                                 .where((e) => e.termBankId == item.id),
                         typedResults: items),
                   if (termBankV3RuleIdentifierRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermBankV3TableData,
+                            $TermBankV3TableTable,
+                            TermBankV3RuleIdentifierRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TermBankV3TableTableReferences
                             ._termBankV3RuleIdentifierRelationsTableRefsTable(
@@ -19238,7 +19333,10 @@ class $$TermBankV3TableTableTableManager extends RootTableManager<
                                 .where((e) => e.termBankId == item.id),
                         typedResults: items),
                   if (termBankV3TagBankRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermBankV3TableData,
+                            $TermBankV3TableTable,
+                            TermBankV3TagBankRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TermBankV3TableTableReferences
                             ._termBankV3TagBankRelationsTableRefsTable(db),
@@ -19303,7 +19401,8 @@ final class $$TermBankV3DefinitionTagsTableTableReferences
       get termBankV3DefinitionTagRelationsTableRefs {
     final manager = $$TermBankV3DefinitionTagRelationsTableTableTableManager(
             $_db, $_db.termBankV3DefinitionTagRelationsTable)
-        .filter((f) => f.definitionTagId.id($_item.id));
+        .filter(
+            (f) => f.definitionTagId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termBankV3DefinitionTagRelationsTableRefsTable($_db));
@@ -19472,7 +19571,10 @@ class $$TermBankV3DefinitionTagsTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (termBankV3DefinitionTagRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermBankV3DefinitionTagsTableData,
+                            $TermBankV3DefinitionTagsTableTable,
+                            TermBankV3DefinitionTagRelationsTableData>(
                         currentTable: table,
                         referencedTable:
                             $$TermBankV3DefinitionTagsTableTableReferences
@@ -19537,12 +19639,13 @@ final class $$TermBankV3DefinitionTagRelationsTableTableReferences
           db.termBankV3DefinitionTagRelationsTable.definitionTagId,
           db.termBankV3DefinitionTagsTable.id));
 
-  $$TermBankV3DefinitionTagsTableTableProcessedTableManager?
+  $$TermBankV3DefinitionTagsTableTableProcessedTableManager
       get definitionTagId {
-    if ($_item.definitionTagId == null) return null;
+    final $_column = $_itemColumn<int>('definition_tag_id')!;
+
     final manager = $$TermBankV3DefinitionTagsTableTableTableManager(
             $_db, $_db.termBankV3DefinitionTagsTable)
-        .filter((f) => f.id($_item.definitionTagId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_definitionTagIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -19554,11 +19657,12 @@ final class $$TermBankV3DefinitionTagRelationsTableTableReferences
           db.termBankV3DefinitionTagRelationsTable.termBankId,
           db.termBankV3Table.id));
 
-  $$TermBankV3TableTableProcessedTableManager? get termBankId {
-    if ($_item.termBankId == null) return null;
+  $$TermBankV3TableTableProcessedTableManager get termBankId {
+    final $_column = $_itemColumn<int>('term_bank_id')!;
+
     final manager =
         $$TermBankV3TableTableTableManager($_db, $_db.termBankV3Table)
-            .filter((f) => f.id($_item.termBankId!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_termBankIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -19886,7 +19990,8 @@ final class $$TermBankV3RuleIdentifierTableTableReferences
       get termBankV3RuleIdentifierRelationsTableRefs {
     final manager = $$TermBankV3RuleIdentifierRelationsTableTableTableManager(
             $_db, $_db.termBankV3RuleIdentifierRelationsTable)
-        .filter((f) => f.ruleIdentifierId.id($_item.id));
+        .filter(
+            (f) => f.ruleIdentifierId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
         _termBankV3RuleIdentifierRelationsTableRefsTable($_db));
@@ -20056,7 +20161,10 @@ class $$TermBankV3RuleIdentifierTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (termBankV3RuleIdentifierRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermBankV3RuleIdentifierTableData,
+                            $TermBankV3RuleIdentifierTableTable,
+                            TermBankV3RuleIdentifierRelationsTableData>(
                         currentTable: table,
                         referencedTable:
                             $$TermBankV3RuleIdentifierTableTableReferences
@@ -20121,12 +20229,13 @@ final class $$TermBankV3RuleIdentifierRelationsTableTableReferences
           db.termBankV3RuleIdentifierRelationsTable.ruleIdentifierId,
           db.termBankV3RuleIdentifierTable.id));
 
-  $$TermBankV3RuleIdentifierTableTableProcessedTableManager?
+  $$TermBankV3RuleIdentifierTableTableProcessedTableManager
       get ruleIdentifierId {
-    if ($_item.ruleIdentifierId == null) return null;
+    final $_column = $_itemColumn<int>('rule_identifier_id')!;
+
     final manager = $$TermBankV3RuleIdentifierTableTableTableManager(
             $_db, $_db.termBankV3RuleIdentifierTable)
-        .filter((f) => f.id($_item.ruleIdentifierId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_ruleIdentifierIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -20138,11 +20247,12 @@ final class $$TermBankV3RuleIdentifierRelationsTableTableReferences
           db.termBankV3RuleIdentifierRelationsTable.termBankId,
           db.termBankV3Table.id));
 
-  $$TermBankV3TableTableProcessedTableManager? get termBankId {
-    if ($_item.termBankId == null) return null;
+  $$TermBankV3TableTableProcessedTableManager get termBankId {
+    final $_column = $_itemColumn<int>('term_bank_id')!;
+
     final manager =
         $$TermBankV3TableTableTableManager($_db, $_db.termBankV3Table)
-            .filter((f) => f.id($_item.termBankId!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_termBankIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -20466,10 +20576,11 @@ final class $$TermBankV3TagBankRelationsTableTableReferences
       db.tagBankV3Table.createAlias($_aliasNameGenerator(
           db.termBankV3TagBankRelationsTable.tagBankId, db.tagBankV3Table.id));
 
-  $$TagBankV3TableTableProcessedTableManager? get tagBankId {
-    if ($_item.tagBankId == null) return null;
+  $$TagBankV3TableTableProcessedTableManager get tagBankId {
+    final $_column = $_itemColumn<int>('tag_bank_id')!;
+
     final manager = $$TagBankV3TableTableTableManager($_db, $_db.tagBankV3Table)
-        .filter((f) => f.id($_item.tagBankId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_tagBankIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -20481,11 +20592,12 @@ final class $$TermBankV3TagBankRelationsTableTableReferences
           db.termBankV3TagBankRelationsTable.termBankId,
           db.termBankV3Table.id));
 
-  $$TermBankV3TableTableProcessedTableManager? get termBankId {
-    if ($_item.termBankId == null) return null;
+  $$TermBankV3TableTableProcessedTableManager get termBankId {
+    final $_column = $_itemColumn<int>('term_bank_id')!;
+
     final manager =
         $$TermBankV3TableTableTableManager($_db, $_db.termBankV3Table)
-            .filter((f) => f.id($_item.termBankId!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_termBankIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -20805,7 +20917,7 @@ final class $$TermMetaBankV3TypeTableTableReferences extends BaseReferences<
   $$TermMetaBankV3TableTableProcessedTableManager get termMetaBankV3TableRefs {
     final manager =
         $$TermMetaBankV3TableTableTableManager($_db, $_db.termMetaBankV3Table)
-            .filter((f) => f.typeId.id($_item.id));
+            .filter((f) => f.typeId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache =
         $_typedResult.readTableOrNull(_termMetaBankV3TableRefsTable($_db));
@@ -20964,7 +21076,10 @@ class $$TermMetaBankV3TypeTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (termMetaBankV3TableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermMetaBankV3TypeTableData,
+                            $TermMetaBankV3TypeTableTable,
+                            TermMetaBankV3TableData>(
                         currentTable: table,
                         referencedTable:
                             $$TermMetaBankV3TypeTableTableReferences
@@ -21027,10 +21142,11 @@ final class $$TermMetaBankV3TableTableReferences extends BaseReferences<
       db.indexTable.createAlias($_aliasNameGenerator(
           db.termMetaBankV3Table.dictId, db.indexTable.id));
 
-  $$IndexTableTableProcessedTableManager? get dictId {
-    if ($_item.dictId == null) return null;
+  $$IndexTableTableProcessedTableManager get dictId {
+    final $_column = $_itemColumn<int>('dict_id')!;
+
     final manager = $$IndexTableTableTableManager($_db, $_db.indexTable)
-        .filter((f) => f.id($_item.dictId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_dictIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -21041,10 +21157,11 @@ final class $$TermMetaBankV3TableTableReferences extends BaseReferences<
       db.termTable.createAlias(
           $_aliasNameGenerator(db.termMetaBankV3Table.termId, db.termTable.id));
 
-  $$TermTableTableProcessedTableManager? get termId {
-    if ($_item.termId == null) return null;
+  $$TermTableTableProcessedTableManager get termId {
+    final $_column = $_itemColumn<int>('term_id')!;
+
     final manager = $$TermTableTableTableManager($_db, $_db.termTable)
-        .filter((f) => f.id($_item.termId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_termIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -21056,9 +21173,10 @@ final class $$TermMetaBankV3TableTableReferences extends BaseReferences<
           db.termMetaBankV3Table.readingId, db.readingTable.id));
 
   $$ReadingTableTableProcessedTableManager? get readingId {
-    if ($_item.readingId == null) return null;
+    final $_column = $_itemColumn<int>('reading_id');
+    if ($_column == null) return null;
     final manager = $$ReadingTableTableTableManager($_db, $_db.readingTable)
-        .filter((f) => f.id($_item.readingId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_readingIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -21069,11 +21187,12 @@ final class $$TermMetaBankV3TableTableReferences extends BaseReferences<
       db.termMetaBankV3TypeTable.createAlias($_aliasNameGenerator(
           db.termMetaBankV3Table.typeId, db.termMetaBankV3TypeTable.id));
 
-  $$TermMetaBankV3TypeTableTableProcessedTableManager? get typeId {
-    if ($_item.typeId == null) return null;
+  $$TermMetaBankV3TypeTableTableProcessedTableManager get typeId {
+    final $_column = $_itemColumn<int>('type_id')!;
+
     final manager = $$TermMetaBankV3TypeTableTableTableManager(
             $_db, $_db.termMetaBankV3TypeTable)
-        .filter((f) => f.id($_item.typeId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_typeIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -21091,7 +21210,7 @@ final class $$TermMetaBankV3TableTableReferences extends BaseReferences<
       get termMetaBankV3PitchRelationsTableRefs {
     final manager = $$TermMetaBankV3PitchRelationsTableTableTableManager(
             $_db, $_db.termMetaBankV3PitchRelationsTable)
-        .filter((f) => f.termMetaId.id($_item.id));
+        .filter((f) => f.termMetaId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termMetaBankV3PitchRelationsTableRefsTable($_db));
@@ -21110,7 +21229,7 @@ final class $$TermMetaBankV3TableTableReferences extends BaseReferences<
       get termMetaBankV3IpaRelationsTableRefs {
     final manager = $$TermMetaBankV3IpaRelationsTableTableTableManager(
             $_db, $_db.termMetaBankV3IpaRelationsTable)
-        .filter((f) => f.termMetaId.id($_item.id));
+        .filter((f) => f.termMetaId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termMetaBankV3IpaRelationsTableRefsTable($_db));
@@ -21668,7 +21787,10 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (termMetaBankV3PitchRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermMetaBankV3TableData,
+                            $TermMetaBankV3TableTable,
+                            TermMetaBankV3PitchRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TermMetaBankV3TableTableReferences
                             ._termMetaBankV3PitchRelationsTableRefsTable(db),
@@ -21680,7 +21802,10 @@ class $$TermMetaBankV3TableTableTableManager extends RootTableManager<
                                 .where((e) => e.termMetaId == item.id),
                         typedResults: items),
                   if (termMetaBankV3IpaRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermMetaBankV3TableData,
+                            $TermMetaBankV3TableTable,
+                            TermMetaBankV3IpaRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TermMetaBankV3TableTableReferences
                             ._termMetaBankV3IpaRelationsTableRefsTable(db),
@@ -21747,7 +21872,7 @@ final class $$TermMetaBankV3PitchTableTableReferences extends BaseReferences<
       get termMetaBankV3PitchRelationsTableRefs {
     final manager = $$TermMetaBankV3PitchRelationsTableTableTableManager(
             $_db, $_db.termMetaBankV3PitchRelationsTable)
-        .filter((f) => f.pitchId.id($_item.id));
+        .filter((f) => f.pitchId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termMetaBankV3PitchRelationsTableRefsTable($_db));
@@ -21766,7 +21891,7 @@ final class $$TermMetaBankV3PitchTableTableReferences extends BaseReferences<
       get termMetaBankV3PitchTagRelationsTableRefs {
     final manager = $$TermMetaBankV3PitchTagRelationsTableTableTableManager(
             $_db, $_db.termMetaBankV3PitchTagRelationsTable)
-        .filter((f) => f.pitchId.id($_item.id));
+        .filter((f) => f.pitchId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termMetaBankV3PitchTagRelationsTableRefsTable($_db));
@@ -22010,12 +22135,13 @@ class $$TermMetaBankV3PitchTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (termMetaBankV3PitchRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermMetaBankV3PitchTableData,
+                            $TermMetaBankV3PitchTableTable,
+                            TermMetaBankV3PitchRelationsTableData>(
                         currentTable: table,
-                        referencedTable:
-                            $$TermMetaBankV3PitchTableTableReferences
-                                ._termMetaBankV3PitchRelationsTableRefsTable(
-                                    db),
+                        referencedTable: $$TermMetaBankV3PitchTableTableReferences
+                            ._termMetaBankV3PitchRelationsTableRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$TermMetaBankV3PitchTableTableReferences(
                                     db, table, p0)
@@ -22025,12 +22151,13 @@ class $$TermMetaBankV3PitchTableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.pitchId == item.id),
                         typedResults: items),
                   if (termMetaBankV3PitchTagRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermMetaBankV3PitchTableData,
+                            $TermMetaBankV3PitchTableTable,
+                            TermMetaBankV3PitchTagRelationsTableData>(
                         currentTable: table,
-                        referencedTable:
-                            $$TermMetaBankV3PitchTableTableReferences
-                                ._termMetaBankV3PitchTagRelationsTableRefsTable(
-                                    db),
+                        referencedTable: $$TermMetaBankV3PitchTableTableReferences
+                            ._termMetaBankV3PitchTagRelationsTableRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$TermMetaBankV3PitchTableTableReferences(
                                     db, table, p0)
@@ -22088,11 +22215,12 @@ final class $$TermMetaBankV3PitchRelationsTableTableReferences
           db.termMetaBankV3PitchRelationsTable.pitchId,
           db.termMetaBankV3PitchTable.id));
 
-  $$TermMetaBankV3PitchTableTableProcessedTableManager? get pitchId {
-    if ($_item.pitchId == null) return null;
+  $$TermMetaBankV3PitchTableTableProcessedTableManager get pitchId {
+    final $_column = $_itemColumn<int>('pitch_id')!;
+
     final manager = $$TermMetaBankV3PitchTableTableTableManager(
             $_db, $_db.termMetaBankV3PitchTable)
-        .filter((f) => f.id($_item.pitchId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_pitchIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -22104,11 +22232,12 @@ final class $$TermMetaBankV3PitchRelationsTableTableReferences
           db.termMetaBankV3PitchRelationsTable.termMetaId,
           db.termMetaBankV3Table.id));
 
-  $$TermMetaBankV3TableTableProcessedTableManager? get termMetaId {
-    if ($_item.termMetaId == null) return null;
+  $$TermMetaBankV3TableTableProcessedTableManager get termMetaId {
+    final $_column = $_itemColumn<int>('term_meta_id')!;
+
     final manager =
         $$TermMetaBankV3TableTableTableManager($_db, $_db.termMetaBankV3Table)
-            .filter((f) => f.id($_item.termMetaId!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_termMetaIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -22434,7 +22563,7 @@ final class $$TermMetaBankV3TagTableTableReferences extends BaseReferences<
       get termMetaBankV3PitchTagRelationsTableRefs {
     final manager = $$TermMetaBankV3PitchTagRelationsTableTableTableManager(
             $_db, $_db.termMetaBankV3PitchTagRelationsTable)
-        .filter((f) => f.tagId.id($_item.id));
+        .filter((f) => f.tagId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termMetaBankV3PitchTagRelationsTableRefsTable($_db));
@@ -22453,7 +22582,7 @@ final class $$TermMetaBankV3TagTableTableReferences extends BaseReferences<
       get termMetaBankV3IpaTagRelationsTableRefs {
     final manager = $$TermMetaBankV3IpaTagRelationsTableTableTableManager(
             $_db, $_db.termMetaBankV3IpaTagRelationsTable)
-        .filter((f) => f.tagId.id($_item.id));
+        .filter((f) => f.tagId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termMetaBankV3IpaTagRelationsTableRefsTable($_db));
@@ -22671,7 +22800,10 @@ class $$TermMetaBankV3TagTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (termMetaBankV3PitchTagRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermMetaBankV3TagTableData,
+                            $TermMetaBankV3TagTableTable,
+                            TermMetaBankV3PitchTagRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TermMetaBankV3TagTableTableReferences
                             ._termMetaBankV3PitchTagRelationsTableRefsTable(db),
@@ -22684,7 +22816,10 @@ class $$TermMetaBankV3TagTableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.tagId == item.id),
                         typedResults: items),
                   if (termMetaBankV3IpaTagRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermMetaBankV3TagTableData,
+                            $TermMetaBankV3TagTableTable,
+                            TermMetaBankV3IpaTagRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TermMetaBankV3TagTableTableReferences
                             ._termMetaBankV3IpaTagRelationsTableRefsTable(db),
@@ -22744,11 +22879,12 @@ final class $$TermMetaBankV3PitchTagRelationsTableTableReferences
           db.termMetaBankV3PitchTagRelationsTable.pitchId,
           db.termMetaBankV3PitchTable.id));
 
-  $$TermMetaBankV3PitchTableTableProcessedTableManager? get pitchId {
-    if ($_item.pitchId == null) return null;
+  $$TermMetaBankV3PitchTableTableProcessedTableManager get pitchId {
+    final $_column = $_itemColumn<int>('pitch_id')!;
+
     final manager = $$TermMetaBankV3PitchTableTableTableManager(
             $_db, $_db.termMetaBankV3PitchTable)
-        .filter((f) => f.id($_item.pitchId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_pitchIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -22760,11 +22896,12 @@ final class $$TermMetaBankV3PitchTagRelationsTableTableReferences
           db.termMetaBankV3PitchTagRelationsTable.tagId,
           db.termMetaBankV3TagTable.id));
 
-  $$TermMetaBankV3TagTableTableProcessedTableManager? get tagId {
-    if ($_item.tagId == null) return null;
+  $$TermMetaBankV3TagTableTableProcessedTableManager get tagId {
+    final $_column = $_itemColumn<int>('tag_id')!;
+
     final manager = $$TermMetaBankV3TagTableTableTableManager(
             $_db, $_db.termMetaBankV3TagTable)
-        .filter((f) => f.id($_item.tagId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_tagIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -23091,7 +23228,7 @@ final class $$TermMetaBankV3IpaTableTableReferences extends BaseReferences<
       get termMetaBankV3IpaRelationsTableRefs {
     final manager = $$TermMetaBankV3IpaRelationsTableTableTableManager(
             $_db, $_db.termMetaBankV3IpaRelationsTable)
-        .filter((f) => f.ipaId.id($_item.id));
+        .filter((f) => f.ipaId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termMetaBankV3IpaRelationsTableRefsTable($_db));
@@ -23110,7 +23247,7 @@ final class $$TermMetaBankV3IpaTableTableReferences extends BaseReferences<
       get termMetaBankV3IpaTagRelationsTableRefs {
     final manager = $$TermMetaBankV3IpaTagRelationsTableTableTableManager(
             $_db, $_db.termMetaBankV3IpaTagRelationsTable)
-        .filter((f) => f.ipaId.id($_item.id));
+        .filter((f) => f.ipaId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_termMetaBankV3IpaTagRelationsTableRefsTable($_db));
@@ -23328,7 +23465,10 @@ class $$TermMetaBankV3IpaTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (termMetaBankV3IpaRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermMetaBankV3IpaTableData,
+                            $TermMetaBankV3IpaTableTable,
+                            TermMetaBankV3IpaRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TermMetaBankV3IpaTableTableReferences
                             ._termMetaBankV3IpaRelationsTableRefsTable(db),
@@ -23341,7 +23481,10 @@ class $$TermMetaBankV3IpaTableTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.ipaId == item.id),
                         typedResults: items),
                   if (termMetaBankV3IpaTagRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            TermMetaBankV3IpaTableData,
+                            $TermMetaBankV3IpaTableTable,
+                            TermMetaBankV3IpaTagRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$TermMetaBankV3IpaTableTableReferences
                             ._termMetaBankV3IpaTagRelationsTableRefsTable(db),
@@ -23399,11 +23542,12 @@ final class $$TermMetaBankV3IpaRelationsTableTableReferences
           db.termMetaBankV3IpaRelationsTable.ipaId,
           db.termMetaBankV3IpaTable.id));
 
-  $$TermMetaBankV3IpaTableTableProcessedTableManager? get ipaId {
-    if ($_item.ipaId == null) return null;
+  $$TermMetaBankV3IpaTableTableProcessedTableManager get ipaId {
+    final $_column = $_itemColumn<int>('ipa_id')!;
+
     final manager = $$TermMetaBankV3IpaTableTableTableManager(
             $_db, $_db.termMetaBankV3IpaTable)
-        .filter((f) => f.id($_item.ipaId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_ipaIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -23415,11 +23559,12 @@ final class $$TermMetaBankV3IpaRelationsTableTableReferences
           db.termMetaBankV3IpaRelationsTable.termMetaId,
           db.termMetaBankV3Table.id));
 
-  $$TermMetaBankV3TableTableProcessedTableManager? get termMetaId {
-    if ($_item.termMetaId == null) return null;
+  $$TermMetaBankV3TableTableProcessedTableManager get termMetaId {
+    final $_column = $_itemColumn<int>('term_meta_id')!;
+
     final manager =
         $$TermMetaBankV3TableTableTableManager($_db, $_db.termMetaBankV3Table)
-            .filter((f) => f.id($_item.termMetaId!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_termMetaIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -23744,11 +23889,12 @@ final class $$TermMetaBankV3IpaTagRelationsTableTableReferences
           db.termMetaBankV3IpaTagRelationsTable.ipaId,
           db.termMetaBankV3IpaTable.id));
 
-  $$TermMetaBankV3IpaTableTableProcessedTableManager? get ipaId {
-    if ($_item.ipaId == null) return null;
+  $$TermMetaBankV3IpaTableTableProcessedTableManager get ipaId {
+    final $_column = $_itemColumn<int>('ipa_id')!;
+
     final manager = $$TermMetaBankV3IpaTableTableTableManager(
             $_db, $_db.termMetaBankV3IpaTable)
-        .filter((f) => f.id($_item.ipaId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_ipaIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -23760,11 +23906,12 @@ final class $$TermMetaBankV3IpaTagRelationsTableTableReferences
           db.termMetaBankV3IpaTagRelationsTable.tagId,
           db.termMetaBankV3TagTable.id));
 
-  $$TermMetaBankV3TagTableTableProcessedTableManager? get tagId {
-    if ($_item.tagId == null) return null;
+  $$TermMetaBankV3TagTableTableProcessedTableManager get tagId {
+    final $_column = $_itemColumn<int>('tag_id')!;
+
     final manager = $$TermMetaBankV3TagTableTableTableManager(
             $_db, $_db.termMetaBankV3TagTable)
-        .filter((f) => f.id($_item.tagId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_tagIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -24090,7 +24237,7 @@ final class $$ExampleTableTableReferences
       get exampleTermRelationsTableRefs {
     final manager = $$ExampleTermRelationsTableTableTableManager(
             $_db, $_db.exampleTermRelationsTable)
-        .filter((f) => f.exampleId.id($_item.id));
+        .filter((f) => f.exampleId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_exampleTermRelationsTableRefsTable($_db));
@@ -24109,7 +24256,7 @@ final class $$ExampleTableTableReferences
       get exampleTranslationRelationsTableRefs {
     final manager = $$ExampleTranslationRelationsTableTableTableManager(
             $_db, $_db.exampleTranslationRelationsTable)
-        .filter((f) => f.exampleId.id($_item.id));
+        .filter((f) => f.exampleId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_exampleTranslationRelationsTableRefsTable($_db));
@@ -24324,7 +24471,8 @@ class $$ExampleTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (exampleTermRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<ExampleTableData,
+                            $ExampleTableTable, ExampleTermRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$ExampleTableTableReferences
                             ._exampleTermRelationsTableRefsTable(db),
@@ -24336,7 +24484,10 @@ class $$ExampleTableTableTableManager extends RootTableManager<
                                 .where((e) => e.exampleId == item.id),
                         typedResults: items),
                   if (exampleTranslationRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            ExampleTableData,
+                            $ExampleTableTable,
+                            ExampleTranslationRelationsTableData>(
                         currentTable: table,
                         referencedTable: $$ExampleTableTableReferences
                             ._exampleTranslationRelationsTableRefsTable(db),
@@ -24390,11 +24541,12 @@ final class $$ExampleTranslationTableTableReferences extends BaseReferences<
       db.languageCodeTable.createAlias($_aliasNameGenerator(
           db.exampleTranslationTable.languageCodeId, db.languageCodeTable.id));
 
-  $$LanguageCodeTableTableProcessedTableManager? get languageCodeId {
-    if ($_item.languageCodeId == null) return null;
+  $$LanguageCodeTableTableProcessedTableManager get languageCodeId {
+    final $_column = $_itemColumn<int>('language_code_id')!;
+
     final manager =
         $$LanguageCodeTableTableTableManager($_db, $_db.languageCodeTable)
-            .filter((f) => f.id($_item.languageCodeId!));
+            .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_languageCodeIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -24412,7 +24564,7 @@ final class $$ExampleTranslationTableTableReferences extends BaseReferences<
       get exampleTranslationRelationsTableRefs {
     final manager = $$ExampleTranslationRelationsTableTableTableManager(
             $_db, $_db.exampleTranslationRelationsTable)
-        .filter((f) => f.translationId.id($_item.id));
+        .filter((f) => f.translationId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult
         .readTableOrNull(_exampleTranslationRelationsTableRefsTable($_db));
@@ -24672,7 +24824,10 @@ class $$ExampleTranslationTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (exampleTranslationRelationsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<
+                            ExampleTranslationTableData,
+                            $ExampleTranslationTableTable,
+                            ExampleTranslationRelationsTableData>(
                         currentTable: table,
                         referencedTable:
                             $$ExampleTranslationTableTableReferences
@@ -24730,10 +24885,11 @@ final class $$ExampleTermRelationsTableTableReferences extends BaseReferences<
       db.exampleTable.createAlias($_aliasNameGenerator(
           db.exampleTermRelationsTable.exampleId, db.exampleTable.id));
 
-  $$ExampleTableTableProcessedTableManager? get exampleId {
-    if ($_item.exampleId == null) return null;
+  $$ExampleTableTableProcessedTableManager get exampleId {
+    final $_column = $_itemColumn<int>('example_id')!;
+
     final manager = $$ExampleTableTableTableManager($_db, $_db.exampleTable)
-        .filter((f) => f.id($_item.exampleId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_exampleIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -24744,10 +24900,11 @@ final class $$ExampleTermRelationsTableTableReferences extends BaseReferences<
       db.termTable.createAlias($_aliasNameGenerator(
           db.exampleTermRelationsTable.termId, db.termTable.id));
 
-  $$TermTableTableProcessedTableManager? get termId {
-    if ($_item.termId == null) return null;
+  $$TermTableTableProcessedTableManager get termId {
+    final $_column = $_itemColumn<int>('term_id')!;
+
     final manager = $$TermTableTableTableManager($_db, $_db.termTable)
-        .filter((f) => f.id($_item.termId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_termIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -25055,10 +25212,11 @@ final class $$ExampleTranslationRelationsTableTableReferences
       db.exampleTable.createAlias($_aliasNameGenerator(
           db.exampleTranslationRelationsTable.exampleId, db.exampleTable.id));
 
-  $$ExampleTableTableProcessedTableManager? get exampleId {
-    if ($_item.exampleId == null) return null;
+  $$ExampleTableTableProcessedTableManager get exampleId {
+    final $_column = $_itemColumn<int>('example_id')!;
+
     final manager = $$ExampleTableTableTableManager($_db, $_db.exampleTable)
-        .filter((f) => f.id($_item.exampleId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_exampleIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -25070,11 +25228,12 @@ final class $$ExampleTranslationRelationsTableTableReferences
           db.exampleTranslationRelationsTable.translationId,
           db.exampleTranslationTable.id));
 
-  $$ExampleTranslationTableTableProcessedTableManager? get translationId {
-    if ($_item.translationId == null) return null;
+  $$ExampleTranslationTableTableProcessedTableManager get translationId {
+    final $_column = $_itemColumn<int>('translation_id')!;
+
     final manager = $$ExampleTranslationTableTableTableManager(
             $_db, $_db.exampleTranslationTable)
-        .filter((f) => f.id($_item.translationId!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_translationIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
