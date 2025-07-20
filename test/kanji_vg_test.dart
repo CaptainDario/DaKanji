@@ -13,12 +13,12 @@ void main() async {
     
     // setup 
     DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
-    await db.deleteDB();
+    await db.clearDB();
 
     // convert kanjivg database
     Stopwatch s = Stopwatch()..start();
     await addKanjiVGToDB(kanjiVGPath, db);
-    print("Converting svg took: ${s.elapsedMilliseconds}ms");
+    print("Converting KanjiVG took: ${s.elapsedMilliseconds}ms");
 
     // test radical lookups
     for (final testCase in kanjiVGLookuptests) {
