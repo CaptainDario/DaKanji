@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 //import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:universal_io/io.dart';
+import 'package:path/path.dart' as p;
 
 // Project imports:
 import 'package:dakanji_db/database/dakanji_db.dart';
@@ -15,21 +16,19 @@ Future parseExampleFileZip() async {
 
 }
 
-/// parses the given file's contents and adds it to the given [DaKanjiDB]
-Future parseExampleFile(File exampleBankJsonPath, DaKanjiDB db) async {
+Future parseExampleFolder(Directory exampleDir, DaKanjiDB db) async {
 
-  String jsonString = exampleBankJsonPath.readAsStringSync();
-  return await parseExample(jsonString, db);
+  List<File> exampleFiles = exampleDir.listSync().whereType<File>().toList();
+
+  Map<String, String> examples = {};
+  for (var file in exampleFiles) {
+    examples[p.basename(file.path)] = file.readAsStringSync();
+  }
 
 }
 
 /// parses the given string and adds it to the given [DaKanjiDB]
-Future parseExample(String exampleBankJson, DaKanjiDB db) async {
-
-  List<String> lines = exampleBankJson.split('\n');
-
-  // read the header
-  List<String> header = lines.first.split("\t");
+Future parseExample(Map<String, String> examples, DaKanjiDB db) async {
 
   // read values from current db
   int maxExampleId = await db.exampleDao.maxExampleId();
@@ -48,62 +47,55 @@ Future parseExample(String exampleBankJson, DaKanjiDB db) async {
   List<LanguageCodeTableCompanion> languageCodeComps = [];
   List<ExampleTranslationTableCompanion> exampleTranslationComps = [];
   List<ExampleTranslationRelationsTableCompanion> exampleTransRelComps = [];
-  for (var i = 1; i < lines.length; i++) {
     
-    // split languages and check that valid data is contained
-    List<String> line = lines[i].split("\t");
-    if(line.length != header.length || line.isEmpty) continue;
+  // create japanese
+  String jap = examples["jpn"]!;
+  exampleComps.add(ExampleTableCompanion(
+    id: Value(++maxExampleId), exampleSentence: Value(jap)
+  ));
 
-    // create japanese 
-    String jap = line.first;
-    exampleComps.add(ExampleTableCompanion(
-      id: Value(++maxExampleId), exampleSentence: Value(jap)
+  // Parse sentence using mecab
+  final mecab = Mecab();
+  await mecab.init("mecab.dylib", "ipadic", true);
+  List<String> terms = mecab.parse(jap).map((e) => e.surface,).toList();
+  for (var term in terms.sublist(0, terms.length-1)) {
+    if(allTerms[term] == null){
+      allTerms[term] = ++maxTermId;
+      termComps.add(TermTableCompanion(
+        id: Value(maxTermId), term: Value(term)
+      ));
+    }
+    exampleTermRelComps.add(ExampleTermRelationsTableCompanion(
+      exampleId: Value(maxExampleId), termId: Value(allTerms[term]!)
+    ));
+  }
+
+  // parse all translations and create links between japanese and translation
+  for (MapEntry entry in examples.entries) {
+    String locale = entry.key;
+    String example = entry.value;
+
+    if(allLanguageCodes[locale] == null){
+      allLanguageCodes[locale] = ++maxLanguageCodeId;
+      languageCodeComps.add(LanguageCodeTableCompanion(
+        id: Value(maxLanguageCodeId), languageCode: Value(locale)
+      ));
+    }
+
+    exampleTranslationComps.add(ExampleTranslationTableCompanion(
+      id: Value(++maxExampleTransId),
+      exampleTranslation: Value(example),
+      languageCodeId: Value(allLanguageCodes[locale]!)
     ));
 
-    // Parse sentence using mecab
-    final mecab = Mecab();
-    await mecab.init("mecab.dylib", "ipadic", true);
-    List<String> terms = mecab.parse(jap).map((e) => e.surface,).toList();
-    for (var term in terms.sublist(0, terms.length-1)) {
-      if(allTerms[term] == null){
-        allTerms[term] = ++maxTermId;
-        termComps.add(TermTableCompanion(
-          id: Value(maxTermId), term: Value(term)
-        ));
-      }
-      exampleTermRelComps.add(ExampleTermRelationsTableCompanion(
-        exampleId: Value(maxExampleId), termId: Value(allTerms[term]!)
-      ));
-    }
-
-    // parse all translations and create links between japanese and translation
-    for (var i = 1; i < line.length; i++) {
-
-      // skip if there is no translation for a sentence
-      if(line[i] == "") continue;
-
-      if(allLanguageCodes[header[i]] == null){
-        allLanguageCodes[header[i]] = ++maxLanguageCodeId;
-        languageCodeComps.add(LanguageCodeTableCompanion(
-          id: Value(maxLanguageCodeId), languageCode: Value(header[i])
-        ));
-      }
-
-      exampleTranslationComps.add(ExampleTranslationTableCompanion(
-        id: Value(++maxExampleTransId),
-        exampleTranslation: Value(line[i]),
-        languageCodeId: Value(allLanguageCodes[header[i]]!)
-      ));
-
-      exampleTransRelComps.add(ExampleTranslationRelationsTableCompanion(
-        exampleId: Value(maxExampleId),
-        translationId: Value(maxExampleTransId),
-      ));
-
-    }
+    exampleTransRelComps.add(ExampleTranslationRelationsTableCompanion(
+      exampleId: Value(maxExampleId),
+      translationId: Value(maxExampleTransId),
+    ));
 
   }
 
+  
   // bulk add all data
   await db.batch((batch) {
 
