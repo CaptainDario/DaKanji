@@ -16,16 +16,16 @@ mixin _$TermMetaBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $TermMetaBankV3TagTableTable get termMetaBankV3TagTable =>
       attachedDatabase.termMetaBankV3TagTable;
   $TermMetaBankV3PitchTagRelationsTableTable
-      get termMetaBankV3PitchTagRelationsTable =>
-          attachedDatabase.termMetaBankV3PitchTagRelationsTable;
+  get termMetaBankV3PitchTagRelationsTable =>
+      attachedDatabase.termMetaBankV3PitchTagRelationsTable;
   $TermMetaBankV3PitchRelationsTableTable
-      get termMetaBankV3PitchRelationsTable =>
-          attachedDatabase.termMetaBankV3PitchRelationsTable;
+  get termMetaBankV3PitchRelationsTable =>
+      attachedDatabase.termMetaBankV3PitchRelationsTable;
   $TermMetaBankV3IpaTableTable get termMetaBankV3IpaTable =>
       attachedDatabase.termMetaBankV3IpaTable;
   $TermMetaBankV3IpaTagRelationsTableTable
-      get termMetaBankV3IpaTagRelationsTable =>
-          attachedDatabase.termMetaBankV3IpaTagRelationsTable;
+  get termMetaBankV3IpaTagRelationsTable =>
+      attachedDatabase.termMetaBankV3IpaTagRelationsTable;
   $TermMetaBankV3IpaRelationsTableTable get termMetaBankV3IpaRelationsTable =>
       attachedDatabase.termMetaBankV3IpaRelationsTable;
 }

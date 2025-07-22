@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,238 +9,286 @@ part of 'term_meta_bank_pitch_entry.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-TermMetaBankV3PitchEntry _$TermMetaBankV3PitchEntryFromJson(
-    Map<String, dynamic> json) {
-  return _TermMetaBankV3PitchEntry.fromJson(json);
-}
 
 /// @nodoc
 mixin _$TermMetaBankV3PitchEntry {
-  /// the position of this pitch entry
-  int get position => throw _privateConstructorUsedError;
 
-  /// all tags of this pitch entry
-  List<String>? get tags => throw _privateConstructorUsedError;
-
-  /// nasal data of this pitch entry
-  int? get nasal => throw _privateConstructorUsedError;
-
-  /// devoice data of this pitch entry
-  int? get devoice => throw _privateConstructorUsedError;
+/// the position of this pitch entry
+ int get position;/// all tags of this pitch entry
+ List<String>? get tags;/// nasal data of this pitch entry
+ int? get nasal;/// devoice data of this pitch entry
+ int? get devoice;
+/// Create a copy of TermMetaBankV3PitchEntry
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TermMetaBankV3PitchEntryCopyWith<TermMetaBankV3PitchEntry> get copyWith => _$TermMetaBankV3PitchEntryCopyWithImpl<TermMetaBankV3PitchEntry>(this as TermMetaBankV3PitchEntry, _$identity);
 
   /// Serializes this TermMetaBankV3PitchEntry to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson();
 
-  /// Create a copy of TermMetaBankV3PitchEntry
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $TermMetaBankV3PitchEntryCopyWith<TermMetaBankV3PitchEntry> get copyWith =>
-      throw _privateConstructorUsedError;
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TermMetaBankV3PitchEntry&&(identical(other.position, position) || other.position == position)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.nasal, nasal) || other.nasal == nasal)&&(identical(other.devoice, devoice) || other.devoice == devoice));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,position,const DeepCollectionEquality().hash(tags),nasal,devoice);
+
+@override
+String toString() {
+  return 'TermMetaBankV3PitchEntry(position: $position, tags: $tags, nasal: $nasal, devoice: $devoice)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $TermMetaBankV3PitchEntryCopyWith<$Res> {
-  factory $TermMetaBankV3PitchEntryCopyWith(TermMetaBankV3PitchEntry value,
-          $Res Function(TermMetaBankV3PitchEntry) then) =
-      _$TermMetaBankV3PitchEntryCopyWithImpl<$Res, TermMetaBankV3PitchEntry>;
-  @useResult
-  $Res call({int position, List<String>? tags, int? nasal, int? devoice});
-}
+abstract mixin class $TermMetaBankV3PitchEntryCopyWith<$Res>  {
+  factory $TermMetaBankV3PitchEntryCopyWith(TermMetaBankV3PitchEntry value, $Res Function(TermMetaBankV3PitchEntry) _then) = _$TermMetaBankV3PitchEntryCopyWithImpl;
+@useResult
+$Res call({
+ int position, List<String>? tags, int? nasal, int? devoice
+});
 
+
+
+
+}
 /// @nodoc
-class _$TermMetaBankV3PitchEntryCopyWithImpl<$Res,
-        $Val extends TermMetaBankV3PitchEntry>
+class _$TermMetaBankV3PitchEntryCopyWithImpl<$Res>
     implements $TermMetaBankV3PitchEntryCopyWith<$Res> {
-  _$TermMetaBankV3PitchEntryCopyWithImpl(this._value, this._then);
+  _$TermMetaBankV3PitchEntryCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final TermMetaBankV3PitchEntry _self;
+  final $Res Function(TermMetaBankV3PitchEntry) _then;
 
-  /// Create a copy of TermMetaBankV3PitchEntry
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? position = null,
-    Object? tags = freezed,
-    Object? nasal = freezed,
-    Object? devoice = freezed,
-  }) {
-    return _then(_value.copyWith(
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as int,
-      tags: freezed == tags
-          ? _value.tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      nasal: freezed == nasal
-          ? _value.nasal
-          : nasal // ignore: cast_nullable_to_non_nullable
-              as int?,
-      devoice: freezed == devoice
-          ? _value.devoice
-          : devoice // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ) as $Val);
-  }
+/// Create a copy of TermMetaBankV3PitchEntry
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? position = null,Object? tags = freezed,Object? nasal = freezed,Object? devoice = freezed,}) {
+  return _then(_self.copyWith(
+position: null == position ? _self.position : position // ignore: cast_nullable_to_non_nullable
+as int,tags: freezed == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
+as List<String>?,nasal: freezed == nasal ? _self.nasal : nasal // ignore: cast_nullable_to_non_nullable
+as int?,devoice: freezed == devoice ? _self.devoice : devoice // ignore: cast_nullable_to_non_nullable
+as int?,
+  ));
 }
 
-/// @nodoc
-abstract class _$$TermMetaBankV3PitchEntryImplCopyWith<$Res>
-    implements $TermMetaBankV3PitchEntryCopyWith<$Res> {
-  factory _$$TermMetaBankV3PitchEntryImplCopyWith(
-          _$TermMetaBankV3PitchEntryImpl value,
-          $Res Function(_$TermMetaBankV3PitchEntryImpl) then) =
-      __$$TermMetaBankV3PitchEntryImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int position, List<String>? tags, int? nasal, int? devoice});
 }
 
-/// @nodoc
-class __$$TermMetaBankV3PitchEntryImplCopyWithImpl<$Res>
-    extends _$TermMetaBankV3PitchEntryCopyWithImpl<$Res,
-        _$TermMetaBankV3PitchEntryImpl>
-    implements _$$TermMetaBankV3PitchEntryImplCopyWith<$Res> {
-  __$$TermMetaBankV3PitchEntryImplCopyWithImpl(
-      _$TermMetaBankV3PitchEntryImpl _value,
-      $Res Function(_$TermMetaBankV3PitchEntryImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of TermMetaBankV3PitchEntry
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? position = null,
-    Object? tags = freezed,
-    Object? nasal = freezed,
-    Object? devoice = freezed,
-  }) {
-    return _then(_$TermMetaBankV3PitchEntryImpl(
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as int,
-      tags: freezed == tags
-          ? _value.tags
-          : tags // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      nasal: freezed == nasal
-          ? _value.nasal
-          : nasal // ignore: cast_nullable_to_non_nullable
-              as int?,
-      devoice: freezed == devoice
-          ? _value.devoice
-          : devoice // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ));
-  }
+/// Adds pattern-matching-related methods to [TermMetaBankV3PitchEntry].
+extension TermMetaBankV3PitchEntryPatterns on TermMetaBankV3PitchEntry {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TermMetaBankV3PitchEntry value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _TermMetaBankV3PitchEntry() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TermMetaBankV3PitchEntry value)  $default,){
+final _that = this;
+switch (_that) {
+case _TermMetaBankV3PitchEntry():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TermMetaBankV3PitchEntry value)?  $default,){
+final _that = this;
+switch (_that) {
+case _TermMetaBankV3PitchEntry() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int position,  List<String>? tags,  int? nasal,  int? devoice)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _TermMetaBankV3PitchEntry() when $default != null:
+return $default(_that.position,_that.tags,_that.nasal,_that.devoice);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int position,  List<String>? tags,  int? nasal,  int? devoice)  $default,) {final _that = this;
+switch (_that) {
+case _TermMetaBankV3PitchEntry():
+return $default(_that.position,_that.tags,_that.nasal,_that.devoice);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int position,  List<String>? tags,  int? nasal,  int? devoice)?  $default,) {final _that = this;
+switch (_that) {
+case _TermMetaBankV3PitchEntry() when $default != null:
+return $default(_that.position,_that.tags,_that.nasal,_that.devoice);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$TermMetaBankV3PitchEntryImpl implements _TermMetaBankV3PitchEntry {
-  const _$TermMetaBankV3PitchEntryImpl(
-      {required this.position, this.tags, this.nasal, this.devoice});
 
-  factory _$TermMetaBankV3PitchEntryImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TermMetaBankV3PitchEntryImplFromJson(json);
+class _TermMetaBankV3PitchEntry implements TermMetaBankV3PitchEntry {
+  const _TermMetaBankV3PitchEntry({required this.position, this.tags, this.nasal, this.devoice});
+  factory _TermMetaBankV3PitchEntry.fromJson(Map<String, dynamic> json) => _$TermMetaBankV3PitchEntryFromJson(json);
 
-  /// the position of this pitch entry
-  @override
-  final int position;
+/// the position of this pitch entry
+@override final  int position;
+/// all tags of this pitch entry
+@override final  List<String>? tags;
+/// nasal data of this pitch entry
+@override final  int? nasal;
+/// devoice data of this pitch entry
+@override final  int? devoice;
 
-  /// all tags of this pitch entry
-  @override
-  final List<String>? tags;
+/// Create a copy of TermMetaBankV3PitchEntry
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TermMetaBankV3PitchEntryCopyWith<_TermMetaBankV3PitchEntry> get copyWith => __$TermMetaBankV3PitchEntryCopyWithImpl<_TermMetaBankV3PitchEntry>(this, _$identity);
 
-  /// nasal data of this pitch entry
-  @override
-  final int? nasal;
-
-  /// devoice data of this pitch entry
-  @override
-  final int? devoice;
-
-  @override
-  String toString() {
-    return 'TermMetaBankV3PitchEntry(position: $position, tags: $tags, nasal: $nasal, devoice: $devoice)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TermMetaBankV3PitchEntryImpl &&
-            (identical(other.position, position) ||
-                other.position == position) &&
-            const DeepCollectionEquality().equals(other.tags, tags) &&
-            (identical(other.nasal, nasal) || other.nasal == nasal) &&
-            (identical(other.devoice, devoice) || other.devoice == devoice));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, position,
-      const DeepCollectionEquality().hash(tags), nasal, devoice);
-
-  /// Create a copy of TermMetaBankV3PitchEntry
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$TermMetaBankV3PitchEntryImplCopyWith<_$TermMetaBankV3PitchEntryImpl>
-      get copyWith => __$$TermMetaBankV3PitchEntryImplCopyWithImpl<
-          _$TermMetaBankV3PitchEntryImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TermMetaBankV3PitchEntryImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$TermMetaBankV3PitchEntryToJson(this, );
 }
 
-abstract class _TermMetaBankV3PitchEntry implements TermMetaBankV3PitchEntry {
-  const factory _TermMetaBankV3PitchEntry(
-      {required final int position,
-      final List<String>? tags,
-      final int? nasal,
-      final int? devoice}) = _$TermMetaBankV3PitchEntryImpl;
-
-  factory _TermMetaBankV3PitchEntry.fromJson(Map<String, dynamic> json) =
-      _$TermMetaBankV3PitchEntryImpl.fromJson;
-
-  /// the position of this pitch entry
-  @override
-  int get position;
-
-  /// all tags of this pitch entry
-  @override
-  List<String>? get tags;
-
-  /// nasal data of this pitch entry
-  @override
-  int? get nasal;
-
-  /// devoice data of this pitch entry
-  @override
-  int? get devoice;
-
-  /// Create a copy of TermMetaBankV3PitchEntry
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TermMetaBankV3PitchEntryImplCopyWith<_$TermMetaBankV3PitchEntryImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TermMetaBankV3PitchEntry&&(identical(other.position, position) || other.position == position)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.nasal, nasal) || other.nasal == nasal)&&(identical(other.devoice, devoice) || other.devoice == devoice));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,position,const DeepCollectionEquality().hash(tags),nasal,devoice);
+
+@override
+String toString() {
+  return 'TermMetaBankV3PitchEntry(position: $position, tags: $tags, nasal: $nasal, devoice: $devoice)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TermMetaBankV3PitchEntryCopyWith<$Res> implements $TermMetaBankV3PitchEntryCopyWith<$Res> {
+  factory _$TermMetaBankV3PitchEntryCopyWith(_TermMetaBankV3PitchEntry value, $Res Function(_TermMetaBankV3PitchEntry) _then) = __$TermMetaBankV3PitchEntryCopyWithImpl;
+@override @useResult
+$Res call({
+ int position, List<String>? tags, int? nasal, int? devoice
+});
+
+
+
+
+}
+/// @nodoc
+class __$TermMetaBankV3PitchEntryCopyWithImpl<$Res>
+    implements _$TermMetaBankV3PitchEntryCopyWith<$Res> {
+  __$TermMetaBankV3PitchEntryCopyWithImpl(this._self, this._then);
+
+  final _TermMetaBankV3PitchEntry _self;
+  final $Res Function(_TermMetaBankV3PitchEntry) _then;
+
+/// Create a copy of TermMetaBankV3PitchEntry
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? position = null,Object? tags = freezed,Object? nasal = freezed,Object? devoice = freezed,}) {
+  return _then(_TermMetaBankV3PitchEntry(
+position: null == position ? _self.position : position // ignore: cast_nullable_to_non_nullable
+as int,tags: freezed == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
+as List<String>?,nasal: freezed == nasal ? _self.nasal : nasal // ignore: cast_nullable_to_non_nullable
+as int?,devoice: freezed == devoice ? _self.devoice : devoice // ignore: cast_nullable_to_non_nullable
+as int?,
+  ));
+}
+
+
+}
+
+// dart format on

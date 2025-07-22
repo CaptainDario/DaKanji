@@ -6,16 +6,13 @@ part of 'kanji_bank_v3_entry_stat.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$KanjiBankV3EntryStatImpl _$$KanjiBankV3EntryStatImplFromJson(
-        Map<String, dynamic> json) =>
-    _$KanjiBankV3EntryStatImpl(
-      name: json['name'] as String,
-      value: json['value'] as String,
-    );
+_KanjiBankV3EntryStat _$KanjiBankV3EntryStatFromJson(
+  Map<String, dynamic> json,
+) => _KanjiBankV3EntryStat(
+  name: json['name'] as String,
+  value: json['value'] as String,
+);
 
-Map<String, dynamic> _$$KanjiBankV3EntryStatImplToJson(
-        _$KanjiBankV3EntryStatImpl instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'value': instance.value,
-    };
+Map<String, dynamic> _$KanjiBankV3EntryStatToJson(
+  _KanjiBankV3EntryStat instance,
+) => <String, dynamic>{'name': instance.name, 'value': instance.value};

@@ -8,6 +8,6 @@ mixin _$TagBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $TagBankV3CategoryTableTable get tagBankV3CategoryTable =>
       attachedDatabase.tagBankV3CategoryTable;
   $TagBankV3TagCategoryRelationsTableTable
-      get tagBankV3TagCategoryRelationsTable =>
-          attachedDatabase.tagBankV3TagCategoryRelationsTable;
+  get tagBankV3TagCategoryRelationsTable =>
+      attachedDatabase.tagBankV3TagCategoryRelationsTable;
 }

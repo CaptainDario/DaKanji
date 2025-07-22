@@ -6,20 +6,20 @@ part of 'kanji_meta_bank_v3_entry.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$KanjiMetaBankV3EntryImpl _$$KanjiMetaBankV3EntryImplFromJson(
-        Map<String, dynamic> json) =>
-    _$KanjiMetaBankV3EntryImpl(
-      kanji: json['kanji'] as String,
-      type: json['type'] as String,
-      freqValue: (json['freqValue'] as num?)?.toInt(),
-      freqDisplayValue: json['freqDisplayValue'] as String?,
-    );
+_KanjiMetaBankV3Entry _$KanjiMetaBankV3EntryFromJson(
+  Map<String, dynamic> json,
+) => _KanjiMetaBankV3Entry(
+  kanji: json['kanji'] as String,
+  type: json['type'] as String,
+  freqValue: (json['freqValue'] as num?)?.toInt(),
+  freqDisplayValue: json['freqDisplayValue'] as String?,
+);
 
-Map<String, dynamic> _$$KanjiMetaBankV3EntryImplToJson(
-        _$KanjiMetaBankV3EntryImpl instance) =>
-    <String, dynamic>{
-      'kanji': instance.kanji,
-      'type': instance.type,
-      'freqValue': instance.freqValue,
-      'freqDisplayValue': instance.freqDisplayValue,
-    };
+Map<String, dynamic> _$KanjiMetaBankV3EntryToJson(
+  _KanjiMetaBankV3Entry instance,
+) => <String, dynamic>{
+  'kanji': instance.kanji,
+  'type': instance.type,
+  'freqValue': instance.freqValue,
+  'freqDisplayValue': instance.freqDisplayValue,
+};

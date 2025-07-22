@@ -6,8 +6,8 @@ part of 'tag_bank_v3_entry.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TagBankV3EntryImpl _$$TagBankV3EntryImplFromJson(Map<String, dynamic> json) =>
-    _$TagBankV3EntryImpl(
+_TagBankV3Entry _$TagBankV3EntryFromJson(Map<String, dynamic> json) =>
+    _TagBankV3Entry(
       name: json['name'] as String,
       categories: json['categories'] as String,
       sortingOrder: (json['sortingOrder'] as num).toInt(),
@@ -15,8 +15,7 @@ _$TagBankV3EntryImpl _$$TagBankV3EntryImplFromJson(Map<String, dynamic> json) =>
       score: (json['score'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$TagBankV3EntryImplToJson(
-        _$TagBankV3EntryImpl instance) =>
+Map<String, dynamic> _$TagBankV3EntryToJson(_TagBankV3Entry instance) =>
     <String, dynamic>{
       'name': instance.name,
       'categories': instance.categories,

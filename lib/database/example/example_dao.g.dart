@@ -9,4 +9,7 @@ mixin _$ExampleDaoMixin on DatabaseAccessor<DaKanjiDB> {
       attachedDatabase.languageCodeTable;
   $ExampleTranslationTableTable get exampleTranslationTable =>
       attachedDatabase.exampleTranslationTable;
+  $ExampleTranslationRelationsTableTable get exampleTranslationRelationsTable =>
+      attachedDatabase.exampleTranslationRelationsTable;
+  $ExampleViewView get exampleView => attachedDatabase.exampleView;
 }

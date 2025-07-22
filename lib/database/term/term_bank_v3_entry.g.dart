@@ -6,9 +6,8 @@ part of 'term_bank_v3_entry.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TermBankV3EntryImpl _$$TermBankV3EntryImplFromJson(
-        Map<String, dynamic> json) =>
-    _$TermBankV3EntryImpl(
+_TermBankV3Entry _$TermBankV3EntryFromJson(Map<String, dynamic> json) =>
+    _TermBankV3Entry(
       term: json['term'] as String,
       reading: json['reading'] as String,
       definitionTags: (json['definitionTags'] as List<dynamic>)
@@ -27,8 +26,7 @@ _$TermBankV3EntryImpl _$$TermBankV3EntryImplFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$$TermBankV3EntryImplToJson(
-        _$TermBankV3EntryImpl instance) =>
+Map<String, dynamic> _$TermBankV3EntryToJson(_TermBankV3Entry instance) =>
     <String, dynamic>{
       'term': instance.term,
       'reading': instance.reading,
