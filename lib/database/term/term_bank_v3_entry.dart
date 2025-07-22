@@ -11,7 +11,7 @@ part 'term_bank_v3_entry.g.dart';
 
 @Freezed(makeCollectionsUnmodifiable: false)
 /// Class representing one kanji entry of the database
-class TermBankV3Entry with _$TermBankV3Entry {
+abstract class TermBankV3Entry with _$TermBankV3Entry {
 
   const factory TermBankV3Entry(
     {

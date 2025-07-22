@@ -12,7 +12,7 @@ part 'term_meta_bank_entry.g.dart';
 
 @Freezed(makeCollectionsUnmodifiable: false)
 /// Class representing one term meta entry of the database
-class TermMetaBankV3Entry with _$TermMetaBankV3Entry {
+abstract class TermMetaBankV3Entry with _$TermMetaBankV3Entry {
 
   const factory TermMetaBankV3Entry(
     {

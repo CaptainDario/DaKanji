@@ -8,7 +8,7 @@ part 'term_meta_bank_pitch_entry.g.dart';
 
 @Freezed(makeCollectionsUnmodifiable: false)
 /// Class representing one term meta entry's pitch data
-class TermMetaBankV3PitchEntry with _$TermMetaBankV3PitchEntry {
+abstract class TermMetaBankV3PitchEntry with _$TermMetaBankV3PitchEntry {
 
   const factory TermMetaBankV3PitchEntry(
     {

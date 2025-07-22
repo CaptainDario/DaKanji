@@ -8,7 +8,7 @@ part 'kanji_meta_bank_v3_entry.g.dart';
 
 @Freezed(makeCollectionsUnmodifiable: false)
 /// Class representing one meta entry of the database
-class KanjiMetaBankV3Entry with _$KanjiMetaBankV3Entry {
+abstract class KanjiMetaBankV3Entry with _$KanjiMetaBankV3Entry {
 
   const factory KanjiMetaBankV3Entry(
     {

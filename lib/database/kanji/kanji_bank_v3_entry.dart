@@ -12,7 +12,7 @@ part 'kanji_bank_v3_entry.g.dart';
 
 @Freezed(makeCollectionsUnmodifiable: false)
 /// Class representing one kanji entry of the database
-class KanjiBankV3Entry with _$KanjiBankV3Entry {
+abstract class KanjiBankV3Entry with _$KanjiBankV3Entry {
 
   const factory KanjiBankV3Entry(
     {
