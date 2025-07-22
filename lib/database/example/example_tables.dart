@@ -5,7 +5,7 @@ import 'package:drift/drift.dart';
 
 
 /// Contains the example sentences
-@TableIndex(name: 'exampleSentence', columns: {#exampleSentence})
+//@TableIndex(name: 'exampleSentence', columns: {#exampleSentence},)
 class ExampleTable extends Table {
   
   /// id of this entry
@@ -14,10 +14,13 @@ class ExampleTable extends Table {
   /// the example of this entry
   TextColumn get exampleSentence => text()();
 
+  /// the example of this entry tokenized
+  TextColumn get exampleSentenceTokenized => text()();
+
 }
 
 /// Contains the example sentences' translations
-@TableIndex(name: 'exampleTranslation', columns: {#exampleTranslation})
+//@TableIndex(name: 'exampleTranslation', columns: {#exampleTranslation})
 class ExampleTranslationTable extends Table {
   
   /// id of this entry
