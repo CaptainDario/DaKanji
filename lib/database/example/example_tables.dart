@@ -5,7 +5,6 @@ import 'package:drift/drift.dart';
 
 
 /// Contains the example sentences
-//@TableIndex(name: 'exampleSentence', columns: {#exampleSentence},)
 class ExampleTable extends Table {
   
   /// id of this entry
@@ -20,7 +19,6 @@ class ExampleTable extends Table {
 }
 
 /// Contains the example sentences' translations
-//@TableIndex(name: 'exampleTranslation', columns: {#exampleTranslation})
 class ExampleTranslationTable extends Table {
   
   /// id of this entry
