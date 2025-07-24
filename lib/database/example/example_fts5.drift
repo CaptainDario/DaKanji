@@ -1,0 +1,36 @@
+import 'example_tables.dart';
+
+-- Create the FTS5 virtual table
+CREATE VIRTUAL TABLE example_fts USING fts5(
+  example_sentence_tokenized,
+  content='example_table',
+  content_rowid='id',
+  tokenize='unicode61'
+);
+
+-- Triggers to keep the FTS table synchronized with the content table.
+-- These should be placed in the same .drift file.
+
+-- After a new row is inserted into example_table, insert the corresponding
+-- content into the FTS5 table.
+CREATE TRIGGER example_table_ai AFTER INSERT ON example_table BEGIN
+  INSERT INTO example_fts(rowid, example_sentence_tokenized)
+  VALUES (new.id, new.example_sentence_tokenized);
+END;
+
+-- After a row is deleted from example_table, delete the corresponding
+-- entry from the FTS5 table.
+CREATE TRIGGER example_table_ad AFTER DELETE ON example_table BEGIN
+  INSERT INTO example_fts(example_fts, rowid, example_sentence_tokenized)
+  VALUES ('delete', old.id, old.example_sentence_tokenized);
+END;
+
+-- After the example_sentence_tokenized column in a row is updated,
+-- update the FTS5 table as well.
+CREATE TRIGGER example_table_au AFTER UPDATE OF example_sentence_tokenized ON example_table BEGIN
+  INSERT INTO example_fts(example_fts, rowid, example_sentence_tokenized)
+  VALUES ('delete', old.id, old.example_sentence_tokenized);
+  INSERT INTO example_fts(rowid, example_sentence_tokenized)
+  VALUES (new.id, new.example_sentence_tokenized);
+END;
+
