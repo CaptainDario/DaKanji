@@ -47,7 +47,6 @@ Future parseTextExample(String exampleText, DaKanjiDB db) async {
   // read the examples
   List<ExampleTableCompanion> exampleComps = [];
   List<TermTableCompanion> termComps = [];
-  List<ExampleTermRelationsTableCompanion> exampleTermRelComps = [];
 
   // split text into sentences
   for (var match in sentenceRegex.allMatches(exampleText)) {
@@ -71,9 +70,6 @@ Future parseTextExample(String exampleText, DaKanjiDB db) async {
           id: Value(maxTermId), term: Value(term)
         ));
       }
-      exampleTermRelComps.add(ExampleTermRelationsTableCompanion(
-        exampleId: Value(maxExampleId), termId: Value(allTerms[term]!)
-      ));
     }
 
   }
@@ -84,9 +80,6 @@ Future parseTextExample(String exampleText, DaKanjiDB db) async {
     db.exampleTable.insertAll(exampleComps);
 
     db.termTable.insertAll(termComps);
-    db.exampleTermRelationsTable.insertAll(exampleTermRelComps);
-
-    db.exampleTermRelationsTable.insertAll(exampleTermRelComps);
 
   },);
 
