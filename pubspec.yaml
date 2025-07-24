@@ -5,7 +5,7 @@ publish_to: none
 version: 4.0.0
 
 environment:
-  sdk: ^3.5.4
+  sdk: ^3.8.0
 
 # Add regular dependencies here.
 dependencies:
@@ -14,18 +14,18 @@ dependencies:
   sqlite3: ^2.4.7
   archive: ^4.0.7
   tuple: ^2.0.2
-  freezed_annotation: ^2.4.4
+  freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
   universal_io: ^2.2.2
   mecab_for_dart: 1.1.5
 
 dev_dependencies:
-  drift_dev: ^2.21.2
-  build_runner: ^2.4.13
+  drift_dev: ^2.28.0
+  build_runner: ^2.6.0
   import_sorter: ^4.6.0
-  freezed: ^2.5.7
-  lints: ^4.0.0
-  test: ^1.25.8
-  json_serializable: ^6.9.0
+  freezed: ^3.2.0
+  lints: ^6.0.0
+  test: ^1.26.3
+  json_serializable: ^6.10.0
 
 #dependency_overrides:
