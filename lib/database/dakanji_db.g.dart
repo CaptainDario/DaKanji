@@ -358,7 +358,7 @@ class ExampleFts extends Table
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(example_sentence_tokenized, content=\'example_table\', content_rowid=\'id\', tokenize=\'simple\')';
+      'fts5(example_sentence_tokenized, content=\'example_table\', content_rowid=\'id\', tokenize=\'unicode61\')';
 }
 
 class ExampleFt extends DataClass implements Insertable<ExampleFt> {
@@ -12141,6 +12141,18 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
   late final $ExampleTableTable exampleTable = $ExampleTableTable(this);
   late final ExampleFts exampleFts = ExampleFts(this);
+  late final Trigger exampleTableAi = Trigger(
+    'CREATE TRIGGER example_table_ai AFTER INSERT ON example_table BEGIN INSERT INTO example_fts ("rowid", example_sentence_tokenized) VALUES (new.id, new.example_sentence_tokenized);END',
+    'example_table_ai',
+  );
+  late final Trigger exampleTableAd = Trigger(
+    'CREATE TRIGGER example_table_ad AFTER DELETE ON example_table BEGIN INSERT INTO example_fts (example_fts, "rowid", example_sentence_tokenized) VALUES (\'delete\', old.id, old.example_sentence_tokenized);END',
+    'example_table_ad',
+  );
+  late final Trigger exampleTableAu = Trigger(
+    'CREATE TRIGGER example_table_au AFTER UPDATE OF example_sentence_tokenized ON example_table BEGIN INSERT INTO example_fts (example_fts, "rowid", example_sentence_tokenized) VALUES (\'delete\', old.id, old.example_sentence_tokenized);INSERT INTO example_fts ("rowid", example_sentence_tokenized) VALUES (new.id, new.example_sentence_tokenized);END',
+    'example_table_au',
+  );
   late final $LanguageCodeTableTable languageCodeTable =
       $LanguageCodeTableTable(this);
   late final $ExampleTranslationTableTable exampleTranslationTable =
@@ -12289,6 +12301,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     exampleTable,
     exampleFts,
+    exampleTableAi,
+    exampleTableAd,
+    exampleTableAu,
     languageCodeTable,
     exampleTranslationTable,
     languageCode,
@@ -12338,6 +12353,30 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     radical,
     name,
   ];
+  @override
+  StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.insert,
+      ),
+      result: [TableUpdate('example_fts', kind: UpdateKind.insert)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('example_fts', kind: UpdateKind.insert)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.update,
+      ),
+      result: [TableUpdate('example_fts', kind: UpdateKind.insert)],
+    ),
+  ]);
 }
 
 typedef $$ExampleTableTableCreateCompanionBuilder =

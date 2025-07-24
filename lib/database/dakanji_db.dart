@@ -38,14 +38,15 @@ import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
 import 'package:dakanji_db/database/term_meta/term_meta_bank_relation_tables.dart';
 import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_dao.dart';
 import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_tables.dart';
+import 'package:dakanji_db/database/example/example_view.dart';
 import 'package:dakanji_db/helper/zlib_text_converter.dart';
 
 part 'dakanji_db.g.dart';
 
 
 
-@DriftDatabase(tables: [
-
+@DriftDatabase(
+  tables: [
     KanjiTable, TermTable, ReadingTable, MeaningTable, LanguageCodeTable,
 
     RadicalsTable, RadicalKanjiRelationsTable,
@@ -79,7 +80,7 @@ part 'dakanji_db.g.dart';
 
     ExampleTable,
     ExampleTranslationTable, ExampleTranslationTable,
-    ExampleTermRelationsTable, ExampleTranslationRelationsTable
+    ExampleTranslationRelationsTable
   ],
   daos: [
     KanjiDao, TermDao, ReadingDao, MeaningDao, LanguageCodeDao,
@@ -90,7 +91,12 @@ part 'dakanji_db.g.dart';
     TermMetaBankV3Dao,
     ExampleDao
   ],
-  
+  views: [
+    ExampleView
+  ],
+  include: {
+    'example/example_fts5.drift'
+  }
 )
 class DaKanjiDB extends _$DaKanjiDB {
   // After generating code, this class needs to define a schemaVersion getter
@@ -134,8 +140,6 @@ class DaKanjiDB extends _$DaKanjiDB {
   /// **WARNING**: This DELETES all contents of the db
   Future clearDB() async {
     await transaction(() async {
-      // you only need this if you've manually enabled foreign keys
-      // await customStatement('PRAGMA foreign_keys = OFF');
       for (final table in allTables) {
         await delete(table).go();
       }
