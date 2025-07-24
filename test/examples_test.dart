@@ -8,6 +8,8 @@ import 'package:dakanji_db/database/dakanji_db.dart';
 import '../bin/paths.dart';
 import 'examples_test_values.dart';
 
+
+
 void main() async {
   
   // create the testing database (delete any existing database)
@@ -27,19 +29,19 @@ void main() async {
 
 /// tests the termMetaBankV3 import of the sample database from the yomitan dictionary
 Future testExamplesV3(DaKanjiDB db) async {
-  // Check some kanji bank queries
-  for (int i = 0; i < examplesTestValues.length; i++) {
-    Stopwatch s = Stopwatch()..start();
-    final testCase = examplesTestValues[i];
-    final result = (await db.exampleDao.getTermMetaBankEntriesFromTerm(testCase));
-    print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
 
-    print("\n\n$i: ${examplesTestValues[i]}");
-    for (var res in result) {
-      print(res);
-    }
-    expect(result.isNotEmpty , true);
-    final pass = result.any((e) => examplesTestValues[i] == e);
-    expect(pass, true);
+  // Check some kanji bank queries
+  for (int i = 0; i < examplesTestQueries.length; i++) {
+
+    Stopwatch s = Stopwatch()..start();
+    final result = (await db.exampleDao.searchExamples(examplesTestQueries[i]));
+    print("Looking up ${examplesTestQueries[i]} took ${s.elapsedMilliseconds}ms");
+    print(result);
+
+    expect(result.isNotEmpty, true);
+    final pass = result.where((r) => !examplesTestExpected.contains(r)).toList();
+    expect(pass.isEmpty, true);
+
   }
+
 }
