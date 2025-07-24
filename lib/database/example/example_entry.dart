@@ -9,7 +9,7 @@ part 'example_entry.g.dart';
 
 
 @Freezed(makeCollectionsUnmodifiable: false)
-/// Class representing one kanji entry of the database
+/// Class representing one example sentence and its translations of the database
 abstract class ExampleEntry with _$ExampleEntry {
 
   const factory ExampleEntry(
