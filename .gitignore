@@ -2,6 +2,9 @@
 # Created by `dart pub`
 .dart_tool/
 
+# macos files
+*/.DS_store
+
 # ignore temporary outputs
 tmp/
 
