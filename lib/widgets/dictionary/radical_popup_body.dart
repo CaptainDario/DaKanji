@@ -105,6 +105,9 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                     shrinkWrap: true,
                     itemCount: kanjisThatUseAllRadicals.length,
                     itemBuilder: (context, strokeIndex) {
+                      if(kanjisThatUseAllRadicals[strokeIndex].isEmpty)
+                        return Container();
+
                       return Column(
                         children: [
                           Align(

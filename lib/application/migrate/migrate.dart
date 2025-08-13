@@ -1,6 +1,7 @@
 // Project imports:
 import 'package:da_kanji_mobile/application/migrate/v3_to_v4.dart';
 import 'package:da_kanji_mobile/entities/releases/version.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Checks if any migration is necessary and if so runs the them
 Future migrate(Version? last, Version current) async {
@@ -9,6 +10,14 @@ Future migrate(Version? last, Version current) async {
   // migration to v4
   if(current.major == 3){
     //storeWordListsAsTextFilesForMigration();
+  }
+  // as some users cannot start the app on v3.5.2 because of shared preferences
+  // delete it on v3.5.3
+  if(current.major == 3 && current.minor == 5 && current.patch == 3
+    && last != null
+    && last.major == 3 && last.minor == 5 && last.patch == 3){
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
   // run migration from v3 to v4
   if(last?.major == 3 && current.major == 4){

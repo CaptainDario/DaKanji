@@ -10,7 +10,7 @@ iso639_3  = "iso639_3"
 is_warning = """/// 
 /// Note: Some ISO codes have been because of conflicts with dart's keywords.
 /// `is` -> `is_` 
-/// `new` -> `is_`
+/// `new` -> `new_`
 /// `for` -> `for_`
 """
 

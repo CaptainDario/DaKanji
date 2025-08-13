@@ -28,37 +28,21 @@ String postHogApiKey = (kDebugMode
   : Env.POSTHOG_API_KEY_REL
 ) ?? "";
 
+/// The name of the event that indicates a daily active user
+String dailyActiveUserEventName = "Daily active user";
+/// The name of the event that indicates a monthly active user
+String monthlyActiveUserEventName = "Monthly active user";
+/// The name of the event that indicates a new / re install
+String installEventName = "New/Re install";
 
 
-/// Logs an even by its name with the default properties
-Future<bool> logDefaultEvent(String eventName) async {
-
-  bool success;
-
-  final body = {
+Future<Map> defaultEvent(String eventName) async {
+  return {
     "api_key": postHogApiKey,
     "event": eventName,
     "properties" : await defaultProperties(),
     "timestamp": (DateTime.now().toUtc()).toIso8601String(),
   };
-
-  success = await logEvent(posthogServiceURL, posthogHeader, body);
-
-  return success;
-
-}
-
-/// Logs a given event by its name and properties
-Future<bool> logEvent(String url, Map<String, String> header, Map body,
-  {bool cacheEventOnfailure = true}) async {
-
-  bool success;
-
-  success = await _logEventPosthogREST(url, header, jsonEncode(body),
-                                      cacheEventOnfailure: cacheEventOnfailure);
-
-  return success;
-
 }
 
 /// Returns a properties map configured with all the default properties
@@ -84,6 +68,23 @@ String randomId(){
   r += "${Random().nextInt(0x7fffffff)}";
 
   return r;
+
+}
+
+
+/// Logs a given event by its name and properties
+/// 
+/// WARNING: NEVER use this function DIRECTLY (if you are NOT 100% you
+/// know what you are doing). ALWAYS use `cacheEvent` for logging events
+Future<bool> _logEvent(String url, Map<String, String> header, Map body,
+  {bool cacheEventOnfailure = true}) async {
+
+  bool success;
+
+  success = await _logEventPosthogREST(url, header, jsonEncode(body),
+                                      cacheEventOnfailure: cacheEventOnfailure);
+
+  return success;
 
 }
 
@@ -117,8 +118,24 @@ Future<bool> _logEventPosthogREST(String url, Map<String, String> header,
   return success;
 }
 
-/// Caches the given event to disk. `retryCachedEvents` can be used to retry
-/// send the cached events
+/// Caches the given default event to disk.
+/// `retryCachedEvents` can be used to send the cached events
+/// 
+/// NOTE: To send an event, cache it with this function, the internal cache-
+/// retry-loop will then later send the event to the server.
+/// This will prevent sending the same event multiple times or not at all
+Future cacheDefaultEvent(String eventName) async {
+
+  return cacheEvent(jsonEncode(await defaultEvent(eventName)));
+
+}
+
+/// Caches the given event to disk.
+/// `retryCachedEvents` can be used to send the cached events
+/// 
+/// NOTE: To send an event, cache it with this function, the internal cache-
+/// retry-loop will then later send the event to the server.
+/// This will prevent sending the same event multiple times or not at all
 Future<void> cacheEvent(String event) async {
 
   // load cached events
@@ -142,7 +159,7 @@ Future<void> retryCachedEvents() async {
 
   // try to resend all events
   while (cachedEvents.isNotEmpty) {
-    bool success = await logEvent(
+    bool success = await _logEvent(
       posthogServiceURL, posthogHeader, jsonDecode(cachedEvents.first),
       cacheEventOnfailure: false);
 

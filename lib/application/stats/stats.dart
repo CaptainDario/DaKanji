@@ -107,6 +107,8 @@ class Stats{
   Future updateStats() async {
 
     userData.resetUsageIfNewDay();
+
+    userData.todayUsageSeconds += updateStatsTimerInterval;
     
     if(!userData.dailyActiveUserTracked) await updateDailyUsage();
     if(!userData.monthlyActiveUserTracked) await updateMonthlyUsage();
@@ -130,24 +132,22 @@ class Stats{
       !userData.monthlyActiveUserTracked){
 
       userData.monthlyActiveUserTracked = true;
-      await logDefaultEvent("Monthly active user");
       await userData.save();
+      await cacheDefaultEvent(monthlyActiveUserEventName);
     }
   }
 
   /// Updates the daily usage
   /// Saves to disk and sends an event if user is now a daily active one
   Future updateDailyUsage() async {
-    
-    userData.todayUsageSeconds += updateStatsTimerInterval;
 
     // user has been active today
     if(userData.todayUsageSeconds >= dailyActiveSecondsThreshold &&
       !userData.dailyActiveUserTracked){
 
       userData.dailyActiveUserTracked = true;
-      await logDefaultEvent("Daily active user");
       await userData.save();
+      await cacheDefaultEvent(dailyActiveUserEventName);
     }
   }
 

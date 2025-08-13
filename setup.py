@@ -30,6 +30,13 @@ files_to_exclude_lin = [
 release_url = None
 assets_version = None
 
+if(sys.platform.startswith("win32")):
+    use_shell = True
+elif(sys.platform.startswith("darwin")):
+    use_shell = True
+elif(sys.platform.startswith("linux")):
+    use_shell = False
+
 
 def exclude_files_per_platform():
     """ Excludes files that are not needed for the current platform
@@ -112,18 +119,15 @@ def init_submodules():
     base_dir = os.getcwd()
 
     os.chdir(f"{base_dir}/plugins/DaKanji-dependencies/flutter_appavailability")
-    subprocess.run(["flutter", "pub", "get"], shell=True)
+    subprocess.run(["flutter", "pub", "get"], shell=use_shell)
 
     os.chdir(f"{base_dir}/plugins/DaKanji-dependencies/liquid_swipe_flutter")
-    subprocess.run(["flutter", "pub", "get"], shell=True)
+    subprocess.run(["flutter", "pub", "get"], shell=use_shell)
 
     os.chdir(f"{base_dir}/plugins/DaKanji-Dictionary/database_builder")
-    subprocess.run(["flutter", "pub", "get"], shell=True)
+    subprocess.run(["flutter", "pub", "get"], shell=use_shell)
 
-    os.chdir(f"{base_dir}/plugins/flutter_browser_app")
-    subprocess.run(["flutter", "pub", "get"], shell=True)
-
-    os.chdir("../..")
+    os.chdir("../../..")
 
 def setup_dakanji_env():
     """
@@ -161,8 +165,8 @@ def main():
     print("Setting up DaKanji")
 
     # switch to dev branch
-    subprocess.run(["git", "checkout", "dev"], shell=True)
-    subprocess.run(["git", "pull"], shell=True)
+    subprocess.run(["git", "checkout", "dev"], shell=use_shell)
+    subprocess.run(["git", "pull"], shell=use_shell)
 
     init_submodules()
     if("--ignore-no-env" not in args):
@@ -185,8 +189,8 @@ def main():
         print("Deleting temporary folder")
         shutil.rmtree(tmp_dir)
 
-    subprocess.run(["flutter", "pub", "get"], shell=True)
-    subprocess.run(["dart", "run", "build_runner", "build", "--delete-conflicting-outputs"], shell=True)
+    subprocess.run(["flutter", "pub", "get"], shell=use_shell)
+    subprocess.run(["dart", "run", "build_runner", "build", "--delete-conflicting-outputs"], shell=use_shell)
 
     print("Setup done! Run: \n flutter run")
     

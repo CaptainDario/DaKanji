@@ -174,9 +174,31 @@ class UserData{
 
     appOpenedTimes++;
 
-    debugPrint("The app was opened for the ${appOpenedTimes.toString()} time");
+    debugPrint("The app was opened for the ${appOpenedTimes.toString()} time");    
+    handleUpdates();
 
-    // a different version than last time is being used (test with version = 0.0.0)
+    // this is the first start of the app
+    if (appOpenedTimes == 1){
+      showChangelog = false;
+      versionUsed = g_Version;
+    }
+
+    // should a rate popup be shown
+    if (!doNotShowRateAgain && appOpenedTimes % g_AskRateAfterEach == 0){
+     debugPrint("show rate dialogue");
+      showRateDialog = true;
+    }
+
+    // DEBUGGING: onboarding, changelog, rate popup
+    //showOnboarding = true;
+    //showChangelog  = true;
+    //showRatePopup  = true;
+
+    save();
+  }
+
+  void handleUpdates(){
+    
     debugPrint("used: $versionUsed now: $g_Version");
     versionUsed ??= Version(0, 0, 0);
     if(versionUsed! < g_Version && appOpenedTimes > 1){
@@ -210,31 +232,14 @@ class UserData{
       }
     }
     if(versionUsed! > g_Version){
-
+      // ignore: avoid_print
+      print("You installed an older version of DaKanji, this is not supported!");
     }
     versionUsed = g_Version;
 
-    // this is the first start of the app
-    if (appOpenedTimes == 1){
-      showChangelog = false;
-      versionUsed = g_Version;
-    }
-
-    // should a rate popup be shown
-    if (!doNotShowRateAgain && appOpenedTimes % g_AskRateAfterEach == 0){
-     debugPrint("show rate dialogue");
-      showRateDialog = true;
-    }
-
-    // DEBUGGING: onboarding, changelog, rate popup
-    //showOnboarding = true;
-    //showChangelog  = true;
-    //showRatePopup  = true;
-
-    save();
   }
 
-    /// Saves all settings to the SharedPreferences.
+  /// Saves all settings to the SharedPreferences.
   Future<void> save() async {
     // obtain shared preferences
     final prefs = await SharedPreferences.getInstance();

@@ -1,6 +1,15 @@
 
 # DaKanji - changelog
 
+## v3.5.3 - ワードリストと暗記改善 (23.07.2024)
+
+Fixed:
+
+- App not loading for some users
+- Radical search: Do not show empty sections
+- Example highlights
+- Smaller fixes
+
 ## v3.5.2 - ワードリストと暗記改善 (21.05.2024)
 
 Fixed:

@@ -8,12 +8,12 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.5.2+136
+version: 3.5.3+136
 
 
 environment:
   sdk: ">=3.0.0"
-  flutter: "3.32.0"
+  flutter: "3.32.5"
 
 platforms:
   android:
@@ -50,9 +50,9 @@ dependencies:
   device_info_plus: 10.1.2
   share_plus: 10.0.2
   file_picker: 8.3.7
-  sqlite3: 2.4.6
-  sqlite3_flutter_libs: 0.5.24
-  drift: 2.23.1
+  sqlite3: 2.7.6
+  sqlite3_flutter_libs: 0.5.34
+  drift: 2.25.1
   json_annotation: 4.9.0
   flutter_spinkit: 5.2.1
   sentry: 8.14.2
@@ -104,7 +104,7 @@ dependencies:
   envied: 0.5.4+1
   envied_generator: 0.5.4+1
   keyboard_detection: 0.8.0
-  async: 2.12.0
+  async: 2.13.0
   path: 1.9.1
   http: 1.2.2
   path_provider: 2.1.5
@@ -191,7 +191,7 @@ dev_dependencies:
   isar_generator:
     version: 3.1.8
     hosted: https://pub.isar-community.dev/
-  drift_dev: 2.23.1
+  drift_dev: 2.25.1
   test: 1.25.15
   
 flutter_icons:
