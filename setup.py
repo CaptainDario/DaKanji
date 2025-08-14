@@ -35,7 +35,7 @@ if(sys.platform.startswith("win32")):
 elif(sys.platform.startswith("darwin")):
     use_shell = True
 elif(sys.platform.startswith("linux")):
-    use_shell = False
+    use_shell = True
 
 
 def exclude_files_per_platform():
