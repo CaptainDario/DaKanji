@@ -89,11 +89,33 @@ jobs:
       #  run: |
       #    pod --version
       #    python3 ./integration_test/run_tests.py
-          
+
       - name: build macos executable
         run: |
+
           flutter build macos --release -v
           ditto -c -k --sequesterRsrc --keepParent build/macos/Build/Products/Release/DaKanji.app/ DaKanji_${{env.DAKANJI_VERSION}}_app.zip
+      - name: setup signing
+        run: |
+          echo ${{secrets.MACOS_CERT}} | base64 --decode > certificate.p12
+          echo "Create Keychain"
+          security create-keychain -p ${{secrets.MACOS_KEYCHAIN_PWD}} build.keychain
+          echo "Assign to Login Keychain"
+          security default-keychain -s build.keychain
+          echo "Unlock the Login Keychain"
+          security unlock-keychain -p ${{secrets.MACOS_KEYCHAIN_PWD}} build.keychain
+          echo "Import certificate"
+          security import certificate.p12 -k build.keychain -P ${{secrets.MACOS_CERT_PWD}} -T /usr/bin/codesign
+          echo "Set Key Partition"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k ${{secrets.MACOS_KEYCHAIN_PWD}} build.keychain
+          echo "Find Identity"
+          security find-identity
+          echo "Sign the app"
+          /usr/bin/codesign --force --deep -s ${{ secrets.MACOS_IDENTITY }} ./$MACOS_APP_RELEASE_PATH/<YOUR-APP-NAME>.app
+
+      - name: Create DMG
+        run: |
+          brew install create-dmg
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
