@@ -28,6 +28,9 @@ jobs:
     # The type of runner that the job will run on
     runs-on: macos-13
 
+    env:
+      MACOS_APP_RELEASE_PATH: build/macos/Build/Products/Release
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -94,7 +97,7 @@ jobs:
         run: |
 
           flutter build macos --release -v
-          ditto -c -k --sequesterRsrc --keepParent build/macos/Build/Products/Release/DaKanji.app/ DaKanji_${{env.DAKANJI_VERSION}}_app.zip
+          ditto -c -k --sequesterRsrc --keepParent ${{env.MACOS_APP_RELEASE_PATH}}/DaKanji.app/ DaKanji_${{env.DAKANJI_VERSION}}_app.zip
       - name: setup signing
         run: |
           echo ${{secrets.MACOS_CERT}} | base64 --decode > certificate.p12
@@ -111,7 +114,7 @@ jobs:
           echo "Find Identity"
           security find-identity
           echo "Sign the app"
-          /usr/bin/codesign --force --deep -s ${{ secrets.MACOS_IDENTITY }} ./$MACOS_APP_RELEASE_PATH/<YOUR-APP-NAME>.app
+          /usr/bin/codesign --force --deep -s ${{ secrets.MACOS_IDENTITY }} ./${{env.MACOS_APP_RELEASE_PATH}}/<YOUR-APP-NAME>.app
 
       - name: Create DMG
         run: |
