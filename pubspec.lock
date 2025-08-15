@@ -808,10 +808,10 @@ packages:
     dependency: "direct main"
     description:
       name: fvp
-      sha256: f5012756985f7c8c19caaea2d65baf8a6cf5fee9fe520e1fabb8bc61e1d5f468
+      sha256: cb867b293ee684fbc5de188040f88bae8603d967d825b9407ecb96e191dcadc9
       url: "https://pub.dev"
     source: hosted
-    version: "0.30.0"
+    version: "0.33.1"
   get_it:
     dependency: "direct main"
     description:
