@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$ExampleEntry {
 
 /// The example sentence
- String get example; String get tokenizedExample;/// The translations of the example
+ String get example;/// The translations of the example
  List<ExampleEntryTranslation> get translations;
 /// Create a copy of ExampleEntry
 /// with the given fields replaced by the non-null parameter values.
@@ -30,16 +30,16 @@ $ExampleEntryCopyWith<ExampleEntry> get copyWith => _$ExampleEntryCopyWithImpl<E
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExampleEntry&&(identical(other.example, example) || other.example == example)&&(identical(other.tokenizedExample, tokenizedExample) || other.tokenizedExample == tokenizedExample)&&const DeepCollectionEquality().equals(other.translations, translations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExampleEntry&&(identical(other.example, example) || other.example == example)&&const DeepCollectionEquality().equals(other.translations, translations));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,example,tokenizedExample,const DeepCollectionEquality().hash(translations));
+int get hashCode => Object.hash(runtimeType,example,const DeepCollectionEquality().hash(translations));
 
 @override
 String toString() {
-  return 'ExampleEntry(example: $example, tokenizedExample: $tokenizedExample, translations: $translations)';
+  return 'ExampleEntry(example: $example, translations: $translations)';
 }
 
 
@@ -50,7 +50,7 @@ abstract mixin class $ExampleEntryCopyWith<$Res>  {
   factory $ExampleEntryCopyWith(ExampleEntry value, $Res Function(ExampleEntry) _then) = _$ExampleEntryCopyWithImpl;
 @useResult
 $Res call({
- String example, String tokenizedExample, List<ExampleEntryTranslation> translations
+ String example, List<ExampleEntryTranslation> translations
 });
 
 
@@ -67,10 +67,9 @@ class _$ExampleEntryCopyWithImpl<$Res>
 
 /// Create a copy of ExampleEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? example = null,Object? tokenizedExample = null,Object? translations = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? example = null,Object? translations = null,}) {
   return _then(_self.copyWith(
 example: null == example ? _self.example : example // ignore: cast_nullable_to_non_nullable
-as String,tokenizedExample: null == tokenizedExample ? _self.tokenizedExample : tokenizedExample // ignore: cast_nullable_to_non_nullable
 as String,translations: null == translations ? _self.translations : translations // ignore: cast_nullable_to_non_nullable
 as List<ExampleEntryTranslation>,
   ));
@@ -157,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String example,  String tokenizedExample,  List<ExampleEntryTranslation> translations)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String example,  List<ExampleEntryTranslation> translations)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ExampleEntry() when $default != null:
-return $default(_that.example,_that.tokenizedExample,_that.translations);case _:
+return $default(_that.example,_that.translations);case _:
   return orElse();
 
 }
@@ -178,10 +177,10 @@ return $default(_that.example,_that.tokenizedExample,_that.translations);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String example,  String tokenizedExample,  List<ExampleEntryTranslation> translations)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String example,  List<ExampleEntryTranslation> translations)  $default,) {final _that = this;
 switch (_that) {
 case _ExampleEntry():
-return $default(_that.example,_that.tokenizedExample,_that.translations);case _:
+return $default(_that.example,_that.translations);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +197,10 @@ return $default(_that.example,_that.tokenizedExample,_that.translations);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String example,  String tokenizedExample,  List<ExampleEntryTranslation> translations)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String example,  List<ExampleEntryTranslation> translations)?  $default,) {final _that = this;
 switch (_that) {
 case _ExampleEntry() when $default != null:
-return $default(_that.example,_that.tokenizedExample,_that.translations);case _:
+return $default(_that.example,_that.translations);case _:
   return null;
 
 }
@@ -213,12 +212,11 @@ return $default(_that.example,_that.tokenizedExample,_that.translations);case _:
 @JsonSerializable()
 
 class _ExampleEntry implements ExampleEntry {
-  const _ExampleEntry({required this.example, required this.tokenizedExample, required this.translations});
+  const _ExampleEntry({required this.example, required this.translations});
   factory _ExampleEntry.fromJson(Map<String, dynamic> json) => _$ExampleEntryFromJson(json);
 
 /// The example sentence
 @override final  String example;
-@override final  String tokenizedExample;
 /// The translations of the example
 @override final  List<ExampleEntryTranslation> translations;
 
@@ -235,16 +233,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExampleEntry&&(identical(other.example, example) || other.example == example)&&(identical(other.tokenizedExample, tokenizedExample) || other.tokenizedExample == tokenizedExample)&&const DeepCollectionEquality().equals(other.translations, translations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExampleEntry&&(identical(other.example, example) || other.example == example)&&const DeepCollectionEquality().equals(other.translations, translations));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,example,tokenizedExample,const DeepCollectionEquality().hash(translations));
+int get hashCode => Object.hash(runtimeType,example,const DeepCollectionEquality().hash(translations));
 
 @override
 String toString() {
-  return 'ExampleEntry(example: $example, tokenizedExample: $tokenizedExample, translations: $translations)';
+  return 'ExampleEntry(example: $example, translations: $translations)';
 }
 
 
@@ -255,7 +253,7 @@ abstract mixin class _$ExampleEntryCopyWith<$Res> implements $ExampleEntryCopyWi
   factory _$ExampleEntryCopyWith(_ExampleEntry value, $Res Function(_ExampleEntry) _then) = __$ExampleEntryCopyWithImpl;
 @override @useResult
 $Res call({
- String example, String tokenizedExample, List<ExampleEntryTranslation> translations
+ String example, List<ExampleEntryTranslation> translations
 });
 
 
@@ -272,10 +270,9 @@ class __$ExampleEntryCopyWithImpl<$Res>
 
 /// Create a copy of ExampleEntry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? example = null,Object? tokenizedExample = null,Object? translations = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? example = null,Object? translations = null,}) {
   return _then(_ExampleEntry(
 example: null == example ? _self.example : example // ignore: cast_nullable_to_non_nullable
-as String,tokenizedExample: null == tokenizedExample ? _self.tokenizedExample : tokenizedExample // ignore: cast_nullable_to_non_nullable
 as String,translations: null == translations ? _self.translations : translations // ignore: cast_nullable_to_non_nullable
 as List<ExampleEntryTranslation>,
   ));
