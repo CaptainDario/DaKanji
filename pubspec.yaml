@@ -17,6 +17,7 @@ dependencies:
   freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
   universal_io: ^2.2.2
+  collection: ^1.19.1
   mecab_for_dart: 1.1.5
 
 dev_dependencies:
