@@ -1,4 +1,6 @@
 // Package imports:
+import 'package:dakanji_db/iso/iso_table.dart';
+import 'package:dakanji_db/parsing/japanese_processing/mecab_parsing.dart';
 import 'package:drift/drift.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 //import 'package:mecab_for_dart/mecab_dart.dart';
@@ -10,7 +12,7 @@ import 'package:dakanji_db/database/dakanji_db.dart';
 
 
 
-Future parseExample(Directory exampleDir, DaKanjiDB db) async {
+Future parseExample(Directory exampleDir, DaKanjiDB db, Mecab mecab) async {
 
   List<File> exampleFiles = exampleDir.listSync().whereType<File>().toList();
 
@@ -18,7 +20,7 @@ Future parseExample(Directory exampleDir, DaKanjiDB db) async {
   for (var file in exampleFiles) {
     examples[p.basename(file.path)] = file.readAsStringSync();
   }
-  String jap = examples["jpn"]!;
+  String jap = examples[Iso639_1.ja.name]!;
 
   // read values from current db
   int maxExampleId = await db.exampleDao.maxExampleId();
@@ -29,21 +31,12 @@ Future parseExample(Directory exampleDir, DaKanjiDB db) async {
 
   // read the examples
   List<ExampleTableCompanion> exampleComps = [];
-  List<TermTableCompanion> termComps = [];
   List<LanguageCodeTableCompanion> languageCodeComps = [];
   List<ExampleTranslationTableCompanion> exampleTranslationComps = [];
   List<ExampleTranslationRelationsTableCompanion> exampleTransRelComps = [];
     
-  // Parse sentence using mecab
-  final mecab = Mecab();
-  await mecab.init("mecab.dylib", "ipadic", true);
-  List<TokenNode> parsed = mecab.parse(jap);
-  String tokenized = "";
-  for (int i = 0; i < parsed.length; i++) {
-    if(parsed[i].features.isEmpty) continue;
-
-    tokenized += "${parsed[i].features[6]} ";
-  }
+  // Get tokens
+  String tokenized = await parseSentenceUsingMecab(jap, mecab);
 
   // create japanese
   exampleComps.add(ExampleTableCompanion(
@@ -83,8 +76,6 @@ Future parseExample(Directory exampleDir, DaKanjiDB db) async {
   await db.batch((batch) {
 
     db.exampleTable.insertAll(exampleComps);
-
-    db.termTable.insertAll(termComps);
 
     db.languageCodeTable.insertAll(languageCodeComps);
     db.exampleTranslationTable.insertAll(exampleTranslationComps);
