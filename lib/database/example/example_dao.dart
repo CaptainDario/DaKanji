@@ -1,8 +1,8 @@
 // Package imports:
 import "package:dakanji_db/database/example/example_entry.dart";
-import "package:dakanji_db/database/example/example_entry_translation.dart";
 import "package:dakanji_db/database/example/example_tables.dart";
 import "package:dakanji_db/database/example/example_view.dart";
+import "package:dakanji_db/iso/iso_table.dart";
 import "package:drift/drift.dart";
 
 // Project imports:
@@ -21,62 +21,32 @@ part 'example_dao.g.dart';
     ExampleView
   ],
   include: {
-    'example_fts5.drift'
+    'example_queries.drift',
   }
 )
 class ExampleDao extends DatabaseAccessor<DaKanjiDB> with _$ExampleDaoMixin {
   
   ExampleDao(super.db);
 
-  Future<List<ExampleEntry>> searchExamples(String query) async {
+  Future<List<ExampleEntry>> searchExamples(
+    String query,
+    List<Iso639_1> languages,
+    {
+      int limit=-1,
+      int offset=0
+    }) async {
 
-    List<ExampleTableData> results = await customSelect(
-      'SELECT T.* FROM example_table AS T '
-      'INNER JOIN example_fts AS F ON F.rowid = T.id '
-      'WHERE example_fts MATCH :query',
-      // The variables map will be used to expand the :query parameter.
-      variables: [Variable.withString(query)],
-      // We need to tell drift how to parse the result set.
-      readsFrom: {exampleTable, exampleFts},
-    ).map((row) => exampleTable.map(row.data)).get();
-    List<int> ids = results.map((e) => e.id).toList();
+    // check laguages are set and parse 
+    assert (languages.isNotEmpty);
+    List<String> langs = languages.map((e) => e.name,).toList();
 
-    (select(exampleTable)
-    ..join([
-      innerJoin(exampleFts, exampleFts.rowId.equalsExp(exampleTable.id)),
-    ])
-    ..where((_) => exampleFts.match(query)));
+    final ftsResults = await example_fts_search_sql(
+      query, langs, limit, offset).get();
+    List<ExampleEntry> entries = ftsResults.map((e) => 
+      ExampleEntry.fromExampleFtsSearchSql(e)
+    ).toList();
 
-    final _query = (selectOnly(exampleTable)
-      .join([
-        // join translations via its relation table
-        innerJoin(
-          exampleTranslationRelationsTable,
-          exampleTable.id.equalsExp(exampleTranslationRelationsTable.exampleId)
-        ),
-        innerJoin(
-          exampleTranslationTable,
-          exampleTranslationRelationsTable.translationId.equalsExp(exampleTranslationTable.id)
-        )
-      ])
-    )
-    
-    ..groupBy([exampleTable.id]) 
-    ..addColumns([
-      exampleTable.exampleSentence,
-      
-      exampleTranslationTable.exampleTranslation.groupConcat(distinct: true)
-      
-    ]);
-    final joined = await _query.get();
-
-    print(joined);
-
-    return results.map((e) => ExampleEntry(
-      example: e.exampleSentence,
-      tokenizedExample: e.exampleSentenceTokenized,
-      translations: []
-    )).toList();
+    return entries;
 
   }
 

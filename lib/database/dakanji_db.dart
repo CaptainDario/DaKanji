@@ -95,7 +95,7 @@ part 'dakanji_db.g.dart';
     ExampleView
   ],
   include: {
-    'example/example_fts5.drift'
+    'example/example_fts5_table.drift',
   }
 )
 class DaKanjiDB extends _$DaKanjiDB {
