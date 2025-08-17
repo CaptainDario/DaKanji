@@ -6,7 +6,7 @@ import 'package:universal_io/io.dart';
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:dakanji_db/parsing/dictionary_parser.dart';
 import '../bin/paths.dart';
-import 'term_bank_test_values.dart';
+import 'term_meta_bank_expected_values.dart';
 
 void main() async {
   
@@ -20,28 +20,27 @@ void main() async {
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   test('Test importing samples', () async {
-    await testTermBankV3(db);
+    await testTermMetaBankV3(db);
   });
 
 }
 
-/// tests the termBankV3 import of the sample database from the yomitan dictionary
-Future testTermBankV3(DaKanjiDB db) async {
+/// tests the termMetaBankV3 import of the sample database from the yomitan dictionary
+Future testTermMetaBankV3(DaKanjiDB db) async {
   // Check some kanji bank queries
-  for (int i = 0; i < termBankTestCases.length; i++) {
+  for (int i = 0; i < termMetaBankTetsCases.length; i++) {
     Stopwatch s = Stopwatch()..start();
-    final testCase = termBankTestCases[i];
-    final result = null;
-      // TODO termBank test
-      //(await db.termBankV3Dao.getTermBankEntriesFromTerm(testCase));
+    final testCase = termMetaBankTetsCases[i];
+    final result = (await db.termMetaBankV3Dao.getTermMetaBankEntriesFromTerm(testCase));
     print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
 
-    print("\n\n$i: ${termBankTestCases[i]}");
+    print("\n\n$i: ${termMetaBankTetsCases[i]}");
     for (var res in result) {
       print(res);
     }
     expect(result.isNotEmpty , true);
-    final pass = result.any((e) => termBankTestCaseExpectations[i] == e);
+    final pass = result.any((e) => termMetaBankTestCaseExpectations[i] == e);
     expect(pass, true);
   }
 }
+

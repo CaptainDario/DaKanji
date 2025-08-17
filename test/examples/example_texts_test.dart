@@ -45,10 +45,10 @@ Future testExampleTextsV3(DaKanjiDB db) async {
     ));
     print("Looking up ${exampleTextsTestQueries[i]} took ${s.elapsedMilliseconds}ms");
     print("Result: $result");
-    print("Actual: ${exampleTextsTestExpected[0]}");
+    print("Expected: ${exampleTextsTestExpected[i]}");
 
     expect(result.isNotEmpty, true);
-    expect(result[0] == exampleTextsTestExpected[0], true);
+    expect(result[0] == exampleTextsTestExpected[i], true);
 
   }
 
