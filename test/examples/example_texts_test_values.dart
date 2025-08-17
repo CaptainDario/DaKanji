@@ -3,6 +3,9 @@ import 'dart:convert';
 
 import 'package:dakanji_db/database/example/example_entry.dart';
 import 'package:universal_io/io.dart';
+import 'package:path/path.dart' as p;
+
+import '../../bin/paths.dart';
 
 
 List<String> exampleTextsTestQueries = [
@@ -13,6 +16,6 @@ List<String> exampleTextsTestQueries = [
 ];
 
 List<ExampleEntry> exampleTextsTestExpected = List.generate(4, (i) => 
-    "test/examples/example_texts_expected_value_${i+1}.json"
+    p.join(devExampleTextsPath, "example_texts_expected_value_${i+1}.json")
   ).map((e) => ExampleEntry.fromJson(jsonDecode(File(e).readAsStringSync())))
   .toList();
