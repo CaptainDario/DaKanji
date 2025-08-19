@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:dakanji_db/parsing/term/structured_content_parser.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
@@ -38,6 +39,12 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
   int currentMaxRuleIdentifiersId = await db.termBankV3Dao.maxTermBankV3RuleIdentifierId();
   Map allRuleIdentifiers =
     { for (var e in await db.termBankV3Dao.getAllRuleIdentifiers()) e.ruleIdentifier : e.id };
+  int currentMaxMeaningId = await db.meaningDao.maxMeaningId();
+  Map allMeanings =
+    { for (var e in await db.meaningDao.getAllMeanings()) e.meaning : e.id };
+  // tags are parsed from the meta bank and thus are already present
+  Map allTags =
+    { for (var e in await db.termBankV3Dao.getAllTags()) e.name : e.id };
   
   // store data in list to bulk add them
   List<TermTableCompanion> termComps = [];
@@ -46,7 +53,10 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
   List<TermBankV3DefinitionTagsTableCompanion> definitionTagComps = [];
   List<TermBankV3DefinitionTagRelationsTableCompanion> definitionTagRelComps = [];
   List<TermBankV3RuleIdentifierTableCompanion> ruleIdentifiersComps = [];
-  List<TermBankV3RuleIdentifierRelationsTableCompanion> ruleIdentifiersTelComps = [];
+  List<TermBankV3RuleIdentifierRelationsTableCompanion> ruleIdentifiersRelComps = [];
+  List<MeaningTableCompanion> meaningComps = [];
+  List<TermBankV3MeaningsRelationsTableCompanion> meaningRelComps = [];
+  List<TermBankV3TagBankRelationsTableCompanion> tagRelComps = [];
 
   // parse the entires
   for (var jsonEntry in jsonList) {
@@ -77,7 +87,7 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
     if(jsonEntry[2] != ""){
       for (var defTag in jsonEntry[2].split(" ")) {
         // get tag from DB
-        int defTagInsertId = allDefTags[jsonEntry[2]] ?? ++currentMaxDefTagId;
+        int defTagInsertId = allDefTags[defTag] ?? ++currentMaxDefTagId;
         if(allDefTags[defTag] == null){
           allDefTags[defTag] = defTagInsertId;
           definitionTagComps.add(TermBankV3DefinitionTagsTableCompanion(
@@ -95,25 +105,55 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
 
     // parse rule identifiers
     if(jsonEntry[3] != ""){
-      for (var ruleDef in jsonEntry[3].split(" ")) {
+      for (var ruleId in jsonEntry[3].split(" ")) {
         // get tag from DB
-        int ruleDefInsertId = allRuleIdentifiers[jsonEntry[3]] ?? ++currentMaxRuleIdentifiersId;
-        if(allDefTags[ruleDef] == null){
-          allDefTags[ruleDef] = ruleDefInsertId;
+        int ruleIdInsertId = allRuleIdentifiers[ruleId] ?? ++currentMaxRuleIdentifiersId;
+        if(allRuleIdentifiers[ruleId] == null){
+          allRuleIdentifiers[ruleId] = ruleIdInsertId;
           ruleIdentifiersComps.add(TermBankV3RuleIdentifierTableCompanion(
-            id: Value(ruleDefInsertId),
-            ruleIdentifier: Value(ruleDef)
+            id: Value(ruleIdInsertId),
+            ruleIdentifier: Value(ruleId)
           ));
         }
         // create relationship
-        ruleIdentifiersTelComps.add(TermBankV3RuleIdentifierRelationsTableCompanion(
-          ruleIdentifierId: Value(ruleDefInsertId),
+        ruleIdentifiersRelComps.add(TermBankV3RuleIdentifierRelationsTableCompanion(
+          ruleIdentifierId: Value(ruleIdInsertId),
           termBankId: Value(currentMaxTermBankId)
         ));
       }
     }
 
-    // TODO parse definitions
+    // Parse definitions
+    List<String> parsedDefinition = extractPlainTextDefinitions(jsonEntry)
+      .map((e) => e.text)
+      .toList();
+    for (var definition in parsedDefinition) {
+        // get tag from DB
+        int meaningInsertId = allMeanings[definition] ?? ++currentMaxMeaningId;
+        if(allMeanings[definition] == null){
+          allMeanings[definition] = meaningInsertId;
+          meaningComps.add(MeaningTableCompanion(
+            id: Value(meaningInsertId),
+            meaning: Value(definition)
+          ));
+        }
+        // create relationship
+        meaningRelComps.add(TermBankV3MeaningsRelationsTableCompanion(
+          meaningId: Value(meaningInsertId),
+          termBankId: Value(currentMaxTermBankId)
+        ));
+      }
+
+    // create tag relations
+    if(jsonEntry[7] != ""){
+      for (var tag in jsonEntry[7].split(" ")) {
+        // create relationship
+        tagRelComps.add(TermBankV3TagBankRelationsTableCompanion(
+          tagBankId: Value(allTags[tag]),
+          termBankId: Value(currentMaxTermBankId)
+        ));
+      }
+    }
 
     // create TermBankEntry
     termBankComps.add(TermBankV3TableCompanion(
@@ -136,8 +176,12 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
     batch.insertAll(db.termBankV3DefinitionTagRelationsTable, definitionTagRelComps);
 
     batch.insertAll(db.termBankV3RuleIdentifierTable, ruleIdentifiersComps);
-    batch.insertAll(db.termBankV3RuleIdentifierRelationsTable, ruleIdentifiersTelComps);
+    batch.insertAll(db.termBankV3RuleIdentifierRelationsTable, ruleIdentifiersRelComps);
+
+    batch.insertAll(db.meaningTable, meaningComps);
+    batch.insertAll(db.termBankV3MeaningsRelationsTable, meaningRelComps);
+
+    batch.insertAll(db.termBankV3TagBankRelationsTable, tagRelComps);
   },);
 
 }
-

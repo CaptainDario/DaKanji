@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db/database/general_tables/meaning_tables.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
 import 'package:dakanji_db/database/term/term_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
@@ -24,6 +25,18 @@ class TermBankV3RuleIdentifierRelationsTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   /// the id of the associated rule identifier reading
   IntColumn get ruleIdentifierId => integer().references(TermBankV3RuleIdentifierTable, #id)();
+  /// the id of the associated term in the term bank
+  IntColumn get termBankId => integer().references(TermBankV3Table, #id)();
+
+}
+
+/// Contains the relationships between terms and meanings
+class TermBankV3MeaningsRelationsTable extends Table {
+
+  /// id of this relation
+  IntColumn get id => integer().autoIncrement()();
+  /// the id of the associated meaning
+  IntColumn get meaningId => integer().references(MeaningTable, #id)();
   /// the id of the associated term in the term bank
   IntColumn get termBankId => integer().references(TermBankV3Table, #id)();
 
