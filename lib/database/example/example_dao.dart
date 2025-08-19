@@ -50,18 +50,6 @@ class ExampleDao extends DatabaseAccessor<DaKanjiDB> with _$ExampleDaoMixin {
 
   }
 
-  Future getExampleById(int id) async {
-
-    int m = await maxExampleId();
-    var exampleQuery = (select(exampleTable)
-      ..where((tbl) => tbl.id.equals(m)));
-
-    // get the actual text
-    var example = await exampleQuery.getSingle();
-    return example.exampleSentenceTokenized;
-
-  }
-
   // ---------------------------------------------------------------------------
   /// Get the maximum id of the [ExampleTable]
   Future<int> maxExampleId() async {

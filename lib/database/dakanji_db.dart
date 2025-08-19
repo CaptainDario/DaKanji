@@ -70,6 +70,7 @@ part 'dakanji_db.g.dart';
     TermBankV3Table,
     TermBankV3DefinitionTagsTable, TermBankV3DefinitionTagRelationsTable,
     TermBankV3RuleIdentifierTable, TermBankV3RuleIdentifierRelationsTable,
+    TermBankV3MeaningsRelationsTable,
     TermBankV3TagBankRelationsTable,
 
     TermMetaBankV3Table,
@@ -96,6 +97,7 @@ part 'dakanji_db.g.dart';
   ],
   include: {
     'example/example_fts5_table.drift',
+    'term/search.drift',
   }
 )
 class DaKanjiDB extends _$DaKanjiDB {

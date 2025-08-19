@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db/iso/iso_table.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
@@ -16,7 +17,7 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(devExampleSentencesPath), db);
+  await parseDictionaryFolder(Directory(devYomitanPath), db);
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   test('Test importing samples', () async {
@@ -31,9 +32,7 @@ Future testTermBankV3(DaKanjiDB db) async {
   for (int i = 0; i < termBankTestCases.length; i++) {
     Stopwatch s = Stopwatch()..start();
     final testCase = termBankTestCases[i];
-    final result = null;
-      // TODO termBank test
-      //(await db.termBankV3Dao.getTermBankEntriesFromTerm(testCase));
+    final result = (await db.termBankV3Dao.searchTerm(testCase, [Iso639_1.en]));
     print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
 
     print("\n\n$i: ${termBankTestCases[i]}");

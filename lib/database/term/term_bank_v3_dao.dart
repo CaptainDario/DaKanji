@@ -1,6 +1,9 @@
 // Package imports:
 import "package:dakanji_db/database/general_tables/term_tables.dart";
+import "package:dakanji_db/database/tag/tag_bank_v3_tables.dart";
+import "package:dakanji_db/database/term/term_bank_v3_entry.dart";
 import "package:dakanji_db/database/term/term_bank_v3_tables.dart";
+import "package:dakanji_db/iso/iso_table.dart";
 import "package:drift/drift.dart";
 
 // Project imports:
@@ -11,15 +14,42 @@ part 'term_bank_v3_dao.g.dart';
 
 
 ///
-@DriftAccessor(tables: [
-  TermTable,
-  TermBankV3Table,
-  TermBankV3DefinitionTagsTable, TermBankV3RuleIdentifierTable
-])
+@DriftAccessor(
+  tables: [
+    TermTable,
+    TermBankV3Table,
+    TermBankV3DefinitionTagsTable, TermBankV3RuleIdentifierTable,
+    TagBankV3Table
+  ],
+  include: {
+    'search.drift',
+  }
+)
 class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixin {
   
   
   TermBankV3Dao(super.db);
+
+    Future<List<TermBankV3Entry>> searchTerm(
+    String query,
+    List<Iso639_1> languages,
+    {
+      int limit=-1,
+      int offset=0
+    }) async {
+
+    // check laguages are set and parse 
+    assert (languages.isNotEmpty);
+    List<String> langs = languages.map((e) => e.name,).toList();
+
+    List<FullTermViewData> results = await term_search(query, limit, offset).get();
+    print(results);
+
+    List<TermBankV3Entry> entries = [];
+
+    return entries;
+
+  }
   
   // ---------------------------------------------------------------------------
   /// Get all definition tags and their ids 
@@ -30,6 +60,11 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
   /// Get all rule identifiers and their ids 
   Future<List<TermBankV3RuleIdentifierTableData>> getAllRuleIdentifiers() async {
     return await select(termBankV3RuleIdentifierTable).get();
+  }
+
+  /// Get all tags and their ids 
+  Future<List<TagBankV3TableData>> getAllTags() async {
+    return await select(tagBankV3Table).get();
   }
 
   // ---------------------------------------------------------------------------
