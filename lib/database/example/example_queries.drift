@@ -11,17 +11,13 @@ example_fts_search_sql:
         GROUP_CONCAT(LCT.language_code, '|||') AS language_codes
     FROM
         example_table AS ET
-    INNER JOIN
-        example_fts AS FTS
+    INNER JOIN example_fts AS FTS
         ON FTS.rowid = ET.id
-    LEFT JOIN
-        example_translation_relations_table AS ETRT
+    LEFT JOIN example_translation_relations_table AS ETRT
         ON ETRT.example_id = ET.id
-    LEFT JOIN
-        example_translation_table AS ETT
+    LEFT JOIN example_translation_table AS ETT
         ON ETRT.translation_id = ETT.id
-    LEFT JOIN
-        language_code_table AS LCT
+    LEFT JOIN language_code_table AS LCT
         ON LCT.id = ETT.language_code_id
     WHERE
         example_fts MATCH :query
