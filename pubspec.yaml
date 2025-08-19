@@ -19,7 +19,6 @@ dependencies:
   universal_io: ^2.2.2
   collection: ^1.19.1
   mecab_for_dart: 1.1.5
-  beautiful_soup_dart: ^0.3.0
   html: ^0.15.6
   recase: ^4.1.0
 
