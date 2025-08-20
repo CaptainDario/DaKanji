@@ -96,7 +96,7 @@ jobs:
       - name: build macos executable
         run: |
 
-          flutter build macos --release -v
+          flutter build macos --release
           ditto -c -k --sequesterRsrc --keepParent ${{env.MACOS_APP_RELEASE_PATH}}/DaKanji.app/ DaKanji_${{env.DAKANJI_VERSION}}_app.zip
       - name: setup signing
         run: |
