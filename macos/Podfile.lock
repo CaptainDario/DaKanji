@@ -11,10 +11,10 @@ PODS:
     - FlutterMacOS
     - OrderedSet (~> 6.0.3)
   - FlutterMacOS (1.0.0)
-  - fvp (0.30.0):
+  - fvp (0.33.1):
     - Flutter
     - FlutterMacOS
-    - mdk (~> 0.31.0)
+    - mdk (~> 0.33.1)
   - in_app_review (2.0.0):
     - FlutterMacOS
   - irondash_engine_context (0.0.1):
@@ -23,7 +23,7 @@ PODS:
     - FlutterMacOS
   - lite_rt_for_flutter_libs_macos (0.0.1):
     - FlutterMacOS
-  - mdk (0.31.0)
+  - mdk (0.33.1)
   - mecab_for_flutter (0.0.1):
     - FlutterMacOS
   - OrderedSet (6.0.3)
@@ -46,18 +46,18 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - sqlite3 (3.50.1):
-    - sqlite3/common (= 3.50.1)
-  - sqlite3/common (3.50.1)
-  - sqlite3/dbstatvtab (3.50.1):
+  - sqlite3 (3.50.4):
+    - sqlite3/common (= 3.50.4)
+  - sqlite3/common (3.50.4)
+  - sqlite3/dbstatvtab (3.50.4):
     - sqlite3/common
-  - sqlite3/fts5 (3.50.1):
+  - sqlite3/fts5 (3.50.4):
     - sqlite3/common
-  - sqlite3/math (3.50.1):
+  - sqlite3/math (3.50.4):
     - sqlite3/common
-  - sqlite3/perf-threadsafe (3.50.1):
+  - sqlite3/perf-threadsafe (3.50.4):
     - sqlite3/common
-  - sqlite3/rtree (3.50.1):
+  - sqlite3/rtree (3.50.4):
     - sqlite3/common
   - sqlite3_flutter_libs (0.0.1):
     - Flutter
@@ -178,12 +178,12 @@ SPEC CHECKSUMS:
   file_picker: e716a70a9fe5fd9e09ebc922d7541464289443af
   flutter_inappwebview_macos: bdf207b8f4ebd58e86ae06cd96b147de99a67c9b
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  fvp: af80ddc7cb52ce62306d8e753b831051780853fd
+  fvp: 1a7cbe4e9e3657b06efeccde4a9f9017d0bddab8
   in_app_review: a6a031b9acd03c7d103e341aa334adf2c493fb93
   irondash_engine_context: da62996ee25616d2f01bbeb85dc115d813359478
   isar_flutter_libs: 43385c99864c168fadba7c9adeddc5d38838ca6a
   lite_rt_for_flutter_libs_macos: 44cd4ada4d859e2ae226dfd4e7f4ff2a066c66ae
-  mdk: 90571adbea8ee78c2d36c1954741acfef9fdacb6
+  mdk: 622e3452cea55a982c0712ec9ce931d8ec718b22
   mecab_for_flutter: ef1ca11a1cecf77834118d2452034743b37f212d
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
   package_info_plus: 12f1c5c2cfe8727ca46cbd0b26677728972d9a5b
@@ -194,7 +194,7 @@ SPEC CHECKSUMS:
   sentry_flutter: 2df8b0aab7e4aba81261c230cbea31c82a62dd1b
   share_plus: 36537c04ce0c3e3f5bd297ce4318b6d5ee5fd6cf
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
-  sqlite3: 1d85290c3321153511f6e900ede7a1608718bbd5
+  sqlite3: 73513155ec6979715d3904ef53a8d68892d4032b
   sqlite3_flutter_libs: 2c48c4ee7217fd653251975e43412250d5bcbbe2
   store_checker: 387169de0dffe57b6370d54cc027e9f95051b57f
   super_native_extensions: 85efee3a7495b46b04befcfc86ed12069264ebf3
