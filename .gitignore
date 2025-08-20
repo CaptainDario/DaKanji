@@ -55,11 +55,6 @@ CNN_single_char.tflite
 # ignore LoC counter
 .VSCodeCounter/
 
-# binaries in blob folder
-blobs/**
-!blobs/.gitkeep
-macos/libtensorflowlite_c-mac.dylib
-
 # ignore the dictionary files but keep the folder
 assets/dict/*
 !assets/dict/.gitkeep

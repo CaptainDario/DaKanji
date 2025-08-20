@@ -431,7 +431,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/blobs/**",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.DaAppLab.daKanji;
@@ -567,7 +566,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/blobs/**",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.DaAppLab.daKanji;
@@ -597,7 +595,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"/Users/darioklepoch/dev/DaKanji/DaKanjiApplication/blobs/**",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.DaAppLab.daKanji;
