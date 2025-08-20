@@ -14,15 +14,15 @@ CREATE VIEW full_term_view AS
 		TT.term,
 		RT.reading,
 		-- DEFINITION TAGS
-		"[" || COALESCE(GROUP_CONCAT(DISTINCT '"' || TB3DTT.definition_tag || '"'), '') || "]" AS definition_tags,
+		'[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || TB3DTT.definition_tag || '"'), '') || ']' AS definition_tags,
 		-- RULE IDENTIFIERS
-		"[" || COALESCE(GROUP_CONCAT(DISTINCT '"' || TB3RIT.rule_identifier || '"'), '') || "]" AS rule_identifiers,
+		'[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || TB3RIT.rule_identifier || '"'), '') || ']' AS rule_identifiers,
 		TB3T.popularity,
 		-- MEANINGS
-		"[" || COALESCE(GROUP_CONCAT(DISTINCT '"' || MT.meaning || '"'), '') || "]" AS meanings,
+		'[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || MT.meaning || '"'), '') || ']' AS meanings,
 		TB3T.sequence_number,
 		-- TAGS
-		"[" || COALESCE(GROUP_CONCAT(DISTINCT '"' || TagB3T.name || '"'), '') || "]" AS tag_names
+		'[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || TagB3T.name || '"'), '') || ']' AS tag_names
 	FROM
 		term_bank_v3_table AS TB3T
 	LEFT JOIN term_table as TT
