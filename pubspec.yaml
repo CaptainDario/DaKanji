@@ -55,9 +55,9 @@ dependencies:
   drift: 2.25.1
   json_annotation: 4.9.0
   flutter_spinkit: 5.2.1
-  sentry: 8.14.2
-  sentry_flutter: 8.14.2
-  feedback_sentry: 3.1.0
+  sentry: 9.6.0
+  sentry_flutter: 9.6.0
+  feedback_sentry: 3.2.0
   dio: 5.7.0
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
