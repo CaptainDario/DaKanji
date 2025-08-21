@@ -16,7 +16,7 @@ abstract class TagBankV3Entry with _$TagBankV3Entry {
       /// Tag name.
       required String name,
       /// Categories for the tag.
-      required String categories,
+      required String category,
       /// Sorting order for the tag.
       required int sortingOrder,
       /// Notes for the tag.
