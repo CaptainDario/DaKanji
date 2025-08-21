@@ -19,7 +19,7 @@ part 'kanji_bank_v3_dao.g.dart';
     KanjiBankV3Table,
     KanjiBankV3KunyomiReadingRelationsTable, KanjiBankV3OnyomiReadingRelationsTable,
     KanjiBankV3TagsKanjiRelationsTable,
-    KanjiBankV3MeaningsKanjiRelationsTable,
+    KanjiBankV3DefinitionsKanjiRelationsTable,
     KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable, 
 ])
@@ -70,14 +70,14 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
           tagBankV3Table,
           kanjiBankV3TagsKanjiRelationsTable.tagId.equalsExp(tagBankV3Table.id)
         ),
-        // meanings
+        // definitions
         innerJoin(
-          kanjiBankV3MeaningsKanjiRelationsTable,
-          kanjiBankV3MeaningsKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
+          kanjiBankV3DefinitionsKanjiRelationsTable,
+          kanjiBankV3DefinitionsKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
         ),
         innerJoin(
-          meaningTable,
-          kanjiBankV3MeaningsKanjiRelationsTable.meaningId.equalsExp(meaningTable.id)
+          definitionTable,
+          kanjiBankV3DefinitionsKanjiRelationsTable.definitionId.equalsExp(definitionTable.id)
         ),
         // Stat names / values
         innerJoin(
@@ -103,7 +103,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         onyomiT.reading.groupConcat(distinct: true),
         kunyomiT.reading.groupConcat(distinct: true),
         tagBankV3Table.name.groupConcat(distinct: true),
-        meaningTable.meaning.groupConcat(distinct: true),
+        definitionTable.definition.groupConcat(distinct: true),
 
         kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true),
         kanjiBankV3StatNamesTable.statName.groupConcat(distinct: true)
@@ -129,8 +129,8 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         tagBankV3Table.name.groupConcat(distinct: true))
         ?.split(","))
         !.map((e) async => await db.tagBankV3Dao.getTagByName(e),));
-      final meanings   = row.read(
-        meaningTable.meaning.groupConcat(distinct: true))
+      final definitions   = row.read(
+        definitionTable.definition.groupConcat(distinct: true))
         ?.split(",");
       final statValues = row.read(
         kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true))
@@ -144,7 +144,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
         onyomis: onyomi,
         kunyomis: kunyomi,
         tags: tags,
-        meanings: meanings,
+        definitions: definitions,
         stats: statValues != null && statNames != null
           ? List.generate(statValues.length, (i) => KanjiBankV3EntryStat(
             name: statNames[i],
@@ -230,14 +230,14 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
     return result.read(readingTable.id.max()) ?? 0;
   }
 
-  /// Get the maximum id of the meanings table
-  Future<int> maxMeaningId() async {
-    final query = selectOnly(meaningTable)
-        ..addColumns([meaningTable.id.max()]);
+  /// Get the maximum id of the definitions table
+  Future<int> maxDefinitionId() async {
+    final query = selectOnly(definitionTable)
+        ..addColumns([definitionTable.id.max()]);
     final result = await query.getSingle();
 
     // Extract the value of the max column using the alias
-    return result.read(meaningTable.id.max()) ?? 0;
+    return result.read(definitionTable.id.max()) ?? 0;
   }
 
   /// Get the maximum id of the stats table

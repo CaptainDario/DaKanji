@@ -1,7 +1,6 @@
 // Package imports:
 import "package:dakanji_db/database/example/example_entry.dart";
 import "package:dakanji_db/database/example/example_tables.dart";
-import "package:dakanji_db/database/example/example_view.dart";
 import "package:dakanji_db/iso/iso_table.dart";
 import "package:drift/drift.dart";
 
@@ -17,12 +16,6 @@ part 'example_dao.g.dart';
   tables: [
     ExampleTable, ExampleTranslationTable
   ],
-  views: [
-    ExampleView
-  ],
-  include: {
-    'example_queries.drift',
-  }
 )
 class ExampleDao extends DatabaseAccessor<DaKanjiDB> with _$ExampleDaoMixin {
   
@@ -40,7 +33,7 @@ class ExampleDao extends DatabaseAccessor<DaKanjiDB> with _$ExampleDaoMixin {
     assert (languages.isNotEmpty);
     List<String> langs = languages.map((e) => e.name,).toList();
 
-    final ftsResults = await example_fts_search_sql(
+    final ftsResults = await db.example_fts_search_sql(
       query, langs, limit, offset).get();
     List<ExampleEntry> entries = ftsResults.map((e) => 
       ExampleEntry.fromExampleFtsSearchSql(e)

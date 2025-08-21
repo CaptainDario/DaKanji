@@ -19,10 +19,10 @@ mixin _$KanjiBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $KanjiBankV3TagsKanjiRelationsTableTable
   get kanjiBankV3TagsKanjiRelationsTable =>
       attachedDatabase.kanjiBankV3TagsKanjiRelationsTable;
-  $MeaningTableTable get meaningTable => attachedDatabase.meaningTable;
-  $KanjiBankV3MeaningsKanjiRelationsTableTable
-  get kanjiBankV3MeaningsKanjiRelationsTable =>
-      attachedDatabase.kanjiBankV3MeaningsKanjiRelationsTable;
+  $DefinitionTableTable get definitionTable => attachedDatabase.definitionTable;
+  $KanjiBankV3DefinitionsKanjiRelationsTableTable
+  get kanjiBankV3DefinitionsKanjiRelationsTable =>
+      attachedDatabase.kanjiBankV3DefinitionsKanjiRelationsTable;
   $KanjiBankV3StatNamesTableTable get kanjiBankV3StatNamesTable =>
       attachedDatabase.kanjiBankV3StatNamesTable;
   $KanjiBankV3StatValuesTableTable get kanjiBankV3StatValuesTable =>

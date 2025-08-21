@@ -18,7 +18,7 @@ _KanjiBankV3Entry _$KanjiBankV3EntryFromJson(Map<String, dynamic> json) =>
       tags: (json['tags'] as List<dynamic>?)
           ?.map((e) => TagBankV3Entry.fromJson(e as Map<String, dynamic>))
           .toList(),
-      meanings: (json['meanings'] as List<dynamic>?)
+      definitions: (json['definitions'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
       stats: (json['stats'] as List<dynamic>?)
@@ -32,6 +32,6 @@ Map<String, dynamic> _$KanjiBankV3EntryToJson(_KanjiBankV3Entry instance) =>
       'onyomis': instance.onyomis,
       'kunyomis': instance.kunyomis,
       'tags': instance.tags,
-      'meanings': instance.meanings,
+      'definitions': instance.definitions,
       'stats': instance.stats,
     };

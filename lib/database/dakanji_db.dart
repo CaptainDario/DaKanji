@@ -14,8 +14,8 @@ import 'package:universal_io/io.dart';
 // Project imports:
 import 'package:dakanji_db/database/general_tables/kanji_dao.dart';
 import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
-import 'package:dakanji_db/database/general_tables/meaning_dao.dart';
-import 'package:dakanji_db/database/general_tables/meaning_tables.dart';
+import 'package:dakanji_db/database/general_tables/definition_dao.dart';
+import 'package:dakanji_db/database/general_tables/definition_tables.dart';
 import 'package:dakanji_db/database/general_tables/reading_dao.dart';
 import 'package:dakanji_db/database/general_tables/reading_tables.dart';
 import 'package:dakanji_db/database/general_tables/term_dao.dart';
@@ -33,12 +33,12 @@ import 'package:dakanji_db/database/radicals/radical_dao.dart';
 import 'package:dakanji_db/database/radicals/radical_relation_tables.dart';
 import 'package:dakanji_db/database/radicals/radical_tables.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_dao.dart';
-import 'package:dakanji_db/database/tag/tag_bank_v3_relation_tables.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
 import 'package:dakanji_db/database/term_meta/term_meta_bank_relation_tables.dart';
 import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_dao.dart';
 import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_tables.dart';
-import 'package:dakanji_db/database/example/example_view.dart';
+// this is NECCESSARY
+// ignore: unused_import
 import 'package:dakanji_db/helper/zlib_text_converter.dart';
 
 part 'dakanji_db.g.dart';
@@ -47,7 +47,7 @@ part 'dakanji_db.g.dart';
 
 @DriftDatabase(
   tables: [
-    KanjiTable, TermTable, ReadingTable, MeaningTable, LanguageCodeTable,
+    KanjiTable, TermTable, ReadingTable, DefinitionTable, LanguageCodeTable,
 
     RadicalsTable, RadicalKanjiRelationsTable,
     KanjiVGTable,
@@ -55,13 +55,11 @@ part 'dakanji_db.g.dart';
     IndexTable,
 
     TagBankV3Table,
-    TagBankV3CategoryTable,
-    TagBankV3TagCategoryRelationsTable,
 
     KanjiBankV3Table,
     KanjiBankV3KunyomiReadingRelationsTable, KanjiBankV3OnyomiReadingRelationsTable,
     KanjiBankV3TagsKanjiRelationsTable,
-    KanjiBankV3MeaningsKanjiRelationsTable,
+    KanjiBankV3DefinitionsKanjiRelationsTable,
     KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable,
 
@@ -70,7 +68,7 @@ part 'dakanji_db.g.dart';
     TermBankV3Table,
     TermBankV3DefinitionTagsTable, TermBankV3DefinitionTagRelationsTable,
     TermBankV3RuleIdentifierTable, TermBankV3RuleIdentifierRelationsTable,
-    TermBankV3MeaningsRelationsTable,
+    TermBankV3DefinitionsRelationsTable,
     TermBankV3TagBankRelationsTable,
 
     TermMetaBankV3Table,
@@ -84,7 +82,7 @@ part 'dakanji_db.g.dart';
     ExampleTranslationRelationsTable
   ],
   daos: [
-    KanjiDao, TermDao, ReadingDao, MeaningDao, LanguageCodeDao,
+    KanjiDao, TermDao, ReadingDao, DefinitionDao, LanguageCodeDao,
     RadicalDao, KanjiVGDao,
     IndexDao, TagBankV3Dao,
     KanjiBankV3Dao, KanjiMetaBankV3Dao,
@@ -93,11 +91,11 @@ part 'dakanji_db.g.dart';
     ExampleDao
   ],
   views: [
-    ExampleView
+
   ],
   include: {
-    'example/example_fts5_table.drift',
-    'term/search.drift',
+    'example/example_queries.drift',
+    'term/term_bank_v3_queries.drift',
   }
 )
 class DaKanjiDB extends _$DaKanjiDB {

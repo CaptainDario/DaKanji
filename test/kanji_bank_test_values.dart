@@ -30,7 +30,7 @@ final kanjiBankTestCaseExpectations = [
         notes: "example kanji tag 2",
         score: 0)
     ],
-    meanings: [
+    definitions: [
       "utsu meaning 1",
       "utsu meaning 2",
       "utsu meaning 3",

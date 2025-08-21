@@ -47,15 +47,15 @@ class KanjiBankV3ParserRefs {
   /// in the database
   Map<String, int> tagsInDB = {};
   
-  /// List of [MeaningTableCompanion] that should be batch inserted
-  List<MeaningTableCompanion> meaningsCompanions  = [];
-  /// The currently highest id in the [MeaningTable]
-  int meaningId = 0;
-  /// List of [KanjiBankV3MeaningsKanjiRelationsTableCompanion] that should be batch inserted
-  List<KanjiBankV3MeaningsKanjiRelationsTableCompanion> meaningRelCompanions = [];
-  /// A local cache for meanings. Every meaning should only be looked up once
+  /// List of [DefinitionTableCompanion] that should be batch inserted
+  List<DefinitionTableCompanion> definitionsCompanions  = [];
+  /// The currently highest id in the [DefinitionTable]
+  int definitionId = 0;
+  /// List of [KanjiBankV3DefinitionssKanjiRelationsTableCompanion] that should be batch inserted
+  List<KanjiBankV3DefinitionsKanjiRelationsTableCompanion> definitionRelCompanions = [];
+  /// A local cache for definitions. Every definition should only be looked up once
   /// in the database
-  Map<String, int> meaningsInDB = {};
+  Map<String, int> definitionsInDB = {};
 
   /// List of [KanjiBankV3StatsTableCompanion] that should be batch inserted
   List<KanjiBankV3StatsTableCompanion> statCompanions = [];
@@ -105,8 +105,8 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
     { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };
   refs.readingsInDB  =
     { for (var e in await db.kanjiBankV3Dao.getAllReadings()) e.reading : e.id };
-  refs.meaningsInDB =
-    { for (var e in await db.meaningDao.getAllMeanings()) e.meaning : e.id };
+  refs.definitionsInDB =
+    { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id };
   refs.tagsInDB = 
     { for (var e in await db.tagBankV3Dao.getAllTags()) e.name : e.id };
   refs.statNamesInDB = 
@@ -118,7 +118,7 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
   refs.kanjiId      = await db.kanjiDao.maxKanjiId();
   refs.kanjiBankId  = await db.kanjiBankV3Dao.maxKanjiId();
   refs.readingId    = await db.readingDao.maxReadingId();
-  refs.meaningId    = await db.kanjiBankV3Dao.maxMeaningId();
+  refs.definitionId    = await db.kanjiBankV3Dao.maxDefinitionId();
   refs.statsId      = await db.kanjiBankV3Dao.maxStatsId();
   refs.statValuesId = await db.kanjiBankV3Dao.maxStatsValueId();
   refs.statNamesId  = await db.kanjiBankV3Dao.maxStatsNameId();
@@ -131,7 +131,7 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
     await parseOnyomi(jsonList[i][1], refs, db);
     await parseKunyomi(jsonList[i][2], refs, db);
     await parseTag(jsonList[i][3], refs, db);
-    await parseMeaning(List<String>.from(jsonList[i][4]), refs, db);
+    await parseDefinition(List<String>.from(jsonList[i][4]), refs, db);
     await parseStats(Map<String, String>.from(jsonList[i][5]), refs, db);
     
   }
@@ -150,8 +150,8 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
 
     batch.insertAll(db.kanjiBankV3TagsKanjiRelationsTable, refs.tagRelCompanions,);
 
-    batch.insertAll(db.meaningTable, refs.meaningsCompanions,);
-    batch.insertAll(db.kanjiBankV3MeaningsKanjiRelationsTable, refs.meaningRelCompanions,);
+    batch.insertAll(db.definitionTable, refs.definitionsCompanions,);
+    batch.insertAll(db.kanjiBankV3DefinitionsKanjiRelationsTable, refs.definitionRelCompanions,);
     
     batch.insertAll(db.kanjiBankV3StatsTable, refs.statCompanions,);
     batch.insertAll(db.kanjiBankV3StatValuesTable, refs.statValuesCompanions,);
@@ -256,25 +256,25 @@ Future<void> parseTag(String jsonTag, KanjiBankV3ParserRefs refs, DaKanjiDB db) 
   }
 }
 
-/// Parses the given `meanings` from a kanji_bank dictionary
+/// Parses the given `definitions` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseMeaning(List<String> meanings, KanjiBankV3ParserRefs refs, DaKanjiDB db) async {
+Future<void> parseDefinition(List<String> definitions, KanjiBankV3ParserRefs refs, DaKanjiDB db) async {
 
-  if(meanings.isNotEmpty){
-    for (String meaning in meanings) {
+  if(definitions.isNotEmpty){
+    for (String definition in definitions) {
       
-      int? meaningInsertId = refs.meaningsInDB[meaning];
-      if(meaningInsertId == null){
-        meaningInsertId = ++refs.meaningId;
-        refs.meaningsInDB[meaning] = meaningInsertId;
+      int? definitionInsertId = refs.definitionsInDB[definition];
+      if(definitionInsertId == null){
+        definitionInsertId = ++refs.definitionId;
+        refs.definitionsInDB[definition] = definitionInsertId;
 
-        refs.meaningsCompanions.add(MeaningTableCompanion(
-          id: Value(meaningInsertId), meaning: Value(meaning)
+        refs.definitionsCompanions.add(DefinitionTableCompanion(
+          id: Value(definitionInsertId), definition: Value(definition)
         ));
       }
-      refs.meaningRelCompanions.add(KanjiBankV3MeaningsKanjiRelationsTableCompanion(
-        kanjiId: Value(refs.kanjiBankId),meaningId: Value(meaningInsertId)
+      refs.definitionRelCompanions.add(KanjiBankV3DefinitionsKanjiRelationsTableCompanion(
+        kanjiId: Value(refs.kanjiBankId), definitionId: Value(definitionInsertId)
       ));
     
     }

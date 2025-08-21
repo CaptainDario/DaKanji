@@ -39,9 +39,9 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
   int currentMaxRuleIdentifiersId = await db.termBankV3Dao.maxTermBankV3RuleIdentifierId();
   Map allRuleIdentifiers =
     { for (var e in await db.termBankV3Dao.getAllRuleIdentifiers()) e.ruleIdentifier : e.id };
-  int currentMaxMeaningId = await db.meaningDao.maxMeaningId();
-  Map allMeanings =
-    { for (var e in await db.meaningDao.getAllMeanings()) e.meaning : e.id };
+  int currentMaxdefinitionId = await db.definitionDao.maxDefinitionId();
+  Map allDefinitions =
+    { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id };
   // tags are parsed from the meta bank and thus are already present
   Map allTags =
     { for (var e in await db.termBankV3Dao.getAllTags()) e.name : e.id };
@@ -54,8 +54,8 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
   List<TermBankV3DefinitionTagRelationsTableCompanion> definitionTagRelComps = [];
   List<TermBankV3RuleIdentifierTableCompanion> ruleIdentifiersComps = [];
   List<TermBankV3RuleIdentifierRelationsTableCompanion> ruleIdentifiersRelComps = [];
-  List<MeaningTableCompanion> meaningComps = [];
-  List<TermBankV3MeaningsRelationsTableCompanion> meaningRelComps = [];
+  List<DefinitionTableCompanion> definitionComps = [];
+  List<TermBankV3DefinitionsRelationsTableCompanion> definitionRelComps = [];
   List<TermBankV3TagBankRelationsTableCompanion> tagRelComps = [];
 
   // parse the entires
@@ -129,17 +129,17 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
       .toList();
     for (var definition in parsedDefinition) {
         // get tag from DB
-        int meaningInsertId = allMeanings[definition] ?? ++currentMaxMeaningId;
-        if(allMeanings[definition] == null){
-          allMeanings[definition] = meaningInsertId;
-          meaningComps.add(MeaningTableCompanion(
-            id: Value(meaningInsertId),
-            meaning: Value(definition)
+        int definitionInsertId = allDefinitions[definition] ?? ++currentMaxdefinitionId;
+        if(allDefinitions[definition] == null){
+          allDefinitions[definition] = definitionInsertId;
+          definitionComps.add(DefinitionTableCompanion(
+            id: Value(definitionInsertId),
+            definition: Value(definition)
           ));
         }
         // create relationship
-        meaningRelComps.add(TermBankV3MeaningsRelationsTableCompanion(
-          meaningId: Value(meaningInsertId),
+        definitionRelComps.add(TermBankV3DefinitionsRelationsTableCompanion(
+          definitionId: Value(definitionInsertId),
           termBankId: Value(currentMaxTermBankId)
         ));
       }
@@ -178,8 +178,8 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
     batch.insertAll(db.termBankV3RuleIdentifierTable, ruleIdentifiersComps);
     batch.insertAll(db.termBankV3RuleIdentifierRelationsTable, ruleIdentifiersRelComps);
 
-    batch.insertAll(db.meaningTable, meaningComps);
-    batch.insertAll(db.termBankV3MeaningsRelationsTable, meaningRelComps);
+    batch.insertAll(db.definitionTable, definitionComps);
+    batch.insertAll(db.termBankV3DefinitionsRelationsTable, definitionRelComps);
 
     batch.insertAll(db.termBankV3TagBankRelationsTable, tagRelComps);
   },);

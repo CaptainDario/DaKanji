@@ -24,8 +24,8 @@ abstract class KanjiBankV3Entry with _$KanjiBankV3Entry {
       required List<String>? kunyomis,
       /// The tags of this entry
       required List<TagBankV3Entry>? tags,
-      /// The meanings of this entry
-      required List<String>? meanings,
+      /// The definition of this entry
+      required List<String>? definitions,
       /// The stats of this entry
       required List<KanjiBankV3EntryStat>? stats
     }) = _KanjiBankV3Entry;

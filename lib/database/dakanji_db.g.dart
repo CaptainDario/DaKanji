@@ -1803,12 +1803,12 @@ class TermBankV3RuleIdentifierRelationsTableCompanion
   }
 }
 
-class $MeaningTableTable extends MeaningTable
-    with TableInfo<$MeaningTableTable, MeaningTableData> {
+class $DefinitionTableTable extends DefinitionTable
+    with TableInfo<$DefinitionTableTable, DefinitionTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $MeaningTableTable(this.attachedDatabase, [this._alias]);
+  $DefinitionTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1822,12 +1822,12 @@ class $MeaningTableTable extends MeaningTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _meaningMeta = const VerificationMeta(
-    'meaning',
+  static const VerificationMeta _definitionMeta = const VerificationMeta(
+    'definition',
   );
   @override
-  late final GeneratedColumn<String> meaning = GeneratedColumn<String>(
-    'meaning',
+  late final GeneratedColumn<String> definition = GeneratedColumn<String>(
+    'definition',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -1835,15 +1835,15 @@ class $MeaningTableTable extends MeaningTable
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
   @override
-  List<GeneratedColumn> get $columns => [id, meaning];
+  List<GeneratedColumn> get $columns => [id, definition];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'meaning_table';
+  static const String $name = 'definition_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<MeaningTableData> instance, {
+    Insertable<DefinitionTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -1851,13 +1851,13 @@ class $MeaningTableTable extends MeaningTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('meaning')) {
+    if (data.containsKey('definition')) {
       context.handle(
-        _meaningMeta,
-        meaning.isAcceptableOrUnknown(data['meaning']!, _meaningMeta),
+        _definitionMeta,
+        definition.isAcceptableOrUnknown(data['definition']!, _definitionMeta),
       );
     } else if (isInserting) {
-      context.missing(_meaningMeta);
+      context.missing(_definitionMeta);
     }
     return context;
   }
@@ -1865,54 +1865,57 @@ class $MeaningTableTable extends MeaningTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  MeaningTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  DefinitionTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MeaningTableData(
+    return DefinitionTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      meaning: attachedDatabase.typeMapping.read(
+      definition: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}meaning'],
+        data['${effectivePrefix}definition'],
       )!,
     );
   }
 
   @override
-  $MeaningTableTable createAlias(String alias) {
-    return $MeaningTableTable(attachedDatabase, alias);
+  $DefinitionTableTable createAlias(String alias) {
+    return $DefinitionTableTable(attachedDatabase, alias);
   }
 }
 
-class MeaningTableData extends DataClass
-    implements Insertable<MeaningTableData> {
+class DefinitionTableData extends DataClass
+    implements Insertable<DefinitionTableData> {
   /// id of this entry
   final int id;
 
-  /// the meaning of this entry
-  final String meaning;
-  const MeaningTableData({required this.id, required this.meaning});
+  /// the definition of this entry
+  final String definition;
+  const DefinitionTableData({required this.id, required this.definition});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['meaning'] = Variable<String>(meaning);
+    map['definition'] = Variable<String>(definition);
     return map;
   }
 
-  MeaningTableCompanion toCompanion(bool nullToAbsent) {
-    return MeaningTableCompanion(id: Value(id), meaning: Value(meaning));
+  DefinitionTableCompanion toCompanion(bool nullToAbsent) {
+    return DefinitionTableCompanion(
+      id: Value(id),
+      definition: Value(definition),
+    );
   }
 
-  factory MeaningTableData.fromJson(
+  factory DefinitionTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return MeaningTableData(
+    return DefinitionTableData(
       id: serializer.fromJson<int>(json['id']),
-      meaning: serializer.fromJson<String>(json['meaning']),
+      definition: serializer.fromJson<String>(json['definition']),
     );
   }
   @override
@@ -1920,63 +1923,71 @@ class MeaningTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'meaning': serializer.toJson<String>(meaning),
+      'definition': serializer.toJson<String>(definition),
     };
   }
 
-  MeaningTableData copyWith({int? id, String? meaning}) =>
-      MeaningTableData(id: id ?? this.id, meaning: meaning ?? this.meaning);
-  MeaningTableData copyWithCompanion(MeaningTableCompanion data) {
-    return MeaningTableData(
+  DefinitionTableData copyWith({int? id, String? definition}) =>
+      DefinitionTableData(
+        id: id ?? this.id,
+        definition: definition ?? this.definition,
+      );
+  DefinitionTableData copyWithCompanion(DefinitionTableCompanion data) {
+    return DefinitionTableData(
       id: data.id.present ? data.id.value : this.id,
-      meaning: data.meaning.present ? data.meaning.value : this.meaning,
+      definition: data.definition.present
+          ? data.definition.value
+          : this.definition,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('MeaningTableData(')
+    return (StringBuffer('DefinitionTableData(')
           ..write('id: $id, ')
-          ..write('meaning: $meaning')
+          ..write('definition: $definition')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, meaning);
+  int get hashCode => Object.hash(id, definition);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is MeaningTableData &&
+      (other is DefinitionTableData &&
           other.id == this.id &&
-          other.meaning == this.meaning);
+          other.definition == this.definition);
 }
 
-class MeaningTableCompanion extends UpdateCompanion<MeaningTableData> {
+class DefinitionTableCompanion extends UpdateCompanion<DefinitionTableData> {
   final Value<int> id;
-  final Value<String> meaning;
-  const MeaningTableCompanion({
+  final Value<String> definition;
+  const DefinitionTableCompanion({
     this.id = const Value.absent(),
-    this.meaning = const Value.absent(),
+    this.definition = const Value.absent(),
   });
-  MeaningTableCompanion.insert({
+  DefinitionTableCompanion.insert({
     this.id = const Value.absent(),
-    required String meaning,
-  }) : meaning = Value(meaning);
-  static Insertable<MeaningTableData> custom({
+    required String definition,
+  }) : definition = Value(definition);
+  static Insertable<DefinitionTableData> custom({
     Expression<int>? id,
-    Expression<String>? meaning,
+    Expression<String>? definition,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (meaning != null) 'meaning': meaning,
+      if (definition != null) 'definition': definition,
     });
   }
 
-  MeaningTableCompanion copyWith({Value<int>? id, Value<String>? meaning}) {
-    return MeaningTableCompanion(
+  DefinitionTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? definition,
+  }) {
+    return DefinitionTableCompanion(
       id: id ?? this.id,
-      meaning: meaning ?? this.meaning,
+      definition: definition ?? this.definition,
     );
   }
 
@@ -1986,33 +1997,36 @@ class MeaningTableCompanion extends UpdateCompanion<MeaningTableData> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (meaning.present) {
-      map['meaning'] = Variable<String>(meaning.value);
+    if (definition.present) {
+      map['definition'] = Variable<String>(definition.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('MeaningTableCompanion(')
+    return (StringBuffer('DefinitionTableCompanion(')
           ..write('id: $id, ')
-          ..write('meaning: $meaning')
+          ..write('definition: $definition')
           ..write(')'))
         .toString();
   }
 }
 
-class $TermBankV3MeaningsRelationsTableTable
-    extends TermBankV3MeaningsRelationsTable
+class $TermBankV3DefinitionsRelationsTableTable
+    extends TermBankV3DefinitionsRelationsTable
     with
         TableInfo<
-          $TermBankV3MeaningsRelationsTableTable,
-          TermBankV3MeaningsRelationsTableData
+          $TermBankV3DefinitionsRelationsTableTable,
+          TermBankV3DefinitionsRelationsTableData
         > {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $TermBankV3MeaningsRelationsTableTable(this.attachedDatabase, [this._alias]);
+  $TermBankV3DefinitionsRelationsTableTable(
+    this.attachedDatabase, [
+    this._alias,
+  ]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -2026,18 +2040,18 @@ class $TermBankV3MeaningsRelationsTableTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _meaningIdMeta = const VerificationMeta(
-    'meaningId',
+  static const VerificationMeta _definitionIdMeta = const VerificationMeta(
+    'definitionId',
   );
   @override
-  late final GeneratedColumn<int> meaningId = GeneratedColumn<int>(
-    'meaning_id',
+  late final GeneratedColumn<int> definitionId = GeneratedColumn<int>(
+    'definition_id',
     aliasedName,
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES meaning_table (id)',
+      'REFERENCES definition_table (id)',
     ),
   );
   static const VerificationMeta _termBankIdMeta = const VerificationMeta(
@@ -2055,15 +2069,15 @@ class $TermBankV3MeaningsRelationsTableTable
     ),
   );
   @override
-  List<GeneratedColumn> get $columns => [id, meaningId, termBankId];
+  List<GeneratedColumn> get $columns => [id, definitionId, termBankId];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'term_bank_v3_meanings_relations_table';
+  static const String $name = 'term_bank_v3_definitions_relations_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<TermBankV3MeaningsRelationsTableData> instance, {
+    Insertable<TermBankV3DefinitionsRelationsTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -2071,13 +2085,16 @@ class $TermBankV3MeaningsRelationsTableTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('meaning_id')) {
+    if (data.containsKey('definition_id')) {
       context.handle(
-        _meaningIdMeta,
-        meaningId.isAcceptableOrUnknown(data['meaning_id']!, _meaningIdMeta),
+        _definitionIdMeta,
+        definitionId.isAcceptableOrUnknown(
+          data['definition_id']!,
+          _definitionIdMeta,
+        ),
       );
     } else if (isInserting) {
-      context.missing(_meaningIdMeta);
+      context.missing(_definitionIdMeta);
     }
     if (data.containsKey('term_bank_id')) {
       context.handle(
@@ -2096,19 +2113,19 @@ class $TermBankV3MeaningsRelationsTableTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  TermBankV3MeaningsRelationsTableData map(
+  TermBankV3DefinitionsRelationsTableData map(
     Map<String, dynamic> data, {
     String? tablePrefix,
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermBankV3MeaningsRelationsTableData(
+    return TermBankV3DefinitionsRelationsTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      meaningId: attachedDatabase.typeMapping.read(
+      definitionId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}meaning_id'],
+        data['${effectivePrefix}definition_id'],
       )!,
       termBankId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -2118,51 +2135,51 @@ class $TermBankV3MeaningsRelationsTableTable
   }
 
   @override
-  $TermBankV3MeaningsRelationsTableTable createAlias(String alias) {
-    return $TermBankV3MeaningsRelationsTableTable(attachedDatabase, alias);
+  $TermBankV3DefinitionsRelationsTableTable createAlias(String alias) {
+    return $TermBankV3DefinitionsRelationsTableTable(attachedDatabase, alias);
   }
 }
 
-class TermBankV3MeaningsRelationsTableData extends DataClass
-    implements Insertable<TermBankV3MeaningsRelationsTableData> {
+class TermBankV3DefinitionsRelationsTableData extends DataClass
+    implements Insertable<TermBankV3DefinitionsRelationsTableData> {
   /// id of this relation
   final int id;
 
-  /// the id of the associated meaning
-  final int meaningId;
+  /// the id of the associated definition
+  final int definitionId;
 
   /// the id of the associated term in the term bank
   final int termBankId;
-  const TermBankV3MeaningsRelationsTableData({
+  const TermBankV3DefinitionsRelationsTableData({
     required this.id,
-    required this.meaningId,
+    required this.definitionId,
     required this.termBankId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['meaning_id'] = Variable<int>(meaningId);
+    map['definition_id'] = Variable<int>(definitionId);
     map['term_bank_id'] = Variable<int>(termBankId);
     return map;
   }
 
-  TermBankV3MeaningsRelationsTableCompanion toCompanion(bool nullToAbsent) {
-    return TermBankV3MeaningsRelationsTableCompanion(
+  TermBankV3DefinitionsRelationsTableCompanion toCompanion(bool nullToAbsent) {
+    return TermBankV3DefinitionsRelationsTableCompanion(
       id: Value(id),
-      meaningId: Value(meaningId),
+      definitionId: Value(definitionId),
       termBankId: Value(termBankId),
     );
   }
 
-  factory TermBankV3MeaningsRelationsTableData.fromJson(
+  factory TermBankV3DefinitionsRelationsTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermBankV3MeaningsRelationsTableData(
+    return TermBankV3DefinitionsRelationsTableData(
       id: serializer.fromJson<int>(json['id']),
-      meaningId: serializer.fromJson<int>(json['meaningId']),
+      definitionId: serializer.fromJson<int>(json['definitionId']),
       termBankId: serializer.fromJson<int>(json['termBankId']),
     );
   }
@@ -2171,26 +2188,28 @@ class TermBankV3MeaningsRelationsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'meaningId': serializer.toJson<int>(meaningId),
+      'definitionId': serializer.toJson<int>(definitionId),
       'termBankId': serializer.toJson<int>(termBankId),
     };
   }
 
-  TermBankV3MeaningsRelationsTableData copyWith({
+  TermBankV3DefinitionsRelationsTableData copyWith({
     int? id,
-    int? meaningId,
+    int? definitionId,
     int? termBankId,
-  }) => TermBankV3MeaningsRelationsTableData(
+  }) => TermBankV3DefinitionsRelationsTableData(
     id: id ?? this.id,
-    meaningId: meaningId ?? this.meaningId,
+    definitionId: definitionId ?? this.definitionId,
     termBankId: termBankId ?? this.termBankId,
   );
-  TermBankV3MeaningsRelationsTableData copyWithCompanion(
-    TermBankV3MeaningsRelationsTableCompanion data,
+  TermBankV3DefinitionsRelationsTableData copyWithCompanion(
+    TermBankV3DefinitionsRelationsTableCompanion data,
   ) {
-    return TermBankV3MeaningsRelationsTableData(
+    return TermBankV3DefinitionsRelationsTableData(
       id: data.id.present ? data.id.value : this.id,
-      meaningId: data.meaningId.present ? data.meaningId.value : this.meaningId,
+      definitionId: data.definitionId.present
+          ? data.definitionId.value
+          : this.definitionId,
       termBankId: data.termBankId.present
           ? data.termBankId.value
           : this.termBankId,
@@ -2199,61 +2218,61 @@ class TermBankV3MeaningsRelationsTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('TermBankV3MeaningsRelationsTableData(')
+    return (StringBuffer('TermBankV3DefinitionsRelationsTableData(')
           ..write('id: $id, ')
-          ..write('meaningId: $meaningId, ')
+          ..write('definitionId: $definitionId, ')
           ..write('termBankId: $termBankId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, meaningId, termBankId);
+  int get hashCode => Object.hash(id, definitionId, termBankId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is TermBankV3MeaningsRelationsTableData &&
+      (other is TermBankV3DefinitionsRelationsTableData &&
           other.id == this.id &&
-          other.meaningId == this.meaningId &&
+          other.definitionId == this.definitionId &&
           other.termBankId == this.termBankId);
 }
 
-class TermBankV3MeaningsRelationsTableCompanion
-    extends UpdateCompanion<TermBankV3MeaningsRelationsTableData> {
+class TermBankV3DefinitionsRelationsTableCompanion
+    extends UpdateCompanion<TermBankV3DefinitionsRelationsTableData> {
   final Value<int> id;
-  final Value<int> meaningId;
+  final Value<int> definitionId;
   final Value<int> termBankId;
-  const TermBankV3MeaningsRelationsTableCompanion({
+  const TermBankV3DefinitionsRelationsTableCompanion({
     this.id = const Value.absent(),
-    this.meaningId = const Value.absent(),
+    this.definitionId = const Value.absent(),
     this.termBankId = const Value.absent(),
   });
-  TermBankV3MeaningsRelationsTableCompanion.insert({
+  TermBankV3DefinitionsRelationsTableCompanion.insert({
     this.id = const Value.absent(),
-    required int meaningId,
+    required int definitionId,
     required int termBankId,
-  }) : meaningId = Value(meaningId),
+  }) : definitionId = Value(definitionId),
        termBankId = Value(termBankId);
-  static Insertable<TermBankV3MeaningsRelationsTableData> custom({
+  static Insertable<TermBankV3DefinitionsRelationsTableData> custom({
     Expression<int>? id,
-    Expression<int>? meaningId,
+    Expression<int>? definitionId,
     Expression<int>? termBankId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (meaningId != null) 'meaning_id': meaningId,
+      if (definitionId != null) 'definition_id': definitionId,
       if (termBankId != null) 'term_bank_id': termBankId,
     });
   }
 
-  TermBankV3MeaningsRelationsTableCompanion copyWith({
+  TermBankV3DefinitionsRelationsTableCompanion copyWith({
     Value<int>? id,
-    Value<int>? meaningId,
+    Value<int>? definitionId,
     Value<int>? termBankId,
   }) {
-    return TermBankV3MeaningsRelationsTableCompanion(
+    return TermBankV3DefinitionsRelationsTableCompanion(
       id: id ?? this.id,
-      meaningId: meaningId ?? this.meaningId,
+      definitionId: definitionId ?? this.definitionId,
       termBankId: termBankId ?? this.termBankId,
     );
   }
@@ -2264,8 +2283,8 @@ class TermBankV3MeaningsRelationsTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (meaningId.present) {
-      map['meaning_id'] = Variable<int>(meaningId.value);
+    if (definitionId.present) {
+      map['definition_id'] = Variable<int>(definitionId.value);
     }
     if (termBankId.present) {
       map['term_bank_id'] = Variable<int>(termBankId.value);
@@ -2275,9 +2294,9 @@ class TermBankV3MeaningsRelationsTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('TermBankV3MeaningsRelationsTableCompanion(')
+    return (StringBuffer('TermBankV3DefinitionsRelationsTableCompanion(')
           ..write('id: $id, ')
-          ..write('meaningId: $meaningId, ')
+          ..write('definitionId: $definitionId, ')
           ..write('termBankId: $termBankId')
           ..write(')'))
         .toString();
@@ -2307,6 +2326,18 @@ class $TagBankV3TableTable extends TagBankV3Table
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
     'name',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
     aliasedName,
     false,
     additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
@@ -2344,7 +2375,14 @@ class $TagBankV3TableTable extends TagBankV3Table
     requiredDuringInsert: true,
   );
   @override
-  List<GeneratedColumn> get $columns => [id, name, sortingOrder, notes, score];
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    category,
+    sortingOrder,
+    notes,
+    score,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2367,6 +2405,14 @@ class $TagBankV3TableTable extends TagBankV3Table
       );
     } else if (isInserting) {
       context.missing(_nameMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
     }
     if (data.containsKey('sorting_order')) {
       context.handle(
@@ -2412,6 +2458,10 @@ class $TagBankV3TableTable extends TagBankV3Table
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
       sortingOrder: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}sorting_order'],
@@ -2441,6 +2491,9 @@ class TagBankV3TableData extends DataClass
   /// Tag name.
   final String name;
 
+  /// Tag category
+  final String category;
+
   /// Sorting order for the tag.
   final int sortingOrder;
 
@@ -2454,6 +2507,7 @@ class TagBankV3TableData extends DataClass
   const TagBankV3TableData({
     required this.id,
     required this.name,
+    required this.category,
     required this.sortingOrder,
     required this.notes,
     required this.score,
@@ -2463,6 +2517,7 @@ class TagBankV3TableData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
+    map['category'] = Variable<String>(category);
     map['sorting_order'] = Variable<int>(sortingOrder);
     map['notes'] = Variable<String>(notes);
     map['score'] = Variable<int>(score);
@@ -2473,6 +2528,7 @@ class TagBankV3TableData extends DataClass
     return TagBankV3TableCompanion(
       id: Value(id),
       name: Value(name),
+      category: Value(category),
       sortingOrder: Value(sortingOrder),
       notes: Value(notes),
       score: Value(score),
@@ -2487,6 +2543,7 @@ class TagBankV3TableData extends DataClass
     return TagBankV3TableData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      category: serializer.fromJson<String>(json['category']),
       sortingOrder: serializer.fromJson<int>(json['sortingOrder']),
       notes: serializer.fromJson<String>(json['notes']),
       score: serializer.fromJson<int>(json['score']),
@@ -2498,6 +2555,7 @@ class TagBankV3TableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'category': serializer.toJson<String>(category),
       'sortingOrder': serializer.toJson<int>(sortingOrder),
       'notes': serializer.toJson<String>(notes),
       'score': serializer.toJson<int>(score),
@@ -2507,12 +2565,14 @@ class TagBankV3TableData extends DataClass
   TagBankV3TableData copyWith({
     int? id,
     String? name,
+    String? category,
     int? sortingOrder,
     String? notes,
     int? score,
   }) => TagBankV3TableData(
     id: id ?? this.id,
     name: name ?? this.name,
+    category: category ?? this.category,
     sortingOrder: sortingOrder ?? this.sortingOrder,
     notes: notes ?? this.notes,
     score: score ?? this.score,
@@ -2521,6 +2581,7 @@ class TagBankV3TableData extends DataClass
     return TagBankV3TableData(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
+      category: data.category.present ? data.category.value : this.category,
       sortingOrder: data.sortingOrder.present
           ? data.sortingOrder.value
           : this.sortingOrder,
@@ -2534,6 +2595,7 @@ class TagBankV3TableData extends DataClass
     return (StringBuffer('TagBankV3TableData(')
           ..write('id: $id, ')
           ..write('name: $name, ')
+          ..write('category: $category, ')
           ..write('sortingOrder: $sortingOrder, ')
           ..write('notes: $notes, ')
           ..write('score: $score')
@@ -2542,13 +2604,15 @@ class TagBankV3TableData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, name, sortingOrder, notes, score);
+  int get hashCode =>
+      Object.hash(id, name, category, sortingOrder, notes, score);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TagBankV3TableData &&
           other.id == this.id &&
           other.name == this.name &&
+          other.category == this.category &&
           other.sortingOrder == this.sortingOrder &&
           other.notes == this.notes &&
           other.score == this.score);
@@ -2557,12 +2621,14 @@ class TagBankV3TableData extends DataClass
 class TagBankV3TableCompanion extends UpdateCompanion<TagBankV3TableData> {
   final Value<int> id;
   final Value<String> name;
+  final Value<String> category;
   final Value<int> sortingOrder;
   final Value<String> notes;
   final Value<int> score;
   const TagBankV3TableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.category = const Value.absent(),
     this.sortingOrder = const Value.absent(),
     this.notes = const Value.absent(),
     this.score = const Value.absent(),
@@ -2570,16 +2636,19 @@ class TagBankV3TableCompanion extends UpdateCompanion<TagBankV3TableData> {
   TagBankV3TableCompanion.insert({
     this.id = const Value.absent(),
     required String name,
+    required String category,
     required int sortingOrder,
     required String notes,
     required int score,
   }) : name = Value(name),
+       category = Value(category),
        sortingOrder = Value(sortingOrder),
        notes = Value(notes),
        score = Value(score);
   static Insertable<TagBankV3TableData> custom({
     Expression<int>? id,
     Expression<String>? name,
+    Expression<String>? category,
     Expression<int>? sortingOrder,
     Expression<String>? notes,
     Expression<int>? score,
@@ -2587,6 +2656,7 @@ class TagBankV3TableCompanion extends UpdateCompanion<TagBankV3TableData> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
+      if (category != null) 'category': category,
       if (sortingOrder != null) 'sorting_order': sortingOrder,
       if (notes != null) 'notes': notes,
       if (score != null) 'score': score,
@@ -2596,6 +2666,7 @@ class TagBankV3TableCompanion extends UpdateCompanion<TagBankV3TableData> {
   TagBankV3TableCompanion copyWith({
     Value<int>? id,
     Value<String>? name,
+    Value<String>? category,
     Value<int>? sortingOrder,
     Value<String>? notes,
     Value<int>? score,
@@ -2603,6 +2674,7 @@ class TagBankV3TableCompanion extends UpdateCompanion<TagBankV3TableData> {
     return TagBankV3TableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      category: category ?? this.category,
       sortingOrder: sortingOrder ?? this.sortingOrder,
       notes: notes ?? this.notes,
       score: score ?? this.score,
@@ -2617,6 +2689,9 @@ class TagBankV3TableCompanion extends UpdateCompanion<TagBankV3TableData> {
     }
     if (name.present) {
       map['name'] = Variable<String>(name.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
     }
     if (sortingOrder.present) {
       map['sorting_order'] = Variable<int>(sortingOrder.value);
@@ -2635,6 +2710,7 @@ class TagBankV3TableCompanion extends UpdateCompanion<TagBankV3TableData> {
     return (StringBuffer('TagBankV3TableCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
+          ..write('category: $category, ')
           ..write('sortingOrder: $sortingOrder, ')
           ..write('notes: $notes, ')
           ..write('score: $score')
@@ -2920,767 +2996,6 @@ class TermBankV3TagBankRelationsTableCompanion
           ..write('id: $id, ')
           ..write('tagBankId: $tagBankId, ')
           ..write('termBankId: $termBankId')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class FullTermViewData extends DataClass {
-  final int id;
-  final String? term;
-  final String? reading;
-  final String definitionTags;
-  final String ruleIdentifiers;
-  final int popularity;
-  final String meanings;
-  final int sequenceNumber;
-  final String tagNames;
-  const FullTermViewData({
-    required this.id,
-    this.term,
-    this.reading,
-    required this.definitionTags,
-    required this.ruleIdentifiers,
-    required this.popularity,
-    required this.meanings,
-    required this.sequenceNumber,
-    required this.tagNames,
-  });
-  factory FullTermViewData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FullTermViewData(
-      id: serializer.fromJson<int>(json['id']),
-      term: serializer.fromJson<String?>(json['term']),
-      reading: serializer.fromJson<String?>(json['reading']),
-      definitionTags: serializer.fromJson<String>(json['definition_tags']),
-      ruleIdentifiers: serializer.fromJson<String>(json['rule_identifiers']),
-      popularity: serializer.fromJson<int>(json['popularity']),
-      meanings: serializer.fromJson<String>(json['meanings']),
-      sequenceNumber: serializer.fromJson<int>(json['sequence_number']),
-      tagNames: serializer.fromJson<String>(json['tag_names']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'term': serializer.toJson<String?>(term),
-      'reading': serializer.toJson<String?>(reading),
-      'definition_tags': serializer.toJson<String>(definitionTags),
-      'rule_identifiers': serializer.toJson<String>(ruleIdentifiers),
-      'popularity': serializer.toJson<int>(popularity),
-      'meanings': serializer.toJson<String>(meanings),
-      'sequence_number': serializer.toJson<int>(sequenceNumber),
-      'tag_names': serializer.toJson<String>(tagNames),
-    };
-  }
-
-  FullTermViewData copyWith({
-    int? id,
-    Value<String?> term = const Value.absent(),
-    Value<String?> reading = const Value.absent(),
-    String? definitionTags,
-    String? ruleIdentifiers,
-    int? popularity,
-    String? meanings,
-    int? sequenceNumber,
-    String? tagNames,
-  }) => FullTermViewData(
-    id: id ?? this.id,
-    term: term.present ? term.value : this.term,
-    reading: reading.present ? reading.value : this.reading,
-    definitionTags: definitionTags ?? this.definitionTags,
-    ruleIdentifiers: ruleIdentifiers ?? this.ruleIdentifiers,
-    popularity: popularity ?? this.popularity,
-    meanings: meanings ?? this.meanings,
-    sequenceNumber: sequenceNumber ?? this.sequenceNumber,
-    tagNames: tagNames ?? this.tagNames,
-  );
-  @override
-  String toString() {
-    return (StringBuffer('FullTermViewData(')
-          ..write('id: $id, ')
-          ..write('term: $term, ')
-          ..write('reading: $reading, ')
-          ..write('definitionTags: $definitionTags, ')
-          ..write('ruleIdentifiers: $ruleIdentifiers, ')
-          ..write('popularity: $popularity, ')
-          ..write('meanings: $meanings, ')
-          ..write('sequenceNumber: $sequenceNumber, ')
-          ..write('tagNames: $tagNames')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    term,
-    reading,
-    definitionTags,
-    ruleIdentifiers,
-    popularity,
-    meanings,
-    sequenceNumber,
-    tagNames,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is FullTermViewData &&
-          other.id == this.id &&
-          other.term == this.term &&
-          other.reading == this.reading &&
-          other.definitionTags == this.definitionTags &&
-          other.ruleIdentifiers == this.ruleIdentifiers &&
-          other.popularity == this.popularity &&
-          other.meanings == this.meanings &&
-          other.sequenceNumber == this.sequenceNumber &&
-          other.tagNames == this.tagNames);
-}
-
-class FullTermView extends ViewInfo<FullTermView, FullTermViewData>
-    implements HasResultSet {
-  final String? _alias;
-  @override
-  final _$DaKanjiDB attachedDatabase;
-  FullTermView(this.attachedDatabase, [this._alias]);
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    term,
-    reading,
-    definitionTags,
-    ruleIdentifiers,
-    popularity,
-    meanings,
-    sequenceNumber,
-    tagNames,
-  ];
-  @override
-  String get aliasedName => _alias ?? entityName;
-  @override
-  String get entityName => 'full_term_view';
-  @override
-  Map<SqlDialect, String> get createViewStatements => {
-    SqlDialect.sqlite:
-        'CREATE VIEW full_term_view AS SELECT TB3T.id, TT.term, RT.reading, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3DTT.definition_tag || \'"\'), \'\') || \']\' AS definition_tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3RIT.rule_identifier || \'"\'), \'\') || \']\' AS rule_identifiers, TB3T.popularity, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || MT.meaning || \'"\'), \'\') || \']\' AS meanings, TB3T.sequence_number, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TagB3T.name || \'"\'), \'\') || \']\' AS tag_names FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_definition_tag_relations_table AS TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id LEFT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id LEFT JOIN term_bank_v3_rule_identifier_relations_table AS TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id LEFT JOIN term_bank_v3_rule_identifier_table AS TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id LEFT JOIN term_bank_v3_meanings_relations_table AS TB3MRT ON TB3T.id = TB3MRT.term_bank_id LEFT JOIN meaning_table AS MT ON TB3MRT.meaning_id = MT.id LEFT JOIN term_bank_v3_tag_bank_relations_table AS TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id LEFT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id GROUP BY TB3T.id',
-  };
-  @override
-  FullTermView get asDslTable => this;
-  @override
-  FullTermViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FullTermViewData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      term: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}term'],
-      ),
-      reading: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}reading'],
-      ),
-      definitionTags: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}definition_tags'],
-      )!,
-      ruleIdentifiers: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}rule_identifiers'],
-      )!,
-      popularity: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}popularity'],
-      )!,
-      meanings: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}meanings'],
-      )!,
-      sequenceNumber: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}sequence_number'],
-      )!,
-      tagNames: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}tag_names'],
-      )!,
-    );
-  }
-
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<String> term = GeneratedColumn<String>(
-    'term',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
-    'reading',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> definitionTags = GeneratedColumn<String>(
-    'definition_tags',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> ruleIdentifiers = GeneratedColumn<String>(
-    'rule_identifiers',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<int> popularity = GeneratedColumn<int>(
-    'popularity',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<String> meanings = GeneratedColumn<String>(
-    'meanings',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<int> sequenceNumber = GeneratedColumn<int>(
-    'sequence_number',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<String> tagNames = GeneratedColumn<String>(
-    'tag_names',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  @override
-  FullTermView createAlias(String alias) {
-    return FullTermView(attachedDatabase, alias);
-  }
-
-  @override
-  Query? get query => null;
-  @override
-  Set<String> get readTables => const {
-    'term_bank_v3_table',
-    'term_table',
-    'reading_table',
-    'term_bank_v3_definition_tag_relations_table',
-    'term_bank_v3_definition_tags_table',
-    'term_bank_v3_rule_identifier_relations_table',
-    'term_bank_v3_rule_identifier_table',
-    'term_bank_v3_meanings_relations_table',
-    'meaning_table',
-    'term_bank_v3_tag_bank_relations_table',
-    'tag_bank_v3_table',
-  };
-}
-
-class $TagBankV3CategoryTableTable extends TagBankV3CategoryTable
-    with TableInfo<$TagBankV3CategoryTableTable, TagBankV3CategoryTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $TagBankV3CategoryTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _categoryMeta = const VerificationMeta(
-    'category',
-  );
-  @override
-  late final GeneratedColumn<String> category = GeneratedColumn<String>(
-    'category',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, category];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'tag_bank_v3_category_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<TagBankV3CategoryTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('category')) {
-      context.handle(
-        _categoryMeta,
-        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_categoryMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  TagBankV3CategoryTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TagBankV3CategoryTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      category: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}category'],
-      )!,
-    );
-  }
-
-  @override
-  $TagBankV3CategoryTableTable createAlias(String alias) {
-    return $TagBankV3CategoryTableTable(attachedDatabase, alias);
-  }
-}
-
-class TagBankV3CategoryTableData extends DataClass
-    implements Insertable<TagBankV3CategoryTableData> {
-  /// id of this entry
-  final int id;
-
-  /// Category for the tag.
-  final String category;
-  const TagBankV3CategoryTableData({required this.id, required this.category});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['category'] = Variable<String>(category);
-    return map;
-  }
-
-  TagBankV3CategoryTableCompanion toCompanion(bool nullToAbsent) {
-    return TagBankV3CategoryTableCompanion(
-      id: Value(id),
-      category: Value(category),
-    );
-  }
-
-  factory TagBankV3CategoryTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TagBankV3CategoryTableData(
-      id: serializer.fromJson<int>(json['id']),
-      category: serializer.fromJson<String>(json['category']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'category': serializer.toJson<String>(category),
-    };
-  }
-
-  TagBankV3CategoryTableData copyWith({int? id, String? category}) =>
-      TagBankV3CategoryTableData(
-        id: id ?? this.id,
-        category: category ?? this.category,
-      );
-  TagBankV3CategoryTableData copyWithCompanion(
-    TagBankV3CategoryTableCompanion data,
-  ) {
-    return TagBankV3CategoryTableData(
-      id: data.id.present ? data.id.value : this.id,
-      category: data.category.present ? data.category.value : this.category,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TagBankV3CategoryTableData(')
-          ..write('id: $id, ')
-          ..write('category: $category')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, category);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TagBankV3CategoryTableData &&
-          other.id == this.id &&
-          other.category == this.category);
-}
-
-class TagBankV3CategoryTableCompanion
-    extends UpdateCompanion<TagBankV3CategoryTableData> {
-  final Value<int> id;
-  final Value<String> category;
-  const TagBankV3CategoryTableCompanion({
-    this.id = const Value.absent(),
-    this.category = const Value.absent(),
-  });
-  TagBankV3CategoryTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String category,
-  }) : category = Value(category);
-  static Insertable<TagBankV3CategoryTableData> custom({
-    Expression<int>? id,
-    Expression<String>? category,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (category != null) 'category': category,
-    });
-  }
-
-  TagBankV3CategoryTableCompanion copyWith({
-    Value<int>? id,
-    Value<String>? category,
-  }) {
-    return TagBankV3CategoryTableCompanion(
-      id: id ?? this.id,
-      category: category ?? this.category,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (category.present) {
-      map['category'] = Variable<String>(category.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TagBankV3CategoryTableCompanion(')
-          ..write('id: $id, ')
-          ..write('category: $category')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $TagBankV3TagCategoryRelationsTableTable
-    extends TagBankV3TagCategoryRelationsTable
-    with
-        TableInfo<
-          $TagBankV3TagCategoryRelationsTableTable,
-          TagBankV3TagCategoryRelationsTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $TagBankV3TagCategoryRelationsTableTable(
-    this.attachedDatabase, [
-    this._alias,
-  ]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
-  @override
-  late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
-    'tag_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES tag_bank_v3_table (id)',
-    ),
-  );
-  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
-    'categoryId',
-  );
-  @override
-  late final GeneratedColumn<int> categoryId = GeneratedColumn<int>(
-    'category_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES tag_bank_v3_category_table (id)',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, tagId, categoryId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'tag_bank_v3_tag_category_relations_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<TagBankV3TagCategoryRelationsTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('tag_id')) {
-      context.handle(
-        _tagIdMeta,
-        tagId.isAcceptableOrUnknown(data['tag_id']!, _tagIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_tagIdMeta);
-    }
-    if (data.containsKey('category_id')) {
-      context.handle(
-        _categoryIdMeta,
-        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_categoryIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  TagBankV3TagCategoryRelationsTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TagBankV3TagCategoryRelationsTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      tagId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}tag_id'],
-      )!,
-      categoryId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}category_id'],
-      )!,
-    );
-  }
-
-  @override
-  $TagBankV3TagCategoryRelationsTableTable createAlias(String alias) {
-    return $TagBankV3TagCategoryRelationsTableTable(attachedDatabase, alias);
-  }
-}
-
-class TagBankV3TagCategoryRelationsTableData extends DataClass
-    implements Insertable<TagBankV3TagCategoryRelationsTableData> {
-  /// id of this relation
-  final int id;
-
-  /// the id of the associated tag reading
-  final int tagId;
-
-  /// the id of the associated tag category
-  final int categoryId;
-  const TagBankV3TagCategoryRelationsTableData({
-    required this.id,
-    required this.tagId,
-    required this.categoryId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['tag_id'] = Variable<int>(tagId);
-    map['category_id'] = Variable<int>(categoryId);
-    return map;
-  }
-
-  TagBankV3TagCategoryRelationsTableCompanion toCompanion(bool nullToAbsent) {
-    return TagBankV3TagCategoryRelationsTableCompanion(
-      id: Value(id),
-      tagId: Value(tagId),
-      categoryId: Value(categoryId),
-    );
-  }
-
-  factory TagBankV3TagCategoryRelationsTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TagBankV3TagCategoryRelationsTableData(
-      id: serializer.fromJson<int>(json['id']),
-      tagId: serializer.fromJson<int>(json['tagId']),
-      categoryId: serializer.fromJson<int>(json['categoryId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'tagId': serializer.toJson<int>(tagId),
-      'categoryId': serializer.toJson<int>(categoryId),
-    };
-  }
-
-  TagBankV3TagCategoryRelationsTableData copyWith({
-    int? id,
-    int? tagId,
-    int? categoryId,
-  }) => TagBankV3TagCategoryRelationsTableData(
-    id: id ?? this.id,
-    tagId: tagId ?? this.tagId,
-    categoryId: categoryId ?? this.categoryId,
-  );
-  TagBankV3TagCategoryRelationsTableData copyWithCompanion(
-    TagBankV3TagCategoryRelationsTableCompanion data,
-  ) {
-    return TagBankV3TagCategoryRelationsTableData(
-      id: data.id.present ? data.id.value : this.id,
-      tagId: data.tagId.present ? data.tagId.value : this.tagId,
-      categoryId: data.categoryId.present
-          ? data.categoryId.value
-          : this.categoryId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TagBankV3TagCategoryRelationsTableData(')
-          ..write('id: $id, ')
-          ..write('tagId: $tagId, ')
-          ..write('categoryId: $categoryId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, tagId, categoryId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TagBankV3TagCategoryRelationsTableData &&
-          other.id == this.id &&
-          other.tagId == this.tagId &&
-          other.categoryId == this.categoryId);
-}
-
-class TagBankV3TagCategoryRelationsTableCompanion
-    extends UpdateCompanion<TagBankV3TagCategoryRelationsTableData> {
-  final Value<int> id;
-  final Value<int> tagId;
-  final Value<int> categoryId;
-  const TagBankV3TagCategoryRelationsTableCompanion({
-    this.id = const Value.absent(),
-    this.tagId = const Value.absent(),
-    this.categoryId = const Value.absent(),
-  });
-  TagBankV3TagCategoryRelationsTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int tagId,
-    required int categoryId,
-  }) : tagId = Value(tagId),
-       categoryId = Value(categoryId);
-  static Insertable<TagBankV3TagCategoryRelationsTableData> custom({
-    Expression<int>? id,
-    Expression<int>? tagId,
-    Expression<int>? categoryId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (tagId != null) 'tag_id': tagId,
-      if (categoryId != null) 'category_id': categoryId,
-    });
-  }
-
-  TagBankV3TagCategoryRelationsTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? tagId,
-    Value<int>? categoryId,
-  }) {
-    return TagBankV3TagCategoryRelationsTableCompanion(
-      id: id ?? this.id,
-      tagId: tagId ?? this.tagId,
-      categoryId: categoryId ?? this.categoryId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (tagId.present) {
-      map['tag_id'] = Variable<int>(tagId.value);
-    }
-    if (categoryId.present) {
-      map['category_id'] = Variable<int>(categoryId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TagBankV3TagCategoryRelationsTableCompanion(')
-          ..write('id: $id, ')
-          ..write('tagId: $tagId, ')
-          ..write('categoryId: $categoryId')
           ..write(')'))
         .toString();
   }
@@ -4663,6 +3978,288 @@ class ExampleTranslationTableCompanion
           ..write('id: $id, ')
           ..write('exampleTranslation: $exampleTranslation, ')
           ..write('languageCodeId: $languageCodeId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExampleTranslationRelationsTableTable
+    extends ExampleTranslationRelationsTable
+    with
+        TableInfo<
+          $ExampleTranslationRelationsTableTable,
+          ExampleTranslationRelationsTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleTranslationRelationsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _exampleIdMeta = const VerificationMeta(
+    'exampleId',
+  );
+  @override
+  late final GeneratedColumn<int> exampleId = GeneratedColumn<int>(
+    'example_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES example_table (id)',
+    ),
+  );
+  static const VerificationMeta _translationIdMeta = const VerificationMeta(
+    'translationId',
+  );
+  @override
+  late final GeneratedColumn<int> translationId = GeneratedColumn<int>(
+    'translation_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES example_translation_table (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, exampleId, translationId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_translation_relations_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleTranslationRelationsTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('example_id')) {
+      context.handle(
+        _exampleIdMeta,
+        exampleId.isAcceptableOrUnknown(data['example_id']!, _exampleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleIdMeta);
+    }
+    if (data.containsKey('translation_id')) {
+      context.handle(
+        _translationIdMeta,
+        translationId.isAcceptableOrUnknown(
+          data['translation_id']!,
+          _translationIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_translationIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ExampleTranslationRelationsTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleTranslationRelationsTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      exampleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}example_id'],
+      )!,
+      translationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}translation_id'],
+      )!,
+    );
+  }
+
+  @override
+  $ExampleTranslationRelationsTableTable createAlias(String alias) {
+    return $ExampleTranslationRelationsTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExampleTranslationRelationsTableData extends DataClass
+    implements Insertable<ExampleTranslationRelationsTableData> {
+  /// id of this relation
+  final int id;
+
+  /// the id of the associated example
+  final int exampleId;
+
+  /// the id of the associated translation
+  final int translationId;
+  const ExampleTranslationRelationsTableData({
+    required this.id,
+    required this.exampleId,
+    required this.translationId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['example_id'] = Variable<int>(exampleId);
+    map['translation_id'] = Variable<int>(translationId);
+    return map;
+  }
+
+  ExampleTranslationRelationsTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleTranslationRelationsTableCompanion(
+      id: Value(id),
+      exampleId: Value(exampleId),
+      translationId: Value(translationId),
+    );
+  }
+
+  factory ExampleTranslationRelationsTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleTranslationRelationsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      exampleId: serializer.fromJson<int>(json['exampleId']),
+      translationId: serializer.fromJson<int>(json['translationId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'exampleId': serializer.toJson<int>(exampleId),
+      'translationId': serializer.toJson<int>(translationId),
+    };
+  }
+
+  ExampleTranslationRelationsTableData copyWith({
+    int? id,
+    int? exampleId,
+    int? translationId,
+  }) => ExampleTranslationRelationsTableData(
+    id: id ?? this.id,
+    exampleId: exampleId ?? this.exampleId,
+    translationId: translationId ?? this.translationId,
+  );
+  ExampleTranslationRelationsTableData copyWithCompanion(
+    ExampleTranslationRelationsTableCompanion data,
+  ) {
+    return ExampleTranslationRelationsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      exampleId: data.exampleId.present ? data.exampleId.value : this.exampleId,
+      translationId: data.translationId.present
+          ? data.translationId.value
+          : this.translationId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTranslationRelationsTableData(')
+          ..write('id: $id, ')
+          ..write('exampleId: $exampleId, ')
+          ..write('translationId: $translationId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, exampleId, translationId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleTranslationRelationsTableData &&
+          other.id == this.id &&
+          other.exampleId == this.exampleId &&
+          other.translationId == this.translationId);
+}
+
+class ExampleTranslationRelationsTableCompanion
+    extends UpdateCompanion<ExampleTranslationRelationsTableData> {
+  final Value<int> id;
+  final Value<int> exampleId;
+  final Value<int> translationId;
+  const ExampleTranslationRelationsTableCompanion({
+    this.id = const Value.absent(),
+    this.exampleId = const Value.absent(),
+    this.translationId = const Value.absent(),
+  });
+  ExampleTranslationRelationsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int exampleId,
+    required int translationId,
+  }) : exampleId = Value(exampleId),
+       translationId = Value(translationId);
+  static Insertable<ExampleTranslationRelationsTableData> custom({
+    Expression<int>? id,
+    Expression<int>? exampleId,
+    Expression<int>? translationId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (exampleId != null) 'example_id': exampleId,
+      if (translationId != null) 'translation_id': translationId,
+    });
+  }
+
+  ExampleTranslationRelationsTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? exampleId,
+    Value<int>? translationId,
+  }) {
+    return ExampleTranslationRelationsTableCompanion(
+      id: id ?? this.id,
+      exampleId: exampleId ?? this.exampleId,
+      translationId: translationId ?? this.translationId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (exampleId.present) {
+      map['example_id'] = Variable<int>(exampleId.value);
+    }
+    if (translationId.present) {
+      map['translation_id'] = Variable<int>(translationId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTranslationRelationsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('exampleId: $exampleId, ')
+          ..write('translationId: $translationId')
           ..write(')'))
         .toString();
   }
@@ -7743,17 +7340,17 @@ class KanjiBankV3TagsKanjiRelationsTableCompanion
   }
 }
 
-class $KanjiBankV3MeaningsKanjiRelationsTableTable
-    extends KanjiBankV3MeaningsKanjiRelationsTable
+class $KanjiBankV3DefinitionsKanjiRelationsTableTable
+    extends KanjiBankV3DefinitionsKanjiRelationsTable
     with
         TableInfo<
-          $KanjiBankV3MeaningsKanjiRelationsTableTable,
-          KanjiBankV3MeaningsKanjiRelationsTableData
+          $KanjiBankV3DefinitionsKanjiRelationsTableTable,
+          KanjiBankV3DefinitionsKanjiRelationsTableData
         > {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $KanjiBankV3MeaningsKanjiRelationsTableTable(
+  $KanjiBankV3DefinitionsKanjiRelationsTableTable(
     this.attachedDatabase, [
     this._alias,
   ]);
@@ -7770,18 +7367,18 @@ class $KanjiBankV3MeaningsKanjiRelationsTableTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _meaningIdMeta = const VerificationMeta(
-    'meaningId',
+  static const VerificationMeta _definitionIdMeta = const VerificationMeta(
+    'definitionId',
   );
   @override
-  late final GeneratedColumn<int> meaningId = GeneratedColumn<int>(
-    'meaning_id',
+  late final GeneratedColumn<int> definitionId = GeneratedColumn<int>(
+    'definition_id',
     aliasedName,
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES meaning_table (id)',
+      'REFERENCES definition_table (id)',
     ),
   );
   static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
@@ -7799,15 +7396,15 @@ class $KanjiBankV3MeaningsKanjiRelationsTableTable
     ),
   );
   @override
-  List<GeneratedColumn> get $columns => [id, meaningId, kanjiId];
+  List<GeneratedColumn> get $columns => [id, definitionId, kanjiId];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'kanji_bank_v3_meanings_kanji_relations_table';
+  static const String $name = 'kanji_bank_v3_definitions_kanji_relations_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<KanjiBankV3MeaningsKanjiRelationsTableData> instance, {
+    Insertable<KanjiBankV3DefinitionsKanjiRelationsTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -7815,13 +7412,16 @@ class $KanjiBankV3MeaningsKanjiRelationsTableTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('meaning_id')) {
+    if (data.containsKey('definition_id')) {
       context.handle(
-        _meaningIdMeta,
-        meaningId.isAcceptableOrUnknown(data['meaning_id']!, _meaningIdMeta),
+        _definitionIdMeta,
+        definitionId.isAcceptableOrUnknown(
+          data['definition_id']!,
+          _definitionIdMeta,
+        ),
       );
     } else if (isInserting) {
-      context.missing(_meaningIdMeta);
+      context.missing(_definitionIdMeta);
     }
     if (data.containsKey('kanji_id')) {
       context.handle(
@@ -7837,19 +7437,19 @@ class $KanjiBankV3MeaningsKanjiRelationsTableTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  KanjiBankV3MeaningsKanjiRelationsTableData map(
+  KanjiBankV3DefinitionsKanjiRelationsTableData map(
     Map<String, dynamic> data, {
     String? tablePrefix,
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiBankV3MeaningsKanjiRelationsTableData(
+    return KanjiBankV3DefinitionsKanjiRelationsTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      meaningId: attachedDatabase.typeMapping.read(
+      definitionId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}meaning_id'],
+        data['${effectivePrefix}definition_id'],
       )!,
       kanjiId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -7859,56 +7459,56 @@ class $KanjiBankV3MeaningsKanjiRelationsTableTable
   }
 
   @override
-  $KanjiBankV3MeaningsKanjiRelationsTableTable createAlias(String alias) {
-    return $KanjiBankV3MeaningsKanjiRelationsTableTable(
+  $KanjiBankV3DefinitionsKanjiRelationsTableTable createAlias(String alias) {
+    return $KanjiBankV3DefinitionsKanjiRelationsTableTable(
       attachedDatabase,
       alias,
     );
   }
 }
 
-class KanjiBankV3MeaningsKanjiRelationsTableData extends DataClass
-    implements Insertable<KanjiBankV3MeaningsKanjiRelationsTableData> {
+class KanjiBankV3DefinitionsKanjiRelationsTableData extends DataClass
+    implements Insertable<KanjiBankV3DefinitionsKanjiRelationsTableData> {
   /// id of this relation
   final int id;
 
-  /// the id of the associated meaning
-  final int meaningId;
+  /// the id of the associated definition
+  final int definitionId;
 
   /// the id of the associated kanji
   final int kanjiId;
-  const KanjiBankV3MeaningsKanjiRelationsTableData({
+  const KanjiBankV3DefinitionsKanjiRelationsTableData({
     required this.id,
-    required this.meaningId,
+    required this.definitionId,
     required this.kanjiId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['meaning_id'] = Variable<int>(meaningId);
+    map['definition_id'] = Variable<int>(definitionId);
     map['kanji_id'] = Variable<int>(kanjiId);
     return map;
   }
 
-  KanjiBankV3MeaningsKanjiRelationsTableCompanion toCompanion(
+  KanjiBankV3DefinitionsKanjiRelationsTableCompanion toCompanion(
     bool nullToAbsent,
   ) {
-    return KanjiBankV3MeaningsKanjiRelationsTableCompanion(
+    return KanjiBankV3DefinitionsKanjiRelationsTableCompanion(
       id: Value(id),
-      meaningId: Value(meaningId),
+      definitionId: Value(definitionId),
       kanjiId: Value(kanjiId),
     );
   }
 
-  factory KanjiBankV3MeaningsKanjiRelationsTableData.fromJson(
+  factory KanjiBankV3DefinitionsKanjiRelationsTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiBankV3MeaningsKanjiRelationsTableData(
+    return KanjiBankV3DefinitionsKanjiRelationsTableData(
       id: serializer.fromJson<int>(json['id']),
-      meaningId: serializer.fromJson<int>(json['meaningId']),
+      definitionId: serializer.fromJson<int>(json['definitionId']),
       kanjiId: serializer.fromJson<int>(json['kanjiId']),
     );
   }
@@ -7917,87 +7517,89 @@ class KanjiBankV3MeaningsKanjiRelationsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'meaningId': serializer.toJson<int>(meaningId),
+      'definitionId': serializer.toJson<int>(definitionId),
       'kanjiId': serializer.toJson<int>(kanjiId),
     };
   }
 
-  KanjiBankV3MeaningsKanjiRelationsTableData copyWith({
+  KanjiBankV3DefinitionsKanjiRelationsTableData copyWith({
     int? id,
-    int? meaningId,
+    int? definitionId,
     int? kanjiId,
-  }) => KanjiBankV3MeaningsKanjiRelationsTableData(
+  }) => KanjiBankV3DefinitionsKanjiRelationsTableData(
     id: id ?? this.id,
-    meaningId: meaningId ?? this.meaningId,
+    definitionId: definitionId ?? this.definitionId,
     kanjiId: kanjiId ?? this.kanjiId,
   );
-  KanjiBankV3MeaningsKanjiRelationsTableData copyWithCompanion(
-    KanjiBankV3MeaningsKanjiRelationsTableCompanion data,
+  KanjiBankV3DefinitionsKanjiRelationsTableData copyWithCompanion(
+    KanjiBankV3DefinitionsKanjiRelationsTableCompanion data,
   ) {
-    return KanjiBankV3MeaningsKanjiRelationsTableData(
+    return KanjiBankV3DefinitionsKanjiRelationsTableData(
       id: data.id.present ? data.id.value : this.id,
-      meaningId: data.meaningId.present ? data.meaningId.value : this.meaningId,
+      definitionId: data.definitionId.present
+          ? data.definitionId.value
+          : this.definitionId,
       kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('KanjiBankV3MeaningsKanjiRelationsTableData(')
+    return (StringBuffer('KanjiBankV3DefinitionsKanjiRelationsTableData(')
           ..write('id: $id, ')
-          ..write('meaningId: $meaningId, ')
+          ..write('definitionId: $definitionId, ')
           ..write('kanjiId: $kanjiId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, meaningId, kanjiId);
+  int get hashCode => Object.hash(id, definitionId, kanjiId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is KanjiBankV3MeaningsKanjiRelationsTableData &&
+      (other is KanjiBankV3DefinitionsKanjiRelationsTableData &&
           other.id == this.id &&
-          other.meaningId == this.meaningId &&
+          other.definitionId == this.definitionId &&
           other.kanjiId == this.kanjiId);
 }
 
-class KanjiBankV3MeaningsKanjiRelationsTableCompanion
-    extends UpdateCompanion<KanjiBankV3MeaningsKanjiRelationsTableData> {
+class KanjiBankV3DefinitionsKanjiRelationsTableCompanion
+    extends UpdateCompanion<KanjiBankV3DefinitionsKanjiRelationsTableData> {
   final Value<int> id;
-  final Value<int> meaningId;
+  final Value<int> definitionId;
   final Value<int> kanjiId;
-  const KanjiBankV3MeaningsKanjiRelationsTableCompanion({
+  const KanjiBankV3DefinitionsKanjiRelationsTableCompanion({
     this.id = const Value.absent(),
-    this.meaningId = const Value.absent(),
+    this.definitionId = const Value.absent(),
     this.kanjiId = const Value.absent(),
   });
-  KanjiBankV3MeaningsKanjiRelationsTableCompanion.insert({
+  KanjiBankV3DefinitionsKanjiRelationsTableCompanion.insert({
     this.id = const Value.absent(),
-    required int meaningId,
+    required int definitionId,
     required int kanjiId,
-  }) : meaningId = Value(meaningId),
+  }) : definitionId = Value(definitionId),
        kanjiId = Value(kanjiId);
-  static Insertable<KanjiBankV3MeaningsKanjiRelationsTableData> custom({
+  static Insertable<KanjiBankV3DefinitionsKanjiRelationsTableData> custom({
     Expression<int>? id,
-    Expression<int>? meaningId,
+    Expression<int>? definitionId,
     Expression<int>? kanjiId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (meaningId != null) 'meaning_id': meaningId,
+      if (definitionId != null) 'definition_id': definitionId,
       if (kanjiId != null) 'kanji_id': kanjiId,
     });
   }
 
-  KanjiBankV3MeaningsKanjiRelationsTableCompanion copyWith({
+  KanjiBankV3DefinitionsKanjiRelationsTableCompanion copyWith({
     Value<int>? id,
-    Value<int>? meaningId,
+    Value<int>? definitionId,
     Value<int>? kanjiId,
   }) {
-    return KanjiBankV3MeaningsKanjiRelationsTableCompanion(
+    return KanjiBankV3DefinitionsKanjiRelationsTableCompanion(
       id: id ?? this.id,
-      meaningId: meaningId ?? this.meaningId,
+      definitionId: definitionId ?? this.definitionId,
       kanjiId: kanjiId ?? this.kanjiId,
     );
   }
@@ -8008,8 +7610,8 @@ class KanjiBankV3MeaningsKanjiRelationsTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (meaningId.present) {
-      map['meaning_id'] = Variable<int>(meaningId.value);
+    if (definitionId.present) {
+      map['definition_id'] = Variable<int>(definitionId.value);
     }
     if (kanjiId.present) {
       map['kanji_id'] = Variable<int>(kanjiId.value);
@@ -8019,9 +7621,9 @@ class KanjiBankV3MeaningsKanjiRelationsTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('KanjiBankV3MeaningsKanjiRelationsTableCompanion(')
+    return (StringBuffer('KanjiBankV3DefinitionsKanjiRelationsTableCompanion(')
           ..write('id: $id, ')
-          ..write('meaningId: $meaningId, ')
+          ..write('definitionId: $definitionId, ')
           ..write('kanjiId: $kanjiId')
           ..write(')'))
         .toString();
@@ -12189,502 +11791,6 @@ class TermMetaBankV3IpaTagRelationsTableCompanion
   }
 }
 
-class $ExampleTranslationRelationsTableTable
-    extends ExampleTranslationRelationsTable
-    with
-        TableInfo<
-          $ExampleTranslationRelationsTableTable,
-          ExampleTranslationRelationsTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ExampleTranslationRelationsTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _exampleIdMeta = const VerificationMeta(
-    'exampleId',
-  );
-  @override
-  late final GeneratedColumn<int> exampleId = GeneratedColumn<int>(
-    'example_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES example_table (id)',
-    ),
-  );
-  static const VerificationMeta _translationIdMeta = const VerificationMeta(
-    'translationId',
-  );
-  @override
-  late final GeneratedColumn<int> translationId = GeneratedColumn<int>(
-    'translation_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES example_translation_table (id)',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, exampleId, translationId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'example_translation_relations_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ExampleTranslationRelationsTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('example_id')) {
-      context.handle(
-        _exampleIdMeta,
-        exampleId.isAcceptableOrUnknown(data['example_id']!, _exampleIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_exampleIdMeta);
-    }
-    if (data.containsKey('translation_id')) {
-      context.handle(
-        _translationIdMeta,
-        translationId.isAcceptableOrUnknown(
-          data['translation_id']!,
-          _translationIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_translationIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  ExampleTranslationRelationsTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ExampleTranslationRelationsTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      exampleId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}example_id'],
-      )!,
-      translationId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}translation_id'],
-      )!,
-    );
-  }
-
-  @override
-  $ExampleTranslationRelationsTableTable createAlias(String alias) {
-    return $ExampleTranslationRelationsTableTable(attachedDatabase, alias);
-  }
-}
-
-class ExampleTranslationRelationsTableData extends DataClass
-    implements Insertable<ExampleTranslationRelationsTableData> {
-  /// id of this relation
-  final int id;
-
-  /// the id of the associated example
-  final int exampleId;
-
-  /// the id of the associated translation
-  final int translationId;
-  const ExampleTranslationRelationsTableData({
-    required this.id,
-    required this.exampleId,
-    required this.translationId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['example_id'] = Variable<int>(exampleId);
-    map['translation_id'] = Variable<int>(translationId);
-    return map;
-  }
-
-  ExampleTranslationRelationsTableCompanion toCompanion(bool nullToAbsent) {
-    return ExampleTranslationRelationsTableCompanion(
-      id: Value(id),
-      exampleId: Value(exampleId),
-      translationId: Value(translationId),
-    );
-  }
-
-  factory ExampleTranslationRelationsTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ExampleTranslationRelationsTableData(
-      id: serializer.fromJson<int>(json['id']),
-      exampleId: serializer.fromJson<int>(json['exampleId']),
-      translationId: serializer.fromJson<int>(json['translationId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'exampleId': serializer.toJson<int>(exampleId),
-      'translationId': serializer.toJson<int>(translationId),
-    };
-  }
-
-  ExampleTranslationRelationsTableData copyWith({
-    int? id,
-    int? exampleId,
-    int? translationId,
-  }) => ExampleTranslationRelationsTableData(
-    id: id ?? this.id,
-    exampleId: exampleId ?? this.exampleId,
-    translationId: translationId ?? this.translationId,
-  );
-  ExampleTranslationRelationsTableData copyWithCompanion(
-    ExampleTranslationRelationsTableCompanion data,
-  ) {
-    return ExampleTranslationRelationsTableData(
-      id: data.id.present ? data.id.value : this.id,
-      exampleId: data.exampleId.present ? data.exampleId.value : this.exampleId,
-      translationId: data.translationId.present
-          ? data.translationId.value
-          : this.translationId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleTranslationRelationsTableData(')
-          ..write('id: $id, ')
-          ..write('exampleId: $exampleId, ')
-          ..write('translationId: $translationId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, exampleId, translationId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ExampleTranslationRelationsTableData &&
-          other.id == this.id &&
-          other.exampleId == this.exampleId &&
-          other.translationId == this.translationId);
-}
-
-class ExampleTranslationRelationsTableCompanion
-    extends UpdateCompanion<ExampleTranslationRelationsTableData> {
-  final Value<int> id;
-  final Value<int> exampleId;
-  final Value<int> translationId;
-  const ExampleTranslationRelationsTableCompanion({
-    this.id = const Value.absent(),
-    this.exampleId = const Value.absent(),
-    this.translationId = const Value.absent(),
-  });
-  ExampleTranslationRelationsTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int exampleId,
-    required int translationId,
-  }) : exampleId = Value(exampleId),
-       translationId = Value(translationId);
-  static Insertable<ExampleTranslationRelationsTableData> custom({
-    Expression<int>? id,
-    Expression<int>? exampleId,
-    Expression<int>? translationId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (exampleId != null) 'example_id': exampleId,
-      if (translationId != null) 'translation_id': translationId,
-    });
-  }
-
-  ExampleTranslationRelationsTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? exampleId,
-    Value<int>? translationId,
-  }) {
-    return ExampleTranslationRelationsTableCompanion(
-      id: id ?? this.id,
-      exampleId: exampleId ?? this.exampleId,
-      translationId: translationId ?? this.translationId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (exampleId.present) {
-      map['example_id'] = Variable<int>(exampleId.value);
-    }
-    if (translationId.present) {
-      map['translation_id'] = Variable<int>(translationId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleTranslationRelationsTableCompanion(')
-          ..write('id: $id, ')
-          ..write('exampleId: $exampleId, ')
-          ..write('translationId: $translationId')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class ExampleViewData extends DataClass {
-  final int? exampleId;
-  final String? sentence;
-  final String? sentenceTokenized;
-  final String? exampleTranslation;
-  final int? languageCodeId;
-  const ExampleViewData({
-    this.exampleId,
-    this.sentence,
-    this.sentenceTokenized,
-    this.exampleTranslation,
-    this.languageCodeId,
-  });
-  factory ExampleViewData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ExampleViewData(
-      exampleId: serializer.fromJson<int?>(json['exampleId']),
-      sentence: serializer.fromJson<String?>(json['sentence']),
-      sentenceTokenized: serializer.fromJson<String?>(
-        json['sentenceTokenized'],
-      ),
-      exampleTranslation: serializer.fromJson<String?>(
-        json['exampleTranslation'],
-      ),
-      languageCodeId: serializer.fromJson<int?>(json['languageCodeId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'exampleId': serializer.toJson<int?>(exampleId),
-      'sentence': serializer.toJson<String?>(sentence),
-      'sentenceTokenized': serializer.toJson<String?>(sentenceTokenized),
-      'exampleTranslation': serializer.toJson<String?>(exampleTranslation),
-      'languageCodeId': serializer.toJson<int?>(languageCodeId),
-    };
-  }
-
-  ExampleViewData copyWith({
-    Value<int?> exampleId = const Value.absent(),
-    Value<String?> sentence = const Value.absent(),
-    Value<String?> sentenceTokenized = const Value.absent(),
-    Value<String?> exampleTranslation = const Value.absent(),
-    Value<int?> languageCodeId = const Value.absent(),
-  }) => ExampleViewData(
-    exampleId: exampleId.present ? exampleId.value : this.exampleId,
-    sentence: sentence.present ? sentence.value : this.sentence,
-    sentenceTokenized: sentenceTokenized.present
-        ? sentenceTokenized.value
-        : this.sentenceTokenized,
-    exampleTranslation: exampleTranslation.present
-        ? exampleTranslation.value
-        : this.exampleTranslation,
-    languageCodeId: languageCodeId.present
-        ? languageCodeId.value
-        : this.languageCodeId,
-  );
-  @override
-  String toString() {
-    return (StringBuffer('ExampleViewData(')
-          ..write('exampleId: $exampleId, ')
-          ..write('sentence: $sentence, ')
-          ..write('sentenceTokenized: $sentenceTokenized, ')
-          ..write('exampleTranslation: $exampleTranslation, ')
-          ..write('languageCodeId: $languageCodeId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    exampleId,
-    sentence,
-    sentenceTokenized,
-    exampleTranslation,
-    languageCodeId,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ExampleViewData &&
-          other.exampleId == this.exampleId &&
-          other.sentence == this.sentence &&
-          other.sentenceTokenized == this.sentenceTokenized &&
-          other.exampleTranslation == this.exampleTranslation &&
-          other.languageCodeId == this.languageCodeId);
-}
-
-class $ExampleViewView extends ViewInfo<$ExampleViewView, ExampleViewData>
-    implements HasResultSet {
-  final String? _alias;
-  @override
-  final _$DaKanjiDB attachedDatabase;
-  $ExampleViewView(this.attachedDatabase, [this._alias]);
-  $ExampleTableTable get exampleTable =>
-      attachedDatabase.exampleTable.createAlias('t0');
-  $ExampleTranslationTableTable get exampleTranslationTable =>
-      attachedDatabase.exampleTranslationTable.createAlias('t1');
-  $ExampleTranslationRelationsTableTable get exampleTranslationRelationsTable =>
-      attachedDatabase.exampleTranslationRelationsTable.createAlias('t2');
-  @override
-  List<GeneratedColumn> get $columns => [
-    exampleId,
-    sentence,
-    sentenceTokenized,
-    exampleTranslation,
-    languageCodeId,
-  ];
-  @override
-  String get aliasedName => _alias ?? entityName;
-  @override
-  String get entityName => 'example_view';
-  @override
-  Map<SqlDialect, String>? get createViewStatements => null;
-  @override
-  $ExampleViewView get asDslTable => this;
-  @override
-  ExampleViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ExampleViewData(
-      exampleId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}example_id'],
-      ),
-      sentence: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}sentence'],
-      ),
-      sentenceTokenized: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}sentence_tokenized'],
-      ),
-      exampleTranslation: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_translation'],
-      ),
-      languageCodeId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}language_code_id'],
-      ),
-    );
-  }
-
-  late final GeneratedColumn<int> exampleId = GeneratedColumn<int>(
-    'example_id',
-    aliasedName,
-    true,
-    generatedAs: GeneratedAs(exampleTable.id, false),
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<String> sentence = GeneratedColumn<String>(
-    'sentence',
-    aliasedName,
-    true,
-    generatedAs: GeneratedAs(exampleTable.exampleSentence, false),
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> sentenceTokenized =
-      GeneratedColumn<String>(
-        'sentence_tokenized',
-        aliasedName,
-        true,
-        generatedAs: GeneratedAs(exampleTable.exampleSentenceTokenized, false),
-        type: DriftSqlType.string,
-      );
-  late final GeneratedColumn<String> exampleTranslation =
-      GeneratedColumn<String>(
-        'example_translation',
-        aliasedName,
-        true,
-        generatedAs: GeneratedAs(
-          exampleTranslationTable.exampleTranslation,
-          false,
-        ),
-        type: DriftSqlType.string,
-      );
-  late final GeneratedColumn<int> languageCodeId = GeneratedColumn<int>(
-    'language_code_id',
-    aliasedName,
-    true,
-    generatedAs: GeneratedAs(exampleTranslationTable.languageCodeId, false),
-    type: DriftSqlType.int,
-  );
-  @override
-  $ExampleViewView createAlias(String alias) {
-    return $ExampleViewView(attachedDatabase, alias);
-  }
-
-  @override
-  Query? get query =>
-      (attachedDatabase.selectOnly(exampleTable)..addColumns($columns)).join([
-        innerJoin(
-          exampleTranslationRelationsTable,
-          exampleTranslationRelationsTable.exampleId.equalsExp(exampleTable.id),
-        ),
-        innerJoin(
-          exampleTranslationTable,
-          exampleTranslationTable.id.equalsExp(
-            exampleTranslationRelationsTable.translationId,
-          ),
-        ),
-      ]);
-  @override
-  Set<String> get readTables => const {
-    'example_table',
-    'example_translation_table',
-    'example_translation_relations_table',
-  };
-}
-
 abstract class _$DaKanjiDB extends GeneratedDatabase {
   _$DaKanjiDB(QueryExecutor e) : super(e);
   $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
@@ -12703,28 +11809,22 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $TermBankV3RuleIdentifierRelationsTableTable
   termBankV3RuleIdentifierRelationsTable =
       $TermBankV3RuleIdentifierRelationsTableTable(this);
-  late final $MeaningTableTable meaningTable = $MeaningTableTable(this);
-  late final $TermBankV3MeaningsRelationsTableTable
-  termBankV3MeaningsRelationsTable = $TermBankV3MeaningsRelationsTableTable(
+  late final $DefinitionTableTable definitionTable = $DefinitionTableTable(
     this,
   );
+  late final $TermBankV3DefinitionsRelationsTableTable
+  termBankV3DefinitionsRelationsTable =
+      $TermBankV3DefinitionsRelationsTableTable(this);
   late final $TagBankV3TableTable tagBankV3Table = $TagBankV3TableTable(this);
   late final $TermBankV3TagBankRelationsTableTable
   termBankV3TagBankRelationsTable = $TermBankV3TagBankRelationsTableTable(this);
-  late final FullTermView fullTermView = FullTermView(this);
-  late final $TagBankV3CategoryTableTable tagBankV3CategoryTable =
-      $TagBankV3CategoryTableTable(this);
-  late final $TagBankV3TagCategoryRelationsTableTable
-  tagBankV3TagCategoryRelationsTable = $TagBankV3TagCategoryRelationsTableTable(
-    this,
-  );
   late final Index name = Index(
     'name',
     'CREATE INDEX name ON tag_bank_v3_table (name)',
   );
-  late final Index meaning = Index(
-    'meaning',
-    'CREATE INDEX meaning ON meaning_table (meaning)',
+  late final Index definition = Index(
+    'definition',
+    'CREATE INDEX definition ON definition_table (definition)',
   );
   late final Index reading = Index(
     'reading',
@@ -12736,6 +11836,14 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   );
   late final $ExampleTableTable exampleTable = $ExampleTableTable(this);
   late final ExampleFts exampleFts = ExampleFts(this);
+  late final $LanguageCodeTableTable languageCodeTable =
+      $LanguageCodeTableTable(this);
+  late final $ExampleTranslationTableTable exampleTranslationTable =
+      $ExampleTranslationTableTable(this);
+  late final $ExampleTranslationRelationsTableTable
+  exampleTranslationRelationsTable = $ExampleTranslationRelationsTableTable(
+    this,
+  );
   late final Trigger exampleTableAi = Trigger(
     'CREATE TRIGGER example_table_ai AFTER INSERT ON example_table BEGIN INSERT INTO example_fts ("rowid", example_sentence_tokenized) VALUES (new.id, new.example_sentence_tokenized);END',
     'example_table_ai',
@@ -12748,10 +11856,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'CREATE TRIGGER example_table_au AFTER UPDATE OF example_sentence_tokenized ON example_table BEGIN INSERT INTO example_fts (example_fts, "rowid", example_sentence_tokenized) VALUES (\'delete\', old.id, old.example_sentence_tokenized);INSERT INTO example_fts ("rowid", example_sentence_tokenized) VALUES (new.id, new.example_sentence_tokenized);END',
     'example_table_au',
   );
-  late final $LanguageCodeTableTable languageCodeTable =
-      $LanguageCodeTableTable(this);
-  late final $ExampleTranslationTableTable exampleTranslationTable =
-      $ExampleTranslationTableTable(this);
   late final Index languageCode = Index(
     'languageCode',
     'CREATE INDEX languageCode ON language_code_table (language_code)',
@@ -12775,9 +11879,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   kanjiBankV3TagsKanjiRelationsTable = $KanjiBankV3TagsKanjiRelationsTableTable(
     this,
   );
-  late final $KanjiBankV3MeaningsKanjiRelationsTableTable
-  kanjiBankV3MeaningsKanjiRelationsTable =
-      $KanjiBankV3MeaningsKanjiRelationsTableTable(this);
+  late final $KanjiBankV3DefinitionsKanjiRelationsTableTable
+  kanjiBankV3DefinitionsKanjiRelationsTable =
+      $KanjiBankV3DefinitionsKanjiRelationsTableTable(this);
   late final $KanjiBankV3StatNamesTableTable kanjiBankV3StatNamesTable =
       $KanjiBankV3StatNamesTableTable(this);
   late final $KanjiBankV3StatValuesTableTable kanjiBankV3StatValuesTable =
@@ -12815,11 +11919,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   termMetaBankV3IpaTagRelationsTable = $TermMetaBankV3IpaTagRelationsTableTable(
     this,
   );
-  late final $ExampleTranslationRelationsTableTable
-  exampleTranslationRelationsTable = $ExampleTranslationRelationsTableTable(
-    this,
-  );
-  late final $ExampleViewView exampleView = $ExampleViewView(this);
   late final Index kanji = Index(
     'kanji',
     'CREATE INDEX kanji ON kanji_table (kanji)',
@@ -12831,7 +11930,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final KanjiDao kanjiDao = KanjiDao(this as DaKanjiDB);
   late final TermDao termDao = TermDao(this as DaKanjiDB);
   late final ReadingDao readingDao = ReadingDao(this as DaKanjiDB);
-  late final MeaningDao meaningDao = MeaningDao(this as DaKanjiDB);
+  late final DefinitionDao definitionDao = DefinitionDao(this as DaKanjiDB);
   late final LanguageCodeDao languageCodeDao = LanguageCodeDao(
     this as DaKanjiDB,
   );
@@ -12848,32 +11947,73 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     this as DaKanjiDB,
   );
   late final ExampleDao exampleDao = ExampleDao(this as DaKanjiDB);
-  Selectable<FullTermViewData> term_search(
-    String? query,
-    int limit,
-    int offset,
-  ) {
+  Selectable<TermBankV3SearchResult> term_bank_v3_search(String? query) {
     return customSelect(
-      'SELECT * FROM full_term_view WHERE term = ?1 LIMIT ?2 OFFSET ?3',
-      variables: [
-        Variable<String>(query),
-        Variable<int>(limit),
-        Variable<int>(offset),
-      ],
+      'SELECT TB3T.id, term, reading, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3DTT.definition_tag || \'"\'), \'\') || \']\' AS definition_tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3RIT.rule_identifier || \'"\'), \'\') || \']\' AS rule_identifiers, popularity, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || MT.definition || \'"\'), \'\') || \']\' AS definitions, sequence_number, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', TagB3T.id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score)), \'\') || \']\' AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_definition_tag_relations_table AS TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id LEFT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id LEFT JOIN term_bank_v3_rule_identifier_relations_table AS TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id LEFT JOIN term_bank_v3_rule_identifier_table AS TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id LEFT JOIN term_bank_v3_definitions_relations_table AS TB3MRT ON TB3T.id = TB3MRT.term_bank_id LEFT JOIN definition_table AS MT ON TB3MRT.definition_id = MT.id LEFT JOIN term_bank_v3_tag_bank_relations_table AS TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id LEFT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id WHERE TT.term = ?1 GROUP BY TB3T.id',
+      variables: [Variable<String>(query)],
       readsFrom: {
         termBankV3Table,
         termTable,
         readingTable,
-        termBankV3DefinitionTagRelationsTable,
         termBankV3DefinitionTagsTable,
-        termBankV3RuleIdentifierRelationsTable,
         termBankV3RuleIdentifierTable,
-        termBankV3MeaningsRelationsTable,
-        meaningTable,
-        termBankV3TagBankRelationsTable,
+        definitionTable,
         tagBankV3Table,
+        termBankV3DefinitionTagRelationsTable,
+        termBankV3RuleIdentifierRelationsTable,
+        termBankV3DefinitionsRelationsTable,
+        termBankV3TagBankRelationsTable,
       },
-    ).asyncMap(fullTermView.mapFromRow);
+    ).map(
+      (QueryRow row) => TermBankV3SearchResult(
+        id: row.read<int>('id'),
+        term: row.readNullable<String>('term'),
+        reading: row.readNullable<String>('reading'),
+        definitionTags: row.read<String>('definition_tags'),
+        ruleIdentifiers: row.read<String>('rule_identifiers'),
+        popularity: row.read<int>('popularity'),
+        definitions: row.read<String>('definitions'),
+        sequenceNumber: row.read<int>('sequence_number'),
+        tags: row.read<String>('tags'),
+      ),
+    );
+  }
+
+  Selectable<ExampleFtsSearchSqlResult> example_fts_search_sql(
+    String query,
+    List<String?> languageCodes,
+    int limit,
+    int offset,
+  ) {
+    var $arrayStartIndex = 4;
+    final expandedlanguageCodes = $expandVar(
+      $arrayStartIndex,
+      languageCodes.length,
+    );
+    $arrayStartIndex += languageCodes.length;
+    return customSelect(
+      'SELECT ET.id, ET.example_sentence, GROUP_CONCAT(ETT.example_translation, \'|||\') AS translations, GROUP_CONCAT(LCT.language_code, \'|||\') AS language_codes FROM example_table AS ET INNER JOIN example_fts AS FTS ON FTS."rowid" = ET.id LEFT JOIN example_translation_relations_table AS ETRT ON ETRT.example_id = ET.id LEFT JOIN example_translation_table AS ETT ON ETRT.translation_id = ETT.id LEFT JOIN language_code_table AS LCT ON LCT.id = ETT.language_code_id WHERE example_fts MATCH ?1 AND(LCT.language_code IN ($expandedlanguageCodes) OR ETT.id IS NULL)GROUP BY ET.id LIMIT ?2 OFFSET ?3',
+      variables: [
+        Variable<String>(query),
+        Variable<int>(limit),
+        Variable<int>(offset),
+        for (var $ in languageCodes) Variable<String>($),
+      ],
+      readsFrom: {
+        exampleTable,
+        exampleTranslationTable,
+        languageCodeTable,
+        exampleFts,
+        exampleTranslationRelationsTable,
+      },
+    ).map(
+      (QueryRow row) => ExampleFtsSearchSqlResult(
+        id: row.read<int>('id'),
+        exampleSentence: row.read<String>('example_sentence'),
+        translations: row.readNullable<String>('translations'),
+        languageCodes: row.readNullable<String>('language_codes'),
+      ),
+    );
   }
 
   @override
@@ -12888,24 +12028,22 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termBankV3DefinitionTagRelationsTable,
     termBankV3RuleIdentifierTable,
     termBankV3RuleIdentifierRelationsTable,
-    meaningTable,
-    termBankV3MeaningsRelationsTable,
+    definitionTable,
+    termBankV3DefinitionsRelationsTable,
     tagBankV3Table,
     termBankV3TagBankRelationsTable,
-    fullTermView,
-    tagBankV3CategoryTable,
-    tagBankV3TagCategoryRelationsTable,
     name,
-    meaning,
+    definition,
     reading,
     term,
     exampleTable,
     exampleFts,
+    languageCodeTable,
+    exampleTranslationTable,
+    exampleTranslationRelationsTable,
     exampleTableAi,
     exampleTableAd,
     exampleTableAu,
-    languageCodeTable,
-    exampleTranslationTable,
     languageCode,
     kanjiTable,
     radicalsTable,
@@ -12916,7 +12054,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     kanjiBankV3KunyomiReadingRelationsTable,
     kanjiBankV3OnyomiReadingRelationsTable,
     kanjiBankV3TagsKanjiRelationsTable,
-    kanjiBankV3MeaningsKanjiRelationsTable,
+    kanjiBankV3DefinitionsKanjiRelationsTable,
     kanjiBankV3StatNamesTable,
     kanjiBankV3StatValuesTable,
     kanjiBankV3StatsTable,
@@ -12932,8 +12070,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termMetaBankV3IpaTable,
     termMetaBankV3IpaRelationsTable,
     termMetaBankV3IpaTagRelationsTable,
-    exampleTranslationRelationsTable,
-    exampleView,
     kanji,
     radical,
   ];
@@ -13999,27 +13135,27 @@ final class $$TermBankV3TableTableReferences
   }
 
   static MultiTypedResultKey<
-    $TermBankV3MeaningsRelationsTableTable,
-    List<TermBankV3MeaningsRelationsTableData>
+    $TermBankV3DefinitionsRelationsTableTable,
+    List<TermBankV3DefinitionsRelationsTableData>
   >
-  _termBankV3MeaningsRelationsTableRefsTable(_$DaKanjiDB db) =>
+  _termBankV3DefinitionsRelationsTableRefsTable(_$DaKanjiDB db) =>
       MultiTypedResultKey.fromTable(
-        db.termBankV3MeaningsRelationsTable,
+        db.termBankV3DefinitionsRelationsTable,
         aliasName: $_aliasNameGenerator(
           db.termBankV3Table.id,
-          db.termBankV3MeaningsRelationsTable.termBankId,
+          db.termBankV3DefinitionsRelationsTable.termBankId,
         ),
       );
 
-  $$TermBankV3MeaningsRelationsTableTableProcessedTableManager
-  get termBankV3MeaningsRelationsTableRefs {
-    final manager = $$TermBankV3MeaningsRelationsTableTableTableManager(
+  $$TermBankV3DefinitionsRelationsTableTableProcessedTableManager
+  get termBankV3DefinitionsRelationsTableRefs {
+    final manager = $$TermBankV3DefinitionsRelationsTableTableTableManager(
       $_db,
-      $_db.termBankV3MeaningsRelationsTable,
+      $_db.termBankV3DefinitionsRelationsTable,
     ).filter((f) => f.termBankId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
-      _termBankV3MeaningsRelationsTableRefsTable($_db),
+      _termBankV3DefinitionsRelationsTableRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -14183,26 +13319,26 @@ class $$TermBankV3TableTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> termBankV3MeaningsRelationsTableRefs(
+  Expression<bool> termBankV3DefinitionsRelationsTableRefs(
     Expression<bool> Function(
-      $$TermBankV3MeaningsRelationsTableTableFilterComposer f,
+      $$TermBankV3DefinitionsRelationsTableTableFilterComposer f,
     )
     f,
   ) {
-    final $$TermBankV3MeaningsRelationsTableTableFilterComposer composer =
+    final $$TermBankV3DefinitionsRelationsTableTableFilterComposer composer =
         $composerBuilder(
           composer: this,
           getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3MeaningsRelationsTable,
+          referencedTable: $db.termBankV3DefinitionsRelationsTable,
           getReferencedColumn: (t) => t.termBankId,
           builder:
               (
                 joinBuilder, {
                 $addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3MeaningsRelationsTableTableFilterComposer(
+              }) => $$TermBankV3DefinitionsRelationsTableTableFilterComposer(
                 $db: $db,
-                $table: $db.termBankV3MeaningsRelationsTable,
+                $table: $db.termBankV3DefinitionsRelationsTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -14439,32 +13575,32 @@ class $$TermBankV3TableTableAnnotationComposer
     return f(composer);
   }
 
-  Expression<T> termBankV3MeaningsRelationsTableRefs<T extends Object>(
+  Expression<T> termBankV3DefinitionsRelationsTableRefs<T extends Object>(
     Expression<T> Function(
-      $$TermBankV3MeaningsRelationsTableTableAnnotationComposer a,
+      $$TermBankV3DefinitionsRelationsTableTableAnnotationComposer a,
     )
     f,
   ) {
-    final $$TermBankV3MeaningsRelationsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3MeaningsRelationsTable,
-          getReferencedColumn: (t) => t.termBankId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+    final $$TermBankV3DefinitionsRelationsTableTableAnnotationComposer
+    composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.termBankV3DefinitionsRelationsTable,
+      getReferencedColumn: (t) => t.termBankId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3DefinitionsRelationsTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.termBankV3DefinitionsRelationsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3MeaningsRelationsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.termBankV3MeaningsRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return f(composer);
   }
 
@@ -14516,7 +13652,7 @@ class $$TermBankV3TableTableTableManager
             bool readingId,
             bool termBankV3DefinitionTagRelationsTableRefs,
             bool termBankV3RuleIdentifierRelationsTableRefs,
-            bool termBankV3MeaningsRelationsTableRefs,
+            bool termBankV3DefinitionsRelationsTableRefs,
             bool termBankV3TagBankRelationsTableRefs,
           })
         > {
@@ -14575,7 +13711,7 @@ class $$TermBankV3TableTableTableManager
                 readingId = false,
                 termBankV3DefinitionTagRelationsTableRefs = false,
                 termBankV3RuleIdentifierRelationsTableRefs = false,
-                termBankV3MeaningsRelationsTableRefs = false,
+                termBankV3DefinitionsRelationsTableRefs = false,
                 termBankV3TagBankRelationsTableRefs = false,
               }) {
                 return PrefetchHooks(
@@ -14585,8 +13721,8 @@ class $$TermBankV3TableTableTableManager
                       db.termBankV3DefinitionTagRelationsTable,
                     if (termBankV3RuleIdentifierRelationsTableRefs)
                       db.termBankV3RuleIdentifierRelationsTable,
-                    if (termBankV3MeaningsRelationsTableRefs)
-                      db.termBankV3MeaningsRelationsTable,
+                    if (termBankV3DefinitionsRelationsTableRefs)
+                      db.termBankV3DefinitionsRelationsTable,
                     if (termBankV3TagBankRelationsTableRefs)
                       db.termBankV3TagBankRelationsTable,
                   ],
@@ -14687,21 +13823,23 @@ class $$TermBankV3TableTableTableManager
                               ),
                           typedResults: items,
                         ),
-                      if (termBankV3MeaningsRelationsTableRefs)
+                      if (termBankV3DefinitionsRelationsTableRefs)
                         await $_getPrefetchedData<
                           TermBankV3TableData,
                           $TermBankV3TableTable,
-                          TermBankV3MeaningsRelationsTableData
+                          TermBankV3DefinitionsRelationsTableData
                         >(
                           currentTable: table,
                           referencedTable: $$TermBankV3TableTableReferences
-                              ._termBankV3MeaningsRelationsTableRefsTable(db),
+                              ._termBankV3DefinitionsRelationsTableRefsTable(
+                                db,
+                              ),
                           managerFromTypedResult: (p0) =>
                               $$TermBankV3TableTableReferences(
                                 db,
                                 table,
                                 p0,
-                              ).termBankV3MeaningsRelationsTableRefs,
+                              ).termBankV3DefinitionsRelationsTableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.termBankId == item.id,
@@ -14754,7 +13892,7 @@ typedef $$TermBankV3TableTableProcessedTableManager =
         bool readingId,
         bool termBankV3DefinitionTagRelationsTableRefs,
         bool termBankV3RuleIdentifierRelationsTableRefs,
-        bool termBankV3MeaningsRelationsTableRefs,
+        bool termBankV3DefinitionsRelationsTableRefs,
         bool termBankV3TagBankRelationsTableRefs,
       })
     >;
@@ -16167,37 +15305,52 @@ typedef $$TermBankV3RuleIdentifierRelationsTableTableProcessedTableManager =
       TermBankV3RuleIdentifierRelationsTableData,
       PrefetchHooks Function({bool ruleIdentifierId, bool termBankId})
     >;
-typedef $$MeaningTableTableCreateCompanionBuilder =
-    MeaningTableCompanion Function({Value<int> id, required String meaning});
-typedef $$MeaningTableTableUpdateCompanionBuilder =
-    MeaningTableCompanion Function({Value<int> id, Value<String> meaning});
+typedef $$DefinitionTableTableCreateCompanionBuilder =
+    DefinitionTableCompanion Function({
+      Value<int> id,
+      required String definition,
+    });
+typedef $$DefinitionTableTableUpdateCompanionBuilder =
+    DefinitionTableCompanion Function({
+      Value<int> id,
+      Value<String> definition,
+    });
 
-final class $$MeaningTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $MeaningTableTable, MeaningTableData> {
-  $$MeaningTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+final class $$DefinitionTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $DefinitionTableTable,
+          DefinitionTableData
+        > {
+  $$DefinitionTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
 
   static MultiTypedResultKey<
-    $TermBankV3MeaningsRelationsTableTable,
-    List<TermBankV3MeaningsRelationsTableData>
+    $TermBankV3DefinitionsRelationsTableTable,
+    List<TermBankV3DefinitionsRelationsTableData>
   >
-  _termBankV3MeaningsRelationsTableRefsTable(_$DaKanjiDB db) =>
+  _termBankV3DefinitionsRelationsTableRefsTable(_$DaKanjiDB db) =>
       MultiTypedResultKey.fromTable(
-        db.termBankV3MeaningsRelationsTable,
+        db.termBankV3DefinitionsRelationsTable,
         aliasName: $_aliasNameGenerator(
-          db.meaningTable.id,
-          db.termBankV3MeaningsRelationsTable.meaningId,
+          db.definitionTable.id,
+          db.termBankV3DefinitionsRelationsTable.definitionId,
         ),
       );
 
-  $$TermBankV3MeaningsRelationsTableTableProcessedTableManager
-  get termBankV3MeaningsRelationsTableRefs {
-    final manager = $$TermBankV3MeaningsRelationsTableTableTableManager(
+  $$TermBankV3DefinitionsRelationsTableTableProcessedTableManager
+  get termBankV3DefinitionsRelationsTableRefs {
+    final manager = $$TermBankV3DefinitionsRelationsTableTableTableManager(
       $_db,
-      $_db.termBankV3MeaningsRelationsTable,
-    ).filter((f) => f.meaningId.id.sqlEquals($_itemColumn<int>('id')!));
+      $_db.termBankV3DefinitionsRelationsTable,
+    ).filter((f) => f.definitionId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
-      _termBankV3MeaningsRelationsTableRefsTable($_db),
+      _termBankV3DefinitionsRelationsTableRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -16205,27 +15358,28 @@ final class $$MeaningTableTableReferences
   }
 
   static MultiTypedResultKey<
-    $KanjiBankV3MeaningsKanjiRelationsTableTable,
-    List<KanjiBankV3MeaningsKanjiRelationsTableData>
+    $KanjiBankV3DefinitionsKanjiRelationsTableTable,
+    List<KanjiBankV3DefinitionsKanjiRelationsTableData>
   >
-  _kanjiBankV3MeaningsKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3DefinitionsKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
       MultiTypedResultKey.fromTable(
-        db.kanjiBankV3MeaningsKanjiRelationsTable,
+        db.kanjiBankV3DefinitionsKanjiRelationsTable,
         aliasName: $_aliasNameGenerator(
-          db.meaningTable.id,
-          db.kanjiBankV3MeaningsKanjiRelationsTable.meaningId,
+          db.definitionTable.id,
+          db.kanjiBankV3DefinitionsKanjiRelationsTable.definitionId,
         ),
       );
 
-  $$KanjiBankV3MeaningsKanjiRelationsTableTableProcessedTableManager
-  get kanjiBankV3MeaningsKanjiRelationsTableRefs {
-    final manager = $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager(
-      $_db,
-      $_db.kanjiBankV3MeaningsKanjiRelationsTable,
-    ).filter((f) => f.meaningId.id.sqlEquals($_itemColumn<int>('id')!));
+  $$KanjiBankV3DefinitionsKanjiRelationsTableTableProcessedTableManager
+  get kanjiBankV3DefinitionsKanjiRelationsTableRefs {
+    final manager =
+        $$KanjiBankV3DefinitionsKanjiRelationsTableTableTableManager(
+          $_db,
+          $_db.kanjiBankV3DefinitionsKanjiRelationsTable,
+        ).filter((f) => f.definitionId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
-      _kanjiBankV3MeaningsKanjiRelationsTableRefsTable($_db),
+      _kanjiBankV3DefinitionsKanjiRelationsTableRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -16233,9 +15387,9 @@ final class $$MeaningTableTableReferences
   }
 }
 
-class $$MeaningTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $MeaningTableTable> {
-  $$MeaningTableTableFilterComposer({
+class $$DefinitionTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $DefinitionTableTable> {
+  $$DefinitionTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16247,31 +15401,31 @@ class $$MeaningTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get meaning => $composableBuilder(
-    column: $table.meaning,
+  ColumnFilters<String> get definition => $composableBuilder(
+    column: $table.definition,
     builder: (column) => ColumnFilters(column),
   );
 
-  Expression<bool> termBankV3MeaningsRelationsTableRefs(
+  Expression<bool> termBankV3DefinitionsRelationsTableRefs(
     Expression<bool> Function(
-      $$TermBankV3MeaningsRelationsTableTableFilterComposer f,
+      $$TermBankV3DefinitionsRelationsTableTableFilterComposer f,
     )
     f,
   ) {
-    final $$TermBankV3MeaningsRelationsTableTableFilterComposer composer =
+    final $$TermBankV3DefinitionsRelationsTableTableFilterComposer composer =
         $composerBuilder(
           composer: this,
           getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3MeaningsRelationsTable,
-          getReferencedColumn: (t) => t.meaningId,
+          referencedTable: $db.termBankV3DefinitionsRelationsTable,
+          getReferencedColumn: (t) => t.definitionId,
           builder:
               (
                 joinBuilder, {
                 $addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3MeaningsRelationsTableTableFilterComposer(
+              }) => $$TermBankV3DefinitionsRelationsTableTableFilterComposer(
                 $db: $db,
-                $table: $db.termBankV3MeaningsRelationsTable,
+                $table: $db.termBankV3DefinitionsRelationsTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -16281,39 +15435,39 @@ class $$MeaningTableTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> kanjiBankV3MeaningsKanjiRelationsTableRefs(
+  Expression<bool> kanjiBankV3DefinitionsKanjiRelationsTableRefs(
     Expression<bool> Function(
-      $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer f,
+      $$KanjiBankV3DefinitionsKanjiRelationsTableTableFilterComposer f,
     )
     f,
   ) {
-    final $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.kanjiBankV3MeaningsKanjiRelationsTable,
-          getReferencedColumn: (t) => t.meaningId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+    final $$KanjiBankV3DefinitionsKanjiRelationsTableTableFilterComposer
+    composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiBankV3DefinitionsKanjiRelationsTable,
+      getReferencedColumn: (t) => t.definitionId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3DefinitionsKanjiRelationsTableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3DefinitionsKanjiRelationsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3MeaningsKanjiRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return f(composer);
   }
 }
 
-class $$MeaningTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $MeaningTableTable> {
-  $$MeaningTableTableOrderingComposer({
+class $$DefinitionTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $DefinitionTableTable> {
+  $$DefinitionTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16325,15 +15479,15 @@ class $$MeaningTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get meaning => $composableBuilder(
-    column: $table.meaning,
+  ColumnOrderings<String> get definition => $composableBuilder(
+    column: $table.definition,
     builder: (column) => ColumnOrderings(column),
   );
 }
 
-class $$MeaningTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $MeaningTableTable> {
-  $$MeaningTableTableAnnotationComposer({
+class $$DefinitionTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $DefinitionTableTable> {
+  $$DefinitionTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16343,58 +15497,31 @@ class $$MeaningTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get meaning =>
-      $composableBuilder(column: $table.meaning, builder: (column) => column);
+  GeneratedColumn<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => column,
+  );
 
-  Expression<T> termBankV3MeaningsRelationsTableRefs<T extends Object>(
+  Expression<T> termBankV3DefinitionsRelationsTableRefs<T extends Object>(
     Expression<T> Function(
-      $$TermBankV3MeaningsRelationsTableTableAnnotationComposer a,
+      $$TermBankV3DefinitionsRelationsTableTableAnnotationComposer a,
     )
     f,
   ) {
-    final $$TermBankV3MeaningsRelationsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3MeaningsRelationsTable,
-          getReferencedColumn: (t) => t.meaningId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3MeaningsRelationsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.termBankV3MeaningsRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
-  Expression<T> kanjiBankV3MeaningsKanjiRelationsTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer
+    final $$TermBankV3DefinitionsRelationsTableTableAnnotationComposer
     composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiBankV3MeaningsKanjiRelationsTable,
-      getReferencedColumn: (t) => t.meaningId,
+      referencedTable: $db.termBankV3DefinitionsRelationsTable,
+      getReferencedColumn: (t) => t.definitionId,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer(
+          }) => $$TermBankV3DefinitionsRelationsTableTableAnnotationComposer(
             $db: $db,
-            $table: $db.kanjiBankV3MeaningsKanjiRelationsTable,
+            $table: $db.termBankV3DefinitionsRelationsTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -16403,112 +15530,149 @@ class $$MeaningTableTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> kanjiBankV3DefinitionsKanjiRelationsTableRefs<T extends Object>(
+    Expression<T> Function(
+      $$KanjiBankV3DefinitionsKanjiRelationsTableTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$KanjiBankV3DefinitionsKanjiRelationsTableTableAnnotationComposer
+    composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiBankV3DefinitionsKanjiRelationsTable,
+      getReferencedColumn: (t) => t.definitionId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) =>
+              $$KanjiBankV3DefinitionsKanjiRelationsTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.kanjiBankV3DefinitionsKanjiRelationsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+    );
+    return f(composer);
+  }
 }
 
-class $$MeaningTableTableTableManager
+class $$DefinitionTableTableTableManager
     extends
         RootTableManager<
           _$DaKanjiDB,
-          $MeaningTableTable,
-          MeaningTableData,
-          $$MeaningTableTableFilterComposer,
-          $$MeaningTableTableOrderingComposer,
-          $$MeaningTableTableAnnotationComposer,
-          $$MeaningTableTableCreateCompanionBuilder,
-          $$MeaningTableTableUpdateCompanionBuilder,
-          (MeaningTableData, $$MeaningTableTableReferences),
-          MeaningTableData,
+          $DefinitionTableTable,
+          DefinitionTableData,
+          $$DefinitionTableTableFilterComposer,
+          $$DefinitionTableTableOrderingComposer,
+          $$DefinitionTableTableAnnotationComposer,
+          $$DefinitionTableTableCreateCompanionBuilder,
+          $$DefinitionTableTableUpdateCompanionBuilder,
+          (DefinitionTableData, $$DefinitionTableTableReferences),
+          DefinitionTableData,
           PrefetchHooks Function({
-            bool termBankV3MeaningsRelationsTableRefs,
-            bool kanjiBankV3MeaningsKanjiRelationsTableRefs,
+            bool termBankV3DefinitionsRelationsTableRefs,
+            bool kanjiBankV3DefinitionsKanjiRelationsTableRefs,
           })
         > {
-  $$MeaningTableTableTableManager(_$DaKanjiDB db, $MeaningTableTable table)
-    : super(
+  $$DefinitionTableTableTableManager(
+    _$DaKanjiDB db,
+    $DefinitionTableTable table,
+  ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$MeaningTableTableFilterComposer($db: db, $table: table),
+              $$DefinitionTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$MeaningTableTableOrderingComposer($db: db, $table: table),
+              $$DefinitionTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$MeaningTableTableAnnotationComposer($db: db, $table: table),
+              $$DefinitionTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<String> meaning = const Value.absent(),
-              }) => MeaningTableCompanion(id: id, meaning: meaning),
+                Value<String> definition = const Value.absent(),
+              }) => DefinitionTableCompanion(id: id, definition: definition),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                required String meaning,
-              }) => MeaningTableCompanion.insert(id: id, meaning: meaning),
+                required String definition,
+              }) => DefinitionTableCompanion.insert(
+                id: id,
+                definition: definition,
+              ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
                   e.readTable(table),
-                  $$MeaningTableTableReferences(db, table, e),
+                  $$DefinitionTableTableReferences(db, table, e),
                 ),
               )
               .toList(),
           prefetchHooksCallback:
               ({
-                termBankV3MeaningsRelationsTableRefs = false,
-                kanjiBankV3MeaningsKanjiRelationsTableRefs = false,
+                termBankV3DefinitionsRelationsTableRefs = false,
+                kanjiBankV3DefinitionsKanjiRelationsTableRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
-                    if (termBankV3MeaningsRelationsTableRefs)
-                      db.termBankV3MeaningsRelationsTable,
-                    if (kanjiBankV3MeaningsKanjiRelationsTableRefs)
-                      db.kanjiBankV3MeaningsKanjiRelationsTable,
+                    if (termBankV3DefinitionsRelationsTableRefs)
+                      db.termBankV3DefinitionsRelationsTable,
+                    if (kanjiBankV3DefinitionsKanjiRelationsTableRefs)
+                      db.kanjiBankV3DefinitionsKanjiRelationsTable,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
                     return [
-                      if (termBankV3MeaningsRelationsTableRefs)
+                      if (termBankV3DefinitionsRelationsTableRefs)
                         await $_getPrefetchedData<
-                          MeaningTableData,
-                          $MeaningTableTable,
-                          TermBankV3MeaningsRelationsTableData
+                          DefinitionTableData,
+                          $DefinitionTableTable,
+                          TermBankV3DefinitionsRelationsTableData
                         >(
                           currentTable: table,
-                          referencedTable: $$MeaningTableTableReferences
-                              ._termBankV3MeaningsRelationsTableRefsTable(db),
+                          referencedTable: $$DefinitionTableTableReferences
+                              ._termBankV3DefinitionsRelationsTableRefsTable(
+                                db,
+                              ),
                           managerFromTypedResult: (p0) =>
-                              $$MeaningTableTableReferences(
+                              $$DefinitionTableTableReferences(
                                 db,
                                 table,
                                 p0,
-                              ).termBankV3MeaningsRelationsTableRefs,
+                              ).termBankV3DefinitionsRelationsTableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
-                                (e) => e.meaningId == item.id,
+                                (e) => e.definitionId == item.id,
                               ),
                           typedResults: items,
                         ),
-                      if (kanjiBankV3MeaningsKanjiRelationsTableRefs)
+                      if (kanjiBankV3DefinitionsKanjiRelationsTableRefs)
                         await $_getPrefetchedData<
-                          MeaningTableData,
-                          $MeaningTableTable,
-                          KanjiBankV3MeaningsKanjiRelationsTableData
+                          DefinitionTableData,
+                          $DefinitionTableTable,
+                          KanjiBankV3DefinitionsKanjiRelationsTableData
                         >(
                           currentTable: table,
-                          referencedTable: $$MeaningTableTableReferences
-                              ._kanjiBankV3MeaningsKanjiRelationsTableRefsTable(
+                          referencedTable: $$DefinitionTableTableReferences
+                              ._kanjiBankV3DefinitionsKanjiRelationsTableRefsTable(
                                 db,
                               ),
                           managerFromTypedResult: (p0) =>
-                              $$MeaningTableTableReferences(
+                              $$DefinitionTableTableReferences(
                                 db,
                                 table,
                                 p0,
-                              ).kanjiBankV3MeaningsKanjiRelationsTableRefs,
+                              ).kanjiBankV3DefinitionsKanjiRelationsTableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
-                                (e) => e.meaningId == item.id,
+                                (e) => e.definitionId == item.id,
                               ),
                           typedResults: items,
                         ),
@@ -16520,65 +15684,65 @@ class $$MeaningTableTableTableManager
       );
 }
 
-typedef $$MeaningTableTableProcessedTableManager =
+typedef $$DefinitionTableTableProcessedTableManager =
     ProcessedTableManager<
       _$DaKanjiDB,
-      $MeaningTableTable,
-      MeaningTableData,
-      $$MeaningTableTableFilterComposer,
-      $$MeaningTableTableOrderingComposer,
-      $$MeaningTableTableAnnotationComposer,
-      $$MeaningTableTableCreateCompanionBuilder,
-      $$MeaningTableTableUpdateCompanionBuilder,
-      (MeaningTableData, $$MeaningTableTableReferences),
-      MeaningTableData,
+      $DefinitionTableTable,
+      DefinitionTableData,
+      $$DefinitionTableTableFilterComposer,
+      $$DefinitionTableTableOrderingComposer,
+      $$DefinitionTableTableAnnotationComposer,
+      $$DefinitionTableTableCreateCompanionBuilder,
+      $$DefinitionTableTableUpdateCompanionBuilder,
+      (DefinitionTableData, $$DefinitionTableTableReferences),
+      DefinitionTableData,
       PrefetchHooks Function({
-        bool termBankV3MeaningsRelationsTableRefs,
-        bool kanjiBankV3MeaningsKanjiRelationsTableRefs,
+        bool termBankV3DefinitionsRelationsTableRefs,
+        bool kanjiBankV3DefinitionsKanjiRelationsTableRefs,
       })
     >;
-typedef $$TermBankV3MeaningsRelationsTableTableCreateCompanionBuilder =
-    TermBankV3MeaningsRelationsTableCompanion Function({
+typedef $$TermBankV3DefinitionsRelationsTableTableCreateCompanionBuilder =
+    TermBankV3DefinitionsRelationsTableCompanion Function({
       Value<int> id,
-      required int meaningId,
+      required int definitionId,
       required int termBankId,
     });
-typedef $$TermBankV3MeaningsRelationsTableTableUpdateCompanionBuilder =
-    TermBankV3MeaningsRelationsTableCompanion Function({
+typedef $$TermBankV3DefinitionsRelationsTableTableUpdateCompanionBuilder =
+    TermBankV3DefinitionsRelationsTableCompanion Function({
       Value<int> id,
-      Value<int> meaningId,
+      Value<int> definitionId,
       Value<int> termBankId,
     });
 
-final class $$TermBankV3MeaningsRelationsTableTableReferences
+final class $$TermBankV3DefinitionsRelationsTableTableReferences
     extends
         BaseReferences<
           _$DaKanjiDB,
-          $TermBankV3MeaningsRelationsTableTable,
-          TermBankV3MeaningsRelationsTableData
+          $TermBankV3DefinitionsRelationsTableTable,
+          TermBankV3DefinitionsRelationsTableData
         > {
-  $$TermBankV3MeaningsRelationsTableTableReferences(
+  $$TermBankV3DefinitionsRelationsTableTableReferences(
     super.$_db,
     super.$_table,
     super.$_typedResult,
   );
 
-  static $MeaningTableTable _meaningIdTable(_$DaKanjiDB db) =>
-      db.meaningTable.createAlias(
+  static $DefinitionTableTable _definitionIdTable(_$DaKanjiDB db) =>
+      db.definitionTable.createAlias(
         $_aliasNameGenerator(
-          db.termBankV3MeaningsRelationsTable.meaningId,
-          db.meaningTable.id,
+          db.termBankV3DefinitionsRelationsTable.definitionId,
+          db.definitionTable.id,
         ),
       );
 
-  $$MeaningTableTableProcessedTableManager get meaningId {
-    final $_column = $_itemColumn<int>('meaning_id')!;
+  $$DefinitionTableTableProcessedTableManager get definitionId {
+    final $_column = $_itemColumn<int>('definition_id')!;
 
-    final manager = $$MeaningTableTableTableManager(
+    final manager = $$DefinitionTableTableTableManager(
       $_db,
-      $_db.meaningTable,
+      $_db.definitionTable,
     ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_meaningIdTable($_db));
+    final item = $_typedResult.readTableOrNull(_definitionIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -16588,7 +15752,7 @@ final class $$TermBankV3MeaningsRelationsTableTableReferences
   static $TermBankV3TableTable _termBankIdTable(_$DaKanjiDB db) =>
       db.termBankV3Table.createAlias(
         $_aliasNameGenerator(
-          db.termBankV3MeaningsRelationsTable.termBankId,
+          db.termBankV3DefinitionsRelationsTable.termBankId,
           db.termBankV3Table.id,
         ),
       );
@@ -16608,9 +15772,9 @@ final class $$TermBankV3MeaningsRelationsTableTableReferences
   }
 }
 
-class $$TermBankV3MeaningsRelationsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3MeaningsRelationsTableTable> {
-  $$TermBankV3MeaningsRelationsTableTableFilterComposer({
+class $$TermBankV3DefinitionsRelationsTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionsRelationsTableTable> {
+  $$TermBankV3DefinitionsRelationsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16622,20 +15786,20 @@ class $$TermBankV3MeaningsRelationsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  $$MeaningTableTableFilterComposer get meaningId {
-    final $$MeaningTableTableFilterComposer composer = $composerBuilder(
+  $$DefinitionTableTableFilterComposer get definitionId {
+    final $$DefinitionTableTableFilterComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.meaningId,
-      referencedTable: $db.meaningTable,
+      getCurrentColumn: (t) => t.definitionId,
+      referencedTable: $db.definitionTable,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$MeaningTableTableFilterComposer(
+          }) => $$DefinitionTableTableFilterComposer(
             $db: $db,
-            $table: $db.meaningTable,
+            $table: $db.definitionTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -16669,9 +15833,9 @@ class $$TermBankV3MeaningsRelationsTableTableFilterComposer
   }
 }
 
-class $$TermBankV3MeaningsRelationsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3MeaningsRelationsTableTable> {
-  $$TermBankV3MeaningsRelationsTableTableOrderingComposer({
+class $$TermBankV3DefinitionsRelationsTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionsRelationsTableTable> {
+  $$TermBankV3DefinitionsRelationsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16683,20 +15847,20 @@ class $$TermBankV3MeaningsRelationsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  $$MeaningTableTableOrderingComposer get meaningId {
-    final $$MeaningTableTableOrderingComposer composer = $composerBuilder(
+  $$DefinitionTableTableOrderingComposer get definitionId {
+    final $$DefinitionTableTableOrderingComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.meaningId,
-      referencedTable: $db.meaningTable,
+      getCurrentColumn: (t) => t.definitionId,
+      referencedTable: $db.definitionTable,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$MeaningTableTableOrderingComposer(
+          }) => $$DefinitionTableTableOrderingComposer(
             $db: $db,
-            $table: $db.meaningTable,
+            $table: $db.definitionTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -16730,9 +15894,9 @@ class $$TermBankV3MeaningsRelationsTableTableOrderingComposer
   }
 }
 
-class $$TermBankV3MeaningsRelationsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3MeaningsRelationsTableTable> {
-  $$TermBankV3MeaningsRelationsTableTableAnnotationComposer({
+class $$TermBankV3DefinitionsRelationsTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionsRelationsTableTable> {
+  $$TermBankV3DefinitionsRelationsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16742,20 +15906,20 @@ class $$TermBankV3MeaningsRelationsTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  $$MeaningTableTableAnnotationComposer get meaningId {
-    final $$MeaningTableTableAnnotationComposer composer = $composerBuilder(
+  $$DefinitionTableTableAnnotationComposer get definitionId {
+    final $$DefinitionTableTableAnnotationComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.meaningId,
-      referencedTable: $db.meaningTable,
+      getCurrentColumn: (t) => t.definitionId,
+      referencedTable: $db.definitionTable,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$MeaningTableTableAnnotationComposer(
+          }) => $$DefinitionTableTableAnnotationComposer(
             $db: $db,
-            $table: $db.meaningTable,
+            $table: $db.definitionTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -16789,71 +15953,71 @@ class $$TermBankV3MeaningsRelationsTableTableAnnotationComposer
   }
 }
 
-class $$TermBankV3MeaningsRelationsTableTableTableManager
+class $$TermBankV3DefinitionsRelationsTableTableTableManager
     extends
         RootTableManager<
           _$DaKanjiDB,
-          $TermBankV3MeaningsRelationsTableTable,
-          TermBankV3MeaningsRelationsTableData,
-          $$TermBankV3MeaningsRelationsTableTableFilterComposer,
-          $$TermBankV3MeaningsRelationsTableTableOrderingComposer,
-          $$TermBankV3MeaningsRelationsTableTableAnnotationComposer,
-          $$TermBankV3MeaningsRelationsTableTableCreateCompanionBuilder,
-          $$TermBankV3MeaningsRelationsTableTableUpdateCompanionBuilder,
+          $TermBankV3DefinitionsRelationsTableTable,
+          TermBankV3DefinitionsRelationsTableData,
+          $$TermBankV3DefinitionsRelationsTableTableFilterComposer,
+          $$TermBankV3DefinitionsRelationsTableTableOrderingComposer,
+          $$TermBankV3DefinitionsRelationsTableTableAnnotationComposer,
+          $$TermBankV3DefinitionsRelationsTableTableCreateCompanionBuilder,
+          $$TermBankV3DefinitionsRelationsTableTableUpdateCompanionBuilder,
           (
-            TermBankV3MeaningsRelationsTableData,
-            $$TermBankV3MeaningsRelationsTableTableReferences,
+            TermBankV3DefinitionsRelationsTableData,
+            $$TermBankV3DefinitionsRelationsTableTableReferences,
           ),
-          TermBankV3MeaningsRelationsTableData,
-          PrefetchHooks Function({bool meaningId, bool termBankId})
+          TermBankV3DefinitionsRelationsTableData,
+          PrefetchHooks Function({bool definitionId, bool termBankId})
         > {
-  $$TermBankV3MeaningsRelationsTableTableTableManager(
+  $$TermBankV3DefinitionsRelationsTableTableTableManager(
     _$DaKanjiDB db,
-    $TermBankV3MeaningsRelationsTableTable table,
+    $TermBankV3DefinitionsRelationsTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$TermBankV3MeaningsRelationsTableTableFilterComposer(
+              $$TermBankV3DefinitionsRelationsTableTableFilterComposer(
                 $db: db,
                 $table: table,
               ),
           createOrderingComposer: () =>
-              $$TermBankV3MeaningsRelationsTableTableOrderingComposer(
+              $$TermBankV3DefinitionsRelationsTableTableOrderingComposer(
                 $db: db,
                 $table: table,
               ),
           createComputedFieldComposer: () =>
-              $$TermBankV3MeaningsRelationsTableTableAnnotationComposer(
+              $$TermBankV3DefinitionsRelationsTableTableAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int> meaningId = const Value.absent(),
+                Value<int> definitionId = const Value.absent(),
                 Value<int> termBankId = const Value.absent(),
-              }) => TermBankV3MeaningsRelationsTableCompanion(
+              }) => TermBankV3DefinitionsRelationsTableCompanion(
                 id: id,
-                meaningId: meaningId,
+                definitionId: definitionId,
                 termBankId: termBankId,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                required int meaningId,
+                required int definitionId,
                 required int termBankId,
-              }) => TermBankV3MeaningsRelationsTableCompanion.insert(
+              }) => TermBankV3DefinitionsRelationsTableCompanion.insert(
                 id: id,
-                meaningId: meaningId,
+                definitionId: definitionId,
                 termBankId: termBankId,
               ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
                   e.readTable(table),
-                  $$TermBankV3MeaningsRelationsTableTableReferences(
+                  $$TermBankV3DefinitionsRelationsTableTableReferences(
                     db,
                     table,
                     e,
@@ -16861,7 +16025,7 @@ class $$TermBankV3MeaningsRelationsTableTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({meaningId = false, termBankId = false}) {
+          prefetchHooksCallback: ({definitionId = false, termBankId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -16881,17 +16045,17 @@ class $$TermBankV3MeaningsRelationsTableTableTableManager
                       dynamic
                     >
                   >(state) {
-                    if (meaningId) {
+                    if (definitionId) {
                       state =
                           state.withJoin(
                                 currentTable: table,
-                                currentColumn: table.meaningId,
+                                currentColumn: table.definitionId,
                                 referencedTable:
-                                    $$TermBankV3MeaningsRelationsTableTableReferences
-                                        ._meaningIdTable(db),
+                                    $$TermBankV3DefinitionsRelationsTableTableReferences
+                                        ._definitionIdTable(db),
                                 referencedColumn:
-                                    $$TermBankV3MeaningsRelationsTableTableReferences
-                                        ._meaningIdTable(db)
+                                    $$TermBankV3DefinitionsRelationsTableTableReferences
+                                        ._definitionIdTable(db)
                                         .id,
                               )
                               as T;
@@ -16902,10 +16066,10 @@ class $$TermBankV3MeaningsRelationsTableTableTableManager
                                 currentTable: table,
                                 currentColumn: table.termBankId,
                                 referencedTable:
-                                    $$TermBankV3MeaningsRelationsTableTableReferences
+                                    $$TermBankV3DefinitionsRelationsTableTableReferences
                                         ._termBankIdTable(db),
                                 referencedColumn:
-                                    $$TermBankV3MeaningsRelationsTableTableReferences
+                                    $$TermBankV3DefinitionsRelationsTableTableReferences
                                         ._termBankIdTable(db)
                                         .id,
                               )
@@ -16923,27 +16087,28 @@ class $$TermBankV3MeaningsRelationsTableTableTableManager
       );
 }
 
-typedef $$TermBankV3MeaningsRelationsTableTableProcessedTableManager =
+typedef $$TermBankV3DefinitionsRelationsTableTableProcessedTableManager =
     ProcessedTableManager<
       _$DaKanjiDB,
-      $TermBankV3MeaningsRelationsTableTable,
-      TermBankV3MeaningsRelationsTableData,
-      $$TermBankV3MeaningsRelationsTableTableFilterComposer,
-      $$TermBankV3MeaningsRelationsTableTableOrderingComposer,
-      $$TermBankV3MeaningsRelationsTableTableAnnotationComposer,
-      $$TermBankV3MeaningsRelationsTableTableCreateCompanionBuilder,
-      $$TermBankV3MeaningsRelationsTableTableUpdateCompanionBuilder,
+      $TermBankV3DefinitionsRelationsTableTable,
+      TermBankV3DefinitionsRelationsTableData,
+      $$TermBankV3DefinitionsRelationsTableTableFilterComposer,
+      $$TermBankV3DefinitionsRelationsTableTableOrderingComposer,
+      $$TermBankV3DefinitionsRelationsTableTableAnnotationComposer,
+      $$TermBankV3DefinitionsRelationsTableTableCreateCompanionBuilder,
+      $$TermBankV3DefinitionsRelationsTableTableUpdateCompanionBuilder,
       (
-        TermBankV3MeaningsRelationsTableData,
-        $$TermBankV3MeaningsRelationsTableTableReferences,
+        TermBankV3DefinitionsRelationsTableData,
+        $$TermBankV3DefinitionsRelationsTableTableReferences,
       ),
-      TermBankV3MeaningsRelationsTableData,
-      PrefetchHooks Function({bool meaningId, bool termBankId})
+      TermBankV3DefinitionsRelationsTableData,
+      PrefetchHooks Function({bool definitionId, bool termBankId})
     >;
 typedef $$TagBankV3TableTableCreateCompanionBuilder =
     TagBankV3TableCompanion Function({
       Value<int> id,
       required String name,
+      required String category,
       required int sortingOrder,
       required String notes,
       required int score,
@@ -16952,6 +16117,7 @@ typedef $$TagBankV3TableTableUpdateCompanionBuilder =
     TagBankV3TableCompanion Function({
       Value<int> id,
       Value<String> name,
+      Value<String> category,
       Value<int> sortingOrder,
       Value<String> notes,
       Value<int> score,
@@ -16988,34 +16154,6 @@ final class $$TagBankV3TableTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _termBankV3TagBankRelationsTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
-    $TagBankV3TagCategoryRelationsTableTable,
-    List<TagBankV3TagCategoryRelationsTableData>
-  >
-  _tagBankV3TagCategoryRelationsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.tagBankV3TagCategoryRelationsTable,
-        aliasName: $_aliasNameGenerator(
-          db.tagBankV3Table.id,
-          db.tagBankV3TagCategoryRelationsTable.tagId,
-        ),
-      );
-
-  $$TagBankV3TagCategoryRelationsTableTableProcessedTableManager
-  get tagBankV3TagCategoryRelationsTableRefs {
-    final manager = $$TagBankV3TagCategoryRelationsTableTableTableManager(
-      $_db,
-      $_db.tagBankV3TagCategoryRelationsTable,
-    ).filter((f) => f.tagId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _tagBankV3TagCategoryRelationsTableRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -17070,6 +16208,11 @@ class $$TagBankV3TableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<int> get sortingOrder => $composableBuilder(
     column: $table.sortingOrder,
     builder: (column) => ColumnFilters(column),
@@ -17105,35 +16248,6 @@ class $$TagBankV3TableTableFilterComposer
               }) => $$TermBankV3TagBankRelationsTableTableFilterComposer(
                 $db: $db,
                 $table: $db.termBankV3TagBankRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
-  Expression<bool> tagBankV3TagCategoryRelationsTableRefs(
-    Expression<bool> Function(
-      $$TagBankV3TagCategoryRelationsTableTableFilterComposer f,
-    )
-    f,
-  ) {
-    final $$TagBankV3TagCategoryRelationsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.tagBankV3TagCategoryRelationsTable,
-          getReferencedColumn: (t) => t.tagId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TagBankV3TagCategoryRelationsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.tagBankV3TagCategoryRelationsTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -17192,6 +16306,11 @@ class $$TagBankV3TableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get sortingOrder => $composableBuilder(
     column: $table.sortingOrder,
     builder: (column) => ColumnOrderings(column),
@@ -17222,6 +16341,9 @@ class $$TagBankV3TableTableAnnotationComposer
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
 
   GeneratedColumn<int> get sortingOrder => $composableBuilder(
     column: $table.sortingOrder,
@@ -17254,35 +16376,6 @@ class $$TagBankV3TableTableAnnotationComposer
               }) => $$TermBankV3TagBankRelationsTableTableAnnotationComposer(
                 $db: $db,
                 $table: $db.termBankV3TagBankRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
-  Expression<T> tagBankV3TagCategoryRelationsTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.tagBankV3TagCategoryRelationsTable,
-          getReferencedColumn: (t) => t.tagId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.tagBankV3TagCategoryRelationsTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -17337,7 +16430,6 @@ class $$TagBankV3TableTableTableManager
           TagBankV3TableData,
           PrefetchHooks Function({
             bool termBankV3TagBankRelationsTableRefs,
-            bool tagBankV3TagCategoryRelationsTableRefs,
             bool kanjiBankV3TagsKanjiRelationsTableRefs,
           })
         > {
@@ -17356,12 +16448,14 @@ class $$TagBankV3TableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
+                Value<String> category = const Value.absent(),
                 Value<int> sortingOrder = const Value.absent(),
                 Value<String> notes = const Value.absent(),
                 Value<int> score = const Value.absent(),
               }) => TagBankV3TableCompanion(
                 id: id,
                 name: name,
+                category: category,
                 sortingOrder: sortingOrder,
                 notes: notes,
                 score: score,
@@ -17370,12 +16464,14 @@ class $$TagBankV3TableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required String name,
+                required String category,
                 required int sortingOrder,
                 required String notes,
                 required int score,
               }) => TagBankV3TableCompanion.insert(
                 id: id,
                 name: name,
+                category: category,
                 sortingOrder: sortingOrder,
                 notes: notes,
                 score: score,
@@ -17391,7 +16487,6 @@ class $$TagBankV3TableTableTableManager
           prefetchHooksCallback:
               ({
                 termBankV3TagBankRelationsTableRefs = false,
-                tagBankV3TagCategoryRelationsTableRefs = false,
                 kanjiBankV3TagsKanjiRelationsTableRefs = false,
               }) {
                 return PrefetchHooks(
@@ -17399,8 +16494,6 @@ class $$TagBankV3TableTableTableManager
                   explicitlyWatchedTables: [
                     if (termBankV3TagBankRelationsTableRefs)
                       db.termBankV3TagBankRelationsTable,
-                    if (tagBankV3TagCategoryRelationsTableRefs)
-                      db.tagBankV3TagCategoryRelationsTable,
                     if (kanjiBankV3TagsKanjiRelationsTableRefs)
                       db.kanjiBankV3TagsKanjiRelationsTable,
                   ],
@@ -17425,27 +16518,6 @@ class $$TagBankV3TableTableTableManager
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.tagBankId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (tagBankV3TagCategoryRelationsTableRefs)
-                        await $_getPrefetchedData<
-                          TagBankV3TableData,
-                          $TagBankV3TableTable,
-                          TagBankV3TagCategoryRelationsTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$TagBankV3TableTableReferences
-                              ._tagBankV3TagCategoryRelationsTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$TagBankV3TableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).tagBankV3TagCategoryRelationsTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.tagId == item.id,
                               ),
                           typedResults: items,
                         ),
@@ -17492,7 +16564,6 @@ typedef $$TagBankV3TableTableProcessedTableManager =
       TagBankV3TableData,
       PrefetchHooks Function({
         bool termBankV3TagBankRelationsTableRefs,
-        bool tagBankV3TagCategoryRelationsTableRefs,
         bool kanjiBankV3TagsKanjiRelationsTableRefs,
       })
     >;
@@ -17898,694 +16969,6 @@ typedef $$TermBankV3TagBankRelationsTableTableProcessedTableManager =
       ),
       TermBankV3TagBankRelationsTableData,
       PrefetchHooks Function({bool tagBankId, bool termBankId})
-    >;
-typedef $$TagBankV3CategoryTableTableCreateCompanionBuilder =
-    TagBankV3CategoryTableCompanion Function({
-      Value<int> id,
-      required String category,
-    });
-typedef $$TagBankV3CategoryTableTableUpdateCompanionBuilder =
-    TagBankV3CategoryTableCompanion Function({
-      Value<int> id,
-      Value<String> category,
-    });
-
-final class $$TagBankV3CategoryTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $TagBankV3CategoryTableTable,
-          TagBankV3CategoryTableData
-        > {
-  $$TagBankV3CategoryTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static MultiTypedResultKey<
-    $TagBankV3TagCategoryRelationsTableTable,
-    List<TagBankV3TagCategoryRelationsTableData>
-  >
-  _tagBankV3TagCategoryRelationsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.tagBankV3TagCategoryRelationsTable,
-        aliasName: $_aliasNameGenerator(
-          db.tagBankV3CategoryTable.id,
-          db.tagBankV3TagCategoryRelationsTable.categoryId,
-        ),
-      );
-
-  $$TagBankV3TagCategoryRelationsTableTableProcessedTableManager
-  get tagBankV3TagCategoryRelationsTableRefs {
-    final manager = $$TagBankV3TagCategoryRelationsTableTableTableManager(
-      $_db,
-      $_db.tagBankV3TagCategoryRelationsTable,
-    ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _tagBankV3TagCategoryRelationsTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$TagBankV3CategoryTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TagBankV3CategoryTableTable> {
-  $$TagBankV3CategoryTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get category => $composableBuilder(
-    column: $table.category,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  Expression<bool> tagBankV3TagCategoryRelationsTableRefs(
-    Expression<bool> Function(
-      $$TagBankV3TagCategoryRelationsTableTableFilterComposer f,
-    )
-    f,
-  ) {
-    final $$TagBankV3TagCategoryRelationsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.tagBankV3TagCategoryRelationsTable,
-          getReferencedColumn: (t) => t.categoryId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TagBankV3TagCategoryRelationsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.tagBankV3TagCategoryRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$TagBankV3CategoryTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TagBankV3CategoryTableTable> {
-  $$TagBankV3CategoryTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get category => $composableBuilder(
-    column: $table.category,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$TagBankV3CategoryTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TagBankV3CategoryTableTable> {
-  $$TagBankV3CategoryTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get category =>
-      $composableBuilder(column: $table.category, builder: (column) => column);
-
-  Expression<T> tagBankV3TagCategoryRelationsTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.tagBankV3TagCategoryRelationsTable,
-          getReferencedColumn: (t) => t.categoryId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.tagBankV3TagCategoryRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$TagBankV3CategoryTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $TagBankV3CategoryTableTable,
-          TagBankV3CategoryTableData,
-          $$TagBankV3CategoryTableTableFilterComposer,
-          $$TagBankV3CategoryTableTableOrderingComposer,
-          $$TagBankV3CategoryTableTableAnnotationComposer,
-          $$TagBankV3CategoryTableTableCreateCompanionBuilder,
-          $$TagBankV3CategoryTableTableUpdateCompanionBuilder,
-          (TagBankV3CategoryTableData, $$TagBankV3CategoryTableTableReferences),
-          TagBankV3CategoryTableData,
-          PrefetchHooks Function({bool tagBankV3TagCategoryRelationsTableRefs})
-        > {
-  $$TagBankV3CategoryTableTableTableManager(
-    _$DaKanjiDB db,
-    $TagBankV3CategoryTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$TagBankV3CategoryTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$TagBankV3CategoryTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$TagBankV3CategoryTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> category = const Value.absent(),
-              }) => TagBankV3CategoryTableCompanion(id: id, category: category),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required String category,
-              }) => TagBankV3CategoryTableCompanion.insert(
-                id: id,
-                category: category,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$TagBankV3CategoryTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback:
-              ({tagBankV3TagCategoryRelationsTableRefs = false}) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [
-                    if (tagBankV3TagCategoryRelationsTableRefs)
-                      db.tagBankV3TagCategoryRelationsTable,
-                  ],
-                  addJoins: null,
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (tagBankV3TagCategoryRelationsTableRefs)
-                        await $_getPrefetchedData<
-                          TagBankV3CategoryTableData,
-                          $TagBankV3CategoryTableTable,
-                          TagBankV3TagCategoryRelationsTableData
-                        >(
-                          currentTable: table,
-                          referencedTable:
-                              $$TagBankV3CategoryTableTableReferences
-                                  ._tagBankV3TagCategoryRelationsTableRefsTable(
-                                    db,
-                                  ),
-                          managerFromTypedResult: (p0) =>
-                              $$TagBankV3CategoryTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).tagBankV3TagCategoryRelationsTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.categoryId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
-                  },
-                );
-              },
-        ),
-      );
-}
-
-typedef $$TagBankV3CategoryTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $TagBankV3CategoryTableTable,
-      TagBankV3CategoryTableData,
-      $$TagBankV3CategoryTableTableFilterComposer,
-      $$TagBankV3CategoryTableTableOrderingComposer,
-      $$TagBankV3CategoryTableTableAnnotationComposer,
-      $$TagBankV3CategoryTableTableCreateCompanionBuilder,
-      $$TagBankV3CategoryTableTableUpdateCompanionBuilder,
-      (TagBankV3CategoryTableData, $$TagBankV3CategoryTableTableReferences),
-      TagBankV3CategoryTableData,
-      PrefetchHooks Function({bool tagBankV3TagCategoryRelationsTableRefs})
-    >;
-typedef $$TagBankV3TagCategoryRelationsTableTableCreateCompanionBuilder =
-    TagBankV3TagCategoryRelationsTableCompanion Function({
-      Value<int> id,
-      required int tagId,
-      required int categoryId,
-    });
-typedef $$TagBankV3TagCategoryRelationsTableTableUpdateCompanionBuilder =
-    TagBankV3TagCategoryRelationsTableCompanion Function({
-      Value<int> id,
-      Value<int> tagId,
-      Value<int> categoryId,
-    });
-
-final class $$TagBankV3TagCategoryRelationsTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $TagBankV3TagCategoryRelationsTableTable,
-          TagBankV3TagCategoryRelationsTableData
-        > {
-  $$TagBankV3TagCategoryRelationsTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $TagBankV3TableTable _tagIdTable(_$DaKanjiDB db) =>
-      db.tagBankV3Table.createAlias(
-        $_aliasNameGenerator(
-          db.tagBankV3TagCategoryRelationsTable.tagId,
-          db.tagBankV3Table.id,
-        ),
-      );
-
-  $$TagBankV3TableTableProcessedTableManager get tagId {
-    final $_column = $_itemColumn<int>('tag_id')!;
-
-    final manager = $$TagBankV3TableTableTableManager(
-      $_db,
-      $_db.tagBankV3Table,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_tagIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $TagBankV3CategoryTableTable _categoryIdTable(_$DaKanjiDB db) =>
-      db.tagBankV3CategoryTable.createAlias(
-        $_aliasNameGenerator(
-          db.tagBankV3TagCategoryRelationsTable.categoryId,
-          db.tagBankV3CategoryTable.id,
-        ),
-      );
-
-  $$TagBankV3CategoryTableTableProcessedTableManager get categoryId {
-    final $_column = $_itemColumn<int>('category_id')!;
-
-    final manager = $$TagBankV3CategoryTableTableTableManager(
-      $_db,
-      $_db.tagBankV3CategoryTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$TagBankV3TagCategoryRelationsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TagBankV3TagCategoryRelationsTableTable> {
-  $$TagBankV3TagCategoryRelationsTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$TagBankV3TableTableFilterComposer get tagId {
-    final $$TagBankV3TableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.tagId,
-      referencedTable: $db.tagBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TagBankV3TableTableFilterComposer(
-            $db: $db,
-            $table: $db.tagBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TagBankV3CategoryTableTableFilterComposer get categoryId {
-    final $$TagBankV3CategoryTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.categoryId,
-          referencedTable: $db.tagBankV3CategoryTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TagBankV3CategoryTableTableFilterComposer(
-                $db: $db,
-                $table: $db.tagBankV3CategoryTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-}
-
-class $$TagBankV3TagCategoryRelationsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TagBankV3TagCategoryRelationsTableTable> {
-  $$TagBankV3TagCategoryRelationsTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$TagBankV3TableTableOrderingComposer get tagId {
-    final $$TagBankV3TableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.tagId,
-      referencedTable: $db.tagBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TagBankV3TableTableOrderingComposer(
-            $db: $db,
-            $table: $db.tagBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TagBankV3CategoryTableTableOrderingComposer get categoryId {
-    final $$TagBankV3CategoryTableTableOrderingComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.categoryId,
-          referencedTable: $db.tagBankV3CategoryTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TagBankV3CategoryTableTableOrderingComposer(
-                $db: $db,
-                $table: $db.tagBankV3CategoryTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-}
-
-class $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TagBankV3TagCategoryRelationsTableTable> {
-  $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  $$TagBankV3TableTableAnnotationComposer get tagId {
-    final $$TagBankV3TableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.tagId,
-      referencedTable: $db.tagBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TagBankV3TableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.tagBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TagBankV3CategoryTableTableAnnotationComposer get categoryId {
-    final $$TagBankV3CategoryTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.categoryId,
-          referencedTable: $db.tagBankV3CategoryTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TagBankV3CategoryTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.tagBankV3CategoryTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-}
-
-class $$TagBankV3TagCategoryRelationsTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $TagBankV3TagCategoryRelationsTableTable,
-          TagBankV3TagCategoryRelationsTableData,
-          $$TagBankV3TagCategoryRelationsTableTableFilterComposer,
-          $$TagBankV3TagCategoryRelationsTableTableOrderingComposer,
-          $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer,
-          $$TagBankV3TagCategoryRelationsTableTableCreateCompanionBuilder,
-          $$TagBankV3TagCategoryRelationsTableTableUpdateCompanionBuilder,
-          (
-            TagBankV3TagCategoryRelationsTableData,
-            $$TagBankV3TagCategoryRelationsTableTableReferences,
-          ),
-          TagBankV3TagCategoryRelationsTableData,
-          PrefetchHooks Function({bool tagId, bool categoryId})
-        > {
-  $$TagBankV3TagCategoryRelationsTableTableTableManager(
-    _$DaKanjiDB db,
-    $TagBankV3TagCategoryRelationsTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$TagBankV3TagCategoryRelationsTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$TagBankV3TagCategoryRelationsTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> tagId = const Value.absent(),
-                Value<int> categoryId = const Value.absent(),
-              }) => TagBankV3TagCategoryRelationsTableCompanion(
-                id: id,
-                tagId: tagId,
-                categoryId: categoryId,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int tagId,
-                required int categoryId,
-              }) => TagBankV3TagCategoryRelationsTableCompanion.insert(
-                id: id,
-                tagId: tagId,
-                categoryId: categoryId,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$TagBankV3TagCategoryRelationsTableTableReferences(
-                    db,
-                    table,
-                    e,
-                  ),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({tagId = false, categoryId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (tagId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.tagId,
-                                referencedTable:
-                                    $$TagBankV3TagCategoryRelationsTableTableReferences
-                                        ._tagIdTable(db),
-                                referencedColumn:
-                                    $$TagBankV3TagCategoryRelationsTableTableReferences
-                                        ._tagIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (categoryId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.categoryId,
-                                referencedTable:
-                                    $$TagBankV3TagCategoryRelationsTableTableReferences
-                                        ._categoryIdTable(db),
-                                referencedColumn:
-                                    $$TagBankV3TagCategoryRelationsTableTableReferences
-                                        ._categoryIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$TagBankV3TagCategoryRelationsTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $TagBankV3TagCategoryRelationsTableTable,
-      TagBankV3TagCategoryRelationsTableData,
-      $$TagBankV3TagCategoryRelationsTableTableFilterComposer,
-      $$TagBankV3TagCategoryRelationsTableTableOrderingComposer,
-      $$TagBankV3TagCategoryRelationsTableTableAnnotationComposer,
-      $$TagBankV3TagCategoryRelationsTableTableCreateCompanionBuilder,
-      $$TagBankV3TagCategoryRelationsTableTableUpdateCompanionBuilder,
-      (
-        TagBankV3TagCategoryRelationsTableData,
-        $$TagBankV3TagCategoryRelationsTableTableReferences,
-      ),
-      TagBankV3TagCategoryRelationsTableData,
-      PrefetchHooks Function({bool tagId, bool categoryId})
     >;
 typedef $$ExampleTableTableCreateCompanionBuilder =
     ExampleTableCompanion Function({
@@ -19689,6 +18072,412 @@ typedef $$ExampleTranslationTableTableProcessedTableManager =
         bool languageCodeId,
         bool exampleTranslationRelationsTableRefs,
       })
+    >;
+typedef $$ExampleTranslationRelationsTableTableCreateCompanionBuilder =
+    ExampleTranslationRelationsTableCompanion Function({
+      Value<int> id,
+      required int exampleId,
+      required int translationId,
+    });
+typedef $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder =
+    ExampleTranslationRelationsTableCompanion Function({
+      Value<int> id,
+      Value<int> exampleId,
+      Value<int> translationId,
+    });
+
+final class $$ExampleTranslationRelationsTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $ExampleTranslationRelationsTableTable,
+          ExampleTranslationRelationsTableData
+        > {
+  $$ExampleTranslationRelationsTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ExampleTableTable _exampleIdTable(_$DaKanjiDB db) =>
+      db.exampleTable.createAlias(
+        $_aliasNameGenerator(
+          db.exampleTranslationRelationsTable.exampleId,
+          db.exampleTable.id,
+        ),
+      );
+
+  $$ExampleTableTableProcessedTableManager get exampleId {
+    final $_column = $_itemColumn<int>('example_id')!;
+
+    final manager = $$ExampleTableTableTableManager(
+      $_db,
+      $_db.exampleTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_exampleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $ExampleTranslationTableTable _translationIdTable(_$DaKanjiDB db) =>
+      db.exampleTranslationTable.createAlias(
+        $_aliasNameGenerator(
+          db.exampleTranslationRelationsTable.translationId,
+          db.exampleTranslationTable.id,
+        ),
+      );
+
+  $$ExampleTranslationTableTableProcessedTableManager get translationId {
+    final $_column = $_itemColumn<int>('translation_id')!;
+
+    final manager = $$ExampleTranslationTableTableTableManager(
+      $_db,
+      $_db.exampleTranslationTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_translationIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ExampleTranslationRelationsTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
+  $$ExampleTranslationRelationsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ExampleTableTableFilterComposer get exampleId {
+    final $$ExampleTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.exampleId,
+      referencedTable: $db.exampleTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ExampleTableTableFilterComposer(
+            $db: $db,
+            $table: $db.exampleTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ExampleTranslationTableTableFilterComposer get translationId {
+    final $$ExampleTranslationTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.translationId,
+          referencedTable: $db.exampleTranslationTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationTableTableFilterComposer(
+                $db: $db,
+                $table: $db.exampleTranslationTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$ExampleTranslationRelationsTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
+  $$ExampleTranslationRelationsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ExampleTableTableOrderingComposer get exampleId {
+    final $$ExampleTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.exampleId,
+      referencedTable: $db.exampleTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ExampleTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.exampleTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ExampleTranslationTableTableOrderingComposer get translationId {
+    final $$ExampleTranslationTableTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.translationId,
+          referencedTable: $db.exampleTranslationTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationTableTableOrderingComposer(
+                $db: $db,
+                $table: $db.exampleTranslationTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$ExampleTranslationRelationsTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
+  $$ExampleTranslationRelationsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$ExampleTableTableAnnotationComposer get exampleId {
+    final $$ExampleTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.exampleId,
+      referencedTable: $db.exampleTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ExampleTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.exampleTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ExampleTranslationTableTableAnnotationComposer get translationId {
+    final $$ExampleTranslationTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.translationId,
+          referencedTable: $db.exampleTranslationTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.exampleTranslationTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$ExampleTranslationRelationsTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $ExampleTranslationRelationsTableTable,
+          ExampleTranslationRelationsTableData,
+          $$ExampleTranslationRelationsTableTableFilterComposer,
+          $$ExampleTranslationRelationsTableTableOrderingComposer,
+          $$ExampleTranslationRelationsTableTableAnnotationComposer,
+          $$ExampleTranslationRelationsTableTableCreateCompanionBuilder,
+          $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder,
+          (
+            ExampleTranslationRelationsTableData,
+            $$ExampleTranslationRelationsTableTableReferences,
+          ),
+          ExampleTranslationRelationsTableData,
+          PrefetchHooks Function({bool exampleId, bool translationId})
+        > {
+  $$ExampleTranslationRelationsTableTableTableManager(
+    _$DaKanjiDB db,
+    $ExampleTranslationRelationsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleTranslationRelationsTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ExampleTranslationRelationsTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleTranslationRelationsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> exampleId = const Value.absent(),
+                Value<int> translationId = const Value.absent(),
+              }) => ExampleTranslationRelationsTableCompanion(
+                id: id,
+                exampleId: exampleId,
+                translationId: translationId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int exampleId,
+                required int translationId,
+              }) => ExampleTranslationRelationsTableCompanion.insert(
+                id: id,
+                exampleId: exampleId,
+                translationId: translationId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ExampleTranslationRelationsTableTableReferences(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({exampleId = false, translationId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (exampleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.exampleId,
+                                referencedTable:
+                                    $$ExampleTranslationRelationsTableTableReferences
+                                        ._exampleIdTable(db),
+                                referencedColumn:
+                                    $$ExampleTranslationRelationsTableTableReferences
+                                        ._exampleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (translationId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.translationId,
+                                referencedTable:
+                                    $$ExampleTranslationRelationsTableTableReferences
+                                        ._translationIdTable(db),
+                                referencedColumn:
+                                    $$ExampleTranslationRelationsTableTableReferences
+                                        ._translationIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ExampleTranslationRelationsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $ExampleTranslationRelationsTableTable,
+      ExampleTranslationRelationsTableData,
+      $$ExampleTranslationRelationsTableTableFilterComposer,
+      $$ExampleTranslationRelationsTableTableOrderingComposer,
+      $$ExampleTranslationRelationsTableTableAnnotationComposer,
+      $$ExampleTranslationRelationsTableTableCreateCompanionBuilder,
+      $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder,
+      (
+        ExampleTranslationRelationsTableData,
+        $$ExampleTranslationRelationsTableTableReferences,
+      ),
+      ExampleTranslationRelationsTableData,
+      PrefetchHooks Function({bool exampleId, bool translationId})
     >;
 typedef $$KanjiTableTableCreateCompanionBuilder =
     KanjiTableCompanion Function({Value<int> id, required String kanji});
@@ -22086,27 +20875,28 @@ final class $$KanjiBankV3TableTableReferences
   }
 
   static MultiTypedResultKey<
-    $KanjiBankV3MeaningsKanjiRelationsTableTable,
-    List<KanjiBankV3MeaningsKanjiRelationsTableData>
+    $KanjiBankV3DefinitionsKanjiRelationsTableTable,
+    List<KanjiBankV3DefinitionsKanjiRelationsTableData>
   >
-  _kanjiBankV3MeaningsKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3DefinitionsKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
       MultiTypedResultKey.fromTable(
-        db.kanjiBankV3MeaningsKanjiRelationsTable,
+        db.kanjiBankV3DefinitionsKanjiRelationsTable,
         aliasName: $_aliasNameGenerator(
           db.kanjiBankV3Table.id,
-          db.kanjiBankV3MeaningsKanjiRelationsTable.kanjiId,
+          db.kanjiBankV3DefinitionsKanjiRelationsTable.kanjiId,
         ),
       );
 
-  $$KanjiBankV3MeaningsKanjiRelationsTableTableProcessedTableManager
-  get kanjiBankV3MeaningsKanjiRelationsTableRefs {
-    final manager = $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager(
-      $_db,
-      $_db.kanjiBankV3MeaningsKanjiRelationsTable,
-    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
+  $$KanjiBankV3DefinitionsKanjiRelationsTableTableProcessedTableManager
+  get kanjiBankV3DefinitionsKanjiRelationsTableRefs {
+    final manager =
+        $$KanjiBankV3DefinitionsKanjiRelationsTableTableTableManager(
+          $_db,
+          $_db.kanjiBankV3DefinitionsKanjiRelationsTable,
+        ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
-      _kanjiBankV3MeaningsKanjiRelationsTableRefsTable($_db),
+      _kanjiBankV3DefinitionsKanjiRelationsTableRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -22289,32 +21079,32 @@ class $$KanjiBankV3TableTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> kanjiBankV3MeaningsKanjiRelationsTableRefs(
+  Expression<bool> kanjiBankV3DefinitionsKanjiRelationsTableRefs(
     Expression<bool> Function(
-      $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer f,
+      $$KanjiBankV3DefinitionsKanjiRelationsTableTableFilterComposer f,
     )
     f,
   ) {
-    final $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.kanjiBankV3MeaningsKanjiRelationsTable,
-          getReferencedColumn: (t) => t.kanjiId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+    final $$KanjiBankV3DefinitionsKanjiRelationsTableTableFilterComposer
+    composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiBankV3DefinitionsKanjiRelationsTable,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3DefinitionsKanjiRelationsTableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3DefinitionsKanjiRelationsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3MeaningsKanjiRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return f(composer);
   }
 
@@ -22555,31 +21345,32 @@ class $$KanjiBankV3TableTableAnnotationComposer
     return f(composer);
   }
 
-  Expression<T> kanjiBankV3MeaningsKanjiRelationsTableRefs<T extends Object>(
+  Expression<T> kanjiBankV3DefinitionsKanjiRelationsTableRefs<T extends Object>(
     Expression<T> Function(
-      $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer a,
+      $$KanjiBankV3DefinitionsKanjiRelationsTableTableAnnotationComposer a,
     )
     f,
   ) {
-    final $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer
+    final $$KanjiBankV3DefinitionsKanjiRelationsTableTableAnnotationComposer
     composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiBankV3MeaningsKanjiRelationsTable,
+      referencedTable: $db.kanjiBankV3DefinitionsKanjiRelationsTable,
       getReferencedColumn: (t) => t.kanjiId,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3MeaningsKanjiRelationsTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
+          }) =>
+              $$KanjiBankV3DefinitionsKanjiRelationsTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.kanjiBankV3DefinitionsKanjiRelationsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
     );
     return f(composer);
   }
@@ -22633,7 +21424,7 @@ class $$KanjiBankV3TableTableTableManager
             bool kanjiBankV3KunyomiReadingRelationsTableRefs,
             bool kanjiBankV3OnyomiReadingRelationsTableRefs,
             bool kanjiBankV3TagsKanjiRelationsTableRefs,
-            bool kanjiBankV3MeaningsKanjiRelationsTableRefs,
+            bool kanjiBankV3DefinitionsKanjiRelationsTableRefs,
             bool kanjiBankV3StatKanjiRelationsTableRefs,
           })
         > {
@@ -22685,7 +21476,7 @@ class $$KanjiBankV3TableTableTableManager
                 kanjiBankV3KunyomiReadingRelationsTableRefs = false,
                 kanjiBankV3OnyomiReadingRelationsTableRefs = false,
                 kanjiBankV3TagsKanjiRelationsTableRefs = false,
-                kanjiBankV3MeaningsKanjiRelationsTableRefs = false,
+                kanjiBankV3DefinitionsKanjiRelationsTableRefs = false,
                 kanjiBankV3StatKanjiRelationsTableRefs = false,
               }) {
                 return PrefetchHooks(
@@ -22697,8 +21488,8 @@ class $$KanjiBankV3TableTableTableManager
                       db.kanjiBankV3OnyomiReadingRelationsTable,
                     if (kanjiBankV3TagsKanjiRelationsTableRefs)
                       db.kanjiBankV3TagsKanjiRelationsTable,
-                    if (kanjiBankV3MeaningsKanjiRelationsTableRefs)
-                      db.kanjiBankV3MeaningsKanjiRelationsTable,
+                    if (kanjiBankV3DefinitionsKanjiRelationsTableRefs)
+                      db.kanjiBankV3DefinitionsKanjiRelationsTable,
                     if (kanjiBankV3StatKanjiRelationsTableRefs)
                       db.kanjiBankV3StatKanjiRelationsTable,
                   ],
@@ -22820,15 +21611,15 @@ class $$KanjiBankV3TableTableTableManager
                               ),
                           typedResults: items,
                         ),
-                      if (kanjiBankV3MeaningsKanjiRelationsTableRefs)
+                      if (kanjiBankV3DefinitionsKanjiRelationsTableRefs)
                         await $_getPrefetchedData<
                           KanjiBankV3TableData,
                           $KanjiBankV3TableTable,
-                          KanjiBankV3MeaningsKanjiRelationsTableData
+                          KanjiBankV3DefinitionsKanjiRelationsTableData
                         >(
                           currentTable: table,
                           referencedTable: $$KanjiBankV3TableTableReferences
-                              ._kanjiBankV3MeaningsKanjiRelationsTableRefsTable(
+                              ._kanjiBankV3DefinitionsKanjiRelationsTableRefsTable(
                                 db,
                               ),
                           managerFromTypedResult: (p0) =>
@@ -22836,7 +21627,7 @@ class $$KanjiBankV3TableTableTableManager
                                 db,
                                 table,
                                 p0,
-                              ).kanjiBankV3MeaningsKanjiRelationsTableRefs,
+                              ).kanjiBankV3DefinitionsKanjiRelationsTableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.kanjiId == item.id,
@@ -22890,7 +21681,7 @@ typedef $$KanjiBankV3TableTableProcessedTableManager =
         bool kanjiBankV3KunyomiReadingRelationsTableRefs,
         bool kanjiBankV3OnyomiReadingRelationsTableRefs,
         bool kanjiBankV3TagsKanjiRelationsTableRefs,
-        bool kanjiBankV3MeaningsKanjiRelationsTableRefs,
+        bool kanjiBankV3DefinitionsKanjiRelationsTableRefs,
         bool kanjiBankV3StatKanjiRelationsTableRefs,
       })
     >;
@@ -24109,48 +22900,48 @@ typedef $$KanjiBankV3TagsKanjiRelationsTableTableProcessedTableManager =
       KanjiBankV3TagsKanjiRelationsTableData,
       PrefetchHooks Function({bool tagId, bool kanjiId})
     >;
-typedef $$KanjiBankV3MeaningsKanjiRelationsTableTableCreateCompanionBuilder =
-    KanjiBankV3MeaningsKanjiRelationsTableCompanion Function({
+typedef $$KanjiBankV3DefinitionsKanjiRelationsTableTableCreateCompanionBuilder =
+    KanjiBankV3DefinitionsKanjiRelationsTableCompanion Function({
       Value<int> id,
-      required int meaningId,
+      required int definitionId,
       required int kanjiId,
     });
-typedef $$KanjiBankV3MeaningsKanjiRelationsTableTableUpdateCompanionBuilder =
-    KanjiBankV3MeaningsKanjiRelationsTableCompanion Function({
+typedef $$KanjiBankV3DefinitionsKanjiRelationsTableTableUpdateCompanionBuilder =
+    KanjiBankV3DefinitionsKanjiRelationsTableCompanion Function({
       Value<int> id,
-      Value<int> meaningId,
+      Value<int> definitionId,
       Value<int> kanjiId,
     });
 
-final class $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences
+final class $$KanjiBankV3DefinitionsKanjiRelationsTableTableReferences
     extends
         BaseReferences<
           _$DaKanjiDB,
-          $KanjiBankV3MeaningsKanjiRelationsTableTable,
-          KanjiBankV3MeaningsKanjiRelationsTableData
+          $KanjiBankV3DefinitionsKanjiRelationsTableTable,
+          KanjiBankV3DefinitionsKanjiRelationsTableData
         > {
-  $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences(
+  $$KanjiBankV3DefinitionsKanjiRelationsTableTableReferences(
     super.$_db,
     super.$_table,
     super.$_typedResult,
   );
 
-  static $MeaningTableTable _meaningIdTable(_$DaKanjiDB db) =>
-      db.meaningTable.createAlias(
+  static $DefinitionTableTable _definitionIdTable(_$DaKanjiDB db) =>
+      db.definitionTable.createAlias(
         $_aliasNameGenerator(
-          db.kanjiBankV3MeaningsKanjiRelationsTable.meaningId,
-          db.meaningTable.id,
+          db.kanjiBankV3DefinitionsKanjiRelationsTable.definitionId,
+          db.definitionTable.id,
         ),
       );
 
-  $$MeaningTableTableProcessedTableManager get meaningId {
-    final $_column = $_itemColumn<int>('meaning_id')!;
+  $$DefinitionTableTableProcessedTableManager get definitionId {
+    final $_column = $_itemColumn<int>('definition_id')!;
 
-    final manager = $$MeaningTableTableTableManager(
+    final manager = $$DefinitionTableTableTableManager(
       $_db,
-      $_db.meaningTable,
+      $_db.definitionTable,
     ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_meaningIdTable($_db));
+    final item = $_typedResult.readTableOrNull(_definitionIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -24160,7 +22951,7 @@ final class $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences
   static $KanjiBankV3TableTable _kanjiIdTable(_$DaKanjiDB db) =>
       db.kanjiBankV3Table.createAlias(
         $_aliasNameGenerator(
-          db.kanjiBankV3MeaningsKanjiRelationsTable.kanjiId,
+          db.kanjiBankV3DefinitionsKanjiRelationsTable.kanjiId,
           db.kanjiBankV3Table.id,
         ),
       );
@@ -24180,10 +22971,10 @@ final class $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences
   }
 }
 
-class $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer
+class $$KanjiBankV3DefinitionsKanjiRelationsTableTableFilterComposer
     extends
-        Composer<_$DaKanjiDB, $KanjiBankV3MeaningsKanjiRelationsTableTable> {
-  $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer({
+        Composer<_$DaKanjiDB, $KanjiBankV3DefinitionsKanjiRelationsTableTable> {
+  $$KanjiBankV3DefinitionsKanjiRelationsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -24195,20 +22986,20 @@ class $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  $$MeaningTableTableFilterComposer get meaningId {
-    final $$MeaningTableTableFilterComposer composer = $composerBuilder(
+  $$DefinitionTableTableFilterComposer get definitionId {
+    final $$DefinitionTableTableFilterComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.meaningId,
-      referencedTable: $db.meaningTable,
+      getCurrentColumn: (t) => t.definitionId,
+      referencedTable: $db.definitionTable,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$MeaningTableTableFilterComposer(
+          }) => $$DefinitionTableTableFilterComposer(
             $db: $db,
-            $table: $db.meaningTable,
+            $table: $db.definitionTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -24242,10 +23033,10 @@ class $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer
   }
 }
 
-class $$KanjiBankV3MeaningsKanjiRelationsTableTableOrderingComposer
+class $$KanjiBankV3DefinitionsKanjiRelationsTableTableOrderingComposer
     extends
-        Composer<_$DaKanjiDB, $KanjiBankV3MeaningsKanjiRelationsTableTable> {
-  $$KanjiBankV3MeaningsKanjiRelationsTableTableOrderingComposer({
+        Composer<_$DaKanjiDB, $KanjiBankV3DefinitionsKanjiRelationsTableTable> {
+  $$KanjiBankV3DefinitionsKanjiRelationsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -24257,20 +23048,20 @@ class $$KanjiBankV3MeaningsKanjiRelationsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  $$MeaningTableTableOrderingComposer get meaningId {
-    final $$MeaningTableTableOrderingComposer composer = $composerBuilder(
+  $$DefinitionTableTableOrderingComposer get definitionId {
+    final $$DefinitionTableTableOrderingComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.meaningId,
-      referencedTable: $db.meaningTable,
+      getCurrentColumn: (t) => t.definitionId,
+      referencedTable: $db.definitionTable,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$MeaningTableTableOrderingComposer(
+          }) => $$DefinitionTableTableOrderingComposer(
             $db: $db,
-            $table: $db.meaningTable,
+            $table: $db.definitionTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -24304,10 +23095,10 @@ class $$KanjiBankV3MeaningsKanjiRelationsTableTableOrderingComposer
   }
 }
 
-class $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer
+class $$KanjiBankV3DefinitionsKanjiRelationsTableTableAnnotationComposer
     extends
-        Composer<_$DaKanjiDB, $KanjiBankV3MeaningsKanjiRelationsTableTable> {
-  $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer({
+        Composer<_$DaKanjiDB, $KanjiBankV3DefinitionsKanjiRelationsTableTable> {
+  $$KanjiBankV3DefinitionsKanjiRelationsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -24317,20 +23108,20 @@ class $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  $$MeaningTableTableAnnotationComposer get meaningId {
-    final $$MeaningTableTableAnnotationComposer composer = $composerBuilder(
+  $$DefinitionTableTableAnnotationComposer get definitionId {
+    final $$DefinitionTableTableAnnotationComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.meaningId,
-      referencedTable: $db.meaningTable,
+      getCurrentColumn: (t) => t.definitionId,
+      referencedTable: $db.definitionTable,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$MeaningTableTableAnnotationComposer(
+          }) => $$DefinitionTableTableAnnotationComposer(
             $db: $db,
-            $table: $db.meaningTable,
+            $table: $db.definitionTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -24364,71 +23155,71 @@ class $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer
   }
 }
 
-class $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager
+class $$KanjiBankV3DefinitionsKanjiRelationsTableTableTableManager
     extends
         RootTableManager<
           _$DaKanjiDB,
-          $KanjiBankV3MeaningsKanjiRelationsTableTable,
-          KanjiBankV3MeaningsKanjiRelationsTableData,
-          $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer,
-          $$KanjiBankV3MeaningsKanjiRelationsTableTableOrderingComposer,
-          $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer,
-          $$KanjiBankV3MeaningsKanjiRelationsTableTableCreateCompanionBuilder,
-          $$KanjiBankV3MeaningsKanjiRelationsTableTableUpdateCompanionBuilder,
+          $KanjiBankV3DefinitionsKanjiRelationsTableTable,
+          KanjiBankV3DefinitionsKanjiRelationsTableData,
+          $$KanjiBankV3DefinitionsKanjiRelationsTableTableFilterComposer,
+          $$KanjiBankV3DefinitionsKanjiRelationsTableTableOrderingComposer,
+          $$KanjiBankV3DefinitionsKanjiRelationsTableTableAnnotationComposer,
+          $$KanjiBankV3DefinitionsKanjiRelationsTableTableCreateCompanionBuilder,
+          $$KanjiBankV3DefinitionsKanjiRelationsTableTableUpdateCompanionBuilder,
           (
-            KanjiBankV3MeaningsKanjiRelationsTableData,
-            $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences,
+            KanjiBankV3DefinitionsKanjiRelationsTableData,
+            $$KanjiBankV3DefinitionsKanjiRelationsTableTableReferences,
           ),
-          KanjiBankV3MeaningsKanjiRelationsTableData,
-          PrefetchHooks Function({bool meaningId, bool kanjiId})
+          KanjiBankV3DefinitionsKanjiRelationsTableData,
+          PrefetchHooks Function({bool definitionId, bool kanjiId})
         > {
-  $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager(
+  $$KanjiBankV3DefinitionsKanjiRelationsTableTableTableManager(
     _$DaKanjiDB db,
-    $KanjiBankV3MeaningsKanjiRelationsTableTable table,
+    $KanjiBankV3DefinitionsKanjiRelationsTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer(
+              $$KanjiBankV3DefinitionsKanjiRelationsTableTableFilterComposer(
                 $db: db,
                 $table: table,
               ),
           createOrderingComposer: () =>
-              $$KanjiBankV3MeaningsKanjiRelationsTableTableOrderingComposer(
+              $$KanjiBankV3DefinitionsKanjiRelationsTableTableOrderingComposer(
                 $db: db,
                 $table: table,
               ),
           createComputedFieldComposer: () =>
-              $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer(
+              $$KanjiBankV3DefinitionsKanjiRelationsTableTableAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int> meaningId = const Value.absent(),
+                Value<int> definitionId = const Value.absent(),
                 Value<int> kanjiId = const Value.absent(),
-              }) => KanjiBankV3MeaningsKanjiRelationsTableCompanion(
+              }) => KanjiBankV3DefinitionsKanjiRelationsTableCompanion(
                 id: id,
-                meaningId: meaningId,
+                definitionId: definitionId,
                 kanjiId: kanjiId,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                required int meaningId,
+                required int definitionId,
                 required int kanjiId,
-              }) => KanjiBankV3MeaningsKanjiRelationsTableCompanion.insert(
+              }) => KanjiBankV3DefinitionsKanjiRelationsTableCompanion.insert(
                 id: id,
-                meaningId: meaningId,
+                definitionId: definitionId,
                 kanjiId: kanjiId,
               ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
                   e.readTable(table),
-                  $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences(
+                  $$KanjiBankV3DefinitionsKanjiRelationsTableTableReferences(
                     db,
                     table,
                     e,
@@ -24436,7 +23227,7 @@ class $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({meaningId = false, kanjiId = false}) {
+          prefetchHooksCallback: ({definitionId = false, kanjiId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -24456,17 +23247,17 @@ class $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager
                       dynamic
                     >
                   >(state) {
-                    if (meaningId) {
+                    if (definitionId) {
                       state =
                           state.withJoin(
                                 currentTable: table,
-                                currentColumn: table.meaningId,
+                                currentColumn: table.definitionId,
                                 referencedTable:
-                                    $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences
-                                        ._meaningIdTable(db),
+                                    $$KanjiBankV3DefinitionsKanjiRelationsTableTableReferences
+                                        ._definitionIdTable(db),
                                 referencedColumn:
-                                    $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences
-                                        ._meaningIdTable(db)
+                                    $$KanjiBankV3DefinitionsKanjiRelationsTableTableReferences
+                                        ._definitionIdTable(db)
                                         .id,
                               )
                               as T;
@@ -24477,10 +23268,10 @@ class $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager
                                 currentTable: table,
                                 currentColumn: table.kanjiId,
                                 referencedTable:
-                                    $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences
+                                    $$KanjiBankV3DefinitionsKanjiRelationsTableTableReferences
                                         ._kanjiIdTable(db),
                                 referencedColumn:
-                                    $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences
+                                    $$KanjiBankV3DefinitionsKanjiRelationsTableTableReferences
                                         ._kanjiIdTable(db)
                                         .id,
                               )
@@ -24498,22 +23289,22 @@ class $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager
       );
 }
 
-typedef $$KanjiBankV3MeaningsKanjiRelationsTableTableProcessedTableManager =
+typedef $$KanjiBankV3DefinitionsKanjiRelationsTableTableProcessedTableManager =
     ProcessedTableManager<
       _$DaKanjiDB,
-      $KanjiBankV3MeaningsKanjiRelationsTableTable,
-      KanjiBankV3MeaningsKanjiRelationsTableData,
-      $$KanjiBankV3MeaningsKanjiRelationsTableTableFilterComposer,
-      $$KanjiBankV3MeaningsKanjiRelationsTableTableOrderingComposer,
-      $$KanjiBankV3MeaningsKanjiRelationsTableTableAnnotationComposer,
-      $$KanjiBankV3MeaningsKanjiRelationsTableTableCreateCompanionBuilder,
-      $$KanjiBankV3MeaningsKanjiRelationsTableTableUpdateCompanionBuilder,
+      $KanjiBankV3DefinitionsKanjiRelationsTableTable,
+      KanjiBankV3DefinitionsKanjiRelationsTableData,
+      $$KanjiBankV3DefinitionsKanjiRelationsTableTableFilterComposer,
+      $$KanjiBankV3DefinitionsKanjiRelationsTableTableOrderingComposer,
+      $$KanjiBankV3DefinitionsKanjiRelationsTableTableAnnotationComposer,
+      $$KanjiBankV3DefinitionsKanjiRelationsTableTableCreateCompanionBuilder,
+      $$KanjiBankV3DefinitionsKanjiRelationsTableTableUpdateCompanionBuilder,
       (
-        KanjiBankV3MeaningsKanjiRelationsTableData,
-        $$KanjiBankV3MeaningsKanjiRelationsTableTableReferences,
+        KanjiBankV3DefinitionsKanjiRelationsTableData,
+        $$KanjiBankV3DefinitionsKanjiRelationsTableTableReferences,
       ),
-      KanjiBankV3MeaningsKanjiRelationsTableData,
-      PrefetchHooks Function({bool meaningId, bool kanjiId})
+      KanjiBankV3DefinitionsKanjiRelationsTableData,
+      PrefetchHooks Function({bool definitionId, bool kanjiId})
     >;
 typedef $$KanjiBankV3StatNamesTableTableCreateCompanionBuilder =
     KanjiBankV3StatNamesTableCompanion Function({
@@ -30847,412 +29638,6 @@ typedef $$TermMetaBankV3IpaTagRelationsTableTableProcessedTableManager =
       TermMetaBankV3IpaTagRelationsTableData,
       PrefetchHooks Function({bool ipaId, bool tagId})
     >;
-typedef $$ExampleTranslationRelationsTableTableCreateCompanionBuilder =
-    ExampleTranslationRelationsTableCompanion Function({
-      Value<int> id,
-      required int exampleId,
-      required int translationId,
-    });
-typedef $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder =
-    ExampleTranslationRelationsTableCompanion Function({
-      Value<int> id,
-      Value<int> exampleId,
-      Value<int> translationId,
-    });
-
-final class $$ExampleTranslationRelationsTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $ExampleTranslationRelationsTableTable,
-          ExampleTranslationRelationsTableData
-        > {
-  $$ExampleTranslationRelationsTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $ExampleTableTable _exampleIdTable(_$DaKanjiDB db) =>
-      db.exampleTable.createAlias(
-        $_aliasNameGenerator(
-          db.exampleTranslationRelationsTable.exampleId,
-          db.exampleTable.id,
-        ),
-      );
-
-  $$ExampleTableTableProcessedTableManager get exampleId {
-    final $_column = $_itemColumn<int>('example_id')!;
-
-    final manager = $$ExampleTableTableTableManager(
-      $_db,
-      $_db.exampleTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_exampleIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $ExampleTranslationTableTable _translationIdTable(_$DaKanjiDB db) =>
-      db.exampleTranslationTable.createAlias(
-        $_aliasNameGenerator(
-          db.exampleTranslationRelationsTable.translationId,
-          db.exampleTranslationTable.id,
-        ),
-      );
-
-  $$ExampleTranslationTableTableProcessedTableManager get translationId {
-    final $_column = $_itemColumn<int>('translation_id')!;
-
-    final manager = $$ExampleTranslationTableTableTableManager(
-      $_db,
-      $_db.exampleTranslationTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_translationIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$ExampleTranslationRelationsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
-  $$ExampleTranslationRelationsTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$ExampleTableTableFilterComposer get exampleId {
-    final $$ExampleTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.exampleId,
-      referencedTable: $db.exampleTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ExampleTableTableFilterComposer(
-            $db: $db,
-            $table: $db.exampleTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$ExampleTranslationTableTableFilterComposer get translationId {
-    final $$ExampleTranslationTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.translationId,
-          referencedTable: $db.exampleTranslationTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationTableTableFilterComposer(
-                $db: $db,
-                $table: $db.exampleTranslationTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-}
-
-class $$ExampleTranslationRelationsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
-  $$ExampleTranslationRelationsTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$ExampleTableTableOrderingComposer get exampleId {
-    final $$ExampleTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.exampleId,
-      referencedTable: $db.exampleTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ExampleTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.exampleTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$ExampleTranslationTableTableOrderingComposer get translationId {
-    final $$ExampleTranslationTableTableOrderingComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.translationId,
-          referencedTable: $db.exampleTranslationTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationTableTableOrderingComposer(
-                $db: $db,
-                $table: $db.exampleTranslationTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-}
-
-class $$ExampleTranslationRelationsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
-  $$ExampleTranslationRelationsTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  $$ExampleTableTableAnnotationComposer get exampleId {
-    final $$ExampleTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.exampleId,
-      referencedTable: $db.exampleTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ExampleTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.exampleTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$ExampleTranslationTableTableAnnotationComposer get translationId {
-    final $$ExampleTranslationTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.translationId,
-          referencedTable: $db.exampleTranslationTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.exampleTranslationTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-}
-
-class $$ExampleTranslationRelationsTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $ExampleTranslationRelationsTableTable,
-          ExampleTranslationRelationsTableData,
-          $$ExampleTranslationRelationsTableTableFilterComposer,
-          $$ExampleTranslationRelationsTableTableOrderingComposer,
-          $$ExampleTranslationRelationsTableTableAnnotationComposer,
-          $$ExampleTranslationRelationsTableTableCreateCompanionBuilder,
-          $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder,
-          (
-            ExampleTranslationRelationsTableData,
-            $$ExampleTranslationRelationsTableTableReferences,
-          ),
-          ExampleTranslationRelationsTableData,
-          PrefetchHooks Function({bool exampleId, bool translationId})
-        > {
-  $$ExampleTranslationRelationsTableTableTableManager(
-    _$DaKanjiDB db,
-    $ExampleTranslationRelationsTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ExampleTranslationRelationsTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$ExampleTranslationRelationsTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$ExampleTranslationRelationsTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> exampleId = const Value.absent(),
-                Value<int> translationId = const Value.absent(),
-              }) => ExampleTranslationRelationsTableCompanion(
-                id: id,
-                exampleId: exampleId,
-                translationId: translationId,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int exampleId,
-                required int translationId,
-              }) => ExampleTranslationRelationsTableCompanion.insert(
-                id: id,
-                exampleId: exampleId,
-                translationId: translationId,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$ExampleTranslationRelationsTableTableReferences(
-                    db,
-                    table,
-                    e,
-                  ),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({exampleId = false, translationId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (exampleId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.exampleId,
-                                referencedTable:
-                                    $$ExampleTranslationRelationsTableTableReferences
-                                        ._exampleIdTable(db),
-                                referencedColumn:
-                                    $$ExampleTranslationRelationsTableTableReferences
-                                        ._exampleIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (translationId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.translationId,
-                                referencedTable:
-                                    $$ExampleTranslationRelationsTableTableReferences
-                                        ._translationIdTable(db),
-                                referencedColumn:
-                                    $$ExampleTranslationRelationsTableTableReferences
-                                        ._translationIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$ExampleTranslationRelationsTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $ExampleTranslationRelationsTableTable,
-      ExampleTranslationRelationsTableData,
-      $$ExampleTranslationRelationsTableTableFilterComposer,
-      $$ExampleTranslationRelationsTableTableOrderingComposer,
-      $$ExampleTranslationRelationsTableTableAnnotationComposer,
-      $$ExampleTranslationRelationsTableTableCreateCompanionBuilder,
-      $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder,
-      (
-        ExampleTranslationRelationsTableData,
-        $$ExampleTranslationRelationsTableTableReferences,
-      ),
-      ExampleTranslationRelationsTableData,
-      PrefetchHooks Function({bool exampleId, bool translationId})
-    >;
 
 class $DaKanjiDBManager {
   final _$DaKanjiDB _db;
@@ -31287,13 +29672,13 @@ class $DaKanjiDBManager {
         _db,
         _db.termBankV3RuleIdentifierRelationsTable,
       );
-  $$MeaningTableTableTableManager get meaningTable =>
-      $$MeaningTableTableTableManager(_db, _db.meaningTable);
-  $$TermBankV3MeaningsRelationsTableTableTableManager
-  get termBankV3MeaningsRelationsTable =>
-      $$TermBankV3MeaningsRelationsTableTableTableManager(
+  $$DefinitionTableTableTableManager get definitionTable =>
+      $$DefinitionTableTableTableManager(_db, _db.definitionTable);
+  $$TermBankV3DefinitionsRelationsTableTableTableManager
+  get termBankV3DefinitionsRelationsTable =>
+      $$TermBankV3DefinitionsRelationsTableTableTableManager(
         _db,
-        _db.termBankV3MeaningsRelationsTable,
+        _db.termBankV3DefinitionsRelationsTable,
       );
   $$TagBankV3TableTableTableManager get tagBankV3Table =>
       $$TagBankV3TableTableTableManager(_db, _db.tagBankV3Table);
@@ -31302,17 +29687,6 @@ class $DaKanjiDBManager {
       $$TermBankV3TagBankRelationsTableTableTableManager(
         _db,
         _db.termBankV3TagBankRelationsTable,
-      );
-  $$TagBankV3CategoryTableTableTableManager get tagBankV3CategoryTable =>
-      $$TagBankV3CategoryTableTableTableManager(
-        _db,
-        _db.tagBankV3CategoryTable,
-      );
-  $$TagBankV3TagCategoryRelationsTableTableTableManager
-  get tagBankV3TagCategoryRelationsTable =>
-      $$TagBankV3TagCategoryRelationsTableTableTableManager(
-        _db,
-        _db.tagBankV3TagCategoryRelationsTable,
       );
   $$ExampleTableTableTableManager get exampleTable =>
       $$ExampleTableTableTableManager(_db, _db.exampleTable);
@@ -31324,6 +29698,12 @@ class $DaKanjiDBManager {
       $$ExampleTranslationTableTableTableManager(
         _db,
         _db.exampleTranslationTable,
+      );
+  $$ExampleTranslationRelationsTableTableTableManager
+  get exampleTranslationRelationsTable =>
+      $$ExampleTranslationRelationsTableTableTableManager(
+        _db,
+        _db.exampleTranslationRelationsTable,
       );
   $$KanjiTableTableTableManager get kanjiTable =>
       $$KanjiTableTableTableManager(_db, _db.kanjiTable);
@@ -31359,11 +29739,11 @@ class $DaKanjiDBManager {
         _db,
         _db.kanjiBankV3TagsKanjiRelationsTable,
       );
-  $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager
-  get kanjiBankV3MeaningsKanjiRelationsTable =>
-      $$KanjiBankV3MeaningsKanjiRelationsTableTableTableManager(
+  $$KanjiBankV3DefinitionsKanjiRelationsTableTableTableManager
+  get kanjiBankV3DefinitionsKanjiRelationsTable =>
+      $$KanjiBankV3DefinitionsKanjiRelationsTableTableTableManager(
         _db,
-        _db.kanjiBankV3MeaningsKanjiRelationsTable,
+        _db.kanjiBankV3DefinitionsKanjiRelationsTable,
       );
   $$KanjiBankV3StatNamesTableTableTableManager get kanjiBankV3StatNamesTable =>
       $$KanjiBankV3StatNamesTableTableTableManager(
@@ -31437,10 +29817,40 @@ class $DaKanjiDBManager {
         _db,
         _db.termMetaBankV3IpaTagRelationsTable,
       );
-  $$ExampleTranslationRelationsTableTableTableManager
-  get exampleTranslationRelationsTable =>
-      $$ExampleTranslationRelationsTableTableTableManager(
-        _db,
-        _db.exampleTranslationRelationsTable,
-      );
+}
+
+class TermBankV3SearchResult {
+  final int id;
+  final String? term;
+  final String? reading;
+  final String definitionTags;
+  final String ruleIdentifiers;
+  final int popularity;
+  final String definitions;
+  final int sequenceNumber;
+  final String tags;
+  TermBankV3SearchResult({
+    required this.id,
+    this.term,
+    this.reading,
+    required this.definitionTags,
+    required this.ruleIdentifiers,
+    required this.popularity,
+    required this.definitions,
+    required this.sequenceNumber,
+    required this.tags,
+  });
+}
+
+class ExampleFtsSearchSqlResult {
+  final int id;
+  final String exampleSentence;
+  final String? translations;
+  final String? languageCodes;
+  ExampleFtsSearchSqlResult({
+    required this.id,
+    required this.exampleSentence,
+    this.translations,
+    this.languageCodes,
+  });
 }

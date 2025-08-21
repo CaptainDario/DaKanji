@@ -40,7 +40,6 @@ Future testTermBankV3(DaKanjiDB db) async {
       print(res);
     }
     expect(result.isNotEmpty , true);
-    final pass = result.any((e) => termBankTestCaseExpectations[i] == e);
-    expect(pass, true);
+    expect(result, equals(termBankTestCaseExpectations[i])); 
   }
 }

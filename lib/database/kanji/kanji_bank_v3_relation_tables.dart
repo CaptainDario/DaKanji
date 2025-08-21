@@ -2,7 +2,7 @@
 import 'package:drift/drift.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/general_tables/meaning_tables.dart';
+import 'package:dakanji_db/database/general_tables/definition_tables.dart';
 import 'package:dakanji_db/database/general_tables/reading_tables.dart';
 import 'package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart';
 import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
@@ -43,13 +43,13 @@ class KanjiBankV3TagsKanjiRelationsTable extends Table {
 
 }
 
-/// Contains the relationships between meanings and kanjis
-class KanjiBankV3MeaningsKanjiRelationsTable extends Table {
+/// Contains the relationships between definitions and kanjis
+class KanjiBankV3DefinitionsKanjiRelationsTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
-  /// the id of the associated meaning
-  IntColumn get meaningId => integer().references(MeaningTable, #id)();
+  /// the id of the associated definition
+  IntColumn get definitionId => integer().references(DefinitionTable, #id)();
   /// the id of the associated kanji
   IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
 

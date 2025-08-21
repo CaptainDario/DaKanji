@@ -2,13 +2,13 @@
 import 'package:drift/drift.dart';
 
 /// Contains the meanins entries to which other tables link
-@TableIndex(name: 'meaning', columns: {#meaning})
-class MeaningTable extends Table {
+@TableIndex(name: 'definition', columns: {#definition})
+class DefinitionTable extends Table {
   
   /// id of this entry
   IntColumn get id => integer().autoIncrement()();
 
-  /// the meaning of this entry
-  TextColumn get meaning => text().unique()();
+  /// the definition of this entry
+  TextColumn get definition => text().unique()();
 
 }
