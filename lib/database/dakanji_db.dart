@@ -94,8 +94,9 @@ part 'dakanji_db.g.dart';
 
   ],
   include: {
-    'example/example_views.drift', 'example/example_queries.drift',
+    'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
     'term/term_bank_v3_views.drift', 'term/term_bank_v3_queries.drift',
+    'example/example_views.drift', 'example/example_queries.drift',
   }
 )
 class DaKanjiDB extends _$DaKanjiDB {

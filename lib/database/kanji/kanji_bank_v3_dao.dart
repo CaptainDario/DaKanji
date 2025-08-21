@@ -31,131 +31,16 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   
 
   /// Returns all kanji entries that match contain any of the given Kanji
-  Future<List<KanjiBankV3Entry>?> getKanjiBankEntriesFromKanji(List<String> kanji) async {
+  Future<List<KanjiBankV3Entry>?> getKanjiBankEntriesFromKanji(String kanji) async {
 
-    final onyomiT  = alias(readingTable, 'onyomi');
-    final kunyomiT = alias(readingTable, 'kunyomi');
+    List<KanjiBankV3Entry> searchResults =
+      (await db.kanji_bank_v3_search(kanji).get())
+      .map((e) => KanjiBankV3Entry.fromKanjiBankV3SearchResult(e))
+      .toList();
 
-    final query = (selectOnly(kanjiBankV3Table)
-      .join([
-        // kanji
-        innerJoin(
-          kanjiTable,
-          kanjiTable.id.equalsExp(kanjiBankV3Table.kanjiId)
-        ),
-        // onyomi
-        innerJoin(
-          kanjiBankV3OnyomiReadingRelationsTable,
-          kanjiBankV3OnyomiReadingRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
-        ),
-        innerJoin(
-          onyomiT,
-          kanjiBankV3OnyomiReadingRelationsTable.onyomiReadingId.equalsExp(onyomiT.id)
-        ),
-        // kunyomi
-        innerJoin(
-          kanjiBankV3KunyomiReadingRelationsTable,
-          kanjiBankV3KunyomiReadingRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
-        ),
-        innerJoin(
-          kunyomiT,
-          kanjiBankV3KunyomiReadingRelationsTable.kunyomiReadingId.equalsExp(kunyomiT.id)
-        ),
-        // tags
-        innerJoin(
-          kanjiBankV3TagsKanjiRelationsTable,
-          kanjiBankV3TagsKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
-        ),
-        innerJoin(
-          tagBankV3Table,
-          kanjiBankV3TagsKanjiRelationsTable.tagId.equalsExp(tagBankV3Table.id)
-        ),
-        // definitions
-        innerJoin(
-          kanjiBankV3DefinitionsKanjiRelationsTable,
-          kanjiBankV3DefinitionsKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
-        ),
-        innerJoin(
-          definitionTable,
-          kanjiBankV3DefinitionsKanjiRelationsTable.definitionId.equalsExp(definitionTable.id)
-        ),
-        // Stat names / values
-        innerJoin(
-          kanjiBankV3StatKanjiRelationsTable,
-          kanjiBankV3StatKanjiRelationsTable.kanjiId.equalsExp(kanjiBankV3Table.id)
-        ),
-        innerJoin(
-          kanjiBankV3StatsTable,
-          kanjiBankV3StatKanjiRelationsTable.statId.equalsExp(kanjiBankV3StatsTable.id)
-        ),
-        innerJoin(
-          kanjiBankV3StatNamesTable,
-          kanjiBankV3StatNamesTable.id.equalsExp(kanjiBankV3StatsTable.statNameId,),
-        ),
-        innerJoin(
-          kanjiBankV3StatValuesTable,
-          kanjiBankV3StatValuesTable.id.equalsExp(kanjiBankV3StatsTable.statValueId,),
-        ),
-      ]))
-      ..where(kanjiTable.kanji.isIn(kanji))
-      ..addColumns([
-        kanjiTable.kanji,
-        onyomiT.reading.groupConcat(distinct: true),
-        kunyomiT.reading.groupConcat(distinct: true),
-        tagBankV3Table.name.groupConcat(distinct: true),
-        definitionTable.definition.groupConcat(distinct: true),
-
-        kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true),
-        kanjiBankV3StatNamesTable.statName.groupConcat(distinct: true)
-      ]);
-
-    // Fetching data from the query
-    final result = await query.get();
-    print(result.first.rawData.data);
-
-    // Process and return the result
-    return (await Future.wait(result.map((row) async {
-      final kanji = row.read<String>(kanjiTable.kanji);
-      print(kanji);
-      
-      // Read the concatenated results
-      final onyomi     = row.read(
-        onyomiT.reading.groupConcat(distinct: true))
-        ?.split(",");
-      final kunyomi    = row.read(
-        kunyomiT.reading.groupConcat(distinct: true))
-        ?.split(",");
-      final tags       = await Future.wait((row.read(
-        tagBankV3Table.name.groupConcat(distinct: true))
-        ?.split(","))
-        !.map((e) async => await db.tagBankV3Dao.getTagByName(e),));
-      final definitions   = row.read(
-        definitionTable.definition.groupConcat(distinct: true))
-        ?.split(",");
-      final statValues = row.read(
-        kanjiBankV3StatValuesTable.statValue.groupConcat(distinct: true))
-        ?.split(",");
-      final statNames  = row.read(
-        kanjiBankV3StatNamesTable.statName.groupConcat(distinct: true))
-        ?.split(",");
-
-      return KanjiBankV3Entry(
-        kanji: kanji!,
-        onyomis: onyomi,
-        kunyomis: kunyomi,
-        tags: tags,
-        definitions: definitions,
-        stats: statValues != null && statNames != null
-          ? List.generate(statValues.length, (i) => KanjiBankV3EntryStat(
-            name: statNames[i],
-            value: statValues[i],
-          ))
-          : []
-      );
-    }))).toList();
+    return searchResults;
 
   }
-
 
   // ---------------------------------------------------------------------------
   /// Get all readings and their ids 

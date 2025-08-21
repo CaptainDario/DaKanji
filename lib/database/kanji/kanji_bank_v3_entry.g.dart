@@ -6,8 +6,8 @@ part of 'kanji_bank_v3_entry.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_KanjiBankV3Entry _$KanjiBankV3EntryFromJson(Map<String, dynamic> json) =>
-    _KanjiBankV3Entry(
+KanjiBankV3Entry _$KanjiBankV3EntryFromJson(Map<String, dynamic> json) =>
+    KanjiBankV3Entry(
       kanji: json['kanji'] as String,
       onyomis: (json['onyomis'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -26,7 +26,7 @@ _KanjiBankV3Entry _$KanjiBankV3EntryFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$KanjiBankV3EntryToJson(_KanjiBankV3Entry instance) =>
+Map<String, dynamic> _$KanjiBankV3EntryToJson(KanjiBankV3Entry instance) =>
     <String, dynamic>{
       'kanji': instance.kanji,
       'onyomis': instance.onyomis,

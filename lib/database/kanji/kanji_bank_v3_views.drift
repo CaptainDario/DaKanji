@@ -1,0 +1,58 @@
+import 'package:dakanji_db/database/general_tables/term_tables.dart';
+import 'package:dakanji_db/database/general_tables/reading_tables.dart';
+import 'package:dakanji_db/database/general_tables/definition_tables.dart';
+import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
+import 'package:dakanji_db/database/tag/tag_bank_v3_relation_tables.dart';
+import 'package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart';
+import 'package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart';
+import 'package:dakanji_db/database/kanji/kanji_bank_v3_stats_tables.dart';
+
+
+CREATE VIEW IF NOT EXISTS kanji_details_view AS
+    SELECT
+        KT.kanji,
+        onyomi.reading AS onyomi_reading,
+        kunyomi.reading AS kunyomi_reading,
+        TB3T.id AS tag_id,
+        TB3T.name AS tag_name,
+        TB3T.category AS tag_category,
+        TB3T.sorting_order AS tag_sorting_order,
+        TB3T.notes AS tag_notes,
+        TB3T.score AS tag_score,
+        DT.definition,
+        KB3SNT.stat_name,
+        KB3SVT.stat_value
+    FROM
+        kanji_bank_v3_table AS KB3T
+    -- Join to get the actual Kanji character.
+    INNER JOIN kanji_table AS KT
+        ON KT.id = KB3T.kanji_id
+    -- Joins for Onyomi readings.
+    INNER JOIN kanji_bank_v3_onyomi_reading_relations_table AS KB3ORRT
+        ON KB3ORRT.kanji_id = KB3T.id
+    INNER JOIN reading_table AS onyomi
+        ON KB3ORRT.onyomi_reading_id = onyomi.id
+    -- Joins for Kunyomi readings.
+    INNER JOIN kanji_bank_v3_kunyomi_reading_relations_table AS KB3KRRT
+        ON KB3KRRT.kanji_id = KB3T.id
+    INNER JOIN reading_table AS kunyomi
+        ON KB3KRRT.kunyomi_reading_id = kunyomi.id
+    -- Joins for tags.
+    INNER JOIN kanji_bank_v3_tags_kanji_relations_table AS KB3TKRT
+        ON KB3TKRT.kanji_id = KB3T.id
+    INNER JOIN tag_bank_v3_table AS TB3T
+        ON KB3TKRT.tag_id = TB3T.id
+    -- Joins for definitions.
+    INNER JOIN kanji_bank_v3_definitions_kanji_relations_table AS KB3DKRT
+        ON KB3DKRT.kanji_id = KB3T.id
+    INNER JOIN definition_table AS DT
+        ON KB3DKRT.definition_id = DT.id
+    -- Joins for stats (names and values).
+    INNER JOIN kanji_bank_v3_stat_kanji_relations_table AS KB3SKRT
+        ON KB3SKRT.kanji_id = KB3T.id
+    INNER JOIN kanji_bank_v3_stats_table AS KB3ST
+        ON KB3SKRT.stat_id = KB3ST.id
+    INNER JOIN kanji_bank_v3_stat_names_table AS KB3SNT
+        ON KB3SNT.id = KB3ST.stat_name_id
+    INNER JOIN kanji_bank_v3_stat_values_table AS KB3SVT
+        ON KB3SVT.id = KB3ST.stat_value_id;
