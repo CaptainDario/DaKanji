@@ -1,0 +1,23 @@
+import 'example_tables.dart';
+import 'example_relation_tables.dart';
+import 'package:dakanji_db/database/general_tables/language_code_table.dart';
+import 'example_fts5_table.drift';
+
+CREATE VIEW example_view AS
+
+    SELECT
+        ET.id,
+        ET.example_sentence,
+        ETT.example_translation,
+        LCT.language_code,
+        ETT.id AS translation_id
+    FROM
+        example_table AS ET
+    LEFT JOIN example_translation_relations_table AS ETRT
+        ON ETRT.example_id = ET.id
+    LEFT JOIN example_translation_table AS ETT
+        ON ETRT.translation_id = ETT.id
+    LEFT JOIN language_code_table AS LCT
+        ON LCT.id = ETT.language_code_id
+    ;
+

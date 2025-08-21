@@ -7,19 +7,27 @@ part 'example_entry_translation.g.dart';
 
 
 
-@Freezed(makeCollectionsUnmodifiable: false)
+@Freezed()
+@JsonSerializable()
 /// Class representing one kanji entry of the database
-abstract class ExampleEntryTranslation with _$ExampleEntryTranslation {
+class ExampleEntryTranslation with _$ExampleEntryTranslation {
 
-  const factory ExampleEntryTranslation(
-    {
-      /// The example's translation
-      required String translation,
-      /// Language code of the language of this translation
-      required String languageCode
-    }) = _ExampleEntryTranslation;
+
+  /// The example's translation
+  @override
+  final String translation;
+  /// Language code of the language of this translation
+  @override
+  final String languageCode;
+
+  ExampleEntryTranslation({
+    required this.translation,
+    required this.languageCode
+  });
 
   factory ExampleEntryTranslation.fromJson(Map<String, Object?> json)
     => _$ExampleEntryTranslationFromJson(json);
+
+  Map<String, Object?> toJson() => _$ExampleEntryTranslationToJson(this);
 
 }

@@ -15,17 +15,13 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ExampleEntryTranslation {
 
-/// The example's translation
- String get translation;/// Language code of the language of this translation
- String get languageCode;
+ String get translation; String get languageCode;
 /// Create a copy of ExampleEntryTranslation
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $ExampleEntryTranslationCopyWith<ExampleEntryTranslation> get copyWith => _$ExampleEntryTranslationCopyWithImpl<ExampleEntryTranslation>(this as ExampleEntryTranslation, _$identity);
 
-  /// Serializes this ExampleEntryTranslation to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
@@ -68,7 +64,7 @@ class _$ExampleEntryTranslationCopyWithImpl<$Res>
 /// Create a copy of ExampleEntryTranslation
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? translation = null,Object? languageCode = null,}) {
-  return _then(_self.copyWith(
+  return _then(ExampleEntryTranslation(
 translation: null == translation ? _self.translation : translation // ignore: cast_nullable_to_non_nullable
 as String,languageCode: null == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
 as String,
@@ -92,11 +88,10 @@ extension ExampleEntryTranslationPatterns on ExampleEntryTranslation {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ExampleEntryTranslation value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _ExampleEntryTranslation() when $default != null:
-return $default(_that);case _:
+case _:
   return orElse();
 
 }
@@ -114,11 +109,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ExampleEntryTranslation value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(){
 final _that = this;
 switch (_that) {
-case _ExampleEntryTranslation():
-return $default(_that);case _:
+case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -135,11 +129,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ExampleEntryTranslation value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(){
 final _that = this;
 switch (_that) {
-case _ExampleEntryTranslation() when $default != null:
-return $default(_that);case _:
+case _:
   return null;
 
 }
@@ -156,10 +149,9 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String translation,  String languageCode)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _ExampleEntryTranslation() when $default != null:
-return $default(_that.translation,_that.languageCode);case _:
+case _:
   return orElse();
 
 }
@@ -177,10 +169,9 @@ return $default(_that.translation,_that.languageCode);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String translation,  String languageCode)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>() {final _that = this;
 switch (_that) {
-case _ExampleEntryTranslation():
-return $default(_that.translation,_that.languageCode);case _:
+case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,87 +188,13 @@ return $default(_that.translation,_that.languageCode);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String translation,  String languageCode)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>() {final _that = this;
 switch (_that) {
-case _ExampleEntryTranslation() when $default != null:
-return $default(_that.translation,_that.languageCode);case _:
+case _:
   return null;
 
 }
 }
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _ExampleEntryTranslation implements ExampleEntryTranslation {
-  const _ExampleEntryTranslation({required this.translation, required this.languageCode});
-  factory _ExampleEntryTranslation.fromJson(Map<String, dynamic> json) => _$ExampleEntryTranslationFromJson(json);
-
-/// The example's translation
-@override final  String translation;
-/// Language code of the language of this translation
-@override final  String languageCode;
-
-/// Create a copy of ExampleEntryTranslation
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$ExampleEntryTranslationCopyWith<_ExampleEntryTranslation> get copyWith => __$ExampleEntryTranslationCopyWithImpl<_ExampleEntryTranslation>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$ExampleEntryTranslationToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExampleEntryTranslation&&(identical(other.translation, translation) || other.translation == translation)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,translation,languageCode);
-
-@override
-String toString() {
-  return 'ExampleEntryTranslation(translation: $translation, languageCode: $languageCode)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$ExampleEntryTranslationCopyWith<$Res> implements $ExampleEntryTranslationCopyWith<$Res> {
-  factory _$ExampleEntryTranslationCopyWith(_ExampleEntryTranslation value, $Res Function(_ExampleEntryTranslation) _then) = __$ExampleEntryTranslationCopyWithImpl;
-@override @useResult
-$Res call({
- String translation, String languageCode
-});
-
-
-
-
-}
-/// @nodoc
-class __$ExampleEntryTranslationCopyWithImpl<$Res>
-    implements _$ExampleEntryTranslationCopyWith<$Res> {
-  __$ExampleEntryTranslationCopyWithImpl(this._self, this._then);
-
-  final _ExampleEntryTranslation _self;
-  final $Res Function(_ExampleEntryTranslation) _then;
-
-/// Create a copy of ExampleEntryTranslation
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? translation = null,Object? languageCode = null,}) {
-  return _then(_ExampleEntryTranslation(
-translation: null == translation ? _self.translation : translation // ignore: cast_nullable_to_non_nullable
-as String,languageCode: null == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
 
 }
 

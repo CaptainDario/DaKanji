@@ -8,7 +8,7 @@ import 'package:universal_io/io.dart';
 // Project imports:
 import 'package:dakanji_db/database/dakanji_db.dart';
 import '../../bin/paths.dart';
-import 'example_sentences_test_values.dart';
+import 'example_sentences_test_expected_values.dart';
 
 
 
@@ -26,7 +26,7 @@ void main() async {
   Stopwatch s = Stopwatch()..start();
   await parseExampleSentenceFolder(Directory(devExampleSentencesPath), db, mecab);
   print("Conversion took ${s.elapsedMilliseconds} ms");
-  
+
   test('Test importing examples', () async {
     await testExamplesV3(db);
   });
@@ -40,16 +40,16 @@ Future testExamplesV3(DaKanjiDB db) async {
   for (int i = 0; i < exampleSentencesTestQueries.length; i++) {
 
     Stopwatch s = Stopwatch()..start();
-    final result = (await db.exampleDao.searchExamples(
+    final results = (await db.exampleDao.searchExamples(
       exampleSentencesTestQueries[i], [Iso639_1.en, Iso639_1.de]
     ));
     print("Looking up ${exampleSentencesTestQueries[i]} took ${s.elapsedMilliseconds}ms");
-    print("Result: $result");
-    print("Actual: ${examplesTestExpected}");
 
-    expect(result.isNotEmpty, true);
-    final pass = result.where((r) => !examplesTestExpected.contains(r)).toList();
-    expect(pass.isEmpty, true);
+    bool allFound = true;
+    for (var result in results) {
+      if(!exampleSentenceTestExpectedValues[i].contains(result)) allFound = false; 
+    }
+    expect(allFound, true);
 
   }
 

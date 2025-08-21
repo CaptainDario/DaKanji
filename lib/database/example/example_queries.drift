@@ -1,29 +1,29 @@
 import 'example_tables.dart';
 import 'example_relation_tables.dart';
 import 'package:dakanji_db/database/general_tables/language_code_table.dart';
-import 'example_fts5_table.drift';
+import 'package:dakanji_db/database/example/example_fts5_table.drift';
+import 'package:dakanji_db/database/example/example_views.drift';
 
 example_fts_search_sql:
     SELECT
-        ET.id,
-        ET.example_sentence,
-        GROUP_CONCAT(ETT.example_translation, '|||') AS translations,
-        GROUP_CONCAT(LCT.language_code, '|||') AS language_codes
+        EDV.id,
+        EDV.example_sentence,
+        '[' || COALESCE(GROUP_CONCAT(DISTINCT
+            -- Only create the JSON object if the translation is not NULL
+            CASE
+                WHEN EDV.example_translation IS NOT NULL THEN json_object(
+                    'translation', EDV.example_translation,
+                    'languageCode', EDV.language_code
+                )
+            END
+        ), '') || ']' AS translations
     FROM
-        example_table AS ET
+        example_view AS EDV
     INNER JOIN example_fts AS FTS
-        ON FTS.rowid = ET.id
-    LEFT JOIN example_translation_relations_table AS ETRT
-        ON ETRT.example_id = ET.id
-    LEFT JOIN example_translation_table AS ETT
-        ON ETRT.translation_id = ETT.id
-    LEFT JOIN language_code_table AS LCT
-        ON LCT.id = ETT.language_code_id
+        ON FTS.rowid = EDV.id
     WHERE
         example_fts MATCH :query
-        AND (LCT.language_code IN :languageCodes OR ETT.id IS NULL)
+        AND (EDV.language_code IN :languageCodes OR EDV.translation_id IS NULL)
     GROUP BY
-        ET.id
+        EDV.id
     LIMIT :limit OFFSET :offset;
-
-

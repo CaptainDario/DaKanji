@@ -3558,203 +3558,6 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
   }
 }
 
-class ExampleFts extends Table
-    with
-        TableInfo<ExampleFts, ExampleFt>,
-        VirtualTableInfo<ExampleFts, ExampleFt> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  ExampleFts(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _exampleSentenceTokenizedMeta =
-      const VerificationMeta('exampleSentenceTokenized');
-  late final GeneratedColumn<String> exampleSentenceTokenized =
-      GeneratedColumn<String>(
-        'example_sentence_tokenized',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-        $customConstraints: '',
-      );
-  @override
-  List<GeneratedColumn> get $columns => [exampleSentenceTokenized];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'example_fts';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ExampleFt> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('example_sentence_tokenized')) {
-      context.handle(
-        _exampleSentenceTokenizedMeta,
-        exampleSentenceTokenized.isAcceptableOrUnknown(
-          data['example_sentence_tokenized']!,
-          _exampleSentenceTokenizedMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_exampleSentenceTokenizedMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  ExampleFt map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ExampleFt(
-      exampleSentenceTokenized: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_sentence_tokenized'],
-      )!,
-    );
-  }
-
-  @override
-  ExampleFts createAlias(String alias) {
-    return ExampleFts(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-  @override
-  String get moduleAndArgs =>
-      'fts5(example_sentence_tokenized, content=\'example_table\', content_rowid=\'id\', tokenize=\'unicode61\')';
-}
-
-class ExampleFt extends DataClass implements Insertable<ExampleFt> {
-  final String exampleSentenceTokenized;
-  const ExampleFt({required this.exampleSentenceTokenized});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['example_sentence_tokenized'] = Variable<String>(
-      exampleSentenceTokenized,
-    );
-    return map;
-  }
-
-  ExampleFtsCompanion toCompanion(bool nullToAbsent) {
-    return ExampleFtsCompanion(
-      exampleSentenceTokenized: Value(exampleSentenceTokenized),
-    );
-  }
-
-  factory ExampleFt.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ExampleFt(
-      exampleSentenceTokenized: serializer.fromJson<String>(
-        json['example_sentence_tokenized'],
-      ),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'example_sentence_tokenized': serializer.toJson<String>(
-        exampleSentenceTokenized,
-      ),
-    };
-  }
-
-  ExampleFt copyWith({String? exampleSentenceTokenized}) => ExampleFt(
-    exampleSentenceTokenized:
-        exampleSentenceTokenized ?? this.exampleSentenceTokenized,
-  );
-  ExampleFt copyWithCompanion(ExampleFtsCompanion data) {
-    return ExampleFt(
-      exampleSentenceTokenized: data.exampleSentenceTokenized.present
-          ? data.exampleSentenceTokenized.value
-          : this.exampleSentenceTokenized,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleFt(')
-          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => exampleSentenceTokenized.hashCode;
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ExampleFt &&
-          other.exampleSentenceTokenized == this.exampleSentenceTokenized);
-}
-
-class ExampleFtsCompanion extends UpdateCompanion<ExampleFt> {
-  final Value<String> exampleSentenceTokenized;
-  final Value<int> rowid;
-  const ExampleFtsCompanion({
-    this.exampleSentenceTokenized = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ExampleFtsCompanion.insert({
-    required String exampleSentenceTokenized,
-    this.rowid = const Value.absent(),
-  }) : exampleSentenceTokenized = Value(exampleSentenceTokenized);
-  static Insertable<ExampleFt> custom({
-    Expression<String>? exampleSentenceTokenized,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (exampleSentenceTokenized != null)
-        'example_sentence_tokenized': exampleSentenceTokenized,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ExampleFtsCompanion copyWith({
-    Value<String>? exampleSentenceTokenized,
-    Value<int>? rowid,
-  }) {
-    return ExampleFtsCompanion(
-      exampleSentenceTokenized:
-          exampleSentenceTokenized ?? this.exampleSentenceTokenized,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (exampleSentenceTokenized.present) {
-      map['example_sentence_tokenized'] = Variable<String>(
-        exampleSentenceTokenized.value,
-      );
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleFtsCompanion(')
-          ..write('exampleSentenceTokenized: $exampleSentenceTokenized, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $LanguageCodeTableTable extends LanguageCodeTable
     with TableInfo<$LanguageCodeTableTable, LanguageCodeTableData> {
   @override
@@ -4531,6 +4334,390 @@ class ExampleTranslationRelationsTableCompanion
           ..write('id: $id, ')
           ..write('exampleId: $exampleId, ')
           ..write('translationId: $translationId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class ExampleViewData extends DataClass {
+  final int id;
+  final String exampleSentence;
+  final String? exampleTranslation;
+  final String? languageCode;
+  final int? translationId;
+  const ExampleViewData({
+    required this.id,
+    required this.exampleSentence,
+    this.exampleTranslation,
+    this.languageCode,
+    this.translationId,
+  });
+  factory ExampleViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleViewData(
+      id: serializer.fromJson<int>(json['id']),
+      exampleSentence: serializer.fromJson<String>(json['example_sentence']),
+      exampleTranslation: serializer.fromJson<String?>(
+        json['example_translation'],
+      ),
+      languageCode: serializer.fromJson<String?>(json['language_code']),
+      translationId: serializer.fromJson<int?>(json['translation_id']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'example_sentence': serializer.toJson<String>(exampleSentence),
+      'example_translation': serializer.toJson<String?>(exampleTranslation),
+      'language_code': serializer.toJson<String?>(languageCode),
+      'translation_id': serializer.toJson<int?>(translationId),
+    };
+  }
+
+  ExampleViewData copyWith({
+    int? id,
+    String? exampleSentence,
+    Value<String?> exampleTranslation = const Value.absent(),
+    Value<String?> languageCode = const Value.absent(),
+    Value<int?> translationId = const Value.absent(),
+  }) => ExampleViewData(
+    id: id ?? this.id,
+    exampleSentence: exampleSentence ?? this.exampleSentence,
+    exampleTranslation: exampleTranslation.present
+        ? exampleTranslation.value
+        : this.exampleTranslation,
+    languageCode: languageCode.present ? languageCode.value : this.languageCode,
+    translationId: translationId.present
+        ? translationId.value
+        : this.translationId,
+  );
+  @override
+  String toString() {
+    return (StringBuffer('ExampleViewData(')
+          ..write('id: $id, ')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('exampleTranslation: $exampleTranslation, ')
+          ..write('languageCode: $languageCode, ')
+          ..write('translationId: $translationId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    exampleSentence,
+    exampleTranslation,
+    languageCode,
+    translationId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleViewData &&
+          other.id == this.id &&
+          other.exampleSentence == this.exampleSentence &&
+          other.exampleTranslation == this.exampleTranslation &&
+          other.languageCode == this.languageCode &&
+          other.translationId == this.translationId);
+}
+
+class ExampleView extends ViewInfo<ExampleView, ExampleViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  ExampleView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    exampleSentence,
+    exampleTranslation,
+    languageCode,
+    translationId,
+  ];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'example_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW example_view AS SELECT ET.id, ET.example_sentence, ETT.example_translation, LCT.language_code, ETT.id AS translation_id FROM example_table AS ET LEFT JOIN example_translation_relations_table AS ETRT ON ETRT.example_id = ET.id LEFT JOIN example_translation_table AS ETT ON ETRT.translation_id = ETT.id LEFT JOIN language_code_table AS LCT ON LCT.id = ETT.language_code_id',
+  };
+  @override
+  ExampleView get asDslTable => this;
+  @override
+  ExampleViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      exampleSentence: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence'],
+      )!,
+      exampleTranslation: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_translation'],
+      ),
+      languageCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language_code'],
+      ),
+      translationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}translation_id'],
+      ),
+    );
+  }
+
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
+    'example_sentence',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> exampleTranslation =
+      GeneratedColumn<String>(
+        'example_translation',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+      );
+  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
+    'language_code',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<int> translationId = GeneratedColumn<int>(
+    'translation_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+  );
+  @override
+  ExampleView createAlias(String alias) {
+    return ExampleView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {
+    'example_table',
+    'example_translation_relations_table',
+    'example_translation_table',
+    'language_code_table',
+  };
+}
+
+class ExampleFts extends Table
+    with
+        TableInfo<ExampleFts, ExampleFt>,
+        VirtualTableInfo<ExampleFts, ExampleFt> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  ExampleFts(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _exampleSentenceTokenizedMeta =
+      const VerificationMeta('exampleSentenceTokenized');
+  late final GeneratedColumn<String> exampleSentenceTokenized =
+      GeneratedColumn<String>(
+        'example_sentence_tokenized',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        $customConstraints: '',
+      );
+  @override
+  List<GeneratedColumn> get $columns => [exampleSentenceTokenized];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_fts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleFt> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('example_sentence_tokenized')) {
+      context.handle(
+        _exampleSentenceTokenizedMeta,
+        exampleSentenceTokenized.isAcceptableOrUnknown(
+          data['example_sentence_tokenized']!,
+          _exampleSentenceTokenizedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleSentenceTokenizedMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ExampleFt map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleFt(
+      exampleSentenceTokenized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence_tokenized'],
+      )!,
+    );
+  }
+
+  @override
+  ExampleFts createAlias(String alias) {
+    return ExampleFts(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(example_sentence_tokenized, content=\'example_table\', content_rowid=\'id\', tokenize=\'unicode61\')';
+}
+
+class ExampleFt extends DataClass implements Insertable<ExampleFt> {
+  final String exampleSentenceTokenized;
+  const ExampleFt({required this.exampleSentenceTokenized});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['example_sentence_tokenized'] = Variable<String>(
+      exampleSentenceTokenized,
+    );
+    return map;
+  }
+
+  ExampleFtsCompanion toCompanion(bool nullToAbsent) {
+    return ExampleFtsCompanion(
+      exampleSentenceTokenized: Value(exampleSentenceTokenized),
+    );
+  }
+
+  factory ExampleFt.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleFt(
+      exampleSentenceTokenized: serializer.fromJson<String>(
+        json['example_sentence_tokenized'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'example_sentence_tokenized': serializer.toJson<String>(
+        exampleSentenceTokenized,
+      ),
+    };
+  }
+
+  ExampleFt copyWith({String? exampleSentenceTokenized}) => ExampleFt(
+    exampleSentenceTokenized:
+        exampleSentenceTokenized ?? this.exampleSentenceTokenized,
+  );
+  ExampleFt copyWithCompanion(ExampleFtsCompanion data) {
+    return ExampleFt(
+      exampleSentenceTokenized: data.exampleSentenceTokenized.present
+          ? data.exampleSentenceTokenized.value
+          : this.exampleSentenceTokenized,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleFt(')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => exampleSentenceTokenized.hashCode;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleFt &&
+          other.exampleSentenceTokenized == this.exampleSentenceTokenized);
+}
+
+class ExampleFtsCompanion extends UpdateCompanion<ExampleFt> {
+  final Value<String> exampleSentenceTokenized;
+  final Value<int> rowid;
+  const ExampleFtsCompanion({
+    this.exampleSentenceTokenized = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExampleFtsCompanion.insert({
+    required String exampleSentenceTokenized,
+    this.rowid = const Value.absent(),
+  }) : exampleSentenceTokenized = Value(exampleSentenceTokenized);
+  static Insertable<ExampleFt> custom({
+    Expression<String>? exampleSentenceTokenized,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (exampleSentenceTokenized != null)
+        'example_sentence_tokenized': exampleSentenceTokenized,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExampleFtsCompanion copyWith({
+    Value<String>? exampleSentenceTokenized,
+    Value<int>? rowid,
+  }) {
+    return ExampleFtsCompanion(
+      exampleSentenceTokenized:
+          exampleSentenceTokenized ?? this.exampleSentenceTokenized,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (exampleSentenceTokenized.present) {
+      map['example_sentence_tokenized'] = Variable<String>(
+        exampleSentenceTokenized.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleFtsCompanion(')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -12109,7 +12296,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'CREATE INDEX term ON term_table (term)',
   );
   late final $ExampleTableTable exampleTable = $ExampleTableTable(this);
-  late final ExampleFts exampleFts = ExampleFts(this);
   late final $LanguageCodeTableTable languageCodeTable =
       $LanguageCodeTableTable(this);
   late final $ExampleTranslationTableTable exampleTranslationTable =
@@ -12118,6 +12304,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   exampleTranslationRelationsTable = $ExampleTranslationRelationsTableTable(
     this,
   );
+  late final ExampleView exampleView = ExampleView(this);
+  late final ExampleFts exampleFts = ExampleFts(this);
   late final Trigger exampleTableAi = Trigger(
     'CREATE TRIGGER example_table_ai AFTER INSERT ON example_table BEGIN INSERT INTO example_fts ("rowid", example_sentence_tokenized) VALUES (new.id, new.example_sentence_tokenized);END',
     'example_table_ai',
@@ -12262,7 +12450,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     );
     $arrayStartIndex += languageCodes.length;
     return customSelect(
-      'SELECT ET.id, ET.example_sentence, GROUP_CONCAT(ETT.example_translation, \'|||\') AS translations, GROUP_CONCAT(LCT.language_code, \'|||\') AS language_codes FROM example_table AS ET INNER JOIN example_fts AS FTS ON FTS."rowid" = ET.id LEFT JOIN example_translation_relations_table AS ETRT ON ETRT.example_id = ET.id LEFT JOIN example_translation_table AS ETT ON ETRT.translation_id = ETT.id LEFT JOIN language_code_table AS LCT ON LCT.id = ETT.language_code_id WHERE example_fts MATCH ?1 AND(LCT.language_code IN ($expandedlanguageCodes) OR ETT.id IS NULL)GROUP BY ET.id LIMIT ?2 OFFSET ?3',
+      'SELECT EDV.id, EDV.example_sentence, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT CASE WHEN EDV.example_translation IS NOT NULL THEN json_object(\'translation\', EDV.example_translation, \'languageCode\', EDV.language_code) END), \'\') || \']\' AS translations FROM example_view AS EDV INNER JOIN example_fts AS FTS ON FTS."rowid" = EDV.id WHERE example_fts MATCH ?1 AND(EDV.language_code IN ($expandedlanguageCodes) OR EDV.translation_id IS NULL)GROUP BY EDV.id LIMIT ?2 OFFSET ?3',
       variables: [
         Variable<String>(query),
         Variable<int>(limit),
@@ -12270,18 +12458,17 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         for (var $ in languageCodes) Variable<String>($),
       ],
       readsFrom: {
+        exampleFts,
         exampleTable,
+        exampleTranslationRelationsTable,
         exampleTranslationTable,
         languageCodeTable,
-        exampleFts,
-        exampleTranslationRelationsTable,
       },
     ).map(
       (QueryRow row) => ExampleFtsSearchSqlResult(
         id: row.read<int>('id'),
         exampleSentence: row.read<String>('example_sentence'),
-        translations: row.readNullable<String>('translations'),
-        languageCodes: row.readNullable<String>('language_codes'),
+        translations: row.read<String>('translations'),
       ),
     );
   }
@@ -12308,10 +12495,11 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     reading,
     term,
     exampleTable,
-    exampleFts,
     languageCodeTable,
     exampleTranslationTable,
     exampleTranslationRelationsTable,
+    exampleView,
+    exampleFts,
     exampleTableAi,
     exampleTableAd,
     exampleTableAu,
@@ -17526,123 +17714,6 @@ typedef $$ExampleTableTableProcessedTableManager =
       ExampleTableData,
       PrefetchHooks Function({bool exampleTranslationRelationsTableRefs})
     >;
-typedef $ExampleFtsCreateCompanionBuilder =
-    ExampleFtsCompanion Function({
-      required String exampleSentenceTokenized,
-      Value<int> rowid,
-    });
-typedef $ExampleFtsUpdateCompanionBuilder =
-    ExampleFtsCompanion Function({
-      Value<String> exampleSentenceTokenized,
-      Value<int> rowid,
-    });
-
-class $ExampleFtsFilterComposer extends Composer<_$DaKanjiDB, ExampleFts> {
-  $ExampleFtsFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
-    column: $table.exampleSentenceTokenized,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $ExampleFtsOrderingComposer extends Composer<_$DaKanjiDB, ExampleFts> {
-  $ExampleFtsOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get exampleSentenceTokenized => $composableBuilder(
-    column: $table.exampleSentenceTokenized,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $ExampleFtsAnnotationComposer extends Composer<_$DaKanjiDB, ExampleFts> {
-  $ExampleFtsAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
-    column: $table.exampleSentenceTokenized,
-    builder: (column) => column,
-  );
-}
-
-class $ExampleFtsTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          ExampleFts,
-          ExampleFt,
-          $ExampleFtsFilterComposer,
-          $ExampleFtsOrderingComposer,
-          $ExampleFtsAnnotationComposer,
-          $ExampleFtsCreateCompanionBuilder,
-          $ExampleFtsUpdateCompanionBuilder,
-          (ExampleFt, BaseReferences<_$DaKanjiDB, ExampleFts, ExampleFt>),
-          ExampleFt,
-          PrefetchHooks Function()
-        > {
-  $ExampleFtsTableManager(_$DaKanjiDB db, ExampleFts table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $ExampleFtsFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $ExampleFtsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $ExampleFtsAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> exampleSentenceTokenized = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => ExampleFtsCompanion(
-                exampleSentenceTokenized: exampleSentenceTokenized,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String exampleSentenceTokenized,
-                Value<int> rowid = const Value.absent(),
-              }) => ExampleFtsCompanion.insert(
-                exampleSentenceTokenized: exampleSentenceTokenized,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $ExampleFtsProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      ExampleFts,
-      ExampleFt,
-      $ExampleFtsFilterComposer,
-      $ExampleFtsOrderingComposer,
-      $ExampleFtsAnnotationComposer,
-      $ExampleFtsCreateCompanionBuilder,
-      $ExampleFtsUpdateCompanionBuilder,
-      (ExampleFt, BaseReferences<_$DaKanjiDB, ExampleFts, ExampleFt>),
-      ExampleFt,
-      PrefetchHooks Function()
-    >;
 typedef $$LanguageCodeTableTableCreateCompanionBuilder =
     LanguageCodeTableCompanion Function({
       Value<int> id,
@@ -18749,6 +18820,123 @@ typedef $$ExampleTranslationRelationsTableTableProcessedTableManager =
       ),
       ExampleTranslationRelationsTableData,
       PrefetchHooks Function({bool exampleId, bool translationId})
+    >;
+typedef $ExampleFtsCreateCompanionBuilder =
+    ExampleFtsCompanion Function({
+      required String exampleSentenceTokenized,
+      Value<int> rowid,
+    });
+typedef $ExampleFtsUpdateCompanionBuilder =
+    ExampleFtsCompanion Function({
+      Value<String> exampleSentenceTokenized,
+      Value<int> rowid,
+    });
+
+class $ExampleFtsFilterComposer extends Composer<_$DaKanjiDB, ExampleFts> {
+  $ExampleFtsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $ExampleFtsOrderingComposer extends Composer<_$DaKanjiDB, ExampleFts> {
+  $ExampleFtsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $ExampleFtsAnnotationComposer extends Composer<_$DaKanjiDB, ExampleFts> {
+  $ExampleFtsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => column,
+  );
+}
+
+class $ExampleFtsTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          ExampleFts,
+          ExampleFt,
+          $ExampleFtsFilterComposer,
+          $ExampleFtsOrderingComposer,
+          $ExampleFtsAnnotationComposer,
+          $ExampleFtsCreateCompanionBuilder,
+          $ExampleFtsUpdateCompanionBuilder,
+          (ExampleFt, BaseReferences<_$DaKanjiDB, ExampleFts, ExampleFt>),
+          ExampleFt,
+          PrefetchHooks Function()
+        > {
+  $ExampleFtsTableManager(_$DaKanjiDB db, ExampleFts table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $ExampleFtsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $ExampleFtsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $ExampleFtsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> exampleSentenceTokenized = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleFtsCompanion(
+                exampleSentenceTokenized: exampleSentenceTokenized,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String exampleSentenceTokenized,
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleFtsCompanion.insert(
+                exampleSentenceTokenized: exampleSentenceTokenized,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $ExampleFtsProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      ExampleFts,
+      ExampleFt,
+      $ExampleFtsFilterComposer,
+      $ExampleFtsOrderingComposer,
+      $ExampleFtsAnnotationComposer,
+      $ExampleFtsCreateCompanionBuilder,
+      $ExampleFtsUpdateCompanionBuilder,
+      (ExampleFt, BaseReferences<_$DaKanjiDB, ExampleFts, ExampleFt>),
+      ExampleFt,
+      PrefetchHooks Function()
     >;
 typedef $$KanjiTableTableCreateCompanionBuilder =
     KanjiTableCompanion Function({Value<int> id, required String kanji});
@@ -29961,8 +30149,6 @@ class $DaKanjiDBManager {
       );
   $$ExampleTableTableTableManager get exampleTable =>
       $$ExampleTableTableTableManager(_db, _db.exampleTable);
-  $ExampleFtsTableManager get exampleFts =>
-      $ExampleFtsTableManager(_db, _db.exampleFts);
   $$LanguageCodeTableTableTableManager get languageCodeTable =>
       $$LanguageCodeTableTableTableManager(_db, _db.languageCodeTable);
   $$ExampleTranslationTableTableTableManager get exampleTranslationTable =>
@@ -29976,6 +30162,8 @@ class $DaKanjiDBManager {
         _db,
         _db.exampleTranslationRelationsTable,
       );
+  $ExampleFtsTableManager get exampleFts =>
+      $ExampleFtsTableManager(_db, _db.exampleFts);
   $$KanjiTableTableTableManager get kanjiTable =>
       $$KanjiTableTableTableManager(_db, _db.kanjiTable);
   $$RadicalsTableTableTableManager get radicalsTable =>
@@ -30093,12 +30281,10 @@ class $DaKanjiDBManager {
 class ExampleFtsSearchSqlResult {
   final int id;
   final String exampleSentence;
-  final String? translations;
-  final String? languageCodes;
+  final String translations;
   ExampleFtsSearchSqlResult({
     required this.id,
     required this.exampleSentence,
-    this.translations,
-    this.languageCodes,
+    required this.translations,
   });
 }
