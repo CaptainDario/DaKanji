@@ -6,8 +6,8 @@ part of 'term_bank_v3_entry.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_TermBankV3Entry _$TermBankV3EntryFromJson(Map<String, dynamic> json) =>
-    _TermBankV3Entry(
+TermBankV3Entry _$TermBankV3EntryFromJson(Map<String, dynamic> json) =>
+    TermBankV3Entry(
       term: json['term'] as String,
       reading: json['reading'] as String,
       definitionTags: (json['definitionTags'] as List<dynamic>)
@@ -17,8 +17,8 @@ _TermBankV3Entry _$TermBankV3EntryFromJson(Map<String, dynamic> json) =>
           .map((e) => e as String)
           .toList(),
       popularity: (json['popularity'] as num).toInt(),
-      definitions: (json['definitions'] as List<dynamic>?)
-          ?.map((e) => e as String)
+      definitions: (json['definitions'] as List<dynamic>)
+          .map((e) => e as String)
           .toList(),
       sequenceNumber: (json['sequenceNumber'] as num).toInt(),
       tags: (json['tags'] as List<dynamic>)
@@ -26,7 +26,7 @@ _TermBankV3Entry _$TermBankV3EntryFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$TermBankV3EntryToJson(_TermBankV3Entry instance) =>
+Map<String, dynamic> _$TermBankV3EntryToJson(TermBankV3Entry instance) =>
     <String, dynamic>{
       'term': instance.term,
       'reading': instance.reading,
