@@ -39,8 +39,8 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
     assert (languages.isNotEmpty);
     List<String> langs = languages.map((e) => e.name,).toList();
 
-    List<TermBankV3Entry> results = (await db.term_bank_v3_search(query).get())
-      .map((e) => TermBankV3Entry.fromTermBankV3SearchResult(e))
+    List<TermBankV3Entry> results = (await db.term_bank_v3_search(query, limit, offset).get())
+      .map((e) => TermBankV3Entry.fromTermBankV3SearchViewData(e))
       .toList();
 
     return results;

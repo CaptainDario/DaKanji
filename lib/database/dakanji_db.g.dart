@@ -3001,6 +3001,277 @@ class TermBankV3TagBankRelationsTableCompanion
   }
 }
 
+class TermBankV3SearchViewData extends DataClass {
+  final int id;
+  final String? term;
+  final String? reading;
+  final String definitionTags;
+  final String ruleIdentifiers;
+  final int popularity;
+  final String definitions;
+  final int sequenceNumber;
+  final String tags;
+  const TermBankV3SearchViewData({
+    required this.id,
+    this.term,
+    this.reading,
+    required this.definitionTags,
+    required this.ruleIdentifiers,
+    required this.popularity,
+    required this.definitions,
+    required this.sequenceNumber,
+    required this.tags,
+  });
+  factory TermBankV3SearchViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermBankV3SearchViewData(
+      id: serializer.fromJson<int>(json['id']),
+      term: serializer.fromJson<String?>(json['term']),
+      reading: serializer.fromJson<String?>(json['reading']),
+      definitionTags: serializer.fromJson<String>(json['definition_tags']),
+      ruleIdentifiers: serializer.fromJson<String>(json['rule_identifiers']),
+      popularity: serializer.fromJson<int>(json['popularity']),
+      definitions: serializer.fromJson<String>(json['definitions']),
+      sequenceNumber: serializer.fromJson<int>(json['sequence_number']),
+      tags: serializer.fromJson<String>(json['tags']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'term': serializer.toJson<String?>(term),
+      'reading': serializer.toJson<String?>(reading),
+      'definition_tags': serializer.toJson<String>(definitionTags),
+      'rule_identifiers': serializer.toJson<String>(ruleIdentifiers),
+      'popularity': serializer.toJson<int>(popularity),
+      'definitions': serializer.toJson<String>(definitions),
+      'sequence_number': serializer.toJson<int>(sequenceNumber),
+      'tags': serializer.toJson<String>(tags),
+    };
+  }
+
+  TermBankV3SearchViewData copyWith({
+    int? id,
+    Value<String?> term = const Value.absent(),
+    Value<String?> reading = const Value.absent(),
+    String? definitionTags,
+    String? ruleIdentifiers,
+    int? popularity,
+    String? definitions,
+    int? sequenceNumber,
+    String? tags,
+  }) => TermBankV3SearchViewData(
+    id: id ?? this.id,
+    term: term.present ? term.value : this.term,
+    reading: reading.present ? reading.value : this.reading,
+    definitionTags: definitionTags ?? this.definitionTags,
+    ruleIdentifiers: ruleIdentifiers ?? this.ruleIdentifiers,
+    popularity: popularity ?? this.popularity,
+    definitions: definitions ?? this.definitions,
+    sequenceNumber: sequenceNumber ?? this.sequenceNumber,
+    tags: tags ?? this.tags,
+  );
+  @override
+  String toString() {
+    return (StringBuffer('TermBankV3SearchViewData(')
+          ..write('id: $id, ')
+          ..write('term: $term, ')
+          ..write('reading: $reading, ')
+          ..write('definitionTags: $definitionTags, ')
+          ..write('ruleIdentifiers: $ruleIdentifiers, ')
+          ..write('popularity: $popularity, ')
+          ..write('definitions: $definitions, ')
+          ..write('sequenceNumber: $sequenceNumber, ')
+          ..write('tags: $tags')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    term,
+    reading,
+    definitionTags,
+    ruleIdentifiers,
+    popularity,
+    definitions,
+    sequenceNumber,
+    tags,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermBankV3SearchViewData &&
+          other.id == this.id &&
+          other.term == this.term &&
+          other.reading == this.reading &&
+          other.definitionTags == this.definitionTags &&
+          other.ruleIdentifiers == this.ruleIdentifiers &&
+          other.popularity == this.popularity &&
+          other.definitions == this.definitions &&
+          other.sequenceNumber == this.sequenceNumber &&
+          other.tags == this.tags);
+}
+
+class TermBankV3SearchView
+    extends ViewInfo<TermBankV3SearchView, TermBankV3SearchViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  TermBankV3SearchView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    term,
+    reading,
+    definitionTags,
+    ruleIdentifiers,
+    popularity,
+    definitions,
+    sequenceNumber,
+    tags,
+  ];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'term_bank_v3_search_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW term_bank_v3_search_view AS SELECT TB3T.id, term, reading, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3DTT.definition_tag || \'"\'), \'\') || \']\' AS definition_tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3RIT.rule_identifier || \'"\'), \'\') || \']\' AS rule_identifiers, popularity, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || MT.definition || \'"\'), \'\') || \']\' AS definitions, sequence_number, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', TagB3T.id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score)), \'\') || \']\' AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_definition_tag_relations_table AS TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id LEFT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id LEFT JOIN term_bank_v3_rule_identifier_relations_table AS TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id LEFT JOIN term_bank_v3_rule_identifier_table AS TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id LEFT JOIN term_bank_v3_definitions_relations_table AS TB3MRT ON TB3T.id = TB3MRT.term_bank_id LEFT JOIN definition_table AS MT ON TB3MRT.definition_id = MT.id LEFT JOIN term_bank_v3_tag_bank_relations_table AS TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id LEFT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id GROUP BY TB3T.id',
+  };
+  @override
+  TermBankV3SearchView get asDslTable => this;
+  @override
+  TermBankV3SearchViewData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermBankV3SearchViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      term: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term'],
+      ),
+      reading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading'],
+      ),
+      definitionTags: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition_tags'],
+      )!,
+      ruleIdentifiers: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}rule_identifiers'],
+      )!,
+      popularity: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}popularity'],
+      )!,
+      definitions: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definitions'],
+      )!,
+      sequenceNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sequence_number'],
+      )!,
+      tags: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tags'],
+      )!,
+    );
+  }
+
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> term = GeneratedColumn<String>(
+    'term',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
+    'reading',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> definitionTags = GeneratedColumn<String>(
+    'definition_tags',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> ruleIdentifiers = GeneratedColumn<String>(
+    'rule_identifiers',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<int> popularity = GeneratedColumn<int>(
+    'popularity',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> definitions = GeneratedColumn<String>(
+    'definitions',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<int> sequenceNumber = GeneratedColumn<int>(
+    'sequence_number',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> tags = GeneratedColumn<String>(
+    'tags',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  @override
+  TermBankV3SearchView createAlias(String alias) {
+    return TermBankV3SearchView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {
+    'term_bank_v3_table',
+    'term_table',
+    'reading_table',
+    'term_bank_v3_definition_tag_relations_table',
+    'term_bank_v3_definition_tags_table',
+    'term_bank_v3_rule_identifier_relations_table',
+    'term_bank_v3_rule_identifier_table',
+    'term_bank_v3_definitions_relations_table',
+    'definition_table',
+    'term_bank_v3_tag_bank_relations_table',
+    'tag_bank_v3_table',
+  };
+}
+
 class $ExampleTableTable extends ExampleTable
     with TableInfo<$ExampleTableTable, ExampleTableData> {
   @override
@@ -11818,6 +12089,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $TagBankV3TableTable tagBankV3Table = $TagBankV3TableTable(this);
   late final $TermBankV3TagBankRelationsTableTable
   termBankV3TagBankRelationsTable = $TermBankV3TagBankRelationsTableTable(this);
+  late final TermBankV3SearchView termBankV3SearchView = TermBankV3SearchView(
+    this,
+  );
   late final Index name = Index(
     'name',
     'CREATE INDEX name ON tag_bank_v3_table (name)',
@@ -11947,36 +12221,32 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     this as DaKanjiDB,
   );
   late final ExampleDao exampleDao = ExampleDao(this as DaKanjiDB);
-  Selectable<TermBankV3SearchResult> term_bank_v3_search(String? query) {
+  Selectable<TermBankV3SearchViewData> term_bank_v3_search(
+    String? query,
+    int limit,
+    int offset,
+  ) {
     return customSelect(
-      'SELECT TB3T.id, term, reading, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3DTT.definition_tag || \'"\'), \'\') || \']\' AS definition_tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3RIT.rule_identifier || \'"\'), \'\') || \']\' AS rule_identifiers, popularity, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || MT.definition || \'"\'), \'\') || \']\' AS definitions, sequence_number, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', TagB3T.id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score)), \'\') || \']\' AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_definition_tag_relations_table AS TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id LEFT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id LEFT JOIN term_bank_v3_rule_identifier_relations_table AS TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id LEFT JOIN term_bank_v3_rule_identifier_table AS TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id LEFT JOIN term_bank_v3_definitions_relations_table AS TB3MRT ON TB3T.id = TB3MRT.term_bank_id LEFT JOIN definition_table AS MT ON TB3MRT.definition_id = MT.id LEFT JOIN term_bank_v3_tag_bank_relations_table AS TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id LEFT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id WHERE TT.term = ?1 GROUP BY TB3T.id',
-      variables: [Variable<String>(query)],
+      'SELECT * FROM term_bank_v3_search_view WHERE term = ?1 LIMIT ?2 OFFSET ?3',
+      variables: [
+        Variable<String>(query),
+        Variable<int>(limit),
+        Variable<int>(offset),
+      ],
       readsFrom: {
         termBankV3Table,
         termTable,
         readingTable,
-        termBankV3DefinitionTagsTable,
-        termBankV3RuleIdentifierTable,
-        definitionTable,
-        tagBankV3Table,
         termBankV3DefinitionTagRelationsTable,
+        termBankV3DefinitionTagsTable,
         termBankV3RuleIdentifierRelationsTable,
+        termBankV3RuleIdentifierTable,
         termBankV3DefinitionsRelationsTable,
+        definitionTable,
         termBankV3TagBankRelationsTable,
+        tagBankV3Table,
       },
-    ).map(
-      (QueryRow row) => TermBankV3SearchResult(
-        id: row.read<int>('id'),
-        term: row.readNullable<String>('term'),
-        reading: row.readNullable<String>('reading'),
-        definitionTags: row.read<String>('definition_tags'),
-        ruleIdentifiers: row.read<String>('rule_identifiers'),
-        popularity: row.read<int>('popularity'),
-        definitions: row.read<String>('definitions'),
-        sequenceNumber: row.read<int>('sequence_number'),
-        tags: row.read<String>('tags'),
-      ),
-    );
+    ).asyncMap(termBankV3SearchView.mapFromRow);
   }
 
   Selectable<ExampleFtsSearchSqlResult> example_fts_search_sql(
@@ -12032,6 +12302,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termBankV3DefinitionsRelationsTable,
     tagBankV3Table,
     termBankV3TagBankRelationsTable,
+    termBankV3SearchView,
     name,
     definition,
     reading,
@@ -29817,29 +30088,6 @@ class $DaKanjiDBManager {
         _db,
         _db.termMetaBankV3IpaTagRelationsTable,
       );
-}
-
-class TermBankV3SearchResult {
-  final int id;
-  final String? term;
-  final String? reading;
-  final String definitionTags;
-  final String ruleIdentifiers;
-  final int popularity;
-  final String definitions;
-  final int sequenceNumber;
-  final String tags;
-  TermBankV3SearchResult({
-    required this.id,
-    this.term,
-    this.reading,
-    required this.definitionTags,
-    required this.ruleIdentifiers,
-    required this.popularity,
-    required this.definitions,
-    required this.sequenceNumber,
-    required this.tags,
-  });
 }
 
 class ExampleFtsSearchSqlResult {

@@ -59,7 +59,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
     tags.sort((a, b) => a.name.compareTo(b.name),);
   }
     
-  factory TermBankV3Entry.fromTermBankV3SearchResult(TermBankV3SearchResult r){
+  factory TermBankV3Entry.fromTermBankV3SearchViewData(TermBankV3SearchViewData r){
 
     return TermBankV3Entry(
       term: r.term ?? "",
