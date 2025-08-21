@@ -12,7 +12,7 @@ part 'term_bank_v3_entry.g.dart';
 
 
 
-@freezed
+@Freezed()
 @JsonSerializable()
 /// Class representing one term of the database
 class TermBankV3Entry with _$TermBankV3Entry {
