@@ -6,7 +6,7 @@ import 'package:universal_io/io.dart';
 import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:dakanji_db/parsing/dictionary_parser.dart';
 import '../../bin/paths.dart';
-import 'kanji_bank_test_values.dart';
+import 'kanji_meta_bank_test_values.dart';
 
 void main() async {
   
@@ -20,23 +20,23 @@ void main() async {
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   test('Test importing samples', () async {
-    await testKanjiBankV3(db);
+    await testKanjiMetaBankV3(db);
   });
 
 }
 
-/// tests the kanjiBankV3 import of the sample database from the yomitan dictionary
-Future testKanjiBankV3(DaKanjiDB db) async {
+/// tests the kanjiMetaBankV3 import of the sample database from the yomitan dictionary
+Future testKanjiMetaBankV3(DaKanjiDB db) async {
   // Check some kanji bank queries
-  for (var testCase in kanjiBankTetsCases) {
+  for (var testCase in kanjiMetaBankTetsCases) {
     Stopwatch s = Stopwatch()..start();
-    List result = (await db.kanjiBankV3Dao.getKanjiBankEntriesFromKanji(testCase))!;
+    List result = (await db.kanjiMetaBankV3Dao.getKanjiMetaBankEntriesFromKanji([testCase]))!;
     print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
-    print(result);
+    print("testesrtaeta $result");
 
     expect(result.isNotEmpty, true);
     for (var entry in result) {
-      expect(kanjiBankTestCaseExpectations.contains(entry), true);
+      expect(kanjiMetaBankTetsCaseExpectations.contains(entry), true);
     }
   }
 }
