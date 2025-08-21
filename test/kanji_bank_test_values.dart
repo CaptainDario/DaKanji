@@ -19,13 +19,13 @@ final kanjiBankTestCaseExpectations = [
     tags: [
       TagBankV3Entry(
         name: "K1",
-        categories: "default",
+        category: "default",
         sortingOrder: 0,
         notes: "example kanji tag 1",
         score: 0),
       TagBankV3Entry(
         name: "K2",
-        categories: "default",
+        category: "default",
         sortingOrder: 0, 
         notes: "example kanji tag 2",
         score: 0)
