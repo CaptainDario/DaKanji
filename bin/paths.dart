@@ -5,6 +5,9 @@ import 'package:universal_io/io.dart';
 /// the path where the dakanji database should be created and populated
 final dakanjiDbPath = p.joinAll([Directory.current.path, "tmp", "dakanji.db"]);
 
+/// path to the tests folder
+final testsPath = p.joinAll([Directory.current.path, "test"]);
+
 /// Path to the folder that contains yomitan dictionary samples for development
 final devYomitanPath = p.joinAll([Directory.current.path, "samples", "yomitan"]);
 /// Path to the folder that contains example sentences for development
