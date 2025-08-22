@@ -3,7 +3,8 @@
 .dart_tool/
 
 # macos files
-*/.DS_store
+.DS_Store
+**/.DS_Store
 
 # ignore temporary outputs
 tmp/
