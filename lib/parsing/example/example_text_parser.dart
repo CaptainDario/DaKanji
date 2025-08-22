@@ -44,9 +44,7 @@ Future parseTextExample(String exampleText, DaKanjiDB db, Mecab mecab) async {
   List<ExampleTableCompanion> exampleComps = [];
 
   // split text into sentences
-  for (var match in sentenceRegex.allMatches(exampleText)) {
-
-    final sentence = match.group(0)!;
+  for (var sentence in findSentencesRegexp(exampleText)) {
 
     // Parse sentence using mecab
     String tokenized = await parseSentenceUsingMecab(sentence, mecab);
