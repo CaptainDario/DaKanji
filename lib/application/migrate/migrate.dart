@@ -12,10 +12,10 @@ Future migrate(Version? last, Version current) async {
     //storeWordListsAsTextFilesForMigration();
   }
   // as some users cannot start the app on v3.5.2 because of shared preferences
-  // delete it on v3.5.3
-  if(current.major == 3 && current.minor == 5 && current.patch == 3
+  // delete it when upgrading to a newer version
+  if(current.major == 3 && current.minor >= 5 && current.patch >= 3
     && last != null
-    && last.major == 3 && last.minor == 5 && last.patch == 3){
+    && last.major == 3 && last.minor <= 5 && last.patch <= 2){
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }
