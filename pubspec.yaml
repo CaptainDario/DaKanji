@@ -8,7 +8,7 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.5.3+137
+version: 3.5.3+138
 
 
 environment:
@@ -69,7 +69,7 @@ dependencies:
 
   fvp: 0.33.1
   chewie: 1.11.0
-  video_player: 2.9.5
+  video_player: 2.10.0
   flutter_subtitle: 0.0.5
 
   flutter_widget_from_html_core: 0.15.2
