@@ -58,3 +58,12 @@
     public static class *;
 }
 -keep public class * extends android.os.Binder { public static *; }
+
+# Sentry.io - Keep rules for Jetpack Compose integration
+-keep class androidx.compose.ui.semantics.** { *; }
+-keep class androidx.compose.ui.unit.** { *; }
+-keepnames class androidx.compose.ui.Modifier
+-dontwarn androidx.compose.ui.semantics.SemanticsModifierKt
+-dontwarn androidx.compose.ui.semantics.SemanticsPropertyReceiver
+-dontwarn androidx.compose.ui.unit.TextUnit$Companion
+-dontwarn androidx.compose.ui.unit.TextUnit
