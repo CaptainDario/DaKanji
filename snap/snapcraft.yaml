@@ -57,6 +57,7 @@ parts:
       - curl
       - ninja-build
       - unzip
+      - openjdk-17-jdk
     override-prime: ''
 
   zenity:
