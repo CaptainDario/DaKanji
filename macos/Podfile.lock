@@ -19,7 +19,7 @@ PODS:
     - FlutterMacOS
   - irondash_engine_context (0.0.1):
     - FlutterMacOS
-  - isar_flutter_libs (1.0.0):
+  - isar_community_flutter_libs (1.0.0):
     - FlutterMacOS
   - lite_rt_for_flutter_libs_macos (0.0.1):
     - FlutterMacOS
@@ -95,7 +95,7 @@ DEPENDENCIES:
   - fvp (from `Flutter/ephemeral/.symlinks/plugins/fvp/darwin`)
   - in_app_review (from `Flutter/ephemeral/.symlinks/plugins/in_app_review/macos`)
   - irondash_engine_context (from `Flutter/ephemeral/.symlinks/plugins/irondash_engine_context/macos`)
-  - isar_flutter_libs (from `Flutter/ephemeral/.symlinks/plugins/isar_flutter_libs/macos`)
+  - isar_community_flutter_libs (from `Flutter/ephemeral/.symlinks/plugins/isar_community_flutter_libs/macos`)
   - lite_rt_for_flutter_libs_macos (from `Flutter/ephemeral/.symlinks/plugins/lite_rt_for_flutter_libs_macos/macos`)
   - mecab_for_flutter (from `Flutter/ephemeral/.symlinks/plugins/mecab_for_flutter/macos`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
@@ -139,8 +139,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/in_app_review/macos
   irondash_engine_context:
     :path: Flutter/ephemeral/.symlinks/plugins/irondash_engine_context/macos
-  isar_flutter_libs:
-    :path: Flutter/ephemeral/.symlinks/plugins/isar_flutter_libs/macos
+  isar_community_flutter_libs:
+    :path: Flutter/ephemeral/.symlinks/plugins/isar_community_flutter_libs/macos
   lite_rt_for_flutter_libs_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/lite_rt_for_flutter_libs_macos/macos
   mecab_for_flutter:
@@ -184,7 +184,7 @@ SPEC CHECKSUMS:
   fvp: 1a7cbe4e9e3657b06efeccde4a9f9017d0bddab8
   in_app_review: a6a031b9acd03c7d103e341aa334adf2c493fb93
   irondash_engine_context: da62996ee25616d2f01bbeb85dc115d813359478
-  isar_flutter_libs: 43385c99864c168fadba7c9adeddc5d38838ca6a
+  isar_community_flutter_libs: d3749f6775866378fc78328b10f1397a05fba673
   lite_rt_for_flutter_libs_macos: 44cd4ada4d859e2ae226dfd4e7f4ff2a066c66ae
   mdk: 622e3452cea55a982c0712ec9ce931d8ec718b22
   mecab_for_flutter: ef1ca11a1cecf77834118d2452034743b37f212d
