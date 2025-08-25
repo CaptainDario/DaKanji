@@ -8,12 +8,13 @@ funding:
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.5.3+138
+version: 3.5.3+140
+isar_version: &isar_version 3.1.8
 
 
 environment:
   sdk: ">=3.0.0"
-  flutter: "3.32.8"
+  flutter: "3.35.1"
 
 platforms:
   android:
@@ -28,51 +29,51 @@ dependencies:
   
   # all platforms supported
   linked_scroll_controller: 0.2.0
-  shared_preferences: 2.3.2
-  url_launcher: 6.3.1
+  shared_preferences: ^2.5.3
+  url_launcher: ^6.3.2
   flutter_phoenix: 1.1.1
   image: 4.5.4
-  flutter_markdown: 0.7.3+1
-  get_it: 7.7.0
-  provider: 6.1.2
+  flutter_markdown: ^0.7.7+1
+  get_it: ^8.2.0
+  provider: ^6.1.5+1
   universal_io: 2.2.2
-  easy_localization: 3.0.7+1
-  flutter_layout_grid: 2.0.7
+  easy_localization: ^3.0.8
+  flutter_layout_grid: ^2.0.8
   tuple: 2.0.2
   lottie: 3.3.1
-  flutter_svg: 2.0.10+1
+  flutter_svg: ^2.0.13
   onboarding_overlay : 3.2.2
-  feedback: 3.1.0
+  feedback: ^3.2.0
   flutter_staggered_animations: 1.1.1
   graphview: 1.2.0
-  xml: 6.5.0
+  xml: ^6.6.1
   reorderables: 0.6.0
-  device_info_plus: 10.1.2
-  share_plus: 10.0.2
-  file_picker: 8.3.7
-  sqlite3: 2.7.6
-  sqlite3_flutter_libs: 0.5.34
-  drift: 2.25.1
+  device_info_plus: ^11.5.0
+  share_plus: ^11.1.0
+  file_picker: ^10.3.2
+  sqlite3: ^2.9.0
+  sqlite3_flutter_libs: ^0.5.39
+  drift: ^2.28.1
   json_annotation: 4.9.0
-  flutter_spinkit: 5.2.1
+  flutter_spinkit: ^5.2.2
   sentry: 9.6.0
   sentry_flutter: 9.6.0
   feedback_sentry: 3.2.0
-  dio: 5.7.0
+  dio: ^5.9.0
   flutter_speed_dial: 7.0.0
   scrollable_positioned_list: 0.3.8
   pdf: 3.11.3
-  printing: 5.13.3
-  path_parsing: 1.0.1               # included in svg_flutter
-  vector_graphics: 1.1.11+1         # included in svg_flutter
-  app_links: 6.4.0                 # android, iOS, web, macos, windows (msix), linux
+  printing: ^5.14.2
+  path_parsing: ^1.1.0               # included in svg_flutter
+  vector_graphics: ^1.1.19         # included in svg_flutter
+  app_links: ^6.4.1                 # android, iOS, web, macos, windows (msix), linux
 
   fvp: 0.33.1
-  chewie: 1.11.0
+  chewie: ^1.12.1
   video_player: 2.10.0
-  flutter_subtitle: 0.0.5
+  flutter_subtitle: ^0.0.6
 
-  flutter_widget_from_html_core: 0.15.2
+  flutter_widget_from_html_core: ^0.17.0
   lite_rt_for_flutter: 0.0.1
   
   lite_rt_for_flutter_libs_android:
@@ -101,25 +102,25 @@ dependencies:
       url: https://github.com/captaindario/lite_rt_for_flutter_libs
       path: base/lite_rt_for_flutter_libs_web_tfjs_tflite
 
-  envied: 0.5.4+1
-  envied_generator: 0.5.4+1
+  envied: ^1.2.0
+  envied_generator: ^1.2.0
   keyboard_detection: 0.8.0
   async: 2.13.0
   path: 1.9.1
-  http: 1.2.2
+  http: ^1.5.0
   path_provider: 2.1.5
   yaml: 3.1.3
   quiver: 3.2.2
   another_flushbar: 1.12.30
   screenshot: 3.0.0
-  super_clipboard: 0.8.24
+  super_clipboard: ^0.9.1
   keyboard_actions: 4.2.0
   meta: 1.16.0
   collection: 1.19.1
-  dart_style: 2.3.7
-  archive: 4.0.5
+  dart_style: ^3.1.1
+  archive: ^4.0.7
   local_assets_server: 2.0.2+12
-  wakelock_plus: 1.2.10
+  wakelock_plus: ^1.3.2
   kana_kit:
 
   # packages that I maintain
@@ -143,23 +144,26 @@ dependencies:
 
   #isar: android, iOS, macos, windows, linux
   isar: 
-    version: 3.1.8
+    version: *isar_version
     hosted: https://pub.isar-community.dev/
   isar_flutter_libs: # contains Isar Core
-    version: 3.1.8
+    version: *isar_version
     hosted: https://pub.isar-community.dev/
 
   # packages that should only target specific platforms
-  android_intent_plus: 5.3.0      # android
-  window_manager: 0.4.3           # desktop
+  android_intent_plus: ^5.3.1      # android
+  window_manager: ^0.5.1           # desktop
   screen_retriever: 0.2.0         # desktop
 
   # utility 
-  flutter_launcher_icons: 0.13.1  # android, iOS, Linux, MacOS, windows
+  flutter_launcher_icons: ^0.14.4  # android, iOS, Linux, MacOS, windows
   flutter_native_splash: 2.4.6   # android, iOS, web
 
-#dependency_overrides:
-  
+dependency_overrides:
+  source_gen: ^3.0.0
+  build: ^3.0.0
+  analyzer: ^7.5.0
+  dart_style: ^3.0.0
 
 msix_config:
   display_name: DaKanji
@@ -180,19 +184,19 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  analyzer: 6.11.0
-  custom_lint: 0.6.4
-  msix: 3.16.9
-  flutter_lints: 4.0.0
+  analyzer:
+  custom_lint: ^0.8.0
+  msix: ^3.16.12
+  flutter_lints: ^6.0.0
   import_sorter: ^5.0.0-releasecandidate.1
-  json_serializable: 6.8.0
-  build_runner: 2.4.12
-  dependency_validator: 4.1.0
-  isar_generator:
-    version: 3.1.8
+  json_serializable: ^6.10.0
+  build_runner: ^2.7.0
+  dependency_validator: ^5.0.2
+  isar_generator: 
+    version: *isar_version
     hosted: https://pub.isar-community.dev/
-  drift_dev: 2.25.1
-  test: 1.25.15
+  drift_dev: ^2.28.1
+  test:
   
 flutter_icons:
   android: "launcher_icon"
