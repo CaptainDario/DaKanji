@@ -22,11 +22,7 @@ const DojgEntrySchema = CollectionSchema(
       name: r'antonymExpression',
       type: IsarType.string,
     ),
-    r'cloze': PropertySchema(
-      id: 1,
-      name: r'cloze',
-      type: IsarType.string,
-    ),
+    r'cloze': PropertySchema(id: 1, name: r'cloze', type: IsarType.string),
     r'equivalent': PropertySchema(
       id: 2,
       name: r'equivalent',
@@ -62,41 +58,21 @@ const DojgEntrySchema = CollectionSchema(
       name: r'keySentencesJp',
       type: IsarType.stringList,
     ),
-    r'note': PropertySchema(
-      id: 9,
-      name: r'note',
-      type: IsarType.string,
-    ),
+    r'note': PropertySchema(id: 9, name: r'note', type: IsarType.string),
     r'noteImageName': PropertySchema(
       id: 10,
       name: r'noteImageName',
       type: IsarType.string,
     ),
-    r'page': PropertySchema(
-      id: 11,
-      name: r'page',
-      type: IsarType.long,
-    ),
-    r'pos': PropertySchema(
-      id: 12,
-      name: r'pos',
-      type: IsarType.string,
-    ),
+    r'page': PropertySchema(id: 11, name: r'page', type: IsarType.long),
+    r'pos': PropertySchema(id: 12, name: r'pos', type: IsarType.string),
     r'relatedExpression': PropertySchema(
       id: 13,
       name: r'relatedExpression',
       type: IsarType.string,
     ),
-    r'usage': PropertySchema(
-      id: 14,
-      name: r'usage',
-      type: IsarType.string,
-    ),
-    r'volume': PropertySchema(
-      id: 15,
-      name: r'volume',
-      type: IsarType.string,
-    ),
+    r'usage': PropertySchema(id: 14, name: r'usage', type: IsarType.string),
+    r'volume': PropertySchema(id: 15, name: r'volume', type: IsarType.string),
     r'volumeJp': PropertySchema(
       id: 16,
       name: r'volumeJp',
@@ -106,8 +82,9 @@ const DojgEntrySchema = CollectionSchema(
       id: 17,
       name: r'volumeTag',
       type: IsarType.string,
-    )
+    ),
   },
+
   estimateSize: _dojgEntryEstimateSize,
   serialize: _dojgEntrySerialize,
   deserialize: _dojgEntryDeserialize,
@@ -124,16 +101,17 @@ const DojgEntrySchema = CollectionSchema(
           name: r'grammaticalConcept',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
-    )
+    ),
   },
   links: {},
   embeddedSchemas: {},
+
   getId: _dojgEntryGetId,
   getLinks: _dojgEntryGetLinks,
   attach: _dojgEntryAttach,
-  version: '3.1.8',
+  version: '3.2.0-dev.2',
 );
 
 int _dojgEntryEstimateSize(
@@ -355,10 +333,7 @@ extension DojgEntryQueryWhere
     on QueryBuilder<DojgEntry, DojgEntry, QWhereClause> {
   QueryBuilder<DojgEntry, DojgEntry, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
@@ -384,8 +359,10 @@ extension DojgEntryQueryWhere
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QAfterWhereClause> idGreaterThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<DojgEntry, DojgEntry, QAfterWhereClause> idGreaterThan(
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -393,8 +370,10 @@ extension DojgEntryQueryWhere
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QAfterWhereClause> idLessThan(Id id,
-      {bool include = false}) {
+  QueryBuilder<DojgEntry, DojgEntry, QAfterWhereClause> idLessThan(
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -409,56 +388,68 @@ extension DojgEntryQueryWhere
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterWhereClause>
-      grammaticalConceptEqualTo(String grammaticalConcept) {
+  grammaticalConceptEqualTo(String grammaticalConcept) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'grammaticalConcept',
-        value: [grammaticalConcept],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'grammaticalConcept',
+          value: [grammaticalConcept],
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterWhereClause>
-      grammaticalConceptNotEqualTo(String grammaticalConcept) {
+  grammaticalConceptNotEqualTo(String grammaticalConcept) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'grammaticalConcept',
-              lower: [],
-              upper: [grammaticalConcept],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'grammaticalConcept',
-              lower: [grammaticalConcept],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'grammaticalConcept',
+                lower: [],
+                upper: [grammaticalConcept],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'grammaticalConcept',
+                lower: [grammaticalConcept],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'grammaticalConcept',
-              lower: [grammaticalConcept],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'grammaticalConcept',
-              lower: [],
-              upper: [grammaticalConcept],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'grammaticalConcept',
+                lower: [grammaticalConcept],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'grammaticalConcept',
+                lower: [],
+                upper: [grammaticalConcept],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
@@ -467,71 +458,74 @@ extension DojgEntryQueryWhere
 extension DojgEntryQueryFilter
     on QueryBuilder<DojgEntry, DojgEntry, QFilterCondition> {
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionIsNull() {
+  antonymExpressionIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'antonymExpression',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'antonymExpression'),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionIsNotNull() {
+  antonymExpressionIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'antonymExpression',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'antonymExpression'),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  antonymExpressionEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'antonymExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'antonymExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'antonymExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionLessThan(
+  antonymExpressionGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'antonymExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'antonymExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionBetween(
+  antonymExpressionLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'antonymExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  antonymExpressionBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -539,84 +533,86 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'antonymExpression',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'antonymExpression',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  antonymExpressionStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'antonymExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'antonymExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  antonymExpressionEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'antonymExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'antonymExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionContains(String value, {bool caseSensitive = true}) {
+  antonymExpressionContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'antonymExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'antonymExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionMatches(String pattern, {bool caseSensitive = true}) {
+  antonymExpressionMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'antonymExpression',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'antonymExpression',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionIsEmpty() {
+  antonymExpressionIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'antonymExpression',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'antonymExpression', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      antonymExpressionIsNotEmpty() {
+  antonymExpressionIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'antonymExpression',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'antonymExpression', value: ''),
+      );
     });
   }
 
@@ -625,11 +621,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'cloze',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'cloze',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -639,12 +637,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'cloze',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'cloze',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -654,12 +654,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'cloze',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'cloze',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -671,14 +673,16 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'cloze',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'cloze',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -687,11 +691,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'cloze',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'cloze',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -700,70 +706,76 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'cloze',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'cloze',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> clozeContains(
-      String value,
-      {bool caseSensitive = true}) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'cloze',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'cloze',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> clozeMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'cloze',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'cloze',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> clozeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'cloze',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'cloze', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> clozeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'cloze',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'cloze', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> equivalentIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'equivalent',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'equivalent'),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      equivalentIsNotNull() {
+  equivalentIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'equivalent',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'equivalent'),
+      );
     });
   }
 
@@ -772,27 +784,31 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'equivalent',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'equivalent',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      equivalentGreaterThan(
+  equivalentGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'equivalent',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'equivalent',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -802,12 +818,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'equivalent',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'equivalent',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -819,28 +837,29 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'equivalent',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'equivalent',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      equivalentStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  equivalentStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'equivalent',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'equivalent',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -849,106 +868,115 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'equivalent',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'equivalent',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> equivalentContains(
-      String value,
-      {bool caseSensitive = true}) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'equivalent',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'equivalent',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> equivalentMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'equivalent',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      equivalentIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'equivalent',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      equivalentIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'equivalent',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnElementEqualTo(
-    String value, {
+    String pattern, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'examplesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'equivalent',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnElementGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
+  equivalentIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'examplesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'equivalent', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnElementLessThan(
+  equivalentIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'equivalent', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesEnElementEqualTo(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'examplesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesEnElementGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'examplesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'examplesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnElementBetween(
+  examplesEnElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'examplesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesEnElementBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -956,160 +984,126 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'examplesEn',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnElementStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'examplesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnElementEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'examplesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnElementContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'examplesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnElementMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'examplesEn',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnElementIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'examplesEn',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnElementIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'examplesEn',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'examplesEn',
-        length,
-        true,
-        length,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'examplesEn',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnIsEmpty() {
+  examplesEnElementStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'examplesEn',
-        0,
-        true,
-        0,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'examplesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnIsNotEmpty() {
+  examplesEnElementEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'examplesEn',
-        0,
-        false,
-        999999,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'examplesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
+  examplesEnElementContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'examplesEn',
-        0,
-        true,
-        length,
-        include,
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'examplesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
+  examplesEnElementMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'examplesEn',
-        length,
-        include,
-        999999,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'examplesEn',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesEnLengthBetween(
+  examplesEnElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'examplesEn', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesEnElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'examplesEn', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesEnLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'examplesEn', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesEnIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'examplesEn', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesEnIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'examplesEn', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesEnLengthLessThan(int length, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'examplesEn', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesEnLengthGreaterThan(int length, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'examplesEn', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesEnLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1127,53 +1121,56 @@ extension DojgEntryQueryFilter
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpElementEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  examplesJpElementEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'examplesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'examplesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpElementGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'examplesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpElementLessThan(
+  examplesJpElementGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'examplesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'examplesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpElementBetween(
+  examplesJpElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'examplesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesJpElementBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1181,160 +1178,126 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'examplesJp',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpElementStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'examplesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpElementEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'examplesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpElementContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'examplesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpElementMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'examplesJp',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpElementIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'examplesJp',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpElementIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'examplesJp',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'examplesJp',
-        length,
-        true,
-        length,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'examplesJp',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpIsEmpty() {
+  examplesJpElementStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'examplesJp',
-        0,
-        true,
-        0,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'examplesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpIsNotEmpty() {
+  examplesJpElementEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'examplesJp',
-        0,
-        false,
-        999999,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'examplesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
+  examplesJpElementContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'examplesJp',
-        0,
-        true,
-        length,
-        include,
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'examplesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
+  examplesJpElementMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'examplesJp',
-        length,
-        include,
-        999999,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'examplesJp',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      examplesJpLengthBetween(
+  examplesJpElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'examplesJp', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesJpElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'examplesJp', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesJpLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'examplesJp', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesJpIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'examplesJp', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesJpIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'examplesJp', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesJpLengthLessThan(int length, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'examplesJp', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesJpLengthGreaterThan(int length, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'examplesJp', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  examplesJpLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1353,18 +1316,18 @@ extension DojgEntryQueryFilter
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> formationIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'formation',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'formation'),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      formationIsNotNull() {
+  formationIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'formation',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'formation'),
+      );
     });
   }
 
@@ -1373,27 +1336,31 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'formation',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'formation',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      formationGreaterThan(
+  formationGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'formation',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'formation',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -1403,12 +1370,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'formation',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'formation',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -1420,14 +1389,16 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'formation',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'formation',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -1436,11 +1407,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'formation',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'formation',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -1449,105 +1422,114 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'formation',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'formation',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> formationContains(
-      String value,
-      {bool caseSensitive = true}) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'formation',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'formation',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> formationMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'formation',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'formation',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> formationIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'formation',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'formation', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      formationIsNotEmpty() {
+  formationIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'formation',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'formation', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      grammaticalConceptEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  grammaticalConceptEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'grammaticalConcept',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'grammaticalConcept',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      grammaticalConceptGreaterThan(
+  grammaticalConceptGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'grammaticalConcept',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'grammaticalConcept',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      grammaticalConceptLessThan(
+  grammaticalConceptLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'grammaticalConcept',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'grammaticalConcept',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      grammaticalConceptBetween(
+  grammaticalConceptBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1555,94 +1537,96 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'grammaticalConcept',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'grammaticalConcept',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      grammaticalConceptStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  grammaticalConceptStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'grammaticalConcept',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'grammaticalConcept',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      grammaticalConceptEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  grammaticalConceptEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'grammaticalConcept',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'grammaticalConcept',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      grammaticalConceptContains(String value, {bool caseSensitive = true}) {
+  grammaticalConceptContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'grammaticalConcept',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'grammaticalConcept',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      grammaticalConceptMatches(String pattern, {bool caseSensitive = true}) {
+  grammaticalConceptMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'grammaticalConcept',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'grammaticalConcept',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      grammaticalConceptIsEmpty() {
+  grammaticalConceptIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'grammaticalConcept',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'grammaticalConcept', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      grammaticalConceptIsNotEmpty() {
+  grammaticalConceptIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'grammaticalConcept',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'grammaticalConcept', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> idEqualTo(
-      Id value) {
+    Id value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
@@ -1651,11 +1635,13 @@ extension DojgEntryQueryFilter
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -1664,11 +1650,13 @@ extension DojgEntryQueryFilter
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -1679,64 +1667,69 @@ extension DojgEntryQueryFilter
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnElementEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  keySentencesEnElementEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'keySentencesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'keySentencesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnElementGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'keySentencesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnElementLessThan(
+  keySentencesEnElementGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'keySentencesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'keySentencesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnElementBetween(
+  keySentencesEnElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'keySentencesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesEnElementBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1744,161 +1737,126 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'keySentencesEn',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnElementStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'keySentencesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnElementEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'keySentencesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnElementContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'keySentencesEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnElementMatches(String pattern,
-          {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'keySentencesEn',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnElementIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'keySentencesEn',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnElementIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'keySentencesEn',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'keySentencesEn',
-        length,
-        true,
-        length,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'keySentencesEn',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnIsEmpty() {
+  keySentencesEnElementStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'keySentencesEn',
-        0,
-        true,
-        0,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'keySentencesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnIsNotEmpty() {
+  keySentencesEnElementEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'keySentencesEn',
-        0,
-        false,
-        999999,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'keySentencesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
+  keySentencesEnElementContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'keySentencesEn',
-        0,
-        true,
-        length,
-        include,
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'keySentencesEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
+  keySentencesEnElementMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'keySentencesEn',
-        length,
-        include,
-        999999,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'keySentencesEn',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesEnLengthBetween(
+  keySentencesEnElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'keySentencesEn', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesEnElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'keySentencesEn', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesEnLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'keySentencesEn', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesEnIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'keySentencesEn', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesEnIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'keySentencesEn', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesEnLengthLessThan(int length, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'keySentencesEn', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesEnLengthGreaterThan(int length, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'keySentencesEn', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesEnLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1916,53 +1874,56 @@ extension DojgEntryQueryFilter
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpElementEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  keySentencesJpElementEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'keySentencesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'keySentencesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpElementGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'keySentencesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpElementLessThan(
+  keySentencesJpElementGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'keySentencesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'keySentencesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpElementBetween(
+  keySentencesJpElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'keySentencesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesJpElementBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1970,161 +1931,126 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'keySentencesJp',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpElementStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'keySentencesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpElementEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'keySentencesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpElementContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'keySentencesJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpElementMatches(String pattern,
-          {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'keySentencesJp',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpElementIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'keySentencesJp',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpElementIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'keySentencesJp',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'keySentencesJp',
-        length,
-        true,
-        length,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'keySentencesJp',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpIsEmpty() {
+  keySentencesJpElementStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'keySentencesJp',
-        0,
-        true,
-        0,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'keySentencesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpIsNotEmpty() {
+  keySentencesJpElementEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'keySentencesJp',
-        0,
-        false,
-        999999,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'keySentencesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
+  keySentencesJpElementContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'keySentencesJp',
-        0,
-        true,
-        length,
-        include,
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'keySentencesJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
+  keySentencesJpElementMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'keySentencesJp',
-        length,
-        include,
-        999999,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'keySentencesJp',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      keySentencesJpLengthBetween(
+  keySentencesJpElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'keySentencesJp', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesJpElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'keySentencesJp', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesJpLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'keySentencesJp', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesJpIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'keySentencesJp', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesJpIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'keySentencesJp', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesJpLengthLessThan(int length, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'keySentencesJp', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesJpLengthGreaterThan(int length, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'keySentencesJp', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
+  keySentencesJpLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -2143,17 +2069,17 @@ extension DojgEntryQueryFilter
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> noteIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'note',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'note'),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> noteIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'note',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'note'),
+      );
     });
   }
 
@@ -2162,11 +2088,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2176,12 +2104,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2191,12 +2121,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2208,14 +2140,16 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'note',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'note',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2224,11 +2158,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2237,122 +2173,131 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> noteContains(
-      String value,
-      {bool caseSensitive = true}) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> noteMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'note',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'note',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> noteIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'note',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'note', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> noteIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'note',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'note', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameIsNull() {
+  noteImageNameIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'noteImageName',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'noteImageName'),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameIsNotNull() {
+  noteImageNameIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'noteImageName',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'noteImageName'),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  noteImageNameEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'noteImageName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'noteImageName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameGreaterThan(
+  noteImageNameGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'noteImageName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'noteImageName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameLessThan(
+  noteImageNameLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'noteImageName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'noteImageName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameBetween(
+  noteImageNameBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -2360,94 +2305,96 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'noteImageName',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'noteImageName',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  noteImageNameStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'noteImageName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'noteImageName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  noteImageNameEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'noteImageName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'noteImageName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameContains(String value, {bool caseSensitive = true}) {
+  noteImageNameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'noteImageName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'noteImageName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameMatches(String pattern, {bool caseSensitive = true}) {
+  noteImageNameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'noteImageName',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'noteImageName',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameIsEmpty() {
+  noteImageNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'noteImageName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'noteImageName', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      noteImageNameIsNotEmpty() {
+  noteImageNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'noteImageName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'noteImageName', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> pageEqualTo(
-      int value) {
+    int value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'page',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'page', value: value),
+      );
     });
   }
 
@@ -2456,11 +2403,13 @@ extension DojgEntryQueryFilter
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'page',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'page',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -2469,11 +2418,13 @@ extension DojgEntryQueryFilter
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'page',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'page',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -2484,29 +2435,31 @@ extension DojgEntryQueryFilter
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'page',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'page',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> posIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'pos',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'pos'),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> posIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'pos',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'pos'),
+      );
     });
   }
 
@@ -2515,11 +2468,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'pos',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'pos',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2529,12 +2484,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'pos',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'pos',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2544,12 +2501,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'pos',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'pos',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2561,14 +2520,16 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'pos',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'pos',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2577,11 +2538,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'pos',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'pos',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2590,122 +2553,131 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'pos',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'pos',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> posContains(
-      String value,
-      {bool caseSensitive = true}) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'pos',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'pos',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> posMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'pos',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'pos',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> posIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'pos',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'pos', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> posIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'pos',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'pos', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionIsNull() {
+  relatedExpressionIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'relatedExpression',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'relatedExpression'),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionIsNotNull() {
+  relatedExpressionIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'relatedExpression',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'relatedExpression'),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  relatedExpressionEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'relatedExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'relatedExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionGreaterThan(
+  relatedExpressionGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'relatedExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'relatedExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionLessThan(
+  relatedExpressionLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'relatedExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'relatedExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionBetween(
+  relatedExpressionBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -2713,100 +2685,102 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'relatedExpression',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'relatedExpression',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  relatedExpressionStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'relatedExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'relatedExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  relatedExpressionEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'relatedExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'relatedExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionContains(String value, {bool caseSensitive = true}) {
+  relatedExpressionContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'relatedExpression',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'relatedExpression',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionMatches(String pattern, {bool caseSensitive = true}) {
+  relatedExpressionMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'relatedExpression',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'relatedExpression',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionIsEmpty() {
+  relatedExpressionIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'relatedExpression',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'relatedExpression', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      relatedExpressionIsNotEmpty() {
+  relatedExpressionIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'relatedExpression',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'relatedExpression', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> usageIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'usage',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'usage'),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> usageIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'usage',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'usage'),
+      );
     });
   }
 
@@ -2815,11 +2789,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'usage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'usage',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2829,12 +2805,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'usage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'usage',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2844,12 +2822,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'usage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'usage',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2861,14 +2841,16 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'usage',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'usage',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2877,11 +2859,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'usage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'usage',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2890,53 +2874,59 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'usage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'usage',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> usageContains(
-      String value,
-      {bool caseSensitive = true}) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'usage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'usage',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> usageMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'usage',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'usage',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> usageIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'usage',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'usage', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> usageIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'usage',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'usage', value: ''),
+      );
     });
   }
 
@@ -2945,11 +2935,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'volume',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'volume',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2959,12 +2951,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'volume',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'volume',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2974,12 +2968,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'volume',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'volume',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -2991,14 +2987,16 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'volume',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'volume',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -3007,11 +3005,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'volume',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'volume',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -3020,53 +3020,59 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'volume',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'volume',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> volumeContains(
-      String value,
-      {bool caseSensitive = true}) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'volume',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'volume',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> volumeMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'volume',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'volume',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> volumeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'volume',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'volume', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> volumeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'volume',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'volume', value: ''),
+      );
     });
   }
 
@@ -3075,11 +3081,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'volumeJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'volumeJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -3089,12 +3097,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'volumeJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'volumeJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -3104,12 +3114,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'volumeJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'volumeJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -3121,14 +3133,16 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'volumeJp',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'volumeJp',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -3137,11 +3151,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'volumeJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'volumeJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -3150,54 +3166,60 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'volumeJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'volumeJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> volumeJpContains(
-      String value,
-      {bool caseSensitive = true}) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'volumeJp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'volumeJp',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> volumeJpMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'volumeJp',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'volumeJp',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> volumeJpIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'volumeJp',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'volumeJp', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      volumeJpIsNotEmpty() {
+  volumeJpIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'volumeJp',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'volumeJp', value: ''),
+      );
     });
   }
 
@@ -3206,27 +3228,31 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'volumeTag',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'volumeTag',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      volumeTagGreaterThan(
+  volumeTagGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'volumeTag',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'volumeTag',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -3236,12 +3262,14 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'volumeTag',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'volumeTag',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -3253,14 +3281,16 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'volumeTag',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'volumeTag',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -3269,11 +3299,13 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'volumeTag',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'volumeTag',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
@@ -3282,54 +3314,60 @@ extension DojgEntryQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'volumeTag',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'volumeTag',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> volumeTagContains(
-      String value,
-      {bool caseSensitive = true}) {
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'volumeTag',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'volumeTag',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> volumeTagMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'volumeTag',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'volumeTag',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition> volumeTagIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'volumeTag',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'volumeTag', value: ''),
+      );
     });
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterFilterCondition>
-      volumeTagIsNotEmpty() {
+  volumeTagIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'volumeTag',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'volumeTag', value: ''),
+      );
     });
   }
 }
@@ -3348,7 +3386,7 @@ extension DojgEntryQuerySortBy on QueryBuilder<DojgEntry, DojgEntry, QSortBy> {
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterSortBy>
-      sortByAntonymExpressionDesc() {
+  sortByAntonymExpressionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'antonymExpression', Sort.desc);
     });
@@ -3397,7 +3435,7 @@ extension DojgEntryQuerySortBy on QueryBuilder<DojgEntry, DojgEntry, QSortBy> {
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterSortBy>
-      sortByGrammaticalConceptDesc() {
+  sortByGrammaticalConceptDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'grammaticalConcept', Sort.desc);
     });
@@ -3458,7 +3496,7 @@ extension DojgEntryQuerySortBy on QueryBuilder<DojgEntry, DojgEntry, QSortBy> {
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterSortBy>
-      sortByRelatedExpressionDesc() {
+  sortByRelatedExpressionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'relatedExpression', Sort.desc);
     });
@@ -3522,7 +3560,7 @@ extension DojgEntryQuerySortThenBy
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterSortBy>
-      thenByAntonymExpressionDesc() {
+  thenByAntonymExpressionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'antonymExpression', Sort.desc);
     });
@@ -3571,7 +3609,7 @@ extension DojgEntryQuerySortThenBy
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterSortBy>
-      thenByGrammaticalConceptDesc() {
+  thenByGrammaticalConceptDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'grammaticalConcept', Sort.desc);
     });
@@ -3644,7 +3682,7 @@ extension DojgEntryQuerySortThenBy
   }
 
   QueryBuilder<DojgEntry, DojgEntry, QAfterSortBy>
-      thenByRelatedExpressionDesc() {
+  thenByRelatedExpressionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'relatedExpression', Sort.desc);
     });
@@ -3701,23 +3739,28 @@ extension DojgEntryQuerySortThenBy
 
 extension DojgEntryQueryWhereDistinct
     on QueryBuilder<DojgEntry, DojgEntry, QDistinct> {
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByAntonymExpression(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByAntonymExpression({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'antonymExpression',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'antonymExpression',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByCloze(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByCloze({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'cloze', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByEquivalent(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByEquivalent({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'equivalent', caseSensitive: caseSensitive);
     });
@@ -3735,18 +3778,22 @@ extension DojgEntryQueryWhereDistinct
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByFormation(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByFormation({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'formation', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByGrammaticalConcept(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByGrammaticalConcept({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'grammaticalConcept',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'grammaticalConcept',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
@@ -3762,18 +3809,22 @@ extension DojgEntryQueryWhereDistinct
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByNote(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByNote({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'note', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByNoteImageName(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByNoteImageName({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'noteImageName',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'noteImageName',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
@@ -3783,44 +3834,52 @@ extension DojgEntryQueryWhereDistinct
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByPos(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByPos({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'pos', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByRelatedExpression(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByRelatedExpression({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'relatedExpression',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'relatedExpression',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByUsage(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByUsage({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'usage', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByVolume(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByVolume({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'volume', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByVolumeJp(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByVolumeJp({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'volumeJp', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByVolumeTag(
-      {bool caseSensitive = true}) {
+  QueryBuilder<DojgEntry, DojgEntry, QDistinct> distinctByVolumeTag({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'volumeTag', caseSensitive: caseSensitive);
     });
@@ -3836,7 +3895,7 @@ extension DojgEntryQueryProperty
   }
 
   QueryBuilder<DojgEntry, String?, QQueryOperations>
-      antonymExpressionProperty() {
+  antonymExpressionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'antonymExpression');
     });
@@ -3873,21 +3932,21 @@ extension DojgEntryQueryProperty
   }
 
   QueryBuilder<DojgEntry, String, QQueryOperations>
-      grammaticalConceptProperty() {
+  grammaticalConceptProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'grammaticalConcept');
     });
   }
 
   QueryBuilder<DojgEntry, List<String>, QQueryOperations>
-      keySentencesEnProperty() {
+  keySentencesEnProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'keySentencesEn');
     });
   }
 
   QueryBuilder<DojgEntry, List<String>, QQueryOperations>
-      keySentencesJpProperty() {
+  keySentencesJpProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'keySentencesJp');
     });
@@ -3918,7 +3977,7 @@ extension DojgEntryQueryProperty
   }
 
   QueryBuilder<DojgEntry, String?, QQueryOperations>
-      relatedExpressionProperty() {
+  relatedExpressionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'relatedExpression');
     });

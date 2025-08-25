@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/dictionary/falling_word_stack_controller.dart';

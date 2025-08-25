@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:archive/archive_io.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 

@@ -13,7 +13,7 @@ import flutter_inappwebview_macos
 import fvp
 import in_app_review
 import irondash_engine_context
-import isar_flutter_libs
+import isar_community_flutter_libs
 import mecab_for_flutter
 import package_info_plus
 import path_provider_foundation

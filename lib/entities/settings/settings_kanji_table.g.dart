@@ -10,11 +10,11 @@ SettingsKanjiTable _$SettingsKanjiTableFromJson(Map<String, dynamic> json) =>
     SettingsKanjiTable()
       ..kanjiCategory =
           $enumDecodeNullable(_$KanjiCategoryEnumMap, json['kanjiCategory']) ??
-              KanjiCategory.jlpt
+          KanjiCategory.jlpt
       ..kanjiCategoryLevel = json['kanjiCategoryLevel'] as String? ?? '5'
       ..kanjiSorting =
           $enumDecodeNullable(_$KanjiSortingEnumMap, json['kanjiSorting']) ??
-              KanjiSorting.strokesAsc;
+          KanjiSorting.strokesAsc;
 
 Map<String, dynamic> _$SettingsKanjiTableToJson(SettingsKanjiTable instance) =>
     <String, dynamic>{

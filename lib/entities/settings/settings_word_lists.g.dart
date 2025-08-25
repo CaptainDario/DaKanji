@@ -24,8 +24,8 @@ SettingsWordLists _$SettingsWordListsFromJson(Map<String, dynamic> json) =>
       ..screenSaverWordLists = (json['screenSaverWordLists'] as List<dynamic>)
           .map((e) => (e as num).toInt())
           .toList()
-      ..screenSaverSecondsToStart =
-          (json['screenSaverSecondsToStart'] as num).toInt()
+      ..screenSaverSecondsToStart = (json['screenSaverSecondsToStart'] as num)
+          .toInt()
       ..screenSaverSecondsToNextCard =
           (json['screenSaverSecondsToNextCard'] as num).toInt();
 

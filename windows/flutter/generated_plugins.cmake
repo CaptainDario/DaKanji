@@ -8,7 +8,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   flutter_inappwebview_windows
   fvp
   irondash_engine_context
-  isar_flutter_libs
+  isar_community_flutter_libs
   mecab_for_flutter
   printing
   screen_retriever_windows

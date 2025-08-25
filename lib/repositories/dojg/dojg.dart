@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:archive/archive_io.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
 import 'package:tuple/tuple.dart';

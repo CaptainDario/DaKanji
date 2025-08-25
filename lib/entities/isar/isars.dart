@@ -2,7 +2,7 @@
 
 
 // Package imports:
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 
 /// class to bundle all instances of isar
 class Isars {

@@ -11,7 +11,7 @@
 #include <flutter_inappwebview_windows/flutter_inappwebview_windows_plugin_c_api.h>
 #include <fvp/fvp_plugin_c_api.h>
 #include <irondash_engine_context/irondash_engine_context_plugin_c_api.h>
-#include <isar_flutter_libs/isar_flutter_libs_plugin.h>
+#include <isar_community_flutter_libs/isar_flutter_libs_plugin.h>
 #include <mecab_for_flutter/mecab_for_flutter_plugin_c_api.h>
 #include <printing/printing_plugin.h>
 #include <screen_retriever_windows/screen_retriever_windows_plugin_c_api.h>

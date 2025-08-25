@@ -3,7 +3,7 @@
 // Package imports:
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/isar/isars.dart';

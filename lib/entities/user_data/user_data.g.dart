@@ -16,8 +16,9 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
       json['monthlyActiveUserTracked'] as bool? ?? false
   ..lastDayUsed = DateTime.parse(json['lastDayUsed'] as String)
   ..doNotShowRateAgain = json['doNotShowRateAgain'] as bool? ?? false
-  ..versionUsed =
-      json['versionUsed'] == null ? null : Version.fromJson(json['versionUsed'])
+  ..versionUsed = json['versionUsed'] == null
+      ? null
+      : Version.fromJson(json['versionUsed'])
   ..userRefusedUpdate = json['userRefusedUpdate'] == null
       ? null
       : DateTime.parse(json['userRefusedUpdate'] as String)
@@ -40,41 +41,43 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..ankiSetup = json['ankiSetup'] as bool? ?? false
   ..dojgImported = json['dojgImported'] as bool? ?? false
   ..dojgWithMediaImported = json['dojgWithMediaImported'] as bool? ?? false
-  ..drawingBackend =
-      $enumDecodeNullable(_$InferenceBackendEnumMap, json['drawingBackend']);
+  ..drawingBackend = $enumDecodeNullable(
+    _$InferenceBackendEnumMap,
+    json['drawingBackend'],
+  );
 
 Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
-      'appOpenedTimes': instance.appOpenedTimes,
-      'todayUsageSeconds': instance.todayUsageSeconds,
-      'dailyActiveUserTracked': instance.dailyActiveUserTracked,
-      'monthsUsageDays': instance.monthsUsageDays,
-      'dailyForMonthlyTracked': instance.dailyForMonthlyTracked,
-      'monthlyActiveUserTracked': instance.monthlyActiveUserTracked,
-      'lastDayUsed': instance.lastDayUsed.toIso8601String(),
-      'doNotShowRateAgain': instance.doNotShowRateAgain,
-      'versionUsed': instance.versionUsed,
-      'userRefusedUpdate': instance.userRefusedUpdate?.toIso8601String(),
-      'showTutorialDrawing': instance.showTutorialDrawing,
-      'showTutorialDictionary': instance.showTutorialDictionary,
-      'showTutorialText': instance.showTutorialText,
-      'showTutorialDojg': instance.showTutorialDojg,
-      'showTutorialImmersion': instance.showTutorialImmersion,
-      'showTutorialOcr': instance.showTutorialOcr,
-      'showTutorialWebbrowser': instance.showTutorialWebbrowser,
-      'showTutorialYoutube': instance.showTutorialYoutube,
-      'showTutorialClipboard': instance.showTutorialClipboard,
-      'showTutorialKanjiTable': instance.showTutorialKanjiTable,
-      'showTutorialKanjiMap': instance.showTutorialKanjiMap,
-      'showTutorialKanaTable': instance.showTutorialKanaTable,
-      'showTutorialWordLists': instance.showTutorialWordLists,
-      'showOnboarding': instance.showOnboarding,
-      'showRateDialog': instance.showRateDialog,
-      'showChangelog': instance.showChangelog,
-      'ankiSetup': instance.ankiSetup,
-      'dojgImported': instance.dojgImported,
-      'dojgWithMediaImported': instance.dojgWithMediaImported,
-      'drawingBackend': _$InferenceBackendEnumMap[instance.drawingBackend],
-    };
+  'appOpenedTimes': instance.appOpenedTimes,
+  'todayUsageSeconds': instance.todayUsageSeconds,
+  'dailyActiveUserTracked': instance.dailyActiveUserTracked,
+  'monthsUsageDays': instance.monthsUsageDays,
+  'dailyForMonthlyTracked': instance.dailyForMonthlyTracked,
+  'monthlyActiveUserTracked': instance.monthlyActiveUserTracked,
+  'lastDayUsed': instance.lastDayUsed.toIso8601String(),
+  'doNotShowRateAgain': instance.doNotShowRateAgain,
+  'versionUsed': instance.versionUsed,
+  'userRefusedUpdate': instance.userRefusedUpdate?.toIso8601String(),
+  'showTutorialDrawing': instance.showTutorialDrawing,
+  'showTutorialDictionary': instance.showTutorialDictionary,
+  'showTutorialText': instance.showTutorialText,
+  'showTutorialDojg': instance.showTutorialDojg,
+  'showTutorialImmersion': instance.showTutorialImmersion,
+  'showTutorialOcr': instance.showTutorialOcr,
+  'showTutorialWebbrowser': instance.showTutorialWebbrowser,
+  'showTutorialYoutube': instance.showTutorialYoutube,
+  'showTutorialClipboard': instance.showTutorialClipboard,
+  'showTutorialKanjiTable': instance.showTutorialKanjiTable,
+  'showTutorialKanjiMap': instance.showTutorialKanjiMap,
+  'showTutorialKanaTable': instance.showTutorialKanaTable,
+  'showTutorialWordLists': instance.showTutorialWordLists,
+  'showOnboarding': instance.showOnboarding,
+  'showRateDialog': instance.showRateDialog,
+  'showChangelog': instance.showChangelog,
+  'ankiSetup': instance.ankiSetup,
+  'dojgImported': instance.dojgImported,
+  'dojgWithMediaImported': instance.dojgWithMediaImported,
+  'drawingBackend': _$InferenceBackendEnumMap[instance.drawingBackend],
+};
 
 const _$InferenceBackendEnumMap = {
   InferenceBackend.cpu: 'cpu',

@@ -32,8 +32,9 @@ const SearchHistorySchema = CollectionSchema(
       name: r'schema',
       type: IsarType.byte,
       enumMap: _SearchHistoryschemaEnumValueMap,
-    )
+    ),
   },
+
   estimateSize: _searchHistoryEstimateSize,
   serialize: _searchHistorySerialize,
   deserialize: _searchHistoryDeserialize,
@@ -50,16 +51,17 @@ const SearchHistorySchema = CollectionSchema(
           name: r'dateSearched',
           type: IndexType.value,
           caseSensitive: false,
-        )
+        ),
       ],
-    )
+    ),
   },
   links: {},
   embeddedSchemas: {},
+
   getId: _searchHistoryGetId,
   getLinks: _searchHistoryGetLinks,
   attach: _searchHistoryAttach,
-  version: '3.1.8',
+  version: '3.2.0-dev.2',
 );
 
 int _searchHistoryEstimateSize(
@@ -94,7 +96,7 @@ SearchHistory _searchHistoryDeserialize(
   object.id = id;
   object.schema =
       _SearchHistoryschemaValueEnumMap[reader.readByteOrNull(offsets[2])] ??
-          DatabaseType.None;
+      DatabaseType.None;
   return object;
 }
 
@@ -111,7 +113,8 @@ P _searchHistoryDeserializeProp<P>(
       return (reader.readLong(offset)) as P;
     case 2:
       return (_SearchHistoryschemaValueEnumMap[reader.readByteOrNull(offset)] ??
-          DatabaseType.None) as P;
+              DatabaseType.None)
+          as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -141,7 +144,10 @@ List<IsarLinkBase<dynamic>> _searchHistoryGetLinks(SearchHistory object) {
 }
 
 void _searchHistoryAttach(
-    IsarCollection<dynamic> col, Id id, SearchHistory object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  SearchHistory object,
+) {
   object.id = id;
 }
 
@@ -165,17 +171,16 @@ extension SearchHistoryQueryWhereSort
 extension SearchHistoryQueryWhere
     on QueryBuilder<SearchHistory, SearchHistory, QWhereClause> {
   QueryBuilder<SearchHistory, SearchHistory, QAfterWhereClause> idEqualTo(
-      Id id) {
+    Id id,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterWhereClause> idNotEqualTo(
-      Id id) {
+    Id id,
+  ) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -198,8 +203,9 @@ extension SearchHistoryQueryWhere
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterWhereClause> idGreaterThan(
-      Id id,
-      {bool include = false}) {
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -208,8 +214,9 @@ extension SearchHistoryQueryWhere
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterWhereClause> idLessThan(
-      Id id,
-      {bool include = false}) {
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -224,105 +231,117 @@ extension SearchHistoryQueryWhere
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterWhereClause>
-      dateSearchedEqualTo(DateTime dateSearched) {
+  dateSearchedEqualTo(DateTime dateSearched) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'dateSearched',
-        value: [dateSearched],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'dateSearched',
+          value: [dateSearched],
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterWhereClause>
-      dateSearchedNotEqualTo(DateTime dateSearched) {
+  dateSearchedNotEqualTo(DateTime dateSearched) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'dateSearched',
-              lower: [],
-              upper: [dateSearched],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'dateSearched',
-              lower: [dateSearched],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'dateSearched',
+                lower: [],
+                upper: [dateSearched],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'dateSearched',
+                lower: [dateSearched],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'dateSearched',
-              lower: [dateSearched],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'dateSearched',
-              lower: [],
-              upper: [dateSearched],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'dateSearched',
+                lower: [dateSearched],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'dateSearched',
+                lower: [],
+                upper: [dateSearched],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterWhereClause>
-      dateSearchedGreaterThan(
-    DateTime dateSearched, {
-    bool include = false,
-  }) {
+  dateSearchedGreaterThan(DateTime dateSearched, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'dateSearched',
-        lower: [dateSearched],
-        includeLower: include,
-        upper: [],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'dateSearched',
+          lower: [dateSearched],
+          includeLower: include,
+          upper: [],
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterWhereClause>
-      dateSearchedLessThan(
-    DateTime dateSearched, {
-    bool include = false,
-  }) {
+  dateSearchedLessThan(DateTime dateSearched, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'dateSearched',
-        lower: [],
-        upper: [dateSearched],
-        includeUpper: include,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'dateSearched',
+          lower: [],
+          upper: [dateSearched],
+          includeUpper: include,
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterWhereClause>
-      dateSearchedBetween(
+  dateSearchedBetween(
     DateTime lowerDateSearched,
     DateTime upperDateSearched, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'dateSearched',
-        lower: [lowerDateSearched],
-        includeLower: includeLower,
-        upper: [upperDateSearched],
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'dateSearched',
+          lower: [lowerDateSearched],
+          includeLower: includeLower,
+          upper: [upperDateSearched],
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
@@ -330,138 +349,135 @@ extension SearchHistoryQueryWhere
 extension SearchHistoryQueryFilter
     on QueryBuilder<SearchHistory, SearchHistory, QFilterCondition> {
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      dateSearchedEqualTo(DateTime value) {
+  dateSearchedEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'dateSearched',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'dateSearched', value: value),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      dateSearchedGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  dateSearchedGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'dateSearched',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'dateSearched',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      dateSearchedLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  dateSearchedLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'dateSearched',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'dateSearched',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      dateSearchedBetween(
+  dateSearchedBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'dateSearched',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'dateSearched',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      dictEntryIdEqualTo(int value) {
+  dictEntryIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'dictEntryId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'dictEntryId', value: value),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      dictEntryIdGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
+  dictEntryIdGreaterThan(int value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'dictEntryId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'dictEntryId',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      dictEntryIdLessThan(
-    int value, {
-    bool include = false,
-  }) {
+  dictEntryIdLessThan(int value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'dictEntryId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'dictEntryId',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      dictEntryIdBetween(
+  dictEntryIdBetween(
     int lower,
     int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'dictEntryId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'dictEntryId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition> idEqualTo(
-      Id value) {
+    Id value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      idGreaterThan(
-    Id value, {
-    bool include = false,
-  }) {
+  idGreaterThan(Id value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -470,11 +486,13 @@ extension SearchHistoryQueryFilter
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -485,69 +503,70 @@ extension SearchHistoryQueryFilter
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      schemaEqualTo(DatabaseType value) {
+  schemaEqualTo(DatabaseType value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'schema',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'schema', value: value),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      schemaGreaterThan(
-    DatabaseType value, {
-    bool include = false,
-  }) {
+  schemaGreaterThan(DatabaseType value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'schema',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'schema',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      schemaLessThan(
-    DatabaseType value, {
-    bool include = false,
-  }) {
+  schemaLessThan(DatabaseType value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'schema',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'schema',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterFilterCondition>
-      schemaBetween(
+  schemaBetween(
     DatabaseType lower,
     DatabaseType upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'schema',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'schema',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
@@ -561,14 +580,14 @@ extension SearchHistoryQueryLinks
 extension SearchHistoryQuerySortBy
     on QueryBuilder<SearchHistory, SearchHistory, QSortBy> {
   QueryBuilder<SearchHistory, SearchHistory, QAfterSortBy>
-      sortByDateSearched() {
+  sortByDateSearched() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateSearched', Sort.asc);
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterSortBy>
-      sortByDateSearchedDesc() {
+  sortByDateSearchedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateSearched', Sort.desc);
     });
@@ -581,7 +600,7 @@ extension SearchHistoryQuerySortBy
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterSortBy>
-      sortByDictEntryIdDesc() {
+  sortByDictEntryIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dictEntryId', Sort.desc);
     });
@@ -603,14 +622,14 @@ extension SearchHistoryQuerySortBy
 extension SearchHistoryQuerySortThenBy
     on QueryBuilder<SearchHistory, SearchHistory, QSortThenBy> {
   QueryBuilder<SearchHistory, SearchHistory, QAfterSortBy>
-      thenByDateSearched() {
+  thenByDateSearched() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateSearched', Sort.asc);
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterSortBy>
-      thenByDateSearchedDesc() {
+  thenByDateSearchedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateSearched', Sort.desc);
     });
@@ -623,7 +642,7 @@ extension SearchHistoryQuerySortThenBy
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QAfterSortBy>
-      thenByDictEntryIdDesc() {
+  thenByDictEntryIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dictEntryId', Sort.desc);
     });
@@ -657,14 +676,14 @@ extension SearchHistoryQuerySortThenBy
 extension SearchHistoryQueryWhereDistinct
     on QueryBuilder<SearchHistory, SearchHistory, QDistinct> {
   QueryBuilder<SearchHistory, SearchHistory, QDistinct>
-      distinctByDateSearched() {
+  distinctByDateSearched() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'dateSearched');
     });
   }
 
   QueryBuilder<SearchHistory, SearchHistory, QDistinct>
-      distinctByDictEntryId() {
+  distinctByDictEntryId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'dictEntryId');
     });
@@ -686,7 +705,7 @@ extension SearchHistoryQueryProperty
   }
 
   QueryBuilder<SearchHistory, DateTime, QQueryOperations>
-      dateSearchedProperty() {
+  dateSearchedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dateSearched');
     });

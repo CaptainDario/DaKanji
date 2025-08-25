@@ -19,7 +19,8 @@ SettingsMisc _$SettingsMiscFromJson(Map<String, dynamic> json) => SettingsMisc()
   ..alwaysSaveWindowSize = json['alwaysSaveWindowSize'] as bool
   ..alwaysSaveWindowPosition = json['alwaysSaveWindowPosition'] as bool
   ..windowOpacity = (json['windowOpacity'] as num).toDouble()
-  ..drawerItemOrder = (json['drawerItemOrder'] as List<dynamic>?)
+  ..drawerItemOrder =
+      (json['drawerItemOrder'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
           .toList() ??
       []

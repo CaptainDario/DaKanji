@@ -9,11 +9,11 @@ funding:
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 3.5.3+140
-isar_version: &isar_version 3.1.8
+isar_version: &isar_version 3.2.0-dev.2
 
 
 environment:
-  sdk: ">=3.0.0"
+  sdk: ">=3.9.0"
   flutter: "3.35.1"
 
 platforms:
@@ -143,12 +143,8 @@ dependencies:
   store_checker: 1.8.0                  # ios, android
 
   #isar: android, iOS, macos, windows, linux
-  isar: 
-    version: *isar_version
-    hosted: https://pub.isar-community.dev/
-  isar_flutter_libs: # contains Isar Core
-    version: *isar_version
-    hosted: https://pub.isar-community.dev/
+  isar_community: *isar_version
+  isar_community_flutter_libs: *isar_version
 
   # packages that should only target specific platforms
   android_intent_plus: ^5.3.1      # android
@@ -159,11 +155,8 @@ dependencies:
   flutter_launcher_icons: ^0.14.4  # android, iOS, Linux, MacOS, windows
   flutter_native_splash: 2.4.6   # android, iOS, web
 
-dependency_overrides:
-  source_gen: ^3.0.0
-  build: ^3.0.0
-  analyzer: ^7.5.0
-  dart_style: ^3.0.0
+#dependency_overrides:
+
 
 msix_config:
   display_name: DaKanji
@@ -192,9 +185,11 @@ dev_dependencies:
   json_serializable: ^6.10.0
   build_runner: ^2.7.0
   dependency_validator: ^5.0.2
-  isar_generator: 
-    version: *isar_version
-    hosted: https://pub.isar-community.dev/
+  isar_community_generator:
+    git:
+      url: https://github.com/callumw-k/isar-community
+      ref: migrating-to-source_gen-3
+      path: packages/isar_community_generator/
   drift_dev: ^2.28.1
   test:
   
