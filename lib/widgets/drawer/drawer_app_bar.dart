@@ -14,6 +14,7 @@ class DrawerAppBar extends StatelessWidget {
     required AnimationController drawerController,
     required this.currentScreen,
     required this.height,
+    this.useBackArrowAppBar = false,
   }) : _drawerController = drawerController;
 
   /// controller to open and close the drawer
@@ -22,6 +23,8 @@ class DrawerAppBar extends StatelessWidget {
   final Screens currentScreen;
   /// the height of the appbar
   final double height;
+
+  final bool useBackArrowAppBar;
 
 
 
@@ -39,12 +42,20 @@ class DrawerAppBar extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                _drawerController.forward(from: 0.0);
+                if(useBackArrowAppBar){
+                  Navigator.of(context).pop();
+                }
+                else{
+                  _drawerController.forward(from: 0.0);
+                }
                 //close onscreen keyboard if one is opened
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               child: Icon(
-                Icons.menu,
+                () {
+                  if(useBackArrowAppBar) return Icons.arrow_back;
+                  else return Icons.menu;
+                } (),
                 size: height*0.5,
               )
             ),

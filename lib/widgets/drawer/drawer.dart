@@ -293,9 +293,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                 child: Scaffold(
                   resizeToAvoidBottomInset: false,
                   // the top app bar
-                  appBar: widget.useBackArrowAppBar
-                    ? AppBar()
-                    : AppBar(
+                  appBar: AppBar(
                       automaticallyImplyLeading: false,
                       toolbarHeight: (MediaQuery.of(context).size.height*0.1).clamp(0, 60),
                       leadingWidth: 0,
@@ -303,6 +301,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                       title: DrawerAppBar(
                         drawerController: _drawerController, 
                         currentScreen: widget.currentScreen,
+                        useBackArrowAppBar: widget.useBackArrowAppBar,
                         height: (MediaQuery.of(context).size.height*0.1).clamp(0, 60),
                       ),
                     ),

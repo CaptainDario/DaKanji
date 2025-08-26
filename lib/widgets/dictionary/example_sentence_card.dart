@@ -78,15 +78,16 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
 
     return GestureDetector(
       onDoubleTap: () {
-        Navigator.push(context, 
-        MaterialPageRoute(builder: 
-          (context) => TextScreen(
-            false,
-            false,
-            useBackArrowAppBar: true,
-            initialText: widget.sentences.sentence,
+        Navigator.push(context,
+          MaterialPageRoute(builder:
+            (context) => TextScreen(
+              false,
+              false,
+              useBackArrowAppBar: true,
+              initialText: widget.sentences.sentence,
+            )
           )
-        ));
+        );
       },
       child: Card(
         child: Padding(
