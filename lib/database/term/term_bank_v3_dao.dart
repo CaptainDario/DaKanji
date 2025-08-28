@@ -21,6 +21,9 @@ part 'term_bank_v3_dao.g.dart';
     TermBankV3DefinitionTagsTable, TermBankV3RuleIdentifierTable,
     TagBankV3Table
   ],
+  include: {
+    'term_bank_v3_views.drift', 'term_bank_v3_queries.drift',
+  }
 )
 class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixin {
   
@@ -39,7 +42,7 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
     assert (languages.isNotEmpty);
     List<String> langs = languages.map((e) => e.name,).toList();
 
-    List<TermBankV3Entry> results = (await db.term_bank_v3_search(query, limit, offset).get())
+    List<TermBankV3Entry> results = (await term_bank_v3_search(query, limit, offset).get())
       .map((e) => TermBankV3Entry.fromTermBankV3SearchViewData(e))
       .toList();
 

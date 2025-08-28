@@ -1,7 +1,7 @@
 // Package imports:
 import 'dart:convert';
 
-import 'package:dakanji_db/database/dakanji_db.dart';
+import 'package:dakanji_db/database/kanji/kanji_bank_v3_dao.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:

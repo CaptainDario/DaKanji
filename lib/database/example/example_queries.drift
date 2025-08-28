@@ -4,7 +4,7 @@ import 'package:dakanji_db/database/general_tables/language_code_table.dart';
 import 'package:dakanji_db/database/example/example_fts5_table.drift';
 import 'package:dakanji_db/database/example/example_views.drift';
 
-example_fts_search_sql:
+example_fts_search:
     SELECT
         EDV.id,
         EDV.example_sentence,

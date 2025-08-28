@@ -1,7 +1,7 @@
 // Package imports:
 import 'dart:convert';
 
-import 'package:dakanji_db/database/dakanji_db.dart';
+import 'package:dakanji_db/database/example/example_dao.dart';
 import 'package:dakanji_db/database/example/example_entry_translation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -34,7 +34,7 @@ class ExampleEntry with _$ExampleEntry {
   factory ExampleEntry.fromJson(dynamic json)
     => _$ExampleEntryFromJson(json);
 
-  factory ExampleEntry.fromExampleFtsSearchSql(ExampleFtsSearchSqlResult r){
+  factory ExampleEntry.fromExampleFtsSearchSql(ExampleFtsSearchResult r){
 
     return ExampleEntry(
       example: r.exampleSentence,

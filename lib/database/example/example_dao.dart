@@ -16,6 +16,11 @@ part 'example_dao.g.dart';
   tables: [
     ExampleTable, ExampleTranslationTable
   ],
+  include: {
+    'example_fts5_table.drift',
+    'example_views.drift',
+    'example_queries.drift',
+  }
 )
 class ExampleDao extends DatabaseAccessor<DaKanjiDB> with _$ExampleDaoMixin {
   
@@ -33,7 +38,7 @@ class ExampleDao extends DatabaseAccessor<DaKanjiDB> with _$ExampleDaoMixin {
     assert (languages.isNotEmpty);
     List<String> langs = languages.map((e) => e.name,).toList();
 
-    final ftsResults = await db.example_fts_search_sql(
+    final ftsResults = await example_fts_search(
       query, langs, limit, offset).get();
     List<ExampleEntry> entries = ftsResults.map((e) => 
       ExampleEntry.fromExampleFtsSearchSql(e)

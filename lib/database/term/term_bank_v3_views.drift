@@ -8,7 +8,7 @@ import 'package:dakanji_db/database/tag/tag_bank_v3_relation_tables.dart';
 
 
 
-CREATE VIEW term_bank_v3_search_view AS
+CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS
 	SELECT
 		TB3T.id,
 		term,

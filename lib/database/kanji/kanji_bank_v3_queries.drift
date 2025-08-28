@@ -19,10 +19,11 @@ kanji_bank_v3_search:
             'name', stat_name,
             'value', stat_value
         )), '') || ']' AS stats
-        FROM kanji_details_view
-        -- Filter the results for a specific Kanji.
-        WHERE
+    FROM
+        kanji_details_view
+    -- Filter the results for a specific Kanji.
+    WHERE
         kanji = :query
-        -- Group the results by the Kanji character to aggregate the joined data.
-        GROUP BY
+    -- Group the results by the Kanji character to aggregate the joined data.
+    GROUP BY
         kanji;

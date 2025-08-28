@@ -26,8 +26,6 @@ class TermBankV3Table extends Table {
   /// results.
   IntColumn get popularity => integer()();
 
-  // TODO definitions
-
   /// Sequence number for the term. Terms with the same sequence number can be
   /// shown together when the "resultOutputMode" option is set to "merge".
   IntColumn get sequenceNumber => integer()();

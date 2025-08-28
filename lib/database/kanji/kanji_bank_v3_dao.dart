@@ -3,7 +3,6 @@ import "package:drift/drift.dart";
 
 // Project imports:
 import "package:dakanji_db/database/kanji/kanji_bank_v3_entry.dart";
-import "package:dakanji_db/database/kanji/kanji_bank_v3_entry_stat.dart";
 import "package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart";
 import "package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart";
 import "../dakanji_db.dart";
@@ -15,14 +14,19 @@ part 'kanji_bank_v3_dao.g.dart';
 // the _TodosDaoMixin will be created by drift. It contains all the necessary
 // fields for the tables. The <MyDatabase> type annotation is the database class
 // that should use this dao.
-@DriftAccessor(tables: [
+@DriftAccessor(
+  tables: [
     KanjiBankV3Table,
     KanjiBankV3KunyomiReadingRelationsTable, KanjiBankV3OnyomiReadingRelationsTable,
     KanjiBankV3TagsKanjiRelationsTable,
     KanjiBankV3DefinitionsKanjiRelationsTable,
     KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable, 
-])
+  ],
+  include: {
+    'kanji_bank_v3_views.drift', 'kanji_bank_v3_queries.drift',
+  }
+)
 class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMixin {
   
   // this constructor is required so that the main database can create an instance
@@ -34,7 +38,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   Future<List<KanjiBankV3Entry>?> getKanjiBankEntriesFromKanji(String kanji) async {
 
     List<KanjiBankV3Entry> searchResults =
-      (await db.kanji_bank_v3_search(kanji).get())
+      (await kanji_bank_v3_search(kanji).get())
       .map((e) => KanjiBankV3Entry.fromKanjiBankV3SearchResult(e))
       .toList();
 

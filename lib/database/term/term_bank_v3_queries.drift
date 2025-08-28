@@ -1,4 +1,4 @@
-import 'package:dakanji_db/database/term/term_bank_v3_views.drift';
+import 'term_bank_v3_views.drift';
 
 
 
