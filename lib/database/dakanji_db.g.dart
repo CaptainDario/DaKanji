@@ -7475,17 +7475,15 @@ class $ExampleTableTable extends ExampleTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _exampleSentenceMeta = const VerificationMeta(
-    'exampleSentence',
-  );
   @override
-  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
+  late final GeneratedColumnWithTypeConverter<String, Uint8List>
+  exampleSentence = GeneratedColumn<Uint8List>(
     'example_sentence',
     aliasedName,
     false,
-    type: DriftSqlType.string,
+    type: DriftSqlType.blob,
     requiredDuringInsert: true,
-  );
+  ).withConverter<String>($ExampleTableTable.$converterexampleSentence);
   static const VerificationMeta _exampleSentenceTokenizedMeta =
       const VerificationMeta('exampleSentenceTokenized');
   @override
@@ -7518,17 +7516,6 @@ class $ExampleTableTable extends ExampleTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('example_sentence')) {
-      context.handle(
-        _exampleSentenceMeta,
-        exampleSentence.isAcceptableOrUnknown(
-          data['example_sentence']!,
-          _exampleSentenceMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_exampleSentenceMeta);
-    }
     if (data.containsKey('example_sentence_tokenized')) {
       context.handle(
         _exampleSentenceTokenizedMeta,
@@ -7553,10 +7540,12 @@ class $ExampleTableTable extends ExampleTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      exampleSentence: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_sentence'],
-      )!,
+      exampleSentence: $ExampleTableTable.$converterexampleSentence.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.blob,
+          data['${effectivePrefix}example_sentence'],
+        )!,
+      ),
       exampleSentenceTokenized: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence_tokenized'],
@@ -7568,6 +7557,9 @@ class $ExampleTableTable extends ExampleTable
   $ExampleTableTable createAlias(String alias) {
     return $ExampleTableTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<String, Uint8List> $converterexampleSentence =
+      const ZlibStringConverter();
 }
 
 class ExampleTableData extends DataClass
@@ -7589,7 +7581,11 @@ class ExampleTableData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['example_sentence'] = Variable<String>(exampleSentence);
+    {
+      map['example_sentence'] = Variable<Uint8List>(
+        $ExampleTableTable.$converterexampleSentence.toSql(exampleSentence),
+      );
+    }
     map['example_sentence_tokenized'] = Variable<String>(
       exampleSentenceTokenized,
     );
@@ -7690,7 +7686,7 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
        exampleSentenceTokenized = Value(exampleSentenceTokenized);
   static Insertable<ExampleTableData> custom({
     Expression<int>? id,
-    Expression<String>? exampleSentence,
+    Expression<Uint8List>? exampleSentence,
     Expression<String>? exampleSentenceTokenized,
   }) {
     return RawValuesInsertable({
@@ -7721,7 +7717,11 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
       map['id'] = Variable<int>(id.value);
     }
     if (exampleSentence.present) {
-      map['example_sentence'] = Variable<String>(exampleSentence.value);
+      map['example_sentence'] = Variable<Uint8List>(
+        $ExampleTableTable.$converterexampleSentence.toSql(
+          exampleSentence.value,
+        ),
+      );
     }
     if (exampleSentenceTokenized.present) {
       map['example_sentence_tokenized'] = Variable<String>(
@@ -8644,10 +8644,12 @@ class ExampleView extends ViewInfo<ExampleView, ExampleViewData>
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      exampleSentence: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_sentence'],
-      )!,
+      exampleSentence: $ExampleTableTable.$converterexampleSentence.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.blob,
+          data['${effectivePrefix}example_sentence'],
+        )!,
+      ),
       exampleTranslation: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}example_translation'],
@@ -8669,12 +8671,13 @@ class ExampleView extends ViewInfo<ExampleView, ExampleViewData>
     false,
     type: DriftSqlType.int,
   );
-  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
+  late final GeneratedColumnWithTypeConverter<String, Uint8List>
+  exampleSentence = GeneratedColumn<Uint8List>(
     'example_sentence',
     aliasedName,
     false,
-    type: DriftSqlType.string,
-  );
+    type: DriftSqlType.blob,
+  ).withConverter<String>($ExampleTableTable.$converterexampleSentence);
   late final GeneratedColumn<String> exampleTranslation =
       GeneratedColumn<String>(
         'example_translation',
@@ -13138,7 +13141,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ).map(
       (QueryRow row) => ExampleFtsSearchResult(
         id: row.read<int>('id'),
-        exampleSentence: row.read<String>('example_sentence'),
+        exampleSentence: $ExampleTableTable.$converterexampleSentence.fromSql(
+          row.read<Uint8List>('example_sentence'),
+        ),
         translations: row.read<String>('translations'),
       ),
     );
@@ -23914,9 +23919,10 @@ class $$ExampleTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get exampleSentence => $composableBuilder(
+  ColumnWithTypeConverterFilters<String, String, Uint8List>
+  get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
@@ -23968,7 +23974,7 @@ class $$ExampleTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get exampleSentence => $composableBuilder(
+  ColumnOrderings<Uint8List> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
     builder: (column) => ColumnOrderings(column),
   );
@@ -23991,10 +23997,11 @@ class $$ExampleTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get exampleSentence => $composableBuilder(
-    column: $table.exampleSentence,
-    builder: (column) => column,
-  );
+  GeneratedColumnWithTypeConverter<String, Uint8List> get exampleSentence =>
+      $composableBuilder(
+        column: $table.exampleSentence,
+        builder: (column) => column,
+      );
 
   GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
     column: $table.exampleSentenceTokenized,

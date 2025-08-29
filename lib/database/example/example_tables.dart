@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:dakanji_db/database/general_tables/language_code_table.dart';
+import 'package:dakanji_db/helper/zlib_text_converter.dart';
 import 'package:drift/drift.dart';
 
 
@@ -11,7 +12,8 @@ class ExampleTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// the example of this entry
-  TextColumn get exampleSentence => text()();
+  //TextColumn get exampleSentence => text()();
+  BlobColumn get exampleSentence => blob().map(const ZlibStringConverter())();
 
   /// the example of this entry tokenized
   TextColumn get exampleSentenceTokenized => text()();
