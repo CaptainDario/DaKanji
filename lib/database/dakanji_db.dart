@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db/database/dakanji_db_dao.dart';
 import 'package:dakanji_db/database/example/example_dao.dart';
 import 'package:dakanji_db/database/example/example_relation_tables.dart';
 import 'package:dakanji_db/database/example/example_tables.dart';
@@ -69,6 +70,7 @@ part 'dakanji_db.g.dart';
     TermBankV3DefinitionTagsTable, TermBankV3DefinitionTagRelationsTable,
     TermBankV3RuleIdentifierTable, TermBankV3RuleIdentifierRelationsTable,
     TermBankV3DefinitionsRelationsTable,
+    TermBankV3DefinitionJsonTable,
     TermBankV3TagBankRelationsTable,
 
     TermMetaBankV3Table,
@@ -82,6 +84,7 @@ part 'dakanji_db.g.dart';
     ExampleTranslationRelationsTable
   ],
   daos: [
+    DaKanjiDBDao,
     KanjiDao, TermDao, ReadingDao, DefinitionDao, LanguageCodeDao,
     RadicalDao, KanjiVGDao,
     IndexDao, TagBankV3Dao,
@@ -97,6 +100,7 @@ part 'dakanji_db.g.dart';
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
     'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
     'term/term_bank_v3_views.drift', 'term/term_bank_v3_queries.drift',
+    'dakanji_db_stat_queries.drift'
   }
 )
 class DaKanjiDB extends _$DaKanjiDB {
@@ -125,6 +129,10 @@ class DaKanjiDB extends _$DaKanjiDB {
       },
       readPool: 6
     );
+  }
+
+  Future<List<GetMbSizesResult>> getDbStats() async {
+    return await get_mb_sizes().get();
   }
 
   /// **WARNING**: This closes the database and DELETES the file

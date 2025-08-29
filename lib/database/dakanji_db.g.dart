@@ -215,17 +215,18 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _definitionJsonMeta = const VerificationMeta(
-    'definitionJson',
-  );
   @override
-  late final GeneratedColumn<String> definitionJson = GeneratedColumn<String>(
-    'definition_json',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
+  late final GeneratedColumnWithTypeConverter<String, Uint8List>
+  definitionJson =
+      GeneratedColumn<Uint8List>(
+        'definition_json',
+        aliasedName,
+        false,
+        type: DriftSqlType.blob,
+        requiredDuringInsert: true,
+      ).withConverter<String>(
+        $TermBankV3DefinitionJsonTableTable.$converterdefinitionJson,
+      );
   @override
   List<GeneratedColumn> get $columns => [id, definitionJson];
   @override
@@ -243,17 +244,6 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('definition_json')) {
-      context.handle(
-        _definitionJsonMeta,
-        definitionJson.isAcceptableOrUnknown(
-          data['definition_json']!,
-          _definitionJsonMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_definitionJsonMeta);
-    }
     return context;
   }
 
@@ -270,10 +260,14 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      definitionJson: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}definition_json'],
-      )!,
+      definitionJson: $TermBankV3DefinitionJsonTableTable
+          .$converterdefinitionJson
+          .fromSql(
+            attachedDatabase.typeMapping.read(
+              DriftSqlType.blob,
+              data['${effectivePrefix}definition_json'],
+            )!,
+          ),
     );
   }
 
@@ -281,6 +275,9 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
   $TermBankV3DefinitionJsonTableTable createAlias(String alias) {
     return $TermBankV3DefinitionJsonTableTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<String, Uint8List> $converterdefinitionJson =
+      const ZlibStringConverter();
 }
 
 class TermBankV3DefinitionJsonTableData extends DataClass
@@ -298,7 +295,13 @@ class TermBankV3DefinitionJsonTableData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['definition_json'] = Variable<String>(definitionJson);
+    {
+      map['definition_json'] = Variable<Uint8List>(
+        $TermBankV3DefinitionJsonTableTable.$converterdefinitionJson.toSql(
+          definitionJson,
+        ),
+      );
+    }
     return map;
   }
 
@@ -379,7 +382,7 @@ class TermBankV3DefinitionJsonTableCompanion
   }) : definitionJson = Value(definitionJson);
   static Insertable<TermBankV3DefinitionJsonTableData> custom({
     Expression<int>? id,
-    Expression<String>? definitionJson,
+    Expression<Uint8List>? definitionJson,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -404,7 +407,11 @@ class TermBankV3DefinitionJsonTableCompanion
       map['id'] = Variable<int>(id.value);
     }
     if (definitionJson.present) {
-      map['definition_json'] = Variable<String>(definitionJson.value);
+      map['definition_json'] = Variable<Uint8List>(
+        $TermBankV3DefinitionJsonTableTable.$converterdefinitionJson.toSql(
+          definitionJson.value,
+        ),
+      );
     }
     return map;
   }
@@ -13007,6 +13014,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'radical',
     'CREATE INDEX radical ON radicals_table (radical)',
   );
+  late final DaKanjiDBDao daKanjiDBDao = DaKanjiDBDao(this as DaKanjiDB);
   late final KanjiDao kanjiDao = KanjiDao(this as DaKanjiDB);
   late final TermDao termDao = TermDao(this as DaKanjiDB);
   late final ReadingDao readingDao = ReadingDao(this as DaKanjiDB);
@@ -13027,6 +13035,20 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     this as DaKanjiDB,
   );
   late final ExampleDao exampleDao = ExampleDao(this as DaKanjiDB);
+  Selectable<GetMbSizesResult> get_mb_sizes() {
+    return customSelect(
+      'SELECT name, sum(pgsize) AS bytes, printf(\'%.2f MB\', CAST(sum(pgsize) AS REAL) /(1024 * 1024)) AS megabytes FROM dbstat GROUP BY name ORDER BY bytes DESC',
+      variables: [],
+      readsFrom: {},
+    ).map(
+      (QueryRow row) => GetMbSizesResult(
+        name: row.read<String>('name'),
+        bytes: row.readNullable<int>('bytes'),
+        megabytes: row.read<String>('megabytes'),
+      ),
+    );
+  }
+
   Selectable<TermBankV3SearchViewData> term_bank_v3_search(
     String? query,
     int limit,
@@ -13608,9 +13630,10 @@ class $$TermBankV3DefinitionJsonTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get definitionJson => $composableBuilder(
+  ColumnWithTypeConverterFilters<String, String, Uint8List>
+  get definitionJson => $composableBuilder(
     column: $table.definitionJson,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   Expression<bool> termBankV3TableRefs(
@@ -13653,7 +13676,7 @@ class $$TermBankV3DefinitionJsonTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get definitionJson => $composableBuilder(
+  ColumnOrderings<Uint8List> get definitionJson => $composableBuilder(
     column: $table.definitionJson,
     builder: (column) => ColumnOrderings(column),
   );
@@ -13671,10 +13694,11 @@ class $$TermBankV3DefinitionJsonTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get definitionJson => $composableBuilder(
-    column: $table.definitionJson,
-    builder: (column) => column,
-  );
+  GeneratedColumnWithTypeConverter<String, Uint8List> get definitionJson =>
+      $composableBuilder(
+        column: $table.definitionJson,
+        builder: (column) => column,
+      );
 
   Expression<T> termBankV3TableRefs<T extends Object>(
     Expression<T> Function($$TermBankV3TableTableAnnotationComposer a) f,
@@ -31325,6 +31349,13 @@ class $DaKanjiDBManager {
         _db,
         _db.termMetaBankV3IpaTagRelationsTable,
       );
+}
+
+class GetMbSizesResult {
+  final String name;
+  final int? bytes;
+  final String megabytes;
+  GetMbSizesResult({required this.name, this.bytes, required this.megabytes});
 }
 
 class KanjiBankV3SearchResult {
