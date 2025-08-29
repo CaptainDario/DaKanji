@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:dakanji_db/parsing/term/parsed_term.dart';
 import 'package:dakanji_db/parsing/term/structured_content_parser.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
@@ -27,6 +28,7 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
   
   // read all necessary data from the db
   int currentMaxTermBankId = await db.termBankV3Dao.maxTermBankV3Id();
+  int currentMaxDefinitionJsonId = await db.termBankV3Dao.maxTermBankV3DefinitionJsonId();
   int currentMaxTermId = await db.termDao.maxTermId();
   Map allTerms =
     { for (var e in await db.termDao.getAllTerms()) e.term : e.id };
@@ -42,7 +44,7 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
   int currentMaxdefinitionId = await db.definitionDao.maxDefinitionId();
   Map allDefinitions =
     { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id };
-  // tags are parsed from the meta bank and thus are already present
+  // tags are parsed from the meta bank and thus are ALWAYS in the DB
   Map allTags =
     { for (var e in await db.termBankV3Dao.getAllTags()) e.name : e.id };
   
@@ -50,6 +52,7 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
   List<TermTableCompanion> termComps = [];
   List<ReadingTableCompanion> readingComps = [];
   List<TermBankV3TableCompanion> termBankComps = [];
+  List<TermBankV3DefinitionJsonTableCompanion> termBankDefJsonComps = [];
   List<TermBankV3DefinitionTagsTableCompanion> definitionTagComps = [];
   List<TermBankV3DefinitionTagRelationsTableCompanion> definitionTagRelComps = [];
   List<TermBankV3RuleIdentifierTableCompanion> ruleIdentifiersComps = [];
@@ -124,25 +127,30 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
     }
 
     // Parse definitions
-    List<String> parsedDefinition = extractPlainTextDefinitions(jsonEntry)
-      .map((e) => e.text)
-      .toList();
+    List<ParsedTerm> parsedDefinition = extractPlainTextDefinitions(jsonEntry);
     for (var definition in parsedDefinition) {
-        // get tag from DB
-        int definitionInsertId = allDefinitions[definition] ?? ++currentMaxdefinitionId;
-        if(allDefinitions[definition] == null){
-          allDefinitions[definition] = definitionInsertId;
-          definitionComps.add(DefinitionTableCompanion(
-            id: Value(definitionInsertId),
-            definition: Value(definition)
-          ));
-        }
-        // create relationship
-        definitionRelComps.add(TermBankV3DefinitionsRelationsTableCompanion(
-          definitionId: Value(definitionInsertId),
-          termBankId: Value(currentMaxTermBankId)
+      // check if term is already in DB
+      int definitionInsertId = allDefinitions[definition] ?? ++currentMaxdefinitionId;
+      if(allDefinitions[definition] == null){
+        allDefinitions[definition] = definitionInsertId;
+        definitionComps.add(DefinitionTableCompanion(
+          id: Value(definitionInsertId),
+          definition: Value(definition.text)
         ));
       }
+      // create relationship
+      definitionRelComps.add(TermBankV3DefinitionsRelationsTableCompanion(
+        definitionId: Value(definitionInsertId),
+        termBankId: Value(currentMaxTermBankId)
+      ));
+    }
+
+    // add full definition json to DB
+    currentMaxDefinitionJsonId += 1;
+    termBankDefJsonComps.add(TermBankV3DefinitionJsonTableCompanion(
+      id: Value(currentMaxDefinitionJsonId),
+      definitionJson: Value(jsonEncode(jsonEntry[5]))
+    ));
 
     // create tag relations
     if(jsonEntry[7] != ""){
@@ -159,6 +167,7 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
     termBankComps.add(TermBankV3TableCompanion(
       id: Value(currentMaxTermBankId),
       termId: Value(termInsertId),
+      termJsonId: Value(currentMaxDefinitionJsonId),
       readingId: Value(readingInsertId),
       popularity: Value(jsonEntry[4]),
       sequenceNumber: Value(jsonEntry[6])
@@ -171,6 +180,7 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
     batch.insertAll(db.readingTable, readingComps);
 
     batch.insertAll(db.termBankV3Table, termBankComps);
+    batch.insertAll(db.termBankV3DefinitionJsonTable, termBankDefJsonComps);
 
     batch.insertAll(db.termBankV3DefinitionTagsTable, definitionTagComps);
     batch.insertAll(db.termBankV3DefinitionTagRelationsTable, definitionTagRelComps);

@@ -46,8 +46,7 @@ class TermBankV3DefinitionJsonTable extends Table {
   IntColumn get id => integer()();
 
   /// JSON representation of the term
-  TextColumn get definitionJson => text()();
-  //BlobColumn get definitionJson => blob().map(const ZlibStringConverter())();
+  BlobColumn get definitionJson => blob().map(const ZlibStringConverter())();
 
 }
 
