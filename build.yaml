@@ -9,3 +9,5 @@ targets:
               modules:
                 - fts5
                 - json1
+                - dbstat
+                - spellfix1
