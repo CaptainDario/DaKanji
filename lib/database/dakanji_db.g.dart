@@ -196,6 +196,229 @@ class TermTableCompanion extends UpdateCompanion<TermTableData> {
   }
 }
 
+class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
+    with
+        TableInfo<
+          $TermBankV3DefinitionJsonTableTable,
+          TermBankV3DefinitionJsonTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermBankV3DefinitionJsonTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _definitionJsonMeta = const VerificationMeta(
+    'definitionJson',
+  );
+  @override
+  late final GeneratedColumn<String> definitionJson = GeneratedColumn<String>(
+    'definition_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, definitionJson];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_bank_v3_definition_json_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TermBankV3DefinitionJsonTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('definition_json')) {
+      context.handle(
+        _definitionJsonMeta,
+        definitionJson.isAcceptableOrUnknown(
+          data['definition_json']!,
+          _definitionJsonMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_definitionJsonMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TermBankV3DefinitionJsonTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermBankV3DefinitionJsonTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      definitionJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition_json'],
+      )!,
+    );
+  }
+
+  @override
+  $TermBankV3DefinitionJsonTableTable createAlias(String alias) {
+    return $TermBankV3DefinitionJsonTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermBankV3DefinitionJsonTableData extends DataClass
+    implements Insertable<TermBankV3DefinitionJsonTableData> {
+  /// id of this entry
+  final int id;
+
+  /// JSON representation of the term
+  final String definitionJson;
+  const TermBankV3DefinitionJsonTableData({
+    required this.id,
+    required this.definitionJson,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['definition_json'] = Variable<String>(definitionJson);
+    return map;
+  }
+
+  TermBankV3DefinitionJsonTableCompanion toCompanion(bool nullToAbsent) {
+    return TermBankV3DefinitionJsonTableCompanion(
+      id: Value(id),
+      definitionJson: Value(definitionJson),
+    );
+  }
+
+  factory TermBankV3DefinitionJsonTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermBankV3DefinitionJsonTableData(
+      id: serializer.fromJson<int>(json['id']),
+      definitionJson: serializer.fromJson<String>(json['definitionJson']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'definitionJson': serializer.toJson<String>(definitionJson),
+    };
+  }
+
+  TermBankV3DefinitionJsonTableData copyWith({
+    int? id,
+    String? definitionJson,
+  }) => TermBankV3DefinitionJsonTableData(
+    id: id ?? this.id,
+    definitionJson: definitionJson ?? this.definitionJson,
+  );
+  TermBankV3DefinitionJsonTableData copyWithCompanion(
+    TermBankV3DefinitionJsonTableCompanion data,
+  ) {
+    return TermBankV3DefinitionJsonTableData(
+      id: data.id.present ? data.id.value : this.id,
+      definitionJson: data.definitionJson.present
+          ? data.definitionJson.value
+          : this.definitionJson,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermBankV3DefinitionJsonTableData(')
+          ..write('id: $id, ')
+          ..write('definitionJson: $definitionJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, definitionJson);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermBankV3DefinitionJsonTableData &&
+          other.id == this.id &&
+          other.definitionJson == this.definitionJson);
+}
+
+class TermBankV3DefinitionJsonTableCompanion
+    extends UpdateCompanion<TermBankV3DefinitionJsonTableData> {
+  final Value<int> id;
+  final Value<String> definitionJson;
+  const TermBankV3DefinitionJsonTableCompanion({
+    this.id = const Value.absent(),
+    this.definitionJson = const Value.absent(),
+  });
+  TermBankV3DefinitionJsonTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String definitionJson,
+  }) : definitionJson = Value(definitionJson);
+  static Insertable<TermBankV3DefinitionJsonTableData> custom({
+    Expression<int>? id,
+    Expression<String>? definitionJson,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (definitionJson != null) 'definition_json': definitionJson,
+    });
+  }
+
+  TermBankV3DefinitionJsonTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? definitionJson,
+  }) {
+    return TermBankV3DefinitionJsonTableCompanion(
+      id: id ?? this.id,
+      definitionJson: definitionJson ?? this.definitionJson,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (definitionJson.present) {
+      map['definition_json'] = Variable<String>(definitionJson.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermBankV3DefinitionJsonTableCompanion(')
+          ..write('id: $id, ')
+          ..write('definitionJson: $definitionJson')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $ReadingTableTable extends ReadingTable
     with TableInfo<$ReadingTableTable, ReadingTableData> {
   @override
@@ -422,6 +645,20 @@ class $TermBankV3TableTable extends TermBankV3Table
       'REFERENCES term_table (id)',
     ),
   );
+  static const VerificationMeta _termJsonIdMeta = const VerificationMeta(
+    'termJsonId',
+  );
+  @override
+  late final GeneratedColumn<int> termJsonId = GeneratedColumn<int>(
+    'term_json_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES term_bank_v3_definition_json_table (id)',
+    ),
+  );
   static const VerificationMeta _readingIdMeta = const VerificationMeta(
     'readingId',
   );
@@ -462,6 +699,7 @@ class $TermBankV3TableTable extends TermBankV3Table
   List<GeneratedColumn> get $columns => [
     id,
     termId,
+    termJsonId,
     readingId,
     popularity,
     sequenceNumber,
@@ -488,6 +726,17 @@ class $TermBankV3TableTable extends TermBankV3Table
       );
     } else if (isInserting) {
       context.missing(_termIdMeta);
+    }
+    if (data.containsKey('term_json_id')) {
+      context.handle(
+        _termJsonIdMeta,
+        termJsonId.isAcceptableOrUnknown(
+          data['term_json_id']!,
+          _termJsonIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_termJsonIdMeta);
     }
     if (data.containsKey('reading_id')) {
       context.handle(
@@ -533,6 +782,10 @@ class $TermBankV3TableTable extends TermBankV3Table
         DriftSqlType.int,
         data['${effectivePrefix}term_id'],
       )!,
+      termJsonId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}term_json_id'],
+      )!,
       readingId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}reading_id'],
@@ -562,6 +815,9 @@ class TermBankV3TableData extends DataClass
   /// The ID of the text for the term.
   final int termId;
 
+  /// The ID of the JSON representation of the definition
+  final int termJsonId;
+
   /// ID reading of the term, or an empty string if the reading is the same as
   /// the term.
   final int readingId;
@@ -577,6 +833,7 @@ class TermBankV3TableData extends DataClass
   const TermBankV3TableData({
     required this.id,
     required this.termId,
+    required this.termJsonId,
     required this.readingId,
     required this.popularity,
     required this.sequenceNumber,
@@ -586,6 +843,7 @@ class TermBankV3TableData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['term_id'] = Variable<int>(termId);
+    map['term_json_id'] = Variable<int>(termJsonId);
     map['reading_id'] = Variable<int>(readingId);
     map['popularity'] = Variable<int>(popularity);
     map['sequence_number'] = Variable<int>(sequenceNumber);
@@ -596,6 +854,7 @@ class TermBankV3TableData extends DataClass
     return TermBankV3TableCompanion(
       id: Value(id),
       termId: Value(termId),
+      termJsonId: Value(termJsonId),
       readingId: Value(readingId),
       popularity: Value(popularity),
       sequenceNumber: Value(sequenceNumber),
@@ -610,6 +869,7 @@ class TermBankV3TableData extends DataClass
     return TermBankV3TableData(
       id: serializer.fromJson<int>(json['id']),
       termId: serializer.fromJson<int>(json['termId']),
+      termJsonId: serializer.fromJson<int>(json['termJsonId']),
       readingId: serializer.fromJson<int>(json['readingId']),
       popularity: serializer.fromJson<int>(json['popularity']),
       sequenceNumber: serializer.fromJson<int>(json['sequenceNumber']),
@@ -621,6 +881,7 @@ class TermBankV3TableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'termId': serializer.toJson<int>(termId),
+      'termJsonId': serializer.toJson<int>(termJsonId),
       'readingId': serializer.toJson<int>(readingId),
       'popularity': serializer.toJson<int>(popularity),
       'sequenceNumber': serializer.toJson<int>(sequenceNumber),
@@ -630,12 +891,14 @@ class TermBankV3TableData extends DataClass
   TermBankV3TableData copyWith({
     int? id,
     int? termId,
+    int? termJsonId,
     int? readingId,
     int? popularity,
     int? sequenceNumber,
   }) => TermBankV3TableData(
     id: id ?? this.id,
     termId: termId ?? this.termId,
+    termJsonId: termJsonId ?? this.termJsonId,
     readingId: readingId ?? this.readingId,
     popularity: popularity ?? this.popularity,
     sequenceNumber: sequenceNumber ?? this.sequenceNumber,
@@ -644,6 +907,9 @@ class TermBankV3TableData extends DataClass
     return TermBankV3TableData(
       id: data.id.present ? data.id.value : this.id,
       termId: data.termId.present ? data.termId.value : this.termId,
+      termJsonId: data.termJsonId.present
+          ? data.termJsonId.value
+          : this.termJsonId,
       readingId: data.readingId.present ? data.readingId.value : this.readingId,
       popularity: data.popularity.present
           ? data.popularity.value
@@ -659,6 +925,7 @@ class TermBankV3TableData extends DataClass
     return (StringBuffer('TermBankV3TableData(')
           ..write('id: $id, ')
           ..write('termId: $termId, ')
+          ..write('termJsonId: $termJsonId, ')
           ..write('readingId: $readingId, ')
           ..write('popularity: $popularity, ')
           ..write('sequenceNumber: $sequenceNumber')
@@ -667,14 +934,21 @@ class TermBankV3TableData extends DataClass
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, termId, readingId, popularity, sequenceNumber);
+  int get hashCode => Object.hash(
+    id,
+    termId,
+    termJsonId,
+    readingId,
+    popularity,
+    sequenceNumber,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TermBankV3TableData &&
           other.id == this.id &&
           other.termId == this.termId &&
+          other.termJsonId == this.termJsonId &&
           other.readingId == this.readingId &&
           other.popularity == this.popularity &&
           other.sequenceNumber == this.sequenceNumber);
@@ -683,12 +957,14 @@ class TermBankV3TableData extends DataClass
 class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   final Value<int> id;
   final Value<int> termId;
+  final Value<int> termJsonId;
   final Value<int> readingId;
   final Value<int> popularity;
   final Value<int> sequenceNumber;
   const TermBankV3TableCompanion({
     this.id = const Value.absent(),
     this.termId = const Value.absent(),
+    this.termJsonId = const Value.absent(),
     this.readingId = const Value.absent(),
     this.popularity = const Value.absent(),
     this.sequenceNumber = const Value.absent(),
@@ -696,16 +972,19 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   TermBankV3TableCompanion.insert({
     this.id = const Value.absent(),
     required int termId,
+    required int termJsonId,
     required int readingId,
     required int popularity,
     required int sequenceNumber,
   }) : termId = Value(termId),
+       termJsonId = Value(termJsonId),
        readingId = Value(readingId),
        popularity = Value(popularity),
        sequenceNumber = Value(sequenceNumber);
   static Insertable<TermBankV3TableData> custom({
     Expression<int>? id,
     Expression<int>? termId,
+    Expression<int>? termJsonId,
     Expression<int>? readingId,
     Expression<int>? popularity,
     Expression<int>? sequenceNumber,
@@ -713,6 +992,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (termId != null) 'term_id': termId,
+      if (termJsonId != null) 'term_json_id': termJsonId,
       if (readingId != null) 'reading_id': readingId,
       if (popularity != null) 'popularity': popularity,
       if (sequenceNumber != null) 'sequence_number': sequenceNumber,
@@ -722,6 +1002,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   TermBankV3TableCompanion copyWith({
     Value<int>? id,
     Value<int>? termId,
+    Value<int>? termJsonId,
     Value<int>? readingId,
     Value<int>? popularity,
     Value<int>? sequenceNumber,
@@ -729,6 +1010,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     return TermBankV3TableCompanion(
       id: id ?? this.id,
       termId: termId ?? this.termId,
+      termJsonId: termJsonId ?? this.termJsonId,
       readingId: readingId ?? this.readingId,
       popularity: popularity ?? this.popularity,
       sequenceNumber: sequenceNumber ?? this.sequenceNumber,
@@ -743,6 +1025,9 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     }
     if (termId.present) {
       map['term_id'] = Variable<int>(termId.value);
+    }
+    if (termJsonId.present) {
+      map['term_json_id'] = Variable<int>(termJsonId.value);
     }
     if (readingId.present) {
       map['reading_id'] = Variable<int>(readingId.value);
@@ -761,6 +1046,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     return (StringBuffer('TermBankV3TableCompanion(')
           ..write('id: $id, ')
           ..write('termId: $termId, ')
+          ..write('termJsonId: $termJsonId, ')
           ..write('readingId: $readingId, ')
           ..write('popularity: $popularity, ')
           ..write('sequenceNumber: $sequenceNumber')
@@ -3466,1023 +3752,6 @@ class KanjiTableCompanion extends UpdateCompanion<KanjiTableData> {
   }
 }
 
-class $LanguageCodeTableTable extends LanguageCodeTable
-    with TableInfo<$LanguageCodeTableTable, LanguageCodeTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $LanguageCodeTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _languageCodeMeta = const VerificationMeta(
-    'languageCode',
-  );
-  @override
-  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
-    'language_code',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, languageCode];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'language_code_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<LanguageCodeTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('language_code')) {
-      context.handle(
-        _languageCodeMeta,
-        languageCode.isAcceptableOrUnknown(
-          data['language_code']!,
-          _languageCodeMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_languageCodeMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  LanguageCodeTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return LanguageCodeTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      languageCode: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}language_code'],
-      )!,
-    );
-  }
-
-  @override
-  $LanguageCodeTableTable createAlias(String alias) {
-    return $LanguageCodeTableTable(attachedDatabase, alias);
-  }
-}
-
-class LanguageCodeTableData extends DataClass
-    implements Insertable<LanguageCodeTableData> {
-  /// id of this entry
-  final int id;
-
-  /// the example of this entry
-  final String languageCode;
-  const LanguageCodeTableData({required this.id, required this.languageCode});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['language_code'] = Variable<String>(languageCode);
-    return map;
-  }
-
-  LanguageCodeTableCompanion toCompanion(bool nullToAbsent) {
-    return LanguageCodeTableCompanion(
-      id: Value(id),
-      languageCode: Value(languageCode),
-    );
-  }
-
-  factory LanguageCodeTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return LanguageCodeTableData(
-      id: serializer.fromJson<int>(json['id']),
-      languageCode: serializer.fromJson<String>(json['languageCode']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'languageCode': serializer.toJson<String>(languageCode),
-    };
-  }
-
-  LanguageCodeTableData copyWith({int? id, String? languageCode}) =>
-      LanguageCodeTableData(
-        id: id ?? this.id,
-        languageCode: languageCode ?? this.languageCode,
-      );
-  LanguageCodeTableData copyWithCompanion(LanguageCodeTableCompanion data) {
-    return LanguageCodeTableData(
-      id: data.id.present ? data.id.value : this.id,
-      languageCode: data.languageCode.present
-          ? data.languageCode.value
-          : this.languageCode,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('LanguageCodeTableData(')
-          ..write('id: $id, ')
-          ..write('languageCode: $languageCode')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, languageCode);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is LanguageCodeTableData &&
-          other.id == this.id &&
-          other.languageCode == this.languageCode);
-}
-
-class LanguageCodeTableCompanion
-    extends UpdateCompanion<LanguageCodeTableData> {
-  final Value<int> id;
-  final Value<String> languageCode;
-  const LanguageCodeTableCompanion({
-    this.id = const Value.absent(),
-    this.languageCode = const Value.absent(),
-  });
-  LanguageCodeTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String languageCode,
-  }) : languageCode = Value(languageCode);
-  static Insertable<LanguageCodeTableData> custom({
-    Expression<int>? id,
-    Expression<String>? languageCode,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (languageCode != null) 'language_code': languageCode,
-    });
-  }
-
-  LanguageCodeTableCompanion copyWith({
-    Value<int>? id,
-    Value<String>? languageCode,
-  }) {
-    return LanguageCodeTableCompanion(
-      id: id ?? this.id,
-      languageCode: languageCode ?? this.languageCode,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (languageCode.present) {
-      map['language_code'] = Variable<String>(languageCode.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('LanguageCodeTableCompanion(')
-          ..write('id: $id, ')
-          ..write('languageCode: $languageCode')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $RadicalsTableTable extends RadicalsTable
-    with TableInfo<$RadicalsTableTable, RadicalsTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $RadicalsTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _radicalMeta = const VerificationMeta(
-    'radical',
-  );
-  @override
-  late final GeneratedColumn<String> radical = GeneratedColumn<String>(
-    'radical',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _strokeCountMeta = const VerificationMeta(
-    'strokeCount',
-  );
-  @override
-  late final GeneratedColumn<int> strokeCount = GeneratedColumn<int>(
-    'stroke_count',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, radical, strokeCount];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'radicals_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<RadicalsTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('radical')) {
-      context.handle(
-        _radicalMeta,
-        radical.isAcceptableOrUnknown(data['radical']!, _radicalMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_radicalMeta);
-    }
-    if (data.containsKey('stroke_count')) {
-      context.handle(
-        _strokeCountMeta,
-        strokeCount.isAcceptableOrUnknown(
-          data['stroke_count']!,
-          _strokeCountMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_strokeCountMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  RadicalsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return RadicalsTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      radical: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}radical'],
-      )!,
-      strokeCount: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}stroke_count'],
-      )!,
-    );
-  }
-
-  @override
-  $RadicalsTableTable createAlias(String alias) {
-    return $RadicalsTableTable(attachedDatabase, alias);
-  }
-}
-
-class RadicalsTableData extends DataClass
-    implements Insertable<RadicalsTableData> {
-  /// id of this entry
-  final int id;
-
-  /// the radical character of this entry
-  /// this column is indexed
-  final String radical;
-
-  /// Stroke count of this radical
-  final int strokeCount;
-  const RadicalsTableData({
-    required this.id,
-    required this.radical,
-    required this.strokeCount,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['radical'] = Variable<String>(radical);
-    map['stroke_count'] = Variable<int>(strokeCount);
-    return map;
-  }
-
-  RadicalsTableCompanion toCompanion(bool nullToAbsent) {
-    return RadicalsTableCompanion(
-      id: Value(id),
-      radical: Value(radical),
-      strokeCount: Value(strokeCount),
-    );
-  }
-
-  factory RadicalsTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return RadicalsTableData(
-      id: serializer.fromJson<int>(json['id']),
-      radical: serializer.fromJson<String>(json['radical']),
-      strokeCount: serializer.fromJson<int>(json['strokeCount']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'radical': serializer.toJson<String>(radical),
-      'strokeCount': serializer.toJson<int>(strokeCount),
-    };
-  }
-
-  RadicalsTableData copyWith({int? id, String? radical, int? strokeCount}) =>
-      RadicalsTableData(
-        id: id ?? this.id,
-        radical: radical ?? this.radical,
-        strokeCount: strokeCount ?? this.strokeCount,
-      );
-  RadicalsTableData copyWithCompanion(RadicalsTableCompanion data) {
-    return RadicalsTableData(
-      id: data.id.present ? data.id.value : this.id,
-      radical: data.radical.present ? data.radical.value : this.radical,
-      strokeCount: data.strokeCount.present
-          ? data.strokeCount.value
-          : this.strokeCount,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('RadicalsTableData(')
-          ..write('id: $id, ')
-          ..write('radical: $radical, ')
-          ..write('strokeCount: $strokeCount')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, radical, strokeCount);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is RadicalsTableData &&
-          other.id == this.id &&
-          other.radical == this.radical &&
-          other.strokeCount == this.strokeCount);
-}
-
-class RadicalsTableCompanion extends UpdateCompanion<RadicalsTableData> {
-  final Value<int> id;
-  final Value<String> radical;
-  final Value<int> strokeCount;
-  const RadicalsTableCompanion({
-    this.id = const Value.absent(),
-    this.radical = const Value.absent(),
-    this.strokeCount = const Value.absent(),
-  });
-  RadicalsTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String radical,
-    required int strokeCount,
-  }) : radical = Value(radical),
-       strokeCount = Value(strokeCount);
-  static Insertable<RadicalsTableData> custom({
-    Expression<int>? id,
-    Expression<String>? radical,
-    Expression<int>? strokeCount,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (radical != null) 'radical': radical,
-      if (strokeCount != null) 'stroke_count': strokeCount,
-    });
-  }
-
-  RadicalsTableCompanion copyWith({
-    Value<int>? id,
-    Value<String>? radical,
-    Value<int>? strokeCount,
-  }) {
-    return RadicalsTableCompanion(
-      id: id ?? this.id,
-      radical: radical ?? this.radical,
-      strokeCount: strokeCount ?? this.strokeCount,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (radical.present) {
-      map['radical'] = Variable<String>(radical.value);
-    }
-    if (strokeCount.present) {
-      map['stroke_count'] = Variable<int>(strokeCount.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('RadicalsTableCompanion(')
-          ..write('id: $id, ')
-          ..write('radical: $radical, ')
-          ..write('strokeCount: $strokeCount')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $RadicalKanjiRelationsTableTable extends RadicalKanjiRelationsTable
-    with
-        TableInfo<
-          $RadicalKanjiRelationsTableTable,
-          RadicalKanjiRelationsTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $RadicalKanjiRelationsTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
-    'kanjiId',
-  );
-  @override
-  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
-    'kanji_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_table (id)',
-    ),
-  );
-  static const VerificationMeta _radicalIdMeta = const VerificationMeta(
-    'radicalId',
-  );
-  @override
-  late final GeneratedColumn<int> radicalId = GeneratedColumn<int>(
-    'radical_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES radicals_table (id)',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, kanjiId, radicalId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'radical_kanji_relations_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<RadicalKanjiRelationsTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('kanji_id')) {
-      context.handle(
-        _kanjiIdMeta,
-        kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_kanjiIdMeta);
-    }
-    if (data.containsKey('radical_id')) {
-      context.handle(
-        _radicalIdMeta,
-        radicalId.isAcceptableOrUnknown(data['radical_id']!, _radicalIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_radicalIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  RadicalKanjiRelationsTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return RadicalKanjiRelationsTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      kanjiId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}kanji_id'],
-      )!,
-      radicalId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}radical_id'],
-      )!,
-    );
-  }
-
-  @override
-  $RadicalKanjiRelationsTableTable createAlias(String alias) {
-    return $RadicalKanjiRelationsTableTable(attachedDatabase, alias);
-  }
-}
-
-class RadicalKanjiRelationsTableData extends DataClass
-    implements Insertable<RadicalKanjiRelationsTableData> {
-  /// id of this relation
-  final int id;
-
-  /// the id of the associated kanji
-  final int kanjiId;
-
-  /// the id of the associated radical
-  final int radicalId;
-  const RadicalKanjiRelationsTableData({
-    required this.id,
-    required this.kanjiId,
-    required this.radicalId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['kanji_id'] = Variable<int>(kanjiId);
-    map['radical_id'] = Variable<int>(radicalId);
-    return map;
-  }
-
-  RadicalKanjiRelationsTableCompanion toCompanion(bool nullToAbsent) {
-    return RadicalKanjiRelationsTableCompanion(
-      id: Value(id),
-      kanjiId: Value(kanjiId),
-      radicalId: Value(radicalId),
-    );
-  }
-
-  factory RadicalKanjiRelationsTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return RadicalKanjiRelationsTableData(
-      id: serializer.fromJson<int>(json['id']),
-      kanjiId: serializer.fromJson<int>(json['kanjiId']),
-      radicalId: serializer.fromJson<int>(json['radicalId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'kanjiId': serializer.toJson<int>(kanjiId),
-      'radicalId': serializer.toJson<int>(radicalId),
-    };
-  }
-
-  RadicalKanjiRelationsTableData copyWith({
-    int? id,
-    int? kanjiId,
-    int? radicalId,
-  }) => RadicalKanjiRelationsTableData(
-    id: id ?? this.id,
-    kanjiId: kanjiId ?? this.kanjiId,
-    radicalId: radicalId ?? this.radicalId,
-  );
-  RadicalKanjiRelationsTableData copyWithCompanion(
-    RadicalKanjiRelationsTableCompanion data,
-  ) {
-    return RadicalKanjiRelationsTableData(
-      id: data.id.present ? data.id.value : this.id,
-      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
-      radicalId: data.radicalId.present ? data.radicalId.value : this.radicalId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('RadicalKanjiRelationsTableData(')
-          ..write('id: $id, ')
-          ..write('kanjiId: $kanjiId, ')
-          ..write('radicalId: $radicalId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, kanjiId, radicalId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is RadicalKanjiRelationsTableData &&
-          other.id == this.id &&
-          other.kanjiId == this.kanjiId &&
-          other.radicalId == this.radicalId);
-}
-
-class RadicalKanjiRelationsTableCompanion
-    extends UpdateCompanion<RadicalKanjiRelationsTableData> {
-  final Value<int> id;
-  final Value<int> kanjiId;
-  final Value<int> radicalId;
-  const RadicalKanjiRelationsTableCompanion({
-    this.id = const Value.absent(),
-    this.kanjiId = const Value.absent(),
-    this.radicalId = const Value.absent(),
-  });
-  RadicalKanjiRelationsTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int kanjiId,
-    required int radicalId,
-  }) : kanjiId = Value(kanjiId),
-       radicalId = Value(radicalId);
-  static Insertable<RadicalKanjiRelationsTableData> custom({
-    Expression<int>? id,
-    Expression<int>? kanjiId,
-    Expression<int>? radicalId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (kanjiId != null) 'kanji_id': kanjiId,
-      if (radicalId != null) 'radical_id': radicalId,
-    });
-  }
-
-  RadicalKanjiRelationsTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? kanjiId,
-    Value<int>? radicalId,
-  }) {
-    return RadicalKanjiRelationsTableCompanion(
-      id: id ?? this.id,
-      kanjiId: kanjiId ?? this.kanjiId,
-      radicalId: radicalId ?? this.radicalId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (kanjiId.present) {
-      map['kanji_id'] = Variable<int>(kanjiId.value);
-    }
-    if (radicalId.present) {
-      map['radical_id'] = Variable<int>(radicalId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('RadicalKanjiRelationsTableCompanion(')
-          ..write('id: $id, ')
-          ..write('kanjiId: $kanjiId, ')
-          ..write('radicalId: $radicalId')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $KanjiVGTableTable extends KanjiVGTable
-    with TableInfo<$KanjiVGTableTable, KanjiVGTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $KanjiVGTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
-    'kanjiId',
-  );
-  @override
-  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
-    'kanji_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_table (id)',
-    ),
-  );
-  @override
-  late final GeneratedColumnWithTypeConverter<String, Uint8List> kanjiVGSVG =
-      GeneratedColumn<Uint8List>(
-        'kanji_v_g_s_v_g',
-        aliasedName,
-        false,
-        type: DriftSqlType.blob,
-        requiredDuringInsert: true,
-      ).withConverter<String>($KanjiVGTableTable.$converterkanjiVGSVG);
-  @override
-  List<GeneratedColumn> get $columns => [id, kanjiId, kanjiVGSVG];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'kanji_v_g_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<KanjiVGTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('kanji_id')) {
-      context.handle(
-        _kanjiIdMeta,
-        kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_kanjiIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  KanjiVGTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiVGTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      kanjiId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}kanji_id'],
-      )!,
-      kanjiVGSVG: $KanjiVGTableTable.$converterkanjiVGSVG.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.blob,
-          data['${effectivePrefix}kanji_v_g_s_v_g'],
-        )!,
-      ),
-    );
-  }
-
-  @override
-  $KanjiVGTableTable createAlias(String alias) {
-    return $KanjiVGTableTable(attachedDatabase, alias);
-  }
-
-  static TypeConverter<String, Uint8List> $converterkanjiVGSVG =
-      const ZlibStringConverter();
-}
-
-class KanjiVGTableData extends DataClass
-    implements Insertable<KanjiVGTableData> {
-  /// id of this entry
-  final int id;
-
-  /// The id of the kanji character in the `KanjiTable`
-  final int kanjiId;
-
-  /// The svg data of this kanji
-  final String kanjiVGSVG;
-  const KanjiVGTableData({
-    required this.id,
-    required this.kanjiId,
-    required this.kanjiVGSVG,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['kanji_id'] = Variable<int>(kanjiId);
-    {
-      map['kanji_v_g_s_v_g'] = Variable<Uint8List>(
-        $KanjiVGTableTable.$converterkanjiVGSVG.toSql(kanjiVGSVG),
-      );
-    }
-    return map;
-  }
-
-  KanjiVGTableCompanion toCompanion(bool nullToAbsent) {
-    return KanjiVGTableCompanion(
-      id: Value(id),
-      kanjiId: Value(kanjiId),
-      kanjiVGSVG: Value(kanjiVGSVG),
-    );
-  }
-
-  factory KanjiVGTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiVGTableData(
-      id: serializer.fromJson<int>(json['id']),
-      kanjiId: serializer.fromJson<int>(json['kanjiId']),
-      kanjiVGSVG: serializer.fromJson<String>(json['kanjiVGSVG']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'kanjiId': serializer.toJson<int>(kanjiId),
-      'kanjiVGSVG': serializer.toJson<String>(kanjiVGSVG),
-    };
-  }
-
-  KanjiVGTableData copyWith({int? id, int? kanjiId, String? kanjiVGSVG}) =>
-      KanjiVGTableData(
-        id: id ?? this.id,
-        kanjiId: kanjiId ?? this.kanjiId,
-        kanjiVGSVG: kanjiVGSVG ?? this.kanjiVGSVG,
-      );
-  KanjiVGTableData copyWithCompanion(KanjiVGTableCompanion data) {
-    return KanjiVGTableData(
-      id: data.id.present ? data.id.value : this.id,
-      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
-      kanjiVGSVG: data.kanjiVGSVG.present
-          ? data.kanjiVGSVG.value
-          : this.kanjiVGSVG,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiVGTableData(')
-          ..write('id: $id, ')
-          ..write('kanjiId: $kanjiId, ')
-          ..write('kanjiVGSVG: $kanjiVGSVG')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, kanjiId, kanjiVGSVG);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is KanjiVGTableData &&
-          other.id == this.id &&
-          other.kanjiId == this.kanjiId &&
-          other.kanjiVGSVG == this.kanjiVGSVG);
-}
-
-class KanjiVGTableCompanion extends UpdateCompanion<KanjiVGTableData> {
-  final Value<int> id;
-  final Value<int> kanjiId;
-  final Value<String> kanjiVGSVG;
-  const KanjiVGTableCompanion({
-    this.id = const Value.absent(),
-    this.kanjiId = const Value.absent(),
-    this.kanjiVGSVG = const Value.absent(),
-  });
-  KanjiVGTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int kanjiId,
-    required String kanjiVGSVG,
-  }) : kanjiId = Value(kanjiId),
-       kanjiVGSVG = Value(kanjiVGSVG);
-  static Insertable<KanjiVGTableData> custom({
-    Expression<int>? id,
-    Expression<int>? kanjiId,
-    Expression<Uint8List>? kanjiVGSVG,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (kanjiId != null) 'kanji_id': kanjiId,
-      if (kanjiVGSVG != null) 'kanji_v_g_s_v_g': kanjiVGSVG,
-    });
-  }
-
-  KanjiVGTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? kanjiId,
-    Value<String>? kanjiVGSVG,
-  }) {
-    return KanjiVGTableCompanion(
-      id: id ?? this.id,
-      kanjiId: kanjiId ?? this.kanjiId,
-      kanjiVGSVG: kanjiVGSVG ?? this.kanjiVGSVG,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (kanjiId.present) {
-      map['kanji_id'] = Variable<int>(kanjiId.value);
-    }
-    if (kanjiVGSVG.present) {
-      map['kanji_v_g_s_v_g'] = Variable<Uint8List>(
-        $KanjiVGTableTable.$converterkanjiVGSVG.toSql(kanjiVGSVG.value),
-      );
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiVGTableCompanion(')
-          ..write('id: $id, ')
-          ..write('kanjiId: $kanjiId, ')
-          ..write('kanjiVGSVG: $kanjiVGSVG')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $IndexTableTable extends IndexTable
     with TableInfo<$IndexTableTable, IndexTableData> {
   @override
@@ -5703,296 +4972,6 @@ class KanjiBankV3TableCompanion extends UpdateCompanion<KanjiBankV3TableData> {
   }
 }
 
-class $KanjiBankV3KunyomiReadingRelationsTableTable
-    extends KanjiBankV3KunyomiReadingRelationsTable
-    with
-        TableInfo<
-          $KanjiBankV3KunyomiReadingRelationsTableTable,
-          KanjiBankV3KunyomiReadingRelationsTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $KanjiBankV3KunyomiReadingRelationsTableTable(
-    this.attachedDatabase, [
-    this._alias,
-  ]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _kunyomiReadingIdMeta = const VerificationMeta(
-    'kunyomiReadingId',
-  );
-  @override
-  late final GeneratedColumn<int> kunyomiReadingId = GeneratedColumn<int>(
-    'kunyomi_reading_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES reading_table (id)',
-    ),
-  );
-  static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
-    'kanjiId',
-  );
-  @override
-  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
-    'kanji_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_bank_v3_table (id)',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, kunyomiReadingId, kanjiId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'kanji_bank_v3_kunyomi_reading_relations_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<KanjiBankV3KunyomiReadingRelationsTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('kunyomi_reading_id')) {
-      context.handle(
-        _kunyomiReadingIdMeta,
-        kunyomiReadingId.isAcceptableOrUnknown(
-          data['kunyomi_reading_id']!,
-          _kunyomiReadingIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_kunyomiReadingIdMeta);
-    }
-    if (data.containsKey('kanji_id')) {
-      context.handle(
-        _kanjiIdMeta,
-        kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_kanjiIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  KanjiBankV3KunyomiReadingRelationsTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiBankV3KunyomiReadingRelationsTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      kunyomiReadingId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}kunyomi_reading_id'],
-      )!,
-      kanjiId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}kanji_id'],
-      )!,
-    );
-  }
-
-  @override
-  $KanjiBankV3KunyomiReadingRelationsTableTable createAlias(String alias) {
-    return $KanjiBankV3KunyomiReadingRelationsTableTable(
-      attachedDatabase,
-      alias,
-    );
-  }
-}
-
-class KanjiBankV3KunyomiReadingRelationsTableData extends DataClass
-    implements Insertable<KanjiBankV3KunyomiReadingRelationsTableData> {
-  /// id of this relation
-  final int id;
-
-  /// the id of the associated kunyomi reading
-  final int kunyomiReadingId;
-
-  /// the id of the associated kanji
-  final int kanjiId;
-  const KanjiBankV3KunyomiReadingRelationsTableData({
-    required this.id,
-    required this.kunyomiReadingId,
-    required this.kanjiId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['kunyomi_reading_id'] = Variable<int>(kunyomiReadingId);
-    map['kanji_id'] = Variable<int>(kanjiId);
-    return map;
-  }
-
-  KanjiBankV3KunyomiReadingRelationsTableCompanion toCompanion(
-    bool nullToAbsent,
-  ) {
-    return KanjiBankV3KunyomiReadingRelationsTableCompanion(
-      id: Value(id),
-      kunyomiReadingId: Value(kunyomiReadingId),
-      kanjiId: Value(kanjiId),
-    );
-  }
-
-  factory KanjiBankV3KunyomiReadingRelationsTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiBankV3KunyomiReadingRelationsTableData(
-      id: serializer.fromJson<int>(json['id']),
-      kunyomiReadingId: serializer.fromJson<int>(json['kunyomiReadingId']),
-      kanjiId: serializer.fromJson<int>(json['kanjiId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'kunyomiReadingId': serializer.toJson<int>(kunyomiReadingId),
-      'kanjiId': serializer.toJson<int>(kanjiId),
-    };
-  }
-
-  KanjiBankV3KunyomiReadingRelationsTableData copyWith({
-    int? id,
-    int? kunyomiReadingId,
-    int? kanjiId,
-  }) => KanjiBankV3KunyomiReadingRelationsTableData(
-    id: id ?? this.id,
-    kunyomiReadingId: kunyomiReadingId ?? this.kunyomiReadingId,
-    kanjiId: kanjiId ?? this.kanjiId,
-  );
-  KanjiBankV3KunyomiReadingRelationsTableData copyWithCompanion(
-    KanjiBankV3KunyomiReadingRelationsTableCompanion data,
-  ) {
-    return KanjiBankV3KunyomiReadingRelationsTableData(
-      id: data.id.present ? data.id.value : this.id,
-      kunyomiReadingId: data.kunyomiReadingId.present
-          ? data.kunyomiReadingId.value
-          : this.kunyomiReadingId,
-      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiBankV3KunyomiReadingRelationsTableData(')
-          ..write('id: $id, ')
-          ..write('kunyomiReadingId: $kunyomiReadingId, ')
-          ..write('kanjiId: $kanjiId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, kunyomiReadingId, kanjiId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is KanjiBankV3KunyomiReadingRelationsTableData &&
-          other.id == this.id &&
-          other.kunyomiReadingId == this.kunyomiReadingId &&
-          other.kanjiId == this.kanjiId);
-}
-
-class KanjiBankV3KunyomiReadingRelationsTableCompanion
-    extends UpdateCompanion<KanjiBankV3KunyomiReadingRelationsTableData> {
-  final Value<int> id;
-  final Value<int> kunyomiReadingId;
-  final Value<int> kanjiId;
-  const KanjiBankV3KunyomiReadingRelationsTableCompanion({
-    this.id = const Value.absent(),
-    this.kunyomiReadingId = const Value.absent(),
-    this.kanjiId = const Value.absent(),
-  });
-  KanjiBankV3KunyomiReadingRelationsTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int kunyomiReadingId,
-    required int kanjiId,
-  }) : kunyomiReadingId = Value(kunyomiReadingId),
-       kanjiId = Value(kanjiId);
-  static Insertable<KanjiBankV3KunyomiReadingRelationsTableData> custom({
-    Expression<int>? id,
-    Expression<int>? kunyomiReadingId,
-    Expression<int>? kanjiId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (kunyomiReadingId != null) 'kunyomi_reading_id': kunyomiReadingId,
-      if (kanjiId != null) 'kanji_id': kanjiId,
-    });
-  }
-
-  KanjiBankV3KunyomiReadingRelationsTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? kunyomiReadingId,
-    Value<int>? kanjiId,
-  }) {
-    return KanjiBankV3KunyomiReadingRelationsTableCompanion(
-      id: id ?? this.id,
-      kunyomiReadingId: kunyomiReadingId ?? this.kunyomiReadingId,
-      kanjiId: kanjiId ?? this.kanjiId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (kunyomiReadingId.present) {
-      map['kunyomi_reading_id'] = Variable<int>(kunyomiReadingId.value);
-    }
-    if (kanjiId.present) {
-      map['kanji_id'] = Variable<int>(kanjiId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiBankV3KunyomiReadingRelationsTableCompanion(')
-          ..write('id: $id, ')
-          ..write('kunyomiReadingId: $kunyomiReadingId, ')
-          ..write('kanjiId: $kanjiId')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $KanjiBankV3OnyomiReadingRelationsTableTable
     extends KanjiBankV3OnyomiReadingRelationsTable
     with
@@ -6277,6 +5256,296 @@ class KanjiBankV3OnyomiReadingRelationsTableCompanion
     return (StringBuffer('KanjiBankV3OnyomiReadingRelationsTableCompanion(')
           ..write('id: $id, ')
           ..write('onyomiReadingId: $onyomiReadingId, ')
+          ..write('kanjiId: $kanjiId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $KanjiBankV3KunyomiReadingRelationsTableTable
+    extends KanjiBankV3KunyomiReadingRelationsTable
+    with
+        TableInfo<
+          $KanjiBankV3KunyomiReadingRelationsTableTable,
+          KanjiBankV3KunyomiReadingRelationsTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiBankV3KunyomiReadingRelationsTableTable(
+    this.attachedDatabase, [
+    this._alias,
+  ]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _kunyomiReadingIdMeta = const VerificationMeta(
+    'kunyomiReadingId',
+  );
+  @override
+  late final GeneratedColumn<int> kunyomiReadingId = GeneratedColumn<int>(
+    'kunyomi_reading_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES reading_table (id)',
+    ),
+  );
+  static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
+    'kanjiId',
+  );
+  @override
+  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
+    'kanji_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES kanji_bank_v3_table (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, kunyomiReadingId, kanjiId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_bank_v3_kunyomi_reading_relations_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<KanjiBankV3KunyomiReadingRelationsTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('kunyomi_reading_id')) {
+      context.handle(
+        _kunyomiReadingIdMeta,
+        kunyomiReadingId.isAcceptableOrUnknown(
+          data['kunyomi_reading_id']!,
+          _kunyomiReadingIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_kunyomiReadingIdMeta);
+    }
+    if (data.containsKey('kanji_id')) {
+      context.handle(
+        _kanjiIdMeta,
+        kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  KanjiBankV3KunyomiReadingRelationsTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiBankV3KunyomiReadingRelationsTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      kunyomiReadingId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kunyomi_reading_id'],
+      )!,
+      kanjiId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kanji_id'],
+      )!,
+    );
+  }
+
+  @override
+  $KanjiBankV3KunyomiReadingRelationsTableTable createAlias(String alias) {
+    return $KanjiBankV3KunyomiReadingRelationsTableTable(
+      attachedDatabase,
+      alias,
+    );
+  }
+}
+
+class KanjiBankV3KunyomiReadingRelationsTableData extends DataClass
+    implements Insertable<KanjiBankV3KunyomiReadingRelationsTableData> {
+  /// id of this relation
+  final int id;
+
+  /// the id of the associated kunyomi reading
+  final int kunyomiReadingId;
+
+  /// the id of the associated kanji
+  final int kanjiId;
+  const KanjiBankV3KunyomiReadingRelationsTableData({
+    required this.id,
+    required this.kunyomiReadingId,
+    required this.kanjiId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['kunyomi_reading_id'] = Variable<int>(kunyomiReadingId);
+    map['kanji_id'] = Variable<int>(kanjiId);
+    return map;
+  }
+
+  KanjiBankV3KunyomiReadingRelationsTableCompanion toCompanion(
+    bool nullToAbsent,
+  ) {
+    return KanjiBankV3KunyomiReadingRelationsTableCompanion(
+      id: Value(id),
+      kunyomiReadingId: Value(kunyomiReadingId),
+      kanjiId: Value(kanjiId),
+    );
+  }
+
+  factory KanjiBankV3KunyomiReadingRelationsTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiBankV3KunyomiReadingRelationsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      kunyomiReadingId: serializer.fromJson<int>(json['kunyomiReadingId']),
+      kanjiId: serializer.fromJson<int>(json['kanjiId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'kunyomiReadingId': serializer.toJson<int>(kunyomiReadingId),
+      'kanjiId': serializer.toJson<int>(kanjiId),
+    };
+  }
+
+  KanjiBankV3KunyomiReadingRelationsTableData copyWith({
+    int? id,
+    int? kunyomiReadingId,
+    int? kanjiId,
+  }) => KanjiBankV3KunyomiReadingRelationsTableData(
+    id: id ?? this.id,
+    kunyomiReadingId: kunyomiReadingId ?? this.kunyomiReadingId,
+    kanjiId: kanjiId ?? this.kanjiId,
+  );
+  KanjiBankV3KunyomiReadingRelationsTableData copyWithCompanion(
+    KanjiBankV3KunyomiReadingRelationsTableCompanion data,
+  ) {
+    return KanjiBankV3KunyomiReadingRelationsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      kunyomiReadingId: data.kunyomiReadingId.present
+          ? data.kunyomiReadingId.value
+          : this.kunyomiReadingId,
+      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiBankV3KunyomiReadingRelationsTableData(')
+          ..write('id: $id, ')
+          ..write('kunyomiReadingId: $kunyomiReadingId, ')
+          ..write('kanjiId: $kanjiId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, kunyomiReadingId, kanjiId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiBankV3KunyomiReadingRelationsTableData &&
+          other.id == this.id &&
+          other.kunyomiReadingId == this.kunyomiReadingId &&
+          other.kanjiId == this.kanjiId);
+}
+
+class KanjiBankV3KunyomiReadingRelationsTableCompanion
+    extends UpdateCompanion<KanjiBankV3KunyomiReadingRelationsTableData> {
+  final Value<int> id;
+  final Value<int> kunyomiReadingId;
+  final Value<int> kanjiId;
+  const KanjiBankV3KunyomiReadingRelationsTableCompanion({
+    this.id = const Value.absent(),
+    this.kunyomiReadingId = const Value.absent(),
+    this.kanjiId = const Value.absent(),
+  });
+  KanjiBankV3KunyomiReadingRelationsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int kunyomiReadingId,
+    required int kanjiId,
+  }) : kunyomiReadingId = Value(kunyomiReadingId),
+       kanjiId = Value(kanjiId);
+  static Insertable<KanjiBankV3KunyomiReadingRelationsTableData> custom({
+    Expression<int>? id,
+    Expression<int>? kunyomiReadingId,
+    Expression<int>? kanjiId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (kunyomiReadingId != null) 'kunyomi_reading_id': kunyomiReadingId,
+      if (kanjiId != null) 'kanji_id': kanjiId,
+    });
+  }
+
+  KanjiBankV3KunyomiReadingRelationsTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? kunyomiReadingId,
+    Value<int>? kanjiId,
+  }) {
+    return KanjiBankV3KunyomiReadingRelationsTableCompanion(
+      id: id ?? this.id,
+      kunyomiReadingId: kunyomiReadingId ?? this.kunyomiReadingId,
+      kanjiId: kanjiId ?? this.kanjiId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (kunyomiReadingId.present) {
+      map['kunyomi_reading_id'] = Variable<int>(kunyomiReadingId.value);
+    }
+    if (kanjiId.present) {
+      map['kanji_id'] = Variable<int>(kanjiId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiBankV3KunyomiReadingRelationsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('kunyomiReadingId: $kunyomiReadingId, ')
           ..write('kanjiId: $kanjiId')
           ..write(')'))
         .toString();
@@ -7846,6 +7115,2589 @@ class KanjiBankV3StatKanjiRelationsTableCompanion
           ..write('id: $id, ')
           ..write('statId: $statId, ')
           ..write('kanjiId: $kanjiId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class KanjiDetailsViewData extends DataClass {
+  final String kanji;
+  final String onyomiReading;
+  final String kunyomiReading;
+  final int tagId;
+  final String tagName;
+  final String tagCategory;
+  final int tagSortingOrder;
+  final String tagNotes;
+  final int tagScore;
+  final String definition;
+  final String statName;
+  final String statValue;
+  const KanjiDetailsViewData({
+    required this.kanji,
+    required this.onyomiReading,
+    required this.kunyomiReading,
+    required this.tagId,
+    required this.tagName,
+    required this.tagCategory,
+    required this.tagSortingOrder,
+    required this.tagNotes,
+    required this.tagScore,
+    required this.definition,
+    required this.statName,
+    required this.statValue,
+  });
+  factory KanjiDetailsViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiDetailsViewData(
+      kanji: serializer.fromJson<String>(json['kanji']),
+      onyomiReading: serializer.fromJson<String>(json['onyomi_reading']),
+      kunyomiReading: serializer.fromJson<String>(json['kunyomi_reading']),
+      tagId: serializer.fromJson<int>(json['tag_id']),
+      tagName: serializer.fromJson<String>(json['tag_name']),
+      tagCategory: serializer.fromJson<String>(json['tag_category']),
+      tagSortingOrder: serializer.fromJson<int>(json['tag_sorting_order']),
+      tagNotes: serializer.fromJson<String>(json['tag_notes']),
+      tagScore: serializer.fromJson<int>(json['tag_score']),
+      definition: serializer.fromJson<String>(json['definition']),
+      statName: serializer.fromJson<String>(json['stat_name']),
+      statValue: serializer.fromJson<String>(json['stat_value']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'kanji': serializer.toJson<String>(kanji),
+      'onyomi_reading': serializer.toJson<String>(onyomiReading),
+      'kunyomi_reading': serializer.toJson<String>(kunyomiReading),
+      'tag_id': serializer.toJson<int>(tagId),
+      'tag_name': serializer.toJson<String>(tagName),
+      'tag_category': serializer.toJson<String>(tagCategory),
+      'tag_sorting_order': serializer.toJson<int>(tagSortingOrder),
+      'tag_notes': serializer.toJson<String>(tagNotes),
+      'tag_score': serializer.toJson<int>(tagScore),
+      'definition': serializer.toJson<String>(definition),
+      'stat_name': serializer.toJson<String>(statName),
+      'stat_value': serializer.toJson<String>(statValue),
+    };
+  }
+
+  KanjiDetailsViewData copyWith({
+    String? kanji,
+    String? onyomiReading,
+    String? kunyomiReading,
+    int? tagId,
+    String? tagName,
+    String? tagCategory,
+    int? tagSortingOrder,
+    String? tagNotes,
+    int? tagScore,
+    String? definition,
+    String? statName,
+    String? statValue,
+  }) => KanjiDetailsViewData(
+    kanji: kanji ?? this.kanji,
+    onyomiReading: onyomiReading ?? this.onyomiReading,
+    kunyomiReading: kunyomiReading ?? this.kunyomiReading,
+    tagId: tagId ?? this.tagId,
+    tagName: tagName ?? this.tagName,
+    tagCategory: tagCategory ?? this.tagCategory,
+    tagSortingOrder: tagSortingOrder ?? this.tagSortingOrder,
+    tagNotes: tagNotes ?? this.tagNotes,
+    tagScore: tagScore ?? this.tagScore,
+    definition: definition ?? this.definition,
+    statName: statName ?? this.statName,
+    statValue: statValue ?? this.statValue,
+  );
+  @override
+  String toString() {
+    return (StringBuffer('KanjiDetailsViewData(')
+          ..write('kanji: $kanji, ')
+          ..write('onyomiReading: $onyomiReading, ')
+          ..write('kunyomiReading: $kunyomiReading, ')
+          ..write('tagId: $tagId, ')
+          ..write('tagName: $tagName, ')
+          ..write('tagCategory: $tagCategory, ')
+          ..write('tagSortingOrder: $tagSortingOrder, ')
+          ..write('tagNotes: $tagNotes, ')
+          ..write('tagScore: $tagScore, ')
+          ..write('definition: $definition, ')
+          ..write('statName: $statName, ')
+          ..write('statValue: $statValue')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    kanji,
+    onyomiReading,
+    kunyomiReading,
+    tagId,
+    tagName,
+    tagCategory,
+    tagSortingOrder,
+    tagNotes,
+    tagScore,
+    definition,
+    statName,
+    statValue,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiDetailsViewData &&
+          other.kanji == this.kanji &&
+          other.onyomiReading == this.onyomiReading &&
+          other.kunyomiReading == this.kunyomiReading &&
+          other.tagId == this.tagId &&
+          other.tagName == this.tagName &&
+          other.tagCategory == this.tagCategory &&
+          other.tagSortingOrder == this.tagSortingOrder &&
+          other.tagNotes == this.tagNotes &&
+          other.tagScore == this.tagScore &&
+          other.definition == this.definition &&
+          other.statName == this.statName &&
+          other.statValue == this.statValue);
+}
+
+class KanjiDetailsView extends ViewInfo<KanjiDetailsView, KanjiDetailsViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  KanjiDetailsView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [
+    kanji,
+    onyomiReading,
+    kunyomiReading,
+    tagId,
+    tagName,
+    tagCategory,
+    tagSortingOrder,
+    tagNotes,
+    tagScore,
+    definition,
+    statName,
+    statValue,
+  ];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'kanji_details_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW IF NOT EXISTS kanji_details_view AS SELECT KT.kanji, onyomi.reading AS onyomi_reading, kunyomi.reading AS kunyomi_reading, TB3T.id AS tag_id, TB3T.name AS tag_name, TB3T.category AS tag_category, TB3T.sorting_order AS tag_sorting_order, TB3T.notes AS tag_notes, TB3T.score AS tag_score, DT.definition, KB3SNT.stat_name, KB3SVT.stat_value FROM kanji_bank_v3_table AS KB3T INNER JOIN kanji_table AS KT ON KT.id = KB3T.kanji_id INNER JOIN kanji_bank_v3_onyomi_reading_relations_table AS KB3ORRT ON KB3ORRT.kanji_id = KB3T.id INNER JOIN reading_table AS onyomi ON KB3ORRT.onyomi_reading_id = onyomi.id INNER JOIN kanji_bank_v3_kunyomi_reading_relations_table AS KB3KRRT ON KB3KRRT.kanji_id = KB3T.id INNER JOIN reading_table AS kunyomi ON KB3KRRT.kunyomi_reading_id = kunyomi.id INNER JOIN kanji_bank_v3_tags_kanji_relations_table AS KB3TKRT ON KB3TKRT.kanji_id = KB3T.id INNER JOIN tag_bank_v3_table AS TB3T ON KB3TKRT.tag_id = TB3T.id INNER JOIN kanji_bank_v3_definitions_kanji_relations_table AS KB3DKRT ON KB3DKRT.kanji_id = KB3T.id INNER JOIN definition_table AS DT ON KB3DKRT.definition_id = DT.id INNER JOIN kanji_bank_v3_stat_kanji_relations_table AS KB3SKRT ON KB3SKRT.kanji_id = KB3T.id INNER JOIN kanji_bank_v3_stats_table AS KB3ST ON KB3SKRT.stat_id = KB3ST.id INNER JOIN kanji_bank_v3_stat_names_table AS KB3SNT ON KB3SNT.id = KB3ST.stat_name_id INNER JOIN kanji_bank_v3_stat_values_table AS KB3SVT ON KB3SVT.id = KB3ST.stat_value_id',
+  };
+  @override
+  KanjiDetailsView get asDslTable => this;
+  @override
+  KanjiDetailsViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiDetailsViewData(
+      kanji: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kanji'],
+      )!,
+      onyomiReading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}onyomi_reading'],
+      )!,
+      kunyomiReading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kunyomi_reading'],
+      )!,
+      tagId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tag_id'],
+      )!,
+      tagName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_name'],
+      )!,
+      tagCategory: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_category'],
+      )!,
+      tagSortingOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tag_sorting_order'],
+      )!,
+      tagNotes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_notes'],
+      )!,
+      tagScore: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tag_score'],
+      )!,
+      definition: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition'],
+      )!,
+      statName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}stat_name'],
+      )!,
+      statValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}stat_value'],
+      )!,
+    );
+  }
+
+  late final GeneratedColumn<String> kanji = GeneratedColumn<String>(
+    'kanji',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> onyomiReading = GeneratedColumn<String>(
+    'onyomi_reading',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> kunyomiReading = GeneratedColumn<String>(
+    'kunyomi_reading',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
+    'tag_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> tagName = GeneratedColumn<String>(
+    'tag_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> tagCategory = GeneratedColumn<String>(
+    'tag_category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<int> tagSortingOrder = GeneratedColumn<int>(
+    'tag_sorting_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> tagNotes = GeneratedColumn<String>(
+    'tag_notes',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<int> tagScore = GeneratedColumn<int>(
+    'tag_score',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> definition = GeneratedColumn<String>(
+    'definition',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> statName = GeneratedColumn<String>(
+    'stat_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> statValue = GeneratedColumn<String>(
+    'stat_value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  @override
+  KanjiDetailsView createAlias(String alias) {
+    return KanjiDetailsView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {
+    'kanji_bank_v3_table',
+    'kanji_table',
+    'kanji_bank_v3_onyomi_reading_relations_table',
+    'reading_table',
+    'kanji_bank_v3_kunyomi_reading_relations_table',
+    'kanji_bank_v3_tags_kanji_relations_table',
+    'tag_bank_v3_table',
+    'kanji_bank_v3_definitions_kanji_relations_table',
+    'definition_table',
+    'kanji_bank_v3_stat_kanji_relations_table',
+    'kanji_bank_v3_stats_table',
+    'kanji_bank_v3_stat_names_table',
+    'kanji_bank_v3_stat_values_table',
+  };
+}
+
+class $ExampleTableTable extends ExampleTable
+    with TableInfo<$ExampleTableTable, ExampleTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _exampleSentenceMeta = const VerificationMeta(
+    'exampleSentence',
+  );
+  @override
+  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
+    'example_sentence',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _exampleSentenceTokenizedMeta =
+      const VerificationMeta('exampleSentenceTokenized');
+  @override
+  late final GeneratedColumn<String> exampleSentenceTokenized =
+      GeneratedColumn<String>(
+        'example_sentence_tokenized',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    exampleSentence,
+    exampleSentenceTokenized,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('example_sentence')) {
+      context.handle(
+        _exampleSentenceMeta,
+        exampleSentence.isAcceptableOrUnknown(
+          data['example_sentence']!,
+          _exampleSentenceMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleSentenceMeta);
+    }
+    if (data.containsKey('example_sentence_tokenized')) {
+      context.handle(
+        _exampleSentenceTokenizedMeta,
+        exampleSentenceTokenized.isAcceptableOrUnknown(
+          data['example_sentence_tokenized']!,
+          _exampleSentenceTokenizedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleSentenceTokenizedMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ExampleTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      exampleSentence: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence'],
+      )!,
+      exampleSentenceTokenized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence_tokenized'],
+      )!,
+    );
+  }
+
+  @override
+  $ExampleTableTable createAlias(String alias) {
+    return $ExampleTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExampleTableData extends DataClass
+    implements Insertable<ExampleTableData> {
+  /// id of this entry
+  final int id;
+
+  /// the example of this entry
+  final String exampleSentence;
+
+  /// the example of this entry tokenized
+  final String exampleSentenceTokenized;
+  const ExampleTableData({
+    required this.id,
+    required this.exampleSentence,
+    required this.exampleSentenceTokenized,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['example_sentence'] = Variable<String>(exampleSentence);
+    map['example_sentence_tokenized'] = Variable<String>(
+      exampleSentenceTokenized,
+    );
+    return map;
+  }
+
+  ExampleTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleTableCompanion(
+      id: Value(id),
+      exampleSentence: Value(exampleSentence),
+      exampleSentenceTokenized: Value(exampleSentenceTokenized),
+    );
+  }
+
+  factory ExampleTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleTableData(
+      id: serializer.fromJson<int>(json['id']),
+      exampleSentence: serializer.fromJson<String>(json['exampleSentence']),
+      exampleSentenceTokenized: serializer.fromJson<String>(
+        json['exampleSentenceTokenized'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'exampleSentence': serializer.toJson<String>(exampleSentence),
+      'exampleSentenceTokenized': serializer.toJson<String>(
+        exampleSentenceTokenized,
+      ),
+    };
+  }
+
+  ExampleTableData copyWith({
+    int? id,
+    String? exampleSentence,
+    String? exampleSentenceTokenized,
+  }) => ExampleTableData(
+    id: id ?? this.id,
+    exampleSentence: exampleSentence ?? this.exampleSentence,
+    exampleSentenceTokenized:
+        exampleSentenceTokenized ?? this.exampleSentenceTokenized,
+  );
+  ExampleTableData copyWithCompanion(ExampleTableCompanion data) {
+    return ExampleTableData(
+      id: data.id.present ? data.id.value : this.id,
+      exampleSentence: data.exampleSentence.present
+          ? data.exampleSentence.value
+          : this.exampleSentence,
+      exampleSentenceTokenized: data.exampleSentenceTokenized.present
+          ? data.exampleSentenceTokenized.value
+          : this.exampleSentenceTokenized,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTableData(')
+          ..write('id: $id, ')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, exampleSentence, exampleSentenceTokenized);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleTableData &&
+          other.id == this.id &&
+          other.exampleSentence == this.exampleSentence &&
+          other.exampleSentenceTokenized == this.exampleSentenceTokenized);
+}
+
+class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
+  final Value<int> id;
+  final Value<String> exampleSentence;
+  final Value<String> exampleSentenceTokenized;
+  const ExampleTableCompanion({
+    this.id = const Value.absent(),
+    this.exampleSentence = const Value.absent(),
+    this.exampleSentenceTokenized = const Value.absent(),
+  });
+  ExampleTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String exampleSentence,
+    required String exampleSentenceTokenized,
+  }) : exampleSentence = Value(exampleSentence),
+       exampleSentenceTokenized = Value(exampleSentenceTokenized);
+  static Insertable<ExampleTableData> custom({
+    Expression<int>? id,
+    Expression<String>? exampleSentence,
+    Expression<String>? exampleSentenceTokenized,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (exampleSentence != null) 'example_sentence': exampleSentence,
+      if (exampleSentenceTokenized != null)
+        'example_sentence_tokenized': exampleSentenceTokenized,
+    });
+  }
+
+  ExampleTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? exampleSentence,
+    Value<String>? exampleSentenceTokenized,
+  }) {
+    return ExampleTableCompanion(
+      id: id ?? this.id,
+      exampleSentence: exampleSentence ?? this.exampleSentence,
+      exampleSentenceTokenized:
+          exampleSentenceTokenized ?? this.exampleSentenceTokenized,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (exampleSentence.present) {
+      map['example_sentence'] = Variable<String>(exampleSentence.value);
+    }
+    if (exampleSentenceTokenized.present) {
+      map['example_sentence_tokenized'] = Variable<String>(
+        exampleSentenceTokenized.value,
+      );
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTableCompanion(')
+          ..write('id: $id, ')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LanguageCodeTableTable extends LanguageCodeTable
+    with TableInfo<$LanguageCodeTableTable, LanguageCodeTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LanguageCodeTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _languageCodeMeta = const VerificationMeta(
+    'languageCode',
+  );
+  @override
+  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
+    'language_code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, languageCode];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'language_code_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LanguageCodeTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('language_code')) {
+      context.handle(
+        _languageCodeMeta,
+        languageCode.isAcceptableOrUnknown(
+          data['language_code']!,
+          _languageCodeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_languageCodeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LanguageCodeTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LanguageCodeTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      languageCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language_code'],
+      )!,
+    );
+  }
+
+  @override
+  $LanguageCodeTableTable createAlias(String alias) {
+    return $LanguageCodeTableTable(attachedDatabase, alias);
+  }
+}
+
+class LanguageCodeTableData extends DataClass
+    implements Insertable<LanguageCodeTableData> {
+  /// id of this entry
+  final int id;
+
+  /// the example of this entry
+  final String languageCode;
+  const LanguageCodeTableData({required this.id, required this.languageCode});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['language_code'] = Variable<String>(languageCode);
+    return map;
+  }
+
+  LanguageCodeTableCompanion toCompanion(bool nullToAbsent) {
+    return LanguageCodeTableCompanion(
+      id: Value(id),
+      languageCode: Value(languageCode),
+    );
+  }
+
+  factory LanguageCodeTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LanguageCodeTableData(
+      id: serializer.fromJson<int>(json['id']),
+      languageCode: serializer.fromJson<String>(json['languageCode']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'languageCode': serializer.toJson<String>(languageCode),
+    };
+  }
+
+  LanguageCodeTableData copyWith({int? id, String? languageCode}) =>
+      LanguageCodeTableData(
+        id: id ?? this.id,
+        languageCode: languageCode ?? this.languageCode,
+      );
+  LanguageCodeTableData copyWithCompanion(LanguageCodeTableCompanion data) {
+    return LanguageCodeTableData(
+      id: data.id.present ? data.id.value : this.id,
+      languageCode: data.languageCode.present
+          ? data.languageCode.value
+          : this.languageCode,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LanguageCodeTableData(')
+          ..write('id: $id, ')
+          ..write('languageCode: $languageCode')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, languageCode);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LanguageCodeTableData &&
+          other.id == this.id &&
+          other.languageCode == this.languageCode);
+}
+
+class LanguageCodeTableCompanion
+    extends UpdateCompanion<LanguageCodeTableData> {
+  final Value<int> id;
+  final Value<String> languageCode;
+  const LanguageCodeTableCompanion({
+    this.id = const Value.absent(),
+    this.languageCode = const Value.absent(),
+  });
+  LanguageCodeTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String languageCode,
+  }) : languageCode = Value(languageCode);
+  static Insertable<LanguageCodeTableData> custom({
+    Expression<int>? id,
+    Expression<String>? languageCode,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (languageCode != null) 'language_code': languageCode,
+    });
+  }
+
+  LanguageCodeTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? languageCode,
+  }) {
+    return LanguageCodeTableCompanion(
+      id: id ?? this.id,
+      languageCode: languageCode ?? this.languageCode,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (languageCode.present) {
+      map['language_code'] = Variable<String>(languageCode.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LanguageCodeTableCompanion(')
+          ..write('id: $id, ')
+          ..write('languageCode: $languageCode')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExampleTranslationTableTable extends ExampleTranslationTable
+    with TableInfo<$ExampleTranslationTableTable, ExampleTranslationTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleTranslationTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _exampleTranslationMeta =
+      const VerificationMeta('exampleTranslation');
+  @override
+  late final GeneratedColumn<String> exampleTranslation =
+      GeneratedColumn<String>(
+        'example_translation',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _languageCodeIdMeta = const VerificationMeta(
+    'languageCodeId',
+  );
+  @override
+  late final GeneratedColumn<int> languageCodeId = GeneratedColumn<int>(
+    'language_code_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES language_code_table (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    exampleTranslation,
+    languageCodeId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_translation_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleTranslationTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('example_translation')) {
+      context.handle(
+        _exampleTranslationMeta,
+        exampleTranslation.isAcceptableOrUnknown(
+          data['example_translation']!,
+          _exampleTranslationMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleTranslationMeta);
+    }
+    if (data.containsKey('language_code_id')) {
+      context.handle(
+        _languageCodeIdMeta,
+        languageCodeId.isAcceptableOrUnknown(
+          data['language_code_id']!,
+          _languageCodeIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_languageCodeIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ExampleTranslationTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleTranslationTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      exampleTranslation: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_translation'],
+      )!,
+      languageCodeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}language_code_id'],
+      )!,
+    );
+  }
+
+  @override
+  $ExampleTranslationTableTable createAlias(String alias) {
+    return $ExampleTranslationTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExampleTranslationTableData extends DataClass
+    implements Insertable<ExampleTranslationTableData> {
+  /// id of this entry
+  final int id;
+
+  /// the example of this entry
+  final String exampleTranslation;
+
+  /// The id of the language code (iso 639 2T) of this translation
+  final int languageCodeId;
+  const ExampleTranslationTableData({
+    required this.id,
+    required this.exampleTranslation,
+    required this.languageCodeId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['example_translation'] = Variable<String>(exampleTranslation);
+    map['language_code_id'] = Variable<int>(languageCodeId);
+    return map;
+  }
+
+  ExampleTranslationTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleTranslationTableCompanion(
+      id: Value(id),
+      exampleTranslation: Value(exampleTranslation),
+      languageCodeId: Value(languageCodeId),
+    );
+  }
+
+  factory ExampleTranslationTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleTranslationTableData(
+      id: serializer.fromJson<int>(json['id']),
+      exampleTranslation: serializer.fromJson<String>(
+        json['exampleTranslation'],
+      ),
+      languageCodeId: serializer.fromJson<int>(json['languageCodeId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'exampleTranslation': serializer.toJson<String>(exampleTranslation),
+      'languageCodeId': serializer.toJson<int>(languageCodeId),
+    };
+  }
+
+  ExampleTranslationTableData copyWith({
+    int? id,
+    String? exampleTranslation,
+    int? languageCodeId,
+  }) => ExampleTranslationTableData(
+    id: id ?? this.id,
+    exampleTranslation: exampleTranslation ?? this.exampleTranslation,
+    languageCodeId: languageCodeId ?? this.languageCodeId,
+  );
+  ExampleTranslationTableData copyWithCompanion(
+    ExampleTranslationTableCompanion data,
+  ) {
+    return ExampleTranslationTableData(
+      id: data.id.present ? data.id.value : this.id,
+      exampleTranslation: data.exampleTranslation.present
+          ? data.exampleTranslation.value
+          : this.exampleTranslation,
+      languageCodeId: data.languageCodeId.present
+          ? data.languageCodeId.value
+          : this.languageCodeId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTranslationTableData(')
+          ..write('id: $id, ')
+          ..write('exampleTranslation: $exampleTranslation, ')
+          ..write('languageCodeId: $languageCodeId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, exampleTranslation, languageCodeId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleTranslationTableData &&
+          other.id == this.id &&
+          other.exampleTranslation == this.exampleTranslation &&
+          other.languageCodeId == this.languageCodeId);
+}
+
+class ExampleTranslationTableCompanion
+    extends UpdateCompanion<ExampleTranslationTableData> {
+  final Value<int> id;
+  final Value<String> exampleTranslation;
+  final Value<int> languageCodeId;
+  const ExampleTranslationTableCompanion({
+    this.id = const Value.absent(),
+    this.exampleTranslation = const Value.absent(),
+    this.languageCodeId = const Value.absent(),
+  });
+  ExampleTranslationTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String exampleTranslation,
+    required int languageCodeId,
+  }) : exampleTranslation = Value(exampleTranslation),
+       languageCodeId = Value(languageCodeId);
+  static Insertable<ExampleTranslationTableData> custom({
+    Expression<int>? id,
+    Expression<String>? exampleTranslation,
+    Expression<int>? languageCodeId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (exampleTranslation != null) 'example_translation': exampleTranslation,
+      if (languageCodeId != null) 'language_code_id': languageCodeId,
+    });
+  }
+
+  ExampleTranslationTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? exampleTranslation,
+    Value<int>? languageCodeId,
+  }) {
+    return ExampleTranslationTableCompanion(
+      id: id ?? this.id,
+      exampleTranslation: exampleTranslation ?? this.exampleTranslation,
+      languageCodeId: languageCodeId ?? this.languageCodeId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (exampleTranslation.present) {
+      map['example_translation'] = Variable<String>(exampleTranslation.value);
+    }
+    if (languageCodeId.present) {
+      map['language_code_id'] = Variable<int>(languageCodeId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTranslationTableCompanion(')
+          ..write('id: $id, ')
+          ..write('exampleTranslation: $exampleTranslation, ')
+          ..write('languageCodeId: $languageCodeId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExampleTranslationRelationsTableTable
+    extends ExampleTranslationRelationsTable
+    with
+        TableInfo<
+          $ExampleTranslationRelationsTableTable,
+          ExampleTranslationRelationsTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleTranslationRelationsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _exampleIdMeta = const VerificationMeta(
+    'exampleId',
+  );
+  @override
+  late final GeneratedColumn<int> exampleId = GeneratedColumn<int>(
+    'example_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES example_table (id)',
+    ),
+  );
+  static const VerificationMeta _translationIdMeta = const VerificationMeta(
+    'translationId',
+  );
+  @override
+  late final GeneratedColumn<int> translationId = GeneratedColumn<int>(
+    'translation_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES example_translation_table (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, exampleId, translationId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_translation_relations_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleTranslationRelationsTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('example_id')) {
+      context.handle(
+        _exampleIdMeta,
+        exampleId.isAcceptableOrUnknown(data['example_id']!, _exampleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleIdMeta);
+    }
+    if (data.containsKey('translation_id')) {
+      context.handle(
+        _translationIdMeta,
+        translationId.isAcceptableOrUnknown(
+          data['translation_id']!,
+          _translationIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_translationIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ExampleTranslationRelationsTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleTranslationRelationsTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      exampleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}example_id'],
+      )!,
+      translationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}translation_id'],
+      )!,
+    );
+  }
+
+  @override
+  $ExampleTranslationRelationsTableTable createAlias(String alias) {
+    return $ExampleTranslationRelationsTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExampleTranslationRelationsTableData extends DataClass
+    implements Insertable<ExampleTranslationRelationsTableData> {
+  /// id of this relation
+  final int id;
+
+  /// the id of the associated example
+  final int exampleId;
+
+  /// the id of the associated translation
+  final int translationId;
+  const ExampleTranslationRelationsTableData({
+    required this.id,
+    required this.exampleId,
+    required this.translationId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['example_id'] = Variable<int>(exampleId);
+    map['translation_id'] = Variable<int>(translationId);
+    return map;
+  }
+
+  ExampleTranslationRelationsTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleTranslationRelationsTableCompanion(
+      id: Value(id),
+      exampleId: Value(exampleId),
+      translationId: Value(translationId),
+    );
+  }
+
+  factory ExampleTranslationRelationsTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleTranslationRelationsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      exampleId: serializer.fromJson<int>(json['exampleId']),
+      translationId: serializer.fromJson<int>(json['translationId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'exampleId': serializer.toJson<int>(exampleId),
+      'translationId': serializer.toJson<int>(translationId),
+    };
+  }
+
+  ExampleTranslationRelationsTableData copyWith({
+    int? id,
+    int? exampleId,
+    int? translationId,
+  }) => ExampleTranslationRelationsTableData(
+    id: id ?? this.id,
+    exampleId: exampleId ?? this.exampleId,
+    translationId: translationId ?? this.translationId,
+  );
+  ExampleTranslationRelationsTableData copyWithCompanion(
+    ExampleTranslationRelationsTableCompanion data,
+  ) {
+    return ExampleTranslationRelationsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      exampleId: data.exampleId.present ? data.exampleId.value : this.exampleId,
+      translationId: data.translationId.present
+          ? data.translationId.value
+          : this.translationId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTranslationRelationsTableData(')
+          ..write('id: $id, ')
+          ..write('exampleId: $exampleId, ')
+          ..write('translationId: $translationId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, exampleId, translationId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleTranslationRelationsTableData &&
+          other.id == this.id &&
+          other.exampleId == this.exampleId &&
+          other.translationId == this.translationId);
+}
+
+class ExampleTranslationRelationsTableCompanion
+    extends UpdateCompanion<ExampleTranslationRelationsTableData> {
+  final Value<int> id;
+  final Value<int> exampleId;
+  final Value<int> translationId;
+  const ExampleTranslationRelationsTableCompanion({
+    this.id = const Value.absent(),
+    this.exampleId = const Value.absent(),
+    this.translationId = const Value.absent(),
+  });
+  ExampleTranslationRelationsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int exampleId,
+    required int translationId,
+  }) : exampleId = Value(exampleId),
+       translationId = Value(translationId);
+  static Insertable<ExampleTranslationRelationsTableData> custom({
+    Expression<int>? id,
+    Expression<int>? exampleId,
+    Expression<int>? translationId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (exampleId != null) 'example_id': exampleId,
+      if (translationId != null) 'translation_id': translationId,
+    });
+  }
+
+  ExampleTranslationRelationsTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? exampleId,
+    Value<int>? translationId,
+  }) {
+    return ExampleTranslationRelationsTableCompanion(
+      id: id ?? this.id,
+      exampleId: exampleId ?? this.exampleId,
+      translationId: translationId ?? this.translationId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (exampleId.present) {
+      map['example_id'] = Variable<int>(exampleId.value);
+    }
+    if (translationId.present) {
+      map['translation_id'] = Variable<int>(translationId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTranslationRelationsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('exampleId: $exampleId, ')
+          ..write('translationId: $translationId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class ExampleViewData extends DataClass {
+  final int id;
+  final String exampleSentence;
+  final String? exampleTranslation;
+  final String? languageCode;
+  final int? translationId;
+  const ExampleViewData({
+    required this.id,
+    required this.exampleSentence,
+    this.exampleTranslation,
+    this.languageCode,
+    this.translationId,
+  });
+  factory ExampleViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleViewData(
+      id: serializer.fromJson<int>(json['id']),
+      exampleSentence: serializer.fromJson<String>(json['example_sentence']),
+      exampleTranslation: serializer.fromJson<String?>(
+        json['example_translation'],
+      ),
+      languageCode: serializer.fromJson<String?>(json['language_code']),
+      translationId: serializer.fromJson<int?>(json['translation_id']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'example_sentence': serializer.toJson<String>(exampleSentence),
+      'example_translation': serializer.toJson<String?>(exampleTranslation),
+      'language_code': serializer.toJson<String?>(languageCode),
+      'translation_id': serializer.toJson<int?>(translationId),
+    };
+  }
+
+  ExampleViewData copyWith({
+    int? id,
+    String? exampleSentence,
+    Value<String?> exampleTranslation = const Value.absent(),
+    Value<String?> languageCode = const Value.absent(),
+    Value<int?> translationId = const Value.absent(),
+  }) => ExampleViewData(
+    id: id ?? this.id,
+    exampleSentence: exampleSentence ?? this.exampleSentence,
+    exampleTranslation: exampleTranslation.present
+        ? exampleTranslation.value
+        : this.exampleTranslation,
+    languageCode: languageCode.present ? languageCode.value : this.languageCode,
+    translationId: translationId.present
+        ? translationId.value
+        : this.translationId,
+  );
+  @override
+  String toString() {
+    return (StringBuffer('ExampleViewData(')
+          ..write('id: $id, ')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('exampleTranslation: $exampleTranslation, ')
+          ..write('languageCode: $languageCode, ')
+          ..write('translationId: $translationId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    exampleSentence,
+    exampleTranslation,
+    languageCode,
+    translationId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleViewData &&
+          other.id == this.id &&
+          other.exampleSentence == this.exampleSentence &&
+          other.exampleTranslation == this.exampleTranslation &&
+          other.languageCode == this.languageCode &&
+          other.translationId == this.translationId);
+}
+
+class ExampleView extends ViewInfo<ExampleView, ExampleViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  ExampleView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    exampleSentence,
+    exampleTranslation,
+    languageCode,
+    translationId,
+  ];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'example_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW IF NOT EXISTS example_view AS SELECT ET.id, ET.example_sentence, ETT.example_translation, LCT.language_code, ETT.id AS translation_id FROM example_table AS ET LEFT JOIN example_translation_relations_table AS ETRT ON ETRT.example_id = ET.id LEFT JOIN example_translation_table AS ETT ON ETRT.translation_id = ETT.id LEFT JOIN language_code_table AS LCT ON LCT.id = ETT.language_code_id',
+  };
+  @override
+  ExampleView get asDslTable => this;
+  @override
+  ExampleViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      exampleSentence: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence'],
+      )!,
+      exampleTranslation: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_translation'],
+      ),
+      languageCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language_code'],
+      ),
+      translationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}translation_id'],
+      ),
+    );
+  }
+
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
+    'example_sentence',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> exampleTranslation =
+      GeneratedColumn<String>(
+        'example_translation',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+      );
+  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
+    'language_code',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<int> translationId = GeneratedColumn<int>(
+    'translation_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+  );
+  @override
+  ExampleView createAlias(String alias) {
+    return ExampleView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {
+    'example_table',
+    'example_translation_relations_table',
+    'example_translation_table',
+    'language_code_table',
+  };
+}
+
+class ExampleFts extends Table
+    with
+        TableInfo<ExampleFts, ExampleFt>,
+        VirtualTableInfo<ExampleFts, ExampleFt> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  ExampleFts(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _exampleSentenceTokenizedMeta =
+      const VerificationMeta('exampleSentenceTokenized');
+  late final GeneratedColumn<String> exampleSentenceTokenized =
+      GeneratedColumn<String>(
+        'example_sentence_tokenized',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        $customConstraints: '',
+      );
+  @override
+  List<GeneratedColumn> get $columns => [exampleSentenceTokenized];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_fts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleFt> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('example_sentence_tokenized')) {
+      context.handle(
+        _exampleSentenceTokenizedMeta,
+        exampleSentenceTokenized.isAcceptableOrUnknown(
+          data['example_sentence_tokenized']!,
+          _exampleSentenceTokenizedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleSentenceTokenizedMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ExampleFt map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleFt(
+      exampleSentenceTokenized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence_tokenized'],
+      )!,
+    );
+  }
+
+  @override
+  ExampleFts createAlias(String alias) {
+    return ExampleFts(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(example_sentence_tokenized, content=\'example_table\', content_rowid=\'id\', tokenize=\'unicode61\')';
+}
+
+class ExampleFt extends DataClass implements Insertable<ExampleFt> {
+  final String exampleSentenceTokenized;
+  const ExampleFt({required this.exampleSentenceTokenized});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['example_sentence_tokenized'] = Variable<String>(
+      exampleSentenceTokenized,
+    );
+    return map;
+  }
+
+  ExampleFtsCompanion toCompanion(bool nullToAbsent) {
+    return ExampleFtsCompanion(
+      exampleSentenceTokenized: Value(exampleSentenceTokenized),
+    );
+  }
+
+  factory ExampleFt.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleFt(
+      exampleSentenceTokenized: serializer.fromJson<String>(
+        json['example_sentence_tokenized'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'example_sentence_tokenized': serializer.toJson<String>(
+        exampleSentenceTokenized,
+      ),
+    };
+  }
+
+  ExampleFt copyWith({String? exampleSentenceTokenized}) => ExampleFt(
+    exampleSentenceTokenized:
+        exampleSentenceTokenized ?? this.exampleSentenceTokenized,
+  );
+  ExampleFt copyWithCompanion(ExampleFtsCompanion data) {
+    return ExampleFt(
+      exampleSentenceTokenized: data.exampleSentenceTokenized.present
+          ? data.exampleSentenceTokenized.value
+          : this.exampleSentenceTokenized,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleFt(')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => exampleSentenceTokenized.hashCode;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleFt &&
+          other.exampleSentenceTokenized == this.exampleSentenceTokenized);
+}
+
+class ExampleFtsCompanion extends UpdateCompanion<ExampleFt> {
+  final Value<String> exampleSentenceTokenized;
+  final Value<int> rowid;
+  const ExampleFtsCompanion({
+    this.exampleSentenceTokenized = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExampleFtsCompanion.insert({
+    required String exampleSentenceTokenized,
+    this.rowid = const Value.absent(),
+  }) : exampleSentenceTokenized = Value(exampleSentenceTokenized);
+  static Insertable<ExampleFt> custom({
+    Expression<String>? exampleSentenceTokenized,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (exampleSentenceTokenized != null)
+        'example_sentence_tokenized': exampleSentenceTokenized,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExampleFtsCompanion copyWith({
+    Value<String>? exampleSentenceTokenized,
+    Value<int>? rowid,
+  }) {
+    return ExampleFtsCompanion(
+      exampleSentenceTokenized:
+          exampleSentenceTokenized ?? this.exampleSentenceTokenized,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (exampleSentenceTokenized.present) {
+      map['example_sentence_tokenized'] = Variable<String>(
+        exampleSentenceTokenized.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleFtsCompanion(')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RadicalsTableTable extends RadicalsTable
+    with TableInfo<$RadicalsTableTable, RadicalsTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RadicalsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _radicalMeta = const VerificationMeta(
+    'radical',
+  );
+  @override
+  late final GeneratedColumn<String> radical = GeneratedColumn<String>(
+    'radical',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _strokeCountMeta = const VerificationMeta(
+    'strokeCount',
+  );
+  @override
+  late final GeneratedColumn<int> strokeCount = GeneratedColumn<int>(
+    'stroke_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, radical, strokeCount];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'radicals_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RadicalsTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('radical')) {
+      context.handle(
+        _radicalMeta,
+        radical.isAcceptableOrUnknown(data['radical']!, _radicalMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_radicalMeta);
+    }
+    if (data.containsKey('stroke_count')) {
+      context.handle(
+        _strokeCountMeta,
+        strokeCount.isAcceptableOrUnknown(
+          data['stroke_count']!,
+          _strokeCountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_strokeCountMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RadicalsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RadicalsTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      radical: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}radical'],
+      )!,
+      strokeCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}stroke_count'],
+      )!,
+    );
+  }
+
+  @override
+  $RadicalsTableTable createAlias(String alias) {
+    return $RadicalsTableTable(attachedDatabase, alias);
+  }
+}
+
+class RadicalsTableData extends DataClass
+    implements Insertable<RadicalsTableData> {
+  /// id of this entry
+  final int id;
+
+  /// the radical character of this entry
+  /// this column is indexed
+  final String radical;
+
+  /// Stroke count of this radical
+  final int strokeCount;
+  const RadicalsTableData({
+    required this.id,
+    required this.radical,
+    required this.strokeCount,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['radical'] = Variable<String>(radical);
+    map['stroke_count'] = Variable<int>(strokeCount);
+    return map;
+  }
+
+  RadicalsTableCompanion toCompanion(bool nullToAbsent) {
+    return RadicalsTableCompanion(
+      id: Value(id),
+      radical: Value(radical),
+      strokeCount: Value(strokeCount),
+    );
+  }
+
+  factory RadicalsTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RadicalsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      radical: serializer.fromJson<String>(json['radical']),
+      strokeCount: serializer.fromJson<int>(json['strokeCount']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'radical': serializer.toJson<String>(radical),
+      'strokeCount': serializer.toJson<int>(strokeCount),
+    };
+  }
+
+  RadicalsTableData copyWith({int? id, String? radical, int? strokeCount}) =>
+      RadicalsTableData(
+        id: id ?? this.id,
+        radical: radical ?? this.radical,
+        strokeCount: strokeCount ?? this.strokeCount,
+      );
+  RadicalsTableData copyWithCompanion(RadicalsTableCompanion data) {
+    return RadicalsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      radical: data.radical.present ? data.radical.value : this.radical,
+      strokeCount: data.strokeCount.present
+          ? data.strokeCount.value
+          : this.strokeCount,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RadicalsTableData(')
+          ..write('id: $id, ')
+          ..write('radical: $radical, ')
+          ..write('strokeCount: $strokeCount')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, radical, strokeCount);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RadicalsTableData &&
+          other.id == this.id &&
+          other.radical == this.radical &&
+          other.strokeCount == this.strokeCount);
+}
+
+class RadicalsTableCompanion extends UpdateCompanion<RadicalsTableData> {
+  final Value<int> id;
+  final Value<String> radical;
+  final Value<int> strokeCount;
+  const RadicalsTableCompanion({
+    this.id = const Value.absent(),
+    this.radical = const Value.absent(),
+    this.strokeCount = const Value.absent(),
+  });
+  RadicalsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String radical,
+    required int strokeCount,
+  }) : radical = Value(radical),
+       strokeCount = Value(strokeCount);
+  static Insertable<RadicalsTableData> custom({
+    Expression<int>? id,
+    Expression<String>? radical,
+    Expression<int>? strokeCount,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (radical != null) 'radical': radical,
+      if (strokeCount != null) 'stroke_count': strokeCount,
+    });
+  }
+
+  RadicalsTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? radical,
+    Value<int>? strokeCount,
+  }) {
+    return RadicalsTableCompanion(
+      id: id ?? this.id,
+      radical: radical ?? this.radical,
+      strokeCount: strokeCount ?? this.strokeCount,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (radical.present) {
+      map['radical'] = Variable<String>(radical.value);
+    }
+    if (strokeCount.present) {
+      map['stroke_count'] = Variable<int>(strokeCount.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RadicalsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('radical: $radical, ')
+          ..write('strokeCount: $strokeCount')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RadicalKanjiRelationsTableTable extends RadicalKanjiRelationsTable
+    with
+        TableInfo<
+          $RadicalKanjiRelationsTableTable,
+          RadicalKanjiRelationsTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RadicalKanjiRelationsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
+    'kanjiId',
+  );
+  @override
+  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
+    'kanji_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES kanji_table (id)',
+    ),
+  );
+  static const VerificationMeta _radicalIdMeta = const VerificationMeta(
+    'radicalId',
+  );
+  @override
+  late final GeneratedColumn<int> radicalId = GeneratedColumn<int>(
+    'radical_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES radicals_table (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, kanjiId, radicalId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'radical_kanji_relations_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RadicalKanjiRelationsTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('kanji_id')) {
+      context.handle(
+        _kanjiIdMeta,
+        kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiIdMeta);
+    }
+    if (data.containsKey('radical_id')) {
+      context.handle(
+        _radicalIdMeta,
+        radicalId.isAcceptableOrUnknown(data['radical_id']!, _radicalIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_radicalIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RadicalKanjiRelationsTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RadicalKanjiRelationsTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      kanjiId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kanji_id'],
+      )!,
+      radicalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}radical_id'],
+      )!,
+    );
+  }
+
+  @override
+  $RadicalKanjiRelationsTableTable createAlias(String alias) {
+    return $RadicalKanjiRelationsTableTable(attachedDatabase, alias);
+  }
+}
+
+class RadicalKanjiRelationsTableData extends DataClass
+    implements Insertable<RadicalKanjiRelationsTableData> {
+  /// id of this relation
+  final int id;
+
+  /// the id of the associated kanji
+  final int kanjiId;
+
+  /// the id of the associated radical
+  final int radicalId;
+  const RadicalKanjiRelationsTableData({
+    required this.id,
+    required this.kanjiId,
+    required this.radicalId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['kanji_id'] = Variable<int>(kanjiId);
+    map['radical_id'] = Variable<int>(radicalId);
+    return map;
+  }
+
+  RadicalKanjiRelationsTableCompanion toCompanion(bool nullToAbsent) {
+    return RadicalKanjiRelationsTableCompanion(
+      id: Value(id),
+      kanjiId: Value(kanjiId),
+      radicalId: Value(radicalId),
+    );
+  }
+
+  factory RadicalKanjiRelationsTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RadicalKanjiRelationsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      kanjiId: serializer.fromJson<int>(json['kanjiId']),
+      radicalId: serializer.fromJson<int>(json['radicalId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'kanjiId': serializer.toJson<int>(kanjiId),
+      'radicalId': serializer.toJson<int>(radicalId),
+    };
+  }
+
+  RadicalKanjiRelationsTableData copyWith({
+    int? id,
+    int? kanjiId,
+    int? radicalId,
+  }) => RadicalKanjiRelationsTableData(
+    id: id ?? this.id,
+    kanjiId: kanjiId ?? this.kanjiId,
+    radicalId: radicalId ?? this.radicalId,
+  );
+  RadicalKanjiRelationsTableData copyWithCompanion(
+    RadicalKanjiRelationsTableCompanion data,
+  ) {
+    return RadicalKanjiRelationsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
+      radicalId: data.radicalId.present ? data.radicalId.value : this.radicalId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RadicalKanjiRelationsTableData(')
+          ..write('id: $id, ')
+          ..write('kanjiId: $kanjiId, ')
+          ..write('radicalId: $radicalId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, kanjiId, radicalId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RadicalKanjiRelationsTableData &&
+          other.id == this.id &&
+          other.kanjiId == this.kanjiId &&
+          other.radicalId == this.radicalId);
+}
+
+class RadicalKanjiRelationsTableCompanion
+    extends UpdateCompanion<RadicalKanjiRelationsTableData> {
+  final Value<int> id;
+  final Value<int> kanjiId;
+  final Value<int> radicalId;
+  const RadicalKanjiRelationsTableCompanion({
+    this.id = const Value.absent(),
+    this.kanjiId = const Value.absent(),
+    this.radicalId = const Value.absent(),
+  });
+  RadicalKanjiRelationsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int kanjiId,
+    required int radicalId,
+  }) : kanjiId = Value(kanjiId),
+       radicalId = Value(radicalId);
+  static Insertable<RadicalKanjiRelationsTableData> custom({
+    Expression<int>? id,
+    Expression<int>? kanjiId,
+    Expression<int>? radicalId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (kanjiId != null) 'kanji_id': kanjiId,
+      if (radicalId != null) 'radical_id': radicalId,
+    });
+  }
+
+  RadicalKanjiRelationsTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? kanjiId,
+    Value<int>? radicalId,
+  }) {
+    return RadicalKanjiRelationsTableCompanion(
+      id: id ?? this.id,
+      kanjiId: kanjiId ?? this.kanjiId,
+      radicalId: radicalId ?? this.radicalId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (kanjiId.present) {
+      map['kanji_id'] = Variable<int>(kanjiId.value);
+    }
+    if (radicalId.present) {
+      map['radical_id'] = Variable<int>(radicalId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RadicalKanjiRelationsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('kanjiId: $kanjiId, ')
+          ..write('radicalId: $radicalId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $KanjiVGTableTable extends KanjiVGTable
+    with TableInfo<$KanjiVGTableTable, KanjiVGTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiVGTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
+    'kanjiId',
+  );
+  @override
+  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
+    'kanji_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES kanji_table (id)',
+    ),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<String, Uint8List> kanjiVGSVG =
+      GeneratedColumn<Uint8List>(
+        'kanji_v_g_s_v_g',
+        aliasedName,
+        false,
+        type: DriftSqlType.blob,
+        requiredDuringInsert: true,
+      ).withConverter<String>($KanjiVGTableTable.$converterkanjiVGSVG);
+  @override
+  List<GeneratedColumn> get $columns => [id, kanjiId, kanjiVGSVG];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_v_g_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<KanjiVGTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('kanji_id')) {
+      context.handle(
+        _kanjiIdMeta,
+        kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  KanjiVGTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiVGTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      kanjiId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kanji_id'],
+      )!,
+      kanjiVGSVG: $KanjiVGTableTable.$converterkanjiVGSVG.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.blob,
+          data['${effectivePrefix}kanji_v_g_s_v_g'],
+        )!,
+      ),
+    );
+  }
+
+  @override
+  $KanjiVGTableTable createAlias(String alias) {
+    return $KanjiVGTableTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<String, Uint8List> $converterkanjiVGSVG =
+      const ZlibStringConverter();
+}
+
+class KanjiVGTableData extends DataClass
+    implements Insertable<KanjiVGTableData> {
+  /// id of this entry
+  final int id;
+
+  /// The id of the kanji character in the `KanjiTable`
+  final int kanjiId;
+
+  /// The svg data of this kanji
+  final String kanjiVGSVG;
+  const KanjiVGTableData({
+    required this.id,
+    required this.kanjiId,
+    required this.kanjiVGSVG,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['kanji_id'] = Variable<int>(kanjiId);
+    {
+      map['kanji_v_g_s_v_g'] = Variable<Uint8List>(
+        $KanjiVGTableTable.$converterkanjiVGSVG.toSql(kanjiVGSVG),
+      );
+    }
+    return map;
+  }
+
+  KanjiVGTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiVGTableCompanion(
+      id: Value(id),
+      kanjiId: Value(kanjiId),
+      kanjiVGSVG: Value(kanjiVGSVG),
+    );
+  }
+
+  factory KanjiVGTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiVGTableData(
+      id: serializer.fromJson<int>(json['id']),
+      kanjiId: serializer.fromJson<int>(json['kanjiId']),
+      kanjiVGSVG: serializer.fromJson<String>(json['kanjiVGSVG']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'kanjiId': serializer.toJson<int>(kanjiId),
+      'kanjiVGSVG': serializer.toJson<String>(kanjiVGSVG),
+    };
+  }
+
+  KanjiVGTableData copyWith({int? id, int? kanjiId, String? kanjiVGSVG}) =>
+      KanjiVGTableData(
+        id: id ?? this.id,
+        kanjiId: kanjiId ?? this.kanjiId,
+        kanjiVGSVG: kanjiVGSVG ?? this.kanjiVGSVG,
+      );
+  KanjiVGTableData copyWithCompanion(KanjiVGTableCompanion data) {
+    return KanjiVGTableData(
+      id: data.id.present ? data.id.value : this.id,
+      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
+      kanjiVGSVG: data.kanjiVGSVG.present
+          ? data.kanjiVGSVG.value
+          : this.kanjiVGSVG,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiVGTableData(')
+          ..write('id: $id, ')
+          ..write('kanjiId: $kanjiId, ')
+          ..write('kanjiVGSVG: $kanjiVGSVG')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, kanjiId, kanjiVGSVG);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiVGTableData &&
+          other.id == this.id &&
+          other.kanjiId == this.kanjiId &&
+          other.kanjiVGSVG == this.kanjiVGSVG);
+}
+
+class KanjiVGTableCompanion extends UpdateCompanion<KanjiVGTableData> {
+  final Value<int> id;
+  final Value<int> kanjiId;
+  final Value<String> kanjiVGSVG;
+  const KanjiVGTableCompanion({
+    this.id = const Value.absent(),
+    this.kanjiId = const Value.absent(),
+    this.kanjiVGSVG = const Value.absent(),
+  });
+  KanjiVGTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int kanjiId,
+    required String kanjiVGSVG,
+  }) : kanjiId = Value(kanjiId),
+       kanjiVGSVG = Value(kanjiVGSVG);
+  static Insertable<KanjiVGTableData> custom({
+    Expression<int>? id,
+    Expression<int>? kanjiId,
+    Expression<Uint8List>? kanjiVGSVG,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (kanjiId != null) 'kanji_id': kanjiId,
+      if (kanjiVGSVG != null) 'kanji_v_g_s_v_g': kanjiVGSVG,
+    });
+  }
+
+  KanjiVGTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? kanjiId,
+    Value<String>? kanjiVGSVG,
+  }) {
+    return KanjiVGTableCompanion(
+      id: id ?? this.id,
+      kanjiId: kanjiId ?? this.kanjiId,
+      kanjiVGSVG: kanjiVGSVG ?? this.kanjiVGSVG,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (kanjiId.present) {
+      map['kanji_id'] = Variable<int>(kanjiId.value);
+    }
+    if (kanjiVGSVG.present) {
+      map['kanji_v_g_s_v_g'] = Variable<Uint8List>(
+        $KanjiVGTableTable.$converterkanjiVGSVG.toSql(kanjiVGSVG.value),
+      );
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiVGTableCompanion(')
+          ..write('id: $id, ')
+          ..write('kanjiId: $kanjiId, ')
+          ..write('kanjiVGSVG: $kanjiVGSVG')
           ..write(')'))
         .toString();
   }
@@ -11012,863 +12864,12 @@ class TermMetaBankV3IpaTagRelationsTableCompanion
   }
 }
 
-class $ExampleTableTable extends ExampleTable
-    with TableInfo<$ExampleTableTable, ExampleTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ExampleTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _exampleSentenceMeta = const VerificationMeta(
-    'exampleSentence',
-  );
-  @override
-  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
-    'example_sentence',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _exampleSentenceTokenizedMeta =
-      const VerificationMeta('exampleSentenceTokenized');
-  @override
-  late final GeneratedColumn<String> exampleSentenceTokenized =
-      GeneratedColumn<String>(
-        'example_sentence_tokenized',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    exampleSentence,
-    exampleSentenceTokenized,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'example_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ExampleTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('example_sentence')) {
-      context.handle(
-        _exampleSentenceMeta,
-        exampleSentence.isAcceptableOrUnknown(
-          data['example_sentence']!,
-          _exampleSentenceMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_exampleSentenceMeta);
-    }
-    if (data.containsKey('example_sentence_tokenized')) {
-      context.handle(
-        _exampleSentenceTokenizedMeta,
-        exampleSentenceTokenized.isAcceptableOrUnknown(
-          data['example_sentence_tokenized']!,
-          _exampleSentenceTokenizedMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_exampleSentenceTokenizedMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  ExampleTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ExampleTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      exampleSentence: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_sentence'],
-      )!,
-      exampleSentenceTokenized: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_sentence_tokenized'],
-      )!,
-    );
-  }
-
-  @override
-  $ExampleTableTable createAlias(String alias) {
-    return $ExampleTableTable(attachedDatabase, alias);
-  }
-}
-
-class ExampleTableData extends DataClass
-    implements Insertable<ExampleTableData> {
-  /// id of this entry
-  final int id;
-
-  /// the example of this entry
-  final String exampleSentence;
-
-  /// the example of this entry tokenized
-  final String exampleSentenceTokenized;
-  const ExampleTableData({
-    required this.id,
-    required this.exampleSentence,
-    required this.exampleSentenceTokenized,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['example_sentence'] = Variable<String>(exampleSentence);
-    map['example_sentence_tokenized'] = Variable<String>(
-      exampleSentenceTokenized,
-    );
-    return map;
-  }
-
-  ExampleTableCompanion toCompanion(bool nullToAbsent) {
-    return ExampleTableCompanion(
-      id: Value(id),
-      exampleSentence: Value(exampleSentence),
-      exampleSentenceTokenized: Value(exampleSentenceTokenized),
-    );
-  }
-
-  factory ExampleTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ExampleTableData(
-      id: serializer.fromJson<int>(json['id']),
-      exampleSentence: serializer.fromJson<String>(json['exampleSentence']),
-      exampleSentenceTokenized: serializer.fromJson<String>(
-        json['exampleSentenceTokenized'],
-      ),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'exampleSentence': serializer.toJson<String>(exampleSentence),
-      'exampleSentenceTokenized': serializer.toJson<String>(
-        exampleSentenceTokenized,
-      ),
-    };
-  }
-
-  ExampleTableData copyWith({
-    int? id,
-    String? exampleSentence,
-    String? exampleSentenceTokenized,
-  }) => ExampleTableData(
-    id: id ?? this.id,
-    exampleSentence: exampleSentence ?? this.exampleSentence,
-    exampleSentenceTokenized:
-        exampleSentenceTokenized ?? this.exampleSentenceTokenized,
-  );
-  ExampleTableData copyWithCompanion(ExampleTableCompanion data) {
-    return ExampleTableData(
-      id: data.id.present ? data.id.value : this.id,
-      exampleSentence: data.exampleSentence.present
-          ? data.exampleSentence.value
-          : this.exampleSentence,
-      exampleSentenceTokenized: data.exampleSentenceTokenized.present
-          ? data.exampleSentenceTokenized.value
-          : this.exampleSentenceTokenized,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleTableData(')
-          ..write('id: $id, ')
-          ..write('exampleSentence: $exampleSentence, ')
-          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(id, exampleSentence, exampleSentenceTokenized);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ExampleTableData &&
-          other.id == this.id &&
-          other.exampleSentence == this.exampleSentence &&
-          other.exampleSentenceTokenized == this.exampleSentenceTokenized);
-}
-
-class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
-  final Value<int> id;
-  final Value<String> exampleSentence;
-  final Value<String> exampleSentenceTokenized;
-  const ExampleTableCompanion({
-    this.id = const Value.absent(),
-    this.exampleSentence = const Value.absent(),
-    this.exampleSentenceTokenized = const Value.absent(),
-  });
-  ExampleTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String exampleSentence,
-    required String exampleSentenceTokenized,
-  }) : exampleSentence = Value(exampleSentence),
-       exampleSentenceTokenized = Value(exampleSentenceTokenized);
-  static Insertable<ExampleTableData> custom({
-    Expression<int>? id,
-    Expression<String>? exampleSentence,
-    Expression<String>? exampleSentenceTokenized,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (exampleSentence != null) 'example_sentence': exampleSentence,
-      if (exampleSentenceTokenized != null)
-        'example_sentence_tokenized': exampleSentenceTokenized,
-    });
-  }
-
-  ExampleTableCompanion copyWith({
-    Value<int>? id,
-    Value<String>? exampleSentence,
-    Value<String>? exampleSentenceTokenized,
-  }) {
-    return ExampleTableCompanion(
-      id: id ?? this.id,
-      exampleSentence: exampleSentence ?? this.exampleSentence,
-      exampleSentenceTokenized:
-          exampleSentenceTokenized ?? this.exampleSentenceTokenized,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (exampleSentence.present) {
-      map['example_sentence'] = Variable<String>(exampleSentence.value);
-    }
-    if (exampleSentenceTokenized.present) {
-      map['example_sentence_tokenized'] = Variable<String>(
-        exampleSentenceTokenized.value,
-      );
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleTableCompanion(')
-          ..write('id: $id, ')
-          ..write('exampleSentence: $exampleSentence, ')
-          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $ExampleTranslationTableTable extends ExampleTranslationTable
-    with TableInfo<$ExampleTranslationTableTable, ExampleTranslationTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ExampleTranslationTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _exampleTranslationMeta =
-      const VerificationMeta('exampleTranslation');
-  @override
-  late final GeneratedColumn<String> exampleTranslation =
-      GeneratedColumn<String>(
-        'example_translation',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      );
-  static const VerificationMeta _languageCodeIdMeta = const VerificationMeta(
-    'languageCodeId',
-  );
-  @override
-  late final GeneratedColumn<int> languageCodeId = GeneratedColumn<int>(
-    'language_code_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES language_code_table (id)',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    exampleTranslation,
-    languageCodeId,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'example_translation_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ExampleTranslationTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('example_translation')) {
-      context.handle(
-        _exampleTranslationMeta,
-        exampleTranslation.isAcceptableOrUnknown(
-          data['example_translation']!,
-          _exampleTranslationMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_exampleTranslationMeta);
-    }
-    if (data.containsKey('language_code_id')) {
-      context.handle(
-        _languageCodeIdMeta,
-        languageCodeId.isAcceptableOrUnknown(
-          data['language_code_id']!,
-          _languageCodeIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_languageCodeIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  ExampleTranslationTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ExampleTranslationTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      exampleTranslation: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_translation'],
-      )!,
-      languageCodeId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}language_code_id'],
-      )!,
-    );
-  }
-
-  @override
-  $ExampleTranslationTableTable createAlias(String alias) {
-    return $ExampleTranslationTableTable(attachedDatabase, alias);
-  }
-}
-
-class ExampleTranslationTableData extends DataClass
-    implements Insertable<ExampleTranslationTableData> {
-  /// id of this entry
-  final int id;
-
-  /// the example of this entry
-  final String exampleTranslation;
-
-  /// The id of the language code (iso 639 2T) of this translation
-  final int languageCodeId;
-  const ExampleTranslationTableData({
-    required this.id,
-    required this.exampleTranslation,
-    required this.languageCodeId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['example_translation'] = Variable<String>(exampleTranslation);
-    map['language_code_id'] = Variable<int>(languageCodeId);
-    return map;
-  }
-
-  ExampleTranslationTableCompanion toCompanion(bool nullToAbsent) {
-    return ExampleTranslationTableCompanion(
-      id: Value(id),
-      exampleTranslation: Value(exampleTranslation),
-      languageCodeId: Value(languageCodeId),
-    );
-  }
-
-  factory ExampleTranslationTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ExampleTranslationTableData(
-      id: serializer.fromJson<int>(json['id']),
-      exampleTranslation: serializer.fromJson<String>(
-        json['exampleTranslation'],
-      ),
-      languageCodeId: serializer.fromJson<int>(json['languageCodeId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'exampleTranslation': serializer.toJson<String>(exampleTranslation),
-      'languageCodeId': serializer.toJson<int>(languageCodeId),
-    };
-  }
-
-  ExampleTranslationTableData copyWith({
-    int? id,
-    String? exampleTranslation,
-    int? languageCodeId,
-  }) => ExampleTranslationTableData(
-    id: id ?? this.id,
-    exampleTranslation: exampleTranslation ?? this.exampleTranslation,
-    languageCodeId: languageCodeId ?? this.languageCodeId,
-  );
-  ExampleTranslationTableData copyWithCompanion(
-    ExampleTranslationTableCompanion data,
-  ) {
-    return ExampleTranslationTableData(
-      id: data.id.present ? data.id.value : this.id,
-      exampleTranslation: data.exampleTranslation.present
-          ? data.exampleTranslation.value
-          : this.exampleTranslation,
-      languageCodeId: data.languageCodeId.present
-          ? data.languageCodeId.value
-          : this.languageCodeId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleTranslationTableData(')
-          ..write('id: $id, ')
-          ..write('exampleTranslation: $exampleTranslation, ')
-          ..write('languageCodeId: $languageCodeId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, exampleTranslation, languageCodeId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ExampleTranslationTableData &&
-          other.id == this.id &&
-          other.exampleTranslation == this.exampleTranslation &&
-          other.languageCodeId == this.languageCodeId);
-}
-
-class ExampleTranslationTableCompanion
-    extends UpdateCompanion<ExampleTranslationTableData> {
-  final Value<int> id;
-  final Value<String> exampleTranslation;
-  final Value<int> languageCodeId;
-  const ExampleTranslationTableCompanion({
-    this.id = const Value.absent(),
-    this.exampleTranslation = const Value.absent(),
-    this.languageCodeId = const Value.absent(),
-  });
-  ExampleTranslationTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String exampleTranslation,
-    required int languageCodeId,
-  }) : exampleTranslation = Value(exampleTranslation),
-       languageCodeId = Value(languageCodeId);
-  static Insertable<ExampleTranslationTableData> custom({
-    Expression<int>? id,
-    Expression<String>? exampleTranslation,
-    Expression<int>? languageCodeId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (exampleTranslation != null) 'example_translation': exampleTranslation,
-      if (languageCodeId != null) 'language_code_id': languageCodeId,
-    });
-  }
-
-  ExampleTranslationTableCompanion copyWith({
-    Value<int>? id,
-    Value<String>? exampleTranslation,
-    Value<int>? languageCodeId,
-  }) {
-    return ExampleTranslationTableCompanion(
-      id: id ?? this.id,
-      exampleTranslation: exampleTranslation ?? this.exampleTranslation,
-      languageCodeId: languageCodeId ?? this.languageCodeId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (exampleTranslation.present) {
-      map['example_translation'] = Variable<String>(exampleTranslation.value);
-    }
-    if (languageCodeId.present) {
-      map['language_code_id'] = Variable<int>(languageCodeId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleTranslationTableCompanion(')
-          ..write('id: $id, ')
-          ..write('exampleTranslation: $exampleTranslation, ')
-          ..write('languageCodeId: $languageCodeId')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $ExampleTranslationRelationsTableTable
-    extends ExampleTranslationRelationsTable
-    with
-        TableInfo<
-          $ExampleTranslationRelationsTableTable,
-          ExampleTranslationRelationsTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ExampleTranslationRelationsTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _exampleIdMeta = const VerificationMeta(
-    'exampleId',
-  );
-  @override
-  late final GeneratedColumn<int> exampleId = GeneratedColumn<int>(
-    'example_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES example_table (id)',
-    ),
-  );
-  static const VerificationMeta _translationIdMeta = const VerificationMeta(
-    'translationId',
-  );
-  @override
-  late final GeneratedColumn<int> translationId = GeneratedColumn<int>(
-    'translation_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES example_translation_table (id)',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, exampleId, translationId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'example_translation_relations_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ExampleTranslationRelationsTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('example_id')) {
-      context.handle(
-        _exampleIdMeta,
-        exampleId.isAcceptableOrUnknown(data['example_id']!, _exampleIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_exampleIdMeta);
-    }
-    if (data.containsKey('translation_id')) {
-      context.handle(
-        _translationIdMeta,
-        translationId.isAcceptableOrUnknown(
-          data['translation_id']!,
-          _translationIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_translationIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  ExampleTranslationRelationsTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ExampleTranslationRelationsTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      exampleId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}example_id'],
-      )!,
-      translationId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}translation_id'],
-      )!,
-    );
-  }
-
-  @override
-  $ExampleTranslationRelationsTableTable createAlias(String alias) {
-    return $ExampleTranslationRelationsTableTable(attachedDatabase, alias);
-  }
-}
-
-class ExampleTranslationRelationsTableData extends DataClass
-    implements Insertable<ExampleTranslationRelationsTableData> {
-  /// id of this relation
-  final int id;
-
-  /// the id of the associated example
-  final int exampleId;
-
-  /// the id of the associated translation
-  final int translationId;
-  const ExampleTranslationRelationsTableData({
-    required this.id,
-    required this.exampleId,
-    required this.translationId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['example_id'] = Variable<int>(exampleId);
-    map['translation_id'] = Variable<int>(translationId);
-    return map;
-  }
-
-  ExampleTranslationRelationsTableCompanion toCompanion(bool nullToAbsent) {
-    return ExampleTranslationRelationsTableCompanion(
-      id: Value(id),
-      exampleId: Value(exampleId),
-      translationId: Value(translationId),
-    );
-  }
-
-  factory ExampleTranslationRelationsTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ExampleTranslationRelationsTableData(
-      id: serializer.fromJson<int>(json['id']),
-      exampleId: serializer.fromJson<int>(json['exampleId']),
-      translationId: serializer.fromJson<int>(json['translationId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'exampleId': serializer.toJson<int>(exampleId),
-      'translationId': serializer.toJson<int>(translationId),
-    };
-  }
-
-  ExampleTranslationRelationsTableData copyWith({
-    int? id,
-    int? exampleId,
-    int? translationId,
-  }) => ExampleTranslationRelationsTableData(
-    id: id ?? this.id,
-    exampleId: exampleId ?? this.exampleId,
-    translationId: translationId ?? this.translationId,
-  );
-  ExampleTranslationRelationsTableData copyWithCompanion(
-    ExampleTranslationRelationsTableCompanion data,
-  ) {
-    return ExampleTranslationRelationsTableData(
-      id: data.id.present ? data.id.value : this.id,
-      exampleId: data.exampleId.present ? data.exampleId.value : this.exampleId,
-      translationId: data.translationId.present
-          ? data.translationId.value
-          : this.translationId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleTranslationRelationsTableData(')
-          ..write('id: $id, ')
-          ..write('exampleId: $exampleId, ')
-          ..write('translationId: $translationId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, exampleId, translationId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ExampleTranslationRelationsTableData &&
-          other.id == this.id &&
-          other.exampleId == this.exampleId &&
-          other.translationId == this.translationId);
-}
-
-class ExampleTranslationRelationsTableCompanion
-    extends UpdateCompanion<ExampleTranslationRelationsTableData> {
-  final Value<int> id;
-  final Value<int> exampleId;
-  final Value<int> translationId;
-  const ExampleTranslationRelationsTableCompanion({
-    this.id = const Value.absent(),
-    this.exampleId = const Value.absent(),
-    this.translationId = const Value.absent(),
-  });
-  ExampleTranslationRelationsTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int exampleId,
-    required int translationId,
-  }) : exampleId = Value(exampleId),
-       translationId = Value(translationId);
-  static Insertable<ExampleTranslationRelationsTableData> custom({
-    Expression<int>? id,
-    Expression<int>? exampleId,
-    Expression<int>? translationId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (exampleId != null) 'example_id': exampleId,
-      if (translationId != null) 'translation_id': translationId,
-    });
-  }
-
-  ExampleTranslationRelationsTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? exampleId,
-    Value<int>? translationId,
-  }) {
-    return ExampleTranslationRelationsTableCompanion(
-      id: id ?? this.id,
-      exampleId: exampleId ?? this.exampleId,
-      translationId: translationId ?? this.translationId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (exampleId.present) {
-      map['example_id'] = Variable<int>(exampleId.value);
-    }
-    if (translationId.present) {
-      map['translation_id'] = Variable<int>(translationId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleTranslationRelationsTableCompanion(')
-          ..write('id: $id, ')
-          ..write('exampleId: $exampleId, ')
-          ..write('translationId: $translationId')
-          ..write(')'))
-        .toString();
-  }
-}
-
 abstract class _$DaKanjiDB extends GeneratedDatabase {
   _$DaKanjiDB(QueryExecutor e) : super(e);
   $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
   late final $TermTableTable termTable = $TermTableTable(this);
+  late final $TermBankV3DefinitionJsonTableTable termBankV3DefinitionJsonTable =
+      $TermBankV3DefinitionJsonTableTable(this);
   late final $ReadingTableTable readingTable = $ReadingTableTable(this);
   late final $TermBankV3TableTable termBankV3Table = $TermBankV3TableTable(
     this,
@@ -11912,22 +12913,16 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'CREATE INDEX term ON term_table (term)',
   );
   late final $KanjiTableTable kanjiTable = $KanjiTableTable(this);
-  late final $LanguageCodeTableTable languageCodeTable =
-      $LanguageCodeTableTable(this);
-  late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
-  late final $RadicalKanjiRelationsTableTable radicalKanjiRelationsTable =
-      $RadicalKanjiRelationsTableTable(this);
-  late final $KanjiVGTableTable kanjiVGTable = $KanjiVGTableTable(this);
   late final $IndexTableTable indexTable = $IndexTableTable(this);
   late final $KanjiBankV3TableTable kanjiBankV3Table = $KanjiBankV3TableTable(
     this,
   );
-  late final $KanjiBankV3KunyomiReadingRelationsTableTable
-  kanjiBankV3KunyomiReadingRelationsTable =
-      $KanjiBankV3KunyomiReadingRelationsTableTable(this);
   late final $KanjiBankV3OnyomiReadingRelationsTableTable
   kanjiBankV3OnyomiReadingRelationsTable =
       $KanjiBankV3OnyomiReadingRelationsTableTable(this);
+  late final $KanjiBankV3KunyomiReadingRelationsTableTable
+  kanjiBankV3KunyomiReadingRelationsTable =
+      $KanjiBankV3KunyomiReadingRelationsTableTable(this);
   late final $KanjiBankV3TagsKanjiRelationsTableTable
   kanjiBankV3TagsKanjiRelationsTable = $KanjiBankV3TagsKanjiRelationsTableTable(
     this,
@@ -11945,6 +12940,42 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   kanjiBankV3StatKanjiRelationsTable = $KanjiBankV3StatKanjiRelationsTableTable(
     this,
   );
+  late final KanjiDetailsView kanjiDetailsView = KanjiDetailsView(this);
+  late final Index kanji = Index(
+    'kanji',
+    'CREATE INDEX kanji ON kanji_table (kanji)',
+  );
+  late final $ExampleTableTable exampleTable = $ExampleTableTable(this);
+  late final $LanguageCodeTableTable languageCodeTable =
+      $LanguageCodeTableTable(this);
+  late final $ExampleTranslationTableTable exampleTranslationTable =
+      $ExampleTranslationTableTable(this);
+  late final $ExampleTranslationRelationsTableTable
+  exampleTranslationRelationsTable = $ExampleTranslationRelationsTableTable(
+    this,
+  );
+  late final ExampleView exampleView = ExampleView(this);
+  late final ExampleFts exampleFts = ExampleFts(this);
+  late final Index languageCode = Index(
+    'languageCode',
+    'CREATE INDEX languageCode ON language_code_table (language_code)',
+  );
+  late final Trigger exampleTableAi = Trigger(
+    'CREATE TRIGGER example_table_ai AFTER INSERT ON example_table BEGIN INSERT INTO example_fts ("rowid", example_sentence_tokenized) VALUES (new.id, new.example_sentence_tokenized);END',
+    'example_table_ai',
+  );
+  late final Trigger exampleTableAd = Trigger(
+    'CREATE TRIGGER example_table_ad AFTER DELETE ON example_table BEGIN INSERT INTO example_fts (example_fts, "rowid", example_sentence_tokenized) VALUES (\'delete\', old.id, old.example_sentence_tokenized);END',
+    'example_table_ad',
+  );
+  late final Trigger exampleTableAu = Trigger(
+    'CREATE TRIGGER example_table_au AFTER UPDATE OF example_sentence_tokenized ON example_table BEGIN INSERT INTO example_fts (example_fts, "rowid", example_sentence_tokenized) VALUES (\'delete\', old.id, old.example_sentence_tokenized);INSERT INTO example_fts ("rowid", example_sentence_tokenized) VALUES (new.id, new.example_sentence_tokenized);END',
+    'example_table_au',
+  );
+  late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
+  late final $RadicalKanjiRelationsTableTable radicalKanjiRelationsTable =
+      $RadicalKanjiRelationsTableTable(this);
+  late final $KanjiVGTableTable kanjiVGTable = $KanjiVGTableTable(this);
   late final $KanjiMetaBankV3TypeTableTable kanjiMetaBankV3TypeTable =
       $KanjiMetaBankV3TypeTableTable(this);
   late final $KanjiMetaBankV3TableTable kanjiMetaBankV3Table =
@@ -11971,21 +13002,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $TermMetaBankV3IpaTagRelationsTableTable
   termMetaBankV3IpaTagRelationsTable = $TermMetaBankV3IpaTagRelationsTableTable(
     this,
-  );
-  late final $ExampleTableTable exampleTable = $ExampleTableTable(this);
-  late final $ExampleTranslationTableTable exampleTranslationTable =
-      $ExampleTranslationTableTable(this);
-  late final $ExampleTranslationRelationsTableTable
-  exampleTranslationRelationsTable = $ExampleTranslationRelationsTableTable(
-    this,
-  );
-  late final Index kanji = Index(
-    'kanji',
-    'CREATE INDEX kanji ON kanji_table (kanji)',
-  );
-  late final Index languageCode = Index(
-    'languageCode',
-    'CREATE INDEX languageCode ON language_code_table (language_code)',
   );
   late final Index radical = Index(
     'radical',
@@ -12039,12 +13055,80 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ).asyncMap(termBankV3SearchView.mapFromRow);
   }
 
+  Selectable<KanjiBankV3SearchResult> kanji_bank_v3_search(String query) {
+    return customSelect(
+      'SELECT kanji, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || onyomi_reading || \'"\'), \'\') || \']\' AS onyomis, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || kunyomi_reading || \'"\'), \'\') || \']\' AS kunyomis, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', tag_id, \'name\', tag_name, \'category\', tag_category, \'sortingOrder\', tag_sorting_order, \'notes\', tag_notes, \'score\', tag_score)), \'\') || \']\' AS tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || definition || \'"\'), \'\') || \']\' AS definitions, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'name\', stat_name, \'value\', stat_value)), \'\') || \']\' AS stats FROM kanji_details_view WHERE kanji = ?1 GROUP BY kanji',
+      variables: [Variable<String>(query)],
+      readsFrom: {
+        kanjiBankV3Table,
+        kanjiTable,
+        kanjiBankV3OnyomiReadingRelationsTable,
+        readingTable,
+        kanjiBankV3KunyomiReadingRelationsTable,
+        kanjiBankV3TagsKanjiRelationsTable,
+        tagBankV3Table,
+        kanjiBankV3DefinitionsKanjiRelationsTable,
+        definitionTable,
+        kanjiBankV3StatKanjiRelationsTable,
+        kanjiBankV3StatsTable,
+        kanjiBankV3StatNamesTable,
+        kanjiBankV3StatValuesTable,
+      },
+    ).map(
+      (QueryRow row) => KanjiBankV3SearchResult(
+        kanji: row.read<String>('kanji'),
+        onyomis: row.read<String>('onyomis'),
+        kunyomis: row.read<String>('kunyomis'),
+        tags: row.read<String>('tags'),
+        definitions: row.read<String>('definitions'),
+        stats: row.read<String>('stats'),
+      ),
+    );
+  }
+
+  Selectable<ExampleFtsSearchResult> example_fts_search(
+    String query,
+    List<String?> languageCodes,
+    int limit,
+    int offset,
+  ) {
+    var $arrayStartIndex = 4;
+    final expandedlanguageCodes = $expandVar(
+      $arrayStartIndex,
+      languageCodes.length,
+    );
+    $arrayStartIndex += languageCodes.length;
+    return customSelect(
+      'SELECT EDV.id, EDV.example_sentence, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT CASE WHEN EDV.example_translation IS NOT NULL THEN json_object(\'translation\', EDV.example_translation, \'languageCode\', EDV.language_code) END), \'\') || \']\' AS translations FROM example_view AS EDV INNER JOIN example_fts AS FTS ON FTS."rowid" = EDV.id WHERE example_fts MATCH ?1 AND(EDV.language_code IN ($expandedlanguageCodes) OR EDV.translation_id IS NULL)GROUP BY EDV.id LIMIT ?2 OFFSET ?3',
+      variables: [
+        Variable<String>(query),
+        Variable<int>(limit),
+        Variable<int>(offset),
+        for (var $ in languageCodes) Variable<String>($),
+      ],
+      readsFrom: {
+        exampleFts,
+        exampleTable,
+        exampleTranslationRelationsTable,
+        exampleTranslationTable,
+        languageCodeTable,
+      },
+    ).map(
+      (QueryRow row) => ExampleFtsSearchResult(
+        id: row.read<int>('id'),
+        exampleSentence: row.read<String>('example_sentence'),
+        translations: row.read<String>('translations'),
+      ),
+    );
+  }
+
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     termTable,
+    termBankV3DefinitionJsonTable,
     readingTable,
     termBankV3Table,
     termBankV3DefinitionTagsTable,
@@ -12061,20 +13145,31 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     reading,
     term,
     kanjiTable,
-    languageCodeTable,
-    radicalsTable,
-    radicalKanjiRelationsTable,
-    kanjiVGTable,
     indexTable,
     kanjiBankV3Table,
-    kanjiBankV3KunyomiReadingRelationsTable,
     kanjiBankV3OnyomiReadingRelationsTable,
+    kanjiBankV3KunyomiReadingRelationsTable,
     kanjiBankV3TagsKanjiRelationsTable,
     kanjiBankV3DefinitionsKanjiRelationsTable,
     kanjiBankV3StatNamesTable,
     kanjiBankV3StatValuesTable,
     kanjiBankV3StatsTable,
     kanjiBankV3StatKanjiRelationsTable,
+    kanjiDetailsView,
+    kanji,
+    exampleTable,
+    languageCodeTable,
+    exampleTranslationTable,
+    exampleTranslationRelationsTable,
+    exampleView,
+    exampleFts,
+    languageCode,
+    exampleTableAi,
+    exampleTableAd,
+    exampleTableAu,
+    radicalsTable,
+    radicalKanjiRelationsTable,
+    kanjiVGTable,
     kanjiMetaBankV3TypeTable,
     kanjiMetaBankV3Table,
     termMetaBankV3TypeTable,
@@ -12086,13 +13181,32 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termMetaBankV3IpaTable,
     termMetaBankV3IpaRelationsTable,
     termMetaBankV3IpaTagRelationsTable,
-    exampleTable,
-    exampleTranslationTable,
-    exampleTranslationRelationsTable,
-    kanji,
-    languageCode,
     radical,
   ];
+  @override
+  StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.insert,
+      ),
+      result: [TableUpdate('example_fts', kind: UpdateKind.insert)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('example_fts', kind: UpdateKind.insert)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.update,
+      ),
+      result: [TableUpdate('example_fts', kind: UpdateKind.insert)],
+    ),
+  ]);
 }
 
 typedef $$TermTableTableCreateCompanionBuilder =
@@ -12432,6 +13546,280 @@ typedef $$TermTableTableProcessedTableManager =
         bool termMetaBankV3TableRefs,
       })
     >;
+typedef $$TermBankV3DefinitionJsonTableTableCreateCompanionBuilder =
+    TermBankV3DefinitionJsonTableCompanion Function({
+      Value<int> id,
+      required String definitionJson,
+    });
+typedef $$TermBankV3DefinitionJsonTableTableUpdateCompanionBuilder =
+    TermBankV3DefinitionJsonTableCompanion Function({
+      Value<int> id,
+      Value<String> definitionJson,
+    });
+
+final class $$TermBankV3DefinitionJsonTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $TermBankV3DefinitionJsonTableTable,
+          TermBankV3DefinitionJsonTableData
+        > {
+  $$TermBankV3DefinitionJsonTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$TermBankV3TableTable, List<TermBankV3TableData>>
+  _termBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+    db.termBankV3Table,
+    aliasName: $_aliasNameGenerator(
+      db.termBankV3DefinitionJsonTable.id,
+      db.termBankV3Table.termJsonId,
+    ),
+  );
+
+  $$TermBankV3TableTableProcessedTableManager get termBankV3TableRefs {
+    final manager = $$TermBankV3TableTableTableManager(
+      $_db,
+      $_db.termBankV3Table,
+    ).filter((f) => f.termJsonId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _termBankV3TableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$TermBankV3DefinitionJsonTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionJsonTableTable> {
+  $$TermBankV3DefinitionJsonTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get definitionJson => $composableBuilder(
+    column: $table.definitionJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> termBankV3TableRefs(
+    Expression<bool> Function($$TermBankV3TableTableFilterComposer f) f,
+  ) {
+    final $$TermBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.termBankV3Table,
+      getReferencedColumn: (t) => t.termJsonId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.termBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TermBankV3DefinitionJsonTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionJsonTableTable> {
+  $$TermBankV3DefinitionJsonTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get definitionJson => $composableBuilder(
+    column: $table.definitionJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TermBankV3DefinitionJsonTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionJsonTableTable> {
+  $$TermBankV3DefinitionJsonTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get definitionJson => $composableBuilder(
+    column: $table.definitionJson,
+    builder: (column) => column,
+  );
+
+  Expression<T> termBankV3TableRefs<T extends Object>(
+    Expression<T> Function($$TermBankV3TableTableAnnotationComposer a) f,
+  ) {
+    final $$TermBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.termBankV3Table,
+      getReferencedColumn: (t) => t.termJsonId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.termBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TermBankV3DefinitionJsonTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $TermBankV3DefinitionJsonTableTable,
+          TermBankV3DefinitionJsonTableData,
+          $$TermBankV3DefinitionJsonTableTableFilterComposer,
+          $$TermBankV3DefinitionJsonTableTableOrderingComposer,
+          $$TermBankV3DefinitionJsonTableTableAnnotationComposer,
+          $$TermBankV3DefinitionJsonTableTableCreateCompanionBuilder,
+          $$TermBankV3DefinitionJsonTableTableUpdateCompanionBuilder,
+          (
+            TermBankV3DefinitionJsonTableData,
+            $$TermBankV3DefinitionJsonTableTableReferences,
+          ),
+          TermBankV3DefinitionJsonTableData,
+          PrefetchHooks Function({bool termBankV3TableRefs})
+        > {
+  $$TermBankV3DefinitionJsonTableTableTableManager(
+    _$DaKanjiDB db,
+    $TermBankV3DefinitionJsonTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermBankV3DefinitionJsonTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$TermBankV3DefinitionJsonTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$TermBankV3DefinitionJsonTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> definitionJson = const Value.absent(),
+              }) => TermBankV3DefinitionJsonTableCompanion(
+                id: id,
+                definitionJson: definitionJson,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String definitionJson,
+              }) => TermBankV3DefinitionJsonTableCompanion.insert(
+                id: id,
+                definitionJson: definitionJson,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TermBankV3DefinitionJsonTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({termBankV3TableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (termBankV3TableRefs) db.termBankV3Table,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (termBankV3TableRefs)
+                    await $_getPrefetchedData<
+                      TermBankV3DefinitionJsonTableData,
+                      $TermBankV3DefinitionJsonTableTable,
+                      TermBankV3TableData
+                    >(
+                      currentTable: table,
+                      referencedTable:
+                          $$TermBankV3DefinitionJsonTableTableReferences
+                              ._termBankV3TableRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$TermBankV3DefinitionJsonTableTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).termBankV3TableRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.termJsonId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TermBankV3DefinitionJsonTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $TermBankV3DefinitionJsonTableTable,
+      TermBankV3DefinitionJsonTableData,
+      $$TermBankV3DefinitionJsonTableTableFilterComposer,
+      $$TermBankV3DefinitionJsonTableTableOrderingComposer,
+      $$TermBankV3DefinitionJsonTableTableAnnotationComposer,
+      $$TermBankV3DefinitionJsonTableTableCreateCompanionBuilder,
+      $$TermBankV3DefinitionJsonTableTableUpdateCompanionBuilder,
+      (
+        TermBankV3DefinitionJsonTableData,
+        $$TermBankV3DefinitionJsonTableTableReferences,
+      ),
+      TermBankV3DefinitionJsonTableData,
+      PrefetchHooks Function({bool termBankV3TableRefs})
+    >;
 typedef $$ReadingTableTableCreateCompanionBuilder =
     ReadingTableCompanion Function({Value<int> id, required String reading});
 typedef $$ReadingTableTableUpdateCompanionBuilder =
@@ -12465,34 +13853,6 @@ final class $$ReadingTableTableReferences
   }
 
   static MultiTypedResultKey<
-    $KanjiBankV3KunyomiReadingRelationsTableTable,
-    List<KanjiBankV3KunyomiReadingRelationsTableData>
-  >
-  _kanjiBankV3KunyomiReadingRelationsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.kanjiBankV3KunyomiReadingRelationsTable,
-        aliasName: $_aliasNameGenerator(
-          db.readingTable.id,
-          db.kanjiBankV3KunyomiReadingRelationsTable.kunyomiReadingId,
-        ),
-      );
-
-  $$KanjiBankV3KunyomiReadingRelationsTableTableProcessedTableManager
-  get kanjiBankV3KunyomiReadingRelationsTableRefs {
-    final manager = $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager(
-      $_db,
-      $_db.kanjiBankV3KunyomiReadingRelationsTable,
-    ).filter((f) => f.kunyomiReadingId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _kanjiBankV3KunyomiReadingRelationsTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
     $KanjiBankV3OnyomiReadingRelationsTableTable,
     List<KanjiBankV3OnyomiReadingRelationsTableData>
   >
@@ -12514,6 +13874,34 @@ final class $$ReadingTableTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _kanjiBankV3OnyomiReadingRelationsTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $KanjiBankV3KunyomiReadingRelationsTableTable,
+    List<KanjiBankV3KunyomiReadingRelationsTableData>
+  >
+  _kanjiBankV3KunyomiReadingRelationsTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.kanjiBankV3KunyomiReadingRelationsTable,
+        aliasName: $_aliasNameGenerator(
+          db.readingTable.id,
+          db.kanjiBankV3KunyomiReadingRelationsTable.kunyomiReadingId,
+        ),
+      );
+
+  $$KanjiBankV3KunyomiReadingRelationsTableTableProcessedTableManager
+  get kanjiBankV3KunyomiReadingRelationsTableRefs {
+    final manager = $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager(
+      $_db,
+      $_db.kanjiBankV3KunyomiReadingRelationsTable,
+    ).filter((f) => f.kunyomiReadingId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _kanjiBankV3KunyomiReadingRelationsTableRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -12592,35 +13980,6 @@ class $$ReadingTableTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> kanjiBankV3KunyomiReadingRelationsTableRefs(
-    Expression<bool> Function(
-      $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer f,
-    )
-    f,
-  ) {
-    final $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer
-    composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiBankV3KunyomiReadingRelationsTable,
-      getReferencedColumn: (t) => t.kunyomiReadingId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3KunyomiReadingRelationsTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
   Expression<bool> kanjiBankV3OnyomiReadingRelationsTableRefs(
     Expression<bool> Function(
       $$KanjiBankV3OnyomiReadingRelationsTableTableFilterComposer f,
@@ -12647,6 +14006,35 @@ class $$ReadingTableTableFilterComposer
                     $removeJoinBuilderFromRootComposer,
               ),
         );
+    return f(composer);
+  }
+
+  Expression<bool> kanjiBankV3KunyomiReadingRelationsTableRefs(
+    Expression<bool> Function(
+      $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer
+    composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiBankV3KunyomiReadingRelationsTable,
+      getReferencedColumn: (t) => t.kunyomiReadingId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3KunyomiReadingRelationsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 
@@ -12736,6 +14124,35 @@ class $$ReadingTableTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> kanjiBankV3OnyomiReadingRelationsTableRefs<T extends Object>(
+    Expression<T> Function(
+      $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer
+    composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiBankV3OnyomiReadingRelationsTable,
+      getReferencedColumn: (t) => t.onyomiReadingId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3OnyomiReadingRelationsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<T> kanjiBankV3KunyomiReadingRelationsTableRefs<T extends Object>(
     Expression<T> Function(
       $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer a,
@@ -12762,35 +14179,6 @@ class $$ReadingTableTableAnnotationComposer
                 $removeJoinBuilderFromRootComposer:
                     $removeJoinBuilderFromRootComposer,
               ),
-    );
-    return f(composer);
-  }
-
-  Expression<T> kanjiBankV3OnyomiReadingRelationsTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer
-    composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiBankV3OnyomiReadingRelationsTable,
-      getReferencedColumn: (t) => t.onyomiReadingId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3OnyomiReadingRelationsTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
     );
     return f(composer);
   }
@@ -12837,8 +14225,8 @@ class $$ReadingTableTableTableManager
           ReadingTableData,
           PrefetchHooks Function({
             bool termBankV3TableRefs,
-            bool kanjiBankV3KunyomiReadingRelationsTableRefs,
             bool kanjiBankV3OnyomiReadingRelationsTableRefs,
+            bool kanjiBankV3KunyomiReadingRelationsTableRefs,
             bool termMetaBankV3TableRefs,
           })
         > {
@@ -12874,18 +14262,18 @@ class $$ReadingTableTableTableManager
           prefetchHooksCallback:
               ({
                 termBankV3TableRefs = false,
-                kanjiBankV3KunyomiReadingRelationsTableRefs = false,
                 kanjiBankV3OnyomiReadingRelationsTableRefs = false,
+                kanjiBankV3KunyomiReadingRelationsTableRefs = false,
                 termMetaBankV3TableRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (termBankV3TableRefs) db.termBankV3Table,
-                    if (kanjiBankV3KunyomiReadingRelationsTableRefs)
-                      db.kanjiBankV3KunyomiReadingRelationsTable,
                     if (kanjiBankV3OnyomiReadingRelationsTableRefs)
                       db.kanjiBankV3OnyomiReadingRelationsTable,
+                    if (kanjiBankV3KunyomiReadingRelationsTableRefs)
+                      db.kanjiBankV3KunyomiReadingRelationsTable,
                     if (termMetaBankV3TableRefs) db.termMetaBankV3Table,
                   ],
                   addJoins: null,
@@ -12912,29 +14300,6 @@ class $$ReadingTableTableTableManager
                               ),
                           typedResults: items,
                         ),
-                      if (kanjiBankV3KunyomiReadingRelationsTableRefs)
-                        await $_getPrefetchedData<
-                          ReadingTableData,
-                          $ReadingTableTable,
-                          KanjiBankV3KunyomiReadingRelationsTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$ReadingTableTableReferences
-                              ._kanjiBankV3KunyomiReadingRelationsTableRefsTable(
-                                db,
-                              ),
-                          managerFromTypedResult: (p0) =>
-                              $$ReadingTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).kanjiBankV3KunyomiReadingRelationsTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.kunyomiReadingId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
                       if (kanjiBankV3OnyomiReadingRelationsTableRefs)
                         await $_getPrefetchedData<
                           ReadingTableData,
@@ -12955,6 +14320,29 @@ class $$ReadingTableTableTableManager
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.onyomiReadingId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (kanjiBankV3KunyomiReadingRelationsTableRefs)
+                        await $_getPrefetchedData<
+                          ReadingTableData,
+                          $ReadingTableTable,
+                          KanjiBankV3KunyomiReadingRelationsTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ReadingTableTableReferences
+                              ._kanjiBankV3KunyomiReadingRelationsTableRefsTable(
+                                db,
+                              ),
+                          managerFromTypedResult: (p0) =>
+                              $$ReadingTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).kanjiBankV3KunyomiReadingRelationsTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.kunyomiReadingId == item.id,
                               ),
                           typedResults: items,
                         ),
@@ -13001,8 +14389,8 @@ typedef $$ReadingTableTableProcessedTableManager =
       ReadingTableData,
       PrefetchHooks Function({
         bool termBankV3TableRefs,
-        bool kanjiBankV3KunyomiReadingRelationsTableRefs,
         bool kanjiBankV3OnyomiReadingRelationsTableRefs,
+        bool kanjiBankV3KunyomiReadingRelationsTableRefs,
         bool termMetaBankV3TableRefs,
       })
     >;
@@ -13010,6 +14398,7 @@ typedef $$TermBankV3TableTableCreateCompanionBuilder =
     TermBankV3TableCompanion Function({
       Value<int> id,
       required int termId,
+      required int termJsonId,
       required int readingId,
       required int popularity,
       required int sequenceNumber,
@@ -13018,6 +14407,7 @@ typedef $$TermBankV3TableTableUpdateCompanionBuilder =
     TermBankV3TableCompanion Function({
       Value<int> id,
       Value<int> termId,
+      Value<int> termJsonId,
       Value<int> readingId,
       Value<int> popularity,
       Value<int> sequenceNumber,
@@ -13049,6 +14439,28 @@ final class $$TermBankV3TableTableReferences
       $_db.termTable,
     ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_termIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TermBankV3DefinitionJsonTableTable _termJsonIdTable(_$DaKanjiDB db) =>
+      db.termBankV3DefinitionJsonTable.createAlias(
+        $_aliasNameGenerator(
+          db.termBankV3Table.termJsonId,
+          db.termBankV3DefinitionJsonTable.id,
+        ),
+      );
+
+  $$TermBankV3DefinitionJsonTableTableProcessedTableManager get termJsonId {
+    final $_column = $_itemColumn<int>('term_json_id')!;
+
+    final manager = $$TermBankV3DefinitionJsonTableTableTableManager(
+      $_db,
+      $_db.termBankV3DefinitionJsonTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_termJsonIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -13231,6 +14643,30 @@ class $$TermBankV3TableTableFilterComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
+    return composer;
+  }
+
+  $$TermBankV3DefinitionJsonTableTableFilterComposer get termJsonId {
+    final $$TermBankV3DefinitionJsonTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.termJsonId,
+          referencedTable: $db.termBankV3DefinitionJsonTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3DefinitionJsonTableTableFilterComposer(
+                $db: $db,
+                $table: $db.termBankV3DefinitionJsonTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return composer;
   }
 
@@ -13421,6 +14857,30 @@ class $$TermBankV3TableTableOrderingComposer
     return composer;
   }
 
+  $$TermBankV3DefinitionJsonTableTableOrderingComposer get termJsonId {
+    final $$TermBankV3DefinitionJsonTableTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.termJsonId,
+          referencedTable: $db.termBankV3DefinitionJsonTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3DefinitionJsonTableTableOrderingComposer(
+                $db: $db,
+                $table: $db.termBankV3DefinitionJsonTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
   $$ReadingTableTableOrderingComposer get readingId {
     final $$ReadingTableTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -13487,6 +14947,30 @@ class $$TermBankV3TableTableAnnotationComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
+    return composer;
+  }
+
+  $$TermBankV3DefinitionJsonTableTableAnnotationComposer get termJsonId {
+    final $$TermBankV3DefinitionJsonTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.termJsonId,
+          referencedTable: $db.termBankV3DefinitionJsonTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3DefinitionJsonTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.termBankV3DefinitionJsonTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return composer;
   }
 
@@ -13645,6 +15129,7 @@ class $$TermBankV3TableTableTableManager
           TermBankV3TableData,
           PrefetchHooks Function({
             bool termId,
+            bool termJsonId,
             bool readingId,
             bool termBankV3DefinitionTagRelationsTableRefs,
             bool termBankV3RuleIdentifierRelationsTableRefs,
@@ -13669,12 +15154,14 @@ class $$TermBankV3TableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int> termId = const Value.absent(),
+                Value<int> termJsonId = const Value.absent(),
                 Value<int> readingId = const Value.absent(),
                 Value<int> popularity = const Value.absent(),
                 Value<int> sequenceNumber = const Value.absent(),
               }) => TermBankV3TableCompanion(
                 id: id,
                 termId: termId,
+                termJsonId: termJsonId,
                 readingId: readingId,
                 popularity: popularity,
                 sequenceNumber: sequenceNumber,
@@ -13683,12 +15170,14 @@ class $$TermBankV3TableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required int termId,
+                required int termJsonId,
                 required int readingId,
                 required int popularity,
                 required int sequenceNumber,
               }) => TermBankV3TableCompanion.insert(
                 id: id,
                 termId: termId,
+                termJsonId: termJsonId,
                 readingId: readingId,
                 popularity: popularity,
                 sequenceNumber: sequenceNumber,
@@ -13704,6 +15193,7 @@ class $$TermBankV3TableTableTableManager
           prefetchHooksCallback:
               ({
                 termId = false,
+                termJsonId = false,
                 readingId = false,
                 termBankV3DefinitionTagRelationsTableRefs = false,
                 termBankV3RuleIdentifierRelationsTableRefs = false,
@@ -13749,6 +15239,21 @@ class $$TermBankV3TableTableTableManager
                                     referencedColumn:
                                         $$TermBankV3TableTableReferences
                                             ._termIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (termJsonId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.termJsonId,
+                                    referencedTable:
+                                        $$TermBankV3TableTableReferences
+                                            ._termJsonIdTable(db),
+                                    referencedColumn:
+                                        $$TermBankV3TableTableReferences
+                                            ._termJsonIdTable(db)
                                             .id,
                                   )
                                   as T;
@@ -13885,6 +15390,7 @@ typedef $$TermBankV3TableTableProcessedTableManager =
       TermBankV3TableData,
       PrefetchHooks Function({
         bool termId,
+        bool termJsonId,
         bool readingId,
         bool termBankV3DefinitionTagRelationsTableRefs,
         bool termBankV3RuleIdentifierRelationsTableRefs,
@@ -16975,6 +18481,29 @@ final class $$KanjiTableTableReferences
     extends BaseReferences<_$DaKanjiDB, $KanjiTableTable, KanjiTableData> {
   $$KanjiTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
+  static MultiTypedResultKey<$KanjiBankV3TableTable, List<KanjiBankV3TableData>>
+  _kanjiBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+    db.kanjiBankV3Table,
+    aliasName: $_aliasNameGenerator(
+      db.kanjiTable.id,
+      db.kanjiBankV3Table.kanjiId,
+    ),
+  );
+
+  $$KanjiBankV3TableTableProcessedTableManager get kanjiBankV3TableRefs {
+    final manager = $$KanjiBankV3TableTableTableManager(
+      $_db,
+      $_db.kanjiBankV3Table,
+    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _kanjiBankV3TableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
   static MultiTypedResultKey<
     $RadicalKanjiRelationsTableTable,
     List<RadicalKanjiRelationsTableData>
@@ -17016,29 +18545,6 @@ final class $$KanjiTableTableReferences
     ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_kanjiVGTableRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<$KanjiBankV3TableTable, List<KanjiBankV3TableData>>
-  _kanjiBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
-    db.kanjiBankV3Table,
-    aliasName: $_aliasNameGenerator(
-      db.kanjiTable.id,
-      db.kanjiBankV3Table.kanjiId,
-    ),
-  );
-
-  $$KanjiBankV3TableTableProcessedTableManager get kanjiBankV3TableRefs {
-    final manager = $$KanjiBankV3TableTableTableManager(
-      $_db,
-      $_db.kanjiBankV3Table,
-    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _kanjiBankV3TableRefsTable($_db),
-    );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -17092,6 +18598,31 @@ class $$KanjiTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  Expression<bool> kanjiBankV3TableRefs(
+    Expression<bool> Function($$KanjiBankV3TableTableFilterComposer f) f,
+  ) {
+    final $$KanjiBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<bool> radicalKanjiRelationsTableRefs(
     Expression<bool> Function($$RadicalKanjiRelationsTableTableFilterComposer f)
     f,
@@ -17135,31 +18666,6 @@ class $$KanjiTableTableFilterComposer
           }) => $$KanjiVGTableTableFilterComposer(
             $db: $db,
             $table: $db.kanjiVGTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<bool> kanjiBankV3TableRefs(
-    Expression<bool> Function($$KanjiBankV3TableTableFilterComposer f) f,
-  ) {
-    final $$KanjiBankV3TableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiBankV3Table,
-      getReferencedColumn: (t) => t.kanjiId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3TableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3Table,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -17230,6 +18736,31 @@ class $$KanjiTableTableAnnotationComposer
   GeneratedColumn<String> get kanji =>
       $composableBuilder(column: $table.kanji, builder: (column) => column);
 
+  Expression<T> kanjiBankV3TableRefs<T extends Object>(
+    Expression<T> Function($$KanjiBankV3TableTableAnnotationComposer a) f,
+  ) {
+    final $$KanjiBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<T> radicalKanjiRelationsTableRefs<T extends Object>(
     Expression<T> Function(
       $$RadicalKanjiRelationsTableTableAnnotationComposer a,
@@ -17284,31 +18815,6 @@ class $$KanjiTableTableAnnotationComposer
     return f(composer);
   }
 
-  Expression<T> kanjiBankV3TableRefs<T extends Object>(
-    Expression<T> Function($$KanjiBankV3TableTableAnnotationComposer a) f,
-  ) {
-    final $$KanjiBankV3TableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiBankV3Table,
-      getReferencedColumn: (t) => t.kanjiId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3TableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
   Expression<T> kanjiMetaBankV3TableRefs<T extends Object>(
     Expression<T> Function($$KanjiMetaBankV3TableTableAnnotationComposer a) f,
   ) {
@@ -17350,9 +18856,9 @@ class $$KanjiTableTableTableManager
           (KanjiTableData, $$KanjiTableTableReferences),
           KanjiTableData,
           PrefetchHooks Function({
+            bool kanjiBankV3TableRefs,
             bool radicalKanjiRelationsTableRefs,
             bool kanjiVGTableRefs,
-            bool kanjiBankV3TableRefs,
             bool kanjiMetaBankV3TableRefs,
           })
         > {
@@ -17385,23 +18891,44 @@ class $$KanjiTableTableTableManager
               .toList(),
           prefetchHooksCallback:
               ({
+                kanjiBankV3TableRefs = false,
                 radicalKanjiRelationsTableRefs = false,
                 kanjiVGTableRefs = false,
-                kanjiBankV3TableRefs = false,
                 kanjiMetaBankV3TableRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
+                    if (kanjiBankV3TableRefs) db.kanjiBankV3Table,
                     if (radicalKanjiRelationsTableRefs)
                       db.radicalKanjiRelationsTable,
                     if (kanjiVGTableRefs) db.kanjiVGTable,
-                    if (kanjiBankV3TableRefs) db.kanjiBankV3Table,
                     if (kanjiMetaBankV3TableRefs) db.kanjiMetaBankV3Table,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
                     return [
+                      if (kanjiBankV3TableRefs)
+                        await $_getPrefetchedData<
+                          KanjiTableData,
+                          $KanjiTableTable,
+                          KanjiBankV3TableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$KanjiTableTableReferences
+                              ._kanjiBankV3TableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$KanjiTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).kanjiBankV3TableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.kanjiId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                       if (radicalKanjiRelationsTableRefs)
                         await $_getPrefetchedData<
                           KanjiTableData,
@@ -17438,27 +18965,6 @@ class $$KanjiTableTableTableManager
                                 table,
                                 p0,
                               ).kanjiVGTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.kanjiId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (kanjiBankV3TableRefs)
-                        await $_getPrefetchedData<
-                          KanjiTableData,
-                          $KanjiTableTable,
-                          KanjiBankV3TableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$KanjiTableTableReferences
-                              ._kanjiBankV3TableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$KanjiTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).kanjiBankV3TableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.kanjiId == item.id,
@@ -17507,1243 +19013,11 @@ typedef $$KanjiTableTableProcessedTableManager =
       (KanjiTableData, $$KanjiTableTableReferences),
       KanjiTableData,
       PrefetchHooks Function({
+        bool kanjiBankV3TableRefs,
         bool radicalKanjiRelationsTableRefs,
         bool kanjiVGTableRefs,
-        bool kanjiBankV3TableRefs,
         bool kanjiMetaBankV3TableRefs,
       })
-    >;
-typedef $$LanguageCodeTableTableCreateCompanionBuilder =
-    LanguageCodeTableCompanion Function({
-      Value<int> id,
-      required String languageCode,
-    });
-typedef $$LanguageCodeTableTableUpdateCompanionBuilder =
-    LanguageCodeTableCompanion Function({
-      Value<int> id,
-      Value<String> languageCode,
-    });
-
-final class $$LanguageCodeTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $LanguageCodeTableTable,
-          LanguageCodeTableData
-        > {
-  $$LanguageCodeTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static MultiTypedResultKey<
-    $ExampleTranslationTableTable,
-    List<ExampleTranslationTableData>
-  >
-  _exampleTranslationTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.exampleTranslationTable,
-        aliasName: $_aliasNameGenerator(
-          db.languageCodeTable.id,
-          db.exampleTranslationTable.languageCodeId,
-        ),
-      );
-
-  $$ExampleTranslationTableTableProcessedTableManager
-  get exampleTranslationTableRefs {
-    final manager = $$ExampleTranslationTableTableTableManager(
-      $_db,
-      $_db.exampleTranslationTable,
-    ).filter((f) => f.languageCodeId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _exampleTranslationTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$LanguageCodeTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
-  $$LanguageCodeTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get languageCode => $composableBuilder(
-    column: $table.languageCode,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  Expression<bool> exampleTranslationTableRefs(
-    Expression<bool> Function($$ExampleTranslationTableTableFilterComposer f) f,
-  ) {
-    final $$ExampleTranslationTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.exampleTranslationTable,
-          getReferencedColumn: (t) => t.languageCodeId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationTableTableFilterComposer(
-                $db: $db,
-                $table: $db.exampleTranslationTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$LanguageCodeTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
-  $$LanguageCodeTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get languageCode => $composableBuilder(
-    column: $table.languageCode,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$LanguageCodeTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
-  $$LanguageCodeTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get languageCode => $composableBuilder(
-    column: $table.languageCode,
-    builder: (column) => column,
-  );
-
-  Expression<T> exampleTranslationTableRefs<T extends Object>(
-    Expression<T> Function($$ExampleTranslationTableTableAnnotationComposer a)
-    f,
-  ) {
-    final $$ExampleTranslationTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.exampleTranslationTable,
-          getReferencedColumn: (t) => t.languageCodeId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.exampleTranslationTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$LanguageCodeTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $LanguageCodeTableTable,
-          LanguageCodeTableData,
-          $$LanguageCodeTableTableFilterComposer,
-          $$LanguageCodeTableTableOrderingComposer,
-          $$LanguageCodeTableTableAnnotationComposer,
-          $$LanguageCodeTableTableCreateCompanionBuilder,
-          $$LanguageCodeTableTableUpdateCompanionBuilder,
-          (LanguageCodeTableData, $$LanguageCodeTableTableReferences),
-          LanguageCodeTableData,
-          PrefetchHooks Function({bool exampleTranslationTableRefs})
-        > {
-  $$LanguageCodeTableTableTableManager(
-    _$DaKanjiDB db,
-    $LanguageCodeTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$LanguageCodeTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$LanguageCodeTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$LanguageCodeTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> languageCode = const Value.absent(),
-              }) => LanguageCodeTableCompanion(
-                id: id,
-                languageCode: languageCode,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required String languageCode,
-              }) => LanguageCodeTableCompanion.insert(
-                id: id,
-                languageCode: languageCode,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$LanguageCodeTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({exampleTranslationTableRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (exampleTranslationTableRefs) db.exampleTranslationTable,
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (exampleTranslationTableRefs)
-                    await $_getPrefetchedData<
-                      LanguageCodeTableData,
-                      $LanguageCodeTableTable,
-                      ExampleTranslationTableData
-                    >(
-                      currentTable: table,
-                      referencedTable: $$LanguageCodeTableTableReferences
-                          ._exampleTranslationTableRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$LanguageCodeTableTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).exampleTranslationTableRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where(
-                            (e) => e.languageCodeId == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                ];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$LanguageCodeTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $LanguageCodeTableTable,
-      LanguageCodeTableData,
-      $$LanguageCodeTableTableFilterComposer,
-      $$LanguageCodeTableTableOrderingComposer,
-      $$LanguageCodeTableTableAnnotationComposer,
-      $$LanguageCodeTableTableCreateCompanionBuilder,
-      $$LanguageCodeTableTableUpdateCompanionBuilder,
-      (LanguageCodeTableData, $$LanguageCodeTableTableReferences),
-      LanguageCodeTableData,
-      PrefetchHooks Function({bool exampleTranslationTableRefs})
-    >;
-typedef $$RadicalsTableTableCreateCompanionBuilder =
-    RadicalsTableCompanion Function({
-      Value<int> id,
-      required String radical,
-      required int strokeCount,
-    });
-typedef $$RadicalsTableTableUpdateCompanionBuilder =
-    RadicalsTableCompanion Function({
-      Value<int> id,
-      Value<String> radical,
-      Value<int> strokeCount,
-    });
-
-final class $$RadicalsTableTableReferences
-    extends
-        BaseReferences<_$DaKanjiDB, $RadicalsTableTable, RadicalsTableData> {
-  $$RadicalsTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static MultiTypedResultKey<
-    $RadicalKanjiRelationsTableTable,
-    List<RadicalKanjiRelationsTableData>
-  >
-  _radicalKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.radicalKanjiRelationsTable,
-        aliasName: $_aliasNameGenerator(
-          db.radicalsTable.id,
-          db.radicalKanjiRelationsTable.radicalId,
-        ),
-      );
-
-  $$RadicalKanjiRelationsTableTableProcessedTableManager
-  get radicalKanjiRelationsTableRefs {
-    final manager = $$RadicalKanjiRelationsTableTableTableManager(
-      $_db,
-      $_db.radicalKanjiRelationsTable,
-    ).filter((f) => f.radicalId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _radicalKanjiRelationsTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$RadicalsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $RadicalsTableTable> {
-  $$RadicalsTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get radical => $composableBuilder(
-    column: $table.radical,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get strokeCount => $composableBuilder(
-    column: $table.strokeCount,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  Expression<bool> radicalKanjiRelationsTableRefs(
-    Expression<bool> Function($$RadicalKanjiRelationsTableTableFilterComposer f)
-    f,
-  ) {
-    final $$RadicalKanjiRelationsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.radicalKanjiRelationsTable,
-          getReferencedColumn: (t) => t.radicalId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$RadicalKanjiRelationsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.radicalKanjiRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$RadicalsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $RadicalsTableTable> {
-  $$RadicalsTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get radical => $composableBuilder(
-    column: $table.radical,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get strokeCount => $composableBuilder(
-    column: $table.strokeCount,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$RadicalsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $RadicalsTableTable> {
-  $$RadicalsTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get radical =>
-      $composableBuilder(column: $table.radical, builder: (column) => column);
-
-  GeneratedColumn<int> get strokeCount => $composableBuilder(
-    column: $table.strokeCount,
-    builder: (column) => column,
-  );
-
-  Expression<T> radicalKanjiRelationsTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$RadicalKanjiRelationsTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$RadicalKanjiRelationsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.radicalKanjiRelationsTable,
-          getReferencedColumn: (t) => t.radicalId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$RadicalKanjiRelationsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.radicalKanjiRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$RadicalsTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $RadicalsTableTable,
-          RadicalsTableData,
-          $$RadicalsTableTableFilterComposer,
-          $$RadicalsTableTableOrderingComposer,
-          $$RadicalsTableTableAnnotationComposer,
-          $$RadicalsTableTableCreateCompanionBuilder,
-          $$RadicalsTableTableUpdateCompanionBuilder,
-          (RadicalsTableData, $$RadicalsTableTableReferences),
-          RadicalsTableData,
-          PrefetchHooks Function({bool radicalKanjiRelationsTableRefs})
-        > {
-  $$RadicalsTableTableTableManager(_$DaKanjiDB db, $RadicalsTableTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$RadicalsTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$RadicalsTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$RadicalsTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> radical = const Value.absent(),
-                Value<int> strokeCount = const Value.absent(),
-              }) => RadicalsTableCompanion(
-                id: id,
-                radical: radical,
-                strokeCount: strokeCount,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required String radical,
-                required int strokeCount,
-              }) => RadicalsTableCompanion.insert(
-                id: id,
-                radical: radical,
-                strokeCount: strokeCount,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$RadicalsTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({radicalKanjiRelationsTableRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (radicalKanjiRelationsTableRefs)
-                  db.radicalKanjiRelationsTable,
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (radicalKanjiRelationsTableRefs)
-                    await $_getPrefetchedData<
-                      RadicalsTableData,
-                      $RadicalsTableTable,
-                      RadicalKanjiRelationsTableData
-                    >(
-                      currentTable: table,
-                      referencedTable: $$RadicalsTableTableReferences
-                          ._radicalKanjiRelationsTableRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$RadicalsTableTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).radicalKanjiRelationsTableRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.radicalId == item.id),
-                      typedResults: items,
-                    ),
-                ];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$RadicalsTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $RadicalsTableTable,
-      RadicalsTableData,
-      $$RadicalsTableTableFilterComposer,
-      $$RadicalsTableTableOrderingComposer,
-      $$RadicalsTableTableAnnotationComposer,
-      $$RadicalsTableTableCreateCompanionBuilder,
-      $$RadicalsTableTableUpdateCompanionBuilder,
-      (RadicalsTableData, $$RadicalsTableTableReferences),
-      RadicalsTableData,
-      PrefetchHooks Function({bool radicalKanjiRelationsTableRefs})
-    >;
-typedef $$RadicalKanjiRelationsTableTableCreateCompanionBuilder =
-    RadicalKanjiRelationsTableCompanion Function({
-      Value<int> id,
-      required int kanjiId,
-      required int radicalId,
-    });
-typedef $$RadicalKanjiRelationsTableTableUpdateCompanionBuilder =
-    RadicalKanjiRelationsTableCompanion Function({
-      Value<int> id,
-      Value<int> kanjiId,
-      Value<int> radicalId,
-    });
-
-final class $$RadicalKanjiRelationsTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $RadicalKanjiRelationsTableTable,
-          RadicalKanjiRelationsTableData
-        > {
-  $$RadicalKanjiRelationsTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
-      db.kanjiTable.createAlias(
-        $_aliasNameGenerator(
-          db.radicalKanjiRelationsTable.kanjiId,
-          db.kanjiTable.id,
-        ),
-      );
-
-  $$KanjiTableTableProcessedTableManager get kanjiId {
-    final $_column = $_itemColumn<int>('kanji_id')!;
-
-    final manager = $$KanjiTableTableTableManager(
-      $_db,
-      $_db.kanjiTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $RadicalsTableTable _radicalIdTable(_$DaKanjiDB db) =>
-      db.radicalsTable.createAlias(
-        $_aliasNameGenerator(
-          db.radicalKanjiRelationsTable.radicalId,
-          db.radicalsTable.id,
-        ),
-      );
-
-  $$RadicalsTableTableProcessedTableManager get radicalId {
-    final $_column = $_itemColumn<int>('radical_id')!;
-
-    final manager = $$RadicalsTableTableTableManager(
-      $_db,
-      $_db.radicalsTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_radicalIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$RadicalKanjiRelationsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $RadicalKanjiRelationsTableTable> {
-  $$RadicalKanjiRelationsTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$KanjiTableTableFilterComposer get kanjiId {
-    final $$KanjiTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiTableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$RadicalsTableTableFilterComposer get radicalId {
-    final $$RadicalsTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.radicalId,
-      referencedTable: $db.radicalsTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$RadicalsTableTableFilterComposer(
-            $db: $db,
-            $table: $db.radicalsTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$RadicalKanjiRelationsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $RadicalKanjiRelationsTableTable> {
-  $$RadicalKanjiRelationsTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$KanjiTableTableOrderingComposer get kanjiId {
-    final $$KanjiTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.kanjiTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$RadicalsTableTableOrderingComposer get radicalId {
-    final $$RadicalsTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.radicalId,
-      referencedTable: $db.radicalsTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$RadicalsTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.radicalsTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$RadicalKanjiRelationsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $RadicalKanjiRelationsTableTable> {
-  $$RadicalKanjiRelationsTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  $$KanjiTableTableAnnotationComposer get kanjiId {
-    final $$KanjiTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$RadicalsTableTableAnnotationComposer get radicalId {
-    final $$RadicalsTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.radicalId,
-      referencedTable: $db.radicalsTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$RadicalsTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.radicalsTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$RadicalKanjiRelationsTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $RadicalKanjiRelationsTableTable,
-          RadicalKanjiRelationsTableData,
-          $$RadicalKanjiRelationsTableTableFilterComposer,
-          $$RadicalKanjiRelationsTableTableOrderingComposer,
-          $$RadicalKanjiRelationsTableTableAnnotationComposer,
-          $$RadicalKanjiRelationsTableTableCreateCompanionBuilder,
-          $$RadicalKanjiRelationsTableTableUpdateCompanionBuilder,
-          (
-            RadicalKanjiRelationsTableData,
-            $$RadicalKanjiRelationsTableTableReferences,
-          ),
-          RadicalKanjiRelationsTableData,
-          PrefetchHooks Function({bool kanjiId, bool radicalId})
-        > {
-  $$RadicalKanjiRelationsTableTableTableManager(
-    _$DaKanjiDB db,
-    $RadicalKanjiRelationsTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$RadicalKanjiRelationsTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$RadicalKanjiRelationsTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$RadicalKanjiRelationsTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> kanjiId = const Value.absent(),
-                Value<int> radicalId = const Value.absent(),
-              }) => RadicalKanjiRelationsTableCompanion(
-                id: id,
-                kanjiId: kanjiId,
-                radicalId: radicalId,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int kanjiId,
-                required int radicalId,
-              }) => RadicalKanjiRelationsTableCompanion.insert(
-                id: id,
-                kanjiId: kanjiId,
-                radicalId: radicalId,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$RadicalKanjiRelationsTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({kanjiId = false, radicalId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (kanjiId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.kanjiId,
-                                referencedTable:
-                                    $$RadicalKanjiRelationsTableTableReferences
-                                        ._kanjiIdTable(db),
-                                referencedColumn:
-                                    $$RadicalKanjiRelationsTableTableReferences
-                                        ._kanjiIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (radicalId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.radicalId,
-                                referencedTable:
-                                    $$RadicalKanjiRelationsTableTableReferences
-                                        ._radicalIdTable(db),
-                                referencedColumn:
-                                    $$RadicalKanjiRelationsTableTableReferences
-                                        ._radicalIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$RadicalKanjiRelationsTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $RadicalKanjiRelationsTableTable,
-      RadicalKanjiRelationsTableData,
-      $$RadicalKanjiRelationsTableTableFilterComposer,
-      $$RadicalKanjiRelationsTableTableOrderingComposer,
-      $$RadicalKanjiRelationsTableTableAnnotationComposer,
-      $$RadicalKanjiRelationsTableTableCreateCompanionBuilder,
-      $$RadicalKanjiRelationsTableTableUpdateCompanionBuilder,
-      (
-        RadicalKanjiRelationsTableData,
-        $$RadicalKanjiRelationsTableTableReferences,
-      ),
-      RadicalKanjiRelationsTableData,
-      PrefetchHooks Function({bool kanjiId, bool radicalId})
-    >;
-typedef $$KanjiVGTableTableCreateCompanionBuilder =
-    KanjiVGTableCompanion Function({
-      Value<int> id,
-      required int kanjiId,
-      required String kanjiVGSVG,
-    });
-typedef $$KanjiVGTableTableUpdateCompanionBuilder =
-    KanjiVGTableCompanion Function({
-      Value<int> id,
-      Value<int> kanjiId,
-      Value<String> kanjiVGSVG,
-    });
-
-final class $$KanjiVGTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $KanjiVGTableTable, KanjiVGTableData> {
-  $$KanjiVGTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
-      db.kanjiTable.createAlias(
-        $_aliasNameGenerator(db.kanjiVGTable.kanjiId, db.kanjiTable.id),
-      );
-
-  $$KanjiTableTableProcessedTableManager get kanjiId {
-    final $_column = $_itemColumn<int>('kanji_id')!;
-
-    final manager = $$KanjiTableTableTableManager(
-      $_db,
-      $_db.kanjiTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$KanjiVGTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
-  $$KanjiVGTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnWithTypeConverterFilters<String, String, Uint8List> get kanjiVGSVG =>
-      $composableBuilder(
-        column: $table.kanjiVGSVG,
-        builder: (column) => ColumnWithTypeConverterFilters(column),
-      );
-
-  $$KanjiTableTableFilterComposer get kanjiId {
-    final $$KanjiTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiTableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiVGTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
-  $$KanjiVGTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<Uint8List> get kanjiVGSVG => $composableBuilder(
-    column: $table.kanjiVGSVG,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$KanjiTableTableOrderingComposer get kanjiId {
-    final $$KanjiTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.kanjiTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiVGTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
-  $$KanjiVGTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<String, Uint8List> get kanjiVGSVG =>
-      $composableBuilder(
-        column: $table.kanjiVGSVG,
-        builder: (column) => column,
-      );
-
-  $$KanjiTableTableAnnotationComposer get kanjiId {
-    final $$KanjiTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiVGTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $KanjiVGTableTable,
-          KanjiVGTableData,
-          $$KanjiVGTableTableFilterComposer,
-          $$KanjiVGTableTableOrderingComposer,
-          $$KanjiVGTableTableAnnotationComposer,
-          $$KanjiVGTableTableCreateCompanionBuilder,
-          $$KanjiVGTableTableUpdateCompanionBuilder,
-          (KanjiVGTableData, $$KanjiVGTableTableReferences),
-          KanjiVGTableData,
-          PrefetchHooks Function({bool kanjiId})
-        > {
-  $$KanjiVGTableTableTableManager(_$DaKanjiDB db, $KanjiVGTableTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$KanjiVGTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$KanjiVGTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$KanjiVGTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> kanjiId = const Value.absent(),
-                Value<String> kanjiVGSVG = const Value.absent(),
-              }) => KanjiVGTableCompanion(
-                id: id,
-                kanjiId: kanjiId,
-                kanjiVGSVG: kanjiVGSVG,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int kanjiId,
-                required String kanjiVGSVG,
-              }) => KanjiVGTableCompanion.insert(
-                id: id,
-                kanjiId: kanjiId,
-                kanjiVGSVG: kanjiVGSVG,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$KanjiVGTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({kanjiId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (kanjiId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.kanjiId,
-                                referencedTable: $$KanjiVGTableTableReferences
-                                    ._kanjiIdTable(db),
-                                referencedColumn: $$KanjiVGTableTableReferences
-                                    ._kanjiIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$KanjiVGTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $KanjiVGTableTable,
-      KanjiVGTableData,
-      $$KanjiVGTableTableFilterComposer,
-      $$KanjiVGTableTableOrderingComposer,
-      $$KanjiVGTableTableAnnotationComposer,
-      $$KanjiVGTableTableCreateCompanionBuilder,
-      $$KanjiVGTableTableUpdateCompanionBuilder,
-      (KanjiVGTableData, $$KanjiVGTableTableReferences),
-      KanjiVGTableData,
-      PrefetchHooks Function({bool kanjiId})
     >;
 typedef $$IndexTableTableCreateCompanionBuilder =
     IndexTableCompanion Function({
@@ -19549,34 +19823,6 @@ final class $$KanjiBankV3TableTableReferences
   }
 
   static MultiTypedResultKey<
-    $KanjiBankV3KunyomiReadingRelationsTableTable,
-    List<KanjiBankV3KunyomiReadingRelationsTableData>
-  >
-  _kanjiBankV3KunyomiReadingRelationsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.kanjiBankV3KunyomiReadingRelationsTable,
-        aliasName: $_aliasNameGenerator(
-          db.kanjiBankV3Table.id,
-          db.kanjiBankV3KunyomiReadingRelationsTable.kanjiId,
-        ),
-      );
-
-  $$KanjiBankV3KunyomiReadingRelationsTableTableProcessedTableManager
-  get kanjiBankV3KunyomiReadingRelationsTableRefs {
-    final manager = $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager(
-      $_db,
-      $_db.kanjiBankV3KunyomiReadingRelationsTable,
-    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _kanjiBankV3KunyomiReadingRelationsTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
     $KanjiBankV3OnyomiReadingRelationsTableTable,
     List<KanjiBankV3OnyomiReadingRelationsTableData>
   >
@@ -19598,6 +19844,34 @@ final class $$KanjiBankV3TableTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _kanjiBankV3OnyomiReadingRelationsTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $KanjiBankV3KunyomiReadingRelationsTableTable,
+    List<KanjiBankV3KunyomiReadingRelationsTableData>
+  >
+  _kanjiBankV3KunyomiReadingRelationsTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.kanjiBankV3KunyomiReadingRelationsTable,
+        aliasName: $_aliasNameGenerator(
+          db.kanjiBankV3Table.id,
+          db.kanjiBankV3KunyomiReadingRelationsTable.kanjiId,
+        ),
+      );
+
+  $$KanjiBankV3KunyomiReadingRelationsTableTableProcessedTableManager
+  get kanjiBankV3KunyomiReadingRelationsTableRefs {
+    final manager = $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager(
+      $_db,
+      $_db.kanjiBankV3KunyomiReadingRelationsTable,
+    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _kanjiBankV3KunyomiReadingRelationsTableRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -19750,35 +20024,6 @@ class $$KanjiBankV3TableTableFilterComposer
     return composer;
   }
 
-  Expression<bool> kanjiBankV3KunyomiReadingRelationsTableRefs(
-    Expression<bool> Function(
-      $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer f,
-    )
-    f,
-  ) {
-    final $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer
-    composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiBankV3KunyomiReadingRelationsTable,
-      getReferencedColumn: (t) => t.kanjiId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3KunyomiReadingRelationsTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
   Expression<bool> kanjiBankV3OnyomiReadingRelationsTableRefs(
     Expression<bool> Function(
       $$KanjiBankV3OnyomiReadingRelationsTableTableFilterComposer f,
@@ -19805,6 +20050,35 @@ class $$KanjiBankV3TableTableFilterComposer
                     $removeJoinBuilderFromRootComposer,
               ),
         );
+    return f(composer);
+  }
+
+  Expression<bool> kanjiBankV3KunyomiReadingRelationsTableRefs(
+    Expression<bool> Function(
+      $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer
+    composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiBankV3KunyomiReadingRelationsTable,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3KunyomiReadingRelationsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 
@@ -20015,6 +20289,35 @@ class $$KanjiBankV3TableTableAnnotationComposer
     return composer;
   }
 
+  Expression<T> kanjiBankV3OnyomiReadingRelationsTableRefs<T extends Object>(
+    Expression<T> Function(
+      $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer
+    composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiBankV3OnyomiReadingRelationsTable,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3OnyomiReadingRelationsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<T> kanjiBankV3KunyomiReadingRelationsTableRefs<T extends Object>(
     Expression<T> Function(
       $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer a,
@@ -20041,35 +20344,6 @@ class $$KanjiBankV3TableTableAnnotationComposer
                 $removeJoinBuilderFromRootComposer:
                     $removeJoinBuilderFromRootComposer,
               ),
-    );
-    return f(composer);
-  }
-
-  Expression<T> kanjiBankV3OnyomiReadingRelationsTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer
-    composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiBankV3OnyomiReadingRelationsTable,
-      getReferencedColumn: (t) => t.kanjiId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3OnyomiReadingRelationsTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3OnyomiReadingRelationsTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
     );
     return f(composer);
   }
@@ -20179,8 +20453,8 @@ class $$KanjiBankV3TableTableTableManager
           PrefetchHooks Function({
             bool kanjiId,
             bool dictId,
-            bool kanjiBankV3KunyomiReadingRelationsTableRefs,
             bool kanjiBankV3OnyomiReadingRelationsTableRefs,
+            bool kanjiBankV3KunyomiReadingRelationsTableRefs,
             bool kanjiBankV3TagsKanjiRelationsTableRefs,
             bool kanjiBankV3DefinitionsKanjiRelationsTableRefs,
             bool kanjiBankV3StatKanjiRelationsTableRefs,
@@ -20231,8 +20505,8 @@ class $$KanjiBankV3TableTableTableManager
               ({
                 kanjiId = false,
                 dictId = false,
-                kanjiBankV3KunyomiReadingRelationsTableRefs = false,
                 kanjiBankV3OnyomiReadingRelationsTableRefs = false,
+                kanjiBankV3KunyomiReadingRelationsTableRefs = false,
                 kanjiBankV3TagsKanjiRelationsTableRefs = false,
                 kanjiBankV3DefinitionsKanjiRelationsTableRefs = false,
                 kanjiBankV3StatKanjiRelationsTableRefs = false,
@@ -20240,10 +20514,10 @@ class $$KanjiBankV3TableTableTableManager
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
-                    if (kanjiBankV3KunyomiReadingRelationsTableRefs)
-                      db.kanjiBankV3KunyomiReadingRelationsTable,
                     if (kanjiBankV3OnyomiReadingRelationsTableRefs)
                       db.kanjiBankV3OnyomiReadingRelationsTable,
+                    if (kanjiBankV3KunyomiReadingRelationsTableRefs)
+                      db.kanjiBankV3KunyomiReadingRelationsTable,
                     if (kanjiBankV3TagsKanjiRelationsTableRefs)
                       db.kanjiBankV3TagsKanjiRelationsTable,
                     if (kanjiBankV3DefinitionsKanjiRelationsTableRefs)
@@ -20302,29 +20576,6 @@ class $$KanjiBankV3TableTableTableManager
                       },
                   getPrefetchedDataCallback: (items) async {
                     return [
-                      if (kanjiBankV3KunyomiReadingRelationsTableRefs)
-                        await $_getPrefetchedData<
-                          KanjiBankV3TableData,
-                          $KanjiBankV3TableTable,
-                          KanjiBankV3KunyomiReadingRelationsTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$KanjiBankV3TableTableReferences
-                              ._kanjiBankV3KunyomiReadingRelationsTableRefsTable(
-                                db,
-                              ),
-                          managerFromTypedResult: (p0) =>
-                              $$KanjiBankV3TableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).kanjiBankV3KunyomiReadingRelationsTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.kanjiId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
                       if (kanjiBankV3OnyomiReadingRelationsTableRefs)
                         await $_getPrefetchedData<
                           KanjiBankV3TableData,
@@ -20342,6 +20593,29 @@ class $$KanjiBankV3TableTableTableManager
                                 table,
                                 p0,
                               ).kanjiBankV3OnyomiReadingRelationsTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.kanjiId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (kanjiBankV3KunyomiReadingRelationsTableRefs)
+                        await $_getPrefetchedData<
+                          KanjiBankV3TableData,
+                          $KanjiBankV3TableTable,
+                          KanjiBankV3KunyomiReadingRelationsTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$KanjiBankV3TableTableReferences
+                              ._kanjiBankV3KunyomiReadingRelationsTableRefsTable(
+                                db,
+                              ),
+                          managerFromTypedResult: (p0) =>
+                              $$KanjiBankV3TableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).kanjiBankV3KunyomiReadingRelationsTableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.kanjiId == item.id,
@@ -20436,418 +20710,12 @@ typedef $$KanjiBankV3TableTableProcessedTableManager =
       PrefetchHooks Function({
         bool kanjiId,
         bool dictId,
-        bool kanjiBankV3KunyomiReadingRelationsTableRefs,
         bool kanjiBankV3OnyomiReadingRelationsTableRefs,
+        bool kanjiBankV3KunyomiReadingRelationsTableRefs,
         bool kanjiBankV3TagsKanjiRelationsTableRefs,
         bool kanjiBankV3DefinitionsKanjiRelationsTableRefs,
         bool kanjiBankV3StatKanjiRelationsTableRefs,
       })
-    >;
-typedef $$KanjiBankV3KunyomiReadingRelationsTableTableCreateCompanionBuilder =
-    KanjiBankV3KunyomiReadingRelationsTableCompanion Function({
-      Value<int> id,
-      required int kunyomiReadingId,
-      required int kanjiId,
-    });
-typedef $$KanjiBankV3KunyomiReadingRelationsTableTableUpdateCompanionBuilder =
-    KanjiBankV3KunyomiReadingRelationsTableCompanion Function({
-      Value<int> id,
-      Value<int> kunyomiReadingId,
-      Value<int> kanjiId,
-    });
-
-final class $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $KanjiBankV3KunyomiReadingRelationsTableTable,
-          KanjiBankV3KunyomiReadingRelationsTableData
-        > {
-  $$KanjiBankV3KunyomiReadingRelationsTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $ReadingTableTable _kunyomiReadingIdTable(_$DaKanjiDB db) =>
-      db.readingTable.createAlias(
-        $_aliasNameGenerator(
-          db.kanjiBankV3KunyomiReadingRelationsTable.kunyomiReadingId,
-          db.readingTable.id,
-        ),
-      );
-
-  $$ReadingTableTableProcessedTableManager get kunyomiReadingId {
-    final $_column = $_itemColumn<int>('kunyomi_reading_id')!;
-
-    final manager = $$ReadingTableTableTableManager(
-      $_db,
-      $_db.readingTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_kunyomiReadingIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $KanjiBankV3TableTable _kanjiIdTable(_$DaKanjiDB db) =>
-      db.kanjiBankV3Table.createAlias(
-        $_aliasNameGenerator(
-          db.kanjiBankV3KunyomiReadingRelationsTable.kanjiId,
-          db.kanjiBankV3Table.id,
-        ),
-      );
-
-  $$KanjiBankV3TableTableProcessedTableManager get kanjiId {
-    final $_column = $_itemColumn<int>('kanji_id')!;
-
-    final manager = $$KanjiBankV3TableTableTableManager(
-      $_db,
-      $_db.kanjiBankV3Table,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer
-    extends
-        Composer<_$DaKanjiDB, $KanjiBankV3KunyomiReadingRelationsTableTable> {
-  $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$ReadingTableTableFilterComposer get kunyomiReadingId {
-    final $$ReadingTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kunyomiReadingId,
-      referencedTable: $db.readingTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ReadingTableTableFilterComposer(
-            $db: $db,
-            $table: $db.readingTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$KanjiBankV3TableTableFilterComposer get kanjiId {
-    final $$KanjiBankV3TableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3TableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiBankV3KunyomiReadingRelationsTableTableOrderingComposer
-    extends
-        Composer<_$DaKanjiDB, $KanjiBankV3KunyomiReadingRelationsTableTable> {
-  $$KanjiBankV3KunyomiReadingRelationsTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$ReadingTableTableOrderingComposer get kunyomiReadingId {
-    final $$ReadingTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kunyomiReadingId,
-      referencedTable: $db.readingTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ReadingTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.readingTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$KanjiBankV3TableTableOrderingComposer get kanjiId {
-    final $$KanjiBankV3TableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3TableTableOrderingComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer
-    extends
-        Composer<_$DaKanjiDB, $KanjiBankV3KunyomiReadingRelationsTableTable> {
-  $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  $$ReadingTableTableAnnotationComposer get kunyomiReadingId {
-    final $$ReadingTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kunyomiReadingId,
-      referencedTable: $db.readingTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ReadingTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.readingTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$KanjiBankV3TableTableAnnotationComposer get kanjiId {
-    final $$KanjiBankV3TableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3TableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $KanjiBankV3KunyomiReadingRelationsTableTable,
-          KanjiBankV3KunyomiReadingRelationsTableData,
-          $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer,
-          $$KanjiBankV3KunyomiReadingRelationsTableTableOrderingComposer,
-          $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer,
-          $$KanjiBankV3KunyomiReadingRelationsTableTableCreateCompanionBuilder,
-          $$KanjiBankV3KunyomiReadingRelationsTableTableUpdateCompanionBuilder,
-          (
-            KanjiBankV3KunyomiReadingRelationsTableData,
-            $$KanjiBankV3KunyomiReadingRelationsTableTableReferences,
-          ),
-          KanjiBankV3KunyomiReadingRelationsTableData,
-          PrefetchHooks Function({bool kunyomiReadingId, bool kanjiId})
-        > {
-  $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager(
-    _$DaKanjiDB db,
-    $KanjiBankV3KunyomiReadingRelationsTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$KanjiBankV3KunyomiReadingRelationsTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> kunyomiReadingId = const Value.absent(),
-                Value<int> kanjiId = const Value.absent(),
-              }) => KanjiBankV3KunyomiReadingRelationsTableCompanion(
-                id: id,
-                kunyomiReadingId: kunyomiReadingId,
-                kanjiId: kanjiId,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int kunyomiReadingId,
-                required int kanjiId,
-              }) => KanjiBankV3KunyomiReadingRelationsTableCompanion.insert(
-                id: id,
-                kunyomiReadingId: kunyomiReadingId,
-                kanjiId: kanjiId,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$KanjiBankV3KunyomiReadingRelationsTableTableReferences(
-                    db,
-                    table,
-                    e,
-                  ),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({kunyomiReadingId = false, kanjiId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (kunyomiReadingId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.kunyomiReadingId,
-                                referencedTable:
-                                    $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
-                                        ._kunyomiReadingIdTable(db),
-                                referencedColumn:
-                                    $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
-                                        ._kunyomiReadingIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (kanjiId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.kanjiId,
-                                referencedTable:
-                                    $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
-                                        ._kanjiIdTable(db),
-                                referencedColumn:
-                                    $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
-                                        ._kanjiIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$KanjiBankV3KunyomiReadingRelationsTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $KanjiBankV3KunyomiReadingRelationsTableTable,
-      KanjiBankV3KunyomiReadingRelationsTableData,
-      $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer,
-      $$KanjiBankV3KunyomiReadingRelationsTableTableOrderingComposer,
-      $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer,
-      $$KanjiBankV3KunyomiReadingRelationsTableTableCreateCompanionBuilder,
-      $$KanjiBankV3KunyomiReadingRelationsTableTableUpdateCompanionBuilder,
-      (
-        KanjiBankV3KunyomiReadingRelationsTableData,
-        $$KanjiBankV3KunyomiReadingRelationsTableTableReferences,
-      ),
-      KanjiBankV3KunyomiReadingRelationsTableData,
-      PrefetchHooks Function({bool kunyomiReadingId, bool kanjiId})
     >;
 typedef $$KanjiBankV3OnyomiReadingRelationsTableTableCreateCompanionBuilder =
     KanjiBankV3OnyomiReadingRelationsTableCompanion Function({
@@ -21254,6 +21122,412 @@ typedef $$KanjiBankV3OnyomiReadingRelationsTableTableProcessedTableManager =
       ),
       KanjiBankV3OnyomiReadingRelationsTableData,
       PrefetchHooks Function({bool onyomiReadingId, bool kanjiId})
+    >;
+typedef $$KanjiBankV3KunyomiReadingRelationsTableTableCreateCompanionBuilder =
+    KanjiBankV3KunyomiReadingRelationsTableCompanion Function({
+      Value<int> id,
+      required int kunyomiReadingId,
+      required int kanjiId,
+    });
+typedef $$KanjiBankV3KunyomiReadingRelationsTableTableUpdateCompanionBuilder =
+    KanjiBankV3KunyomiReadingRelationsTableCompanion Function({
+      Value<int> id,
+      Value<int> kunyomiReadingId,
+      Value<int> kanjiId,
+    });
+
+final class $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $KanjiBankV3KunyomiReadingRelationsTableTable,
+          KanjiBankV3KunyomiReadingRelationsTableData
+        > {
+  $$KanjiBankV3KunyomiReadingRelationsTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ReadingTableTable _kunyomiReadingIdTable(_$DaKanjiDB db) =>
+      db.readingTable.createAlias(
+        $_aliasNameGenerator(
+          db.kanjiBankV3KunyomiReadingRelationsTable.kunyomiReadingId,
+          db.readingTable.id,
+        ),
+      );
+
+  $$ReadingTableTableProcessedTableManager get kunyomiReadingId {
+    final $_column = $_itemColumn<int>('kunyomi_reading_id')!;
+
+    final manager = $$ReadingTableTableTableManager(
+      $_db,
+      $_db.readingTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_kunyomiReadingIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $KanjiBankV3TableTable _kanjiIdTable(_$DaKanjiDB db) =>
+      db.kanjiBankV3Table.createAlias(
+        $_aliasNameGenerator(
+          db.kanjiBankV3KunyomiReadingRelationsTable.kanjiId,
+          db.kanjiBankV3Table.id,
+        ),
+      );
+
+  $$KanjiBankV3TableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
+    final manager = $$KanjiBankV3TableTableTableManager(
+      $_db,
+      $_db.kanjiBankV3Table,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer
+    extends
+        Composer<_$DaKanjiDB, $KanjiBankV3KunyomiReadingRelationsTableTable> {
+  $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ReadingTableTableFilterComposer get kunyomiReadingId {
+    final $$ReadingTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kunyomiReadingId,
+      referencedTable: $db.readingTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReadingTableTableFilterComposer(
+            $db: $db,
+            $table: $db.readingTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$KanjiBankV3TableTableFilterComposer get kanjiId {
+    final $$KanjiBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiBankV3KunyomiReadingRelationsTableTableOrderingComposer
+    extends
+        Composer<_$DaKanjiDB, $KanjiBankV3KunyomiReadingRelationsTableTable> {
+  $$KanjiBankV3KunyomiReadingRelationsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ReadingTableTableOrderingComposer get kunyomiReadingId {
+    final $$ReadingTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kunyomiReadingId,
+      referencedTable: $db.readingTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReadingTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.readingTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$KanjiBankV3TableTableOrderingComposer get kanjiId {
+    final $$KanjiBankV3TableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableOrderingComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer
+    extends
+        Composer<_$DaKanjiDB, $KanjiBankV3KunyomiReadingRelationsTableTable> {
+  $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$ReadingTableTableAnnotationComposer get kunyomiReadingId {
+    final $$ReadingTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kunyomiReadingId,
+      referencedTable: $db.readingTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReadingTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.readingTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$KanjiBankV3TableTableAnnotationComposer get kanjiId {
+    final $$KanjiBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $KanjiBankV3KunyomiReadingRelationsTableTable,
+          KanjiBankV3KunyomiReadingRelationsTableData,
+          $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer,
+          $$KanjiBankV3KunyomiReadingRelationsTableTableOrderingComposer,
+          $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer,
+          $$KanjiBankV3KunyomiReadingRelationsTableTableCreateCompanionBuilder,
+          $$KanjiBankV3KunyomiReadingRelationsTableTableUpdateCompanionBuilder,
+          (
+            KanjiBankV3KunyomiReadingRelationsTableData,
+            $$KanjiBankV3KunyomiReadingRelationsTableTableReferences,
+          ),
+          KanjiBankV3KunyomiReadingRelationsTableData,
+          PrefetchHooks Function({bool kunyomiReadingId, bool kanjiId})
+        > {
+  $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager(
+    _$DaKanjiDB db,
+    $KanjiBankV3KunyomiReadingRelationsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$KanjiBankV3KunyomiReadingRelationsTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> kunyomiReadingId = const Value.absent(),
+                Value<int> kanjiId = const Value.absent(),
+              }) => KanjiBankV3KunyomiReadingRelationsTableCompanion(
+                id: id,
+                kunyomiReadingId: kunyomiReadingId,
+                kanjiId: kanjiId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int kunyomiReadingId,
+                required int kanjiId,
+              }) => KanjiBankV3KunyomiReadingRelationsTableCompanion.insert(
+                id: id,
+                kunyomiReadingId: kunyomiReadingId,
+                kanjiId: kanjiId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$KanjiBankV3KunyomiReadingRelationsTableTableReferences(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({kunyomiReadingId = false, kanjiId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (kunyomiReadingId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.kunyomiReadingId,
+                                referencedTable:
+                                    $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
+                                        ._kunyomiReadingIdTable(db),
+                                referencedColumn:
+                                    $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
+                                        ._kunyomiReadingIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (kanjiId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.kanjiId,
+                                referencedTable:
+                                    $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
+                                        ._kanjiIdTable(db),
+                                referencedColumn:
+                                    $$KanjiBankV3KunyomiReadingRelationsTableTableReferences
+                                        ._kanjiIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$KanjiBankV3KunyomiReadingRelationsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $KanjiBankV3KunyomiReadingRelationsTableTable,
+      KanjiBankV3KunyomiReadingRelationsTableData,
+      $$KanjiBankV3KunyomiReadingRelationsTableTableFilterComposer,
+      $$KanjiBankV3KunyomiReadingRelationsTableTableOrderingComposer,
+      $$KanjiBankV3KunyomiReadingRelationsTableTableAnnotationComposer,
+      $$KanjiBankV3KunyomiReadingRelationsTableTableCreateCompanionBuilder,
+      $$KanjiBankV3KunyomiReadingRelationsTableTableUpdateCompanionBuilder,
+      (
+        KanjiBankV3KunyomiReadingRelationsTableData,
+        $$KanjiBankV3KunyomiReadingRelationsTableTableReferences,
+      ),
+      KanjiBankV3KunyomiReadingRelationsTableData,
+      PrefetchHooks Function({bool kunyomiReadingId, bool kanjiId})
     >;
 typedef $$KanjiBankV3TagsKanjiRelationsTableTableCreateCompanionBuilder =
     KanjiBankV3TagsKanjiRelationsTableCompanion Function({
@@ -23555,6 +23829,2476 @@ typedef $$KanjiBankV3StatKanjiRelationsTableTableProcessedTableManager =
       ),
       KanjiBankV3StatKanjiRelationsTableData,
       PrefetchHooks Function({bool statId, bool kanjiId})
+    >;
+typedef $$ExampleTableTableCreateCompanionBuilder =
+    ExampleTableCompanion Function({
+      Value<int> id,
+      required String exampleSentence,
+      required String exampleSentenceTokenized,
+    });
+typedef $$ExampleTableTableUpdateCompanionBuilder =
+    ExampleTableCompanion Function({
+      Value<int> id,
+      Value<String> exampleSentence,
+      Value<String> exampleSentenceTokenized,
+    });
+
+final class $$ExampleTableTableReferences
+    extends BaseReferences<_$DaKanjiDB, $ExampleTableTable, ExampleTableData> {
+  $$ExampleTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<
+    $ExampleTranslationRelationsTableTable,
+    List<ExampleTranslationRelationsTableData>
+  >
+  _exampleTranslationRelationsTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.exampleTranslationRelationsTable,
+        aliasName: $_aliasNameGenerator(
+          db.exampleTable.id,
+          db.exampleTranslationRelationsTable.exampleId,
+        ),
+      );
+
+  $$ExampleTranslationRelationsTableTableProcessedTableManager
+  get exampleTranslationRelationsTableRefs {
+    final manager = $$ExampleTranslationRelationsTableTableTableManager(
+      $_db,
+      $_db.exampleTranslationRelationsTable,
+    ).filter((f) => f.exampleId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _exampleTranslationRelationsTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ExampleTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $ExampleTableTable> {
+  $$ExampleTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> exampleTranslationRelationsTableRefs(
+    Expression<bool> Function(
+      $$ExampleTranslationRelationsTableTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$ExampleTranslationRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.exampleTranslationRelationsTable,
+          getReferencedColumn: (t) => t.exampleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationRelationsTableTableFilterComposer(
+                $db: $db,
+                $table: $db.exampleTranslationRelationsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$ExampleTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $ExampleTableTable> {
+  $$ExampleTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExampleTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $ExampleTableTable> {
+  $$ExampleTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => column,
+  );
+
+  Expression<T> exampleTranslationRelationsTableRefs<T extends Object>(
+    Expression<T> Function(
+      $$ExampleTranslationRelationsTableTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$ExampleTranslationRelationsTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.exampleTranslationRelationsTable,
+          getReferencedColumn: (t) => t.exampleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationRelationsTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.exampleTranslationRelationsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$ExampleTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $ExampleTableTable,
+          ExampleTableData,
+          $$ExampleTableTableFilterComposer,
+          $$ExampleTableTableOrderingComposer,
+          $$ExampleTableTableAnnotationComposer,
+          $$ExampleTableTableCreateCompanionBuilder,
+          $$ExampleTableTableUpdateCompanionBuilder,
+          (ExampleTableData, $$ExampleTableTableReferences),
+          ExampleTableData,
+          PrefetchHooks Function({bool exampleTranslationRelationsTableRefs})
+        > {
+  $$ExampleTableTableTableManager(_$DaKanjiDB db, $ExampleTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ExampleTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ExampleTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> exampleSentence = const Value.absent(),
+                Value<String> exampleSentenceTokenized = const Value.absent(),
+              }) => ExampleTableCompanion(
+                id: id,
+                exampleSentence: exampleSentence,
+                exampleSentenceTokenized: exampleSentenceTokenized,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String exampleSentence,
+                required String exampleSentenceTokenized,
+              }) => ExampleTableCompanion.insert(
+                id: id,
+                exampleSentence: exampleSentence,
+                exampleSentenceTokenized: exampleSentenceTokenized,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ExampleTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({exampleTranslationRelationsTableRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (exampleTranslationRelationsTableRefs)
+                      db.exampleTranslationRelationsTable,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (exampleTranslationRelationsTableRefs)
+                        await $_getPrefetchedData<
+                          ExampleTableData,
+                          $ExampleTableTable,
+                          ExampleTranslationRelationsTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ExampleTableTableReferences
+                              ._exampleTranslationRelationsTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ExampleTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).exampleTranslationRelationsTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.exampleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ExampleTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $ExampleTableTable,
+      ExampleTableData,
+      $$ExampleTableTableFilterComposer,
+      $$ExampleTableTableOrderingComposer,
+      $$ExampleTableTableAnnotationComposer,
+      $$ExampleTableTableCreateCompanionBuilder,
+      $$ExampleTableTableUpdateCompanionBuilder,
+      (ExampleTableData, $$ExampleTableTableReferences),
+      ExampleTableData,
+      PrefetchHooks Function({bool exampleTranslationRelationsTableRefs})
+    >;
+typedef $$LanguageCodeTableTableCreateCompanionBuilder =
+    LanguageCodeTableCompanion Function({
+      Value<int> id,
+      required String languageCode,
+    });
+typedef $$LanguageCodeTableTableUpdateCompanionBuilder =
+    LanguageCodeTableCompanion Function({
+      Value<int> id,
+      Value<String> languageCode,
+    });
+
+final class $$LanguageCodeTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $LanguageCodeTableTable,
+          LanguageCodeTableData
+        > {
+  $$LanguageCodeTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $ExampleTranslationTableTable,
+    List<ExampleTranslationTableData>
+  >
+  _exampleTranslationTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.exampleTranslationTable,
+        aliasName: $_aliasNameGenerator(
+          db.languageCodeTable.id,
+          db.exampleTranslationTable.languageCodeId,
+        ),
+      );
+
+  $$ExampleTranslationTableTableProcessedTableManager
+  get exampleTranslationTableRefs {
+    final manager = $$ExampleTranslationTableTableTableManager(
+      $_db,
+      $_db.exampleTranslationTable,
+    ).filter((f) => f.languageCodeId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _exampleTranslationTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$LanguageCodeTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
+  $$LanguageCodeTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get languageCode => $composableBuilder(
+    column: $table.languageCode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> exampleTranslationTableRefs(
+    Expression<bool> Function($$ExampleTranslationTableTableFilterComposer f) f,
+  ) {
+    final $$ExampleTranslationTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.exampleTranslationTable,
+          getReferencedColumn: (t) => t.languageCodeId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationTableTableFilterComposer(
+                $db: $db,
+                $table: $db.exampleTranslationTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$LanguageCodeTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
+  $$LanguageCodeTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get languageCode => $composableBuilder(
+    column: $table.languageCode,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$LanguageCodeTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
+  $$LanguageCodeTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get languageCode => $composableBuilder(
+    column: $table.languageCode,
+    builder: (column) => column,
+  );
+
+  Expression<T> exampleTranslationTableRefs<T extends Object>(
+    Expression<T> Function($$ExampleTranslationTableTableAnnotationComposer a)
+    f,
+  ) {
+    final $$ExampleTranslationTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.exampleTranslationTable,
+          getReferencedColumn: (t) => t.languageCodeId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.exampleTranslationTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$LanguageCodeTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $LanguageCodeTableTable,
+          LanguageCodeTableData,
+          $$LanguageCodeTableTableFilterComposer,
+          $$LanguageCodeTableTableOrderingComposer,
+          $$LanguageCodeTableTableAnnotationComposer,
+          $$LanguageCodeTableTableCreateCompanionBuilder,
+          $$LanguageCodeTableTableUpdateCompanionBuilder,
+          (LanguageCodeTableData, $$LanguageCodeTableTableReferences),
+          LanguageCodeTableData,
+          PrefetchHooks Function({bool exampleTranslationTableRefs})
+        > {
+  $$LanguageCodeTableTableTableManager(
+    _$DaKanjiDB db,
+    $LanguageCodeTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LanguageCodeTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LanguageCodeTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LanguageCodeTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> languageCode = const Value.absent(),
+              }) => LanguageCodeTableCompanion(
+                id: id,
+                languageCode: languageCode,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String languageCode,
+              }) => LanguageCodeTableCompanion.insert(
+                id: id,
+                languageCode: languageCode,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$LanguageCodeTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({exampleTranslationTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (exampleTranslationTableRefs) db.exampleTranslationTable,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (exampleTranslationTableRefs)
+                    await $_getPrefetchedData<
+                      LanguageCodeTableData,
+                      $LanguageCodeTableTable,
+                      ExampleTranslationTableData
+                    >(
+                      currentTable: table,
+                      referencedTable: $$LanguageCodeTableTableReferences
+                          ._exampleTranslationTableRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$LanguageCodeTableTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).exampleTranslationTableRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where(
+                            (e) => e.languageCodeId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$LanguageCodeTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $LanguageCodeTableTable,
+      LanguageCodeTableData,
+      $$LanguageCodeTableTableFilterComposer,
+      $$LanguageCodeTableTableOrderingComposer,
+      $$LanguageCodeTableTableAnnotationComposer,
+      $$LanguageCodeTableTableCreateCompanionBuilder,
+      $$LanguageCodeTableTableUpdateCompanionBuilder,
+      (LanguageCodeTableData, $$LanguageCodeTableTableReferences),
+      LanguageCodeTableData,
+      PrefetchHooks Function({bool exampleTranslationTableRefs})
+    >;
+typedef $$ExampleTranslationTableTableCreateCompanionBuilder =
+    ExampleTranslationTableCompanion Function({
+      Value<int> id,
+      required String exampleTranslation,
+      required int languageCodeId,
+    });
+typedef $$ExampleTranslationTableTableUpdateCompanionBuilder =
+    ExampleTranslationTableCompanion Function({
+      Value<int> id,
+      Value<String> exampleTranslation,
+      Value<int> languageCodeId,
+    });
+
+final class $$ExampleTranslationTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $ExampleTranslationTableTable,
+          ExampleTranslationTableData
+        > {
+  $$ExampleTranslationTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $LanguageCodeTableTable _languageCodeIdTable(_$DaKanjiDB db) =>
+      db.languageCodeTable.createAlias(
+        $_aliasNameGenerator(
+          db.exampleTranslationTable.languageCodeId,
+          db.languageCodeTable.id,
+        ),
+      );
+
+  $$LanguageCodeTableTableProcessedTableManager get languageCodeId {
+    final $_column = $_itemColumn<int>('language_code_id')!;
+
+    final manager = $$LanguageCodeTableTableTableManager(
+      $_db,
+      $_db.languageCodeTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_languageCodeIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ExampleTranslationRelationsTableTable,
+    List<ExampleTranslationRelationsTableData>
+  >
+  _exampleTranslationRelationsTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.exampleTranslationRelationsTable,
+        aliasName: $_aliasNameGenerator(
+          db.exampleTranslationTable.id,
+          db.exampleTranslationRelationsTable.translationId,
+        ),
+      );
+
+  $$ExampleTranslationRelationsTableTableProcessedTableManager
+  get exampleTranslationRelationsTableRefs {
+    final manager = $$ExampleTranslationRelationsTableTableTableManager(
+      $_db,
+      $_db.exampleTranslationRelationsTable,
+    ).filter((f) => f.translationId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _exampleTranslationRelationsTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ExampleTranslationTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $ExampleTranslationTableTable> {
+  $$ExampleTranslationTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get exampleTranslation => $composableBuilder(
+    column: $table.exampleTranslation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$LanguageCodeTableTableFilterComposer get languageCodeId {
+    final $$LanguageCodeTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.languageCodeId,
+      referencedTable: $db.languageCodeTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LanguageCodeTableTableFilterComposer(
+            $db: $db,
+            $table: $db.languageCodeTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> exampleTranslationRelationsTableRefs(
+    Expression<bool> Function(
+      $$ExampleTranslationRelationsTableTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$ExampleTranslationRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.exampleTranslationRelationsTable,
+          getReferencedColumn: (t) => t.translationId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationRelationsTableTableFilterComposer(
+                $db: $db,
+                $table: $db.exampleTranslationRelationsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$ExampleTranslationTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $ExampleTranslationTableTable> {
+  $$ExampleTranslationTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get exampleTranslation => $composableBuilder(
+    column: $table.exampleTranslation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$LanguageCodeTableTableOrderingComposer get languageCodeId {
+    final $$LanguageCodeTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.languageCodeId,
+      referencedTable: $db.languageCodeTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LanguageCodeTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.languageCodeTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ExampleTranslationTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $ExampleTranslationTableTable> {
+  $$ExampleTranslationTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get exampleTranslation => $composableBuilder(
+    column: $table.exampleTranslation,
+    builder: (column) => column,
+  );
+
+  $$LanguageCodeTableTableAnnotationComposer get languageCodeId {
+    final $$LanguageCodeTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.languageCodeId,
+          referencedTable: $db.languageCodeTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$LanguageCodeTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.languageCodeTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  Expression<T> exampleTranslationRelationsTableRefs<T extends Object>(
+    Expression<T> Function(
+      $$ExampleTranslationRelationsTableTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$ExampleTranslationRelationsTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.exampleTranslationRelationsTable,
+          getReferencedColumn: (t) => t.translationId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationRelationsTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.exampleTranslationRelationsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$ExampleTranslationTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $ExampleTranslationTableTable,
+          ExampleTranslationTableData,
+          $$ExampleTranslationTableTableFilterComposer,
+          $$ExampleTranslationTableTableOrderingComposer,
+          $$ExampleTranslationTableTableAnnotationComposer,
+          $$ExampleTranslationTableTableCreateCompanionBuilder,
+          $$ExampleTranslationTableTableUpdateCompanionBuilder,
+          (
+            ExampleTranslationTableData,
+            $$ExampleTranslationTableTableReferences,
+          ),
+          ExampleTranslationTableData,
+          PrefetchHooks Function({
+            bool languageCodeId,
+            bool exampleTranslationRelationsTableRefs,
+          })
+        > {
+  $$ExampleTranslationTableTableTableManager(
+    _$DaKanjiDB db,
+    $ExampleTranslationTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleTranslationTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ExampleTranslationTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleTranslationTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> exampleTranslation = const Value.absent(),
+                Value<int> languageCodeId = const Value.absent(),
+              }) => ExampleTranslationTableCompanion(
+                id: id,
+                exampleTranslation: exampleTranslation,
+                languageCodeId: languageCodeId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String exampleTranslation,
+                required int languageCodeId,
+              }) => ExampleTranslationTableCompanion.insert(
+                id: id,
+                exampleTranslation: exampleTranslation,
+                languageCodeId: languageCodeId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ExampleTranslationTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                languageCodeId = false,
+                exampleTranslationRelationsTableRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (exampleTranslationRelationsTableRefs)
+                      db.exampleTranslationRelationsTable,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (languageCodeId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.languageCodeId,
+                                    referencedTable:
+                                        $$ExampleTranslationTableTableReferences
+                                            ._languageCodeIdTable(db),
+                                    referencedColumn:
+                                        $$ExampleTranslationTableTableReferences
+                                            ._languageCodeIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (exampleTranslationRelationsTableRefs)
+                        await $_getPrefetchedData<
+                          ExampleTranslationTableData,
+                          $ExampleTranslationTableTable,
+                          ExampleTranslationRelationsTableData
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$ExampleTranslationTableTableReferences
+                                  ._exampleTranslationRelationsTableRefsTable(
+                                    db,
+                                  ),
+                          managerFromTypedResult: (p0) =>
+                              $$ExampleTranslationTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).exampleTranslationRelationsTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.translationId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ExampleTranslationTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $ExampleTranslationTableTable,
+      ExampleTranslationTableData,
+      $$ExampleTranslationTableTableFilterComposer,
+      $$ExampleTranslationTableTableOrderingComposer,
+      $$ExampleTranslationTableTableAnnotationComposer,
+      $$ExampleTranslationTableTableCreateCompanionBuilder,
+      $$ExampleTranslationTableTableUpdateCompanionBuilder,
+      (ExampleTranslationTableData, $$ExampleTranslationTableTableReferences),
+      ExampleTranslationTableData,
+      PrefetchHooks Function({
+        bool languageCodeId,
+        bool exampleTranslationRelationsTableRefs,
+      })
+    >;
+typedef $$ExampleTranslationRelationsTableTableCreateCompanionBuilder =
+    ExampleTranslationRelationsTableCompanion Function({
+      Value<int> id,
+      required int exampleId,
+      required int translationId,
+    });
+typedef $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder =
+    ExampleTranslationRelationsTableCompanion Function({
+      Value<int> id,
+      Value<int> exampleId,
+      Value<int> translationId,
+    });
+
+final class $$ExampleTranslationRelationsTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $ExampleTranslationRelationsTableTable,
+          ExampleTranslationRelationsTableData
+        > {
+  $$ExampleTranslationRelationsTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ExampleTableTable _exampleIdTable(_$DaKanjiDB db) =>
+      db.exampleTable.createAlias(
+        $_aliasNameGenerator(
+          db.exampleTranslationRelationsTable.exampleId,
+          db.exampleTable.id,
+        ),
+      );
+
+  $$ExampleTableTableProcessedTableManager get exampleId {
+    final $_column = $_itemColumn<int>('example_id')!;
+
+    final manager = $$ExampleTableTableTableManager(
+      $_db,
+      $_db.exampleTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_exampleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $ExampleTranslationTableTable _translationIdTable(_$DaKanjiDB db) =>
+      db.exampleTranslationTable.createAlias(
+        $_aliasNameGenerator(
+          db.exampleTranslationRelationsTable.translationId,
+          db.exampleTranslationTable.id,
+        ),
+      );
+
+  $$ExampleTranslationTableTableProcessedTableManager get translationId {
+    final $_column = $_itemColumn<int>('translation_id')!;
+
+    final manager = $$ExampleTranslationTableTableTableManager(
+      $_db,
+      $_db.exampleTranslationTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_translationIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ExampleTranslationRelationsTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
+  $$ExampleTranslationRelationsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ExampleTableTableFilterComposer get exampleId {
+    final $$ExampleTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.exampleId,
+      referencedTable: $db.exampleTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ExampleTableTableFilterComposer(
+            $db: $db,
+            $table: $db.exampleTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ExampleTranslationTableTableFilterComposer get translationId {
+    final $$ExampleTranslationTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.translationId,
+          referencedTable: $db.exampleTranslationTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationTableTableFilterComposer(
+                $db: $db,
+                $table: $db.exampleTranslationTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$ExampleTranslationRelationsTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
+  $$ExampleTranslationRelationsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ExampleTableTableOrderingComposer get exampleId {
+    final $$ExampleTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.exampleId,
+      referencedTable: $db.exampleTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ExampleTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.exampleTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ExampleTranslationTableTableOrderingComposer get translationId {
+    final $$ExampleTranslationTableTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.translationId,
+          referencedTable: $db.exampleTranslationTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationTableTableOrderingComposer(
+                $db: $db,
+                $table: $db.exampleTranslationTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$ExampleTranslationRelationsTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
+  $$ExampleTranslationRelationsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$ExampleTableTableAnnotationComposer get exampleId {
+    final $$ExampleTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.exampleId,
+      referencedTable: $db.exampleTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ExampleTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.exampleTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ExampleTranslationTableTableAnnotationComposer get translationId {
+    final $$ExampleTranslationTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.translationId,
+          referencedTable: $db.exampleTranslationTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleTranslationTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.exampleTranslationTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$ExampleTranslationRelationsTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $ExampleTranslationRelationsTableTable,
+          ExampleTranslationRelationsTableData,
+          $$ExampleTranslationRelationsTableTableFilterComposer,
+          $$ExampleTranslationRelationsTableTableOrderingComposer,
+          $$ExampleTranslationRelationsTableTableAnnotationComposer,
+          $$ExampleTranslationRelationsTableTableCreateCompanionBuilder,
+          $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder,
+          (
+            ExampleTranslationRelationsTableData,
+            $$ExampleTranslationRelationsTableTableReferences,
+          ),
+          ExampleTranslationRelationsTableData,
+          PrefetchHooks Function({bool exampleId, bool translationId})
+        > {
+  $$ExampleTranslationRelationsTableTableTableManager(
+    _$DaKanjiDB db,
+    $ExampleTranslationRelationsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleTranslationRelationsTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ExampleTranslationRelationsTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleTranslationRelationsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> exampleId = const Value.absent(),
+                Value<int> translationId = const Value.absent(),
+              }) => ExampleTranslationRelationsTableCompanion(
+                id: id,
+                exampleId: exampleId,
+                translationId: translationId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int exampleId,
+                required int translationId,
+              }) => ExampleTranslationRelationsTableCompanion.insert(
+                id: id,
+                exampleId: exampleId,
+                translationId: translationId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ExampleTranslationRelationsTableTableReferences(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({exampleId = false, translationId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (exampleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.exampleId,
+                                referencedTable:
+                                    $$ExampleTranslationRelationsTableTableReferences
+                                        ._exampleIdTable(db),
+                                referencedColumn:
+                                    $$ExampleTranslationRelationsTableTableReferences
+                                        ._exampleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (translationId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.translationId,
+                                referencedTable:
+                                    $$ExampleTranslationRelationsTableTableReferences
+                                        ._translationIdTable(db),
+                                referencedColumn:
+                                    $$ExampleTranslationRelationsTableTableReferences
+                                        ._translationIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ExampleTranslationRelationsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $ExampleTranslationRelationsTableTable,
+      ExampleTranslationRelationsTableData,
+      $$ExampleTranslationRelationsTableTableFilterComposer,
+      $$ExampleTranslationRelationsTableTableOrderingComposer,
+      $$ExampleTranslationRelationsTableTableAnnotationComposer,
+      $$ExampleTranslationRelationsTableTableCreateCompanionBuilder,
+      $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder,
+      (
+        ExampleTranslationRelationsTableData,
+        $$ExampleTranslationRelationsTableTableReferences,
+      ),
+      ExampleTranslationRelationsTableData,
+      PrefetchHooks Function({bool exampleId, bool translationId})
+    >;
+typedef $ExampleFtsCreateCompanionBuilder =
+    ExampleFtsCompanion Function({
+      required String exampleSentenceTokenized,
+      Value<int> rowid,
+    });
+typedef $ExampleFtsUpdateCompanionBuilder =
+    ExampleFtsCompanion Function({
+      Value<String> exampleSentenceTokenized,
+      Value<int> rowid,
+    });
+
+class $ExampleFtsFilterComposer extends Composer<_$DaKanjiDB, ExampleFts> {
+  $ExampleFtsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $ExampleFtsOrderingComposer extends Composer<_$DaKanjiDB, ExampleFts> {
+  $ExampleFtsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $ExampleFtsAnnotationComposer extends Composer<_$DaKanjiDB, ExampleFts> {
+  $ExampleFtsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => column,
+  );
+}
+
+class $ExampleFtsTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          ExampleFts,
+          ExampleFt,
+          $ExampleFtsFilterComposer,
+          $ExampleFtsOrderingComposer,
+          $ExampleFtsAnnotationComposer,
+          $ExampleFtsCreateCompanionBuilder,
+          $ExampleFtsUpdateCompanionBuilder,
+          (ExampleFt, BaseReferences<_$DaKanjiDB, ExampleFts, ExampleFt>),
+          ExampleFt,
+          PrefetchHooks Function()
+        > {
+  $ExampleFtsTableManager(_$DaKanjiDB db, ExampleFts table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $ExampleFtsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $ExampleFtsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $ExampleFtsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> exampleSentenceTokenized = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleFtsCompanion(
+                exampleSentenceTokenized: exampleSentenceTokenized,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String exampleSentenceTokenized,
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleFtsCompanion.insert(
+                exampleSentenceTokenized: exampleSentenceTokenized,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $ExampleFtsProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      ExampleFts,
+      ExampleFt,
+      $ExampleFtsFilterComposer,
+      $ExampleFtsOrderingComposer,
+      $ExampleFtsAnnotationComposer,
+      $ExampleFtsCreateCompanionBuilder,
+      $ExampleFtsUpdateCompanionBuilder,
+      (ExampleFt, BaseReferences<_$DaKanjiDB, ExampleFts, ExampleFt>),
+      ExampleFt,
+      PrefetchHooks Function()
+    >;
+typedef $$RadicalsTableTableCreateCompanionBuilder =
+    RadicalsTableCompanion Function({
+      Value<int> id,
+      required String radical,
+      required int strokeCount,
+    });
+typedef $$RadicalsTableTableUpdateCompanionBuilder =
+    RadicalsTableCompanion Function({
+      Value<int> id,
+      Value<String> radical,
+      Value<int> strokeCount,
+    });
+
+final class $$RadicalsTableTableReferences
+    extends
+        BaseReferences<_$DaKanjiDB, $RadicalsTableTable, RadicalsTableData> {
+  $$RadicalsTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $RadicalKanjiRelationsTableTable,
+    List<RadicalKanjiRelationsTableData>
+  >
+  _radicalKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.radicalKanjiRelationsTable,
+        aliasName: $_aliasNameGenerator(
+          db.radicalsTable.id,
+          db.radicalKanjiRelationsTable.radicalId,
+        ),
+      );
+
+  $$RadicalKanjiRelationsTableTableProcessedTableManager
+  get radicalKanjiRelationsTableRefs {
+    final manager = $$RadicalKanjiRelationsTableTableTableManager(
+      $_db,
+      $_db.radicalKanjiRelationsTable,
+    ).filter((f) => f.radicalId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _radicalKanjiRelationsTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$RadicalsTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $RadicalsTableTable> {
+  $$RadicalsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get radical => $composableBuilder(
+    column: $table.radical,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get strokeCount => $composableBuilder(
+    column: $table.strokeCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> radicalKanjiRelationsTableRefs(
+    Expression<bool> Function($$RadicalKanjiRelationsTableTableFilterComposer f)
+    f,
+  ) {
+    final $$RadicalKanjiRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.radicalKanjiRelationsTable,
+          getReferencedColumn: (t) => t.radicalId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$RadicalKanjiRelationsTableTableFilterComposer(
+                $db: $db,
+                $table: $db.radicalKanjiRelationsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$RadicalsTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $RadicalsTableTable> {
+  $$RadicalsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get radical => $composableBuilder(
+    column: $table.radical,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get strokeCount => $composableBuilder(
+    column: $table.strokeCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$RadicalsTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $RadicalsTableTable> {
+  $$RadicalsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get radical =>
+      $composableBuilder(column: $table.radical, builder: (column) => column);
+
+  GeneratedColumn<int> get strokeCount => $composableBuilder(
+    column: $table.strokeCount,
+    builder: (column) => column,
+  );
+
+  Expression<T> radicalKanjiRelationsTableRefs<T extends Object>(
+    Expression<T> Function(
+      $$RadicalKanjiRelationsTableTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$RadicalKanjiRelationsTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.radicalKanjiRelationsTable,
+          getReferencedColumn: (t) => t.radicalId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$RadicalKanjiRelationsTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.radicalKanjiRelationsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$RadicalsTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $RadicalsTableTable,
+          RadicalsTableData,
+          $$RadicalsTableTableFilterComposer,
+          $$RadicalsTableTableOrderingComposer,
+          $$RadicalsTableTableAnnotationComposer,
+          $$RadicalsTableTableCreateCompanionBuilder,
+          $$RadicalsTableTableUpdateCompanionBuilder,
+          (RadicalsTableData, $$RadicalsTableTableReferences),
+          RadicalsTableData,
+          PrefetchHooks Function({bool radicalKanjiRelationsTableRefs})
+        > {
+  $$RadicalsTableTableTableManager(_$DaKanjiDB db, $RadicalsTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RadicalsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RadicalsTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RadicalsTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> radical = const Value.absent(),
+                Value<int> strokeCount = const Value.absent(),
+              }) => RadicalsTableCompanion(
+                id: id,
+                radical: radical,
+                strokeCount: strokeCount,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String radical,
+                required int strokeCount,
+              }) => RadicalsTableCompanion.insert(
+                id: id,
+                radical: radical,
+                strokeCount: strokeCount,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$RadicalsTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({radicalKanjiRelationsTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (radicalKanjiRelationsTableRefs)
+                  db.radicalKanjiRelationsTable,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (radicalKanjiRelationsTableRefs)
+                    await $_getPrefetchedData<
+                      RadicalsTableData,
+                      $RadicalsTableTable,
+                      RadicalKanjiRelationsTableData
+                    >(
+                      currentTable: table,
+                      referencedTable: $$RadicalsTableTableReferences
+                          ._radicalKanjiRelationsTableRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$RadicalsTableTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).radicalKanjiRelationsTableRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.radicalId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$RadicalsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $RadicalsTableTable,
+      RadicalsTableData,
+      $$RadicalsTableTableFilterComposer,
+      $$RadicalsTableTableOrderingComposer,
+      $$RadicalsTableTableAnnotationComposer,
+      $$RadicalsTableTableCreateCompanionBuilder,
+      $$RadicalsTableTableUpdateCompanionBuilder,
+      (RadicalsTableData, $$RadicalsTableTableReferences),
+      RadicalsTableData,
+      PrefetchHooks Function({bool radicalKanjiRelationsTableRefs})
+    >;
+typedef $$RadicalKanjiRelationsTableTableCreateCompanionBuilder =
+    RadicalKanjiRelationsTableCompanion Function({
+      Value<int> id,
+      required int kanjiId,
+      required int radicalId,
+    });
+typedef $$RadicalKanjiRelationsTableTableUpdateCompanionBuilder =
+    RadicalKanjiRelationsTableCompanion Function({
+      Value<int> id,
+      Value<int> kanjiId,
+      Value<int> radicalId,
+    });
+
+final class $$RadicalKanjiRelationsTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $RadicalKanjiRelationsTableTable,
+          RadicalKanjiRelationsTableData
+        > {
+  $$RadicalKanjiRelationsTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
+      db.kanjiTable.createAlias(
+        $_aliasNameGenerator(
+          db.radicalKanjiRelationsTable.kanjiId,
+          db.kanjiTable.id,
+        ),
+      );
+
+  $$KanjiTableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
+    final manager = $$KanjiTableTableTableManager(
+      $_db,
+      $_db.kanjiTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $RadicalsTableTable _radicalIdTable(_$DaKanjiDB db) =>
+      db.radicalsTable.createAlias(
+        $_aliasNameGenerator(
+          db.radicalKanjiRelationsTable.radicalId,
+          db.radicalsTable.id,
+        ),
+      );
+
+  $$RadicalsTableTableProcessedTableManager get radicalId {
+    final $_column = $_itemColumn<int>('radical_id')!;
+
+    final manager = $$RadicalsTableTableTableManager(
+      $_db,
+      $_db.radicalsTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_radicalIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$RadicalKanjiRelationsTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $RadicalKanjiRelationsTableTable> {
+  $$RadicalKanjiRelationsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$KanjiTableTableFilterComposer get kanjiId {
+    final $$KanjiTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiTableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$RadicalsTableTableFilterComposer get radicalId {
+    final $$RadicalsTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.radicalId,
+      referencedTable: $db.radicalsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RadicalsTableTableFilterComposer(
+            $db: $db,
+            $table: $db.radicalsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RadicalKanjiRelationsTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $RadicalKanjiRelationsTableTable> {
+  $$RadicalKanjiRelationsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$KanjiTableTableOrderingComposer get kanjiId {
+    final $$KanjiTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.kanjiTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$RadicalsTableTableOrderingComposer get radicalId {
+    final $$RadicalsTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.radicalId,
+      referencedTable: $db.radicalsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RadicalsTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.radicalsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RadicalKanjiRelationsTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $RadicalKanjiRelationsTableTable> {
+  $$RadicalKanjiRelationsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$KanjiTableTableAnnotationComposer get kanjiId {
+    final $$KanjiTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$RadicalsTableTableAnnotationComposer get radicalId {
+    final $$RadicalsTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.radicalId,
+      referencedTable: $db.radicalsTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RadicalsTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.radicalsTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RadicalKanjiRelationsTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $RadicalKanjiRelationsTableTable,
+          RadicalKanjiRelationsTableData,
+          $$RadicalKanjiRelationsTableTableFilterComposer,
+          $$RadicalKanjiRelationsTableTableOrderingComposer,
+          $$RadicalKanjiRelationsTableTableAnnotationComposer,
+          $$RadicalKanjiRelationsTableTableCreateCompanionBuilder,
+          $$RadicalKanjiRelationsTableTableUpdateCompanionBuilder,
+          (
+            RadicalKanjiRelationsTableData,
+            $$RadicalKanjiRelationsTableTableReferences,
+          ),
+          RadicalKanjiRelationsTableData,
+          PrefetchHooks Function({bool kanjiId, bool radicalId})
+        > {
+  $$RadicalKanjiRelationsTableTableTableManager(
+    _$DaKanjiDB db,
+    $RadicalKanjiRelationsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RadicalKanjiRelationsTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$RadicalKanjiRelationsTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$RadicalKanjiRelationsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> kanjiId = const Value.absent(),
+                Value<int> radicalId = const Value.absent(),
+              }) => RadicalKanjiRelationsTableCompanion(
+                id: id,
+                kanjiId: kanjiId,
+                radicalId: radicalId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int kanjiId,
+                required int radicalId,
+              }) => RadicalKanjiRelationsTableCompanion.insert(
+                id: id,
+                kanjiId: kanjiId,
+                radicalId: radicalId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$RadicalKanjiRelationsTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({kanjiId = false, radicalId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (kanjiId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.kanjiId,
+                                referencedTable:
+                                    $$RadicalKanjiRelationsTableTableReferences
+                                        ._kanjiIdTable(db),
+                                referencedColumn:
+                                    $$RadicalKanjiRelationsTableTableReferences
+                                        ._kanjiIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (radicalId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.radicalId,
+                                referencedTable:
+                                    $$RadicalKanjiRelationsTableTableReferences
+                                        ._radicalIdTable(db),
+                                referencedColumn:
+                                    $$RadicalKanjiRelationsTableTableReferences
+                                        ._radicalIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$RadicalKanjiRelationsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $RadicalKanjiRelationsTableTable,
+      RadicalKanjiRelationsTableData,
+      $$RadicalKanjiRelationsTableTableFilterComposer,
+      $$RadicalKanjiRelationsTableTableOrderingComposer,
+      $$RadicalKanjiRelationsTableTableAnnotationComposer,
+      $$RadicalKanjiRelationsTableTableCreateCompanionBuilder,
+      $$RadicalKanjiRelationsTableTableUpdateCompanionBuilder,
+      (
+        RadicalKanjiRelationsTableData,
+        $$RadicalKanjiRelationsTableTableReferences,
+      ),
+      RadicalKanjiRelationsTableData,
+      PrefetchHooks Function({bool kanjiId, bool radicalId})
+    >;
+typedef $$KanjiVGTableTableCreateCompanionBuilder =
+    KanjiVGTableCompanion Function({
+      Value<int> id,
+      required int kanjiId,
+      required String kanjiVGSVG,
+    });
+typedef $$KanjiVGTableTableUpdateCompanionBuilder =
+    KanjiVGTableCompanion Function({
+      Value<int> id,
+      Value<int> kanjiId,
+      Value<String> kanjiVGSVG,
+    });
+
+final class $$KanjiVGTableTableReferences
+    extends BaseReferences<_$DaKanjiDB, $KanjiVGTableTable, KanjiVGTableData> {
+  $$KanjiVGTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
+      db.kanjiTable.createAlias(
+        $_aliasNameGenerator(db.kanjiVGTable.kanjiId, db.kanjiTable.id),
+      );
+
+  $$KanjiTableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
+    final manager = $$KanjiTableTableTableManager(
+      $_db,
+      $_db.kanjiTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$KanjiVGTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+  $$KanjiVGTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<String, String, Uint8List> get kanjiVGSVG =>
+      $composableBuilder(
+        column: $table.kanjiVGSVG,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+
+  $$KanjiTableTableFilterComposer get kanjiId {
+    final $$KanjiTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiTableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiVGTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+  $$KanjiVGTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<Uint8List> get kanjiVGSVG => $composableBuilder(
+    column: $table.kanjiVGSVG,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$KanjiTableTableOrderingComposer get kanjiId {
+    final $$KanjiTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.kanjiTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiVGTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+  $$KanjiVGTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<String, Uint8List> get kanjiVGSVG =>
+      $composableBuilder(
+        column: $table.kanjiVGSVG,
+        builder: (column) => column,
+      );
+
+  $$KanjiTableTableAnnotationComposer get kanjiId {
+    final $$KanjiTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiVGTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $KanjiVGTableTable,
+          KanjiVGTableData,
+          $$KanjiVGTableTableFilterComposer,
+          $$KanjiVGTableTableOrderingComposer,
+          $$KanjiVGTableTableAnnotationComposer,
+          $$KanjiVGTableTableCreateCompanionBuilder,
+          $$KanjiVGTableTableUpdateCompanionBuilder,
+          (KanjiVGTableData, $$KanjiVGTableTableReferences),
+          KanjiVGTableData,
+          PrefetchHooks Function({bool kanjiId})
+        > {
+  $$KanjiVGTableTableTableManager(_$DaKanjiDB db, $KanjiVGTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiVGTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$KanjiVGTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$KanjiVGTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> kanjiId = const Value.absent(),
+                Value<String> kanjiVGSVG = const Value.absent(),
+              }) => KanjiVGTableCompanion(
+                id: id,
+                kanjiId: kanjiId,
+                kanjiVGSVG: kanjiVGSVG,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int kanjiId,
+                required String kanjiVGSVG,
+              }) => KanjiVGTableCompanion.insert(
+                id: id,
+                kanjiId: kanjiId,
+                kanjiVGSVG: kanjiVGSVG,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$KanjiVGTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({kanjiId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (kanjiId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.kanjiId,
+                                referencedTable: $$KanjiVGTableTableReferences
+                                    ._kanjiIdTable(db),
+                                referencedColumn: $$KanjiVGTableTableReferences
+                                    ._kanjiIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$KanjiVGTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $KanjiVGTableTable,
+      KanjiVGTableData,
+      $$KanjiVGTableTableFilterComposer,
+      $$KanjiVGTableTableOrderingComposer,
+      $$KanjiVGTableTableAnnotationComposer,
+      $$KanjiVGTableTableCreateCompanionBuilder,
+      $$KanjiVGTableTableUpdateCompanionBuilder,
+      (KanjiVGTableData, $$KanjiVGTableTableReferences),
+      KanjiVGTableData,
+      PrefetchHooks Function({bool kanjiId})
     >;
 typedef $$KanjiMetaBankV3TypeTableTableCreateCompanionBuilder =
     KanjiMetaBankV3TypeTableCompanion Function({
@@ -28396,1133 +31140,18 @@ typedef $$TermMetaBankV3IpaTagRelationsTableTableProcessedTableManager =
       TermMetaBankV3IpaTagRelationsTableData,
       PrefetchHooks Function({bool ipaId, bool tagId})
     >;
-typedef $$ExampleTableTableCreateCompanionBuilder =
-    ExampleTableCompanion Function({
-      Value<int> id,
-      required String exampleSentence,
-      required String exampleSentenceTokenized,
-    });
-typedef $$ExampleTableTableUpdateCompanionBuilder =
-    ExampleTableCompanion Function({
-      Value<int> id,
-      Value<String> exampleSentence,
-      Value<String> exampleSentenceTokenized,
-    });
-
-final class $$ExampleTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $ExampleTableTable, ExampleTableData> {
-  $$ExampleTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static MultiTypedResultKey<
-    $ExampleTranslationRelationsTableTable,
-    List<ExampleTranslationRelationsTableData>
-  >
-  _exampleTranslationRelationsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.exampleTranslationRelationsTable,
-        aliasName: $_aliasNameGenerator(
-          db.exampleTable.id,
-          db.exampleTranslationRelationsTable.exampleId,
-        ),
-      );
-
-  $$ExampleTranslationRelationsTableTableProcessedTableManager
-  get exampleTranslationRelationsTableRefs {
-    final manager = $$ExampleTranslationRelationsTableTableTableManager(
-      $_db,
-      $_db.exampleTranslationRelationsTable,
-    ).filter((f) => f.exampleId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _exampleTranslationRelationsTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$ExampleTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $ExampleTableTable> {
-  $$ExampleTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get exampleSentence => $composableBuilder(
-    column: $table.exampleSentence,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
-    column: $table.exampleSentenceTokenized,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  Expression<bool> exampleTranslationRelationsTableRefs(
-    Expression<bool> Function(
-      $$ExampleTranslationRelationsTableTableFilterComposer f,
-    )
-    f,
-  ) {
-    final $$ExampleTranslationRelationsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.exampleTranslationRelationsTable,
-          getReferencedColumn: (t) => t.exampleId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationRelationsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.exampleTranslationRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$ExampleTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $ExampleTableTable> {
-  $$ExampleTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get exampleSentence => $composableBuilder(
-    column: $table.exampleSentence,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get exampleSentenceTokenized => $composableBuilder(
-    column: $table.exampleSentenceTokenized,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$ExampleTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $ExampleTableTable> {
-  $$ExampleTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get exampleSentence => $composableBuilder(
-    column: $table.exampleSentence,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
-    column: $table.exampleSentenceTokenized,
-    builder: (column) => column,
-  );
-
-  Expression<T> exampleTranslationRelationsTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$ExampleTranslationRelationsTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$ExampleTranslationRelationsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.exampleTranslationRelationsTable,
-          getReferencedColumn: (t) => t.exampleId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationRelationsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.exampleTranslationRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$ExampleTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $ExampleTableTable,
-          ExampleTableData,
-          $$ExampleTableTableFilterComposer,
-          $$ExampleTableTableOrderingComposer,
-          $$ExampleTableTableAnnotationComposer,
-          $$ExampleTableTableCreateCompanionBuilder,
-          $$ExampleTableTableUpdateCompanionBuilder,
-          (ExampleTableData, $$ExampleTableTableReferences),
-          ExampleTableData,
-          PrefetchHooks Function({bool exampleTranslationRelationsTableRefs})
-        > {
-  $$ExampleTableTableTableManager(_$DaKanjiDB db, $ExampleTableTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ExampleTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ExampleTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$ExampleTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> exampleSentence = const Value.absent(),
-                Value<String> exampleSentenceTokenized = const Value.absent(),
-              }) => ExampleTableCompanion(
-                id: id,
-                exampleSentence: exampleSentence,
-                exampleSentenceTokenized: exampleSentenceTokenized,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required String exampleSentence,
-                required String exampleSentenceTokenized,
-              }) => ExampleTableCompanion.insert(
-                id: id,
-                exampleSentence: exampleSentence,
-                exampleSentenceTokenized: exampleSentenceTokenized,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$ExampleTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback:
-              ({exampleTranslationRelationsTableRefs = false}) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [
-                    if (exampleTranslationRelationsTableRefs)
-                      db.exampleTranslationRelationsTable,
-                  ],
-                  addJoins: null,
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (exampleTranslationRelationsTableRefs)
-                        await $_getPrefetchedData<
-                          ExampleTableData,
-                          $ExampleTableTable,
-                          ExampleTranslationRelationsTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$ExampleTableTableReferences
-                              ._exampleTranslationRelationsTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$ExampleTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).exampleTranslationRelationsTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.exampleId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
-                  },
-                );
-              },
-        ),
-      );
-}
-
-typedef $$ExampleTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $ExampleTableTable,
-      ExampleTableData,
-      $$ExampleTableTableFilterComposer,
-      $$ExampleTableTableOrderingComposer,
-      $$ExampleTableTableAnnotationComposer,
-      $$ExampleTableTableCreateCompanionBuilder,
-      $$ExampleTableTableUpdateCompanionBuilder,
-      (ExampleTableData, $$ExampleTableTableReferences),
-      ExampleTableData,
-      PrefetchHooks Function({bool exampleTranslationRelationsTableRefs})
-    >;
-typedef $$ExampleTranslationTableTableCreateCompanionBuilder =
-    ExampleTranslationTableCompanion Function({
-      Value<int> id,
-      required String exampleTranslation,
-      required int languageCodeId,
-    });
-typedef $$ExampleTranslationTableTableUpdateCompanionBuilder =
-    ExampleTranslationTableCompanion Function({
-      Value<int> id,
-      Value<String> exampleTranslation,
-      Value<int> languageCodeId,
-    });
-
-final class $$ExampleTranslationTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $ExampleTranslationTableTable,
-          ExampleTranslationTableData
-        > {
-  $$ExampleTranslationTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $LanguageCodeTableTable _languageCodeIdTable(_$DaKanjiDB db) =>
-      db.languageCodeTable.createAlias(
-        $_aliasNameGenerator(
-          db.exampleTranslationTable.languageCodeId,
-          db.languageCodeTable.id,
-        ),
-      );
-
-  $$LanguageCodeTableTableProcessedTableManager get languageCodeId {
-    final $_column = $_itemColumn<int>('language_code_id')!;
-
-    final manager = $$LanguageCodeTableTableTableManager(
-      $_db,
-      $_db.languageCodeTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_languageCodeIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static MultiTypedResultKey<
-    $ExampleTranslationRelationsTableTable,
-    List<ExampleTranslationRelationsTableData>
-  >
-  _exampleTranslationRelationsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.exampleTranslationRelationsTable,
-        aliasName: $_aliasNameGenerator(
-          db.exampleTranslationTable.id,
-          db.exampleTranslationRelationsTable.translationId,
-        ),
-      );
-
-  $$ExampleTranslationRelationsTableTableProcessedTableManager
-  get exampleTranslationRelationsTableRefs {
-    final manager = $$ExampleTranslationRelationsTableTableTableManager(
-      $_db,
-      $_db.exampleTranslationRelationsTable,
-    ).filter((f) => f.translationId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _exampleTranslationRelationsTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$ExampleTranslationTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationTableTable> {
-  $$ExampleTranslationTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get exampleTranslation => $composableBuilder(
-    column: $table.exampleTranslation,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$LanguageCodeTableTableFilterComposer get languageCodeId {
-    final $$LanguageCodeTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.languageCodeId,
-      referencedTable: $db.languageCodeTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$LanguageCodeTableTableFilterComposer(
-            $db: $db,
-            $table: $db.languageCodeTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  Expression<bool> exampleTranslationRelationsTableRefs(
-    Expression<bool> Function(
-      $$ExampleTranslationRelationsTableTableFilterComposer f,
-    )
-    f,
-  ) {
-    final $$ExampleTranslationRelationsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.exampleTranslationRelationsTable,
-          getReferencedColumn: (t) => t.translationId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationRelationsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.exampleTranslationRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$ExampleTranslationTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationTableTable> {
-  $$ExampleTranslationTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get exampleTranslation => $composableBuilder(
-    column: $table.exampleTranslation,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$LanguageCodeTableTableOrderingComposer get languageCodeId {
-    final $$LanguageCodeTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.languageCodeId,
-      referencedTable: $db.languageCodeTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$LanguageCodeTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.languageCodeTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ExampleTranslationTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationTableTable> {
-  $$ExampleTranslationTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get exampleTranslation => $composableBuilder(
-    column: $table.exampleTranslation,
-    builder: (column) => column,
-  );
-
-  $$LanguageCodeTableTableAnnotationComposer get languageCodeId {
-    final $$LanguageCodeTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.languageCodeId,
-          referencedTable: $db.languageCodeTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$LanguageCodeTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.languageCodeTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  Expression<T> exampleTranslationRelationsTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$ExampleTranslationRelationsTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$ExampleTranslationRelationsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.exampleTranslationRelationsTable,
-          getReferencedColumn: (t) => t.translationId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationRelationsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.exampleTranslationRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$ExampleTranslationTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $ExampleTranslationTableTable,
-          ExampleTranslationTableData,
-          $$ExampleTranslationTableTableFilterComposer,
-          $$ExampleTranslationTableTableOrderingComposer,
-          $$ExampleTranslationTableTableAnnotationComposer,
-          $$ExampleTranslationTableTableCreateCompanionBuilder,
-          $$ExampleTranslationTableTableUpdateCompanionBuilder,
-          (
-            ExampleTranslationTableData,
-            $$ExampleTranslationTableTableReferences,
-          ),
-          ExampleTranslationTableData,
-          PrefetchHooks Function({
-            bool languageCodeId,
-            bool exampleTranslationRelationsTableRefs,
-          })
-        > {
-  $$ExampleTranslationTableTableTableManager(
-    _$DaKanjiDB db,
-    $ExampleTranslationTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ExampleTranslationTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$ExampleTranslationTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$ExampleTranslationTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> exampleTranslation = const Value.absent(),
-                Value<int> languageCodeId = const Value.absent(),
-              }) => ExampleTranslationTableCompanion(
-                id: id,
-                exampleTranslation: exampleTranslation,
-                languageCodeId: languageCodeId,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required String exampleTranslation,
-                required int languageCodeId,
-              }) => ExampleTranslationTableCompanion.insert(
-                id: id,
-                exampleTranslation: exampleTranslation,
-                languageCodeId: languageCodeId,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$ExampleTranslationTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback:
-              ({
-                languageCodeId = false,
-                exampleTranslationRelationsTableRefs = false,
-              }) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [
-                    if (exampleTranslationRelationsTableRefs)
-                      db.exampleTranslationRelationsTable,
-                  ],
-                  addJoins:
-                      <
-                        T extends TableManagerState<
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic
-                        >
-                      >(state) {
-                        if (languageCodeId) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.languageCodeId,
-                                    referencedTable:
-                                        $$ExampleTranslationTableTableReferences
-                                            ._languageCodeIdTable(db),
-                                    referencedColumn:
-                                        $$ExampleTranslationTableTableReferences
-                                            ._languageCodeIdTable(db)
-                                            .id,
-                                  )
-                                  as T;
-                        }
-
-                        return state;
-                      },
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (exampleTranslationRelationsTableRefs)
-                        await $_getPrefetchedData<
-                          ExampleTranslationTableData,
-                          $ExampleTranslationTableTable,
-                          ExampleTranslationRelationsTableData
-                        >(
-                          currentTable: table,
-                          referencedTable:
-                              $$ExampleTranslationTableTableReferences
-                                  ._exampleTranslationRelationsTableRefsTable(
-                                    db,
-                                  ),
-                          managerFromTypedResult: (p0) =>
-                              $$ExampleTranslationTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).exampleTranslationRelationsTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.translationId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
-                  },
-                );
-              },
-        ),
-      );
-}
-
-typedef $$ExampleTranslationTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $ExampleTranslationTableTable,
-      ExampleTranslationTableData,
-      $$ExampleTranslationTableTableFilterComposer,
-      $$ExampleTranslationTableTableOrderingComposer,
-      $$ExampleTranslationTableTableAnnotationComposer,
-      $$ExampleTranslationTableTableCreateCompanionBuilder,
-      $$ExampleTranslationTableTableUpdateCompanionBuilder,
-      (ExampleTranslationTableData, $$ExampleTranslationTableTableReferences),
-      ExampleTranslationTableData,
-      PrefetchHooks Function({
-        bool languageCodeId,
-        bool exampleTranslationRelationsTableRefs,
-      })
-    >;
-typedef $$ExampleTranslationRelationsTableTableCreateCompanionBuilder =
-    ExampleTranslationRelationsTableCompanion Function({
-      Value<int> id,
-      required int exampleId,
-      required int translationId,
-    });
-typedef $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder =
-    ExampleTranslationRelationsTableCompanion Function({
-      Value<int> id,
-      Value<int> exampleId,
-      Value<int> translationId,
-    });
-
-final class $$ExampleTranslationRelationsTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $ExampleTranslationRelationsTableTable,
-          ExampleTranslationRelationsTableData
-        > {
-  $$ExampleTranslationRelationsTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $ExampleTableTable _exampleIdTable(_$DaKanjiDB db) =>
-      db.exampleTable.createAlias(
-        $_aliasNameGenerator(
-          db.exampleTranslationRelationsTable.exampleId,
-          db.exampleTable.id,
-        ),
-      );
-
-  $$ExampleTableTableProcessedTableManager get exampleId {
-    final $_column = $_itemColumn<int>('example_id')!;
-
-    final manager = $$ExampleTableTableTableManager(
-      $_db,
-      $_db.exampleTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_exampleIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $ExampleTranslationTableTable _translationIdTable(_$DaKanjiDB db) =>
-      db.exampleTranslationTable.createAlias(
-        $_aliasNameGenerator(
-          db.exampleTranslationRelationsTable.translationId,
-          db.exampleTranslationTable.id,
-        ),
-      );
-
-  $$ExampleTranslationTableTableProcessedTableManager get translationId {
-    final $_column = $_itemColumn<int>('translation_id')!;
-
-    final manager = $$ExampleTranslationTableTableTableManager(
-      $_db,
-      $_db.exampleTranslationTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_translationIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$ExampleTranslationRelationsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
-  $$ExampleTranslationRelationsTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$ExampleTableTableFilterComposer get exampleId {
-    final $$ExampleTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.exampleId,
-      referencedTable: $db.exampleTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ExampleTableTableFilterComposer(
-            $db: $db,
-            $table: $db.exampleTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$ExampleTranslationTableTableFilterComposer get translationId {
-    final $$ExampleTranslationTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.translationId,
-          referencedTable: $db.exampleTranslationTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationTableTableFilterComposer(
-                $db: $db,
-                $table: $db.exampleTranslationTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-}
-
-class $$ExampleTranslationRelationsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
-  $$ExampleTranslationRelationsTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$ExampleTableTableOrderingComposer get exampleId {
-    final $$ExampleTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.exampleId,
-      referencedTable: $db.exampleTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ExampleTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.exampleTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$ExampleTranslationTableTableOrderingComposer get translationId {
-    final $$ExampleTranslationTableTableOrderingComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.translationId,
-          referencedTable: $db.exampleTranslationTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationTableTableOrderingComposer(
-                $db: $db,
-                $table: $db.exampleTranslationTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-}
-
-class $$ExampleTranslationRelationsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationRelationsTableTable> {
-  $$ExampleTranslationRelationsTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  $$ExampleTableTableAnnotationComposer get exampleId {
-    final $$ExampleTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.exampleId,
-      referencedTable: $db.exampleTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ExampleTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.exampleTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$ExampleTranslationTableTableAnnotationComposer get translationId {
-    final $$ExampleTranslationTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.translationId,
-          referencedTable: $db.exampleTranslationTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleTranslationTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.exampleTranslationTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-}
-
-class $$ExampleTranslationRelationsTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $ExampleTranslationRelationsTableTable,
-          ExampleTranslationRelationsTableData,
-          $$ExampleTranslationRelationsTableTableFilterComposer,
-          $$ExampleTranslationRelationsTableTableOrderingComposer,
-          $$ExampleTranslationRelationsTableTableAnnotationComposer,
-          $$ExampleTranslationRelationsTableTableCreateCompanionBuilder,
-          $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder,
-          (
-            ExampleTranslationRelationsTableData,
-            $$ExampleTranslationRelationsTableTableReferences,
-          ),
-          ExampleTranslationRelationsTableData,
-          PrefetchHooks Function({bool exampleId, bool translationId})
-        > {
-  $$ExampleTranslationRelationsTableTableTableManager(
-    _$DaKanjiDB db,
-    $ExampleTranslationRelationsTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ExampleTranslationRelationsTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$ExampleTranslationRelationsTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$ExampleTranslationRelationsTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> exampleId = const Value.absent(),
-                Value<int> translationId = const Value.absent(),
-              }) => ExampleTranslationRelationsTableCompanion(
-                id: id,
-                exampleId: exampleId,
-                translationId: translationId,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int exampleId,
-                required int translationId,
-              }) => ExampleTranslationRelationsTableCompanion.insert(
-                id: id,
-                exampleId: exampleId,
-                translationId: translationId,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$ExampleTranslationRelationsTableTableReferences(
-                    db,
-                    table,
-                    e,
-                  ),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({exampleId = false, translationId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (exampleId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.exampleId,
-                                referencedTable:
-                                    $$ExampleTranslationRelationsTableTableReferences
-                                        ._exampleIdTable(db),
-                                referencedColumn:
-                                    $$ExampleTranslationRelationsTableTableReferences
-                                        ._exampleIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (translationId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.translationId,
-                                referencedTable:
-                                    $$ExampleTranslationRelationsTableTableReferences
-                                        ._translationIdTable(db),
-                                referencedColumn:
-                                    $$ExampleTranslationRelationsTableTableReferences
-                                        ._translationIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$ExampleTranslationRelationsTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $ExampleTranslationRelationsTableTable,
-      ExampleTranslationRelationsTableData,
-      $$ExampleTranslationRelationsTableTableFilterComposer,
-      $$ExampleTranslationRelationsTableTableOrderingComposer,
-      $$ExampleTranslationRelationsTableTableAnnotationComposer,
-      $$ExampleTranslationRelationsTableTableCreateCompanionBuilder,
-      $$ExampleTranslationRelationsTableTableUpdateCompanionBuilder,
-      (
-        ExampleTranslationRelationsTableData,
-        $$ExampleTranslationRelationsTableTableReferences,
-      ),
-      ExampleTranslationRelationsTableData,
-      PrefetchHooks Function({bool exampleId, bool translationId})
-    >;
 
 class $DaKanjiDBManager {
   final _$DaKanjiDB _db;
   $DaKanjiDBManager(this._db);
   $$TermTableTableTableManager get termTable =>
       $$TermTableTableTableManager(_db, _db.termTable);
+  $$TermBankV3DefinitionJsonTableTableTableManager
+  get termBankV3DefinitionJsonTable =>
+      $$TermBankV3DefinitionJsonTableTableTableManager(
+        _db,
+        _db.termBankV3DefinitionJsonTable,
+      );
   $$ReadingTableTableTableManager get readingTable =>
       $$ReadingTableTableTableManager(_db, _db.readingTable);
   $$TermBankV3TableTableTableManager get termBankV3Table =>
@@ -29569,33 +31198,21 @@ class $DaKanjiDBManager {
       );
   $$KanjiTableTableTableManager get kanjiTable =>
       $$KanjiTableTableTableManager(_db, _db.kanjiTable);
-  $$LanguageCodeTableTableTableManager get languageCodeTable =>
-      $$LanguageCodeTableTableTableManager(_db, _db.languageCodeTable);
-  $$RadicalsTableTableTableManager get radicalsTable =>
-      $$RadicalsTableTableTableManager(_db, _db.radicalsTable);
-  $$RadicalKanjiRelationsTableTableTableManager
-  get radicalKanjiRelationsTable =>
-      $$RadicalKanjiRelationsTableTableTableManager(
-        _db,
-        _db.radicalKanjiRelationsTable,
-      );
-  $$KanjiVGTableTableTableManager get kanjiVGTable =>
-      $$KanjiVGTableTableTableManager(_db, _db.kanjiVGTable);
   $$IndexTableTableTableManager get indexTable =>
       $$IndexTableTableTableManager(_db, _db.indexTable);
   $$KanjiBankV3TableTableTableManager get kanjiBankV3Table =>
       $$KanjiBankV3TableTableTableManager(_db, _db.kanjiBankV3Table);
-  $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager
-  get kanjiBankV3KunyomiReadingRelationsTable =>
-      $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager(
-        _db,
-        _db.kanjiBankV3KunyomiReadingRelationsTable,
-      );
   $$KanjiBankV3OnyomiReadingRelationsTableTableTableManager
   get kanjiBankV3OnyomiReadingRelationsTable =>
       $$KanjiBankV3OnyomiReadingRelationsTableTableTableManager(
         _db,
         _db.kanjiBankV3OnyomiReadingRelationsTable,
+      );
+  $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager
+  get kanjiBankV3KunyomiReadingRelationsTable =>
+      $$KanjiBankV3KunyomiReadingRelationsTableTableTableManager(
+        _db,
+        _db.kanjiBankV3KunyomiReadingRelationsTable,
       );
   $$KanjiBankV3TagsKanjiRelationsTableTableTableManager
   get kanjiBankV3TagsKanjiRelationsTable =>
@@ -29628,6 +31245,33 @@ class $DaKanjiDBManager {
         _db,
         _db.kanjiBankV3StatKanjiRelationsTable,
       );
+  $$ExampleTableTableTableManager get exampleTable =>
+      $$ExampleTableTableTableManager(_db, _db.exampleTable);
+  $$LanguageCodeTableTableTableManager get languageCodeTable =>
+      $$LanguageCodeTableTableTableManager(_db, _db.languageCodeTable);
+  $$ExampleTranslationTableTableTableManager get exampleTranslationTable =>
+      $$ExampleTranslationTableTableTableManager(
+        _db,
+        _db.exampleTranslationTable,
+      );
+  $$ExampleTranslationRelationsTableTableTableManager
+  get exampleTranslationRelationsTable =>
+      $$ExampleTranslationRelationsTableTableTableManager(
+        _db,
+        _db.exampleTranslationRelationsTable,
+      );
+  $ExampleFtsTableManager get exampleFts =>
+      $ExampleFtsTableManager(_db, _db.exampleFts);
+  $$RadicalsTableTableTableManager get radicalsTable =>
+      $$RadicalsTableTableTableManager(_db, _db.radicalsTable);
+  $$RadicalKanjiRelationsTableTableTableManager
+  get radicalKanjiRelationsTable =>
+      $$RadicalKanjiRelationsTableTableTableManager(
+        _db,
+        _db.radicalKanjiRelationsTable,
+      );
+  $$KanjiVGTableTableTableManager get kanjiVGTable =>
+      $$KanjiVGTableTableTableManager(_db, _db.kanjiVGTable);
   $$KanjiMetaBankV3TypeTableTableTableManager get kanjiMetaBankV3TypeTable =>
       $$KanjiMetaBankV3TypeTableTableTableManager(
         _db,
@@ -29681,17 +31325,32 @@ class $DaKanjiDBManager {
         _db,
         _db.termMetaBankV3IpaTagRelationsTable,
       );
-  $$ExampleTableTableTableManager get exampleTable =>
-      $$ExampleTableTableTableManager(_db, _db.exampleTable);
-  $$ExampleTranslationTableTableTableManager get exampleTranslationTable =>
-      $$ExampleTranslationTableTableTableManager(
-        _db,
-        _db.exampleTranslationTable,
-      );
-  $$ExampleTranslationRelationsTableTableTableManager
-  get exampleTranslationRelationsTable =>
-      $$ExampleTranslationRelationsTableTableTableManager(
-        _db,
-        _db.exampleTranslationRelationsTable,
-      );
+}
+
+class KanjiBankV3SearchResult {
+  final String kanji;
+  final String onyomis;
+  final String kunyomis;
+  final String tags;
+  final String definitions;
+  final String stats;
+  KanjiBankV3SearchResult({
+    required this.kanji,
+    required this.onyomis,
+    required this.kunyomis,
+    required this.tags,
+    required this.definitions,
+    required this.stats,
+  });
+}
+
+class ExampleFtsSearchResult {
+  final int id;
+  final String exampleSentence;
+  final String translations;
+  ExampleFtsSearchResult({
+    required this.id,
+    required this.exampleSentence,
+    required this.translations,
+  });
 }

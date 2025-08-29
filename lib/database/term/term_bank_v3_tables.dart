@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:dakanji_db/database/general_tables/reading_tables.dart';
 import 'package:dakanji_db/database/general_tables/term_tables.dart';
+import 'package:dakanji_db/helper/zlib_text_converter.dart';
 import 'package:drift/drift.dart';
 
 
@@ -17,6 +18,9 @@ class TermBankV3Table extends Table {
   /// The ID of the text for the term.
   IntColumn get termId => integer().references(TermTable, #id)();
 
+  /// The ID of the JSON representation of the definition
+  IntColumn get termJsonId => integer().references(TermBankV3DefinitionJsonTable, #id)();
+
   /// ID reading of the term, or an empty string if the reading is the same as
   /// the term.
   IntColumn get readingId => integer().references(ReadingTable, #id)();
@@ -29,6 +33,21 @@ class TermBankV3Table extends Table {
   /// Sequence number for the term. Terms with the same sequence number can be
   /// shown together when the "resultOutputMode" option is set to "merge".
   IntColumn get sequenceNumber => integer()();
+
+}
+
+/// Table that stores the json of a definition (important for structured content)
+class TermBankV3DefinitionJsonTable extends Table {
+
+  @override
+  Set<Column> get primaryKey => {id};
+  
+  /// id of this entry
+  IntColumn get id => integer()();
+
+  /// JSON representation of the term
+  TextColumn get definitionJson => text()();
+  //BlobColumn get definitionJson => blob().map(const ZlibStringConverter())();
 
 }
 

@@ -23,9 +23,6 @@ part 'kanji_bank_v3_dao.g.dart';
     KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable, 
   ],
-  include: {
-    'kanji_bank_v3_views.drift', 'kanji_bank_v3_queries.drift',
-  }
 )
 class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMixin {
   
@@ -38,7 +35,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   Future<List<KanjiBankV3Entry>?> getKanjiBankEntriesFromKanji(String kanji) async {
 
     List<KanjiBankV3Entry> searchResults =
-      (await kanji_bank_v3_search(kanji).get())
+      (await db.kanji_bank_v3_search(kanji).get())
       .map((e) => KanjiBankV3Entry.fromKanjiBankV3SearchResult(e))
       .toList();
 

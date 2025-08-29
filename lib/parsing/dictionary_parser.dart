@@ -64,14 +64,13 @@ Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db) async {
     await parseTagBankV3File(tagFile, db);
   }
 
-  // parse the kanji bank files
   for (var file in validFiles) {
     await parseDictionaryFile(Tuple3(file, db, dictEntry!));
   }
 
 }
 
-/// Depending on the file name applies the correct conversion method
+/// Depending on the file name applies the correct parsing method
 Future parseDictionaryFile(Tuple3<File, DaKanjiDB, IndexTableData> args) async {
 
   File dictFile = args.item1;

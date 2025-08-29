@@ -21,9 +21,6 @@ part 'term_bank_v3_dao.g.dart';
     TermBankV3DefinitionTagsTable, TermBankV3RuleIdentifierTable,
     TagBankV3Table
   ],
-  include: {
-    'term_bank_v3_views.drift', 'term_bank_v3_queries.drift',
-  }
 )
 class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixin {
   
@@ -42,7 +39,7 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
     assert (languages.isNotEmpty);
     List<String> langs = languages.map((e) => e.name,).toList();
 
-    List<TermBankV3Entry> results = (await term_bank_v3_search(query, limit, offset).get())
+    List<TermBankV3Entry> results = (await db.term_bank_v3_search(query, limit, offset).get())
       .map((e) => TermBankV3Entry.fromTermBankV3SearchViewData(e))
       .toList();
 
@@ -88,6 +85,18 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
 
     // Extract the max ID value, defaulting to 0 if null
     return query.read(termBankV3DefinitionTagsTable.id.max()) ?? 0;
+
+  }
+
+  /// Get the maximum definition tag id 
+  Future<int> maxTermBankV3DefinitionJsonId() async {
+
+    final query = await (selectOnly(termBankV3DefinitionJsonTable)
+        ..addColumns([termBankV3DefinitionJsonTable.id.max()]))
+      .getSingle();
+
+    // Extract the max ID value, defaulting to 0 if null
+    return query.read(termBankV3DefinitionJsonTable.id.max()) ?? 0;
 
   }
 

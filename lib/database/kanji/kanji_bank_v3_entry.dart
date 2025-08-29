@@ -1,7 +1,7 @@
 // Package imports:
 import 'dart:convert';
 
-import 'package:dakanji_db/database/kanji/kanji_bank_v3_dao.dart';
+import 'package:dakanji_db/database/dakanji_db.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
@@ -56,7 +56,7 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
 
   factory KanjiBankV3Entry.fromKanjiBankV3SearchResult(KanjiBankV3SearchResult r){
     return KanjiBankV3Entry(
-      kanji: r.kanji ?? "",
+      kanji: r.kanji,
       onyomis: List<String>.from(jsonDecode(r.onyomis)),
       kunyomis: List<String>.from(jsonDecode(r.kunyomis)),
       tags: List.from(jsonDecode(r.tags))
