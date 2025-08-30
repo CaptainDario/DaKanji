@@ -30,14 +30,16 @@ Install it like this
 The official (base dictionary that is shipped with DaKanji) consists of the following dictionaries
 
 * Yomitan format
-  * Jitendex
+  * [Jitendex](https://github.com/yomidevs/jmdict-yomitan)
     * Base dictionary
   * [JLPT](https://github.com/stephenmk/yomitan-jlpt-vocab)
     * Word level JLPT annotations
   * JPDB frquency
     * Word frequencies
-  * KANJIDIC
+  * [KANJIDIC](https://github.com/yomidevs/jmdict-yomitan)
     * Kanji definitions
+  * [Kanjium](https://learnjapanese.moe/yomichan/)
+    * Pitch accents
 * Custom parsed
   * Kanji
     * [RADK](https://github.com/scriptin/jmdict-simplified)
@@ -46,17 +48,14 @@ The official (base dictionary that is shipped with DaKanji) consists of the foll
       * Project contains information about radicals used by kanjis.
     * [KanjiVG](https://kanjivg.tagaini.net/)
       * Project contains detailed stroke order diagrams of many kanji.
-    * [Kanjium](https://github.com/mifunetoshiro/kanjium)
-      * Pitch accents
-      * Antonyms
-      * Synonyms
-      * Kanjidict
+    * [Kanji Network](https://github.com/acoomans/kanjinetworks)
+      * Database of etymologies for kanjis
   * Audio
     * [Yomitan Audio](https://github.com/yomidevs/local-audio-yomichan)
   * Examples
     * Tatoeba (based on DaKanji example format)
 
-To build DaKanji DB first download each of the aforementioned databaes and place them in `./input_files`
+To build DaKanji DB first download each of the aforementioned database and place them in `./input_files`
 
 Now the DB can be build by running
 
@@ -129,20 +128,7 @@ For this two different types are importable.
 
 ##### Japanese with translation
 
-For this type of example sentences any text file that is structured like the following example can be imported:
-
-```
-jpn	eng	spa	deu
-きみにちょっとしたものをもってきたよ。	I brought you a little something.	Te traje algo pequeño.	Ich habe dir eine Kleinigkeit mitgebracht.
-何かしてみましょう。	Let's try something.	Hagamos algo.	Lass uns etwas probieren.
-私は眠らなければなりません。	I have to go to sleep.		Ich muss schlafen gehen.
-```
-
-Here it should be noted that he header should contain languages given by their `iso8306 language code` separated by tabs (the first language must be japanese!).
-The following lines should be the example sentence and their translation.
-If a translation is not available in a certain language, two tabs should be included like in the last line above.
-
-A longer example can be found in [the samples folder](./samples/example_sentences/example_bank_1.tsv)
+DaKanji can import custom examples and their translation for this, the format in [the samples folder](./samples/example_sentences/1/) needs to be followed.
 
 ##### Extract examples from Japanese text
 
