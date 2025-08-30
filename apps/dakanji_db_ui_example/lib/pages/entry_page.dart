@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:dakanji_db_ui/structured_content_widget.dart';
+import 'package:dakanji_db_shared/paths.dart';
 
 class EntryPage extends StatefulWidget {
   const EntryPage({super.key});
@@ -15,7 +16,7 @@ class _EntryPageState extends State<EntryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<Map<String, dynamic>?>(
+      body: FutureBuilder<List<dynamic>?>(
         // Load the structured content from the local file.
         future: _loadStructuredContentFromFile(),
         builder: (context, snapshot) {
@@ -33,7 +34,7 @@ class _EntryPageState extends State<EntryPage> {
             return SelectableRegion(
               selectionControls: MaterialTextSelectionControls(),
               child: StructuredContentWidget(
-                content: snapshot.data!,
+                content: snapshot.data?.first,
                 imageAssetBasePath: imageBasePath,
               ),
             );
@@ -45,9 +46,9 @@ class _EntryPageState extends State<EntryPage> {
 }
 
 /// Loads and parses the first structured content definition from a local file.
-Future<Map<String, dynamic>?> _loadStructuredContentFromFile() async {
-  const devYomitanPath =
-      "/Users/darioklepoch/dev/DaKanji/dakanji_db/samples/yomitan/term_bank_2.json";
+Future<List<dynamic>?> _loadStructuredContentFromFile() async {
+  final devYomitanPath = "$yomitanSampleDictionaryPath/term_bank_2.json";
+  print(devYomitanPath);
   final file = File(devYomitanPath);
 
   if (!await file.exists()) {
@@ -60,12 +61,7 @@ Future<Map<String, dynamic>?> _loadStructuredContentFromFile() async {
   if (termBank.isNotEmpty) {
     final entry = termBank.first;
     final definitions = entry[5] as List;
-
-    for (final definition in definitions) {
-      if (definition is Map && definition['type'] == 'structured-content') {
-        return definition['content'] as Map<String, dynamic>;
-      }
-    }
+    return definitions;
   }
   return null; // No structured content found
 }

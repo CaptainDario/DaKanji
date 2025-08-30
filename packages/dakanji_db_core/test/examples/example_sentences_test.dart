@@ -7,7 +7,7 @@ import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import '../../bin/paths.dart';
+import 'package:dakanji_db_shared/paths.dart';
 import 'example_sentences_test_expected_values.dart';
 
 

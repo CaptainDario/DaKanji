@@ -63,14 +63,14 @@ dom.Element createElementFromStructuredContent(Map<String, dynamic> content) {
   }
 
   // Recursively generate the inner HTML for all child content.
-  element.innerHtml = getStructuredContentHtml(childContent);
+  element.innerHtml = convertDefinitionToHtml(childContent);
 
   return element;
 }
 
 
 /// Recursively builds an HTML string from a structured content object.
-String getStructuredContentHtml(dynamic content) {
+String convertDefinitionToHtml(dynamic content) {
   if (content == null) {
     return '';
   }
@@ -79,7 +79,7 @@ String getStructuredContentHtml(dynamic content) {
   }
 
   if (content is List) {
-    return content.map(getStructuredContentHtml).join();
+    return content.map(convertDefinitionToHtml).join();
   }
 
   if (content is Map<String, dynamic>) {
@@ -123,7 +123,7 @@ Future<void> main() async {
         if (definition is Map && definition['type'] == 'structured-content') {
           // Pass the *actual content* of the definition to the HTML generator.
           final actualContent = definition['content'];
-          print(getStructuredContentHtml(actualContent));
+          print(convertDefinitionToHtml(actualContent));
         } else if (definition is String) {
           // Handle simple string definitions.
           print(definition);

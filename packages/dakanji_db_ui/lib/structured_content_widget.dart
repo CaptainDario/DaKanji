@@ -22,15 +22,15 @@ class StructuredContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Convert the structured content JSON into a standard HTML string.
-    final htmlString = getStructuredContentHtml(content);
-    final definitions = extractPlainTextDefinitions(content[5]);
+    final htmlString = convertDefinitionToHtml(content);
+    //final definitions = extractPlainTextDefinitions(content[5]);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
           Text(
-            "Definitions found: $definitions"
+            "Definitions found: "
           ),
           HtmlWidget(
             htmlString,
@@ -42,6 +42,7 @@ class StructuredContentWidget extends StatelessWidget {
                 final uri = Uri.parse(url);
                 final query = uri.queryParameters['query'];
                 if (query != null) {
+                  // TODO 
                   // In a real app, you would trigger a search here.
                   print('Internal link tapped! Search for: "$query"');
                   ScaffoldMessenger.of(context).showSnackBar(

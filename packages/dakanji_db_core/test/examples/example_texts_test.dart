@@ -8,7 +8,7 @@ import 'package:path/path.dart' as p;
 
 // Project imports:
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import '../../bin/paths.dart';
+import 'package:dakanji_db_shared/paths.dart';
 import 'example_texts_test_expected_values.dart';
 
 

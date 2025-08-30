@@ -5,7 +5,7 @@ import 'package:universal_io/io.dart';
 // Project imports:
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
-import '../../bin/paths.dart';
+import 'package:dakanji_db_shared/paths.dart';
 import 'term_meta_bank_expected_values.dart';
 
 void main() async {

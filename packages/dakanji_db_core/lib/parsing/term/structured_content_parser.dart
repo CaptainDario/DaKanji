@@ -4,6 +4,7 @@ import '/parsing/term/structure_content_ui_converter.dart';
 
 import '/parsing/term/parsed_term.dart';
 import '/parsing/term/term_parsing_method.dart';
+import 'package:dakanji_db_shared/paths.dart';
 import 'package:html/parser.dart';
 
 /// Recursively extracts all text from within a given JSON node.
@@ -127,7 +128,7 @@ List<ParsedTerm> extractPlainTextDefinitions(List<dynamic> termEntryJson) {
 String getCustomDefinitionText(String jsonString) {
   try {
     final dynamic content = jsonDecode(jsonString);
-    final html = getStructuredContentHtml(content);
+    final html = convertDefinitionToHtml(content);
 
     // Use the standard 'html' package to parse the document and get its text.
     final document = parse(html);
@@ -143,7 +144,7 @@ String getCustomDefinitionText(String jsonString) {
 
 Future<void> main() async {
   print(Directory("../../").listSync());
-  const devYomitanPath = "../../data/yomitan/term_bank_2.json";
+  final devYomitanPath = "$yomitanSampleDictionaryPath/term_bank_2.json";
   final file = File(devYomitanPath);
 
   try {

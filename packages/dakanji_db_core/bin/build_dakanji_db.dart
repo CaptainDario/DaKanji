@@ -6,7 +6,7 @@ import 'package:dakanji_db_core/conversion/kanji_vg.dart';
 import 'package:dakanji_db_core/conversion/radicals.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
-import 'paths.dart';
+import 'package:dakanji_db_shared/paths.dart';
 
 void main() async {
 

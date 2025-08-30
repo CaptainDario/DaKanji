@@ -5,7 +5,7 @@ import 'package:universal_io/io.dart';
 // Project imports:
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
-import '../../bin/paths.dart';
+import 'package:dakanji_db_shared/paths.dart';
 import 'kanji_bank_test_values.dart';
 
 void main() async {
@@ -16,7 +16,7 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(devYomitanPath), db);
+  await parseDictionaryFolder(Directory(yomitanSampleDictionaryPath), db);
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   test('Test importing samples', () async {
