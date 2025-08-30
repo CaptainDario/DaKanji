@@ -2,7 +2,8 @@ name: dakanji_db
 description: Library to populate and access DaKanji's database
 repository: https://github.com/captaindario/dakanji-db
 publish_to: none
-version: 4.0.0
+version: 1.0.0
+resolution: workspace
 
 environment:
   sdk: ^3.8.0
@@ -28,7 +29,7 @@ dev_dependencies:
   import_sorter: ^4.6.0
   freezed: ^3.2.0
   lints: ^6.0.0
-  test: ^1.26.3
+  test: ^1.26.0
   json_serializable: ^6.10.0
 
 #dependency_overrides:
