@@ -1,11 +1,11 @@
 // Package imports:
-import 'package:dakanji_db/parsing/example_parser.dart';
+import 'package:dakanji_db_core/parsing/example_parser.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/dakanji_db.dart';
-import 'package:dakanji_db/parsing/dictionary_parser.dart';
+import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'paths.dart';
 
 void main() async {

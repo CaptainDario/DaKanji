@@ -1,7 +1,7 @@
 // Package imports:
-import 'package:dakanji_db/database/general_tables/definition_tables.dart';
-import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
-import 'package:dakanji_db/database/term/term_bank_v3_tables.dart';
+import '/database/general_tables/definition_tables.dart';
+import '/database/tag/tag_bank_v3_tables.dart';
+import '/database/term/term_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
 
 

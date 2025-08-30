@@ -2,9 +2,9 @@
 import 'package:drift/drift.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/general_tables/reading_tables.dart';
-import 'package:dakanji_db/database/general_tables/term_tables.dart';
-import 'package:dakanji_db/database/index/index_tables.dart';
+import '/database/general_tables/reading_tables.dart';
+import '/database/general_tables/term_tables.dart';
+import '/database/index/index_tables.dart';
 
 /// Table that store the main term of a meta term bank and links to its data
 class TermMetaBankV3Table extends Table {

@@ -1,4 +1,4 @@
-import 'package:dakanji_db/parsing/term/term_parsing_method.dart';
+import '/parsing/term/term_parsing_method.dart';
 
 /// A class to hold the extracted definition text and the method used to parse it.
 class ParsedTerm {

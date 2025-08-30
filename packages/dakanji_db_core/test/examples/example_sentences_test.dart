@@ -1,12 +1,12 @@
 // Package imports:
-import 'package:dakanji_db/iso/iso_table.dart';
-import 'package:dakanji_db/parsing/example_parser.dart';
+import 'package:dakanji_db_core/iso/iso_table.dart';
+import 'package:dakanji_db_core/parsing/example_parser.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/dakanji_db.dart';
 import '../../bin/paths.dart';
 import 'example_sentences_test_expected_values.dart';
 

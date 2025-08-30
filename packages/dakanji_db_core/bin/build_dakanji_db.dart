@@ -2,10 +2,10 @@
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db/conversion/kanji_vg.dart';
-import 'package:dakanji_db/conversion/radicals.dart';
-import 'package:dakanji_db/database/dakanji_db.dart';
-import 'package:dakanji_db/parsing/dictionary_parser.dart';
+import 'package:dakanji_db_core/conversion/kanji_vg.dart';
+import 'package:dakanji_db_core/conversion/radicals.dart';
+import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'paths.dart';
 
 void main() async {

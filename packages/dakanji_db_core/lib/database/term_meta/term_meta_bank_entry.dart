@@ -2,8 +2,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/term_meta/term_meta_bank_ipa_entry.dart';
-import 'package:dakanji_db/database/term_meta/term_meta_bank_pitch_entry.dart';
+import '/database/term_meta/term_meta_bank_ipa_entry.dart';
+import '/database/term_meta/term_meta_bank_pitch_entry.dart';
 
 part 'term_meta_bank_entry.freezed.dart';
 part 'term_meta_bank_entry.g.dart';

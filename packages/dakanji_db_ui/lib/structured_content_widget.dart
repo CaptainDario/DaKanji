@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:core/parsing/term/structure_content_ui_converter.dart';
-import 'package:core/parsing/term/structured_content_parser.dart';
+import 'package:dakanji_db_core/parsing/term/structure_content_ui_converter.dart';
+import 'package:dakanji_db_core/parsing/term/structured_content_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
@@ -23,14 +23,14 @@ class StructuredContentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // Convert the structured content JSON into a standard HTML string.
     final htmlString = getStructuredContentHtml(content);
-    final definitions = extractPlainTextDefinitions(content);
+    final definitions = extractPlainTextDefinitions(content[5]);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
           Text(
-            "Definitions found: ${}"
+            "Definitions found: $definitions"
           ),
           HtmlWidget(
             htmlString,

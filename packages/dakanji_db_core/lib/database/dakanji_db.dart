@@ -1,46 +1,46 @@
 // Package imports:
-import 'package:dakanji_db/database/dakanji_db_dao.dart';
-import 'package:dakanji_db/database/example/example_dao.dart';
-import 'package:dakanji_db/database/example/example_relation_tables.dart';
-import 'package:dakanji_db/database/example/example_tables.dart';
-import 'package:dakanji_db/database/general_tables/language_code_dao.dart';
-import 'package:dakanji_db/database/general_tables/language_code_table.dart';
-import 'package:dakanji_db/database/term/term_bank_v3_dao.dart';
-import 'package:dakanji_db/database/term/term_bank_v3_relation_tables.dart';
-import 'package:dakanji_db/database/term/term_bank_v3_tables.dart';
+import '/database/dakanji_db_dao.dart';
+import '/database/example/example_dao.dart';
+import '/database/example/example_relation_tables.dart';
+import '/database/example/example_tables.dart';
+import '/database/general_tables/language_code_dao.dart';
+import '/database/general_tables/language_code_table.dart';
+import '/database/term/term_bank_v3_dao.dart';
+import '/database/term/term_bank_v3_relation_tables.dart';
+import '/database/term/term_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/general_tables/kanji_dao.dart';
-import 'package:dakanji_db/database/general_tables/kanji_tables.dart';
-import 'package:dakanji_db/database/general_tables/definition_dao.dart';
-import 'package:dakanji_db/database/general_tables/definition_tables.dart';
-import 'package:dakanji_db/database/general_tables/reading_dao.dart';
-import 'package:dakanji_db/database/general_tables/reading_tables.dart';
-import 'package:dakanji_db/database/general_tables/term_dao.dart';
-import 'package:dakanji_db/database/general_tables/term_tables.dart';
-import 'package:dakanji_db/database/index/index_dao.dart';
-import 'package:dakanji_db/database/index/index_tables.dart';
-import 'package:dakanji_db/database/kanji/kanji_bank_v3_dao.dart';
-import 'package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart';
-import 'package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart';
-import 'package:dakanji_db/database/kanji_meta/kanji_meta_bank_v3_dao.dart';
-import 'package:dakanji_db/database/kanji_meta/kanji_meta_bank_v3_tables.dart';
-import 'package:dakanji_db/database/kanji_vg/kanji_vg_dao.dart';
-import 'package:dakanji_db/database/kanji_vg/kanji_vg_tables.dart';
-import 'package:dakanji_db/database/radicals/radical_dao.dart';
-import 'package:dakanji_db/database/radicals/radical_relation_tables.dart';
-import 'package:dakanji_db/database/radicals/radical_tables.dart';
-import 'package:dakanji_db/database/tag/tag_bank_v3_dao.dart';
-import 'package:dakanji_db/database/tag/tag_bank_v3_tables.dart';
-import 'package:dakanji_db/database/term_meta/term_meta_bank_relation_tables.dart';
-import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_dao.dart';
-import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_tables.dart';
+import '/database/general_tables/kanji_dao.dart';
+import '/database/general_tables/kanji_tables.dart';
+import '/database/general_tables/definition_dao.dart';
+import '/database/general_tables/definition_tables.dart';
+import '/database/general_tables/reading_dao.dart';
+import '/database/general_tables/reading_tables.dart';
+import '/database/general_tables/term_dao.dart';
+import '/database/general_tables/term_tables.dart';
+import '/database/index/index_dao.dart';
+import '/database/index/index_tables.dart';
+import '/database/kanji/kanji_bank_v3_dao.dart';
+import '/database/kanji/kanji_bank_v3_relation_tables.dart';
+import '/database/kanji/kanji_bank_v3_tables.dart';
+import '/database/kanji_meta/kanji_meta_bank_v3_dao.dart';
+import '/database/kanji_meta/kanji_meta_bank_v3_tables.dart';
+import '/database/kanji_vg/kanji_vg_dao.dart';
+import '/database/kanji_vg/kanji_vg_tables.dart';
+import '/database/radicals/radical_dao.dart';
+import '/database/radicals/radical_relation_tables.dart';
+import '/database/radicals/radical_tables.dart';
+import '/database/tag/tag_bank_v3_dao.dart';
+import '/database/tag/tag_bank_v3_tables.dart';
+import '/database/term_meta/term_meta_bank_relation_tables.dart';
+import '/database/term_meta/term_meta_bank_v3_dao.dart';
+import '/database/term_meta/term_meta_bank_v3_tables.dart';
 // this is NECCESSARY
 // ignore: unused_import
-import 'package:dakanji_db/helper/zlib_text_converter.dart';
+import '/helper/zlib_text_converter.dart';
 
 part 'dakanji_db.g.dart';
 

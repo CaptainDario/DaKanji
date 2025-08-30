@@ -1,13 +1,13 @@
 // Package imports:
-import 'package:dakanji_db/parsing/japanese_processing/mecab_parsing.dart';
-import 'package:dakanji_db/parsing/japanese_processing/sentence_finding.dart';
+import '/parsing/japanese_processing/mecab_parsing.dart';
+import '/parsing/japanese_processing/sentence_finding.dart';
 import 'package:drift/drift.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 //import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/dakanji_db.dart';
+import '/database/dakanji_db.dart';
 
 
 

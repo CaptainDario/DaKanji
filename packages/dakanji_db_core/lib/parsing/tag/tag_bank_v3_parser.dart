@@ -6,7 +6,7 @@ import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/dakanji_db.dart';
+import '/database/dakanji_db.dart';
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
 Future parseTagBankV3File(File indexJsonFile, DaKanjiDB db) async {

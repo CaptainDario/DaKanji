@@ -1,7 +1,7 @@
 // Package imports:
-import 'package:dakanji_db/database/general_tables/reading_tables.dart';
-import 'package:dakanji_db/database/general_tables/term_tables.dart';
-import 'package:dakanji_db/helper/zlib_text_converter.dart';
+import '/database/general_tables/reading_tables.dart';
+import '/database/general_tables/term_tables.dart';
+import '/helper/zlib_text_converter.dart';
 import 'package:drift/drift.dart';
 
 

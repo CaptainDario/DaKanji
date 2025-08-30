@@ -1,4 +1,4 @@
-name: ui
+name: dakanji_db_ui
 description: Project to provide a user interface for DaKanjiDB
 publish_to: 'none'
 resolution: workspace
@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_widget_from_html: ^0.17.0
-  core:
+  dakanji_db_core:
 
 dev_dependencies:
   flutter_test:

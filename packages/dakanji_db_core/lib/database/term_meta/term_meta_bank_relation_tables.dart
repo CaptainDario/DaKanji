@@ -2,7 +2,7 @@
 import 'package:drift/drift.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/term_meta/term_meta_bank_v3_tables.dart';
+import '/database/term_meta/term_meta_bank_v3_tables.dart';
 
 /// Relationship table between TermMetaBank and PitchTable
 class TermMetaBankV3PitchRelationsTable extends Table {

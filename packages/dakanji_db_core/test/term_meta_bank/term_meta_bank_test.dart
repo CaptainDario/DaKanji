@@ -3,8 +3,8 @@ import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/dakanji_db.dart';
-import 'package:dakanji_db/parsing/dictionary_parser.dart';
+import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import '../../bin/paths.dart';
 import 'term_meta_bank_expected_values.dart';
 

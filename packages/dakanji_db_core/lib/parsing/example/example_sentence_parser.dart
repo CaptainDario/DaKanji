@@ -1,6 +1,6 @@
 // Package imports:
-import 'package:dakanji_db/iso/iso_table.dart';
-import 'package:dakanji_db/parsing/japanese_processing/mecab_parsing.dart';
+import '/iso/iso_table.dart';
+import '/parsing/japanese_processing/mecab_parsing.dart';
 import 'package:drift/drift.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 //import 'package:mecab_for_dart/mecab_dart.dart';
@@ -8,7 +8,7 @@ import 'package:universal_io/io.dart';
 import 'package:path/path.dart' as p;
 
 // Project imports:
-import 'package:dakanji_db/database/dakanji_db.dart';
+import '/database/dakanji_db.dart';
 
 
 

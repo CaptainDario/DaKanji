@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:dakanji_db/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
+import 'package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
 
 
 /// ----------------------------------------------------------------------------

@@ -1,7 +1,6 @@
-import 'package:dakanji_db_ui_example/pages/kanji_page.dart';
+import '/pages/kanji_page.dart';
 import 'package:flutter/material.dart';
 import 'pages/entry_page.dart';
-import 'pages/search_page.dart';
 
 void main() {
   runApp(const MyApp());

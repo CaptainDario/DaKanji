@@ -1,4 +1,4 @@
-name: core
+name: dakanji_db_core
 description: Library to populate and access DaKanji's database
 repository: https://github.com/captaindario/dakanji-db
 publish_to: none

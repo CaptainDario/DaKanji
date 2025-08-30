@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ui/structured_content_widget.dart';
+import 'package:dakanji_db_ui/structured_content_widget.dart';
 
 class EntryPage extends StatefulWidget {
   const EntryPage({super.key});

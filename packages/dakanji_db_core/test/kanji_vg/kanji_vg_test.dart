@@ -2,8 +2,8 @@
 import 'package:test/test.dart';
 
 // Project imports:
-import 'package:dakanji_db/conversion/kanji_vg.dart';
-import 'package:dakanji_db/database/dakanji_db.dart';
+import 'package:dakanji_db_core/conversion/kanji_vg.dart';
+import 'package:dakanji_db_core/database/dakanji_db.dart';
 import '../../bin/paths.dart';
 import 'kanji_vg_test_values.dart';
 

@@ -1,8 +1,8 @@
 import 'example_tables.dart';
 import 'example_relation_tables.dart';
-import 'package:dakanji_db/database/general_tables/language_code_table.dart';
-import 'package:dakanji_db/database/example/example_fts5_table.drift';
-import 'package:dakanji_db/database/example/example_views.drift';
+import '/database/general_tables/language_code_table.dart';
+import '/database/example/example_fts5_table.drift';
+import '/database/example/example_views.drift';
 
 example_fts_search:
     SELECT

@@ -2,13 +2,13 @@
 import 'dart:convert';
 
 // Package imports:
-import 'package:dakanji_db/parsing/term/parsed_term.dart';
-import 'package:dakanji_db/parsing/term/structured_content_parser.dart';
+import '/parsing/term/parsed_term.dart';
+import '/parsing/term/structured_content_parser.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/dakanji_db.dart';
+import '/database/dakanji_db.dart';
 
 
 

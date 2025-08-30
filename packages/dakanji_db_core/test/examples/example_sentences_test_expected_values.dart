@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
-import 'package:dakanji_db/database/example/example_entry.dart';
+import 'package:dakanji_db_core/database/example/example_entry.dart';
 import 'package:universal_io/io.dart';
 import 'package:path/path.dart' as p;
 

@@ -1,6 +1,6 @@
 import 'example_tables.dart';
 import 'example_relation_tables.dart';
-import 'package:dakanji_db/database/general_tables/language_code_table.dart';
+import '/database/general_tables/language_code_table.dart';
 import 'example_fts5_table.drift';
 
 CREATE VIEW IF NOT EXISTS example_view AS

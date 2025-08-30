@@ -6,7 +6,7 @@ import 'package:drift/isolate.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/dakanji_db.dart';
+import '/database/dakanji_db.dart';
 
 /// Worker isolate that processes a file and sends a message when done
 void isolateWorker(SendPort mainSendPort) {

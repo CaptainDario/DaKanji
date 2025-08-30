@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:core/parsing/term/parsed_term.dart';
-import 'package:core/parsing/term/term_parsing_method.dart';
-import 'package:html/dom.dart' as dom;
+import '/parsing/term/structure_content_ui_converter.dart';
+
+import '/parsing/term/parsed_term.dart';
+import '/parsing/term/term_parsing_method.dart';
 import 'package:html/parser.dart';
-import 'package:recase/recase.dart';
 
 /// Recursively extracts all text from within a given JSON node.
 /// This is used after a glossary node has been identified.
@@ -122,8 +122,6 @@ List<ParsedTerm> extractPlainTextDefinitions(List<dynamic> termEntryJson) {
   return parsedDefinitions;
 }
 
-// --- Original Helper Functions (now used as a fallback for old formats) ---
-
 /// Takes a JSON string from a structured-content definition and converts it
 /// into clean, readable plain text.
 String getCustomDefinitionText(String jsonString) {
@@ -142,94 +140,10 @@ String getCustomDefinitionText(String jsonString) {
 
 
 
-// Set of CSS properties that require a unit if their value is numeric.
-const Set<String> _unitProperties = {
-  'font-size',
-  'margin', 'margin-top', 'margin-left', 'margin-right', 'margin-bottom',
-  'padding', 'padding-top', 'padding-left', 'padding-right', 'padding-bottom',
-  'border-radius', 'border-width',
-};
-
-/// Creates a single `dom.Element` from a structured content JSON object.
-///
-/// This function handles the creation of one element and applies its attributes
-/// and inline styles. It uses `getStructuredContentHtml` to recursively
-/// generate the inner HTML for its children.
-dom.Element createElementFromStructuredContent(Map<String, dynamic> content) {
-  final tag = content['tag'] as String?;
-  final childContent = content['content'];
-  final styleData = content['style'];
-  final href = content['href'] as String?;
-  final title = content['title'] as String?;
-
-  // If there's no tag, we can't create a meaningful element.
-  // Return an empty span as a safe fallback.
-  if (tag == null) {
-    return dom.Element.tag('span');
-  }
-
-  // Create the element with its specified tag.
-  final element = dom.Element.tag(tag);
-
-  // Add standard attributes like href for links and title for tooltips.
-  if (href != null) element.attributes['href'] = href;
-  if (title != null) element.attributes['title'] = title;
-
-  // Process and apply inline styles.
-  if (styleData is Map) {
-    // Convert style keys from camelCase to param-case and handle numeric values.
-    final style = Map<String, String>.fromEntries(
-      styleData.entries.map((e) {
-        final key = ReCase(e.key as String).paramCase;
-        var value = e.value;
-
-        // If the value is a number and the property requires a unit, append 'em'.
-        // This is a common convention in the Yomitan format.
-        if (value is num && _unitProperties.contains(key)) {
-          return MapEntry(key, '${value}em');
-        }
-
-        // Otherwise, just convert the value to a string.
-        return MapEntry(key, value.toString());
-      }),
-    );
-    // Create a single style string for the element's style attribute.
-    element.attributes['style'] = style.entries.map((e) => '${e.key}: ${e.value}').join('; ');
-  }
-
-  // Recursively generate the inner HTML for all child content.
-  element.innerHtml = getStructuredContentHtml(childContent);
-
-  return element;
-}
-
-
-/// Recursively builds an HTML string from a structured content object.
-String getStructuredContentHtml(dynamic content) {
-  if (content == null) {
-    return '';
-  }
-  if (content is String) {
-    return content;
-  }
-
-  if (content is List) {
-    return content.map(getStructuredContentHtml).join();
-  }
-
-  if (content is Map<String, dynamic>) {
-    // Use the new function to create the element and return its full HTML.
-    return createElementFromStructuredContent(content).outerHtml;
-  }
-
-  return '';
-}
-
 
 Future<void> main() async {
-  // Define the path to your Yomitan term bank file.
-  // IMPORTANT: Replace this with the actual path to your file.
-  const devYomitanPath = "/Users/darioklepoch/dev/DaKanji/dakanji_db/samples/yomitan/term_bank_2.json";
+  print(Directory("../../").listSync());
+  const devYomitanPath = "../../data/yomitan/term_bank_2.json";
   final file = File(devYomitanPath);
 
   try {
@@ -252,7 +166,7 @@ Future<void> main() async {
           definitions.forEach((def) => print(def));
         }
       }
-      print("\n\n\n${getStructuredContentHtml(entry[5])}");
+
       break;
     }
   } catch (e) {

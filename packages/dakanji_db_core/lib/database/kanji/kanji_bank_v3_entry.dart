@@ -1,12 +1,12 @@
 // Package imports:
 import 'dart:convert';
 
-import 'package:dakanji_db/database/dakanji_db.dart';
+import '/database/dakanji_db.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/kanji/kanji_bank_v3_entry_stat.dart';
-import 'package:dakanji_db/database/tag/tag_bank_v3_entry.dart';
+import '/database/kanji/kanji_bank_v3_entry_stat.dart';
+import '/database/tag/tag_bank_v3_entry.dart';
 
 part 'kanji_bank_v3_entry.freezed.dart';
 part 'kanji_bank_v3_entry.g.dart';

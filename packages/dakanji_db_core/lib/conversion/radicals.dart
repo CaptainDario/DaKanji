@@ -7,7 +7,7 @@ import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/dakanji_db.dart';
+import '/database/dakanji_db.dart';
 
 /// map to lookup the code that is stored in the krad/radk file to an actual
 /// radical

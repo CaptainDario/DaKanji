@@ -1,10 +1,10 @@
 // Package imports:
-import 'package:dakanji_db/parsing/example/example_sentence_parser.dart';
+import '/parsing/example/example_sentence_parser.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db/database/dakanji_db.dart';
+import '/database/dakanji_db.dart';
 
 
 
