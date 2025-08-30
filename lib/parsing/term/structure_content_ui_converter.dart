@@ -3,10 +3,6 @@ import 'dart:io';
 import 'package:html/dom.dart' as dom;
 import 'package:recase/recase.dart';
 
-// You will need to add these dependencies to your pubspec.yaml:
-// dependencies:
-//   html: ^0.15.0
-//   recase: ^4.0.0
 
 // --- Helper Functions to Convert JSON to HTML ---
 
