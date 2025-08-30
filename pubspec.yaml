@@ -6,13 +6,12 @@ environment:
 
 
 workspace:
-  - packages/core
-  - packages/ui
+  - packages/dakanji_db_core
+  - packages/dakanji_db_ui
+  - apps/dakanji_db_ui_example
 
 packages:
   - packages/*
-
-apps:
   - apps/*
 
 dev_dependencies:

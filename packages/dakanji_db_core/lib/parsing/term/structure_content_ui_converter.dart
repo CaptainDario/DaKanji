@@ -91,7 +91,6 @@ String getStructuredContentHtml(dynamic content) {
 }
 
 
-// --- Example Usage ---
 
 Future<void> main() async {
   // Define the path to your Yomitan term bank file.

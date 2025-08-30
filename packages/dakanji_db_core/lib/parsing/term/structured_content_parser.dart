@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:dakanji_db/parsing/term/parsed_term.dart';
-import 'package:dakanji_db/parsing/term/term_parsing_method.dart';
+import 'package:core/parsing/term/parsed_term.dart';
+import 'package:core/parsing/term/term_parsing_method.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart';
 import 'package:recase/recase.dart';
