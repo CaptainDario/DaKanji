@@ -15,10 +15,6 @@ tmp/
 # ignore tmp schema
 dakanji_db_schema/schema.pdf
 
-# ignore stress test downloads
-stresstest/*
-!stresstest/.gitkeep
-
 # code counter
 .VSCodeCounter/**
 
@@ -26,5 +22,5 @@ stresstest/*
 input_files/**
 
 # ignore files to run mecab in pure dart
-ipadic/**
+unidic/**
 libmecab.dylib
