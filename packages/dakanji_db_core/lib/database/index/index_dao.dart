@@ -2,7 +2,7 @@
 import "package:drift/drift.dart";
 
 // Project imports:
-import "package:dakanji_db/database/index/index_tables.dart";
+import "/database/index/index_tables.dart";
 import "../dakanji_db.dart";
 
 part 'index_dao.g.dart';

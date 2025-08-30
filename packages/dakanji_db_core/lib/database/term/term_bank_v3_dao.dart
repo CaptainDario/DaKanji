@@ -1,9 +1,9 @@
 // Package imports:
-import "package:dakanji_db/database/general_tables/term_tables.dart";
-import "package:dakanji_db/database/tag/tag_bank_v3_tables.dart";
-import "package:dakanji_db/database/term/term_bank_v3_entry.dart";
-import "package:dakanji_db/database/term/term_bank_v3_tables.dart";
-import "package:dakanji_db/iso/iso_table.dart";
+import "/database/general_tables/term_tables.dart";
+import "/database/tag/tag_bank_v3_tables.dart";
+import "/database/term/term_bank_v3_entry.dart";
+import "/database/term/term_bank_v3_tables.dart";
+import "/iso/iso_table.dart";
 import "package:drift/drift.dart";
 
 // Project imports:

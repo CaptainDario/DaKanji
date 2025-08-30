@@ -2,8 +2,8 @@
 import "package:drift/drift.dart";
 
 // Project imports:
-import "package:dakanji_db/database/radicals/radical_relation_tables.dart";
-import "package:dakanji_db/database/radicals/radical_tables.dart";
+import "/database/radicals/radical_relation_tables.dart";
+import "/database/radicals/radical_tables.dart";
 import "../dakanji_db.dart";
 
 part 'radical_dao.g.dart';

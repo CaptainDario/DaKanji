@@ -1,7 +1,7 @@
 // Package imports:
-import "package:dakanji_db/database/example/example_entry.dart";
-import "package:dakanji_db/database/example/example_tables.dart";
-import "package:dakanji_db/iso/iso_table.dart";
+import "/database/example/example_entry.dart";
+import "/database/example/example_tables.dart";
+import "/iso/iso_table.dart";
 import "package:drift/drift.dart";
 
 // Project imports:

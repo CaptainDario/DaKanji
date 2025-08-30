@@ -1,6 +1,6 @@
 // Package imports:
-import 'package:dakanji_db/database/general_tables/language_code_table.dart';
-import 'package:dakanji_db/helper/zlib_text_converter.dart';
+import '/database/general_tables/language_code_table.dart';
+import '/helper/zlib_text_converter.dart';
 import 'package:drift/drift.dart';
 
 

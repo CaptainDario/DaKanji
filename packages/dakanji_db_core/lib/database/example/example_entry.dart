@@ -1,8 +1,8 @@
 // Package imports:
 import 'dart:convert';
 
-import 'package:dakanji_db/database/dakanji_db.dart';
-import 'package:dakanji_db/database/example/example_entry_translation.dart';
+import '/database/dakanji_db.dart';
+import '/database/example/example_entry_translation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:

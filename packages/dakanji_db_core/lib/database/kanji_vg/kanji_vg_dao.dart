@@ -2,7 +2,7 @@
 import "package:drift/drift.dart";
 
 // Project imports:
-import "package:dakanji_db/database/kanji_vg/kanji_vg_tables.dart";
+import "/database/kanji_vg/kanji_vg_tables.dart";
 import "../dakanji_db.dart";
 
 part 'kanji_vg_dao.g.dart';

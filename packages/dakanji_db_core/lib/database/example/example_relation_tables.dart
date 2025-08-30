@@ -1,5 +1,5 @@
 // Package imports:
-import 'package:dakanji_db/database/example/example_tables.dart';
+import '/database/example/example_tables.dart';
 import 'package:drift/drift.dart';
 
 

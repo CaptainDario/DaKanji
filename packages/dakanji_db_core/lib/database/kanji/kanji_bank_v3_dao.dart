@@ -2,9 +2,9 @@
 import "package:drift/drift.dart";
 
 // Project imports:
-import "package:dakanji_db/database/kanji/kanji_bank_v3_entry.dart";
-import "package:dakanji_db/database/kanji/kanji_bank_v3_relation_tables.dart";
-import "package:dakanji_db/database/kanji/kanji_bank_v3_tables.dart";
+import "/database/kanji/kanji_bank_v3_entry.dart";
+import "/database/kanji/kanji_bank_v3_relation_tables.dart";
+import "/database/kanji/kanji_bank_v3_tables.dart";
 import "../dakanji_db.dart";
 
 part 'kanji_bank_v3_dao.g.dart';
