@@ -3,10 +3,17 @@ name: dakanji_db_workspace
 publish_to: none
 environment:
   sdk: ^3.9.0
+
+
 workspace:
   - packages/core
   - packages/ui
+
+packages:
+  - packages/*
+
+apps:
+  - apps/*
+
 dev_dependencies:
   melos: ^7.1.0
-
-melos:

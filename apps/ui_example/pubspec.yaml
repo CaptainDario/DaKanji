@@ -1,21 +1,23 @@
-name: ui
-description: Project to provide a user interface for DaKanjiDB
+name: dakanji_db_ui_example
+description: "A new Flutter project."
 publish_to: 'none'
-resolution: workspace
-version: 1.0.0
+version: 1.0.0+1
 
 environment:
   sdk: ^3.9.0
 
+
 dependencies:
   flutter:
     sdk: flutter
-  flutter_widget_from_html: ^0.17.0
-  core:
+  cupertino_icons: ^1.0.8
+  ui:
+    path: ../
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true
