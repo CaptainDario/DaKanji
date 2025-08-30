@@ -1,0 +1,34 @@
+name: dakanji_db
+description: Library to populate and access DaKanji's database
+repository: https://github.com/captaindario/dakanji-db
+publish_to: none
+version: 4.0.0
+
+environment:
+  sdk: ^3.8.0
+
+# Add regular dependencies here.
+dependencies:
+  path: ^1.9.1
+  drift: ^2.21.0
+  sqlite3: ^2.4.7
+  archive: ^4.0.7
+  tuple: ^2.0.2
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+  universal_io: ^2.2.2
+  collection: ^1.19.1
+  mecab_for_dart: 1.1.5
+  html: ^0.15.6
+  recase: ^4.1.0
+
+dev_dependencies:
+  drift_dev: ^2.28.0
+  build_runner: ^2.6.0
+  import_sorter: ^4.6.0
+  freezed: ^3.2.0
+  lints: ^6.0.0
+  test: ^1.26.3
+  json_serializable: ^6.10.0
+
+#dependency_overrides:
