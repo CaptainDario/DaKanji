@@ -19,7 +19,8 @@ dakanji_db_schema/schema.pdf
 .VSCodeCounter/**
 
 # ignore files that are converted from non yomitan dicts
-data/input_files/**
+data/dakanji_db_input_files/**
+!data/dakanji_db_input_files/.gitkeep
 
 # ignore files to run mecab in pure dart
 unidic/**
