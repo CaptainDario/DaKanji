@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dakanji_db_core/parsing/term/structured_content_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:dakanji_db_ui/structured_content_widget.dart';
 import 'package:dakanji_db_shared/paths.dart';
@@ -18,7 +19,7 @@ class _EntryPageState extends State<EntryPage> {
     return Scaffold(
       body: FutureBuilder<List<dynamic>?>(
         // Load the structured content from the local file.
-        future: _loadStructuredContentFromFile(),
+        future: _loadDefinitionsFromFile(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -31,12 +32,26 @@ class _EntryPageState extends State<EntryPage> {
             const imageBasePath =
                 "/Users/darioklepoch/dev/DaKanji/dakanji_db/samples/yomitan";
 
-            return SelectableRegion(
-              selectionControls: MaterialTextSelectionControls(),
-              child: StructuredContentWidget(
-                content: snapshot.data?.first,
-                imageAssetBasePath: imageBasePath,
-              ),
+            String definitions = extractPlainTextDefinitions(snapshot.data!)
+              .map((def) => def.text).join("\n");
+
+            return ListView.separated(
+              itemCount: snapshot.data!.length,
+              separatorBuilder: (context, index) => const Divider(height: 8, thickness: 8),
+              itemBuilder: (context, index) {
+                return SelectableRegion(
+                  selectionControls: MaterialTextSelectionControls(),
+                  child: Column(
+                    children: [
+                      Text("Definitons found:\n$definitions"),
+                      StructuredContentWidget(
+                        content: snapshot.data?[index],
+                        imageAssetBasePath: imageBasePath,
+                      ),
+                    ],
+                  ),
+                );
+              },
             );
           }
         },
@@ -46,7 +61,7 @@ class _EntryPageState extends State<EntryPage> {
 }
 
 /// Loads and parses the first structured content definition from a local file.
-Future<List<dynamic>?> _loadStructuredContentFromFile() async {
+Future<List<dynamic>?> _loadDefinitionsFromFile() async {
   final devYomitanPath = "$yomitanSampleDictionaryPath/term_bank_2.json";
   print(devYomitanPath);
   final file = File(devYomitanPath);
