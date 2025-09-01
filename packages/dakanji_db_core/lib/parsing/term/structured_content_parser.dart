@@ -96,6 +96,13 @@ List<ParsedTerm> extractParsedTerms(dynamic definition) {
           return [ParsedTerm(text, TermParsingMethod.textObject)];
         }
         break;
+      case 'image':
+        final description = definition['description'] as String?;
+        if (description != null) {
+          return [ParsedTerm(description, TermParsingMethod.image)];
+        }
+        break;
+
       case 'structured-content':
         final content = definition['content'];
         if (content != null) {
@@ -153,9 +160,6 @@ const Set<String> _unitProperties = {
 };
 
 
-
-
-
 /// Creates a single `dom.Element` from a structured content JSON object.
 ///
 /// This function handles the creation of one element and applies its attributes
@@ -163,28 +167,48 @@ const Set<String> _unitProperties = {
 /// generate the inner HTML for its children.
 dom.Element _createElementFromStructuredContent(Map<String, dynamic> content) {
   final tag = content['tag'] as String?;
-  final childContent = content['content'];
-  final styleData = content['style'];
-  final href = content['href'] as String?;
-  final title = content['title'] as String?;
-
   if (tag == null) return dom.Element.tag('span');
+  
   final element = dom.Element.tag(tag);
 
-  if (href != null) element.attributes['href'] = href;
-  if (title != null) element.attributes['title'] = title;
+  // START: MODIFIED LOGIC TO DYNAMICALLY ADD ATTRIBUTES
+  // Loop through all keys in the JSON object to add them as attributes.
+  content.forEach((key, value) {
+    // Skip keys that are not HTML attributes.
+    if (key == 'tag' || key == 'content' || key == 'style' || value == null) {
+      return;
+    }
 
+    // Convert the key from camelCase to param-case for HTML.
+    final attributeName = ReCase(key).paramCase;
+    final attributeValue = value.toString();
+
+    // Special case: map the 'path' property to the 'src' attribute for images.
+    if (tag == 'img' && attributeName == 'path') {
+      element.attributes['src'] = attributeValue;
+    } else {
+      element.attributes[attributeName] = attributeValue;
+    }
+  });
+  // END: MODIFIED LOGIC
+
+  // Handle the 'style' attribute separately.
+  final styleData = content['style'];
   if (styleData is Map) {
-    // Preprocess the styles to handle shorthands and other conversions.
     final processedStyles = preprocessCssForFlutterWidget(styleData as Map<String, dynamic>);
-
     final styleString = processedStyles.entries.map((e) {
       final key = ReCase(e.key).paramCase;
       var value = e.value;
-      if (value is num && _unitProperties.contains(key)) {
-        return '$key: ${value}em';
+      
+      String valueString;
+      if (value is List) {
+        valueString = value.join(' ');
+      } else if (value is num && _unitProperties.contains(key)) {
+        valueString = '${value}em';
+      } else {
+        valueString = value.toString();
       }
-      return '$key: ${value.toString()}';
+      return '$key: $valueString';
     }).join('; ');
 
     if (styleString.isNotEmpty) {
@@ -192,7 +216,8 @@ dom.Element _createElementFromStructuredContent(Map<String, dynamic> content) {
     }
   }
 
-  element.innerHtml = getHtmlFromContent(childContent);
+  // Recursively generate the element's inner content.
+  element.innerHtml = getHtmlFromContent(content['content']);
   return element;
 }
 
