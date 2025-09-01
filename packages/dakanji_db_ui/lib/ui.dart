@@ -1,1 +1,2 @@
-export 'structured_content_widget.dart';
+export 'definition_item_widget.dart';
+export 'definitions_widget.dart';
