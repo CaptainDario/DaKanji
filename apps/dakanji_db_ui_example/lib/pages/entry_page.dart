@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dakanji_db_ui/definitions_widget.dart';
+import 'package:path/path.dart' as p;
 
 import 'package:dakanji_db_core/parsing/term/structured_content_parser.dart';
 import 'package:flutter/material.dart';
-import 'package:dakanji_db_ui/structured_content_widget.dart';
+import 'package:dakanji_db_ui/definition_item_widget.dart';
 import 'package:dakanji_db_shared/paths.dart';
 
 class EntryPage extends StatefulWidget {
@@ -14,69 +16,106 @@ class EntryPage extends StatefulWidget {
 }
 
 class _EntryPageState extends State<EntryPage> {
+
+  List<dynamic> allSamples = [];
+
+  int currentSampleIdx = 0;
+  
+
+  @override
+  void initState() {
+    super.initState();
+    getAllSamples();
+  }
+
+  Future<bool> wait() async {
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<dynamic>?>(
+      body: FutureBuilder<bool>(
         // Load the structured content from the local file.
-        future: _loadDefinitionsFromFile(),
+        future: Future.sync(() => true),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot.data == null || snapshot.data == false) {
             return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data == null) {
-            return const Center(child: Text('No structured content found.'));
           } else {
             // IMPORTANT: Replace this with the actual base path of your unzipped dictionary.
-            const imageBasePath =
-                "/Users/darioklepoch/dev/DaKanji/dakanji_db/samples/yomitan";
+            final imageBasePath = yomitanSampleDictionaryPath;
 
-            String definitions = extractPlainTextDefinitions(snapshot.data!)
-              .map((def) => def.text).join("\n");
+            String definitions = extractPlainTextDefinitions(allSamples[currentSampleIdx])
+              .map((def) => "\t\t\t\t${def.text}").join("\n");
 
-            return ListView.separated(
-              itemCount: snapshot.data!.length,
-              separatorBuilder: (context, index) => const Divider(height: 8, thickness: 8),
-              itemBuilder: (context, index) {
-                return SelectableRegion(
-                  selectionControls: MaterialTextSelectionControls(),
-                  child: Column(
-                    children: [
-                      Text("Definitons found:\n$definitions"),
-                      StructuredContentWidget(
-                        content: snapshot.data?[index],
-                        imageAssetBasePath: imageBasePath,
-                      ),
-                    ],
+            return Column(
+              children: [
+                DropdownButton<int>(
+                  items: List.generate(allSamples.length, (i) => 
+                    DropdownMenuItem(value:i, child: Text("$i"))
                   ),
-                );
-              },
+                  onChanged: (int? value) {
+                    setState(() {
+                      currentSampleIdx = value ?? 0;
+                    });
+                  },
+                  value: currentSampleIdx,
+                ),
+                Divider(),
+                Expanded(
+                  child: SelectableRegion(
+                    selectionControls: MaterialTextSelectionControls(),
+                    child: ListView(
+                      children: [
+                        ExpansionTile(
+                          title: Text("Definitions found"),
+                          children: [
+                            Align(
+                              alignment: AlignmentGeometry.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(definitions),
+                              )
+                            ),
+                          ],
+                        ),
+                        
+                        Divider(),
+                        DefinitionsWidget(
+                          definitions: allSamples[currentSampleIdx],
+                          imageAssetBasePath: imageBasePath,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ]
             );
           }
         },
       ),
     );
   }
+
+  void getAllSamples() {
+    final dir = Directory(yomitanSampleDictionaryPath);
+    final files = dir.listSync()
+      .whereType<File>()
+      .where((f) => p.basename(f.absolute.path).startsWith('term_bank'))
+      .toList();
+
+    allSamples = [];
+    for (var file in files) {
+      final jsonString = file.readAsStringSync();
+      final List<dynamic> termBank = jsonDecode(jsonString);
+
+      if (termBank.isNotEmpty) {
+        allSamples.addAll(
+          termBank.map((e) => e[5])
+        );
+      }
+    }
+  }
 }
 
-/// Loads and parses the first structured content definition from a local file.
-Future<List<dynamic>?> _loadDefinitionsFromFile() async {
-  final devYomitanPath = "$yomitanSampleDictionaryPath/term_bank_2.json";
-  print(devYomitanPath);
-  final file = File(devYomitanPath);
 
-  if (!await file.exists()) {
-    throw Exception('File not found at "$devYomitanPath"');
-  }
-
-  final jsonString = await file.readAsString();
-  final List<dynamic> termBank = jsonDecode(jsonString);
-
-  if (termBank.isNotEmpty) {
-    final entry = termBank.first;
-    final definitions = entry[5] as List;
-    return definitions;
-  }
-  return null; // No structured content found
-}
