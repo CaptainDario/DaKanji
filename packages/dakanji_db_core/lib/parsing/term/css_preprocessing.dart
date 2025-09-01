@@ -1,3 +1,9 @@
+const Set<String> unitProperties = {
+  'font-size', 'margin', 'margin-top', 'margin-left', 'margin-right', 'margin-bottom',
+  'padding', 'padding-top', 'padding-left', 'padding-right', 'padding-bottom',
+  'border-radius', 'border-width',
+};
+
 /// Preprocesses border-related properties into the CSS `border` shorthand.
 Map<String, dynamic> preprocessCssBorderForFlutterWidget(Map<String, dynamic> styleData) {
   // Make a mutable copy to handle special cases.
