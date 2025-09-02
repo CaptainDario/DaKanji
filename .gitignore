@@ -25,3 +25,6 @@ data/dakanji_db_input_files/**
 # ignore files to run mecab in pure dart
 unidic/**
 libmecab.dylib
+
+# sqlite build files
+custom_sqlite/build/**
