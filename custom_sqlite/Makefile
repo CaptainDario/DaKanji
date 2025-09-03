@@ -17,9 +17,7 @@ endif
 
 BUILD_DIR = build
 
-# --- EDIT THIS PATH ---
-# Point this variable to the directory containing crsqlite.h in your project.
-# Based on the error log, this path might be incorrect. A common location is 'cr-sqlite/core/include'.
+# CR SQLITE SOURCES
 CRSQLITE_INCLUDE_DIR = $(CRSQLITE_DIR)/core/src
 
 # Target filenames
@@ -47,6 +45,7 @@ INIT_OBJ = $(BUILD_DIR)/custom_init.o
 CFLAGS = -g -O2 -fPIC -I$(SRC_DIR) -I$(VEC_DIR) -I$(CRSQLITE_INCLUDE_DIR) \
          -DSQLITE_CORE \
          -DSQLITE_ENABLE_FTS5 \
+		 -DSQLITE_ENABLE_DBSTAT_VTAB \
          -DSQLITE_EXTRA_INIT=sqlite3_extra_init
 
 # LDFLAGS are for the linker
@@ -83,26 +82,9 @@ $(BUILD_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule to compile the generated custom_init.c
-$(INIT_OBJ): $(BUILD_DIR)/custom_init.c
+$(INIT_OBJ): ./custom_init.c
 	@echo "==> ⚙️  Compiling generated initializer $<..."
 	$(CC) $(CFLAGS) -c $< -o $@
-
-# Rule to auto-generate the custom C file for initialization.
-$(BUILD_DIR)/custom_init.c:
-	@mkdir -p $(BUILD_DIR)
-	@echo "==> ✍️  Generating custom extension initializer..."
-	@echo '#include "sqlite3.h"' > $@
-	@echo '#include "crsqlite.h"' >> $@
-	@echo 'int sqlite3_spellfix_init(sqlite3*, char**, const sqlite3_api_routines*);' >> $@
-	@echo 'int sqlite3_compress_init(sqlite3*, char**, const sqlite3_api_routines*);' >> $@
-	@echo 'int sqlite3_vec_init(sqlite3*, char**, const sqlite3_api_routines*);' >> $@
-	@echo 'int sqlite3_crsqlite_init(sqlite3*, char**, const sqlite3_api_routines*);' >> $@
-	@echo 'void sqlite3_extra_init(void) {' >> $@
-	@echo '  sqlite3_auto_extension((void (*)(void))sqlite3_spellfix_init);' >> $@
-	@echo '  sqlite3_auto_extension((void (*)(void))sqlite3_compress_init);' >> $@
-	@echo '  sqlite3_auto_extension((void (*)(void))sqlite3_vec_init);' >> $@
-	@echo '  sqlite3_auto_extension((void (*)(void))sqlite3_crsqlite_init);' >> $@
-	@echo '}' >> $@
 
 # Rule to clean up the build directory.
 clean:
