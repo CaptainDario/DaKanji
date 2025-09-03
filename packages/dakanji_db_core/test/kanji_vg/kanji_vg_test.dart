@@ -17,7 +17,7 @@ void main() async {
 
     // convert kanjivg database
     Stopwatch s = Stopwatch()..start();
-    await addKanjiVGToDB(kanjiVGPath, db);
+    await addKanjiVGToDB(kanjiVGInputPath, db);
     print("Converting KanjiVG took: ${s.elapsedMilliseconds}ms");
 
     // test radical lookups

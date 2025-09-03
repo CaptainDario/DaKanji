@@ -17,7 +17,7 @@ void main() {
 
     // convert krad / radk file
     Stopwatch s = Stopwatch()..start();
-    await addRadicalsToDB(radicalsPath, db);
+    await addRadicalsToDB(radicalsInputPath, db);
     print("Converting radicals took: ${s.elapsedMilliseconds}ms");
 
     // test radical lookups
