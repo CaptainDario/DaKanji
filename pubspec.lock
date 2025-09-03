@@ -305,6 +305,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.11"
+  disjoint_set:
+    dependency: transitive
+    description:
+      name: disjoint_set
+      sha256: b670cc11f8d28ee500bc14b258f254f5bb5d8ed7862ca0ea583eda012572edb5
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   drift:
     dependency: transitive
     description:
@@ -480,6 +488,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.15.5"
+  github:
+    dependency: transitive
+    description:
+      name: github
+      sha256: c88cd9f11e131a05b1910e1c742c80e6dc7708701884d1fcf28147fc95933aa8
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.25.0"
   glob:
     dependency: transitive
     description:
@@ -497,7 +513,7 @@ packages:
     source: hosted
     version: "2.3.2"
   hooks:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: hooks
       sha256: "22abd27b650a571e53576abe732e4d9053aacaaa6dee23e9ff106c63e3e5b96c"
@@ -696,6 +712,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  native_toolchain_c:
+    dependency: transitive
+    description:
+      name: native_toolchain_c
+      sha256: "74a0c80d877c519bc6bde2c4e27b6b01c1f93c9b480f65ceae8bedd3aba3c086"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.16.8"
   nested:
     dependency: transitive
     description:
@@ -1045,6 +1069,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.9.0"
+  sqlite3_native_assets:
+    dependency: transitive
+    description:
+      name: sqlite3_native_assets
+      sha256: "6ca6a0669137d4bd46ea2262395f04a3a6e42446e749a4999fd27ed8dc54dbdb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9"
   sqlparser:
     dependency: transitive
     description:
