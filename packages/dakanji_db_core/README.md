@@ -42,9 +42,7 @@ The official (base dictionary that is shipped with DaKanji) consists of the foll
     * Pitch accents
 * Custom parsed
   * Kanji
-    * [RADK](https://github.com/scriptin/jmdict-simplified)
-      * Project contains information about radicals used by kanjis.
-    * [KRAD](https://github.com/scriptin/jmdict-simplified)
+    * [RADK / KRAD](https://github.com/scriptin/jmdict-simplified)
       * Project contains information about radicals used by kanjis.
     * [KanjiVG](https://kanjivg.tagaini.net/)
       * Project contains detailed stroke order diagrams of many kanji.
@@ -128,8 +126,8 @@ For this two different types are importable.
 
 ##### Japanese with translation
 
-DaKanji can import custom examples and their translation for this, the format in [the samples folder](./samples/example_sentences/1/) needs to be followed.
+DaKanji can import custom examples and their translation for this, the format in [the samples folder](./data/example_sentences/1/) needs to be followed.
 
 ##### Extract examples from Japanese text
 
-DaKanji can also extract sample sentences from a longer text file. This file should contain a full Japanese text like in [this sample](./samples/example_sentences/example_text_1.txt).
+DaKanji can also extract sample sentences from a longer text file. This file should contain a full Japanese text like in [this sample](./data/example_sentences/example_text_1.txt).
