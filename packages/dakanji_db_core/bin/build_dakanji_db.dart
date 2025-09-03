@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db_core/conversion/tatoeba.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
@@ -7,20 +8,56 @@ import 'package:dakanji_db_core/conversion/radicals.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
+import 'get_sources.dart';
+import 'package:path/path.dart' as p;
 
 void main() async {
 
+  await downloadSources();
+
   // setup 
-  DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
-  await db.deleteDB();
+  //DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
+  //await db.deleteDB();
 
-  await kanjiVG(db);
+  //await kanjiVG(db);
 
-  await radicals(db);
+  //await radicals(db);
 
-  await kanjidic2(db);
+  //await kanjidic2(db);
 
-  exit(0);
+  //exit(0);
+
+}
+
+///
+Future downloadSources() async {
+
+  print("Cleaning up old source files...");
+  Directory out = Directory(dakanjiDBInputFilesPath);
+  out.listSync()
+    .where((f) => p.basename(f.path) != ".gitkeep")
+    .forEach((f) => f.deleteSync(recursive: true));
+
+  print("Downloading source files...");
+  String kanjiVGUri = await getSourceFromGHRelease('KanjiVG', 'kanjivg', 'kanjivg', 'all.zip', out);
+
+  String radkUri = await getSourceFromGHRelease('scriptin', 'jmdict-simplified', 'radk', '.json.zip', out);
+  String kradUri = await getSourceFromGHRelease('scriptin', 'jmdict-simplified', 'krad', '.json.zip', out);
+  String kanjiDic2Uri = await getSourceFromGHRelease('scriptin', 'jmdict-simplified', 'kanjidic2-en', '.json.zip', out);
+
+  String tatoebaLinksUri = await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/links.tar.bz2'), out);
+  String tatoebaSentencesUri = await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/sentences.tar.bz2'), out);
+
+  print("All downloads completed, writing summary file.");
+  File sourcesList = File(p.join(out.path, 'sources_list.txt'))..createSync();
+  sourcesList.writeAsStringSync(
+    'Krad: $kradUri\n'
+    'Radk: $radkUri\n'
+    'KanjiVG: $kanjiVGUri\n'
+    'KanjiDic2: $kanjiDic2Uri\n'
+    'Tatoeba Links: $tatoebaLinksUri\n'
+    'Tatoeba Sentences: $tatoebaSentencesUri'
+  );
 
 }
 
@@ -28,7 +65,7 @@ void main() async {
 Future kanjiVG(DaKanjiDB db) async {
 
   Stopwatch s = Stopwatch()..start();
-  await addKanjiVGToDB(kanjiVGPath, db);
+  await addKanjiVGToDB(kanjiVGInputPath, db);
   print("Converting KanjiVG took: ${s.elapsedMilliseconds}ms");
 
 }
@@ -37,7 +74,7 @@ Future kanjiVG(DaKanjiDB db) async {
 Future radicals(DaKanjiDB db) async {
 
   Stopwatch s = Stopwatch()..start();
-  await addRadicalsToDB(radicalsPath, db);
+  await addRadicalsToDB(radicalsInputPath, db);
   print("Converting Radicals took: ${s.elapsedMilliseconds}ms");
 
 }
@@ -47,7 +84,18 @@ Future radicals(DaKanjiDB db) async {
 Future kanjidic2(DaKanjiDB db) async {
 
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(kanjidic2Path), db);
+  await parseDictionaryFolder(Directory(kanjidic2InputPath), db);
   print("Converting KanjiDic2 took: ${s.elapsedMilliseconds}ms");
+
+}
+
+Future tatoeba(DaKanjiDB db) async {
+
+  Stopwatch s = Stopwatch()..start();
+  await convertTatoebaFiles(
+    Directory(tatoebaInputPath),
+    Directory(tatoebaProcessedPath)
+  );
+  print("Converting Tatoeba took: ${s.elapsedMilliseconds}ms");
 
 }
