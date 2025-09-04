@@ -12,16 +12,19 @@ environment:
 dependencies:
   path: ^1.9.1
   drift: ^2.21.0
-  sqlite3: ^2.4.7
+  sqlite3: ^2.9.0
+  sqlite3_native_assets: ^0.0.10
   archive: ^4.0.7
   tuple: ^2.0.2
   freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
   universal_io: ^2.2.2
   collection: ^1.19.1
-  mecab_for_dart: 1.1.5
+  mecab_for_dart: ^1.1.5
   html: ^0.15.6
   recase: ^4.1.0
+  code_assets: ^0.19.6
+  hooks: ^0.20.1
   disjoint_set: ^1.0.0
   github: ^9.25.0
 
