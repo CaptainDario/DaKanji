@@ -513,7 +513,7 @@ packages:
     source: hosted
     version: "2.3.2"
   hooks:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: hooks
       sha256: "22abd27b650a571e53576abe732e4d9053aacaaa6dee23e9ff106c63e3e5b96c"
@@ -716,10 +716,10 @@ packages:
     dependency: transitive
     description:
       name: native_toolchain_c
-      sha256: "74a0c80d877c519bc6bde2c4e27b6b01c1f93c9b480f65ceae8bedd3aba3c086"
+      sha256: "7e8358a4f6ec69a4f2d366bb971af298aca50d6c2e8a07be7c12d7f6d40460aa"
       url: "https://pub.dev"
     source: hosted
-    version: "0.16.8"
+    version: "0.17.1"
   nested:
     dependency: transitive
     description:
@@ -1073,10 +1073,10 @@ packages:
     dependency: transitive
     description:
       name: sqlite3_native_assets
-      sha256: "6ca6a0669137d4bd46ea2262395f04a3a6e42446e749a4999fd27ed8dc54dbdb"
+      sha256: ef915fbb1bdd6cd919347d181491bf878124bf152f23fd70711af226ad2589ab
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.9"
+    version: "0.0.10"
   sqlparser:
     dependency: transitive
     description:
