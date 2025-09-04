@@ -10,6 +10,7 @@ CC = gcc
 SRC_DIR := $(firstword $(wildcard sqlite-source-* sqlite-amalgamation-*))
 VEC_DIR = sqlite-vec
 CRSQLITE_DIR = cr-sqlite
+EXT_DIR = ext
 
 ifeq ($(SRC_DIR),)
 $(error No 'sqlite-source-*' or 'sqlite-amalgamation-*' directory found. Please download the SQLite source zip first.)
@@ -29,7 +30,7 @@ CRSQLITE_STATIC_LIB = $(CRSQLITE_DIR)/core/dist/crsqlite-.a
 
 # Source files
 # VPATH tells 'make' where to find the source files.
-VPATH = $(SRC_DIR):$(VEC_DIR):$(SRC_DIR)/ext/misc
+VPATH = $(SRC_DIR):$(VEC_DIR):$(EXT_DIR)
 
 # Define source file basenames
 LIB_SOURCES_NAMES = sqlite3.c sqlite-vec.c spellfix.c compress.c
@@ -62,7 +63,6 @@ all: shell dylib
 shell: $(SHELL_EXEC)
 dylib: $(DYLIB_LIB)
 
-
 # 3. Build Rules
 # =================================
 # Rule for linking the SHELL EXECUTABLE from object files
@@ -91,3 +91,5 @@ clean:
 	@echo "==> 🧹 Cleaning up build directory..."
 	@rm -rf $(BUILD_DIR)
 
+loadable_spellfix_mac:
+	gcc -I./$(SRC_DIR) -g -fPIC -shared ./$(EXT_DIR)/spellfix.c -o ./$(BUILD_DIR)/spellfix.dylib
