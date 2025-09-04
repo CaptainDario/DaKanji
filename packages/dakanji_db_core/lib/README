@@ -1,0 +1,13 @@
+# DaKanji-DB-Core sources
+
+## `./conversion/`
+
+Parsing of data sources that ARE NOT native yomitan dictionaries
+
+## `./database`
+
+Contains everything that defines the database, ie.: views tables etc.
+
+## `./parsing`
+
+Parsing of data sources that ARE native yomitan dictionaries
