@@ -23,6 +23,7 @@ dependencies:
   html: ^0.15.6
   recase: ^4.1.0
   disjoint_set: ^1.0.0
+  github: ^9.25.0
 
 dev_dependencies:
   drift_dev: ^2.28.0
