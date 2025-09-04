@@ -43,7 +43,6 @@ Future downloadSources() async {
 
   String radkUri = await getSourceFromGHRelease('scriptin', 'jmdict-simplified', 'radk', '.json.zip', out);
   String kradUri = await getSourceFromGHRelease('scriptin', 'jmdict-simplified', 'krad', '.json.zip', out);
-  String kanjiDic2Uri = await getSourceFromGHRelease('scriptin', 'jmdict-simplified', 'kanjidic2-en', '.json.zip', out);
 
   String tatoebaLinksUri = await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/links.tar.bz2'), out);
   String tatoebaSentencesUri = await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/sentences.tar.bz2'), out);
@@ -54,7 +53,6 @@ Future downloadSources() async {
     'Krad: $kradUri\n'
     'Radk: $radkUri\n'
     'KanjiVG: $kanjiVGUri\n'
-    'KanjiDic2: $kanjiDic2Uri\n'
     'Tatoeba Links: $tatoebaLinksUri\n'
     'Tatoeba Sentences: $tatoebaSentencesUri'
   );
