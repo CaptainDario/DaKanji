@@ -653,20 +653,20 @@ class $TermBankV3TableTable extends TermBankV3Table
     ),
   );
   @override
-  late final GeneratedColumnWithTypeConverter<Object?, String> termOrder =
+  late final GeneratedColumnWithTypeConverter<Object?, String> definitionOrder =
       GeneratedColumn<String>(
-        'term_order',
+        'definition_order',
         aliasedName,
         false,
         type: DriftSqlType.string,
         requiredDuringInsert: true,
-      ).withConverter<Object?>($TermBankV3TableTable.$convertertermOrder);
-  static const VerificationMeta _termJsonIdMeta = const VerificationMeta(
-    'termJsonId',
+      ).withConverter<Object?>($TermBankV3TableTable.$converterdefinitionOrder);
+  static const VerificationMeta _definitionJsonIdMeta = const VerificationMeta(
+    'definitionJsonId',
   );
   @override
-  late final GeneratedColumn<int> termJsonId = GeneratedColumn<int>(
-    'term_json_id',
+  late final GeneratedColumn<int> definitionJsonId = GeneratedColumn<int>(
+    'definition_json_id',
     aliasedName,
     false,
     type: DriftSqlType.int,
@@ -715,8 +715,8 @@ class $TermBankV3TableTable extends TermBankV3Table
   List<GeneratedColumn> get $columns => [
     id,
     termId,
-    termOrder,
-    termJsonId,
+    definitionOrder,
+    definitionJsonId,
     readingId,
     popularity,
     sequenceNumber,
@@ -744,16 +744,16 @@ class $TermBankV3TableTable extends TermBankV3Table
     } else if (isInserting) {
       context.missing(_termIdMeta);
     }
-    if (data.containsKey('term_json_id')) {
+    if (data.containsKey('definition_json_id')) {
       context.handle(
-        _termJsonIdMeta,
-        termJsonId.isAcceptableOrUnknown(
-          data['term_json_id']!,
-          _termJsonIdMeta,
+        _definitionJsonIdMeta,
+        definitionJsonId.isAcceptableOrUnknown(
+          data['definition_json_id']!,
+          _definitionJsonIdMeta,
         ),
       );
     } else if (isInserting) {
-      context.missing(_termJsonIdMeta);
+      context.missing(_definitionJsonIdMeta);
     }
     if (data.containsKey('reading_id')) {
       context.handle(
@@ -799,15 +799,15 @@ class $TermBankV3TableTable extends TermBankV3Table
         DriftSqlType.int,
         data['${effectivePrefix}term_id'],
       )!,
-      termOrder: $TermBankV3TableTable.$convertertermOrder.fromSql(
+      definitionOrder: $TermBankV3TableTable.$converterdefinitionOrder.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}term_order'],
+          data['${effectivePrefix}definition_order'],
         )!,
       ),
-      termJsonId: attachedDatabase.typeMapping.read(
+      definitionJsonId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}term_json_id'],
+        data['${effectivePrefix}definition_json_id'],
       )!,
       readingId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -829,7 +829,7 @@ class $TermBankV3TableTable extends TermBankV3Table
     return $TermBankV3TableTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<Object?, String> $convertertermOrder =
+  static TypeConverter<Object?, String> $converterdefinitionOrder =
       const JsonConverter();
 }
 
@@ -844,10 +844,10 @@ class TermBankV3TableData extends DataClass
   /// The order of the terms, used to sort them in the order they were
   /// provided by the dictionary. This is a JSON array of integers, where each
   /// integer corresponds to `termId`.
-  final Object? termOrder;
+  final Object? definitionOrder;
 
   /// The ID of the JSON representation of the definition
-  final int termJsonId;
+  final int definitionJsonId;
 
   /// ID reading of the term, or an empty string if the reading is the same as
   /// the term.
@@ -864,8 +864,8 @@ class TermBankV3TableData extends DataClass
   const TermBankV3TableData({
     required this.id,
     required this.termId,
-    this.termOrder,
-    required this.termJsonId,
+    this.definitionOrder,
+    required this.definitionJsonId,
     required this.readingId,
     required this.popularity,
     required this.sequenceNumber,
@@ -875,12 +875,12 @@ class TermBankV3TableData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['term_id'] = Variable<int>(termId);
-    if (!nullToAbsent || termOrder != null) {
-      map['term_order'] = Variable<String>(
-        $TermBankV3TableTable.$convertertermOrder.toSql(termOrder),
+    if (!nullToAbsent || definitionOrder != null) {
+      map['definition_order'] = Variable<String>(
+        $TermBankV3TableTable.$converterdefinitionOrder.toSql(definitionOrder),
       );
     }
-    map['term_json_id'] = Variable<int>(termJsonId);
+    map['definition_json_id'] = Variable<int>(definitionJsonId);
     map['reading_id'] = Variable<int>(readingId);
     map['popularity'] = Variable<int>(popularity);
     map['sequence_number'] = Variable<int>(sequenceNumber);
@@ -891,10 +891,10 @@ class TermBankV3TableData extends DataClass
     return TermBankV3TableCompanion(
       id: Value(id),
       termId: Value(termId),
-      termOrder: termOrder == null && nullToAbsent
+      definitionOrder: definitionOrder == null && nullToAbsent
           ? const Value.absent()
-          : Value(termOrder),
-      termJsonId: Value(termJsonId),
+          : Value(definitionOrder),
+      definitionJsonId: Value(definitionJsonId),
       readingId: Value(readingId),
       popularity: Value(popularity),
       sequenceNumber: Value(sequenceNumber),
@@ -909,8 +909,8 @@ class TermBankV3TableData extends DataClass
     return TermBankV3TableData(
       id: serializer.fromJson<int>(json['id']),
       termId: serializer.fromJson<int>(json['termId']),
-      termOrder: serializer.fromJson<Object?>(json['termOrder']),
-      termJsonId: serializer.fromJson<int>(json['termJsonId']),
+      definitionOrder: serializer.fromJson<Object?>(json['definitionOrder']),
+      definitionJsonId: serializer.fromJson<int>(json['definitionJsonId']),
       readingId: serializer.fromJson<int>(json['readingId']),
       popularity: serializer.fromJson<int>(json['popularity']),
       sequenceNumber: serializer.fromJson<int>(json['sequenceNumber']),
@@ -922,8 +922,8 @@ class TermBankV3TableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'termId': serializer.toJson<int>(termId),
-      'termOrder': serializer.toJson<Object?>(termOrder),
-      'termJsonId': serializer.toJson<int>(termJsonId),
+      'definitionOrder': serializer.toJson<Object?>(definitionOrder),
+      'definitionJsonId': serializer.toJson<int>(definitionJsonId),
       'readingId': serializer.toJson<int>(readingId),
       'popularity': serializer.toJson<int>(popularity),
       'sequenceNumber': serializer.toJson<int>(sequenceNumber),
@@ -933,16 +933,18 @@ class TermBankV3TableData extends DataClass
   TermBankV3TableData copyWith({
     int? id,
     int? termId,
-    Value<Object?> termOrder = const Value.absent(),
-    int? termJsonId,
+    Value<Object?> definitionOrder = const Value.absent(),
+    int? definitionJsonId,
     int? readingId,
     int? popularity,
     int? sequenceNumber,
   }) => TermBankV3TableData(
     id: id ?? this.id,
     termId: termId ?? this.termId,
-    termOrder: termOrder.present ? termOrder.value : this.termOrder,
-    termJsonId: termJsonId ?? this.termJsonId,
+    definitionOrder: definitionOrder.present
+        ? definitionOrder.value
+        : this.definitionOrder,
+    definitionJsonId: definitionJsonId ?? this.definitionJsonId,
     readingId: readingId ?? this.readingId,
     popularity: popularity ?? this.popularity,
     sequenceNumber: sequenceNumber ?? this.sequenceNumber,
@@ -951,10 +953,12 @@ class TermBankV3TableData extends DataClass
     return TermBankV3TableData(
       id: data.id.present ? data.id.value : this.id,
       termId: data.termId.present ? data.termId.value : this.termId,
-      termOrder: data.termOrder.present ? data.termOrder.value : this.termOrder,
-      termJsonId: data.termJsonId.present
-          ? data.termJsonId.value
-          : this.termJsonId,
+      definitionOrder: data.definitionOrder.present
+          ? data.definitionOrder.value
+          : this.definitionOrder,
+      definitionJsonId: data.definitionJsonId.present
+          ? data.definitionJsonId.value
+          : this.definitionJsonId,
       readingId: data.readingId.present ? data.readingId.value : this.readingId,
       popularity: data.popularity.present
           ? data.popularity.value
@@ -970,8 +974,8 @@ class TermBankV3TableData extends DataClass
     return (StringBuffer('TermBankV3TableData(')
           ..write('id: $id, ')
           ..write('termId: $termId, ')
-          ..write('termOrder: $termOrder, ')
-          ..write('termJsonId: $termJsonId, ')
+          ..write('definitionOrder: $definitionOrder, ')
+          ..write('definitionJsonId: $definitionJsonId, ')
           ..write('readingId: $readingId, ')
           ..write('popularity: $popularity, ')
           ..write('sequenceNumber: $sequenceNumber')
@@ -983,8 +987,8 @@ class TermBankV3TableData extends DataClass
   int get hashCode => Object.hash(
     id,
     termId,
-    termOrder,
-    termJsonId,
+    definitionOrder,
+    definitionJsonId,
     readingId,
     popularity,
     sequenceNumber,
@@ -995,8 +999,8 @@ class TermBankV3TableData extends DataClass
       (other is TermBankV3TableData &&
           other.id == this.id &&
           other.termId == this.termId &&
-          other.termOrder == this.termOrder &&
-          other.termJsonId == this.termJsonId &&
+          other.definitionOrder == this.definitionOrder &&
+          other.definitionJsonId == this.definitionJsonId &&
           other.readingId == this.readingId &&
           other.popularity == this.popularity &&
           other.sequenceNumber == this.sequenceNumber);
@@ -1005,16 +1009,16 @@ class TermBankV3TableData extends DataClass
 class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   final Value<int> id;
   final Value<int> termId;
-  final Value<Object?> termOrder;
-  final Value<int> termJsonId;
+  final Value<Object?> definitionOrder;
+  final Value<int> definitionJsonId;
   final Value<int> readingId;
   final Value<int> popularity;
   final Value<int> sequenceNumber;
   const TermBankV3TableCompanion({
     this.id = const Value.absent(),
     this.termId = const Value.absent(),
-    this.termOrder = const Value.absent(),
-    this.termJsonId = const Value.absent(),
+    this.definitionOrder = const Value.absent(),
+    this.definitionJsonId = const Value.absent(),
     this.readingId = const Value.absent(),
     this.popularity = const Value.absent(),
     this.sequenceNumber = const Value.absent(),
@@ -1022,22 +1026,22 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   TermBankV3TableCompanion.insert({
     this.id = const Value.absent(),
     required int termId,
-    required Object? termOrder,
-    required int termJsonId,
+    required Object? definitionOrder,
+    required int definitionJsonId,
     required int readingId,
     required int popularity,
     required int sequenceNumber,
   }) : termId = Value(termId),
-       termOrder = Value(termOrder),
-       termJsonId = Value(termJsonId),
+       definitionOrder = Value(definitionOrder),
+       definitionJsonId = Value(definitionJsonId),
        readingId = Value(readingId),
        popularity = Value(popularity),
        sequenceNumber = Value(sequenceNumber);
   static Insertable<TermBankV3TableData> custom({
     Expression<int>? id,
     Expression<int>? termId,
-    Expression<String>? termOrder,
-    Expression<int>? termJsonId,
+    Expression<String>? definitionOrder,
+    Expression<int>? definitionJsonId,
     Expression<int>? readingId,
     Expression<int>? popularity,
     Expression<int>? sequenceNumber,
@@ -1045,8 +1049,8 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (termId != null) 'term_id': termId,
-      if (termOrder != null) 'term_order': termOrder,
-      if (termJsonId != null) 'term_json_id': termJsonId,
+      if (definitionOrder != null) 'definition_order': definitionOrder,
+      if (definitionJsonId != null) 'definition_json_id': definitionJsonId,
       if (readingId != null) 'reading_id': readingId,
       if (popularity != null) 'popularity': popularity,
       if (sequenceNumber != null) 'sequence_number': sequenceNumber,
@@ -1056,8 +1060,8 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   TermBankV3TableCompanion copyWith({
     Value<int>? id,
     Value<int>? termId,
-    Value<Object?>? termOrder,
-    Value<int>? termJsonId,
+    Value<Object?>? definitionOrder,
+    Value<int>? definitionJsonId,
     Value<int>? readingId,
     Value<int>? popularity,
     Value<int>? sequenceNumber,
@@ -1065,8 +1069,8 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     return TermBankV3TableCompanion(
       id: id ?? this.id,
       termId: termId ?? this.termId,
-      termOrder: termOrder ?? this.termOrder,
-      termJsonId: termJsonId ?? this.termJsonId,
+      definitionOrder: definitionOrder ?? this.definitionOrder,
+      definitionJsonId: definitionJsonId ?? this.definitionJsonId,
       readingId: readingId ?? this.readingId,
       popularity: popularity ?? this.popularity,
       sequenceNumber: sequenceNumber ?? this.sequenceNumber,
@@ -1082,13 +1086,15 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     if (termId.present) {
       map['term_id'] = Variable<int>(termId.value);
     }
-    if (termOrder.present) {
-      map['term_order'] = Variable<String>(
-        $TermBankV3TableTable.$convertertermOrder.toSql(termOrder.value),
+    if (definitionOrder.present) {
+      map['definition_order'] = Variable<String>(
+        $TermBankV3TableTable.$converterdefinitionOrder.toSql(
+          definitionOrder.value,
+        ),
       );
     }
-    if (termJsonId.present) {
-      map['term_json_id'] = Variable<int>(termJsonId.value);
+    if (definitionJsonId.present) {
+      map['definition_json_id'] = Variable<int>(definitionJsonId.value);
     }
     if (readingId.present) {
       map['reading_id'] = Variable<int>(readingId.value);
@@ -1107,8 +1113,8 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     return (StringBuffer('TermBankV3TableCompanion(')
           ..write('id: $id, ')
           ..write('termId: $termId, ')
-          ..write('termOrder: $termOrder, ')
-          ..write('termJsonId: $termJsonId, ')
+          ..write('definitionOrder: $definitionOrder, ')
+          ..write('definitionJsonId: $definitionJsonId, ')
           ..write('readingId: $readingId, ')
           ..write('popularity: $popularity, ')
           ..write('sequenceNumber: $sequenceNumber')
@@ -14125,7 +14131,7 @@ final class $$TermBankV3DefinitionJsonTableTableReferences
     db.termBankV3Table,
     aliasName: $_aliasNameGenerator(
       db.termBankV3DefinitionJsonTable.id,
-      db.termBankV3Table.termJsonId,
+      db.termBankV3Table.definitionJsonId,
     ),
   );
 
@@ -14133,7 +14139,7 @@ final class $$TermBankV3DefinitionJsonTableTableReferences
     final manager = $$TermBankV3TableTableTableManager(
       $_db,
       $_db.termBankV3Table,
-    ).filter((f) => f.termJsonId.id.sqlEquals($_itemColumn<int>('id')!));
+    ).filter((f) => f.definitionJsonId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
       _termBankV3TableRefsTable($_db),
@@ -14171,7 +14177,7 @@ class $$TermBankV3DefinitionJsonTableTableFilterComposer
       composer: this,
       getCurrentColumn: (t) => t.id,
       referencedTable: $db.termBankV3Table,
-      getReferencedColumn: (t) => t.termJsonId,
+      getReferencedColumn: (t) => t.definitionJsonId,
       builder:
           (
             joinBuilder, {
@@ -14235,7 +14241,7 @@ class $$TermBankV3DefinitionJsonTableTableAnnotationComposer
       composer: this,
       getCurrentColumn: (t) => t.id,
       referencedTable: $db.termBankV3Table,
-      getReferencedColumn: (t) => t.termJsonId,
+      getReferencedColumn: (t) => t.definitionJsonId,
       builder:
           (
             joinBuilder, {
@@ -14344,7 +14350,9 @@ class $$TermBankV3DefinitionJsonTableTableTableManager
                             p0,
                           ).termBankV3TableRefs,
                       referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.termJsonId == item.id),
+                          referencedItems.where(
+                            (e) => e.definitionJsonId == item.id,
+                          ),
                       typedResults: items,
                     ),
                 ];
@@ -14950,8 +14958,8 @@ typedef $$TermBankV3TableTableCreateCompanionBuilder =
     TermBankV3TableCompanion Function({
       Value<int> id,
       required int termId,
-      required Object? termOrder,
-      required int termJsonId,
+      required Object? definitionOrder,
+      required int definitionJsonId,
       required int readingId,
       required int popularity,
       required int sequenceNumber,
@@ -14960,8 +14968,8 @@ typedef $$TermBankV3TableTableUpdateCompanionBuilder =
     TermBankV3TableCompanion Function({
       Value<int> id,
       Value<int> termId,
-      Value<Object?> termOrder,
-      Value<int> termJsonId,
+      Value<Object?> definitionOrder,
+      Value<int> definitionJsonId,
       Value<int> readingId,
       Value<int> popularity,
       Value<int> sequenceNumber,
@@ -14999,22 +15007,24 @@ final class $$TermBankV3TableTableReferences
     );
   }
 
-  static $TermBankV3DefinitionJsonTableTable _termJsonIdTable(_$DaKanjiDB db) =>
-      db.termBankV3DefinitionJsonTable.createAlias(
-        $_aliasNameGenerator(
-          db.termBankV3Table.termJsonId,
-          db.termBankV3DefinitionJsonTable.id,
-        ),
-      );
+  static $TermBankV3DefinitionJsonTableTable _definitionJsonIdTable(
+    _$DaKanjiDB db,
+  ) => db.termBankV3DefinitionJsonTable.createAlias(
+    $_aliasNameGenerator(
+      db.termBankV3Table.definitionJsonId,
+      db.termBankV3DefinitionJsonTable.id,
+    ),
+  );
 
-  $$TermBankV3DefinitionJsonTableTableProcessedTableManager get termJsonId {
-    final $_column = $_itemColumn<int>('term_json_id')!;
+  $$TermBankV3DefinitionJsonTableTableProcessedTableManager
+  get definitionJsonId {
+    final $_column = $_itemColumn<int>('definition_json_id')!;
 
     final manager = $$TermBankV3DefinitionJsonTableTableTableManager(
       $_db,
       $_db.termBankV3DefinitionJsonTable,
     ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_termJsonIdTable($_db));
+    final item = $_typedResult.readTableOrNull(_definitionJsonIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -15167,9 +15177,9 @@ class $$TermBankV3TableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<Object?, Object, String> get termOrder =>
+  ColumnWithTypeConverterFilters<Object?, Object, String> get definitionOrder =>
       $composableBuilder(
-        column: $table.termOrder,
+        column: $table.definitionOrder,
         builder: (column) => ColumnWithTypeConverterFilters(column),
       );
 
@@ -15206,11 +15216,11 @@ class $$TermBankV3TableTableFilterComposer
     return composer;
   }
 
-  $$TermBankV3DefinitionJsonTableTableFilterComposer get termJsonId {
+  $$TermBankV3DefinitionJsonTableTableFilterComposer get definitionJsonId {
     final $$TermBankV3DefinitionJsonTableTableFilterComposer composer =
         $composerBuilder(
           composer: this,
-          getCurrentColumn: (t) => t.termJsonId,
+          getCurrentColumn: (t) => t.definitionJsonId,
           referencedTable: $db.termBankV3DefinitionJsonTable,
           getReferencedColumn: (t) => t.id,
           builder:
@@ -15384,8 +15394,8 @@ class $$TermBankV3TableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get termOrder => $composableBuilder(
-    column: $table.termOrder,
+  ColumnOrderings<String> get definitionOrder => $composableBuilder(
+    column: $table.definitionOrder,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -15422,11 +15432,11 @@ class $$TermBankV3TableTableOrderingComposer
     return composer;
   }
 
-  $$TermBankV3DefinitionJsonTableTableOrderingComposer get termJsonId {
+  $$TermBankV3DefinitionJsonTableTableOrderingComposer get definitionJsonId {
     final $$TermBankV3DefinitionJsonTableTableOrderingComposer composer =
         $composerBuilder(
           composer: this,
-          getCurrentColumn: (t) => t.termJsonId,
+          getCurrentColumn: (t) => t.definitionJsonId,
           referencedTable: $db.termBankV3DefinitionJsonTable,
           getReferencedColumn: (t) => t.id,
           builder:
@@ -15482,8 +15492,11 @@ class $$TermBankV3TableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<Object?, String> get termOrder =>
-      $composableBuilder(column: $table.termOrder, builder: (column) => column);
+  GeneratedColumnWithTypeConverter<Object?, String> get definitionOrder =>
+      $composableBuilder(
+        column: $table.definitionOrder,
+        builder: (column) => column,
+      );
 
   GeneratedColumn<int> get popularity => $composableBuilder(
     column: $table.popularity,
@@ -15518,11 +15531,11 @@ class $$TermBankV3TableTableAnnotationComposer
     return composer;
   }
 
-  $$TermBankV3DefinitionJsonTableTableAnnotationComposer get termJsonId {
+  $$TermBankV3DefinitionJsonTableTableAnnotationComposer get definitionJsonId {
     final $$TermBankV3DefinitionJsonTableTableAnnotationComposer composer =
         $composerBuilder(
           composer: this,
-          getCurrentColumn: (t) => t.termJsonId,
+          getCurrentColumn: (t) => t.definitionJsonId,
           referencedTable: $db.termBankV3DefinitionJsonTable,
           getReferencedColumn: (t) => t.id,
           builder:
@@ -15697,7 +15710,7 @@ class $$TermBankV3TableTableTableManager
           TermBankV3TableData,
           PrefetchHooks Function({
             bool termId,
-            bool termJsonId,
+            bool definitionJsonId,
             bool readingId,
             bool termBankV3DefinitionTagRelationsTableRefs,
             bool termBankV3RuleIdentifierRelationsTableRefs,
@@ -15722,16 +15735,16 @@ class $$TermBankV3TableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int> termId = const Value.absent(),
-                Value<Object?> termOrder = const Value.absent(),
-                Value<int> termJsonId = const Value.absent(),
+                Value<Object?> definitionOrder = const Value.absent(),
+                Value<int> definitionJsonId = const Value.absent(),
                 Value<int> readingId = const Value.absent(),
                 Value<int> popularity = const Value.absent(),
                 Value<int> sequenceNumber = const Value.absent(),
               }) => TermBankV3TableCompanion(
                 id: id,
                 termId: termId,
-                termOrder: termOrder,
-                termJsonId: termJsonId,
+                definitionOrder: definitionOrder,
+                definitionJsonId: definitionJsonId,
                 readingId: readingId,
                 popularity: popularity,
                 sequenceNumber: sequenceNumber,
@@ -15740,16 +15753,16 @@ class $$TermBankV3TableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required int termId,
-                required Object? termOrder,
-                required int termJsonId,
+                required Object? definitionOrder,
+                required int definitionJsonId,
                 required int readingId,
                 required int popularity,
                 required int sequenceNumber,
               }) => TermBankV3TableCompanion.insert(
                 id: id,
                 termId: termId,
-                termOrder: termOrder,
-                termJsonId: termJsonId,
+                definitionOrder: definitionOrder,
+                definitionJsonId: definitionJsonId,
                 readingId: readingId,
                 popularity: popularity,
                 sequenceNumber: sequenceNumber,
@@ -15765,7 +15778,7 @@ class $$TermBankV3TableTableTableManager
           prefetchHooksCallback:
               ({
                 termId = false,
-                termJsonId = false,
+                definitionJsonId = false,
                 readingId = false,
                 termBankV3DefinitionTagRelationsTableRefs = false,
                 termBankV3RuleIdentifierRelationsTableRefs = false,
@@ -15815,17 +15828,17 @@ class $$TermBankV3TableTableTableManager
                                   )
                                   as T;
                         }
-                        if (termJsonId) {
+                        if (definitionJsonId) {
                           state =
                               state.withJoin(
                                     currentTable: table,
-                                    currentColumn: table.termJsonId,
+                                    currentColumn: table.definitionJsonId,
                                     referencedTable:
                                         $$TermBankV3TableTableReferences
-                                            ._termJsonIdTable(db),
+                                            ._definitionJsonIdTable(db),
                                     referencedColumn:
                                         $$TermBankV3TableTableReferences
-                                            ._termJsonIdTable(db)
+                                            ._definitionJsonIdTable(db)
                                             .id,
                                   )
                                   as T;
@@ -15962,7 +15975,7 @@ typedef $$TermBankV3TableTableProcessedTableManager =
       TermBankV3TableData,
       PrefetchHooks Function({
         bool termId,
-        bool termJsonId,
+        bool definitionJsonId,
         bool readingId,
         bool termBankV3DefinitionTagRelationsTableRefs,
         bool termBankV3RuleIdentifierRelationsTableRefs,

@@ -179,8 +179,8 @@ Future parseTermBankV3(
     termBankComps.add(TermBankV3TableCompanion(
       id: Value(currentMaxTermBankId),
       termId: Value(termInsertId),
-      termOrder: Value(definitionIds),
-      termJsonId: Value(currentMaxDefinitionJsonId),
+      definitionOrder: Value(definitionIds),
+      definitionJsonId: Value(currentMaxDefinitionJsonId),
       readingId: Value(readingInsertId),
       popularity: Value(jsonEntry[4]),
       sequenceNumber: Value(jsonEntry[6])

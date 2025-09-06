@@ -23,10 +23,10 @@ class TermBankV3Table extends Table {
   /// The order of the terms, used to sort them in the order they were
   /// provided by the dictionary. This is a JSON array of integers, where each
   /// integer corresponds to `termId`.
-  TextColumn get termOrder => text().map(const JsonConverter())();
+  TextColumn get definitionOrder => text().map(const JsonConverter())();
 
   /// The ID of the JSON representation of the definition
-  IntColumn get termJsonId => integer().references(TermBankV3DefinitionJsonTable, #id)();
+  IntColumn get definitionJsonId => integer().references(TermBankV3DefinitionJsonTable, #id)();
 
   /// ID reading of the term, or an empty string if the reading is the same as
   /// the term.
