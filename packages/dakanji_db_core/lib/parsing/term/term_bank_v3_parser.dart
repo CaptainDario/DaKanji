@@ -135,16 +135,17 @@ Future parseTermBankV3(
     }
 
     // Parse definitions
-    List<ParsedTerm> parsedDefinition = extractPlainTextDefinitions(jsonEntry);
+    List<ParsedTerm> parsedDefinitions = extractPlainTextDefinitions(jsonEntry);
     List<int> definitionIds = [];
-    for (var definition in parsedDefinition) {
+    for (var parsedDefinition in parsedDefinitions) {
+      String text = parsedDefinition.text;
       // check if term is already in DB
-      int definitionInsertId = allDefinitions[definition] ?? ++currentMaxdefinitionId;
-      if(allDefinitions[definition] == null){
-        allDefinitions[definition] = definitionInsertId;
+      int definitionInsertId = allDefinitions[text] ?? ++currentMaxdefinitionId;
+      if(allDefinitions[text] == null){
+        allDefinitions[text] = definitionInsertId;
         definitionComps.add(DefinitionTableCompanion(
           id: Value(definitionInsertId),
-          definition: Value(definition.text)
+          definition: Value(text)
         ));
       }
       definitionIds.add(definitionInsertId);
