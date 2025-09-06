@@ -1,6 +1,6 @@
 // Package imports:
-import '/parsing/japanese_processing/mecab_parsing.dart';
-import '/parsing/japanese_processing/sentence_finding.dart';
+import 'package:language_processing/japanese/sentence_parsing.dart';
+import 'package:language_processing/japanese/sentence_finding.dart';
 import 'package:drift/drift.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 //import 'package:mecab_for_dart/mecab_dart.dart';

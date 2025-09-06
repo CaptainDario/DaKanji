@@ -3,7 +3,7 @@ import "/database/general_tables/term_tables.dart";
 import "/database/tag/tag_bank_v3_tables.dart";
 import "/database/term/term_bank_v3_entry.dart";
 import "/database/term/term_bank_v3_tables.dart";
-import "/iso/iso_table.dart";
+import 'package:language_processing/iso/iso_table.dart';
 import "package:drift/drift.dart";
 
 // Project imports:

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dakanji_db_core/iso/iso_table.dart';
+import 'package:language_processing/iso/iso_table.dart';
 import 'package:path/path.dart' as p;
 
 import 'package:disjoint_set/disjoint_set.dart'; 

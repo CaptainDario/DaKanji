@@ -27,6 +27,7 @@ dependencies:
   hooks: ^0.20.1
   disjoint_set: ^1.0.0
   github: ^9.25.0
+  language_processing:
 
 dev_dependencies:
   drift_dev: ^2.28.0

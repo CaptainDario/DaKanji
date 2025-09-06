@@ -1,5 +1,5 @@
 // Package imports:
-import 'package:dakanji_db_core/iso/iso_table.dart';
+import 'package:language_processing/iso/iso_table.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 

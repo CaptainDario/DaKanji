@@ -10,7 +10,6 @@ RegExp sentenceRegex = RegExp(
   multiLine: true
 );
 
-
 // Finds all sentences in the given `text` using a RegExp for estimation
 List<String> findSentencesRegexp(String text){
 

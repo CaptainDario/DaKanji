@@ -6,6 +6,7 @@
 <module fileurl="file://$PROJECT_DIR$/packages/dakanji_db_shared/melos_dakanji_db_shared.iml" filepath="$PROJECT_DIR$/packages/dakanji_db_shared/melos_dakanji_db_shared.iml" />
 <module fileurl="file://$PROJECT_DIR$/packages/dakanji_db_ui/melos_dakanji_db_ui.iml" filepath="$PROJECT_DIR$/packages/dakanji_db_ui/melos_dakanji_db_ui.iml" />
 <module fileurl="file://$PROJECT_DIR$/apps/dakanji_db_ui_example/melos_dakanji_db_ui_example.iml" filepath="$PROJECT_DIR$/apps/dakanji_db_ui_example/melos_dakanji_db_ui_example.iml" />
+<module fileurl="file://$PROJECT_DIR$/packages/language_processing/melos_language_processing.iml" filepath="$PROJECT_DIR$/packages/language_processing/melos_language_processing.iml" />
 <module fileurl="file://$PROJECT_DIR$/melos_dakanji_db_workspace.iml" filepath="$PROJECT_DIR$/melos_dakanji_db_workspace.iml" />
     </modules>
   </component>

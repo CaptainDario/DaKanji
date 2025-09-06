@@ -1,7 +1,7 @@
 // Package imports:
 import "/database/example/example_entry.dart";
 import "/database/example/example_tables.dart";
-import "/iso/iso_table.dart";
+import 'package:language_processing/iso/iso_table.dart';
 import "package:drift/drift.dart";
 
 // Project imports:
