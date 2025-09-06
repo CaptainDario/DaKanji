@@ -44,18 +44,24 @@ Future downloadSources() async {
   String radkUri = await getSourceFromGHRelease('scriptin', 'jmdict-simplified', 'radk', '.json.zip', out);
   String kradUri = await getSourceFromGHRelease('scriptin', 'jmdict-simplified', 'krad', '.json.zip', out);
 
+  String jmdictUri = await getSourceFromGHRelease('yomidevs', 'jmdict-yomitan', 'JMdict', 'english.zip', out);
+  String kanjiDic2Uri = await getSourceFromGHRelease('yomidevs', 'jmdict-yomitan', 'KANJIDIC', 'english.zip', out);
+
   String tatoebaLinksUri = await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/links.tar.bz2'), out);
   String tatoebaSentencesUri = await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/sentences.tar.bz2'), out);
 
   print("All downloads completed, writing summary file.");
   File sourcesList = File(p.join(out.path, 'sources_list.txt'))..createSync();
   sourcesList.writeAsStringSync(
+    'KanjiVG: $kanjiVGUri\n'
     'Krad: $kradUri\n'
     'Radk: $radkUri\n'
-    'KanjiVG: $kanjiVGUri\n'
+    'JMDict: $jmdictUri\n'
+    'KanjiDic2: $kanjiDic2Uri\n'
     'Tatoeba Links: $tatoebaLinksUri\n'
     'Tatoeba Sentences: $tatoebaSentencesUri'
   );
+  print("Done!");
 
 }
 
@@ -82,7 +88,7 @@ Future radicals(DaKanjiDB db) async {
 Future kanjidic2(DaKanjiDB db) async {
 
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(kanjidic2InputPath), db);
+  await parseDictionaryFolder(Directory(kanjidic2InputPath), db, false);
   print("Converting KanjiDic2 took: ${s.elapsedMilliseconds}ms");
 
 }

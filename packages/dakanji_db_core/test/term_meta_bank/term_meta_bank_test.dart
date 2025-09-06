@@ -16,7 +16,7 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(devExampleSentencesPath), db);
+  await parseDictionaryFolder(Directory(devExampleSentencesPath), db, true);
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   test('Test importing samples', () async {

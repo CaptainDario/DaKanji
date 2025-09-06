@@ -16,7 +16,7 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(yomitanSampleDictionaryPath), db);
+  await parseDictionaryFolder(Directory(yomitanSampleDictionaryPath), db, false);
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   test('Test importing samples', () async {
