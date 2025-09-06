@@ -48,6 +48,8 @@ final yomitanSampleDictionaryPath = p.joinAll([dataFilesPath, "yomitan"]);
 final devExampleSentencesPath = p.joinAll([dataFilesPath, "example_sentences"]);
 /// Path to the folder that contains example texts for development
 final devExampleTextsPath = p.joinAll([dataFilesPath, "example_texts"]);
+/// Path to the folder that contains audio examples for development
+final devExampleAudioPath = p.joinAll([dataFilesPath, "example_audio_sources"]);
 
 /// --- DAKANJI DB FILES -------------------------------------------------------
 /// Path to the folder that contains the input files for creating DaKanji DB
