@@ -3626,167 +3626,6 @@ class TermBankV3SearchView
   };
 }
 
-class $MyJsonTableTable extends MyJsonTable
-    with TableInfo<$MyJsonTableTable, MyJsonTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $MyJsonTableTable(this.attachedDatabase, [this._alias]);
-  @override
-  late final GeneratedColumnWithTypeConverter<Object?, String> lastName =
-      GeneratedColumn<String>(
-        'last_name',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      ).withConverter<Object?>($MyJsonTableTable.$converterlastName);
-  @override
-  List<GeneratedColumn> get $columns => [lastName];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'my_json_table';
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  MyJsonTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MyJsonTableData(
-      lastName: $MyJsonTableTable.$converterlastName.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.string,
-          data['${effectivePrefix}last_name'],
-        )!,
-      ),
-    );
-  }
-
-  @override
-  $MyJsonTableTable createAlias(String alias) {
-    return $MyJsonTableTable(attachedDatabase, alias);
-  }
-
-  static TypeConverter<Object?, String> $converterlastName =
-      const JsonConverter();
-}
-
-class MyJsonTableData extends DataClass implements Insertable<MyJsonTableData> {
-  final Object? lastName;
-  const MyJsonTableData({this.lastName});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (!nullToAbsent || lastName != null) {
-      map['last_name'] = Variable<String>(
-        $MyJsonTableTable.$converterlastName.toSql(lastName),
-      );
-    }
-    return map;
-  }
-
-  MyJsonTableCompanion toCompanion(bool nullToAbsent) {
-    return MyJsonTableCompanion(
-      lastName: lastName == null && nullToAbsent
-          ? const Value.absent()
-          : Value(lastName),
-    );
-  }
-
-  factory MyJsonTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return MyJsonTableData(
-      lastName: serializer.fromJson<Object?>(json['lastName']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{'lastName': serializer.toJson<Object?>(lastName)};
-  }
-
-  MyJsonTableData copyWith({Value<Object?> lastName = const Value.absent()}) =>
-      MyJsonTableData(
-        lastName: lastName.present ? lastName.value : this.lastName,
-      );
-  MyJsonTableData copyWithCompanion(MyJsonTableCompanion data) {
-    return MyJsonTableData(
-      lastName: data.lastName.present ? data.lastName.value : this.lastName,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MyJsonTableData(')
-          ..write('lastName: $lastName')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => lastName.hashCode;
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is MyJsonTableData && other.lastName == this.lastName);
-}
-
-class MyJsonTableCompanion extends UpdateCompanion<MyJsonTableData> {
-  final Value<Object?> lastName;
-  final Value<int> rowid;
-  const MyJsonTableCompanion({
-    this.lastName = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  MyJsonTableCompanion.insert({
-    required Object? lastName,
-    this.rowid = const Value.absent(),
-  }) : lastName = Value(lastName);
-  static Insertable<MyJsonTableData> custom({
-    Expression<String>? lastName,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (lastName != null) 'last_name': lastName,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  MyJsonTableCompanion copyWith({Value<Object?>? lastName, Value<int>? rowid}) {
-    return MyJsonTableCompanion(
-      lastName: lastName ?? this.lastName,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (lastName.present) {
-      map['last_name'] = Variable<String>(
-        $MyJsonTableTable.$converterlastName.toSql(lastName.value),
-      );
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MyJsonTableCompanion(')
-          ..write('lastName: $lastName, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $KanjiTableTable extends KanjiTable
     with TableInfo<$KanjiTableTable, KanjiTableData> {
   @override
@@ -9167,22 +9006,20 @@ class $AudioTableTable extends AudioTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _isLocalMeta = const VerificationMeta(
-    'isLocal',
-  );
+  static const VerificationMeta _localMeta = const VerificationMeta('local');
   @override
-  late final GeneratedColumn<bool> isLocal = GeneratedColumn<bool>(
-    'is_local',
+  late final GeneratedColumn<bool> local = GeneratedColumn<bool>(
+    'local',
     aliasedName,
     false,
     type: DriftSqlType.bool,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_local" IN (0, 1))',
+      'CHECK ("local" IN (0, 1))',
     ),
   );
   @override
-  List<GeneratedColumn> get $columns => [id, name, uri, isLocal];
+  List<GeneratedColumn> get $columns => [id, name, uri, local];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -9214,13 +9051,13 @@ class $AudioTableTable extends AudioTable
     } else if (isInserting) {
       context.missing(_uriMeta);
     }
-    if (data.containsKey('is_local')) {
+    if (data.containsKey('local')) {
       context.handle(
-        _isLocalMeta,
-        isLocal.isAcceptableOrUnknown(data['is_local']!, _isLocalMeta),
+        _localMeta,
+        local.isAcceptableOrUnknown(data['local']!, _localMeta),
       );
     } else if (isInserting) {
-      context.missing(_isLocalMeta);
+      context.missing(_localMeta);
     }
     return context;
   }
@@ -9243,9 +9080,9 @@ class $AudioTableTable extends AudioTable
         DriftSqlType.string,
         data['${effectivePrefix}uri'],
       )!,
-      isLocal: attachedDatabase.typeMapping.read(
+      local: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
-        data['${effectivePrefix}is_local'],
+        data['${effectivePrefix}local'],
       )!,
     );
   }
@@ -9266,12 +9103,12 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
   final String uri;
 
   /// Is this a local audio source
-  final bool isLocal;
+  final bool local;
   const AudioTableData({
     required this.id,
     required this.name,
     required this.uri,
-    required this.isLocal,
+    required this.local,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -9279,7 +9116,7 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     map['uri'] = Variable<String>(uri);
-    map['is_local'] = Variable<bool>(isLocal);
+    map['local'] = Variable<bool>(local);
     return map;
   }
 
@@ -9288,7 +9125,7 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
       id: Value(id),
       name: Value(name),
       uri: Value(uri),
-      isLocal: Value(isLocal),
+      local: Value(local),
     );
   }
 
@@ -9301,7 +9138,7 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       uri: serializer.fromJson<String>(json['uri']),
-      isLocal: serializer.fromJson<bool>(json['isLocal']),
+      local: serializer.fromJson<bool>(json['local']),
     );
   }
   @override
@@ -9311,27 +9148,23 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'uri': serializer.toJson<String>(uri),
-      'isLocal': serializer.toJson<bool>(isLocal),
+      'local': serializer.toJson<bool>(local),
     };
   }
 
-  AudioTableData copyWith({
-    int? id,
-    String? name,
-    String? uri,
-    bool? isLocal,
-  }) => AudioTableData(
-    id: id ?? this.id,
-    name: name ?? this.name,
-    uri: uri ?? this.uri,
-    isLocal: isLocal ?? this.isLocal,
-  );
+  AudioTableData copyWith({int? id, String? name, String? uri, bool? local}) =>
+      AudioTableData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        uri: uri ?? this.uri,
+        local: local ?? this.local,
+      );
   AudioTableData copyWithCompanion(AudioTableCompanion data) {
     return AudioTableData(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       uri: data.uri.present ? data.uri.value : this.uri,
-      isLocal: data.isLocal.present ? data.isLocal.value : this.isLocal,
+      local: data.local.present ? data.local.value : this.local,
     );
   }
 
@@ -9341,13 +9174,13 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('uri: $uri, ')
-          ..write('isLocal: $isLocal')
+          ..write('local: $local')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, uri, isLocal);
+  int get hashCode => Object.hash(id, name, uri, local);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -9355,39 +9188,39 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
           other.id == this.id &&
           other.name == this.name &&
           other.uri == this.uri &&
-          other.isLocal == this.isLocal);
+          other.local == this.local);
 }
 
 class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
   final Value<int> id;
   final Value<String> name;
   final Value<String> uri;
-  final Value<bool> isLocal;
+  final Value<bool> local;
   const AudioTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.uri = const Value.absent(),
-    this.isLocal = const Value.absent(),
+    this.local = const Value.absent(),
   });
   AudioTableCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     required String uri,
-    required bool isLocal,
+    required bool local,
   }) : name = Value(name),
        uri = Value(uri),
-       isLocal = Value(isLocal);
+       local = Value(local);
   static Insertable<AudioTableData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? uri,
-    Expression<bool>? isLocal,
+    Expression<bool>? local,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (uri != null) 'uri': uri,
-      if (isLocal != null) 'is_local': isLocal,
+      if (local != null) 'local': local,
     });
   }
 
@@ -9395,13 +9228,13 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
     Value<int>? id,
     Value<String>? name,
     Value<String>? uri,
-    Value<bool>? isLocal,
+    Value<bool>? local,
   }) {
     return AudioTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       uri: uri ?? this.uri,
-      isLocal: isLocal ?? this.isLocal,
+      local: local ?? this.local,
     );
   }
 
@@ -9417,8 +9250,8 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
     if (uri.present) {
       map['uri'] = Variable<String>(uri.value);
     }
-    if (isLocal.present) {
-      map['is_local'] = Variable<bool>(isLocal.value);
+    if (local.present) {
+      map['local'] = Variable<bool>(local.value);
     }
     return map;
   }
@@ -9429,7 +9262,7 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('uri: $uri, ')
-          ..write('isLocal: $isLocal')
+          ..write('local: $local')
           ..write(')'))
         .toString();
   }
@@ -13435,7 +13268,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'name',
     'CREATE INDEX name ON tag_bank_v3_table (name)',
   );
-  late final $MyJsonTableTable myJsonTable = $MyJsonTableTable(this);
   late final Index definition = Index(
     'definition',
     'CREATE INDEX definition ON definition_table (definition)',
@@ -13695,7 +13527,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termBankV3TagBankRelationsTable,
     termBankV3SearchView,
     name,
-    myJsonTable,
     definition,
     reading,
     term,
@@ -19056,123 +18887,6 @@ typedef $$TermBankV3TagBankRelationsTableTableProcessedTableManager =
       ),
       TermBankV3TagBankRelationsTableData,
       PrefetchHooks Function({bool tagBankId, bool termBankId})
-    >;
-typedef $$MyJsonTableTableCreateCompanionBuilder =
-    MyJsonTableCompanion Function({
-      required Object? lastName,
-      Value<int> rowid,
-    });
-typedef $$MyJsonTableTableUpdateCompanionBuilder =
-    MyJsonTableCompanion Function({Value<Object?> lastName, Value<int> rowid});
-
-class $$MyJsonTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $MyJsonTableTable> {
-  $$MyJsonTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnWithTypeConverterFilters<Object?, Object, String> get lastName =>
-      $composableBuilder(
-        column: $table.lastName,
-        builder: (column) => ColumnWithTypeConverterFilters(column),
-      );
-}
-
-class $$MyJsonTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $MyJsonTableTable> {
-  $$MyJsonTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get lastName => $composableBuilder(
-    column: $table.lastName,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$MyJsonTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $MyJsonTableTable> {
-  $$MyJsonTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumnWithTypeConverter<Object?, String> get lastName =>
-      $composableBuilder(column: $table.lastName, builder: (column) => column);
-}
-
-class $$MyJsonTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $MyJsonTableTable,
-          MyJsonTableData,
-          $$MyJsonTableTableFilterComposer,
-          $$MyJsonTableTableOrderingComposer,
-          $$MyJsonTableTableAnnotationComposer,
-          $$MyJsonTableTableCreateCompanionBuilder,
-          $$MyJsonTableTableUpdateCompanionBuilder,
-          (
-            MyJsonTableData,
-            BaseReferences<_$DaKanjiDB, $MyJsonTableTable, MyJsonTableData>,
-          ),
-          MyJsonTableData,
-          PrefetchHooks Function()
-        > {
-  $$MyJsonTableTableTableManager(_$DaKanjiDB db, $MyJsonTableTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$MyJsonTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$MyJsonTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$MyJsonTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<Object?> lastName = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => MyJsonTableCompanion(lastName: lastName, rowid: rowid),
-          createCompanionCallback:
-              ({
-                required Object? lastName,
-                Value<int> rowid = const Value.absent(),
-              }) =>
-                  MyJsonTableCompanion.insert(lastName: lastName, rowid: rowid),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $$MyJsonTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $MyJsonTableTable,
-      MyJsonTableData,
-      $$MyJsonTableTableFilterComposer,
-      $$MyJsonTableTableOrderingComposer,
-      $$MyJsonTableTableAnnotationComposer,
-      $$MyJsonTableTableCreateCompanionBuilder,
-      $$MyJsonTableTableUpdateCompanionBuilder,
-      (
-        MyJsonTableData,
-        BaseReferences<_$DaKanjiDB, $MyJsonTableTable, MyJsonTableData>,
-      ),
-      MyJsonTableData,
-      PrefetchHooks Function()
     >;
 typedef $$KanjiTableTableCreateCompanionBuilder =
     KanjiTableCompanion Function({Value<int> id, required String kanji});
@@ -26048,14 +25762,14 @@ typedef $$AudioTableTableCreateCompanionBuilder =
       Value<int> id,
       required String name,
       required String uri,
-      required bool isLocal,
+      required bool local,
     });
 typedef $$AudioTableTableUpdateCompanionBuilder =
     AudioTableCompanion Function({
       Value<int> id,
       Value<String> name,
       Value<String> uri,
-      Value<bool> isLocal,
+      Value<bool> local,
     });
 
 class $$AudioTableTableFilterComposer
@@ -26082,8 +25796,8 @@ class $$AudioTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<bool> get isLocal => $composableBuilder(
-    column: $table.isLocal,
+  ColumnFilters<bool> get local => $composableBuilder(
+    column: $table.local,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -26112,8 +25826,8 @@ class $$AudioTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<bool> get isLocal => $composableBuilder(
-    column: $table.isLocal,
+  ColumnOrderings<bool> get local => $composableBuilder(
+    column: $table.local,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -26136,8 +25850,8 @@ class $$AudioTableTableAnnotationComposer
   GeneratedColumn<String> get uri =>
       $composableBuilder(column: $table.uri, builder: (column) => column);
 
-  GeneratedColumn<bool> get isLocal =>
-      $composableBuilder(column: $table.isLocal, builder: (column) => column);
+  GeneratedColumn<bool> get local =>
+      $composableBuilder(column: $table.local, builder: (column) => column);
 }
 
 class $$AudioTableTableTableManager
@@ -26174,24 +25888,24 @@ class $$AudioTableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<String> uri = const Value.absent(),
-                Value<bool> isLocal = const Value.absent(),
+                Value<bool> local = const Value.absent(),
               }) => AudioTableCompanion(
                 id: id,
                 name: name,
                 uri: uri,
-                isLocal: isLocal,
+                local: local,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String name,
                 required String uri,
-                required bool isLocal,
+                required bool local,
               }) => AudioTableCompanion.insert(
                 id: id,
                 name: name,
                 uri: uri,
-                isLocal: isLocal,
+                local: local,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -32075,8 +31789,6 @@ class $DaKanjiDBManager {
         _db,
         _db.termBankV3TagBankRelationsTable,
       );
-  $$MyJsonTableTableTableManager get myJsonTable =>
-      $$MyJsonTableTableTableManager(_db, _db.myJsonTable);
   $$KanjiTableTableTableManager get kanjiTable =>
       $$KanjiTableTableTableManager(_db, _db.kanjiTable);
   $$IndexTableTableTableManager get indexTable =>

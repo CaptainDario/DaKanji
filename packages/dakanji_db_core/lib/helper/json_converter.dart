@@ -11,7 +11,3 @@ class JsonConverter extends TypeConverter<Object?, String> {
   @override
   String toSql(Object? value) => json.encode(value);
 }
-
-class MyJsonTable extends Table {
-  TextColumn get lastName => text().map(const JsonConverter())();
-}

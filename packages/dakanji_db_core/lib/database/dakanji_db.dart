@@ -1,4 +1,6 @@
 // Package imports:
+import 'package:dakanji_db_core/database/audio/audio_table.dart';
+
 import '/database/dakanji_db_dao.dart';
 import '/database/example/example_dao.dart';
 import '/database/example/example_relation_tables.dart';
@@ -41,6 +43,8 @@ import '/database/term_meta/term_meta_bank_v3_tables.dart';
 // this is NECCESSARY
 // ignore: unused_import
 import '/helper/zlib_text_converter.dart';
+// ignore: unused_import
+import '/helper/json_converter.dart';
 
 part 'dakanji_db.g.dart';
 
@@ -48,6 +52,7 @@ part 'dakanji_db.g.dart';
 
 @DriftDatabase(
   tables: [
+    AudioTable,
     KanjiTable, TermTable, ReadingTable, DefinitionTable, LanguageCodeTable,
 
     RadicalsTable, RadicalKanjiRelationsTable,
