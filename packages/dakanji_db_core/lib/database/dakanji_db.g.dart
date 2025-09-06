@@ -652,6 +652,15 @@ class $TermBankV3TableTable extends TermBankV3Table
       'REFERENCES term_table (id)',
     ),
   );
+  @override
+  late final GeneratedColumnWithTypeConverter<Object?, String> termOrder =
+      GeneratedColumn<String>(
+        'term_order',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<Object?>($TermBankV3TableTable.$convertertermOrder);
   static const VerificationMeta _termJsonIdMeta = const VerificationMeta(
     'termJsonId',
   );
@@ -706,6 +715,7 @@ class $TermBankV3TableTable extends TermBankV3Table
   List<GeneratedColumn> get $columns => [
     id,
     termId,
+    termOrder,
     termJsonId,
     readingId,
     popularity,
@@ -789,6 +799,12 @@ class $TermBankV3TableTable extends TermBankV3Table
         DriftSqlType.int,
         data['${effectivePrefix}term_id'],
       )!,
+      termOrder: $TermBankV3TableTable.$convertertermOrder.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}term_order'],
+        )!,
+      ),
       termJsonId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}term_json_id'],
@@ -812,6 +828,9 @@ class $TermBankV3TableTable extends TermBankV3Table
   $TermBankV3TableTable createAlias(String alias) {
     return $TermBankV3TableTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<Object?, String> $convertertermOrder =
+      const JsonConverter();
 }
 
 class TermBankV3TableData extends DataClass
@@ -821,6 +840,11 @@ class TermBankV3TableData extends DataClass
 
   /// The ID of the text for the term.
   final int termId;
+
+  /// The order of the terms, used to sort them in the order they were
+  /// provided by the dictionary. This is a JSON array of integers, where each
+  /// integer corresponds to `termId`.
+  final Object? termOrder;
 
   /// The ID of the JSON representation of the definition
   final int termJsonId;
@@ -840,6 +864,7 @@ class TermBankV3TableData extends DataClass
   const TermBankV3TableData({
     required this.id,
     required this.termId,
+    this.termOrder,
     required this.termJsonId,
     required this.readingId,
     required this.popularity,
@@ -850,6 +875,11 @@ class TermBankV3TableData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['term_id'] = Variable<int>(termId);
+    if (!nullToAbsent || termOrder != null) {
+      map['term_order'] = Variable<String>(
+        $TermBankV3TableTable.$convertertermOrder.toSql(termOrder),
+      );
+    }
     map['term_json_id'] = Variable<int>(termJsonId);
     map['reading_id'] = Variable<int>(readingId);
     map['popularity'] = Variable<int>(popularity);
@@ -861,6 +891,9 @@ class TermBankV3TableData extends DataClass
     return TermBankV3TableCompanion(
       id: Value(id),
       termId: Value(termId),
+      termOrder: termOrder == null && nullToAbsent
+          ? const Value.absent()
+          : Value(termOrder),
       termJsonId: Value(termJsonId),
       readingId: Value(readingId),
       popularity: Value(popularity),
@@ -876,6 +909,7 @@ class TermBankV3TableData extends DataClass
     return TermBankV3TableData(
       id: serializer.fromJson<int>(json['id']),
       termId: serializer.fromJson<int>(json['termId']),
+      termOrder: serializer.fromJson<Object?>(json['termOrder']),
       termJsonId: serializer.fromJson<int>(json['termJsonId']),
       readingId: serializer.fromJson<int>(json['readingId']),
       popularity: serializer.fromJson<int>(json['popularity']),
@@ -888,6 +922,7 @@ class TermBankV3TableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'termId': serializer.toJson<int>(termId),
+      'termOrder': serializer.toJson<Object?>(termOrder),
       'termJsonId': serializer.toJson<int>(termJsonId),
       'readingId': serializer.toJson<int>(readingId),
       'popularity': serializer.toJson<int>(popularity),
@@ -898,6 +933,7 @@ class TermBankV3TableData extends DataClass
   TermBankV3TableData copyWith({
     int? id,
     int? termId,
+    Value<Object?> termOrder = const Value.absent(),
     int? termJsonId,
     int? readingId,
     int? popularity,
@@ -905,6 +941,7 @@ class TermBankV3TableData extends DataClass
   }) => TermBankV3TableData(
     id: id ?? this.id,
     termId: termId ?? this.termId,
+    termOrder: termOrder.present ? termOrder.value : this.termOrder,
     termJsonId: termJsonId ?? this.termJsonId,
     readingId: readingId ?? this.readingId,
     popularity: popularity ?? this.popularity,
@@ -914,6 +951,7 @@ class TermBankV3TableData extends DataClass
     return TermBankV3TableData(
       id: data.id.present ? data.id.value : this.id,
       termId: data.termId.present ? data.termId.value : this.termId,
+      termOrder: data.termOrder.present ? data.termOrder.value : this.termOrder,
       termJsonId: data.termJsonId.present
           ? data.termJsonId.value
           : this.termJsonId,
@@ -932,6 +970,7 @@ class TermBankV3TableData extends DataClass
     return (StringBuffer('TermBankV3TableData(')
           ..write('id: $id, ')
           ..write('termId: $termId, ')
+          ..write('termOrder: $termOrder, ')
           ..write('termJsonId: $termJsonId, ')
           ..write('readingId: $readingId, ')
           ..write('popularity: $popularity, ')
@@ -944,6 +983,7 @@ class TermBankV3TableData extends DataClass
   int get hashCode => Object.hash(
     id,
     termId,
+    termOrder,
     termJsonId,
     readingId,
     popularity,
@@ -955,6 +995,7 @@ class TermBankV3TableData extends DataClass
       (other is TermBankV3TableData &&
           other.id == this.id &&
           other.termId == this.termId &&
+          other.termOrder == this.termOrder &&
           other.termJsonId == this.termJsonId &&
           other.readingId == this.readingId &&
           other.popularity == this.popularity &&
@@ -964,6 +1005,7 @@ class TermBankV3TableData extends DataClass
 class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   final Value<int> id;
   final Value<int> termId;
+  final Value<Object?> termOrder;
   final Value<int> termJsonId;
   final Value<int> readingId;
   final Value<int> popularity;
@@ -971,6 +1013,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   const TermBankV3TableCompanion({
     this.id = const Value.absent(),
     this.termId = const Value.absent(),
+    this.termOrder = const Value.absent(),
     this.termJsonId = const Value.absent(),
     this.readingId = const Value.absent(),
     this.popularity = const Value.absent(),
@@ -979,11 +1022,13 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   TermBankV3TableCompanion.insert({
     this.id = const Value.absent(),
     required int termId,
+    required Object? termOrder,
     required int termJsonId,
     required int readingId,
     required int popularity,
     required int sequenceNumber,
   }) : termId = Value(termId),
+       termOrder = Value(termOrder),
        termJsonId = Value(termJsonId),
        readingId = Value(readingId),
        popularity = Value(popularity),
@@ -991,6 +1036,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   static Insertable<TermBankV3TableData> custom({
     Expression<int>? id,
     Expression<int>? termId,
+    Expression<String>? termOrder,
     Expression<int>? termJsonId,
     Expression<int>? readingId,
     Expression<int>? popularity,
@@ -999,6 +1045,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (termId != null) 'term_id': termId,
+      if (termOrder != null) 'term_order': termOrder,
       if (termJsonId != null) 'term_json_id': termJsonId,
       if (readingId != null) 'reading_id': readingId,
       if (popularity != null) 'popularity': popularity,
@@ -1009,6 +1056,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   TermBankV3TableCompanion copyWith({
     Value<int>? id,
     Value<int>? termId,
+    Value<Object?>? termOrder,
     Value<int>? termJsonId,
     Value<int>? readingId,
     Value<int>? popularity,
@@ -1017,6 +1065,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     return TermBankV3TableCompanion(
       id: id ?? this.id,
       termId: termId ?? this.termId,
+      termOrder: termOrder ?? this.termOrder,
       termJsonId: termJsonId ?? this.termJsonId,
       readingId: readingId ?? this.readingId,
       popularity: popularity ?? this.popularity,
@@ -1032,6 +1081,11 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     }
     if (termId.present) {
       map['term_id'] = Variable<int>(termId.value);
+    }
+    if (termOrder.present) {
+      map['term_order'] = Variable<String>(
+        $TermBankV3TableTable.$convertertermOrder.toSql(termOrder.value),
+      );
     }
     if (termJsonId.present) {
       map['term_json_id'] = Variable<int>(termJsonId.value);
@@ -1053,6 +1107,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     return (StringBuffer('TermBankV3TableCompanion(')
           ..write('id: $id, ')
           ..write('termId: $termId, ')
+          ..write('termOrder: $termOrder, ')
           ..write('termJsonId: $termJsonId, ')
           ..write('readingId: $readingId, ')
           ..write('popularity: $popularity, ')
@@ -3563,6 +3618,167 @@ class TermBankV3SearchView
     'term_bank_v3_tag_bank_relations_table',
     'tag_bank_v3_table',
   };
+}
+
+class $MyJsonTableTable extends MyJsonTable
+    with TableInfo<$MyJsonTableTable, MyJsonTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MyJsonTableTable(this.attachedDatabase, [this._alias]);
+  @override
+  late final GeneratedColumnWithTypeConverter<Object?, String> lastName =
+      GeneratedColumn<String>(
+        'last_name',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<Object?>($MyJsonTableTable.$converterlastName);
+  @override
+  List<GeneratedColumn> get $columns => [lastName];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'my_json_table';
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  MyJsonTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MyJsonTableData(
+      lastName: $MyJsonTableTable.$converterlastName.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}last_name'],
+        )!,
+      ),
+    );
+  }
+
+  @override
+  $MyJsonTableTable createAlias(String alias) {
+    return $MyJsonTableTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<Object?, String> $converterlastName =
+      const JsonConverter();
+}
+
+class MyJsonTableData extends DataClass implements Insertable<MyJsonTableData> {
+  final Object? lastName;
+  const MyJsonTableData({this.lastName});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || lastName != null) {
+      map['last_name'] = Variable<String>(
+        $MyJsonTableTable.$converterlastName.toSql(lastName),
+      );
+    }
+    return map;
+  }
+
+  MyJsonTableCompanion toCompanion(bool nullToAbsent) {
+    return MyJsonTableCompanion(
+      lastName: lastName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastName),
+    );
+  }
+
+  factory MyJsonTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MyJsonTableData(
+      lastName: serializer.fromJson<Object?>(json['lastName']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{'lastName': serializer.toJson<Object?>(lastName)};
+  }
+
+  MyJsonTableData copyWith({Value<Object?> lastName = const Value.absent()}) =>
+      MyJsonTableData(
+        lastName: lastName.present ? lastName.value : this.lastName,
+      );
+  MyJsonTableData copyWithCompanion(MyJsonTableCompanion data) {
+    return MyJsonTableData(
+      lastName: data.lastName.present ? data.lastName.value : this.lastName,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MyJsonTableData(')
+          ..write('lastName: $lastName')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => lastName.hashCode;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MyJsonTableData && other.lastName == this.lastName);
+}
+
+class MyJsonTableCompanion extends UpdateCompanion<MyJsonTableData> {
+  final Value<Object?> lastName;
+  final Value<int> rowid;
+  const MyJsonTableCompanion({
+    this.lastName = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MyJsonTableCompanion.insert({
+    required Object? lastName,
+    this.rowid = const Value.absent(),
+  }) : lastName = Value(lastName);
+  static Insertable<MyJsonTableData> custom({
+    Expression<String>? lastName,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (lastName != null) 'last_name': lastName,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MyJsonTableCompanion copyWith({Value<Object?>? lastName, Value<int>? rowid}) {
+    return MyJsonTableCompanion(
+      lastName: lastName ?? this.lastName,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (lastName.present) {
+      map['last_name'] = Variable<String>(
+        $MyJsonTableTable.$converterlastName.toSql(lastName.value),
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MyJsonTableCompanion(')
+          ..write('lastName: $lastName, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
 }
 
 class $KanjiTableTable extends KanjiTable
@@ -8910,6 +9126,309 @@ class ExampleFtsCompanion extends UpdateCompanion<ExampleFt> {
   }
 }
 
+class $AudioTableTable extends AudioTable
+    with TableInfo<$AudioTableTable, AudioTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AudioTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _uriMeta = const VerificationMeta('uri');
+  @override
+  late final GeneratedColumn<String> uri = GeneratedColumn<String>(
+    'uri',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isLocalMeta = const VerificationMeta(
+    'isLocal',
+  );
+  @override
+  late final GeneratedColumn<bool> isLocal = GeneratedColumn<bool>(
+    'is_local',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_local" IN (0, 1))',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, uri, isLocal];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'audio_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AudioTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('uri')) {
+      context.handle(
+        _uriMeta,
+        uri.isAcceptableOrUnknown(data['uri']!, _uriMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_uriMeta);
+    }
+    if (data.containsKey('is_local')) {
+      context.handle(
+        _isLocalMeta,
+        isLocal.isAcceptableOrUnknown(data['is_local']!, _isLocalMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_isLocalMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AudioTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AudioTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      uri: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uri'],
+      )!,
+      isLocal: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_local'],
+      )!,
+    );
+  }
+
+  @override
+  $AudioTableTable createAlias(String alias) {
+    return $AudioTableTable(attachedDatabase, alias);
+  }
+}
+
+class AudioTableData extends DataClass implements Insertable<AudioTableData> {
+  final int id;
+
+  /// The name of the audio source
+  final String name;
+
+  /// The URI of the audio source
+  final String uri;
+
+  /// Is this a local audio source
+  final bool isLocal;
+  const AudioTableData({
+    required this.id,
+    required this.name,
+    required this.uri,
+    required this.isLocal,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['uri'] = Variable<String>(uri);
+    map['is_local'] = Variable<bool>(isLocal);
+    return map;
+  }
+
+  AudioTableCompanion toCompanion(bool nullToAbsent) {
+    return AudioTableCompanion(
+      id: Value(id),
+      name: Value(name),
+      uri: Value(uri),
+      isLocal: Value(isLocal),
+    );
+  }
+
+  factory AudioTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AudioTableData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      uri: serializer.fromJson<String>(json['uri']),
+      isLocal: serializer.fromJson<bool>(json['isLocal']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'uri': serializer.toJson<String>(uri),
+      'isLocal': serializer.toJson<bool>(isLocal),
+    };
+  }
+
+  AudioTableData copyWith({
+    int? id,
+    String? name,
+    String? uri,
+    bool? isLocal,
+  }) => AudioTableData(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    uri: uri ?? this.uri,
+    isLocal: isLocal ?? this.isLocal,
+  );
+  AudioTableData copyWithCompanion(AudioTableCompanion data) {
+    return AudioTableData(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      uri: data.uri.present ? data.uri.value : this.uri,
+      isLocal: data.isLocal.present ? data.isLocal.value : this.isLocal,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AudioTableData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('uri: $uri, ')
+          ..write('isLocal: $isLocal')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, uri, isLocal);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AudioTableData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.uri == this.uri &&
+          other.isLocal == this.isLocal);
+}
+
+class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> uri;
+  final Value<bool> isLocal;
+  const AudioTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.uri = const Value.absent(),
+    this.isLocal = const Value.absent(),
+  });
+  AudioTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String uri,
+    required bool isLocal,
+  }) : name = Value(name),
+       uri = Value(uri),
+       isLocal = Value(isLocal);
+  static Insertable<AudioTableData> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? uri,
+    Expression<bool>? isLocal,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (uri != null) 'uri': uri,
+      if (isLocal != null) 'is_local': isLocal,
+    });
+  }
+
+  AudioTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<String>? uri,
+    Value<bool>? isLocal,
+  }) {
+    return AudioTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      uri: uri ?? this.uri,
+      isLocal: isLocal ?? this.isLocal,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (uri.present) {
+      map['uri'] = Variable<String>(uri.value);
+    }
+    if (isLocal.present) {
+      map['is_local'] = Variable<bool>(isLocal.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AudioTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('uri: $uri, ')
+          ..write('isLocal: $isLocal')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $RadicalsTableTable extends RadicalsTable
     with TableInfo<$RadicalsTableTable, RadicalsTableData> {
   @override
@@ -12910,6 +13429,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'name',
     'CREATE INDEX name ON tag_bank_v3_table (name)',
   );
+  late final $MyJsonTableTable myJsonTable = $MyJsonTableTable(this);
   late final Index definition = Index(
     'definition',
     'CREATE INDEX definition ON definition_table (definition)',
@@ -12982,6 +13502,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'CREATE TRIGGER example_table_au AFTER UPDATE OF example_sentence_tokenized ON example_table BEGIN INSERT INTO example_fts (example_fts, "rowid", example_sentence_tokenized) VALUES (\'delete\', old.id, old.example_sentence_tokenized);INSERT INTO example_fts ("rowid", example_sentence_tokenized) VALUES (new.id, new.example_sentence_tokenized);END',
     'example_table_au',
   );
+  late final $AudioTableTable audioTable = $AudioTableTable(this);
   late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
   late final $RadicalKanjiRelationsTableTable radicalKanjiRelationsTable =
       $RadicalKanjiRelationsTableTable(this);
@@ -13168,6 +13689,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termBankV3TagBankRelationsTable,
     termBankV3SearchView,
     name,
+    myJsonTable,
     definition,
     reading,
     term,
@@ -13194,6 +13716,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     exampleTableAi,
     exampleTableAd,
     exampleTableAu,
+    audioTable,
     radicalsTable,
     radicalKanjiRelationsTable,
     kanjiVGTable,
@@ -14427,6 +14950,7 @@ typedef $$TermBankV3TableTableCreateCompanionBuilder =
     TermBankV3TableCompanion Function({
       Value<int> id,
       required int termId,
+      required Object? termOrder,
       required int termJsonId,
       required int readingId,
       required int popularity,
@@ -14436,6 +14960,7 @@ typedef $$TermBankV3TableTableUpdateCompanionBuilder =
     TermBankV3TableCompanion Function({
       Value<int> id,
       Value<int> termId,
+      Value<Object?> termOrder,
       Value<int> termJsonId,
       Value<int> readingId,
       Value<int> popularity,
@@ -14641,6 +15166,12 @@ class $$TermBankV3TableTableFilterComposer
     column: $table.id,
     builder: (column) => ColumnFilters(column),
   );
+
+  ColumnWithTypeConverterFilters<Object?, Object, String> get termOrder =>
+      $composableBuilder(
+        column: $table.termOrder,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
 
   ColumnFilters<int> get popularity => $composableBuilder(
     column: $table.popularity,
@@ -14853,6 +15384,11 @@ class $$TermBankV3TableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get termOrder => $composableBuilder(
+    column: $table.termOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get popularity => $composableBuilder(
     column: $table.popularity,
     builder: (column) => ColumnOrderings(column),
@@ -14945,6 +15481,9 @@ class $$TermBankV3TableTableAnnotationComposer
   });
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<Object?, String> get termOrder =>
+      $composableBuilder(column: $table.termOrder, builder: (column) => column);
 
   GeneratedColumn<int> get popularity => $composableBuilder(
     column: $table.popularity,
@@ -15183,6 +15722,7 @@ class $$TermBankV3TableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int> termId = const Value.absent(),
+                Value<Object?> termOrder = const Value.absent(),
                 Value<int> termJsonId = const Value.absent(),
                 Value<int> readingId = const Value.absent(),
                 Value<int> popularity = const Value.absent(),
@@ -15190,6 +15730,7 @@ class $$TermBankV3TableTableTableManager
               }) => TermBankV3TableCompanion(
                 id: id,
                 termId: termId,
+                termOrder: termOrder,
                 termJsonId: termJsonId,
                 readingId: readingId,
                 popularity: popularity,
@@ -15199,6 +15740,7 @@ class $$TermBankV3TableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required int termId,
+                required Object? termOrder,
                 required int termJsonId,
                 required int readingId,
                 required int popularity,
@@ -15206,6 +15748,7 @@ class $$TermBankV3TableTableTableManager
               }) => TermBankV3TableCompanion.insert(
                 id: id,
                 termId: termId,
+                termOrder: termOrder,
                 termJsonId: termJsonId,
                 readingId: readingId,
                 popularity: popularity,
@@ -18500,6 +19043,123 @@ typedef $$TermBankV3TagBankRelationsTableTableProcessedTableManager =
       ),
       TermBankV3TagBankRelationsTableData,
       PrefetchHooks Function({bool tagBankId, bool termBankId})
+    >;
+typedef $$MyJsonTableTableCreateCompanionBuilder =
+    MyJsonTableCompanion Function({
+      required Object? lastName,
+      Value<int> rowid,
+    });
+typedef $$MyJsonTableTableUpdateCompanionBuilder =
+    MyJsonTableCompanion Function({Value<Object?> lastName, Value<int> rowid});
+
+class $$MyJsonTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $MyJsonTableTable> {
+  $$MyJsonTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnWithTypeConverterFilters<Object?, Object, String> get lastName =>
+      $composableBuilder(
+        column: $table.lastName,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+}
+
+class $$MyJsonTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $MyJsonTableTable> {
+  $$MyJsonTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get lastName => $composableBuilder(
+    column: $table.lastName,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MyJsonTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $MyJsonTableTable> {
+  $$MyJsonTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumnWithTypeConverter<Object?, String> get lastName =>
+      $composableBuilder(column: $table.lastName, builder: (column) => column);
+}
+
+class $$MyJsonTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $MyJsonTableTable,
+          MyJsonTableData,
+          $$MyJsonTableTableFilterComposer,
+          $$MyJsonTableTableOrderingComposer,
+          $$MyJsonTableTableAnnotationComposer,
+          $$MyJsonTableTableCreateCompanionBuilder,
+          $$MyJsonTableTableUpdateCompanionBuilder,
+          (
+            MyJsonTableData,
+            BaseReferences<_$DaKanjiDB, $MyJsonTableTable, MyJsonTableData>,
+          ),
+          MyJsonTableData,
+          PrefetchHooks Function()
+        > {
+  $$MyJsonTableTableTableManager(_$DaKanjiDB db, $MyJsonTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MyJsonTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MyJsonTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MyJsonTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<Object?> lastName = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MyJsonTableCompanion(lastName: lastName, rowid: rowid),
+          createCompanionCallback:
+              ({
+                required Object? lastName,
+                Value<int> rowid = const Value.absent(),
+              }) =>
+                  MyJsonTableCompanion.insert(lastName: lastName, rowid: rowid),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MyJsonTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $MyJsonTableTable,
+      MyJsonTableData,
+      $$MyJsonTableTableFilterComposer,
+      $$MyJsonTableTableOrderingComposer,
+      $$MyJsonTableTableAnnotationComposer,
+      $$MyJsonTableTableCreateCompanionBuilder,
+      $$MyJsonTableTableUpdateCompanionBuilder,
+      (
+        MyJsonTableData,
+        BaseReferences<_$DaKanjiDB, $MyJsonTableTable, MyJsonTableData>,
+      ),
+      MyJsonTableData,
+      PrefetchHooks Function()
     >;
 typedef $$KanjiTableTableCreateCompanionBuilder =
     KanjiTableCompanion Function({Value<int> id, required String kanji});
@@ -25370,6 +26030,181 @@ typedef $ExampleFtsProcessedTableManager =
       ExampleFt,
       PrefetchHooks Function()
     >;
+typedef $$AudioTableTableCreateCompanionBuilder =
+    AudioTableCompanion Function({
+      Value<int> id,
+      required String name,
+      required String uri,
+      required bool isLocal,
+    });
+typedef $$AudioTableTableUpdateCompanionBuilder =
+    AudioTableCompanion Function({
+      Value<int> id,
+      Value<String> name,
+      Value<String> uri,
+      Value<bool> isLocal,
+    });
+
+class $$AudioTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $AudioTableTable> {
+  $$AudioTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get uri => $composableBuilder(
+    column: $table.uri,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isLocal => $composableBuilder(
+    column: $table.isLocal,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$AudioTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $AudioTableTable> {
+  $$AudioTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get uri => $composableBuilder(
+    column: $table.uri,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isLocal => $composableBuilder(
+    column: $table.isLocal,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AudioTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $AudioTableTable> {
+  $$AudioTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get uri =>
+      $composableBuilder(column: $table.uri, builder: (column) => column);
+
+  GeneratedColumn<bool> get isLocal =>
+      $composableBuilder(column: $table.isLocal, builder: (column) => column);
+}
+
+class $$AudioTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $AudioTableTable,
+          AudioTableData,
+          $$AudioTableTableFilterComposer,
+          $$AudioTableTableOrderingComposer,
+          $$AudioTableTableAnnotationComposer,
+          $$AudioTableTableCreateCompanionBuilder,
+          $$AudioTableTableUpdateCompanionBuilder,
+          (
+            AudioTableData,
+            BaseReferences<_$DaKanjiDB, $AudioTableTable, AudioTableData>,
+          ),
+          AudioTableData,
+          PrefetchHooks Function()
+        > {
+  $$AudioTableTableTableManager(_$DaKanjiDB db, $AudioTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AudioTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AudioTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AudioTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> uri = const Value.absent(),
+                Value<bool> isLocal = const Value.absent(),
+              }) => AudioTableCompanion(
+                id: id,
+                name: name,
+                uri: uri,
+                isLocal: isLocal,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String name,
+                required String uri,
+                required bool isLocal,
+              }) => AudioTableCompanion.insert(
+                id: id,
+                name: name,
+                uri: uri,
+                isLocal: isLocal,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$AudioTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $AudioTableTable,
+      AudioTableData,
+      $$AudioTableTableFilterComposer,
+      $$AudioTableTableOrderingComposer,
+      $$AudioTableTableAnnotationComposer,
+      $$AudioTableTableCreateCompanionBuilder,
+      $$AudioTableTableUpdateCompanionBuilder,
+      (
+        AudioTableData,
+        BaseReferences<_$DaKanjiDB, $AudioTableTable, AudioTableData>,
+      ),
+      AudioTableData,
+      PrefetchHooks Function()
+    >;
 typedef $$RadicalsTableTableCreateCompanionBuilder =
     RadicalsTableCompanion Function({
       Value<int> id,
@@ -31227,6 +32062,8 @@ class $DaKanjiDBManager {
         _db,
         _db.termBankV3TagBankRelationsTable,
       );
+  $$MyJsonTableTableTableManager get myJsonTable =>
+      $$MyJsonTableTableTableManager(_db, _db.myJsonTable);
   $$KanjiTableTableTableManager get kanjiTable =>
       $$KanjiTableTableTableManager(_db, _db.kanjiTable);
   $$IndexTableTableTableManager get indexTable =>
@@ -31293,6 +32130,8 @@ class $DaKanjiDBManager {
       );
   $ExampleFtsTableManager get exampleFts =>
       $ExampleFtsTableManager(_db, _db.exampleFts);
+  $$AudioTableTableTableManager get audioTable =>
+      $$AudioTableTableTableManager(_db, _db.audioTable);
   $$RadicalsTableTableTableManager get radicalsTable =>
       $$RadicalsTableTableTableManager(_db, _db.radicalsTable);
   $$RadicalKanjiRelationsTableTableTableManager

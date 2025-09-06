@@ -13,15 +13,23 @@ import '/database/dakanji_db.dart';
 
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
-Future parseTermBankV3File(File termMetaBankFile, DaKanjiDB db, int dictId) async {
+Future parseTermBankV3File(
+  File termMetaBankFile,
+  DaKanjiDB db,
+  int dictId,
+  bool addFullJsonDefinitions) async {
 
   String termMetaBankJson = termMetaBankFile.readAsStringSync();
-  await parseTermBankV3(termMetaBankJson, db, dictId);
+  await parseTermBankV3(termMetaBankJson, db, dictId, addFullJsonDefinitions);
 
 }
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
-Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async {
+Future parseTermBankV3(
+  String termMetaBankJson,
+  DaKanjiDB db,
+  int dictId,
+  bool addFullJsonDefinitions) async {
 
   // decode json
   List jsonList = jsonDecode(termMetaBankJson);
@@ -128,6 +136,7 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
 
     // Parse definitions
     List<ParsedTerm> parsedDefinition = extractPlainTextDefinitions(jsonEntry);
+    List<int> definitionIds = [];
     for (var definition in parsedDefinition) {
       // check if term is already in DB
       int definitionInsertId = allDefinitions[definition] ?? ++currentMaxdefinitionId;
@@ -138,6 +147,7 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
           definition: Value(definition.text)
         ));
       }
+      definitionIds.add(definitionInsertId);
       // create relationship
       definitionRelComps.add(TermBankV3DefinitionsRelationsTableCompanion(
         definitionId: Value(definitionInsertId),
@@ -146,11 +156,13 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
     }
 
     // add full definition json to DB
-    currentMaxDefinitionJsonId += 1;
-    termBankDefJsonComps.add(TermBankV3DefinitionJsonTableCompanion(
-      id: Value(currentMaxDefinitionJsonId),
-      definitionJson: Value(jsonEncode(jsonEntry[5]))
-    ));
+    if(addFullJsonDefinitions) {
+      currentMaxDefinitionJsonId += 1;
+      termBankDefJsonComps.add(TermBankV3DefinitionJsonTableCompanion(
+        id: Value(currentMaxDefinitionJsonId),
+        definitionJson: Value(jsonEncode(jsonEntry[5]))
+      ));
+    }
 
     // create tag relations
     if(jsonEntry[7] != ""){
@@ -167,6 +179,7 @@ Future parseTermBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async 
     termBankComps.add(TermBankV3TableCompanion(
       id: Value(currentMaxTermBankId),
       termId: Value(termInsertId),
+      termOrder: Value(definitionIds),
       termJsonId: Value(currentMaxDefinitionJsonId),
       readingId: Value(readingInsertId),
       popularity: Value(jsonEntry[4]),

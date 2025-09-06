@@ -42,7 +42,7 @@ Future parseDictionaryZip (File dictZip, DaKanjiDB db) async {
 
 
 /// Parses the given yomitan dictionary folder
-Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db) async {
+Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db, bool addFullJsonDefinitions) async {
 
   /// Get all files from the given folder that can be parsed
   List<File> validFiles = dictDir.listSync().where((f) => 
@@ -65,42 +65,45 @@ Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db) async {
   }
 
   for (var file in validFiles) {
-    await parseDictionaryFile(Tuple3(file, db, dictEntry!));
+    await parseDictionaryFile((
+      dictFile: file,
+      db: db,
+      ind: dictEntry!,
+      addFullJsonDefinitions: addFullJsonDefinitions
+    ));
   }
 
 }
 
 /// Depending on the file name applies the correct parsing method
-Future parseDictionaryFile(Tuple3<File, DaKanjiDB, IndexTableData> args) async {
+Future parseDictionaryFile(
+  ({File dictFile, DaKanjiDB db, IndexTableData ind, bool addFullJsonDefinitions}) args) async {
 
-  File dictFile = args.item1;
-  DaKanjiDB db = args.item2;
-  IndexTableData ind = args.item3;
 
   // TODO parse audio files
 
   // parse `kanji_bank`-files
-  if(p.basename(dictFile.path).contains(kanjiBankFile)){
-    print("Parsing ${p.basename(dictFile.path)} as `$kanjiBankFile`");
-    await parseKanjiBankV3File(dictFile, db, ind.id); 
+  if(p.basename(args.dictFile.path).contains(kanjiBankFile)){
+    print("Parsing ${p.basename(args.dictFile.path)} as `$kanjiBankFile`");
+    await parseKanjiBankV3File(args.dictFile, args.db, args.ind.id); 
   }
 
   // parse `kanji_meta_bank`-files
-  if(p.basename(dictFile.path).contains(kanjiMetaBankFile)){
-    print("Parsing ${p.basename(dictFile.path)} as `$kanjiMetaBankFile`");
-    await parseKanjiMetaBankV3File(dictFile, db, ind.id); 
+  if(p.basename(args.dictFile.path).contains(kanjiMetaBankFile)){
+    print("Parsing ${p.basename(args.dictFile.path)} as `$kanjiMetaBankFile`");
+    await parseKanjiMetaBankV3File(args.dictFile, args.db, args.ind.id); 
   }
 
   // parse `term_bank`-files
-  if(p.basename(dictFile.path).contains(termBankFile)){
-    print("Parsing ${p.basename(dictFile.path)} as `$termBankFile`");
-    await parseTermBankV3File(dictFile, db, ind.id); 
+  if(p.basename(args.dictFile.path).contains(termBankFile)){
+    print("Parsing ${p.basename(args.dictFile.path)} as `$termBankFile`");
+    await parseTermBankV3File(args.dictFile, args.db, args.ind.id, args.addFullJsonDefinitions); 
   }
 
   // parse `term_meta_bank`-files
-  if(p.basename(dictFile.path).contains(termMetaBankFile)){
-    print("Parsing ${p.basename(dictFile.path)} as `$termMetaBankFile`");
-    await parseTermMetaBankV3File(dictFile, db, ind.id); 
+  if(p.basename(args.dictFile.path).contains(termMetaBankFile)){
+    print("Parsing ${p.basename(args.dictFile.path)} as `$termMetaBankFile`");
+    await parseTermMetaBankV3File(args.dictFile, args.db, args.ind.id); 
   }
 
 }
