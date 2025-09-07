@@ -33,12 +33,14 @@ String findProjectRoot() {
   }
 }
 
-final String _projectRoot = findProjectRoot();
+final String dakanjiDbProjectRoot = findProjectRoot();
 
 /// the path where the dakanji database should be created and populated
-final dakanjiDbPath = p.joinAll([_projectRoot, "tmp", "dakanji.db"]);
+final dakanjiDbPath = p.joinAll([dakanjiDbProjectRoot, "tmp", "dakanji.db"]);
 /// Path to the folder that contains data files
-final dataFilesPath = p.joinAll([_projectRoot, "data"]);
+final dataFilesPath = p.joinAll([dakanjiDbProjectRoot, "data"]);
+/// Path to the folder that contains the files for mecab
+final mecabFilesPath = p.joinAll([dakanjiDbProjectRoot, "mecab"]);
 
 
 /// --- TESTING FILES ----------------------------------------------------------
