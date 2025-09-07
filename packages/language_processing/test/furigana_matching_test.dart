@@ -1,21 +1,30 @@
 import 'package:language_processing/japanese/furigana_matching.dart';
+import 'package:language_processing/japanese/furigana_pair.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:test/test.dart';
+import 'package:path/path.dart' as p;
+import 'package:dakanji_db_shared/dakanji_db_shared.dart';
+
+import 'furigana_matching_test_cases.dart';
 
 
 
-List<Map<String, String>> testCases = [
-    {"kanji": "思い始め", "kana": "おもいはじめ"},
-    {"kanji": "東京", "kana": "トーキョー"},
-    {"kanji": "食べる", "kana": "たべる"},
-    {"kanji": "今日", "kana": "きょう"},
-    {"kanji": "友達", "kana": "ともだち"},
-  ];
 
-void main() {
 
-  for (var test in testCases) {
-    print("Input: ${test['kanji']} → ${test['kana']}");
-    print(matchFurigana(test["kanji"]!, test["kana"]!).toString());
+void main() async {
+
+  Mecab mecab = Mecab();
+  await mecab.init(p.join(mecabFilesPath, "mecab.dylib"), "unidic", true);
+
+  test('Testing deconjugation', () {
+    for (var testCase in testCases) {
+    print("Input: ${testCase.$1['kanji']} → ${testCase.$1['kana']}");
+    
+    List<FuriganaPair> result = matchFurigana(testCase.$1["kanji"]!, testCase.$1["kana"]!);
+    print("Output: ${result.toString()}");
+    expect(result, equals(testCase.$2));
     print("----");
   }
+  });
 
 }
