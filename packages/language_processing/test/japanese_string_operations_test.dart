@@ -26,13 +26,6 @@ void main() async {
     }
   });
 
-  test('Testing toHalfWidth', () {
-    for (var testCase in toHalfWidthTestCases) {
-      String result = toHalfWidth(testCase.$1);
-      expect(result, equals(testCase.$2));
-    }
-  });
-
   test('Testing katakanaToHiragana', () {
     for (var testCase in katakanaToHiraganaTestCases) {
       String result = katakanaToHiragana(testCase.$1);

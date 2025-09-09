@@ -86,9 +86,3 @@ String katakanaToHiragana(String text) {
   return kanaKit.toHiragana(text);
 }
 
-/// Converts full-width ASCII characters in a string to their half-width counterparts.
-String toHalfWidth(String input) {
-  return input.replaceAllMapped(RegExp(r'[\uFF01-\uFF5E]'), (match) {
-    return String.fromCharCode(match.group(0)!.codeUnitAt(0) - 0xFEE0);
-  }).replaceAll('　', ' '); // Converts full-width space to half-width space
-}
