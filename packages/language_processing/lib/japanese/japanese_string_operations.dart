@@ -1,3 +1,5 @@
+import 'package:kana_kit/kana_kit.dart';
+
 /// String that can be used for Regex that matches any Kana character
 const String kanaRegexGroupString = "ぁ-んァ-ン";
 /// Regex that matches any Kana character
@@ -34,30 +36,59 @@ RegExp asteriksMarkRegex = RegExp(r"\*|\＊");
 RegExp rawWildcardRegex = RegExp('${questionMarkRegex.pattern}|${asteriksMarkRegex.pattern}');
 
 
-/// Given the list of string `words` removes all kana from it and returns a list
-/// containing all kanji
-List<String> removeKana(List<String> words) {
-  
-  var allKanji = words.map((String s) => 
-    s.replaceAll(kanaRegex, "")).toList().join("").split("");   
-  var uniqueKanji = allKanji.toSet().toList();
-  
-  return uniqueKanji;
-}
-
 /// Given the list of string `words` removes all characters that are not kanji
-///  from it and returns a list containing all kanji
-List<String> removeAllButKanji(List<String> words) {
-  
-  List<String> uniqueKanji = [];
-  
+/// from it and returns a list containing all **unique** kanji
+Set<String> extractKanji(List<String> words) {
+
+  Set<String> uniqueKanji = {};
+
   for (String word in words) {
     for (int i = 0; i < word.length; i++) {
-      if(!uniqueKanji.contains(word[i]) && kanjiRegex.hasMatch(word[i])){
+      if(kanjiRegex.hasMatch(word[i])){
         uniqueKanji.add(word[i]);
       }
     }
   }
   
   return uniqueKanji;
+}
+
+/// Converts the given `romaji` string to kana
+/// 
+/// Note:
+///   * `N`, `n'`, `n ` -> ん
+///   * `-` long vowel mark are converted to double vowels
+String romajiToHiragana(String romaji){
+
+  KanaKit kanaKit = KanaKit();
+
+  if(romaji.contains("N")){
+    romaji = romaji.replaceAll("N", "ん");
+  }
+  if(romaji.contains("n ")){
+    romaji = romaji.replaceAll("n ", "ん");
+  }
+
+  return kanaKit.toHiragana(kanaKit.toKatakana(romaji));
+}
+
+/// Converts all katakana in the given `text` string to hiragana
+/// Does nothing with non-katakana characters
+/// 
+/// /// Note:
+///   * `-` long vowel mark are converted to double vowels
+String katakanaToHiragana(String text) {
+  KanaKit kanaKit = KanaKit(config: KanaKitConfig(
+    passRomaji: true,
+    passKanji: true,
+    upcaseKatakana: false
+  ));
+  return kanaKit.toHiragana(text);
+}
+
+/// Converts full-width ASCII characters in a string to their half-width counterparts.
+String toHalfWidth(String input) {
+  return input.replaceAllMapped(RegExp(r'[\uFF01-\uFF5E]'), (match) {
+    return String.fromCharCode(match.group(0)!.codeUnitAt(0) - 0xFEE0);
+  }).replaceAll('　', ' '); // Converts full-width space to half-width space
 }
