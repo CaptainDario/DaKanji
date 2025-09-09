@@ -1,0 +1,27 @@
+
+import 'package:kana_kit/kana_kit.dart';
+import 'package:language_processing/japanese/conjugation/mecab_deconjugate.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:test/test.dart';
+import 'package:dakanji_db_shared/dakanji_db_shared.dart';
+import 'package:path/path.dart' as p;
+import 'mecab_deconjugation_test_cases.dart';
+
+void main() async {
+
+  Mecab mecab = Mecab();
+  await mecab.init(p.join(mecabFilesPath, "mecab.dylib"), p.join(mecabFilesPath, "unidic"), true);
+
+  test('Testing deconjugation', () {
+    for (int i = 0; i < verbs.length; i++) {
+      print(verbs[i].toString());
+      List<String> deconjugated = getDeconjugatedTerms(
+        verbs[i].$1, mecab, const KanaKit());
+      expect(deconjugated, verbs[i].$2);
+      print("output: $deconjugated");
+
+      expect(deconjugated, verbs[i].$2);
+    }
+  });
+
+}
