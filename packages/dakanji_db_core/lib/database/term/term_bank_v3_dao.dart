@@ -1,9 +1,7 @@
 // Package imports:
 import "/database/general_tables/term_tables.dart";
 import "/database/tag/tag_bank_v3_tables.dart";
-import "/database/term/term_bank_v3_entry.dart";
 import "/database/term/term_bank_v3_tables.dart";
-import 'package:language_processing/iso/iso_table.dart';
 import "package:drift/drift.dart";
 
 // Project imports:
@@ -27,25 +25,6 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
   
   TermBankV3Dao(super.db);
 
-    Future<List<TermBankV3Entry>> searchTerm(
-    String query,
-    List<Iso639_1> languages,
-    {
-      int limit=-1,
-      int offset=0
-    }) async {
-
-    // check laguages are set and parse 
-    assert (languages.isNotEmpty);
-    List<String> langs = languages.map((e) => e.name,).toList();
-
-    List<TermBankV3Entry> results = (await db.term_bank_v3_search(query, limit, offset).get())
-      .map((e) => TermBankV3Entry.fromTermBankV3SearchViewData(e))
-      .toList();
-
-    return results;
-
-  }
   
   // ---------------------------------------------------------------------------
   /// Get all definition tags and their ids 
