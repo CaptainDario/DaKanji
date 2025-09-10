@@ -2,8 +2,8 @@
 import 'dart:convert';
 
 // Package imports:
-import '/parsing/term/parsed_term.dart';
-import '/parsing/term/structured_content_parser.dart';
+import 'parsed_term.dart';
+import 'structured_content_parser.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
