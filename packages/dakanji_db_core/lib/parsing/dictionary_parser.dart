@@ -1,7 +1,7 @@
 // Package imports:
 import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
 
-import '/parsing/term/term_bank_v3_parser.dart';
+import 'term/structured_content/term_bank_v3_parser.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 

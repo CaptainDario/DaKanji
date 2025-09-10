@@ -1,4 +1,4 @@
-import 'package:dakanji_db_core/parsing/term/structured_content_parser.dart';
+import 'package:dakanji_db_core/parsing/term/structured_content/structured_content_parser.dart';
 import 'package:dakanji_db_ui/html_widget_factories/custom_html_to_widget_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
