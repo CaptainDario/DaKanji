@@ -1,5 +1,8 @@
 // Package imports:
 import 'package:dakanji_db_core/database/audio/audio_table.dart';
+import 'package:dakanji_db_core/database/conjugations/conjugations_relations_table.dart';
+import 'package:dakanji_db_core/database/conjugations/conjugations_table.dart';
+import 'package:sqlite3/native_assets.dart';
 
 import '/database/dakanji_db_dao.dart';
 import '/database/example/example_dao.dart';
@@ -75,7 +78,6 @@ part 'dakanji_db.g.dart';
     TermBankV3DefinitionTagsTable, TermBankV3DefinitionTagRelationsTable,
     TermBankV3RuleIdentifierTable, TermBankV3RuleIdentifierRelationsTable,
     TermBankV3DefinitionsRelationsTable,
-    TermBankV3DefinitionJsonTable,
     TermBankV3TagBankRelationsTable,
 
     TermMetaBankV3Table,
@@ -86,7 +88,10 @@ part 'dakanji_db.g.dart';
 
     ExampleTable,
     ExampleTranslationTable, ExampleTranslationTable,
-    ExampleTranslationRelationsTable
+    ExampleTranslationRelationsTable,
+
+    ConjugationsTable,
+    ConjugationsRelationsTable
   ],
   daos: [
     DaKanjiDBDao,
@@ -125,6 +130,7 @@ class DaKanjiDB extends _$DaKanjiDB {
   static QueryExecutor _openConnection(String path) {
     return NativeDatabase.createInBackground(
       File(path),
+      sqlite3: () => sqlite3Native,
       setup: (database) {
         // This is important, as accessing the database across threads otherwise
         // causes "database locked" errors.
@@ -132,7 +138,7 @@ class DaKanjiDB extends _$DaKanjiDB {
         // readers can operate on the database in parallel.
         //database.execute('pragma journal_mode = WAL;');
       },
-      readPool: 6
+      readPool: 8
     );
   }
 
