@@ -23,6 +23,8 @@ List<(String, bool, String, String?)> preprocessInputTestCases = [
   ("kon'ya", true, "kon'ya", "こんや"),
   // 'n' at the end
   ("ramen", true, "ramen", "らめん"),
+  // Long vowel mark
+  ("ラーメン", true, "らあめん", null),
 
   // --- Mixed Input ---
   // Mixed Kanji and Romaji, conversion ON. 'term' keeps romaji, 'hiraganaTerm' has conversion.
