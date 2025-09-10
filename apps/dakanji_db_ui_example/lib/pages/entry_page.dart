@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:dakanji_db_ui/definitions_widget.dart';
 import 'package:path/path.dart' as p;
 
-import 'package:dakanji_db_core/parsing/term/structured_content_parser.dart';
+import 'package:dakanji_db_core/parsing/term/structured_content/structured_content_parser.dart';
 import 'package:flutter/material.dart';
-import 'package:dakanji_db_ui/definition_item_widget.dart';
 import 'package:dakanji_db_shared/paths.dart';
 
 class EntryPage extends StatefulWidget {
