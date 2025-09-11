@@ -2189,16 +2189,7 @@ class $DefinitionTableTable extends DefinitionTable
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
   @override
-  late final GeneratedColumnWithTypeConverter<String, Uint8List>
-  definitionJson = GeneratedColumn<Uint8List>(
-    'definition_json',
-    aliasedName,
-    false,
-    type: DriftSqlType.blob,
-    requiredDuringInsert: true,
-  ).withConverter<String>($DefinitionTableTable.$converterdefinitionJson);
-  @override
-  List<GeneratedColumn> get $columns => [id, definition, definitionJson];
+  List<GeneratedColumn> get $columns => [id, definition];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2239,12 +2230,6 @@ class $DefinitionTableTable extends DefinitionTable
         DriftSqlType.string,
         data['${effectivePrefix}definition'],
       )!,
-      definitionJson: $DefinitionTableTable.$converterdefinitionJson.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.blob,
-          data['${effectivePrefix}definition_json'],
-        )!,
-      ),
     );
   }
 
@@ -2252,9 +2237,6 @@ class $DefinitionTableTable extends DefinitionTable
   $DefinitionTableTable createAlias(String alias) {
     return $DefinitionTableTable(attachedDatabase, alias);
   }
-
-  static TypeConverter<String, Uint8List> $converterdefinitionJson =
-      const ZlibStringConverter();
 }
 
 class DefinitionTableData extends DataClass
@@ -2264,24 +2246,12 @@ class DefinitionTableData extends DataClass
 
   /// the definition of this entry
   final String definition;
-
-  /// JSON representation of the term
-  final String definitionJson;
-  const DefinitionTableData({
-    required this.id,
-    required this.definition,
-    required this.definitionJson,
-  });
+  const DefinitionTableData({required this.id, required this.definition});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['definition'] = Variable<String>(definition);
-    {
-      map['definition_json'] = Variable<Uint8List>(
-        $DefinitionTableTable.$converterdefinitionJson.toSql(definitionJson),
-      );
-    }
     return map;
   }
 
@@ -2289,7 +2259,6 @@ class DefinitionTableData extends DataClass
     return DefinitionTableCompanion(
       id: Value(id),
       definition: Value(definition),
-      definitionJson: Value(definitionJson),
     );
   }
 
@@ -2301,7 +2270,6 @@ class DefinitionTableData extends DataClass
     return DefinitionTableData(
       id: serializer.fromJson<int>(json['id']),
       definition: serializer.fromJson<String>(json['definition']),
-      definitionJson: serializer.fromJson<String>(json['definitionJson']),
     );
   }
   @override
@@ -2310,28 +2278,20 @@ class DefinitionTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'definition': serializer.toJson<String>(definition),
-      'definitionJson': serializer.toJson<String>(definitionJson),
     };
   }
 
-  DefinitionTableData copyWith({
-    int? id,
-    String? definition,
-    String? definitionJson,
-  }) => DefinitionTableData(
-    id: id ?? this.id,
-    definition: definition ?? this.definition,
-    definitionJson: definitionJson ?? this.definitionJson,
-  );
+  DefinitionTableData copyWith({int? id, String? definition}) =>
+      DefinitionTableData(
+        id: id ?? this.id,
+        definition: definition ?? this.definition,
+      );
   DefinitionTableData copyWithCompanion(DefinitionTableCompanion data) {
     return DefinitionTableData(
       id: data.id.present ? data.id.value : this.id,
       definition: data.definition.present
           ? data.definition.value
           : this.definition,
-      definitionJson: data.definitionJson.present
-          ? data.definitionJson.value
-          : this.definitionJson,
     );
   }
 
@@ -2339,59 +2299,49 @@ class DefinitionTableData extends DataClass
   String toString() {
     return (StringBuffer('DefinitionTableData(')
           ..write('id: $id, ')
-          ..write('definition: $definition, ')
-          ..write('definitionJson: $definitionJson')
+          ..write('definition: $definition')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, definition, definitionJson);
+  int get hashCode => Object.hash(id, definition);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is DefinitionTableData &&
           other.id == this.id &&
-          other.definition == this.definition &&
-          other.definitionJson == this.definitionJson);
+          other.definition == this.definition);
 }
 
 class DefinitionTableCompanion extends UpdateCompanion<DefinitionTableData> {
   final Value<int> id;
   final Value<String> definition;
-  final Value<String> definitionJson;
   const DefinitionTableCompanion({
     this.id = const Value.absent(),
     this.definition = const Value.absent(),
-    this.definitionJson = const Value.absent(),
   });
   DefinitionTableCompanion.insert({
     this.id = const Value.absent(),
     required String definition,
-    required String definitionJson,
-  }) : definition = Value(definition),
-       definitionJson = Value(definitionJson);
+  }) : definition = Value(definition);
   static Insertable<DefinitionTableData> custom({
     Expression<int>? id,
     Expression<String>? definition,
-    Expression<Uint8List>? definitionJson,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (definition != null) 'definition': definition,
-      if (definitionJson != null) 'definition_json': definitionJson,
     });
   }
 
   DefinitionTableCompanion copyWith({
     Value<int>? id,
     Value<String>? definition,
-    Value<String>? definitionJson,
   }) {
     return DefinitionTableCompanion(
       id: id ?? this.id,
       definition: definition ?? this.definition,
-      definitionJson: definitionJson ?? this.definitionJson,
     );
   }
 
@@ -2404,13 +2354,6 @@ class DefinitionTableCompanion extends UpdateCompanion<DefinitionTableData> {
     if (definition.present) {
       map['definition'] = Variable<String>(definition.value);
     }
-    if (definitionJson.present) {
-      map['definition_json'] = Variable<Uint8List>(
-        $DefinitionTableTable.$converterdefinitionJson.toSql(
-          definitionJson.value,
-        ),
-      );
-    }
     return map;
   }
 
@@ -2418,8 +2361,7 @@ class DefinitionTableCompanion extends UpdateCompanion<DefinitionTableData> {
   String toString() {
     return (StringBuffer('DefinitionTableCompanion(')
           ..write('id: $id, ')
-          ..write('definition: $definition, ')
-          ..write('definitionJson: $definitionJson')
+          ..write('definition: $definition')
           ..write(')'))
         .toString();
   }
@@ -13294,12 +13236,12 @@ class TermMetaBankV3IpaTagRelationsTableCompanion
   }
 }
 
-class $ConjugationsTableTable extends ConjugationsTable
-    with TableInfo<$ConjugationsTableTable, ConjugationsTableData> {
+class $ConjugationTableTable extends ConjugationTable
+    with TableInfo<$ConjugationTableTable, ConjugationTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ConjugationsTableTable(this.attachedDatabase, [this._alias]);
+  $ConjugationTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -13331,10 +13273,10 @@ class $ConjugationsTableTable extends ConjugationsTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'conjugations_table';
+  static const String $name = 'conjugation_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<ConjugationsTableData> instance, {
+    Insertable<ConjugationTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -13359,9 +13301,9 @@ class $ConjugationsTableTable extends ConjugationsTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ConjugationsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  ConjugationTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ConjugationsTableData(
+    return ConjugationTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
@@ -13374,19 +13316,19 @@ class $ConjugationsTableTable extends ConjugationsTable
   }
 
   @override
-  $ConjugationsTableTable createAlias(String alias) {
-    return $ConjugationsTableTable(attachedDatabase, alias);
+  $ConjugationTableTable createAlias(String alias) {
+    return $ConjugationTableTable(attachedDatabase, alias);
   }
 }
 
-class ConjugationsTableData extends DataClass
-    implements Insertable<ConjugationsTableData> {
+class ConjugationTableData extends DataClass
+    implements Insertable<ConjugationTableData> {
   /// Define the columns for the conjugations table
   final int id;
 
   /// The form of the conjugation (e.g., "食べます", "食べない", etc.)
   final String conjugation;
-  const ConjugationsTableData({required this.id, required this.conjugation});
+  const ConjugationTableData({required this.id, required this.conjugation});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -13395,19 +13337,19 @@ class ConjugationsTableData extends DataClass
     return map;
   }
 
-  ConjugationsTableCompanion toCompanion(bool nullToAbsent) {
-    return ConjugationsTableCompanion(
+  ConjugationTableCompanion toCompanion(bool nullToAbsent) {
+    return ConjugationTableCompanion(
       id: Value(id),
       conjugation: Value(conjugation),
     );
   }
 
-  factory ConjugationsTableData.fromJson(
+  factory ConjugationTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ConjugationsTableData(
+    return ConjugationTableData(
       id: serializer.fromJson<int>(json['id']),
       conjugation: serializer.fromJson<String>(json['conjugation']),
     );
@@ -13421,13 +13363,13 @@ class ConjugationsTableData extends DataClass
     };
   }
 
-  ConjugationsTableData copyWith({int? id, String? conjugation}) =>
-      ConjugationsTableData(
+  ConjugationTableData copyWith({int? id, String? conjugation}) =>
+      ConjugationTableData(
         id: id ?? this.id,
         conjugation: conjugation ?? this.conjugation,
       );
-  ConjugationsTableData copyWithCompanion(ConjugationsTableCompanion data) {
-    return ConjugationsTableData(
+  ConjugationTableData copyWithCompanion(ConjugationTableCompanion data) {
+    return ConjugationTableData(
       id: data.id.present ? data.id.value : this.id,
       conjugation: data.conjugation.present
           ? data.conjugation.value
@@ -13437,7 +13379,7 @@ class ConjugationsTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('ConjugationsTableData(')
+    return (StringBuffer('ConjugationTableData(')
           ..write('id: $id, ')
           ..write('conjugation: $conjugation')
           ..write(')'))
@@ -13449,24 +13391,23 @@ class ConjugationsTableData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ConjugationsTableData &&
+      (other is ConjugationTableData &&
           other.id == this.id &&
           other.conjugation == this.conjugation);
 }
 
-class ConjugationsTableCompanion
-    extends UpdateCompanion<ConjugationsTableData> {
+class ConjugationTableCompanion extends UpdateCompanion<ConjugationTableData> {
   final Value<int> id;
   final Value<String> conjugation;
-  const ConjugationsTableCompanion({
+  const ConjugationTableCompanion({
     this.id = const Value.absent(),
     this.conjugation = const Value.absent(),
   });
-  ConjugationsTableCompanion.insert({
+  ConjugationTableCompanion.insert({
     this.id = const Value.absent(),
     required String conjugation,
   }) : conjugation = Value(conjugation);
-  static Insertable<ConjugationsTableData> custom({
+  static Insertable<ConjugationTableData> custom({
     Expression<int>? id,
     Expression<String>? conjugation,
   }) {
@@ -13476,11 +13417,11 @@ class ConjugationsTableCompanion
     });
   }
 
-  ConjugationsTableCompanion copyWith({
+  ConjugationTableCompanion copyWith({
     Value<int>? id,
     Value<String>? conjugation,
   }) {
-    return ConjugationsTableCompanion(
+    return ConjugationTableCompanion(
       id: id ?? this.id,
       conjugation: conjugation ?? this.conjugation,
     );
@@ -13500,7 +13441,7 @@ class ConjugationsTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('ConjugationsTableCompanion(')
+    return (StringBuffer('ConjugationTableCompanion(')
           ..write('id: $id, ')
           ..write('conjugation: $conjugation')
           ..write(')'))
@@ -13508,16 +13449,12 @@ class ConjugationsTableCompanion
   }
 }
 
-class $ConjugationsRelationsTableTable extends ConjugationsRelationsTable
-    with
-        TableInfo<
-          $ConjugationsRelationsTableTable,
-          ConjugationsRelationsTableData
-        > {
+class $ConjugationXTermTableTable extends ConjugationXTermTable
+    with TableInfo<$ConjugationXTermTableTable, ConjugationXTermTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ConjugationsRelationsTableTable(this.attachedDatabase, [this._alias]);
+  $ConjugationXTermTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -13542,7 +13479,7 @@ class $ConjugationsRelationsTableTable extends ConjugationsRelationsTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES conjugations_table (id)',
+      'REFERENCES conjugation_table (id)',
     ),
   );
   static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
@@ -13563,10 +13500,10 @@ class $ConjugationsRelationsTableTable extends ConjugationsRelationsTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'conjugations_relations_table';
+  static const String $name = 'conjugation_x_term_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<ConjugationsRelationsTableData> instance, {
+    Insertable<ConjugationXTermTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -13599,12 +13536,12 @@ class $ConjugationsRelationsTableTable extends ConjugationsRelationsTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ConjugationsRelationsTableData map(
+  ConjugationXTermTableData map(
     Map<String, dynamic> data, {
     String? tablePrefix,
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ConjugationsRelationsTableData(
+    return ConjugationXTermTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
@@ -13621,13 +13558,13 @@ class $ConjugationsRelationsTableTable extends ConjugationsRelationsTable
   }
 
   @override
-  $ConjugationsRelationsTableTable createAlias(String alias) {
-    return $ConjugationsRelationsTableTable(attachedDatabase, alias);
+  $ConjugationXTermTableTable createAlias(String alias) {
+    return $ConjugationXTermTableTable(attachedDatabase, alias);
   }
 }
 
-class ConjugationsRelationsTableData extends DataClass
-    implements Insertable<ConjugationsRelationsTableData> {
+class ConjugationXTermTableData extends DataClass
+    implements Insertable<ConjugationXTermTableData> {
   /// Define the columns for the conjugations_relations table
   final int id;
 
@@ -13636,7 +13573,7 @@ class ConjugationsRelationsTableData extends DataClass
 
   /// The ID of the term from the TermTable to which this conjugation applies
   final int termId;
-  const ConjugationsRelationsTableData({
+  const ConjugationXTermTableData({
     required this.id,
     required this.conjugationId,
     required this.termId,
@@ -13650,20 +13587,20 @@ class ConjugationsRelationsTableData extends DataClass
     return map;
   }
 
-  ConjugationsRelationsTableCompanion toCompanion(bool nullToAbsent) {
-    return ConjugationsRelationsTableCompanion(
+  ConjugationXTermTableCompanion toCompanion(bool nullToAbsent) {
+    return ConjugationXTermTableCompanion(
       id: Value(id),
       conjugationId: Value(conjugationId),
       termId: Value(termId),
     );
   }
 
-  factory ConjugationsRelationsTableData.fromJson(
+  factory ConjugationXTermTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ConjugationsRelationsTableData(
+    return ConjugationXTermTableData(
       id: serializer.fromJson<int>(json['id']),
       conjugationId: serializer.fromJson<int>(json['conjugationId']),
       termId: serializer.fromJson<int>(json['termId']),
@@ -13679,19 +13616,19 @@ class ConjugationsRelationsTableData extends DataClass
     };
   }
 
-  ConjugationsRelationsTableData copyWith({
+  ConjugationXTermTableData copyWith({
     int? id,
     int? conjugationId,
     int? termId,
-  }) => ConjugationsRelationsTableData(
+  }) => ConjugationXTermTableData(
     id: id ?? this.id,
     conjugationId: conjugationId ?? this.conjugationId,
     termId: termId ?? this.termId,
   );
-  ConjugationsRelationsTableData copyWithCompanion(
-    ConjugationsRelationsTableCompanion data,
+  ConjugationXTermTableData copyWithCompanion(
+    ConjugationXTermTableCompanion data,
   ) {
-    return ConjugationsRelationsTableData(
+    return ConjugationXTermTableData(
       id: data.id.present ? data.id.value : this.id,
       conjugationId: data.conjugationId.present
           ? data.conjugationId.value
@@ -13702,7 +13639,7 @@ class ConjugationsRelationsTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('ConjugationsRelationsTableData(')
+    return (StringBuffer('ConjugationXTermTableData(')
           ..write('id: $id, ')
           ..write('conjugationId: $conjugationId, ')
           ..write('termId: $termId')
@@ -13715,29 +13652,29 @@ class ConjugationsRelationsTableData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ConjugationsRelationsTableData &&
+      (other is ConjugationXTermTableData &&
           other.id == this.id &&
           other.conjugationId == this.conjugationId &&
           other.termId == this.termId);
 }
 
-class ConjugationsRelationsTableCompanion
-    extends UpdateCompanion<ConjugationsRelationsTableData> {
+class ConjugationXTermTableCompanion
+    extends UpdateCompanion<ConjugationXTermTableData> {
   final Value<int> id;
   final Value<int> conjugationId;
   final Value<int> termId;
-  const ConjugationsRelationsTableCompanion({
+  const ConjugationXTermTableCompanion({
     this.id = const Value.absent(),
     this.conjugationId = const Value.absent(),
     this.termId = const Value.absent(),
   });
-  ConjugationsRelationsTableCompanion.insert({
+  ConjugationXTermTableCompanion.insert({
     this.id = const Value.absent(),
     required int conjugationId,
     required int termId,
   }) : conjugationId = Value(conjugationId),
        termId = Value(termId);
-  static Insertable<ConjugationsRelationsTableData> custom({
+  static Insertable<ConjugationXTermTableData> custom({
     Expression<int>? id,
     Expression<int>? conjugationId,
     Expression<int>? termId,
@@ -13749,12 +13686,12 @@ class ConjugationsRelationsTableCompanion
     });
   }
 
-  ConjugationsRelationsTableCompanion copyWith({
+  ConjugationXTermTableCompanion copyWith({
     Value<int>? id,
     Value<int>? conjugationId,
     Value<int>? termId,
   }) {
-    return ConjugationsRelationsTableCompanion(
+    return ConjugationXTermTableCompanion(
       id: id ?? this.id,
       conjugationId: conjugationId ?? this.conjugationId,
       termId: termId ?? this.termId,
@@ -13778,7 +13715,7 @@ class ConjugationsRelationsTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('ConjugationsRelationsTableCompanion(')
+    return (StringBuffer('ConjugationXTermTableCompanion(')
           ..write('id: $id, ')
           ..write('conjugationId: $conjugationId, ')
           ..write('termId: $termId')
@@ -13927,10 +13864,11 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   termMetaBankV3IpaTagRelationsTable = $TermMetaBankV3IpaTagRelationsTableTable(
     this,
   );
-  late final $ConjugationsTableTable conjugationsTable =
-      $ConjugationsTableTable(this);
-  late final $ConjugationsRelationsTableTable conjugationsRelationsTable =
-      $ConjugationsRelationsTableTable(this);
+  late final $ConjugationTableTable conjugationTable = $ConjugationTableTable(
+    this,
+  );
+  late final $ConjugationXTermTableTable conjugationXTermTable =
+      $ConjugationXTermTableTable(this);
   late final Index radical = Index(
     'radical',
     'CREATE INDEX radical ON radicals_table (radical)',
@@ -13956,6 +13894,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     this as DaKanjiDB,
   );
   late final ExampleDao exampleDao = ExampleDao(this as DaKanjiDB);
+  late final ConjugationDao conjugationDao = ConjugationDao(this as DaKanjiDB);
   Selectable<GetMbSizesResult> get_mb_sizes() {
     return customSelect(
       'SELECT name, sum(pgsize) AS bytes, printf(\'%.2f MB\', CAST(sum(pgsize) AS REAL) /(1024 * 1024)) AS megabytes FROM dbstat GROUP BY name ORDER BY bytes DESC',
@@ -14127,8 +14066,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termMetaBankV3IpaTable,
     termMetaBankV3IpaRelationsTable,
     termMetaBankV3IpaTagRelationsTable,
-    conjugationsTable,
-    conjugationsRelationsTable,
+    conjugationTable,
+    conjugationXTermTable,
     radical,
   ];
   @override
@@ -14214,27 +14153,27 @@ final class $$TermTableTableReferences
   }
 
   static MultiTypedResultKey<
-    $ConjugationsRelationsTableTable,
-    List<ConjugationsRelationsTableData>
+    $ConjugationXTermTableTable,
+    List<ConjugationXTermTableData>
   >
-  _conjugationsRelationsTableRefsTable(_$DaKanjiDB db) =>
+  _conjugationXTermTableRefsTable(_$DaKanjiDB db) =>
       MultiTypedResultKey.fromTable(
-        db.conjugationsRelationsTable,
+        db.conjugationXTermTable,
         aliasName: $_aliasNameGenerator(
           db.termTable.id,
-          db.conjugationsRelationsTable.termId,
+          db.conjugationXTermTable.termId,
         ),
       );
 
-  $$ConjugationsRelationsTableTableProcessedTableManager
-  get conjugationsRelationsTableRefs {
-    final manager = $$ConjugationsRelationsTableTableTableManager(
+  $$ConjugationXTermTableTableProcessedTableManager
+  get conjugationXTermTableRefs {
+    final manager = $$ConjugationXTermTableTableTableManager(
       $_db,
-      $_db.conjugationsRelationsTable,
+      $_db.conjugationXTermTable,
     ).filter((f) => f.termId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
-      _conjugationsRelationsTableRefsTable($_db),
+      _conjugationXTermTableRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -14311,24 +14250,23 @@ class $$TermTableTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> conjugationsRelationsTableRefs(
-    Expression<bool> Function($$ConjugationsRelationsTableTableFilterComposer f)
-    f,
+  Expression<bool> conjugationXTermTableRefs(
+    Expression<bool> Function($$ConjugationXTermTableTableFilterComposer f) f,
   ) {
-    final $$ConjugationsRelationsTableTableFilterComposer composer =
+    final $$ConjugationXTermTableTableFilterComposer composer =
         $composerBuilder(
           composer: this,
           getCurrentColumn: (t) => t.id,
-          referencedTable: $db.conjugationsRelationsTable,
+          referencedTable: $db.conjugationXTermTable,
           getReferencedColumn: (t) => t.termId,
           builder:
               (
                 joinBuilder, {
                 $addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer,
-              }) => $$ConjugationsRelationsTableTableFilterComposer(
+              }) => $$ConjugationXTermTableTableFilterComposer(
                 $db: $db,
-                $table: $db.conjugationsRelationsTable,
+                $table: $db.conjugationXTermTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -14425,26 +14363,23 @@ class $$TermTableTableAnnotationComposer
     return f(composer);
   }
 
-  Expression<T> conjugationsRelationsTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$ConjugationsRelationsTableTableAnnotationComposer a,
-    )
-    f,
+  Expression<T> conjugationXTermTableRefs<T extends Object>(
+    Expression<T> Function($$ConjugationXTermTableTableAnnotationComposer a) f,
   ) {
-    final $$ConjugationsRelationsTableTableAnnotationComposer composer =
+    final $$ConjugationXTermTableTableAnnotationComposer composer =
         $composerBuilder(
           composer: this,
           getCurrentColumn: (t) => t.id,
-          referencedTable: $db.conjugationsRelationsTable,
+          referencedTable: $db.conjugationXTermTable,
           getReferencedColumn: (t) => t.termId,
           builder:
               (
                 joinBuilder, {
                 $addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer,
-              }) => $$ConjugationsRelationsTableTableAnnotationComposer(
+              }) => $$ConjugationXTermTableTableAnnotationComposer(
                 $db: $db,
-                $table: $db.conjugationsRelationsTable,
+                $table: $db.conjugationXTermTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -14471,7 +14406,7 @@ class $$TermTableTableTableManager
           PrefetchHooks Function({
             bool termBankV3TableRefs,
             bool termMetaBankV3TableRefs,
-            bool conjugationsRelationsTableRefs,
+            bool conjugationXTermTableRefs,
           })
         > {
   $$TermTableTableTableManager(_$DaKanjiDB db, $TermTableTable table)
@@ -14505,15 +14440,14 @@ class $$TermTableTableTableManager
               ({
                 termBankV3TableRefs = false,
                 termMetaBankV3TableRefs = false,
-                conjugationsRelationsTableRefs = false,
+                conjugationXTermTableRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (termBankV3TableRefs) db.termBankV3Table,
                     if (termMetaBankV3TableRefs) db.termMetaBankV3Table,
-                    if (conjugationsRelationsTableRefs)
-                      db.conjugationsRelationsTable,
+                    if (conjugationXTermTableRefs) db.conjugationXTermTable,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -14560,21 +14494,21 @@ class $$TermTableTableTableManager
                               ),
                           typedResults: items,
                         ),
-                      if (conjugationsRelationsTableRefs)
+                      if (conjugationXTermTableRefs)
                         await $_getPrefetchedData<
                           TermTableData,
                           $TermTableTable,
-                          ConjugationsRelationsTableData
+                          ConjugationXTermTableData
                         >(
                           currentTable: table,
                           referencedTable: $$TermTableTableReferences
-                              ._conjugationsRelationsTableRefsTable(db),
+                              ._conjugationXTermTableRefsTable(db),
                           managerFromTypedResult: (p0) =>
                               $$TermTableTableReferences(
                                 db,
                                 table,
                                 p0,
-                              ).conjugationsRelationsTableRefs,
+                              ).conjugationXTermTableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.termId == item.id,
@@ -14604,7 +14538,7 @@ typedef $$TermTableTableProcessedTableManager =
       PrefetchHooks Function({
         bool termBankV3TableRefs,
         bool termMetaBankV3TableRefs,
-        bool conjugationsRelationsTableRefs,
+        bool conjugationXTermTableRefs,
       })
     >;
 typedef $$TermBankV3DefinitionJsonTableTableCreateCompanionBuilder =
@@ -17901,13 +17835,11 @@ typedef $$DefinitionTableTableCreateCompanionBuilder =
     DefinitionTableCompanion Function({
       Value<int> id,
       required String definition,
-      required String definitionJson,
     });
 typedef $$DefinitionTableTableUpdateCompanionBuilder =
     DefinitionTableCompanion Function({
       Value<int> id,
       Value<String> definition,
-      Value<String> definitionJson,
     });
 
 final class $$DefinitionTableTableReferences
@@ -18000,12 +17932,6 @@ class $$DefinitionTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<String, String, Uint8List>
-  get definitionJson => $composableBuilder(
-    column: $table.definitionJson,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
-  );
-
   Expression<bool> termBankV3DefinitionsRelationsTableRefs(
     Expression<bool> Function(
       $$TermBankV3DefinitionsRelationsTableTableFilterComposer f,
@@ -18083,11 +18009,6 @@ class $$DefinitionTableTableOrderingComposer
     column: $table.definition,
     builder: (column) => ColumnOrderings(column),
   );
-
-  ColumnOrderings<Uint8List> get definitionJson => $composableBuilder(
-    column: $table.definitionJson,
-    builder: (column) => ColumnOrderings(column),
-  );
 }
 
 class $$DefinitionTableTableAnnotationComposer
@@ -18106,12 +18027,6 @@ class $$DefinitionTableTableAnnotationComposer
     column: $table.definition,
     builder: (column) => column,
   );
-
-  GeneratedColumnWithTypeConverter<String, Uint8List> get definitionJson =>
-      $composableBuilder(
-        column: $table.definitionJson,
-        builder: (column) => column,
-      );
 
   Expression<T> termBankV3DefinitionsRelationsTableRefs<T extends Object>(
     Expression<T> Function(
@@ -18208,21 +18123,14 @@ class $$DefinitionTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> definition = const Value.absent(),
-                Value<String> definitionJson = const Value.absent(),
-              }) => DefinitionTableCompanion(
-                id: id,
-                definition: definition,
-                definitionJson: definitionJson,
-              ),
+              }) => DefinitionTableCompanion(id: id, definition: definition),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String definition,
-                required String definitionJson,
               }) => DefinitionTableCompanion.insert(
                 id: id,
                 definition: definition,
-                definitionJson: definitionJson,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -32433,52 +32341,52 @@ typedef $$TermMetaBankV3IpaTagRelationsTableTableProcessedTableManager =
       TermMetaBankV3IpaTagRelationsTableData,
       PrefetchHooks Function({bool ipaId, bool tagId})
     >;
-typedef $$ConjugationsTableTableCreateCompanionBuilder =
-    ConjugationsTableCompanion Function({
+typedef $$ConjugationTableTableCreateCompanionBuilder =
+    ConjugationTableCompanion Function({
       Value<int> id,
       required String conjugation,
     });
-typedef $$ConjugationsTableTableUpdateCompanionBuilder =
-    ConjugationsTableCompanion Function({
+typedef $$ConjugationTableTableUpdateCompanionBuilder =
+    ConjugationTableCompanion Function({
       Value<int> id,
       Value<String> conjugation,
     });
 
-final class $$ConjugationsTableTableReferences
+final class $$ConjugationTableTableReferences
     extends
         BaseReferences<
           _$DaKanjiDB,
-          $ConjugationsTableTable,
-          ConjugationsTableData
+          $ConjugationTableTable,
+          ConjugationTableData
         > {
-  $$ConjugationsTableTableReferences(
+  $$ConjugationTableTableReferences(
     super.$_db,
     super.$_table,
     super.$_typedResult,
   );
 
   static MultiTypedResultKey<
-    $ConjugationsRelationsTableTable,
-    List<ConjugationsRelationsTableData>
+    $ConjugationXTermTableTable,
+    List<ConjugationXTermTableData>
   >
-  _conjugationsRelationsTableRefsTable(_$DaKanjiDB db) =>
+  _conjugationXTermTableRefsTable(_$DaKanjiDB db) =>
       MultiTypedResultKey.fromTable(
-        db.conjugationsRelationsTable,
+        db.conjugationXTermTable,
         aliasName: $_aliasNameGenerator(
-          db.conjugationsTable.id,
-          db.conjugationsRelationsTable.conjugationId,
+          db.conjugationTable.id,
+          db.conjugationXTermTable.conjugationId,
         ),
       );
 
-  $$ConjugationsRelationsTableTableProcessedTableManager
-  get conjugationsRelationsTableRefs {
-    final manager = $$ConjugationsRelationsTableTableTableManager(
+  $$ConjugationXTermTableTableProcessedTableManager
+  get conjugationXTermTableRefs {
+    final manager = $$ConjugationXTermTableTableTableManager(
       $_db,
-      $_db.conjugationsRelationsTable,
+      $_db.conjugationXTermTable,
     ).filter((f) => f.conjugationId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(
-      _conjugationsRelationsTableRefsTable($_db),
+      _conjugationXTermTableRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -32486,9 +32394,9 @@ final class $$ConjugationsTableTableReferences
   }
 }
 
-class $$ConjugationsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $ConjugationsTableTable> {
-  $$ConjugationsTableTableFilterComposer({
+class $$ConjugationTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $ConjugationTableTable> {
+  $$ConjugationTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -32505,24 +32413,23 @@ class $$ConjugationsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  Expression<bool> conjugationsRelationsTableRefs(
-    Expression<bool> Function($$ConjugationsRelationsTableTableFilterComposer f)
-    f,
+  Expression<bool> conjugationXTermTableRefs(
+    Expression<bool> Function($$ConjugationXTermTableTableFilterComposer f) f,
   ) {
-    final $$ConjugationsRelationsTableTableFilterComposer composer =
+    final $$ConjugationXTermTableTableFilterComposer composer =
         $composerBuilder(
           composer: this,
           getCurrentColumn: (t) => t.id,
-          referencedTable: $db.conjugationsRelationsTable,
+          referencedTable: $db.conjugationXTermTable,
           getReferencedColumn: (t) => t.conjugationId,
           builder:
               (
                 joinBuilder, {
                 $addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer,
-              }) => $$ConjugationsRelationsTableTableFilterComposer(
+              }) => $$ConjugationXTermTableTableFilterComposer(
                 $db: $db,
-                $table: $db.conjugationsRelationsTable,
+                $table: $db.conjugationXTermTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -32533,9 +32440,9 @@ class $$ConjugationsTableTableFilterComposer
   }
 }
 
-class $$ConjugationsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $ConjugationsTableTable> {
-  $$ConjugationsTableTableOrderingComposer({
+class $$ConjugationTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $ConjugationTableTable> {
+  $$ConjugationTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -32553,9 +32460,9 @@ class $$ConjugationsTableTableOrderingComposer
   );
 }
 
-class $$ConjugationsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $ConjugationsTableTable> {
-  $$ConjugationsTableTableAnnotationComposer({
+class $$ConjugationTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $ConjugationTableTable> {
+  $$ConjugationTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -32570,26 +32477,23 @@ class $$ConjugationsTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  Expression<T> conjugationsRelationsTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$ConjugationsRelationsTableTableAnnotationComposer a,
-    )
-    f,
+  Expression<T> conjugationXTermTableRefs<T extends Object>(
+    Expression<T> Function($$ConjugationXTermTableTableAnnotationComposer a) f,
   ) {
-    final $$ConjugationsRelationsTableTableAnnotationComposer composer =
+    final $$ConjugationXTermTableTableAnnotationComposer composer =
         $composerBuilder(
           composer: this,
           getCurrentColumn: (t) => t.id,
-          referencedTable: $db.conjugationsRelationsTable,
+          referencedTable: $db.conjugationXTermTable,
           getReferencedColumn: (t) => t.conjugationId,
           builder:
               (
                 joinBuilder, {
                 $addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer,
-              }) => $$ConjugationsRelationsTableTableAnnotationComposer(
+              }) => $$ConjugationXTermTableTableAnnotationComposer(
                 $db: $db,
-                $table: $db.conjugationsRelationsTable,
+                $table: $db.conjugationXTermTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -32600,48 +32504,44 @@ class $$ConjugationsTableTableAnnotationComposer
   }
 }
 
-class $$ConjugationsTableTableTableManager
+class $$ConjugationTableTableTableManager
     extends
         RootTableManager<
           _$DaKanjiDB,
-          $ConjugationsTableTable,
-          ConjugationsTableData,
-          $$ConjugationsTableTableFilterComposer,
-          $$ConjugationsTableTableOrderingComposer,
-          $$ConjugationsTableTableAnnotationComposer,
-          $$ConjugationsTableTableCreateCompanionBuilder,
-          $$ConjugationsTableTableUpdateCompanionBuilder,
-          (ConjugationsTableData, $$ConjugationsTableTableReferences),
-          ConjugationsTableData,
-          PrefetchHooks Function({bool conjugationsRelationsTableRefs})
+          $ConjugationTableTable,
+          ConjugationTableData,
+          $$ConjugationTableTableFilterComposer,
+          $$ConjugationTableTableOrderingComposer,
+          $$ConjugationTableTableAnnotationComposer,
+          $$ConjugationTableTableCreateCompanionBuilder,
+          $$ConjugationTableTableUpdateCompanionBuilder,
+          (ConjugationTableData, $$ConjugationTableTableReferences),
+          ConjugationTableData,
+          PrefetchHooks Function({bool conjugationXTermTableRefs})
         > {
-  $$ConjugationsTableTableTableManager(
+  $$ConjugationTableTableTableManager(
     _$DaKanjiDB db,
-    $ConjugationsTableTable table,
+    $ConjugationTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$ConjugationsTableTableFilterComposer($db: db, $table: table),
+              $$ConjugationTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$ConjugationsTableTableOrderingComposer($db: db, $table: table),
+              $$ConjugationTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$ConjugationsTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
+              $$ConjugationTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> conjugation = const Value.absent(),
-              }) =>
-                  ConjugationsTableCompanion(id: id, conjugation: conjugation),
+              }) => ConjugationTableCompanion(id: id, conjugation: conjugation),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String conjugation,
-              }) => ConjugationsTableCompanion.insert(
+              }) => ConjugationTableCompanion.insert(
                 id: id,
                 conjugation: conjugation,
               ),
@@ -32649,35 +32549,34 @@ class $$ConjugationsTableTableTableManager
               .map(
                 (e) => (
                   e.readTable(table),
-                  $$ConjugationsTableTableReferences(db, table, e),
+                  $$ConjugationTableTableReferences(db, table, e),
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({conjugationsRelationsTableRefs = false}) {
+          prefetchHooksCallback: ({conjugationXTermTableRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
-                if (conjugationsRelationsTableRefs)
-                  db.conjugationsRelationsTable,
+                if (conjugationXTermTableRefs) db.conjugationXTermTable,
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
-                  if (conjugationsRelationsTableRefs)
+                  if (conjugationXTermTableRefs)
                     await $_getPrefetchedData<
-                      ConjugationsTableData,
-                      $ConjugationsTableTable,
-                      ConjugationsRelationsTableData
+                      ConjugationTableData,
+                      $ConjugationTableTable,
+                      ConjugationXTermTableData
                     >(
                       currentTable: table,
-                      referencedTable: $$ConjugationsTableTableReferences
-                          ._conjugationsRelationsTableRefsTable(db),
+                      referencedTable: $$ConjugationTableTableReferences
+                          ._conjugationXTermTableRefsTable(db),
                       managerFromTypedResult: (p0) =>
-                          $$ConjugationsTableTableReferences(
+                          $$ConjugationTableTableReferences(
                             db,
                             table,
                             p0,
-                          ).conjugationsRelationsTableRefs,
+                          ).conjugationXTermTableRefs,
                       referencedItemsForCurrentItem: (item, referencedItems) =>
                           referencedItems.where(
                             (e) => e.conjugationId == item.id,
@@ -32692,60 +32591,60 @@ class $$ConjugationsTableTableTableManager
       );
 }
 
-typedef $$ConjugationsTableTableProcessedTableManager =
+typedef $$ConjugationTableTableProcessedTableManager =
     ProcessedTableManager<
       _$DaKanjiDB,
-      $ConjugationsTableTable,
-      ConjugationsTableData,
-      $$ConjugationsTableTableFilterComposer,
-      $$ConjugationsTableTableOrderingComposer,
-      $$ConjugationsTableTableAnnotationComposer,
-      $$ConjugationsTableTableCreateCompanionBuilder,
-      $$ConjugationsTableTableUpdateCompanionBuilder,
-      (ConjugationsTableData, $$ConjugationsTableTableReferences),
-      ConjugationsTableData,
-      PrefetchHooks Function({bool conjugationsRelationsTableRefs})
+      $ConjugationTableTable,
+      ConjugationTableData,
+      $$ConjugationTableTableFilterComposer,
+      $$ConjugationTableTableOrderingComposer,
+      $$ConjugationTableTableAnnotationComposer,
+      $$ConjugationTableTableCreateCompanionBuilder,
+      $$ConjugationTableTableUpdateCompanionBuilder,
+      (ConjugationTableData, $$ConjugationTableTableReferences),
+      ConjugationTableData,
+      PrefetchHooks Function({bool conjugationXTermTableRefs})
     >;
-typedef $$ConjugationsRelationsTableTableCreateCompanionBuilder =
-    ConjugationsRelationsTableCompanion Function({
+typedef $$ConjugationXTermTableTableCreateCompanionBuilder =
+    ConjugationXTermTableCompanion Function({
       Value<int> id,
       required int conjugationId,
       required int termId,
     });
-typedef $$ConjugationsRelationsTableTableUpdateCompanionBuilder =
-    ConjugationsRelationsTableCompanion Function({
+typedef $$ConjugationXTermTableTableUpdateCompanionBuilder =
+    ConjugationXTermTableCompanion Function({
       Value<int> id,
       Value<int> conjugationId,
       Value<int> termId,
     });
 
-final class $$ConjugationsRelationsTableTableReferences
+final class $$ConjugationXTermTableTableReferences
     extends
         BaseReferences<
           _$DaKanjiDB,
-          $ConjugationsRelationsTableTable,
-          ConjugationsRelationsTableData
+          $ConjugationXTermTableTable,
+          ConjugationXTermTableData
         > {
-  $$ConjugationsRelationsTableTableReferences(
+  $$ConjugationXTermTableTableReferences(
     super.$_db,
     super.$_table,
     super.$_typedResult,
   );
 
-  static $ConjugationsTableTable _conjugationIdTable(_$DaKanjiDB db) =>
-      db.conjugationsTable.createAlias(
+  static $ConjugationTableTable _conjugationIdTable(_$DaKanjiDB db) =>
+      db.conjugationTable.createAlias(
         $_aliasNameGenerator(
-          db.conjugationsRelationsTable.conjugationId,
-          db.conjugationsTable.id,
+          db.conjugationXTermTable.conjugationId,
+          db.conjugationTable.id,
         ),
       );
 
-  $$ConjugationsTableTableProcessedTableManager get conjugationId {
+  $$ConjugationTableTableProcessedTableManager get conjugationId {
     final $_column = $_itemColumn<int>('conjugation_id')!;
 
-    final manager = $$ConjugationsTableTableTableManager(
+    final manager = $$ConjugationTableTableTableManager(
       $_db,
-      $_db.conjugationsTable,
+      $_db.conjugationTable,
     ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_conjugationIdTable($_db));
     if (item == null) return manager;
@@ -32756,10 +32655,7 @@ final class $$ConjugationsRelationsTableTableReferences
 
   static $TermTableTable _termIdTable(_$DaKanjiDB db) =>
       db.termTable.createAlias(
-        $_aliasNameGenerator(
-          db.conjugationsRelationsTable.termId,
-          db.termTable.id,
-        ),
+        $_aliasNameGenerator(db.conjugationXTermTable.termId, db.termTable.id),
       );
 
   $$TermTableTableProcessedTableManager get termId {
@@ -32777,9 +32673,9 @@ final class $$ConjugationsRelationsTableTableReferences
   }
 }
 
-class $$ConjugationsRelationsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $ConjugationsRelationsTableTable> {
-  $$ConjugationsRelationsTableTableFilterComposer({
+class $$ConjugationXTermTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $ConjugationXTermTableTable> {
+  $$ConjugationXTermTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -32791,20 +32687,20 @@ class $$ConjugationsRelationsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  $$ConjugationsTableTableFilterComposer get conjugationId {
-    final $$ConjugationsTableTableFilterComposer composer = $composerBuilder(
+  $$ConjugationTableTableFilterComposer get conjugationId {
+    final $$ConjugationTableTableFilterComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.conjugationId,
-      referencedTable: $db.conjugationsTable,
+      referencedTable: $db.conjugationTable,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$ConjugationsTableTableFilterComposer(
+          }) => $$ConjugationTableTableFilterComposer(
             $db: $db,
-            $table: $db.conjugationsTable,
+            $table: $db.conjugationTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -32838,9 +32734,9 @@ class $$ConjugationsRelationsTableTableFilterComposer
   }
 }
 
-class $$ConjugationsRelationsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $ConjugationsRelationsTableTable> {
-  $$ConjugationsRelationsTableTableOrderingComposer({
+class $$ConjugationXTermTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $ConjugationXTermTableTable> {
+  $$ConjugationXTermTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -32852,20 +32748,20 @@ class $$ConjugationsRelationsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  $$ConjugationsTableTableOrderingComposer get conjugationId {
-    final $$ConjugationsTableTableOrderingComposer composer = $composerBuilder(
+  $$ConjugationTableTableOrderingComposer get conjugationId {
+    final $$ConjugationTableTableOrderingComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.conjugationId,
-      referencedTable: $db.conjugationsTable,
+      referencedTable: $db.conjugationTable,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$ConjugationsTableTableOrderingComposer(
+          }) => $$ConjugationTableTableOrderingComposer(
             $db: $db,
-            $table: $db.conjugationsTable,
+            $table: $db.conjugationTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -32899,9 +32795,9 @@ class $$ConjugationsRelationsTableTableOrderingComposer
   }
 }
 
-class $$ConjugationsRelationsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $ConjugationsRelationsTableTable> {
-  $$ConjugationsRelationsTableTableAnnotationComposer({
+class $$ConjugationXTermTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $ConjugationXTermTableTable> {
+  $$ConjugationXTermTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -32911,27 +32807,26 @@ class $$ConjugationsRelationsTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  $$ConjugationsTableTableAnnotationComposer get conjugationId {
-    final $$ConjugationsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.conjugationId,
-          referencedTable: $db.conjugationsTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+  $$ConjugationTableTableAnnotationComposer get conjugationId {
+    final $$ConjugationTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.conjugationId,
+      referencedTable: $db.conjugationTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ConjugationTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.conjugationTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$ConjugationsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.conjugationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return composer;
   }
 
@@ -32959,43 +32854,40 @@ class $$ConjugationsRelationsTableTableAnnotationComposer
   }
 }
 
-class $$ConjugationsRelationsTableTableTableManager
+class $$ConjugationXTermTableTableTableManager
     extends
         RootTableManager<
           _$DaKanjiDB,
-          $ConjugationsRelationsTableTable,
-          ConjugationsRelationsTableData,
-          $$ConjugationsRelationsTableTableFilterComposer,
-          $$ConjugationsRelationsTableTableOrderingComposer,
-          $$ConjugationsRelationsTableTableAnnotationComposer,
-          $$ConjugationsRelationsTableTableCreateCompanionBuilder,
-          $$ConjugationsRelationsTableTableUpdateCompanionBuilder,
-          (
-            ConjugationsRelationsTableData,
-            $$ConjugationsRelationsTableTableReferences,
-          ),
-          ConjugationsRelationsTableData,
+          $ConjugationXTermTableTable,
+          ConjugationXTermTableData,
+          $$ConjugationXTermTableTableFilterComposer,
+          $$ConjugationXTermTableTableOrderingComposer,
+          $$ConjugationXTermTableTableAnnotationComposer,
+          $$ConjugationXTermTableTableCreateCompanionBuilder,
+          $$ConjugationXTermTableTableUpdateCompanionBuilder,
+          (ConjugationXTermTableData, $$ConjugationXTermTableTableReferences),
+          ConjugationXTermTableData,
           PrefetchHooks Function({bool conjugationId, bool termId})
         > {
-  $$ConjugationsRelationsTableTableTableManager(
+  $$ConjugationXTermTableTableTableManager(
     _$DaKanjiDB db,
-    $ConjugationsRelationsTableTable table,
+    $ConjugationXTermTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$ConjugationsRelationsTableTableFilterComposer(
+              $$ConjugationXTermTableTableFilterComposer(
                 $db: db,
                 $table: table,
               ),
           createOrderingComposer: () =>
-              $$ConjugationsRelationsTableTableOrderingComposer(
+              $$ConjugationXTermTableTableOrderingComposer(
                 $db: db,
                 $table: table,
               ),
           createComputedFieldComposer: () =>
-              $$ConjugationsRelationsTableTableAnnotationComposer(
+              $$ConjugationXTermTableTableAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
@@ -33004,7 +32896,7 @@ class $$ConjugationsRelationsTableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<int> conjugationId = const Value.absent(),
                 Value<int> termId = const Value.absent(),
-              }) => ConjugationsRelationsTableCompanion(
+              }) => ConjugationXTermTableCompanion(
                 id: id,
                 conjugationId: conjugationId,
                 termId: termId,
@@ -33014,7 +32906,7 @@ class $$ConjugationsRelationsTableTableTableManager
                 Value<int> id = const Value.absent(),
                 required int conjugationId,
                 required int termId,
-              }) => ConjugationsRelationsTableCompanion.insert(
+              }) => ConjugationXTermTableCompanion.insert(
                 id: id,
                 conjugationId: conjugationId,
                 termId: termId,
@@ -33023,7 +32915,7 @@ class $$ConjugationsRelationsTableTableTableManager
               .map(
                 (e) => (
                   e.readTable(table),
-                  $$ConjugationsRelationsTableTableReferences(db, table, e),
+                  $$ConjugationXTermTableTableReferences(db, table, e),
                 ),
               )
               .toList(),
@@ -33053,10 +32945,10 @@ class $$ConjugationsRelationsTableTableTableManager
                                 currentTable: table,
                                 currentColumn: table.conjugationId,
                                 referencedTable:
-                                    $$ConjugationsRelationsTableTableReferences
+                                    $$ConjugationXTermTableTableReferences
                                         ._conjugationIdTable(db),
                                 referencedColumn:
-                                    $$ConjugationsRelationsTableTableReferences
+                                    $$ConjugationXTermTableTableReferences
                                         ._conjugationIdTable(db)
                                         .id,
                               )
@@ -33068,10 +32960,10 @@ class $$ConjugationsRelationsTableTableTableManager
                                 currentTable: table,
                                 currentColumn: table.termId,
                                 referencedTable:
-                                    $$ConjugationsRelationsTableTableReferences
+                                    $$ConjugationXTermTableTableReferences
                                         ._termIdTable(db),
                                 referencedColumn:
-                                    $$ConjugationsRelationsTableTableReferences
+                                    $$ConjugationXTermTableTableReferences
                                         ._termIdTable(db)
                                         .id,
                               )
@@ -33089,21 +32981,18 @@ class $$ConjugationsRelationsTableTableTableManager
       );
 }
 
-typedef $$ConjugationsRelationsTableTableProcessedTableManager =
+typedef $$ConjugationXTermTableTableProcessedTableManager =
     ProcessedTableManager<
       _$DaKanjiDB,
-      $ConjugationsRelationsTableTable,
-      ConjugationsRelationsTableData,
-      $$ConjugationsRelationsTableTableFilterComposer,
-      $$ConjugationsRelationsTableTableOrderingComposer,
-      $$ConjugationsRelationsTableTableAnnotationComposer,
-      $$ConjugationsRelationsTableTableCreateCompanionBuilder,
-      $$ConjugationsRelationsTableTableUpdateCompanionBuilder,
-      (
-        ConjugationsRelationsTableData,
-        $$ConjugationsRelationsTableTableReferences,
-      ),
-      ConjugationsRelationsTableData,
+      $ConjugationXTermTableTable,
+      ConjugationXTermTableData,
+      $$ConjugationXTermTableTableFilterComposer,
+      $$ConjugationXTermTableTableOrderingComposer,
+      $$ConjugationXTermTableTableAnnotationComposer,
+      $$ConjugationXTermTableTableCreateCompanionBuilder,
+      $$ConjugationXTermTableTableUpdateCompanionBuilder,
+      (ConjugationXTermTableData, $$ConjugationXTermTableTableReferences),
+      ConjugationXTermTableData,
       PrefetchHooks Function({bool conjugationId, bool termId})
     >;
 
@@ -33293,14 +33182,10 @@ class $DaKanjiDBManager {
         _db,
         _db.termMetaBankV3IpaTagRelationsTable,
       );
-  $$ConjugationsTableTableTableManager get conjugationsTable =>
-      $$ConjugationsTableTableTableManager(_db, _db.conjugationsTable);
-  $$ConjugationsRelationsTableTableTableManager
-  get conjugationsRelationsTable =>
-      $$ConjugationsRelationsTableTableTableManager(
-        _db,
-        _db.conjugationsRelationsTable,
-      );
+  $$ConjugationTableTableTableManager get conjugationTable =>
+      $$ConjugationTableTableTableManager(_db, _db.conjugationTable);
+  $$ConjugationXTermTableTableTableManager get conjugationXTermTable =>
+      $$ConjugationXTermTableTableTableManager(_db, _db.conjugationXTermTable);
 }
 
 class GetMbSizesResult {

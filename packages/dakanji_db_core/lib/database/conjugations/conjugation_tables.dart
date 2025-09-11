@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 
 
 
-class ConjugationsTable extends Table {
+class ConjugationTable extends Table {
 
   /// Define the columns for the conjugations table
   IntColumn get id => integer().autoIncrement()();

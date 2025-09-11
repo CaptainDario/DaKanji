@@ -2,6 +2,10 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:language_processing/japanese/conjugation/conjugate.dart';
+import 'package:language_processing/japanese/conjugation/conjugation_data/conj.dart';
+import 'package:language_processing/japanese/conjugation/conjugation_data/kwpos.dart';
+
 import 'parsed_term.dart';
 import 'structured_content_parser.dart';
 import 'package:drift/drift.dart';
@@ -36,51 +40,64 @@ Future parseTermBankV3(
   
   // read all necessary data from the db
   int currentMaxTermBankId = await db.termBankV3Dao.maxTermBankV3Id();
-  int currentMaxDefinitionJsonId = await db.termBankV3Dao.maxTermBankV3DefinitionJsonId();
+  List<TermBankV3TableCompanion> termBankComps = [];
+
   int currentMaxTermId = await db.termDao.maxTermId();
   Map allTerms =
     { for (var e in await db.termDao.getAllTerms()) e.term : e.id };
+  List<TermTableCompanion> termComps = [];
+  
+  int currentMaxConjugationId = await db.conjugationDao.maxConjugationsId();
+  Map allConjugations =
+    { for (var e in await db.conjugationDao.getAllConjugations()) e.conjugation : e.id };
+  List<ConjugationTableCompanion> conjugationComps = [];
+  List<ConjugationXTermTableCompanion> conjugationsXTermComps = [];
+
   int currentMaxReadingId = await db.readingDao.maxReadingId();
   Map allReadings =
     { for (var e in await db.readingDao.getAllReadings()) e.reading : e.id };
+  List<ReadingTableCompanion> readingComps = [];
+  
   int currentMaxDefTagId = await db.termBankV3Dao.maxTermBankV3DefinitionTagId();
   Map allDefTags =
     { for (var e in await db.termBankV3Dao.getAllDefinitionTags()) e.definitionTag : e.id };
+  List<TermBankV3DefinitionTagsTableCompanion> definitionTagComps = [];
+  List<TermBankV3DefinitionTagRelationsTableCompanion> definitionTagRelComps = [];
+
   int currentMaxRuleIdentifiersId = await db.termBankV3Dao.maxTermBankV3RuleIdentifierId();
   Map allRuleIdentifiers =
     { for (var e in await db.termBankV3Dao.getAllRuleIdentifiers()) e.ruleIdentifier : e.id };
+  List<TermBankV3RuleIdentifierTableCompanion> ruleIdentifiersComps = [];
+  List<TermBankV3RuleIdentifierRelationsTableCompanion> ruleIdentifiersRelComps = [];
+
+  int currentMaxDefinitionJsonId = await db.termBankV3Dao.maxTermBankV3DefinitionJsonId();
+  List<TermBankV3DefinitionJsonTableCompanion> termBankDefJsonComps = [];
+
   int currentMaxdefinitionId = await db.definitionDao.maxDefinitionId();
   Map allDefinitions =
     { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id };
+  List<DefinitionTableCompanion> definitionComps = [];
+  List<TermBankV3DefinitionsRelationsTableCompanion> definitionRelComps = [];
+
   // tags are parsed from the meta bank and thus are ALWAYS in the DB
   Map allTags =
     { for (var e in await db.termBankV3Dao.getAllTags()) e.name : e.id };
-  
-  // store data in list to bulk add them
-  List<TermTableCompanion> termComps = [];
-  List<ReadingTableCompanion> readingComps = [];
-  List<TermBankV3TableCompanion> termBankComps = [];
-  List<TermBankV3DefinitionJsonTableCompanion> termBankDefJsonComps = [];
-  List<TermBankV3DefinitionTagsTableCompanion> definitionTagComps = [];
-  List<TermBankV3DefinitionTagRelationsTableCompanion> definitionTagRelComps = [];
-  List<TermBankV3RuleIdentifierTableCompanion> ruleIdentifiersComps = [];
-  List<TermBankV3RuleIdentifierRelationsTableCompanion> ruleIdentifiersRelComps = [];
-  List<DefinitionTableCompanion> definitionComps = [];
-  List<TermBankV3DefinitionsRelationsTableCompanion> definitionRelComps = [];
   List<TermBankV3TagBankRelationsTableCompanion> tagRelComps = [];
 
-  // parse the entires
+
+  // --- parse the entires
   for (var jsonEntry in jsonList) {
 
     currentMaxTermBankId++;
 
     // parse term
     int termInsertId = allTerms[jsonEntry[0]] ?? ++currentMaxTermId;
-    if(allTerms[jsonEntry[0]] == null){
-      allTerms[jsonEntry[0]] = termInsertId;
+    String term = jsonEntry[0];
+    if(allTerms[term] == null){
+      allTerms[term] = termInsertId;
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
-        term: Value(jsonEntry[0])
+        term: Value(term)
       ));
     }
 
@@ -95,8 +112,9 @@ Future parseTermBankV3(
     }
 
     // parse definition tags
+    List<String> defTags = jsonEntry[2].split(" ");
     if(jsonEntry[2] != ""){
-      for (var defTag in jsonEntry[2].split(" ")) {
+      for (var defTag in defTags) {
         // get tag from DB
         int defTagInsertId = allDefTags[defTag] ?? ++currentMaxDefTagId;
         if(allDefTags[defTag] == null){
@@ -115,9 +133,10 @@ Future parseTermBankV3(
     }
 
     // parse rule identifiers
+    List<String> ruleIds = jsonEntry[3].split(" ");
     if(jsonEntry[3] != ""){
-      for (var ruleId in jsonEntry[3].split(" ")) {
-        // get tag from DB
+      for (var ruleId in ruleIds) {
+        // get id from DB
         int ruleIdInsertId = allRuleIdentifiers[ruleId] ?? ++currentMaxRuleIdentifiersId;
         if(allRuleIdentifiers[ruleId] == null){
           allRuleIdentifiers[ruleId] = ruleIdInsertId;
@@ -130,6 +149,30 @@ Future parseTermBankV3(
         ruleIdentifiersRelComps.add(TermBankV3RuleIdentifierRelationsTableCompanion(
           ruleIdentifierId: Value(ruleIdInsertId),
           termBankId: Value(currentMaxTermBankId)
+        ));
+      }
+    }
+
+    // add conjugations if there are any
+    print(ruleIds);
+    for (String ruleId in ruleIds) {
+      Pos? pos = posStringToPosEnum[ruleId];
+      if(pos == null) continue;
+
+      List<String> conjos = getAllConjugations(term, pos);
+      for (String conjo in conjos) {
+        int conjoInsertId = allConjugations[conjo] ?? ++currentMaxConjugationId;
+        if(allConjugations[conjo] == null){
+          allConjugations[conjo] = conjoInsertId;
+          conjugationComps.add(ConjugationTableCompanion(
+            id: Value(conjoInsertId),
+            conjugation: Value(conjo)
+          ));
+        }
+        // create relationships
+        conjugationsXTermComps.add(ConjugationXTermTableCompanion(
+          conjugationId: Value(conjoInsertId),
+          termId: Value(termInsertId)
         ));
       }
     }
@@ -156,7 +199,7 @@ Future parseTermBankV3(
       ));
     }
 
-    // add full definition json to DB
+    // Optionally: add full definition json to DB
     if(addFullJsonDefinitions) {
       currentMaxDefinitionJsonId += 1;
       termBankDefJsonComps.add(TermBankV3DefinitionJsonTableCompanion(
@@ -192,6 +235,9 @@ Future parseTermBankV3(
   await db.batch((batch) {
     batch.insertAll(db.termTable, termComps);
     batch.insertAll(db.readingTable, readingComps);
+
+    batch.insertAll(db.conjugationTable, conjugationComps);
+    batch.insertAll(db.conjugationXTermTable, conjugationsXTermComps);
 
     batch.insertAll(db.termBankV3Table, termBankComps);
     batch.insertAll(db.termBankV3DefinitionJsonTable, termBankDefJsonComps);

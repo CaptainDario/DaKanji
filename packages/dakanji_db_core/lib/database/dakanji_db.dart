@@ -1,7 +1,8 @@
 // Package imports:
 import 'package:dakanji_db_core/database/audio/audio_table.dart';
-import 'package:dakanji_db_core/database/conjugations/conjugations_relations_table.dart';
-import 'package:dakanji_db_core/database/conjugations/conjugations_table.dart';
+import 'package:dakanji_db_core/database/conjugations/conjugation_dao.dart';
+import 'package:dakanji_db_core/database/conjugations/conjugation_relation_tables.dart';
+import 'package:dakanji_db_core/database/conjugations/conjugation_tables.dart';
 import 'package:sqlite3/native_assets.dart';
 
 import '/database/dakanji_db_dao.dart';
@@ -43,7 +44,7 @@ import '/database/tag/tag_bank_v3_tables.dart';
 import '/database/term_meta/term_meta_bank_relation_tables.dart';
 import '/database/term_meta/term_meta_bank_v3_dao.dart';
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
-// this is NECCESSARY
+// these are NECCESSARY
 // ignore: unused_import
 import '/helper/zlib_text_converter.dart';
 // ignore: unused_import
@@ -90,8 +91,8 @@ part 'dakanji_db.g.dart';
     ExampleTranslationTable, ExampleTranslationTable,
     ExampleTranslationRelationsTable,
 
-    ConjugationsTable,
-    ConjugationsRelationsTable
+    ConjugationTable,
+    ConjugationXTermTable
   ],
   daos: [
     DaKanjiDBDao,
@@ -101,7 +102,8 @@ part 'dakanji_db.g.dart';
     KanjiBankV3Dao, KanjiMetaBankV3Dao,
     TermBankV3Dao,
     TermMetaBankV3Dao,
-    ExampleDao
+    ExampleDao,
+    ConjugationDao
   ],
   views: [
 
