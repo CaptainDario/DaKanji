@@ -1,5 +1,5 @@
-import 'package:language_processing/japanese/conjugation/conjugate.dart';
-import 'package:language_processing/japanese/conjugation/conjugation_data/kwpos.dart';
+import 'package:language_processing/japanese/conjugation/jmdict_conjugate.dart';
+import 'package:language_processing/japanese/conjugation/jmdict_conjugation_data/kwpos.dart';
 import 'package:test/test.dart';
 
 import 'conjugate_test_cases.dart';
