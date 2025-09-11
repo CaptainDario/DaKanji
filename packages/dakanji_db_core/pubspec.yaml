@@ -27,7 +27,9 @@ dependencies:
   hooks: ^0.20.1
   disjoint_set: ^1.0.0
   github: ^9.25.0
+  kana_kit: ^2.1.1
   language_processing:
+  fullwidth_halfwidth_converter: ^1.2.0
 
 dev_dependencies:
   drift_dev: ^2.28.0
