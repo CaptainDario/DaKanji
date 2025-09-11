@@ -4,13 +4,12 @@ import 'package:language_processing/japanese/conjugation/mecab_deconjugate.dart'
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
-import 'package:path/path.dart' as p;
 import 'mecab_deconjugation_test_cases.dart';
 
 void main() async {
 
   Mecab mecab = Mecab();
-  await mecab.init(p.join(mecabFilesPath, "mecab.dylib"), p.join(mecabFilesPath, "unidic"), true);
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   test('Testing deconjugation', () {
     for (int i = 0; i < verbs.length; i++) {

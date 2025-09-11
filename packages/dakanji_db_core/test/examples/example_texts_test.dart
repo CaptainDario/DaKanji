@@ -21,7 +21,7 @@ void main() async {
 
   // init mecab
   final mecab = Mecab();
-  await mecab.init("mecab.dylib", "ipadic", true);
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();

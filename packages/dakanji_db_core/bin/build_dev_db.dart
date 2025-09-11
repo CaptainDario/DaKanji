@@ -16,7 +16,7 @@ void main() async {
 
   // init mecab
   final mecab = Mecab();
-  await mecab.init("mecab.dylib", "ipadic", true);
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   // convert the yomitan test files
   Stopwatch s = Stopwatch()..start();

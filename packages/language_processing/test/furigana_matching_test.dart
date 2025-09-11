@@ -14,7 +14,7 @@ import 'furigana_matching_test_cases.dart';
 void main() async {
 
   Mecab mecab = Mecab();
-  await mecab.init(p.join(mecabFilesPath, "mecab.dylib"), "unidic", true);
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   test('Testing deconjugation', () {
     for (var testCase in testCases) {

@@ -39,8 +39,14 @@ final String dakanjiDbProjectRoot = findProjectRoot();
 final dakanjiDbPath = p.joinAll([dakanjiDbProjectRoot, "tmp", "dakanji.db"]);
 /// Path to the folder that contains data files
 final dataFilesPath = p.joinAll([dakanjiDbProjectRoot, "data"]);
+
+/// --- MECAB FILES ------------------------------------------------------------
 /// Path to the folder that contains the files for mecab
 final mecabFilesPath = p.joinAll([dakanjiDbProjectRoot, "mecab"]);
+/// Path to the mecab dynamic library
+final mecabDynamicLibPath = p.joinAll([mecabFilesPath, "mecab.dylib"]);
+/// Path to the mecab dictionary
+final mecabDicPath = p.joinAll([mecabFilesPath, "unidic"]);
 
 
 /// --- TESTING FILES ----------------------------------------------------------
@@ -59,10 +65,13 @@ final dakanjiDBInputFilesPath = p.joinAll([dataFilesPath, "dakanji_db_input_file
 
 /// KANJIDIC input file folder name
 final kanjidic2Name = "KANJIDIC_english";
+/// KanjiVG input file folder name
 final kanjiVGPathName = "kanji";
+/// Radicals input file folder name
 final radicalsPathName = "radicals";
+/// Tatoeba input file folder name
 final tatoebaFolderName = "tatoeba";
-
+/// Suffix added to processed files
 final processedSuffix = "_processed";
 
 /// path to the kanjidic2 files input files that should be parsed
