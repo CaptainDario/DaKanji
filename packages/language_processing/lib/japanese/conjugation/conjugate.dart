@@ -60,6 +60,21 @@ String conjugate(String baseVerb, Conjo conjugation){
   return result;
 }
 
+/// Function that returns a list of all possible conjugations of the given
+/// `verb` using `pos`.
+List<String> getAllConjugations(String verb, Pos pos){
+
+  final Set<String> conjugations = {};
+  final applicableConjugations = conjos.where((element) => element.pos == pos);
+
+  for (final conjo in applicableConjugations) {
+    conjugations.add(conjugate(verb, conjo));
+  }
+
+  return conjugations.toList();
+
+}
+
 /// 
 void main(){
 
@@ -71,6 +86,7 @@ void main(){
   
   List<Conjo> conjos = conjosFromArgs(pos, conj, neg, fml);
 
+  print(getAllConjugations(verb, pos));
 
   String conjugation = conjugate(verb, conjos.first);
   print(conjugation);
