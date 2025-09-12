@@ -1,8 +1,5 @@
 // Package imports:
 import 'package:dakanji_db_core/database/audio/audio_table.dart';
-import 'package:dakanji_db_core/database/conjugations/conjugation_dao.dart';
-import 'package:dakanji_db_core/database/conjugations/conjugation_relation_tables.dart';
-import 'package:dakanji_db_core/database/conjugations/conjugation_tables.dart';
 import 'package:sqlite3/native_assets.dart';
 
 import '/database/dakanji_db_dao.dart';
@@ -90,9 +87,6 @@ part 'dakanji_db.g.dart';
     ExampleTable,
     ExampleTranslationTable, ExampleTranslationTable,
     ExampleTranslationRelationsTable,
-
-    ConjugationTable,
-    ConjugationXTermTable
   ],
   daos: [
     DaKanjiDBDao,
@@ -103,7 +97,6 @@ part 'dakanji_db.g.dart';
     TermBankV3Dao,
     TermMetaBankV3Dao,
     ExampleDao,
-    ConjugationDao
   ],
   views: [
 

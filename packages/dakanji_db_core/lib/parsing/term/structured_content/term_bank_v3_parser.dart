@@ -1,10 +1,6 @@
 // Dart imports:
 import 'dart:convert';
 
-// Package imports:
-import 'package:language_processing/japanese/conjugation/jmdict_conjugate.dart';
-import 'package:language_processing/japanese/conjugation/jmdict_conjugation_data/kwpos.dart';
-
 import 'parsed_term.dart';
 import 'structured_content_parser.dart';
 import 'package:drift/drift.dart';
@@ -45,12 +41,6 @@ Future parseTermBankV3(
   Map allTerms =
     { for (var e in await db.termDao.getAllTerms()) e.term : e.id };
   List<TermTableCompanion> termComps = [];
-  
-  int currentMaxConjugationId = await db.conjugationDao.maxConjugationsId();
-  Map allConjugations =
-    { for (var e in await db.conjugationDao.getAllConjugations()) e.conjugation : e.id };
-  List<ConjugationTableCompanion> conjugationComps = [];
-  List<ConjugationXTermTableCompanion> conjugationsXTermComps = [];
 
   int currentMaxReadingId = await db.readingDao.maxReadingId();
   Map allReadings =
@@ -152,30 +142,6 @@ Future parseTermBankV3(
       }
     }
 
-    // add conjugations if there are any
-    print(ruleIds);
-    for (String ruleId in ruleIds) {
-      Pos? pos = posStringToPosEnum[ruleId];
-      if(pos == null) continue;
-
-      List<String> conjos = getAllConjugations(term, pos);
-      for (String conjo in conjos) {
-        int conjoInsertId = allConjugations[conjo] ?? ++currentMaxConjugationId;
-        if(allConjugations[conjo] == null){
-          allConjugations[conjo] = conjoInsertId;
-          conjugationComps.add(ConjugationTableCompanion(
-            id: Value(conjoInsertId),
-            conjugation: Value(conjo)
-          ));
-        }
-        // create relationships
-        conjugationsXTermComps.add(ConjugationXTermTableCompanion(
-          conjugationId: Value(conjoInsertId),
-          termId: Value(termInsertId)
-        ));
-      }
-    }
-
     // Parse definitions
     List<ParsedTerm> parsedDefinitions = extractPlainTextDefinitions(jsonEntry);
     List<int> definitionIds = [];
@@ -234,9 +200,6 @@ Future parseTermBankV3(
   await db.batch((batch) {
     batch.insertAll(db.termTable, termComps);
     batch.insertAll(db.readingTable, readingComps);
-
-    batch.insertAll(db.conjugationTable, conjugationComps);
-    batch.insertAll(db.conjugationXTermTable, conjugationsXTermComps);
 
     batch.insertAll(db.termBankV3Table, termBankComps);
     batch.insertAll(db.termBankV3DefinitionJsonTable, termBankDefJsonComps);
