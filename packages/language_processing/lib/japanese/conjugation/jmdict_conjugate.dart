@@ -8,10 +8,10 @@
 import 'package:language_processing/japanese/japanese_string_operations.dart';
 
 // Project imports:
-import 'conjugation_data/conj.dart';
-import 'conjugation_data/conjo.dart';
-import 'conjugation_data/conjos.dart';
-import 'conjugation_data/kwpos.dart';
+import 'jmdict_conjugation_data/conj.dart';
+import 'jmdict_conjugation_data/conjo.dart';
+import 'jmdict_conjugation_data/conjos.dart';
+import 'jmdict_conjugation_data/kwpos.dart';
 
 /// Convenience function to get all conjugations that match the given arguments.
 /// The returned list can contain multiple entries if `onum == null`. 
