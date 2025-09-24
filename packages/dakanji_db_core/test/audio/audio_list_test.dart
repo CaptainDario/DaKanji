@@ -7,7 +7,7 @@ import 'package:universal_io/io.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
-import 'audio_list_expectations.dart';
+import 'audio_list_test_cases.dart';
 import 'package:path/path.dart' as p;
 
 void main() async {

@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import 'package:dakanji_db_core/conversion/kanji_vg.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import '../../../dakanji_db_shared/lib/paths.dart';
-import 'kanji_vg_test_values.dart';
+import 'kanji_vg_test_cases.dart';
 
 void main() async {
 

@@ -6,7 +6,7 @@ import 'package:universal_io/io.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
-import 'kanji_bank_test_values.dart';
+import 'kanji_bank_test_cases.dart';
 
 void main() async {
   

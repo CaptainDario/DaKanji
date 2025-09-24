@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import 'package:dakanji_db_core/conversion/radicals.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_shared/paths.dart';
-import 'radicals_test_values.dart';
+import 'radicals_test_cases.dart';
 
 void main() {
 
