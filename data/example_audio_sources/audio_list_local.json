@@ -1,0 +1,10 @@
+{
+    "type": "audioSourceList",
+    "audioSources": [
+        {
+            "name": "Forvo",
+            "url": "https://audio.forvo.com/mp3/example1.mp3",
+            "local": true
+        }
+    ]
+}
