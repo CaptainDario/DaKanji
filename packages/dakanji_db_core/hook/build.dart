@@ -12,7 +12,7 @@ void main(List<String> args) async {
   
   await build(args, (input, output) async {
 
-    String extensionPath = "/Users/darioklepoch/dev/DaKanji/dakanji_db/packages/dakanji_db_core/hook/";
+    String extensionPath = "/Users/darioklepoch/dev/DaKanji/dakanji_db/packages/dakanji_db_core/hook";
     String dylibExtension = getDylibExtension();
     String platformName = getPlatformName();
     String cpuArchitecture = getCpuArchitecture();
@@ -34,21 +34,18 @@ void main(List<String> args) async {
 }
 
 String getPlatformName() {
-  if (Platform.isMacOS) {
-    return "mac";
-  } else if (Platform.isLinux) {
-    return "linux";
-  } else if (Platform.isWindows) {
-    return "windows";
-  } else {
-    throw UnsupportedError('Unsupported platform: ${Platform.operatingSystem}');
-  }
+  if (Platform.isMacOS) return "mac";
+  else if (Platform.isLinux) return "linux";
+  else if (Platform.isWindows) return "windows";
+  else if (Platform.isAndroid) return "android";
+  else if (Platform.isIOS) return "ios";
+  else throw UnsupportedError('Unsupported platform: ${Platform.operatingSystem}');
 }
 
 String getDylibExtension() {
   if (Platform.isMacOS) {
     return "dylib";
-  } else if (Platform.isLinux) {
+  } else if (Platform.isLinux || Platform.isAndroid) {
     return "so";
   } else if (Platform.isWindows) {
     return "dll";

@@ -1,5 +1,4 @@
 // Package imports:
-import 'package:dakanji_db_core/database/audio/audio_table.dart';
 import 'package:sqlite3/native_assets.dart';
 
 import '/database/dakanji_db_dao.dart';
@@ -16,6 +15,7 @@ import 'package:drift/native.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
+import '/database/audio/audio_table.dart';
 import '/database/general_tables/kanji_dao.dart';
 import '/database/general_tables/kanji_tables.dart';
 import '/database/general_tables/definition_dao.dart';
@@ -41,6 +41,9 @@ import '/database/tag/tag_bank_v3_tables.dart';
 import '/database/term_meta/term_meta_bank_relation_tables.dart';
 import '/database/term_meta/term_meta_bank_v3_dao.dart';
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
+import '/extensions/sqlite_vec_extension.dart';
+import '/extensions/sqlite_spellfix_extension.dart';
+import '/extensions/sqlite_crsqlite_extension.dart';
 // these are NECCESSARY
 // ignore: unused_import
 import '/helper/zlib_text_converter.dart';
@@ -105,6 +108,10 @@ part 'dakanji_db.g.dart';
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
     'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
     'term/term_bank_v3_views.drift', 'term/term_bank_v3_queries.drift',
+    'general_tables/definition_fts5_table.drift',
+    'general_tables/reading_fts5_table.drift',
+    'general_tables/reading_spellfix_table.drift',
+    'general_tables/term_fts5_table.drift',
     'dakanji_db_stat_queries.drift'
   }
 )
@@ -125,7 +132,12 @@ class DaKanjiDB extends _$DaKanjiDB {
   static QueryExecutor _openConnection(String path) {
     return NativeDatabase.createInBackground(
       File(path),
-      sqlite3: () => sqlite3Native,
+      sqlite3: () {
+        sqlite3Native.loadSqliteVecExtension();
+        sqlite3Native.loadSqliteSpellfixExtension();
+        sqlite3Native.loadSqliteCrsqliteExtension();
+        return sqlite3Native;
+      },
       setup: (database) {
         // This is important, as accessing the database across threads otherwise
         // causes "database locked" errors.
