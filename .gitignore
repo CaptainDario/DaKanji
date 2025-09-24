@@ -23,8 +23,8 @@ data/dakanji_db_input_files/**
 !data/dakanji_db_input_files/.gitkeep
 
 # ignore files to run mecab in pure dart
-unidic/**
-libmecab.dylib
+mecab/**
+!mecab/.gitkeep
 
 # sqlite build files
 custom_sqlite/build/**
