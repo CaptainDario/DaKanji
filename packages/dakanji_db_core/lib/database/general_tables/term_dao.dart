@@ -15,8 +15,8 @@ part 'term_dao.g.dart';
 ])
 class TermDao extends DatabaseAccessor<DaKanjiDB> with _$TermDaoMixin {
   
-  // this constructor is required so that the main database can create an instance
-  // of this object.
+  // this constructor is required so that the main database can create an
+  // instance of this object.
   TermDao(super.db);
 
   // ---------------------------------------------------------------------------

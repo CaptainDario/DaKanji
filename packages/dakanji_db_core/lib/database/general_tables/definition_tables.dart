@@ -2,7 +2,6 @@
 import 'package:drift/drift.dart';
 
 /// Contains the meanins entries to which other tables link
-@TableIndex(name: 'definition', columns: {#definition})
 class DefinitionTable extends Table {
   
   /// id of this entry

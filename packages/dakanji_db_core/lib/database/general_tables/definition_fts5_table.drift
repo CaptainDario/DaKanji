@@ -1,0 +1,36 @@
+import 'definition_tables.dart';
+
+-- Create the FTS5 virtual table
+CREATE VIRTUAL TABLE definition_fts USING fts5(
+  definition,
+  content='definition_table',
+  content_rowid='id',
+  tokenize='unicode61'
+);
+
+-- Triggers to keep the FTS table synchronized with the content table.
+-- These should be placed in the same .drift file.
+
+-- After a new row is inserted into definition_table, insert the corresponding
+-- content into the FTS5 table.
+CREATE TRIGGER definition_table_ai AFTER INSERT ON definition_table BEGIN
+  INSERT INTO definition_fts(rowid, definition)
+  VALUES (new.id, new.definition);
+END;
+
+-- After a row is deleted from definition_table, delete the corresponding
+-- entry from the FTS5 table.
+CREATE TRIGGER definition_table_ad AFTER DELETE ON definition_table BEGIN
+  INSERT INTO definition_fts(definition_fts, rowid, definition)
+  VALUES ('delete', old.id, old.definition);
+END;
+
+-- After the definition column in a row is updated,
+-- update the FTS5 table as well.
+CREATE TRIGGER definition_table_au AFTER UPDATE OF definition ON definition_table BEGIN
+  INSERT INTO definition_fts(definition_fts, rowid, definition)
+  VALUES ('delete', old.id, old.definition);
+  INSERT INTO definition_fts(rowid, definition)
+  VALUES (new.id, new.definition);
+END;
+

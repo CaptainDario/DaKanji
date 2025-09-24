@@ -11,3 +11,67 @@ term_bank_v3_search:
     term = :query
   LIMIT :limit OFFSET :offset
   ;
+
+
+-- Use a Common Table Expression (CTE) to find and rank all matching IDs
+WITH RankedIDs AS (
+    -- Find matches in the 'term' table and get their parent term_bank_id
+    SELECT
+      TB3T.id as term_bank_id,
+      rank,
+      TT.term as matched_text
+    FROM term_fts AS FTS
+    JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.term_id
+    JOIN term_table AS TT ON FTS.rowid = TT.id
+    WHERE term_fts MATCH '打*'
+    
+    UNION ALL
+    
+    -- Find matches in the 'reading' table and get their parent term_bank_id
+    SELECT
+      TB3T.id as term_bank_id,
+      rank,
+      RT.reading as matched_text
+    FROM reading_fts AS FTS
+    JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.reading_id
+    JOIN reading_table AS RT ON FTS.rowid = RT.id
+    WHERE reading_fts MATCH '打*'
+    
+    UNION ALL
+    
+    -- Find matches in the 'definition' table and get their parent term_bank_id
+    SELECT
+      R.term_bank_id,
+      rank,
+      DT.definition as matched_text
+    FROM definition_fts AS FTS
+    JOIN term_bank_v3_definitions_relations_table AS R ON FTS.rowid = R.definition_id
+    JOIN definition_table AS DT ON FTS.rowid = DT.id
+    WHERE definition_fts MATCH '打*'
+),
+FinalRankedIDs AS (
+    -- If a term matches in multiple places (e.g., in reading AND definition),
+    -- this selects the single best match (lowest rank) and its corresponding text.
+    SELECT
+        term_bank_id,
+        rank as best_rank,
+        matched_text
+    FROM (
+        SELECT
+            *,
+            ROW_NUMBER() OVER(PARTITION BY term_bank_id ORDER BY rank) as rn
+        FROM RankedIDs
+    )
+    WHERE rn = 1
+)
+-- Finally, join the ranked IDs with your view to get the full data
+SELECT
+    R.best_rank as fts5_rank,
+    LENGTH(R.matched_text) - LENGTH('打') AS length_difference,
+    V.*
+FROM term_bank_v3_search_view AS V
+JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id
+ORDER BY
+    R.best_rank,
+    V.popularity DESC,
+    length_difference ASC;
