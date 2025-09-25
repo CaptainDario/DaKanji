@@ -70,6 +70,25 @@ class TermBankV3Entry with _$TermBankV3Entry {
       definitions: List<String>.from(jsonDecode(r.definitions)),
       sequenceNumber: r.sequenceNumber,
       tags: List.from(jsonDecode(r.tags))
+        .where((tagJson) => tagJson != null && tagJson['name'] != null)
+        .map((e) => TagBankV3Entry.fromJson(e))
+        .toList()
+    );
+    
+  }
+
+  factory TermBankV3Entry.fromSearchTermDriftResult(SearchTermDriftResult r){
+    
+    return TermBankV3Entry(
+      term: r.term ?? "",
+      reading: r.reading ?? "",
+      definitionTags: List<String>.from(jsonDecode(r.definitionTags)),
+      ruleIdentifiers: List<String>.from(jsonDecode(r.ruleIdentifiers)),
+      popularity: r.popularity,
+      definitions: List<String>.from(jsonDecode(r.definitions)),
+      sequenceNumber: r.sequenceNumber,
+      tags: List.from(jsonDecode(r.tags))
+        .where((tagJson) => tagJson != null && tagJson['name'] != null)
         .map((e) => TagBankV3Entry.fromJson(e))
         .toList()
     );

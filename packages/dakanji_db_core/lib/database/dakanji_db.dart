@@ -109,10 +109,10 @@ part 'dakanji_db.g.dart';
     'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
     'term/term_bank_v3_views.drift', 'term/term_bank_v3_queries.drift',
     'general_tables/definition_fts5_table.drift',
-    'general_tables/reading_fts5_table.drift',
-    'general_tables/reading_spellfix_table.drift',
+    'general_tables/reading_fts5_table.drift', 'general_tables/reading_spellfix_table.drift',
     'general_tables/term_fts5_table.drift',
-    'dakanji_db_stat_queries.drift'
+    'dakanji_db_stat_queries.drift',
+    'queries/search_term_queries.drift'
   }
 )
 class DaKanjiDB extends _$DaKanjiDB {

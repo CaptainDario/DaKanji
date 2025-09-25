@@ -1,4 +1,6 @@
 // Package imports:
+import "package:dakanji_db_core/database/term/term_bank_v3_entry.dart";
+
 import "/database/general_tables/term_tables.dart";
 import "/database/tag/tag_bank_v3_tables.dart";
 import "/database/term/term_bank_v3_tables.dart";
@@ -25,7 +27,14 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
   
   TermBankV3Dao(super.db);
 
-  
+
+  /// Searches in the Term Bank for 
+  Future<List> search (String term, {int limit=-1, int offset=0}) async {
+    return (await db.term_bank_v3_search(term, limit, offset).get())
+      .map((r) => TermBankV3Entry.fromTermBankV3SearchViewData(r))
+      .toList();
+  }
+
   // ---------------------------------------------------------------------------
   /// Get all definition tags and their ids 
   Future<List<TermBankV3DefinitionTagsTableData>> getAllDefinitionTags() async {

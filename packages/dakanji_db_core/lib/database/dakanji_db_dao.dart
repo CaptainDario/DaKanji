@@ -1,6 +1,6 @@
 // Package imports:
 import "package:dakanji_db_core/database/term/term_bank_v3_entry.dart";
-import "package:dakanji_db_core/queries/term_search.dart";
+import "package:dakanji_db_core/database/queries/search_term_utils.dart";
 import "package:drift/drift.dart";
 import "package:language_processing/iso/iso_table.dart";
 
@@ -31,17 +31,15 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
     final (:hiraganaTerm, term: preprocessedTerm) =
       preprocessInput(term, convertRomajiToHiragana);
 
-    
-
     // check laguages are set and parse 
     assert (languages.isNotEmpty);
     List<String> langs = languages.map((e) => e.name).toList();
 
-    List<TermBankV3SearchViewData> t = 
-      await db.term_bank_v3_search(preprocessedTerm, limit, offset).get();
+    List<SearchTermDriftResult> t = 
+      await db.search_term_drift(term).get();
 
     List<TermBankV3Entry> results = t
-      .map((e) => TermBankV3Entry.fromTermBankV3SearchViewData(e))
+      .map((e) => TermBankV3Entry.fromSearchTermDriftResult(e))
       .toList();
 
     return results;
