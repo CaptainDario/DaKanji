@@ -1,8 +1,8 @@
 // Dart imports:
 import 'dart:convert';
 
-import 'parsed_term.dart';
-import 'structured_content_parser.dart';
+import 'structured_content/parsed_term.dart';
+import 'structured_content/structured_content_parser.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
@@ -146,7 +146,8 @@ Future parseTermBankV3(
     List<ParsedTerm> parsedDefinitions = extractPlainTextDefinitions(jsonEntry[5]);
     List<int> definitionIds = [];
     for (var parsedDefinition in parsedDefinitions) {
-      String text = parsedDefinition.text;
+      // esc
+      String text = parsedDefinition.text.replaceAll('\n', ' ').trim();
       // check if term is already in DB
       int definitionInsertId = allDefinitions[text] ?? ++currentMaxdefinitionId;
       if(allDefinitions[text] == null){

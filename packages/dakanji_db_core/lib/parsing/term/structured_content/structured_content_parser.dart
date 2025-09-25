@@ -95,13 +95,16 @@ List<ParsedTerm> extractParsedTerms(dynamic definition) {
         if (text != null) {
           return [ParsedTerm(text, TermParsingMethod.textObject)];
         }
-        break;
+        // If text is null, it's a valid type with no content. Return empty.
+        return [];
+
       case 'image':
         final description = definition['description'] as String?;
         if (description != null) {
           return [ParsedTerm(description, TermParsingMethod.image)];
         }
-        break;
+        // If description is null, it's a valid type with no content. Return empty.
+        return [];
 
       case 'structured-content':
         final content = definition['content'];
@@ -121,7 +124,17 @@ List<ParsedTerm> extractParsedTerms(dynamic definition) {
             }
           }
         }
-        break;
+        // If content was null or legacy format yielded no text, return an empty list.
+        return [];
+    }
+
+    // Handle raw structured content nodes that lack a 'type' key.
+    if (definition.containsKey('tag')) {
+      final plainText = _getPlainTextFromStructuredContent(definition);
+      if (plainText.isNotEmpty) {
+        return [ParsedTerm(plainText, TermParsingMethod.legacyStructured)];
+      }
+      return [];
     }
   }
 
@@ -136,9 +149,7 @@ List<ParsedTerm> extractParsedTerms(dynamic definition) {
       // The second element is a list of rule strings. Join them together.
       final rules = (definition[1] as List).join(' → ');
       return [
-        // The result is a simple string, so plainString is appropriate.
-        // For more detailed tracking, you could add a new enum value like 'TermParsingMethod.deinflection'.
-        ParsedTerm('$baseForm → $rules', TermParsingMethod.plainString)
+        ParsedTerm('$baseForm → $rules', TermParsingMethod.deinflection)
       ];
     }
     // Fallback for other list formats we don't handle.
