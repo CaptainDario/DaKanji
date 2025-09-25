@@ -4,7 +4,7 @@ import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 
 /// ----------------------------------------------------------------------------
 /// Test cases for term_bank_1.json
-final termBankTestCases = [
+final termBankTestCases1 = [
   "打",
   "打つ",
   "打ち込む",
@@ -32,7 +32,7 @@ final termBankTestCases = [
 ];
 
 /// kanjiMetaBankV3 test case expected values
-final termBankTestCaseExpectations = [
+final termBankTestCaseExpectations1 = [
   // Test case for "打"
   [
     TermBankV3Entry(

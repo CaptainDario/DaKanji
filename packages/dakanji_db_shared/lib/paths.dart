@@ -33,10 +33,14 @@ String findProjectRoot() {
   }
 }
 
+/// The root path of the DaKanji project.
 final String dakanjiDbProjectRoot = findProjectRoot();
 
+/// the tmp path of the project
+final String tmpPath = p.joinAll([dakanjiDbProjectRoot, "tmp"]);
+
 /// the path where the dakanji database should be created and populated
-final dakanjiDbPath = p.joinAll([dakanjiDbProjectRoot, "tmp", "dakanji.db"]);
+final dakanjiDbPath = p.joinAll([tmpPath,"dakanji.db"]);
 /// Path to the folder that contains data files
 final dataFilesPath = p.joinAll([dakanjiDbProjectRoot, "data"]);
 
