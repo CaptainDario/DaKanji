@@ -7,7 +7,8 @@
 **/.DS_Store
 
 # ignore temporary outputs
-tmp/
+tmp/**
+!tmp/.gitkeep
 
 # ignore python
 .venv/
