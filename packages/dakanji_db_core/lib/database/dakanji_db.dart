@@ -129,6 +129,20 @@ class DaKanjiDB extends _$DaKanjiDB {
   /// The path of this db
   String? path;
 
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onCreate: (Migrator m) async {
+        // First, create all the tables defined in the @DriftDatabase annotation
+        await m.createAll();
+
+        // Init spellfix
+        await populateSpellfixCost();
+        await loadCustomCostTable();
+      },
+    );
+  }
+
   static QueryExecutor _openConnection(String path) {
     return NativeDatabase.createInBackground(
       File(path),

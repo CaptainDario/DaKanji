@@ -9,27 +9,6 @@ CREATE TABLE IF NOT EXISTS spellfix_cost(
   cost INT NOT NULL
 );
 
--- Add rules for common phonetic relationships (lower cost = more similar)
--- NOTE: The default cost is 100. Any pair of characters in this
--- table with the same cost will have a substitution cost equal to that value.
-INSERT OR IGNORE INTO spellfix_cost(char, cost) VALUES
-  -- Voiced (dakuten) and semi-voiced (handakuten) sounds
-  ('か', 10), ('が', 10),
-  ('は', 10), ('ば', 10), ('ぱ', 10),
-  ('さ', 10), ('ざ', 10),
-  ('た', 10), ('だ', 10),
-  -- Small vs. large characters
-  ('つ', 20), ('っ', 20),
-  ('や', 20), ('ゃ', 20),
-  ('ゆ', 20), ('ゅ', 20),
-  ('よ', 20), ('ょ', 20),
-  -- Similar sounds
-  ('じ', 25), ('ぢ', 25),
-  ('ず', 25), ('づ', 25);
-  
--- Load the custom cost table into spellfix1
-INSERT INTO reading_spellfix(word, command) VALUES(NULL, 'cost_table ''spellfix_cost''');
-
 -- Trigger to add a new word to the spellfix table
 CREATE TRIGGER reading_spellfix_insert
 AFTER INSERT ON reading_table
@@ -60,3 +39,26 @@ BEGIN
     WHERE word = old.reading
       AND NOT EXISTS (SELECT 1 FROM reading_table WHERE reading = old.reading);
 END;
+
+-- Add rules for common phonetic relationships (lower cost = more similar)
+-- NOTE: The default cost is 100. Any pair of characters in this
+-- table with the same cost will have a substitution cost equal to that value.
+populateSpellfixCost:
+  INSERT OR IGNORE INTO spellfix_cost(char, cost) VALUES
+    -- Voiced (dakuten) and semi-voiced (handakuten) sounds
+    ('か', 10), ('が', 10),
+    ('は', 10), ('ば', 10), ('ぱ', 10),
+    ('さ', 10), ('ざ', 10),
+    ('た', 10), ('だ', 10),
+    -- Small vs. large characters
+    ('つ', 20), ('っ', 20),
+    ('や', 20), ('ゃ', 20),
+    ('ゆ', 20), ('ゅ', 20),
+    ('よ', 20), ('ょ', 20),
+    -- Similar sounds
+    ('じ', 25), ('ぢ', 25),
+    ('ず', 25), ('づ', 25);
+  
+-- Load the custom cost table into spellfix1
+loadCustomCostTable:
+  UPDATE reading_spellfix SET distance = 'cost_table=spellfix_cost';
