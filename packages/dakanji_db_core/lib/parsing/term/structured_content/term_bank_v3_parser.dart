@@ -143,7 +143,7 @@ Future parseTermBankV3(
     }
 
     // Parse definitions
-    List<ParsedTerm> parsedDefinitions = extractPlainTextDefinitions(jsonEntry);
+    List<ParsedTerm> parsedDefinitions = extractPlainTextDefinitions(jsonEntry[5]);
     List<int> definitionIds = [];
     for (var parsedDefinition in parsedDefinitions) {
       String text = parsedDefinition.text;

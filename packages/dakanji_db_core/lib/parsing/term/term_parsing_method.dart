@@ -8,6 +8,8 @@ enum TermParsingMethod {
   legacyStructured,
   /// A simple text object e.g. { "type": "text", "text": "..." }.
   textObject,
+  /// A term and a list of deinflection steps
+  deinflection,
   /// An image
   image,
   /// An unsupported format, like a deinflection rule.

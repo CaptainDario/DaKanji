@@ -125,9 +125,23 @@ List<ParsedTerm> extractParsedTerms(dynamic definition) {
     }
   }
 
-  // Case 3: The definition is some other format we don't handle,
-  // like a deinflection rule which is often a List.
+  // Case 3: The definition is a list. This often indicates a deinflection rule.
   if (definition is List) {
+    // Handle deinflection rules, which are typically in the format:
+    // [ "base_form", [ "rule1", "rule2", ... ] ]
+    if (definition.length == 2 &&
+        definition[0] is String &&
+        definition[1] is List) {
+      final baseForm = definition[0] as String;
+      // The second element is a list of rule strings. Join them together.
+      final rules = (definition[1] as List).join('');
+      return [
+        // The result is a simple string, so plainString is appropriate.
+        // For more detailed tracking, you could add a new enum value like 'TermParsingMethod.deinflection'.
+        ParsedTerm('$baseForm$rules', TermParsingMethod.plainString)
+      ];
+    }
+    // Fallback for other list formats we don't handle.
     return [ParsedTerm('[Deinflection Rule]', TermParsingMethod.unsupported)];
   }
 
@@ -276,4 +290,3 @@ String convertDefinitionToHtml(dynamic definition) {
   // Return a placeholder for any unknown or unsupported format.
   return '[Unsupported definition format]';
 }
-
