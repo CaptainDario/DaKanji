@@ -162,13 +162,36 @@ List<ParsedTerm> extractParsedTerms(dynamic definition) {
   ];
 }
 
+String _extractTextFromNodeWithAlt(dom.Node node) {
+  if (node is dom.Text) {
+    // For a text node, just return its text.
+    return node.text;
+  }
+  if (node is dom.Element) {
+    // For an image tag, return its 'alt' text.
+    if (node.localName == 'img') {
+      return node.attributes['alt'] ?? '';
+    }
+    // For any other element, recursively process its children
+    // and join their text with spaces.
+    return node.nodes.map(_extractTextFromNodeWithAlt).join(' ');
+  }
+  return '';
+}
+
 /// Converts a structured-content object to HTML and then extracts all plain text.
 /// This is a fallback for older dictionary formats without the 'glossary' tag.
 String _getPlainTextFromStructuredContent(dynamic content) {
   try {
     final html = getHtmlFromContent(content);
     final document = html_parser.parse(html);
-    return document.body?.text.trim() ?? '';
+    if (document.body == null) return '';
+
+    // Use our new recursive function on the document's body
+    final rawText = _extractTextFromNodeWithAlt(document.body!);
+  
+    
+    return rawText;
   } catch (e) {
     return '';
   }

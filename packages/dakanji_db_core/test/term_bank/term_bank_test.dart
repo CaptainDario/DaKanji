@@ -8,6 +8,7 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'term_bank_test_cases_1.dart';
+import 'term_bank_v3_entry_matcher.dart';
 
 void main() {
   // Group all related term bank tests together.
@@ -43,7 +44,9 @@ void main() {
         // 2. If counts match, compare the content of each entry.
         expect(
           result,
-          equals(expected),
+          orderedEquals(
+            expected.map((e) => matchesTermBankEntry(e)).toList(),
+          ),
           reason: "The entries for '$testCase' did not match the expected data.",
         );
       });

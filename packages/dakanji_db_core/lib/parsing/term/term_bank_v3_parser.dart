@@ -146,8 +146,8 @@ Future parseTermBankV3(
     List<ParsedTerm> parsedDefinitions = extractPlainTextDefinitions(jsonEntry[5]);
     List<int> definitionIds = [];
     for (var parsedDefinition in parsedDefinitions) {
-      // esc
-      String text = parsedDefinition.text.replaceAll('\n', ' ').trim();
+      // escape special characters
+      String text = parsedDefinition.text.replaceAll(RegExp(r'[\s\u00A0]+'), ' ').trim();
       // check if term is already in DB
       int definitionInsertId = allDefinitions[text] ?? ++currentMaxdefinitionId;
       if(allDefinitions[text] == null){
