@@ -134,11 +134,11 @@ List<ParsedTerm> extractParsedTerms(dynamic definition) {
         definition[1] is List) {
       final baseForm = definition[0] as String;
       // The second element is a list of rule strings. Join them together.
-      final rules = (definition[1] as List).join('');
+      final rules = (definition[1] as List).join(' → ');
       return [
         // The result is a simple string, so plainString is appropriate.
         // For more detailed tracking, you could add a new enum value like 'TermParsingMethod.deinflection'.
-        ParsedTerm('$baseForm$rules', TermParsingMethod.plainString)
+        ParsedTerm('$baseForm → $rules', TermParsingMethod.plainString)
       ];
     }
     // Fallback for other list formats we don't handle.
