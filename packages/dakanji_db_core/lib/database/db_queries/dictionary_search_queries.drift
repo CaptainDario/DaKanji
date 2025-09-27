@@ -97,6 +97,6 @@ dictionary_search_fts5_drift:
   ORDER BY
     R.match_type_priority,   -- 1. Sort by Match Type (Exact > Prefix > Other)
     R.match_column_priority, -- 2. Sort by Match Column (Kanji > Reading > Definition)
-    R.best_rank,             -- 3. Sort by FTS5 relevance
-    V.popularity DESC;       -- 4. Sort by result frequency/popularity
+    V.popularity DESC,       -- 4. Sort by result frequency/popularity
+    R.best_rank;             -- 3. Sort by FTS5 relevance
 
