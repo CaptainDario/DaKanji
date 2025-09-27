@@ -23,6 +23,7 @@ class SearchTestCase {
   final List<ExpectedSearchResult> expectedExactMatchs;
   final List<ExpectedSearchResult> expectedPrefixMatchs;
   final List<ExpectedSearchResult> expectedTokenMatchs;
+  final List<ExpectedSearchResult> expectedFuzzyMatchs;
   final List<ExpectedSearchResult> expectedWildcardMatchs;
 
   const SearchTestCase({
@@ -31,6 +32,7 @@ class SearchTestCase {
     this.expectedExactMatchs = const [],
     this.expectedPrefixMatchs = const [],
     this.expectedTokenMatchs = const [],
+    this.expectedFuzzyMatchs = const [],
     this.expectedWildcardMatchs = const [],
     this.isFuture = false,
     this.expectOrdered = false,

@@ -73,6 +73,10 @@ void main() async {
           // Assert Token Matches
           final tokenMatchers = testCase.expectedTokenMatchs.map(matchesSearchResult).toList();
           expect(results.tokenMatchs, orderingMatcher(tokenMatchers), reason: "TokenMatches for query '${testCase.query}' did not match.");
+
+          // Assert Fuzzy Matches
+          final fuzzyMatchers = testCase.expectedFuzzyMatchs.map(matchesSearchResult).toList();
+          expect(results.fuzzyMatchs, orderingMatcher(fuzzyMatchers), reason: "FuzzyMatches for query '${testCase.query}' did not match.");
           
           // Assert Wildcard Matches
           final wildcardMatchers = testCase.expectedWildcardMatchs.map(matchesSearchResult).toList();
