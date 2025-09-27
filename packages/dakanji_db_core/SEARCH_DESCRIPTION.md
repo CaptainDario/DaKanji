@@ -47,5 +47,6 @@
    1. Kanji
    2. Reading
    3. Definition
-3. Sort by fts5 relevance
+3. Except exact match: Sort by length difference of search term and match
 4. Sort by result frequency
+5. Sort by fts5 relevance
