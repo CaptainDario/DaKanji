@@ -12,6 +12,7 @@ dictionary_search_fts5_drift:
         TB3T.id as term_bank_id,
         rank,
         TT.term as matched_text,
+        highlight(term_fts, 0, '', '') AS highlighted_text,
         -- Categorize the match type
         CASE
             WHEN TT.term = :query THEN 1 -- 1. Exact Match
@@ -22,7 +23,7 @@ dictionary_search_fts5_drift:
       FROM term_fts AS FTS
       JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.term_id
       JOIN term_table AS TT ON FTS.rowid = TT.id
-      WHERE term_fts MATCH :query
+      WHERE term_fts MATCH :fts_query
       
       UNION ALL
       
@@ -31,6 +32,7 @@ dictionary_search_fts5_drift:
         TB3T.id as term_bank_id,
         rank,
         RT.reading as matched_text,
+        highlight(reading_fts, 0, '', '') AS highlighted_text,
         CASE
             WHEN RT.reading = :query THEN 1
             WHEN RT.reading LIKE :query || '%' THEN 2
@@ -40,7 +42,7 @@ dictionary_search_fts5_drift:
       FROM reading_fts AS FTS
       JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.reading_id
       JOIN reading_table AS RT ON FTS.rowid = RT.id
-      WHERE reading_fts MATCH :query
+      WHERE reading_fts MATCH :fts_query
       
       UNION ALL
       
@@ -49,6 +51,7 @@ dictionary_search_fts5_drift:
         R.term_bank_id,
         rank,
         DT.definition as matched_text,
+        highlight(definition_fts, 0, '', '') AS highlighted_text,
         CASE
             WHEN DT.definition = :query THEN 1
             WHEN DT.definition LIKE :query || '%' THEN 2
@@ -58,15 +61,16 @@ dictionary_search_fts5_drift:
       FROM definition_fts AS FTS
       JOIN term_bank_v3_definitions_relations_table AS R ON FTS.rowid = R.definition_id
       JOIN definition_table AS DT ON FTS.rowid = DT.id
-      WHERE definition_fts MATCH :query
+      WHERE definition_fts MATCH :fts_query
   ),
   FinalRankedIDs AS (
-      -- For each term, select the single best match based on our new, detailed priority system.
+      -- For each term, select the single best match based on the priority system.
       SELECT
           term_bank_id,
           rank as best_rank,
           match_type_priority,
-          match_column_priority
+          match_column_priority,
+          highlighted_text
       FROM (
           SELECT
               *,
@@ -84,6 +88,7 @@ dictionary_search_fts5_drift:
   -- Finally, join the best-ranked IDs with the main view to get the full data
   SELECT
     R.best_rank as fts5_rank,
+    highlighted_text,
     R.match_type_priority,
     R.match_column_priority,
     V.*

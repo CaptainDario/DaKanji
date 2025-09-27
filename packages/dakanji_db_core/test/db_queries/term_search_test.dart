@@ -2,25 +2,24 @@
 
 import 'dart:io';
 
-import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
-import 'package:dakanji_db_shared/paths.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search_result.dart';
+import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:language_processing/iso/iso_table.dart';
 import 'package:test/test.dart';
 import 'package:path/path.dart' as p;
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 
-
 import '../util/db_files.dart';
 import 'term_search_test_cases.dart';
 
-
-/// Custom matcher to verify the essential fields of a search result.
-/// This confirms that the correct items are returned. (No change needed here)
+/// UPDATED: Custom matcher now verifies the new `DictionarySearchResult` object.
+/// It checks the `match` text and the nested `entry`'s term and reading.
 Matcher matchesSearchResult(ExpectedSearchResult expected) {
-  return isA<TermBankV3Entry>()
-      .having((res) => res.term, 'term', expected.term)
-      .having((res) => res.reading, 'reading', expected.reading);
+  return isA<DictionarySearchResult>()
+      .having((res) => res.match, 'match', expected.match)
+      .having((res) => res.entry.term, 'entry.term', expected.term)
+      .having((res) => res.entry.reading, 'entry.reading', expected.reading);
 }
 
 final List<SearchTestCase> testCases = [...termSearchTestCases];
@@ -61,33 +60,24 @@ void main() async {
                   ? orderedEquals(matchers)
                   : unorderedEquals(matchers);
 
-          // 3. UPDATED: Assert against the new nested structure for termMatches.
-          final expectedTerms = testCase.expectedTermMatches;
-          expect(results.termMatches.exactMatch, orderingMatcher(expectedTerms.exactMatch.map(matchesSearchResult).toList()), reason: "Term/Exact");
-          expect(results.termMatches.prefixMatch, orderingMatcher(expectedTerms.prefixMatch.map(matchesSearchResult).toList()), reason: "Term/Prefix");
-          expect(results.termMatches.tokenMatch, orderingMatcher(expectedTerms.tokenMatch.map(matchesSearchResult).toList()), reason: "Term/Token");
-          expect(results.termMatches.wildcardMatch, orderingMatcher(expectedTerms.wildcardMatch.map(matchesSearchResult).toList()), reason: "Term/Wildcard");
+          // 3. UPDATED: Assert against the new flat list structure in DictionarySearchResults.
+          
+          // Assert Exact Matches
+          final exactMatchers = testCase.expectedExactMatchs.map(matchesSearchResult).toList();
+          expect(results.exactMatchs, orderingMatcher(exactMatchers), reason: "ExactMatches for query '${testCase.query}' did not match.");
 
+          // Assert Prefix Matches
+          final prefixMatchers = testCase.expectedPrefixMatchs.map(matchesSearchResult).toList();
+          expect(results.prefixMatchs, orderingMatcher(prefixMatchers), reason: "PrefixMatches for query '${testCase.query}' did not match.");
+          
+          // Assert Token Matches
+          final tokenMatchers = testCase.expectedTokenMatchs.map(matchesSearchResult).toList();
+          expect(results.tokenMatchs, orderingMatcher(tokenMatchers), reason: "TokenMatches for query '${testCase.query}' did not match.");
+          
+          // Assert Wildcard Matches
+          final wildcardMatchers = testCase.expectedWildcardMatchs.map(matchesSearchResult).toList();
+          expect(results.wildcardMatchs, orderingMatcher(wildcardMatchers), reason: "WildcardMatches for query '${testCase.query}' did not match.");
 
-          // 4. UPDATED: Assert against the new nested structure for hiraganaTermMatches.
-          final expectedHiragana = testCase.expectedHiraganaTermMatches;
-          expect(results.hiraganaTermMatches.exactMatch, orderingMatcher(expectedHiragana.exactMatch.map(matchesSearchResult).toList()), reason: "Hiragana/Exact");
-          expect(results.hiraganaTermMatches.prefixMatch, orderingMatcher(expectedHiragana.prefixMatch.map(matchesSearchResult).toList()), reason: "Hiragana/Prefix");
-          expect(results.hiraganaTermMatches.tokenMatch, orderingMatcher(expectedHiragana.tokenMatch.map(matchesSearchResult).toList()), reason: "Hiragana/Token");
-          expect(results.hiraganaTermMatches.wildcardMatch, orderingMatcher(expectedHiragana.wildcardMatch.map(matchesSearchResult).toList()), reason: "Hiragana/Wildcard");
-
-          // 5. UPDATED: Assert against the list of preprocessed term matches.
-          expect(results.preprocessedTermsMatches.length, testCase.expectedPreprocessedTermsMatches.length, reason: "Preprocessed list should have the same number of elements.");
-
-          for (var i = 0; i < testCase.expectedPreprocessedTermsMatches.length; i++) {
-            final expectedGroup = testCase.expectedPreprocessedTermsMatches[i];
-            final actualGroup = results.preprocessedTermsMatches[i];
-            
-            expect(actualGroup.exactMatch, orderingMatcher(expectedGroup.exactMatch.map(matchesSearchResult).toList()), reason: "Preprocessed[$i]/Exact");
-            expect(actualGroup.prefixMatch, orderingMatcher(expectedGroup.prefixMatch.map(matchesSearchResult).toList()), reason: "Preprocessed[$i]/Prefix");
-            expect(actualGroup.tokenMatch, orderingMatcher(expectedGroup.tokenMatch.map(matchesSearchResult).toList()), reason: "Preprocessed[$i]/Token");
-            expect(actualGroup.wildcardMatch, orderingMatcher(expectedGroup.wildcardMatch.map(matchesSearchResult).toList()), reason: "Preprocessed[$i]/Wildcard");
-          }
         },
         skip: testCase.isFuture
             ? 'This test is for a feature that is not yet implemented.'

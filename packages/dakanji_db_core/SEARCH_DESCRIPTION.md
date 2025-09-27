@@ -9,6 +9,8 @@
   * Kana Folding:
     * りんご should match リンゴ
   * More intuitive handling of 'n → ん' (convert `n'`, and `n ` to ん)
+    * If n can match ん and another kana like に
+      * Include a direct match AND a converted version with に
   * ー should match its vowel equivalent
     * ラーメン could also be found by らあめん
   * Kanji
@@ -28,7 +30,7 @@
   * At the beginning: 食べ→食べる
   * Sub matches
     * I am considering removing sub matches for japanese (is this a necessary feature?): 日→一日中
-    * eat -> to eat
+    * eat → to eat
 * Wildcard search
   * ‘?‘ - matches one character
   * ‘*‘ - matches zero to many characters
@@ -38,10 +40,9 @@
 
 1. Sort by match type
    1. Exact match: 食べる→食べる
-   2. Normalized exact match: 食べます→食べる
-   3. Prefix Match: 食べる→食べるラー油
-   4. Infix/N-gram Match: 日中 → 一日中
-   5. Fuzzy Math: りょこ → りょこう
+   2. Prefix Match: 食べる→食べるラー油
+   3. Infix/N-gram Match: 日中 → 一日中
+   4. Fuzzy Math: りょこ → りょこう
 2. Sort by match column
    1. Kanji
    2. Reading

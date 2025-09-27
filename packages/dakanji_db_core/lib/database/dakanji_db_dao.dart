@@ -36,30 +36,28 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
     assert (languages.isNotEmpty);
     List<String> langs = languages.map((e) => e.name).toList();
 
-    List<TermBankV3Entry> termExactMatches =
-      (await db.dictionary_search_fts5_drift(term).get())
-      .map((e) => TermBankV3Entry.fromSearchTermDriftResult(e))
-      .toList();
+    List<DictionarySearchFts5DriftResult> driftResults =
+      (await db.dictionary_search_fts5_drift(term, "$term *").get());
 
-    List<TermBankV3Entry> termPrefixMatches =
-      (await db.dictionary_search_fts5_drift("$term * NOT $term").get())
-      .map((e) => TermBankV3Entry.fromSearchTermDriftResult(e))
-      .toList();
+    List<DictionarySearchResult> exactMatches = [], prefixMatches = [], tokenMatches = [];
+    for (var driftResult in driftResults) {
+      DictionarySearchResult r = DictionarySearchResult(
+        match: driftResult.highlightedText!,
+        entry: TermBankV3Entry.fromSearchTermDriftResult(driftResult)
+      );
+
+      if(driftResult.matchTypePriority == 1) exactMatches.add(r);
+      else if(driftResult.matchTypePriority == 2) prefixMatches.add(r);
+      else if(driftResult.matchTypePriority == 3) tokenMatches.add(r);
+
+    }
 
     return DictionarySearchResults(
-      termMatches: DictionarySearchResult(
-        exactMatch: termExactMatches,
-        prefixMatch: termPrefixMatches,
-        tokenMatch: [],
-        wildcardMatch: []
-      ),
-      hiraganaTermMatches: DictionarySearchResult(
-        exactMatch: [],
-        prefixMatch: [],
-        tokenMatch: [],
-        wildcardMatch: []
-      ),
-      preprocessedTermsMatches: []
+        exactMatchs: exactMatches,
+        prefixMatchs: prefixMatches,
+        tokenMatchs: [],
+        fuzzyMatchs: [],
+        wildcardMatchs: []
     );
 
     
