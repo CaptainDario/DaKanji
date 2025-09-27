@@ -21,8 +21,8 @@ part 'term_meta_bank_v3_dao.g.dart';
 @DriftAccessor(tables: [
     TermTable, ReadingTable,
     TermMetaBankV3Table,
-    TermMetaBankV3PitchTable, TermMetaBankV3PitchTagRelationsTable, TermMetaBankV3PitchRelationsTable,
-    TermMetaBankV3IpaTable, TermMetaBankV3IpaTagRelationsTable, TermMetaBankV3IpaRelationsTable,
+    TermMetaBankV3PitchTable, TermMetaBankV3_X_PitchTagTable, TermMetaBankV3_X_PitchTable,
+    TermMetaBankV3IpaTable, TermMetaBankV3_X_IpaTagTable, TermMetaBankV3_X_IpaTable,
     TermMetaBankV3TagTable
 ])
 class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV3DaoMixin {
@@ -59,39 +59,39 @@ class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV
         ),
         // pitch
         leftOuterJoin(
-          termMetaBankV3PitchRelationsTable,
-          termMetaBankV3Table.id.equalsExp(termMetaBankV3PitchRelationsTable.termMetaId)
+          termMetaBankV3XPitchTable,
+          termMetaBankV3Table.id.equalsExp(termMetaBankV3XPitchTable.termMetaId)
         ),
         leftOuterJoin(
           termMetaBankV3PitchTable,
-          termMetaBankV3PitchRelationsTable.pitchId.equalsExp(termMetaBankV3PitchTable.id)
+          termMetaBankV3XPitchTable.pitchId.equalsExp(termMetaBankV3PitchTable.id)
         ),
         // pitch tags
         leftOuterJoin(
-          termMetaBankV3PitchTagRelationsTable,
-          termMetaBankV3PitchTable.id.equalsExp(termMetaBankV3PitchTagRelationsTable.pitchId)
+          termMetaBankV3XPitchTagTable,
+          termMetaBankV3PitchTable.id.equalsExp(termMetaBankV3XPitchTagTable.pitchId)
         ),
         leftOuterJoin(
           tagsPitch,
-          termMetaBankV3PitchTagRelationsTable.tagId.equalsExp(tagsPitch.id)
+          termMetaBankV3XPitchTagTable.tagId.equalsExp(tagsPitch.id)
         ),
         // ipa
         leftOuterJoin(
-          termMetaBankV3IpaRelationsTable,
-          termMetaBankV3Table.id.equalsExp(termMetaBankV3IpaRelationsTable.termMetaId)
+          termMetaBankV3XIpaTable,
+          termMetaBankV3Table.id.equalsExp(termMetaBankV3XIpaTable.termMetaId)
         ),
         leftOuterJoin(
           termMetaBankV3IpaTable,
-          termMetaBankV3IpaRelationsTable.ipaId.equalsExp(termMetaBankV3IpaTable.id)
+          termMetaBankV3XIpaTable.ipaId.equalsExp(termMetaBankV3IpaTable.id)
         ),
         // ipa tags
         leftOuterJoin(
-          termMetaBankV3IpaTagRelationsTable,
-          termMetaBankV3IpaTable.id.equalsExp(termMetaBankV3IpaTagRelationsTable.ipaId)
+          termMetaBankV3XIpaTagTable,
+          termMetaBankV3IpaTable.id.equalsExp(termMetaBankV3XIpaTagTable.ipaId)
         ),
         leftOuterJoin(
           tagsIpa,
-          termMetaBankV3IpaTagRelationsTable.tagId.equalsExp(tagsIpa.id)
+          termMetaBankV3XIpaTagTable.tagId.equalsExp(tagsIpa.id)
         ),
         
       ]))

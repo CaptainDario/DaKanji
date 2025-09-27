@@ -7,7 +7,8 @@ import 'package:drift/drift.dart';
 
 
 /// Contains the relationships between definition tags and terms
-class TermBankV3DefinitionTagRelationsTable extends Table {
+// ignore: camel_case_types
+class TermBankV3_X_DefinitionTagTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -19,7 +20,8 @@ class TermBankV3DefinitionTagRelationsTable extends Table {
 }
 
 /// Contains the relationships between rule identifiers and terms
-class TermBankV3RuleIdentifierRelationsTable extends Table {
+// ignore: camel_case_types
+class TermBankV3_X_RuleIdentifierTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -31,7 +33,8 @@ class TermBankV3RuleIdentifierRelationsTable extends Table {
 }
 
 /// Contains the relationships between terms and definitions
-class TermBankV3DefinitionsRelationsTable extends Table {
+// ignore: camel_case_types
+class TermBankV3_X_DefinitionTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -43,7 +46,8 @@ class TermBankV3DefinitionsRelationsTable extends Table {
 }
 
 /// Contains the relationships between tag bank tags and terms
-class TermBankV3TagBankRelationsTable extends Table {
+// ignore: camel_case_types
+class TermBankV3_X_TagBankTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();

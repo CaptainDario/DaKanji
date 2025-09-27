@@ -18,7 +18,7 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
   // of this object.
   DaKanjiDBDao(super.db);
 
-  Future<DictionarySearchResults> searchTerm(
+  Future<DictionarySearchResults> dictionarySearch(
     String term,
     List<Iso639_1> languages,
     List<String> tags,

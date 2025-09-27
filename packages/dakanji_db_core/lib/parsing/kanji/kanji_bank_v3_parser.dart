@@ -31,16 +31,16 @@ class KanjiBankV3ParserRefs {
   List<ReadingTableCompanion> readingCompanions  = [];
   /// The currently highest id in the [ReadingTable]
   int readingId = 0;
-  /// List of [KanjiBankV3OnyomiReadingRelationsTableCompanion] that should be batch inserted
-  List<KanjiBankV3OnyomiReadingRelationsTableCompanion> kanjiOnyomiReadingRelCompanions = [];
-  /// List of [KanjiBankV3KunyomiReadingRelationsTableCompanion] that should be batch inserted
-  List<KanjiBankV3KunyomiReadingRelationsTableCompanion> kanjiKunyomiReadingRelCompanions = [];
+  /// List of [KanjiBankV3_X_OnyomiReadingTableCompanion] that should be batch inserted
+  List<KanjiBankV3_X_OnyomiReadingTableCompanion> kanjiOnyomiReadingRelCompanions = [];
+  /// List of [KanjiBankV3_X_KunyomiReadingTableCompanion] that should be batch inserted
+  List<KanjiBankV3_X_KunyomiReadingTableCompanion> kanjiKunyomiReadingRelCompanions = [];
   /// A local cache for readings. Every reading should only be looked up once
   /// in the database
   Map<String, int> readingsInDB = {};
   
-  /// List of [KanjiBankV3TagsKanjiRelationsTableCompanion] that should be batch inserted
-  List<KanjiBankV3TagsKanjiRelationsTableCompanion> tagRelCompanions = [];
+  /// List of [KanjiBankV3_X_TagBankV3TableCompanion] that should be batch inserted
+  List<KanjiBankV3_X_TagBankV3TableCompanion> tagRelCompanions = [];
   /// The currently highest id in the [KanjiBankV3TagsKanjiRelationsTableData]
   int tagId = 0;
   /// A local cache for tags. Every tag should only be looked up once
@@ -51,8 +51,8 @@ class KanjiBankV3ParserRefs {
   List<DefinitionTableCompanion> definitionsCompanions  = [];
   /// The currently highest id in the [DefinitionTable]
   int definitionId = 0;
-  /// List of [KanjiBankV3DefinitionssKanjiRelationsTableCompanion] that should be batch inserted
-  List<KanjiBankV3DefinitionsKanjiRelationsTableCompanion> definitionRelCompanions = [];
+  /// List of [KanjiBankV3_X_DefinitionTableCompanion] that should be batch inserted
+  List<KanjiBankV3_X_DefinitionTableCompanion> definitionRelCompanions = [];
   /// A local cache for definitions. Every definition should only be looked up once
   /// in the database
   Map<String, int> definitionsInDB = {};
@@ -69,8 +69,8 @@ class KanjiBankV3ParserRefs {
   int statNamesId = 0;
   /// The currently highest id in the [KanjiBankV3StatNamesTable]
   int statValuesId = 0;
-  /// List of [KanjiBankV3StatKanjiRelationsTableCompanion] that should be batch inserted
-  List<KanjiBankV3StatKanjiRelationsTableCompanion> statValueRelCompanions = [];
+  /// List of [KanjiBankV3_X_KanjiBankV3StatsTableCompanion] that should be batch inserted
+  List<KanjiBankV3_X_KanjiBankV3StatsTableCompanion> statValueRelCompanions = [];
   /// A local cache for stat names. Every stat name should only be looked up
   /// once in the database
   Map<String, int> statNamesInDB = {};
@@ -145,18 +145,18 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
     batch.insertAll(db.kanjiBankV3Table, refs.kanjiBankCompanions,);
 
     batch.insertAll(db.readingTable, refs.readingCompanions,);
-    batch.insertAll(db.kanjiBankV3KunyomiReadingRelationsTable, refs.kanjiKunyomiReadingRelCompanions,);
-    batch.insertAll(db.kanjiBankV3OnyomiReadingRelationsTable, refs.kanjiOnyomiReadingRelCompanions,);
+    batch.insertAll(db.kanjiBankV3XKunyomiReadingTable, refs.kanjiKunyomiReadingRelCompanions,);
+    batch.insertAll(db.kanjiBankV3XOnyomiReadingTable, refs.kanjiOnyomiReadingRelCompanions,);
 
-    batch.insertAll(db.kanjiBankV3TagsKanjiRelationsTable, refs.tagRelCompanions,);
+    batch.insertAll(db.kanjiBankV3XTagBankV3Table, refs.tagRelCompanions,);
 
     batch.insertAll(db.definitionTable, refs.definitionsCompanions,);
-    batch.insertAll(db.kanjiBankV3DefinitionsKanjiRelationsTable, refs.definitionRelCompanions,);
+    batch.insertAll(db.kanjiBankV3XDefinitionTable, refs.definitionRelCompanions,);
     
     batch.insertAll(db.kanjiBankV3StatsTable, refs.statCompanions,);
     batch.insertAll(db.kanjiBankV3StatValuesTable, refs.statValuesCompanions,);
     batch.insertAll(db.kanjiBankV3StatNamesTable, refs.statNamesCompanions,);
-    batch.insertAll(db.kanjiBankV3StatKanjiRelationsTable, refs.statValueRelCompanions,);
+    batch.insertAll(db.kanjiBankV3XKanjiBankV3StatsTable, refs.statValueRelCompanions,);
 
   });
   print("Adding to DaKanjiDB took ${s.elapsedMilliseconds}ms");
@@ -204,7 +204,7 @@ Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserRefs refs, DaKanjiD
         ));
       }
       
-      refs.kanjiOnyomiReadingRelCompanions.add(KanjiBankV3OnyomiReadingRelationsTableCompanion(
+      refs.kanjiOnyomiReadingRelCompanions.add(KanjiBankV3_X_OnyomiReadingTableCompanion(
         kanjiId: Value(refs.kanjiBankId), onyomiReadingId: Value(refs.readingId)
       ));
     
@@ -229,7 +229,7 @@ Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserRefs refs, DaKanj
           id: Value(refs.readingId), reading: Value(kunyomi)
         ));
       }
-      refs.kanjiKunyomiReadingRelCompanions.add(KanjiBankV3KunyomiReadingRelationsTableCompanion(
+      refs.kanjiKunyomiReadingRelCompanions.add(KanjiBankV3_X_KunyomiReadingTableCompanion(
         kanjiId: Value(refs.kanjiBankId), kunyomiReadingId: Value(refs.readingId)
       ));
     
@@ -248,7 +248,7 @@ Future<void> parseTag(String jsonTag, KanjiBankV3ParserRefs refs, DaKanjiDB db) 
       
       int tagInsertId = refs.tagsInDB[tag]!;
 
-      refs.tagRelCompanions.add(KanjiBankV3TagsKanjiRelationsTableCompanion(
+      refs.tagRelCompanions.add(KanjiBankV3_X_TagBankV3TableCompanion(
         kanjiId: Value(refs.kanjiBankId), tagId: Value(tagInsertId)
       ));
     
@@ -273,7 +273,7 @@ Future<void> parseDefinition(List<String> definitions, KanjiBankV3ParserRefs ref
           id: Value(definitionInsertId), definition: Value(definition)
         ));
       }
-      refs.definitionRelCompanions.add(KanjiBankV3DefinitionsKanjiRelationsTableCompanion(
+      refs.definitionRelCompanions.add(KanjiBankV3_X_DefinitionTableCompanion(
         kanjiId: Value(refs.kanjiBankId), definitionId: Value(definitionInsertId)
       ));
     
@@ -319,7 +319,7 @@ Future<void> parseStats(Map<String, String> stats, KanjiBankV3ParserRefs refs, D
         statNameId: Value(statNameInsertId),
         statValueId: Value(statValueInsertId),
       ));
-      refs.statValueRelCompanions.add(KanjiBankV3StatKanjiRelationsTableCompanion(
+      refs.statValueRelCompanions.add(KanjiBankV3_X_KanjiBankV3StatsTableCompanion(
         kanjiId: Value(refs.kanjiBankId),
         statId: Value(refs.statsId),
       ));

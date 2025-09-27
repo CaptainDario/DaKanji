@@ -5,7 +5,8 @@ import 'package:drift/drift.dart';
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
 
 /// Relationship table between TermMetaBank and PitchTable
-class TermMetaBankV3PitchRelationsTable extends Table {
+// ignore: camel_case_types
+class TermMetaBankV3_X_PitchTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -17,7 +18,8 @@ class TermMetaBankV3PitchRelationsTable extends Table {
 }
 
 /// Relationship table between TermMetaBank and IpaTable
-class TermMetaBankV3IpaRelationsTable extends Table {
+// ignore: camel_case_types
+class TermMetaBankV3_X_IpaTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -29,7 +31,8 @@ class TermMetaBankV3IpaRelationsTable extends Table {
 }
 
 /// Relationship table between Ipa transcription and its tags
-class TermMetaBankV3IpaTagRelationsTable extends Table {
+// ignore: camel_case_types
+class TermMetaBankV3_X_IpaTagTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -41,7 +44,8 @@ class TermMetaBankV3IpaTagRelationsTable extends Table {
 }
 
 /// Relationship table between pitch and its tags
-class TermMetaBankV3PitchTagRelationsTable extends Table {
+// ignore: camel_case_types
+class TermMetaBankV3_X_PitchTagTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();

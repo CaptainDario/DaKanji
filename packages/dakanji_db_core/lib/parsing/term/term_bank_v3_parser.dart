@@ -51,13 +51,13 @@ Future parseTermBankV3(
   Map allDefTags =
     { for (var e in await db.termBankV3Dao.getAllDefinitionTags()) e.definitionTag : e.id };
   List<TermBankV3DefinitionTagsTableCompanion> definitionTagComps = [];
-  List<TermBankV3DefinitionTagRelationsTableCompanion> definitionTagRelComps = [];
+  List<TermBankV3_X_DefinitionTagTableCompanion> definitionTagRelComps = [];
 
   int currentMaxRuleIdentifiersId = await db.termBankV3Dao.maxTermBankV3RuleIdentifierId();
   Map allRuleIdentifiers =
     { for (var e in await db.termBankV3Dao.getAllRuleIdentifiers()) e.ruleIdentifier : e.id };
   List<TermBankV3RuleIdentifierTableCompanion> ruleIdentifiersComps = [];
-  List<TermBankV3RuleIdentifierRelationsTableCompanion> ruleIdentifiersRelComps = [];
+  List<TermBankV3_X_RuleIdentifierTableCompanion> ruleIdentifiersRelComps = [];
 
   int currentMaxDefinitionJsonId = await db.termBankV3Dao.maxTermBankV3DefinitionJsonId();
   List<TermBankV3DefinitionJsonTableCompanion> termBankDefJsonComps = [];
@@ -66,12 +66,12 @@ Future parseTermBankV3(
   Map allDefinitions =
     { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id };
   List<DefinitionTableCompanion> definitionComps = [];
-  List<TermBankV3DefinitionsRelationsTableCompanion> definitionRelComps = [];
+  List<TermBankV3_X_DefinitionTableCompanion> definitionRelComps = [];
 
   // tags are parsed from the meta bank and thus are ALWAYS in the DB
   Map allTags =
     { for (var e in await db.termBankV3Dao.getAllTags()) e.name : e.id };
-  List<TermBankV3TagBankRelationsTableCompanion> tagRelComps = [];
+  List<TermBankV3_X_TagBankTableCompanion> tagRelComps = [];
 
 
   // --- parse the entires
@@ -114,7 +114,7 @@ Future parseTermBankV3(
           ));
         }
         // create relationship
-        definitionTagRelComps.add(TermBankV3DefinitionTagRelationsTableCompanion(
+        definitionTagRelComps.add(TermBankV3_X_DefinitionTagTableCompanion(
           definitionTagId: Value(defTagInsertId),
           termBankId: Value(currentMaxTermBankId)
         ));
@@ -135,7 +135,7 @@ Future parseTermBankV3(
           ));
         }
         // create relationship
-        ruleIdentifiersRelComps.add(TermBankV3RuleIdentifierRelationsTableCompanion(
+        ruleIdentifiersRelComps.add(TermBankV3_X_RuleIdentifierTableCompanion(
           ruleIdentifierId: Value(ruleIdInsertId),
           termBankId: Value(currentMaxTermBankId)
         ));
@@ -159,7 +159,7 @@ Future parseTermBankV3(
       }
       definitionIds.add(definitionInsertId);
       // create relationship
-      definitionRelComps.add(TermBankV3DefinitionsRelationsTableCompanion(
+      definitionRelComps.add(TermBankV3_X_DefinitionTableCompanion(
         definitionId: Value(definitionInsertId),
         termBankId: Value(currentMaxTermBankId)
       ));
@@ -178,7 +178,7 @@ Future parseTermBankV3(
     if(jsonEntry[7] != ""){
       for (var tag in jsonEntry[7].split(" ")) {
         // create relationship
-        tagRelComps.add(TermBankV3TagBankRelationsTableCompanion(
+        tagRelComps.add(TermBankV3_X_TagBankTableCompanion(
           tagBankId: Value(allTags[tag]),
           termBankId: Value(currentMaxTermBankId)
         ));
@@ -206,15 +206,15 @@ Future parseTermBankV3(
     batch.insertAll(db.termBankV3DefinitionJsonTable, termBankDefJsonComps);
 
     batch.insertAll(db.termBankV3DefinitionTagsTable, definitionTagComps);
-    batch.insertAll(db.termBankV3DefinitionTagRelationsTable, definitionTagRelComps);
+    batch.insertAll(db.termBankV3XDefinitionTagTable, definitionTagRelComps);
 
     batch.insertAll(db.termBankV3RuleIdentifierTable, ruleIdentifiersComps);
-    batch.insertAll(db.termBankV3RuleIdentifierRelationsTable, ruleIdentifiersRelComps);
+    batch.insertAll(db.termBankV3XRuleIdentifierTable, ruleIdentifiersRelComps);
 
     batch.insertAll(db.definitionTable, definitionComps);
-    batch.insertAll(db.termBankV3DefinitionsRelationsTable, definitionRelComps);
+    batch.insertAll(db.termBankV3XDefinitionTable, definitionRelComps);
 
-    batch.insertAll(db.termBankV3TagBankRelationsTable, tagRelComps);
+    batch.insertAll(db.termBankV3XTagBankTable, tagRelComps);
   },);
 
 }

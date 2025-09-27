@@ -10,11 +10,8 @@ part 'radical_dao.g.dart';
 
 
 
-// the _TodosDaoMixin will be created by drift. It contains all the necessary
-// fields for the tables. The <MyDatabase> type annotation is the database class
-// that should use this dao.
 @DriftAccessor(tables: [
-  RadicalsTable, RadicalKanjiRelationsTable
+  RadicalsTable, Radical_X_KanjiRelationsTable
 ])
 class RadicalDao extends DatabaseAccessor<DaKanjiDB> with _$RadicalDaoMixin {
   
@@ -30,12 +27,12 @@ class RadicalDao extends DatabaseAccessor<DaKanjiDB> with _$RadicalDaoMixin {
     final query = db.select(kanjiTable)
       .join([
         innerJoin(
-          radicalKanjiRelationsTable,
-          radicalKanjiRelationsTable.kanjiId.equalsExp(kanjiTable.id)
+          radicalXKanjiRelationsTable,
+          radicalXKanjiRelationsTable.kanjiId.equalsExp(kanjiTable.id)
         ),
         innerJoin(
           radicalsTable,
-          radicalKanjiRelationsTable.radicalId.equalsExp(radicalsTable.id)
+          radicalXKanjiRelationsTable.radicalId.equalsExp(radicalsTable.id)
         ),
       ])
       ..where(db.kanjiTable.kanji.equals(kanji));
@@ -59,12 +56,12 @@ class RadicalDao extends DatabaseAccessor<DaKanjiDB> with _$RadicalDaoMixin {
     final kanjiQuery = selectOnly(kanjiTable).join(
       [
         innerJoin(
-          radicalKanjiRelationsTable,
-          radicalKanjiRelationsTable.kanjiId.equalsExp(kanjiTable.id)
+          radicalXKanjiRelationsTable,
+          radicalXKanjiRelationsTable.kanjiId.equalsExp(kanjiTable.id)
         ),
         innerJoin(
           radicalsTable,
-          radicalKanjiRelationsTable.radicalId.equalsExp(radicalsTable.id)
+          radicalXKanjiRelationsTable.radicalId.equalsExp(radicalsTable.id)
         ),
       ],
     )

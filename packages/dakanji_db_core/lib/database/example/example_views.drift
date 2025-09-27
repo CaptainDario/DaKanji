@@ -13,7 +13,7 @@ CREATE VIEW IF NOT EXISTS example_view AS
         ETT.id AS translation_id
     FROM
         example_table AS ET
-    LEFT JOIN example_translation_relations_table AS ETRT
+    LEFT JOIN example_table_x_example_translation_table AS ETRT
         ON ETRT.example_id = ET.id
     LEFT JOIN example_translation_table AS ETT
         ON ETRT.translation_id = ETT.id

@@ -59,7 +59,7 @@ dictionary_search_fts5_drift:
         END AS match_type_priority,
         3 AS match_column_priority
       FROM definition_fts AS FTS
-      JOIN term_bank_v3_definitions_relations_table AS R ON FTS.rowid = R.definition_id
+      JOIN term_bank_v3_x_definition_table AS R ON FTS.rowid = R.definition_id
       JOIN definition_table AS DT ON FTS.rowid = DT.id
       WHERE definition_fts MATCH :fts_query
   ),

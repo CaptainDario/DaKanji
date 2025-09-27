@@ -4,7 +4,8 @@ import 'package:drift/drift.dart';
 
 
 /// Contains the relationships between examples and their translations
-class ExampleTranslationRelationsTable extends Table {
+// ignore: camel_case_types
+class ExampleTable_X_ExampleTranslationTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();

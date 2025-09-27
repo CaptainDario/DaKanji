@@ -17,10 +17,10 @@ part 'kanji_bank_v3_dao.g.dart';
 @DriftAccessor(
   tables: [
     KanjiBankV3Table,
-    KanjiBankV3KunyomiReadingRelationsTable, KanjiBankV3OnyomiReadingRelationsTable,
-    KanjiBankV3TagsKanjiRelationsTable,
-    KanjiBankV3DefinitionsKanjiRelationsTable,
-    KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
+    KanjiBankV3_X_KunyomiReadingTable, KanjiBankV3_X_OnyomiReadingTable,
+    KanjiBankV3_X_TagBankV3Table,
+    KanjiBankV3_X_DefinitionTable,
+    KanjiBankV3StatsTable, KanjiBankV3_X_KanjiBankV3StatsTable,
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable, 
   ],
 )
@@ -31,7 +31,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   KanjiBankV3Dao(super.db);
   
 
-  /// Returns all kanji entries that match contain any of the given Kanji
+  /// Returns all kanji entries that 
   Future<List<KanjiBankV3Entry>?> getKanjiBankEntriesFromKanji(String kanji) async {
 
     List<KanjiBankV3Entry> searchResults =

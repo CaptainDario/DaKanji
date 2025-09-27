@@ -51,7 +51,7 @@ void main() async {
         testCase.description,
         () async {
           // 1. Perform the search.
-          final results = await db.daKanjiDBDao.searchTerm(
+          final results = await db.daKanjiDBDao.dictionarySearch(
             testCase.query,
             [Iso639_1.en],
             <String>[],

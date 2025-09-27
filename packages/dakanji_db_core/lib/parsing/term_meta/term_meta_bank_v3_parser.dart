@@ -48,12 +48,12 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
   List<TermMetaBankV3TagTableCompanion> termMetaBankV3TagTableComps = [];
 
   List<TermMetaBankV3IpaTableCompanion> termMetaBankIpaComps = [];
-  List<TermMetaBankV3IpaTagRelationsTableCompanion> termMetaBankIpaTagRelsComps = [];
-  List<TermMetaBankV3IpaRelationsTableCompanion> termMetaBankIpaRelsComps = [];
+  List<TermMetaBankV3_X_IpaTagTableCompanion> termMetaBankIpaTagRelsComps = [];
+  List<TermMetaBankV3_X_IpaTableCompanion> termMetaBankIpaRelsComps = [];
 
   List<TermMetaBankV3PitchTableCompanion> termMetaBankPitchComps = [];
-  List<TermMetaBankV3PitchTagRelationsTableCompanion> termMetaBankPitchTagRelsComps = [];
-  List<TermMetaBankV3PitchRelationsTableCompanion> termMetaBankPitchRelsComps = [];
+  List<TermMetaBankV3_X_PitchTagTableCompanion> termMetaBankPitchTagRelsComps = [];
+  List<TermMetaBankV3_X_PitchTableCompanion> termMetaBankPitchRelsComps = [];
 
   // parse the entires
   for (var jsonEntry in jsonList) {
@@ -133,7 +133,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
             nasal: Value(pitch["nasal"]),
             devoice: Value(pitch["devoice"]),
           ));
-          termMetaBankPitchRelsComps.add(TermMetaBankV3PitchRelationsTableCompanion(
+          termMetaBankPitchRelsComps.add(TermMetaBankV3_X_PitchTableCompanion(
             pitchId: Value(pitchInsertId),
             termMetaId: Value(currentMaxTermMetaId),
           ));
@@ -146,7 +146,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
                 id: Value(tagInsertId), tag: Value(tag)
               ));
             }
-            termMetaBankPitchTagRelsComps.add(TermMetaBankV3PitchTagRelationsTableCompanion(
+            termMetaBankPitchTagRelsComps.add(TermMetaBankV3_X_PitchTagTableCompanion(
               pitchId: Value(pitchInsertId),
               tagId: Value(tagInsertId)
             ));
@@ -162,7 +162,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
             id: Value(++ipaInsertId),
             ipa: Value(transcription["ipa"]),
           ));
-          termMetaBankIpaRelsComps.add(TermMetaBankV3IpaRelationsTableCompanion(
+          termMetaBankIpaRelsComps.add(TermMetaBankV3_X_IpaTableCompanion(
             ipaId: Value(ipaInsertId),
             termMetaId: Value(currentMaxTermMetaId),
           ));
@@ -175,7 +175,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
                 id: Value(tagInsertId), tag: Value(tag)
               ));
             }
-            termMetaBankIpaTagRelsComps.add(TermMetaBankV3IpaTagRelationsTableCompanion(
+            termMetaBankIpaTagRelsComps.add(TermMetaBankV3_X_IpaTagTableCompanion(
               ipaId: Value(ipaInsertId),
               tagId: Value(tagInsertId)
             ));
@@ -207,12 +207,12 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
     batch.insertAll(db.termMetaBankV3TagTable, termMetaBankV3TagTableComps);
 
     batch.insertAll(db.termMetaBankV3PitchTable, termMetaBankPitchComps);
-    batch.insertAll(db.termMetaBankV3PitchTagRelationsTable, termMetaBankPitchTagRelsComps);
-    batch.insertAll(db.termMetaBankV3PitchRelationsTable, termMetaBankPitchRelsComps);
+    batch.insertAll(db.termMetaBankV3XPitchTagTable, termMetaBankPitchTagRelsComps);
+    batch.insertAll(db.termMetaBankV3XPitchTable, termMetaBankPitchRelsComps);
 
     batch.insertAll(db.termMetaBankV3IpaTable, termMetaBankIpaComps);
-    batch.insertAll(db.termMetaBankV3IpaTagRelationsTable, termMetaBankIpaTagRelsComps);
-    batch.insertAll(db.termMetaBankV3IpaRelationsTable, termMetaBankIpaRelsComps);
+    batch.insertAll(db.termMetaBankV3XIpaTagTable, termMetaBankIpaTagRelsComps);
+    batch.insertAll(db.termMetaBankV3XIpaTable, termMetaBankIpaRelsComps);
   },);
 
 }

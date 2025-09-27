@@ -33,7 +33,7 @@ Future parseExample(Directory exampleDir, DaKanjiDB db, Mecab mecab) async {
   List<ExampleTableCompanion> exampleComps = [];
   List<LanguageCodeTableCompanion> languageCodeComps = [];
   List<ExampleTranslationTableCompanion> exampleTranslationComps = [];
-  List<ExampleTranslationRelationsTableCompanion> exampleTransRelComps = [];
+  List<ExampleTable_X_ExampleTranslationTableCompanion> exampleTransRelComps = [];
     
   // Get tokens
   String tokenized = await parseSentenceUsingMecab(jap, mecab);
@@ -64,7 +64,7 @@ Future parseExample(Directory exampleDir, DaKanjiDB db, Mecab mecab) async {
       languageCodeId: Value(allLanguageCodes[locale]!)
     ));
 
-    exampleTransRelComps.add(ExampleTranslationRelationsTableCompanion(
+    exampleTransRelComps.add(ExampleTable_X_ExampleTranslationTableCompanion(
       exampleId: Value(maxExampleId),
       translationId: Value(maxExampleTransId),
     ));
@@ -80,7 +80,7 @@ Future parseExample(Directory exampleDir, DaKanjiDB db, Mecab mecab) async {
     db.languageCodeTable.insertAll(languageCodeComps);
     db.exampleTranslationTable.insertAll(exampleTranslationComps);
 
-    db.exampleTranslationRelationsTable.insertAll(exampleTransRelComps);
+    db.exampleTableXExampleTranslationTable.insertAll(exampleTransRelComps);
 
   },);
 

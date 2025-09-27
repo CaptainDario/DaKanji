@@ -15,17 +15,14 @@ mixin _$TermMetaBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
       attachedDatabase.termMetaBankV3PitchTable;
   $TermMetaBankV3TagTableTable get termMetaBankV3TagTable =>
       attachedDatabase.termMetaBankV3TagTable;
-  $TermMetaBankV3PitchTagRelationsTableTable
-  get termMetaBankV3PitchTagRelationsTable =>
-      attachedDatabase.termMetaBankV3PitchTagRelationsTable;
-  $TermMetaBankV3PitchRelationsTableTable
-  get termMetaBankV3PitchRelationsTable =>
-      attachedDatabase.termMetaBankV3PitchRelationsTable;
+  $TermMetaBankV3_X_PitchTagTableTable get termMetaBankV3XPitchTagTable =>
+      attachedDatabase.termMetaBankV3XPitchTagTable;
+  $TermMetaBankV3_X_PitchTableTable get termMetaBankV3XPitchTable =>
+      attachedDatabase.termMetaBankV3XPitchTable;
   $TermMetaBankV3IpaTableTable get termMetaBankV3IpaTable =>
       attachedDatabase.termMetaBankV3IpaTable;
-  $TermMetaBankV3IpaTagRelationsTableTable
-  get termMetaBankV3IpaTagRelationsTable =>
-      attachedDatabase.termMetaBankV3IpaTagRelationsTable;
-  $TermMetaBankV3IpaRelationsTableTable get termMetaBankV3IpaRelationsTable =>
-      attachedDatabase.termMetaBankV3IpaRelationsTable;
+  $TermMetaBankV3_X_IpaTagTableTable get termMetaBankV3XIpaTagTable =>
+      attachedDatabase.termMetaBankV3XIpaTagTable;
+  $TermMetaBankV3_X_IpaTableTable get termMetaBankV3XIpaTable =>
+      attachedDatabase.termMetaBankV3XIpaTable;
 }

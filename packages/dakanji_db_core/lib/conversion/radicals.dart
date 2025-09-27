@@ -87,7 +87,7 @@ Future addRadicalsToDB(String radicalPath, DaKanjiDB db) async {
     RadicalsTableCompanion(id: Value(1), radical: Value("龠"), strokeCount: Value(17))
   ];
   List<KanjiTableCompanion> kanjiComps = [];
-  List<RadicalKanjiRelationsTableCompanion> radKanRelComps = [];
+  List<Radical_X_KanjiRelationsTableCompanion> radKanRelComps = [];
 
   // ids of radicals in the sqlite db
   Map<String, int> radicalIds = {
@@ -130,7 +130,7 @@ Future addRadicalsToDB(String radicalPath, DaKanjiDB db) async {
 
       if(["", " "].contains(radical)) continue;
 
-      radKanRelComps.add(RadicalKanjiRelationsTableCompanion(
+      radKanRelComps.add(Radical_X_KanjiRelationsTableCompanion(
         kanjiId: Value(maxKanjiId),
         radicalId: Value(
           (kanjiCodeLookup[radical] != null
@@ -144,7 +144,7 @@ Future addRadicalsToDB(String radicalPath, DaKanjiDB db) async {
   }
 
   await db.batch((batch) {
-    batch.insertAll(db.radicalKanjiRelationsTable, radKanRelComps);
+    batch.insertAll(db.radicalXKanjiRelationsTable, radKanRelComps);
     batch.insertAll(db.radicalsTable, radComps);
     batch.insertAll(db.kanjiTable, kanjiComps);
   });

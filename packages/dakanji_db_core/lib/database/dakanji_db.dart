@@ -59,7 +59,7 @@ part 'dakanji_db.g.dart';
     AudioTable,
     KanjiTable, TermTable, ReadingTable, DefinitionTable, LanguageCodeTable,
 
-    RadicalsTable, RadicalKanjiRelationsTable,
+    RadicalsTable, Radical_X_KanjiRelationsTable,
     KanjiVGTable,
 
     IndexTable,
@@ -67,29 +67,29 @@ part 'dakanji_db.g.dart';
     TagBankV3Table,
 
     KanjiBankV3Table,
-    KanjiBankV3KunyomiReadingRelationsTable, KanjiBankV3OnyomiReadingRelationsTable,
-    KanjiBankV3TagsKanjiRelationsTable,
-    KanjiBankV3DefinitionsKanjiRelationsTable,
-    KanjiBankV3StatsTable, KanjiBankV3StatKanjiRelationsTable,
+    KanjiBankV3_X_KunyomiReadingTable, KanjiBankV3_X_OnyomiReadingTable,
+    KanjiBankV3_X_TagBankV3Table,
+    KanjiBankV3_X_DefinitionTable,
+    KanjiBankV3StatsTable, KanjiBankV3_X_KanjiBankV3StatsTable,
     KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable,
 
     KanjiMetaBankV3Table, KanjiMetaBankV3TypeTable,
     
     TermBankV3Table,
-    TermBankV3DefinitionTagsTable, TermBankV3DefinitionTagRelationsTable,
-    TermBankV3RuleIdentifierTable, TermBankV3RuleIdentifierRelationsTable,
-    TermBankV3DefinitionsRelationsTable,
-    TermBankV3TagBankRelationsTable,
+    TermBankV3DefinitionTagsTable, TermBankV3_X_DefinitionTagTable,
+    TermBankV3RuleIdentifierTable, TermBankV3_X_RuleIdentifierTable,
+    TermBankV3_X_DefinitionTable,
+    TermBankV3_X_TagBankTable,
 
     TermMetaBankV3Table,
     TermMetaBankV3TypeTable, 
-    TermMetaBankV3PitchTable, TermMetaBankV3PitchRelationsTable, TermMetaBankV3PitchTagRelationsTable,
-    TermMetaBankV3IpaTable, TermMetaBankV3IpaRelationsTable, TermMetaBankV3IpaTagRelationsTable,
+    TermMetaBankV3PitchTable, TermMetaBankV3_X_PitchTable, TermMetaBankV3_X_PitchTagTable,
+    TermMetaBankV3IpaTable, TermMetaBankV3_X_IpaTable, TermMetaBankV3_X_IpaTagTable,
     TermMetaBankV3TagTable,
 
     ExampleTable,
     ExampleTranslationTable, ExampleTranslationTable,
-    ExampleTranslationRelationsTable,
+    ExampleTable_X_ExampleTranslationTable,
   ],
   daos: [
     DaKanjiDBDao,

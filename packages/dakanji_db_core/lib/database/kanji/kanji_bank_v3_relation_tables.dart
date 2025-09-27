@@ -8,7 +8,8 @@ import '/database/kanji/kanji_bank_v3_tables.dart';
 import '/database/tag/tag_bank_v3_tables.dart';
 
 /// Contains the relationships between readings (onyomi) and kanjis
-class KanjiBankV3OnyomiReadingRelationsTable extends Table {
+// ignore: camel_case_types
+class KanjiBankV3_X_OnyomiReadingTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -20,7 +21,8 @@ class KanjiBankV3OnyomiReadingRelationsTable extends Table {
 }
 
 /// Contains the relationships between readings (kunyomi) and kanjis
-class KanjiBankV3KunyomiReadingRelationsTable extends Table {
+// ignore: camel_case_types
+class KanjiBankV3_X_KunyomiReadingTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -32,7 +34,8 @@ class KanjiBankV3KunyomiReadingRelationsTable extends Table {
 }
 
 /// Contains the relationships between tags and kanjis
-class KanjiBankV3TagsKanjiRelationsTable extends Table {
+// ignore: camel_case_types
+class KanjiBankV3_X_TagBankV3Table extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -44,7 +47,8 @@ class KanjiBankV3TagsKanjiRelationsTable extends Table {
 }
 
 /// Contains the relationships between definitions and kanjis
-class KanjiBankV3DefinitionsKanjiRelationsTable extends Table {
+// ignore: camel_case_types
+class KanjiBankV3_X_DefinitionTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -56,7 +60,8 @@ class KanjiBankV3DefinitionsKanjiRelationsTable extends Table {
 }
 
 /// Contains the relationships between stat values and kanjis
-class KanjiBankV3StatKanjiRelationsTable extends Table {
+// ignore: camel_case_types
+class KanjiBankV3_X_KanjiBankV3StatsTable extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
