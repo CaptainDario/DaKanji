@@ -19,7 +19,14 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS
 		'[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || TB3RIT.rule_identifier || '"'), '') || ']' AS rule_identifiers,
 		popularity,
 		-- DEFINITIONS,
-		'[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || MT.definition || '"'), '') || ']' AS definitions,
+		'[' || COALESCE(
+        GROUP_CONCAT(
+          DISTINCT '"' || MT.definition || '"'
+          ORDER BY j.key
+        ),
+        ''
+      ) || ']' AS definitions,
+		definition_order,
 		sequence_number,
 		-- TAG
 		'[' || COALESCE(GROUP_CONCAT(DISTINCT json_object(
@@ -33,31 +40,22 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS
 	FROM
 		term_bank_v3_table AS TB3T
 	-- get all terms
-	LEFT JOIN term_table as TT
-		ON TB3T.term_id = TT.id
+	LEFT JOIN term_table as TT ON TB3T.term_id = TT.id
 	-- get all readings
-	LEFT JOIN reading_table as RT
-		ON TB3T.reading_id = RT.id
+	LEFT JOIN reading_table as RT ON TB3T.reading_id = RT.id
 	-- get all defintion tags such as 'vt' (verb)
-	LEFT JOIN term_bank_v3_definition_tag_relations_table as TB3DTRT
-		ON TB3T.id = TB3DTRT.term_bank_id 
-	LEFT JOIN term_bank_v3_definition_tags_table as TB3DTT
-		ON TB3DTRT.definition_tag_id = TB3DTT.id
+	LEFT JOIN term_bank_v3_definition_tag_relations_table as TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id 
+	LEFT JOIN term_bank_v3_definition_tags_table as TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id
 	-- get all rule identifiers such as 'v5'
-	LEFT JOIN term_bank_v3_rule_identifier_relations_table as TB3RIRT
-		ON TB3T.id = TB3RIRT.term_bank_id 
-	LEFT JOIN term_bank_v3_rule_identifier_table as TB3RIT
-		ON TB3RIRT.rule_identifier_id = TB3RIT.id
+	LEFT JOIN term_bank_v3_rule_identifier_relations_table as TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id 
+	LEFT JOIN term_bank_v3_rule_identifier_table as TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id
 	-- get the definitions
-	LEFT JOIN term_bank_v3_definitions_relations_table as TB3MRT
-		ON TB3T.id = TB3MRT.term_bank_id 
-	LEFT JOIN definition_table as MT
-		ON TB3MRT.definition_id = MT.id
+	LEFT JOIN term_bank_v3_definitions_relations_table as TB3MRT ON TB3T.id = TB3MRT.term_bank_id 
+	LEFT JOIN definition_table as MT ON TB3MRT.definition_id = MT.id
+	JOIN json_each(TB3T.definition_order) j ON j.value = TB3MRT.definition_id 
 	-- get the tags
-	LEFT JOIN term_bank_v3_tag_bank_relations_table as TB3TBRT
-		ON TB3T.id = TB3TBRT.term_bank_id 
-	LEFT JOIN tag_bank_v3_table as TagB3T
-		ON TB3TBRT.tag_bank_id = TagB3T.id
-	GROUP BY
-		TB3T.id
+	LEFT JOIN term_bank_v3_tag_bank_relations_table as TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id 
+	LEFT JOIN tag_bank_v3_table as TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id
+	
+	GROUP BY TB3T.id
 	;

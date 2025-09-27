@@ -11,7 +11,7 @@ import 'package:path/path.dart' as p;
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 
 import '../util/db_files.dart';
-import 'term_search_test_cases.dart';
+import 'dictionary_search_test_cases.dart';
 
 /// UPDATED: Custom matcher that verifies a `DictionarySearchResult` object.
 ///

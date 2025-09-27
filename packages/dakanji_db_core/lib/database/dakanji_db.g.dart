@@ -3874,6 +3874,7 @@ class TermBankV3SearchViewData extends DataClass {
   final String ruleIdentifiers;
   final int popularity;
   final String definitions;
+  final Object? definitionOrder;
   final int sequenceNumber;
   final String tags;
   const TermBankV3SearchViewData({
@@ -3884,6 +3885,7 @@ class TermBankV3SearchViewData extends DataClass {
     required this.ruleIdentifiers,
     required this.popularity,
     required this.definitions,
+    this.definitionOrder,
     required this.sequenceNumber,
     required this.tags,
   });
@@ -3900,6 +3902,7 @@ class TermBankV3SearchViewData extends DataClass {
       ruleIdentifiers: serializer.fromJson<String>(json['rule_identifiers']),
       popularity: serializer.fromJson<int>(json['popularity']),
       definitions: serializer.fromJson<String>(json['definitions']),
+      definitionOrder: serializer.fromJson<Object?>(json['definition_order']),
       sequenceNumber: serializer.fromJson<int>(json['sequence_number']),
       tags: serializer.fromJson<String>(json['tags']),
     );
@@ -3915,6 +3918,7 @@ class TermBankV3SearchViewData extends DataClass {
       'rule_identifiers': serializer.toJson<String>(ruleIdentifiers),
       'popularity': serializer.toJson<int>(popularity),
       'definitions': serializer.toJson<String>(definitions),
+      'definition_order': serializer.toJson<Object?>(definitionOrder),
       'sequence_number': serializer.toJson<int>(sequenceNumber),
       'tags': serializer.toJson<String>(tags),
     };
@@ -3928,6 +3932,7 @@ class TermBankV3SearchViewData extends DataClass {
     String? ruleIdentifiers,
     int? popularity,
     String? definitions,
+    Value<Object?> definitionOrder = const Value.absent(),
     int? sequenceNumber,
     String? tags,
   }) => TermBankV3SearchViewData(
@@ -3938,6 +3943,9 @@ class TermBankV3SearchViewData extends DataClass {
     ruleIdentifiers: ruleIdentifiers ?? this.ruleIdentifiers,
     popularity: popularity ?? this.popularity,
     definitions: definitions ?? this.definitions,
+    definitionOrder: definitionOrder.present
+        ? definitionOrder.value
+        : this.definitionOrder,
     sequenceNumber: sequenceNumber ?? this.sequenceNumber,
     tags: tags ?? this.tags,
   );
@@ -3951,6 +3959,7 @@ class TermBankV3SearchViewData extends DataClass {
           ..write('ruleIdentifiers: $ruleIdentifiers, ')
           ..write('popularity: $popularity, ')
           ..write('definitions: $definitions, ')
+          ..write('definitionOrder: $definitionOrder, ')
           ..write('sequenceNumber: $sequenceNumber, ')
           ..write('tags: $tags')
           ..write(')'))
@@ -3966,6 +3975,7 @@ class TermBankV3SearchViewData extends DataClass {
     ruleIdentifiers,
     popularity,
     definitions,
+    definitionOrder,
     sequenceNumber,
     tags,
   );
@@ -3980,6 +3990,7 @@ class TermBankV3SearchViewData extends DataClass {
           other.ruleIdentifiers == this.ruleIdentifiers &&
           other.popularity == this.popularity &&
           other.definitions == this.definitions &&
+          other.definitionOrder == this.definitionOrder &&
           other.sequenceNumber == this.sequenceNumber &&
           other.tags == this.tags);
 }
@@ -4000,6 +4011,7 @@ class TermBankV3SearchView
     ruleIdentifiers,
     popularity,
     definitions,
+    definitionOrder,
     sequenceNumber,
     tags,
   ];
@@ -4010,7 +4022,7 @@ class TermBankV3SearchView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS SELECT TB3T.id, term, reading, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3DTT.definition_tag || \'"\'), \'\') || \']\' AS definition_tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3RIT.rule_identifier || \'"\'), \'\') || \']\' AS rule_identifiers, popularity, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || MT.definition || \'"\'), \'\') || \']\' AS definitions, sequence_number, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', TagB3T.id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score)), \'\') || \']\' AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_definition_tag_relations_table AS TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id LEFT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id LEFT JOIN term_bank_v3_rule_identifier_relations_table AS TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id LEFT JOIN term_bank_v3_rule_identifier_table AS TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id LEFT JOIN term_bank_v3_definitions_relations_table AS TB3MRT ON TB3T.id = TB3MRT.term_bank_id LEFT JOIN definition_table AS MT ON TB3MRT.definition_id = MT.id LEFT JOIN term_bank_v3_tag_bank_relations_table AS TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id LEFT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id GROUP BY TB3T.id',
+        'CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS SELECT TB3T.id, term, reading, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3DTT.definition_tag || \'"\'), \'\') || \']\' AS definition_tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3RIT.rule_identifier || \'"\'), \'\') || \']\' AS rule_identifiers, popularity, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || MT.definition || \'"\' ORDER BY j."key"), \'\') || \']\' AS definitions, definition_order, sequence_number, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', TagB3T.id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score)), \'\') || \']\' AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_definition_tag_relations_table AS TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id LEFT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id LEFT JOIN term_bank_v3_rule_identifier_relations_table AS TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id LEFT JOIN term_bank_v3_rule_identifier_table AS TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id LEFT JOIN term_bank_v3_definitions_relations_table AS TB3MRT ON TB3T.id = TB3MRT.term_bank_id LEFT JOIN definition_table AS MT ON TB3MRT.definition_id = MT.id JOIN json_each(TB3T.definition_order)AS j ON j.value = TB3MRT.definition_id LEFT JOIN term_bank_v3_tag_bank_relations_table AS TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id LEFT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id GROUP BY TB3T.id',
   };
   @override
   TermBankV3SearchView get asDslTable => this;
@@ -4049,6 +4061,12 @@ class TermBankV3SearchView
         DriftSqlType.string,
         data['${effectivePrefix}definitions'],
       )!,
+      definitionOrder: $TermBankV3TableTable.$converterdefinitionOrder.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}definition_order'],
+        )!,
+      ),
       sequenceNumber: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}sequence_number'],
@@ -4102,6 +4120,13 @@ class TermBankV3SearchView
     false,
     type: DriftSqlType.string,
   );
+  late final GeneratedColumnWithTypeConverter<Object?, String> definitionOrder =
+      GeneratedColumn<String>(
+        'definition_order',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+      ).withConverter<Object?>($TermBankV3TableTable.$converterdefinitionOrder);
   late final GeneratedColumn<int> sequenceNumber = GeneratedColumn<int>(
     'sequence_number',
     aliasedName,
@@ -14596,7 +14621,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     String ftsQuery,
   ) {
     return customSelect(
-      'WITH RankedIDs AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, highlight(term_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE term_fts MATCH ?2 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, highlight(reading_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE reading_fts MATCH ?2 UNION ALL SELECT R.term_bank_id, rank, DT.definition AS matched_text, highlight(definition_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority FROM definition_fts AS FTS JOIN term_bank_v3_definitions_relations_table AS R ON FTS."rowid" = R.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE definition_fts MATCH ?2), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, highlighted_text FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, highlighted_text, R.match_type_priority, R.match_column_priority, V.* FROM term_bank_v3_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, R.best_rank, V.popularity DESC',
+      'WITH RankedIDs AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, highlight(term_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE term_fts MATCH ?2 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, highlight(reading_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE reading_fts MATCH ?2 UNION ALL SELECT R.term_bank_id, rank, DT.definition AS matched_text, highlight(definition_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority FROM definition_fts AS FTS JOIN term_bank_v3_definitions_relations_table AS R ON FTS."rowid" = R.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE definition_fts MATCH ?2), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, highlighted_text FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, highlighted_text, R.match_type_priority, R.match_column_priority, V.* FROM term_bank_v3_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, V.popularity DESC, R.best_rank',
       variables: [Variable<String>(query), Variable<String>(ftsQuery)],
       readsFrom: {
         termBankV3Table,
@@ -14627,6 +14652,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         ruleIdentifiers: row.read<String>('rule_identifiers'),
         popularity: row.read<int>('popularity'),
         definitions: row.read<String>('definitions'),
+        definitionOrder: $TermBankV3TableTable.$converterdefinitionOrder
+            .fromSql(row.read<String>('definition_order')),
         sequenceNumber: row.read<int>('sequence_number'),
         tags: row.read<String>('tags'),
       ),
@@ -14635,7 +14662,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
 
   Selectable<GetMbSizesDriftResult> get_mb_sizes_drift() {
     return customSelect(
-      'SELECT name, sum(pgsize) AS bytes, printf(\'%.2f MB\', CAST(sum(pgsize) AS REAL) /(1024 * 1024)) AS megabytes FROM dbstat GROUP BY name ORDER BY bytes DESC',
+      'SELECT name, sum(pgsize) AS bytes, format(\'%.2f MB\', CAST(sum(pgsize) AS REAL) /(1024 * 1024)) AS megabytes FROM dbstat GROUP BY name ORDER BY bytes DESC',
       variables: [],
       readsFrom: {},
     ).map(
@@ -33985,6 +34012,7 @@ class DictionarySearchFts5DriftResult {
   final String ruleIdentifiers;
   final int popularity;
   final String definitions;
+  final Object? definitionOrder;
   final int sequenceNumber;
   final String tags;
   DictionarySearchFts5DriftResult({
@@ -33999,6 +34027,7 @@ class DictionarySearchFts5DriftResult {
     required this.ruleIdentifiers,
     required this.popularity,
     required this.definitions,
+    required this.definitionOrder,
     required this.sequenceNumber,
     required this.tags,
   });
