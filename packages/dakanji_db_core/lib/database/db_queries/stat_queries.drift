@@ -4,7 +4,7 @@ get_mb_sizes_drift:
     SELECT
         name,
         sum(pgsize) AS bytes,
-        printf('%.2f MB', cast(sum(pgsize) AS REAL) / (1024 * 1024)) AS megabytes
+        format('%.2f MB', cast(sum(pgsize) AS REAL) / (1024 * 1024)) AS megabytes
     FROM dbstat
     GROUP BY name
     ORDER BY bytes DESC;
