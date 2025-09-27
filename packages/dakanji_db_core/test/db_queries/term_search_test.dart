@@ -13,13 +13,17 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import '../util/db_files.dart';
 import 'term_search_test_cases.dart';
 
-/// UPDATED: Custom matcher now verifies the new `DictionarySearchResult` object.
-/// It checks the `match` text and the nested `entry`'s term and reading.
+/// UPDATED: Custom matcher that verifies a `DictionarySearchResult` object.
+///
+/// It checks the `match` text and the nested `entry`'s term, reading,
+/// and the simple `List<String>` of definitions.
 Matcher matchesSearchResult(ExpectedSearchResult expected) {
   return isA<DictionarySearchResult>()
       .having((res) => res.match, 'match', expected.match)
       .having((res) => res.entry.term, 'entry.term', expected.term)
-      .having((res) => res.entry.reading, 'entry.reading', expected.reading);
+      .having((res) => res.entry.reading, 'entry.reading', expected.reading)
+      // This is the corrected line, using your provided structure.
+      .having((res) => res.entry.definitions, 'entry.definitions', orderedEquals(expected.definitions));
 }
 
 final List<SearchTestCase> testCases = [...termSearchTestCases];
@@ -54,38 +58,28 @@ void main() async {
             true, // Enable romaji conversion for tests that need it.
           );
 
-          // 2. Determine the ordering for the assertion.
-          final orderingMatcher = (List<Matcher> matchers) =>
-              testCase.expectOrdered
-                  ? orderedEquals(matchers)
-                  : unorderedEquals(matchers);
-
-          // 3. UPDATED: Assert against the new flat list structure in DictionarySearchResults.
+          // 2. Assert against the search result categories, always expecting an ordered list.
           
           // Assert Exact Matches
           final exactMatchers = testCase.expectedExactMatchs.map(matchesSearchResult).toList();
-          expect(results.exactMatchs, orderingMatcher(exactMatchers), reason: "ExactMatches for query '${testCase.query}' did not match.");
+          expect(results.exactMatchs, orderedEquals(exactMatchers), reason: "ExactMatches for query '${testCase.query}' did not match.");
 
           // Assert Prefix Matches
           final prefixMatchers = testCase.expectedPrefixMatchs.map(matchesSearchResult).toList();
-          expect(results.prefixMatchs, orderingMatcher(prefixMatchers), reason: "PrefixMatches for query '${testCase.query}' did not match.");
+          expect(results.prefixMatchs, orderedEquals(prefixMatchers), reason: "PrefixMatches for query '${testCase.query}' did not match.");
           
           // Assert Token Matches
           final tokenMatchers = testCase.expectedTokenMatchs.map(matchesSearchResult).toList();
-          expect(results.tokenMatchs, orderingMatcher(tokenMatchers), reason: "TokenMatches for query '${testCase.query}' did not match.");
+          expect(results.tokenMatchs, orderedEquals(tokenMatchers), reason: "TokenMatches for query '${testCase.query}' did not match.");
 
           // Assert Fuzzy Matches
           final fuzzyMatchers = testCase.expectedFuzzyMatchs.map(matchesSearchResult).toList();
-          expect(results.fuzzyMatchs, orderingMatcher(fuzzyMatchers), reason: "FuzzyMatches for query '${testCase.query}' did not match.");
+          expect(results.fuzzyMatchs, orderedEquals(fuzzyMatchers), reason: "FuzzyMatches for query '${testCase.query}' did not match.");
           
           // Assert Wildcard Matches
           final wildcardMatchers = testCase.expectedWildcardMatchs.map(matchesSearchResult).toList();
-          expect(results.wildcardMatchs, orderingMatcher(wildcardMatchers), reason: "WildcardMatches for query '${testCase.query}' did not match.");
-
+          expect(results.wildcardMatchs, orderedEquals(wildcardMatchers), reason: "WildcardMatches for query '${testCase.query}' did not match.");
         },
-        skip: testCase.isFuture
-            ? 'This test is for a feature that is not yet implemented.'
-            : false,
       );
     }
   });

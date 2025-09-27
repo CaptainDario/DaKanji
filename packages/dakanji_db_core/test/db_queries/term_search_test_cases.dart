@@ -4,16 +4,19 @@
 class ExpectedSearchResult {
   final String term;
   final String reading;
-  final String match; // The text that was matched (e.g., highlighted text)
+  final List<String> definitions;
+  /// The text that was matched (e.g., highlighted text)
+  final String match;
 
   const ExpectedSearchResult({
     required this.term,
     required this.reading,
+    required this.definitions,
     required this.match,
   });
 }
 
-/// Defines a single test case, mirroring the structure of `DictionarySearchResults`.
+/// Defines a single test case
 class SearchTestCase {
   final String description;
   final String query;
@@ -39,19 +42,23 @@ class SearchTestCase {
   });
 }
 
-// NOTE: Test case results are categorized based on their *intent*.
-// Your current DAO implementation may only return results in `exactMatchs`,
-// so tests for other types will fail until those match types are implemented.
+
 final List<SearchTestCase> termSearchTestCases = [
   // --- General Search & Sorting ---
   SearchTestCase(
     description: 'Exact match on term',
     query: "食べる",
     expectedExactMatchs: [
-      const ExpectedSearchResult(term: '食べる', reading: 'たべる', match: '食べる'),
+      const ExpectedSearchResult(
+        term: '食べる', reading: 'たべる', match: '食べる',
+        definitions: ["to eat"]
+      ),
     ],
     expectedPrefixMatchs: [
-      const ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油')
+      const ExpectedSearchResult(
+        term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油',
+        definitions: ["chili oil with garlic, etc. for eating with rice"]
+      )
     ],
     expectOrdered: true,
   ),
@@ -61,10 +68,10 @@ final List<SearchTestCase> termSearchTestCases = [
     // This is a pure prefix test, but FTS may categorize it as a token match.
     // Placing in `expectedPrefixMatchs` to align with intent.
     expectedPrefixMatchs: [
-      const ExpectedSearchResult(term: '食べる', reading: 'たべる', match: '食べ'),
-      const ExpectedSearchResult(term: '食べ物', reading: 'たべもの', match: '食べ'),
-      const ExpectedSearchResult(term: '食べます', reading: 'たべます', match: '食べ'),
-      const ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: '食べ'),
+      const ExpectedSearchResult(term: '食べる', reading: 'たべる', match: '食べ', definitions: ["to eat"]),
+      const ExpectedSearchResult(term: '食べ物', reading: 'たべもの', match: '食べ', definitions: ["food"]),
+      const ExpectedSearchResult(term: '食べます', reading: 'たべます', match: '食べ', definitions: ["to eat (polite)"]),
+      const ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: '食べ', definitions: ["chili oil with garlic, etc. for eating with rice"]),
     ],
     expectOrdered: true,
   ),
@@ -72,10 +79,10 @@ final List<SearchTestCase> termSearchTestCases = [
     description: 'Exact match on reading (hiragana query)',
     query: 'たべる',
     expectedExactMatchs: [
-      const ExpectedSearchResult(term: '食べる', reading: 'たべる', match: 'たべる'),
+      const ExpectedSearchResult(term: '食べる', reading: 'たべる', match: 'たべる', definitions: ["to eat"]),
     ],
     expectedPrefixMatchs: [
-      const ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: 'たべる')
+      const ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: 'たべる', definitions: ["chili oil with garlic, etc. for eating with rice"])
     ],
     expectOrdered: true,
   ),
@@ -84,19 +91,32 @@ final List<SearchTestCase> termSearchTestCases = [
     query: 'はやい',
     expectedExactMatchs: [
       // '速い' has higher popularity, should come before '早い'
-      const ExpectedSearchResult(term: '速い', reading: 'はやい', match: 'はやい'),
-      const ExpectedSearchResult(term: '早い', reading: 'はやい', match: 'はやい'),
+      const ExpectedSearchResult(term: '速い', reading: 'はやい', match: 'はやい', definitions: ["fast; quick; rapid"]),
+      const ExpectedSearchResult(term: '早い', reading: 'はやい', match: 'はやい', definitions: ["early; premature"]),
     ],
     expectOrdered: true,
   ),
-
+  // --- Definitions ---
+  SearchTestCase(
+    description: 'Definition ordering',
+    query: "召し上がる",
+    expectedExactMatchs: [
+      const ExpectedSearchResult(
+        term: '召し上がる',
+        reading: 'めしあがる',
+        definitions: ["to eat (honorific)", "to eat"],
+        match: '召し上がる'
+      ),
+    ],
+    expectOrdered: true,
+  ),
   // --- Input processing ---
   SearchTestCase(
     description: 'Search with Romaji input (taberu -> たべる)',
     query: 'taberu',
     expectedExactMatchs: [
-      const ExpectedSearchResult(term: '食べる', reading: 'たべる', match: 'たべる'),
-      const ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: 'たべる'),
+      const ExpectedSearchResult(term: '食べる', reading: 'たべる', match: 'たべる', definitions: ["to eat"]),
+      const ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: 'たべる', definitions: ["chili oil with garlic, etc. for eating with rice"]),
     ],
     expectOrdered: true,
   ),
@@ -104,7 +124,7 @@ final List<SearchTestCase> termSearchTestCases = [
     description: 'Search with Romaji input (kawaii -> かわいい)',
     query: 'kawaii',
     expectedExactMatchs: [
-      const ExpectedSearchResult(term: '可愛い', reading: 'かわいい', match: 'かわいい'),
+      const ExpectedSearchResult(term: '可愛い', reading: 'かわいい', match: 'かわいい', definitions: ["cute; lovely; charming"]),
     ],
   ),
 
@@ -113,9 +133,9 @@ final List<SearchTestCase> termSearchTestCases = [
     description: 'Definition match ("eat" should match "to eat")',
     query: 'eat',
     expectedTokenMatchs: [
-      const ExpectedSearchResult(term: '食べる', reading: 'たべる', match: 'eat'),
-      const ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: 'eat'),
-      const ExpectedSearchResult(term: '食べます', reading: 'たべます', match: 'eat'),
+      const ExpectedSearchResult(term: '食べる', reading: 'たべる', match: 'eat', definitions: ["to eat"]),
+      const ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: 'eat', definitions: ["chili oil with garlic, etc. for eating with rice"]),
+      const ExpectedSearchResult(term: '食べます', reading: 'たべます', match: 'eat', definitions: ["to eat (polite)"]),
     ],
   ),
 
@@ -124,26 +144,26 @@ final List<SearchTestCase> termSearchTestCases = [
     description: 'Deconjugation: polite form',
     query: '食べます',
     expectedExactMatchs: [
-      const ExpectedSearchResult(term: '食べます', reading: 'たべます', match: '食べます'),
+      const ExpectedSearchResult(term: '食べます', reading: 'たべます', match: '食べます', definitions: ["to eat (polite)"]),
     ],
     expectedTokenMatchs: [
-      const ExpectedSearchResult(term: '食べる', reading: 'たべる', match: '食べます'),
+      const ExpectedSearchResult(term: '食べる', reading: 'たべる', match: '食べます', definitions: ["to eat"]),
     ],
   ),
   SearchTestCase(
     description: 'Deconjugation: ambiguous potential form',
     query: 'いける',
     expectedTokenMatchs: [
-      const ExpectedSearchResult(term: '行く', reading: 'いく', match: 'いける'),
-      const ExpectedSearchResult(term: '生ける', reading: 'いける', match: 'いける'),
+      const ExpectedSearchResult(term: '行く', reading: 'いく', match: 'いける', definitions: ["to go"]),
+      const ExpectedSearchResult(term: '生ける', reading: 'いける', match: 'いける', definitions: ["to arrange (flowers)"]),
     ],
   ),
   SearchTestCase(
     description: 'Deconjugation: ambiguous negative form',
     query: 'ぶれない',
     expectedTokenMatchs: [
-      const ExpectedSearchResult(term: 'ぶれる', reading: 'ぶれる', match: 'ぶれない'),
-      const ExpectedSearchResult(term: '振る', reading: 'ぶる', match: 'ぶれない'),
+      const ExpectedSearchResult(term: 'ぶれる', reading: 'ぶれる', match: 'ぶれない', definitions: ["to be blurred", "to be shaky"]),
+      const ExpectedSearchResult(term: '振る', reading: 'ぶる', match: 'ぶれない', definitions: ["to wave", "to shake", "to wield"]),
     ],
   ),
 
@@ -152,7 +172,7 @@ final List<SearchTestCase> termSearchTestCases = [
     description: "Wildcard '?': single character",
     query: '?本',
     expectedWildcardMatchs: [
-      const ExpectedSearchResult(term: '日本', reading: 'にほん', match: '?本'),
+      const ExpectedSearchResult(term: '日本', reading: 'にほん', match: '?本', definitions: ["Japan"]),
     ],
   ),
   SearchTestCase(
@@ -161,15 +181,15 @@ final List<SearchTestCase> termSearchTestCases = [
     // This seems to be a test for a more complex token match, like `*本*`.
     // Categorized as wildcard based on the original description.
     expectedWildcardMatchs: [
-      const ExpectedSearchResult(term: 'ドイツ人', reading: 'どいつじん', match: '?本?'),
+      const ExpectedSearchResult(term: 'ドイツ人', reading: 'どいつじん', match: '?本?', definitions: ["German person"]),
     ],
   ),
   SearchTestCase(
     description: "Wildcard '*': zero to many characters",
     query: '*人',
     expectedWildcardMatchs: [
-      const ExpectedSearchResult(term: '日本人', reading: 'にほんじん', match: '*人'),
-      const ExpectedSearchResult(term: 'ドイツ人', reading: 'どいつじん', match: '*人'),
+      const ExpectedSearchResult(term: '日本人', reading: 'にほんじん', match: '*人', definitions: ["Japanese person"]),
+      const ExpectedSearchResult(term: 'ドイツ人', reading: 'どいつじん', match: '*人', definitions: ["German person"]),
     ],
   ),
 
@@ -179,7 +199,7 @@ final List<SearchTestCase> termSearchTestCases = [
     query: '日中',
     isFuture: true,
     expectedTokenMatchs: [
-      const ExpectedSearchResult(term: '一日中', reading: 'いちにちじゅう', match: '日中'),
+      const ExpectedSearchResult(term: '一日中', reading: 'いちにちじゅう', match: '日中', definitions: ["all day long"]),
     ],
   ),
   SearchTestCase(
@@ -188,7 +208,7 @@ final List<SearchTestCase> termSearchTestCases = [
     isFuture: true,
     // There isn't a fuzzy list in your new structure, so token is the next best place.
     expectedTokenMatchs: [
-      const ExpectedSearchResult(term: '旅行', reading: 'りょこう', match: 'りょこ'),
+      const ExpectedSearchResult(term: '旅行', reading: 'りょこう', match: 'りょこ', definitions: ["travel; trip"]),
     ],
   ),
 ];
