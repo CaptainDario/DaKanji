@@ -111,8 +111,8 @@ part 'dakanji_db.g.dart';
     'general_tables/definition_fts5_table.drift',
     'general_tables/reading_fts5_table.drift', 'general_tables/reading_spellfix_table.drift',
     'general_tables/term_fts5_table.drift',
-    'dakanji_db_stat_queries.drift',
-    'queries/search_term_queries.drift'
+    'db_queries/stat_queries.drift',
+    'db_queries/dictionary_search_queries.drift'
   }
 )
 class DaKanjiDB extends _$DaKanjiDB {
@@ -163,8 +163,8 @@ class DaKanjiDB extends _$DaKanjiDB {
     );
   }
 
-  Future<List<GetMbSizesResult>> getDbStats() async {
-    return await get_mb_sizes().get();
+  Future<List<GetMbSizesDriftResult>> getDbStats() async {
+    return await get_mb_sizes_drift().get();
   }
 
   /// **WARNING**: This closes the database and DELETES the file

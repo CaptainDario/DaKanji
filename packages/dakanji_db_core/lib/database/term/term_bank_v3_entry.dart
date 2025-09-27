@@ -77,7 +77,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
     
   }
 
-  factory TermBankV3Entry.fromSearchTermDriftResult(SearchTermDriftResult r){
+  factory TermBankV3Entry.fromSearchTermDriftResult(DictionarySearchFts5DriftResult r){
     
     return TermBankV3Entry(
       term: r.term ?? "",

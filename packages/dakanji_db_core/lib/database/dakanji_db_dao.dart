@@ -1,6 +1,7 @@
 // Package imports:
+import "package:dakanji_db_core/database/db_queries/dictionary_search_result.dart";
 import "package:dakanji_db_core/database/term/term_bank_v3_entry.dart";
-import "package:dakanji_db_core/database/queries/search_term_utils.dart";
+import "package:dakanji_db_core/database/db_queries/dictionary_search_utils.dart";
 import "package:drift/drift.dart";
 import "package:language_processing/iso/iso_table.dart";
 
@@ -17,7 +18,7 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
   // of this object.
   DaKanjiDBDao(super.db);
 
-  Future<List<TermBankV3Entry>> searchTerm(
+  Future<DictionarySearchResults> searchTerm(
     String term,
     List<Iso639_1> languages,
     List<String> tags,
@@ -35,14 +36,31 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
     assert (languages.isNotEmpty);
     List<String> langs = languages.map((e) => e.name).toList();
 
-    List<SearchTermDriftResult> t = 
-      await db.search_term_drift(term).get();
-
-    List<TermBankV3Entry> results = t
+    List<TermBankV3Entry> termExactMatches =
+      (await db.dictionary_search_fts5_drift(term).get())
       .map((e) => TermBankV3Entry.fromSearchTermDriftResult(e))
       .toList();
 
-    return results;
+    List<TermBankV3Entry> termPrefixMatches =
+      (await db.dictionary_search_fts5_drift("$term * NOT $term").get())
+      .map((e) => TermBankV3Entry.fromSearchTermDriftResult(e))
+      .toList();
+
+    return DictionarySearchResults(
+      termMatches: DictionarySearchResult(
+        exactMatch: termExactMatches,
+        prefixMatch: termPrefixMatches,
+        tokenMatch: [],
+        wildcardMatch: []
+      ),
+      hiraganaTermMatches: DictionarySearchResult(
+        exactMatch: [],
+        prefixMatch: [],
+        tokenMatch: [],
+        wildcardMatch: []
+      ),
+      preprocessedTermsMatches: []
+    );
 
     
   }

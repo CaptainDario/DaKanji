@@ -4,7 +4,7 @@ import '/database/general_tables/language_code_table.dart';
 import '/database/example/example_fts5_table.drift';
 import '/database/example/example_views.drift';
 
-example_fts_search:
+example_fts_search_drift:
     SELECT
         EDV.id,
         EDV.example_sentence,

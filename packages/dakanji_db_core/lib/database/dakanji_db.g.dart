@@ -258,7 +258,7 @@ class TermFts extends Table
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(term, content=\'term_table\', content_rowid=\'id\', tokenize=\'unicode61\')';
+      'fts5(term, content=\'term_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
 }
 
 class TermFt extends DataClass implements Insertable<TermFt> {
@@ -1351,7 +1351,7 @@ class ReadingFts extends Table
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(reading, content=\'reading_table\', content_rowid=\'id\', tokenize=\'unicode61\')';
+      'fts5(reading, content=\'reading_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
 }
 
 class ReadingFt extends DataClass implements Insertable<ReadingFt> {
@@ -1731,7 +1731,7 @@ class DefinitionFts extends Table
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(definition, content=\'definition_table\', content_rowid=\'id\', tokenize=\'unicode61\')';
+      'fts5(definition, content=\'definition_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
 }
 
 class DefinitionFt extends DataClass implements Insertable<DefinitionFt> {
@@ -4010,7 +4010,7 @@ class TermBankV3SearchView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS SELECT TB3T.id, term, reading, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || json_quote(TB3DTT.definition_tag) || \'"\'), \'\') || \']\' AS definition_tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || json_quote(TB3RIT.rule_identifier) || \'"\'), \'\') || \']\' AS rule_identifiers, popularity, COALESCE(json_group_array(DISTINCT MT.definition), json_array()) AS definitions, sequence_number, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', TagB3T.id, \'name\', json_quote(TagB3T.name), \'category\', json_quote(TagB3T.category), \'sortingOrder\', TagB3T.sorting_order, \'notes\', json_quote(TagB3T.notes), \'score\', TagB3T.score)), \'\') || \']\' AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_definition_tag_relations_table AS TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id LEFT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id LEFT JOIN term_bank_v3_rule_identifier_relations_table AS TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id LEFT JOIN term_bank_v3_rule_identifier_table AS TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id LEFT JOIN term_bank_v3_definitions_relations_table AS TB3MRT ON TB3T.id = TB3MRT.term_bank_id LEFT JOIN definition_table AS MT ON TB3MRT.definition_id = MT.id LEFT JOIN term_bank_v3_tag_bank_relations_table AS TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id LEFT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id GROUP BY TB3T.id',
+        'CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS SELECT TB3T.id, term, reading, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3DTT.definition_tag || \'"\'), \'\') || \']\' AS definition_tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3RIT.rule_identifier || \'"\'), \'\') || \']\' AS rule_identifiers, popularity, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || MT.definition || \'"\'), \'\') || \']\' AS definitions, sequence_number, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', TagB3T.id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score)), \'\') || \']\' AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_definition_tag_relations_table AS TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id LEFT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id LEFT JOIN term_bank_v3_rule_identifier_relations_table AS TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id LEFT JOIN term_bank_v3_rule_identifier_table AS TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id LEFT JOIN term_bank_v3_definitions_relations_table AS TB3MRT ON TB3T.id = TB3MRT.term_bank_id LEFT JOIN definition_table AS MT ON TB3MRT.definition_id = MT.id LEFT JOIN term_bank_v3_tag_bank_relations_table AS TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id LEFT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id GROUP BY TB3T.id',
   };
   @override
   TermBankV3SearchView get asDslTable => this;
@@ -9984,7 +9984,7 @@ class ExampleFts extends Table
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(example_sentence_tokenized, content=\'example_table\', content_rowid=\'id\', tokenize=\'unicode61\')';
+      'fts5(example_sentence_tokenized, content=\'example_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
 }
 
 class ExampleFt extends DataClass implements Insertable<ExampleFt> {
@@ -14591,9 +14591,11 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     this as DaKanjiDB,
   );
   late final ExampleDao exampleDao = ExampleDao(this as DaKanjiDB);
-  Selectable<SearchTermDriftResult> search_term_drift(String query) {
+  Selectable<DictionarySearchFts5DriftResult> dictionary_search_fts5_drift(
+    String query,
+  ) {
     return customSelect(
-      'WITH RankedIDs AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE term_fts MATCH ?1 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE reading_fts MATCH ?1 UNION ALL SELECT R.term_bank_id, rank, DT.definition AS matched_text FROM definition_fts AS FTS JOIN term_bank_v3_definitions_relations_table AS R ON FTS."rowid" = R.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE definition_fts MATCH ?1), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, matched_text FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, LENGTH(R.matched_text) - LENGTH(?1) AS length_difference, V.* FROM term_bank_v3_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.best_rank, V.popularity DESC, length_difference ASC',
+      'WITH RankedIDs AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE term_fts MATCH ?1 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE reading_fts MATCH ?1 UNION ALL SELECT R.term_bank_id, rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority FROM definition_fts AS FTS JOIN term_bank_v3_definitions_relations_table AS R ON FTS."rowid" = R.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE definition_fts MATCH ?1), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, R.match_type_priority, R.match_column_priority, V.* FROM term_bank_v3_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, R.best_rank, V.popularity DESC',
       variables: [Variable<String>(query)],
       readsFrom: {
         termBankV3Table,
@@ -14612,9 +14614,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         tagBankV3Table,
       },
     ).map(
-      (QueryRow row) => SearchTermDriftResult(
+      (QueryRow row) => DictionarySearchFts5DriftResult(
         fts5Rank: row.readNullable<double>('fts5_rank'),
-        lengthDifference: row.read<int>('length_difference'),
+        matchTypePriority: row.read<int>('match_type_priority'),
+        matchColumnPriority: row.read<int>('match_column_priority'),
         id: row.read<int>('id'),
         term: row.readNullable<String>('term'),
         reading: row.readNullable<String>('reading'),
@@ -14628,13 +14631,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     );
   }
 
-  Selectable<GetMbSizesResult> get_mb_sizes() {
+  Selectable<GetMbSizesDriftResult> get_mb_sizes_drift() {
     return customSelect(
       'SELECT name, sum(pgsize) AS bytes, printf(\'%.2f MB\', CAST(sum(pgsize) AS REAL) /(1024 * 1024)) AS megabytes FROM dbstat GROUP BY name ORDER BY bytes DESC',
       variables: [],
       readsFrom: {},
     ).map(
-      (QueryRow row) => GetMbSizesResult(
+      (QueryRow row) => GetMbSizesDriftResult(
         name: row.read<String>('name'),
         bytes: row.readNullable<int>('bytes'),
         megabytes: row.read<String>('megabytes'),
@@ -14659,7 +14662,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     );
   }
 
-  Selectable<TermBankV3SearchViewData> term_bank_v3_search(
+  Selectable<TermBankV3SearchViewData> term_bank_v3_search_drift(
     String? query,
     int limit,
     int offset,
@@ -14687,7 +14690,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ).asyncMap(termBankV3SearchView.mapFromRow);
   }
 
-  Selectable<KanjiBankV3SearchResult> kanji_bank_v3_search(String query) {
+  Selectable<KanjiBankV3SearchDriftResult> kanji_bank_v3_search_drift(
+    String query,
+  ) {
     return customSelect(
       'SELECT kanji, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || onyomi_reading || \'"\'), \'\') || \']\' AS onyomis, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || kunyomi_reading || \'"\'), \'\') || \']\' AS kunyomis, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', tag_id, \'name\', tag_name, \'category\', tag_category, \'sortingOrder\', tag_sorting_order, \'notes\', tag_notes, \'score\', tag_score)), \'\') || \']\' AS tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || definition || \'"\'), \'\') || \']\' AS definitions, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'name\', stat_name, \'value\', stat_value)), \'\') || \']\' AS stats FROM kanji_details_view WHERE kanji = ?1 GROUP BY kanji',
       variables: [Variable<String>(query)],
@@ -14707,7 +14712,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         kanjiBankV3StatValuesTable,
       },
     ).map(
-      (QueryRow row) => KanjiBankV3SearchResult(
+      (QueryRow row) => KanjiBankV3SearchDriftResult(
         kanji: row.read<String>('kanji'),
         onyomis: row.read<String>('onyomis'),
         kunyomis: row.read<String>('kunyomis'),
@@ -14718,7 +14723,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     );
   }
 
-  Selectable<ExampleFtsSearchResult> example_fts_search(
+  Selectable<ExampleFtsSearchDriftResult> example_fts_search_drift(
     String query,
     List<String?> languageCodes,
     int limit,
@@ -14746,7 +14751,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         languageCodeTable,
       },
     ).map(
-      (QueryRow row) => ExampleFtsSearchResult(
+      (QueryRow row) => ExampleFtsSearchDriftResult(
         id: row.read<int>('id'),
         exampleSentence: $ExampleTableTable.$converterexampleSentence.fromSql(
           row.read<Uint8List>('example_sentence'),
@@ -33966,9 +33971,10 @@ class $DaKanjiDBManager {
       );
 }
 
-class SearchTermDriftResult {
+class DictionarySearchFts5DriftResult {
   final double? fts5Rank;
-  final int lengthDifference;
+  final int matchTypePriority;
+  final int matchColumnPriority;
   final int id;
   final String? term;
   final String? reading;
@@ -33978,9 +33984,10 @@ class SearchTermDriftResult {
   final String definitions;
   final int sequenceNumber;
   final String tags;
-  SearchTermDriftResult({
+  DictionarySearchFts5DriftResult({
     this.fts5Rank,
-    required this.lengthDifference,
+    required this.matchTypePriority,
+    required this.matchColumnPriority,
     required this.id,
     this.term,
     this.reading,
@@ -33993,21 +34000,25 @@ class SearchTermDriftResult {
   });
 }
 
-class GetMbSizesResult {
+class GetMbSizesDriftResult {
   final String name;
   final int? bytes;
   final String megabytes;
-  GetMbSizesResult({required this.name, this.bytes, required this.megabytes});
+  GetMbSizesDriftResult({
+    required this.name,
+    this.bytes,
+    required this.megabytes,
+  });
 }
 
-class KanjiBankV3SearchResult {
+class KanjiBankV3SearchDriftResult {
   final String kanji;
   final String onyomis;
   final String kunyomis;
   final String tags;
   final String definitions;
   final String stats;
-  KanjiBankV3SearchResult({
+  KanjiBankV3SearchDriftResult({
     required this.kanji,
     required this.onyomis,
     required this.kunyomis,
@@ -34017,11 +34028,11 @@ class KanjiBankV3SearchResult {
   });
 }
 
-class ExampleFtsSearchResult {
+class ExampleFtsSearchDriftResult {
   final int id;
   final String exampleSentence;
   final String translations;
-  ExampleFtsSearchResult({
+  ExampleFtsSearchDriftResult({
     required this.id,
     required this.exampleSentence,
     required this.translations,

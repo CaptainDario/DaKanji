@@ -35,7 +35,7 @@ class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMi
   Future<List<KanjiBankV3Entry>?> getKanjiBankEntriesFromKanji(String kanji) async {
 
     List<KanjiBankV3Entry> searchResults =
-      (await db.kanji_bank_v3_search(kanji).get())
+      (await db.kanji_bank_v3_search_drift(kanji).get())
       .map((e) => KanjiBankV3Entry.fromKanjiBankV3SearchResult(e))
       .toList();
 

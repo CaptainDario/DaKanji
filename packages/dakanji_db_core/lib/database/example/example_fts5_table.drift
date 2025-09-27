@@ -5,7 +5,8 @@ CREATE VIRTUAL TABLE example_fts USING fts5(
   example_sentence_tokenized,
   content='example_table',
   content_rowid='id',
-  tokenize='unicode61'
+  tokenize='unicode61',
+  prefix='2 3'
 );
 
 -- Triggers to keep the FTS table synchronized with the content table.

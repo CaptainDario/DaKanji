@@ -34,7 +34,7 @@ class ExampleEntry with _$ExampleEntry {
   factory ExampleEntry.fromJson(dynamic json)
     => _$ExampleEntryFromJson(json);
 
-  factory ExampleEntry.fromExampleFtsSearchSql(ExampleFtsSearchResult r){
+  factory ExampleEntry.fromExampleFtsSearchSql(ExampleFtsSearchDriftResult r){
 
     return ExampleEntry(
       example: r.exampleSentence,

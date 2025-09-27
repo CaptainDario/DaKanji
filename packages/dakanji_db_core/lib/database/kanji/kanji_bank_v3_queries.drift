@@ -1,7 +1,7 @@
 import '/database/kanji/kanji_bank_v3_views.drift';
 
 
-kanji_bank_v3_search:
+kanji_bank_v3_search_drift:
     SELECT
         kanji,
         '[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || onyomi_reading || '"'), '') || ']' AS onyomis,

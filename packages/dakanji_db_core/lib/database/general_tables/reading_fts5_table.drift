@@ -5,7 +5,8 @@ CREATE VIRTUAL TABLE reading_fts USING fts5(
   reading,
   content='reading_table',
   content_rowid='id',
-  tokenize='unicode61'
+  tokenize='unicode61',
+  prefix='2 3'
 );
 
 -- Triggers to keep the FTS table synchronized with the content table.

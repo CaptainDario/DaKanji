@@ -54,7 +54,7 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
     }
 
 
-  factory KanjiBankV3Entry.fromKanjiBankV3SearchResult(KanjiBankV3SearchResult r){
+  factory KanjiBankV3Entry.fromKanjiBankV3SearchResult(KanjiBankV3SearchDriftResult r){
     return KanjiBankV3Entry(
       kanji: r.kanji,
       onyomis: List<String>.from(jsonDecode(r.onyomis)),

@@ -1,6 +1,6 @@
 
 
-get_mb_sizes:
+get_mb_sizes_drift:
     SELECT
         name,
         sum(pgsize) AS bytes,

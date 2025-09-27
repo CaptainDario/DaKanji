@@ -2,7 +2,7 @@ import 'term_bank_v3_views.drift';
 
 
 
-term_bank_v3_search:
+term_bank_v3_search_drift:
   SELECT
     *
   FROM

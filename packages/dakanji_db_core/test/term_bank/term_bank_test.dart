@@ -13,12 +13,13 @@ import 'term_bank_test_cases_2.dart';
 import 'term_bank_v3_entry_matcher.dart';
 
 
+final List testCases = [
+  (termBankTestCases1, termBankTestCaseExpectations1),
+  (termBankTestCases2, termBankTestCaseExpectations2)
+];
+
 
 void main() async {
-  final List testCases = [
-    (termBankTestCases1, termBankTestCaseExpectations1),
-    (termBankTestCases2, termBankTestCaseExpectations2)
-  ];
 
   late DaKanjiDB db;
   
@@ -35,7 +36,7 @@ void main() async {
         bool shouldIncludeFile(File file) =>
           (p.basename(file.path) == "term_bank_${testCaseIndex+1}.json" ||
           !p.basename(file.path).contains("term_bank"));
-        await partialInit(db, shouldIncludeFile); 
+        await partialInit(db, shouldIncludeFile, "term_bank_test"); 
       });
 
       // Loop through the test cases and dynamically create a test for each one.
