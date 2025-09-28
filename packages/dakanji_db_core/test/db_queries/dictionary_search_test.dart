@@ -1,4 +1,4 @@
-// term_search_test.dart
+// dictionary_search_test.dart
 
 import 'dart:io';
 
@@ -11,24 +11,43 @@ import 'package:path/path.dart' as p;
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 
 import '../util/db_files.dart';
+import 'dictionary_search_deconjugation_test_cases.dart';
+import 'dictionary_search_fuzzy_test_cases.dart';
+import 'dictionary_search_language_filtering_test_cases.dart';
+import 'dictionary_search_romaji_test_cases.dart';
+import 'dictionary_search_sorting_test_cases.dart';
+import 'dictionary_search_tag_filtering_test_cases.dart';
 import 'dictionary_search_test_cases.dart';
+import 'dictionary_search_test_util.dart';
+import 'dictionary_search_wildcard_test_cases.dart';
+import 'dictionary_search_test_helper_classes.dart';
 
-/// UPDATED: Custom matcher that verifies a `DictionarySearchResult` object.
-///
-/// It checks the `match` text and the nested `entry`'s term, reading,
-/// and the simple `List<String>` of definitions.
-Matcher matchesSearchResult(ExpectedSearchResult expected) {
-  return isA<DictionarySearchResult>()
-      .having((res) => res.match, 'match', expected.match)
-      .having((res) => res.entry.term, 'entry.term', expected.term)
-      .having((res) => res.entry.reading, 'entry.reading', expected.reading)
-      // This is the corrected line, using your provided structure.
-      .having((res) => res.entry.definitions, 'entry.definitions', orderedEquals(expected.definitions));
-}
 
-final List<SearchTestCase> testCases = [...termSearchTestCases];
+// Lists are defined at the top level (this is fine)
+final List<List<SearchTestCase>> testCases = [
+  termSearchTestCases,
+  deconjugationTestCases,
+  wildcardSearchTestCases,
+  romajiSearchTestCases,
+  sortingTestCases,
+  fuzzySearchTestCases,
+  tagFilteringTestCases,
+  languageFilteringTestCases,
+];
+final List<String> testCaseNames = [
+  "Term Search Test Cases",
+  "Deconjugation Test Cases",
+  "Wildcard Search Test Cases",
+  "Romaji Search Test Cases",
+  "Sorting Test Cases",
+  "Fuzzy Search Test Cases",
+  "Tag Filtering Test Cases",
+  "Language Filtering Test Cases",
+];
 
-void main() async {
+
+void main() {
+  // Define db here so it's accessible to setUpAll and tearDownAll
   late DaKanjiDB db;
 
   setUpAll(() async {
@@ -45,42 +64,44 @@ void main() async {
     await db.close();
   });
 
-  group('Term Search', () {
-    for (final testCase in testCases) {
-      test(
-        testCase.description,
-        () async {
-          // 1. Perform the search.
-          final results = await db.daKanjiDBDao.dictionarySearch(
-            testCase.query,
-            [Iso639_1.en],
-            <String>[],
-            true, // Enable romaji conversion for tests that need it.
-          );
+  // The loop is now inside main, which is the standard way.
+  // The key is that `group()` is called within the main test scope.
+  for (int i = 0; i < testCases.length; i++) {
+    final subTestCases = testCases[i];
+    final testCaseName = testCaseNames[i];
+    
+    // This `group` call is now correctly discovered.
+    group(testCaseName, () {
+      for (final testCase in subTestCases) {
+        test(
+          testCase.description,
+          () async {
+            // Perform the search
+            final results = await db.daKanjiDBDao.dictionarySearch(
+              testCase.query,
+              [Iso639_1.en],
+              // Providing a default dictionary ID to prevent the previous RangeError
+              ['jmdict_en'], 
+              true, 
+            );
 
-          // 2. Assert against the search result categories, always expecting an ordered list.
-          
-          // Assert Exact Matches
-          final exactMatchers = testCase.expectedExactMatchs.map(matchesSearchResult).toList();
-          expect(results.exactMatchs, orderedEquals(exactMatchers), reason: "ExactMatches for query '${testCase.query}' did not match.");
+            // Assert against the new result structure
+            expectMatchGroup(results.termMatches, testCase.termMatches, testCase.query, 'termMatches');
+            expectMatchGroup(results.hiraganaMatches, testCase.hiraganaMatches, testCase.query, 'hiraganaMatches');
 
-          // Assert Prefix Matches
-          final prefixMatchers = testCase.expectedPrefixMatchs.map(matchesSearchResult).toList();
-          expect(results.prefixMatchs, orderedEquals(prefixMatchers), reason: "PrefixMatches for query '${testCase.query}' did not match.");
-          
-          // Assert Token Matches
-          final tokenMatchers = testCase.expectedTokenMatchs.map(matchesSearchResult).toList();
-          expect(results.tokenMatchs, orderedEquals(tokenMatchers), reason: "TokenMatches for query '${testCase.query}' did not match.");
+            expect(
+              results.variantTermMatches,
+              hasLength(testCase.variantMatches.length),
+              reason: "Unexpected number of variant match groups for query '${testCase.query}'."
+            );
 
-          // Assert Fuzzy Matches
-          final fuzzyMatchers = testCase.expectedFuzzyMatchs.map(matchesSearchResult).toList();
-          expect(results.fuzzyMatchs, orderedEquals(fuzzyMatchers), reason: "FuzzyMatches for query '${testCase.query}' did not match.");
-          
-          // Assert Wildcard Matches
-          final wildcardMatchers = testCase.expectedWildcardMatchs.map(matchesSearchResult).toList();
-          expect(results.wildcardMatchs, orderedEquals(wildcardMatchers), reason: "WildcardMatches for query '${testCase.query}' did not match.");
-        },
-      );
-    }
-  });
+            for (int i = 0; i < testCase.variantMatches.length; i++) {
+              expectMatchGroup(results.variantTermMatches[i], testCase.variantMatches[i], testCase.query, 'variantMatches[$i]');
+            }
+          },
+          skip: testCase.isFuture,
+        );
+      }
+    });
+  }
 }

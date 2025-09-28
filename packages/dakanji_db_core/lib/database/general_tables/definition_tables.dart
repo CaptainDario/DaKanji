@@ -10,4 +10,6 @@ class DefinitionTable extends Table {
   /// the definition of this entry
   TextColumn get definition => text().unique()();
 
+  /// the definition toke
+
 }

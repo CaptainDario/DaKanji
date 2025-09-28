@@ -29,24 +29,29 @@
   * Exact match: 食べる→食べる
   * At the beginning: 食べ→食べる
   * Sub matches
-    * I am considering removing sub matches for japanese (is this a necessary feature?): 日→一日中
+    * 日→一日中 (not TRUE sub matches, ONLY sub-token matches)
     * eat → to eat
 * Wildcard search
   * ‘?‘ - matches one character
   * ‘*‘ - matches zero to many characters
 * Fuzzy match (also consider misspellings): りょこ→りょこう
+* Filter by languages
 
 ## Search Result Sorting
 
-1. Sort by match type
+1. Sort by matched query
+   1. Exact search term matches
+   2. Search term converted to hiragana matches
+   3. Any of the preprocessed terms matches
+2. Sort by match type
    1. Exact match: 食べる→食べる
    2. Prefix Match: 食べる→食べるラー油
-   3. Infix/N-gram Match: 日中 → 一日中
+   3. Infix/N-gram Match: 日 → 一日中
    4. Fuzzy Math: りょこ → りょこう
-2. Sort by match column
+3. Sort by match column
    1. Kanji
    2. Reading
    3. Definition
-3. Except exact match: Sort by length difference of search term and match
-4. Sort by result frequency
-5. Sort by fts5 relevance
+4. Except exact match: Sort by length difference of search term and match
+5. Sort by result frequency
+6. Sort by fts5 relevance

@@ -1,6 +1,6 @@
+import "dart:async";
 // Package imports:
 import "package:dakanji_db_core/database/db_queries/dictionary_search_result.dart";
-import "package:dakanji_db_core/database/term/term_bank_v3_entry.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search_utils.dart";
 import "package:drift/drift.dart";
 import "package:language_processing/iso/iso_table.dart";
@@ -18,7 +18,7 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
   // of this object.
   DaKanjiDBDao(super.db);
 
-  Future<DictionarySearchResults> dictionarySearch(
+  Future<DictionarySearchResult> dictionarySearch(
     String term,
     List<Iso639_1> languages,
     List<String> tags,
@@ -29,35 +29,27 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
     }
   ) async {
 
-    final (:hiraganaTerm, term: preprocessedTerm) =
-      preprocessInput(term, convertRomajiToHiragana);
+    final (:hiraganaTerm, term: preprocessedTerm) = preprocessInput(term, convertRomajiToHiragana);
 
     // check laguages are set and parse 
     assert (languages.isNotEmpty);
     List<String> langs = languages.map((e) => e.name).toList();
 
-    List<DictionarySearchFts5DriftResult> driftResults =
-      (await db.dictionary_search_fts5_drift(term, "$term *").get());
+    final results = await Future.wait([
+      db.dictionary_search_fts5_drift(term, "$term *").get(),
+      if(hiraganaTerm != null) db.dictionary_search_fts5_drift(hiraganaTerm, "$hiraganaTerm *").get()
+    ]);
 
-    List<DictionarySearchResult> exactMatches = [], prefixMatches = [], tokenMatches = [];
-    for (var driftResult in driftResults) {
-      DictionarySearchResult r = DictionarySearchResult(
-        match: driftResult.highlightedText!,
-        entry: TermBankV3Entry.fromSearchTermDriftResult(driftResult)
-      );
-
-      if(driftResult.matchTypePriority == 1) exactMatches.add(r);
-      else if(driftResult.matchTypePriority == 2) prefixMatches.add(r);
-      else if(driftResult.matchTypePriority == 3) tokenMatches.add(r);
-
-    }
-
-    return DictionarySearchResults(
-        exactMatchs: exactMatches,
-        prefixMatchs: prefixMatches,
-        tokenMatchs: [],
-        fuzzyMatchs: [],
-        wildcardMatchs: []
+    return DictionarySearchResult(
+      termMatches: SearchMatchGroup.fromDictionaryMatchList(results[0]),
+      hiraganaMatches: results.length >= 2
+        ? SearchMatchGroup.fromDictionaryMatchList(results[1])
+        : SearchMatchGroup.empty(),
+      variantTermMatches: results.length >= 3 
+        ? results.sublist(2).map(
+          (r) => SearchMatchGroup.fromDictionaryMatchList(r)
+        ).toList()
+        : []
     );
 
     
