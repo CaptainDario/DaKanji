@@ -12,7 +12,7 @@ dictionary_search_fts5_drift:
         TB3T.id as term_bank_id,
         rank,
         TT.term as matched_text,
-        highlight(term_fts, 0, '', '') AS matched_text,
+        highlight(term_fts, 0, '', '') AS highlighted_text,
         -- Categorize the match type
         CASE
             WHEN TT.term = :query THEN 1 -- 1. Exact Match
@@ -70,7 +70,8 @@ dictionary_search_fts5_drift:
           rank as best_rank,
           match_type_priority,
           match_column_priority,
-          highlighted_text
+          highlighted_text,
+          matched_text
       FROM (
           SELECT
               *,
@@ -88,6 +89,7 @@ dictionary_search_fts5_drift:
   -- Finally, join the best-ranked IDs with the main view to get the full data
   SELECT
     R.best_rank as fts5_rank,
+    matched_text,
     highlighted_text,
     R.match_type_priority,
     R.match_column_priority,
