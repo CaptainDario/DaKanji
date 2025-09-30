@@ -29,12 +29,14 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
     }
   ) async {
 
-    final (:hiraganaTerm, term: preprocessedTerm) = preprocessInput(term, convertRomajiToHiragana);
+    final (:hiraganaTerm, :termVariants) = preprocessInput(term, convertRomajiToHiragana);
+    print("$term -> $hiraganaTerm, $termVariants");
 
     // check laguages are set and parse 
     assert (languages.isNotEmpty);
     List<String> langs = languages.map((e) => e.name).toList();
 
+    // run the queries in parallel
     final results = await Future.wait([
       db.dictionary_search_fts5_drift(term, "$term *").get(),
       if(hiraganaTerm != null) db.dictionary_search_fts5_drift(hiraganaTerm, "$hiraganaTerm *").get()

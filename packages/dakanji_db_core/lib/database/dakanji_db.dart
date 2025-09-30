@@ -57,7 +57,8 @@ part 'dakanji_db.g.dart';
 @DriftDatabase(
   tables: [
     AudioTable,
-    KanjiTable, TermTable, ReadingTable, DefinitionTable, LanguageCodeTable,
+    KanjiTable, TermTable, ReadingTable,
+    DefinitionTable, TermBankV3DefinitionJsonTable, LanguageCodeTable,
 
     RadicalsTable, Radical_X_KanjiRelationsTable,
     KanjiVGTable,
@@ -88,7 +89,7 @@ part 'dakanji_db.g.dart';
     TermMetaBankV3TagTable,
 
     ExampleTable,
-    ExampleTranslationTable, ExampleTranslationTable,
+    ExampleTranslationTable,
     ExampleTable_X_ExampleTranslationTable,
   ],
   daos: [
@@ -137,8 +138,7 @@ class DaKanjiDB extends _$DaKanjiDB {
         await m.createAll();
 
         // Init spellfix
-        await populateSpellfixCost();
-        await loadCustomCostTable();
+        await populateHiraganaSpellfixCostTable();
       },
     );
   }

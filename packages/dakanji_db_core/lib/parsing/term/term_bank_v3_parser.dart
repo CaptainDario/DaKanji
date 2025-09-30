@@ -86,7 +86,8 @@ Future parseTermBankV3(
       allTerms[term] = termInsertId;
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
-        term: Value(term)
+        term: Value(term),
+        //: Value(generateSearchTokens(term))
       ));
     }
 

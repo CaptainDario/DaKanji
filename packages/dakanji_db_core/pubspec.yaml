@@ -6,39 +6,39 @@ version: 1.0.0
 resolution: workspace
 
 environment:
-  sdk: ^3.8.0
+  sdk: 3.10.0-162.1.beta
 
 # Add regular dependencies here.
 dependencies:
   path: ^1.9.1
-  drift: ^2.21.0
+  drift: ^2.28.2
   sqlite3: ^2.9.0
   sqlite3_native_assets: ^0.0.10
   archive: ^4.0.7
   tuple: ^2.0.2
   freezed_annotation: ^3.1.0
-  json_annotation: ^4.9.0
-  universal_io: ^2.2.2
-  collection: ^1.19.1
-  mecab_for_dart: ^1.1.5
-  html: ^0.15.6
-  recase: ^4.1.0
-  code_assets: ^0.19.6
-  hooks: ^0.20.1
-  disjoint_set: ^1.0.0
-  github: ^9.25.0
-  kana_kit: ^2.1.1
+  json_annotation: 4.9.0
+  universal_io: 2.2.2
+  collection: 1.19.1
+  mecab_for_dart: 1.1.5
+  html: 0.15.6
+  recase: 4.1.0
+  code_assets: ^0.19.7
+  hooks: 0.20.1
+  disjoint_set: 1.0.0
+  github: 9.25.0
+  kana_kit: 2.1.1
   language_processing:
-  fullwidth_halfwidth_converter: ^1.2.0
+  fullwidth_halfwidth_converter: 1.2.0
 
 dev_dependencies:
-  drift_dev: ^2.28.0
-  build_runner: ^2.6.0
-  import_sorter: ^4.6.0
-  freezed: ^3.2.0
-  lints: ^6.0.0
+  drift_dev: 2.28.3
+  build_runner: ^2.7.1
+  import_sorter: 4.6.0
+  freezed: 3.2.3
+  lints: 6.0.0
   test: ^1.26.0
-  json_serializable: ^6.10.0
-  dakanji_db_shared:
+  json_serializable: ^6.11.1
+  #dakanji_db_shared:
 
 #dependency_overrides:

@@ -14,8 +14,8 @@ void main() {
 
       test('Test Case ${i + 1}: input="$input", convertRomaji=$convertRomaji', () {
         final result = preprocessInput(input, convertRomaji);
-        expect(result.term, equals(expectedTerm));
         expect(result.hiraganaTerm, equals(expectedHiragana));
+        expect(result.termVariants, equals(expectedTerm));
       });
     }
   });

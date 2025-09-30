@@ -1,9 +1,10 @@
 import 'dictionary_search_test_helper_classes.dart';
 
+String descriptionPrefix = "Input processing";
 
-List<SearchTestCase> romajiSearchTestCases = [
+List<SearchTestCase> inputPreprocessingSearchTestCases = [
   SearchTestCase(
-    description: 'Search with Romaji input (taberu -> たべる)',
+    description: '$descriptionPrefix: Search with Romaji input (taberu -> たべる)',
     query: 'taberu',
     hiraganaMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -15,7 +16,7 @@ List<SearchTestCase> romajiSearchTestCases = [
     ),
   ),
   SearchTestCase(
-    description: 'Search with Romaji input (kawaii -> かわいい)',
+    description: '$descriptionPrefix: Search with Romaji input (kawaii -> かわいい)',
     query: 'kawaii',
     hiraganaMatches: const ExpectedMatchGroup(
       exactMatches: [

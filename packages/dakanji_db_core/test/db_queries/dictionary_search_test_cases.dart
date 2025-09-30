@@ -1,11 +1,13 @@
-
-
 import 'dictionary_search_test_helper_classes.dart';
 
-final List<SearchTestCase> termSearchTestCases = [
+
+
+String descriptionPrefix = "Search";
+
+final List<SearchTestCase> searchTestCases = [
   // --- General Search & Sorting ---
   SearchTestCase(
-    description: 'Exact match on term',
+    description: '$descriptionPrefix: Exact match on term',
     query: "食べる",
     termMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -23,7 +25,7 @@ final List<SearchTestCase> termSearchTestCases = [
     ),
   ),
   SearchTestCase(
-    description: 'Prefix match on term',
+    description: '$descriptionPrefix: Prefix match on term',
     query: '食べ',
     termMatches: const ExpectedMatchGroup(
       prefixMatches: [
@@ -35,7 +37,7 @@ final List<SearchTestCase> termSearchTestCases = [
     ),
   ),
   SearchTestCase(
-    description: 'Exact match on reading (hiragana query)',
+    description: '$descriptionPrefix: Exact match on reading (hiragana query)',
     query: 'たべる',
     termMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -48,7 +50,7 @@ final List<SearchTestCase> termSearchTestCases = [
   ),
   // --- Definitions ---
   SearchTestCase(
-    description: 'Definition ordering',
+    description: '$descriptionPrefix: Definition ordering',
     query: "召し上がる",
     termMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -63,7 +65,7 @@ final List<SearchTestCase> termSearchTestCases = [
 
   // --- Sub matches ---
   SearchTestCase(
-    description: 'Definition match ("eat" should match "to eat")',
+    description: '$descriptionPrefix: Definition match ("eat" should match "to eat")',
     query: 'eat',
     termMatches: const ExpectedMatchGroup(
       tokenMatches: [
@@ -77,17 +79,16 @@ final List<SearchTestCase> termSearchTestCases = [
 
   // --- Various match types using 電車 (でんしゃ) ---
   SearchTestCase(
-    description: "Comprehensive search for 'でんしゃ' that covers exact, prefix, token matches",
+    description: "$descriptionPrefix: Exact, prefix and token matches",
     query: "電車",
-
     // Expected results for the hiragana-converted query: 'でんしゃ'
-    hiraganaMatches: const ExpectedMatchGroup(
+    termMatches: const ExpectedMatchGroup(
       exactMatches: [
         ExpectedSearchResult(
           term: '電車',
           reading: 'でんしゃ',
           definitions: ['(electric) train'],
-          match: 'でんしゃ',
+          match: '電車',
         ),
       ],
       prefixMatches: [
@@ -95,7 +96,7 @@ final List<SearchTestCase> termSearchTestCases = [
           term: '電車賃',
           reading: 'でんしゃちん',
           definitions: ['train fare'],
-          match: 'でんしゃちん',
+          match: '電車賃',
         ),
       ],
       tokenMatches: [
@@ -103,7 +104,7 @@ final List<SearchTestCase> termSearchTestCases = [
           term: '満員電車',
           reading: 'まんいんでんしゃ',
           definitions: ['crowded train; packed train'],
-          match: 'まんいんでんしゃ',
+          match: '満員電車',
         ),
       ],
     ),

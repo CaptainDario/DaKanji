@@ -12,12 +12,13 @@ import 'package:fullwidth_halfwidth_converter/fullwidth_halfwidth_converter.dart
 /// true).
 /// 
 /// Returns a tuple containing:
-/// - `term`: The preprocessed term
 /// - `hiraganaTerm`: The hiragana conversion of the term if romaji conversion
 ///    was performed, otherwise null.
-({String term, String? hiraganaTerm}) preprocessInput(String input, bool convertRomajiToHiragana) {
-  // convert full-width romaji to half-width and half-width kana to full-width
-  String processedTerm = input.toFullwidth(convertKana: true);
+/// - `processedTerms`: A list of processed terms
+({String? hiraganaTerm, List<String>? termVariants}) preprocessInput(String term, bool convertRomajiToHiragana) {
+
+  // 1. convert full-width romaji to half-width and half-width kana to full-width
+  String processedTerm = term.toFullwidth(convertKana: true);
   processedTerm = processedTerm.toHalfwidth(
     convertAlphabet: true, convertNumber: true, convertSymbol: true);
 
@@ -31,11 +32,16 @@ import 'package:fullwidth_halfwidth_converter/fullwidth_halfwidth_converter.dart
     final romajiConverted = romajiToHiragana(processedTerm);
     // Only set hiraganaTerm if the conversion actually changed the string
     // AND the result contains ONLY Japanese characters
-    if (romajiConverted != processedTerm &&
-      KanaKit().isJapanese(romajiConverted)) {
+    if (romajiConverted != term && KanaKit().isJapanese(romajiConverted)) {
       hiraganaTerm = romajiConverted;
     }
   }
 
-  return (term: processedTerm, hiraganaTerm: hiraganaTerm);
+  // 4. TODO find all possible deconjugations of the hiragana term
+  List<String> termVariants = [];
+
+  return (
+    hiraganaTerm: hiraganaTerm,
+    termVariants: termVariants.isEmpty ? null : termVariants
+  );
 }

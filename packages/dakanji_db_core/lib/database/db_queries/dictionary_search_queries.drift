@@ -2,11 +2,28 @@ import '../term/term_bank_v3_views.drift';
 import '../general_tables/definition_fts5_table.drift';
 import '../general_tables/reading_fts5_table.drift';
 import '../general_tables/term_fts5_table.drift';
+import '../general_tables/reading_spellfix_table.drift';
+
 
 dictionary_search_fts5_drift:
 
   -- Use CTEs to find, categorize, and rank all matching IDs
-  WITH RankedIDs AS (
+  WITH
+  
+    SpellfixSuggestions AS (
+      SELECT
+        word,
+        distance
+      FROM reading_spellfix
+      -- Provide the user's query to the 'word' column to get suggestions
+      WHERE word MATCH :query 
+        AND distance > 0      -- Exclude exact matches from fuzzy results
+        AND distance < 300    -- Keep your threshold
+      ORDER BY distance
+      LIMIT 10
+    ),
+
+  RankedIDs AS (
       -- Find matches in 'term' (Kanji) - Column Priority 1
       SELECT
         TB3T.id as term_bank_id,
@@ -24,9 +41,9 @@ dictionary_search_fts5_drift:
       JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.term_id
       JOIN term_table AS TT ON FTS.rowid = TT.id
       WHERE term_fts MATCH :fts_query
-      
+
       UNION ALL
-      
+
       -- Find matches in 'reading' - Column Priority 2
       SELECT
         TB3T.id as term_bank_id,
@@ -43,9 +60,24 @@ dictionary_search_fts5_drift:
       JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.reading_id
       JOIN reading_table AS RT ON FTS.rowid = RT.id
       WHERE reading_fts MATCH :fts_query
-      
+
       UNION ALL
-      
+
+      -- This has the lowest match type priority (4)
+      SELECT
+        TB3T.id as term_bank_id,
+        S.distance as rank, -- Use spellfix distance for ranking
+        RT.reading as matched_text,
+        RT.reading as highlighted_text, -- No FTS highlight available for spellfix
+        4 AS match_type_priority, -- 4. Fuzzy Match
+        2 AS match_column_priority -- This is a 'reading' column match
+      FROM SpellfixSuggestions AS S
+      -- Join suggestions with the actual reading table to find valid entries
+      JOIN reading_table AS RT ON S.word = RT.reading
+      JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id
+
+      UNION ALL
+
       -- Find matches in 'definition' - Column Priority 3
       SELECT
         R.term_bank_id,
@@ -63,6 +95,7 @@ dictionary_search_fts5_drift:
       JOIN definition_table AS DT ON FTS.rowid = DT.id
       WHERE definition_fts MATCH :fts_query
   ),
+
   FinalRankedIDs AS (
       -- For each term, select the single best match based on the priority system.
       SELECT
@@ -76,16 +109,17 @@ dictionary_search_fts5_drift:
           SELECT
               *,
               ROW_NUMBER() OVER(
-                PARTITION BY term_bank_id 
-                ORDER BY 
-                  match_type_priority,   -- First, by the quality of the match
+                PARTITION BY term_bank_id
+                ORDER BY
+                  match_type_priority,   -- First, by the quality of the match (1-4)
                   match_column_priority, -- Then, by which column was matched
-                  rank                   -- Finally, by FTS5's own relevance score
+                  rank                   -- Finally, by FTS5 rank or spellfix distance
               ) as rn
           FROM RankedIDs
       )
       WHERE rn = 1
   )
+
   -- Finally, join the best-ranked IDs with the main view to get the full data
   SELECT
     R.best_rank as fts5_rank,
@@ -97,8 +131,7 @@ dictionary_search_fts5_drift:
   FROM term_bank_v3_search_view AS V
   JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id
   ORDER BY
-    R.match_type_priority,   -- 1. Sort by Match Type (Exact > Prefix > Other)
+    R.match_type_priority,   -- 1. Sort by Match Type (Exact > Prefix > Other > Fuzzy)
     R.match_column_priority, -- 2. Sort by Match Column (Kanji > Reading > Definition)
     V.popularity DESC,       -- 4. Sort by result frequency/popularity
-    R.best_rank;             -- 3. Sort by FTS5 relevance
-
+    R.best_rank;             -- 3. Sort by FTS5 relevance or spellfix distance

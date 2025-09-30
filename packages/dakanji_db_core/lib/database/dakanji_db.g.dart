@@ -3,6 +3,425 @@
 part of 'dakanji_db.dart';
 
 // ignore_for_file: type=lint
+class ReadingSpellfix extends Table
+    with
+        TableInfo<ReadingSpellfix, ReadingSpellfixData>,
+        VirtualTableInfo<ReadingSpellfix, ReadingSpellfixData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  ReadingSpellfix(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _wordMeta = const VerificationMeta('word');
+  late final GeneratedColumn<String> word = GeneratedColumn<String>(
+    'word',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _rankMeta = const VerificationMeta('rank');
+  late final GeneratedColumn<int> rank = GeneratedColumn<int>(
+    'rank',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _distanceMeta = const VerificationMeta(
+    'distance',
+  );
+  late final GeneratedColumn<int> distance = GeneratedColumn<int>(
+    'distance',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _langidMeta = const VerificationMeta('langid');
+  late final GeneratedColumn<int> langid = GeneratedColumn<int>(
+    'langid',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _scoreMeta = const VerificationMeta('score');
+  late final GeneratedColumn<int> score = GeneratedColumn<int>(
+    'score',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _matchlenMeta = const VerificationMeta(
+    'matchlen',
+  );
+  late final GeneratedColumn<int> matchlen = GeneratedColumn<int>(
+    'matchlen',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    word,
+    rank,
+    distance,
+    langid,
+    score,
+    matchlen,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'reading_spellfix';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReadingSpellfixData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('word')) {
+      context.handle(
+        _wordMeta,
+        word.isAcceptableOrUnknown(data['word']!, _wordMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_wordMeta);
+    }
+    if (data.containsKey('rank')) {
+      context.handle(
+        _rankMeta,
+        rank.isAcceptableOrUnknown(data['rank']!, _rankMeta),
+      );
+    }
+    if (data.containsKey('distance')) {
+      context.handle(
+        _distanceMeta,
+        distance.isAcceptableOrUnknown(data['distance']!, _distanceMeta),
+      );
+    }
+    if (data.containsKey('langid')) {
+      context.handle(
+        _langidMeta,
+        langid.isAcceptableOrUnknown(data['langid']!, _langidMeta),
+      );
+    }
+    if (data.containsKey('score')) {
+      context.handle(
+        _scoreMeta,
+        score.isAcceptableOrUnknown(data['score']!, _scoreMeta),
+      );
+    }
+    if (data.containsKey('matchlen')) {
+      context.handle(
+        _matchlenMeta,
+        matchlen.isAcceptableOrUnknown(data['matchlen']!, _matchlenMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ReadingSpellfixData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReadingSpellfixData(
+      word: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}word'],
+      )!,
+      rank: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rank'],
+      ),
+      distance: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}distance'],
+      ),
+      langid: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}langid'],
+      ),
+      score: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}score'],
+      ),
+      matchlen: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}matchlen'],
+      ),
+    );
+  }
+
+  @override
+  ReadingSpellfix createAlias(String alias) {
+    return ReadingSpellfix(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'spellfix1(edit_cost_table=hiragana_spellfix_cost)';
+}
+
+class ReadingSpellfixData extends DataClass
+    implements Insertable<ReadingSpellfixData> {
+  final String word;
+  final int? rank;
+  final int? distance;
+  final int? langid;
+  final int? score;
+  final int? matchlen;
+  const ReadingSpellfixData({
+    required this.word,
+    this.rank,
+    this.distance,
+    this.langid,
+    this.score,
+    this.matchlen,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['word'] = Variable<String>(word);
+    if (!nullToAbsent || rank != null) {
+      map['rank'] = Variable<int>(rank);
+    }
+    if (!nullToAbsent || distance != null) {
+      map['distance'] = Variable<int>(distance);
+    }
+    if (!nullToAbsent || langid != null) {
+      map['langid'] = Variable<int>(langid);
+    }
+    if (!nullToAbsent || score != null) {
+      map['score'] = Variable<int>(score);
+    }
+    if (!nullToAbsent || matchlen != null) {
+      map['matchlen'] = Variable<int>(matchlen);
+    }
+    return map;
+  }
+
+  ReadingSpellfixCompanion toCompanion(bool nullToAbsent) {
+    return ReadingSpellfixCompanion(
+      word: Value(word),
+      rank: rank == null && nullToAbsent ? const Value.absent() : Value(rank),
+      distance: distance == null && nullToAbsent
+          ? const Value.absent()
+          : Value(distance),
+      langid: langid == null && nullToAbsent
+          ? const Value.absent()
+          : Value(langid),
+      score: score == null && nullToAbsent
+          ? const Value.absent()
+          : Value(score),
+      matchlen: matchlen == null && nullToAbsent
+          ? const Value.absent()
+          : Value(matchlen),
+    );
+  }
+
+  factory ReadingSpellfixData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReadingSpellfixData(
+      word: serializer.fromJson<String>(json['word']),
+      rank: serializer.fromJson<int?>(json['rank']),
+      distance: serializer.fromJson<int?>(json['distance']),
+      langid: serializer.fromJson<int?>(json['langid']),
+      score: serializer.fromJson<int?>(json['score']),
+      matchlen: serializer.fromJson<int?>(json['matchlen']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'word': serializer.toJson<String>(word),
+      'rank': serializer.toJson<int?>(rank),
+      'distance': serializer.toJson<int?>(distance),
+      'langid': serializer.toJson<int?>(langid),
+      'score': serializer.toJson<int?>(score),
+      'matchlen': serializer.toJson<int?>(matchlen),
+    };
+  }
+
+  ReadingSpellfixData copyWith({
+    String? word,
+    Value<int?> rank = const Value.absent(),
+    Value<int?> distance = const Value.absent(),
+    Value<int?> langid = const Value.absent(),
+    Value<int?> score = const Value.absent(),
+    Value<int?> matchlen = const Value.absent(),
+  }) => ReadingSpellfixData(
+    word: word ?? this.word,
+    rank: rank.present ? rank.value : this.rank,
+    distance: distance.present ? distance.value : this.distance,
+    langid: langid.present ? langid.value : this.langid,
+    score: score.present ? score.value : this.score,
+    matchlen: matchlen.present ? matchlen.value : this.matchlen,
+  );
+  ReadingSpellfixData copyWithCompanion(ReadingSpellfixCompanion data) {
+    return ReadingSpellfixData(
+      word: data.word.present ? data.word.value : this.word,
+      rank: data.rank.present ? data.rank.value : this.rank,
+      distance: data.distance.present ? data.distance.value : this.distance,
+      langid: data.langid.present ? data.langid.value : this.langid,
+      score: data.score.present ? data.score.value : this.score,
+      matchlen: data.matchlen.present ? data.matchlen.value : this.matchlen,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReadingSpellfixData(')
+          ..write('word: $word, ')
+          ..write('rank: $rank, ')
+          ..write('distance: $distance, ')
+          ..write('langid: $langid, ')
+          ..write('score: $score, ')
+          ..write('matchlen: $matchlen')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(word, rank, distance, langid, score, matchlen);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReadingSpellfixData &&
+          other.word == this.word &&
+          other.rank == this.rank &&
+          other.distance == this.distance &&
+          other.langid == this.langid &&
+          other.score == this.score &&
+          other.matchlen == this.matchlen);
+}
+
+class ReadingSpellfixCompanion extends UpdateCompanion<ReadingSpellfixData> {
+  final Value<String> word;
+  final Value<int?> rank;
+  final Value<int?> distance;
+  final Value<int?> langid;
+  final Value<int?> score;
+  final Value<int?> matchlen;
+  final Value<int> rowid;
+  const ReadingSpellfixCompanion({
+    this.word = const Value.absent(),
+    this.rank = const Value.absent(),
+    this.distance = const Value.absent(),
+    this.langid = const Value.absent(),
+    this.score = const Value.absent(),
+    this.matchlen = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ReadingSpellfixCompanion.insert({
+    required String word,
+    this.rank = const Value.absent(),
+    this.distance = const Value.absent(),
+    this.langid = const Value.absent(),
+    this.score = const Value.absent(),
+    this.matchlen = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : word = Value(word);
+  static Insertable<ReadingSpellfixData> custom({
+    Expression<String>? word,
+    Expression<int>? rank,
+    Expression<int>? distance,
+    Expression<int>? langid,
+    Expression<int>? score,
+    Expression<int>? matchlen,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (word != null) 'word': word,
+      if (rank != null) 'rank': rank,
+      if (distance != null) 'distance': distance,
+      if (langid != null) 'langid': langid,
+      if (score != null) 'score': score,
+      if (matchlen != null) 'matchlen': matchlen,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ReadingSpellfixCompanion copyWith({
+    Value<String>? word,
+    Value<int?>? rank,
+    Value<int?>? distance,
+    Value<int?>? langid,
+    Value<int?>? score,
+    Value<int?>? matchlen,
+    Value<int>? rowid,
+  }) {
+    return ReadingSpellfixCompanion(
+      word: word ?? this.word,
+      rank: rank ?? this.rank,
+      distance: distance ?? this.distance,
+      langid: langid ?? this.langid,
+      score: score ?? this.score,
+      matchlen: matchlen ?? this.matchlen,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (word.present) {
+      map['word'] = Variable<String>(word.value);
+    }
+    if (rank.present) {
+      map['rank'] = Variable<int>(rank.value);
+    }
+    if (distance.present) {
+      map['distance'] = Variable<int>(distance.value);
+    }
+    if (langid.present) {
+      map['langid'] = Variable<int>(langid.value);
+    }
+    if (score.present) {
+      map['score'] = Variable<int>(score.value);
+    }
+    if (matchlen.present) {
+      map['matchlen'] = Variable<int>(matchlen.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReadingSpellfixCompanion(')
+          ..write('word: $word, ')
+          ..write('rank: $rank, ')
+          ..write('distance: $distance, ')
+          ..write('langid: $langid, ')
+          ..write('score: $score, ')
+          ..write('matchlen: $matchlen, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $TermTableTable extends TermTable
     with TableInfo<$TermTableTable, TermTableData> {
   @override
@@ -4144,66 +4563,42 @@ class TermBankV3SearchView
   };
 }
 
-class ReadingSpellfix extends Table
-    with
-        TableInfo<ReadingSpellfix, ReadingSpellfixData>,
-        VirtualTableInfo<ReadingSpellfix, ReadingSpellfixData> {
+class HiraganaSpellfixCost extends Table
+    with TableInfo<HiraganaSpellfixCost, HiraganaSpellfixCostData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  ReadingSpellfix(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _wordMeta = const VerificationMeta('word');
-  late final GeneratedColumn<String> word = GeneratedColumn<String>(
-    'word',
+  HiraganaSpellfixCost(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _iLangMeta = const VerificationMeta('iLang');
+  late final GeneratedColumn<int> iLang = GeneratedColumn<int>(
+    'iLang',
     aliasedName,
-    false,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _cFromMeta = const VerificationMeta('cFrom');
+  late final GeneratedColumn<String> cFrom = GeneratedColumn<String>(
+    'cFrom',
+    aliasedName,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _rankMeta = const VerificationMeta('rank');
-  late final GeneratedColumn<int> rank = GeneratedColumn<int>(
-    'rank',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
     requiredDuringInsert: false,
     $customConstraints: '',
   );
-  static const VerificationMeta _distanceMeta = const VerificationMeta(
-    'distance',
-  );
-  late final GeneratedColumn<int> distance = GeneratedColumn<int>(
-    'distance',
+  static const VerificationMeta _cToMeta = const VerificationMeta('cTo');
+  late final GeneratedColumn<String> cTo = GeneratedColumn<String>(
+    'cTo',
     aliasedName,
     true,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: '',
   );
-  static const VerificationMeta _langidMeta = const VerificationMeta('langid');
-  late final GeneratedColumn<int> langid = GeneratedColumn<int>(
-    'langid',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _scoreMeta = const VerificationMeta('score');
-  late final GeneratedColumn<int> score = GeneratedColumn<int>(
-    'score',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _matchlenMeta = const VerificationMeta(
-    'matchlen',
-  );
-  late final GeneratedColumn<int> matchlen = GeneratedColumn<int>(
-    'matchlen',
+  static const VerificationMeta _iCostMeta = const VerificationMeta('iCost');
+  late final GeneratedColumn<int> iCost = GeneratedColumn<int>(
+    'iCost',
     aliasedName,
     true,
     type: DriftSqlType.int,
@@ -4211,62 +4606,41 @@ class ReadingSpellfix extends Table
     $customConstraints: '',
   );
   @override
-  List<GeneratedColumn> get $columns => [
-    word,
-    rank,
-    distance,
-    langid,
-    score,
-    matchlen,
-  ];
+  List<GeneratedColumn> get $columns => [iLang, cFrom, cTo, iCost];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'reading_spellfix';
+  static const String $name = 'hiragana_spellfix_cost';
   @override
   VerificationContext validateIntegrity(
-    Insertable<ReadingSpellfixData> instance, {
+    Insertable<HiraganaSpellfixCostData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('word')) {
+    if (data.containsKey('iLang')) {
       context.handle(
-        _wordMeta,
-        word.isAcceptableOrUnknown(data['word']!, _wordMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_wordMeta);
-    }
-    if (data.containsKey('rank')) {
-      context.handle(
-        _rankMeta,
-        rank.isAcceptableOrUnknown(data['rank']!, _rankMeta),
+        _iLangMeta,
+        iLang.isAcceptableOrUnknown(data['iLang']!, _iLangMeta),
       );
     }
-    if (data.containsKey('distance')) {
+    if (data.containsKey('cFrom')) {
       context.handle(
-        _distanceMeta,
-        distance.isAcceptableOrUnknown(data['distance']!, _distanceMeta),
+        _cFromMeta,
+        cFrom.isAcceptableOrUnknown(data['cFrom']!, _cFromMeta),
       );
     }
-    if (data.containsKey('langid')) {
+    if (data.containsKey('cTo')) {
       context.handle(
-        _langidMeta,
-        langid.isAcceptableOrUnknown(data['langid']!, _langidMeta),
+        _cToMeta,
+        cTo.isAcceptableOrUnknown(data['cTo']!, _cToMeta),
       );
     }
-    if (data.containsKey('score')) {
+    if (data.containsKey('iCost')) {
       context.handle(
-        _scoreMeta,
-        score.isAcceptableOrUnknown(data['score']!, _scoreMeta),
-      );
-    }
-    if (data.containsKey('matchlen')) {
-      context.handle(
-        _matchlenMeta,
-        matchlen.isAcceptableOrUnknown(data['matchlen']!, _matchlenMeta),
+        _iCostMeta,
+        iCost.isAcceptableOrUnknown(data['iCost']!, _iCostMeta),
       );
     }
     return context;
@@ -4275,247 +4649,208 @@ class ReadingSpellfix extends Table
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  ReadingSpellfixData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  HiraganaSpellfixCostData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ReadingSpellfixData(
-      word: attachedDatabase.typeMapping.read(
+    return HiraganaSpellfixCostData(
+      iLang: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}iLang'],
+      ),
+      cFrom: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}word'],
-      )!,
-      rank: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}rank'],
+        data['${effectivePrefix}cFrom'],
       ),
-      distance: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}distance'],
+      cTo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cTo'],
       ),
-      langid: attachedDatabase.typeMapping.read(
+      iCost: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}langid'],
-      ),
-      score: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}score'],
-      ),
-      matchlen: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}matchlen'],
+        data['${effectivePrefix}iCost'],
       ),
     );
   }
 
   @override
-  ReadingSpellfix createAlias(String alias) {
-    return ReadingSpellfix(attachedDatabase, alias);
+  HiraganaSpellfixCost createAlias(String alias) {
+    return HiraganaSpellfixCost(attachedDatabase, alias);
   }
 
   @override
   bool get dontWriteConstraints => true;
-  @override
-  String get moduleAndArgs => 'spellfix1()';
 }
 
-class ReadingSpellfixData extends DataClass
-    implements Insertable<ReadingSpellfixData> {
-  final String word;
-  final int? rank;
-  final int? distance;
-  final int? langid;
-  final int? score;
-  final int? matchlen;
-  const ReadingSpellfixData({
-    required this.word,
-    this.rank,
-    this.distance,
-    this.langid,
-    this.score,
-    this.matchlen,
+class HiraganaSpellfixCostData extends DataClass
+    implements Insertable<HiraganaSpellfixCostData> {
+  final int? iLang;
+
+  /// The language ID
+  final String? cFrom;
+
+  /// Convert text from this
+  final String? cTo;
+
+  /// Convert text into this
+  final int? iCost;
+  const HiraganaSpellfixCostData({
+    this.iLang,
+    this.cFrom,
+    this.cTo,
+    this.iCost,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['word'] = Variable<String>(word);
-    if (!nullToAbsent || rank != null) {
-      map['rank'] = Variable<int>(rank);
+    if (!nullToAbsent || iLang != null) {
+      map['iLang'] = Variable<int>(iLang);
     }
-    if (!nullToAbsent || distance != null) {
-      map['distance'] = Variable<int>(distance);
+    if (!nullToAbsent || cFrom != null) {
+      map['cFrom'] = Variable<String>(cFrom);
     }
-    if (!nullToAbsent || langid != null) {
-      map['langid'] = Variable<int>(langid);
+    if (!nullToAbsent || cTo != null) {
+      map['cTo'] = Variable<String>(cTo);
     }
-    if (!nullToAbsent || score != null) {
-      map['score'] = Variable<int>(score);
-    }
-    if (!nullToAbsent || matchlen != null) {
-      map['matchlen'] = Variable<int>(matchlen);
+    if (!nullToAbsent || iCost != null) {
+      map['iCost'] = Variable<int>(iCost);
     }
     return map;
   }
 
-  ReadingSpellfixCompanion toCompanion(bool nullToAbsent) {
-    return ReadingSpellfixCompanion(
-      word: Value(word),
-      rank: rank == null && nullToAbsent ? const Value.absent() : Value(rank),
-      distance: distance == null && nullToAbsent
+  HiraganaSpellfixCostCompanion toCompanion(bool nullToAbsent) {
+    return HiraganaSpellfixCostCompanion(
+      iLang: iLang == null && nullToAbsent
           ? const Value.absent()
-          : Value(distance),
-      langid: langid == null && nullToAbsent
+          : Value(iLang),
+      cFrom: cFrom == null && nullToAbsent
           ? const Value.absent()
-          : Value(langid),
-      score: score == null && nullToAbsent
+          : Value(cFrom),
+      cTo: cTo == null && nullToAbsent ? const Value.absent() : Value(cTo),
+      iCost: iCost == null && nullToAbsent
           ? const Value.absent()
-          : Value(score),
-      matchlen: matchlen == null && nullToAbsent
-          ? const Value.absent()
-          : Value(matchlen),
+          : Value(iCost),
     );
   }
 
-  factory ReadingSpellfixData.fromJson(
+  factory HiraganaSpellfixCostData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ReadingSpellfixData(
-      word: serializer.fromJson<String>(json['word']),
-      rank: serializer.fromJson<int?>(json['rank']),
-      distance: serializer.fromJson<int?>(json['distance']),
-      langid: serializer.fromJson<int?>(json['langid']),
-      score: serializer.fromJson<int?>(json['score']),
-      matchlen: serializer.fromJson<int?>(json['matchlen']),
+    return HiraganaSpellfixCostData(
+      iLang: serializer.fromJson<int?>(json['iLang']),
+      cFrom: serializer.fromJson<String?>(json['cFrom']),
+      cTo: serializer.fromJson<String?>(json['cTo']),
+      iCost: serializer.fromJson<int?>(json['iCost']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'word': serializer.toJson<String>(word),
-      'rank': serializer.toJson<int?>(rank),
-      'distance': serializer.toJson<int?>(distance),
-      'langid': serializer.toJson<int?>(langid),
-      'score': serializer.toJson<int?>(score),
-      'matchlen': serializer.toJson<int?>(matchlen),
+      'iLang': serializer.toJson<int?>(iLang),
+      'cFrom': serializer.toJson<String?>(cFrom),
+      'cTo': serializer.toJson<String?>(cTo),
+      'iCost': serializer.toJson<int?>(iCost),
     };
   }
 
-  ReadingSpellfixData copyWith({
-    String? word,
-    Value<int?> rank = const Value.absent(),
-    Value<int?> distance = const Value.absent(),
-    Value<int?> langid = const Value.absent(),
-    Value<int?> score = const Value.absent(),
-    Value<int?> matchlen = const Value.absent(),
-  }) => ReadingSpellfixData(
-    word: word ?? this.word,
-    rank: rank.present ? rank.value : this.rank,
-    distance: distance.present ? distance.value : this.distance,
-    langid: langid.present ? langid.value : this.langid,
-    score: score.present ? score.value : this.score,
-    matchlen: matchlen.present ? matchlen.value : this.matchlen,
+  HiraganaSpellfixCostData copyWith({
+    Value<int?> iLang = const Value.absent(),
+    Value<String?> cFrom = const Value.absent(),
+    Value<String?> cTo = const Value.absent(),
+    Value<int?> iCost = const Value.absent(),
+  }) => HiraganaSpellfixCostData(
+    iLang: iLang.present ? iLang.value : this.iLang,
+    cFrom: cFrom.present ? cFrom.value : this.cFrom,
+    cTo: cTo.present ? cTo.value : this.cTo,
+    iCost: iCost.present ? iCost.value : this.iCost,
   );
-  ReadingSpellfixData copyWithCompanion(ReadingSpellfixCompanion data) {
-    return ReadingSpellfixData(
-      word: data.word.present ? data.word.value : this.word,
-      rank: data.rank.present ? data.rank.value : this.rank,
-      distance: data.distance.present ? data.distance.value : this.distance,
-      langid: data.langid.present ? data.langid.value : this.langid,
-      score: data.score.present ? data.score.value : this.score,
-      matchlen: data.matchlen.present ? data.matchlen.value : this.matchlen,
+  HiraganaSpellfixCostData copyWithCompanion(
+    HiraganaSpellfixCostCompanion data,
+  ) {
+    return HiraganaSpellfixCostData(
+      iLang: data.iLang.present ? data.iLang.value : this.iLang,
+      cFrom: data.cFrom.present ? data.cFrom.value : this.cFrom,
+      cTo: data.cTo.present ? data.cTo.value : this.cTo,
+      iCost: data.iCost.present ? data.iCost.value : this.iCost,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('ReadingSpellfixData(')
-          ..write('word: $word, ')
-          ..write('rank: $rank, ')
-          ..write('distance: $distance, ')
-          ..write('langid: $langid, ')
-          ..write('score: $score, ')
-          ..write('matchlen: $matchlen')
+    return (StringBuffer('HiraganaSpellfixCostData(')
+          ..write('iLang: $iLang, ')
+          ..write('cFrom: $cFrom, ')
+          ..write('cTo: $cTo, ')
+          ..write('iCost: $iCost')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(word, rank, distance, langid, score, matchlen);
+  int get hashCode => Object.hash(iLang, cFrom, cTo, iCost);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ReadingSpellfixData &&
-          other.word == this.word &&
-          other.rank == this.rank &&
-          other.distance == this.distance &&
-          other.langid == this.langid &&
-          other.score == this.score &&
-          other.matchlen == this.matchlen);
+      (other is HiraganaSpellfixCostData &&
+          other.iLang == this.iLang &&
+          other.cFrom == this.cFrom &&
+          other.cTo == this.cTo &&
+          other.iCost == this.iCost);
 }
 
-class ReadingSpellfixCompanion extends UpdateCompanion<ReadingSpellfixData> {
-  final Value<String> word;
-  final Value<int?> rank;
-  final Value<int?> distance;
-  final Value<int?> langid;
-  final Value<int?> score;
-  final Value<int?> matchlen;
+class HiraganaSpellfixCostCompanion
+    extends UpdateCompanion<HiraganaSpellfixCostData> {
+  final Value<int?> iLang;
+  final Value<String?> cFrom;
+  final Value<String?> cTo;
+  final Value<int?> iCost;
   final Value<int> rowid;
-  const ReadingSpellfixCompanion({
-    this.word = const Value.absent(),
-    this.rank = const Value.absent(),
-    this.distance = const Value.absent(),
-    this.langid = const Value.absent(),
-    this.score = const Value.absent(),
-    this.matchlen = const Value.absent(),
+  const HiraganaSpellfixCostCompanion({
+    this.iLang = const Value.absent(),
+    this.cFrom = const Value.absent(),
+    this.cTo = const Value.absent(),
+    this.iCost = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  ReadingSpellfixCompanion.insert({
-    required String word,
-    this.rank = const Value.absent(),
-    this.distance = const Value.absent(),
-    this.langid = const Value.absent(),
-    this.score = const Value.absent(),
-    this.matchlen = const Value.absent(),
+  HiraganaSpellfixCostCompanion.insert({
+    this.iLang = const Value.absent(),
+    this.cFrom = const Value.absent(),
+    this.cTo = const Value.absent(),
+    this.iCost = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : word = Value(word);
-  static Insertable<ReadingSpellfixData> custom({
-    Expression<String>? word,
-    Expression<int>? rank,
-    Expression<int>? distance,
-    Expression<int>? langid,
-    Expression<int>? score,
-    Expression<int>? matchlen,
+  });
+  static Insertable<HiraganaSpellfixCostData> custom({
+    Expression<int>? iLang,
+    Expression<String>? cFrom,
+    Expression<String>? cTo,
+    Expression<int>? iCost,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (word != null) 'word': word,
-      if (rank != null) 'rank': rank,
-      if (distance != null) 'distance': distance,
-      if (langid != null) 'langid': langid,
-      if (score != null) 'score': score,
-      if (matchlen != null) 'matchlen': matchlen,
+      if (iLang != null) 'iLang': iLang,
+      if (cFrom != null) 'cFrom': cFrom,
+      if (cTo != null) 'cTo': cTo,
+      if (iCost != null) 'iCost': iCost,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
-  ReadingSpellfixCompanion copyWith({
-    Value<String>? word,
-    Value<int?>? rank,
-    Value<int?>? distance,
-    Value<int?>? langid,
-    Value<int?>? score,
-    Value<int?>? matchlen,
+  HiraganaSpellfixCostCompanion copyWith({
+    Value<int?>? iLang,
+    Value<String?>? cFrom,
+    Value<String?>? cTo,
+    Value<int?>? iCost,
     Value<int>? rowid,
   }) {
-    return ReadingSpellfixCompanion(
-      word: word ?? this.word,
-      rank: rank ?? this.rank,
-      distance: distance ?? this.distance,
-      langid: langid ?? this.langid,
-      score: score ?? this.score,
-      matchlen: matchlen ?? this.matchlen,
+    return HiraganaSpellfixCostCompanion(
+      iLang: iLang ?? this.iLang,
+      cFrom: cFrom ?? this.cFrom,
+      cTo: cTo ?? this.cTo,
+      iCost: iCost ?? this.iCost,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -4523,23 +4858,17 @@ class ReadingSpellfixCompanion extends UpdateCompanion<ReadingSpellfixData> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (word.present) {
-      map['word'] = Variable<String>(word.value);
+    if (iLang.present) {
+      map['iLang'] = Variable<int>(iLang.value);
     }
-    if (rank.present) {
-      map['rank'] = Variable<int>(rank.value);
+    if (cFrom.present) {
+      map['cFrom'] = Variable<String>(cFrom.value);
     }
-    if (distance.present) {
-      map['distance'] = Variable<int>(distance.value);
+    if (cTo.present) {
+      map['cTo'] = Variable<String>(cTo.value);
     }
-    if (langid.present) {
-      map['langid'] = Variable<int>(langid.value);
-    }
-    if (score.present) {
-      map['score'] = Variable<int>(score.value);
-    }
-    if (matchlen.present) {
-      map['matchlen'] = Variable<int>(matchlen.value);
+    if (iCost.present) {
+      map['iCost'] = Variable<int>(iCost.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -4549,225 +4878,11 @@ class ReadingSpellfixCompanion extends UpdateCompanion<ReadingSpellfixData> {
 
   @override
   String toString() {
-    return (StringBuffer('ReadingSpellfixCompanion(')
-          ..write('word: $word, ')
-          ..write('rank: $rank, ')
-          ..write('distance: $distance, ')
-          ..write('langid: $langid, ')
-          ..write('score: $score, ')
-          ..write('matchlen: $matchlen, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class SpellfixCost extends Table
-    with TableInfo<SpellfixCost, SpellfixCostData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  SpellfixCost(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _charMeta = const VerificationMeta('char');
-  late final GeneratedColumn<String> char = GeneratedColumn<String>(
-    'char',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: 'NOT NULL',
-  );
-  static const VerificationMeta _costMeta = const VerificationMeta('cost');
-  late final GeneratedColumn<int> cost = GeneratedColumn<int>(
-    'cost',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    $customConstraints: 'NOT NULL',
-  );
-  @override
-  List<GeneratedColumn> get $columns => [char, cost];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'spellfix_cost';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<SpellfixCostData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('char')) {
-      context.handle(
-        _charMeta,
-        char.isAcceptableOrUnknown(data['char']!, _charMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_charMeta);
-    }
-    if (data.containsKey('cost')) {
-      context.handle(
-        _costMeta,
-        cost.isAcceptableOrUnknown(data['cost']!, _costMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_costMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  SpellfixCostData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return SpellfixCostData(
-      char: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}char'],
-      )!,
-      cost: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}cost'],
-      )!,
-    );
-  }
-
-  @override
-  SpellfixCost createAlias(String alias) {
-    return SpellfixCost(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-}
-
-class SpellfixCostData extends DataClass
-    implements Insertable<SpellfixCostData> {
-  final String char;
-  final int cost;
-  const SpellfixCostData({required this.char, required this.cost});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['char'] = Variable<String>(char);
-    map['cost'] = Variable<int>(cost);
-    return map;
-  }
-
-  SpellfixCostCompanion toCompanion(bool nullToAbsent) {
-    return SpellfixCostCompanion(char: Value(char), cost: Value(cost));
-  }
-
-  factory SpellfixCostData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return SpellfixCostData(
-      char: serializer.fromJson<String>(json['char']),
-      cost: serializer.fromJson<int>(json['cost']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'char': serializer.toJson<String>(char),
-      'cost': serializer.toJson<int>(cost),
-    };
-  }
-
-  SpellfixCostData copyWith({String? char, int? cost}) =>
-      SpellfixCostData(char: char ?? this.char, cost: cost ?? this.cost);
-  SpellfixCostData copyWithCompanion(SpellfixCostCompanion data) {
-    return SpellfixCostData(
-      char: data.char.present ? data.char.value : this.char,
-      cost: data.cost.present ? data.cost.value : this.cost,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('SpellfixCostData(')
-          ..write('char: $char, ')
-          ..write('cost: $cost')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(char, cost);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is SpellfixCostData &&
-          other.char == this.char &&
-          other.cost == this.cost);
-}
-
-class SpellfixCostCompanion extends UpdateCompanion<SpellfixCostData> {
-  final Value<String> char;
-  final Value<int> cost;
-  final Value<int> rowid;
-  const SpellfixCostCompanion({
-    this.char = const Value.absent(),
-    this.cost = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  SpellfixCostCompanion.insert({
-    required String char,
-    required int cost,
-    this.rowid = const Value.absent(),
-  }) : char = Value(char),
-       cost = Value(cost);
-  static Insertable<SpellfixCostData> custom({
-    Expression<String>? char,
-    Expression<int>? cost,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (char != null) 'char': char,
-      if (cost != null) 'cost': cost,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  SpellfixCostCompanion copyWith({
-    Value<String>? char,
-    Value<int>? cost,
-    Value<int>? rowid,
-  }) {
-    return SpellfixCostCompanion(
-      char: char ?? this.char,
-      cost: cost ?? this.cost,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (char.present) {
-      map['char'] = Variable<String>(char.value);
-    }
-    if (cost.present) {
-      map['cost'] = Variable<int>(cost.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('SpellfixCostCompanion(')
-          ..write('char: $char, ')
-          ..write('cost: $cost, ')
+    return (StringBuffer('HiraganaSpellfixCostCompanion(')
+          ..write('iLang: $iLang, ')
+          ..write('cFrom: $cFrom, ')
+          ..write('cTo: $cTo, ')
+          ..write('iCost: $iCost, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -14357,6 +14472,7 @@ class TermMetaBankV3_X_IpaTagTableCompanion
 abstract class _$DaKanjiDB extends GeneratedDatabase {
   _$DaKanjiDB(QueryExecutor e) : super(e);
   $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
+  late final ReadingSpellfix readingSpellfix = ReadingSpellfix(this);
   late final $TermTableTable termTable = $TermTableTable(this);
   late final TermFts termFts = TermFts(this);
   late final $TermBankV3DefinitionJsonTableTable termBankV3DefinitionJsonTable =
@@ -14402,8 +14518,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'term',
     'CREATE INDEX term ON term_table (term)',
   );
-  late final ReadingSpellfix readingSpellfix = ReadingSpellfix(this);
-  late final SpellfixCost spellfixCost = SpellfixCost(this);
+  late final HiraganaSpellfixCost hiraganaSpellfixCost = HiraganaSpellfixCost(
+    this,
+  );
   late final Trigger readingSpellfixInsert = Trigger(
     'CREATE TRIGGER reading_spellfix_insert AFTER INSERT ON reading_table BEGIN INSERT INTO reading_spellfix (word) VALUES (new.reading);END',
     'reading_spellfix_insert',
@@ -14561,9 +14678,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     String ftsQuery,
   ) {
     return customSelect(
-      'WITH RankedIDs AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, highlight(term_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE term_fts MATCH ?2 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, highlight(reading_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE reading_fts MATCH ?2 UNION ALL SELECT R.term_bank_id, rank, DT.definition AS matched_text, highlight(definition_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority FROM definition_fts AS FTS JOIN term_bank_v3_x_definition_table AS R ON FTS."rowid" = R.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE definition_fts MATCH ?2), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, highlighted_text, matched_text FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, matched_text, highlighted_text, R.match_type_priority, R.match_column_priority, V.* FROM term_bank_v3_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, V.popularity DESC, R.best_rank',
+      'WITH SpellfixSuggestions AS (SELECT word, distance FROM reading_spellfix WHERE word MATCH ?1 AND distance > 0 AND distance < 300 ORDER BY distance LIMIT 10), RankedIDs AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, highlight(term_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE term_fts MATCH ?2 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, highlight(reading_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE reading_fts MATCH ?2 UNION ALL SELECT TB3T.id AS term_bank_id, S.distance AS rank, RT.reading AS matched_text, RT.reading AS highlighted_text, 4 AS match_type_priority, 2 AS match_column_priority FROM SpellfixSuggestions AS S JOIN reading_table AS RT ON S.word = RT.reading JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id UNION ALL SELECT R.term_bank_id, rank, DT.definition AS matched_text, highlight(definition_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority FROM definition_fts AS FTS JOIN term_bank_v3_x_definition_table AS R ON FTS."rowid" = R.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE definition_fts MATCH ?2), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, highlighted_text, matched_text FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, matched_text, highlighted_text, R.match_type_priority, R.match_column_priority, V.* FROM term_bank_v3_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, V.popularity DESC, R.best_rank',
       variables: [Variable<String>(query), Variable<String>(ftsQuery)],
       readsFrom: {
+        readingSpellfix,
         termBankV3Table,
         termFts,
         termTable,
@@ -14615,20 +14733,11 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     );
   }
 
-  Future<int> populateSpellfixCost() {
+  Future<int> populateHiraganaSpellfixCostTable() {
     return customInsert(
-      'INSERT OR IGNORE INTO spellfix_cost (char, cost) VALUES (\'か\', 10), (\'が\', 10), (\'は\', 10), (\'ば\', 10), (\'ぱ\', 10), (\'さ\', 10), (\'ざ\', 10), (\'た\', 10), (\'だ\', 10), (\'つ\', 20), (\'っ\', 20), (\'や\', 20), (\'ゃ\', 20), (\'ゆ\', 20), (\'ゅ\', 20), (\'よ\', 20), (\'ょ\', 20), (\'じ\', 25), (\'ぢ\', 25), (\'ず\', 25), (\'づ\', 25)',
+      'INSERT OR IGNORE INTO hiragana_spellfix_cost (iLang, cFrom, cTo, iCost) VALUES (0, \'か\', \'が\', 10), (0, \'が\', \'か\', 10), (0, \'き\', \'ぎ\', 10), (0, \'ぎ\', \'き\', 10), (0, \'く\', \'ぐ\', 10), (0, \'ぐ\', \'く\', 10), (0, \'け\', \'げ\', 10), (0, \'げ\', \'け\', 10), (0, \'こ\', \'ご\', 10), (0, \'ご\', \'こ\', 10), (0, \'さ\', \'ざ\', 10), (0, \'ざ\', \'さ\', 10), (0, \'し\', \'じ\', 10), (0, \'じ\', \'し\', 10), (0, \'す\', \'ず\', 10), (0, \'ず\', \'す\', 10), (0, \'せ\', \'ぜ\', 10), (0, \'ぜ\', \'せ\', 10), (0, \'そ\', \'ぞ\', 10), (0, \'ぞ\', \'そ\', 10), (0, \'た\', \'だ\', 10), (0, \'だ\', \'た\', 10), (0, \'ち\', \'ぢ\', 10), (0, \'ぢ\', \'ち\', 10), (0, \'つ\', \'づ\', 10), (0, \'づ\', \'つ\', 10), (0, \'て\', \'で\', 10), (0, \'で\', \'て\', 10), (0, \'と\', \'ど\', 10), (0, \'ど\', \'と\', 10), (0, \'は\', \'ば\', 10), (0, \'ば\', \'は\', 10), (0, \'は\', \'ぱ\', 10), (0, \'ぱ\', \'は\', 10), (0, \'ば\', \'ぱ\', 10), (0, \'ぱ\', \'ば\', 10), (0, \'ひ\', \'び\', 10), (0, \'び\', \'ひ\', 10), (0, \'ひ\', \'ぴ\', 10), (0, \'ぴ\', \'ひ\', 10), (0, \'び\', \'ぴ\', 10), (0, \'ぴ\', \'び\', 10), (0, \'ふ\', \'ぶ\', 10), (0, \'ぶ\', \'ふ\', 10), (0, \'ふ\', \'ぷ\', 10), (0, \'ぷ\', \'ふ\', 10), (0, \'ぶ\', \'ぷ\', 10), (0, \'ぷ\', \'ぶ\', 10), (0, \'へ\', \'べ\', 10), (0, \'べ\', \'へ\', 10), (0, \'へ\', \'ぺ\', 10), (0, \'ぺ\', \'へ\', 10), (0, \'べ\', \'ぺ\', 10), (0, \'ぺ\', \'べ\', 10), (0, \'ほ\', \'ぼ\', 10), (0, \'ぼ\', \'ほ\', 10), (0, \'ほ\', \'ぽ\', 10), (0, \'ぽ\', \'ほ\', 10), (0, \'ぼ\', \'ぽ\', 10), (0, \'ぽ\', \'ぼ\', 10), (0, \'じ\', \'ぢ\', 5), (0, \'ぢ\', \'じ\', 5), (0, \'ず\', \'づ\', 5), (0, \'づ\', \'ず\', 5), (0, \'つ\', \'っ\', 20), (0, \'っ\', \'つ\', 20), (0, \'や\', \'ゃ\', 20), (0, \'ゃ\', \'や\', 20), (0, \'ゆ\', \'ゅ\', 20), (0, \'ゅ\', \'ゆ\', 20), (0, \'よ\', \'ょ\', 20), (0, \'ょ\', \'よ\', 20), (0, \'あ\', \'ぁ\', 20), (0, \'ぁ\', \'あ\', 20), (0, \'い\', \'ぃ\', 20), (0, \'ぃ\', \'い\', 20), (0, \'う\', \'ぅ\', 20), (0, \'ぅ\', \'う\', 20), (0, \'え\', \'ぇ\', 20), (0, \'ぇ\', \'え\', 20), (0, \'お\', \'ぉ\', 20), (0, \'ぉ\', \'お\', 20), (0, \'おう\', \'おお\', 25), (0, \'おお\', \'おう\', 25), (0, \'えい\', \'ええ\', 25), (0, \'ええ\', \'えい\', 25), (0, \'こう\', \'こお\', 25), (0, \'こお\', \'こう\', 25), (0, \'そう\', \'そお\', 25), (0, \'そお\', \'そう\', 25), (0, \'とう\', \'とお\', 25), (0, \'とお\', \'とう\', 25), (0, \'のう\', \'のお\', 25), (0, \'のお\', \'のう\', 25), (0, \'ほう\', \'ほお\', 25), (0, \'ほお\', \'ほう\', 25), (0, \'もう\', \'もお\', 25), (0, \'もお\', \'もう\', 25), (0, \'よう\', \'よお\', 25), (0, \'よお\', \'よう\', 25), (0, \'ろう\', \'ろお\', 25), (0, \'ろお\', \'ろう\', 25), (0, \'ごう\', \'ごお\', 25), (0, \'ごお\', \'ごう\', 25), (0, \'ぞう\', \'ぞお\', 25), (0, \'ぞお\', \'ぞう\', 25), (0, \'どう\', \'どお\', 25), (0, \'どお\', \'どう\', 25), (0, \'ぼう\', \'ぼお\', 25), (0, \'ぼお\', \'ぼう\', 25), (0, \'ぽう\', \'ぽお\', 25), (0, \'ぽお\', \'ぽう\', 25), (0, \'せい\', \'せえ\', 25), (0, \'せえ\', \'せい\', 25), (0, \'てい\', \'てえ\', 25), (0, \'てえ\', \'てい\', 25), (0, \'ねい\', \'ねえ\', 25), (0, \'ねえ\', \'ねい\', 25), (0, \'へい\', \'へえ\', 25), (0, \'へえ\', \'へい\', 25), (0, \'めい\', \'めえ\', 25), (0, \'めえ\', \'めい\', 25), (0, \'れい\', \'れえ\', 25), (0, \'れえ\', \'れい\', 25), (0, \'げい\', \'げえ\', 25), (0, \'げえ\', \'げい\', 25), (0, \'ぜい\', \'ぜえ\', 25), (0, \'ぜえ\', \'ぜい\', 25), (0, \'でい\', \'でえ\', 25), (0, \'でえ\', \'でい\', 25), (0, \'べい\', \'べえ\', 25), (0, \'べえ\', \'べい\', 25), (0, \'ぺい\', \'ぺえ\', 25), (0, \'ぺえ\', \'ぺい\', 25), (0, \'あ\', \'ア\', 30), (0, \'ア\', \'あ\', 30), (0, \'い\', \'イ\', 30), (0, \'イ\', \'い\', 30), (0, \'う\', \'ウ\', 30), (0, \'ウ\', \'う\', 30), (0, \'え\', \'エ\', 30), (0, \'エ\', \'え\', 30), (0, \'お\', \'オ\', 30), (0, \'オ\', \'お\', 30), (0, \'か\', \'カ\', 30), (0, \'カ\', \'か\', 30), (0, \'き\', \'キ\', 30), (0, \'キ\', \'き\', 30), (0, \'く\', \'ク\', 30), (0, \'ク\', \'く\', 30), (0, \'け\', \'ケ\', 30), (0, \'ケ\', \'け\', 30), (0, \'こ\', \'コ\', 30), (0, \'コ\', \'こ\', 30), (0, \'さ\', \'サ\', 30), (0, \'サ\', \'さ\', 30), (0, \'し\', \'シ\', 30), (0, \'シ\', \'し\', 30), (0, \'す\', \'ス\', 30), (0, \'ス\', \'す\', 30), (0, \'せ\', \'セ\', 30), (0, \'セ\', \'せ\', 30), (0, \'そ\', \'ソ\', 30), (0, \'ソ\', \'そ\', 30), (0, \'た\', \'タ\', 30), (0, \'タ\', \'た\', 30), (0, \'ち\', \'チ\', 30), (0, \'チ\', \'ち\', 30), (0, \'つ\', \'ツ\', 30), (0, \'ツ\', \'つ\', 30), (0, \'て\', \'テ\', 30), (0, \'テ\', \'て\', 30), (0, \'と\', \'ト\', 30), (0, \'ト\', \'と\', 30), (0, \'な\', \'ナ\', 30), (0, \'ナ\', \'な\', 30), (0, \'に\', \'ニ\', 30), (0, \'ニ\', \'に\', 30), (0, \'ぬ\', \'ヌ\', 30), (0, \'ヌ\', \'ぬ\', 30), (0, \'ね\', \'ネ\', 30), (0, \'ネ\', \'ね\', 30), (0, \'の\', \'ノ\', 30), (0, \'ノ\', \'の\', 30), (0, \'は\', \'ハ\', 30), (0, \'ハ\', \'は\', 30), (0, \'ひ\', \'ヒ\', 30), (0, \'ヒ\', \'ひ\', 30), (0, \'ふ\', \'フ\', 30), (0, \'フ\', \'ふ\', 30), (0, \'へ\', \'ヘ\', 30), (0, \'ヘ\', \'へ\', 30), (0, \'ほ\', \'ホ\', 30), (0, \'ホ\', \'ほ\', 30), (0, \'ま\', \'マ\', 30), (0, \'マ\', \'ま\', 30), (0, \'み\', \'ミ\', 30), (0, \'ミ\', \'み\', 30), (0, \'む\', \'ム\', 30), (0, \'ム\', \'む\', 30), (0, \'め\', \'メ\', 30), (0, \'メ\', \'め\', 30), (0, \'も\', \'モ\', 30), (0, \'モ\', \'も\', 30), (0, \'や\', \'ヤ\', 30), (0, \'ヤ\', \'や\', 30), (0, \'ゆ\', \'ユ\', 30), (0, \'ユ\', \'ゆ\', 30), (0, \'よ\', \'ヨ\', 30), (0, \'ヨ\', \'よ\', 30), (0, \'ら\', \'ラ\', 30), (0, \'ラ\', \'ら\', 30), (0, \'り\', \'リ\', 30), (0, \'リ\', \'り\', 30), (0, \'る\', \'ル\', 30), (0, \'ル\', \'る\', 30), (0, \'れ\', \'レ\', 30), (0, \'レ\', \'れ\', 30), (0, \'ろ\', \'ロ\', 30), (0, \'ロ\', \'ろ\', 30), (0, \'わ\', \'ワ\', 30), (0, \'ワ\', \'わ\', 30), (0, \'を\', \'ヲ\', 30), (0, \'ヲ\', \'を\', 30), (0, \'ん\', \'ン\', 30), (0, \'ン\', \'ん\', 30), (0, \'が\', \'ガ\', 30), (0, \'ガ\', \'が\', 30), (0, \'ぎ\', \'ギ\', 30), (0, \'ギ\', \'ぎ\', 30), (0, \'ぐ\', \'グ\', 30), (0, \'グ\', \'ぐ\', 30), (0, \'げ\', \'ゲ\', 30), (0, \'ゲ\', \'げ\', 30), (0, \'ご\', \'ゴ\', 30), (0, \'ゴ\', \'ご\', 30), (0, \'ざ\', \'ザ\', 30), (0, \'ザ\', \'ざ\', 30), (0, \'じ\', \'ジ\', 30), (0, \'ジ\', \'じ\', 30), (0, \'ず\', \'ズ\', 30), (0, \'ズ\', \'ず\', 30), (0, \'ぜ\', \'ゼ\', 30), (0, \'ゼ\', \'ぜ\', 30), (0, \'ぞ\', \'ゾ\', 30), (0, \'ゾ\', \'そ\', 30), (0, \'だ\', \'ダ\', 30), (0, \'ダ\', \'だ\', 30), (0, \'ぢ\', \'ヂ\', 30), (0, \'ヂ\', \'ぢ\', 30), (0, \'づ\', \'ヅ\', 30), (0, \'ヅ\', \'づ\', 30), (0, \'で\', \'デ\', 30), (0, \'デ\', \'て\', 30), (0, \'ど\', \'ド\', 30), (0, \'ド\', \'と\', 30), (0, \'ば\', \'バ\', 30), (0, \'バ\', \'ば\', 30), (0, \'び\', \'ビ\', 30), (0, \'ビ\', \'び\', 30), (0, \'ぶ\', \'ブ\', 30), (0, \'ブ\', \'ぶ\', 30), (0, \'べ\', \'ベ\', 30), (0, \'ベ\', \'べ\', 30), (0, \'ぼ\', \'ボ\', 30), (0, \'ボ\', \'ぼ\', 30), (0, \'ぱ\', \'パ\', 30), (0, \'パ\', \'ぱ\', 30), (0, \'ぴ\', \'ピ\', 30), (0, \'ピ\', \'ぴ\', 30), (0, \'ぷ\', \'プ\', 30), (0, \'プ\', \'ぷ\', 30), (0, \'ぺ\', \'ペ\', 30), (0, \'ペ\', \'ぺ\', 30), (0, \'ぽ\', \'ポ\', 30), (0, \'ポ\', \'ぽ\', 30), (0, \'ー\', \'ー\', 0)',
       variables: [],
-      updates: {spellfixCost},
-    );
-  }
-
-  Future<int> loadCustomCostTable() {
-    return customUpdate(
-      'UPDATE reading_spellfix SET distance = \'cost_table=spellfix_cost\'',
-      variables: [],
-      updates: {readingSpellfix},
-      updateKind: UpdateKind.update,
+      updates: {hiraganaSpellfixCost},
     );
   }
 
@@ -14736,6 +14845,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
+    readingSpellfix,
     termTable,
     termFts,
     termBankV3DefinitionJsonTable,
@@ -14756,8 +14866,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termTableAd,
     termTableAu,
     term,
-    readingSpellfix,
-    spellfixCost,
+    hiraganaSpellfixCost,
     readingSpellfixInsert,
     readingSpellfixDelete,
     readingSpellfixUpdate,
@@ -14922,6 +15031,225 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   ]);
 }
 
+typedef $ReadingSpellfixCreateCompanionBuilder =
+    ReadingSpellfixCompanion Function({
+      required String word,
+      Value<int?> rank,
+      Value<int?> distance,
+      Value<int?> langid,
+      Value<int?> score,
+      Value<int?> matchlen,
+      Value<int> rowid,
+    });
+typedef $ReadingSpellfixUpdateCompanionBuilder =
+    ReadingSpellfixCompanion Function({
+      Value<String> word,
+      Value<int?> rank,
+      Value<int?> distance,
+      Value<int?> langid,
+      Value<int?> score,
+      Value<int?> matchlen,
+      Value<int> rowid,
+    });
+
+class $ReadingSpellfixFilterComposer
+    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
+  $ReadingSpellfixFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get word => $composableBuilder(
+    column: $table.word,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get rank => $composableBuilder(
+    column: $table.rank,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get distance => $composableBuilder(
+    column: $table.distance,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get langid => $composableBuilder(
+    column: $table.langid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get score => $composableBuilder(
+    column: $table.score,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get matchlen => $composableBuilder(
+    column: $table.matchlen,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $ReadingSpellfixOrderingComposer
+    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
+  $ReadingSpellfixOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get word => $composableBuilder(
+    column: $table.word,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get rank => $composableBuilder(
+    column: $table.rank,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get distance => $composableBuilder(
+    column: $table.distance,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get langid => $composableBuilder(
+    column: $table.langid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get score => $composableBuilder(
+    column: $table.score,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get matchlen => $composableBuilder(
+    column: $table.matchlen,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $ReadingSpellfixAnnotationComposer
+    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
+  $ReadingSpellfixAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get word =>
+      $composableBuilder(column: $table.word, builder: (column) => column);
+
+  GeneratedColumn<int> get rank =>
+      $composableBuilder(column: $table.rank, builder: (column) => column);
+
+  GeneratedColumn<int> get distance =>
+      $composableBuilder(column: $table.distance, builder: (column) => column);
+
+  GeneratedColumn<int> get langid =>
+      $composableBuilder(column: $table.langid, builder: (column) => column);
+
+  GeneratedColumn<int> get score =>
+      $composableBuilder(column: $table.score, builder: (column) => column);
+
+  GeneratedColumn<int> get matchlen =>
+      $composableBuilder(column: $table.matchlen, builder: (column) => column);
+}
+
+class $ReadingSpellfixTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          ReadingSpellfix,
+          ReadingSpellfixData,
+          $ReadingSpellfixFilterComposer,
+          $ReadingSpellfixOrderingComposer,
+          $ReadingSpellfixAnnotationComposer,
+          $ReadingSpellfixCreateCompanionBuilder,
+          $ReadingSpellfixUpdateCompanionBuilder,
+          (
+            ReadingSpellfixData,
+            BaseReferences<_$DaKanjiDB, ReadingSpellfix, ReadingSpellfixData>,
+          ),
+          ReadingSpellfixData,
+          PrefetchHooks Function()
+        > {
+  $ReadingSpellfixTableManager(_$DaKanjiDB db, ReadingSpellfix table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $ReadingSpellfixFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $ReadingSpellfixOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $ReadingSpellfixAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> word = const Value.absent(),
+                Value<int?> rank = const Value.absent(),
+                Value<int?> distance = const Value.absent(),
+                Value<int?> langid = const Value.absent(),
+                Value<int?> score = const Value.absent(),
+                Value<int?> matchlen = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReadingSpellfixCompanion(
+                word: word,
+                rank: rank,
+                distance: distance,
+                langid: langid,
+                score: score,
+                matchlen: matchlen,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String word,
+                Value<int?> rank = const Value.absent(),
+                Value<int?> distance = const Value.absent(),
+                Value<int?> langid = const Value.absent(),
+                Value<int?> score = const Value.absent(),
+                Value<int?> matchlen = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReadingSpellfixCompanion.insert(
+                word: word,
+                rank: rank,
+                distance: distance,
+                langid: langid,
+                score: score,
+                matchlen: matchlen,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $ReadingSpellfixProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      ReadingSpellfix,
+      ReadingSpellfixData,
+      $ReadingSpellfixFilterComposer,
+      $ReadingSpellfixOrderingComposer,
+      $ReadingSpellfixAnnotationComposer,
+      $ReadingSpellfixCreateCompanionBuilder,
+      $ReadingSpellfixUpdateCompanionBuilder,
+      (
+        ReadingSpellfixData,
+        BaseReferences<_$DaKanjiDB, ReadingSpellfix, ReadingSpellfixData>,
+      ),
+      ReadingSpellfixData,
+      PrefetchHooks Function()
+    >;
 typedef $$TermTableTableCreateCompanionBuilder =
     TermTableCompanion Function({Value<int> id, required String term});
 typedef $$TermTableTableUpdateCompanionBuilder =
@@ -20494,198 +20822,164 @@ typedef $$TermBankV3_X_TagBankTableTableProcessedTableManager =
       TermBankV3_X_TagBankTableData,
       PrefetchHooks Function({bool tagBankId, bool termBankId})
     >;
-typedef $ReadingSpellfixCreateCompanionBuilder =
-    ReadingSpellfixCompanion Function({
-      required String word,
-      Value<int?> rank,
-      Value<int?> distance,
-      Value<int?> langid,
-      Value<int?> score,
-      Value<int?> matchlen,
+typedef $HiraganaSpellfixCostCreateCompanionBuilder =
+    HiraganaSpellfixCostCompanion Function({
+      Value<int?> iLang,
+      Value<String?> cFrom,
+      Value<String?> cTo,
+      Value<int?> iCost,
       Value<int> rowid,
     });
-typedef $ReadingSpellfixUpdateCompanionBuilder =
-    ReadingSpellfixCompanion Function({
-      Value<String> word,
-      Value<int?> rank,
-      Value<int?> distance,
-      Value<int?> langid,
-      Value<int?> score,
-      Value<int?> matchlen,
+typedef $HiraganaSpellfixCostUpdateCompanionBuilder =
+    HiraganaSpellfixCostCompanion Function({
+      Value<int?> iLang,
+      Value<String?> cFrom,
+      Value<String?> cTo,
+      Value<int?> iCost,
       Value<int> rowid,
     });
 
-class $ReadingSpellfixFilterComposer
-    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
-  $ReadingSpellfixFilterComposer({
+class $HiraganaSpellfixCostFilterComposer
+    extends Composer<_$DaKanjiDB, HiraganaSpellfixCost> {
+  $HiraganaSpellfixCostFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<String> get word => $composableBuilder(
-    column: $table.word,
+  ColumnFilters<int> get iLang => $composableBuilder(
+    column: $table.iLang,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get rank => $composableBuilder(
-    column: $table.rank,
+  ColumnFilters<String> get cFrom => $composableBuilder(
+    column: $table.cFrom,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get distance => $composableBuilder(
-    column: $table.distance,
+  ColumnFilters<String> get cTo => $composableBuilder(
+    column: $table.cTo,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get langid => $composableBuilder(
-    column: $table.langid,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get score => $composableBuilder(
-    column: $table.score,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get matchlen => $composableBuilder(
-    column: $table.matchlen,
+  ColumnFilters<int> get iCost => $composableBuilder(
+    column: $table.iCost,
     builder: (column) => ColumnFilters(column),
   );
 }
 
-class $ReadingSpellfixOrderingComposer
-    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
-  $ReadingSpellfixOrderingComposer({
+class $HiraganaSpellfixCostOrderingComposer
+    extends Composer<_$DaKanjiDB, HiraganaSpellfixCost> {
+  $HiraganaSpellfixCostOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<String> get word => $composableBuilder(
-    column: $table.word,
+  ColumnOrderings<int> get iLang => $composableBuilder(
+    column: $table.iLang,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get rank => $composableBuilder(
-    column: $table.rank,
+  ColumnOrderings<String> get cFrom => $composableBuilder(
+    column: $table.cFrom,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get distance => $composableBuilder(
-    column: $table.distance,
+  ColumnOrderings<String> get cTo => $composableBuilder(
+    column: $table.cTo,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get langid => $composableBuilder(
-    column: $table.langid,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get score => $composableBuilder(
-    column: $table.score,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get matchlen => $composableBuilder(
-    column: $table.matchlen,
+  ColumnOrderings<int> get iCost => $composableBuilder(
+    column: $table.iCost,
     builder: (column) => ColumnOrderings(column),
   );
 }
 
-class $ReadingSpellfixAnnotationComposer
-    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
-  $ReadingSpellfixAnnotationComposer({
+class $HiraganaSpellfixCostAnnotationComposer
+    extends Composer<_$DaKanjiDB, HiraganaSpellfixCost> {
+  $HiraganaSpellfixCostAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<String> get word =>
-      $composableBuilder(column: $table.word, builder: (column) => column);
+  GeneratedColumn<int> get iLang =>
+      $composableBuilder(column: $table.iLang, builder: (column) => column);
 
-  GeneratedColumn<int> get rank =>
-      $composableBuilder(column: $table.rank, builder: (column) => column);
+  GeneratedColumn<String> get cFrom =>
+      $composableBuilder(column: $table.cFrom, builder: (column) => column);
 
-  GeneratedColumn<int> get distance =>
-      $composableBuilder(column: $table.distance, builder: (column) => column);
+  GeneratedColumn<String> get cTo =>
+      $composableBuilder(column: $table.cTo, builder: (column) => column);
 
-  GeneratedColumn<int> get langid =>
-      $composableBuilder(column: $table.langid, builder: (column) => column);
-
-  GeneratedColumn<int> get score =>
-      $composableBuilder(column: $table.score, builder: (column) => column);
-
-  GeneratedColumn<int> get matchlen =>
-      $composableBuilder(column: $table.matchlen, builder: (column) => column);
+  GeneratedColumn<int> get iCost =>
+      $composableBuilder(column: $table.iCost, builder: (column) => column);
 }
 
-class $ReadingSpellfixTableManager
+class $HiraganaSpellfixCostTableManager
     extends
         RootTableManager<
           _$DaKanjiDB,
-          ReadingSpellfix,
-          ReadingSpellfixData,
-          $ReadingSpellfixFilterComposer,
-          $ReadingSpellfixOrderingComposer,
-          $ReadingSpellfixAnnotationComposer,
-          $ReadingSpellfixCreateCompanionBuilder,
-          $ReadingSpellfixUpdateCompanionBuilder,
+          HiraganaSpellfixCost,
+          HiraganaSpellfixCostData,
+          $HiraganaSpellfixCostFilterComposer,
+          $HiraganaSpellfixCostOrderingComposer,
+          $HiraganaSpellfixCostAnnotationComposer,
+          $HiraganaSpellfixCostCreateCompanionBuilder,
+          $HiraganaSpellfixCostUpdateCompanionBuilder,
           (
-            ReadingSpellfixData,
-            BaseReferences<_$DaKanjiDB, ReadingSpellfix, ReadingSpellfixData>,
+            HiraganaSpellfixCostData,
+            BaseReferences<
+              _$DaKanjiDB,
+              HiraganaSpellfixCost,
+              HiraganaSpellfixCostData
+            >,
           ),
-          ReadingSpellfixData,
+          HiraganaSpellfixCostData,
           PrefetchHooks Function()
         > {
-  $ReadingSpellfixTableManager(_$DaKanjiDB db, ReadingSpellfix table)
+  $HiraganaSpellfixCostTableManager(_$DaKanjiDB db, HiraganaSpellfixCost table)
     : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $ReadingSpellfixFilterComposer($db: db, $table: table),
+              $HiraganaSpellfixCostFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $ReadingSpellfixOrderingComposer($db: db, $table: table),
+              $HiraganaSpellfixCostOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $ReadingSpellfixAnnotationComposer($db: db, $table: table),
+              $HiraganaSpellfixCostAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<String> word = const Value.absent(),
-                Value<int?> rank = const Value.absent(),
-                Value<int?> distance = const Value.absent(),
-                Value<int?> langid = const Value.absent(),
-                Value<int?> score = const Value.absent(),
-                Value<int?> matchlen = const Value.absent(),
+                Value<int?> iLang = const Value.absent(),
+                Value<String?> cFrom = const Value.absent(),
+                Value<String?> cTo = const Value.absent(),
+                Value<int?> iCost = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => ReadingSpellfixCompanion(
-                word: word,
-                rank: rank,
-                distance: distance,
-                langid: langid,
-                score: score,
-                matchlen: matchlen,
+              }) => HiraganaSpellfixCostCompanion(
+                iLang: iLang,
+                cFrom: cFrom,
+                cTo: cTo,
+                iCost: iCost,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
-                required String word,
-                Value<int?> rank = const Value.absent(),
-                Value<int?> distance = const Value.absent(),
-                Value<int?> langid = const Value.absent(),
-                Value<int?> score = const Value.absent(),
-                Value<int?> matchlen = const Value.absent(),
+                Value<int?> iLang = const Value.absent(),
+                Value<String?> cFrom = const Value.absent(),
+                Value<String?> cTo = const Value.absent(),
+                Value<int?> iCost = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => ReadingSpellfixCompanion.insert(
-                word: word,
-                rank: rank,
-                distance: distance,
-                langid: langid,
-                score: score,
-                matchlen: matchlen,
+              }) => HiraganaSpellfixCostCompanion.insert(
+                iLang: iLang,
+                cFrom: cFrom,
+                cTo: cTo,
+                iCost: iCost,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -20696,159 +20990,25 @@ class $ReadingSpellfixTableManager
       );
 }
 
-typedef $ReadingSpellfixProcessedTableManager =
+typedef $HiraganaSpellfixCostProcessedTableManager =
     ProcessedTableManager<
       _$DaKanjiDB,
-      ReadingSpellfix,
-      ReadingSpellfixData,
-      $ReadingSpellfixFilterComposer,
-      $ReadingSpellfixOrderingComposer,
-      $ReadingSpellfixAnnotationComposer,
-      $ReadingSpellfixCreateCompanionBuilder,
-      $ReadingSpellfixUpdateCompanionBuilder,
+      HiraganaSpellfixCost,
+      HiraganaSpellfixCostData,
+      $HiraganaSpellfixCostFilterComposer,
+      $HiraganaSpellfixCostOrderingComposer,
+      $HiraganaSpellfixCostAnnotationComposer,
+      $HiraganaSpellfixCostCreateCompanionBuilder,
+      $HiraganaSpellfixCostUpdateCompanionBuilder,
       (
-        ReadingSpellfixData,
-        BaseReferences<_$DaKanjiDB, ReadingSpellfix, ReadingSpellfixData>,
-      ),
-      ReadingSpellfixData,
-      PrefetchHooks Function()
-    >;
-typedef $SpellfixCostCreateCompanionBuilder =
-    SpellfixCostCompanion Function({
-      required String char,
-      required int cost,
-      Value<int> rowid,
-    });
-typedef $SpellfixCostUpdateCompanionBuilder =
-    SpellfixCostCompanion Function({
-      Value<String> char,
-      Value<int> cost,
-      Value<int> rowid,
-    });
-
-class $SpellfixCostFilterComposer extends Composer<_$DaKanjiDB, SpellfixCost> {
-  $SpellfixCostFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get char => $composableBuilder(
-    column: $table.char,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get cost => $composableBuilder(
-    column: $table.cost,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $SpellfixCostOrderingComposer
-    extends Composer<_$DaKanjiDB, SpellfixCost> {
-  $SpellfixCostOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get char => $composableBuilder(
-    column: $table.char,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get cost => $composableBuilder(
-    column: $table.cost,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $SpellfixCostAnnotationComposer
-    extends Composer<_$DaKanjiDB, SpellfixCost> {
-  $SpellfixCostAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get char =>
-      $composableBuilder(column: $table.char, builder: (column) => column);
-
-  GeneratedColumn<int> get cost =>
-      $composableBuilder(column: $table.cost, builder: (column) => column);
-}
-
-class $SpellfixCostTableManager
-    extends
-        RootTableManager<
+        HiraganaSpellfixCostData,
+        BaseReferences<
           _$DaKanjiDB,
-          SpellfixCost,
-          SpellfixCostData,
-          $SpellfixCostFilterComposer,
-          $SpellfixCostOrderingComposer,
-          $SpellfixCostAnnotationComposer,
-          $SpellfixCostCreateCompanionBuilder,
-          $SpellfixCostUpdateCompanionBuilder,
-          (
-            SpellfixCostData,
-            BaseReferences<_$DaKanjiDB, SpellfixCost, SpellfixCostData>,
-          ),
-          SpellfixCostData,
-          PrefetchHooks Function()
-        > {
-  $SpellfixCostTableManager(_$DaKanjiDB db, SpellfixCost table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $SpellfixCostFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $SpellfixCostOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $SpellfixCostAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> char = const Value.absent(),
-                Value<int> cost = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => SpellfixCostCompanion(char: char, cost: cost, rowid: rowid),
-          createCompanionCallback:
-              ({
-                required String char,
-                required int cost,
-                Value<int> rowid = const Value.absent(),
-              }) => SpellfixCostCompanion.insert(
-                char: char,
-                cost: cost,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $SpellfixCostProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      SpellfixCost,
-      SpellfixCostData,
-      $SpellfixCostFilterComposer,
-      $SpellfixCostOrderingComposer,
-      $SpellfixCostAnnotationComposer,
-      $SpellfixCostCreateCompanionBuilder,
-      $SpellfixCostUpdateCompanionBuilder,
-      (
-        SpellfixCostData,
-        BaseReferences<_$DaKanjiDB, SpellfixCost, SpellfixCostData>,
+          HiraganaSpellfixCost,
+          HiraganaSpellfixCostData
+        >,
       ),
-      SpellfixCostData,
+      HiraganaSpellfixCostData,
       PrefetchHooks Function()
     >;
 typedef $$KanjiTableTableCreateCompanionBuilder =
@@ -33648,6 +33808,8 @@ typedef $$TermMetaBankV3_X_IpaTagTableTableProcessedTableManager =
 class $DaKanjiDBManager {
   final _$DaKanjiDB _db;
   $DaKanjiDBManager(this._db);
+  $ReadingSpellfixTableManager get readingSpellfix =>
+      $ReadingSpellfixTableManager(_db, _db.readingSpellfix);
   $$TermTableTableTableManager get termTable =>
       $$TermTableTableTableManager(_db, _db.termTable);
   $TermFtsTableManager get termFts => $TermFtsTableManager(_db, _db.termFts);
@@ -33704,10 +33866,8 @@ class $DaKanjiDBManager {
         _db,
         _db.termBankV3XTagBankTable,
       );
-  $ReadingSpellfixTableManager get readingSpellfix =>
-      $ReadingSpellfixTableManager(_db, _db.readingSpellfix);
-  $SpellfixCostTableManager get spellfixCost =>
-      $SpellfixCostTableManager(_db, _db.spellfixCost);
+  $HiraganaSpellfixCostTableManager get hiraganaSpellfixCost =>
+      $HiraganaSpellfixCostTableManager(_db, _db.hiraganaSpellfixCost);
   $$KanjiTableTableTableManager get kanjiTable =>
       $$KanjiTableTableTableManager(_db, _db.kanjiTable);
   $$IndexTableTableTableManager get indexTable =>

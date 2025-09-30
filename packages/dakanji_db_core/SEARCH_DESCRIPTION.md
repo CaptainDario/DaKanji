@@ -3,14 +3,15 @@
 ## Input formats and normalization
 
 * Hiragana / Katakana
-  * Full-width and Half-width characters: Unify all characters to a single form. 
+  * Full-width and Half-width characters: Unify all characters to a single form.
     * ｱ == ア
     * A == Ａ
   * Kana Folding:
     * りんご should match リンゴ
   * More intuitive handling of 'n → ん' (convert `n'`, and `n ` to ん)
-    * If n can match ん and another kana like に
-      * Include a direct match AND a converted version with に
+    * If n can match んい and another kana like に
+      * Term match: んい
+      * Variant match: に
   * ー should match its vowel equivalent
     * ラーメン could also be found by らあめん
   * Kanji

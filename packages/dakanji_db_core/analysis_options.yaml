@@ -20,6 +20,8 @@ include: package:lints/recommended.yaml
 #     - camel_case_types
 
 analyzer:
+  errors:
+    curly_braces_in_flow_control_structures: ignore
   exclude:
     - '**.freezed.dart'
     - '**.g.dart'

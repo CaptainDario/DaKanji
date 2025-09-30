@@ -14,7 +14,7 @@ import '../util/db_files.dart';
 import 'dictionary_search_deconjugation_test_cases.dart';
 import 'dictionary_search_fuzzy_test_cases.dart';
 import 'dictionary_search_language_filtering_test_cases.dart';
-import 'dictionary_search_romaji_test_cases.dart';
+import 'dictionary_search_input_preprocessing_test_cases.dart';
 import 'dictionary_search_sorting_test_cases.dart';
 import 'dictionary_search_tag_filtering_test_cases.dart';
 import 'dictionary_search_test_cases.dart';
@@ -25,17 +25,17 @@ import 'dictionary_search_test_helper_classes.dart';
 
 // Lists are defined at the top level (this is fine)
 final List<List<SearchTestCase>> testCases = [
-  termSearchTestCases,
+  searchTestCases,
   deconjugationTestCases,
   wildcardSearchTestCases,
-  romajiSearchTestCases,
+  inputPreprocessingSearchTestCases,
   sortingTestCases,
   fuzzySearchTestCases,
   tagFilteringTestCases,
   languageFilteringTestCases,
 ];
 final List<String> testCaseNames = [
-  "Term Search Test Cases",
+  "Search Test Cases",
   "Deconjugation Test Cases",
   "Wildcard Search Test Cases",
   "Romaji Search Test Cases",

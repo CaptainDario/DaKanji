@@ -63,7 +63,7 @@ class SearchMatchGroup {
 
   factory SearchMatchGroup.fromDictionaryMatchList(List<DictionarySearchFts5DriftResult> matches) {
 
-    List<DictionaryMatch> exactMatches = [], prefixMatches = [], tokenMatches = [];
+    List<DictionaryMatch> exactMatches = [], prefixMatches = [], tokenMatches = [], fuzzyMatches = [], wildcardMatches = [];
     for (var driftResult in matches) {
       DictionaryMatch r = DictionaryMatch(
         match: driftResult.highlightedText!,
@@ -73,6 +73,7 @@ class SearchMatchGroup {
       if(driftResult.matchTypePriority == 1) exactMatches.add(r);
       else if(driftResult.matchTypePriority == 2) prefixMatches.add(r);
       else if(driftResult.matchTypePriority == 3) tokenMatches.add(r);
+      else if(driftResult.matchTypePriority == 4) fuzzyMatches.add(r);
 
     }
 
@@ -80,8 +81,8 @@ class SearchMatchGroup {
       exactMatchs: exactMatches,
       prefixMatchs: prefixMatches,
       tokenMatchs: tokenMatches,
-      fuzzyMatchs: [],
-      wildcardMatchs: []
+      fuzzyMatchs: fuzzyMatches,
+      wildcardMatchs: wildcardMatches
     );
   }
 
