@@ -24,10 +24,8 @@ import 'dictionary_search_test_helper_classes.dart';
 
 // Lists are defined at the top level (this is fine)
 final List<List<SearchTestCase>> testCases = [
-  deconjugationTestCases,
   searchTestCases,
-  
-
+  deconjugationTestCases,
   wildcardSearchTestCases,
   inputPreprocessingSearchTestCases,
   sortingTestCases,
@@ -39,7 +37,7 @@ final List<String> testCaseNames = [
   "Search Test Cases",
   "Deconjugation Test Cases",
   "Wildcard Search Test Cases",
-  "Romaji Search Test Cases",
+  "Input processing Test Cases",
   "Sorting Test Cases",
   "Fuzzy Search Test Cases",
   "Tag Filtering Test Cases",

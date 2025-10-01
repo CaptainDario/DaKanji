@@ -122,26 +122,29 @@ class SearchMatchGroup {
   factory SearchMatchGroup.fromDictionaryMatchList(
       List<DictionarySearchFts5DriftResult> matches,
       String searchTerm,
+      bool isWildcardSearch,
       {
-        String? spellfixSuggestion,
         String? variantReason
       }
     ) {
 
     if(matches.isEmpty) return SearchMatchGroup.empty();
 
-    List<DictionaryMatch> exactMatches = [],
-        prefixMatches = [],
-        tokenMatches = [],
-        fuzzyMatches = [],
-        wildcardMatches = [];
+    List<DictionaryMatch> exactMatches = [], prefixMatches = [],
+                          tokenMatches = [], fuzzyMatches = [], 
+                          wildcardMatches = [];
     for (int i = 0; i < matches.length; i++) {
       DictionarySearchFts5DriftResult driftResult = matches[i];
       DictionaryMatch r = DictionaryMatch(
-          match: driftResult.highlightedText!,
-          spellfixSuggestion: driftResult.spellfixSuggestion,
-          entry: TermBankV3Entry.fromSearchTermDriftResult(driftResult));
+        match: driftResult.highlightedText!,
+        spellfixSuggestion: driftResult.spellfixSuggestion,
+        entry: TermBankV3Entry.fromSearchTermDriftResult(driftResult)
+      );
 
+      if(isWildcardSearch) {
+        wildcardMatches.add(r);
+        continue;
+      }
       if (driftResult.matchTypePriority == 1) exactMatches.add(r);
       else if (driftResult.matchTypePriority == 2) prefixMatches.add(r);
       else if (driftResult.matchTypePriority == 3) tokenMatches.add(r);
@@ -149,13 +152,14 @@ class SearchMatchGroup {
     }
 
     return SearchMatchGroup(
-        searchTerm: searchTerm,
-        variantReason: variantReason,
-        exactMatches: exactMatches,
-        prefixMatches: prefixMatches,
-        tokenMatches: tokenMatches,
-        fuzzyMatches: fuzzyMatches,
-        wildcardMatches: wildcardMatches);
+      searchTerm: searchTerm,
+      variantReason: variantReason,
+      exactMatches: exactMatches,
+      prefixMatches: prefixMatches,
+      tokenMatches: tokenMatches,
+      fuzzyMatches: fuzzyMatches,
+      wildcardMatches: wildcardMatches
+    );
   }
 
   @override
