@@ -6,7 +6,7 @@ List<SearchTestCase> inputPreprocessingSearchTestCases = [
   SearchTestCase(
     description: '$descriptionPrefix: Search with Romaji input (taberu -> たべる)',
     query: 'taberu',
-    hiraganaMatches: const ExpectedMatchGroup(
+    hiraganaQueryMatches: const ExpectedMatchGroup(
       exactMatches: [
         ExpectedSearchResult(term: '食べる', reading: 'たべる', match: 'たべる', definitions: ["to eat"]),
       ],
@@ -16,9 +16,9 @@ List<SearchTestCase> inputPreprocessingSearchTestCases = [
     ),
   ),
   SearchTestCase(
-    description: '$descriptionPrefix: Search with Romaji input (kawaii -> かわいい)',
-    query: 'kawaii',
-    hiraganaMatches: const ExpectedMatchGroup(
+    description: '$descriptionPrefix: Search with Romaji and kana input (カワii -> かわいい)',
+    query: 'カワii',
+    hiraganaQueryMatches: const ExpectedMatchGroup(
       exactMatches: [
         ExpectedSearchResult(term: '可愛い', reading: 'かわいい', match: 'かわいい', definitions: ["cute; lovely; charming"]),
       ],

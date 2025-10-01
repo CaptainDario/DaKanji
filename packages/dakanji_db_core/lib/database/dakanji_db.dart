@@ -112,6 +112,7 @@ part 'dakanji_db.g.dart';
     'general_tables/definition_fts5_table.drift',
     'general_tables/reading_fts5_table.drift', 'general_tables/reading_spellfix_table.drift',
     'general_tables/term_fts5_table.drift',
+    'general_tables/hiragana_spellfix_cost.drift',
     'db_queries/stat_queries.drift',
     'db_queries/dictionary_search_queries.drift'
   }

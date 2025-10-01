@@ -1,28 +1,69 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 
-
-
 /// Utility class representing the overall results from a dictionary search.
 /// It groups results based on whether they matched the search term directly,
 /// matched the hiragana form of the term (romaji converted to hiragana), or
 /// matched pre-processed variants of the term (e.g., 食べます→食べる).
 class DictionarySearchResult {
-
-  /// Matches from the original search term.
-  final SearchMatchGroup termMatches;
-  /// Matches from the hiragana-converted search term.
-  final SearchMatchGroup hiraganaMatches;
+  /// Matches from the original search query.
+  final SearchMatchGroup queryMatches;
+  /// Matches from the hiragana-converted search query.
+  final SearchMatchGroup hiraganaQueryMatches;
   /// Matches from pre-processed variants of the search term.
   /// For example, de-conjugated forms.
-  final List<SearchMatchGroup> variantTermMatches;
+  final List<SearchMatchGroup> queryVariantMatches;
 
   DictionarySearchResult({
-    required this.termMatches,
-    required this.hiraganaMatches,
-    required this.variantTermMatches,
+    required this.queryMatches,
+    required this.hiraganaQueryMatches,
+    required this.queryVariantMatches,
   });
-  
+
+  /// Override for a comprehensive and readable summary of all search results.
+  @override
+  String toString() {
+    final buffer = StringBuffer();
+    const sectionIndent = '  ';
+
+    buffer.writeln('\n--- 📖 Dictionary Search Results ---');
+
+    // 1. Original Query Matches
+    if (!queryMatches.isEmpty) {
+      buffer.writeln('\n▼ Matches for Original Query');
+      buffer.write(queryMatches.toFormattedString(indent: sectionIndent));
+    }
+
+    // 2. Hiragana Query Matches
+    if (!hiraganaQueryMatches.isEmpty) {
+      buffer.writeln('\n▼ Matches for Hiragana Query');
+      buffer.write(hiraganaQueryMatches.toFormattedString(indent: sectionIndent));
+    }
+
+    // 3. De-conjugated / Variant Matches
+    final nonEmptyVariants =
+        queryVariantMatches.where((v) => !v.isEmpty).toList();
+    if (nonEmptyVariants.isNotEmpty) {
+      buffer.writeln(
+          '\n▼ Matches for De-conjugated Variants (${nonEmptyVariants.length})');
+      for (var i = 0; i < nonEmptyVariants.length; i++) {
+        buffer.writeln('$sectionIndent- Variant ${i + 1}:');
+        // Add extra indentation for the content of each variant.
+        buffer.write(
+            nonEmptyVariants[i].toFormattedString(indent: '$sectionIndent  '));
+      }
+    }
+
+    // Check if any matches were found at all.
+    if (queryMatches.isEmpty &&
+        hiraganaQueryMatches.isEmpty &&
+        nonEmptyVariants.isEmpty) {
+      buffer.writeln("\n<No matches found anywhere>");
+    }
+
+    buffer.writeln('\n------------------------------------');
+    return buffer.toString();
+  }
 }
 
 /// Utility class representing a grouped set of search results from the
@@ -30,84 +71,148 @@ class DictionarySearchResult {
 /// categories based on the type of match.
 class SearchMatchGroup {
 
+  /// The search term that produced this match
+  final String searchTerm;
+  /// If this match was found via a variant (e.g., de-conjugation),
+  /// this field describes the reason (e.g., 食べられます (polite -> potential))
+  final String? variantReason;
+
   /// Matches that exactly match the search term.
-  /// E.g., searching for 'でんしゃ' returns '電車 (densha)'. 
-  final List<DictionaryMatch> exactMatchs;
+  /// E.g., searching for 'でんしゃ' returns '電車 (densha)'.
+  final List<DictionaryMatch> exactMatches;
   /// Matches that start with the search term.
   /// E.g., searching for 'でんしゃ' returns '電車賃 (denshachin)'.
-  final List<DictionaryMatch> prefixMatchs;
+  final List<DictionaryMatch> prefixMatches;
   /// Matches that contain the search term as a token.
   /// E.g., searching for 'でんしゃ' returns '満員電車 (man'in densha)'.
-  final List<DictionaryMatch> tokenMatchs;
+  final List<DictionaryMatch> tokenMatches;
   /// Matches that are similar to the search term (fuzzy).
-  /// E.g., searching for 'でんさ' returns '電車 (densha)'.
-  final List<DictionaryMatch> fuzzyMatchs;
+  /// E.g., searching for 'りょこお' returns '旅行 (ryokou)'.
+  final List<DictionaryMatch> fuzzyMatches;
   /// Matches that fit wildcard patterns.
   /// E.g., searching for 'で*しゃ' returns '電車 (densha)'.
-  final List<DictionaryMatch> wildcardMatchs;
+  final List<DictionaryMatch> wildcardMatches;
 
   SearchMatchGroup({
-    required this.exactMatchs,
-    required this.prefixMatchs,
-    required this.tokenMatchs,
-    required this.fuzzyMatchs,
-    required this.wildcardMatchs,
+    required this.searchTerm,
+    this.variantReason,
+    required this.exactMatches,
+    required this.prefixMatches,
+    required this.tokenMatches,
+    required this.fuzzyMatches,
+    required this.wildcardMatches,
   });
 
-  SearchMatchGroup.empty() : 
-    exactMatchs = [],
-    prefixMatchs = [],
-    tokenMatchs = [],
-    fuzzyMatchs = [],
-    wildcardMatchs = [];
+  SearchMatchGroup.empty()
+      : searchTerm = '',
+        variantReason = null,
+        exactMatches = [],
+        prefixMatches = [],
+        tokenMatches = [],
+        fuzzyMatches = [],
+        wildcardMatches = [];
 
-  factory SearchMatchGroup.fromDictionaryMatchList(List<DictionarySearchFts5DriftResult> matches) {
+  bool get isEmpty =>
+      exactMatches.isEmpty &&
+      prefixMatches.isEmpty &&
+      tokenMatches.isEmpty &&
+      fuzzyMatches.isEmpty &&
+      wildcardMatches.isEmpty;
 
-    List<DictionaryMatch> exactMatches = [], prefixMatches = [], tokenMatches = [], fuzzyMatches = [], wildcardMatches = [];
-    for (var driftResult in matches) {
+  factory SearchMatchGroup.fromDictionaryMatchList(
+      List<DictionarySearchFts5DriftResult> matches,
+      String searchTerm,
+      {
+        String? spellfixSuggestion,
+        String? variantReason
+      }
+    ) {
+
+    if(matches.isEmpty) return SearchMatchGroup.empty();
+
+    List<DictionaryMatch> exactMatches = [],
+        prefixMatches = [],
+        tokenMatches = [],
+        fuzzyMatches = [],
+        wildcardMatches = [];
+    for (int i = 0; i < matches.length; i++) {
+      DictionarySearchFts5DriftResult driftResult = matches[i];
       DictionaryMatch r = DictionaryMatch(
-        match: driftResult.highlightedText!,
-        entry: TermBankV3Entry.fromSearchTermDriftResult(driftResult)
-      );
+          match: driftResult.highlightedText!,
+          spellfixSuggestion: driftResult.spellfixSuggestion,
+          entry: TermBankV3Entry.fromSearchTermDriftResult(driftResult));
 
-      if(driftResult.matchTypePriority == 1) exactMatches.add(r);
-      else if(driftResult.matchTypePriority == 2) prefixMatches.add(r);
-      else if(driftResult.matchTypePriority == 3) tokenMatches.add(r);
-      else if(driftResult.matchTypePriority == 4) fuzzyMatches.add(r);
-
+      if (driftResult.matchTypePriority == 1) exactMatches.add(r);
+      else if (driftResult.matchTypePriority == 2) prefixMatches.add(r);
+      else if (driftResult.matchTypePriority == 3) tokenMatches.add(r);
+      else if (driftResult.matchTypePriority == 4) fuzzyMatches.add(r);
     }
 
     return SearchMatchGroup(
-      exactMatchs: exactMatches,
-      prefixMatchs: prefixMatches,
-      tokenMatchs: tokenMatches,
-      fuzzyMatchs: fuzzyMatches,
-      wildcardMatchs: wildcardMatches
-    );
+        searchTerm: searchTerm,
+        variantReason: variantReason,
+        exactMatches: exactMatches,
+        prefixMatches: prefixMatches,
+        tokenMatches: tokenMatches,
+        fuzzyMatches: fuzzyMatches,
+        wildcardMatches: wildcardMatches);
   }
 
+  @override
+  String toString() => toFormattedString();
+
+  String toFormattedString({String indent = ''}) {
+    if (isEmpty) return '$indent<Empty Match Group>';
+    
+    final buffer = StringBuffer();
+    final nextIndent = '$indent  ';
+
+    void printSection(String title, List<DictionaryMatch> matches) {
+      if (matches.isNotEmpty) {
+        buffer.writeln('$indent▶ $title (${matches.length}):');
+        for (final match in matches) {
+          buffer.writeln(match.toFormattedString(indent: nextIndent));
+        }
+      }
+    }
+
+    printSection('Exact Matches', exactMatches);
+    printSection('Prefix Matches', prefixMatches);
+    printSection('Token Matches', tokenMatches);
+    printSection('Fuzzy Matches', fuzzyMatches);
+    printSection('Wildcard Matches', wildcardMatches);
+
+    return buffer.toString();
+  }
 }
 
 /// Utility class representing a single search result from the dictionary search.
 class DictionaryMatch {
-
-  /// The text that was matched (e.g., 食べるラー油 -> 食べる).
+  /// The tokens that was matched (e.g., 食べるラー油 -> 食べる).
   final String match;
+  /// If this match was found via spellfix, this field contains the suggestion
+  /// that was used to find it.
+  final String? spellfixSuggestion;
   /// The full dictionary entry that was matched.
   final TermBankV3Entry entry;
 
-  DictionaryMatch({
-    required this.match,
-    required this.entry
-  });
+  DictionaryMatch(
+    {
+      required this.match,
+      this.spellfixSuggestion,
+      required this.entry,
+    }
+  );
 
   @override
-  String toString() {
-    return '<<Instance of \'DictionarySearchResult\'> with '
-           '`match`: \'$match\' and '
-           '`entry.term`: \'${entry.term}\' and '
-           '`entry.reading`: \'${entry.reading}\' and '
-           '`entry.definitions`: ${entry.definitions}>';
-  }
+  String toString() => toFormattedString();
 
+  String toFormattedString({String indent = ''}) {
+    final buffer = StringBuffer();
+    buffer.writeln('$indent${entry.term} [${entry.reading}] (Matched: "$match")');
+    for (var i = 0; i < entry.definitions.length; i++) {
+      buffer.writeln('$indent  ${i + 1}. ${entry.definitions[i]}');
+    }
+    return buffer.toString().trimRight();
+  }
 }

@@ -12,7 +12,7 @@ List<SearchTestCase> fuzzySearchTestCases = [
   SearchTestCase(
     description: "Fuzzy (Sort Order): Lower cost errors (voiced kana, cost 10) should rank higher than higher cost errors (default substitution, cost 100+)",
     query: "にほんちん",
-    termMatches: const ExpectedMatchGroup(
+    queryMatches: const ExpectedMatchGroup(
       fuzzyMatches: [
         // 1. Expected: 日本人 (にほんじん)
         // Reason: 'ち' -> 'じ' is a single, low-cost (10) substitution.
@@ -39,7 +39,7 @@ List<SearchTestCase> fuzzySearchTestCases = [
   SearchTestCase(
     description: "Fuzzy (match): Long vowel confusion りょこお -> りょこう (Cost 25)",
     query: "りょこお",
-    termMatches: const ExpectedMatchGroup(
+    queryMatches: const ExpectedMatchGroup(
       fuzzyMatches: [
         ExpectedSearchResult(
           term: '旅行',
@@ -50,12 +50,42 @@ List<SearchTestCase> fuzzySearchTestCases = [
       ],
     ),
   ),
+  // Tests a common phonetic error defined in your cost table.
+  SearchTestCase(
+    description: "Fuzzy (match): Long vowel confusion りょこしゃ -> りょこうしゃ",
+    query: "りょこしゃ",
+    queryMatches: const ExpectedMatchGroup(
+      fuzzyMatches: [
+        ExpectedSearchResult(
+          term: '旅行者',
+          reading: 'りょこうしゃ',
+          definitions: ["traveller; traveler"],
+          match: 'りょこうしゃ',
+        ),
+      ],
+    ),
+  ),
+  // Tests a common error defined in your cost table.
+  SearchTestCase(
+    description: "Fuzzy (match): Sound confusion でんさ -> でんしゃ",
+    query: "りょこしゃ",
+    queryMatches: const ExpectedMatchGroup(
+      fuzzyMatches: [
+        ExpectedSearchResult(
+          term: '電車',
+          reading: 'でんしゃ',
+          definitions: ['(electric) train'],
+          match: '電車',
+        ),
+      ],
+    ),
+  ),
 
   // Tests a common typing mistake involving yōon characters.
   SearchTestCase(
     description: "Fuzzy (match): Small vs large kana でんしや -> でんしゃ (Cost 20)",
     query: "でんしや",
-    termMatches: const ExpectedMatchGroup(
+    queryMatches: const ExpectedMatchGroup(
       fuzzyMatches: [
         ExpectedSearchResult(
           term: '電車',

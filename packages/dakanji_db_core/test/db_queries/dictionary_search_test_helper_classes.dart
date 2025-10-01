@@ -40,20 +40,20 @@ class SearchTestCase {
   final bool isFuture;
 
   /// Expected results from the original, unmodified query.
-  final ExpectedMatchGroup termMatches;
+  final ExpectedMatchGroup queryMatches;
 
   /// Expected results from the Romaji-to-Hiragana converted query.
-  final ExpectedMatchGroup hiraganaMatches;
+  final ExpectedMatchGroup hiraganaQueryMatches;
 
   /// Expected results from de-conjugated or other normalized query variants.
-  final List<ExpectedMatchGroup> variantMatches;
+  final List<ExpectedMatchGroup> queryVariantMatches;
 
   const SearchTestCase({
     required this.description,
     required this.query,
-    this.termMatches = const ExpectedMatchGroup(),
-    this.hiraganaMatches = const ExpectedMatchGroup(),
-    this.variantMatches = const [],
+    this.queryMatches = const ExpectedMatchGroup(),
+    this.hiraganaQueryMatches = const ExpectedMatchGroup(),
+    this.queryVariantMatches = const [],
     this.isFuture = false,
   });
 }

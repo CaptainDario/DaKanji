@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:dakanji_db_core/database/db_queries/dictionary_search_result.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:language_processing/iso/iso_table.dart';
 import 'package:test/test.dart';
@@ -25,8 +24,10 @@ import 'dictionary_search_test_helper_classes.dart';
 
 // Lists are defined at the top level (this is fine)
 final List<List<SearchTestCase>> testCases = [
-  searchTestCases,
   deconjugationTestCases,
+  searchTestCases,
+  
+
   wildcardSearchTestCases,
   inputPreprocessingSearchTestCases,
   sortingTestCases,
@@ -84,19 +85,32 @@ void main() {
               ['jmdict_en'], 
               true, 
             );
-
+            print("Results:\n $results");
+            print("Expected:\n $testCase");
+            
             // Assert against the new result structure
-            expectMatchGroup(results.termMatches, testCase.termMatches, testCase.query, 'termMatches');
-            expectMatchGroup(results.hiraganaMatches, testCase.hiraganaMatches, testCase.query, 'hiraganaMatches');
+            expectMatchGroup(results.queryMatches, testCase.queryMatches, testCase.query, 'termMatches');
+            expectMatchGroup(results.hiraganaQueryMatches, testCase.hiraganaQueryMatches, testCase.query, 'hiraganaMatches');
 
-            expect(
-              results.variantTermMatches,
-              hasLength(testCase.variantMatches.length),
-              reason: "Unexpected number of variant match groups for query '${testCase.query}'."
-            );
+            final actualVariants = results.queryVariantMatches;
+            final expectedVariants = testCase.queryVariantMatches;
 
-            for (int i = 0; i < testCase.variantMatches.length; i++) {
-              expectMatchGroup(results.variantTermMatches[i], testCase.variantMatches[i], testCase.query, 'variantMatches[$i]');
+            if (actualVariants.length != expectedVariants.length) {
+              fail(
+                'Unexpected number of variant match groups for query \'${testCase.query}\'.\n'
+                'Expected length: ${expectedVariants.length}\n'
+                '  Actual length: ${actualVariants.length}\n'
+                '   ACTUAL CONTENTS:\n${actualVariants.map((g) => g.toFormattedString(indent: "    ")).join("\n")}'
+              );
+            }
+
+            for (int i = 0; i < expectedVariants.length; i++) {
+              expectMatchGroup(
+                actualVariants[i], 
+                expectedVariants[i], 
+                testCase.query, 
+                'variantMatches[$i]'
+              );
             }
           },
           skip: testCase.isFuture,

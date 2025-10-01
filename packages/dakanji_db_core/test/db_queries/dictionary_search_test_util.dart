@@ -24,11 +24,11 @@ void expectMatchGroup(
     String groupName,
 ) {
     final exactMatchers = expected.exactMatches.map(matchesSearchResult).toList();
-    expect(actual.exactMatchs, orderedEquals(exactMatchers), reason: "ExactMatches in group '$groupName' for query '$query' did not match.");
+    expect(actual.exactMatches, orderedEquals(exactMatchers), reason: "ExactMatches in group '$groupName' for query '$query' did not match.");
 
     final prefixMatchers = expected.prefixMatches.map(matchesSearchResult).toList();
-    expect(actual.prefixMatchs, orderedEquals(prefixMatchers), reason: "PrefixMatches in group '$groupName' for query '$query' did not match.");
+    expect(actual.prefixMatches, orderedEquals(prefixMatchers), reason: "PrefixMatches in group '$groupName' for query '$query' did not match.");
     
     final tokenMatchers = expected.tokenMatches.map(matchesSearchResult).toList();
-    expect(actual.tokenMatchs, orderedEquals(tokenMatchers), reason: "TokenMatches in group '$groupName' for query '$query' did not match.");
+    expect(actual.tokenMatches, orderedEquals(tokenMatchers), reason: "TokenMatches in group '$groupName' for query '$query' did not match.");
 }
