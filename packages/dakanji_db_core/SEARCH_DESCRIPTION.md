@@ -53,6 +53,12 @@
    1. Kanji
    2. Reading
    3. Definition
-4. Except exact match: Sort by length difference of search term and match
-5. Sort by result frequency
-6. Sort by fts5 relevance
+4. Sort by result frequency
+5. Sort by fts5 relevance
+6. Sort by length difference of search term and match
+
+## Filtering
+
+* Tag filtering
+* Language filtering
+* 
