@@ -136,7 +136,7 @@ class SearchMatchGroup {
     for (int i = 0; i < matches.length; i++) {
       DictionarySearchFts5DriftResult driftResult = matches[i];
       DictionaryMatch r = DictionaryMatch(
-        match: driftResult.highlightedText!,
+        match: driftResult.matchedText,
         spellfixSuggestion: driftResult.spellfixSuggestion,
         entry: TermBankV3Entry.fromSearchTermDriftResult(driftResult)
       );

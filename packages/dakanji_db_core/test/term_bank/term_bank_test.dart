@@ -1,6 +1,7 @@
 // Package imports:
 import 'dart:io';
 
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:path/path.dart' as p;
 
@@ -23,6 +24,8 @@ void main() async {
 
   late DaKanjiDB db;
   
+  late Mecab mecab;
+
   // Group all related term bank tests together.
   for (var testCaseIndex = 0; testCaseIndex < testCases.length; testCaseIndex++) {
     final termBankTestCases = testCases[testCaseIndex].$1;
@@ -33,10 +36,14 @@ void main() async {
       setUpAll(() async {
         db = DaKanjiDB(path: dakanjiDbPath);
         db.clearDB();
+
+        mecab = Mecab();
+        await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+        
         bool shouldIncludeFile(File file) =>
           (p.basename(file.path) == "term_bank_${testCaseIndex+1}.json" ||
           !p.basename(file.path).contains("term_bank"));
-        await partialInit(db, shouldIncludeFile, "term_bank_test"); 
+        await partialInit(db, shouldIncludeFile, "term_bank_test", mecab); 
       });
 
       // Loop through the test cases and dynamically create a test for each one.

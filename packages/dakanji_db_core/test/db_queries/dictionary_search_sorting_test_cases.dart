@@ -24,6 +24,9 @@ List<SearchTestCase> sortingTestCases = [
         // Length of '電車' (2) is closer to query '電' (1) than '電車賃' (3)
         ExpectedSearchResult(term: '電車', reading: 'でんしゃ', match: '電車', definitions: ["(electric) train"]),
         ExpectedSearchResult(term: '電車賃', reading: 'でんしゃちん', match: '電車賃', definitions: ["train fare"]),
+      ],
+      tokenMatches: [
+        ExpectedSearchResult(term: '満員電車', reading: 'まんいんでんしゃ', match: '満員電車', definitions: ["crowded train; packed train"]),
       ]
     ),
   ),

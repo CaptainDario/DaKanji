@@ -1,6 +1,8 @@
 // Dart imports:
 import 'dart:convert';
 
+import 'package:mecab_for_dart/mecab_dart.dart';
+
 import 'structured_content/parsed_term.dart';
 import 'structured_content/structured_content_parser.dart';
 import 'package:drift/drift.dart';
@@ -16,10 +18,11 @@ Future parseTermBankV3File(
   File termMetaBankFile,
   DaKanjiDB db,
   int dictId,
-  bool addFullJsonDefinitions) async {
+  bool addFullJsonDefinitions,
+  Mecab mecab) async {
 
   String termMetaBankJson = termMetaBankFile.readAsStringSync();
-  await parseTermBankV3(termMetaBankJson, db, dictId, addFullJsonDefinitions);
+  await parseTermBankV3(termMetaBankJson, db, dictId, addFullJsonDefinitions, mecab);
 
 }
 
@@ -28,7 +31,8 @@ Future parseTermBankV3(
   String termMetaBankJson,
   DaKanjiDB db,
   int dictId,
-  bool addFullJsonDefinitions) async {
+  bool addFullJsonDefinitions,
+  Mecab mecab) async {
 
   // decode json
   List jsonList = jsonDecode(termMetaBankJson);
@@ -87,7 +91,12 @@ Future parseTermBankV3(
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
         term: Value(term),
-        //: Value(generateSearchTokens(term))
+        termTokens: Value(() {
+          List<String> tokens = mecab.parse(term).map((e) => e.surface).toList();
+          tokens = tokens.sublist(0, tokens.length-1);
+          String joinedTokens = tokens.join(" ");
+          return joinedTokens == term ? null : joinedTokens;
+        } ())
       ));
     }
 

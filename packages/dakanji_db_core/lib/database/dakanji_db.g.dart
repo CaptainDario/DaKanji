@@ -451,8 +451,20 @@ class $TermTableTable extends TermTable
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
+  static const VerificationMeta _termTokensMeta = const VerificationMeta(
+    'termTokens',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, term];
+  late final GeneratedColumn<String> termTokens = GeneratedColumn<String>(
+    'term_tokens',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, term, termTokens];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -476,6 +488,12 @@ class $TermTableTable extends TermTable
     } else if (isInserting) {
       context.missing(_termMeta);
     }
+    if (data.containsKey('term_tokens')) {
+      context.handle(
+        _termTokensMeta,
+        termTokens.isAcceptableOrUnknown(data['term_tokens']!, _termTokensMeta),
+      );
+    }
     return context;
   }
 
@@ -493,6 +511,10 @@ class $TermTableTable extends TermTable
         DriftSqlType.string,
         data['${effectivePrefix}term'],
       )!,
+      termTokens: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_tokens'],
+      ),
     );
   }
 
@@ -508,17 +530,29 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
 
   /// the term of this entry
   final String term;
-  const TermTableData({required this.id, required this.term});
+
+  /// the term's tokens (space-separated) of this entry
+  final String? termTokens;
+  const TermTableData({required this.id, required this.term, this.termTokens});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['term'] = Variable<String>(term);
+    if (!nullToAbsent || termTokens != null) {
+      map['term_tokens'] = Variable<String>(termTokens);
+    }
     return map;
   }
 
   TermTableCompanion toCompanion(bool nullToAbsent) {
-    return TermTableCompanion(id: Value(id), term: Value(term));
+    return TermTableCompanion(
+      id: Value(id),
+      term: Value(term),
+      termTokens: termTokens == null && nullToAbsent
+          ? const Value.absent()
+          : Value(termTokens),
+    );
   }
 
   factory TermTableData.fromJson(
@@ -529,6 +563,7 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
     return TermTableData(
       id: serializer.fromJson<int>(json['id']),
       term: serializer.fromJson<String>(json['term']),
+      termTokens: serializer.fromJson<String?>(json['termTokens']),
     );
   }
   @override
@@ -537,15 +572,26 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'term': serializer.toJson<String>(term),
+      'termTokens': serializer.toJson<String?>(termTokens),
     };
   }
 
-  TermTableData copyWith({int? id, String? term}) =>
-      TermTableData(id: id ?? this.id, term: term ?? this.term);
+  TermTableData copyWith({
+    int? id,
+    String? term,
+    Value<String?> termTokens = const Value.absent(),
+  }) => TermTableData(
+    id: id ?? this.id,
+    term: term ?? this.term,
+    termTokens: termTokens.present ? termTokens.value : this.termTokens,
+  );
   TermTableData copyWithCompanion(TermTableCompanion data) {
     return TermTableData(
       id: data.id.present ? data.id.value : this.id,
       term: data.term.present ? data.term.value : this.term,
+      termTokens: data.termTokens.present
+          ? data.termTokens.value
+          : this.termTokens,
     );
   }
 
@@ -553,44 +599,59 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
   String toString() {
     return (StringBuffer('TermTableData(')
           ..write('id: $id, ')
-          ..write('term: $term')
+          ..write('term: $term, ')
+          ..write('termTokens: $termTokens')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, term);
+  int get hashCode => Object.hash(id, term, termTokens);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TermTableData &&
           other.id == this.id &&
-          other.term == this.term);
+          other.term == this.term &&
+          other.termTokens == this.termTokens);
 }
 
 class TermTableCompanion extends UpdateCompanion<TermTableData> {
   final Value<int> id;
   final Value<String> term;
+  final Value<String?> termTokens;
   const TermTableCompanion({
     this.id = const Value.absent(),
     this.term = const Value.absent(),
+    this.termTokens = const Value.absent(),
   });
   TermTableCompanion.insert({
     this.id = const Value.absent(),
     required String term,
+    this.termTokens = const Value.absent(),
   }) : term = Value(term);
   static Insertable<TermTableData> custom({
     Expression<int>? id,
     Expression<String>? term,
+    Expression<String>? termTokens,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (term != null) 'term': term,
+      if (termTokens != null) 'term_tokens': termTokens,
     });
   }
 
-  TermTableCompanion copyWith({Value<int>? id, Value<String>? term}) {
-    return TermTableCompanion(id: id ?? this.id, term: term ?? this.term);
+  TermTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? term,
+    Value<String?>? termTokens,
+  }) {
+    return TermTableCompanion(
+      id: id ?? this.id,
+      term: term ?? this.term,
+      termTokens: termTokens ?? this.termTokens,
+    );
   }
 
   @override
@@ -602,6 +663,9 @@ class TermTableCompanion extends UpdateCompanion<TermTableData> {
     if (term.present) {
       map['term'] = Variable<String>(term.value);
     }
+    if (termTokens.present) {
+      map['term_tokens'] = Variable<String>(termTokens.value);
+    }
     return map;
   }
 
@@ -609,7 +673,8 @@ class TermTableCompanion extends UpdateCompanion<TermTableData> {
   String toString() {
     return (StringBuffer('TermTableCompanion(')
           ..write('id: $id, ')
-          ..write('term: $term')
+          ..write('term: $term, ')
+          ..write('termTokens: $termTokens')
           ..write(')'))
         .toString();
   }
@@ -630,8 +695,19 @@ class TermFts extends Table
     requiredDuringInsert: true,
     $customConstraints: '',
   );
+  static const VerificationMeta _termTokensMeta = const VerificationMeta(
+    'termTokens',
+  );
+  late final GeneratedColumn<String> termTokens = GeneratedColumn<String>(
+    'term_tokens',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
   @override
-  List<GeneratedColumn> get $columns => [term];
+  List<GeneratedColumn> get $columns => [term, termTokens];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -652,6 +728,14 @@ class TermFts extends Table
     } else if (isInserting) {
       context.missing(_termMeta);
     }
+    if (data.containsKey('term_tokens')) {
+      context.handle(
+        _termTokensMeta,
+        termTokens.isAcceptableOrUnknown(data['term_tokens']!, _termTokensMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termTokensMeta);
+    }
     return context;
   }
 
@@ -665,6 +749,10 @@ class TermFts extends Table
         DriftSqlType.string,
         data['${effectivePrefix}term'],
       )!,
+      termTokens: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_tokens'],
+      )!,
     );
   }
 
@@ -677,21 +765,23 @@ class TermFts extends Table
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(term, content=\'term_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
+      'fts5(term, term_tokens, content=\'term_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
 }
 
 class TermFt extends DataClass implements Insertable<TermFt> {
   final String term;
-  const TermFt({required this.term});
+  final String termTokens;
+  const TermFt({required this.term, required this.termTokens});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['term'] = Variable<String>(term);
+    map['term_tokens'] = Variable<String>(termTokens);
     return map;
   }
 
   TermFtsCompanion toCompanion(bool nullToAbsent) {
-    return TermFtsCompanion(term: Value(term));
+    return TermFtsCompanion(term: Value(term), termTokens: Value(termTokens));
   }
 
   factory TermFt.fromJson(
@@ -699,58 +789,87 @@ class TermFt extends DataClass implements Insertable<TermFt> {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermFt(term: serializer.fromJson<String>(json['term']));
+    return TermFt(
+      term: serializer.fromJson<String>(json['term']),
+      termTokens: serializer.fromJson<String>(json['term_tokens']),
+    );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{'term': serializer.toJson<String>(term)};
+    return <String, dynamic>{
+      'term': serializer.toJson<String>(term),
+      'term_tokens': serializer.toJson<String>(termTokens),
+    };
   }
 
-  TermFt copyWith({String? term}) => TermFt(term: term ?? this.term);
+  TermFt copyWith({String? term, String? termTokens}) => TermFt(
+    term: term ?? this.term,
+    termTokens: termTokens ?? this.termTokens,
+  );
   TermFt copyWithCompanion(TermFtsCompanion data) {
-    return TermFt(term: data.term.present ? data.term.value : this.term);
+    return TermFt(
+      term: data.term.present ? data.term.value : this.term,
+      termTokens: data.termTokens.present
+          ? data.termTokens.value
+          : this.termTokens,
+    );
   }
 
   @override
   String toString() {
     return (StringBuffer('TermFt(')
-          ..write('term: $term')
+          ..write('term: $term, ')
+          ..write('termTokens: $termTokens')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => term.hashCode;
+  int get hashCode => Object.hash(term, termTokens);
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || (other is TermFt && other.term == this.term);
+      identical(this, other) ||
+      (other is TermFt &&
+          other.term == this.term &&
+          other.termTokens == this.termTokens);
 }
 
 class TermFtsCompanion extends UpdateCompanion<TermFt> {
   final Value<String> term;
+  final Value<String> termTokens;
   final Value<int> rowid;
   const TermFtsCompanion({
     this.term = const Value.absent(),
+    this.termTokens = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   TermFtsCompanion.insert({
     required String term,
+    required String termTokens,
     this.rowid = const Value.absent(),
-  }) : term = Value(term);
+  }) : term = Value(term),
+       termTokens = Value(termTokens);
   static Insertable<TermFt> custom({
     Expression<String>? term,
+    Expression<String>? termTokens,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (term != null) 'term': term,
+      if (termTokens != null) 'term_tokens': termTokens,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
-  TermFtsCompanion copyWith({Value<String>? term, Value<int>? rowid}) {
+  TermFtsCompanion copyWith({
+    Value<String>? term,
+    Value<String>? termTokens,
+    Value<int>? rowid,
+  }) {
     return TermFtsCompanion(
       term: term ?? this.term,
+      termTokens: termTokens ?? this.termTokens,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -760,6 +879,9 @@ class TermFtsCompanion extends UpdateCompanion<TermFt> {
     final map = <String, Expression>{};
     if (term.present) {
       map['term'] = Variable<String>(term.value);
+    }
+    if (termTokens.present) {
+      map['term_tokens'] = Variable<String>(termTokens.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -771,6 +893,7 @@ class TermFtsCompanion extends UpdateCompanion<TermFt> {
   String toString() {
     return (StringBuffer('TermFtsCompanion(')
           ..write('term: $term, ')
+          ..write('termTokens: $termTokens, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -14505,21 +14628,17 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final HiraganaSpellfixCost hiraganaSpellfixCost = HiraganaSpellfixCost(
     this,
   );
-  late final Trigger termTableAi = Trigger(
-    'CREATE TRIGGER term_table_ai AFTER INSERT ON term_table BEGIN INSERT INTO term_fts ("rowid", term) VALUES (new.id, new.term);END',
-    'term_table_ai',
+  late final Trigger definitionTableAi = Trigger(
+    'CREATE TRIGGER definition_table_ai AFTER INSERT ON definition_table BEGIN INSERT INTO definition_fts ("rowid", definition) VALUES (new.id, new.definition);END',
+    'definition_table_ai',
   );
-  late final Trigger termTableAd = Trigger(
-    'CREATE TRIGGER term_table_ad AFTER DELETE ON term_table BEGIN INSERT INTO term_fts (term_fts, "rowid", term) VALUES (\'delete\', old.id, old.term);END',
-    'term_table_ad',
+  late final Trigger definitionTableAd = Trigger(
+    'CREATE TRIGGER definition_table_ad AFTER DELETE ON definition_table BEGIN INSERT INTO definition_fts (definition_fts, "rowid", definition) VALUES (\'delete\', old.id, old.definition);END',
+    'definition_table_ad',
   );
-  late final Trigger termTableAu = Trigger(
-    'CREATE TRIGGER term_table_au AFTER UPDATE OF term ON term_table BEGIN INSERT INTO term_fts (term_fts, "rowid", term) VALUES (\'delete\', old.id, old.term);INSERT INTO term_fts ("rowid", term) VALUES (new.id, new.term);END',
-    'term_table_au',
-  );
-  late final Index term = Index(
-    'term',
-    'CREATE INDEX term ON term_table (term)',
+  late final Trigger definitionTableAu = Trigger(
+    'CREATE TRIGGER definition_table_au AFTER UPDATE OF definition ON definition_table BEGIN INSERT INTO definition_fts (definition_fts, "rowid", definition) VALUES (\'delete\', old.id, old.definition);INSERT INTO definition_fts ("rowid", definition) VALUES (new.id, new.definition);END',
+    'definition_table_au',
   );
   late final Trigger readingSpellfixInsert = Trigger(
     'CREATE TRIGGER reading_spellfix_insert AFTER INSERT ON reading_table BEGIN INSERT INTO reading_spellfix (word) VALUES (new.reading);END',
@@ -14549,17 +14668,21 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'CREATE TRIGGER reading_table_au AFTER UPDATE OF reading ON reading_table BEGIN INSERT INTO reading_fts (reading_fts, "rowid", reading) VALUES (\'delete\', old.id, old.reading);INSERT INTO reading_fts ("rowid", reading) VALUES (new.id, new.reading);END',
     'reading_table_au',
   );
-  late final Trigger definitionTableAi = Trigger(
-    'CREATE TRIGGER definition_table_ai AFTER INSERT ON definition_table BEGIN INSERT INTO definition_fts ("rowid", definition) VALUES (new.id, new.definition);END',
-    'definition_table_ai',
+  late final Trigger termTableAi = Trigger(
+    'CREATE TRIGGER term_table_ai AFTER INSERT ON term_table BEGIN INSERT INTO term_fts ("rowid", term, term_tokens) VALUES (new.id, new.term, new.term_tokens);END',
+    'term_table_ai',
   );
-  late final Trigger definitionTableAd = Trigger(
-    'CREATE TRIGGER definition_table_ad AFTER DELETE ON definition_table BEGIN INSERT INTO definition_fts (definition_fts, "rowid", definition) VALUES (\'delete\', old.id, old.definition);END',
-    'definition_table_ad',
+  late final Trigger termTableAd = Trigger(
+    'CREATE TRIGGER term_table_ad AFTER DELETE ON term_table BEGIN INSERT INTO term_fts (term_fts, "rowid", term, term_tokens) VALUES (\'delete\', old.id, old.term, old.term_tokens);END',
+    'term_table_ad',
   );
-  late final Trigger definitionTableAu = Trigger(
-    'CREATE TRIGGER definition_table_au AFTER UPDATE OF definition ON definition_table BEGIN INSERT INTO definition_fts (definition_fts, "rowid", definition) VALUES (\'delete\', old.id, old.definition);INSERT INTO definition_fts ("rowid", definition) VALUES (new.id, new.definition);END',
-    'definition_table_au',
+  late final Trigger termTableAu = Trigger(
+    'CREATE TRIGGER term_table_au AFTER UPDATE OF term, term_tokens ON term_table BEGIN INSERT INTO term_fts (term_fts, "rowid", term, term_tokens) VALUES (\'delete\', old.id, old.term, old.term_tokens);INSERT INTO term_fts ("rowid", term, term_tokens) VALUES (new.id, new.term, new.term_tokens);END',
+    'term_table_au',
+  );
+  late final Index term = Index(
+    'term',
+    'CREATE INDEX term ON term_table (term)',
   );
   late final Index name = Index(
     'name',
@@ -14681,7 +14804,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     String posFilter,
   ) {
     return customSelect(
-      'WITH SpellfixSuggestions AS (SELECT word, distance FROM reading_spellfix WHERE word MATCH ?1 AND distance > 0 AND distance < ?2 AND ?3 = 0 ORDER BY distance LIMIT 10), FtsMatches AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, highlight(term_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE ?3 = 0 AND term_fts MATCH ?4 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, highlight(reading_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE ?3 = 0 AND reading_fts MATCH ?4 UNION ALL SELECT DefJoin.term_bank_id, rank, DT.definition AS matched_text, highlight(definition_fts, 0, \'\', \'\') AS highlighted_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_fts AS FTS JOIN term_bank_v3_x_definition_table AS DefJoin ON FTS."rowid" = DefJoin.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE ?3 = 0 AND definition_fts MATCH ?4), GlobMatches AS (SELECT TB3T.id AS term_bank_id, 0 AS rank, TT.term AS matched_text, TT.term AS highlighted_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_table AS TT JOIN term_bank_v3_table AS TB3T ON TT.id = TB3T.term_id WHERE ?3 = 1 AND TT.term GLOB ?1 UNION ALL SELECT TB3T.id AS term_bank_id, 0 AS rank, RT.reading AS matched_text, RT.reading AS highlighted_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_table AS RT JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id WHERE ?3 = 1 AND RT.reading GLOB ?1 UNION ALL SELECT DefJoin.term_bank_id, 0 AS rank, DT.definition AS matched_text, DT.definition AS highlighted_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_table AS DT JOIN term_bank_v3_x_definition_table AS DefJoin ON DT.id = DefJoin.definition_id WHERE ?3 = 1 AND DT.definition GLOB ?1), RankedIDs AS (SELECT * FROM FtsMatches UNION ALL SELECT * FROM GlobMatches UNION ALL SELECT TB3T.id AS term_bank_id, S.distance AS rank, RT.reading AS matched_text, RT.reading AS highlighted_text, 4 AS match_type_priority, 2 AS match_column_priority, S.word AS spellfix_suggestion FROM SpellfixSuggestions AS S JOIN reading_table AS RT ON S.word = RT.reading JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id), FilteredByPoS AS (SELECT T3XDT.term_bank_id FROM term_bank_v3_x_definition_tag_table AS T3XDT JOIN term_bank_v3_definition_tags_table AS T3DT ON T3DT.id = T3XDT.definition_tag_id WHERE LENGTH(?5) > 2 AND T3DT.definition_tag IN (SELECT value FROM json_each(?5)) GROUP BY T3XDT.term_bank_id), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, highlighted_text, matched_text, spellfix_suggestion FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs WHERE(LENGTH(?5) <= 2)OR(term_bank_id IN (SELECT term_bank_id FROM FilteredByPoS))) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, matched_text, highlighted_text, R.match_type_priority, R.match_column_priority, R.spellfix_suggestion, V.* FROM term_bank_v3_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, V.popularity DESC, R.best_rank, LENGTH(R.matched_text)',
+      'WITH SpellfixSuggestions AS (SELECT word, distance FROM reading_spellfix WHERE word MATCH ?1 AND distance > 0 AND distance < ?2 AND ?3 = 0 ORDER BY distance LIMIT 10), FtsMatches AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE ?3 = 0 AND term_fts MATCH ?4 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE ?3 = 0 AND reading_fts MATCH ?4 UNION ALL SELECT DefJoin.term_bank_id, rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_fts AS FTS JOIN term_bank_v3_x_definition_table AS DefJoin ON FTS."rowid" = DefJoin.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE ?3 = 0 AND definition_fts MATCH ?4), GlobMatches AS (SELECT TB3T.id AS term_bank_id, 0 AS rank, TT.term AS matched_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_table AS TT JOIN term_bank_v3_table AS TB3T ON TT.id = TB3T.term_id WHERE ?3 = 1 AND TT.term GLOB ?1 UNION ALL SELECT TB3T.id AS term_bank_id, 0 AS rank, RT.reading AS matched_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_table AS RT JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id WHERE ?3 = 1 AND RT.reading GLOB ?1 UNION ALL SELECT DefJoin.term_bank_id, 0 AS rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_table AS DT JOIN term_bank_v3_x_definition_table AS DefJoin ON DT.id = DefJoin.definition_id WHERE ?3 = 1 AND DT.definition GLOB ?1), RankedIDs AS (SELECT * FROM FtsMatches UNION ALL SELECT * FROM GlobMatches UNION ALL SELECT TB3T.id AS term_bank_id, S.distance AS rank, RT.reading AS matched_text, 4 AS match_type_priority, 2 AS match_column_priority, S.word AS spellfix_suggestion FROM SpellfixSuggestions AS S JOIN reading_table AS RT ON S.word = RT.reading JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id), FilteredByPoS AS (SELECT T3XDT.term_bank_id FROM term_bank_v3_x_definition_tag_table AS T3XDT JOIN term_bank_v3_definition_tags_table AS T3DT ON T3DT.id = T3XDT.definition_tag_id WHERE LENGTH(?5) > 2 AND T3DT.definition_tag IN (SELECT value FROM json_each(?5)) GROUP BY T3XDT.term_bank_id), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, matched_text, spellfix_suggestion FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs WHERE(LENGTH(?5) <= 2)OR(term_bank_id IN (SELECT term_bank_id FROM FilteredByPoS))) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, matched_text, R.match_type_priority, R.match_column_priority, R.spellfix_suggestion, V.* FROM term_bank_v3_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, V.popularity DESC, R.best_rank, LENGTH(R.matched_text)',
       variables: [
         Variable<String>(query),
         Variable<int>(spellfixDistance),
@@ -14710,7 +14833,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       (QueryRow row) => DictionarySearchFts5DriftResult(
         fts5Rank: row.readNullable<double>('fts5_rank'),
         matchedText: row.read<String>('matched_text'),
-        highlightedText: row.readNullable<String>('highlighted_text'),
         matchTypePriority: row.read<int>('match_type_priority'),
         matchColumnPriority: row.read<int>('match_column_priority'),
         spellfixSuggestion: row.readNullable<String>('spellfix_suggestion'),
@@ -14873,10 +14995,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termBankV3XTagBankTable,
     termBankV3SearchView,
     hiraganaSpellfixCost,
-    termTableAi,
-    termTableAd,
-    termTableAu,
-    term,
+    definitionTableAi,
+    definitionTableAd,
+    definitionTableAu,
     readingSpellfixInsert,
     readingSpellfixDelete,
     readingSpellfixUpdate,
@@ -14884,9 +15005,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     readingTableAi,
     readingTableAd,
     readingTableAu,
-    definitionTableAi,
-    definitionTableAd,
-    definitionTableAu,
+    termTableAi,
+    termTableAd,
+    termTableAu,
+    term,
     name,
     kanjiTable,
     indexTable,
@@ -14932,24 +15054,24 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
     WritePropagation(
       on: TableUpdateQuery.onTableName(
-        'term_table',
+        'definition_table',
         limitUpdateKind: UpdateKind.insert,
       ),
-      result: [TableUpdate('term_fts', kind: UpdateKind.insert)],
+      result: [TableUpdate('definition_fts', kind: UpdateKind.insert)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
-        'term_table',
+        'definition_table',
         limitUpdateKind: UpdateKind.delete,
       ),
-      result: [TableUpdate('term_fts', kind: UpdateKind.insert)],
+      result: [TableUpdate('definition_fts', kind: UpdateKind.insert)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
-        'term_table',
+        'definition_table',
         limitUpdateKind: UpdateKind.update,
       ),
-      result: [TableUpdate('term_fts', kind: UpdateKind.insert)],
+      result: [TableUpdate('definition_fts', kind: UpdateKind.insert)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
@@ -14998,24 +15120,24 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
-        'definition_table',
+        'term_table',
         limitUpdateKind: UpdateKind.insert,
       ),
-      result: [TableUpdate('definition_fts', kind: UpdateKind.insert)],
+      result: [TableUpdate('term_fts', kind: UpdateKind.insert)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
-        'definition_table',
+        'term_table',
         limitUpdateKind: UpdateKind.delete,
       ),
-      result: [TableUpdate('definition_fts', kind: UpdateKind.insert)],
+      result: [TableUpdate('term_fts', kind: UpdateKind.insert)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
-        'definition_table',
+        'term_table',
         limitUpdateKind: UpdateKind.update,
       ),
-      result: [TableUpdate('definition_fts', kind: UpdateKind.insert)],
+      result: [TableUpdate('term_fts', kind: UpdateKind.insert)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
@@ -15261,9 +15383,17 @@ typedef $ReadingSpellfixProcessedTableManager =
       PrefetchHooks Function()
     >;
 typedef $$TermTableTableCreateCompanionBuilder =
-    TermTableCompanion Function({Value<int> id, required String term});
+    TermTableCompanion Function({
+      Value<int> id,
+      required String term,
+      Value<String?> termTokens,
+    });
 typedef $$TermTableTableUpdateCompanionBuilder =
-    TermTableCompanion Function({Value<int> id, Value<String> term});
+    TermTableCompanion Function({
+      Value<int> id,
+      Value<String> term,
+      Value<String?> termTokens,
+    });
 
 final class $$TermTableTableReferences
     extends BaseReferences<_$DaKanjiDB, $TermTableTable, TermTableData> {
@@ -15336,6 +15466,11 @@ class $$TermTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => ColumnFilters(column),
+  );
+
   Expression<bool> termBankV3TableRefs(
     Expression<bool> Function($$TermBankV3TableTableFilterComposer f) f,
   ) {
@@ -15405,6 +15540,11 @@ class $$TermTableTableOrderingComposer
     column: $table.term,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TermTableTableAnnotationComposer
@@ -15421,6 +15561,11 @@ class $$TermTableTableAnnotationComposer
 
   GeneratedColumn<String> get term =>
       $composableBuilder(column: $table.term, builder: (column) => column);
+
+  GeneratedColumn<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => column,
+  );
 
   Expression<T> termBankV3TableRefs<T extends Object>(
     Expression<T> Function($$TermBankV3TableTableAnnotationComposer a) f,
@@ -15507,10 +15652,22 @@ class $$TermTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> term = const Value.absent(),
-              }) => TermTableCompanion(id: id, term: term),
+                Value<String?> termTokens = const Value.absent(),
+              }) => TermTableCompanion(
+                id: id,
+                term: term,
+                termTokens: termTokens,
+              ),
           createCompanionCallback:
-              ({Value<int> id = const Value.absent(), required String term}) =>
-                  TermTableCompanion.insert(id: id, term: term),
+              ({
+                Value<int> id = const Value.absent(),
+                required String term,
+                Value<String?> termTokens = const Value.absent(),
+              }) => TermTableCompanion.insert(
+                id: id,
+                term: term,
+                termTokens: termTokens,
+              ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
@@ -15598,9 +15755,17 @@ typedef $$TermTableTableProcessedTableManager =
       })
     >;
 typedef $TermFtsCreateCompanionBuilder =
-    TermFtsCompanion Function({required String term, Value<int> rowid});
+    TermFtsCompanion Function({
+      required String term,
+      required String termTokens,
+      Value<int> rowid,
+    });
 typedef $TermFtsUpdateCompanionBuilder =
-    TermFtsCompanion Function({Value<String> term, Value<int> rowid});
+    TermFtsCompanion Function({
+      Value<String> term,
+      Value<String> termTokens,
+      Value<int> rowid,
+    });
 
 class $TermFtsFilterComposer extends Composer<_$DaKanjiDB, TermFts> {
   $TermFtsFilterComposer({
@@ -15612,6 +15777,11 @@ class $TermFtsFilterComposer extends Composer<_$DaKanjiDB, TermFts> {
   });
   ColumnFilters<String> get term => $composableBuilder(
     column: $table.term,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -15628,6 +15798,11 @@ class $TermFtsOrderingComposer extends Composer<_$DaKanjiDB, TermFts> {
     column: $table.term,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $TermFtsAnnotationComposer extends Composer<_$DaKanjiDB, TermFts> {
@@ -15640,6 +15815,11 @@ class $TermFtsAnnotationComposer extends Composer<_$DaKanjiDB, TermFts> {
   });
   GeneratedColumn<String> get term =>
       $composableBuilder(column: $table.term, builder: (column) => column);
+
+  GeneratedColumn<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => column,
+  );
 }
 
 class $TermFtsTableManager
@@ -15671,13 +15851,23 @@ class $TermFtsTableManager
           updateCompanionCallback:
               ({
                 Value<String> term = const Value.absent(),
+                Value<String> termTokens = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => TermFtsCompanion(term: term, rowid: rowid),
+              }) => TermFtsCompanion(
+                term: term,
+                termTokens: termTokens,
+                rowid: rowid,
+              ),
           createCompanionCallback:
               ({
                 required String term,
+                required String termTokens,
                 Value<int> rowid = const Value.absent(),
-              }) => TermFtsCompanion.insert(term: term, rowid: rowid),
+              }) => TermFtsCompanion.insert(
+                term: term,
+                termTokens: termTokens,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),
@@ -34013,7 +34203,6 @@ class $DaKanjiDBManager {
 class DictionarySearchFts5DriftResult {
   final double? fts5Rank;
   final String matchedText;
-  final String? highlightedText;
   final int matchTypePriority;
   final int matchColumnPriority;
   final String? spellfixSuggestion;
@@ -34030,7 +34219,6 @@ class DictionarySearchFts5DriftResult {
   DictionarySearchFts5DriftResult({
     this.fts5Rank,
     required this.matchedText,
-    this.highlightedText,
     required this.matchTypePriority,
     required this.matchColumnPriority,
     this.spellfixSuggestion,

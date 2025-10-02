@@ -1,5 +1,6 @@
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
@@ -14,6 +15,7 @@ Future<void> partialInit(
   DaKanjiDB db,
   bool Function(File) shouldIncludeFile,
   String folderName,
+  Mecab mecab,
   {
     List<File> otherFilesToCopy = const [],
   }
@@ -35,7 +37,7 @@ Future<void> partialInit(
 
   print("Setting up test database...");
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(d, db, true);
+  await parseDictionaryFolder(d, db, true, mecab);
   print("Database setup and conversion took ${s.elapsedMilliseconds} ms.");
 
 }

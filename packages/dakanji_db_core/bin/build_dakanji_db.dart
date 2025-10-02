@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:dakanji_db_core/conversion/tatoeba.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
@@ -16,8 +17,12 @@ void main() async {
   await downloadSources();
 
   // setup 
-  //DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
-  //await db.deleteDB();
+  DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
+  await db.deleteDB();
+
+  // init mecab
+  final mecab = Mecab();
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   //await kanjiVG(db);
 
@@ -85,15 +90,15 @@ Future radicals(DaKanjiDB db) async {
 
 
 /// parses the kanjidic2 and adds it to the given [DaKanjiDB]
-Future kanjidic2(DaKanjiDB db) async {
+Future kanjidic2(DaKanjiDB db, Mecab mecab) async {
 
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(kanjidic2InputPath), db, false);
+  await parseDictionaryFolder(Directory(kanjidic2InputPath), db, false, mecab);
   print("Converting KanjiDic2 took: ${s.elapsedMilliseconds}ms");
 
 }
 
-Future tatoeba(DaKanjiDB db) async {
+Future tatoeba(DaKanjiDB db, Mecab mecab) async {
 
   Stopwatch s = Stopwatch()..start();
   await convertTatoebaFiles(

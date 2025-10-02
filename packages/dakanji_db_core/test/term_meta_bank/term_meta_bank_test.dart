@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
@@ -14,9 +15,12 @@ void main() async {
   DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
   db.clearDB();
 
+  final mecab = Mecab();
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(devExampleSentencesPath), db, true);
+  await parseDictionaryFolder(Directory(devExampleSentencesPath), db, true, mecab);
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   test('Test importing samples', () async {

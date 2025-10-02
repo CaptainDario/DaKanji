@@ -24,9 +24,12 @@ dictionary_search_fts5_drift:
     FtsMatches AS (
       -- Find matches in 'term' (Kanji)
       SELECT
-        TB3T.id as term_bank_id, rank, TT.term as matched_text, highlight(term_fts, 0, '', '') AS highlighted_text,
-        CASE WHEN TT.term = :query THEN 1 WHEN TT.term LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
-        1 AS match_column_priority, NULL as spellfix_suggestion
+        TB3T.id as term_bank_id, rank, TT.term as matched_text,
+        CASE WHEN TT.term = :query THEN 1
+        WHEN TT.term LIKE :query || '%' THEN 2
+        ELSE 3 END AS match_type_priority,
+        1 AS match_column_priority,
+        NULL as spellfix_suggestion
       FROM term_fts AS FTS
       JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.term_id
       JOIN term_table AS TT ON FTS.rowid = TT.id
@@ -36,7 +39,7 @@ dictionary_search_fts5_drift:
 
       -- Find matches in 'reading'
       SELECT
-        TB3T.id as term_bank_id, rank, RT.reading as matched_text, highlight(reading_fts, 0, '', '') AS highlighted_text,
+        TB3T.id as term_bank_id, rank, RT.reading as matched_text,
         CASE WHEN RT.reading = :query THEN 1 WHEN RT.reading LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
         2 AS match_column_priority, NULL as spellfix_suggestion
       FROM reading_fts AS FTS
@@ -48,7 +51,7 @@ dictionary_search_fts5_drift:
 
       -- Find matches in 'definition'
       SELECT
-        DefJoin.term_bank_id, rank, DT.definition as matched_text, highlight(definition_fts, 0, '', '') AS highlighted_text,
+        DefJoin.term_bank_id, rank, DT.definition as matched_text,
         CASE WHEN DT.definition = :query THEN 1 WHEN DT.definition LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
         3 AS match_column_priority, NULL as spellfix_suggestion
       FROM definition_fts AS FTS
@@ -61,7 +64,7 @@ dictionary_search_fts5_drift:
     GlobMatches AS (
       -- Find matches in 'term' (Kanji)
       SELECT
-        TB3T.id as term_bank_id, 0 as rank, TT.term as matched_text, TT.term AS highlighted_text,
+        TB3T.id as term_bank_id, 0 as rank, TT.term as matched_text,
         CASE WHEN TT.term = :query THEN 1 WHEN TT.term LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
         1 AS match_column_priority, NULL as spellfix_suggestion
       FROM term_table AS TT
@@ -72,7 +75,7 @@ dictionary_search_fts5_drift:
 
       -- Find matches in 'reading'
       SELECT
-        TB3T.id as term_bank_id, 0 as rank, RT.reading as matched_text, RT.reading AS highlighted_text,
+        TB3T.id as term_bank_id, 0 as rank, RT.reading as matched_text,
         CASE WHEN RT.reading = :query THEN 1 WHEN RT.reading LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
         2 AS match_column_priority, NULL as spellfix_suggestion
       FROM reading_table AS RT
@@ -83,7 +86,7 @@ dictionary_search_fts5_drift:
 
       -- Find matches in 'definition'
       SELECT
-        DefJoin.term_bank_id, 0 as rank, DT.definition as matched_text, DT.definition AS highlighted_text,
+        DefJoin.term_bank_id, 0 as rank, DT.definition as matched_text,
         CASE WHEN DT.definition = :query THEN 1 WHEN DT.definition LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
         3 AS match_column_priority, NULL as spellfix_suggestion
       FROM definition_table AS DT
@@ -99,7 +102,7 @@ dictionary_search_fts5_drift:
       UNION ALL
       -- Spellfix results (fuzzy search)
       SELECT
-        TB3T.id as term_bank_id, S.distance as rank, RT.reading as matched_text, RT.reading as highlighted_text,
+        TB3T.id as term_bank_id, S.distance as rank, RT.reading as matched_text,
         4 AS match_type_priority, 2 AS match_column_priority, S.word as spellfix_suggestion
       FROM SpellfixSuggestions AS S
       JOIN reading_table AS RT ON S.word = RT.reading
@@ -118,7 +121,7 @@ dictionary_search_fts5_drift:
       -- For each term, select the single best match based on the priority system.
       SELECT
         term_bank_id, rank as best_rank, match_type_priority, match_column_priority,
-        highlighted_text, matched_text, spellfix_suggestion
+        matched_text, spellfix_suggestion
       FROM (
         SELECT
           *,
@@ -141,7 +144,6 @@ dictionary_search_fts5_drift:
   SELECT
     R.best_rank as fts5_rank,
     matched_text,
-    highlighted_text,
     R.match_type_priority,
     R.match_column_priority,
     R.spellfix_suggestion, V.*

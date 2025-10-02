@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:language_processing/iso/iso_table.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:path/path.dart' as p;
 
@@ -50,10 +51,16 @@ void main() {
   late DaKanjiDB db;
 
   setUpAll(() async {
+
     if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
     db = DaKanjiDB(path: dakanjiDbPath);
+
+    // init mecab
+    final mecab = Mecab();
+    await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+
     bool shouldIncludeFile(File file) => !p.basename(file.path).contains("term_bank");
-    await partialInit(db, shouldIncludeFile, "term_search_test",
+    await partialInit(db, shouldIncludeFile, "term_search_test", mecab,
         otherFilesToCopy: [
           File(p.join(dataFilesPath, "testing_db", 'term_bank_1.json'))
         ]);

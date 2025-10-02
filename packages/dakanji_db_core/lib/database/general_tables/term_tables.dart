@@ -12,6 +12,6 @@ class TermTable extends Table {
   TextColumn get term => text().unique()();
 
   /// the term's tokens (space-separated) of this entry
-  //TextColumn get termTokens => text().unique().nullable()();
+  TextColumn get termTokens => text().unique().nullable()();
 
 }
