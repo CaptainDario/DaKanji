@@ -61,4 +61,3 @@
 
 * Tag filtering
 * Language filtering
-* 

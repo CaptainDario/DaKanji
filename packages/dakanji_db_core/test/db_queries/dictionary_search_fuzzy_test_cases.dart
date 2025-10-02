@@ -11,25 +11,24 @@ List<SearchTestCase> fuzzySearchTestCases = [
   // Therefore, 'にほんじん' should appear first.
   SearchTestCase(
     description: "Fuzzy (Sort Order): Lower cost errors (voiced kana, cost 10) should rank higher than higher cost errors (default substitution, cost 100+)",
-    query: "にほんちん",
+    query: "ちゅうごくしん",
     queryMatches: const ExpectedMatchGroup(
       fuzzyMatches: [
-        // 1. Expected: 日本人 (にほんじん)
-        // Reason: 'ち' -> 'じ' is a single, low-cost (10) substitution.
+        // 1. Expected: 中国人 (ちゅうごくじん)
+        // Reason: 'し' -> 'じ' is a single, low-cost (10) substitution.
         ExpectedSearchResult(
-          term: '日本人',
-          reading: 'にほんじん',
-          definitions: ['Japanese person'],
-          match: 'にほんじん',
+          term: '中国人',
+          reading: 'ちゅうごくじん',
+          definitions: ['Chinese person'],
+          match: 'ちゅうごくじん',
         ),
-        // 2. Expected: 電車賃 (でんしゃちん)
-        // Reason: 'にほん' vs 'でんしゃ' has multiple high-cost substitutions.
-        // The total distance will be much greater than 10.
+        // 2. Expected: 日本史 (にほんし)
+        // Reason: One high cost deletion (100)
         ExpectedSearchResult(
-          term: '電車賃',
-          reading: 'でんしゃちん',
-          definitions: ['train fare'],
-          match: 'でんしゃちん',
+          term: '中国史',
+          reading: 'ちゅうごくし',
+          definitions: ['Chinese history; history of China'],
+          match: 'ちゅうごくし',
         ),
       ],
     ),
@@ -65,21 +64,6 @@ List<SearchTestCase> fuzzySearchTestCases = [
       ],
     ),
   ),
-  // Tests a common error defined in your cost table.
-  SearchTestCase(
-    description: "Fuzzy (match): Sound confusion でんさ -> でんしゃ",
-    query: "りょこしゃ",
-    queryMatches: const ExpectedMatchGroup(
-      fuzzyMatches: [
-        ExpectedSearchResult(
-          term: '電車',
-          reading: 'でんしゃ',
-          definitions: ['(electric) train'],
-          match: '電車',
-        ),
-      ],
-    ),
-  ),
 
   // Tests a common typing mistake involving yōon characters.
   SearchTestCase(
@@ -95,6 +79,19 @@ List<SearchTestCase> fuzzySearchTestCases = [
         ),
       ],
     ),
-    
+  ),
+  SearchTestCase(
+    description: "Fuzzy (match): delete extra character",
+    query: "たべものう",
+    queryMatches: const ExpectedMatchGroup(
+      fuzzyMatches: [
+        ExpectedSearchResult(
+          term: '食べ物',
+          reading: 'たべもの',
+          definitions: ["food"],
+          match: 'たべもの',
+        ),
+      ],
+    ),
   ),
 ];

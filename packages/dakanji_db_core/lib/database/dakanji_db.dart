@@ -143,9 +143,10 @@ class DaKanjiDB extends _$DaKanjiDB {
       },
     );
   }
+  
 
   static QueryExecutor _openConnection(String path) {
-    return NativeDatabase.createInBackground(
+    QueryExecutor qe = NativeDatabase.createInBackground(
       File(path),
       sqlite3: () {
         sqlite3Native.loadSqliteVecExtension();
@@ -162,6 +163,8 @@ class DaKanjiDB extends _$DaKanjiDB {
       },
       readPool: 8
     );
+
+    return qe;
   }
 
   Future<List<GetMbSizesDriftResult>> getDbStats() async {

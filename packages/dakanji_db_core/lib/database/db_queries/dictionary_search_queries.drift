@@ -139,12 +139,17 @@ dictionary_search_fts5_drift:
 
   -- Finally, join the best-ranked IDs with the main view to get the full data
   SELECT
-    R.best_rank as fts5_rank, matched_text, highlighted_text, R.match_type_priority,
-    R.match_column_priority, R.spellfix_suggestion, V.*
+    R.best_rank as fts5_rank,
+    matched_text,
+    highlighted_text,
+    R.match_type_priority,
+    R.match_column_priority,
+    R.spellfix_suggestion, V.*
   FROM term_bank_v3_search_view AS V
   JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id
   ORDER BY
     R.match_type_priority,
     R.match_column_priority,
     V.popularity DESC,
-    R.best_rank;
+    R.best_rank,
+    LENGTH(R.matched_text);

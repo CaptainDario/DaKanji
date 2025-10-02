@@ -50,8 +50,8 @@ void main() {
   late DaKanjiDB db;
 
   setUpAll(() async {
+    if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
     db = DaKanjiDB(path: dakanjiDbPath);
-    db.clearDB();
     bool shouldIncludeFile(File file) => !p.basename(file.path).contains("term_bank");
     await partialInit(db, shouldIncludeFile, "term_search_test",
         otherFilesToCopy: [

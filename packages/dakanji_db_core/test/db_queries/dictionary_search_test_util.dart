@@ -31,4 +31,10 @@ void expectMatchGroup(
     
     final tokenMatchers = expected.tokenMatches.map(matchesSearchResult).toList();
     expect(actual.tokenMatches, orderedEquals(tokenMatchers), reason: "TokenMatches in group '$groupName' for query '$query' did not match.");
+
+    final fuzzyMatchers = expected.fuzzyMatches.map(matchesSearchResult).toList();
+    expect(actual.fuzzyMatches, orderedEquals(fuzzyMatchers), reason: "FuzzyMatches in group '$groupName' for query '$query' did not match.");
+
+    final wildcardMatchers = expected.wildcardMatches.map(matchesSearchResult).toList();
+    expect(actual.wildcardMatches, orderedEquals(wildcardMatchers), reason: "WildcardMatches in group '$groupName' for query '$query' did not match.");
 }
