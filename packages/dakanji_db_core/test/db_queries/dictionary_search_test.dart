@@ -62,7 +62,8 @@ void main() {
     bool shouldIncludeFile(File file) => !p.basename(file.path).contains("term_bank");
     await partialInit(db, shouldIncludeFile, "term_search_test", mecab,
         otherFilesToCopy: [
-          File(p.join(dataFilesPath, "testing_db", 'term_bank_1.json'))
+          File(p.join(dataFilesPath, "testing_db", 'term_bank_1.json')),
+          File(p.join(dataFilesPath, "testing_db", 'tag_bank_1.json')),
         ]);
   });
 
@@ -86,8 +87,7 @@ void main() {
             final results = await db.daKanjiDBDao.dictionarySearch(
               testCase.query,
               [Iso639_1.en],
-              // Providing a default dictionary ID to prevent the previous RangeError
-              ['jmdict_en'], 
+              testCase.tags, 
               true, 
             );
             print("Results:\n $results");
@@ -118,7 +118,6 @@ void main() {
               );
             }
           },
-          skip: testCase.isFuture,
         );
       }
     });

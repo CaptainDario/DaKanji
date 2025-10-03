@@ -132,9 +132,9 @@
         "n",
         "",
         95,
-        ["German person"],
+        ["Eine deutsche Person"],
         207,
-        ""
+        "DE"
     ],
     [
         "人",
@@ -234,7 +234,7 @@
         0,
         ["crowded train; packed train"],
         3,
-        ""
+        "JP R"
     ],
     [
         "本日",
@@ -274,7 +274,7 @@
         50,
         ["eat"],
         404,
-        ""
+        "EN"
     ],
     [
         "イート",

@@ -35,9 +35,12 @@ class ExpectedMatchGroup {
 /// Defines a single, comprehensive test case that can assert against the different
 /// categories of results from a `DictionaryLookupResult`.
 class SearchTestCase {
+
   final String description;
+
   final String query;
-  final bool isFuture;
+
+  final List<String> tags;
 
   /// Expected results from the original, unmodified query.
   final ExpectedMatchGroup queryMatches;
@@ -51,9 +54,9 @@ class SearchTestCase {
   const SearchTestCase({
     required this.description,
     required this.query,
+    this.tags = const [],
     this.queryMatches = const ExpectedMatchGroup(),
     this.hiraganaQueryMatches = const ExpectedMatchGroup(),
     this.queryVariantMatches = const [],
-    this.isFuture = false,
   });
 }

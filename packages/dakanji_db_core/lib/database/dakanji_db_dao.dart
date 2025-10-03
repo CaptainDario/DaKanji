@@ -45,18 +45,18 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
     // run the queries in parallel
     final results = (await Future.wait([
       db.dictionary_search_fts5_drift(term, spellfixDistance, useGlobInt,
-                                      "$term *", "[]").get(),
+                                      "$term *", "[]", jsonEncode(tags)).get(),
 
       if(hiraganaTerm != null)
         db.dictionary_search_fts5_drift(hiraganaTerm, spellfixDistance, useGlobInt,
-                                      "$hiraganaTerm *", "[]").get(),
+                                      "$hiraganaTerm *", "[]", jsonEncode(tags)).get(),
       if(hiraganaTerm == null) Future.sync(() => <DictionarySearchFts5DriftResult>[]),
       
       if(termVariants != null && !isWildcardSearch)
         for (final variant in termVariants) 
           db.dictionary_search_fts5_drift(
             variant.deconjugatedTerm, 0, useGlobInt, "${variant.deconjugatedTerm} *",
-            jsonEncode(variant.requiredPartsOfSpeech) 
+            jsonEncode(variant.requiredPartsOfSpeech), jsonEncode(tags)
           ).get()
     ]));
 

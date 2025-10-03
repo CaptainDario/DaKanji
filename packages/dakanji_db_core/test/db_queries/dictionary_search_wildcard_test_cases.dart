@@ -34,7 +34,7 @@ List<SearchTestCase> wildcardSearchTestCases = [
         ExpectedSearchResult(term: '中国人', reading: 'ちゅうごくじん', match: '中国人', definitions: ["Chinese person"]),
         ExpectedSearchResult(term: '人', reading: 'じん', match: '人', definitions: ["Person"]),
         ExpectedSearchResult(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"]),
-        ExpectedSearchResult(term: 'ドイツ人', reading: 'どいつじん', match: 'ドイツ人', definitions: ["German person"]),
+        ExpectedSearchResult(term: 'ドイツ人', reading: 'どいつじん', match: 'ドイツ人', definitions: ["Eine deutsche Person"]),
         
       ],
     ),
