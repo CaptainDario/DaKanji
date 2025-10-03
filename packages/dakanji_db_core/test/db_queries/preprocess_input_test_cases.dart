@@ -1,5 +1,5 @@
 // (input, convertRomajiToHiragana, expectedHiraganaTerm, expectedTermVariants)
-List<(String, bool, String?, String?)> preprocessInputTestCases = [
+List<(String, bool, String?, List<String>?)> preprocessInputTestCases = [
   // --- Hiragana / Katakana ---
   // Katakana to Hiragana
   ("コンピューター", false, "こんぴゅうたあ", null),
@@ -20,15 +20,15 @@ List<(String, bool, String?, String?)> preprocessInputTestCases = [
   // Romaji-only input, conversion OFF. 'term' is unchanged, 'hiraganaTerm' is null.
   ("konnichiha", false, null, null),
   // 'n' variations: n'
-  ("kon'ya", true, "こんや", null),
+  ("kon'ya", true, "こんや", ['こんう']),
   // 'n' at the end
-  ("ramen", true, "らめん", null),
+  ("ramen", true, "らめん", ['らめる', 'らむ']),
   // Long vowel mark
   ("ラーメン", true, "らあめん", null),
 
   // --- Mixed Input ---
   // Mixed Kanji and Romaji, conversion ON. 'term' keeps romaji, 'hiraganaTerm' has conversion.
-  ("食べru", true, "食べる", null),
+  ("食べru", true, "食べる",  ['食ぶ']),
   // Mixed Kanji and Romaji, conversion OFF.
   ("食べru", false, null, null),
   // Mixed full-width, katakana, and romaji, conversion ON.
@@ -40,9 +40,9 @@ List<(String, bool, String?, String?)> preprocessInputTestCases = [
 
   // -- Variants / Deconjugation ---
   // Simple verb
-  ("食べます", false, null, "食べる"),
+  ("食べます", false, null, ['食べむ', '食べる', '食ぶ']),
   // Simple verb from romaji
-  ("tabemasu", true, "たべます", "食べる"),
+  ("tabemasu", true, "たべます", ['たべむ', 'たべる', 'たぶ']),
 
   // --- Edge Cases ---
   // Input is already hiragana, conversion ON. No change, so hiraganaTerm is null.
