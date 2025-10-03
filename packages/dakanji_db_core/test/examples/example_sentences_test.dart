@@ -43,7 +43,7 @@ Future testExamplesV3(DaKanjiDB db) async {
       
         Stopwatch s = Stopwatch()..start();
         final results = (await db.exampleDao.searchExamples(
-          exampleSentencesTestQueries[i], [Iso639_1.en, Iso639_1.de]
+          exampleSentencesTestQueries[i].$1, exampleSentencesTestQueries[i].$2
         ));
         print("Looking up ${exampleSentencesTestQueries[i]} took ${s.elapsedMilliseconds}ms");
 
