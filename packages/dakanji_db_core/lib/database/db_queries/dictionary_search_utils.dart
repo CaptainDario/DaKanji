@@ -20,6 +20,8 @@ import 'package:fullwidth_halfwidth_converter/fullwidth_halfwidth_converter.dart
 /// - `processedTerms`: A list of processed terms
 ({String? hiraganaTerm, List<DeconjugationResult>? termVariants}) preprocessInput(String searchTerm, bool convertRomajiToHiragana) {
 
+  if(searchTerm == "") return (hiraganaTerm: null, termVariants: null);
+
   // 1. convert full-width romaji to half-width and half-width kana to full-width
   String normalizedTerm = searchTerm.toFullwidth(convertKana: true);
   normalizedTerm = normalizedTerm.toHalfwidth(
@@ -28,16 +30,20 @@ import 'package:fullwidth_halfwidth_converter/fullwidth_halfwidth_converter.dart
   // 2. convert all kana to hiragana
   normalizedTerm = katakanaToHiragana(normalizedTerm);
 
-  // 3. convert romaji to kana if convertRomajiToHiragana is true
-  //    AND the input contains romaji characters
+  // 3. convert romaji to kana
+  String? romajiToHiraganaResult;
+  if(convertRomajiToHiragana) romajiToHiraganaResult= romajiToHiragana(normalizedTerm);
+  
+  // Only set hiraganaTerm if the conversion actually changed the string
+  // AND the result contains ONLY Japanese characters
   String? hiraganaTerm;
-  if (convertRomajiToHiragana) {
-    final romajiToHiraganaResult = romajiToHiragana(normalizedTerm);
-    // Only set hiraganaTerm if the conversion actually changed the string
-    // AND the result contains ONLY Japanese characters
-    if (romajiToHiraganaResult != searchTerm && KanaKit().isJapanese(romajiToHiraganaResult)) {
-      hiraganaTerm = romajiToHiraganaResult;
-    }
+  if (romajiToHiraganaResult != null &&
+    romajiToHiraganaResult != searchTerm && KanaKit().isJapanese(romajiToHiraganaResult)) {
+    hiraganaTerm = romajiToHiraganaResult;
+  }
+  // OR the normalized term is different from the input term
+  else if (normalizedTerm != searchTerm) {
+    hiraganaTerm = normalizedTerm;
   }
 
   // 4. find all possible deconjugations of the hiragana term
