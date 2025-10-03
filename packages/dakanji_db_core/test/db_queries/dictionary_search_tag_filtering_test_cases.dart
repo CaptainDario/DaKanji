@@ -4,7 +4,7 @@ import 'dictionary_search_test_helper_classes.dart';
 
 List<SearchTestCase> tagFilteringTestCases = [
   SearchTestCase(
-    description: "Filter by single tag (Japanese)",
+    description: "Filter by single tag (DE)",
     query: '人',
     tags: ['DE'],
     queryMatches: const ExpectedMatchGroup(
@@ -43,5 +43,14 @@ List<SearchTestCase> tagFilteringTestCases = [
       ],
     ),
   ),
-  
+  SearchTestCase(
+    description: "Filter by single tag (DE) on wildcard search",
+    query: '*人',
+    tags: ['DE'],
+    queryMatches: const ExpectedMatchGroup(
+      wildcardMatches: [
+        ExpectedSearchResult(term: 'ドイツ人', reading: 'どいつじん', match: 'ドイツ人', definitions: ["Eine deutsche Person"]),
+      ],
+    ),
+  ),
 ];
