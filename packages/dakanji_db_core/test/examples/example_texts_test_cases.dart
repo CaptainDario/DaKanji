@@ -17,10 +17,10 @@ List<String> exampleTextsTestQueries = [
   "アニメーション"
 ];
 
-List<ExampleEntry> exampleTextTestsExpectedValues = Directory(p.join(testsPath, "examples"))
+List<ExampleEntry> exampleTextTestsExpectedValues = Directory(p.join(coreTestsPath, "examples"))
   .listSync().whereType<File>()
   .map((e) => File(e.absolute.path))
-  .where((e) => p.basename(e.path).startsWith("example_texts_expected_value_"))
+  .where((e) => p.basename(e.path).startsWith("example_texts_test_case_"))
   .toList()
   .sorted((a, b) => (extractNumber(a)).compareTo(extractNumber(b)))
   .map((e) => ExampleEntry.fromJson(jsonDecode(e.readAsStringSync())))

@@ -12,7 +12,7 @@ import '../util/files.dart';
 
 List<String> exampleSentencesTestQueries = ["勉強"];
 
-List<List<ExampleEntry>> exampleSentenceTestExpectedValues = Directory(p.join(testsPath, "examples"))
+List<List<ExampleEntry>> exampleSentenceTestExpectedValues = Directory(p.join(coreTestsPath, "examples"))
     .listSync().whereType<File>()
     .map((e) => File(e.absolute.path))
     .where((e) => p.basename(e.path).startsWith("example_sentences_expected_value_"))

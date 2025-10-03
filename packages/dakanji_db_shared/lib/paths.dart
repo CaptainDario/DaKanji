@@ -105,4 +105,4 @@ final tatoebaInputPath = p.joinAll([dakanjiDBInputFilesPath, tatoebaFolderPatter
 final tatoebaProcessedPath = p.joinAll([dakanjiDBInputFilesPath, tatoebaFolderPattern + processedSuffix]);
 
 /// path to the tests folder
-final testsPath = p.joinAll([Directory.current.path, "test"]);
+final coreTestsPath = p.joinAll([dakanjiDbProjectRoot, "packages", "dakanji_db_core", "test"]);

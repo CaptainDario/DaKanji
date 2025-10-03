@@ -14,6 +14,8 @@ import 'example_texts_test_cases.dart';
 
 
 void main() async {
+
+  print(coreTestsPath);
   
   // create the testing database (delete any existing database)
   DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
@@ -43,11 +45,11 @@ Future testExampleTexts(DaKanjiDB db) async {
 
         Stopwatch s = Stopwatch()..start();
         final results = (await db.exampleDao.searchExamples(
-          exampleTextsTestQueries[i], []
+          exampleTextsTestQueries[i], [Iso639_1.en]
         ));
+        print("This are my results: $results");
         print("Looking up ${exampleTextsTestQueries[i]} took ${s.elapsedMilliseconds}ms");
 
-        Directory(p.join(testsPath, "examples")).listSync();
         expect(results.first, equals(exampleTextTestsExpectedValues[i]));
 
       });

@@ -23,7 +23,15 @@ example_fts_search_drift:
         ON FTS.rowid = EDV.id
     WHERE
         example_fts MATCH :query
-        AND (EDV.language_code IN :languageCodes OR EDV.translation_id IS NULL)
+            AND 
+        (
+            (LENGTH(:languageCodes) <= 2)
+                OR
+            (EDV.language_code IN (SELECT value FROM json_each(:languageCodes)))
+                OR
+            EDV.translation_id IS NULL
+        )
+
     GROUP BY
         EDV.id
     LIMIT :limit OFFSET :offset;
