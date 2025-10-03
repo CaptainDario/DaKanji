@@ -74,8 +74,10 @@ final jmdictFileName = "JMdict";
 final kanjidic2Pattern = "KANJIDIC";
 /// KanjiVG input file folder name
 final kanjiVGPathPattern = "kanjivg";
-/// Radicals input file folder name
-final radicalsPathPattern = "radicals";
+/// Krad input file name
+final kradPathPattern = "krad";
+/// Radk input file name
+final radkPathPattern = "radk";
 /// Tatoeba input file folder name
 final tatoebaFolderPattern = "tatoeba";
 /// Suffix added to processed files
@@ -94,9 +96,13 @@ final kanjidic2InputPath = Directory(dakanjiDBInputFilesPath)
 final kanjiVGInputPath = Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(kanjiVGPathPattern))
   .first.path;
-/// path to the radical files input files that should be parsed
-final radicalsInputPath = Directory(dakanjiDBInputFilesPath)
-  .listSync().where((e) => p.basename(e.path).contains("radicals"))
+/// path to the krad file input files that should be parsed
+final kradInputPath = Directory(dakanjiDBInputFilesPath)
+  .listSync().where((e) => p.basename(e.path).contains(kradPathPattern))
+  .first.path;
+/// path to the radk file input files that should be parsed
+final radkInputPath = Directory(dakanjiDBInputFilesPath)
+  .listSync().where((e) => p.basename(e.path).contains(radkPathPattern))
   .first.path;
 /// path to the tatoeba input files that should be parsed
 final tatoebaInputPath = p.joinAll([dakanjiDBInputFilesPath, tatoebaFolderPattern]);

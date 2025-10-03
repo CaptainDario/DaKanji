@@ -83,7 +83,7 @@ Future kanjiVG(DaKanjiDB db) async {
 Future radicals(DaKanjiDB db) async {
 
   Stopwatch s = Stopwatch()..start();
-  await addRadicalsToDB(radicalsInputPath, db);
+  await addRadicalsToDB(radkInputPath, kradInputPath, db);
   print("Converting Radicals took: ${s.elapsedMilliseconds}ms");
 
 }

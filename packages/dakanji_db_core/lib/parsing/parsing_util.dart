@@ -2,9 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:archive/archive.dart';
 
-void main(List<String> args) {
-  archiveIteratorStreamed("/Users/darioklepoch/dev/DaKanji/dakanji_db/data/dakanji_db_input_files/JMdict_english.zip");
-}
 
 
 /// Reads a DaKanji DB compatabile data source (KanjiVG, Yomitan, ...)

@@ -9,17 +9,16 @@ import 'radicals_test_cases.dart';
 
 void main() async {
 
-
   // setup 
   DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
   await db.clearDB();
 
   // convert krad / radk file
   Stopwatch s = Stopwatch()..start();
-  await addRadicalsToDB(radicalsInputPath, db);
+  await addRadicalsToDB(radkInputPath, kradInputPath, db);
   print("Converting radicals took: ${s.elapsedMilliseconds}ms");
 
-  group('Radical Lookups', () async {
+  group('Radical Lookups', () {
     // test radical lookups
     for (final testCase in radicalLookuptests) {
       test('Looking up radicals of ${testCase.item1}', () async {

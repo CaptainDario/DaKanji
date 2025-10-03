@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:dakanji_db_core/parsing/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
@@ -66,17 +67,11 @@ Map<String, String> kanjiCodeLookup = {
 
 /// Converts the radk and krad file at the given paths and adds them to the
 /// given DaKanji db
-Future addRadicalsToDB(String radicalPath, DaKanjiDB db) async {
+Future addRadicalsToDB(String radkPath, String kradPath, DaKanjiDB db) async {
 
   // load radical files
-  String radkPath = Directory(radicalPath).listSync()
-    .where((e) => p.basename(e.path).startsWith("radkfile"))
-    .first.path;
-  Map radkMap = jsonDecode(File(radkPath).readAsStringSync())["radicals"];
-  String kradPath = Directory(radicalPath).listSync()
-    .where((e) => p.basename(e.path).startsWith("kradfile"))
-    .first.path;
-  Map kradMap = jsonDecode(File(kradPath).readAsStringSync())["kanji"];
+  Map radkMap = jsonDecode(dakanjiDBDataSourceIterator(radkPath).first)["radicals"];
+  Map kradMap = jsonDecode(dakanjiDBDataSourceIterator(kradPath).first)["kanji"];
 
   // get all entries that are currently in the kanji db
   final kanjis = { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };
