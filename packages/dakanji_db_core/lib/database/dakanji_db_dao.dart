@@ -35,21 +35,17 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
     final (:hiraganaTerm, :termVariants) = preprocessInput(term, convertRomajiToHiragana);
     print("$term -> $hiraganaTerm, $termVariants");
 
-    // check laguages are set and parse 
-    assert (languages.isNotEmpty);
-    List<String> langs = languages.map((e) => e.name).toList();
-
     bool isWildcardSearch = term.contains(RegExp(r'\*|\?'));
     int useGlobInt = isWildcardSearch ? 1 : 0;
 
     // run the queries in parallel
     final results = (await Future.wait([
       db.dictionary_search_fts5_drift(term, spellfixDistance, useGlobInt,
-                                      "$term *", "[]", jsonEncode(tags)).get(),
+                                      "$term *", jsonEncode([]), jsonEncode(tags)).get(),
 
       if(hiraganaTerm != null)
         db.dictionary_search_fts5_drift(hiraganaTerm, spellfixDistance, useGlobInt,
-                                      "$hiraganaTerm *", "[]", jsonEncode(tags)).get(),
+                                      "$hiraganaTerm *", jsonEncode([]), jsonEncode(tags)).get(),
       if(hiraganaTerm == null) Future.sync(() => <DictionarySearchFts5DriftResult>[]),
       
       if(termVariants != null && !isWildcardSearch)
