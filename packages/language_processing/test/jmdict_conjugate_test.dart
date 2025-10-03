@@ -5,9 +5,10 @@ import 'package:test/test.dart';
 import 'jmdict_conjugate_test_cases.dart';
 
 void main() {
-  
-  for (final testCase in conjugationTestCases) {
-    group('JM Dict get all conjugations', () {
+
+  group('JM Dict get all conjugations', () {
+    for (final testCase in conjugationTestCases) {
+    
       final verb = testCase['verb'] as String;
       final posName = testCase['pos'] as String;
       final expectedConjugations = testCase['expected'] as List<String>;
@@ -17,7 +18,6 @@ void main() {
         final result = getAllConjugations(verb, pos);
         expect(result, containsAll(expectedConjugations));
       });
-    });
-  }
-  
+    }
+  });
 }

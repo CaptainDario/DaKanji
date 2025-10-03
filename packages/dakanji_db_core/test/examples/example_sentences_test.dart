@@ -34,11 +34,9 @@ void main() async {
 /// tests the termMetaBankV3 import of the sample database from the yomitan dictionary
 Future testExamplesV3(DaKanjiDB db) async {
 
-  // Check some kanji bank queries
-  for (int i = 0; i < exampleSentencesTestQueries.length; i++) {
-
-    group("Test importing example sentences", () {
-
+  group("Test importing example sentences", () {
+    // Check some kanji bank queries
+    for (int i = 0; i < exampleSentencesTestQueries.length; i++) {
       test('${exampleSentencesTestQueries[i]} ', () async {
       
         Stopwatch s = Stopwatch()..start();
@@ -52,10 +50,8 @@ Future testExamplesV3(DaKanjiDB db) async {
           if(!exampleSentenceTestExpectedValues[i].contains(result)) allFound = false; 
         }
         expect(allFound, true);
-
       });
-    });
-
-  }
+    }
+  });
 
 }

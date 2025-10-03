@@ -11,32 +11,32 @@ import 'japanese_string_operations_test_cases.dart';
 
 void main() async {
 
-  for (var romajiToKanaTestCase in romajiToHiraganaTestCases) {
-    group("Romaji to kana", () {
+  group("Romaji to kana", () {
+    for (var romajiToKanaTestCase in romajiToHiraganaTestCases) {
       test('Converting: ${romajiToKanaTestCase.$1}', () {
         String result = romajiToHiragana(romajiToKanaTestCase.$1);
         expect(result, equals(romajiToKanaTestCase.$2));
       });
-    });
-  }
+    }
+  });
 
-  for (var testCase in extractKanjiTestCases) {
-    group("Kanji extraction", () {
+  group("Kanji extraction", () {
+    for (var testCase in extractKanjiTestCases) {
       test('Extracting kanji from: ${testCase.$1}', () {
         Set<String> result = extractKanji(testCase.$1);
         // Sort for consistent comparison as order is not guaranteed.
         expect(result, equals(testCase.$2.toSet()));
       });
-    });
-  }
+    }
+  });
 
+  group("Katakana to hiragana", () {
     for (var testCase in katakanaToHiraganaTestCases) {
-      group("Katakana to hiragana", () {
-        test('Converting: ${testCase.$1}', () {
-          String result = katakanaToHiragana(testCase.$1);
-          expect(result, equals(testCase.$2));
-        });
+      test('Converting: ${testCase.$1}', () {
+        String result = katakanaToHiragana(testCase.$1);
+        expect(result, equals(testCase.$2));
       });
     }
+  });
 
 }

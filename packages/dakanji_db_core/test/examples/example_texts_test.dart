@@ -37,10 +37,9 @@ void main() async {
 /// tests the termMetaBankV3 import of the sample database from the yomitan dictionary
 Future testExampleTexts(DaKanjiDB db) async {
 
-  // Check some kanji bank queries
-  for (int i = 0; i < exampleTextsTestQueries.length; i++) {
-
-    group("Test importing example texts", () {
+  group("Test importing example texts", () {
+    // Check some kanji bank queries
+    for (int i = 0; i < exampleTextsTestQueries.length; i++) {
       test('Searching: ${exampleTextsTestQueries[i]}', () async {
 
         Stopwatch s = Stopwatch()..start();
@@ -53,8 +52,6 @@ Future testExampleTexts(DaKanjiDB db) async {
         expect(results.first, equals(exampleTextTestsExpectedValues[i]));
 
       });
-    });
-
-  }
-
+    }
+  });
 }

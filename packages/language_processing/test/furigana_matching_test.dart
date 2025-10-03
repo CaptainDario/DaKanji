@@ -16,8 +16,8 @@ void main() async {
   Mecab mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
-  for (var testCase in testCases) {
-    group("Furigana matching:", () {
+  group("Furigana matching:", () {
+    for (var testCase in testCases) {
       test('Matching furigana for: ${testCase.$1}', () async {
         print("Input: ${testCase.$1['kanji']} → ${testCase.$1['kana']}");
         
@@ -26,7 +26,7 @@ void main() async {
         expect(result, equals(testCase.$2));
         print("----");
       });
-    });
-  }
+    }
+  });
 
 }
