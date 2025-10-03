@@ -3,7 +3,7 @@ import 'package:dakanji_db_core/database/term_meta/term_meta_bank_ipa_entry.dart
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_pitch_entry.dart';
 
 /// Test cases for the kanji meta bank
-final termMetaBankTetsCases = [
+final termMetaBankTestCases = [
   "打",
   "打",
   "打つ",

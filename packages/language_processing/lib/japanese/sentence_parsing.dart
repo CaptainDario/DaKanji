@@ -9,7 +9,8 @@ Future<String> parseSentenceUsingMecab(String sentence, Mecab mecab) async {
   for (int i = 0; i < parsed.length; i++) {
     if(parsed[i].features.isEmpty) continue;
 
-    tokenized += "${parsed[i].features[6]} ";
+    print("lkasgdlkjas ${parsed[i].surface} -> ${parsed[i].features} -> ${parsed[i].features[10]}");
+    tokenized += "${parsed[i].features[10]} ";
   }
 
   return tokenized;

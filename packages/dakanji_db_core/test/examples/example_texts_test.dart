@@ -27,10 +27,8 @@ void main() async {
   Stopwatch s = Stopwatch()..start();
   await parseExampleTextFolder(Directory(devExampleTextsPath), db, mecab);
   print("Conversion took ${s.elapsedMilliseconds} ms");
-  
-  test('Test importing examples', () async {
-    await testExampleTexts(db);
-  });
+
+  await testExampleTexts(db);
 
 }
 
@@ -40,14 +38,20 @@ Future testExampleTexts(DaKanjiDB db) async {
   // Check some kanji bank queries
   for (int i = 0; i < exampleTextsTestQueries.length; i++) {
 
-    Stopwatch s = Stopwatch()..start();
-    final results = (await db.exampleDao.searchExamples(
-      exampleTextsTestQueries[i], [Iso639_1.en, Iso639_1.de]
-    ));
-    print("Looking up ${exampleTextsTestQueries[i]} took ${s.elapsedMilliseconds}ms");
+    group("Test importing example texts", () {
+      test('Searching: ${exampleTextsTestQueries[i]}', () async {
 
-    Directory(p.join(testsPath, "examples")).listSync();
-    expect(results.first, equals(exampleTextTestsExpectedValues[i]));
+        Stopwatch s = Stopwatch()..start();
+        final results = (await db.exampleDao.searchExamples(
+          exampleTextsTestQueries[i], []
+        ));
+        print("Looking up ${exampleTextsTestQueries[i]} took ${s.elapsedMilliseconds}ms");
+
+        Directory(p.join(testsPath, "examples")).listSync();
+        expect(results.first, equals(exampleTextTestsExpectedValues[i]));
+
+      });
+    });
 
   }
 

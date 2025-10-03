@@ -12,12 +12,11 @@ void main() {
       final expectedHiragana = testCase.$3;
       final expectedTermVariants = testCase.$4;
 
-      test('Test Case ${i + 1}: input="$input", convertRomaji=$convertRomaji', () {
+      test('Test Case $input', () {
         final result = preprocessInput(input, convertRomaji);
         expect(result.hiraganaTerm, equals(expectedHiragana));
-        //expect(termVariants, equals(expectedTerm));
-      //expect(termVariants, equals(expectedTerm));
-          });
+        expect(result.termVariants, equals(expectedTermVariants));
+      });
     }
   });
 }

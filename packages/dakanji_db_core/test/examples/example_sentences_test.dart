@@ -27,9 +27,7 @@ void main() async {
   await parseExampleSentenceFolder(Directory(devExampleSentencesPath), db, mecab);
   print("Conversion took ${s.elapsedMilliseconds} ms");
 
-  test('Test importing examples', () async {
-    await testExamplesV3(db);
-  });
+  await testExamplesV3(db);
 
 }
 
@@ -39,17 +37,24 @@ Future testExamplesV3(DaKanjiDB db) async {
   // Check some kanji bank queries
   for (int i = 0; i < exampleSentencesTestQueries.length; i++) {
 
-    Stopwatch s = Stopwatch()..start();
-    final results = (await db.exampleDao.searchExamples(
-      exampleSentencesTestQueries[i], [Iso639_1.en, Iso639_1.de]
-    ));
-    print("Looking up ${exampleSentencesTestQueries[i]} took ${s.elapsedMilliseconds}ms");
+    group("Test importing example sentences", () {
 
-    bool allFound = true;
-    for (var result in results) {
-      if(!exampleSentenceTestExpectedValues[i].contains(result)) allFound = false; 
-    }
-    expect(allFound, true);
+      test('${exampleSentencesTestQueries[i]} ', () async {
+      
+        Stopwatch s = Stopwatch()..start();
+        final results = (await db.exampleDao.searchExamples(
+          exampleSentencesTestQueries[i], [Iso639_1.en, Iso639_1.de]
+        ));
+        print("Looking up ${exampleSentencesTestQueries[i]} took ${s.elapsedMilliseconds}ms");
+
+        bool allFound = true;
+        for (var result in results) {
+          if(!exampleSentenceTestExpectedValues[i].contains(result)) allFound = false; 
+        }
+        expect(allFound, true);
+
+      });
+    });
 
   }
 

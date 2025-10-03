@@ -11,16 +11,19 @@ void main() async {
   Mecab mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
-  test('Testing deconjugation', () {
-    for (int i = 0; i < verbs.length; i++) {
-      print(verbs[i].toString());
-      List<String> deconjugated = getDeconjugatedTerms(
-        verbs[i].$1, mecab, const KanaKit());
-      expect(deconjugated, verbs[i].$2);
-      print("output: $deconjugated");
+  for (int i = 0; i < verbs.length; i++) {
 
-      expect(deconjugated, verbs[i].$2);
-    }
-  });
+    group("Mecab deconjugation", () {
+      test('Deconjugating: ${verbs[i].toString()}', () async {
+        print(verbs[i].toString());
+        List<String> deconjugated = getDeconjugatedTerms(
+          verbs[i].$1, mecab, const KanaKit());
+        expect(deconjugated, verbs[i].$2);
+        print("output: $deconjugated");
+
+        expect(deconjugated, verbs[i].$2);
+      });
+    });
+  }
 
 }
