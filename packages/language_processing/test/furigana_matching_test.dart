@@ -16,15 +16,17 @@ void main() async {
   Mecab mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
-  test('Testing deconjugation', () {
+  group("Furigana matching:", () {
     for (var testCase in testCases) {
-    print("Input: ${testCase.$1['kanji']} → ${testCase.$1['kana']}");
-    
-    List<FuriganaPair> result = matchFurigana(testCase.$1["kanji"]!, testCase.$1["kana"]!);
-    print("Output: ${result.toString()}");
-    expect(result, equals(testCase.$2));
-    print("----");
-  }
+      test('Matching furigana for: ${testCase.$1}', () async {
+        print("Input: ${testCase.$1['kanji']} → ${testCase.$1['kana']}");
+        
+        List<FuriganaPair> result = matchFurigana(testCase.$1["kanji"]!, testCase.$1["kana"]!);
+        print("Output: ${result.toString()}");
+        expect(result, equals(testCase.$2));
+        print("----");
+      });
+    }
   });
 
 }

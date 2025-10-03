@@ -1,13 +1,15 @@
-
-
 import 'dictionary_search_test_helper_classes.dart';
 
-final List<SearchTestCase> termSearchTestCases = [
+
+
+String descriptionPrefix = "Search";
+
+final List<SearchTestCase> searchTestCases = [
   // --- General Search & Sorting ---
   SearchTestCase(
-    description: 'Exact match on term',
+    description: '$descriptionPrefix: Exact match on term',
     query: "食べる",
-    termMatches: const ExpectedMatchGroup(
+    queryMatches: const ExpectedMatchGroup(
       exactMatches: [
         ExpectedSearchResult(
           term: '食べる', reading: 'たべる', match: '食べる',
@@ -23,9 +25,9 @@ final List<SearchTestCase> termSearchTestCases = [
     ),
   ),
   SearchTestCase(
-    description: 'Prefix match on term',
+    description: '$descriptionPrefix: Prefix match on term',
     query: '食べ',
-    termMatches: const ExpectedMatchGroup(
+    queryMatches: const ExpectedMatchGroup(
       prefixMatches: [
         ExpectedSearchResult(term: '食べる', reading: 'たべる', match: '食べる', definitions: ["to eat"]),
         ExpectedSearchResult(term: '食べ物', reading: 'たべもの', match: '食べ物', definitions: ["food"]),
@@ -33,11 +35,18 @@ final List<SearchTestCase> termSearchTestCases = [
         ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油', definitions: ["chili oil with garlic, etc. for eating with rice"]),
       ],
     ),
+    queryVariantMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          ExpectedSearchResult(term: '食べる', reading: 'たべる', match: '食べる', definitions: ["to eat"]),
+        ],
+      )
+    ]
   ),
   SearchTestCase(
-    description: 'Exact match on reading (hiragana query)',
+    description: '$descriptionPrefix: Exact match on reading (hiragana query)',
     query: 'たべる',
-    termMatches: const ExpectedMatchGroup(
+    queryMatches: const ExpectedMatchGroup(
       exactMatches: [
         ExpectedSearchResult(term: '食べる', reading: 'たべる', match: 'たべる', definitions: ["to eat"]),
       ],
@@ -48,9 +57,9 @@ final List<SearchTestCase> termSearchTestCases = [
   ),
   // --- Definitions ---
   SearchTestCase(
-    description: 'Definition ordering',
+    description: '$descriptionPrefix: Definition ordering',
     query: "召し上がる",
-    termMatches: const ExpectedMatchGroup(
+    queryMatches: const ExpectedMatchGroup(
       exactMatches: [
         ExpectedSearchResult(
           term: '召し上がる', reading: 'めしあがる',
@@ -63,13 +72,17 @@ final List<SearchTestCase> termSearchTestCases = [
 
   // --- Sub matches ---
   SearchTestCase(
-    description: 'Definition match ("eat" should match "to eat")',
+    description: '$descriptionPrefix: Definition match ("eat" should match "to eat" and "eating")',
     query: 'eat',
-    termMatches: const ExpectedMatchGroup(
+    queryMatches: const ExpectedMatchGroup(
+      exactMatches: [
+        ExpectedSearchResult(term: 'イート', reading: 'いーと', match: 'eat', definitions: ["eat"]),
+      ],
       tokenMatches: [
         ExpectedSearchResult(term: '食べる', reading: 'たべる', match: 'to eat', definitions: ["to eat"]),
         ExpectedSearchResult(term: '召し上がる', reading: 'めしあがる', match: 'to eat', definitions: ["to eat (honorific)", "to eat"]),
         ExpectedSearchResult(term: '食べます', reading: 'たべます', match: 'to eat (polite)', definitions: ["to eat (polite)"]),
+        ExpectedSearchResult(term: 'イート', reading: 'いーと', match: "the act of eating", definitions: ["the act of eating"]),
         ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: 'chili oil with garlic, etc. for eating with rice', definitions: ["chili oil with garlic, etc. for eating with rice"]),
       ],
     )
@@ -77,17 +90,16 @@ final List<SearchTestCase> termSearchTestCases = [
 
   // --- Various match types using 電車 (でんしゃ) ---
   SearchTestCase(
-    description: "Comprehensive search for 'でんしゃ' that covers exact, prefix, token matches",
+    description: "$descriptionPrefix: Exact, prefix and token matches",
     query: "電車",
-
     // Expected results for the hiragana-converted query: 'でんしゃ'
-    hiraganaMatches: const ExpectedMatchGroup(
+    queryMatches: const ExpectedMatchGroup(
       exactMatches: [
         ExpectedSearchResult(
           term: '電車',
           reading: 'でんしゃ',
           definitions: ['(electric) train'],
-          match: 'でんしゃ',
+          match: '電車',
         ),
       ],
       prefixMatches: [
@@ -95,7 +107,7 @@ final List<SearchTestCase> termSearchTestCases = [
           term: '電車賃',
           reading: 'でんしゃちん',
           definitions: ['train fare'],
-          match: 'でんしゃちん',
+          match: '電車賃',
         ),
       ],
       tokenMatches: [
@@ -103,7 +115,7 @@ final List<SearchTestCase> termSearchTestCases = [
           term: '満員電車',
           reading: 'まんいんでんしゃ',
           definitions: ['crowded train; packed train'],
-          match: 'まんいんでんしゃ',
+          match: '満員電車',
         ),
       ],
     ),

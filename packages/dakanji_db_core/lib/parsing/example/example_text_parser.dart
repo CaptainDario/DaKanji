@@ -10,33 +10,8 @@ import 'package:universal_io/io.dart';
 import '/database/dakanji_db.dart';
 
 
-
-Future parseExampleTextFileZip() async {
-
-  // TODO
-
-}
-
-Future parseExampleTextFolder(Directory exampleTextDirectory, DaKanjiDB db, Mecab mecab) async {
-
-  List<File> exampleFiles = exampleTextDirectory.listSync().whereType<File>().toList();
-
-  for (File file in exampleFiles) {
-    await parseExampleTextFile(file, db, mecab);
-  }
-
-}
-
 /// parses the given file's contents and adds it to the given [DaKanjiDB]
-Future parseExampleTextFile(File exampleTextPath, DaKanjiDB db, Mecab mecab) async {
-
-  String jsonString = exampleTextPath.readAsStringSync();
-  return await parseTextExample(jsonString, db, mecab);
-
-}
-
-/// parses the given string and adds it to the given [DaKanjiDB]
-Future parseTextExample(String exampleText, DaKanjiDB db, Mecab mecab) async {
+Future parseExampleText(String exampleText, DaKanjiDB db, Mecab mecab) async {
 
   // read values from current db
   int maxExampleId = await db.exampleDao.maxExampleId();

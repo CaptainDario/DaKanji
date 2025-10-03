@@ -1,4 +1,6 @@
 // Package imports:
+import "dart:convert";
+
 import "/database/example/example_entry.dart";
 import "/database/example/example_tables.dart";
 import 'package:language_processing/iso/iso_table.dart';
@@ -30,11 +32,10 @@ class ExampleDao extends DatabaseAccessor<DaKanjiDB> with _$ExampleDaoMixin {
     }) async {
 
     // check laguages are set and parse 
-    assert (languages.isNotEmpty);
     List<String> langs = languages.map((e) => e.name,).toList();
 
-    final ftsResults = await db.example_fts_search_drift(
-      query, langs, limit, offset).get();
+    final ftsResults = (await db.example_fts_search_drift(
+      query, jsonEncode(langs), limit, offset).get());
     List<ExampleEntry> entries = ftsResults.map((e) => 
       ExampleEntry.fromExampleFtsSearchSql(e)
     ).toList();

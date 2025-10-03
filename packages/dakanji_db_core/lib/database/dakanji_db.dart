@@ -57,7 +57,8 @@ part 'dakanji_db.g.dart';
 @DriftDatabase(
   tables: [
     AudioTable,
-    KanjiTable, TermTable, ReadingTable, DefinitionTable, LanguageCodeTable,
+    KanjiTable, TermTable, ReadingTable,
+    DefinitionTable, TermBankV3DefinitionJsonTable, LanguageCodeTable,
 
     RadicalsTable, Radical_X_KanjiRelationsTable,
     KanjiVGTable,
@@ -88,7 +89,7 @@ part 'dakanji_db.g.dart';
     TermMetaBankV3TagTable,
 
     ExampleTable,
-    ExampleTranslationTable, ExampleTranslationTable,
+    ExampleTranslationTable,
     ExampleTable_X_ExampleTranslationTable,
   ],
   daos: [
@@ -108,9 +109,10 @@ part 'dakanji_db.g.dart';
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
     'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
     'term/term_bank_v3_views.drift', 'term/term_bank_v3_queries.drift',
-    'general_tables/definition_fts5_table.drift',
-    'general_tables/reading_fts5_table.drift', 'general_tables/reading_spellfix_table.drift',
     'general_tables/term_fts5_table.drift',
+    'general_tables/reading_fts5_table.drift', 'general_tables/reading_spellfix_table.drift',
+    'general_tables/definition_fts5_table.drift',
+    'general_tables/hiragana_spellfix_cost.drift',
     'db_queries/stat_queries.drift',
     'db_queries/dictionary_search_queries.drift'
   }
@@ -137,14 +139,14 @@ class DaKanjiDB extends _$DaKanjiDB {
         await m.createAll();
 
         // Init spellfix
-        await populateSpellfixCost();
-        await loadCustomCostTable();
+        await populateHiraganaSpellfixCostTable();
       },
     );
   }
+  
 
   static QueryExecutor _openConnection(String path) {
-    return NativeDatabase.createInBackground(
+    QueryExecutor qe = NativeDatabase.createInBackground(
       File(path),
       sqlite3: () {
         sqlite3Native.loadSqliteVecExtension();
@@ -161,6 +163,8 @@ class DaKanjiDB extends _$DaKanjiDB {
       },
       readPool: 8
     );
+
+    return qe;
   }
 
   Future<List<GetMbSizesDriftResult>> getDbStats() async {

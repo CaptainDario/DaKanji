@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "dakanji_db",
             "request": "launch",
@@ -16,6 +17,12 @@
             "flutterMode": "debug",
             "program": "lib/main.dart", // The entry point relative to your app
             "cwd": "${workspaceFolder}/apps/dakanji_db_ui_example" // The crucial part!
+        },
+        {
+            "name": "Attach to Dart Build",
+            "request": "attach",
+            "type": "dart",
+            "vmServiceUri": "${command:dart.promptForVmService}"
         }
     ]
 }

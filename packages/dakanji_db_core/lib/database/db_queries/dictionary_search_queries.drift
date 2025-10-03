@@ -2,101 +2,181 @@ import '../term/term_bank_v3_views.drift';
 import '../general_tables/definition_fts5_table.drift';
 import '../general_tables/reading_fts5_table.drift';
 import '../general_tables/term_fts5_table.drift';
+import '../general_tables/reading_spellfix_table.drift';
 
 dictionary_search_fts5_drift:
-
   -- Use CTEs to find, categorize, and rank all matching IDs
-  WITH RankedIDs AS (
-      -- Find matches in 'term' (Kanji) - Column Priority 1
+  WITH
+    SpellfixSuggestions AS (
       SELECT
-        TB3T.id as term_bank_id,
-        rank,
-        TT.term as matched_text,
-        highlight(term_fts, 0, '', '') AS matched_text,
-        -- Categorize the match type
-        CASE
-            WHEN TT.term = :query THEN 1 -- 1. Exact Match
-            WHEN TT.term LIKE :query || '%' THEN 2 -- 2. Prefix Match
-            ELSE 3 -- 3. Infix/N-gram/Other
-        END AS match_type_priority,
-        1 AS match_column_priority
+        word,
+        distance
+      FROM reading_spellfix
+      WHERE word MATCH :query
+        AND distance > 0
+        AND distance < :spellfix_distance
+        AND :use_glob = 0
+      ORDER BY distance
+      LIMIT 10
+    ),
+
+    -- CTE specifically for FTS matches. Only runs if :use_glob is 0.
+    FtsMatches AS (
+      -- Find matches in 'term' (Kanji)
+      SELECT
+        TB3T.id as term_bank_id, rank, TT.term as matched_text,
+        CASE WHEN TT.term = :query THEN 1
+        WHEN TT.term LIKE :query || '%' THEN 2
+        ELSE 3 END AS match_type_priority,
+        1 AS match_column_priority,
+        NULL as spellfix_suggestion
       FROM term_fts AS FTS
       JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.term_id
       JOIN term_table AS TT ON FTS.rowid = TT.id
-      WHERE term_fts MATCH :fts_query
-      
+      WHERE :use_glob = 0 AND term_fts MATCH :fts_query
+
       UNION ALL
-      
-      -- Find matches in 'reading' - Column Priority 2
+
+      -- Find matches in 'reading'
       SELECT
-        TB3T.id as term_bank_id,
-        rank,
-        RT.reading as matched_text,
-        highlight(reading_fts, 0, '', '') AS highlighted_text,
-        CASE
-            WHEN RT.reading = :query THEN 1
-            WHEN RT.reading LIKE :query || '%' THEN 2
-            ELSE 3
-        END AS match_type_priority,
-        2 AS match_column_priority
+        TB3T.id as term_bank_id, rank, RT.reading as matched_text,
+        CASE WHEN RT.reading = :query THEN 1 WHEN RT.reading LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
+        2 AS match_column_priority, NULL as spellfix_suggestion
       FROM reading_fts AS FTS
       JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.reading_id
       JOIN reading_table AS RT ON FTS.rowid = RT.id
-      WHERE reading_fts MATCH :fts_query
-      
+      WHERE :use_glob = 0 AND reading_fts MATCH :fts_query
+
       UNION ALL
-      
-      -- Find matches in 'definition' - Column Priority 3
+
+      -- Find matches in 'definition'
       SELECT
-        R.term_bank_id,
-        rank,
-        DT.definition as matched_text,
-        highlight(definition_fts, 0, '', '') AS highlighted_text,
-        CASE
-            WHEN DT.definition = :query THEN 1
-            WHEN DT.definition LIKE :query || '%' THEN 2
-            ELSE 3
-        END AS match_type_priority,
-        3 AS match_column_priority
+        DefJoin.term_bank_id, rank, DT.definition as matched_text,
+        CASE WHEN DT.definition = :query THEN 1 WHEN DT.definition LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
+        3 AS match_column_priority, NULL as spellfix_suggestion
       FROM definition_fts AS FTS
-      JOIN term_bank_v3_x_definition_table AS R ON FTS.rowid = R.definition_id
+      JOIN term_bank_v3_x_definition_table AS DefJoin ON FTS.rowid = DefJoin.definition_id
       JOIN definition_table AS DT ON FTS.rowid = DT.id
-      WHERE definition_fts MATCH :fts_query
-  ),
-  FinalRankedIDs AS (
+      WHERE :use_glob = 0 AND definition_fts MATCH :fts_query
+    ),
+
+    -- CTEs specifically for GLOB matches. Only runs if :use_glob is 1.
+    GlobMatches AS (
+      -- Find matches in 'term' (Kanji)
+      SELECT
+        TB3T.id as term_bank_id, 0 as rank, TT.term as matched_text,
+        CASE WHEN TT.term = :query THEN 1 WHEN TT.term LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
+        1 AS match_column_priority, NULL as spellfix_suggestion
+      FROM term_table AS TT
+      JOIN term_bank_v3_table AS TB3T ON TT.id = TB3T.term_id
+      WHERE :use_glob = 1 AND TT.term GLOB :query
+
+      UNION ALL
+
+      -- Find matches in 'reading'
+      SELECT
+        TB3T.id as term_bank_id, 0 as rank,
+        RT.reading as matched_text,
+        CASE
+          WHEN RT.reading = :query 
+          THEN 1 WHEN RT.reading LIKE :query || '%'
+          THEN 2 ELSE 3
+        END AS match_type_priority,
+        2 AS match_column_priority, 
+        NULL as spellfix_suggestion
+      FROM reading_table AS RT
+      JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id
+      WHERE :use_glob = 1 AND RT.reading GLOB :query
+
+      UNION ALL
+
+      -- Find matches in 'definition'
+      SELECT
+        DefJoin.term_bank_id, 0 as rank, DT.definition as matched_text,
+        CASE
+          WHEN DT.definition = :query THEN 1
+          WHEN DT.definition LIKE :query || '%' THEN 2
+          ELSE 3
+        END AS match_type_priority,
+        3 AS match_column_priority,
+        NULL as spellfix_suggestion
+      FROM definition_table AS DT
+      JOIN term_bank_v3_x_definition_table AS DefJoin ON DT.id = DefJoin.definition_id
+      WHERE :use_glob = 1 AND DT.definition GLOB :query
+    ),
+
+    -- This CTE combines the separated paths and adds Spellfix results.
+    RankedIDs AS (
+      SELECT * FROM FtsMatches
+      UNION ALL
+      SELECT * FROM GlobMatches
+      UNION ALL
+      -- Spellfix results (fuzzy search)
+      SELECT
+        TB3T.id as term_bank_id, S.distance as rank, RT.reading as matched_text,
+        4 AS match_type_priority, 2 AS match_column_priority, S.word as spellfix_suggestion
+      FROM SpellfixSuggestions AS S
+      JOIN reading_table AS RT ON S.word = RT.reading
+      JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id
+    ),
+
+    -- This CTE finds all term_bank_ids that match the PoS filter.
+    FilteredByPoS AS (
+      SELECT T3XDT.term_bank_id
+      FROM term_bank_v3_x_definition_tag_table AS T3XDT
+      JOIN term_bank_v3_definition_tags_table AS T3DT ON T3DT.id = T3XDT.definition_tag_id
+      WHERE LENGTH(:posFilter) > 2 AND T3DT.definition_tag IN (SELECT value FROM json_each(:posFilter))
+      GROUP BY T3XDT.term_bank_id
+    ),
+
+    -- This CTE finds all term_bank_ids that match the tag filter.
+    FilteredByTags AS (
+      SELECT T3XT.term_bank_id
+      FROM term_bank_v3_x_tag_bank_table AS T3XT
+      JOIN tag_bank_v3_table AS T3T ON T3T.id = T3XT.tag_bank_id
+      WHERE
+        LENGTH(:tagFilter) > 2
+          AND
+        T3T.name IN (SELECT value FROM json_each(:tagFilter))
+      GROUP BY T3XT.term_bank_id
+    ),
+
+    FinalRankedIDs AS (
       -- For each term, select the single best match based on the priority system.
       SELECT
-          term_bank_id,
-          rank as best_rank,
-          match_type_priority,
-          match_column_priority,
-          highlighted_text
+        term_bank_id, rank as best_rank, match_type_priority, match_column_priority,
+        matched_text, spellfix_suggestion
       FROM (
-          SELECT
-              *,
-              ROW_NUMBER() OVER(
-                PARTITION BY term_bank_id 
-                ORDER BY 
-                  match_type_priority,   -- First, by the quality of the match
-                  match_column_priority, -- Then, by which column was matched
-                  rank                   -- Finally, by FTS5's own relevance score
-              ) as rn
-          FROM RankedIDs
+        SELECT
+          *,
+          ROW_NUMBER() OVER(
+            PARTITION BY term_bank_id
+            ORDER BY
+              match_type_priority,
+              match_column_priority,
+              rank
+          ) as rn
+        FROM RankedIDs
+        WHERE
+          (LENGTH(:posFilter) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByPoS))
+          AND
+          (LENGTH(:tagFilter) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByTags))
       )
       WHERE rn = 1
-  )
+    )
+
   -- Finally, join the best-ranked IDs with the main view to get the full data
   SELECT
     R.best_rank as fts5_rank,
-    highlighted_text,
+    matched_text,
     R.match_type_priority,
     R.match_column_priority,
-    V.*
+    R.spellfix_suggestion, V.*
   FROM term_bank_v3_search_view AS V
   JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id
   ORDER BY
-    R.match_type_priority,   -- 1. Sort by Match Type (Exact > Prefix > Other)
-    R.match_column_priority, -- 2. Sort by Match Column (Kanji > Reading > Definition)
-    V.popularity DESC,       -- 4. Sort by result frequency/popularity
-    R.best_rank;             -- 3. Sort by FTS5 relevance
-
+    R.match_type_priority,
+    R.match_column_priority,
+    V.popularity DESC,
+    R.best_rank,
+    LENGTH(R.matched_text);

@@ -1,0 +1,69 @@
+// Package imports:
+import 'package:dakanji_db_core/parsing/parsing_util.dart';
+import 'package:drift/drift.dart';
+
+// Project imports:
+import '/database/dakanji_db.dart';
+
+/// Converts the KanjiVG data source at the given path and adds it to the given
+/// [DaKanjiDB].
+/// 
+/// [dataSourcePath] Path to the folder containing the KanjiVG SVG files
+/// can either be a folder or a zip file
+Future<void> addKanjiVGToDB(String dataSourcePath, DaKanjiDB db) async {
+
+  // convert kanji vg to map
+  Map<String, String> kanjiVGMap = {};
+  for (final (kanjiVGFileName, kanjiVGFileContent) in dakanjiDBDataSourceIterator(dataSourcePath)) {
+    final (kanji, svg) = parseKanjiVGFile(kanjiVGFileContent);
+    kanjiVGMap[kanji] = svg;
+  }
+
+  // get all entries that are currently in the kanji db
+  final kanjis = { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };
+  int maxKanjiId = await db.kanjiDao.maxKanjiId();
+
+  List<KanjiTableCompanion> kanjiTableComps = [];
+  List<KanjiVGTableCompanion> kanjiVGTableComps = [];
+  for (var kanjiVG in kanjiVGMap.entries) {
+
+    if(kanjis[kanjiVG.key] == null){
+
+      kanjis[kanjiVG.key] = ++maxKanjiId;
+      kanjiTableComps.add(KanjiTableCompanion(
+        id: Value(maxKanjiId),
+        kanji: Value(kanjiVG.key)
+      ));
+    
+    }
+
+    kanjiVGTableComps.add(
+      KanjiVGTableCompanion(
+        kanjiId: Value(kanjis[kanjiVG.key]!),
+        kanjiVGSVG: Value(kanjiVG.value)
+      )
+    );
+
+  }
+
+  await db.batch((batch) {
+    batch.insertAll(db.kanjiTable, kanjiTableComps);
+    batch.insertAll(db.kanjiVGTable, kanjiVGTableComps);
+  },);
+
+}
+
+/// Parses a single KanjiVG file content and returns the kanji and the SVG content
+(String kanji, String svg) parseKanjiVGFile(String kanjiVGFileContent){
+
+  // Remove comments
+  final commentRegExp = RegExp(r'<!--.*?-->', dotAll: true);
+  String cleanedContent = kanjiVGFileContent.replaceAll(commentRegExp, '');
+
+  // get the kanji
+  final regex = RegExp(r'kvg:element="([^"]+)"');
+  final kanji = regex.firstMatch(cleanedContent)!.group(1)!;
+
+  return (kanji, cleanedContent);
+
+}

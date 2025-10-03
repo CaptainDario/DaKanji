@@ -11,25 +11,31 @@ import 'japanese_string_operations_test_cases.dart';
 
 void main() async {
 
-  test('Testing romaji to hiragana', () {
+  group("Romaji to kana", () {
     for (var romajiToKanaTestCase in romajiToHiraganaTestCases) {
-      String result = romajiToHiragana(romajiToKanaTestCase.$1);
-      expect(result, equals(romajiToKanaTestCase.$2));
+      test('Converting: ${romajiToKanaTestCase.$1}', () {
+        String result = romajiToHiragana(romajiToKanaTestCase.$1);
+        expect(result, equals(romajiToKanaTestCase.$2));
+      });
     }
   });
 
-  test('Testing removeAllButKanji', () {
+  group("Kanji extraction", () {
     for (var testCase in extractKanjiTestCases) {
-      Set<String> result = extractKanji(testCase.$1);
-      // Sort for consistent comparison as order is not guaranteed.
-      expect(result, equals(testCase.$2.toSet()));
+      test('Extracting kanji from: ${testCase.$1}', () {
+        Set<String> result = extractKanji(testCase.$1);
+        // Sort for consistent comparison as order is not guaranteed.
+        expect(result, equals(testCase.$2.toSet()));
+      });
     }
   });
 
-  test('Testing katakanaToHiragana', () {
+  group("Katakana to hiragana", () {
     for (var testCase in katakanaToHiraganaTestCases) {
-      String result = katakanaToHiragana(testCase.$1);
-      expect(result, equals(testCase.$2));
+      test('Converting: ${testCase.$1}', () {
+        String result = katakanaToHiragana(testCase.$1);
+        expect(result, equals(testCase.$2));
+      });
     }
   });
 

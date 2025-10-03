@@ -1,5 +1,7 @@
 import "dart:async";
+import "dart:convert";
 // Package imports:
+import "package:collection/collection.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search_result.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search_utils.dart";
 import "package:drift/drift.dart";
@@ -25,31 +27,55 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
     bool convertRomajiToHiragana,
     {
       int limit=-1,
-      int offset=0
+      int offset=0,
+      int spellfixDistance = 150,
     }
   ) async {
 
-    final (:hiraganaTerm, term: preprocessedTerm) = preprocessInput(term, convertRomajiToHiragana);
+    final (:hiraganaTerm, :termVariants) = preprocessInput(term, convertRomajiToHiragana);
+    print("$term -> $hiraganaTerm, $termVariants");
 
-    // check laguages are set and parse 
-    assert (languages.isNotEmpty);
-    List<String> langs = languages.map((e) => e.name).toList();
+    bool isWildcardSearch = term.contains(RegExp(r'\*|\?'));
+    int useGlobInt = isWildcardSearch ? 1 : 0;
 
-    final results = await Future.wait([
-      db.dictionary_search_fts5_drift(term, "$term *").get(),
-      if(hiraganaTerm != null) db.dictionary_search_fts5_drift(hiraganaTerm, "$hiraganaTerm *").get()
-    ]);
+    // run the queries in parallel
+    final results = (await Future.wait([
+      db.dictionary_search_fts5_drift(term, spellfixDistance, useGlobInt,
+                                      "$term *", jsonEncode([]), jsonEncode(tags)).get(),
+
+      if(hiraganaTerm != null)
+        db.dictionary_search_fts5_drift(hiraganaTerm, spellfixDistance, useGlobInt,
+                                      "$hiraganaTerm *", jsonEncode([]), jsonEncode(tags)).get(),
+      if(hiraganaTerm == null) Future.sync(() => <DictionarySearchFts5DriftResult>[]),
+      
+      if(termVariants != null && !isWildcardSearch)
+        for (final variant in termVariants) 
+          db.dictionary_search_fts5_drift(
+            variant.deconjugatedTerm, 0, useGlobInt, "${variant.deconjugatedTerm} *",
+            jsonEncode(variant.requiredPartsOfSpeech), jsonEncode(tags)
+          ).get()
+    ]));
+
+    print("RRRRRRRRRESULTS $results");
+
+    // process all variant search results
+    List<SearchMatchGroup> filteredQueryVariantMatches = [];
+    final queryVariantMatches = results.length > 2 ? results.sublist(2) : [];
+    for (var i = 0; i < queryVariantMatches.length; i++) {
+      if(results[i+2].isNotEmpty) {
+        filteredQueryVariantMatches.add(SearchMatchGroup.fromDictionaryMatchList(
+          results[i+2], termVariants![i].deconjugatedTerm, isWildcardSearch,
+          variantReason: termVariants[i].transformRules.join(" -> ")
+        ));
+      }
+    }
 
     return DictionarySearchResult(
-      termMatches: SearchMatchGroup.fromDictionaryMatchList(results[0]),
-      hiraganaMatches: results.length >= 2
-        ? SearchMatchGroup.fromDictionaryMatchList(results[1])
+      queryMatches: SearchMatchGroup.fromDictionaryMatchList(results[0], term, isWildcardSearch),
+      hiraganaQueryMatches: results.length >= 2 && results[1].isNotEmpty
+        ? SearchMatchGroup.fromDictionaryMatchList(results[1], hiraganaTerm!, isWildcardSearch)
         : SearchMatchGroup.empty(),
-      variantTermMatches: results.length >= 3 
-        ? results.sublist(2).map(
-          (r) => SearchMatchGroup.fromDictionaryMatchList(r)
-        ).toList()
-        : []
+      queryVariantMatches: filteredQueryVariantMatches
     );
 
     

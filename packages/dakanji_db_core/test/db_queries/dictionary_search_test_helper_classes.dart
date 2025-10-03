@@ -35,25 +35,28 @@ class ExpectedMatchGroup {
 /// Defines a single, comprehensive test case that can assert against the different
 /// categories of results from a `DictionaryLookupResult`.
 class SearchTestCase {
+
   final String description;
+
   final String query;
-  final bool isFuture;
+
+  final List<String> tags;
 
   /// Expected results from the original, unmodified query.
-  final ExpectedMatchGroup termMatches;
+  final ExpectedMatchGroup queryMatches;
 
   /// Expected results from the Romaji-to-Hiragana converted query.
-  final ExpectedMatchGroup hiraganaMatches;
+  final ExpectedMatchGroup hiraganaQueryMatches;
 
   /// Expected results from de-conjugated or other normalized query variants.
-  final List<ExpectedMatchGroup> variantMatches;
+  final List<ExpectedMatchGroup> queryVariantMatches;
 
   const SearchTestCase({
     required this.description,
     required this.query,
-    this.termMatches = const ExpectedMatchGroup(),
-    this.hiraganaMatches = const ExpectedMatchGroup(),
-    this.variantMatches = const [],
-    this.isFuture = false,
+    this.tags = const [],
+    this.queryMatches = const ExpectedMatchGroup(),
+    this.hiraganaQueryMatches = const ExpectedMatchGroup(),
+    this.queryVariantMatches = const [],
   });
 }

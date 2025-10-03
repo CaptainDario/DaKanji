@@ -1,31 +1,26 @@
 // Package imports:
+import 'package:dakanji_db_core/parsing/example/example_text_parser.dart';
+import 'package:dakanji_db_core/parsing/parsing_util.dart';
+
 import '/parsing/example/example_sentence_parser.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
-import 'package:universal_io/io.dart';
+
 
 // Project imports:
 import '/database/dakanji_db.dart';
 
-
-
-/// Parses the given yomitan dictionary zip
-Future parseExampleSentenceZip (File dictZip, DaKanjiDB db, Mecab mecab) async {
-
-  // TODO
-
-}
-
 /// Parses the given dakanji example folder
-Future parseExampleSentenceFolder(Directory exampleDir, DaKanjiDB db, Mecab mecab) async {
-
-  /// Get all folders that contain examples
-  List<Directory> exampleFolders = exampleDir.listSync()
-    .whereType<Directory>().toList();
+Future parseExampleDataSource(String exampleDir, DaKanjiDB db, Mecab mecab) async {
 
   // parse the example bank files
-  for (var folder in exampleFolders) {
-    
-    await parseExample(folder, db, mecab);
+  for (var (fileName, fileContent) in dakanjiDBDataSourceIterator(exampleDir)) {
+
+    if(fileName.endsWith(".txt")) {
+      await parseExampleText(fileContent, db, mecab);
+    }
+    else if(fileName.endsWith(".json")) {
+      await parseExampleSentence(fileContent, db, mecab);
+    }
 
   }
 

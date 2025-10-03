@@ -8,14 +8,17 @@ void main() {
     for (var i = 0; i < preprocessInputTestCases.length; i++) {
       final testCase = preprocessInputTestCases[i];
       final input = testCase.$1;
-      final convertRomaji = testCase.$2;
-      final expectedTerm = testCase.$3;
-      final expectedHiragana = testCase.$4;
+      final convertRomajiToHiragana = testCase.$2;
+      final expectedHiragana = testCase.$3;
+      final expectedTermVariants = testCase.$4;
 
-      test('Test Case ${i + 1}: input="$input", convertRomaji=$convertRomaji', () {
-        final result = preprocessInput(input, convertRomaji);
-        expect(result.term, equals(expectedTerm));
+      test('Test Case $input', () {
+        final result = preprocessInput(input, convertRomajiToHiragana);
         expect(result.hiraganaTerm, equals(expectedHiragana));
+        expect(
+          result.termVariants?.map((e) => e.deconjugatedTerm).toList(),
+          equals(expectedTermVariants)
+        );
       });
     }
   });

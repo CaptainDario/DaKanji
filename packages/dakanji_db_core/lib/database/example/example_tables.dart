@@ -1,4 +1,6 @@
 // Package imports:
+import 'package:html/dom.dart';
+
 import '/database/general_tables/language_code_table.dart';
 import '/helper/zlib_text_converter.dart';
 import 'package:drift/drift.dart';
@@ -12,9 +14,8 @@ class ExampleTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// the example of this entry
-  //TextColumn get exampleSentence => text()();
-  BlobColumn get exampleSentence => blob().map(const ZlibStringConverter())();
-
+  TextColumn get exampleSentence => text()();
+  
   /// the example of this entry tokenized
   TextColumn get exampleSentenceTokenized => text()();
 

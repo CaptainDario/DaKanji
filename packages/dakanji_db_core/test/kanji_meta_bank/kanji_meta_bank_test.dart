@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
@@ -14,29 +15,35 @@ void main() async {
   DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
   db.clearDB();
 
+  final mecab = Mecab();
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(yomitanSampleDictionaryPath), db, false);
+  await parseDictionaryFolder(Directory(yomitanSampleDictionaryPath), db, false, mecab);
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
-  test('Test importing samples', () async {
-    await testKanjiMetaBankV3(db);
-  });
+  await testKanjiMetaBankV3(db);
 
 }
 
 /// tests the kanjiMetaBankV3 import of the sample database from the yomitan dictionary
 Future testKanjiMetaBankV3(DaKanjiDB db) async {
-  // Check some kanji bank queries
-  for (var testCase in kanjiMetaBankTetsCases) {
-    Stopwatch s = Stopwatch()..start();
-    List result = (await db.kanjiMetaBankV3Dao.getKanjiMetaBankEntriesFromKanji([testCase]))!;
-    print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
-    print("testesrtaeta $result");
 
-    expect(result.isNotEmpty, true);
-    for (var entry in result) {
-      expect(kanjiMetaBankTetsCaseExpectations.contains(entry), true);
+  group("Test importing kanji meta bank", () {
+    // Check some kanji bank queries
+    for (var testCase in kanjiMetaBankTetsCases) {
+      test('Looking up $testCase', () async {
+        Stopwatch s = Stopwatch()..start();
+        List result = (await db.kanjiMetaBankV3Dao.getKanjiMetaBankEntriesFromKanji([testCase]))!;
+        print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
+        print("testesrtaeta $result");
+
+        expect(result.isNotEmpty, true);
+        for (var entry in result) {
+          expect(kanjiMetaBankTetsCaseExpectations.contains(entry), true);
+        }
+      });
     }
-  }
+  });
 }

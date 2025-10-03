@@ -1,10 +1,11 @@
 // Package imports:
-import 'package:dakanji_db_core/conversion/tatoeba.dart';
+import 'package:dakanji_db_core/parsing/tatoeba_parser.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db_core/conversion/kanji_vg.dart';
-import 'package:dakanji_db_core/conversion/radicals.dart';
+import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
+import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
@@ -16,8 +17,12 @@ void main() async {
   await downloadSources();
 
   // setup 
-  //DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
-  //await db.deleteDB();
+  DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
+  await db.deleteDB();
+
+  // init mecab
+  final mecab = Mecab();
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   //await kanjiVG(db);
 
@@ -78,22 +83,22 @@ Future kanjiVG(DaKanjiDB db) async {
 Future radicals(DaKanjiDB db) async {
 
   Stopwatch s = Stopwatch()..start();
-  await addRadicalsToDB(radicalsInputPath, db);
+  await addRadicalsToDB(radkInputPath, kradInputPath, db);
   print("Converting Radicals took: ${s.elapsedMilliseconds}ms");
 
 }
 
-
 /// parses the kanjidic2 and adds it to the given [DaKanjiDB]
-Future kanjidic2(DaKanjiDB db) async {
+Future kanjidic2(DaKanjiDB db, Mecab mecab) async {
 
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(kanjidic2InputPath), db, false);
+  await parseDictionaryFolder(Directory(kanjidic2InputPath), db, false, mecab);
   print("Converting KanjiDic2 took: ${s.elapsedMilliseconds}ms");
 
 }
 
-Future tatoeba(DaKanjiDB db) async {
+/// parses tatoeba and adds it to the given [DaKanjiDB]
+Future tatoeba(DaKanjiDB db, Mecab mecab) async {
 
   Stopwatch s = Stopwatch()..start();
   await convertTatoebaFiles(
