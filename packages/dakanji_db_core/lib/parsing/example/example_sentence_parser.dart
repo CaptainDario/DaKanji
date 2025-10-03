@@ -1,25 +1,20 @@
 // Package imports:
+import 'dart:convert';
+
 import 'package:language_processing/iso/iso_table.dart';
 import 'package:language_processing/japanese/sentence_parsing.dart';
 import 'package:drift/drift.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
-//import 'package:mecab_for_dart/mecab_dart.dart';
-import 'package:universal_io/io.dart';
-import 'package:path/path.dart' as p;
 
 // Project imports:
 import '/database/dakanji_db.dart';
 
 
 
-Future parseExample(Directory exampleDir, DaKanjiDB db, Mecab mecab) async {
+Future parseExampleSentence(String exampleSentenceJsonString, DaKanjiDB db, Mecab mecab) async {
 
-  List<File> exampleFiles = exampleDir.listSync().whereType<File>().toList();
 
-  Map<String, String> examples = {};
-  for (var file in exampleFiles) {
-    examples[p.basename(file.path)] = file.readAsStringSync();
-  }
+  Map<String, dynamic> examples = jsonDecode(exampleSentenceJsonString);
   String jap = examples[Iso639_1.ja.name]!;
 
   // read values from current db

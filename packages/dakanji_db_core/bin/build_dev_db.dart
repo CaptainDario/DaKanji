@@ -25,7 +25,7 @@ void main() async {
 
   // convert the example bank test files
   s = Stopwatch()..reset()..start();
-  await parseExampleSentenceFolder(Directory(devExampleSentencesPath), db, mecab);
+  await parseExampleDataSource(devExampleSentencesPath, db, mecab);
   print("Converting examples took ${s.elapsedMilliseconds} ms");
 
   exit(0);

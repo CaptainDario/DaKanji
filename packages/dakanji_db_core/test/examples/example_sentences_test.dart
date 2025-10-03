@@ -24,7 +24,7 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseExampleSentenceFolder(Directory(devExampleSentencesPath), db, mecab);
+  await parseExampleDataSource(devExampleSentencesPath, db, mecab);
   print("Conversion took ${s.elapsedMilliseconds} ms");
 
   await testExamplesV3(db);

@@ -1,11 +1,11 @@
 // Package imports:
-import 'package:dakanji_db_core/conversion/tatoeba.dart';
+import 'package:dakanji_db_core/parsing/tatoeba_parser.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:dakanji_db_core/conversion/kanji_vg.dart';
-import 'package:dakanji_db_core/conversion/radicals.dart';
+import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
+import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
@@ -88,7 +88,6 @@ Future radicals(DaKanjiDB db) async {
 
 }
 
-
 /// parses the kanjidic2 and adds it to the given [DaKanjiDB]
 Future kanjidic2(DaKanjiDB db, Mecab mecab) async {
 
@@ -98,6 +97,7 @@ Future kanjidic2(DaKanjiDB db, Mecab mecab) async {
 
 }
 
+/// parses tatoeba and adds it to the given [DaKanjiDB]
 Future tatoeba(DaKanjiDB db, Mecab mecab) async {
 
   Stopwatch s = Stopwatch()..start();

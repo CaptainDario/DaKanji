@@ -70,8 +70,8 @@ Map<String, String> kanjiCodeLookup = {
 Future addRadicalsToDB(String radkPath, String kradPath, DaKanjiDB db) async {
 
   // load radical files
-  Map radkMap = jsonDecode(dakanjiDBDataSourceIterator(radkPath).first)["radicals"];
-  Map kradMap = jsonDecode(dakanjiDBDataSourceIterator(kradPath).first)["kanji"];
+  Map radkMap = jsonDecode(dakanjiDBDataSourceIterator(radkPath).first.$2)["radicals"];
+  Map kradMap = jsonDecode(dakanjiDBDataSourceIterator(kradPath).first.$2)["kanji"];
 
   // get all entries that are currently in the kanji db
   final kanjis = { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };

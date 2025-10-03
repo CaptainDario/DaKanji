@@ -37,16 +37,12 @@ String termBankFile = "term_bank";
 /// the naming pattern for term meta bank files
 String termMetaBankFile = "term_meta_bank";
 
-/// Parses the given yomitan dictionary zip
-Future parseDictionaryZip (File dictZip, DaKanjiDB db, Mecab mecab) async {
-
-  // TODO
-
-}
 
 
 /// Parses the given yomitan dictionary folder
 Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db, bool addFullJsonDefinitions, Mecab mecab) async {
+
+  // TODO zip based parsing
 
   /// Get all files from the given folder that can be parsed
   List<File> validFiles = dictDir.listSync().where((f) => 
