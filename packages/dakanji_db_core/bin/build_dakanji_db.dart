@@ -92,7 +92,12 @@ Future radicals(DaKanjiDB db) async {
 Future kanjidic2(DaKanjiDB db, Mecab mecab) async {
 
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryDataSource(kanjidic2InputPath, db, false, mecab);
+  await parseDictionaryDataSource(
+    dataSourcePath:  kanjidic2InputPath,
+    db: db,
+    addFullJsonDefinitions: false,
+    mecab: mecab
+  );
   print("Converting KanjiDic2 took: ${s.elapsedMilliseconds}ms");
 
 }

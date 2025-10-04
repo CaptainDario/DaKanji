@@ -41,7 +41,12 @@ Future<void> partialInit(
 
   print("Setting up test database...");
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryDataSource("${d.path}.zip", db, true, mecab);
+  await parseDictionaryDataSource(
+    dataSourcePath: "${d.path}.zip",
+    db: db,
+    addFullJsonDefinitions: false,
+    mecab: mecab
+  );
   print("Database setup and conversion took ${s.elapsedMilliseconds} ms.");
 
 }

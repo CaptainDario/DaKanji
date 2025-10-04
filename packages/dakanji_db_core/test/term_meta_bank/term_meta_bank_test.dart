@@ -20,7 +20,12 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryDataSource(yomitanSampleDictionaryPath, db, true, mecab);
+  await parseDictionaryDataSource(
+    dataSourcePath: yomitanSampleDictionaryPath,
+    db: db,
+    addFullJsonDefinitions: false,
+    mecab: mecab
+  );
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   await testTermMetaBankV3(db);

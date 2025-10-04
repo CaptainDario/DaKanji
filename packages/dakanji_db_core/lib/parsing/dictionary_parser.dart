@@ -1,8 +1,11 @@
 // Package imports:
+import 'dart:ffi';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
 import 'package:dakanji_db_core/parsing/parsing_util.dart';
+import 'package:drift/isolate.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
 import 'term/term_bank_v3_parser.dart';
@@ -42,12 +45,46 @@ String termMetaBankFileNamingScheme = "term_meta_bank";
 
 
 /// Parses the given yomitan dictionary folder
-Future parseDictionaryDataSource(String? dataSourcePath,
-  DaKanjiDB db, bool addFullJsonDefinitions, Mecab mecab) async {
-  
+Future parseDictionaryDataSource({
+  String? dataSourcePath,
+  Uint8List? archiveBytes,
+  required DaKanjiDB db,
+  required bool addFullJsonDefinitions,
+  required Mecab mecab
+}) async {
+
   assert(dataSourcePath != null);
 
-  print(dataSourcePath);
+  final connection = await db.attachedDatabase.serializableConnection();
+
+  String libmecabPath = mecab.libmecabPath;
+  String mecabDicPath = mecab.dictDir;
+
+  // spawn isolate
+  await Isolate.run(() async {
+    await _parseDictionaryDataSource(
+      dataSourcePath: dataSourcePath,
+      archiveBytes: archiveBytes,
+      dbConnection: connection,
+      addFullJsonDefinitions: addFullJsonDefinitions,
+      libmecabPath: libmecabPath,
+      mecabDictDir: mecabDicPath
+    );
+  });
+
+}
+
+Future _parseDictionaryDataSource({
+  String? dataSourcePath,
+  Uint8List? archiveBytes,
+  required DriftIsolate dbConnection,
+  required bool addFullJsonDefinitions,
+  required String libmecabPath,
+  required String mecabDictDir,
+}) async {
+
+  final db = DaKanjiDB(executor: await dbConnection.connect());
+  final mecab = Mecab()..init(libmecabPath, mecabDictDir, true);
 
   Iterable<({String fileName, String fileContent})> dataSource = dakanjiDBDataSourceIterator(
     archivePath: dataSourcePath,

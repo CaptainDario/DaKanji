@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:archive/archive.dart';
-import 'package:language_processing/japanese/conjugation/jmdict_conjugation_data/conjos.dart';
 import 'package:path/path.dart' as p;
 
 
