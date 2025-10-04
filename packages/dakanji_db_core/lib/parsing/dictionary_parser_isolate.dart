@@ -33,7 +33,7 @@ void isolateWorker(SendPort mainSendPort) {
     if (message is File) {
       print("isolate received a file");
       try {
-        await parseDictionaryZip(message, db, mecab);
+        //await parseDictionaryDataSource(message, db, mecab);
       } catch (e) {
         print("Error during parsing of dictionary: $e");
         mainSendPort.send("Error during parsing of dictionary: $e");

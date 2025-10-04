@@ -1,3 +1,4 @@
+import 'package:archive/archive_io.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
@@ -35,9 +36,12 @@ Future<void> partialInit(
     await file.copy(p.joinAll([d.path, p.basename(file.path)]));
   }
 
+  await ZipFileEncoder().zipDirectory(
+    d, filename: "${d.path}.zip", level: 1,);
+
   print("Setting up test database...");
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(d, db, true, mecab);
+  await parseDictionaryDataSource("${d.path}.zip", db, true, mecab);
   print("Database setup and conversion took ${s.elapsedMilliseconds} ms.");
 
 }

@@ -20,7 +20,7 @@ void main() async {
 
   // convert the yomitan test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(yomitanSampleDictionaryPath), db, true, mecab);
+  await parseDictionaryDataSource(yomitanSampleDictionaryPath, db, true, mecab);
   print("Converting yomitan dict took ${s.elapsedMilliseconds} ms");
 
   // convert the example bank test files

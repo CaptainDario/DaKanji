@@ -1,5 +1,8 @@
 // Package imports:
+import 'dart:typed_data';
+
 import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
+import 'package:dakanji_db_core/parsing/parsing_util.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
 import 'term/term_bank_v3_parser.dart';
@@ -16,57 +19,50 @@ import '/parsing/term_meta/term_meta_bank_v3_parser.dart';
 
 /// A list containing the names of files that are valid yomtain files
 List<String> validDictionaryFiles = [
-  audioFile,
-  indexFile,
-  tagBankFile,
-  kanjiBankFile, kanjiMetaBankFile,
-  termBankFile, termMetaBankFile
+  audioFileNamingScheme,
+  indexFileNamingScheme,
+  tagBankFileNamingScheme,
+  kanjiBankFileNamingScheme, kanjiMetaBankFileNamingScheme,
+  termBankFileNamingScheme, termMetaBankFileNamingScheme
+
 ];
-
-String audioFile = "audio_list";
+String audioFileNamingScheme = "audio_list";
 /// The name of the dictionary index files
-String indexFile = "index.json";
+String indexFileNamingScheme = "index.json";
 /// The naming pattern for tag bank files
-String tagBankFile = "tag_bank";
+String tagBankFileNamingScheme = "tag_bank";
 /// The naming pattern for kanji bank files
-String kanjiBankFile = "kanji_bank";
+String kanjiBankFileNamingScheme = "kanji_bank";
 /// the naming pattern for kanji meta bank files
-String kanjiMetaBankFile = "kanji_meta_bank";
+String kanjiMetaBankFileNamingScheme = "kanji_meta_bank";
 /// the naming pattern for term bank terms
-String termBankFile = "term_bank";
+String termBankFileNamingScheme = "term_bank";
 /// the naming pattern for term meta bank files
-String termMetaBankFile = "term_meta_bank";
-
+String termMetaBankFileNamingScheme = "term_meta_bank";
 
 
 /// Parses the given yomitan dictionary folder
-Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db, bool addFullJsonDefinitions, Mecab mecab) async {
-
-  // TODO zip based parsing
-
-  /// Get all files from the given folder that can be parsed
-  List<File> validFiles = dictDir.listSync().where((f) => 
-    f.statSync().type == FileSystemEntityType.file &&
-    validDictionaryFiles.any((ext) => p.basename(f.path).contains(ext))
-  )
-  .map((f) => File(f.path)).toList();
-
-  // parse the index file -> get dict index
-  int dictId = await parseIndexFile(
-    validFiles.where((e) => p.basename(e.path) == indexFile).first,
-    db
-  );
-  final dictEntry = await db.indexDao.getById(dictId);
+Future parseDictionaryDataSource(String? dataSourcePath,
+  DaKanjiDB db, bool addFullJsonDefinitions, Mecab mecab) async {
   
-  // parse the tags
-  Iterable<File> tagFiles = validFiles.where((e) => p.basename(e.path).contains(tagBankFile));
-  for (var tagFile in tagFiles) {
-    await parseTagBankV3File(tagFile, db);
-  }
+  assert(dataSourcePath != null);
 
-  for (var file in validFiles) {
+  print(dataSourcePath);
+
+  Iterable<({String fileName, String fileContent})> dataSource = dakanjiDBDataSourceIterator(
+    archivePath: dataSourcePath,
+    fileOrder: [indexFileNamingScheme, tagBankFileNamingScheme]
+  );
+  
+  // parse the index file -> get dict index
+  final indexFile = dataSource.first;
+  int dictId = await parseIndex(indexFile.fileContent, db);
+  final dictEntry = await db.indexDao.getById(dictId);
+
+  for (final ({String fileName, String fileContent}) data in dataSource) {
     await parseDictionaryFile(
-      dictFile: file,
+      fileName: data.fileName,
+      fileContent: data.fileContent,
       db: db,
       ind: dictEntry!,
       addFullJsonDefinitions: addFullJsonDefinitions,
@@ -78,42 +74,34 @@ Future parseDictionaryFolder(Directory dictDir, DaKanjiDB db, bool addFullJsonDe
 
 /// Depending on the file name applies the correct parsing method
 Future parseDictionaryFile({
-  required File dictFile,
+  required String fileName,
+  required String fileContent,
   required DaKanjiDB db,
   required IndexTableData ind,
   required bool addFullJsonDefinitions,
   required Mecab mecab
 }) async {
 
+  // create config to pass the different arguments to the functions
+  final parserConfig = {
+    audioFileNamingScheme: () => parseAudio(fileContent, db, ind.id),
+    kanjiBankFileNamingScheme: () => parseKanjiBankV3(fileContent, db, ind.id),
+    kanjiMetaBankFileNamingScheme: () => parseKanjiMetaBankV3(fileContent, db, ind.id),
+    tagBankFileNamingScheme: () => parseTagBankv3(fileContent, db),
+    termBankFileNamingScheme: () => parseTermBankV3(fileContent, db, ind.id, addFullJsonDefinitions, mecab),
+    termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, db, ind.id),
+  };
 
-  // parse audio files
-  if(p.basename(dictFile.path).contains("audio_list")){
-    print("Parsing ${p.basename(dictFile.path)} as `audio`");
-    await parseAudioFile(dictFile, db, ind.id); 
-  }
+  final baseName = p.basename(fileName);
+  for (final entry in parserConfig.entries) {
+    final scheme = entry.key;
+    final parserFunction = entry.value;
 
-  // parse `kanji_bank`-files
-  if(p.basename(dictFile.path).contains(kanjiBankFile)){
-    print("Parsing ${p.basename(dictFile.path)} as `$kanjiBankFile`");
-    await parseKanjiBankV3File(dictFile, db, ind.id); 
-  }
-
-  // parse `kanji_meta_bank`-files
-  if(p.basename(dictFile.path).contains(kanjiMetaBankFile)){
-    print("Parsing ${p.basename(dictFile.path)} as `$kanjiMetaBankFile`");
-    await parseKanjiMetaBankV3File(dictFile, db, ind.id); 
-  }
-
-  // parse `term_bank`-files
-  if(p.basename(dictFile.path).contains(termBankFile)){
-    print("Parsing ${p.basename(dictFile.path)} as `$termBankFile`");
-    await parseTermBankV3File(dictFile, db, ind.id, addFullJsonDefinitions, mecab); 
-  }
-
-  // parse `term_meta_bank`-files
-  if(p.basename(dictFile.path).contains(termMetaBankFile)){
-    print("Parsing ${p.basename(dictFile.path)} as `$termMetaBankFile`");
-    await parseTermMetaBankV3File(dictFile, db, ind.id); 
+    if (baseName.contains(scheme)) {
+      print("Parsing $baseName as `$scheme`");
+      await parserFunction();
+      break;
+    }
   }
 
 }

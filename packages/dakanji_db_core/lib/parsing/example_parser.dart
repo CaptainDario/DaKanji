@@ -12,14 +12,17 @@ import '/database/dakanji_db.dart';
 /// Parses the given dakanji example folder
 Future parseExampleDataSource(String exampleDir, DaKanjiDB db, Mecab mecab) async {
 
-  // parse the example bank files
-  for (var (fileName, fileContent) in dakanjiDBDataSourceIterator(exampleDir)) {
+  Iterable<({String fileName, String fileContent})> dataSources = 
+    dakanjiDBDataSourceIterator(archivePath: exampleDir);
 
-    if(fileName.endsWith(".txt")) {
-      await parseExampleText(fileContent, db, mecab);
+  // parse the example bank files
+   for (final ({String fileName, String fileContent}) data in dataSources) {
+
+    if(data.fileName.endsWith(".txt")) {
+      await parseExampleText(data.fileContent, db, mecab);
     }
-    else if(fileName.endsWith(".json")) {
-      await parseExampleSentence(fileContent, db, mecab);
+    else if(data.fileName.endsWith(".json")) {
+      await parseExampleSentence(data.fileContent, db, mecab);
     }
 
   }

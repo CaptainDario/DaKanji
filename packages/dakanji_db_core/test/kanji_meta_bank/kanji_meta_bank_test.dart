@@ -20,7 +20,7 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryFolder(Directory(yomitanSampleDictionaryPath), db, false, mecab);
+  await parseDictionaryDataSource(yomitanSampleDictionaryPath, db, false, mecab);
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   await testKanjiMetaBankV3(db);
