@@ -1,6 +1,9 @@
 // Package imports:
+import 'dart:isolate';
+
 import 'package:dakanji_db_core/parsing/parsing_util.dart';
 import 'package:drift/drift.dart';
+import 'package:drift/isolate.dart';
 
 // Project imports:
 import '/database/dakanji_db.dart';
@@ -11,6 +14,23 @@ import '/database/dakanji_db.dart';
 /// [dataSourcePath] Path to the folder containing the KanjiVG SVG files
 /// can either be a folder or a zip file
 Future<void> addKanjiVGToDB(String dataSourcePath, DaKanjiDB db) async {
+
+  final connection = await db.attachedDatabase.serializableConnection();
+
+  // spawn isolate
+  await Isolate.run(() async {
+    await _addKanjiVGToDB(dataSourcePath, connection);
+  });
+
+  await db.customStatement("PRAGMA wal_checkpoint(TRUNCATE);");
+}
+
+
+/// Actual implementation of the [_addKanjiVGToDB] that runs in an isolate
+Future<void> _addKanjiVGToDB(String dataSourcePath, DriftIsolate dbConnection) async {
+
+  // reconnect to the database
+  final db = DaKanjiDB(executor: await dbConnection.connect());
 
   // convert kanji vg to map
   Map<String, String> kanjiVGMap = {};

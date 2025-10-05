@@ -18,7 +18,7 @@ Iterable<({String fileName, String fileContent})> dakanjiDBDataSourceIterator(
     String? archivePath,
     Uint8List? archiveBytes,
     List<String> fileOrder=const [],
-    List<String> extensionsToInclude = const [".json", ".txt"]
+    List<String> extensionsToInclude = const [".json", ".txt", ".svg"]
   }
 ) sync* {
 

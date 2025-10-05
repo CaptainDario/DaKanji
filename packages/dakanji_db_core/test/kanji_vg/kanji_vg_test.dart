@@ -4,6 +4,7 @@ import 'package:test/test.dart';
 // Project imports:
 import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:universal_io/io.dart';
 import '../../../dakanji_db_shared/lib/paths.dart';
 import 'kanji_vg_test_cases.dart';
 
@@ -33,4 +34,5 @@ void main() async {
       });  
     }
   });
+
 }
