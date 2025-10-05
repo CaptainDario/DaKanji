@@ -1,11 +1,11 @@
 // Dart imports:
 import 'dart:convert';
+import 'dart:isolate';
 
 // Package imports:
 import 'package:dakanji_db_core/parsing/parsing_util.dart';
 import 'package:drift/drift.dart';
-import 'package:path/path.dart' as p;
-import 'package:universal_io/io.dart';
+import 'package:drift/isolate.dart';
 
 // Project imports:
 import '/database/dakanji_db.dart';
@@ -68,6 +68,21 @@ Map<String, String> kanjiCodeLookup = {
 /// Converts the radk and krad file at the given paths and adds them to the
 /// given DaKanji db
 Future addRadicalsToDB(String radkPath, String kradPath, DaKanjiDB db) async {
+
+  final connection = await db.attachedDatabase.serializableConnection();
+
+  // spawn isolate
+  await Isolate.run(() async {
+    await _addRadicalsToDB(radkPath, kradPath, connection);
+  });
+}
+
+
+/// Actual implementation of the [_addRadicalsToDB] that runs in an isolate
+Future _addRadicalsToDB(String radkPath, String kradPath, DriftIsolate dbConnection) async {
+
+  // reconnect to the database
+  final db = DaKanjiDB(executor: await dbConnection.connect());
 
   // load radical files
   Map radkMap = jsonDecode(dakanjiDBDataSourceIterator(
