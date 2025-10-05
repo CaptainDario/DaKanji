@@ -107,6 +107,10 @@ Future _parseDictionaryDataSource({
     );
   }
 
+  // Optimize db
+  await db.customStatement('VACUUM;');
+  await db.customStatement('ANALYZE;');
+
 }
 
 /// Depending on the file name applies the correct parsing method
