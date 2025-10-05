@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:archive/archive.dart';
+import 'package:collection/collection.dart';
 import 'package:path/path.dart' as p;
 
 
@@ -61,7 +62,7 @@ Iterable<({String fileName, String fileContent})> _archiveIteratorStreamed(
       .where((e) => e.name.contains(RegExp(f)))
       .toList();
 
-    // 
+    // Iterate over the files for which an order was specified
     for (ArchiveFile matchedFile in matchedFiles) {
       final content = utf8.decode(matchedFile.readBytes()!);
       processedFiles.add(matchedFile.name);
@@ -69,11 +70,10 @@ Iterable<({String fileName, String fileContent})> _archiveIteratorStreamed(
     }
   }
 
-  // iterate over the remainign files
-  for (final entity in archive) {
+  // iterate over the remaining files
+  for (final entity in archive.files.sorted((a, b) => a.name.compareTo(b.name))) {
     if (entity.isFile && !processedFiles.contains(entity.name)
         && extensionsToInclude.contains(p.extension(entity.name))) {
-      print("Found unprocessed file: ${entity.name}");
       // get the file's content as a string
       final content = utf8.decode(entity.readBytes()!);
       yield (fileName: entity.name, fileContent: content);

@@ -41,7 +41,7 @@ import '/database/tag/tag_bank_v3_tables.dart';
 import '/database/term_meta/term_meta_bank_relation_tables.dart';
 import '/database/term_meta/term_meta_bank_v3_dao.dart';
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
-import '/extensions/sqlite_vec_extension.dart';
+import '/extensions/sqlite_vector_extension.dart';
 import '/extensions/sqlite_spellfix_extension.dart';
 import '/extensions/sqlite_crsqlite_extension.dart';
 // these are NECCESSARY
@@ -149,7 +149,7 @@ class DaKanjiDB extends _$DaKanjiDB {
     QueryExecutor qe = NativeDatabase.createInBackground(
       File(path),
       sqlite3: () {
-        sqlite3Native.loadSqliteVecExtension();
+        //sqlite3Native.loadSqliteVecExtension();
         sqlite3Native.loadSqliteSpellfixExtension();
         sqlite3Native.loadSqliteCrsqliteExtension();
         return sqlite3Native;
@@ -159,7 +159,7 @@ class DaKanjiDB extends _$DaKanjiDB {
         // causes "database locked" errors.
         // With write-ahead logging (WAL) enabled, a single writer and multiple
         // readers can operate on the database in parallel.
-        //database.execute('pragma journal_mode = WAL;');
+        database.execute('PRAGMA journal_mode = WAL;');
       },
       readPool: 8
     );

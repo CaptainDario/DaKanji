@@ -6,3 +6,5 @@
   - KRAD
   - RADK
   - KanjiVG
+  - Examples
+  - Audio files
