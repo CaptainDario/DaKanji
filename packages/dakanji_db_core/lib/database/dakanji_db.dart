@@ -15,7 +15,7 @@ import 'package:drift/native.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import '/database/audio/audio_table.dart';
+import 'audio_source_list/audio_source_list_tables.dart';
 import '/database/general_tables/kanji_dao.dart';
 import '/database/general_tables/kanji_tables.dart';
 import '/database/general_tables/definition_dao.dart';
@@ -57,7 +57,7 @@ part 'dakanji_db.g.dart';
 
 @DriftDatabase(
   tables: [
-    AudioTable,
+    AudioSourceListTable,
     KanjiTable, TermTable, ReadingTable,
     DefinitionTable, TermBankV3DefinitionJsonTable, LanguageCodeTable,
 

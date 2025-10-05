@@ -9,11 +9,6 @@ import 'package:disjoint_set/disjoint_set.dart';
 
 
 
-/// First parses the tatoeba data source and then adds the data to the database
-void convertAndParseTatoebaDataSource() {
-   
-}
-
 /// Converts the Tatoeba files from the input directory to the DaKanji DB
 /// example sentence format by parsing the `sentences.csv` and `links.csv` files
 /// in the `input_directory`
@@ -45,7 +40,7 @@ Future<void> convertTatoebaDataSource(
       { for (var record in sentenceGroup) record.$1 : record.$2 }
     ));
 
-    if(i >= 10) return;
+    //if(i >= 10) return;
 
   }
 

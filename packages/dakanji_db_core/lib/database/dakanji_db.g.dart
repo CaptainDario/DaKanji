@@ -10330,12 +10330,12 @@ class ExampleFtsCompanion extends UpdateCompanion<ExampleFt> {
   }
 }
 
-class $AudioTableTable extends AudioTable
-    with TableInfo<$AudioTableTable, AudioTableData> {
+class $AudioSourceListTableTable extends AudioSourceListTable
+    with TableInfo<$AudioSourceListTableTable, AudioSourceListTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $AudioTableTable(this.attachedDatabase, [this._alias]);
+  $AudioSourceListTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -10369,28 +10369,16 @@ class $AudioTableTable extends AudioTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _localMeta = const VerificationMeta('local');
   @override
-  late final GeneratedColumn<bool> local = GeneratedColumn<bool>(
-    'local',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("local" IN (0, 1))',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, name, uri, local];
+  List<GeneratedColumn> get $columns => [id, name, uri];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'audio_table';
+  static const String $name = 'audio_source_list_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<AudioTableData> instance, {
+    Insertable<AudioSourceListTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -10414,23 +10402,18 @@ class $AudioTableTable extends AudioTable
     } else if (isInserting) {
       context.missing(_uriMeta);
     }
-    if (data.containsKey('local')) {
-      context.handle(
-        _localMeta,
-        local.isAcceptableOrUnknown(data['local']!, _localMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_localMeta);
-    }
     return context;
   }
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  AudioTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  AudioSourceListTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return AudioTableData(
+    return AudioSourceListTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
@@ -10443,20 +10426,17 @@ class $AudioTableTable extends AudioTable
         DriftSqlType.string,
         data['${effectivePrefix}uri'],
       )!,
-      local: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}local'],
-      )!,
     );
   }
 
   @override
-  $AudioTableTable createAlias(String alias) {
-    return $AudioTableTable(attachedDatabase, alias);
+  $AudioSourceListTableTable createAlias(String alias) {
+    return $AudioSourceListTableTable(attachedDatabase, alias);
   }
 }
 
-class AudioTableData extends DataClass implements Insertable<AudioTableData> {
+class AudioSourceListTableData extends DataClass
+    implements Insertable<AudioSourceListTableData> {
   final int id;
 
   /// The name of the audio source
@@ -10464,14 +10444,10 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
 
   /// The URI of the audio source
   final String uri;
-
-  /// Is this a local audio source
-  final bool local;
-  const AudioTableData({
+  const AudioSourceListTableData({
     required this.id,
     required this.name,
     required this.uri,
-    required this.local,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -10479,29 +10455,26 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     map['uri'] = Variable<String>(uri);
-    map['local'] = Variable<bool>(local);
     return map;
   }
 
-  AudioTableCompanion toCompanion(bool nullToAbsent) {
-    return AudioTableCompanion(
+  AudioSourceListTableCompanion toCompanion(bool nullToAbsent) {
+    return AudioSourceListTableCompanion(
       id: Value(id),
       name: Value(name),
       uri: Value(uri),
-      local: Value(local),
     );
   }
 
-  factory AudioTableData.fromJson(
+  factory AudioSourceListTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return AudioTableData(
+    return AudioSourceListTableData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       uri: serializer.fromJson<String>(json['uri']),
-      local: serializer.fromJson<bool>(json['local']),
     );
   }
   @override
@@ -10511,93 +10484,83 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'uri': serializer.toJson<String>(uri),
-      'local': serializer.toJson<bool>(local),
     };
   }
 
-  AudioTableData copyWith({int? id, String? name, String? uri, bool? local}) =>
-      AudioTableData(
+  AudioSourceListTableData copyWith({int? id, String? name, String? uri}) =>
+      AudioSourceListTableData(
         id: id ?? this.id,
         name: name ?? this.name,
         uri: uri ?? this.uri,
-        local: local ?? this.local,
       );
-  AudioTableData copyWithCompanion(AudioTableCompanion data) {
-    return AudioTableData(
+  AudioSourceListTableData copyWithCompanion(
+    AudioSourceListTableCompanion data,
+  ) {
+    return AudioSourceListTableData(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       uri: data.uri.present ? data.uri.value : this.uri,
-      local: data.local.present ? data.local.value : this.local,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('AudioTableData(')
+    return (StringBuffer('AudioSourceListTableData(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('uri: $uri, ')
-          ..write('local: $local')
+          ..write('uri: $uri')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, uri, local);
+  int get hashCode => Object.hash(id, name, uri);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is AudioTableData &&
+      (other is AudioSourceListTableData &&
           other.id == this.id &&
           other.name == this.name &&
-          other.uri == this.uri &&
-          other.local == this.local);
+          other.uri == this.uri);
 }
 
-class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
+class AudioSourceListTableCompanion
+    extends UpdateCompanion<AudioSourceListTableData> {
   final Value<int> id;
   final Value<String> name;
   final Value<String> uri;
-  final Value<bool> local;
-  const AudioTableCompanion({
+  const AudioSourceListTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.uri = const Value.absent(),
-    this.local = const Value.absent(),
   });
-  AudioTableCompanion.insert({
+  AudioSourceListTableCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     required String uri,
-    required bool local,
   }) : name = Value(name),
-       uri = Value(uri),
-       local = Value(local);
-  static Insertable<AudioTableData> custom({
+       uri = Value(uri);
+  static Insertable<AudioSourceListTableData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? uri,
-    Expression<bool>? local,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (uri != null) 'uri': uri,
-      if (local != null) 'local': local,
     });
   }
 
-  AudioTableCompanion copyWith({
+  AudioSourceListTableCompanion copyWith({
     Value<int>? id,
     Value<String>? name,
     Value<String>? uri,
-    Value<bool>? local,
   }) {
-    return AudioTableCompanion(
+    return AudioSourceListTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       uri: uri ?? this.uri,
-      local: local ?? this.local,
     );
   }
 
@@ -10613,19 +10576,15 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
     if (uri.present) {
       map['uri'] = Variable<String>(uri.value);
     }
-    if (local.present) {
-      map['local'] = Variable<bool>(local.value);
-    }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('AudioTableCompanion(')
+    return (StringBuffer('AudioSourceListTableCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('uri: $uri, ')
-          ..write('local: $local')
+          ..write('uri: $uri')
           ..write(')'))
         .toString();
   }
@@ -14738,7 +14697,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'CREATE TRIGGER example_table_au AFTER UPDATE OF example_sentence_tokenized ON example_table BEGIN INSERT INTO example_fts (example_fts, "rowid", example_sentence_tokenized) VALUES (\'delete\', old.id, old.example_sentence_tokenized);INSERT INTO example_fts ("rowid", example_sentence_tokenized) VALUES (new.id, new.example_sentence_tokenized);END',
     'example_table_au',
   );
-  late final $AudioTableTable audioTable = $AudioTableTable(this);
+  late final $AudioSourceListTableTable audioSourceListTable =
+      $AudioSourceListTableTable(this);
   late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
   late final $Radical_X_KanjiRelationsTableTable radicalXKanjiRelationsTable =
       $Radical_X_KanjiRelationsTableTable(this);
@@ -15021,7 +14981,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     exampleTableAi,
     exampleTableAd,
     exampleTableAu,
-    audioTable,
+    audioSourceListTable,
     radicalsTable,
     radicalXKanjiRelationsTable,
     kanjiVGTable,
@@ -28049,24 +28009,22 @@ typedef $ExampleFtsProcessedTableManager =
       ExampleFt,
       PrefetchHooks Function()
     >;
-typedef $$AudioTableTableCreateCompanionBuilder =
-    AudioTableCompanion Function({
+typedef $$AudioSourceListTableTableCreateCompanionBuilder =
+    AudioSourceListTableCompanion Function({
       Value<int> id,
       required String name,
       required String uri,
-      required bool local,
     });
-typedef $$AudioTableTableUpdateCompanionBuilder =
-    AudioTableCompanion Function({
+typedef $$AudioSourceListTableTableUpdateCompanionBuilder =
+    AudioSourceListTableCompanion Function({
       Value<int> id,
       Value<String> name,
       Value<String> uri,
-      Value<bool> local,
     });
 
-class $$AudioTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $AudioTableTable> {
-  $$AudioTableTableFilterComposer({
+class $$AudioSourceListTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $AudioSourceListTableTable> {
+  $$AudioSourceListTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -28087,16 +28045,11 @@ class $$AudioTableTableFilterComposer
     column: $table.uri,
     builder: (column) => ColumnFilters(column),
   );
-
-  ColumnFilters<bool> get local => $composableBuilder(
-    column: $table.local,
-    builder: (column) => ColumnFilters(column),
-  );
 }
 
-class $$AudioTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $AudioTableTable> {
-  $$AudioTableTableOrderingComposer({
+class $$AudioSourceListTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $AudioSourceListTableTable> {
+  $$AudioSourceListTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -28117,16 +28070,11 @@ class $$AudioTableTableOrderingComposer
     column: $table.uri,
     builder: (column) => ColumnOrderings(column),
   );
-
-  ColumnOrderings<bool> get local => $composableBuilder(
-    column: $table.local,
-    builder: (column) => ColumnOrderings(column),
-  );
 }
 
-class $$AudioTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $AudioTableTable> {
-  $$AudioTableTableAnnotationComposer({
+class $$AudioSourceListTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $AudioSourceListTableTable> {
+  $$AudioSourceListTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -28141,63 +28089,64 @@ class $$AudioTableTableAnnotationComposer
 
   GeneratedColumn<String> get uri =>
       $composableBuilder(column: $table.uri, builder: (column) => column);
-
-  GeneratedColumn<bool> get local =>
-      $composableBuilder(column: $table.local, builder: (column) => column);
 }
 
-class $$AudioTableTableTableManager
+class $$AudioSourceListTableTableTableManager
     extends
         RootTableManager<
           _$DaKanjiDB,
-          $AudioTableTable,
-          AudioTableData,
-          $$AudioTableTableFilterComposer,
-          $$AudioTableTableOrderingComposer,
-          $$AudioTableTableAnnotationComposer,
-          $$AudioTableTableCreateCompanionBuilder,
-          $$AudioTableTableUpdateCompanionBuilder,
+          $AudioSourceListTableTable,
+          AudioSourceListTableData,
+          $$AudioSourceListTableTableFilterComposer,
+          $$AudioSourceListTableTableOrderingComposer,
+          $$AudioSourceListTableTableAnnotationComposer,
+          $$AudioSourceListTableTableCreateCompanionBuilder,
+          $$AudioSourceListTableTableUpdateCompanionBuilder,
           (
-            AudioTableData,
-            BaseReferences<_$DaKanjiDB, $AudioTableTable, AudioTableData>,
+            AudioSourceListTableData,
+            BaseReferences<
+              _$DaKanjiDB,
+              $AudioSourceListTableTable,
+              AudioSourceListTableData
+            >,
           ),
-          AudioTableData,
+          AudioSourceListTableData,
           PrefetchHooks Function()
         > {
-  $$AudioTableTableTableManager(_$DaKanjiDB db, $AudioTableTable table)
-    : super(
+  $$AudioSourceListTableTableTableManager(
+    _$DaKanjiDB db,
+    $AudioSourceListTableTable table,
+  ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$AudioTableTableFilterComposer($db: db, $table: table),
+              $$AudioSourceListTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$AudioTableTableOrderingComposer($db: db, $table: table),
+              $$AudioSourceListTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
           createComputedFieldComposer: () =>
-              $$AudioTableTableAnnotationComposer($db: db, $table: table),
+              $$AudioSourceListTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<String> uri = const Value.absent(),
-                Value<bool> local = const Value.absent(),
-              }) => AudioTableCompanion(
-                id: id,
-                name: name,
-                uri: uri,
-                local: local,
-              ),
+              }) => AudioSourceListTableCompanion(id: id, name: name, uri: uri),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String name,
                 required String uri,
-                required bool local,
-              }) => AudioTableCompanion.insert(
+              }) => AudioSourceListTableCompanion.insert(
                 id: id,
                 name: name,
                 uri: uri,
-                local: local,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -28207,21 +28156,25 @@ class $$AudioTableTableTableManager
       );
 }
 
-typedef $$AudioTableTableProcessedTableManager =
+typedef $$AudioSourceListTableTableProcessedTableManager =
     ProcessedTableManager<
       _$DaKanjiDB,
-      $AudioTableTable,
-      AudioTableData,
-      $$AudioTableTableFilterComposer,
-      $$AudioTableTableOrderingComposer,
-      $$AudioTableTableAnnotationComposer,
-      $$AudioTableTableCreateCompanionBuilder,
-      $$AudioTableTableUpdateCompanionBuilder,
+      $AudioSourceListTableTable,
+      AudioSourceListTableData,
+      $$AudioSourceListTableTableFilterComposer,
+      $$AudioSourceListTableTableOrderingComposer,
+      $$AudioSourceListTableTableAnnotationComposer,
+      $$AudioSourceListTableTableCreateCompanionBuilder,
+      $$AudioSourceListTableTableUpdateCompanionBuilder,
       (
-        AudioTableData,
-        BaseReferences<_$DaKanjiDB, $AudioTableTable, AudioTableData>,
+        AudioSourceListTableData,
+        BaseReferences<
+          _$DaKanjiDB,
+          $AudioSourceListTableTable,
+          AudioSourceListTableData
+        >,
       ),
-      AudioTableData,
+      AudioSourceListTableData,
       PrefetchHooks Function()
     >;
 typedef $$RadicalsTableTableCreateCompanionBuilder =
@@ -34120,8 +34073,8 @@ class $DaKanjiDBManager {
       );
   $ExampleFtsTableManager get exampleFts =>
       $ExampleFtsTableManager(_db, _db.exampleFts);
-  $$AudioTableTableTableManager get audioTable =>
-      $$AudioTableTableTableManager(_db, _db.audioTable);
+  $$AudioSourceListTableTableTableManager get audioSourceListTable =>
+      $$AudioSourceListTableTableTableManager(_db, _db.audioSourceListTable);
   $$RadicalsTableTableTableManager get radicalsTable =>
       $$RadicalsTableTableTableManager(_db, _db.radicalsTable);
   $$Radical_X_KanjiRelationsTableTableTableManager

@@ -28,14 +28,13 @@ Future parseAudio(String kanjiBankV3Json, DaKanjiDB db, int dictId) async {
   // populate the companion lists
   Stopwatch s = Stopwatch()..start();
   
-  List<AudioTableCompanion> audioEntries = jsonList.map((entry) {
+  List<AudioSourceListTableCompanion> audioEntries = jsonList.map((entry) {
     String name = entry["name"]!;
     String uri = entry["uri"] ?? entry["url"]!;
     bool isLocal = entry["local"] ?? false;
-    return AudioTableCompanion.insert(
+    return AudioSourceListTableCompanion.insert(
       name: name.trim(),
       uri: uri.trim(),
-      local: isLocal,
     );
   }).toList();
 
@@ -45,7 +44,7 @@ Future parseAudio(String kanjiBankV3Json, DaKanjiDB db, int dictId) async {
   s.reset();
   await db.batch((batch) {
     
-    batch.insertAll(db.audioTable, audioEntries);
+    batch.insertAll(db.audioSourceListTable, audioEntries);
 
   });
   print("Adding to DaKanjiDB took ${s.elapsedMilliseconds}ms");

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'audio_entry.dart';
+part of 'audio_source_list_entry.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,40 +13,40 @@ part of 'audio_entry.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$AudioEntry {
+mixin _$AudioSourceListEntry {
 
- String get name; set name(String value); String get uri; set uri(String value); bool get local; set local(bool value);
-/// Create a copy of AudioEntry
+ String get name; set name(String value); String get uri; set uri(String value);
+/// Create a copy of AudioSourceListEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$AudioEntryCopyWith<AudioEntry> get copyWith => _$AudioEntryCopyWithImpl<AudioEntry>(this as AudioEntry, _$identity);
+$AudioSourceListEntryCopyWith<AudioSourceListEntry> get copyWith => _$AudioSourceListEntryCopyWithImpl<AudioSourceListEntry>(this as AudioSourceListEntry, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AudioEntry&&(identical(other.name, name) || other.name == name)&&(identical(other.uri, uri) || other.uri == uri)&&(identical(other.local, local) || other.local == local));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AudioSourceListEntry&&(identical(other.name, name) || other.name == name)&&(identical(other.uri, uri) || other.uri == uri));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,uri,local);
+int get hashCode => Object.hash(runtimeType,name,uri);
 
 @override
 String toString() {
-  return 'AudioEntry(name: $name, uri: $uri, local: $local)';
+  return 'AudioSourceListEntry(name: $name, uri: $uri)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $AudioEntryCopyWith<$Res>  {
-  factory $AudioEntryCopyWith(AudioEntry value, $Res Function(AudioEntry) _then) = _$AudioEntryCopyWithImpl;
+abstract mixin class $AudioSourceListEntryCopyWith<$Res>  {
+  factory $AudioSourceListEntryCopyWith(AudioSourceListEntry value, $Res Function(AudioSourceListEntry) _then) = _$AudioSourceListEntryCopyWithImpl;
 @useResult
 $Res call({
- String name, String uri, bool local
+ String name, String uri
 });
 
 
@@ -54,29 +54,28 @@ $Res call({
 
 }
 /// @nodoc
-class _$AudioEntryCopyWithImpl<$Res>
-    implements $AudioEntryCopyWith<$Res> {
-  _$AudioEntryCopyWithImpl(this._self, this._then);
+class _$AudioSourceListEntryCopyWithImpl<$Res>
+    implements $AudioSourceListEntryCopyWith<$Res> {
+  _$AudioSourceListEntryCopyWithImpl(this._self, this._then);
 
-  final AudioEntry _self;
-  final $Res Function(AudioEntry) _then;
+  final AudioSourceListEntry _self;
+  final $Res Function(AudioSourceListEntry) _then;
 
-/// Create a copy of AudioEntry
+/// Create a copy of AudioSourceListEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? uri = null,Object? local = null,}) {
-  return _then(AudioEntry(
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? uri = null,}) {
+  return _then(AudioSourceListEntry(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,uri: null == uri ? _self.uri : uri // ignore: cast_nullable_to_non_nullable
-as String,local: null == local ? _self.local : local // ignore: cast_nullable_to_non_nullable
-as bool,
+as String,
   ));
 }
 
 }
 
 
-/// Adds pattern-matching-related methods to [AudioEntry].
-extension AudioEntryPatterns on AudioEntry {
+/// Adds pattern-matching-related methods to [AudioSourceListEntry].
+extension AudioSourceListEntryPatterns on AudioSourceListEntry {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:

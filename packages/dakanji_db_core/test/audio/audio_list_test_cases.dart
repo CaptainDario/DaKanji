@@ -1,14 +1,12 @@
-import 'package:dakanji_db_core/database/audio/audio_entry.dart';
+import 'package:dakanji_db_core/database/audio_source_list/audio_source_list_entry.dart';
 
-List<AudioEntry> audioTestCases = [
-  AudioEntry(
+List<AudioSourceListEntry> audioTestCases = [
+  AudioSourceListEntry(
     name: "JapanesePod101",
     uri: "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kanji={{KANJI}}&kana={{KANA}}",
-    local: false
   ),
-  AudioEntry(
+  AudioSourceListEntry(
     name: "JapanesePod101",
     uri: "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kanji={{KANJI}}&kana={{KANA}}",
-    local: false
   ),
 ];
