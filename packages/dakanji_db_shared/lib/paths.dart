@@ -58,10 +58,16 @@ final mecabDicPath = p.joinAll([mecabFilesPath, "unidic"]);
 final yomitanSampleDictionaryPath = p.joinAll([dataFilesPath, "yomitan"]);
 /// Path to the folder that contains example sentences for development
 final devExampleSentencesPath = p.joinAll([dataFilesPath, "example_sentences"]);
+/// Path to the zip file that contains example sentences for development
+final devExampleSentencesZipPath = p.joinAll([dataFilesPath, "example_sentences.zip"]);
 /// Path to the folder that contains example texts for development
 final devExampleTextsPath = p.joinAll([dataFilesPath, "example_texts"]);
+/// Path to the folder that contains example texts for development
+final devExampleTextsZipPath = p.joinAll([dataFilesPath, "example_texts.zip"]);
 /// Path to the folder that contains audio examples for development
 final devExampleAudioPath = p.joinAll([dataFilesPath, "example_audio_sources"]);
+/// Path to the zip file that contains audio examples for development
+final devExampleAudioZipPath = p.joinAll([dataFilesPath, "example_audio_sources.zip"]);
 
 /// --- DAKANJI DB FILES -------------------------------------------------------
 /// Path to the folder that contains the input files for creating DaKanji DB

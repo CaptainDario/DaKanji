@@ -55,6 +55,8 @@ Future downloadSources() async {
   String tatoebaLinksUri = await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/links.tar.bz2'), out);
   String tatoebaSentencesUri = await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/sentences.tar.bz2'), out);
 
+  // TODO audio files
+
   print("All downloads completed, writing summary file.");
   File sourcesList = File(p.join(out.path, 'sources_list.txt'))..createSync();
   sourcesList.writeAsStringSync(
@@ -106,10 +108,11 @@ Future kanjidic2(DaKanjiDB db, Mecab mecab) async {
 Future tatoeba(DaKanjiDB db, Mecab mecab) async {
 
   Stopwatch s = Stopwatch()..start();
-  await convertTatoebaFiles(
-    Directory(tatoebaInputPath),
-    Directory(tatoebaProcessedPath)
-  );
+  // TODO
+  //await convertTatoebaFiles(
+  //  Directory(tatoebaInputPath),
+  //  Directory(tatoebaProcessedPath)
+  //);
   print("Converting Tatoeba took: ${s.elapsedMilliseconds}ms");
 
 }

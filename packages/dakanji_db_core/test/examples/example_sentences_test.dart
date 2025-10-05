@@ -1,9 +1,7 @@
 // Package imports:
-import 'package:language_processing/iso/iso_table.dart';
 import 'package:dakanji_db_core/parsing/example_parser.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
-import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:dakanji_db_core/database/dakanji_db.dart';
@@ -24,7 +22,10 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseExampleDataSource(devExampleSentencesPath, db, mecab);
+  Stream<String> stream = await parseExampleDataSource(devExampleSentencesZipPath, db, mecab);
+  await for (final event in stream) {
+    print(event);
+  }
   print("Conversion took ${s.elapsedMilliseconds} ms");
 
   await testExamplesV3(db);
