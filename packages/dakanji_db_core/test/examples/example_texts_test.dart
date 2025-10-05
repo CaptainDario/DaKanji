@@ -28,7 +28,10 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseExampleDataSource(devExampleTextsPath, db, mecab);
+  Stream<String> stream = await parseExampleDataSource(devExampleTextsZipPath, db, mecab);
+  await for (final event in stream) {
+    print(event);
+  }
   print("Conversion took ${s.elapsedMilliseconds} ms");
 
   await testExampleTexts(db);
