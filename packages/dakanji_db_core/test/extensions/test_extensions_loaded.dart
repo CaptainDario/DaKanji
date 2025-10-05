@@ -10,6 +10,7 @@ void main() async {
   //sqlite3Native.loadSqliteVecExtension();
   sqlite3Native.loadSqliteSpellfixExtension();
   sqlite3Native.loadSqliteCrsqliteExtension();
+  sqlite3Native.loadSqliteCompressExtension();
 
   final db = sqlite3Native.openInMemory();
 
@@ -25,8 +26,13 @@ void main() async {
     db.execute('CREATE VIRTUAL TABLE demo USING spellfix1;');
   });
 
-  test('Testing SQLite-vec loaded', () async {
-    db.execute('create virtual table vec_examples using vec0(sample_embedding float[8]);');
+  test('Testing COMPRESS loaded', () async {
+    db.execute('CREATE TABLE t1 (data TEXT);');
+    db.execute("INSERT INTO t1 (data) VALUES (compress('This is a test'));");
+    final result = db.select('SELECT uncompress(data) as data FROM t1;');
+    List<int> uncompressed = result.first['data'];
+    String decoded = String.fromCharCodes(uncompressed);
+    expect(decoded, 'This is a test');
   });
 
   //test('Testing SQLite-vec loaded', () async {

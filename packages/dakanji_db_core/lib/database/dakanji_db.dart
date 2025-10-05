@@ -44,6 +44,7 @@ import '/database/term_meta/term_meta_bank_v3_tables.dart';
 import '/extensions/sqlite_vector_extension.dart';
 import '/extensions/sqlite_spellfix_extension.dart';
 import '/extensions/sqlite_crsqlite_extension.dart';
+import '/extensions/sqlite_compress_extension.dart';
 // these are NECCESSARY
 // ignore: unused_import
 import '/helper/zlib_text_converter.dart';
@@ -152,6 +153,7 @@ class DaKanjiDB extends _$DaKanjiDB {
         //sqlite3Native.loadSqliteVecExtension();
         sqlite3Native.loadSqliteSpellfixExtension();
         sqlite3Native.loadSqliteCrsqliteExtension();
+        sqlite3Native.loadSqliteCompressExtension();
         return sqlite3Native;
       },
       setup: (database) {
