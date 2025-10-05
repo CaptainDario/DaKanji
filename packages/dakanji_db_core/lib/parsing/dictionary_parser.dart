@@ -1,16 +1,15 @@
 // Package imports:
-import 'dart:ffi';
 import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
 import 'package:dakanji_db_core/parsing/parsing_util.dart';
+import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_import_context.dart';
 import 'package:drift/isolate.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
 import 'term/term_bank_v3_parser.dart';
 import 'package:path/path.dart' as p;
-import 'package:universal_io/io.dart';
 
 // Project imports:
 import '/database/dakanji_db.dart';
@@ -96,10 +95,22 @@ Future _parseDictionaryDataSource({
   int dictId = await parseIndex(indexFile.fileContent, db);
   final dictEntry = await db.indexDao.getById(dictId);
 
+  // create import context for term bank parsing
+  TermBankV3ParserImportContext? importContext;
+
+  // parse the rest of the files (first tag bank, then the rest in sorted order)
   for (final ({String fileName, String fileContent}) data in dataSource) {
+
+    // As the tags are parsed first, create the import context when parsing the
+    // the first term bank file
+    if (importContext == null && data.fileName.contains(termBankFileNamingScheme)) 
+      importContext = await TermBankV3ParserImportContext.create(db);
+    
+
     await parseDictionaryFile(
       fileName: data.fileName,
       fileContent: data.fileContent,
+      importContext: importContext,
       db: db,
       ind: dictEntry!,
       addFullJsonDefinitions: addFullJsonDefinitions,
@@ -117,6 +128,7 @@ Future _parseDictionaryDataSource({
 Future parseDictionaryFile({
   required String fileName,
   required String fileContent,
+  required TermBankV3ParserImportContext? importContext,
   required DaKanjiDB db,
   required IndexTableData ind,
   required bool addFullJsonDefinitions,
@@ -129,7 +141,7 @@ Future parseDictionaryFile({
     kanjiBankFileNamingScheme: () => parseKanjiBankV3(fileContent, db, ind.id),
     kanjiMetaBankFileNamingScheme: () => parseKanjiMetaBankV3(fileContent, db, ind.id),
     tagBankFileNamingScheme: () => parseTagBankv3(fileContent, db),
-    termBankFileNamingScheme: () => parseTermBankV3(fileContent, db, ind.id, addFullJsonDefinitions, mecab),
+    termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext!, db, ind.id, addFullJsonDefinitions, mecab),
     termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, db, ind.id),
   };
 
