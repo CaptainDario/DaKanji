@@ -10,7 +10,7 @@ String findProjectRoot() {
   var dir = Directory.current;
   
   // The anchor file that identifies the project root.
-  const anchorFileName = 'melos_dakanji_db_workspace.iml';
+  const anchorFileName = '.dakanji_db_mono_repo_root';
 
   while (true) {
     // Check if the anchor file exists in the current directory.
