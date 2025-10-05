@@ -3207,7 +3207,6 @@ class $TagBankV3TableTable extends TagBankV3Table
     'name',
     aliasedName,
     false,
-    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
@@ -3219,7 +3218,6 @@ class $TagBankV3TableTable extends TagBankV3Table
     'category',
     aliasedName,
     false,
-    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
@@ -3240,7 +3238,6 @@ class $TagBankV3TableTable extends TagBankV3Table
     'notes',
     aliasedName,
     false,
-    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );

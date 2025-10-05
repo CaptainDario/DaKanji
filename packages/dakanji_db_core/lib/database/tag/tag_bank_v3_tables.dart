@@ -9,13 +9,13 @@ class TagBankV3Table extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// Tag name.
-  TextColumn get name => text().withLength(min: 1)();
+  TextColumn get name => text()();
   /// Tag category
-  TextColumn get category => text().withLength(min: 1)();
+  TextColumn get category => text()();
   /// Sorting order for the tag.
   IntColumn get sortingOrder => integer()();
   /// Notes for the tag.
-  TextColumn get notes => text().withLength(min: 1)();
+  TextColumn get notes => text()();
   /// Score used to determine popularity. Negative values are more rare and
   /// positive values are more frequent. This score is also used to sort search
   /// results.
