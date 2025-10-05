@@ -40,7 +40,7 @@ Future parseTermBankV3(
   // decode json
   Stopwatch s = Stopwatch()..start();
   List jsonList = jsonDecode(termMetaBankJson);
-  print("Decoded JSON in ${s.elapsedMilliseconds}ms");
+  //print("Decoded JSON in ${s.elapsedMilliseconds}ms");
 
   // lists to store all parsed data for insert
   List<TermBankV3TableCompanion> termBankComps = [];
@@ -185,7 +185,7 @@ Future parseTermBankV3(
       sequenceNumber: Value(jsonEntry[6])
     ));
   }
-  print("Parsed ${jsonList.length} entries in ${s.elapsedMilliseconds}ms");
+  //print("Parsed ${jsonList.length} entries in ${s.elapsedMilliseconds}ms");
 
   // bulk insert all data
   s..reset()..start();
@@ -208,5 +208,5 @@ Future parseTermBankV3(
 
     batch.insertAll(db.termBankV3XTagBankTable, tagRelComps);
   },);
-  print("Inserted all entries in ${s.elapsedMilliseconds}ms");
+  //print("Inserted all entries in ${s.elapsedMilliseconds}ms");
 }

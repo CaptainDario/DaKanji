@@ -13,12 +13,15 @@ void main() async {
 
   Stopwatch s = Stopwatch()..start();
 
-  await parseDictionaryDataSource(
+  Stream<String> progressStream = await parseDictionaryDataSource(
     dataSourcePath: jmdictInputPath,
     db: db,
     addFullJsonDefinitions: false,
     mecab: Mecab()..init(mecabDynamicLibPath, mecabDicPath, true)
   );
+  await for (final String progressMessage in progressStream) {
+    print(progressMessage);
+  }
 
   print("Done in ${s.elapsedMilliseconds}ms");
 

@@ -1,4 +1,5 @@
 // Package imports:
+import 'dart:async';
 import 'dart:isolate';
 import 'dart:typed_data';
 
@@ -44,56 +45,70 @@ String termMetaBankFileNamingScheme = "term_meta_bank";
 
 
 /// Parses the given yomitan dictionary folder
-Future parseDictionaryDataSource({
+Future<Stream<String>> parseDictionaryDataSource({
   String? dataSourcePath,
   Uint8List? archiveBytes,
   required DaKanjiDB db,
   required bool addFullJsonDefinitions,
-  required Mecab mecab
+  required Mecab mecab,
 }) async {
 
   assert(dataSourcePath != null);
 
-  final connection = await db.attachedDatabase.serializableConnection();
+  // Use a completer to wait for the isolate to finish
+  final StreamController<String> controller = StreamController();
 
+  /// get parameters for isolate and spawn it
+  final connection = await db.attachedDatabase.serializableConnection();
   String libmecabPath = mecab.libmecabPath;
   String mecabDicPath = mecab.dictDir;
 
-  // spawn isolate
-  await Isolate.run(() async {
-    await _parseDictionaryDataSource(
-      dataSourcePath: dataSourcePath,
-      archiveBytes: archiveBytes,
-      dbConnection: connection,
-      addFullJsonDefinitions: addFullJsonDefinitions,
-      libmecabPath: libmecabPath,
-      mecabDictDir: mecabDicPath
-    );
+  // setup isolate communication
+  ReceivePort receivePort = ReceivePort();
+  receivePort.listen((message) {
+    if(message is String) controller.add(message);
+    else if(message == null) {
+      receivePort.close();
+      controller.close();
+    }
   });
+
+  await Isolate.spawn(_parseDictionaryDataSource, (
+    dataSourcePath: dataSourcePath,
+    archiveBytes: archiveBytes,
+    dbConnection: connection,
+    addFullJsonDefinitions: addFullJsonDefinitions,
+    libmecabPath: libmecabPath,
+    mecabDictDir: mecabDicPath,
+    mainIsolateSendPort: receivePort.sendPort
+  ));
+
+  return controller.stream;
 
 }
 
 /// Actual implementation of the [_parseDictionaryDataSource] that runs in an
-/// isolate
-Future _parseDictionaryDataSource({
+/// isolate.
+Future _parseDictionaryDataSource(({
   String? dataSourcePath,
   Uint8List? archiveBytes,
-  required DriftIsolate dbConnection,
-  required bool addFullJsonDefinitions,
-  required String libmecabPath,
-  required String mecabDictDir,
-}) async {
+  DriftIsolate dbConnection,
+  bool addFullJsonDefinitions,
+  String libmecabPath,
+  String mecabDictDir,
+  SendPort mainIsolateSendPort
+}) params) async {
 
-  final db = DaKanjiDB(executor: await dbConnection.connect());
-  final mecab = Mecab()..init(libmecabPath, mecabDictDir, true);
+  final db = DaKanjiDB(executor: await params.dbConnection.connect());
+  final mecab = Mecab()..init(params.libmecabPath, params.mecabDictDir, true);
 
-  Iterable<({String fileName, String fileContent})> dataSource = dakanjiDBDataSourceIterator(
-    archivePath: dataSourcePath,
+  Iterable<({String fileName, String fileContent})> dataSources = dakanjiDBDataSourceIterator(
+    archivePath: params.dataSourcePath,
     fileOrder: [indexFileNamingScheme, tagBankFileNamingScheme]
   );
   
   // parse the index file -> get dict index
-  final indexFile = dataSource.first;
+  final indexFile = dataSources.first;
   int dictId = await parseIndex(indexFile.fileContent, db);
   final dictEntry = await db.indexDao.getById(dictId);
 
@@ -101,13 +116,15 @@ Future _parseDictionaryDataSource({
   TermBankV3ParserImportContext? importContext;
 
   // parse the rest of the files (first tag bank, then the rest in sorted order)
-  for (final ({String fileName, String fileContent}) data in dataSource) {
+  int progressCounter = 2;
+  for (final ({String fileName, String fileContent}) data in dataSources) {
+
+    params.mainIsolateSendPort.send("Parsing ${data.fileName} ($progressCounter/${dataSources.length}) ...");
 
     // As the tags are parsed first, create the import context when parsing the
     // the first term bank file
     if (importContext == null && data.fileName.contains(termBankFileNamingScheme)) 
       importContext = await TermBankV3ParserImportContext.create(db);
-    
 
     await parseDictionaryFile(
       fileName: data.fileName,
@@ -115,9 +132,11 @@ Future _parseDictionaryDataSource({
       importContext: importContext,
       db: db,
       ind: dictEntry!,
-      addFullJsonDefinitions: addFullJsonDefinitions,
+      addFullJsonDefinitions: params.addFullJsonDefinitions,
       mecab: mecab
     );
+
+    progressCounter++;
   }
 
   // Optimize db
@@ -159,7 +178,7 @@ Future parseDictionaryFile({
     final parserFunction = entry.value;
 
     if (baseName.contains(scheme)) {
-      print("Parsing $baseName as `$scheme`");
+      //print("Parsing $baseName as `$scheme`");
       await parserFunction();
       break;
     }
