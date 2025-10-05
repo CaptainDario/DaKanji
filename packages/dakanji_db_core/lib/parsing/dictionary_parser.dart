@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:isolate';
 import 'dart:typed_data';
 
-import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
+import 'package:dakanji_db_core/parsing/audio/audio_source_list_parser.dart';
 import 'package:dakanji_db_core/parsing/parsing_util.dart';
 import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_import_context.dart';
 import 'package:drift/isolate.dart';

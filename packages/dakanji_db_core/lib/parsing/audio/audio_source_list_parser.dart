@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:convert';
-import 'dart:math';
 
 // Package imports:
 import 'package:universal_io/io.dart';
@@ -31,7 +30,6 @@ Future parseAudio(String kanjiBankV3Json, DaKanjiDB db, int dictId) async {
   List<AudioSourceListTableCompanion> audioEntries = jsonList.map((entry) {
     String name = entry["name"]!;
     String uri = entry["uri"] ?? entry["url"]!;
-    bool isLocal = entry["local"] ?? false;
     return AudioSourceListTableCompanion.insert(
       name: name.trim(),
       uri: uri.trim(),
