@@ -78,8 +78,10 @@ final kanjiVGPathPattern = "kanjivg";
 final kradPathPattern = "krad";
 /// Radk input file name
 final radkPathPattern = "radk";
-/// Tatoeba input file folder name
-final tatoebaFolderPattern = "tatoeba";
+/// Tatoeba input file (links) name
+final tatoebaLinksFilePattern = "links";
+/// Tatoeba input file (sentences) name
+final tatoebaSentencesFilePattern = "sentences";
 /// Suffix added to processed files
 final processedSuffix = "_processed";
 
@@ -105,10 +107,13 @@ final radkInputPath = Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(radkPathPattern))
   .first.path;
 /// path to the tatoeba input files that should be parsed
-final tatoebaInputPath = p.joinAll([dakanjiDBInputFilesPath, tatoebaFolderPattern]);
-
+final tatoebaLinksInputPath = Directory(dakanjiDBInputFilesPath)
+  .listSync().where((e) => p.basename(e.path).contains(tatoebaLinksFilePattern))
+  .first.path;
 /// path to the tatoeba input files that should be parsed
-final tatoebaProcessedPath = p.joinAll([dakanjiDBInputFilesPath, tatoebaFolderPattern + processedSuffix]);
+final tatoebaSentencesInputPath = Directory(dakanjiDBInputFilesPath)
+  .listSync().where((e) => p.basename(e.path).contains(tatoebaSentencesFilePattern))
+  .first.path;
 
 /// path to the tests folder
 final coreTestsPath = p.joinAll([dakanjiDbProjectRoot, "packages", "dakanji_db_core", "test"]);

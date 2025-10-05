@@ -3,8 +3,32 @@ import 'dart:typed_data';
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
 import 'package:path/path.dart' as p;
+import 'package:universal_io/io.dart';
 
 
+
+/// Read a .tar.bz2 file and **streams** the content of the first file line by
+/// line
+Stream<String> getStringStreamFromTarBz2File(File file) {
+  
+  final bzip2Bytes = file.readAsBytesSync();
+  final tarBytes = BZip2Decoder().decodeBytes(bzip2Bytes);
+  final tarArchive = TarDecoder().decodeBytes(tarBytes);
+
+  // Get the first file from the archive
+  final firstFile = tarArchive.files.first;
+  final contentBytes = firstFile.content as List<int>;
+
+  final byteStream = Stream.fromIterable([contentBytes]);
+
+    // 2. Transform the stream to decode UTF-8 and split by lines.
+    final linesStream = byteStream
+      .transform(utf8.decoder)
+      .transform(const LineSplitter());
+
+  return linesStream;
+
+}
 
 /// Reads a DaKanji DB compatabile data source (KanjiVG, Yomitan, ...)
 /// Can read a zip file from disk or from .
@@ -51,7 +75,7 @@ Iterable<({String fileName, String fileContent})> _archiveIteratorStreamed(
   Archive archive,
   {
     List<String> fileOrder=const [],
-    List<String> extensionsToInclude = const [".json", ".txt"]
+    List<String> extensionsToInclude = const [".json", ".txt", ".svg"]
   }
 ) sync* {
 
