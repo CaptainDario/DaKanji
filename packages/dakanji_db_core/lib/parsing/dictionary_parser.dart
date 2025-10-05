@@ -100,7 +100,8 @@ Future _parseDictionaryDataSource(({
 }) params) async {
 
   final db = DaKanjiDB(executor: await params.dbConnection.connect());
-  final mecab = Mecab()..init(params.libmecabPath, params.mecabDictDir, true);
+  final mecab = Mecab();
+  await mecab.init(params.libmecabPath, params.mecabDictDir, true);
 
   Iterable<({String fileName, String fileContent})> dataSources = dakanjiDBDataSourceIterator(
     archivePath: params.dataSourcePath,
@@ -148,6 +149,9 @@ Future _parseDictionaryDataSource(({
 
   // close mecab
   mecab.destroy();
+
+  // close isolate communication
+  params.mainIsolateSendPort.send(null);
 
 }
 
