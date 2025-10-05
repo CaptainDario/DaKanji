@@ -1,5 +1,5 @@
 // Package imports:
-import 'package:dakanji_db_core/parsing/audio/audio_source_list_parser.dart';
+import 'package:dakanji_db_core/parsing/audio_source_list/audio_source_list_parser.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
