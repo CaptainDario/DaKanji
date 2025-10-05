@@ -63,7 +63,7 @@ Future _parseExampleDataSource(({
     dakanjiDBDataSourceIterator(archivePath: params.examplesZipPath);
 
   // parse the example bank files
-  int progressCounter = 0;
+  int progressCounter = 1;
   for (final ({String fileName, String fileContent}) data in dataSources) {
 
     params.mainIsolateSendPort.send("Parsing ${data.fileName} ($progressCounter/${dataSources.length}) ...");
@@ -74,6 +74,8 @@ Future _parseExampleDataSource(({
     else if(data.fileName.endsWith(".json")) {
       await parseExampleSentence(data.fileContent, db, mecab);
     }
+
+    progressCounter++;
 
   }
 
