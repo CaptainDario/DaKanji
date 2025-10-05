@@ -73,6 +73,8 @@ Future parseDictionaryDataSource({
 
 }
 
+/// Actual implementation of the [_parseDictionaryDataSource] that runs in an
+/// isolate
 Future _parseDictionaryDataSource({
   String? dataSourcePath,
   Uint8List? archiveBytes,
@@ -121,6 +123,12 @@ Future _parseDictionaryDataSource({
   // Optimize db
   await db.customStatement('VACUUM;');
   await db.customStatement('ANALYZE;');
+
+  // commit all changes to DB
+  await db.customStatement("PRAGMA wal_checkpoint(TRUNCATE);");
+
+  // close mecab
+  mecab.destroy();
 
 }
 
