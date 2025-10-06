@@ -56,6 +56,9 @@ final mecabDicPath = p.joinAll([mecabFilesPath, "unidic"]);
 /// --- TESTING FILES ----------------------------------------------------------
 /// Path to the folder that contains yomitan dictionary samples for development
 final yomitanSampleDictionaryPath = p.joinAll([dataFilesPath, "yomitan"]);
+/// Path to the zip file that contains yomitan dictionary samples for development
+final yomitanSampleDictionaryZipPath = p.joinAll([dataFilesPath, "yomitan.zip"]);
+
 /// Path to the folder that contains example sentences for development
 final devExampleSentencesPath = p.joinAll([dataFilesPath, "example_sentences"]);
 /// Path to the zip file that contains example sentences for development
@@ -64,6 +67,7 @@ final devExampleSentencesZipPath = p.joinAll([dataFilesPath, "example_sentences.
 final devExampleTextsPath = p.joinAll([dataFilesPath, "example_texts"]);
 /// Path to the folder that contains example texts for development
 final devExampleTextsZipPath = p.joinAll([dataFilesPath, "example_texts.zip"]);
+
 /// Path to the folder that contains audio examples for development
 final devExampleAudioPath = p.joinAll([dataFilesPath, "example_audio_sources"]);
 /// Path to the zip file that contains audio examples for development
