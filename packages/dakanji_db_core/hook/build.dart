@@ -5,7 +5,7 @@ import 'package:universal_io/io.dart';
 
 
 List<String> extensionNames = [
-  "spellfix", "crsqlite", "compress", //"vector", 
+  "spellfix", "crsqlite", "compress", "vector", 
 ];
 
 void main(List<String> args) async {

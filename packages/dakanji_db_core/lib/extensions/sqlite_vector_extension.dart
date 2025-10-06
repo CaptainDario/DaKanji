@@ -5,21 +5,21 @@ import 'dart:ffi';
 import 'package:sqlite3/sqlite3.dart';
 
 @Native<Int Function(Pointer<Void>, Pointer<Void>, Pointer<Void>)>()
-external int vector_init(
+external int sqlite3_vector_init(
   Pointer<Void> db,
   Pointer<Void> pzErrMsg,
   Pointer<Void> pApi,
 );
 
 extension LoadVectorExtension on Sqlite3 {
-  void loadSqliteVecExtension() {
+  void loadSqliteVectorExtension() {
     ensureExtensionLoaded(
       SqliteExtension(
         Native.addressOf<
           NativeFunction<
             Int Function(Pointer<Void>, Pointer<Void>, Pointer<Void>)
           >
-        >(vector_init).cast(),
+        >(sqlite3_vector_init).cast(),
       ),
     );
   }

@@ -153,7 +153,7 @@ class DaKanjiDB extends _$DaKanjiDB {
     QueryExecutor qe = NativeDatabase.createInBackground(
       File(path),
       sqlite3: () {
-        //sqlite3Native.loadSqliteVecExtension();
+        sqlite3Native.loadSqliteVectorExtension();
         sqlite3Native.loadSqliteSpellfixExtension();
         sqlite3Native.loadSqliteCrsqliteExtension();
         sqlite3Native.loadSqliteCompressExtension();

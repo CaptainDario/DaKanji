@@ -7,7 +7,7 @@ import 'package:dakanji_db_core/extensions/sqlite_compress_extension.dart';
 
 void main() async {
 
-  //sqlite3Native.loadSqliteVecExtension();
+  sqlite3Native.loadSqliteVectorExtension();
   sqlite3Native.loadSqliteSpellfixExtension();
   sqlite3Native.loadSqliteCrsqliteExtension();
   sqlite3Native.loadSqliteCompressExtension();
@@ -35,9 +35,9 @@ void main() async {
     expect(decoded, 'This is a test');
   });
 
-  //test('Testing SQLite-vec loaded', () async {
-  //  db.execute('create virtual table vec_examples using vec0(sample_embedding float[8]);');
-  //});
+  test('Testing SQLite-vector loaded', () async {
+    db.execute('SELECT vector_version()');
+  });
 
   test('Testing CR-SQLite loaded', () async {
     db.execute('''
