@@ -4,26 +4,30 @@ import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry_stat.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 
 
+int indexId = 1;
 
 /// Test cases for the kanji bank
-final kanjiBankTetsCases = [
+final kanjiBankTestCases = [
   "打"
 ];
 
 /// kanji bank test case expected values
 final kanjiBankTestCaseExpectations = [
   KanjiBankV3Entry(
+    indexId: indexId,
     kanji: "打",
     onyomis: ["ダ", "ダアス"],
     kunyomis: ["う.つ", "う.ち-", "ぶ.つ"],
     tags: [
       TagBankV3Entry(
+        indexId: indexId,
         name: "K1",
         category: "default",
         sortingOrder: 0,
         notes: "example kanji tag 1",
         score: 0),
       TagBankV3Entry(
+        indexId: indexId,
         name: "K2",
         category: "default",
         sortingOrder: 0, 

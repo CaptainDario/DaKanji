@@ -12,7 +12,8 @@ abstract class TagBankV3Entry with _$TagBankV3Entry {
 
   const factory TagBankV3Entry(
     {
-
+      /// id of this entry's dictionary
+      required int indexId,
       /// Tag name.
       required String name,
       /// Categories for the tag.

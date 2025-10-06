@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db_core/database/index/index_tables.dart';
 import 'package:dakanji_db_core/helper/json_converter.dart';
 
 import '/database/general_tables/reading_tables.dart';
@@ -16,6 +17,9 @@ class TermBankV3Table extends Table {
   
   /// id of this entry
   IntColumn get id => integer()();
+
+  /// The id of the dictionary this entry belongs to
+  IntColumn get indexId => integer().references(IndexTable, #id)();
 
   /// The ID of the text for the term.
   IntColumn get termId => integer().references(TermTable, #id)();

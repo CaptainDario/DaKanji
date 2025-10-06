@@ -1,6 +1,4 @@
 import 'package:kana_kit/kana_kit.dart';
-import 'package:language_processing/japanese/conjugation/yomitan_conjugation_data/japanese_transforms.dart';
-import 'package:language_processing/japanese/conjugation/yomitan_conjugation_data/language_transformer.dart';
 import 'package:language_processing/japanese/conjugation/yomitan_deconjugate.dart';
 import 'package:language_processing/japanese/japanese_string_operations.dart';
 import 'package:fullwidth_halfwidth_converter/fullwidth_halfwidth_converter.dart';

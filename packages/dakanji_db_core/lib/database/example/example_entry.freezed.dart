@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ExampleEntry {
 
- String get example; List<ExampleEntryTranslation> get translations;
+ String get example; int get indexId; List<ExampleEntryTranslation> get translations;
 /// Create a copy of ExampleEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $ExampleEntryCopyWith<ExampleEntry> get copyWith => _$ExampleEntryCopyWithImpl<E
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExampleEntry&&(identical(other.example, example) || other.example == example)&&const DeepCollectionEquality().equals(other.translations, translations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExampleEntry&&(identical(other.example, example) || other.example == example)&&(identical(other.indexId, indexId) || other.indexId == indexId)&&const DeepCollectionEquality().equals(other.translations, translations));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,example,const DeepCollectionEquality().hash(translations));
+int get hashCode => Object.hash(runtimeType,example,indexId,const DeepCollectionEquality().hash(translations));
 
 @override
 String toString() {
-  return 'ExampleEntry(example: $example, translations: $translations)';
+  return 'ExampleEntry(example: $example, indexId: $indexId, translations: $translations)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $ExampleEntryCopyWith<$Res>  {
   factory $ExampleEntryCopyWith(ExampleEntry value, $Res Function(ExampleEntry) _then) = _$ExampleEntryCopyWithImpl;
 @useResult
 $Res call({
- String example, List<ExampleEntryTranslation> translations
+ String example, List<ExampleEntryTranslation> translations, int indexId
 });
 
 
@@ -63,11 +63,12 @@ class _$ExampleEntryCopyWithImpl<$Res>
 
 /// Create a copy of ExampleEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? example = null,Object? translations = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? example = null,Object? translations = null,Object? indexId = null,}) {
   return _then(ExampleEntry(
 example: null == example ? _self.example : example // ignore: cast_nullable_to_non_nullable
 as String,translations: null == translations ? _self.translations : translations // ignore: cast_nullable_to_non_nullable
-as List<ExampleEntryTranslation>,
+as List<ExampleEntryTranslation>,indexId: null == indexId ? _self.indexId : indexId // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

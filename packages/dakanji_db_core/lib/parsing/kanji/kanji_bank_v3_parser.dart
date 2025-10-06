@@ -181,7 +181,7 @@ Future<void> parseKanji(String jsonKanji, KanjiBankV3ParserRefs refs, DaKanjiDB 
   refs.kanjiBankCompanions.add(KanjiBankV3TableCompanion(
     id: Value(++refs.kanjiBankId),
     kanjiId: Value(refs.kanjiId),
-    dictId: Value(refs.dictId)
+    indexId: Value(refs.dictId)
   ));
 
 }

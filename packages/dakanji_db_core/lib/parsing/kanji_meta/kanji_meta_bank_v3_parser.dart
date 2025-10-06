@@ -76,7 +76,8 @@ Future parseKanjiMetaBankV3(String kanjiMetaBankJson, DaKanjiDB db, int dictId) 
 
     kanjiMetaBankComps.add(KanjiMetaBankV3TableCompanion(
       kanjiId: Value(kanjiInsertId),
-      typeId: Value(typeInsertId), dictId: Value(dictId),
+      typeId: Value(typeInsertId),
+      indexId: Value(dictId),
       freqValue: freqValue == null ? Value.absent() : Value(freqValue),
       freqDisplayValue: freqDisplayValue == null ? Value.absent() : Value(freqDisplayValue)
     ));

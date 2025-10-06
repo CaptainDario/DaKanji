@@ -110,14 +110,14 @@ Future _parseDictionaryDataSource(({
   
   // parse the index file -> get dict index
   final indexFile = dataSources.first;
-  int dictId = await parseIndex(indexFile.fileContent, db);
-  final dictEntry = await db.indexDao.getById(dictId);
+  int indexId = await parseIndex(indexFile.fileContent, db);
+  final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
 
   // create import context for term bank parsing
   TermBankV3ParserImportContext? importContext;
 
   // parse the rest of the files (first tag bank, then the rest in sorted order)
-  int progressCounter = 2;
+  int progressCounter = 1;
   for (final ({String fileName, String fileContent}) data in dataSources) {
 
     params.mainIsolateSendPort.send("Parsing ${data.fileName} ($progressCounter/${dataSources.length}) ...");
@@ -132,7 +132,7 @@ Future _parseDictionaryDataSource(({
       fileContent: data.fileContent,
       importContext: importContext,
       db: db,
-      ind: dictEntry!,
+      ind: indexEntry,
       addFullJsonDefinitions: params.addFullJsonDefinitions,
       mecab: mecab
     );
@@ -171,7 +171,7 @@ Future parseDictionaryFile({
     audioFileNamingScheme: () => parseAudio(fileContent, db, ind.id),
     kanjiBankFileNamingScheme: () => parseKanjiBankV3(fileContent, db, ind.id),
     kanjiMetaBankFileNamingScheme: () => parseKanjiMetaBankV3(fileContent, db, ind.id),
-    tagBankFileNamingScheme: () => parseTagBankv3(fileContent, db),
+    tagBankFileNamingScheme: () => parseTagBankv3(fileContent, db, ind.id),
     termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext!, db, ind.id, addFullJsonDefinitions, mecab),
     termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, db, ind.id),
   };

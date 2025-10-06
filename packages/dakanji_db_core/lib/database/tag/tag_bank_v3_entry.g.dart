@@ -8,6 +8,7 @@ part of 'tag_bank_v3_entry.dart';
 
 _TagBankV3Entry _$TagBankV3EntryFromJson(Map<String, dynamic> json) =>
     _TagBankV3Entry(
+      indexId: (json['indexId'] as num).toInt(),
       name: json['name'] as String,
       category: json['category'] as String,
       sortingOrder: (json['sortingOrder'] as num).toInt(),
@@ -17,6 +18,7 @@ _TagBankV3Entry _$TagBankV3EntryFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TagBankV3EntryToJson(_TagBankV3Entry instance) =>
     <String, dynamic>{
+      'indexId': instance.indexId,
       'name': instance.name,
       'category': instance.category,
       'sortingOrder': instance.sortingOrder,

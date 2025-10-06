@@ -11,10 +11,12 @@ ExampleEntry _$ExampleEntryFromJson(Map<String, dynamic> json) => ExampleEntry(
   translations: (json['translations'] as List<dynamic>)
       .map((e) => ExampleEntryTranslation.fromJson(e as Map<String, dynamic>))
       .toList(),
+  indexId: (json['indexId'] as num).toInt(),
 );
 
 Map<String, dynamic> _$ExampleEntryToJson(ExampleEntry instance) =>
     <String, dynamic>{
       'example': instance.example,
+      'indexId': instance.indexId,
       'translations': instance.translations,
     };

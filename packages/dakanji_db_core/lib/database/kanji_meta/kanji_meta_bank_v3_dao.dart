@@ -24,48 +24,14 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
   
 
   /// Returns all kanji entries that match contain any of the given Kanji
-  Future<List<KanjiMetaBankV3Entry>?> getKanjiMetaBankEntriesFromKanji(List<String> kanjis) async {
+  Future<List<KanjiMetaBankV3Entry>?> getKanjiMetaBankEntriesFromKanji(String kanji) async {
   
-    final query = (selectOnly(kanjiMetaBankV3Table)
-      .join([
-        // onyomi
-        innerJoin(
-          kanjiMetaBankV3TypeTable,
-          kanjiMetaBankV3TypeTable.id.equalsExp(kanjiMetaBankV3Table.typeId)
-        ),
-        // kanji
-        innerJoin(
-          kanjiTable,
-          kanjiTable.id.equalsExp(kanjiMetaBankV3Table.kanjiId)
-        )
-      ]))
-      ..where(db.kanjiTable.kanji.isIn(kanjis))
-      ..addColumns([
-        db.kanjiTable.kanji,
-        db.kanjiMetaBankV3TypeTable.type,
-        db.kanjiMetaBankV3Table.freqValue,
-        db.kanjiMetaBankV3Table.freqDisplayValue
-      ]);
+    List<KanjiMetaBankV3EntryViewData> results =
+      await db.kanji_meta_bank_v3_search_drift(kanji).get();
 
-    // Fetching data from the query
-    final result = await query.get();
-    print(result);
-
-    // Process and return the result
-    return (await Future.wait(result.map((row) async {
-
-      final kanji            = row.read<String>(kanjiTable.kanji);
-      final type             = row.read<String>(kanjiMetaBankV3TypeTable.type);
-      final freqValue        = row.read<int>(kanjiMetaBankV3Table.freqValue);
-      final freqDisplayValue = row.read<String>(kanjiMetaBankV3Table.freqDisplayValue);
-
-      return KanjiMetaBankV3Entry(
-        kanji: kanji!,
-        type: type!,
-        freqValue: freqValue,
-        freqDisplayValue: freqDisplayValue
-      );
-    }))).toList();
+    return results.map((e) =>
+      KanjiMetaBankV3Entry.fromKanjiMetaBankV3EntryViewData(e)
+    ).toList();
 
   }
 

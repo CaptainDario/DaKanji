@@ -18,7 +18,7 @@ class KanjiBankV3Table extends Table {
   IntColumn get kanjiId => integer().references(KanjiTable, #id)();
 
   /// The id of the dictionary this entry belongs to
-  IntColumn get dictId => integer().references(IndexTable, #id)();
+  IntColumn get indexId => integer().references(IndexTable, #id)();
   
 }
 

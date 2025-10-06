@@ -7,51 +7,57 @@ import '/database/kanji/kanji_bank_v3_tables.dart';
 import '/database/kanji/kanji_bank_v3_relation_tables.dart';
 
 
-CREATE VIEW IF NOT EXISTS kanji_details_view AS
+
+
+CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
     SELECT
+        KB3T.index_id as indexId,
         KT.kanji,
-        onyomi.reading AS onyomi_reading,
-        kunyomi.reading AS kunyomi_reading,
-        TB3T.id AS tag_id,
-        TB3T.name AS tag_name,
-        TB3T.category AS tag_category,
-        TB3T.sorting_order AS tag_sorting_order,
-        TB3T.notes AS tag_notes,
-        TB3T.score AS tag_score,
-        DT.definition,
-        KB3SNT.stat_name,
-        KB3SVT.stat_value
+        '[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || onyomi.reading || '"'), '') || ']' AS onyomis,
+        '[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || kunyomi.reading || '"'), '') || ']' AS kunyomis,
+        '[' || COALESCE(GROUP_CONCAT(DISTINCT json_object(
+            'id', TB3T.id,
+            'name', TB3T.name,
+            'category', TB3T.category,
+            'sortingOrder', TB3T.sorting_order,
+            'notes', TB3T.notes,
+            'score', TB3T.score
+        )), '') || ']' AS tags,
+        '[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || DT.definition || '"'), '') || ']' AS definitions,
+        '[' || COALESCE(GROUP_CONCAT(DISTINCT json_object(
+            'name', KB3SNT.stat_name,
+            'value', KB3SVT.stat_value
+        )), '') || ']' AS stats
     FROM
         kanji_bank_v3_table AS KB3T
-    -- Join to get the actual Kanji character.
+    -- Essential join: A bank entry must have a kanji character.
     INNER JOIN kanji_table AS KT
         ON KT.id = KB3T.kanji_id
-    -- Joins for Onyomi readings.
-    INNER JOIN kanji_bank_v3_x_onyomi_reading_table AS KB3ORRT
+    -- Optional joins: Use LEFT JOIN for data that might be absent.
+    LEFT JOIN kanji_bank_v3_x_onyomi_reading_table AS KB3ORRT
         ON KB3ORRT.kanji_id = KB3T.id
-    INNER JOIN reading_table AS onyomi
+    LEFT JOIN reading_table AS onyomi
         ON KB3ORRT.onyomi_reading_id = onyomi.id
-    -- Joins for Kunyomi readings.
-    INNER JOIN kanji_bank_v3_x_kunyomi_reading_table AS KB3KRRT
+    LEFT JOIN kanji_bank_v3_x_kunyomi_reading_table AS KB3KRRT
         ON KB3KRRT.kanji_id = KB3T.id
-    INNER JOIN reading_table AS kunyomi
+    LEFT JOIN reading_table AS kunyomi
         ON KB3KRRT.kunyomi_reading_id = kunyomi.id
-    -- Joins for tags.
-    INNER JOIN kanji_bank_v3_x_tag_bank_v3_table AS KB3TKRT
+    LEFT JOIN kanji_bank_v3_x_tag_bank_v3_table AS KB3TKRT
         ON KB3TKRT.kanji_id = KB3T.id
-    INNER JOIN tag_bank_v3_table AS TB3T
+    LEFT JOIN tag_bank_v3_table AS TB3T
         ON KB3TKRT.tag_id = TB3T.id
-    -- Joins for definitions.
-    INNER JOIN kanji_bank_v3_x_definition_table AS KB3DKRT
+    LEFT JOIN kanji_bank_v3_x_definition_table AS KB3DKRT
         ON KB3DKRT.kanji_id = KB3T.id
-    INNER JOIN definition_table AS DT
+    LEFT JOIN definition_table AS DT
         ON KB3DKRT.definition_id = DT.id
-    -- Joins for stats (names and values).
-    INNER JOIN kanji_bank_v3_x_kanji_bank_v3_stats_table AS KB3SKRT
+    LEFT JOIN kanji_bank_v3_x_kanji_bank_v3_stats_table AS KB3SKRT
         ON KB3SKRT.kanji_id = KB3T.id
-    INNER JOIN kanji_bank_v3_stats_table AS KB3ST
+    LEFT JOIN kanji_bank_v3_stats_table AS KB3ST
         ON KB3SKRT.stat_id = KB3ST.id
-    INNER JOIN kanji_bank_v3_stat_names_table AS KB3SNT
+    LEFT JOIN kanji_bank_v3_stat_names_table AS KB3SNT
         ON KB3SNT.id = KB3ST.stat_name_id
-    INNER JOIN kanji_bank_v3_stat_values_table AS KB3SVT
-        ON KB3SVT.id = KB3ST.stat_value_id;
+    LEFT JOIN kanji_bank_v3_stat_values_table AS KB3SVT
+        ON KB3SVT.id = KB3ST.stat_value_id
+    -- Group all the joined rows by the kanji character to aggregate them.
+    GROUP BY
+        KT.kanji;

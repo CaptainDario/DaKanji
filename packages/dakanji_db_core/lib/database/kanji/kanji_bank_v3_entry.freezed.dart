@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$KanjiBankV3Entry {
 
- String get kanji; set kanji(String value); List<String>? get onyomis; set onyomis(List<String>? value); List<String>? get kunyomis; set kunyomis(List<String>? value); List<TagBankV3Entry>? get tags; set tags(List<TagBankV3Entry>? value); List<String>? get definitions; set definitions(List<String>? value); List<KanjiBankV3EntryStat>? get stats; set stats(List<KanjiBankV3EntryStat>? value);
+ String get kanji; set kanji(String value); int get indexId; set indexId(int value); List<String>? get onyomis; set onyomis(List<String>? value); List<String>? get kunyomis; set kunyomis(List<String>? value); List<TagBankV3Entry>? get tags; set tags(List<TagBankV3Entry>? value); List<String>? get definitions; set definitions(List<String>? value); List<KanjiBankV3EntryStat>? get stats; set stats(List<KanjiBankV3EntryStat>? value);
 /// Create a copy of KanjiBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $KanjiBankV3EntryCopyWith<KanjiBankV3Entry> get copyWith => _$KanjiBankV3EntryCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is KanjiBankV3Entry&&(identical(other.kanji, kanji) || other.kanji == kanji)&&const DeepCollectionEquality().equals(other.onyomis, onyomis)&&const DeepCollectionEquality().equals(other.kunyomis, kunyomis)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.definitions, definitions)&&const DeepCollectionEquality().equals(other.stats, stats));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is KanjiBankV3Entry&&(identical(other.kanji, kanji) || other.kanji == kanji)&&(identical(other.indexId, indexId) || other.indexId == indexId)&&const DeepCollectionEquality().equals(other.onyomis, onyomis)&&const DeepCollectionEquality().equals(other.kunyomis, kunyomis)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.definitions, definitions)&&const DeepCollectionEquality().equals(other.stats, stats));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,kanji,const DeepCollectionEquality().hash(onyomis),const DeepCollectionEquality().hash(kunyomis),const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(definitions),const DeepCollectionEquality().hash(stats));
+int get hashCode => Object.hash(runtimeType,kanji,indexId,const DeepCollectionEquality().hash(onyomis),const DeepCollectionEquality().hash(kunyomis),const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(definitions),const DeepCollectionEquality().hash(stats));
 
 @override
 String toString() {
-  return 'KanjiBankV3Entry(kanji: $kanji, onyomis: $onyomis, kunyomis: $kunyomis, tags: $tags, definitions: $definitions, stats: $stats)';
+  return 'KanjiBankV3Entry(kanji: $kanji, indexId: $indexId, onyomis: $onyomis, kunyomis: $kunyomis, tags: $tags, definitions: $definitions, stats: $stats)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $KanjiBankV3EntryCopyWith<$Res>  {
   factory $KanjiBankV3EntryCopyWith(KanjiBankV3Entry value, $Res Function(KanjiBankV3Entry) _then) = _$KanjiBankV3EntryCopyWithImpl;
 @useResult
 $Res call({
- String kanji, List<String>? onyomis, List<String>? kunyomis, List<TagBankV3Entry>? tags, List<String>? definitions, List<KanjiBankV3EntryStat>? stats
+ String kanji, int indexId, List<String>? onyomis, List<String>? kunyomis, List<TagBankV3Entry>? tags, List<String>? definitions, List<KanjiBankV3EntryStat>? stats
 });
 
 
@@ -63,10 +63,11 @@ class _$KanjiBankV3EntryCopyWithImpl<$Res>
 
 /// Create a copy of KanjiBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? kanji = null,Object? onyomis = freezed,Object? kunyomis = freezed,Object? tags = freezed,Object? definitions = freezed,Object? stats = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? kanji = null,Object? indexId = null,Object? onyomis = freezed,Object? kunyomis = freezed,Object? tags = freezed,Object? definitions = freezed,Object? stats = freezed,}) {
   return _then(KanjiBankV3Entry(
 kanji: null == kanji ? _self.kanji : kanji // ignore: cast_nullable_to_non_nullable
-as String,onyomis: freezed == onyomis ? _self.onyomis : onyomis // ignore: cast_nullable_to_non_nullable
+as String,indexId: null == indexId ? _self.indexId : indexId // ignore: cast_nullable_to_non_nullable
+as int,onyomis: freezed == onyomis ? _self.onyomis : onyomis // ignore: cast_nullable_to_non_nullable
 as List<String>?,kunyomis: freezed == kunyomis ? _self.kunyomis : kunyomis // ignore: cast_nullable_to_non_nullable
 as List<String>?,tags: freezed == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<TagBankV3Entry>?,definitions: freezed == definitions ? _self.definitions : definitions // ignore: cast_nullable_to_non_nullable

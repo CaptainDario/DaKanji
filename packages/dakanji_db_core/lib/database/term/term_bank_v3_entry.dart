@@ -15,6 +15,7 @@ extension _CommonTermData on Object {
   // or `Object` with casting, if the classes don't share a base type 
   // you can reference here. `dynamic` is often sufficient for *similar*
   // data coming from different sources.
+  int get indexId => (this as dynamic).indexId ?? 0;
   String get _term => (this as dynamic).term ?? "";
   String get _reading => (this as dynamic).reading ?? "";
   String get _definitionTags => (this as dynamic).definitionTags;
@@ -30,6 +31,9 @@ extension _CommonTermData on Object {
 /// Class representing one term of the database
 class TermBankV3Entry with _$TermBankV3Entry {
 
+  ///
+  @override
+  final int indexId;
   /// The term of a dictionary entry, for example: 食べる
   @override
   final String term;
@@ -57,6 +61,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
 
     
   TermBankV3Entry({
+    required this.indexId,
     required this.term,
     required this.reading,
     required this.definitionTags,
@@ -83,6 +88,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
 
   static TermBankV3Entry _mapCommonFields(Object r) {
     return TermBankV3Entry(
+      indexId: r.indexId,
       term: r._term,
       reading: r._reading,
       definitionTags: List<String>.from(jsonDecode(r._definitionTags)),

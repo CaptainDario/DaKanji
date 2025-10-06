@@ -35,7 +35,7 @@ class IndexDao extends DatabaseAccessor<DaKanjiDB> with _$IndexDaoMixin {
     final query = select(db.indexTable)..where((tbl) => tbl.id.equals(id));
 
     // Fetch the first result that matches the condition
-    final result = query.getSingleOrNull();
+    final result = await query.getSingleOrNull();
 
     return result;
 

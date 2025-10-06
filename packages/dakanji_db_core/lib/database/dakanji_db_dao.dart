@@ -1,7 +1,6 @@
 import "dart:async";
 import "dart:convert";
 // Package imports:
-import "package:collection/collection.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search_result.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search_utils.dart";
 import "package:drift/drift.dart";
@@ -55,8 +54,6 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
             jsonEncode(variant.requiredPartsOfSpeech), jsonEncode(tags)
           ).get()
     ]));
-
-    print("RRRRRRRRRESULTS $results");
 
     // process all variant search results
     List<SearchMatchGroup> filteredQueryVariantMatches = [];

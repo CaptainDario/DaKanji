@@ -18,7 +18,7 @@ Future parseAudioFile(File kanjiBankV3JsonFile, DaKanjiDB db, int dictId) async 
 }
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseAudio(String kanjiBankV3Json, DaKanjiDB db, int dictId) async {
+Future parseAudio(String kanjiBankV3Json, DaKanjiDB db, int indexId) async {
 
   // read and decode the json
   List jsonList = jsonDecode(kanjiBankV3Json)["audioSources"];
@@ -31,6 +31,7 @@ Future parseAudio(String kanjiBankV3Json, DaKanjiDB db, int dictId) async {
     String name = entry["name"]!;
     String uri = entry["uri"] ?? entry["url"]!;
     return AudioSourceListTableCompanion.insert(
+      indexId: indexId,
       name: name.trim(),
       uri: uri.trim(),
     );

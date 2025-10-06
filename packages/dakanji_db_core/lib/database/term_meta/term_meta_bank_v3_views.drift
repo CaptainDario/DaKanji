@@ -18,14 +18,14 @@ WITH
           'devoice',  p.devoice,
           'nasal',    p.nasal,
           'tags',     COALESCE(
-                        (
-                          SELECT JSON_GROUP_ARRAY(tag.tag)
-                          FROM term_meta_bank_v3_x_pitch_tag_table AS xpt
-                          JOIN term_meta_bank_v3_tag_table AS tag ON xpt.tag_id = tag.id
-                          WHERE xpt.pitch_id = p.id
-                        ),
-                        JSON('[]')
-                      )
+            (
+              SELECT JSON_GROUP_ARRAY(tag.tag)
+              FROM term_meta_bank_v3_x_pitch_tag_table AS xpt
+              JOIN term_meta_bank_v3_tag_table AS tag ON xpt.tag_id = tag.id
+              WHERE xpt.pitch_id = p.id
+            ),
+            JSON('[]')
+          )
         )
       ) AS pitches
     FROM term_meta_bank_v3_x_pitch_table AS xp

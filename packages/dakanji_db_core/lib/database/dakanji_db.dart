@@ -113,7 +113,7 @@ part 'dakanji_db.g.dart';
     'general_tables/definition_fts5_table.drift',
     'general_tables/hiragana_spellfix_cost.drift',
     'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
-    // TODO kanji meta
+    'kanji_meta/kanji_meta_bank_v3_views.drift', 'kanji_meta/kanji_meta_bank_v3_queries.drift',
     'term_meta/term_meta_bank_v3_views.drift', 'term_meta/term_meta_bank_v3_queries.drift',
     'term/term_bank_v3_views.drift', 'term/term_bank_v3_queries.drift',
     

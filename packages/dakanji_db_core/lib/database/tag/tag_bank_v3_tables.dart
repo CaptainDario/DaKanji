@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db_core/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
 
 /// Contains the tag defintions
@@ -7,6 +8,9 @@ class TagBankV3Table extends Table {
   
   /// id of this entry
   IntColumn get id => integer().autoIncrement()();
+
+  /// The id of the dictionary this entry belongs to
+  IntColumn get indexId => integer().references(IndexTable, #id)();
 
   /// Tag name.
   TextColumn get name => text()();

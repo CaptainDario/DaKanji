@@ -9,17 +9,17 @@ import 'package:universal_io/io.dart';
 import '/database/dakanji_db.dart';
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseTagBankV3File(File indexJsonFile, DaKanjiDB db) async {
+Future parseTagBankV3File(File tagJsonFile, DaKanjiDB db, int dictId) async {
 
   // read and decode the json
-  String jsonString = indexJsonFile.readAsStringSync();
+  String jsonString = tagJsonFile.readAsStringSync();
 
-  await parseTagBankv3(jsonString, db);
+  await parseTagBankv3(jsonString, db, dictId);
 
 }
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseTagBankv3(String json, DaKanjiDB db) async {
+Future parseTagBankv3(String json, DaKanjiDB db, int dictId) async {
 
   // Parse the given string
   List jsonList = jsonDecode(json);
@@ -33,6 +33,7 @@ Future parseTagBankv3(String json, DaKanjiDB db) async {
   for (var tag in jsonList) {    
     tagComps.add(TagBankV3TableCompanion(
       id: Value(++maxTagId),
+      indexId: Value(dictId),
       name: Value(tag[0]),
       category: Value(tag[1]),
       sortingOrder: Value(tag[2]),

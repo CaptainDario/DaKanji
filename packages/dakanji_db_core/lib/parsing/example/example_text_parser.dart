@@ -3,15 +3,13 @@ import 'package:language_processing/japanese/sentence_parsing.dart';
 import 'package:language_processing/japanese/sentence_finding.dart';
 import 'package:drift/drift.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
-//import 'package:mecab_for_dart/mecab_dart.dart';
-import 'package:universal_io/io.dart';
 
 // Project imports:
 import '/database/dakanji_db.dart';
 
 
 /// parses the given file's contents and adds it to the given [DaKanjiDB]
-Future parseExampleText(String exampleText, DaKanjiDB db, Mecab mecab) async {
+Future parseExampleText(String exampleText, DaKanjiDB db, Mecab mecab, int indexId) async {
 
   // read values from current db
   int maxExampleId = await db.exampleDao.maxExampleId();
@@ -26,7 +24,9 @@ Future parseExampleText(String exampleText, DaKanjiDB db, Mecab mecab) async {
 
     // add sentence to db
     exampleComps.add(ExampleTableCompanion(
-      id: Value(++maxExampleId), exampleSentence: Value(sentence),
+      id: Value(++maxExampleId),
+      indexId: Value(indexId),
+      exampleSentence: Value(sentence),
       exampleSentenceTokenized: Value(tokenized)
     ));
 

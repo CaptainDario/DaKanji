@@ -2,28 +2,4 @@ import '/database/kanji/kanji_bank_v3_views.drift';
 
 
 kanji_bank_v3_search_drift:
-    SELECT
-        kanji,
-        '[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || onyomi_reading || '"'), '') || ']' AS onyomis,
-        '[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || kunyomi_reading || '"'), '') || ']' AS kunyomis,
-        '[' || COALESCE(GROUP_CONCAT(DISTINCT json_object(
-            'id', tag_id,
-            'name', tag_name,
-            'category', tag_category,
-            'sortingOrder', tag_sorting_order,
-            'notes', tag_notes,
-            'score', tag_score
-        )), '') || ']' AS tags,
-        '[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || definition || '"'), '') || ']' AS definitions,
-        '[' || COALESCE(GROUP_CONCAT(DISTINCT json_object(
-            'name', stat_name,
-            'value', stat_value
-        )), '') || ']' AS stats
-    FROM
-        kanji_details_view
-    -- Filter the results for a specific Kanji.
-    WHERE
-        kanji = :query
-    -- Group the results by the Kanji character to aggregate the joined data.
-    GROUP BY
-        kanji;
+    SELECT * FROM kanji_bank_v3_entry_view WHERE kanji = :query;

@@ -20,13 +20,17 @@ class ExampleEntry with _$ExampleEntry {
   @override
   final String example;
 
+  /// The id of the dictionary this entry belongs to
+  final int indexId;
+
   /// The translations of the example
   @override
   final List<ExampleEntryTranslation> translations;
 
   ExampleEntry({
     required this.example,
-    required this.translations
+    required this.translations,
+    required this.indexId
   }) {
     translations.sort((a, b) => a.languageCode.compareTo(b.languageCode));
   }
@@ -37,6 +41,7 @@ class ExampleEntry with _$ExampleEntry {
   factory ExampleEntry.fromExampleFtsSearchSql(ExampleFtsSearchDriftResult r){
 
     return ExampleEntry(
+      indexId: r.indexId,
       example: r.exampleSentence,
       translations: List.from(jsonDecode(r.translations)).map((e) => 
         ExampleEntryTranslation.fromJson(e)  

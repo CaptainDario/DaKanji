@@ -3,10 +3,11 @@ import 'example_relation_tables.dart';
 import '/database/general_tables/language_code_table.dart';
 import 'example_fts5_table.drift';
 
-CREATE VIEW IF NOT EXISTS example_view AS
+CREATE VIEW IF NOT EXISTS example_entry_view AS
 
     SELECT
         ET.id,
+        ET.index_id,
         ET.example_sentence,
         ETT.example_translation,
         LCT.language_code,

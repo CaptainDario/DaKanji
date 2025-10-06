@@ -177,6 +177,7 @@ Future parseTermBankV3(
     // create TermBankEntry
     termBankComps.add(TermBankV3TableCompanion(
       id: Value(iC.currentMaxTermBankId),
+      indexId: Value(dictId),
       termId: Value(termInsertId),
       definitionOrder: Value(definitionIds),
       definitionJsonId: Value(iC.currentMaxDefinitionJsonId),

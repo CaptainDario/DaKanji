@@ -16,7 +16,8 @@ T _$identity<T>(T value) => value;
 mixin _$KanjiMetaBankV3Entry {
 
 /// The kanji of this entry
- String get kanji;/// The type of this entry
+ String get kanji;/// id of this entry's dictionary
+ int get indexId;/// The type of this entry
  String get type;/// the numeric value of this entry's frequency
  int? get freqValue;/// The display value of this entry's frequency
  String? get freqDisplayValue;
@@ -32,16 +33,16 @@ $KanjiMetaBankV3EntryCopyWith<KanjiMetaBankV3Entry> get copyWith => _$KanjiMetaB
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is KanjiMetaBankV3Entry&&(identical(other.kanji, kanji) || other.kanji == kanji)&&(identical(other.type, type) || other.type == type)&&(identical(other.freqValue, freqValue) || other.freqValue == freqValue)&&(identical(other.freqDisplayValue, freqDisplayValue) || other.freqDisplayValue == freqDisplayValue));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is KanjiMetaBankV3Entry&&(identical(other.kanji, kanji) || other.kanji == kanji)&&(identical(other.indexId, indexId) || other.indexId == indexId)&&(identical(other.type, type) || other.type == type)&&(identical(other.freqValue, freqValue) || other.freqValue == freqValue)&&(identical(other.freqDisplayValue, freqDisplayValue) || other.freqDisplayValue == freqDisplayValue));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,kanji,type,freqValue,freqDisplayValue);
+int get hashCode => Object.hash(runtimeType,kanji,indexId,type,freqValue,freqDisplayValue);
 
 @override
 String toString() {
-  return 'KanjiMetaBankV3Entry(kanji: $kanji, type: $type, freqValue: $freqValue, freqDisplayValue: $freqDisplayValue)';
+  return 'KanjiMetaBankV3Entry(kanji: $kanji, indexId: $indexId, type: $type, freqValue: $freqValue, freqDisplayValue: $freqDisplayValue)';
 }
 
 
@@ -52,7 +53,7 @@ abstract mixin class $KanjiMetaBankV3EntryCopyWith<$Res>  {
   factory $KanjiMetaBankV3EntryCopyWith(KanjiMetaBankV3Entry value, $Res Function(KanjiMetaBankV3Entry) _then) = _$KanjiMetaBankV3EntryCopyWithImpl;
 @useResult
 $Res call({
- String kanji, String type, int? freqValue, String? freqDisplayValue
+ String kanji, int indexId, String type, int? freqValue, String? freqDisplayValue
 });
 
 
@@ -69,10 +70,11 @@ class _$KanjiMetaBankV3EntryCopyWithImpl<$Res>
 
 /// Create a copy of KanjiMetaBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? kanji = null,Object? type = null,Object? freqValue = freezed,Object? freqDisplayValue = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? kanji = null,Object? indexId = null,Object? type = null,Object? freqValue = freezed,Object? freqDisplayValue = freezed,}) {
   return _then(_self.copyWith(
 kanji: null == kanji ? _self.kanji : kanji // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,indexId: null == indexId ? _self.indexId : indexId // ignore: cast_nullable_to_non_nullable
+as int,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,freqValue: freezed == freqValue ? _self.freqValue : freqValue // ignore: cast_nullable_to_non_nullable
 as int?,freqDisplayValue: freezed == freqDisplayValue ? _self.freqDisplayValue : freqDisplayValue // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -160,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String kanji,  String type,  int? freqValue,  String? freqDisplayValue)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String kanji,  int indexId,  String type,  int? freqValue,  String? freqDisplayValue)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _KanjiMetaBankV3Entry() when $default != null:
-return $default(_that.kanji,_that.type,_that.freqValue,_that.freqDisplayValue);case _:
+return $default(_that.kanji,_that.indexId,_that.type,_that.freqValue,_that.freqDisplayValue);case _:
   return orElse();
 
 }
@@ -181,10 +183,10 @@ return $default(_that.kanji,_that.type,_that.freqValue,_that.freqDisplayValue);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String kanji,  String type,  int? freqValue,  String? freqDisplayValue)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String kanji,  int indexId,  String type,  int? freqValue,  String? freqDisplayValue)  $default,) {final _that = this;
 switch (_that) {
 case _KanjiMetaBankV3Entry():
-return $default(_that.kanji,_that.type,_that.freqValue,_that.freqDisplayValue);case _:
+return $default(_that.kanji,_that.indexId,_that.type,_that.freqValue,_that.freqDisplayValue);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +203,10 @@ return $default(_that.kanji,_that.type,_that.freqValue,_that.freqDisplayValue);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String kanji,  String type,  int? freqValue,  String? freqDisplayValue)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String kanji,  int indexId,  String type,  int? freqValue,  String? freqDisplayValue)?  $default,) {final _that = this;
 switch (_that) {
 case _KanjiMetaBankV3Entry() when $default != null:
-return $default(_that.kanji,_that.type,_that.freqValue,_that.freqDisplayValue);case _:
+return $default(_that.kanji,_that.indexId,_that.type,_that.freqValue,_that.freqDisplayValue);case _:
   return null;
 
 }
@@ -216,11 +218,13 @@ return $default(_that.kanji,_that.type,_that.freqValue,_that.freqDisplayValue);c
 @JsonSerializable()
 
 class _KanjiMetaBankV3Entry implements KanjiMetaBankV3Entry {
-  const _KanjiMetaBankV3Entry({required this.kanji, required this.type, this.freqValue, this.freqDisplayValue});
+  const _KanjiMetaBankV3Entry({required this.kanji, required this.indexId, required this.type, this.freqValue, this.freqDisplayValue});
   factory _KanjiMetaBankV3Entry.fromJson(Map<String, dynamic> json) => _$KanjiMetaBankV3EntryFromJson(json);
 
 /// The kanji of this entry
 @override final  String kanji;
+/// id of this entry's dictionary
+@override final  int indexId;
 /// The type of this entry
 @override final  String type;
 /// the numeric value of this entry's frequency
@@ -241,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _KanjiMetaBankV3Entry&&(identical(other.kanji, kanji) || other.kanji == kanji)&&(identical(other.type, type) || other.type == type)&&(identical(other.freqValue, freqValue) || other.freqValue == freqValue)&&(identical(other.freqDisplayValue, freqDisplayValue) || other.freqDisplayValue == freqDisplayValue));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _KanjiMetaBankV3Entry&&(identical(other.kanji, kanji) || other.kanji == kanji)&&(identical(other.indexId, indexId) || other.indexId == indexId)&&(identical(other.type, type) || other.type == type)&&(identical(other.freqValue, freqValue) || other.freqValue == freqValue)&&(identical(other.freqDisplayValue, freqDisplayValue) || other.freqDisplayValue == freqDisplayValue));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,kanji,type,freqValue,freqDisplayValue);
+int get hashCode => Object.hash(runtimeType,kanji,indexId,type,freqValue,freqDisplayValue);
 
 @override
 String toString() {
-  return 'KanjiMetaBankV3Entry(kanji: $kanji, type: $type, freqValue: $freqValue, freqDisplayValue: $freqDisplayValue)';
+  return 'KanjiMetaBankV3Entry(kanji: $kanji, indexId: $indexId, type: $type, freqValue: $freqValue, freqDisplayValue: $freqDisplayValue)';
 }
 
 
@@ -261,7 +265,7 @@ abstract mixin class _$KanjiMetaBankV3EntryCopyWith<$Res> implements $KanjiMetaB
   factory _$KanjiMetaBankV3EntryCopyWith(_KanjiMetaBankV3Entry value, $Res Function(_KanjiMetaBankV3Entry) _then) = __$KanjiMetaBankV3EntryCopyWithImpl;
 @override @useResult
 $Res call({
- String kanji, String type, int? freqValue, String? freqDisplayValue
+ String kanji, int indexId, String type, int? freqValue, String? freqDisplayValue
 });
 
 
@@ -278,10 +282,11 @@ class __$KanjiMetaBankV3EntryCopyWithImpl<$Res>
 
 /// Create a copy of KanjiMetaBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? kanji = null,Object? type = null,Object? freqValue = freezed,Object? freqDisplayValue = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? kanji = null,Object? indexId = null,Object? type = null,Object? freqValue = freezed,Object? freqDisplayValue = freezed,}) {
   return _then(_KanjiMetaBankV3Entry(
 kanji: null == kanji ? _self.kanji : kanji // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,indexId: null == indexId ? _self.indexId : indexId // ignore: cast_nullable_to_non_nullable
+as int,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,freqValue: freezed == freqValue ? _self.freqValue : freqValue // ignore: cast_nullable_to_non_nullable
 as int?,freqDisplayValue: freezed == freqDisplayValue ? _self.freqDisplayValue : freqDisplayValue // ignore: cast_nullable_to_non_nullable
 as String?,

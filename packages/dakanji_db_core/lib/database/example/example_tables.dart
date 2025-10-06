@@ -1,8 +1,7 @@
 // Package imports:
-import 'package:html/dom.dart';
+import 'package:dakanji_db_core/database/index/index_tables.dart';
 
 import '/database/general_tables/language_code_table.dart';
-import '/helper/zlib_text_converter.dart';
 import 'package:drift/drift.dart';
 
 
@@ -12,6 +11,9 @@ class ExampleTable extends Table {
   
   /// id of this entry
   IntColumn get id => integer().autoIncrement()();
+
+  /// The id of the dictionary this entry belongs to
+  IntColumn get indexId => integer().references(IndexTable, #id)();
 
   /// the example of this entry
   TextColumn get exampleSentence => text()();

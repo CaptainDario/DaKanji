@@ -22,6 +22,9 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
   /// The kanji character of this entry
   String kanji;
   @override
+  /// The id of the dictionary this entry belongs to
+  int indexId;
+  @override
   /// The onyomi readings of this entry
   List<String>? onyomis;
   @override
@@ -40,6 +43,7 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
   KanjiBankV3Entry(
     {
       required this.kanji,
+      required this.indexId,
       required this.onyomis,
       required this.kunyomis,
       required this.tags,
@@ -54,9 +58,10 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
     }
 
 
-  factory KanjiBankV3Entry.fromKanjiBankV3SearchResult(KanjiBankV3SearchDriftResult r){
+  factory KanjiBankV3Entry.fromKanjiBankV3SearchResult(KanjiBankV3EntryViewData r){
     return KanjiBankV3Entry(
       kanji: r.kanji,
+      indexId: r.indexId,
       onyomis: List<String>.from(jsonDecode(r.onyomis)),
       kunyomis: List<String>.from(jsonDecode(r.kunyomis)),
       tags: List.from(jsonDecode(r.tags))

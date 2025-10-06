@@ -11,7 +11,9 @@ import '/database/dakanji_db.dart';
 
 
 
-Future parseExampleSentence(String exampleSentenceJsonString, DaKanjiDB db, Mecab mecab) async {
+Future parseExampleSentence(
+  String exampleSentenceJsonString, DaKanjiDB db, Mecab mecab, int indexId
+) async {
 
 
   Map<String, dynamic> examples = jsonDecode(exampleSentenceJsonString);
@@ -35,7 +37,9 @@ Future parseExampleSentence(String exampleSentenceJsonString, DaKanjiDB db, Meca
 
   // create japanese
   exampleComps.add(ExampleTableCompanion(
-    id: Value(++maxExampleId), exampleSentence: Value(jap),
+    id: Value(++maxExampleId),
+    indexId: Value(indexId),
+    exampleSentence: Value(jap),
     exampleSentenceTokenized: Value(tokenized)
   
   ));

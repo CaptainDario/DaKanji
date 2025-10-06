@@ -42,7 +42,7 @@ Future<int> parseIndex(String indexJson, DaKanjiDB db) async {
   );
 
   // insert into the db
-  int id = await db.into(db.indexTable).insert(comp);
+  int id = await (db.into(db.indexTable).insert(comp));
 
   return id;
 

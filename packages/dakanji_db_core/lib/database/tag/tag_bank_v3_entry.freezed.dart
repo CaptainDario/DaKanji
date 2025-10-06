@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TagBankV3Entry {
 
-/// Tag name.
+/// id of this entry's dictionary
+ int get indexId;/// Tag name.
  String get name;/// Categories for the tag.
  String get category;/// Sorting order for the tag.
  int get sortingOrder;/// Notes for the tag.
@@ -35,16 +36,16 @@ $TagBankV3EntryCopyWith<TagBankV3Entry> get copyWith => _$TagBankV3EntryCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TagBankV3Entry&&(identical(other.name, name) || other.name == name)&&(identical(other.category, category) || other.category == category)&&(identical(other.sortingOrder, sortingOrder) || other.sortingOrder == sortingOrder)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.score, score) || other.score == score));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TagBankV3Entry&&(identical(other.indexId, indexId) || other.indexId == indexId)&&(identical(other.name, name) || other.name == name)&&(identical(other.category, category) || other.category == category)&&(identical(other.sortingOrder, sortingOrder) || other.sortingOrder == sortingOrder)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.score, score) || other.score == score));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,category,sortingOrder,notes,score);
+int get hashCode => Object.hash(runtimeType,indexId,name,category,sortingOrder,notes,score);
 
 @override
 String toString() {
-  return 'TagBankV3Entry(name: $name, category: $category, sortingOrder: $sortingOrder, notes: $notes, score: $score)';
+  return 'TagBankV3Entry(indexId: $indexId, name: $name, category: $category, sortingOrder: $sortingOrder, notes: $notes, score: $score)';
 }
 
 
@@ -55,7 +56,7 @@ abstract mixin class $TagBankV3EntryCopyWith<$Res>  {
   factory $TagBankV3EntryCopyWith(TagBankV3Entry value, $Res Function(TagBankV3Entry) _then) = _$TagBankV3EntryCopyWithImpl;
 @useResult
 $Res call({
- String name, String category, int sortingOrder, String notes, int score
+ int indexId, String name, String category, int sortingOrder, String notes, int score
 });
 
 
@@ -72,9 +73,10 @@ class _$TagBankV3EntryCopyWithImpl<$Res>
 
 /// Create a copy of TagBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? category = null,Object? sortingOrder = null,Object? notes = null,Object? score = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? indexId = null,Object? name = null,Object? category = null,Object? sortingOrder = null,Object? notes = null,Object? score = null,}) {
   return _then(_self.copyWith(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+indexId: null == indexId ? _self.indexId : indexId // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String,sortingOrder: null == sortingOrder ? _self.sortingOrder : sortingOrder // ignore: cast_nullable_to_non_nullable
 as int,notes: null == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
@@ -164,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String category,  int sortingOrder,  String notes,  int score)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int indexId,  String name,  String category,  int sortingOrder,  String notes,  int score)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TagBankV3Entry() when $default != null:
-return $default(_that.name,_that.category,_that.sortingOrder,_that.notes,_that.score);case _:
+return $default(_that.indexId,_that.name,_that.category,_that.sortingOrder,_that.notes,_that.score);case _:
   return orElse();
 
 }
@@ -185,10 +187,10 @@ return $default(_that.name,_that.category,_that.sortingOrder,_that.notes,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String category,  int sortingOrder,  String notes,  int score)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int indexId,  String name,  String category,  int sortingOrder,  String notes,  int score)  $default,) {final _that = this;
 switch (_that) {
 case _TagBankV3Entry():
-return $default(_that.name,_that.category,_that.sortingOrder,_that.notes,_that.score);case _:
+return $default(_that.indexId,_that.name,_that.category,_that.sortingOrder,_that.notes,_that.score);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +207,10 @@ return $default(_that.name,_that.category,_that.sortingOrder,_that.notes,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String category,  int sortingOrder,  String notes,  int score)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int indexId,  String name,  String category,  int sortingOrder,  String notes,  int score)?  $default,) {final _that = this;
 switch (_that) {
 case _TagBankV3Entry() when $default != null:
-return $default(_that.name,_that.category,_that.sortingOrder,_that.notes,_that.score);case _:
+return $default(_that.indexId,_that.name,_that.category,_that.sortingOrder,_that.notes,_that.score);case _:
   return null;
 
 }
@@ -220,9 +222,11 @@ return $default(_that.name,_that.category,_that.sortingOrder,_that.notes,_that.s
 @JsonSerializable()
 
 class _TagBankV3Entry implements TagBankV3Entry {
-  const _TagBankV3Entry({required this.name, required this.category, required this.sortingOrder, required this.notes, required this.score});
+  const _TagBankV3Entry({required this.indexId, required this.name, required this.category, required this.sortingOrder, required this.notes, required this.score});
   factory _TagBankV3Entry.fromJson(Map<String, dynamic> json) => _$TagBankV3EntryFromJson(json);
 
+/// id of this entry's dictionary
+@override final  int indexId;
 /// Tag name.
 @override final  String name;
 /// Categories for the tag.
@@ -249,16 +253,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TagBankV3Entry&&(identical(other.name, name) || other.name == name)&&(identical(other.category, category) || other.category == category)&&(identical(other.sortingOrder, sortingOrder) || other.sortingOrder == sortingOrder)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.score, score) || other.score == score));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TagBankV3Entry&&(identical(other.indexId, indexId) || other.indexId == indexId)&&(identical(other.name, name) || other.name == name)&&(identical(other.category, category) || other.category == category)&&(identical(other.sortingOrder, sortingOrder) || other.sortingOrder == sortingOrder)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.score, score) || other.score == score));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,category,sortingOrder,notes,score);
+int get hashCode => Object.hash(runtimeType,indexId,name,category,sortingOrder,notes,score);
 
 @override
 String toString() {
-  return 'TagBankV3Entry(name: $name, category: $category, sortingOrder: $sortingOrder, notes: $notes, score: $score)';
+  return 'TagBankV3Entry(indexId: $indexId, name: $name, category: $category, sortingOrder: $sortingOrder, notes: $notes, score: $score)';
 }
 
 
@@ -269,7 +273,7 @@ abstract mixin class _$TagBankV3EntryCopyWith<$Res> implements $TagBankV3EntryCo
   factory _$TagBankV3EntryCopyWith(_TagBankV3Entry value, $Res Function(_TagBankV3Entry) _then) = __$TagBankV3EntryCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String category, int sortingOrder, String notes, int score
+ int indexId, String name, String category, int sortingOrder, String notes, int score
 });
 
 
@@ -286,9 +290,10 @@ class __$TagBankV3EntryCopyWithImpl<$Res>
 
 /// Create a copy of TagBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? category = null,Object? sortingOrder = null,Object? notes = null,Object? score = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? indexId = null,Object? name = null,Object? category = null,Object? sortingOrder = null,Object? notes = null,Object? score = null,}) {
   return _then(_TagBankV3Entry(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+indexId: null == indexId ? _self.indexId : indexId // ignore: cast_nullable_to_non_nullable
+as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String,sortingOrder: null == sortingOrder ? _self.sortingOrder : sortingOrder // ignore: cast_nullable_to_non_nullable
 as int,notes: null == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable

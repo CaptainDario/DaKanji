@@ -1,0 +1,16 @@
+import '../general_tables/kanji_tables.dart';
+import 'kanji_meta_bank_v3_tables.dart';
+
+CREATE VIEW kanji_meta_bank_v3_entry_view AS
+    SELECT
+        KT.kanji,
+        KMBV3T.index_id AS index_id,
+        KMBV3TT.type,
+        KMBV3T.freq_value,
+        KMBV3T.freq_display_value
+    FROM
+        kanji_meta_bank_v3_table AS KMBV3T
+    INNER JOIN
+        kanji_meta_bank_v3_type_table AS KMBV3TT ON KMBV3TT.id = KMBV3T.type_id
+    INNER JOIN
+        kanji_table AS KT ON KT.id = KMBV3T.kanji_id;

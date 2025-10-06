@@ -9,15 +9,15 @@ import 'package:universal_io/io.dart';
 import '/database/dakanji_db.dart';
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
-Future parseTermMetaBankV3File(File termMetaBankFile, DaKanjiDB db, int dictId) async {
+Future parseTermMetaBankV3File(File termMetaBankFile, DaKanjiDB db, int indexId) async {
 
   String termMetaBankJson = termMetaBankFile.readAsStringSync();
-  await parseTermMetaBankV3(termMetaBankJson, db, dictId);
+  await parseTermMetaBankV3(termMetaBankJson, db, indexId);
 
 }
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
-Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) async {
+Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int indexId) async {
 
   // decode json
   List jsonList = jsonDecode(termMetaBankJson);
@@ -188,7 +188,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int dictId) as
       id: Value(currentMaxTermMetaId),
       termId: Value(termInsertId),
       typeId: Value(typeInsertId),
-      dictId: Value(dictId),
+      indexId: Value(indexId),
       readingId: Value(readingInsertId),
       freqValue: Value(freqValue),
       freqDisplayValue: Value(freqDisplayValue),

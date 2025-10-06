@@ -7,6 +7,7 @@ import '/database/example/example_views.drift';
 example_fts_search_drift:
     SELECT
         EDV.id,
+        EDV.index_id,
         EDV.example_sentence,
         '[' || COALESCE(GROUP_CONCAT(DISTINCT
             -- Only create the JSON object if the translation is not NULL
@@ -18,7 +19,7 @@ example_fts_search_drift:
             END
         ), '') || ']' AS translations
     FROM
-        example_view AS EDV
+        example_entry_view AS EDV
     INNER JOIN example_fts AS FTS
         ON FTS.rowid = EDV.id
     WHERE

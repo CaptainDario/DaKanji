@@ -36,7 +36,7 @@ void main() async {
 Future testKanjiBankV3(DaKanjiDB db) async {
   group('KanjiBankV3 Tests', () {
     // Check some kanji bank queries
-    for (var testCase in kanjiBankTetsCases) {
+    for (var testCase in kanjiBankTestCases) {
       test('Looking up $testCase', () async {
         Stopwatch s = Stopwatch()..start();
         List result = (await db.kanjiBankV3Dao.getKanjiBankEntriesFromKanji(testCase))!;

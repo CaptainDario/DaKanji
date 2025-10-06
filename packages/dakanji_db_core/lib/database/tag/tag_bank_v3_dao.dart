@@ -25,13 +25,6 @@ class TagBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TagBankV3DaoMixin 
   TagBankV3Dao(super.db);
 
 
-  /// 
-  Future<TagBankV3Entry> getTagByName(String tagName) async {
-    /// TODO
-    return TagBankV3Entry.fromJson(jsonDecode(""));
-  }
-
-
   /// Checks if the given `tag` is already present in the database
   Future<int?> getTagId(String tag) async {
 

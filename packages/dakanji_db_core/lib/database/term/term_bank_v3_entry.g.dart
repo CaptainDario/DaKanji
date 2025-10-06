@@ -8,6 +8,7 @@ part of 'term_bank_v3_entry.dart';
 
 TermBankV3Entry _$TermBankV3EntryFromJson(Map<String, dynamic> json) =>
     TermBankV3Entry(
+      indexId: (json['indexId'] as num).toInt(),
       term: json['term'] as String,
       reading: json['reading'] as String,
       definitionTags: (json['definitionTags'] as List<dynamic>)
@@ -28,6 +29,7 @@ TermBankV3Entry _$TermBankV3EntryFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TermBankV3EntryToJson(TermBankV3Entry instance) =>
     <String, dynamic>{
+      'indexId': instance.indexId,
       'term': instance.term,
       'reading': instance.reading,
       'definitionTags': instance.definitionTags,
