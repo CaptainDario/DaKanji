@@ -17,7 +17,7 @@ mixin _$TermMetaBankV3IpaEntry {
 
 /// the ipa transcription of this entry
  String get ipa;/// all tags of this pitch entry
- List<String>? get tags;
+ List<String> get tags;
 /// Create a copy of TermMetaBankV3IpaEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -50,7 +50,7 @@ abstract mixin class $TermMetaBankV3IpaEntryCopyWith<$Res>  {
   factory $TermMetaBankV3IpaEntryCopyWith(TermMetaBankV3IpaEntry value, $Res Function(TermMetaBankV3IpaEntry) _then) = _$TermMetaBankV3IpaEntryCopyWithImpl;
 @useResult
 $Res call({
- String ipa, List<String>? tags
+ String ipa, List<String> tags
 });
 
 
@@ -67,11 +67,11 @@ class _$TermMetaBankV3IpaEntryCopyWithImpl<$Res>
 
 /// Create a copy of TermMetaBankV3IpaEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? ipa = null,Object? tags = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? ipa = null,Object? tags = null,}) {
   return _then(_self.copyWith(
 ipa: null == ipa ? _self.ipa : ipa // ignore: cast_nullable_to_non_nullable
-as String,tags: freezed == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
-as List<String>?,
+as String,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 
@@ -156,7 +156,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String ipa,  List<String>? tags)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String ipa,  List<String> tags)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TermMetaBankV3IpaEntry() when $default != null:
 return $default(_that.ipa,_that.tags);case _:
@@ -177,7 +177,7 @@ return $default(_that.ipa,_that.tags);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String ipa,  List<String>? tags)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String ipa,  List<String> tags)  $default,) {final _that = this;
 switch (_that) {
 case _TermMetaBankV3IpaEntry():
 return $default(_that.ipa,_that.tags);case _:
@@ -197,7 +197,7 @@ return $default(_that.ipa,_that.tags);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String ipa,  List<String>? tags)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String ipa,  List<String> tags)?  $default,) {final _that = this;
 switch (_that) {
 case _TermMetaBankV3IpaEntry() when $default != null:
 return $default(_that.ipa,_that.tags);case _:
@@ -212,13 +212,13 @@ return $default(_that.ipa,_that.tags);case _:
 @JsonSerializable()
 
 class _TermMetaBankV3IpaEntry implements TermMetaBankV3IpaEntry {
-  const _TermMetaBankV3IpaEntry({required this.ipa, this.tags});
+  const _TermMetaBankV3IpaEntry({required this.ipa, required this.tags});
   factory _TermMetaBankV3IpaEntry.fromJson(Map<String, dynamic> json) => _$TermMetaBankV3IpaEntryFromJson(json);
 
 /// the ipa transcription of this entry
 @override final  String ipa;
 /// all tags of this pitch entry
-@override final  List<String>? tags;
+@override final  List<String> tags;
 
 /// Create a copy of TermMetaBankV3IpaEntry
 /// with the given fields replaced by the non-null parameter values.
@@ -253,7 +253,7 @@ abstract mixin class _$TermMetaBankV3IpaEntryCopyWith<$Res> implements $TermMeta
   factory _$TermMetaBankV3IpaEntryCopyWith(_TermMetaBankV3IpaEntry value, $Res Function(_TermMetaBankV3IpaEntry) _then) = __$TermMetaBankV3IpaEntryCopyWithImpl;
 @override @useResult
 $Res call({
- String ipa, List<String>? tags
+ String ipa, List<String> tags
 });
 
 
@@ -270,11 +270,11 @@ class __$TermMetaBankV3IpaEntryCopyWithImpl<$Res>
 
 /// Create a copy of TermMetaBankV3IpaEntry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? ipa = null,Object? tags = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? ipa = null,Object? tags = null,}) {
   return _then(_TermMetaBankV3IpaEntry(
 ipa: null == ipa ? _self.ipa : ipa // ignore: cast_nullable_to_non_nullable
-as String,tags: freezed == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
-as List<String>?,
+as String,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 

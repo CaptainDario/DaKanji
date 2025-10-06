@@ -1,7 +1,6 @@
 // Package imports:
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
-import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:dakanji_db_core/database/dakanji_db.dart';
@@ -13,19 +12,23 @@ void main() async {
   
   // create the testing database (delete any existing database)
   DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
-  db.clearDB();
+  await db.clearDB();
 
   final mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseDictionaryDataSource(
-    dataSourcePath: yomitanSampleDictionaryPath,
+  Stream<String> parsingProgress = await parseDictionaryDataSource(
+    dataSourcePath: yomitanSampleDictionaryZipPath,
     db: db,
     addFullJsonDefinitions: false,
     mecab: mecab
   );
+  await for (final progress in parsingProgress) {
+    print(progress);
+  }
+  
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
   await testTermMetaBankV3(db);
@@ -42,14 +45,15 @@ Future testTermMetaBankV3(DaKanjiDB db) async {
       test('should return correct metadata for "${termMetaBankTestCases[i]}"', () async {
         Stopwatch s = Stopwatch()..start();
         final testCase = termMetaBankTestCases[i];
-        final result = (await db.termMetaBankV3Dao.getTermMetaBankEntriesFromTerm(testCase));
+        final result = (await db.termMetaBankV3Dao.searchTermMetaBankV3Entries(testCase));
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
 
         print("\n\n$i: ${termMetaBankTestCases[i]}");
         for (var res in result) {
-          print(res);
+          print("Found element: $res");
         }
         expect(result.isNotEmpty , true);
+        print("Expectaiton ${termMetaBankTestCaseExpectations[i]}");
         final pass = result.any((e) => termMetaBankTestCaseExpectations[i] == e);
         expect(pass, true);
       });

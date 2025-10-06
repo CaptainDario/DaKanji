@@ -15,14 +15,15 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TermMetaBankV3Entry {
 
-/// The term of this entry
+/// id of this entry's dictionary
+ int get indexId;/// The term of this entry
  String get term;/// The type of this entry
  String get type;/// The reading of this entry
  String? get reading;/// the frequency of this entry as a numeric value
  int? get frequency;/// the frequency of this entry as a string for displaying
  String? get frequencyDisplayValue;/// Pitch data of this entry
- List<TermMetaBankV3PitchEntry>? get pitchs;/// Ipa transcription data of this entry
- List<TermMetaBankV3IpaEntry>? get ipas;
+ List<TermMetaBankV3PitchEntry> get pitchs;/// Ipa transcription data of this entry
+ List<TermMetaBankV3IpaEntry> get ipas;
 /// Create a copy of TermMetaBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -35,16 +36,16 @@ $TermMetaBankV3EntryCopyWith<TermMetaBankV3Entry> get copyWith => _$TermMetaBank
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TermMetaBankV3Entry&&(identical(other.term, term) || other.term == term)&&(identical(other.type, type) || other.type == type)&&(identical(other.reading, reading) || other.reading == reading)&&(identical(other.frequency, frequency) || other.frequency == frequency)&&(identical(other.frequencyDisplayValue, frequencyDisplayValue) || other.frequencyDisplayValue == frequencyDisplayValue)&&const DeepCollectionEquality().equals(other.pitchs, pitchs)&&const DeepCollectionEquality().equals(other.ipas, ipas));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TermMetaBankV3Entry&&(identical(other.indexId, indexId) || other.indexId == indexId)&&(identical(other.term, term) || other.term == term)&&(identical(other.type, type) || other.type == type)&&(identical(other.reading, reading) || other.reading == reading)&&(identical(other.frequency, frequency) || other.frequency == frequency)&&(identical(other.frequencyDisplayValue, frequencyDisplayValue) || other.frequencyDisplayValue == frequencyDisplayValue)&&const DeepCollectionEquality().equals(other.pitchs, pitchs)&&const DeepCollectionEquality().equals(other.ipas, ipas));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,term,type,reading,frequency,frequencyDisplayValue,const DeepCollectionEquality().hash(pitchs),const DeepCollectionEquality().hash(ipas));
+int get hashCode => Object.hash(runtimeType,indexId,term,type,reading,frequency,frequencyDisplayValue,const DeepCollectionEquality().hash(pitchs),const DeepCollectionEquality().hash(ipas));
 
 @override
 String toString() {
-  return 'TermMetaBankV3Entry(term: $term, type: $type, reading: $reading, frequency: $frequency, frequencyDisplayValue: $frequencyDisplayValue, pitchs: $pitchs, ipas: $ipas)';
+  return 'TermMetaBankV3Entry(indexId: $indexId, term: $term, type: $type, reading: $reading, frequency: $frequency, frequencyDisplayValue: $frequencyDisplayValue, pitchs: $pitchs, ipas: $ipas)';
 }
 
 
@@ -55,7 +56,7 @@ abstract mixin class $TermMetaBankV3EntryCopyWith<$Res>  {
   factory $TermMetaBankV3EntryCopyWith(TermMetaBankV3Entry value, $Res Function(TermMetaBankV3Entry) _then) = _$TermMetaBankV3EntryCopyWithImpl;
 @useResult
 $Res call({
- String term, String type, String? reading, int? frequency, String? frequencyDisplayValue, List<TermMetaBankV3PitchEntry>? pitchs, List<TermMetaBankV3IpaEntry>? ipas
+ int indexId, String term, String type, String? reading, int? frequency, String? frequencyDisplayValue, List<TermMetaBankV3PitchEntry> pitchs, List<TermMetaBankV3IpaEntry> ipas
 });
 
 
@@ -72,16 +73,17 @@ class _$TermMetaBankV3EntryCopyWithImpl<$Res>
 
 /// Create a copy of TermMetaBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? term = null,Object? type = null,Object? reading = freezed,Object? frequency = freezed,Object? frequencyDisplayValue = freezed,Object? pitchs = freezed,Object? ipas = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? indexId = null,Object? term = null,Object? type = null,Object? reading = freezed,Object? frequency = freezed,Object? frequencyDisplayValue = freezed,Object? pitchs = null,Object? ipas = null,}) {
   return _then(_self.copyWith(
-term: null == term ? _self.term : term // ignore: cast_nullable_to_non_nullable
+indexId: null == indexId ? _self.indexId : indexId // ignore: cast_nullable_to_non_nullable
+as int,term: null == term ? _self.term : term // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,reading: freezed == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
 as String?,frequency: freezed == frequency ? _self.frequency : frequency // ignore: cast_nullable_to_non_nullable
 as int?,frequencyDisplayValue: freezed == frequencyDisplayValue ? _self.frequencyDisplayValue : frequencyDisplayValue // ignore: cast_nullable_to_non_nullable
-as String?,pitchs: freezed == pitchs ? _self.pitchs : pitchs // ignore: cast_nullable_to_non_nullable
-as List<TermMetaBankV3PitchEntry>?,ipas: freezed == ipas ? _self.ipas : ipas // ignore: cast_nullable_to_non_nullable
-as List<TermMetaBankV3IpaEntry>?,
+as String?,pitchs: null == pitchs ? _self.pitchs : pitchs // ignore: cast_nullable_to_non_nullable
+as List<TermMetaBankV3PitchEntry>,ipas: null == ipas ? _self.ipas : ipas // ignore: cast_nullable_to_non_nullable
+as List<TermMetaBankV3IpaEntry>,
   ));
 }
 
@@ -166,10 +168,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String term,  String type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry>? pitchs,  List<TermMetaBankV3IpaEntry>? ipas)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int indexId,  String term,  String type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry> pitchs,  List<TermMetaBankV3IpaEntry> ipas)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TermMetaBankV3Entry() when $default != null:
-return $default(_that.term,_that.type,_that.reading,_that.frequency,_that.frequencyDisplayValue,_that.pitchs,_that.ipas);case _:
+return $default(_that.indexId,_that.term,_that.type,_that.reading,_that.frequency,_that.frequencyDisplayValue,_that.pitchs,_that.ipas);case _:
   return orElse();
 
 }
@@ -187,10 +189,10 @@ return $default(_that.term,_that.type,_that.reading,_that.frequency,_that.freque
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String term,  String type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry>? pitchs,  List<TermMetaBankV3IpaEntry>? ipas)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int indexId,  String term,  String type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry> pitchs,  List<TermMetaBankV3IpaEntry> ipas)  $default,) {final _that = this;
 switch (_that) {
 case _TermMetaBankV3Entry():
-return $default(_that.term,_that.type,_that.reading,_that.frequency,_that.frequencyDisplayValue,_that.pitchs,_that.ipas);case _:
+return $default(_that.indexId,_that.term,_that.type,_that.reading,_that.frequency,_that.frequencyDisplayValue,_that.pitchs,_that.ipas);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -207,10 +209,10 @@ return $default(_that.term,_that.type,_that.reading,_that.frequency,_that.freque
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String term,  String type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry>? pitchs,  List<TermMetaBankV3IpaEntry>? ipas)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int indexId,  String term,  String type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry> pitchs,  List<TermMetaBankV3IpaEntry> ipas)?  $default,) {final _that = this;
 switch (_that) {
 case _TermMetaBankV3Entry() when $default != null:
-return $default(_that.term,_that.type,_that.reading,_that.frequency,_that.frequencyDisplayValue,_that.pitchs,_that.ipas);case _:
+return $default(_that.indexId,_that.term,_that.type,_that.reading,_that.frequency,_that.frequencyDisplayValue,_that.pitchs,_that.ipas);case _:
   return null;
 
 }
@@ -222,9 +224,11 @@ return $default(_that.term,_that.type,_that.reading,_that.frequency,_that.freque
 @JsonSerializable()
 
 class _TermMetaBankV3Entry implements TermMetaBankV3Entry {
-  const _TermMetaBankV3Entry({required this.term, required this.type, this.reading, this.frequency, this.frequencyDisplayValue, this.pitchs, this.ipas});
+  const _TermMetaBankV3Entry({required this.indexId, required this.term, required this.type, this.reading, this.frequency, this.frequencyDisplayValue, required this.pitchs, required this.ipas});
   factory _TermMetaBankV3Entry.fromJson(Map<String, dynamic> json) => _$TermMetaBankV3EntryFromJson(json);
 
+/// id of this entry's dictionary
+@override final  int indexId;
 /// The term of this entry
 @override final  String term;
 /// The type of this entry
@@ -236,9 +240,9 @@ class _TermMetaBankV3Entry implements TermMetaBankV3Entry {
 /// the frequency of this entry as a string for displaying
 @override final  String? frequencyDisplayValue;
 /// Pitch data of this entry
-@override final  List<TermMetaBankV3PitchEntry>? pitchs;
+@override final  List<TermMetaBankV3PitchEntry> pitchs;
 /// Ipa transcription data of this entry
-@override final  List<TermMetaBankV3IpaEntry>? ipas;
+@override final  List<TermMetaBankV3IpaEntry> ipas;
 
 /// Create a copy of TermMetaBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
@@ -253,16 +257,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TermMetaBankV3Entry&&(identical(other.term, term) || other.term == term)&&(identical(other.type, type) || other.type == type)&&(identical(other.reading, reading) || other.reading == reading)&&(identical(other.frequency, frequency) || other.frequency == frequency)&&(identical(other.frequencyDisplayValue, frequencyDisplayValue) || other.frequencyDisplayValue == frequencyDisplayValue)&&const DeepCollectionEquality().equals(other.pitchs, pitchs)&&const DeepCollectionEquality().equals(other.ipas, ipas));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TermMetaBankV3Entry&&(identical(other.indexId, indexId) || other.indexId == indexId)&&(identical(other.term, term) || other.term == term)&&(identical(other.type, type) || other.type == type)&&(identical(other.reading, reading) || other.reading == reading)&&(identical(other.frequency, frequency) || other.frequency == frequency)&&(identical(other.frequencyDisplayValue, frequencyDisplayValue) || other.frequencyDisplayValue == frequencyDisplayValue)&&const DeepCollectionEquality().equals(other.pitchs, pitchs)&&const DeepCollectionEquality().equals(other.ipas, ipas));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,term,type,reading,frequency,frequencyDisplayValue,const DeepCollectionEquality().hash(pitchs),const DeepCollectionEquality().hash(ipas));
+int get hashCode => Object.hash(runtimeType,indexId,term,type,reading,frequency,frequencyDisplayValue,const DeepCollectionEquality().hash(pitchs),const DeepCollectionEquality().hash(ipas));
 
 @override
 String toString() {
-  return 'TermMetaBankV3Entry(term: $term, type: $type, reading: $reading, frequency: $frequency, frequencyDisplayValue: $frequencyDisplayValue, pitchs: $pitchs, ipas: $ipas)';
+  return 'TermMetaBankV3Entry(indexId: $indexId, term: $term, type: $type, reading: $reading, frequency: $frequency, frequencyDisplayValue: $frequencyDisplayValue, pitchs: $pitchs, ipas: $ipas)';
 }
 
 
@@ -273,7 +277,7 @@ abstract mixin class _$TermMetaBankV3EntryCopyWith<$Res> implements $TermMetaBan
   factory _$TermMetaBankV3EntryCopyWith(_TermMetaBankV3Entry value, $Res Function(_TermMetaBankV3Entry) _then) = __$TermMetaBankV3EntryCopyWithImpl;
 @override @useResult
 $Res call({
- String term, String type, String? reading, int? frequency, String? frequencyDisplayValue, List<TermMetaBankV3PitchEntry>? pitchs, List<TermMetaBankV3IpaEntry>? ipas
+ int indexId, String term, String type, String? reading, int? frequency, String? frequencyDisplayValue, List<TermMetaBankV3PitchEntry> pitchs, List<TermMetaBankV3IpaEntry> ipas
 });
 
 
@@ -290,16 +294,17 @@ class __$TermMetaBankV3EntryCopyWithImpl<$Res>
 
 /// Create a copy of TermMetaBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? term = null,Object? type = null,Object? reading = freezed,Object? frequency = freezed,Object? frequencyDisplayValue = freezed,Object? pitchs = freezed,Object? ipas = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? indexId = null,Object? term = null,Object? type = null,Object? reading = freezed,Object? frequency = freezed,Object? frequencyDisplayValue = freezed,Object? pitchs = null,Object? ipas = null,}) {
   return _then(_TermMetaBankV3Entry(
-term: null == term ? _self.term : term // ignore: cast_nullable_to_non_nullable
+indexId: null == indexId ? _self.indexId : indexId // ignore: cast_nullable_to_non_nullable
+as int,term: null == term ? _self.term : term // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,reading: freezed == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
 as String?,frequency: freezed == frequency ? _self.frequency : frequency // ignore: cast_nullable_to_non_nullable
 as int?,frequencyDisplayValue: freezed == frequencyDisplayValue ? _self.frequencyDisplayValue : frequencyDisplayValue // ignore: cast_nullable_to_non_nullable
-as String?,pitchs: freezed == pitchs ? _self.pitchs : pitchs // ignore: cast_nullable_to_non_nullable
-as List<TermMetaBankV3PitchEntry>?,ipas: freezed == ipas ? _self.ipas : ipas // ignore: cast_nullable_to_non_nullable
-as List<TermMetaBankV3IpaEntry>?,
+as String?,pitchs: null == pitchs ? _self.pitchs : pitchs // ignore: cast_nullable_to_non_nullable
+as List<TermMetaBankV3PitchEntry>,ipas: null == ipas ? _self.ipas : ipas // ignore: cast_nullable_to_non_nullable
+as List<TermMetaBankV3IpaEntry>,
   ));
 }
 

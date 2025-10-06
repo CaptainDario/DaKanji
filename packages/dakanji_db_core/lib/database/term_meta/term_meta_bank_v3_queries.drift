@@ -1,0 +1,9 @@
+import 'term_meta_bank_v3_tables.dart';
+import 'term_meta_bank_v3_views.drift';
+
+
+
+term_meta_bank_v3_entry_search_drift:
+
+    SELECT * from term_meta_bank_v3_entry_view
+        WHERE term == :term;

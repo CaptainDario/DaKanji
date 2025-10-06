@@ -12,8 +12,8 @@ class TermMetaBankV3Table extends Table {
   /// id of this entry
   IntColumn get id => integer().autoIncrement()();
 
-  /// id of the dictionary this entry belongs to
-  IntColumn get dictId => integer().references(IndexTable, #id)();
+  /// id of the index (dictionary) this entry belongs to
+  IntColumn get indexId => integer().references(IndexTable, #id)();
 
   /// the ID of the term this meta data belongs to
   IntColumn get termId => integer().references(TermTable, #id)();

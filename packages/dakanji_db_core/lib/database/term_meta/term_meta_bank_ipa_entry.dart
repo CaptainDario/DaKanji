@@ -15,7 +15,7 @@ abstract class TermMetaBankV3IpaEntry with _$TermMetaBankV3IpaEntry {
       /// the ipa transcription of this entry
       required String ipa,
       /// all tags of this pitch entry
-      List<String>? tags,
+      required List<String> tags,
     }) = _TermMetaBankV3IpaEntry;
 
   factory TermMetaBankV3IpaEntry.fromJson(Map<String, Object?> json)

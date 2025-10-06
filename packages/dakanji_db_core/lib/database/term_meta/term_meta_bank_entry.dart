@@ -1,4 +1,7 @@
 // Package imports:
+import 'dart:convert';
+
+import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
@@ -16,6 +19,8 @@ abstract class TermMetaBankV3Entry with _$TermMetaBankV3Entry {
 
   const factory TermMetaBankV3Entry(
     {
+      /// id of this entry's dictionary
+      required int indexId,
       /// The term of this entry
       required String term,
       /// The type of this entry
@@ -27,10 +32,26 @@ abstract class TermMetaBankV3Entry with _$TermMetaBankV3Entry {
       /// the frequency of this entry as a string for displaying
       String? frequencyDisplayValue,
       /// Pitch data of this entry
-      List<TermMetaBankV3PitchEntry>? pitchs,
+      required List<TermMetaBankV3PitchEntry> pitchs,
       /// Ipa transcription data of this entry
-      List<TermMetaBankV3IpaEntry>? ipas
+      required List<TermMetaBankV3IpaEntry> ipas
     }) = _TermMetaBankV3Entry;
+
+  factory TermMetaBankV3Entry.fromTermMetaBankV3EntryViewData(TermMetaBankV3EntryViewData data) {
+
+    return TermMetaBankV3Entry(
+      indexId: data.indexId,
+      term: data.term,
+      type: data.type,
+      reading: data.reading,
+      frequency: data.frequency,
+      frequencyDisplayValue: data.frequencyDisplayValue,
+      pitchs: List<TermMetaBankV3PitchEntry>.from(
+        jsonDecode(data.pitchs).map((e) => TermMetaBankV3PitchEntry.fromJson(e))),
+      ipas: List<TermMetaBankV3IpaEntry>.from(
+        jsonDecode(data.ipas).map((e) => TermMetaBankV3IpaEntry.fromJson(e))),
+    );
+  }
 
   factory TermMetaBankV3Entry.fromJson(Map<String, Object?> json)
     => _$TermMetaBankV3EntryFromJson(json);

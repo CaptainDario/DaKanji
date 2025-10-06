@@ -2,6 +2,8 @@
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 
+int dictId = 1;
+
 /// ----------------------------------------------------------------------------
 /// Test cases for term_bank_1.json
 final termBankTestCases1 = [
@@ -36,41 +38,49 @@ final termBankTestCaseExpectations1 = [
   // Test case for "打"
   [
     TermBankV3Entry(
-        term: "打",
-        reading: "だ",
-        definitionTags: ["n"],
-        ruleIdentifiers: ["n"],
-        popularity: 1,
-        definitions: ["da definition 1", "da definition 2"],
-        sequenceNumber: 1,
-        tags: [
-          TagBankV3Entry(
-              name: "E1",
-              category: "default",
-              sortingOrder: 0,
-              notes: "example tag 1",
-              score: 0)
-        ]),
+      indexId: dictId,
+      term: "打",
+      reading: "だ",
+      definitionTags: ["n"],
+      ruleIdentifiers: ["n"],
+      popularity: 1,
+      definitions: ["da definition 1", "da definition 2"],
+      sequenceNumber: 1,
+      tags: [
+        TagBankV3Entry(
+          indexId: dictId,
+          name: "E1",
+          category: "default",
+          sortingOrder: 0,
+          notes: "example tag 1",
+          score: 0)
+      ]
+    ),
     TermBankV3Entry(
-        term: "打",
-        reading: "ダース",
-        definitionTags: ["n", "abbr"],
-        ruleIdentifiers: ["n"],
-        popularity: 1,
-        definitions: ["daasu definition 1", "daasu definition 2"],
-        sequenceNumber: 2,
-        tags: [
-          TagBankV3Entry(
-              name: "E1",
-              category: "default",
-              sortingOrder: 0,
-              notes: "example tag 1",
-              score: 0)
-        ]),
+      indexId: dictId,
+      term: "打",
+      reading: "ダース",
+      definitionTags: ["n", "abbr"],
+      ruleIdentifiers: ["n"],
+      popularity: 1,
+      definitions: ["daasu definition 1", "daasu definition 2"],
+      sequenceNumber: 2,
+      tags: [
+        TagBankV3Entry(
+          indexId: dictId,
+          name: "E1",
+          category: "default",
+          sortingOrder: 0,
+          notes: "example tag 1",
+          score: 0
+        )
+      ]
+    ),
   ],
   // Test case for "打つ"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "打つ",
         reading: "うつ",
         definitionTags: ["vt"],
@@ -80,12 +90,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 3,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E1",
               category: "default",
               sortingOrder: 0,
@@ -93,6 +105,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        indexId: dictId,
         term: "打つ",
         reading: "うつ",
         definitionTags: ["vt"],
@@ -102,12 +115,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 3,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E2",
               category: "default",
               sortingOrder: 0,
@@ -115,6 +130,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        indexId: dictId,
         term: "打つ",
         reading: "ぶつ",
         definitionTags: ["vt"],
@@ -124,12 +140,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 3,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E1",
               category: "default",
               sortingOrder: 0,
@@ -137,6 +155,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        indexId: dictId,
         term: "打つ",
         reading: "ぶつ",
         definitionTags: ["vt"],
@@ -146,12 +165,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 3,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E2",
               category: "default",
               sortingOrder: 0,
@@ -162,6 +183,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "打ち込む"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "打ち込む",
         reading: "うちこむ",
         definitionTags: ["vt"],
@@ -171,12 +193,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 4,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E1",
               category: "default",
               sortingOrder: 0,
@@ -184,6 +208,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        indexId: dictId,
         term: "打ち込む",
         reading: "うちこむ",
         definitionTags: ["vt"],
@@ -193,12 +218,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 4,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E2",
               category: "default",
               sortingOrder: 0,
@@ -206,6 +233,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        indexId: dictId,
         term: "打ち込む",
         reading: "ぶちこむ",
         definitionTags: ["vt"],
@@ -215,12 +243,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 4,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E1",
               category: "default",
               sortingOrder: 0,
@@ -228,6 +258,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        indexId: dictId,
         term: "打ち込む",
         reading: "ぶちこむ",
         definitionTags: ["vt"],
@@ -237,12 +268,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 4,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E2",
               category: "default",
               sortingOrder: 0,
@@ -253,6 +286,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "画像"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "画像",
         reading: "がぞう",
         definitionTags: ["n"],
@@ -262,12 +296,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 5,
         tags: [
           TagBankV3Entry(
+              indexId: dictId, 
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E1",
               category: "default",
               sortingOrder: 0,
@@ -278,6 +314,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "読む"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "読む",
         reading: "よむ",
         definitionTags: ["vt"],
@@ -287,12 +324,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 6,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E1",
               category: "default",
               sortingOrder: 0,
@@ -303,6 +342,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "強み"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "強み",
         reading: "つよみ",
         definitionTags: ["n"],
@@ -312,12 +352,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 7,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E1",
               category: "default",
               sortingOrder: 0,
@@ -328,6 +370,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "テキスト"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "テキスト",
         reading: "テキスト",
         definitionTags: ["n"],
@@ -337,12 +380,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 8,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E1",
               category: "default",
               sortingOrder: 0,
@@ -353,6 +398,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "お手前"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "お手前",
         reading: "おてまえ",
         definitionTags: ["n"],
@@ -365,6 +411,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "番号"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "番号",
         reading: "ばんごう",
         definitionTags: ["n"],
@@ -377,6 +424,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "中腰"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "中腰",
         reading: "ちゅうごし",
         definitionTags: ["n"],
@@ -389,6 +437,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "所業"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "所業",
         reading: "しょぎょう",
         definitionTags: ["n"],
@@ -401,6 +450,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "土木工事"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "土木工事",
         reading: "どぼくこうじ",
         definitionTags: ["n"],
@@ -413,6 +463,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "好き"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "好き",
         reading: "すき",
         definitionTags: ["adj-na", "n"],
@@ -425,6 +476,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "内容"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "内容",
         reading: "ないよう",
         definitionTags: ["n"],
@@ -459,12 +511,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 100,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E1",
               category: "default",
               sortingOrder: 0,
@@ -475,6 +529,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "構造"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "構造",
         reading: "こうぞう",
         definitionTags: ["n"],
@@ -488,12 +543,14 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 101,
         tags: [
           TagBankV3Entry(
+              indexId: dictId,
               name: "P",
               category: "popular",
               sortingOrder: 0,
               notes: "popular term",
               score: 0),
           TagBankV3Entry(
+              indexId: dictId,
               name: "E1",
               category: "default",
               sortingOrder: 0,
@@ -504,6 +561,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "のたまう"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "のたまう",
         reading: "のたまう",
         definitionTags: ["v5"],
@@ -516,6 +574,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "のたもうた"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "のたもうた",
         reading: "のたもうた",
         definitionTags: [],
@@ -528,6 +587,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "３９"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "３９",
         reading: "さんきゅう",
         definitionTags: [],
@@ -540,6 +600,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "凄い"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "凄い",
         reading: "すごい",
         definitionTags: ["adj-i"],
@@ -552,6 +613,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "English"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "English",
         reading: "",
         definitionTags: ["n"],
@@ -564,6 +626,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "language"
   [
     TermBankV3Entry(
+        indexId: dictId, 
         term: "language",
         reading: "",
         definitionTags: ["n"],
@@ -576,6 +639,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "ＵＳＢ"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "ＵＳＢ",
         reading: "ユーエスビー",
         definitionTags: ["n"],
@@ -588,6 +652,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "마시다"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "마시다",
         reading: "",
         definitionTags: ["v"],
@@ -600,6 +665,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "自重"
   [
     TermBankV3Entry(
+        indexId: dictId,
         term: "自重",
         reading: "じちょう",
         definitionTags: ["n"],
@@ -609,6 +675,7 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 23,
         tags: []),
     TermBankV3Entry(
+        indexId: dictId,
         term: "自重",
         reading: "じじゅう",
         definitionTags: ["n"],

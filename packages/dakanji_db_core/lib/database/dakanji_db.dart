@@ -108,12 +108,15 @@ part 'dakanji_db.g.dart';
   ],
   include: {
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
-    'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
-    'term/term_bank_v3_views.drift', 'term/term_bank_v3_queries.drift',
     'general_tables/term_fts5_table.drift',
     'general_tables/reading_fts5_table.drift', 'general_tables/reading_spellfix_table.drift',
     'general_tables/definition_fts5_table.drift',
     'general_tables/hiragana_spellfix_cost.drift',
+    'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
+    // TODO kanji meta
+    'term_meta/term_meta_bank_v3_views.drift', 'term_meta/term_meta_bank_v3_queries.drift',
+    'term/term_bank_v3_views.drift', 'term/term_bank_v3_queries.drift',
+    
     'db_queries/stat_queries.drift',
     'db_queries/dictionary_search_queries.drift'
   }
