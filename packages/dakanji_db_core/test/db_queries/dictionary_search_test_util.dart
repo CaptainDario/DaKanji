@@ -1,4 +1,4 @@
-import 'package:dakanji_db_core/database/db_queries/dictionary_search_result.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:test/test.dart';
 
 import 'dictionary_search_test_helper_classes.dart';

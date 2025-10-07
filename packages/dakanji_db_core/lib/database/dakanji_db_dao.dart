@@ -1,8 +1,8 @@
 import "dart:async";
 import "dart:convert";
 // Package imports:
-import "package:dakanji_db_core/database/db_queries/dictionary_search_result.dart";
-import "package:dakanji_db_core/database/db_queries/dictionary_search_utils.dart";
+import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart";
+import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
 import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_entry.dart";
 import "package:drift/drift.dart";

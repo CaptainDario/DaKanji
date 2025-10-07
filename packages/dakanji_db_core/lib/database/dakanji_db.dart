@@ -120,7 +120,7 @@ part 'dakanji_db.g.dart';
     
     'db_queries/stat_queries.drift',
 
-    'db_queries/dictionary_search_queries.drift',
+    'db_queries/dictionary_search/dictionary_search_queries.drift',
     'db_queries/dictionary_search/dictionary_search_views.drift',
 
     'db_queries/kanji_dictionary_search/kanji_dictionary_search_queries.drift',
