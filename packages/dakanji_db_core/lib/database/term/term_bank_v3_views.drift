@@ -19,12 +19,12 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS
 		popularity,
 		-- DEFINITIONS,
 		'[' || COALESCE(
-        GROUP_CONCAT(
-          DISTINCT '"' || MT.definition || '"'
-          ORDER BY j.key
-        ),
-        ''
-      ) || ']' AS definitions,
+			GROUP_CONCAT(
+				DISTINCT '"' || MT.definition || '"'
+				ORDER BY j.key
+			),
+			''
+		) || ']' AS definitions,
 		definition_order,
 		sequence_number,
 		-- TAG
@@ -51,7 +51,7 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS
 	-- get the definitions
 	LEFT JOIN term_bank_v3_x_definition_table as TB3MRT ON TB3T.id = TB3MRT.term_bank_id 
 	LEFT JOIN definition_table as MT ON TB3MRT.definition_id = MT.id
-	JOIN json_each(TB3T.definition_order) j ON j.value = TB3MRT.definition_id 
+	JOIN json_each(TB3T.definition_order) j ON j.value = TB3MRT.definition_id
 	-- get the tags
 	LEFT JOIN term_bank_v3_x_tag_bank_table as TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id 
 	LEFT JOIN tag_bank_v3_table as TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id

@@ -15,8 +15,8 @@ import 'kanji_dictionary_search_test_cases.dart';
 void main() async {
   
   // create the testing database (delete any existing database)
+  if (File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
-  await db.clearDB();
 
   final mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
@@ -52,7 +52,7 @@ Future testKanjiBankV3(DaKanjiDB db) async {
 
         expect(result.isNotEmpty, true);
         for (var entry in result) {
-          print(JsonEncoder.withIndent("  ").convert(entry));
+          //print(JsonEncoder.withIndent("  ").convert(entry));
           expect(kanjiDictionarySearchTestCaseExpectations.contains(entry), true);
         }
       });

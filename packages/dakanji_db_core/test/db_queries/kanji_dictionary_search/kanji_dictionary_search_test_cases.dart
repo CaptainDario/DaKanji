@@ -97,10 +97,10 @@ final kanjiDictionarySearchTestCaseExpectations = [
     indexId: 1,
     onyomis: [],
     kunyomis: [
-      "-こ.み",
       "-こ.む",
-      "こ.み",
       "こ.む",
+      "こ.み",
+      "-こ.み",
       "こ.める"
     ],
     tags: [
