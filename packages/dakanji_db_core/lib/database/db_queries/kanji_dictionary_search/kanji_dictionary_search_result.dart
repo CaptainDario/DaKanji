@@ -15,8 +15,10 @@ part 'kanji_dictionary_search_result.g.dart';
 @JsonSerializable()
 class KanjiDictionarySearchResult with _$KanjiDictionarySearchResult {
 
+  @override
   /// List of kanji bank entries found for the search
   KanjiBankV3Entry kanjiBankEntry;
+  @override
   /// List of lists of kanji meta bank entries, each list corresponds to one
   /// kanji bank entry of [kanjiBankEntry]
   List<KanjiMetaBankV3Entry> kanjiMetaBankEntry;
