@@ -40,7 +40,7 @@ Future testKanjiMetaBankV3(DaKanjiDB db) async {
     for (var testCase in kanjiMetaBankTetsCases) {
       test('Looking up $testCase', () async {
         Stopwatch s = Stopwatch()..start();
-        List result = (await db.kanjiMetaBankV3Dao.getKanjiMetaBankEntriesFromKanji(testCase))!;
+        List result = (await db.kanjiMetaBankV3Dao.search(testCase))!;
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
         print("testesrtaeta $result");
 

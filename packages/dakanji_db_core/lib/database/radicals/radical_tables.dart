@@ -9,7 +9,6 @@ class RadicalsTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// the radical character of this entry
-  /// this column is indexed
   TextColumn get radical => text().withLength(min: 1)();
 
   /// Stroke count of this radical

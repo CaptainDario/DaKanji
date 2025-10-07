@@ -5,6 +5,7 @@ import '/database/general_tables/definition_tables.dart';
 import '/database/tag/tag_bank_v3_tables.dart';
 import '/database/kanji/kanji_bank_v3_tables.dart';
 import '/database/kanji/kanji_bank_v3_relation_tables.dart';
+import '/database/kanji_meta/kanji_meta_bank_v3_views.drift';
 
 
 
@@ -17,6 +18,7 @@ CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
         '[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || kunyomi.reading || '"'), '') || ']' AS kunyomis,
         '[' || COALESCE(GROUP_CONCAT(DISTINCT json_object(
             'id', TB3T.id,
+            'indexId', TB3T.index_id,
             'name', TB3T.name,
             'category', TB3T.category,
             'sortingOrder', TB3T.sorting_order,

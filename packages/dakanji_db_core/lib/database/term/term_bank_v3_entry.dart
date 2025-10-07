@@ -10,21 +10,7 @@ import '/database/tag/tag_bank_v3_entry.dart';
 part 'term_bank_v3_entry.freezed.dart';
 part 'term_bank_v3_entry.g.dart';
 
-extension _CommonTermData on Object {
-  // Use a type that covers the fields you need, like `dynamic` 
-  // or `Object` with casting, if the classes don't share a base type 
-  // you can reference here. `dynamic` is often sufficient for *similar*
-  // data coming from different sources.
-  int get indexId => (this as dynamic).indexId ?? 0;
-  String get _term => (this as dynamic).term ?? "";
-  String get _reading => (this as dynamic).reading ?? "";
-  String get _definitionTags => (this as dynamic).definitionTags;
-  String get _ruleIdentifiers => (this as dynamic).ruleIdentifiers;
-  int get _popularity => (this as dynamic).popularity;
-  String get _definitions => (this as dynamic).definitions;
-  int get _sequenceNumber => (this as dynamic).sequenceNumber;
-  String get _tags => (this as dynamic).tags;
-}
+
 
 @Freezed()
 @JsonSerializable()
@@ -78,15 +64,15 @@ class TermBankV3Entry with _$TermBankV3Entry {
   }
     
   factory TermBankV3Entry.fromTermBankV3SearchViewData(TermBankV3SearchViewData r) {
-    return _mapCommonFields(r);
+    return TermBankV3Entry._fromDataSource(r);
   }
 
   // 2. Factory constructor for DictionarySearchFts5DriftResult
   factory TermBankV3Entry.fromSearchTermDriftResult(DictionarySearchFts5DriftResult r) {
-    return _mapCommonFields(r);
+    return TermBankV3Entry._fromDataSource(r);
   }
 
-  static TermBankV3Entry _mapCommonFields(Object r) {
+  factory TermBankV3Entry._fromDataSource(dynamic r) {
     return TermBankV3Entry(
       indexId: r.indexId,
       term: r._term,

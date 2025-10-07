@@ -1,0 +1,6 @@
+import 'kanji_dictionary_search_views.drift';
+
+
+
+kanji_dictionary_search_drift:
+    SELECT * FROM kanji_dictionary_search_view WHERE kanji IN :kanjis;

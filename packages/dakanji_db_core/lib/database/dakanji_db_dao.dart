@@ -3,6 +3,8 @@ import "dart:convert";
 // Package imports:
 import "package:dakanji_db_core/database/db_queries/dictionary_search_result.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search_utils.dart";
+import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
+import "package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_entry.dart";
 import "package:drift/drift.dart";
 import "package:language_processing/iso/iso_table.dart";
 
@@ -18,6 +20,20 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
   // this constructor is required so that the main database can create an instance
   // of this object.
   DaKanjiDBDao(super.db);
+
+  Future<List<KanjiDictionarySearchResult>> kanjiDictionarySearch(List<String> kanjis) async {
+
+    if(kanjis.isEmpty) return [];
+
+    // run the query
+    final searchResults = await db.kanji_dictionary_search_drift(kanjis).get();
+    final convertedResults = searchResults.map((result) =>
+      KanjiDictionarySearchResult.fromKanjiDictionarySearchViewData(result)
+    ).toList();
+
+    return convertedResults;
+
+  }
 
   Future<DictionarySearchResult> dictionarySearch(
     String term,

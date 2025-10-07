@@ -1,4 +1,7 @@
 // Package imports:
+import 'dart:convert';
+
+import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
@@ -7,7 +10,7 @@ import 'package:universal_io/io.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
-import 'kanji_bank_test_cases.dart';
+import 'kanji_dictionary_search_test_cases.dart';
 
 void main() async {
   
@@ -39,16 +42,18 @@ void main() async {
 Future testKanjiBankV3(DaKanjiDB db) async {
   group('KanjiBankV3 Tests', () {
     // Check some kanji bank queries
-    for (var testCase in kanjiBankTestCases) {
+    for (var testCase in kanjiDictionaryTestCases) {
       test('Looking up $testCase', () async {
         Stopwatch s = Stopwatch()..start();
-        List result = (await db.kanjiBankV3Dao.search(testCase))!;
+        List<KanjiDictionarySearchResult> result =
+          (await db.daKanjiDBDao.kanjiDictionarySearch(testCase));
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
         print(result);
 
         expect(result.isNotEmpty, true);
         for (var entry in result) {
-          expect(kanjiBankTestCaseExpectations.contains(entry), true);
+          print(JsonEncoder.withIndent("  ").convert(entry));
+          expect(kanjiDictionarySearchTestCaseExpectations.contains(entry), true);
         }
       });
     }

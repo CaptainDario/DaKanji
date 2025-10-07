@@ -23,22 +23,22 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
   String kanji;
   @override
   /// The id of the dictionary this entry belongs to
-  int indexId;
+  final int indexId;
   @override
-  /// The onyomi readings of this entry
-  List<String>? onyomis;
+  /// The onyomi readings of this entry (sorted lexicographically)
+  List<String> onyomis;
   @override
-  /// The kunyomi readings of this entry
-  List<String>? kunyomis;
+  /// The kunyomi readings of this entry (sorted lexicographically)
+  List<String> kunyomis;
   @override
-  /// The tags of this entry
-  List<TagBankV3Entry>? tags;
+  /// The tags of this entry (sorted lexicographically by name)
+  List<TagBankV3Entry> tags;
   @override
   /// The definition of this entry
-  List<String>? definitions;
+  List<String> definitions;
   @override
   /// The stats of this entry
-  List<KanjiBankV3EntryStat>? stats;
+  List<KanjiBankV3EntryStat> stats;
 
   KanjiBankV3Entry(
     {
@@ -50,15 +50,25 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
       required this.definitions,
       required this.stats,
     }){
-      onyomis?.sort();
-      kunyomis?.sort();
-      tags?.sort((a, b) => a.name.compareTo(b.name));
-      definitions?.sort();
-      stats?.sort((a, b) => a.name.compareTo(b.name));
+      onyomis.sort();
+      kunyomis.sort();
+      tags.sort((a, b) => a.sortingOrder.compareTo(b.sortingOrder));
+      definitions.sort();
+      stats.sort((a, b) {
+        if (a.name != b.name) return a.name.compareTo(b.name);
+        else return a.value.compareTo(b.value);
+      });
     }
 
+  factory KanjiBankV3Entry.fromKanjiDictionarySearchViewData(KanjiDictionarySearchViewData r){
+    return KanjiBankV3Entry._fromData(r);
+  }
 
-  factory KanjiBankV3Entry.fromKanjiBankV3SearchResult(KanjiBankV3EntryViewData r){
+  factory KanjiBankV3Entry.fromKanjiBankV3EntryViewData(KanjiBankV3EntryViewData r){
+    return KanjiBankV3Entry._fromData(r);
+  }
+
+  factory KanjiBankV3Entry._fromData(dynamic r){
     return KanjiBankV3Entry(
       kanji: r.kanji,
       indexId: r.indexId,
