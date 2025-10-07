@@ -1204,7 +1204,43 @@ class $KanjiBankV3TableTable extends KanjiBankV3Table
     ),
   );
   @override
-  List<GeneratedColumn> get $columns => [id, kanjiId, indexId];
+  late final GeneratedColumnWithTypeConverter<Object?, String> onyomiOrder =
+      GeneratedColumn<String>(
+        'onyomi_order',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<Object?>($KanjiBankV3TableTable.$converteronyomiOrder);
+  @override
+  late final GeneratedColumnWithTypeConverter<Object?, String> kunyomiOrder =
+      GeneratedColumn<String>(
+        'kunyomi_order',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<Object?>($KanjiBankV3TableTable.$converterkunyomiOrder);
+  @override
+  late final GeneratedColumnWithTypeConverter<Object?, String> definitionOrder =
+      GeneratedColumn<String>(
+        'definition_order',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<Object?>(
+        $KanjiBankV3TableTable.$converterdefinitionOrder,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    kanjiId,
+    indexId,
+    onyomiOrder,
+    kunyomiOrder,
+    definitionOrder,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1257,6 +1293,24 @@ class $KanjiBankV3TableTable extends KanjiBankV3Table
         DriftSqlType.int,
         data['${effectivePrefix}index_id'],
       )!,
+      onyomiOrder: $KanjiBankV3TableTable.$converteronyomiOrder.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}onyomi_order'],
+        )!,
+      ),
+      kunyomiOrder: $KanjiBankV3TableTable.$converterkunyomiOrder.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}kunyomi_order'],
+        )!,
+      ),
+      definitionOrder: $KanjiBankV3TableTable.$converterdefinitionOrder.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}definition_order'],
+        )!,
+      ),
     );
   }
 
@@ -1264,6 +1318,13 @@ class $KanjiBankV3TableTable extends KanjiBankV3Table
   $KanjiBankV3TableTable createAlias(String alias) {
     return $KanjiBankV3TableTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<Object?, String> $converteronyomiOrder =
+      const JsonConverter();
+  static TypeConverter<Object?, String> $converterkunyomiOrder =
+      const JsonConverter();
+  static TypeConverter<Object?, String> $converterdefinitionOrder =
+      const JsonConverter();
 }
 
 class KanjiBankV3TableData extends DataClass
@@ -1276,10 +1337,28 @@ class KanjiBankV3TableData extends DataClass
 
   /// The id of the dictionary this entry belongs to
   final int indexId;
+
+  /// The order of the Onyomi Readins, used to sort them in the order they were
+  /// provided by the dictionary. This is a JSON array of integers, where each
+  /// integer corresponds to `onyomiReadingId`.
+  final Object? onyomiOrder;
+
+  /// The order of the Kunyomi Readins, used to sort them in the order they were
+  /// provided by the dictionary. This is a JSON array of integers, where each
+  /// integer corresponds to `kunyomiReadingId`.
+  final Object? kunyomiOrder;
+
+  /// The order of the definitions, used to sort them in the order they were
+  /// provided by the dictionary. This is a JSON array of integers, where each
+  /// integer corresponds to `definitionId`.
+  final Object? definitionOrder;
   const KanjiBankV3TableData({
     required this.id,
     required this.kanjiId,
     required this.indexId,
+    this.onyomiOrder,
+    this.kunyomiOrder,
+    this.definitionOrder,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1287,6 +1366,21 @@ class KanjiBankV3TableData extends DataClass
     map['id'] = Variable<int>(id);
     map['kanji_id'] = Variable<int>(kanjiId);
     map['index_id'] = Variable<int>(indexId);
+    if (!nullToAbsent || onyomiOrder != null) {
+      map['onyomi_order'] = Variable<String>(
+        $KanjiBankV3TableTable.$converteronyomiOrder.toSql(onyomiOrder),
+      );
+    }
+    if (!nullToAbsent || kunyomiOrder != null) {
+      map['kunyomi_order'] = Variable<String>(
+        $KanjiBankV3TableTable.$converterkunyomiOrder.toSql(kunyomiOrder),
+      );
+    }
+    if (!nullToAbsent || definitionOrder != null) {
+      map['definition_order'] = Variable<String>(
+        $KanjiBankV3TableTable.$converterdefinitionOrder.toSql(definitionOrder),
+      );
+    }
     return map;
   }
 
@@ -1295,6 +1389,15 @@ class KanjiBankV3TableData extends DataClass
       id: Value(id),
       kanjiId: Value(kanjiId),
       indexId: Value(indexId),
+      onyomiOrder: onyomiOrder == null && nullToAbsent
+          ? const Value.absent()
+          : Value(onyomiOrder),
+      kunyomiOrder: kunyomiOrder == null && nullToAbsent
+          ? const Value.absent()
+          : Value(kunyomiOrder),
+      definitionOrder: definitionOrder == null && nullToAbsent
+          ? const Value.absent()
+          : Value(definitionOrder),
     );
   }
 
@@ -1307,6 +1410,9 @@ class KanjiBankV3TableData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       kanjiId: serializer.fromJson<int>(json['kanjiId']),
       indexId: serializer.fromJson<int>(json['indexId']),
+      onyomiOrder: serializer.fromJson<Object?>(json['onyomiOrder']),
+      kunyomiOrder: serializer.fromJson<Object?>(json['kunyomiOrder']),
+      definitionOrder: serializer.fromJson<Object?>(json['definitionOrder']),
     );
   }
   @override
@@ -1316,20 +1422,43 @@ class KanjiBankV3TableData extends DataClass
       'id': serializer.toJson<int>(id),
       'kanjiId': serializer.toJson<int>(kanjiId),
       'indexId': serializer.toJson<int>(indexId),
+      'onyomiOrder': serializer.toJson<Object?>(onyomiOrder),
+      'kunyomiOrder': serializer.toJson<Object?>(kunyomiOrder),
+      'definitionOrder': serializer.toJson<Object?>(definitionOrder),
     };
   }
 
-  KanjiBankV3TableData copyWith({int? id, int? kanjiId, int? indexId}) =>
-      KanjiBankV3TableData(
-        id: id ?? this.id,
-        kanjiId: kanjiId ?? this.kanjiId,
-        indexId: indexId ?? this.indexId,
-      );
+  KanjiBankV3TableData copyWith({
+    int? id,
+    int? kanjiId,
+    int? indexId,
+    Value<Object?> onyomiOrder = const Value.absent(),
+    Value<Object?> kunyomiOrder = const Value.absent(),
+    Value<Object?> definitionOrder = const Value.absent(),
+  }) => KanjiBankV3TableData(
+    id: id ?? this.id,
+    kanjiId: kanjiId ?? this.kanjiId,
+    indexId: indexId ?? this.indexId,
+    onyomiOrder: onyomiOrder.present ? onyomiOrder.value : this.onyomiOrder,
+    kunyomiOrder: kunyomiOrder.present ? kunyomiOrder.value : this.kunyomiOrder,
+    definitionOrder: definitionOrder.present
+        ? definitionOrder.value
+        : this.definitionOrder,
+  );
   KanjiBankV3TableData copyWithCompanion(KanjiBankV3TableCompanion data) {
     return KanjiBankV3TableData(
       id: data.id.present ? data.id.value : this.id,
       kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
       indexId: data.indexId.present ? data.indexId.value : this.indexId,
+      onyomiOrder: data.onyomiOrder.present
+          ? data.onyomiOrder.value
+          : this.onyomiOrder,
+      kunyomiOrder: data.kunyomiOrder.present
+          ? data.kunyomiOrder.value
+          : this.kunyomiOrder,
+      definitionOrder: data.definitionOrder.present
+          ? data.definitionOrder.value
+          : this.definitionOrder,
     );
   }
 
@@ -1338,46 +1467,77 @@ class KanjiBankV3TableData extends DataClass
     return (StringBuffer('KanjiBankV3TableData(')
           ..write('id: $id, ')
           ..write('kanjiId: $kanjiId, ')
-          ..write('indexId: $indexId')
+          ..write('indexId: $indexId, ')
+          ..write('onyomiOrder: $onyomiOrder, ')
+          ..write('kunyomiOrder: $kunyomiOrder, ')
+          ..write('definitionOrder: $definitionOrder')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, kanjiId, indexId);
+  int get hashCode => Object.hash(
+    id,
+    kanjiId,
+    indexId,
+    onyomiOrder,
+    kunyomiOrder,
+    definitionOrder,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiBankV3TableData &&
           other.id == this.id &&
           other.kanjiId == this.kanjiId &&
-          other.indexId == this.indexId);
+          other.indexId == this.indexId &&
+          other.onyomiOrder == this.onyomiOrder &&
+          other.kunyomiOrder == this.kunyomiOrder &&
+          other.definitionOrder == this.definitionOrder);
 }
 
 class KanjiBankV3TableCompanion extends UpdateCompanion<KanjiBankV3TableData> {
   final Value<int> id;
   final Value<int> kanjiId;
   final Value<int> indexId;
+  final Value<Object?> onyomiOrder;
+  final Value<Object?> kunyomiOrder;
+  final Value<Object?> definitionOrder;
   const KanjiBankV3TableCompanion({
     this.id = const Value.absent(),
     this.kanjiId = const Value.absent(),
     this.indexId = const Value.absent(),
+    this.onyomiOrder = const Value.absent(),
+    this.kunyomiOrder = const Value.absent(),
+    this.definitionOrder = const Value.absent(),
   });
   KanjiBankV3TableCompanion.insert({
     this.id = const Value.absent(),
     required int kanjiId,
     required int indexId,
+    required Object? onyomiOrder,
+    required Object? kunyomiOrder,
+    required Object? definitionOrder,
   }) : kanjiId = Value(kanjiId),
-       indexId = Value(indexId);
+       indexId = Value(indexId),
+       onyomiOrder = Value(onyomiOrder),
+       kunyomiOrder = Value(kunyomiOrder),
+       definitionOrder = Value(definitionOrder);
   static Insertable<KanjiBankV3TableData> custom({
     Expression<int>? id,
     Expression<int>? kanjiId,
     Expression<int>? indexId,
+    Expression<String>? onyomiOrder,
+    Expression<String>? kunyomiOrder,
+    Expression<String>? definitionOrder,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (kanjiId != null) 'kanji_id': kanjiId,
       if (indexId != null) 'index_id': indexId,
+      if (onyomiOrder != null) 'onyomi_order': onyomiOrder,
+      if (kunyomiOrder != null) 'kunyomi_order': kunyomiOrder,
+      if (definitionOrder != null) 'definition_order': definitionOrder,
     });
   }
 
@@ -1385,11 +1545,17 @@ class KanjiBankV3TableCompanion extends UpdateCompanion<KanjiBankV3TableData> {
     Value<int>? id,
     Value<int>? kanjiId,
     Value<int>? indexId,
+    Value<Object?>? onyomiOrder,
+    Value<Object?>? kunyomiOrder,
+    Value<Object?>? definitionOrder,
   }) {
     return KanjiBankV3TableCompanion(
       id: id ?? this.id,
       kanjiId: kanjiId ?? this.kanjiId,
       indexId: indexId ?? this.indexId,
+      onyomiOrder: onyomiOrder ?? this.onyomiOrder,
+      kunyomiOrder: kunyomiOrder ?? this.kunyomiOrder,
+      definitionOrder: definitionOrder ?? this.definitionOrder,
     );
   }
 
@@ -1405,6 +1571,23 @@ class KanjiBankV3TableCompanion extends UpdateCompanion<KanjiBankV3TableData> {
     if (indexId.present) {
       map['index_id'] = Variable<int>(indexId.value);
     }
+    if (onyomiOrder.present) {
+      map['onyomi_order'] = Variable<String>(
+        $KanjiBankV3TableTable.$converteronyomiOrder.toSql(onyomiOrder.value),
+      );
+    }
+    if (kunyomiOrder.present) {
+      map['kunyomi_order'] = Variable<String>(
+        $KanjiBankV3TableTable.$converterkunyomiOrder.toSql(kunyomiOrder.value),
+      );
+    }
+    if (definitionOrder.present) {
+      map['definition_order'] = Variable<String>(
+        $KanjiBankV3TableTable.$converterdefinitionOrder.toSql(
+          definitionOrder.value,
+        ),
+      );
+    }
     return map;
   }
 
@@ -1413,7 +1596,10 @@ class KanjiBankV3TableCompanion extends UpdateCompanion<KanjiBankV3TableData> {
     return (StringBuffer('KanjiBankV3TableCompanion(')
           ..write('id: $id, ')
           ..write('kanjiId: $kanjiId, ')
-          ..write('indexId: $indexId')
+          ..write('indexId: $indexId, ')
+          ..write('onyomiOrder: $onyomiOrder, ')
+          ..write('kunyomiOrder: $kunyomiOrder, ')
+          ..write('definitionOrder: $definitionOrder')
           ..write(')'))
         .toString();
   }
@@ -17691,12 +17877,18 @@ typedef $$KanjiBankV3TableTableCreateCompanionBuilder =
       Value<int> id,
       required int kanjiId,
       required int indexId,
+      required Object? onyomiOrder,
+      required Object? kunyomiOrder,
+      required Object? definitionOrder,
     });
 typedef $$KanjiBankV3TableTableUpdateCompanionBuilder =
     KanjiBankV3TableCompanion Function({
       Value<int> id,
       Value<int> kanjiId,
       Value<int> indexId,
+      Value<Object?> onyomiOrder,
+      Value<Object?> kunyomiOrder,
+      Value<Object?> definitionOrder,
     });
 
 final class $$KanjiBankV3TableTableReferences
@@ -17905,6 +18097,24 @@ class $$KanjiBankV3TableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnWithTypeConverterFilters<Object?, Object, String> get onyomiOrder =>
+      $composableBuilder(
+        column: $table.onyomiOrder,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+
+  ColumnWithTypeConverterFilters<Object?, Object, String> get kunyomiOrder =>
+      $composableBuilder(
+        column: $table.kunyomiOrder,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+
+  ColumnWithTypeConverterFilters<Object?, Object, String> get definitionOrder =>
+      $composableBuilder(
+        column: $table.definitionOrder,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+
   $$KanjiTableTableFilterComposer get kanjiId {
     final $$KanjiTableTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -18111,6 +18321,21 @@ class $$KanjiBankV3TableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get onyomiOrder => $composableBuilder(
+    column: $table.onyomiOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kunyomiOrder => $composableBuilder(
+    column: $table.kunyomiOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get definitionOrder => $composableBuilder(
+    column: $table.definitionOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$KanjiTableTableOrderingComposer get kanjiId {
     final $$KanjiTableTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -18169,6 +18394,24 @@ class $$KanjiBankV3TableTableAnnotationComposer
   });
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<Object?, String> get onyomiOrder =>
+      $composableBuilder(
+        column: $table.onyomiOrder,
+        builder: (column) => column,
+      );
+
+  GeneratedColumnWithTypeConverter<Object?, String> get kunyomiOrder =>
+      $composableBuilder(
+        column: $table.kunyomiOrder,
+        builder: (column) => column,
+      );
+
+  GeneratedColumnWithTypeConverter<Object?, String> get definitionOrder =>
+      $composableBuilder(
+        column: $table.definitionOrder,
+        builder: (column) => column,
+      );
 
   $$KanjiTableTableAnnotationComposer get kanjiId {
     final $$KanjiTableTableAnnotationComposer composer = $composerBuilder(
@@ -18403,20 +18646,32 @@ class $$KanjiBankV3TableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<int> kanjiId = const Value.absent(),
                 Value<int> indexId = const Value.absent(),
+                Value<Object?> onyomiOrder = const Value.absent(),
+                Value<Object?> kunyomiOrder = const Value.absent(),
+                Value<Object?> definitionOrder = const Value.absent(),
               }) => KanjiBankV3TableCompanion(
                 id: id,
                 kanjiId: kanjiId,
                 indexId: indexId,
+                onyomiOrder: onyomiOrder,
+                kunyomiOrder: kunyomiOrder,
+                definitionOrder: definitionOrder,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required int kanjiId,
                 required int indexId,
+                required Object? onyomiOrder,
+                required Object? kunyomiOrder,
+                required Object? definitionOrder,
               }) => KanjiBankV3TableCompanion.insert(
                 id: id,
                 kanjiId: kanjiId,
                 indexId: indexId,
+                onyomiOrder: onyomiOrder,
+                kunyomiOrder: kunyomiOrder,
+                definitionOrder: definitionOrder,
               ),
           withReferenceMapper: (p0) => p0
               .map(

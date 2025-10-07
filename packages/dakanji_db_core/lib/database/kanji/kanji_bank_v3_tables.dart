@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db_core/helper/json_converter.dart';
 import 'package:drift/drift.dart';
 
 // Project imports:
@@ -20,6 +21,21 @@ class KanjiBankV3Table extends Table {
   /// The id of the dictionary this entry belongs to
   IntColumn get indexId => integer().references(IndexTable, #id)();
   
+  /// The order of the Onyomi Readins, used to sort them in the order they were
+  /// provided by the dictionary. This is a JSON array of integers, where each
+  /// integer corresponds to `onyomiReadingId`.
+  TextColumn get onyomiOrder => text().map(const JsonConverter())();
+
+  /// The order of the Kunyomi Readins, used to sort them in the order they were
+  /// provided by the dictionary. This is a JSON array of integers, where each
+  /// integer corresponds to `kunyomiReadingId`.
+  TextColumn get kunyomiOrder => text().map(const JsonConverter())();
+
+  /// The order of the definitions, used to sort them in the order they were
+  /// provided by the dictionary. This is a JSON array of integers, where each
+  /// integer corresponds to `definitionId`.
+  TextColumn get definitionOrder => text().map(const JsonConverter())();
+
 }
 
 /// Contains all kanji stat's. Each entry links to a

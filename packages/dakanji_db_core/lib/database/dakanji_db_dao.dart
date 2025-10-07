@@ -27,6 +27,7 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
 
     // run the query
     final searchResults = await db.kanji_dictionary_search_drift(kanjis).get();
+    print('FOUNDDDDDDDDD \n $searchResults');
     final convertedResults = searchResults.map((result) =>
       KanjiDictionarySearchResult.fromKanjiDictionarySearchViewData(result)
     ).toList();
