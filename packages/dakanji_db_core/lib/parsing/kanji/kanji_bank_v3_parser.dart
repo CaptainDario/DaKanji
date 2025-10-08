@@ -3,7 +3,6 @@ import 'dart:convert';
 
 // Package imports:
 import 'package:drift/drift.dart';
-import 'package:path/path.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
@@ -14,67 +13,43 @@ import 'kanji_bank_v3_parser_context.dart';
 
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseKanjiBankV3File(File kanjiBankV3JsonFile, DaKanjiDB db, int dictId) async {
+Future parseKanjiBankV3File(File kanjiBankV3JsonFile, KanjiBankV3ParserContext pC, DaKanjiDB db, int dictId) async {
 
   String jsonString = kanjiBankV3JsonFile.readAsStringSync();
 
-  await parseKanjiBankV3(jsonString, db, dictId);
+  await parseKanjiBankV3(jsonString, pC, db, dictId);
 
 }
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async {
+Future parseKanjiBankV3(String kanjiBankV3Json, KanjiBankV3ParserContext pC, DaKanjiDB db, int dictId) async {
 
   // read and decode the json
   List jsonList = jsonDecode(kanjiBankV3Json);
   print("Parsing ${jsonList.length} kanji entries");
 
-  KanjiBankV3ParserContext parsingContext = KanjiBankV3ParserContext()
-    ..dictId = dictId;
-  
-  // get all ids and values from the db for O(1) access
-  parsingContext.kanjisInDB =
-    { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };
-  parsingContext.readingsInDB  =
-    { for (var e in await db.kanjiBankV3Dao.getAllReadings()) e.reading : e.id };
-  parsingContext.definitionsInDB =
-    { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id };
-  parsingContext.tagsInDB = 
-    { for (var e in await db.tagBankV3Dao.getAllTags()) e.name : e.id };
-  parsingContext.statNamesInDB = 
-    { for (var e in await db.kanjiBankV3Dao.getAllStatNames()) e.statName : e.id };
-  parsingContext.statValuesInDB =
-    { for (var e in await db.kanjiBankV3Dao.getAllStatValues()) e.statValue : e.id };
-
-  // get current maximum values
-  parsingContext.kanjiId      = await db.kanjiDao.maxKanjiId();
-  parsingContext.kanjiBankId  = await db.kanjiBankV3Dao.maxKanjiId();
-  parsingContext.readingId    = await db.readingDao.maxReadingId();
-  parsingContext.definitionId = await db.kanjiBankV3Dao.maxDefinitionId();
-  parsingContext.statsId      = await db.kanjiBankV3Dao.maxStatsId();
-  parsingContext.statValuesId = await db.kanjiBankV3Dao.maxStatsValueId();
-  parsingContext.statNamesId  = await db.kanjiBankV3Dao.maxStatsNameId();
+  pC.resetCompanions();
 
   // populate the companion lists
   Stopwatch s = Stopwatch()..start();
   for (var i = 0; i < jsonList.length; i++) {
 
-    parsingContext.kanjiBankId++;
+    pC.kanjiBankId++;
     
-    await parseKanji(jsonList[i][0], parsingContext, db);
-    await parseOnyomi(jsonList[i][1], parsingContext, db);
-    await parseKunyomi(jsonList[i][2], parsingContext, db);
-    await parseTag(jsonList[i][3], parsingContext, db);
-    await parseDefinition(List<String>.from(jsonList[i][4]), parsingContext, db);
-    await parseStats(Map<String, String>.from(jsonList[i][5]), parsingContext, db);
+    await parseKanji(jsonList[i][0], pC, db);
+    await parseOnyomi(jsonList[i][1], pC, db);
+    await parseKunyomi(jsonList[i][2], pC, db);
+    await parseTag(jsonList[i][3], pC, db);
+    await parseDefinition(List<String>.from(jsonList[i][4]), pC, db);
+    await parseStats(Map<String, String>.from(jsonList[i][5]), pC, db);
 
-    parsingContext.kanjiBankCompanions.add(KanjiBankV3TableCompanion(
-      id: Value(parsingContext.kanjiBankId),
-      kanjiId: Value(parsingContext.kanjiId),
-      indexId: Value(parsingContext.dictId),
-      onyomiOrder: Value(jsonEncode(parsingContext.onyomisOrder)),
-      kunyomiOrder: Value(jsonEncode(parsingContext.kunyomisOrder)),
-      definitionOrder: Value(jsonEncode(parsingContext.definitionsOrder))
+    pC.kanjiBankCompanions.add(KanjiBankV3TableCompanion(
+      id: Value(pC.kanjiBankId),
+      kanjiId: Value(pC.kanjiId),
+      indexId: Value(pC.dictId),
+      onyomiOrder: Value(jsonEncode(pC.onyomisOrder)),
+      kunyomiOrder: Value(jsonEncode(pC.kunyomisOrder)),
+      definitionOrder: Value(jsonEncode(pC.definitionsOrder))
     ));
 
   }
@@ -84,22 +59,22 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
   s.reset();
   await db.batch((batch) {
     
-    batch.insertAll(db.kanjiTable, parsingContext.kanjiCompanions);
-    batch.insertAll(db.kanjiBankV3Table, parsingContext.kanjiBankCompanions,);
+    batch.insertAll(db.kanjiTable, pC.kanjiCompanions);
+    batch.insertAll(db.kanjiBankV3Table, pC.kanjiBankCompanions,);
 
-    batch.insertAll(db.readingTable, parsingContext.readingCompanions,);
-    batch.insertAll(db.kanjiBankV3XKunyomiReadingTable, parsingContext.kanjiKunyomiReadingRelCompanions,);
-    batch.insertAll(db.kanjiBankV3XOnyomiReadingTable, parsingContext.kanjiOnyomiReadingRelCompanions,);
+    batch.insertAll(db.readingTable, pC.readingCompanions,);
+    batch.insertAll(db.kanjiBankV3XKunyomiReadingTable, pC.kanjiKunyomiReadingRelCompanions,);
+    batch.insertAll(db.kanjiBankV3XOnyomiReadingTable, pC.kanjiOnyomiReadingRelCompanions,);
 
-    batch.insertAll(db.kanjiBankV3XTagBankV3Table, parsingContext.tagRelCompanions,);
+    batch.insertAll(db.kanjiBankV3XTagBankV3Table, pC.tagRelCompanions,);
 
-    batch.insertAll(db.definitionTable, parsingContext.definitionsCompanions,);
-    batch.insertAll(db.kanjiBankV3XDefinitionTable, parsingContext.definitionRelCompanions,);
+    batch.insertAll(db.definitionTable, pC.definitionsCompanions,);
+    batch.insertAll(db.kanjiBankV3XDefinitionTable, pC.definitionRelCompanions,);
     
-    batch.insertAll(db.kanjiBankV3StatsTable, parsingContext.statCompanions,);
-    batch.insertAll(db.kanjiBankV3StatValuesTable, parsingContext.statValuesCompanions,);
-    batch.insertAll(db.kanjiBankV3StatNamesTable, parsingContext.statNamesCompanions,);
-    batch.insertAll(db.kanjiBankV3XKanjiBankV3StatsTable, parsingContext.statValueRelCompanions,);
+    batch.insertAll(db.kanjiBankV3StatsTable, pC.statCompanions,);
+    batch.insertAll(db.kanjiBankV3StatValuesTable, pC.statValuesCompanions,);
+    batch.insertAll(db.kanjiBankV3StatNamesTable, pC.statNamesCompanions,);
+    batch.insertAll(db.kanjiBankV3XKanjiBankV3StatsTable, pC.statValueRelCompanions,);
 
   });
   print("Adding to DaKanjiDB took ${s.elapsedMilliseconds}ms");
@@ -109,13 +84,13 @@ Future parseKanjiBankV3(String kanjiBankV3Json, DaKanjiDB db, int dictId) async 
 /// Parses the given `jsonKanji` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseKanji(String jsonKanji, KanjiBankV3ParserContext parsingContext, DaKanjiDB db) async {
+Future<void> parseKanji(String jsonKanji, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
 
-  if(parsingContext.kanjisInDB[jsonKanji] == null){
+  if(pC.kanjisInDB[jsonKanji] == null){
 
-    parsingContext.kanjisInDB[jsonKanji] = ++parsingContext.kanjiId;
-    parsingContext.kanjiCompanions.add(KanjiTableCompanion(
-      id: Value(parsingContext.kanjiId),
+    pC.kanjisInDB[jsonKanji] = ++pC.kanjiId;
+    pC.kanjiCompanions.add(KanjiTableCompanion(
+      id: Value(pC.kanjiId),
       kanji: Value(jsonKanji),
     ));
   
@@ -125,27 +100,27 @@ Future<void> parseKanji(String jsonKanji, KanjiBankV3ParserContext parsingContex
 /// Parses the given `jsonOnyomis` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserContext parsingContext, DaKanjiDB db) async {
+Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
 
   if(jsonOnyomi != ""){
     List<String> onyomis = jsonOnyomi.toString().split(" ");
-    parsingContext.onyomisOrder = [];
+    pC.onyomisOrder = [];
     for (String onyomi in onyomis) {
       
       // is this onyomi already in the db?
-      int? onyomiInsertId = parsingContext.readingsInDB[onyomi];
+      int? onyomiInsertId = pC.readingsInDB[onyomi];
       if(onyomiInsertId == null){
-        onyomiInsertId = ++parsingContext.readingId;
-        parsingContext.readingsInDB[onyomi] = onyomiInsertId;
+        onyomiInsertId = ++pC.readingId;
+        pC.readingsInDB[onyomi] = onyomiInsertId;
 
-        parsingContext.readingCompanions.add(ReadingTableCompanion(
+        pC.readingCompanions.add(ReadingTableCompanion(
           id: Value(onyomiInsertId), reading: Value(onyomi)
         ));
       }
       
-      parsingContext.onyomisOrder.add(onyomiInsertId);
-      parsingContext.kanjiOnyomiReadingRelCompanions.add(KanjiBankV3_X_OnyomiReadingTableCompanion(
-        kanjiId: Value(parsingContext.kanjiBankId), onyomiReadingId: Value(onyomiInsertId)
+      pC.onyomisOrder.add(onyomiInsertId);
+      pC.kanjiOnyomiReadingRelCompanions.add(KanjiBankV3_X_OnyomiReadingTableCompanion(
+        kanjiId: Value(pC.kanjiBankId), onyomiReadingId: Value(onyomiInsertId)
       ));
     
     }
@@ -155,26 +130,26 @@ Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserContext parsingCont
 /// Parses the given `jsonKunyomis` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserContext parsingContext, DaKanjiDB db) async {
+Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
 
   if(jsonKunyomi != ""){
     List<String> kunyomis = jsonKunyomi.toString().split(" ");
-    parsingContext.kunyomisOrder = [];
+    pC.kunyomisOrder = [];
     for (String kunyomi in kunyomis) {
       
       // is this kunyomi already in the DB?
-      int? kunyomiInsertId = parsingContext.readingsInDB[kunyomi];
+      int? kunyomiInsertId = pC.readingsInDB[kunyomi];
       if(kunyomiInsertId == null){
-        kunyomiInsertId = ++parsingContext.readingId;
-        parsingContext.readingsInDB[kunyomi] = kunyomiInsertId;
+        kunyomiInsertId = ++pC.readingId;
+        pC.readingsInDB[kunyomi] = kunyomiInsertId;
 
-        parsingContext.readingCompanions.add(ReadingTableCompanion(
+        pC.readingCompanions.add(ReadingTableCompanion(
           id: Value(kunyomiInsertId), reading: Value(kunyomi)
         ));
       }
-      parsingContext.kunyomisOrder.add(kunyomiInsertId);
-      parsingContext.kanjiKunyomiReadingRelCompanions.add(KanjiBankV3_X_KunyomiReadingTableCompanion(
-        kanjiId: Value(parsingContext.kanjiBankId), kunyomiReadingId: Value(kunyomiInsertId)
+      pC.kunyomisOrder.add(kunyomiInsertId);
+      pC.kanjiKunyomiReadingRelCompanions.add(KanjiBankV3_X_KunyomiReadingTableCompanion(
+        kanjiId: Value(pC.kanjiBankId), kunyomiReadingId: Value(kunyomiInsertId)
       ));
     
     }
@@ -184,16 +159,16 @@ Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserContext parsingCo
 /// Parses the given `jsonTag` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseTag(String jsonTag, KanjiBankV3ParserContext parsingContext, DaKanjiDB db) async {
+Future<void> parseTag(String jsonTag, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
 
   if(jsonTag != ""){
     List<String> tags = jsonTag.toString().split(" ");
     for (String tag in tags) {
       
-      int tagInsertId = parsingContext.tagsInDB[tag]!;
+      int tagInsertId = pC.tagsInDB[tag]!;
 
-      parsingContext.tagRelCompanions.add(KanjiBankV3_X_TagBankV3TableCompanion(
-        kanjiId: Value(parsingContext.kanjiBankId), tagId: Value(tagInsertId)
+      pC.tagRelCompanions.add(KanjiBankV3_X_TagBankV3TableCompanion(
+        kanjiId: Value(pC.kanjiBankId), tagId: Value(tagInsertId)
       ));
     
     }
@@ -203,25 +178,25 @@ Future<void> parseTag(String jsonTag, KanjiBankV3ParserContext parsingContext, D
 /// Parses the given `definitions` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseDefinition(List<String> definitions, KanjiBankV3ParserContext parsingContext, DaKanjiDB db) async {
+Future<void> parseDefinition(List<String> definitions, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
 
   if(definitions.isNotEmpty){
     for (String definition in definitions) {
       
-      int? definitionInsertId = parsingContext.definitionsInDB[definition];
-      parsingContext.definitionsOrder = [];
+      int? definitionInsertId = pC.definitionsInDB[definition];
+      pC.definitionsOrder = [];
       if(definitionInsertId == null){
-        definitionInsertId = ++parsingContext.definitionId;
-        parsingContext.definitionsInDB[definition] = definitionInsertId;
+        definitionInsertId = ++pC.definitionId;
+        pC.definitionsInDB[definition] = definitionInsertId;
 
-        parsingContext.definitionsCompanions.add(DefinitionTableCompanion(
+        pC.definitionsCompanions.add(DefinitionTableCompanion(
           id: Value(definitionInsertId), definition: Value(definition)
         ));
       }
 
-      parsingContext.definitionsOrder.add(definitionInsertId);
-      parsingContext.definitionRelCompanions.add(KanjiBankV3_X_DefinitionTableCompanion(
-        kanjiId: Value(parsingContext.kanjiBankId), definitionId: Value(definitionInsertId)
+      pC.definitionsOrder.add(definitionInsertId);
+      pC.definitionRelCompanions.add(KanjiBankV3_X_DefinitionTableCompanion(
+        kanjiId: Value(pC.kanjiBankId), definitionId: Value(definitionInsertId)
       ));
     
     }
@@ -231,44 +206,44 @@ Future<void> parseDefinition(List<String> definitions, KanjiBankV3ParserContext 
 /// Parses the given `stats` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseStats(Map<String, String> stats, KanjiBankV3ParserContext parsingContext, DaKanjiDB db) async {
+Future<void> parseStats(Map<String, String> stats, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
 
   if(stats.isNotEmpty){
 
     for (MapEntry<String, String> stat in stats.entries) {
 
-      parsingContext.statsId += 1;
+      pC.statsId += 1;
       
-      int? statValueInsertId = parsingContext.statValuesInDB[stat.value];
+      int? statValueInsertId = pC.statValuesInDB[stat.value];
       if(statValueInsertId == null){
-        statValueInsertId = ++parsingContext.statValuesId;
-        parsingContext.statValuesInDB[stat.value] = statValueInsertId;
+        statValueInsertId = ++pC.statValuesId;
+        pC.statValuesInDB[stat.value] = statValueInsertId;
 
-        parsingContext.statValuesCompanions.add(KanjiBankV3StatValuesTableCompanion(
+        pC.statValuesCompanions.add(KanjiBankV3StatValuesTableCompanion(
           id: Value(statValueInsertId),
           statValue: Value(stat.value)
         ));
       }
       
-      int? statNameInsertId = parsingContext.statNamesInDB[stat.key];
+      int? statNameInsertId = pC.statNamesInDB[stat.key];
       if(statNameInsertId == null){
-        statNameInsertId = ++parsingContext.statNamesId;
-        parsingContext.statNamesInDB[stat.key] = statNameInsertId;
+        statNameInsertId = ++pC.statNamesId;
+        pC.statNamesInDB[stat.key] = statNameInsertId;
 
-        parsingContext.statNamesCompanions.add(KanjiBankV3StatNamesTableCompanion(
+        pC.statNamesCompanions.add(KanjiBankV3StatNamesTableCompanion(
           id: Value(statNameInsertId),
           statName: Value(stat.key)
         ));
       }
 
-      parsingContext.statCompanions.add(KanjiBankV3StatsTableCompanion(
-        id: Value(parsingContext.statsId),
+      pC.statCompanions.add(KanjiBankV3StatsTableCompanion(
+        id: Value(pC.statsId),
         statNameId: Value(statNameInsertId),
         statValueId: Value(statValueInsertId),
       ));
-      parsingContext.statValueRelCompanions.add(KanjiBankV3_X_KanjiBankV3StatsTableCompanion(
-        kanjiId: Value(parsingContext.kanjiBankId),
-        statId: Value(parsingContext.statsId),
+      pC.statValueRelCompanions.add(KanjiBankV3_X_KanjiBankV3StatsTableCompanion(
+        kanjiId: Value(pC.kanjiBankId),
+        statId: Value(pC.statsId),
       ));
     
     }

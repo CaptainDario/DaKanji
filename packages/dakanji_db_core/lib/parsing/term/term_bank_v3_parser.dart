@@ -17,21 +17,21 @@ import '/database/dakanji_db.dart';
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
 Future parseTermBankV3File(
   File termMetaBankFile,
-  TermBankV3ParserImportContext importContext,
+  TermBankV3ParserContext pC,
   DaKanjiDB db,
   int dictId,
   bool addFullJsonDefinitions,
   Mecab mecab) async {
 
   String termMetaBankJson = termMetaBankFile.readAsStringSync();
-  await parseTermBankV3(termMetaBankJson, importContext, db, dictId, addFullJsonDefinitions, mecab);
+  await parseTermBankV3(termMetaBankJson, pC, db, dictId, addFullJsonDefinitions, mecab);
 
 }
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
 Future parseTermBankV3(
   String termMetaBankJson,
-  TermBankV3ParserImportContext iC,
+  TermBankV3ParserContext pC,
   DaKanjiDB db,
   int dictId,
   bool addFullJsonDefinitions,
@@ -60,13 +60,13 @@ Future parseTermBankV3(
   s..reset()..start();
   for (var jsonEntry in jsonList) {
 
-    iC.currentMaxTermBankId++;
+    pC.currentMaxTermBankId++;
 
     // parse term
-    int termInsertId = iC.allTerms[jsonEntry[0]] ?? ++iC.currentMaxTermId;
+    int termInsertId = pC.allTerms[jsonEntry[0]] ?? ++pC.currentMaxTermId;
     String term = jsonEntry[0];
-    if(iC.allTerms[term] == null){
-      iC.allTerms[term] = termInsertId;
+    if(pC.allTerms[term] == null){
+      pC.allTerms[term] = termInsertId;
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
         term: Value(term),
@@ -80,9 +80,9 @@ Future parseTermBankV3(
     }
 
     // parse reading
-    int readingInsertId = iC.allReadings[jsonEntry[1]] ?? ++iC.currentMaxReadingId;
-    if(iC.allReadings[jsonEntry[1]] == null){
-      iC.allReadings[jsonEntry[1]] = readingInsertId;
+    int readingInsertId = pC.allReadings[jsonEntry[1]] ?? ++pC.currentMaxReadingId;
+    if(pC.allReadings[jsonEntry[1]] == null){
+      pC.allReadings[jsonEntry[1]] = readingInsertId;
       readingComps.add(ReadingTableCompanion(
         id: Value(readingInsertId),
         reading: Value(jsonEntry[1])
@@ -94,9 +94,9 @@ Future parseTermBankV3(
     if(jsonEntry[2] != ""){
       for (var defTag in defTags) {
         // get tag from DB
-        int defTagInsertId = iC.allDefTags[defTag] ?? ++iC.currentMaxDefTagId;
-        if(iC.allDefTags[defTag] == null){
-          iC.allDefTags[defTag] = defTagInsertId;
+        int defTagInsertId = pC.allDefTags[defTag] ?? ++pC.currentMaxDefTagId;
+        if(pC.allDefTags[defTag] == null){
+          pC.allDefTags[defTag] = defTagInsertId;
           definitionTagComps.add(TermBankV3DefinitionTagsTableCompanion(
             id: Value(defTagInsertId),
             definitionTag: Value(defTag)
@@ -105,7 +105,7 @@ Future parseTermBankV3(
         // create relationship
         definitionTagRelComps.add(TermBankV3_X_DefinitionTagTableCompanion(
           definitionTagId: Value(defTagInsertId),
-          termBankId: Value(iC.currentMaxTermBankId)
+          termBankId: Value(pC.currentMaxTermBankId)
         ));
       }
     }
@@ -115,9 +115,9 @@ Future parseTermBankV3(
     if(jsonEntry[3] != ""){
       for (var ruleId in ruleIds) {
         // get id from DB
-        int ruleIdInsertId = iC.allRuleIdentifiers[ruleId] ?? ++iC.currentMaxRuleIdentifiersId;
-        if(iC.allRuleIdentifiers[ruleId] == null){
-          iC.allRuleIdentifiers[ruleId] = ruleIdInsertId;
+        int ruleIdInsertId = pC.allRuleIdentifiers[ruleId] ?? ++pC.currentMaxRuleIdentifiersId;
+        if(pC.allRuleIdentifiers[ruleId] == null){
+          pC.allRuleIdentifiers[ruleId] = ruleIdInsertId;
           ruleIdentifiersComps.add(TermBankV3RuleIdentifierTableCompanion(
             id: Value(ruleIdInsertId),
             ruleIdentifier: Value(ruleId)
@@ -126,7 +126,7 @@ Future parseTermBankV3(
         // create relationship
         ruleIdentifiersRelComps.add(TermBankV3_X_RuleIdentifierTableCompanion(
           ruleIdentifierId: Value(ruleIdInsertId),
-          termBankId: Value(iC.currentMaxTermBankId)
+          termBankId: Value(pC.currentMaxTermBankId)
         ));
       }
     }
@@ -138,9 +138,9 @@ Future parseTermBankV3(
       // escape special characters
       String text = parsedDefinition.text.replaceAll(RegExp(r'[\s\u00A0]+'), ' ').trim();
       // check if term is already in DB
-      int definitionInsertId = iC.allDefinitions[text] ?? ++iC.currentMaxdefinitionId;
-      if(iC.allDefinitions[text] == null){
-        iC.allDefinitions[text] = definitionInsertId;
+      int definitionInsertId = pC.allDefinitions[text] ?? ++pC.currentMaxdefinitionId;
+      if(pC.allDefinitions[text] == null){
+        pC.allDefinitions[text] = definitionInsertId;
         definitionComps.add(DefinitionTableCompanion(
           id: Value(definitionInsertId),
           definition: Value(text)
@@ -150,15 +150,15 @@ Future parseTermBankV3(
       // create relationship
       definitionRelComps.add(TermBankV3_X_DefinitionTableCompanion(
         definitionId: Value(definitionInsertId),
-        termBankId: Value(iC.currentMaxTermBankId)
+        termBankId: Value(pC.currentMaxTermBankId)
       ));
     }
 
     // Optionally: add full definition json to DB
     if(addFullJsonDefinitions) {
-      iC.currentMaxDefinitionJsonId += 1;
+      pC.currentMaxDefinitionJsonId += 1;
       termBankDefJsonComps.add(TermBankV3DefinitionJsonTableCompanion(
-        id: Value(iC.currentMaxDefinitionJsonId),
+        id: Value(pC.currentMaxDefinitionJsonId),
         definitionJson: Value(jsonEncode(jsonEntry[5]))
       ));
     }
@@ -168,19 +168,19 @@ Future parseTermBankV3(
       for (var tag in jsonEntry[7].split(" ")) {
         // create relationship
         tagRelComps.add(TermBankV3_X_TagBankTableCompanion(
-          tagBankId: Value(iC.allTags[tag]),
-          termBankId: Value(iC.currentMaxTermBankId)
+          tagBankId: Value(pC.allTags[tag]),
+          termBankId: Value(pC.currentMaxTermBankId)
         ));
       }
     }
 
     // create TermBankEntry
     termBankComps.add(TermBankV3TableCompanion(
-      id: Value(iC.currentMaxTermBankId),
+      id: Value(pC.currentMaxTermBankId),
       indexId: Value(dictId),
       termId: Value(termInsertId),
       definitionOrder: Value(definitionIds),
-      definitionJsonId: Value(iC.currentMaxDefinitionJsonId),
+      definitionJsonId: Value(pC.currentMaxDefinitionJsonId),
       readingId: Value(readingInsertId),
       popularity: Value(jsonEntry[4]),
       sequenceNumber: Value(jsonEntry[6])

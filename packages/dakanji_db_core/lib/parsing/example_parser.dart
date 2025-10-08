@@ -4,7 +4,7 @@ import 'dart:isolate';
 
 import 'package:dakanji_db_core/parsing/example/example_text_parser.dart';
 import 'package:dakanji_db_core/parsing/index/index_parser.dart';
-import 'package:dakanji_db_core/parsing/parsing_util.dart';
+import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/isolate.dart';
 
 import '/parsing/example/example_sentence_parser.dart';

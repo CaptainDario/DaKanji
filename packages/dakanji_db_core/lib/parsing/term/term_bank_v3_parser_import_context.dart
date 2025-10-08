@@ -1,7 +1,9 @@
 // Project imports:
+import 'package:dakanji_db_core/parsing/util/import_context.dart';
+
 import '/database/dakanji_db.dart';
 
-class TermBankV3ParserImportContext {
+class TermBankV3ParserContext extends ParserContext{
 
   int currentMaxTermBankId;
 
@@ -26,7 +28,7 @@ class TermBankV3ParserImportContext {
   Map allTags;
 
 
-  TermBankV3ParserImportContext._({
+  TermBankV3ParserContext._({
     required this.currentMaxTermBankId,
     required this.currentMaxTermId,
     required this.allTerms,
@@ -42,9 +44,9 @@ class TermBankV3ParserImportContext {
     required this.allTags,
   });
 
-  static Future<TermBankV3ParserImportContext> create(DaKanjiDB db) async {
+  static Future<TermBankV3ParserContext> create(DaKanjiDB db) async {
 
-    return TermBankV3ParserImportContext._(
+    return TermBankV3ParserContext._(
       currentMaxTermBankId: await db.termBankV3Dao.maxTermBankV3Id(),
       currentMaxTermId: await db.termDao.maxTermId(),
       allTerms: { for (var e in await db.termDao.getAllTerms()) e.term : e.id },

@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:dakanji_db_core/parsing/term_meta/term_meta_bank_v3_parser_context.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
@@ -9,37 +10,19 @@ import 'package:universal_io/io.dart';
 import '/database/dakanji_db.dart';
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
-Future parseTermMetaBankV3File(File termMetaBankFile, DaKanjiDB db, int indexId) async {
+Future parseTermMetaBankV3File(File termMetaBankFile, TermMetaBankV3ParserContext pC, DaKanjiDB db, int indexId) async {
 
   String termMetaBankJson = termMetaBankFile.readAsStringSync();
-  await parseTermMetaBankV3(termMetaBankJson, db, indexId);
+  await parseTermMetaBankV3(termMetaBankJson, pC, db, indexId);
 
 }
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
-Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int indexId) async {
+Future parseTermMetaBankV3(String termMetaBankJson, TermMetaBankV3ParserContext pC, DaKanjiDB db, int indexId) async {
 
   // decode json
   List jsonList = jsonDecode(termMetaBankJson);
   
-  // read all necessary data from the db
-  int currentMaxTermMetaId = await db.termMetaBankV3Dao.maxTermMetaBankV3TypeId();
-  Map allTerms =
-    { for (var e in await db.termDao.getAllTerms()) e.term : e.id };
-  int currentMaxTermId = await db.termDao.maxTermId();
-  Map allTypes =
-    { for (var e in await db.termMetaBankV3Dao.getAllTypes()) e.type : e.id };
-  int currentMaxTypeId = await db.termMetaBankV3Dao.maxTermMetaBankV3TypeId();
-  Map allReadings =
-    { for (var e in await db.readingDao.getAllReadings()) e.reading : e.id };
-  int currentMaxReadingId = await db.readingDao.maxReadingId();
-  Map allTags =
-    { for (var e in await db.termMetaBankV3Dao.getAllTags()) e.tag : e.id };
-  int currentMaxTagId = await db.termMetaBankV3Dao.maxTermMetaBankV3TagId();
-  int currentMaxPitchId = await db.termMetaBankV3Dao.maxTermMetaBankV3PitchId();
-  int currentMaxIpaId = await db.termMetaBankV3Dao.maxTermMetaBankV3IpaId();
-  
-
   // store data in list to bulk add them
   List<TermTableCompanion> termComps = [];
   List<TermMetaBankV3TableCompanion> termMetaBankComps = [];
@@ -57,12 +40,12 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int indexId) a
 
   // parse the entires
   for (var jsonEntry in jsonList) {
-    currentMaxTermMetaId++;
+    pC.currentMaxTermMetaId++;
 
     // parse term
-    int termInsertId = allTerms[jsonEntry[0]] ?? ++currentMaxTermId;
-    if(allTerms[jsonEntry[0]] == null){
-      allTerms[jsonEntry[0]] = termInsertId;
+    int termInsertId = pC.allTerms[jsonEntry[0]] ?? ++pC.currentMaxTermId;
+    if(pC.allTerms[jsonEntry[0]] == null){
+      pC.allTerms[jsonEntry[0]] = termInsertId;
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
         term: Value(jsonEntry[0])
@@ -70,9 +53,9 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int indexId) a
     }
 
     // parse type
-    int typeInsertId = allTypes[jsonEntry[1]] ?? ++currentMaxTypeId;
-    if(allTypes[jsonEntry[1]] == null){
-      allTypes[jsonEntry[1]] = typeInsertId;
+    int typeInsertId = pC.allTypes[jsonEntry[1]] ?? ++pC.currentMaxTypeId;
+    if(pC.allTypes[jsonEntry[1]] == null){
+      pC.allTypes[jsonEntry[1]] = typeInsertId;
       termMetaBankTypeComps.add(TermMetaBankV3TypeTableCompanion(
         id: Value(typeInsertId),
         type: Value(jsonEntry[1])
@@ -92,9 +75,9 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int indexId) a
       reading = jsonEntry[2]["reading"];
       // parse reading
       if(reading != null){
-        readingInsertId = allReadings[reading] ?? ++currentMaxReadingId;
-        if(allReadings[reading] == null){
-          allReadings[reading] = readingInsertId;
+        readingInsertId = pC.allReadings[reading] ?? ++pC.currentMaxReadingId;
+        if(pC.allReadings[reading] == null){
+          pC.allReadings[reading] = readingInsertId;
           readingComps.add(ReadingTableCompanion(
             id: Value(readingInsertId!),
             reading: Value(reading)
@@ -125,7 +108,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int indexId) a
       else if(jsonEntry[1] == "pitch"){
         for (var pitch in jsonEntry[2]["pitches"]) {
 
-          pitchInsertId = ++currentMaxPitchId;
+          pitchInsertId = ++pC.currentMaxPitchId;
           
           termMetaBankPitchComps.add(TermMetaBankV3PitchTableCompanion(
             id: Value(pitchInsertId),
@@ -135,13 +118,13 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int indexId) a
           ));
           termMetaBankPitchRelsComps.add(TermMetaBankV3_X_PitchTableCompanion(
             pitchId: Value(pitchInsertId),
-            termMetaId: Value(currentMaxTermMetaId),
+            termMetaId: Value(pC.currentMaxTermMetaId),
           ));
 
           for (var tag in pitch["tags"] ?? []) {
-            int tagInsertId = allTags[tag] ?? ++currentMaxTagId;
-            if(allTags[tag] == null){
-              allTags[tag] = tagInsertId;
+            int tagInsertId = pC.allTags[tag] ?? ++pC.currentMaxTagId;
+            if(pC.allTags[tag] == null){
+              pC.allTags[tag] = tagInsertId;
               termMetaBankV3TagTableComps.add(TermMetaBankV3TagTableCompanion(
                 id: Value(tagInsertId), tag: Value(tag)
               ));
@@ -156,7 +139,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int indexId) a
       else if (jsonEntry[1] == "ipa"){
         for (var transcription in jsonEntry[2]["transcriptions"]) {
 
-          ipaInsertId = ++currentMaxIpaId;
+          ipaInsertId = ++pC.currentMaxIpaId;
 
           termMetaBankIpaComps.add(TermMetaBankV3IpaTableCompanion(
             id: Value(++ipaInsertId),
@@ -164,13 +147,13 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int indexId) a
           ));
           termMetaBankIpaRelsComps.add(TermMetaBankV3_X_IpaTableCompanion(
             ipaId: Value(ipaInsertId),
-            termMetaId: Value(currentMaxTermMetaId),
+            termMetaId: Value(pC.currentMaxTermMetaId),
           ));
 
           for (var tag in transcription["tags"] ?? []) {
-            int tagInsertId = allTags[tag] ?? ++currentMaxTagId;
-            if(allTags[tag] == null){
-              allTags[tag] = tagInsertId;
+            int tagInsertId = pC.allTags[tag] ?? ++pC.currentMaxTagId;
+            if(pC.allTags[tag] == null){
+              pC.allTags[tag] = tagInsertId;
               termMetaBankV3TagTableComps.add(TermMetaBankV3TagTableCompanion(
                 id: Value(tagInsertId), tag: Value(tag)
               ));
@@ -185,7 +168,7 @@ Future parseTermMetaBankV3(String termMetaBankJson, DaKanjiDB db, int indexId) a
     }
 
     termMetaBankComps.add(TermMetaBankV3TableCompanion(
-      id: Value(currentMaxTermMetaId),
+      id: Value(pC.currentMaxTermMetaId),
       termId: Value(termInsertId),
       typeId: Value(typeInsertId),
       indexId: Value(indexId),

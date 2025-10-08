@@ -4,7 +4,11 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:dakanji_db_core/parsing/audio_source_list/audio_source_list_parser.dart';
-import 'package:dakanji_db_core/parsing/parsing_util.dart';
+import 'package:dakanji_db_core/parsing/kanji/kanji_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/kanji_meta/kanji_meta_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/term_meta/term_meta_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/util/import_context.dart';
+import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_import_context.dart';
 import 'package:drift/isolate.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
@@ -113,8 +117,11 @@ Future _parseDictionaryDataSource(({
   int indexId = await parseIndex(indexFile.fileContent, db);
   final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
 
-  // create import context for term bank parsing
-  TermBankV3ParserImportContext? importContext;
+  // create import context for parsing
+  TermBankV3ParserContext? termImportContext;
+  TermMetaBankV3ParserContext? termMetaImportContext;
+  KanjiBankV3ParserContext? kanjiImportContext;
+  KanjiMetaBankV3ParserContext? kanjiMetaImportContext;
 
   // parse the rest of the files (first tag bank, then the rest in sorted order)
   int progressCounter = 1;
@@ -122,15 +129,20 @@ Future _parseDictionaryDataSource(({
 
     params.mainIsolateSendPort.send("Parsing ${data.fileName} ($progressCounter/${dataSources.length}) ...");
 
-    // As the tags are parsed first, create the import context when parsing the
-    // the first term bank file
-    if (importContext == null && data.fileName.contains(termBankFileNamingScheme)) 
-      importContext = await TermBankV3ParserImportContext.create(db);
-
+    // manage import contexts
+    termImportContext = await manageImportContext(termImportContext, data.fileName, termBankFileNamingScheme,
+      () => TermBankV3ParserContext.create(db));
+    termMetaImportContext = await manageImportContext(termMetaImportContext, data.fileName, termMetaBankFileNamingScheme,
+      () => TermMetaBankV3ParserContext.create(db));
+    kanjiImportContext = await manageImportContext(kanjiImportContext, data.fileName, kanjiBankFileNamingScheme,
+      () => KanjiBankV3ParserContext.create(db, indexEntry.id));
+    kanjiMetaImportContext = await manageImportContext(kanjiMetaImportContext, data.fileName, kanjiMetaBankFileNamingScheme,
+      () => KanjiMetaBankV3ParserContext.create(db));
+      
     await parseDictionaryFile(
       fileName: data.fileName,
       fileContent: data.fileContent,
-      importContext: importContext,
+      importContext: termImportContext,
       db: db,
       ind: indexEntry,
       addFullJsonDefinitions: params.addFullJsonDefinitions,
@@ -155,11 +167,36 @@ Future _parseDictionaryDataSource(({
 
 }
 
+/// Manages the lifecycle of an import context.
+///
+/// Returns a new context if [currentContext] is null and [fileName] matches the [namingScheme].
+/// Returns null if [currentContext] exists and [fileName] no longer matches.
+/// Otherwise, returns the [currentContext] unchanged.
+Future<T?> manageImportContext<T>(
+  T? currentContext,
+  String fileName,
+  String namingScheme,
+  Future<T> Function() create
+) async {
+  final bool matchesScheme = fileName.contains(namingScheme);
+
+  if (currentContext == null && matchesScheme) {
+    // Condition to CREATE the context
+    return await create();
+  } else if (currentContext != null && !matchesScheme) {
+    // Condition to DISPOSE of the context
+    return null;
+  }
+  
+  // No change needed
+  return currentContext;
+}
+
 /// Depending on the file name applies the correct parsing method
 Future parseDictionaryFile({
   required String fileName,
   required String fileContent,
-  required TermBankV3ParserImportContext? importContext,
+  required ParserContext? importContext,
   required DaKanjiDB db,
   required IndexTableData ind,
   required bool addFullJsonDefinitions,
@@ -169,11 +206,11 @@ Future parseDictionaryFile({
   // create config to pass the different arguments to the functions
   final parserConfig = {
     audioFileNamingScheme: () => parseAudio(fileContent, db, ind.id),
-    kanjiBankFileNamingScheme: () => parseKanjiBankV3(fileContent, db, ind.id),
-    kanjiMetaBankFileNamingScheme: () => parseKanjiMetaBankV3(fileContent, db, ind.id),
+    kanjiBankFileNamingScheme: () => parseKanjiBankV3(fileContent, importContext as KanjiBankV3ParserContext, db, ind.id),
+    kanjiMetaBankFileNamingScheme: () => parseKanjiMetaBankV3(fileContent, importContext as KanjiMetaBankV3ParserContext, db, ind.id),
     tagBankFileNamingScheme: () => parseTagBankv3(fileContent, db, ind.id),
-    termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext!, db, ind.id, addFullJsonDefinitions, mecab),
-    termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, db, ind.id),
+    termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext as TermBankV3ParserContext, db, ind.id, addFullJsonDefinitions, mecab),
+    termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, importContext as TermMetaBankV3ParserContext, db, ind.id),
   };
 
   final baseName = p.basename(fileName);

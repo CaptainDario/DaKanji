@@ -1,7 +1,7 @@
 // Package imports:
 import 'dart:isolate';
 
-import 'package:dakanji_db_core/parsing/parsing_util.dart';
+import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 

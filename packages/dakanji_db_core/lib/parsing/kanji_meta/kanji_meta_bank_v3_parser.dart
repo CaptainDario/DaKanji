@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Package imports:
+import 'package:dakanji_db_core/parsing/kanji_meta/kanji_meta_bank_v3_parser_context.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
@@ -9,27 +10,19 @@ import 'package:universal_io/io.dart';
 import '/database/dakanji_db.dart';
 
 /// Parses the given KanjiMetaBank and adds it to the given [DaKanjiDB]
-Future parseKanjiMetaBankV3File(File kanjiMetaBankFile, DaKanjiDB db, int dictId) async {
+Future parseKanjiMetaBankV3File(File kanjiMetaBankFile, KanjiMetaBankV3ParserContext pC, DaKanjiDB db, int dictId) async {
 
   String kanjiMetaBankJson = kanjiMetaBankFile.readAsStringSync();
-  await parseKanjiMetaBankV3(kanjiMetaBankJson, db, dictId);
+  await parseKanjiMetaBankV3(kanjiMetaBankJson, pC, db, dictId);
 
 }
 
 /// Parses the given KanjiMetaBank and adds it to the given [DaKanjiDB]
-Future parseKanjiMetaBankV3(String kanjiMetaBankJson, DaKanjiDB db, int dictId) async {
+Future parseKanjiMetaBankV3(String kanjiMetaBankJson, KanjiMetaBankV3ParserContext pC, DaKanjiDB db, int dictId) async {
 
   // decode json
   List jsonList = jsonDecode(kanjiMetaBankJson);
   
-  // read all necessary data from the db
-  Map typesInDB =
-    { for (var e in await db.kanjiMetaBankV3Dao.getAllTypes()) e.type : e.id };
-  int maxTypeId = await db.kanjiMetaBankV3Dao.maxKanjiMetaBankV3TypeId();
-  Map<String, int> kanjisInDB = 
-    { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };
-  int maxKanjiId = await db.kanjiDao.maxKanjiId();
-
   // store data in list to bulk add them
   List<KanjiMetaBankV3TableCompanion> kanjiMetaBankComps = [];
   List<KanjiMetaBankV3TypeTableCompanion> kanjiMetaBankTypeComps = [];
@@ -53,9 +46,9 @@ Future parseKanjiMetaBankV3(String kanjiMetaBankJson, DaKanjiDB db, int dictId) 
     }
 
     // check if the type is already in the db
-    int typeInsertId = typesInDB[type] ?? ++maxTypeId;
-    if(typesInDB[type] == null){
-      typesInDB[type] = typeInsertId;
+    int typeInsertId = pC.typesInDB[type] ?? ++pC.maxTypeId;
+    if(pC.typesInDB[type] == null){
+      pC.typesInDB[type] = typeInsertId;
       kanjiMetaBankTypeComps.add(
         KanjiMetaBankV3TypeTableCompanion(
           id: Value(typeInsertId), type: Value(type)
@@ -64,9 +57,9 @@ Future parseKanjiMetaBankV3(String kanjiMetaBankJson, DaKanjiDB db, int dictId) 
     }
 
     // check if the kanji is already in the db
-    int kanjiInsertId = kanjisInDB[kanji] ?? ++maxKanjiId;
-    if(kanjisInDB[kanji] == null){
-      kanjisInDB[kanji] = kanjiInsertId;
+    int kanjiInsertId = pC.kanjisInDB[kanji] ?? ++pC.maxKanjiId;
+    if(pC.kanjisInDB[kanji] == null){
+      pC.kanjisInDB[kanji] = kanjiInsertId;
       kanjiComps.add(
         KanjiTableCompanion(
           id: Value(kanjiInsertId), kanji: Value(kanji)
