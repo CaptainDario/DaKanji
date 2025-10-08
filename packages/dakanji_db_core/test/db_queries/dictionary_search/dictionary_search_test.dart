@@ -10,7 +10,7 @@ import 'package:path/path.dart' as p;
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 
-import '../util/db_files.dart';
+import '../../util/db_files.dart';
 import 'dictionary_search_deconjugation_test_cases.dart';
 import 'dictionary_search_fuzzy_test_cases.dart';
 import 'dictionary_search_language_filtering_test_cases.dart';
