@@ -1,11 +1,13 @@
 // Package imports:
 import 'dart:async';
+import 'dart:convert';
 import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:dakanji_db_core/parsing/audio_source_list/audio_source_list_parser.dart';
 import 'package:dakanji_db_core/parsing/kanji/kanji_bank_v3_parser_context.dart';
 import 'package:dakanji_db_core/parsing/kanji_meta/kanji_meta_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/media/media_importer.dart';
 import 'package:dakanji_db_core/parsing/term_meta/term_meta_bank_v3_parser_context.dart';
 import 'package:dakanji_db_core/parsing/util/import_context.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
@@ -107,14 +109,14 @@ Future _parseDictionaryDataSource(({
   final mecab = Mecab();
   await mecab.init(params.libmecabPath, params.mecabDictDir, true);
 
-  Iterable<({String fileName, String fileContent})> dataSources = dakanjiDBDataSourceIterator(
+  Iterable<({String fileName, Uint8List fileContent})> dataSources = dakanjiDBDataSourceIterator(
     archivePath: params.dataSourcePath,
-    fileOrder: [indexFileNamingScheme, tagBankFileNamingScheme]
+    fileOrder: [indexFileNamingScheme, tagBankFileNamingScheme],
   );
   
   // parse the index file -> get dict index
   final indexFile = dataSources.first;
-  int indexId = await parseIndex(indexFile.fileContent, db);
+  int indexId = await parseIndex(utf8.decode(indexFile.fileContent), db);
   final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
 
   // create import context for parsing
@@ -125,9 +127,17 @@ Future _parseDictionaryDataSource(({
 
   // parse the rest of the files (first tag bank, then the rest in sorted order)
   int progressCounter = 1;
-  for (final ({String fileName, String fileContent}) data in dataSources) {
+  for (final ({String fileName, Uint8List fileContent}) data in dataSources) {
 
+    progressCounter++;
     params.mainIsolateSendPort.send("Parsing ${data.fileName} ($progressCounter/${dataSources.length}) ...");
+
+    if(p.basename(data.fileName).contains(indexFileNamingScheme)) continue;
+    if(!validDictionaryFiles.any((scheme) => p.basename(data.fileName).contains(scheme))){
+      params.mainIsolateSendPort.send("Copying ${data.fileName} to DB ...");
+      await importMediaFile(data.fileContent);
+      continue;
+    }
 
     // manage import contexts
     termImportContext = await manageImportContext(termImportContext, data.fileName, termBankFileNamingScheme,
@@ -138,18 +148,18 @@ Future _parseDictionaryDataSource(({
       () => KanjiBankV3ParserContext.create(db, indexEntry.id));
     kanjiMetaImportContext = await manageImportContext(kanjiMetaImportContext, data.fileName, kanjiMetaBankFileNamingScheme,
       () => KanjiMetaBankV3ParserContext.create(db));
+    print("$termImportContext $termMetaImportContext $kanjiImportContext $kanjiMetaImportContext");
       
     await parseDictionaryFile(
       fileName: data.fileName,
-      fileContent: data.fileContent,
-      importContext: termImportContext,
+      fileContent: utf8.decode(data.fileContent),
+      importContext: [termImportContext, termMetaImportContext, kanjiImportContext, kanjiMetaImportContext]
+        .nonNulls.firstOrNull,
       db: db,
       ind: indexEntry,
       addFullJsonDefinitions: params.addFullJsonDefinitions,
       mecab: mecab
     );
-
-    progressCounter++;
   }
 
   // Optimize db
@@ -202,7 +212,7 @@ Future parseDictionaryFile({
   required bool addFullJsonDefinitions,
   required Mecab mecab
 }) async {
-
+  
   // create config to pass the different arguments to the functions
   final parserConfig = {
     audioFileNamingScheme: () => parseAudio(fileContent, db, ind.id),

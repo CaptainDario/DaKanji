@@ -1,8 +1,9 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/util/import_context.dart';
 
 
 
-class KanjiMetaBankV3ParserContext {
+class KanjiMetaBankV3ParserContext extends ParserContext {
 
   Map typesInDB ;
   int maxTypeId;

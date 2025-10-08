@@ -1,4 +1,5 @@
 // Package imports:
+import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
@@ -34,9 +35,9 @@ Future<void> _addKanjiVGToDB(String dataSourcePath, DriftIsolate dbConnection) a
 
   // convert kanji vg to map
   Map<String, String> kanjiVGMap = {};
-  Iterable<({String fileContent, String fileName})> dataSources = dakanjiDBDataSourceIterator(archivePath: dataSourcePath);
-  for (final ({String fileName, String fileContent}) data in dataSources) {
-    final (kanji, svg) = parseKanjiVGFile(data.fileContent);
+  Iterable<({String fileName, Uint8List fileContent})> dataSources = dakanjiDBDataSourceIterator(archivePath: dataSourcePath);
+  for (final ({String fileName, Uint8List fileContent}) data in dataSources) {
+    final (kanji, svg) = parseKanjiVGFile(utf8.decode(data.fileContent));
     kanjiVGMap[kanji] = svg;
   }
 

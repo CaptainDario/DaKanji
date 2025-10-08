@@ -37,12 +37,12 @@ Stream<String> getStringStreamFromTarBz2File(File file) {
 /// be processed. The name can be a RegExp pattern that will be matched. If the
 /// list is short than the number of files in the archive the unspecified files
 /// are processed in the order they are read.
-Iterable<({String fileName, String fileContent})> dakanjiDBDataSourceIterator(
+Iterable<({String fileName, Uint8List fileContent})> dakanjiDBDataSourceIterator(
   {
     String? archivePath,
     Uint8List? archiveBytes,
     List<String> fileOrder=const [],
-    List<String> extensionsToInclude = const [".json", ".txt", ".svg"]
+    List<String> filesToExclude = const []
   }
 ) sync* {
 
@@ -57,7 +57,7 @@ Iterable<({String fileName, String fileContent})> dakanjiDBDataSourceIterator(
   yield* _archiveIteratorStreamed(
     archive,
     fileOrder: fileOrder,
-    extensionsToInclude: extensionsToInclude
+    filesToExclude: filesToExclude
   );
 
   inputStream.close();
@@ -70,17 +70,21 @@ Iterable<({String fileName, String fileContent})> dakanjiDBDataSourceIterator(
 /// [fileOrder] can be used to define a custom order in which the files should
 /// be processed. The name can be a RegExp pattern that will be matched. If the
 /// list is short than the number of files in the archive the unspecified files
-/// are processed in the order they are read.
-Iterable<({String fileName, String fileContent})> _archiveIteratorStreamed(
+/// are processed in sorted are read.
+Iterable<({String fileName, Uint8List fileContent})> _archiveIteratorStreamed(
   Archive archive,
   {
     List<String> fileOrder=const [],
-    List<String> extensionsToInclude = const [".json", ".txt", ".svg"]
+    List<String> filesToExclude = const []
   }
 ) sync* {
 
   List processedFiles = [];
   for (var f in fileOrder) {
+
+    // skip files that should be excluded
+    if (filesToExclude.contains(p.basename(f))) continue;
+
     // get all files that match the current search order file name
     List<ArchiveFile> matchedFiles = archive.files
       .where((e) => e.name.contains(RegExp(f)))
@@ -88,7 +92,7 @@ Iterable<({String fileName, String fileContent})> _archiveIteratorStreamed(
 
     // Iterate over the files for which an order was specified
     for (ArchiveFile matchedFile in matchedFiles) {
-      final content = utf8.decode(matchedFile.readBytes()!);
+      final content = matchedFile.readBytes()!;
       processedFiles.add(matchedFile.name);
       yield (fileName: matchedFile.name, fileContent: content); 
     }
@@ -96,10 +100,9 @@ Iterable<({String fileName, String fileContent})> _archiveIteratorStreamed(
 
   // iterate over the remaining files
   for (final entity in archive.files.sorted((a, b) => a.name.compareTo(b.name))) {
-    if (entity.isFile && !processedFiles.contains(entity.name)
-        && extensionsToInclude.contains(p.extension(entity.name))) {
+    if (entity.isFile && !processedFiles.contains(entity.name)) {
       // get the file's content as a string
-      final content = utf8.decode(entity.readBytes()!);
+      final content = entity.readBytes()!;
       yield (fileName: entity.name, fileContent: content);
     }
   }

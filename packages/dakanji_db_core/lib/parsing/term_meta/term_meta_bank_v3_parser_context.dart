@@ -1,8 +1,9 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/util/import_context.dart';
 
 
 
-class TermMetaBankV3ParserContext {
+class TermMetaBankV3ParserContext extends ParserContext {
 
   int currentMaxTermMetaId;
   Map allTerms;

@@ -1,6 +1,8 @@
 // Package imports:
 import 'dart:async';
+import 'dart:convert';
 import 'dart:isolate';
+import 'dart:typed_data';
 
 import 'package:dakanji_db_core/parsing/example/example_text_parser.dart';
 import 'package:dakanji_db_core/parsing/index/index_parser.dart';
@@ -60,27 +62,27 @@ Future _parseExampleDataSource(({
   final mecab = Mecab();
   await mecab.init(params.libmecabPath, params.mecabDictDir, true);
 
-  Iterable<({String fileName, String fileContent})> dataSources =
+  Iterable<({String fileName, Uint8List fileContent})> dataSources =
     dakanjiDBDataSourceIterator(archivePath: params.examplesZipPath,
     fileOrder: ["index.json"]
   );
 
   // parse the index file -> get dict index
   final indexFile = dataSources.first;
-  int indexId = await parseIndex(indexFile.fileContent, db);
+  int indexId = await parseIndex(utf8.decode(indexFile.fileContent), db);
   final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
 
   // parse the example bank files
   int progressCounter = 1;
-  for (final ({String fileName, String fileContent}) data in dataSources) {
+  for (final ({String fileName, Uint8List fileContent}) data in dataSources) {
 
     params.mainIsolateSendPort.send("Parsing ${data.fileName} ($progressCounter/${dataSources.length}) ...");
 
     if(data.fileName.endsWith(".txt")) {
-      await parseExampleText(data.fileContent, db, mecab, indexEntry.id);
+      await parseExampleText(utf8.decode(data.fileContent), db, mecab, indexEntry.id);
     }
     else if(data.fileName.endsWith(".json")) {
-      await parseExampleSentence(data.fileContent, db, mecab, indexEntry.id);
+      await parseExampleSentence(utf8.decode(data.fileContent), db, mecab, indexEntry.id);
     }
 
     progressCounter++;

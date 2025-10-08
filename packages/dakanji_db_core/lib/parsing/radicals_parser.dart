@@ -85,10 +85,10 @@ Future _addRadicalsToDB(String radkPath, String kradPath, DriftIsolate dbConnect
   final db = DaKanjiDB(executor: await dbConnection.connect());
 
   // load radical files
-  Map radkMap = jsonDecode(dakanjiDBDataSourceIterator(
-    archivePath: radkPath).first.fileContent)["radicals"];
-  Map kradMap = jsonDecode(dakanjiDBDataSourceIterator(
-    archivePath: kradPath).first.fileContent)["kanji"];
+  Map radkMap = jsonDecode(utf8.decode(dakanjiDBDataSourceIterator(
+    archivePath: radkPath).first.fileContent))["radicals"];
+  Map kradMap = jsonDecode(utf8.decode(dakanjiDBDataSourceIterator(
+    archivePath: kradPath).first.fileContent))["kanji"];
 
   // get all entries that are currently in the kanji db
   final kanjis = { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };
