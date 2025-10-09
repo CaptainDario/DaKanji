@@ -9,7 +9,7 @@ import 'kanji_vg_test_cases.dart';
 
 void main() async {
   // setup 
-  DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
   await db.clearDB();
 
   // convert kanjivg database

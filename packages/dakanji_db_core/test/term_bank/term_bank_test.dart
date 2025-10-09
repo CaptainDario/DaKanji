@@ -34,7 +34,7 @@ void main() async {
     group('Term Bank V3 test cases: $testCaseIndex', () {
 
       setUpAll(() async {
-        db = DaKanjiDB(path: dakanjiDbPath);
+        db = DaKanjiDB(dbPath: dakanjiDbPath);
         db.clearDB();
 
         mecab = Mecab();

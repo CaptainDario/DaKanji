@@ -9,7 +9,7 @@ import 'package:universal_io/io.dart';
 void main() async {
 
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
 
   Stopwatch s = Stopwatch()..start();
 

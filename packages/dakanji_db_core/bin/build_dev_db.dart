@@ -11,7 +11,7 @@ import 'package:dakanji_db_shared/paths.dart';
 void main() async {
 
   // setup 
-  DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
   await db.clearDB();
 
   // init mecab

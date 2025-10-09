@@ -56,7 +56,7 @@ void main() {
   setUpAll(() async {
 
     if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-    db = DaKanjiDB(path: dakanjiDbPath);
+    db = DaKanjiDB(dbPath: dakanjiDbPath);
 
     // init mecab
     final mecab = Mecab();

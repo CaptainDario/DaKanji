@@ -8,7 +8,7 @@ import 'package:universal_io/io.dart';
 void main() async {
 
   // setup 
-  DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
   await db.clearDB();
 
   // convert krad / radk file

@@ -12,7 +12,7 @@ import 'kanji_bank_test_cases.dart';
 void main() async {
   
   // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
   await db.clearDB();
 
   final mecab = Mecab();

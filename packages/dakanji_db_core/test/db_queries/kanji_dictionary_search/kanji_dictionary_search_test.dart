@@ -14,7 +14,7 @@ void main() async {
   
   // create the testing database (delete any existing database)
   if (File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
 
   final mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);

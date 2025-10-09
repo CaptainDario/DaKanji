@@ -12,7 +12,7 @@ import 'package:path/path.dart' as p;
 void main() async {
   
   // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(path: dakanjiDbPath);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
   db.clearDB();
 
   // convert the test files

@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db_core/database/general_tables/data_tables.dart';
 import 'package:sqlite3/native_assets.dart';
 
 import '/database/dakanji_db_dao.dart';
@@ -58,7 +59,7 @@ part 'dakanji_db.g.dart';
 @DriftDatabase(
   tables: [
     AudioSourceListTable,
-    KanjiTable, TermTable, ReadingTable,
+    KanjiTable, TermTable, ReadingTable, DataTable,
     DefinitionTable, TermBankV3DefinitionJsonTable, LanguageCodeTable,
 
     RadicalsTable, Radical_X_KanjiRelationsTable,
@@ -132,14 +133,14 @@ class DaKanjiDB extends _$DaKanjiDB {
   // and a constructor telling drift where the database should be stored.
   // These are described in the getting started guide: https://drift.simonbinder.eu/getting-started/#open
   DaKanjiDB({
-    this.path,
+    this.dbPath,
     QueryExecutor? executor,
-  }) : super(executor ?? _openConnection(path!));
+  }) : super(executor ?? _openConnection(dbPath!));
 
   @override
   int get schemaVersion => 1;
   /// The path of this db
-  String? path;
+  String? dbPath;
 
   @override
   MigrationStrategy get migration {
@@ -186,7 +187,7 @@ class DaKanjiDB extends _$DaKanjiDB {
   Future deleteDB() async {
 
     await close();
-    File file = File(path!);
+    File file = File(dbPath!);
     if(file.existsSync()){
       file.deleteSync();
     }
