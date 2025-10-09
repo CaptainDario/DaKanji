@@ -53,14 +53,6 @@ abstract class TermMetaBankV3Entry with _$TermMetaBankV3Entry {
     );
   }
 
-  factory TermMetaBankV3Entry.fromDictionarySearchDrift(DictionarySearchDriftResult r) {
-
-    final metaEntries = jsonDecode(r.termMetaEntries);
-    print(metaEntries);
-
-    return TermMetaBankV3Entry.fromJson(metaEntries);
-  }
-
   factory TermMetaBankV3Entry.fromJson(Map<String, Object?> json)
     => _$TermMetaBankV3EntryFromJson(json);
 

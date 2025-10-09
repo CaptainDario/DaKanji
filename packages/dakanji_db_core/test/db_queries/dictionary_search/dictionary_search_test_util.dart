@@ -12,7 +12,10 @@ Matcher matchesSearchResult(ExpectedSearchResult expected) {
       .having((res) => res.match, 'match', expected.match)
       .having((res) => res.entry.term, 'entry.term', expected.term)
       .having((res) => res.entry.reading, 'entry.reading', expected.reading)
-      .having((res) => res.entry.definitions, 'entry.definitions', orderedEquals(expected.definitions));
+      .having((res) => res.entry.definitions, 'entry.definitions', orderedEquals(expected.definitions))
+      .having((res) => res.metaEntries.map((e) => e.type), 'entry.termMetaTypes',  
+        unorderedEquals(expected.termMetaTypes)
+      );
 }
 
 /// Helper function to assert that an actual `SearchMatchGroup`
@@ -23,6 +26,7 @@ void expectMatchGroup(
     String query,
     String groupName,
 ) {
+    
     final exactMatchers = expected.exactMatches.map(matchesSearchResult).toList();
     expect(actual.exactMatches, orderedEquals(exactMatchers), reason: "ExactMatches in group '$groupName' for query '$query' did not match.");
 
@@ -37,4 +41,5 @@ void expectMatchGroup(
 
     final wildcardMatchers = expected.wildcardMatches.map(matchesSearchResult).toList();
     expect(actual.wildcardMatches, orderedEquals(wildcardMatchers), reason: "WildcardMatches in group '$groupName' for query '$query' did not match.");
+
 }

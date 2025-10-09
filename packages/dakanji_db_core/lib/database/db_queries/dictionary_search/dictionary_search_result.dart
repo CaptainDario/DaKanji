@@ -145,7 +145,7 @@ class SearchMatchGroup {
         spellfixSuggestion: driftResult.spellfixSuggestion,
         entry: TermBankV3Entry.fromDictionarySearchDrift(driftResult),
         metaEntries: (jsonDecode(driftResult.termMetaEntries) as List)
-            .map((me) => TermMetaBankV3Entry.fromTermMetaBankV3EntryViewData(me))
+            .map((me) => TermMetaBankV3Entry.fromJson(me))
             .toList(),
       );
 

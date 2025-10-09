@@ -15,6 +15,7 @@ import 'dictionary_search_deconjugation_test_cases.dart';
 import 'dictionary_search_fuzzy_test_cases.dart';
 import 'dictionary_search_language_filtering_test_cases.dart';
 import 'dictionary_search_input_preprocessing_test_cases.dart';
+import 'dictionary_search_meta_bank_test_cases.dart';
 import 'dictionary_search_sorting_test_cases.dart';
 import 'dictionary_search_tag_filtering_test_cases.dart';
 import 'dictionary_search_test_cases.dart';
@@ -33,6 +34,7 @@ final List<List<SearchTestCase>> testCases = [
   fuzzySearchTestCases,
   tagFilteringTestCases,
   languageFilteringTestCases,
+  metaBankTestCases
 ];
 final List<String> testCaseNames = [
   "Search Test Cases",
@@ -43,6 +45,7 @@ final List<String> testCaseNames = [
   "Fuzzy Search Test Cases",
   "Tag Filtering Test Cases",
   "Language Filtering Test Cases",
+  "Meta bank test cases"
 ];
 
 
@@ -93,7 +96,6 @@ void main() {
             print("Results:\n $results");
             print("Expected:\n $testCase");
             
-            // Assert against the new result structure
             expectMatchGroup(results.queryMatches, testCase.queryMatches, testCase.query, 'termMatches');
             expectMatchGroup(results.hiraganaQueryMatches, testCase.hiraganaQueryMatches, testCase.query, 'hiraganaMatches');
 

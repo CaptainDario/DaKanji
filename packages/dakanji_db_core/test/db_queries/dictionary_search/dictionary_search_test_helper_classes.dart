@@ -6,11 +6,14 @@ class ExpectedSearchResult {
   /// The text that was matched (e.g., highlighted text)
   final String match;
 
+  final List<String> termMetaTypes;
+
   const ExpectedSearchResult({
     required this.term,
     required this.reading,
     required this.definitions,
     required this.match,
+    this.termMetaTypes = const [],
   });
 }
 
