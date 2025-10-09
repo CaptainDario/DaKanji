@@ -13291,17 +13291,15 @@ class $ExampleTableTable extends ExampleTable
       'REFERENCES index_table (id)',
     ),
   );
-  static const VerificationMeta _exampleSentenceMeta = const VerificationMeta(
-    'exampleSentence',
-  );
   @override
-  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
+  late final GeneratedColumnWithTypeConverter<String, Uint8List>
+  exampleSentence = GeneratedColumn<Uint8List>(
     'example_sentence',
     aliasedName,
     false,
-    type: DriftSqlType.string,
+    type: DriftSqlType.blob,
     requiredDuringInsert: true,
-  );
+  ).withConverter<String>($ExampleTableTable.$converterexampleSentence);
   static const VerificationMeta _exampleSentenceTokenizedMeta =
       const VerificationMeta('exampleSentenceTokenized');
   @override
@@ -13343,17 +13341,6 @@ class $ExampleTableTable extends ExampleTable
     } else if (isInserting) {
       context.missing(_indexIdMeta);
     }
-    if (data.containsKey('example_sentence')) {
-      context.handle(
-        _exampleSentenceMeta,
-        exampleSentence.isAcceptableOrUnknown(
-          data['example_sentence']!,
-          _exampleSentenceMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_exampleSentenceMeta);
-    }
     if (data.containsKey('example_sentence_tokenized')) {
       context.handle(
         _exampleSentenceTokenizedMeta,
@@ -13382,10 +13369,12 @@ class $ExampleTableTable extends ExampleTable
         DriftSqlType.int,
         data['${effectivePrefix}index_id'],
       )!,
-      exampleSentence: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_sentence'],
-      )!,
+      exampleSentence: $ExampleTableTable.$converterexampleSentence.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.blob,
+          data['${effectivePrefix}example_sentence'],
+        )!,
+      ),
       exampleSentenceTokenized: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence_tokenized'],
@@ -13397,6 +13386,9 @@ class $ExampleTableTable extends ExampleTable
   $ExampleTableTable createAlias(String alias) {
     return $ExampleTableTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<String, Uint8List> $converterexampleSentence =
+      const ZlibStringConverter();
 }
 
 class ExampleTableData extends DataClass
@@ -13423,7 +13415,11 @@ class ExampleTableData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['index_id'] = Variable<int>(indexId);
-    map['example_sentence'] = Variable<String>(exampleSentence);
+    {
+      map['example_sentence'] = Variable<Uint8List>(
+        $ExampleTableTable.$converterexampleSentence.toSql(exampleSentence),
+      );
+    }
     map['example_sentence_tokenized'] = Variable<String>(
       exampleSentenceTokenized,
     );
@@ -13537,7 +13533,7 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
   static Insertable<ExampleTableData> custom({
     Expression<int>? id,
     Expression<int>? indexId,
-    Expression<String>? exampleSentence,
+    Expression<Uint8List>? exampleSentence,
     Expression<String>? exampleSentenceTokenized,
   }) {
     return RawValuesInsertable({
@@ -13574,7 +13570,11 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
       map['index_id'] = Variable<int>(indexId.value);
     }
     if (exampleSentence.present) {
-      map['example_sentence'] = Variable<String>(exampleSentence.value);
+      map['example_sentence'] = Variable<Uint8List>(
+        $ExampleTableTable.$converterexampleSentence.toSql(
+          exampleSentence.value,
+        ),
+      );
     }
     if (exampleSentenceTokenized.present) {
       map['example_sentence_tokenized'] = Variable<String>(
@@ -14520,10 +14520,12 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
         DriftSqlType.int,
         data['${effectivePrefix}index_id'],
       )!,
-      exampleSentence: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_sentence'],
-      )!,
+      exampleSentence: $ExampleTableTable.$converterexampleSentence.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.blob,
+          data['${effectivePrefix}example_sentence'],
+        )!,
+      ),
       exampleTranslation: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}example_translation'],
@@ -14551,12 +14553,13 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
     false,
     type: DriftSqlType.int,
   );
-  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
+  late final GeneratedColumnWithTypeConverter<String, Uint8List>
+  exampleSentence = GeneratedColumn<Uint8List>(
     'example_sentence',
     aliasedName,
     false,
-    type: DriftSqlType.string,
-  );
+    type: DriftSqlType.blob,
+  ).withConverter<String>($ExampleTableTable.$converterexampleSentence);
   late final GeneratedColumn<String> exampleTranslation =
       GeneratedColumn<String>(
         'example_translation',
@@ -15101,12 +15104,12 @@ class AudioSourceListTableCompanion
   }
 }
 
-class $DataTableTable extends DataTable
-    with TableInfo<$DataTableTable, DataTableData> {
+class $MediaTableTable extends MediaTable
+    with TableInfo<$MediaTableTable, MediaTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $DataTableTable(this.attachedDatabase, [this._alias]);
+  $MediaTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -15131,35 +15134,25 @@ class $DataTableTable extends DataTable
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  late final GeneratedColumnWithTypeConverter<String, Uint8List> data =
+  late final GeneratedColumnWithTypeConverter<List<int>, Uint8List> data =
       GeneratedColumn<Uint8List>(
         'data',
         aliasedName,
         false,
         type: DriftSqlType.blob,
         requiredDuringInsert: true,
-      ).withConverter<String>($DataTableTable.$converterdata);
+      ).withConverter<List<int>>($MediaTableTable.$converterdata);
   @override
-  List<GeneratedColumn> get $columns => [id, path, name, data];
+  List<GeneratedColumn> get $columns => [id, path, data];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'data_table';
+  static const String $name = 'media_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<DataTableData> instance, {
+    Insertable<MediaTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -15175,23 +15168,15 @@ class $DataTableTable extends DataTable
     } else if (isInserting) {
       context.missing(_pathMeta);
     }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
     return context;
   }
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  DataTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  MediaTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return DataTableData(
+    return MediaTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
@@ -15200,11 +15185,7 @@ class $DataTableTable extends DataTable
         DriftSqlType.string,
         data['${effectivePrefix}path'],
       )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-      data: $DataTableTable.$converterdata.fromSql(
+      data: $MediaTableTable.$converterdata.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.blob,
           data['${effectivePrefix}data'],
@@ -15214,30 +15195,26 @@ class $DataTableTable extends DataTable
   }
 
   @override
-  $DataTableTable createAlias(String alias) {
-    return $DataTableTable(attachedDatabase, alias);
+  $MediaTableTable createAlias(String alias) {
+    return $MediaTableTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<String, Uint8List> $converterdata =
-      const ZlibStringConverter();
+  static TypeConverter<List<int>, Uint8List> $converterdata =
+      const ZlibBytesConverter();
 }
 
-class DataTableData extends DataClass implements Insertable<DataTableData> {
+class MediaTableData extends DataClass implements Insertable<MediaTableData> {
   /// id of this entry
   final int id;
 
   /// the path of this data file as found in the original data source
   final String path;
 
-  /// the name of this data file as found in the original data source
-  final String name;
-
   /// The actual data of the file
-  final String data;
-  const DataTableData({
+  final List<int> data;
+  const MediaTableData({
     required this.id,
     required this.path,
-    required this.name,
     required this.data,
   });
   @override
@@ -15245,34 +15222,31 @@ class DataTableData extends DataClass implements Insertable<DataTableData> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['path'] = Variable<String>(path);
-    map['name'] = Variable<String>(name);
     {
       map['data'] = Variable<Uint8List>(
-        $DataTableTable.$converterdata.toSql(data),
+        $MediaTableTable.$converterdata.toSql(data),
       );
     }
     return map;
   }
 
-  DataTableCompanion toCompanion(bool nullToAbsent) {
-    return DataTableCompanion(
+  MediaTableCompanion toCompanion(bool nullToAbsent) {
+    return MediaTableCompanion(
       id: Value(id),
       path: Value(path),
-      name: Value(name),
       data: Value(data),
     );
   }
 
-  factory DataTableData.fromJson(
+  factory MediaTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return DataTableData(
+    return MediaTableData(
       id: serializer.fromJson<int>(json['id']),
       path: serializer.fromJson<String>(json['path']),
-      name: serializer.fromJson<String>(json['name']),
-      data: serializer.fromJson<String>(json['data']),
+      data: serializer.fromJson<List<int>>(json['data']),
     );
   }
   @override
@@ -15281,93 +15255,80 @@ class DataTableData extends DataClass implements Insertable<DataTableData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'path': serializer.toJson<String>(path),
-      'name': serializer.toJson<String>(name),
-      'data': serializer.toJson<String>(data),
+      'data': serializer.toJson<List<int>>(data),
     };
   }
 
-  DataTableData copyWith({int? id, String? path, String? name, String? data}) =>
-      DataTableData(
+  MediaTableData copyWith({int? id, String? path, List<int>? data}) =>
+      MediaTableData(
         id: id ?? this.id,
         path: path ?? this.path,
-        name: name ?? this.name,
         data: data ?? this.data,
       );
-  DataTableData copyWithCompanion(DataTableCompanion data) {
-    return DataTableData(
+  MediaTableData copyWithCompanion(MediaTableCompanion data) {
+    return MediaTableData(
       id: data.id.present ? data.id.value : this.id,
       path: data.path.present ? data.path.value : this.path,
-      name: data.name.present ? data.name.value : this.name,
       data: data.data.present ? data.data.value : this.data,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('DataTableData(')
+    return (StringBuffer('MediaTableData(')
           ..write('id: $id, ')
           ..write('path: $path, ')
-          ..write('name: $name, ')
           ..write('data: $data')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, path, name, data);
+  int get hashCode => Object.hash(id, path, data);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is DataTableData &&
+      (other is MediaTableData &&
           other.id == this.id &&
           other.path == this.path &&
-          other.name == this.name &&
           other.data == this.data);
 }
 
-class DataTableCompanion extends UpdateCompanion<DataTableData> {
+class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
   final Value<int> id;
   final Value<String> path;
-  final Value<String> name;
-  final Value<String> data;
-  const DataTableCompanion({
+  final Value<List<int>> data;
+  const MediaTableCompanion({
     this.id = const Value.absent(),
     this.path = const Value.absent(),
-    this.name = const Value.absent(),
     this.data = const Value.absent(),
   });
-  DataTableCompanion.insert({
+  MediaTableCompanion.insert({
     this.id = const Value.absent(),
     required String path,
-    required String name,
-    required String data,
+    required List<int> data,
   }) : path = Value(path),
-       name = Value(name),
        data = Value(data);
-  static Insertable<DataTableData> custom({
+  static Insertable<MediaTableData> custom({
     Expression<int>? id,
     Expression<String>? path,
-    Expression<String>? name,
     Expression<Uint8List>? data,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (path != null) 'path': path,
-      if (name != null) 'name': name,
       if (data != null) 'data': data,
     });
   }
 
-  DataTableCompanion copyWith({
+  MediaTableCompanion copyWith({
     Value<int>? id,
     Value<String>? path,
-    Value<String>? name,
-    Value<String>? data,
+    Value<List<int>>? data,
   }) {
-    return DataTableCompanion(
+    return MediaTableCompanion(
       id: id ?? this.id,
       path: path ?? this.path,
-      name: name ?? this.name,
       data: data ?? this.data,
     );
   }
@@ -15381,12 +15342,9 @@ class DataTableCompanion extends UpdateCompanion<DataTableData> {
     if (path.present) {
       map['path'] = Variable<String>(path.value);
     }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
     if (data.present) {
       map['data'] = Variable<Uint8List>(
-        $DataTableTable.$converterdata.toSql(data.value),
+        $MediaTableTable.$converterdata.toSql(data.value),
       );
     }
     return map;
@@ -15394,10 +15352,9 @@ class DataTableCompanion extends UpdateCompanion<DataTableData> {
 
   @override
   String toString() {
-    return (StringBuffer('DataTableCompanion(')
+    return (StringBuffer('MediaTableCompanion(')
           ..write('id: $id, ')
           ..write('path: $path, ')
-          ..write('name: $name, ')
           ..write('data: $data')
           ..write(')'))
         .toString();
@@ -16393,14 +16350,14 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   );
   late final $AudioSourceListTableTable audioSourceListTable =
       $AudioSourceListTableTable(this);
-  late final $DataTableTable dataTable = $DataTableTable(this);
+  late final $MediaTableTable mediaTable = $MediaTableTable(this);
   late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
   late final $Radical_X_KanjiRelationsTableTable radicalXKanjiRelationsTable =
       $Radical_X_KanjiRelationsTableTable(this);
   late final $KanjiVGTableTable kanjiVGTable = $KanjiVGTableTable(this);
   late final Index path = Index(
     'path',
-    'CREATE INDEX path ON data_table (path)',
+    'CREATE INDEX path ON media_table (path)',
   );
   late final Index radical = Index(
     'radical',
@@ -16653,7 +16610,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       (QueryRow row) => ExampleFtsSearchDriftResult(
         id: row.read<int>('id'),
         indexId: row.read<int>('index_id'),
-        exampleSentence: row.read<String>('example_sentence'),
+        exampleSentence: $ExampleTableTable.$converterexampleSentence.fromSql(
+          row.read<Uint8List>('example_sentence'),
+        ),
         translations: row.read<String>('translations'),
       ),
     );
@@ -16736,7 +16695,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     exampleTableAd,
     exampleTableAu,
     audioSourceListTable,
-    dataTable,
+    mediaTable,
     radicalsTable,
     radicalXKanjiRelationsTable,
     kanjiVGTable,
@@ -33824,9 +33783,10 @@ class $$ExampleTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get exampleSentence => $composableBuilder(
+  ColumnWithTypeConverterFilters<String, String, Uint8List>
+  get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
@@ -33901,7 +33861,7 @@ class $$ExampleTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get exampleSentence => $composableBuilder(
+  ColumnOrderings<Uint8List> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
     builder: (column) => ColumnOrderings(column),
   );
@@ -33947,10 +33907,11 @@ class $$ExampleTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get exampleSentence => $composableBuilder(
-    column: $table.exampleSentence,
-    builder: (column) => column,
-  );
+  GeneratedColumnWithTypeConverter<String, Uint8List> get exampleSentence =>
+      $composableBuilder(
+        column: $table.exampleSentence,
+        builder: (column) => column,
+      );
 
   GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
     column: $table.exampleSentenceTokenized,
@@ -35706,24 +35667,22 @@ typedef $$AudioSourceListTableTableProcessedTableManager =
       AudioSourceListTableData,
       PrefetchHooks Function({bool indexId})
     >;
-typedef $$DataTableTableCreateCompanionBuilder =
-    DataTableCompanion Function({
+typedef $$MediaTableTableCreateCompanionBuilder =
+    MediaTableCompanion Function({
       Value<int> id,
       required String path,
-      required String name,
-      required String data,
+      required List<int> data,
     });
-typedef $$DataTableTableUpdateCompanionBuilder =
-    DataTableCompanion Function({
+typedef $$MediaTableTableUpdateCompanionBuilder =
+    MediaTableCompanion Function({
       Value<int> id,
       Value<String> path,
-      Value<String> name,
-      Value<String> data,
+      Value<List<int>> data,
     });
 
-class $$DataTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $DataTableTable> {
-  $$DataTableTableFilterComposer({
+class $$MediaTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+  $$MediaTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -35740,21 +35699,16 @@ class $$DataTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnWithTypeConverterFilters<String, String, Uint8List> get data =>
+  ColumnWithTypeConverterFilters<List<int>, List<int>, Uint8List> get data =>
       $composableBuilder(
         column: $table.data,
         builder: (column) => ColumnWithTypeConverterFilters(column),
       );
 }
 
-class $$DataTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $DataTableTable> {
-  $$DataTableTableOrderingComposer({
+class $$MediaTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+  $$MediaTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -35771,20 +35725,15 @@ class $$DataTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<Uint8List> get data => $composableBuilder(
     column: $table.data,
     builder: (column) => ColumnOrderings(column),
   );
 }
 
-class $$DataTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $DataTableTable> {
-  $$DataTableTableAnnotationComposer({
+class $$MediaTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+  $$MediaTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -35797,66 +35746,51 @@ class $$DataTableTableAnnotationComposer
   GeneratedColumn<String> get path =>
       $composableBuilder(column: $table.path, builder: (column) => column);
 
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<String, Uint8List> get data =>
+  GeneratedColumnWithTypeConverter<List<int>, Uint8List> get data =>
       $composableBuilder(column: $table.data, builder: (column) => column);
 }
 
-class $$DataTableTableTableManager
+class $$MediaTableTableTableManager
     extends
         RootTableManager<
           _$DaKanjiDB,
-          $DataTableTable,
-          DataTableData,
-          $$DataTableTableFilterComposer,
-          $$DataTableTableOrderingComposer,
-          $$DataTableTableAnnotationComposer,
-          $$DataTableTableCreateCompanionBuilder,
-          $$DataTableTableUpdateCompanionBuilder,
+          $MediaTableTable,
+          MediaTableData,
+          $$MediaTableTableFilterComposer,
+          $$MediaTableTableOrderingComposer,
+          $$MediaTableTableAnnotationComposer,
+          $$MediaTableTableCreateCompanionBuilder,
+          $$MediaTableTableUpdateCompanionBuilder,
           (
-            DataTableData,
-            BaseReferences<_$DaKanjiDB, $DataTableTable, DataTableData>,
+            MediaTableData,
+            BaseReferences<_$DaKanjiDB, $MediaTableTable, MediaTableData>,
           ),
-          DataTableData,
+          MediaTableData,
           PrefetchHooks Function()
         > {
-  $$DataTableTableTableManager(_$DaKanjiDB db, $DataTableTable table)
+  $$MediaTableTableTableManager(_$DaKanjiDB db, $MediaTableTable table)
     : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$DataTableTableFilterComposer($db: db, $table: table),
+              $$MediaTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$DataTableTableOrderingComposer($db: db, $table: table),
+              $$MediaTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$DataTableTableAnnotationComposer($db: db, $table: table),
+              $$MediaTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> path = const Value.absent(),
-                Value<String> name = const Value.absent(),
-                Value<String> data = const Value.absent(),
-              }) => DataTableCompanion(
-                id: id,
-                path: path,
-                name: name,
-                data: data,
-              ),
+                Value<List<int>> data = const Value.absent(),
+              }) => MediaTableCompanion(id: id, path: path, data: data),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String path,
-                required String name,
-                required String data,
-              }) => DataTableCompanion.insert(
-                id: id,
-                path: path,
-                name: name,
-                data: data,
-              ),
+                required List<int> data,
+              }) => MediaTableCompanion.insert(id: id, path: path, data: data),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),
@@ -35865,21 +35799,21 @@ class $$DataTableTableTableManager
       );
 }
 
-typedef $$DataTableTableProcessedTableManager =
+typedef $$MediaTableTableProcessedTableManager =
     ProcessedTableManager<
       _$DaKanjiDB,
-      $DataTableTable,
-      DataTableData,
-      $$DataTableTableFilterComposer,
-      $$DataTableTableOrderingComposer,
-      $$DataTableTableAnnotationComposer,
-      $$DataTableTableCreateCompanionBuilder,
-      $$DataTableTableUpdateCompanionBuilder,
+      $MediaTableTable,
+      MediaTableData,
+      $$MediaTableTableFilterComposer,
+      $$MediaTableTableOrderingComposer,
+      $$MediaTableTableAnnotationComposer,
+      $$MediaTableTableCreateCompanionBuilder,
+      $$MediaTableTableUpdateCompanionBuilder,
       (
-        DataTableData,
-        BaseReferences<_$DaKanjiDB, $DataTableTable, DataTableData>,
+        MediaTableData,
+        BaseReferences<_$DaKanjiDB, $MediaTableTable, MediaTableData>,
       ),
-      DataTableData,
+      MediaTableData,
       PrefetchHooks Function()
     >;
 typedef $$RadicalsTableTableCreateCompanionBuilder =
@@ -37029,8 +36963,8 @@ class $DaKanjiDBManager {
       $ExampleFtsTableManager(_db, _db.exampleFts);
   $$AudioSourceListTableTableTableManager get audioSourceListTable =>
       $$AudioSourceListTableTableTableManager(_db, _db.audioSourceListTable);
-  $$DataTableTableTableManager get dataTable =>
-      $$DataTableTableTableManager(_db, _db.dataTable);
+  $$MediaTableTableTableManager get mediaTable =>
+      $$MediaTableTableTableManager(_db, _db.mediaTable);
   $$RadicalsTableTableTableManager get radicalsTable =>
       $$RadicalsTableTableTableManager(_db, _db.radicalsTable);
   $$Radical_X_KanjiRelationsTableTableTableManager

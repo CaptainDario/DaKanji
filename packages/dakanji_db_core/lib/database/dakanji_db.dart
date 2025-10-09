@@ -50,6 +50,8 @@ import '/extensions/sqlite_compress_extension.dart';
 // ignore: unused_import
 import '/helper/zlib_text_converter.dart';
 // ignore: unused_import
+import '/helper/zlib_bytes_converter.dart';
+// ignore: unused_import
 import '/helper/json_converter.dart';
 
 part 'dakanji_db.g.dart';
@@ -59,7 +61,7 @@ part 'dakanji_db.g.dart';
 @DriftDatabase(
   tables: [
     AudioSourceListTable,
-    KanjiTable, TermTable, ReadingTable, DataTable,
+    KanjiTable, TermTable, ReadingTable, MediaTable,
     DefinitionTable, TermBankV3DefinitionJsonTable, LanguageCodeTable,
 
     RadicalsTable, Radical_X_KanjiRelationsTable,

@@ -5,6 +5,8 @@ import 'package:drift/drift.dart';
 import '/database/general_tables/kanji_tables.dart';
 import '/helper/zlib_text_converter.dart';
 
+
+
 /// Contains the kanji entries and links to the radicals table
 class KanjiVGTable extends Table {
   
