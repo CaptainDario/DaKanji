@@ -9,6 +9,7 @@ import 'package:dakanji_db_core/parsing/kanji/kanji_bank_v3_parser_context.dart'
 import 'package:dakanji_db_core/parsing/kanji_meta/kanji_meta_bank_v3_parser_context.dart';
 import 'package:dakanji_db_core/parsing/media/media_importer.dart';
 import 'package:dakanji_db_core/parsing/term_meta/term_meta_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/import_context.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_import_context.dart';
@@ -126,7 +127,7 @@ Future _parseDictionaryDataSource(({
   KanjiMetaBankV3ParserContext? kanjiMetaImportContext;
 
   // parse the rest of the files (first tag bank, then the rest in sorted order)
-  int progressCounter = 1;
+  int progressCounter = 0;
   for (final ({String fileName, Uint8List fileContent}) data in dataSources) {
 
     progressCounter++;
@@ -148,7 +149,6 @@ Future _parseDictionaryDataSource(({
       () => KanjiBankV3ParserContext.create(db, indexEntry.id));
     kanjiMetaImportContext = await manageImportContext(kanjiMetaImportContext, data.fileName, kanjiMetaBankFileNamingScheme,
       () => KanjiMetaBankV3ParserContext.create(db));
-    print("$termImportContext $termMetaImportContext $kanjiImportContext $kanjiMetaImportContext");
       
     await parseDictionaryFile(
       fileName: data.fileName,
@@ -162,12 +162,7 @@ Future _parseDictionaryDataSource(({
     );
   }
 
-  // Optimize db
-  await db.customStatement('VACUUM;');
-  await db.customStatement('ANALYZE;');
-
-  // commit all changes to DB
-  await db.customStatement("PRAGMA wal_checkpoint(TRUNCATE);");
+  await optimizeDbAfterImport(db);
 
   // close mecab
   mecab.destroy();

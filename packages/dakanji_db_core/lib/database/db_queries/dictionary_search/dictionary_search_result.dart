@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
+import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 
 /// Utility class representing the overall results from a dictionary search.
 /// It groups results based on whether they matched the search term directly,
@@ -120,7 +123,7 @@ class SearchMatchGroup {
       wildcardMatches.isEmpty;
 
   factory SearchMatchGroup.fromDictionaryMatchList(
-      List<DictionarySearchFts5DriftResult> matches,
+      List<DictionarySearchDriftResult> matches,
       String searchTerm,
       bool isWildcardSearch,
       {
@@ -133,12 +136,17 @@ class SearchMatchGroup {
     List<DictionaryMatch> exactMatches = [], prefixMatches = [],
                           tokenMatches = [], fuzzyMatches = [], 
                           wildcardMatches = [];
+    
     for (int i = 0; i < matches.length; i++) {
-      DictionarySearchFts5DriftResult driftResult = matches[i];
+      
+      DictionarySearchDriftResult driftResult = matches[i];
       DictionaryMatch r = DictionaryMatch(
         match: driftResult.matchedText,
         spellfixSuggestion: driftResult.spellfixSuggestion,
-        entry: TermBankV3Entry.fromSearchTermDriftResult(driftResult)
+        entry: TermBankV3Entry.fromDictionarySearchDrift(driftResult),
+        metaEntries: (jsonDecode(driftResult.termMetaEntries) as List)
+            .map((me) => TermMetaBankV3Entry.fromTermMetaBankV3EntryViewData(me))
+            .toList(),
       );
 
       if(isWildcardSearch) {
@@ -199,12 +207,15 @@ class DictionaryMatch {
   final String? spellfixSuggestion;
   /// The full dictionary entry that was matched.
   final TermBankV3Entry entry;
+  /// Any associated metadata entries for this term.
+  final List<TermMetaBankV3Entry> metaEntries;
 
   DictionaryMatch(
     {
       required this.match,
       this.spellfixSuggestion,
       required this.entry,
+      this.metaEntries = const [],
     }
   );
 

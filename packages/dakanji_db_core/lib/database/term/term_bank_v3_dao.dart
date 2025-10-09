@@ -31,7 +31,7 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
   /// Searches in the Term Bank for 
   Future<List> search (String term, {int limit=-1, int offset=0}) async {
     return (await db.term_bank_v3_search_drift(term, limit, offset).get())
-      .map((r) => TermBankV3Entry.fromTermBankV3SearchViewData(r))
+      .map((r) => TermBankV3Entry.fromTermBankV3EntryViewData(r))
       .toList();
   }
 

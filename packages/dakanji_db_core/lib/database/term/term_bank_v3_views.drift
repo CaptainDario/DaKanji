@@ -7,9 +7,10 @@ import '/database/tag/tag_bank_v3_tables.dart';
 
 
 
-CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS
+CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
 	SELECT
 		TB3T.id,
+		TB3T.index_id AS indexId,
 		term,
 		reading,
 		-- DEFINITION TAGS
@@ -28,14 +29,22 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS
 		definition_order,
 		sequence_number,
 		-- TAG
-		'[' || COALESCE(GROUP_CONCAT(DISTINCT json_object(
-			'id', TagB3T.id,
-			'name', TagB3T.name,
-			'category', TagB3T.category,
-			'sortingOrder', TagB3T.sorting_order,
-			'notes', TagB3T.notes,
-			'score', TagB3T.score
-		)), '') || ']' AS tags
+		'[' || COALESCE(
+			GROUP_CONCAT(DISTINCT
+				CASE WHEN TagB3T.id IS NOT NULL THEN
+					json_object(
+						'id', TagB3T.id,
+						'indexId', TagB3T.index_id,
+						'name', TagB3T.name,
+						'category', TagB3T.category,
+						'sortingOrder', TagB3T.sorting_order,
+						'notes', TagB3T.notes,
+						'score', TagB3T.score
+					)
+				ELSE NULL END
+			),
+		''
+		) || ']' AS tags
 	FROM
 		term_bank_v3_table AS TB3T
 	-- get all terms

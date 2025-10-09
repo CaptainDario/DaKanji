@@ -4,7 +4,6 @@ import "dart:convert";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
 import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
-import "package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_entry.dart";
 import "package:drift/drift.dart";
 import "package:language_processing/iso/iso_table.dart";
 
@@ -49,24 +48,23 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
   ) async {
 
     final (:hiraganaTerm, :termVariants) = preprocessInput(term, convertRomajiToHiragana);
-    print("$term -> $hiraganaTerm, $termVariants");
 
     bool isWildcardSearch = term.contains(RegExp(r'\*|\?'));
     int useGlobInt = isWildcardSearch ? 1 : 0;
 
     // run the queries in parallel
     final results = (await Future.wait([
-      db.dictionary_search_fts5_drift(term, spellfixDistance, useGlobInt,
+      db.dictionary_search_drift(term, spellfixDistance, useGlobInt,
                                       "$term *", jsonEncode([]), jsonEncode(tags)).get(),
 
       if(hiraganaTerm != null)
-        db.dictionary_search_fts5_drift(hiraganaTerm, spellfixDistance, useGlobInt,
+        db.dictionary_search_drift(hiraganaTerm, spellfixDistance, useGlobInt,
                                       "$hiraganaTerm *", jsonEncode([]), jsonEncode(tags)).get(),
-      if(hiraganaTerm == null) Future.sync(() => <DictionarySearchFts5DriftResult>[]),
+      if(hiraganaTerm == null) Future.sync(() => <DictionarySearchDriftResult>[]),
       
       if(termVariants != null && !isWildcardSearch)
         for (final variant in termVariants) 
-          db.dictionary_search_fts5_drift(
+          db.dictionary_search_drift(
             variant.deconjugatedTerm, 0, useGlobInt, "${variant.deconjugatedTerm} *",
             jsonEncode(variant.requiredPartsOfSpeech), jsonEncode(tags)
           ).get()

@@ -63,26 +63,27 @@ class TermBankV3Entry with _$TermBankV3Entry {
     tags.sort((a, b) => a.name.compareTo(b.name),);
   }
     
-  factory TermBankV3Entry.fromTermBankV3SearchViewData(TermBankV3SearchViewData r) {
+  factory TermBankV3Entry.fromTermBankV3EntryViewData(TermBankV3EntryViewData r) {
     return TermBankV3Entry._fromDataSource(r);
   }
 
   // 2. Factory constructor for DictionarySearchFts5DriftResult
-  factory TermBankV3Entry.fromSearchTermDriftResult(DictionarySearchFts5DriftResult r) {
+  factory TermBankV3Entry.fromDictionarySearchDrift(DictionarySearchDriftResult r) {
     return TermBankV3Entry._fromDataSource(r);
   }
 
   factory TermBankV3Entry._fromDataSource(dynamic r) {
+
     return TermBankV3Entry(
       indexId: r.indexId,
-      term: r._term,
-      reading: r._reading,
-      definitionTags: List<String>.from(jsonDecode(r._definitionTags)),
-      ruleIdentifiers: List<String>.from(jsonDecode(r._ruleIdentifiers)),
-      popularity: r._popularity,
-      definitions: List<String>.from(jsonDecode(r._definitions)),
-      sequenceNumber: r._sequenceNumber,
-      tags: List.from(jsonDecode(r._tags))
+      term: r.term!,
+      reading: r.reading!,
+      definitionTags: List<String>.from(jsonDecode(r.definitionTags)),
+      ruleIdentifiers: List<String>.from(jsonDecode(r.ruleIdentifiers)),
+      popularity: r.popularity,
+      definitions: List<String>.from(jsonDecode(r.definitions)),
+      sequenceNumber: r.sequenceNumber,
+      tags: List.from(jsonDecode(r.tags))
           .where((tagJson) => tagJson != null && tagJson['name'] != null)
           .map((e) => TagBankV3Entry.fromJson(e))
           .toList(),

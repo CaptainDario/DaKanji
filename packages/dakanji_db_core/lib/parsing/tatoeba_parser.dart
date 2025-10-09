@@ -39,9 +39,6 @@ Future<void> convertTatoebaDataSource(
     sentenceFile.writeAsStringSync(jsonEncode(
       { for (var record in sentenceGroup) record.$1 : record.$2 }
     ));
-
-    //if(i >= 10) return;
-
   }
 
 }

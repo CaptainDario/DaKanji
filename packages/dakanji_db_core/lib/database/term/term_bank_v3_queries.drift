@@ -6,7 +6,7 @@ term_bank_v3_search_drift:
   SELECT
     *
   FROM
-    term_bank_v3_search_view
+    term_bank_v3_entry_view
   WHERE
     term = :query
   LIMIT :limit OFFSET :offset

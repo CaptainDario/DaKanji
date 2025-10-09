@@ -1,6 +1,4 @@
 // Package imports:
-import 'dart:convert';
-
 import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';

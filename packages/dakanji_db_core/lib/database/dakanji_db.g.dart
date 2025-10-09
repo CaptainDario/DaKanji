@@ -5907,425 +5907,6 @@ class KanjiDictionarySearchView
   };
 }
 
-class ReadingSpellfix extends Table
-    with
-        TableInfo<ReadingSpellfix, ReadingSpellfixData>,
-        VirtualTableInfo<ReadingSpellfix, ReadingSpellfixData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  ReadingSpellfix(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _wordMeta = const VerificationMeta('word');
-  late final GeneratedColumn<String> word = GeneratedColumn<String>(
-    'word',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _rankMeta = const VerificationMeta('rank');
-  late final GeneratedColumn<int> rank = GeneratedColumn<int>(
-    'rank',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _distanceMeta = const VerificationMeta(
-    'distance',
-  );
-  late final GeneratedColumn<int> distance = GeneratedColumn<int>(
-    'distance',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _langidMeta = const VerificationMeta('langid');
-  late final GeneratedColumn<int> langid = GeneratedColumn<int>(
-    'langid',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _scoreMeta = const VerificationMeta('score');
-  late final GeneratedColumn<int> score = GeneratedColumn<int>(
-    'score',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _matchlenMeta = const VerificationMeta(
-    'matchlen',
-  );
-  late final GeneratedColumn<int> matchlen = GeneratedColumn<int>(
-    'matchlen',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    $customConstraints: '',
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    word,
-    rank,
-    distance,
-    langid,
-    score,
-    matchlen,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'reading_spellfix';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ReadingSpellfixData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('word')) {
-      context.handle(
-        _wordMeta,
-        word.isAcceptableOrUnknown(data['word']!, _wordMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_wordMeta);
-    }
-    if (data.containsKey('rank')) {
-      context.handle(
-        _rankMeta,
-        rank.isAcceptableOrUnknown(data['rank']!, _rankMeta),
-      );
-    }
-    if (data.containsKey('distance')) {
-      context.handle(
-        _distanceMeta,
-        distance.isAcceptableOrUnknown(data['distance']!, _distanceMeta),
-      );
-    }
-    if (data.containsKey('langid')) {
-      context.handle(
-        _langidMeta,
-        langid.isAcceptableOrUnknown(data['langid']!, _langidMeta),
-      );
-    }
-    if (data.containsKey('score')) {
-      context.handle(
-        _scoreMeta,
-        score.isAcceptableOrUnknown(data['score']!, _scoreMeta),
-      );
-    }
-    if (data.containsKey('matchlen')) {
-      context.handle(
-        _matchlenMeta,
-        matchlen.isAcceptableOrUnknown(data['matchlen']!, _matchlenMeta),
-      );
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  ReadingSpellfixData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ReadingSpellfixData(
-      word: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}word'],
-      )!,
-      rank: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}rank'],
-      ),
-      distance: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}distance'],
-      ),
-      langid: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}langid'],
-      ),
-      score: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}score'],
-      ),
-      matchlen: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}matchlen'],
-      ),
-    );
-  }
-
-  @override
-  ReadingSpellfix createAlias(String alias) {
-    return ReadingSpellfix(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-  @override
-  String get moduleAndArgs =>
-      'spellfix1(edit_cost_table=hiragana_spellfix_cost)';
-}
-
-class ReadingSpellfixData extends DataClass
-    implements Insertable<ReadingSpellfixData> {
-  final String word;
-  final int? rank;
-  final int? distance;
-  final int? langid;
-  final int? score;
-  final int? matchlen;
-  const ReadingSpellfixData({
-    required this.word,
-    this.rank,
-    this.distance,
-    this.langid,
-    this.score,
-    this.matchlen,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['word'] = Variable<String>(word);
-    if (!nullToAbsent || rank != null) {
-      map['rank'] = Variable<int>(rank);
-    }
-    if (!nullToAbsent || distance != null) {
-      map['distance'] = Variable<int>(distance);
-    }
-    if (!nullToAbsent || langid != null) {
-      map['langid'] = Variable<int>(langid);
-    }
-    if (!nullToAbsent || score != null) {
-      map['score'] = Variable<int>(score);
-    }
-    if (!nullToAbsent || matchlen != null) {
-      map['matchlen'] = Variable<int>(matchlen);
-    }
-    return map;
-  }
-
-  ReadingSpellfixCompanion toCompanion(bool nullToAbsent) {
-    return ReadingSpellfixCompanion(
-      word: Value(word),
-      rank: rank == null && nullToAbsent ? const Value.absent() : Value(rank),
-      distance: distance == null && nullToAbsent
-          ? const Value.absent()
-          : Value(distance),
-      langid: langid == null && nullToAbsent
-          ? const Value.absent()
-          : Value(langid),
-      score: score == null && nullToAbsent
-          ? const Value.absent()
-          : Value(score),
-      matchlen: matchlen == null && nullToAbsent
-          ? const Value.absent()
-          : Value(matchlen),
-    );
-  }
-
-  factory ReadingSpellfixData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ReadingSpellfixData(
-      word: serializer.fromJson<String>(json['word']),
-      rank: serializer.fromJson<int?>(json['rank']),
-      distance: serializer.fromJson<int?>(json['distance']),
-      langid: serializer.fromJson<int?>(json['langid']),
-      score: serializer.fromJson<int?>(json['score']),
-      matchlen: serializer.fromJson<int?>(json['matchlen']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'word': serializer.toJson<String>(word),
-      'rank': serializer.toJson<int?>(rank),
-      'distance': serializer.toJson<int?>(distance),
-      'langid': serializer.toJson<int?>(langid),
-      'score': serializer.toJson<int?>(score),
-      'matchlen': serializer.toJson<int?>(matchlen),
-    };
-  }
-
-  ReadingSpellfixData copyWith({
-    String? word,
-    Value<int?> rank = const Value.absent(),
-    Value<int?> distance = const Value.absent(),
-    Value<int?> langid = const Value.absent(),
-    Value<int?> score = const Value.absent(),
-    Value<int?> matchlen = const Value.absent(),
-  }) => ReadingSpellfixData(
-    word: word ?? this.word,
-    rank: rank.present ? rank.value : this.rank,
-    distance: distance.present ? distance.value : this.distance,
-    langid: langid.present ? langid.value : this.langid,
-    score: score.present ? score.value : this.score,
-    matchlen: matchlen.present ? matchlen.value : this.matchlen,
-  );
-  ReadingSpellfixData copyWithCompanion(ReadingSpellfixCompanion data) {
-    return ReadingSpellfixData(
-      word: data.word.present ? data.word.value : this.word,
-      rank: data.rank.present ? data.rank.value : this.rank,
-      distance: data.distance.present ? data.distance.value : this.distance,
-      langid: data.langid.present ? data.langid.value : this.langid,
-      score: data.score.present ? data.score.value : this.score,
-      matchlen: data.matchlen.present ? data.matchlen.value : this.matchlen,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ReadingSpellfixData(')
-          ..write('word: $word, ')
-          ..write('rank: $rank, ')
-          ..write('distance: $distance, ')
-          ..write('langid: $langid, ')
-          ..write('score: $score, ')
-          ..write('matchlen: $matchlen')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(word, rank, distance, langid, score, matchlen);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ReadingSpellfixData &&
-          other.word == this.word &&
-          other.rank == this.rank &&
-          other.distance == this.distance &&
-          other.langid == this.langid &&
-          other.score == this.score &&
-          other.matchlen == this.matchlen);
-}
-
-class ReadingSpellfixCompanion extends UpdateCompanion<ReadingSpellfixData> {
-  final Value<String> word;
-  final Value<int?> rank;
-  final Value<int?> distance;
-  final Value<int?> langid;
-  final Value<int?> score;
-  final Value<int?> matchlen;
-  final Value<int> rowid;
-  const ReadingSpellfixCompanion({
-    this.word = const Value.absent(),
-    this.rank = const Value.absent(),
-    this.distance = const Value.absent(),
-    this.langid = const Value.absent(),
-    this.score = const Value.absent(),
-    this.matchlen = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ReadingSpellfixCompanion.insert({
-    required String word,
-    this.rank = const Value.absent(),
-    this.distance = const Value.absent(),
-    this.langid = const Value.absent(),
-    this.score = const Value.absent(),
-    this.matchlen = const Value.absent(),
-    this.rowid = const Value.absent(),
-  }) : word = Value(word);
-  static Insertable<ReadingSpellfixData> custom({
-    Expression<String>? word,
-    Expression<int>? rank,
-    Expression<int>? distance,
-    Expression<int>? langid,
-    Expression<int>? score,
-    Expression<int>? matchlen,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (word != null) 'word': word,
-      if (rank != null) 'rank': rank,
-      if (distance != null) 'distance': distance,
-      if (langid != null) 'langid': langid,
-      if (score != null) 'score': score,
-      if (matchlen != null) 'matchlen': matchlen,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ReadingSpellfixCompanion copyWith({
-    Value<String>? word,
-    Value<int?>? rank,
-    Value<int?>? distance,
-    Value<int?>? langid,
-    Value<int?>? score,
-    Value<int?>? matchlen,
-    Value<int>? rowid,
-  }) {
-    return ReadingSpellfixCompanion(
-      word: word ?? this.word,
-      rank: rank ?? this.rank,
-      distance: distance ?? this.distance,
-      langid: langid ?? this.langid,
-      score: score ?? this.score,
-      matchlen: matchlen ?? this.matchlen,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (word.present) {
-      map['word'] = Variable<String>(word.value);
-    }
-    if (rank.present) {
-      map['rank'] = Variable<int>(rank.value);
-    }
-    if (distance.present) {
-      map['distance'] = Variable<int>(distance.value);
-    }
-    if (langid.present) {
-      map['langid'] = Variable<int>(langid.value);
-    }
-    if (score.present) {
-      map['score'] = Variable<int>(score.value);
-    }
-    if (matchlen.present) {
-      map['matchlen'] = Variable<int>(matchlen.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ReadingSpellfixCompanion(')
-          ..write('word: $word, ')
-          ..write('rank: $rank, ')
-          ..write('distance: $distance, ')
-          ..write('langid: $langid, ')
-          ..write('score: $score, ')
-          ..write('matchlen: $matchlen, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $TermTableTable extends TermTable
     with TableInfo<$TermTableTable, TermTableData> {
   @override
@@ -6579,226 +6160,6 @@ class TermTableCompanion extends UpdateCompanion<TermTableData> {
           ..write('id: $id, ')
           ..write('term: $term, ')
           ..write('termTokens: $termTokens')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class TermFts extends Table
-    with TableInfo<TermFts, TermFt>, VirtualTableInfo<TermFts, TermFt> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  TermFts(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _termMeta = const VerificationMeta('term');
-  late final GeneratedColumn<String> term = GeneratedColumn<String>(
-    'term',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _termTokensMeta = const VerificationMeta(
-    'termTokens',
-  );
-  late final GeneratedColumn<String> termTokens = GeneratedColumn<String>(
-    'term_tokens',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: '',
-  );
-  @override
-  List<GeneratedColumn> get $columns => [term, termTokens];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'term_fts';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<TermFt> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('term')) {
-      context.handle(
-        _termMeta,
-        term.isAcceptableOrUnknown(data['term']!, _termMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_termMeta);
-    }
-    if (data.containsKey('term_tokens')) {
-      context.handle(
-        _termTokensMeta,
-        termTokens.isAcceptableOrUnknown(data['term_tokens']!, _termTokensMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_termTokensMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  TermFt map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermFt(
-      term: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}term'],
-      )!,
-      termTokens: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}term_tokens'],
-      )!,
-    );
-  }
-
-  @override
-  TermFts createAlias(String alias) {
-    return TermFts(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-  @override
-  String get moduleAndArgs =>
-      'fts5(term, term_tokens, content=\'term_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
-}
-
-class TermFt extends DataClass implements Insertable<TermFt> {
-  final String term;
-  final String termTokens;
-  const TermFt({required this.term, required this.termTokens});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['term'] = Variable<String>(term);
-    map['term_tokens'] = Variable<String>(termTokens);
-    return map;
-  }
-
-  TermFtsCompanion toCompanion(bool nullToAbsent) {
-    return TermFtsCompanion(term: Value(term), termTokens: Value(termTokens));
-  }
-
-  factory TermFt.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermFt(
-      term: serializer.fromJson<String>(json['term']),
-      termTokens: serializer.fromJson<String>(json['term_tokens']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'term': serializer.toJson<String>(term),
-      'term_tokens': serializer.toJson<String>(termTokens),
-    };
-  }
-
-  TermFt copyWith({String? term, String? termTokens}) => TermFt(
-    term: term ?? this.term,
-    termTokens: termTokens ?? this.termTokens,
-  );
-  TermFt copyWithCompanion(TermFtsCompanion data) {
-    return TermFt(
-      term: data.term.present ? data.term.value : this.term,
-      termTokens: data.termTokens.present
-          ? data.termTokens.value
-          : this.termTokens,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermFt(')
-          ..write('term: $term, ')
-          ..write('termTokens: $termTokens')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(term, termTokens);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TermFt &&
-          other.term == this.term &&
-          other.termTokens == this.termTokens);
-}
-
-class TermFtsCompanion extends UpdateCompanion<TermFt> {
-  final Value<String> term;
-  final Value<String> termTokens;
-  final Value<int> rowid;
-  const TermFtsCompanion({
-    this.term = const Value.absent(),
-    this.termTokens = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  TermFtsCompanion.insert({
-    required String term,
-    required String termTokens,
-    this.rowid = const Value.absent(),
-  }) : term = Value(term),
-       termTokens = Value(termTokens);
-  static Insertable<TermFt> custom({
-    Expression<String>? term,
-    Expression<String>? termTokens,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (term != null) 'term': term,
-      if (termTokens != null) 'term_tokens': termTokens,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  TermFtsCompanion copyWith({
-    Value<String>? term,
-    Value<String>? termTokens,
-    Value<int>? rowid,
-  }) {
-    return TermFtsCompanion(
-      term: term ?? this.term,
-      termTokens: termTokens ?? this.termTokens,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (term.present) {
-      map['term'] = Variable<String>(term.value);
-    }
-    if (termTokens.present) {
-      map['term_tokens'] = Variable<String>(termTokens.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermFtsCompanion(')
-          ..write('term: $term, ')
-          ..write('termTokens: $termTokens, ')
-          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -7585,641 +6946,6 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   }
 }
 
-class ReadingFts extends Table
-    with
-        TableInfo<ReadingFts, ReadingFt>,
-        VirtualTableInfo<ReadingFts, ReadingFt> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  ReadingFts(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _readingMeta = const VerificationMeta(
-    'reading',
-  );
-  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
-    'reading',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: '',
-  );
-  @override
-  List<GeneratedColumn> get $columns => [reading];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'reading_fts';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ReadingFt> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('reading')) {
-      context.handle(
-        _readingMeta,
-        reading.isAcceptableOrUnknown(data['reading']!, _readingMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_readingMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  ReadingFt map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ReadingFt(
-      reading: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}reading'],
-      )!,
-    );
-  }
-
-  @override
-  ReadingFts createAlias(String alias) {
-    return ReadingFts(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-  @override
-  String get moduleAndArgs =>
-      'fts5(reading, content=\'reading_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
-}
-
-class ReadingFt extends DataClass implements Insertable<ReadingFt> {
-  final String reading;
-  const ReadingFt({required this.reading});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['reading'] = Variable<String>(reading);
-    return map;
-  }
-
-  ReadingFtsCompanion toCompanion(bool nullToAbsent) {
-    return ReadingFtsCompanion(reading: Value(reading));
-  }
-
-  factory ReadingFt.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ReadingFt(reading: serializer.fromJson<String>(json['reading']));
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{'reading': serializer.toJson<String>(reading)};
-  }
-
-  ReadingFt copyWith({String? reading}) =>
-      ReadingFt(reading: reading ?? this.reading);
-  ReadingFt copyWithCompanion(ReadingFtsCompanion data) {
-    return ReadingFt(
-      reading: data.reading.present ? data.reading.value : this.reading,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ReadingFt(')
-          ..write('reading: $reading')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => reading.hashCode;
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ReadingFt && other.reading == this.reading);
-}
-
-class ReadingFtsCompanion extends UpdateCompanion<ReadingFt> {
-  final Value<String> reading;
-  final Value<int> rowid;
-  const ReadingFtsCompanion({
-    this.reading = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ReadingFtsCompanion.insert({
-    required String reading,
-    this.rowid = const Value.absent(),
-  }) : reading = Value(reading);
-  static Insertable<ReadingFt> custom({
-    Expression<String>? reading,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (reading != null) 'reading': reading,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ReadingFtsCompanion copyWith({Value<String>? reading, Value<int>? rowid}) {
-    return ReadingFtsCompanion(
-      reading: reading ?? this.reading,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (reading.present) {
-      map['reading'] = Variable<String>(reading.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ReadingFtsCompanion(')
-          ..write('reading: $reading, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class DefinitionFts extends Table
-    with
-        TableInfo<DefinitionFts, DefinitionFt>,
-        VirtualTableInfo<DefinitionFts, DefinitionFt> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  DefinitionFts(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _definitionMeta = const VerificationMeta(
-    'definition',
-  );
-  late final GeneratedColumn<String> definition = GeneratedColumn<String>(
-    'definition',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: '',
-  );
-  @override
-  List<GeneratedColumn> get $columns => [definition];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'definition_fts';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<DefinitionFt> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('definition')) {
-      context.handle(
-        _definitionMeta,
-        definition.isAcceptableOrUnknown(data['definition']!, _definitionMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_definitionMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  DefinitionFt map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return DefinitionFt(
-      definition: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}definition'],
-      )!,
-    );
-  }
-
-  @override
-  DefinitionFts createAlias(String alias) {
-    return DefinitionFts(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-  @override
-  String get moduleAndArgs =>
-      'fts5(definition, content=\'definition_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
-}
-
-class DefinitionFt extends DataClass implements Insertable<DefinitionFt> {
-  final String definition;
-  const DefinitionFt({required this.definition});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['definition'] = Variable<String>(definition);
-    return map;
-  }
-
-  DefinitionFtsCompanion toCompanion(bool nullToAbsent) {
-    return DefinitionFtsCompanion(definition: Value(definition));
-  }
-
-  factory DefinitionFt.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return DefinitionFt(
-      definition: serializer.fromJson<String>(json['definition']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'definition': serializer.toJson<String>(definition),
-    };
-  }
-
-  DefinitionFt copyWith({String? definition}) =>
-      DefinitionFt(definition: definition ?? this.definition);
-  DefinitionFt copyWithCompanion(DefinitionFtsCompanion data) {
-    return DefinitionFt(
-      definition: data.definition.present
-          ? data.definition.value
-          : this.definition,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('DefinitionFt(')
-          ..write('definition: $definition')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => definition.hashCode;
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is DefinitionFt && other.definition == this.definition);
-}
-
-class DefinitionFtsCompanion extends UpdateCompanion<DefinitionFt> {
-  final Value<String> definition;
-  final Value<int> rowid;
-  const DefinitionFtsCompanion({
-    this.definition = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  DefinitionFtsCompanion.insert({
-    required String definition,
-    this.rowid = const Value.absent(),
-  }) : definition = Value(definition);
-  static Insertable<DefinitionFt> custom({
-    Expression<String>? definition,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (definition != null) 'definition': definition,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  DefinitionFtsCompanion copyWith({
-    Value<String>? definition,
-    Value<int>? rowid,
-  }) {
-    return DefinitionFtsCompanion(
-      definition: definition ?? this.definition,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (definition.present) {
-      map['definition'] = Variable<String>(definition.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('DefinitionFtsCompanion(')
-          ..write('definition: $definition, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $TermBankV3_X_DefinitionTableTable extends TermBankV3_X_DefinitionTable
-    with
-        TableInfo<
-          $TermBankV3_X_DefinitionTableTable,
-          TermBankV3_X_DefinitionTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $TermBankV3_X_DefinitionTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _definitionIdMeta = const VerificationMeta(
-    'definitionId',
-  );
-  @override
-  late final GeneratedColumn<int> definitionId = GeneratedColumn<int>(
-    'definition_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES definition_table (id)',
-    ),
-  );
-  static const VerificationMeta _termBankIdMeta = const VerificationMeta(
-    'termBankId',
-  );
-  @override
-  late final GeneratedColumn<int> termBankId = GeneratedColumn<int>(
-    'term_bank_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_bank_v3_table (id)',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, definitionId, termBankId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'term_bank_v3_x_definition_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<TermBankV3_X_DefinitionTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('definition_id')) {
-      context.handle(
-        _definitionIdMeta,
-        definitionId.isAcceptableOrUnknown(
-          data['definition_id']!,
-          _definitionIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_definitionIdMeta);
-    }
-    if (data.containsKey('term_bank_id')) {
-      context.handle(
-        _termBankIdMeta,
-        termBankId.isAcceptableOrUnknown(
-          data['term_bank_id']!,
-          _termBankIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_termBankIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  TermBankV3_X_DefinitionTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermBankV3_X_DefinitionTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      definitionId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}definition_id'],
-      )!,
-      termBankId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}term_bank_id'],
-      )!,
-    );
-  }
-
-  @override
-  $TermBankV3_X_DefinitionTableTable createAlias(String alias) {
-    return $TermBankV3_X_DefinitionTableTable(attachedDatabase, alias);
-  }
-}
-
-class TermBankV3_X_DefinitionTableData extends DataClass
-    implements Insertable<TermBankV3_X_DefinitionTableData> {
-  /// id of this relation
-  final int id;
-
-  /// the id of the associated definition
-  final int definitionId;
-
-  /// the id of the associated term in the term bank
-  final int termBankId;
-  const TermBankV3_X_DefinitionTableData({
-    required this.id,
-    required this.definitionId,
-    required this.termBankId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['definition_id'] = Variable<int>(definitionId);
-    map['term_bank_id'] = Variable<int>(termBankId);
-    return map;
-  }
-
-  TermBankV3_X_DefinitionTableCompanion toCompanion(bool nullToAbsent) {
-    return TermBankV3_X_DefinitionTableCompanion(
-      id: Value(id),
-      definitionId: Value(definitionId),
-      termBankId: Value(termBankId),
-    );
-  }
-
-  factory TermBankV3_X_DefinitionTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermBankV3_X_DefinitionTableData(
-      id: serializer.fromJson<int>(json['id']),
-      definitionId: serializer.fromJson<int>(json['definitionId']),
-      termBankId: serializer.fromJson<int>(json['termBankId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'definitionId': serializer.toJson<int>(definitionId),
-      'termBankId': serializer.toJson<int>(termBankId),
-    };
-  }
-
-  TermBankV3_X_DefinitionTableData copyWith({
-    int? id,
-    int? definitionId,
-    int? termBankId,
-  }) => TermBankV3_X_DefinitionTableData(
-    id: id ?? this.id,
-    definitionId: definitionId ?? this.definitionId,
-    termBankId: termBankId ?? this.termBankId,
-  );
-  TermBankV3_X_DefinitionTableData copyWithCompanion(
-    TermBankV3_X_DefinitionTableCompanion data,
-  ) {
-    return TermBankV3_X_DefinitionTableData(
-      id: data.id.present ? data.id.value : this.id,
-      definitionId: data.definitionId.present
-          ? data.definitionId.value
-          : this.definitionId,
-      termBankId: data.termBankId.present
-          ? data.termBankId.value
-          : this.termBankId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermBankV3_X_DefinitionTableData(')
-          ..write('id: $id, ')
-          ..write('definitionId: $definitionId, ')
-          ..write('termBankId: $termBankId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, definitionId, termBankId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TermBankV3_X_DefinitionTableData &&
-          other.id == this.id &&
-          other.definitionId == this.definitionId &&
-          other.termBankId == this.termBankId);
-}
-
-class TermBankV3_X_DefinitionTableCompanion
-    extends UpdateCompanion<TermBankV3_X_DefinitionTableData> {
-  final Value<int> id;
-  final Value<int> definitionId;
-  final Value<int> termBankId;
-  const TermBankV3_X_DefinitionTableCompanion({
-    this.id = const Value.absent(),
-    this.definitionId = const Value.absent(),
-    this.termBankId = const Value.absent(),
-  });
-  TermBankV3_X_DefinitionTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int definitionId,
-    required int termBankId,
-  }) : definitionId = Value(definitionId),
-       termBankId = Value(termBankId);
-  static Insertable<TermBankV3_X_DefinitionTableData> custom({
-    Expression<int>? id,
-    Expression<int>? definitionId,
-    Expression<int>? termBankId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (definitionId != null) 'definition_id': definitionId,
-      if (termBankId != null) 'term_bank_id': termBankId,
-    });
-  }
-
-  TermBankV3_X_DefinitionTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? definitionId,
-    Value<int>? termBankId,
-  }) {
-    return TermBankV3_X_DefinitionTableCompanion(
-      id: id ?? this.id,
-      definitionId: definitionId ?? this.definitionId,
-      termBankId: termBankId ?? this.termBankId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (definitionId.present) {
-      map['definition_id'] = Variable<int>(definitionId.value);
-    }
-    if (termBankId.present) {
-      map['term_bank_id'] = Variable<int>(termBankId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermBankV3_X_DefinitionTableCompanion(')
-          ..write('id: $id, ')
-          ..write('definitionId: $definitionId, ')
-          ..write('termBankId: $termBankId')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $TermBankV3DefinitionTagsTableTable extends TermBankV3DefinitionTagsTable
     with
         TableInfo<
@@ -8724,287 +7450,6 @@ class TermBankV3_X_DefinitionTagTableCompanion
     return (StringBuffer('TermBankV3_X_DefinitionTagTableCompanion(')
           ..write('id: $id, ')
           ..write('definitionTagId: $definitionTagId, ')
-          ..write('termBankId: $termBankId')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $TermBankV3_X_TagBankTableTable extends TermBankV3_X_TagBankTable
-    with
-        TableInfo<
-          $TermBankV3_X_TagBankTableTable,
-          TermBankV3_X_TagBankTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $TermBankV3_X_TagBankTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _tagBankIdMeta = const VerificationMeta(
-    'tagBankId',
-  );
-  @override
-  late final GeneratedColumn<int> tagBankId = GeneratedColumn<int>(
-    'tag_bank_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES tag_bank_v3_table (id)',
-    ),
-  );
-  static const VerificationMeta _termBankIdMeta = const VerificationMeta(
-    'termBankId',
-  );
-  @override
-  late final GeneratedColumn<int> termBankId = GeneratedColumn<int>(
-    'term_bank_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_bank_v3_table (id)',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, tagBankId, termBankId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'term_bank_v3_x_tag_bank_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<TermBankV3_X_TagBankTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('tag_bank_id')) {
-      context.handle(
-        _tagBankIdMeta,
-        tagBankId.isAcceptableOrUnknown(data['tag_bank_id']!, _tagBankIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_tagBankIdMeta);
-    }
-    if (data.containsKey('term_bank_id')) {
-      context.handle(
-        _termBankIdMeta,
-        termBankId.isAcceptableOrUnknown(
-          data['term_bank_id']!,
-          _termBankIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_termBankIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  TermBankV3_X_TagBankTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermBankV3_X_TagBankTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      tagBankId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}tag_bank_id'],
-      )!,
-      termBankId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}term_bank_id'],
-      )!,
-    );
-  }
-
-  @override
-  $TermBankV3_X_TagBankTableTable createAlias(String alias) {
-    return $TermBankV3_X_TagBankTableTable(attachedDatabase, alias);
-  }
-}
-
-class TermBankV3_X_TagBankTableData extends DataClass
-    implements Insertable<TermBankV3_X_TagBankTableData> {
-  /// id of this relation
-  final int id;
-
-  /// the id of the associated tag bank entry
-  final int tagBankId;
-
-  /// the id of the associated term in the term bank
-  final int termBankId;
-  const TermBankV3_X_TagBankTableData({
-    required this.id,
-    required this.tagBankId,
-    required this.termBankId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['tag_bank_id'] = Variable<int>(tagBankId);
-    map['term_bank_id'] = Variable<int>(termBankId);
-    return map;
-  }
-
-  TermBankV3_X_TagBankTableCompanion toCompanion(bool nullToAbsent) {
-    return TermBankV3_X_TagBankTableCompanion(
-      id: Value(id),
-      tagBankId: Value(tagBankId),
-      termBankId: Value(termBankId),
-    );
-  }
-
-  factory TermBankV3_X_TagBankTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermBankV3_X_TagBankTableData(
-      id: serializer.fromJson<int>(json['id']),
-      tagBankId: serializer.fromJson<int>(json['tagBankId']),
-      termBankId: serializer.fromJson<int>(json['termBankId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'tagBankId': serializer.toJson<int>(tagBankId),
-      'termBankId': serializer.toJson<int>(termBankId),
-    };
-  }
-
-  TermBankV3_X_TagBankTableData copyWith({
-    int? id,
-    int? tagBankId,
-    int? termBankId,
-  }) => TermBankV3_X_TagBankTableData(
-    id: id ?? this.id,
-    tagBankId: tagBankId ?? this.tagBankId,
-    termBankId: termBankId ?? this.termBankId,
-  );
-  TermBankV3_X_TagBankTableData copyWithCompanion(
-    TermBankV3_X_TagBankTableCompanion data,
-  ) {
-    return TermBankV3_X_TagBankTableData(
-      id: data.id.present ? data.id.value : this.id,
-      tagBankId: data.tagBankId.present ? data.tagBankId.value : this.tagBankId,
-      termBankId: data.termBankId.present
-          ? data.termBankId.value
-          : this.termBankId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermBankV3_X_TagBankTableData(')
-          ..write('id: $id, ')
-          ..write('tagBankId: $tagBankId, ')
-          ..write('termBankId: $termBankId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, tagBankId, termBankId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TermBankV3_X_TagBankTableData &&
-          other.id == this.id &&
-          other.tagBankId == this.tagBankId &&
-          other.termBankId == this.termBankId);
-}
-
-class TermBankV3_X_TagBankTableCompanion
-    extends UpdateCompanion<TermBankV3_X_TagBankTableData> {
-  final Value<int> id;
-  final Value<int> tagBankId;
-  final Value<int> termBankId;
-  const TermBankV3_X_TagBankTableCompanion({
-    this.id = const Value.absent(),
-    this.tagBankId = const Value.absent(),
-    this.termBankId = const Value.absent(),
-  });
-  TermBankV3_X_TagBankTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int tagBankId,
-    required int termBankId,
-  }) : tagBankId = Value(tagBankId),
-       termBankId = Value(termBankId);
-  static Insertable<TermBankV3_X_TagBankTableData> custom({
-    Expression<int>? id,
-    Expression<int>? tagBankId,
-    Expression<int>? termBankId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (tagBankId != null) 'tag_bank_id': tagBankId,
-      if (termBankId != null) 'term_bank_id': termBankId,
-    });
-  }
-
-  TermBankV3_X_TagBankTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? tagBankId,
-    Value<int>? termBankId,
-  }) {
-    return TermBankV3_X_TagBankTableCompanion(
-      id: id ?? this.id,
-      tagBankId: tagBankId ?? this.tagBankId,
-      termBankId: termBankId ?? this.termBankId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (tagBankId.present) {
-      map['tag_bank_id'] = Variable<int>(tagBankId.value);
-    }
-    if (termBankId.present) {
-      map['term_bank_id'] = Variable<int>(termBankId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermBankV3_X_TagBankTableCompanion(')
-          ..write('id: $id, ')
-          ..write('tagBankId: $tagBankId, ')
           ..write('termBankId: $termBankId')
           ..write(')'))
         .toString();
@@ -9522,8 +7967,576 @@ class TermBankV3_X_RuleIdentifierTableCompanion
   }
 }
 
-class TermBankV3SearchViewData extends DataClass {
+class $TermBankV3_X_DefinitionTableTable extends TermBankV3_X_DefinitionTable
+    with
+        TableInfo<
+          $TermBankV3_X_DefinitionTableTable,
+          TermBankV3_X_DefinitionTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermBankV3_X_DefinitionTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _definitionIdMeta = const VerificationMeta(
+    'definitionId',
+  );
+  @override
+  late final GeneratedColumn<int> definitionId = GeneratedColumn<int>(
+    'definition_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES definition_table (id)',
+    ),
+  );
+  static const VerificationMeta _termBankIdMeta = const VerificationMeta(
+    'termBankId',
+  );
+  @override
+  late final GeneratedColumn<int> termBankId = GeneratedColumn<int>(
+    'term_bank_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES term_bank_v3_table (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, definitionId, termBankId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_bank_v3_x_definition_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TermBankV3_X_DefinitionTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('definition_id')) {
+      context.handle(
+        _definitionIdMeta,
+        definitionId.isAcceptableOrUnknown(
+          data['definition_id']!,
+          _definitionIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_definitionIdMeta);
+    }
+    if (data.containsKey('term_bank_id')) {
+      context.handle(
+        _termBankIdMeta,
+        termBankId.isAcceptableOrUnknown(
+          data['term_bank_id']!,
+          _termBankIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_termBankIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TermBankV3_X_DefinitionTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermBankV3_X_DefinitionTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      definitionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}definition_id'],
+      )!,
+      termBankId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}term_bank_id'],
+      )!,
+    );
+  }
+
+  @override
+  $TermBankV3_X_DefinitionTableTable createAlias(String alias) {
+    return $TermBankV3_X_DefinitionTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermBankV3_X_DefinitionTableData extends DataClass
+    implements Insertable<TermBankV3_X_DefinitionTableData> {
+  /// id of this relation
   final int id;
+
+  /// the id of the associated definition
+  final int definitionId;
+
+  /// the id of the associated term in the term bank
+  final int termBankId;
+  const TermBankV3_X_DefinitionTableData({
+    required this.id,
+    required this.definitionId,
+    required this.termBankId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['definition_id'] = Variable<int>(definitionId);
+    map['term_bank_id'] = Variable<int>(termBankId);
+    return map;
+  }
+
+  TermBankV3_X_DefinitionTableCompanion toCompanion(bool nullToAbsent) {
+    return TermBankV3_X_DefinitionTableCompanion(
+      id: Value(id),
+      definitionId: Value(definitionId),
+      termBankId: Value(termBankId),
+    );
+  }
+
+  factory TermBankV3_X_DefinitionTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermBankV3_X_DefinitionTableData(
+      id: serializer.fromJson<int>(json['id']),
+      definitionId: serializer.fromJson<int>(json['definitionId']),
+      termBankId: serializer.fromJson<int>(json['termBankId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'definitionId': serializer.toJson<int>(definitionId),
+      'termBankId': serializer.toJson<int>(termBankId),
+    };
+  }
+
+  TermBankV3_X_DefinitionTableData copyWith({
+    int? id,
+    int? definitionId,
+    int? termBankId,
+  }) => TermBankV3_X_DefinitionTableData(
+    id: id ?? this.id,
+    definitionId: definitionId ?? this.definitionId,
+    termBankId: termBankId ?? this.termBankId,
+  );
+  TermBankV3_X_DefinitionTableData copyWithCompanion(
+    TermBankV3_X_DefinitionTableCompanion data,
+  ) {
+    return TermBankV3_X_DefinitionTableData(
+      id: data.id.present ? data.id.value : this.id,
+      definitionId: data.definitionId.present
+          ? data.definitionId.value
+          : this.definitionId,
+      termBankId: data.termBankId.present
+          ? data.termBankId.value
+          : this.termBankId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermBankV3_X_DefinitionTableData(')
+          ..write('id: $id, ')
+          ..write('definitionId: $definitionId, ')
+          ..write('termBankId: $termBankId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, definitionId, termBankId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermBankV3_X_DefinitionTableData &&
+          other.id == this.id &&
+          other.definitionId == this.definitionId &&
+          other.termBankId == this.termBankId);
+}
+
+class TermBankV3_X_DefinitionTableCompanion
+    extends UpdateCompanion<TermBankV3_X_DefinitionTableData> {
+  final Value<int> id;
+  final Value<int> definitionId;
+  final Value<int> termBankId;
+  const TermBankV3_X_DefinitionTableCompanion({
+    this.id = const Value.absent(),
+    this.definitionId = const Value.absent(),
+    this.termBankId = const Value.absent(),
+  });
+  TermBankV3_X_DefinitionTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int definitionId,
+    required int termBankId,
+  }) : definitionId = Value(definitionId),
+       termBankId = Value(termBankId);
+  static Insertable<TermBankV3_X_DefinitionTableData> custom({
+    Expression<int>? id,
+    Expression<int>? definitionId,
+    Expression<int>? termBankId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (definitionId != null) 'definition_id': definitionId,
+      if (termBankId != null) 'term_bank_id': termBankId,
+    });
+  }
+
+  TermBankV3_X_DefinitionTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? definitionId,
+    Value<int>? termBankId,
+  }) {
+    return TermBankV3_X_DefinitionTableCompanion(
+      id: id ?? this.id,
+      definitionId: definitionId ?? this.definitionId,
+      termBankId: termBankId ?? this.termBankId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (definitionId.present) {
+      map['definition_id'] = Variable<int>(definitionId.value);
+    }
+    if (termBankId.present) {
+      map['term_bank_id'] = Variable<int>(termBankId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermBankV3_X_DefinitionTableCompanion(')
+          ..write('id: $id, ')
+          ..write('definitionId: $definitionId, ')
+          ..write('termBankId: $termBankId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TermBankV3_X_TagBankTableTable extends TermBankV3_X_TagBankTable
+    with
+        TableInfo<
+          $TermBankV3_X_TagBankTableTable,
+          TermBankV3_X_TagBankTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermBankV3_X_TagBankTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _tagBankIdMeta = const VerificationMeta(
+    'tagBankId',
+  );
+  @override
+  late final GeneratedColumn<int> tagBankId = GeneratedColumn<int>(
+    'tag_bank_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tag_bank_v3_table (id)',
+    ),
+  );
+  static const VerificationMeta _termBankIdMeta = const VerificationMeta(
+    'termBankId',
+  );
+  @override
+  late final GeneratedColumn<int> termBankId = GeneratedColumn<int>(
+    'term_bank_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES term_bank_v3_table (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, tagBankId, termBankId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_bank_v3_x_tag_bank_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TermBankV3_X_TagBankTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('tag_bank_id')) {
+      context.handle(
+        _tagBankIdMeta,
+        tagBankId.isAcceptableOrUnknown(data['tag_bank_id']!, _tagBankIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tagBankIdMeta);
+    }
+    if (data.containsKey('term_bank_id')) {
+      context.handle(
+        _termBankIdMeta,
+        termBankId.isAcceptableOrUnknown(
+          data['term_bank_id']!,
+          _termBankIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_termBankIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TermBankV3_X_TagBankTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermBankV3_X_TagBankTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      tagBankId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tag_bank_id'],
+      )!,
+      termBankId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}term_bank_id'],
+      )!,
+    );
+  }
+
+  @override
+  $TermBankV3_X_TagBankTableTable createAlias(String alias) {
+    return $TermBankV3_X_TagBankTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermBankV3_X_TagBankTableData extends DataClass
+    implements Insertable<TermBankV3_X_TagBankTableData> {
+  /// id of this relation
+  final int id;
+
+  /// the id of the associated tag bank entry
+  final int tagBankId;
+
+  /// the id of the associated term in the term bank
+  final int termBankId;
+  const TermBankV3_X_TagBankTableData({
+    required this.id,
+    required this.tagBankId,
+    required this.termBankId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['tag_bank_id'] = Variable<int>(tagBankId);
+    map['term_bank_id'] = Variable<int>(termBankId);
+    return map;
+  }
+
+  TermBankV3_X_TagBankTableCompanion toCompanion(bool nullToAbsent) {
+    return TermBankV3_X_TagBankTableCompanion(
+      id: Value(id),
+      tagBankId: Value(tagBankId),
+      termBankId: Value(termBankId),
+    );
+  }
+
+  factory TermBankV3_X_TagBankTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermBankV3_X_TagBankTableData(
+      id: serializer.fromJson<int>(json['id']),
+      tagBankId: serializer.fromJson<int>(json['tagBankId']),
+      termBankId: serializer.fromJson<int>(json['termBankId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'tagBankId': serializer.toJson<int>(tagBankId),
+      'termBankId': serializer.toJson<int>(termBankId),
+    };
+  }
+
+  TermBankV3_X_TagBankTableData copyWith({
+    int? id,
+    int? tagBankId,
+    int? termBankId,
+  }) => TermBankV3_X_TagBankTableData(
+    id: id ?? this.id,
+    tagBankId: tagBankId ?? this.tagBankId,
+    termBankId: termBankId ?? this.termBankId,
+  );
+  TermBankV3_X_TagBankTableData copyWithCompanion(
+    TermBankV3_X_TagBankTableCompanion data,
+  ) {
+    return TermBankV3_X_TagBankTableData(
+      id: data.id.present ? data.id.value : this.id,
+      tagBankId: data.tagBankId.present ? data.tagBankId.value : this.tagBankId,
+      termBankId: data.termBankId.present
+          ? data.termBankId.value
+          : this.termBankId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermBankV3_X_TagBankTableData(')
+          ..write('id: $id, ')
+          ..write('tagBankId: $tagBankId, ')
+          ..write('termBankId: $termBankId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, tagBankId, termBankId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermBankV3_X_TagBankTableData &&
+          other.id == this.id &&
+          other.tagBankId == this.tagBankId &&
+          other.termBankId == this.termBankId);
+}
+
+class TermBankV3_X_TagBankTableCompanion
+    extends UpdateCompanion<TermBankV3_X_TagBankTableData> {
+  final Value<int> id;
+  final Value<int> tagBankId;
+  final Value<int> termBankId;
+  const TermBankV3_X_TagBankTableCompanion({
+    this.id = const Value.absent(),
+    this.tagBankId = const Value.absent(),
+    this.termBankId = const Value.absent(),
+  });
+  TermBankV3_X_TagBankTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int tagBankId,
+    required int termBankId,
+  }) : tagBankId = Value(tagBankId),
+       termBankId = Value(termBankId);
+  static Insertable<TermBankV3_X_TagBankTableData> custom({
+    Expression<int>? id,
+    Expression<int>? tagBankId,
+    Expression<int>? termBankId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (tagBankId != null) 'tag_bank_id': tagBankId,
+      if (termBankId != null) 'term_bank_id': termBankId,
+    });
+  }
+
+  TermBankV3_X_TagBankTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? tagBankId,
+    Value<int>? termBankId,
+  }) {
+    return TermBankV3_X_TagBankTableCompanion(
+      id: id ?? this.id,
+      tagBankId: tagBankId ?? this.tagBankId,
+      termBankId: termBankId ?? this.termBankId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (tagBankId.present) {
+      map['tag_bank_id'] = Variable<int>(tagBankId.value);
+    }
+    if (termBankId.present) {
+      map['term_bank_id'] = Variable<int>(termBankId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermBankV3_X_TagBankTableCompanion(')
+          ..write('id: $id, ')
+          ..write('tagBankId: $tagBankId, ')
+          ..write('termBankId: $termBankId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class TermBankV3EntryViewData extends DataClass {
+  final int id;
+  final int indexId;
   final String? term;
   final String? reading;
   final String definitionTags;
@@ -9533,8 +8546,9 @@ class TermBankV3SearchViewData extends DataClass {
   final Object? definitionOrder;
   final int sequenceNumber;
   final String tags;
-  const TermBankV3SearchViewData({
+  const TermBankV3EntryViewData({
     required this.id,
+    required this.indexId,
     this.term,
     this.reading,
     required this.definitionTags,
@@ -9545,13 +8559,14 @@ class TermBankV3SearchViewData extends DataClass {
     required this.sequenceNumber,
     required this.tags,
   });
-  factory TermBankV3SearchViewData.fromJson(
+  factory TermBankV3EntryViewData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermBankV3SearchViewData(
+    return TermBankV3EntryViewData(
       id: serializer.fromJson<int>(json['id']),
+      indexId: serializer.fromJson<int>(json['indexId']),
       term: serializer.fromJson<String?>(json['term']),
       reading: serializer.fromJson<String?>(json['reading']),
       definitionTags: serializer.fromJson<String>(json['definition_tags']),
@@ -9568,6 +8583,7 @@ class TermBankV3SearchViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'indexId': serializer.toJson<int>(indexId),
       'term': serializer.toJson<String?>(term),
       'reading': serializer.toJson<String?>(reading),
       'definition_tags': serializer.toJson<String>(definitionTags),
@@ -9580,8 +8596,9 @@ class TermBankV3SearchViewData extends DataClass {
     };
   }
 
-  TermBankV3SearchViewData copyWith({
+  TermBankV3EntryViewData copyWith({
     int? id,
+    int? indexId,
     Value<String?> term = const Value.absent(),
     Value<String?> reading = const Value.absent(),
     String? definitionTags,
@@ -9591,8 +8608,9 @@ class TermBankV3SearchViewData extends DataClass {
     Value<Object?> definitionOrder = const Value.absent(),
     int? sequenceNumber,
     String? tags,
-  }) => TermBankV3SearchViewData(
+  }) => TermBankV3EntryViewData(
     id: id ?? this.id,
+    indexId: indexId ?? this.indexId,
     term: term.present ? term.value : this.term,
     reading: reading.present ? reading.value : this.reading,
     definitionTags: definitionTags ?? this.definitionTags,
@@ -9607,8 +8625,9 @@ class TermBankV3SearchViewData extends DataClass {
   );
   @override
   String toString() {
-    return (StringBuffer('TermBankV3SearchViewData(')
+    return (StringBuffer('TermBankV3EntryViewData(')
           ..write('id: $id, ')
+          ..write('indexId: $indexId, ')
           ..write('term: $term, ')
           ..write('reading: $reading, ')
           ..write('definitionTags: $definitionTags, ')
@@ -9625,6 +8644,7 @@ class TermBankV3SearchViewData extends DataClass {
   @override
   int get hashCode => Object.hash(
     id,
+    indexId,
     term,
     reading,
     definitionTags,
@@ -9638,8 +8658,9 @@ class TermBankV3SearchViewData extends DataClass {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is TermBankV3SearchViewData &&
+      (other is TermBankV3EntryViewData &&
           other.id == this.id &&
+          other.indexId == this.indexId &&
           other.term == this.term &&
           other.reading == this.reading &&
           other.definitionTags == this.definitionTags &&
@@ -9651,16 +8672,17 @@ class TermBankV3SearchViewData extends DataClass {
           other.tags == this.tags);
 }
 
-class TermBankV3SearchView
-    extends ViewInfo<TermBankV3SearchView, TermBankV3SearchViewData>
+class TermBankV3EntryView
+    extends ViewInfo<TermBankV3EntryView, TermBankV3EntryViewData>
     implements HasResultSet {
   final String? _alias;
   @override
   final _$DaKanjiDB attachedDatabase;
-  TermBankV3SearchView(this.attachedDatabase, [this._alias]);
+  TermBankV3EntryView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    indexId,
     term,
     reading,
     definitionTags,
@@ -9674,24 +8696,28 @@ class TermBankV3SearchView
   @override
   String get aliasedName => _alias ?? entityName;
   @override
-  String get entityName => 'term_bank_v3_search_view';
+  String get entityName => 'term_bank_v3_entry_view';
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_bank_v3_search_view AS SELECT TB3T.id, term, reading, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3DTT.definition_tag || \'"\'), \'\') || \']\' AS definition_tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3RIT.rule_identifier || \'"\'), \'\') || \']\' AS rule_identifiers, popularity, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || MT.definition || \'"\' ORDER BY j."key"), \'\') || \']\' AS definitions, definition_order, sequence_number, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', TagB3T.id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score)), \'\') || \']\' AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_x_definition_tag_table AS TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id LEFT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id LEFT JOIN term_bank_v3_x_rule_identifier_table AS TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id LEFT JOIN term_bank_v3_rule_identifier_table AS TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id LEFT JOIN term_bank_v3_x_definition_table AS TB3MRT ON TB3T.id = TB3MRT.term_bank_id LEFT JOIN definition_table AS MT ON TB3MRT.definition_id = MT.id JOIN json_each(TB3T.definition_order)AS j ON j.value = TB3MRT.definition_id LEFT JOIN term_bank_v3_x_tag_bank_table AS TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id LEFT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id GROUP BY TB3T.id',
+        'CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS SELECT TB3T.id, TB3T.index_id AS indexId, term, reading, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3DTT.definition_tag || \'"\'), \'\') || \']\' AS definition_tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || TB3RIT.rule_identifier || \'"\'), \'\') || \']\' AS rule_identifiers, popularity, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT \'"\' || MT.definition || \'"\' ORDER BY j."key"), \'\') || \']\' AS definitions, definition_order, sequence_number, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT CASE WHEN TagB3T.id IS NOT NULL THEN json_object(\'id\', TagB3T.id, \'indexId\', TagB3T.index_id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score) ELSE NULL END), \'\') || \']\' AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_x_definition_tag_table AS TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id LEFT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id LEFT JOIN term_bank_v3_x_rule_identifier_table AS TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id LEFT JOIN term_bank_v3_rule_identifier_table AS TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id LEFT JOIN term_bank_v3_x_definition_table AS TB3MRT ON TB3T.id = TB3MRT.term_bank_id LEFT JOIN definition_table AS MT ON TB3MRT.definition_id = MT.id JOIN json_each(TB3T.definition_order)AS j ON j.value = TB3MRT.definition_id LEFT JOIN term_bank_v3_x_tag_bank_table AS TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id LEFT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id GROUP BY TB3T.id',
   };
   @override
-  TermBankV3SearchView get asDslTable => this;
+  TermBankV3EntryView get asDslTable => this;
   @override
-  TermBankV3SearchViewData map(
+  TermBankV3EntryViewData map(
     Map<String, dynamic> data, {
     String? tablePrefix,
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermBankV3SearchViewData(
+    return TermBankV3EntryViewData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
+      )!,
+      indexId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}indexId'],
       )!,
       term: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -9736,6 +8762,12 @@ class TermBankV3SearchView
 
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
     'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
+    'indexId',
     aliasedName,
     false,
     type: DriftSqlType.int,
@@ -9796,8 +8828,8 @@ class TermBankV3SearchView
     type: DriftSqlType.string,
   );
   @override
-  TermBankV3SearchView createAlias(String alias) {
-    return TermBankV3SearchView(attachedDatabase, alias);
+  TermBankV3EntryView createAlias(String alias) {
+    return TermBankV3EntryView(attachedDatabase, alias);
   }
 
   @override
@@ -12590,6 +11622,1314 @@ class TermMetaBankV3EntryView
     'term_meta_bank_v3_type_table',
     'reading_table',
   };
+}
+
+class DictionarySearchViewData extends DataClass {
+  final int id;
+  final int indexId;
+  final String? term;
+  final String? reading;
+  final int popularity;
+  final int sequenceNumber;
+  final String definitionTags;
+  final String ruleIdentifiers;
+  final String definitions;
+  final String tags;
+  final String termMetaEntries;
+  const DictionarySearchViewData({
+    required this.id,
+    required this.indexId,
+    this.term,
+    this.reading,
+    required this.popularity,
+    required this.sequenceNumber,
+    required this.definitionTags,
+    required this.ruleIdentifiers,
+    required this.definitions,
+    required this.tags,
+    required this.termMetaEntries,
+  });
+  factory DictionarySearchViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DictionarySearchViewData(
+      id: serializer.fromJson<int>(json['id']),
+      indexId: serializer.fromJson<int>(json['indexId']),
+      term: serializer.fromJson<String?>(json['term']),
+      reading: serializer.fromJson<String?>(json['reading']),
+      popularity: serializer.fromJson<int>(json['popularity']),
+      sequenceNumber: serializer.fromJson<int>(json['sequenceNumber']),
+      definitionTags: serializer.fromJson<String>(json['definitionTags']),
+      ruleIdentifiers: serializer.fromJson<String>(json['ruleIdentifiers']),
+      definitions: serializer.fromJson<String>(json['definitions']),
+      tags: serializer.fromJson<String>(json['tags']),
+      termMetaEntries: serializer.fromJson<String>(json['termMetaEntries']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'indexId': serializer.toJson<int>(indexId),
+      'term': serializer.toJson<String?>(term),
+      'reading': serializer.toJson<String?>(reading),
+      'popularity': serializer.toJson<int>(popularity),
+      'sequenceNumber': serializer.toJson<int>(sequenceNumber),
+      'definitionTags': serializer.toJson<String>(definitionTags),
+      'ruleIdentifiers': serializer.toJson<String>(ruleIdentifiers),
+      'definitions': serializer.toJson<String>(definitions),
+      'tags': serializer.toJson<String>(tags),
+      'termMetaEntries': serializer.toJson<String>(termMetaEntries),
+    };
+  }
+
+  DictionarySearchViewData copyWith({
+    int? id,
+    int? indexId,
+    Value<String?> term = const Value.absent(),
+    Value<String?> reading = const Value.absent(),
+    int? popularity,
+    int? sequenceNumber,
+    String? definitionTags,
+    String? ruleIdentifiers,
+    String? definitions,
+    String? tags,
+    String? termMetaEntries,
+  }) => DictionarySearchViewData(
+    id: id ?? this.id,
+    indexId: indexId ?? this.indexId,
+    term: term.present ? term.value : this.term,
+    reading: reading.present ? reading.value : this.reading,
+    popularity: popularity ?? this.popularity,
+    sequenceNumber: sequenceNumber ?? this.sequenceNumber,
+    definitionTags: definitionTags ?? this.definitionTags,
+    ruleIdentifiers: ruleIdentifiers ?? this.ruleIdentifiers,
+    definitions: definitions ?? this.definitions,
+    tags: tags ?? this.tags,
+    termMetaEntries: termMetaEntries ?? this.termMetaEntries,
+  );
+  @override
+  String toString() {
+    return (StringBuffer('DictionarySearchViewData(')
+          ..write('id: $id, ')
+          ..write('indexId: $indexId, ')
+          ..write('term: $term, ')
+          ..write('reading: $reading, ')
+          ..write('popularity: $popularity, ')
+          ..write('sequenceNumber: $sequenceNumber, ')
+          ..write('definitionTags: $definitionTags, ')
+          ..write('ruleIdentifiers: $ruleIdentifiers, ')
+          ..write('definitions: $definitions, ')
+          ..write('tags: $tags, ')
+          ..write('termMetaEntries: $termMetaEntries')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    indexId,
+    term,
+    reading,
+    popularity,
+    sequenceNumber,
+    definitionTags,
+    ruleIdentifiers,
+    definitions,
+    tags,
+    termMetaEntries,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DictionarySearchViewData &&
+          other.id == this.id &&
+          other.indexId == this.indexId &&
+          other.term == this.term &&
+          other.reading == this.reading &&
+          other.popularity == this.popularity &&
+          other.sequenceNumber == this.sequenceNumber &&
+          other.definitionTags == this.definitionTags &&
+          other.ruleIdentifiers == this.ruleIdentifiers &&
+          other.definitions == this.definitions &&
+          other.tags == this.tags &&
+          other.termMetaEntries == this.termMetaEntries);
+}
+
+class DictionarySearchView
+    extends ViewInfo<DictionarySearchView, DictionarySearchViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  DictionarySearchView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    indexId,
+    term,
+    reading,
+    popularity,
+    sequenceNumber,
+    definitionTags,
+    ruleIdentifiers,
+    definitions,
+    tags,
+    termMetaEntries,
+  ];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'dictionary_search_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW IF NOT EXISTS dictionary_search_view AS SELECT Terms.id, Terms.indexId, Terms.term, Terms.reading, Terms.popularity, Terms.sequence_number AS sequenceNumber, Terms.definition_tags AS definitionTags, Terms.rule_identifiers AS ruleIdentifiers, Terms.definitions, Terms.tags, COALESce(JSON_GROUP_ARRAY(JSON_OBJECT(\'indexId\', Meta.indexId, \'term\', Meta.term, \'reading\', Meta.reading, \'type\', Meta.type, \'frequency\', Meta.frequency, \'frequencyDisplayValue\', Meta.frequencyDisplayValue, \'pitches\', JSON(Meta.pitchs), \'ipas\', JSON(Meta.ipas)))FILTER (WHERE Meta.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM term_bank_v3_entry_view AS Terms LEFT JOIN term_meta_bank_v3_entry_view AS Meta ON Terms.term = Meta.term AND Terms.reading = Meta.reading GROUP BY Terms.id, Terms.indexId, Terms.term, Terms.reading, Terms.popularity, Terms.sequence_number, Terms.definition_tags, Terms.rule_identifiers, Terms.definitions, Terms.tags',
+  };
+  @override
+  DictionarySearchView get asDslTable => this;
+  @override
+  DictionarySearchViewData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DictionarySearchViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      indexId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}indexId'],
+      )!,
+      term: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term'],
+      ),
+      reading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading'],
+      ),
+      popularity: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}popularity'],
+      )!,
+      sequenceNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sequenceNumber'],
+      )!,
+      definitionTags: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definitionTags'],
+      )!,
+      ruleIdentifiers: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ruleIdentifiers'],
+      )!,
+      definitions: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definitions'],
+      )!,
+      tags: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tags'],
+      )!,
+      termMetaEntries: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}termMetaEntries'],
+      )!,
+    );
+  }
+
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
+    'indexId',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> term = GeneratedColumn<String>(
+    'term',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
+    'reading',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<int> popularity = GeneratedColumn<int>(
+    'popularity',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> sequenceNumber = GeneratedColumn<int>(
+    'sequenceNumber',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> definitionTags = GeneratedColumn<String>(
+    'definitionTags',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> ruleIdentifiers = GeneratedColumn<String>(
+    'ruleIdentifiers',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> definitions = GeneratedColumn<String>(
+    'definitions',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> tags = GeneratedColumn<String>(
+    'tags',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> termMetaEntries = GeneratedColumn<String>(
+    'termMetaEntries',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  @override
+  DictionarySearchView createAlias(String alias) {
+    return DictionarySearchView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {
+    'term_bank_v3_table',
+    'term_table',
+    'reading_table',
+    'term_bank_v3_x_definition_tag_table',
+    'term_bank_v3_definition_tags_table',
+    'term_bank_v3_x_rule_identifier_table',
+    'term_bank_v3_rule_identifier_table',
+    'term_bank_v3_x_definition_table',
+    'definition_table',
+    'term_bank_v3_x_tag_bank_table',
+    'tag_bank_v3_table',
+    'term_meta_bank_v3_x_pitch_table',
+    'term_meta_bank_v3_pitch_table',
+    'term_meta_bank_v3_x_pitch_tag_table',
+    'term_meta_bank_v3_tag_table',
+    'term_meta_bank_v3_x_ipa_table',
+    'term_meta_bank_v3_ipa_table',
+    'term_meta_bank_v3_x_ipa_tag_table',
+    'term_meta_bank_v3_table',
+    'term_meta_bank_v3_type_table',
+  };
+}
+
+class ReadingSpellfix extends Table
+    with
+        TableInfo<ReadingSpellfix, ReadingSpellfixData>,
+        VirtualTableInfo<ReadingSpellfix, ReadingSpellfixData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  ReadingSpellfix(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _wordMeta = const VerificationMeta('word');
+  late final GeneratedColumn<String> word = GeneratedColumn<String>(
+    'word',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _rankMeta = const VerificationMeta('rank');
+  late final GeneratedColumn<int> rank = GeneratedColumn<int>(
+    'rank',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _distanceMeta = const VerificationMeta(
+    'distance',
+  );
+  late final GeneratedColumn<int> distance = GeneratedColumn<int>(
+    'distance',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _langidMeta = const VerificationMeta('langid');
+  late final GeneratedColumn<int> langid = GeneratedColumn<int>(
+    'langid',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _scoreMeta = const VerificationMeta('score');
+  late final GeneratedColumn<int> score = GeneratedColumn<int>(
+    'score',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _matchlenMeta = const VerificationMeta(
+    'matchlen',
+  );
+  late final GeneratedColumn<int> matchlen = GeneratedColumn<int>(
+    'matchlen',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    word,
+    rank,
+    distance,
+    langid,
+    score,
+    matchlen,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'reading_spellfix';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReadingSpellfixData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('word')) {
+      context.handle(
+        _wordMeta,
+        word.isAcceptableOrUnknown(data['word']!, _wordMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_wordMeta);
+    }
+    if (data.containsKey('rank')) {
+      context.handle(
+        _rankMeta,
+        rank.isAcceptableOrUnknown(data['rank']!, _rankMeta),
+      );
+    }
+    if (data.containsKey('distance')) {
+      context.handle(
+        _distanceMeta,
+        distance.isAcceptableOrUnknown(data['distance']!, _distanceMeta),
+      );
+    }
+    if (data.containsKey('langid')) {
+      context.handle(
+        _langidMeta,
+        langid.isAcceptableOrUnknown(data['langid']!, _langidMeta),
+      );
+    }
+    if (data.containsKey('score')) {
+      context.handle(
+        _scoreMeta,
+        score.isAcceptableOrUnknown(data['score']!, _scoreMeta),
+      );
+    }
+    if (data.containsKey('matchlen')) {
+      context.handle(
+        _matchlenMeta,
+        matchlen.isAcceptableOrUnknown(data['matchlen']!, _matchlenMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ReadingSpellfixData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReadingSpellfixData(
+      word: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}word'],
+      )!,
+      rank: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rank'],
+      ),
+      distance: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}distance'],
+      ),
+      langid: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}langid'],
+      ),
+      score: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}score'],
+      ),
+      matchlen: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}matchlen'],
+      ),
+    );
+  }
+
+  @override
+  ReadingSpellfix createAlias(String alias) {
+    return ReadingSpellfix(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'spellfix1(edit_cost_table=hiragana_spellfix_cost)';
+}
+
+class ReadingSpellfixData extends DataClass
+    implements Insertable<ReadingSpellfixData> {
+  final String word;
+  final int? rank;
+  final int? distance;
+  final int? langid;
+  final int? score;
+  final int? matchlen;
+  const ReadingSpellfixData({
+    required this.word,
+    this.rank,
+    this.distance,
+    this.langid,
+    this.score,
+    this.matchlen,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['word'] = Variable<String>(word);
+    if (!nullToAbsent || rank != null) {
+      map['rank'] = Variable<int>(rank);
+    }
+    if (!nullToAbsent || distance != null) {
+      map['distance'] = Variable<int>(distance);
+    }
+    if (!nullToAbsent || langid != null) {
+      map['langid'] = Variable<int>(langid);
+    }
+    if (!nullToAbsent || score != null) {
+      map['score'] = Variable<int>(score);
+    }
+    if (!nullToAbsent || matchlen != null) {
+      map['matchlen'] = Variable<int>(matchlen);
+    }
+    return map;
+  }
+
+  ReadingSpellfixCompanion toCompanion(bool nullToAbsent) {
+    return ReadingSpellfixCompanion(
+      word: Value(word),
+      rank: rank == null && nullToAbsent ? const Value.absent() : Value(rank),
+      distance: distance == null && nullToAbsent
+          ? const Value.absent()
+          : Value(distance),
+      langid: langid == null && nullToAbsent
+          ? const Value.absent()
+          : Value(langid),
+      score: score == null && nullToAbsent
+          ? const Value.absent()
+          : Value(score),
+      matchlen: matchlen == null && nullToAbsent
+          ? const Value.absent()
+          : Value(matchlen),
+    );
+  }
+
+  factory ReadingSpellfixData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReadingSpellfixData(
+      word: serializer.fromJson<String>(json['word']),
+      rank: serializer.fromJson<int?>(json['rank']),
+      distance: serializer.fromJson<int?>(json['distance']),
+      langid: serializer.fromJson<int?>(json['langid']),
+      score: serializer.fromJson<int?>(json['score']),
+      matchlen: serializer.fromJson<int?>(json['matchlen']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'word': serializer.toJson<String>(word),
+      'rank': serializer.toJson<int?>(rank),
+      'distance': serializer.toJson<int?>(distance),
+      'langid': serializer.toJson<int?>(langid),
+      'score': serializer.toJson<int?>(score),
+      'matchlen': serializer.toJson<int?>(matchlen),
+    };
+  }
+
+  ReadingSpellfixData copyWith({
+    String? word,
+    Value<int?> rank = const Value.absent(),
+    Value<int?> distance = const Value.absent(),
+    Value<int?> langid = const Value.absent(),
+    Value<int?> score = const Value.absent(),
+    Value<int?> matchlen = const Value.absent(),
+  }) => ReadingSpellfixData(
+    word: word ?? this.word,
+    rank: rank.present ? rank.value : this.rank,
+    distance: distance.present ? distance.value : this.distance,
+    langid: langid.present ? langid.value : this.langid,
+    score: score.present ? score.value : this.score,
+    matchlen: matchlen.present ? matchlen.value : this.matchlen,
+  );
+  ReadingSpellfixData copyWithCompanion(ReadingSpellfixCompanion data) {
+    return ReadingSpellfixData(
+      word: data.word.present ? data.word.value : this.word,
+      rank: data.rank.present ? data.rank.value : this.rank,
+      distance: data.distance.present ? data.distance.value : this.distance,
+      langid: data.langid.present ? data.langid.value : this.langid,
+      score: data.score.present ? data.score.value : this.score,
+      matchlen: data.matchlen.present ? data.matchlen.value : this.matchlen,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReadingSpellfixData(')
+          ..write('word: $word, ')
+          ..write('rank: $rank, ')
+          ..write('distance: $distance, ')
+          ..write('langid: $langid, ')
+          ..write('score: $score, ')
+          ..write('matchlen: $matchlen')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(word, rank, distance, langid, score, matchlen);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReadingSpellfixData &&
+          other.word == this.word &&
+          other.rank == this.rank &&
+          other.distance == this.distance &&
+          other.langid == this.langid &&
+          other.score == this.score &&
+          other.matchlen == this.matchlen);
+}
+
+class ReadingSpellfixCompanion extends UpdateCompanion<ReadingSpellfixData> {
+  final Value<String> word;
+  final Value<int?> rank;
+  final Value<int?> distance;
+  final Value<int?> langid;
+  final Value<int?> score;
+  final Value<int?> matchlen;
+  final Value<int> rowid;
+  const ReadingSpellfixCompanion({
+    this.word = const Value.absent(),
+    this.rank = const Value.absent(),
+    this.distance = const Value.absent(),
+    this.langid = const Value.absent(),
+    this.score = const Value.absent(),
+    this.matchlen = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ReadingSpellfixCompanion.insert({
+    required String word,
+    this.rank = const Value.absent(),
+    this.distance = const Value.absent(),
+    this.langid = const Value.absent(),
+    this.score = const Value.absent(),
+    this.matchlen = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : word = Value(word);
+  static Insertable<ReadingSpellfixData> custom({
+    Expression<String>? word,
+    Expression<int>? rank,
+    Expression<int>? distance,
+    Expression<int>? langid,
+    Expression<int>? score,
+    Expression<int>? matchlen,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (word != null) 'word': word,
+      if (rank != null) 'rank': rank,
+      if (distance != null) 'distance': distance,
+      if (langid != null) 'langid': langid,
+      if (score != null) 'score': score,
+      if (matchlen != null) 'matchlen': matchlen,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ReadingSpellfixCompanion copyWith({
+    Value<String>? word,
+    Value<int?>? rank,
+    Value<int?>? distance,
+    Value<int?>? langid,
+    Value<int?>? score,
+    Value<int?>? matchlen,
+    Value<int>? rowid,
+  }) {
+    return ReadingSpellfixCompanion(
+      word: word ?? this.word,
+      rank: rank ?? this.rank,
+      distance: distance ?? this.distance,
+      langid: langid ?? this.langid,
+      score: score ?? this.score,
+      matchlen: matchlen ?? this.matchlen,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (word.present) {
+      map['word'] = Variable<String>(word.value);
+    }
+    if (rank.present) {
+      map['rank'] = Variable<int>(rank.value);
+    }
+    if (distance.present) {
+      map['distance'] = Variable<int>(distance.value);
+    }
+    if (langid.present) {
+      map['langid'] = Variable<int>(langid.value);
+    }
+    if (score.present) {
+      map['score'] = Variable<int>(score.value);
+    }
+    if (matchlen.present) {
+      map['matchlen'] = Variable<int>(matchlen.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReadingSpellfixCompanion(')
+          ..write('word: $word, ')
+          ..write('rank: $rank, ')
+          ..write('distance: $distance, ')
+          ..write('langid: $langid, ')
+          ..write('score: $score, ')
+          ..write('matchlen: $matchlen, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class TermFts extends Table
+    with TableInfo<TermFts, TermFt>, VirtualTableInfo<TermFts, TermFt> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  TermFts(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _termMeta = const VerificationMeta('term');
+  late final GeneratedColumn<String> term = GeneratedColumn<String>(
+    'term',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _termTokensMeta = const VerificationMeta(
+    'termTokens',
+  );
+  late final GeneratedColumn<String> termTokens = GeneratedColumn<String>(
+    'term_tokens',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [term, termTokens];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_fts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TermFt> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('term')) {
+      context.handle(
+        _termMeta,
+        term.isAcceptableOrUnknown(data['term']!, _termMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termMeta);
+    }
+    if (data.containsKey('term_tokens')) {
+      context.handle(
+        _termTokensMeta,
+        termTokens.isAcceptableOrUnknown(data['term_tokens']!, _termTokensMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termTokensMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  TermFt map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermFt(
+      term: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term'],
+      )!,
+      termTokens: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_tokens'],
+      )!,
+    );
+  }
+
+  @override
+  TermFts createAlias(String alias) {
+    return TermFts(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(term, term_tokens, content=\'term_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
+}
+
+class TermFt extends DataClass implements Insertable<TermFt> {
+  final String term;
+  final String termTokens;
+  const TermFt({required this.term, required this.termTokens});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['term'] = Variable<String>(term);
+    map['term_tokens'] = Variable<String>(termTokens);
+    return map;
+  }
+
+  TermFtsCompanion toCompanion(bool nullToAbsent) {
+    return TermFtsCompanion(term: Value(term), termTokens: Value(termTokens));
+  }
+
+  factory TermFt.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermFt(
+      term: serializer.fromJson<String>(json['term']),
+      termTokens: serializer.fromJson<String>(json['term_tokens']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'term': serializer.toJson<String>(term),
+      'term_tokens': serializer.toJson<String>(termTokens),
+    };
+  }
+
+  TermFt copyWith({String? term, String? termTokens}) => TermFt(
+    term: term ?? this.term,
+    termTokens: termTokens ?? this.termTokens,
+  );
+  TermFt copyWithCompanion(TermFtsCompanion data) {
+    return TermFt(
+      term: data.term.present ? data.term.value : this.term,
+      termTokens: data.termTokens.present
+          ? data.termTokens.value
+          : this.termTokens,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermFt(')
+          ..write('term: $term, ')
+          ..write('termTokens: $termTokens')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(term, termTokens);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermFt &&
+          other.term == this.term &&
+          other.termTokens == this.termTokens);
+}
+
+class TermFtsCompanion extends UpdateCompanion<TermFt> {
+  final Value<String> term;
+  final Value<String> termTokens;
+  final Value<int> rowid;
+  const TermFtsCompanion({
+    this.term = const Value.absent(),
+    this.termTokens = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TermFtsCompanion.insert({
+    required String term,
+    required String termTokens,
+    this.rowid = const Value.absent(),
+  }) : term = Value(term),
+       termTokens = Value(termTokens);
+  static Insertable<TermFt> custom({
+    Expression<String>? term,
+    Expression<String>? termTokens,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (term != null) 'term': term,
+      if (termTokens != null) 'term_tokens': termTokens,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TermFtsCompanion copyWith({
+    Value<String>? term,
+    Value<String>? termTokens,
+    Value<int>? rowid,
+  }) {
+    return TermFtsCompanion(
+      term: term ?? this.term,
+      termTokens: termTokens ?? this.termTokens,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (term.present) {
+      map['term'] = Variable<String>(term.value);
+    }
+    if (termTokens.present) {
+      map['term_tokens'] = Variable<String>(termTokens.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermFtsCompanion(')
+          ..write('term: $term, ')
+          ..write('termTokens: $termTokens, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class ReadingFts extends Table
+    with
+        TableInfo<ReadingFts, ReadingFt>,
+        VirtualTableInfo<ReadingFts, ReadingFt> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  ReadingFts(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _readingMeta = const VerificationMeta(
+    'reading',
+  );
+  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
+    'reading',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [reading];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'reading_fts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReadingFt> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('reading')) {
+      context.handle(
+        _readingMeta,
+        reading.isAcceptableOrUnknown(data['reading']!, _readingMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_readingMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ReadingFt map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReadingFt(
+      reading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading'],
+      )!,
+    );
+  }
+
+  @override
+  ReadingFts createAlias(String alias) {
+    return ReadingFts(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(reading, content=\'reading_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
+}
+
+class ReadingFt extends DataClass implements Insertable<ReadingFt> {
+  final String reading;
+  const ReadingFt({required this.reading});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['reading'] = Variable<String>(reading);
+    return map;
+  }
+
+  ReadingFtsCompanion toCompanion(bool nullToAbsent) {
+    return ReadingFtsCompanion(reading: Value(reading));
+  }
+
+  factory ReadingFt.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReadingFt(reading: serializer.fromJson<String>(json['reading']));
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{'reading': serializer.toJson<String>(reading)};
+  }
+
+  ReadingFt copyWith({String? reading}) =>
+      ReadingFt(reading: reading ?? this.reading);
+  ReadingFt copyWithCompanion(ReadingFtsCompanion data) {
+    return ReadingFt(
+      reading: data.reading.present ? data.reading.value : this.reading,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReadingFt(')
+          ..write('reading: $reading')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => reading.hashCode;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReadingFt && other.reading == this.reading);
+}
+
+class ReadingFtsCompanion extends UpdateCompanion<ReadingFt> {
+  final Value<String> reading;
+  final Value<int> rowid;
+  const ReadingFtsCompanion({
+    this.reading = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ReadingFtsCompanion.insert({
+    required String reading,
+    this.rowid = const Value.absent(),
+  }) : reading = Value(reading);
+  static Insertable<ReadingFt> custom({
+    Expression<String>? reading,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (reading != null) 'reading': reading,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ReadingFtsCompanion copyWith({Value<String>? reading, Value<int>? rowid}) {
+    return ReadingFtsCompanion(
+      reading: reading ?? this.reading,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (reading.present) {
+      map['reading'] = Variable<String>(reading.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReadingFtsCompanion(')
+          ..write('reading: $reading, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class DefinitionFts extends Table
+    with
+        TableInfo<DefinitionFts, DefinitionFt>,
+        VirtualTableInfo<DefinitionFts, DefinitionFt> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  DefinitionFts(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _definitionMeta = const VerificationMeta(
+    'definition',
+  );
+  late final GeneratedColumn<String> definition = GeneratedColumn<String>(
+    'definition',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [definition];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'definition_fts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DefinitionFt> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('definition')) {
+      context.handle(
+        _definitionMeta,
+        definition.isAcceptableOrUnknown(data['definition']!, _definitionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_definitionMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  DefinitionFt map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DefinitionFt(
+      definition: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition'],
+      )!,
+    );
+  }
+
+  @override
+  DefinitionFts createAlias(String alias) {
+    return DefinitionFts(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(definition, content=\'definition_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
+}
+
+class DefinitionFt extends DataClass implements Insertable<DefinitionFt> {
+  final String definition;
+  const DefinitionFt({required this.definition});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['definition'] = Variable<String>(definition);
+    return map;
+  }
+
+  DefinitionFtsCompanion toCompanion(bool nullToAbsent) {
+    return DefinitionFtsCompanion(definition: Value(definition));
+  }
+
+  factory DefinitionFt.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DefinitionFt(
+      definition: serializer.fromJson<String>(json['definition']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'definition': serializer.toJson<String>(definition),
+    };
+  }
+
+  DefinitionFt copyWith({String? definition}) =>
+      DefinitionFt(definition: definition ?? this.definition);
+  DefinitionFt copyWithCompanion(DefinitionFtsCompanion data) {
+    return DefinitionFt(
+      definition: data.definition.present
+          ? data.definition.value
+          : this.definition,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DefinitionFt(')
+          ..write('definition: $definition')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => definition.hashCode;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DefinitionFt && other.definition == this.definition);
+}
+
+class DefinitionFtsCompanion extends UpdateCompanion<DefinitionFt> {
+  final Value<String> definition;
+  final Value<int> rowid;
+  const DefinitionFtsCompanion({
+    this.definition = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DefinitionFtsCompanion.insert({
+    required String definition,
+    this.rowid = const Value.absent(),
+  }) : definition = Value(definition);
+  static Insertable<DefinitionFt> custom({
+    Expression<String>? definition,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (definition != null) 'definition': definition,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DefinitionFtsCompanion copyWith({
+    Value<String>? definition,
+    Value<int>? rowid,
+  }) {
+    return DefinitionFtsCompanion(
+      definition: definition ?? this.definition,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (definition.present) {
+      map['definition'] = Variable<String>(definition.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DefinitionFtsCompanion(')
+          ..write('definition: $definition, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
 }
 
 class HiraganaSpellfixCost extends Table
@@ -15607,42 +15947,26 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       KanjiMetaBankV3EntryView(this);
   late final KanjiDictionarySearchView kanjiDictionarySearchView =
       KanjiDictionarySearchView(this);
-  late final ReadingSpellfix readingSpellfix = ReadingSpellfix(this);
   late final $TermTableTable termTable = $TermTableTable(this);
-  late final TermFts termFts = TermFts(this);
   late final $TermBankV3DefinitionJsonTableTable termBankV3DefinitionJsonTable =
       $TermBankV3DefinitionJsonTableTable(this);
   late final $TermBankV3TableTable termBankV3Table = $TermBankV3TableTable(
     this,
   );
-  late final ReadingFts readingFts = ReadingFts(this);
-  late final DefinitionFts definitionFts = DefinitionFts(this);
-  late final $TermBankV3_X_DefinitionTableTable termBankV3XDefinitionTable =
-      $TermBankV3_X_DefinitionTableTable(this);
   late final $TermBankV3DefinitionTagsTableTable termBankV3DefinitionTagsTable =
       $TermBankV3DefinitionTagsTableTable(this);
   late final $TermBankV3_X_DefinitionTagTableTable
   termBankV3XDefinitionTagTable = $TermBankV3_X_DefinitionTagTableTable(this);
-  late final $TermBankV3_X_TagBankTableTable termBankV3XTagBankTable =
-      $TermBankV3_X_TagBankTableTable(this);
   late final $TermBankV3RuleIdentifierTableTable termBankV3RuleIdentifierTable =
       $TermBankV3RuleIdentifierTableTable(this);
   late final $TermBankV3_X_RuleIdentifierTableTable
   termBankV3XRuleIdentifierTable = $TermBankV3_X_RuleIdentifierTableTable(this);
-  late final TermBankV3SearchView termBankV3SearchView = TermBankV3SearchView(
+  late final $TermBankV3_X_DefinitionTableTable termBankV3XDefinitionTable =
+      $TermBankV3_X_DefinitionTableTable(this);
+  late final $TermBankV3_X_TagBankTableTable termBankV3XTagBankTable =
+      $TermBankV3_X_TagBankTableTable(this);
+  late final TermBankV3EntryView termBankV3EntryView = TermBankV3EntryView(
     this,
-  );
-  late final Index name = Index(
-    'name',
-    'CREATE INDEX name ON tag_bank_v3_table (name)',
-  );
-  late final Index reading = Index(
-    'reading',
-    'CREATE INDEX reading ON reading_table (reading)',
-  );
-  late final Index term = Index(
-    'term',
-    'CREATE INDEX term ON term_table (term)',
   );
   late final $TermMetaBankV3PitchTableTable termMetaBankV3PitchTable =
       $TermMetaBankV3PitchTableTable(this);
@@ -15664,6 +15988,25 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       $TermMetaBankV3_X_IpaTagTableTable(this);
   late final TermMetaBankV3EntryView termMetaBankV3EntryView =
       TermMetaBankV3EntryView(this);
+  late final DictionarySearchView dictionarySearchView = DictionarySearchView(
+    this,
+  );
+  late final ReadingSpellfix readingSpellfix = ReadingSpellfix(this);
+  late final TermFts termFts = TermFts(this);
+  late final ReadingFts readingFts = ReadingFts(this);
+  late final DefinitionFts definitionFts = DefinitionFts(this);
+  late final Index name = Index(
+    'name',
+    'CREATE INDEX name ON tag_bank_v3_table (name)',
+  );
+  late final Index reading = Index(
+    'reading',
+    'CREATE INDEX reading ON reading_table (reading)',
+  );
+  late final Index term = Index(
+    'term',
+    'CREATE INDEX term ON term_table (term)',
+  );
   late final Index kanji = Index(
     'kanji',
     'CREATE INDEX kanji ON kanji_table (kanji)',
@@ -15805,7 +16148,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ).asyncMap(kanjiDictionarySearchView.mapFromRow);
   }
 
-  Selectable<DictionarySearchFts5DriftResult> dictionary_search_fts5_drift(
+  Selectable<DictionarySearchDriftResult> dictionary_search_drift(
     String query,
     int? spellfixDistance,
     int useGlob,
@@ -15814,7 +16157,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     String tagFilter,
   ) {
     return customSelect(
-      'WITH SpellfixSuggestions AS (SELECT word, distance FROM reading_spellfix WHERE word MATCH ?1 AND distance > 0 AND distance < ?2 AND ?3 = 0 ORDER BY distance LIMIT 10), FtsMatches AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE ?3 = 0 AND term_fts MATCH ?4 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE ?3 = 0 AND reading_fts MATCH ?4 UNION ALL SELECT DefJoin.term_bank_id, rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_fts AS FTS JOIN term_bank_v3_x_definition_table AS DefJoin ON FTS."rowid" = DefJoin.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE ?3 = 0 AND definition_fts MATCH ?4), GlobMatches AS (SELECT TB3T.id AS term_bank_id, 0 AS rank, TT.term AS matched_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_table AS TT JOIN term_bank_v3_table AS TB3T ON TT.id = TB3T.term_id WHERE ?3 = 1 AND TT.term GLOB ?1 UNION ALL SELECT TB3T.id AS term_bank_id, 0 AS rank, RT.reading AS matched_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_table AS RT JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id WHERE ?3 = 1 AND RT.reading GLOB ?1 UNION ALL SELECT DefJoin.term_bank_id, 0 AS rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_table AS DT JOIN term_bank_v3_x_definition_table AS DefJoin ON DT.id = DefJoin.definition_id WHERE ?3 = 1 AND DT.definition GLOB ?1), RankedIDs AS (SELECT * FROM FtsMatches UNION ALL SELECT * FROM GlobMatches UNION ALL SELECT TB3T.id AS term_bank_id, S.distance AS rank, RT.reading AS matched_text, 4 AS match_type_priority, 2 AS match_column_priority, S.word AS spellfix_suggestion FROM SpellfixSuggestions AS S JOIN reading_table AS RT ON S.word = RT.reading JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id), FilteredByPoS AS (SELECT T3XDT.term_bank_id FROM term_bank_v3_x_definition_tag_table AS T3XDT JOIN term_bank_v3_definition_tags_table AS T3DT ON T3DT.id = T3XDT.definition_tag_id WHERE LENGTH(?5) > 2 AND T3DT.definition_tag IN (SELECT value FROM json_each(?5)) GROUP BY T3XDT.term_bank_id), FilteredByTags AS (SELECT T3XT.term_bank_id FROM term_bank_v3_x_tag_bank_table AS T3XT JOIN tag_bank_v3_table AS T3T ON T3T.id = T3XT.tag_bank_id WHERE LENGTH(?6) > 2 AND T3T.name IN (SELECT value FROM json_each(?6)) GROUP BY T3XT.term_bank_id), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, matched_text, spellfix_suggestion FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs WHERE(LENGTH(?5) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByPoS))AND(LENGTH(?6) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByTags))) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, matched_text, R.match_type_priority, R.match_column_priority, R.spellfix_suggestion, V.* FROM term_bank_v3_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, V.popularity DESC, R.best_rank, LENGTH(R.matched_text)',
+      'WITH SpellfixSuggestions AS (SELECT word, distance FROM reading_spellfix WHERE word MATCH ?1 AND distance > 0 AND distance < ?2 AND ?3 = 0 ORDER BY distance LIMIT 10), FtsMatches AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE ?3 = 0 AND term_fts MATCH ?4 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE ?3 = 0 AND reading_fts MATCH ?4 UNION ALL SELECT DefJoin.term_bank_id, rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_fts AS FTS JOIN term_bank_v3_x_definition_table AS DefJoin ON FTS."rowid" = DefJoin.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE ?3 = 0 AND definition_fts MATCH ?4), GlobMatches AS (SELECT TB3T.id AS term_bank_id, 0 AS rank, TT.term AS matched_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_table AS TT JOIN term_bank_v3_table AS TB3T ON TT.id = TB3T.term_id WHERE ?3 = 1 AND TT.term GLOB ?1 UNION ALL SELECT TB3T.id AS term_bank_id, 0 AS rank, RT.reading AS matched_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_table AS RT JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id WHERE ?3 = 1 AND RT.reading GLOB ?1 UNION ALL SELECT DefJoin.term_bank_id, 0 AS rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_table AS DT JOIN term_bank_v3_x_definition_table AS DefJoin ON DT.id = DefJoin.definition_id WHERE ?3 = 1 AND DT.definition GLOB ?1), RankedIDs AS (SELECT * FROM FtsMatches UNION ALL SELECT * FROM GlobMatches UNION ALL SELECT TB3T.id AS term_bank_id, S.distance AS rank, RT.reading AS matched_text, 4 AS match_type_priority, 2 AS match_column_priority, S.word AS spellfix_suggestion FROM SpellfixSuggestions AS S JOIN reading_table AS RT ON S.word = RT.reading JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id), FilteredByPoS AS (SELECT T3XDT.term_bank_id FROM term_bank_v3_x_definition_tag_table AS T3XDT JOIN term_bank_v3_definition_tags_table AS T3DT ON T3DT.id = T3XDT.definition_tag_id WHERE LENGTH(?5) > 2 AND T3DT.definition_tag IN (SELECT value FROM json_each(?5)) GROUP BY T3XDT.term_bank_id), FilteredByTags AS (SELECT T3XT.term_bank_id FROM term_bank_v3_x_tag_bank_table AS T3XT JOIN tag_bank_v3_table AS T3T ON T3T.id = T3XT.tag_bank_id WHERE LENGTH(?6) > 2 AND T3T.name IN (SELECT value FROM json_each(?6)) GROUP BY T3XT.term_bank_id), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, matched_text, spellfix_suggestion FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs WHERE(LENGTH(?5) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByPoS))AND(LENGTH(?6) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByTags))) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, matched_text, R.match_type_priority, R.match_column_priority, R.spellfix_suggestion, V.* FROM dictionary_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, V.popularity DESC, R.best_rank, LENGTH(R.matched_text)',
       variables: [
         Variable<String>(query),
         Variable<int>(spellfixDistance),
@@ -15839,25 +16182,34 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         tagBankV3Table,
         termBankV3XRuleIdentifierTable,
         termBankV3RuleIdentifierTable,
+        termMetaBankV3XPitchTable,
+        termMetaBankV3PitchTable,
+        termMetaBankV3XPitchTagTable,
+        termMetaBankV3TagTable,
+        termMetaBankV3XIpaTable,
+        termMetaBankV3IpaTable,
+        termMetaBankV3XIpaTagTable,
+        termMetaBankV3Table,
+        termMetaBankV3TypeTable,
       },
     ).map(
-      (QueryRow row) => DictionarySearchFts5DriftResult(
+      (QueryRow row) => DictionarySearchDriftResult(
         fts5Rank: row.readNullable<double>('fts5_rank'),
         matchedText: row.read<String>('matched_text'),
         matchTypePriority: row.read<int>('match_type_priority'),
         matchColumnPriority: row.read<int>('match_column_priority'),
         spellfixSuggestion: row.readNullable<String>('spellfix_suggestion'),
         id: row.read<int>('id'),
+        indexId: row.read<int>('indexId'),
         term: row.readNullable<String>('term'),
         reading: row.readNullable<String>('reading'),
-        definitionTags: row.read<String>('definition_tags'),
-        ruleIdentifiers: row.read<String>('rule_identifiers'),
         popularity: row.read<int>('popularity'),
+        sequenceNumber: row.read<int>('sequenceNumber'),
+        definitionTags: row.read<String>('definitionTags'),
+        ruleIdentifiers: row.read<String>('ruleIdentifiers'),
         definitions: row.read<String>('definitions'),
-        definitionOrder: $TermBankV3TableTable.$converterdefinitionOrder
-            .fromSql(row.read<String>('definition_order')),
-        sequenceNumber: row.read<int>('sequence_number'),
         tags: row.read<String>('tags'),
+        termMetaEntries: row.read<String>('termMetaEntries'),
       ),
     );
   }
@@ -15876,13 +16228,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     );
   }
 
-  Selectable<TermBankV3SearchViewData> term_bank_v3_search_drift(
+  Selectable<TermBankV3EntryViewData> term_bank_v3_search_drift(
     String? query,
     int limit,
     int offset,
   ) {
     return customSelect(
-      'SELECT * FROM term_bank_v3_search_view WHERE term = ?1 LIMIT ?2 OFFSET ?3',
+      'SELECT * FROM term_bank_v3_entry_view WHERE term = ?1 LIMIT ?2 OFFSET ?3',
       variables: [
         Variable<String>(query),
         Variable<int>(limit),
@@ -15901,7 +16253,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         termBankV3XTagBankTable,
         tagBankV3Table,
       },
-    ).asyncMap(termBankV3SearchView.mapFromRow);
+    ).asyncMap(termBankV3EntryView.mapFromRow);
   }
 
   Selectable<TermMetaBankV3EntryViewData> term_meta_bank_v3_entry_search_drift(
@@ -16023,23 +16375,16 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     kanjiMetaBankV3Table,
     kanjiMetaBankV3EntryView,
     kanjiDictionarySearchView,
-    readingSpellfix,
     termTable,
-    termFts,
     termBankV3DefinitionJsonTable,
     termBankV3Table,
-    readingFts,
-    definitionFts,
-    termBankV3XDefinitionTable,
     termBankV3DefinitionTagsTable,
     termBankV3XDefinitionTagTable,
-    termBankV3XTagBankTable,
     termBankV3RuleIdentifierTable,
     termBankV3XRuleIdentifierTable,
-    termBankV3SearchView,
-    name,
-    reading,
-    term,
+    termBankV3XDefinitionTable,
+    termBankV3XTagBankTable,
+    termBankV3EntryView,
     termMetaBankV3PitchTable,
     termMetaBankV3TypeTable,
     termMetaBankV3Table,
@@ -16050,6 +16395,14 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termMetaBankV3XIpaTable,
     termMetaBankV3XIpaTagTable,
     termMetaBankV3EntryView,
+    dictionarySearchView,
+    readingSpellfix,
+    termFts,
+    readingFts,
+    definitionFts,
+    name,
+    reading,
+    term,
     kanji,
     hiraganaSpellfixCost,
     definitionTableAi,
@@ -24340,225 +24693,6 @@ typedef $$KanjiMetaBankV3TableTableProcessedTableManager =
       KanjiMetaBankV3TableData,
       PrefetchHooks Function({bool indexId, bool kanjiId, bool typeId})
     >;
-typedef $ReadingSpellfixCreateCompanionBuilder =
-    ReadingSpellfixCompanion Function({
-      required String word,
-      Value<int?> rank,
-      Value<int?> distance,
-      Value<int?> langid,
-      Value<int?> score,
-      Value<int?> matchlen,
-      Value<int> rowid,
-    });
-typedef $ReadingSpellfixUpdateCompanionBuilder =
-    ReadingSpellfixCompanion Function({
-      Value<String> word,
-      Value<int?> rank,
-      Value<int?> distance,
-      Value<int?> langid,
-      Value<int?> score,
-      Value<int?> matchlen,
-      Value<int> rowid,
-    });
-
-class $ReadingSpellfixFilterComposer
-    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
-  $ReadingSpellfixFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get word => $composableBuilder(
-    column: $table.word,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get rank => $composableBuilder(
-    column: $table.rank,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get distance => $composableBuilder(
-    column: $table.distance,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get langid => $composableBuilder(
-    column: $table.langid,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get score => $composableBuilder(
-    column: $table.score,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get matchlen => $composableBuilder(
-    column: $table.matchlen,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $ReadingSpellfixOrderingComposer
-    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
-  $ReadingSpellfixOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get word => $composableBuilder(
-    column: $table.word,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get rank => $composableBuilder(
-    column: $table.rank,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get distance => $composableBuilder(
-    column: $table.distance,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get langid => $composableBuilder(
-    column: $table.langid,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get score => $composableBuilder(
-    column: $table.score,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get matchlen => $composableBuilder(
-    column: $table.matchlen,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $ReadingSpellfixAnnotationComposer
-    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
-  $ReadingSpellfixAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get word =>
-      $composableBuilder(column: $table.word, builder: (column) => column);
-
-  GeneratedColumn<int> get rank =>
-      $composableBuilder(column: $table.rank, builder: (column) => column);
-
-  GeneratedColumn<int> get distance =>
-      $composableBuilder(column: $table.distance, builder: (column) => column);
-
-  GeneratedColumn<int> get langid =>
-      $composableBuilder(column: $table.langid, builder: (column) => column);
-
-  GeneratedColumn<int> get score =>
-      $composableBuilder(column: $table.score, builder: (column) => column);
-
-  GeneratedColumn<int> get matchlen =>
-      $composableBuilder(column: $table.matchlen, builder: (column) => column);
-}
-
-class $ReadingSpellfixTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          ReadingSpellfix,
-          ReadingSpellfixData,
-          $ReadingSpellfixFilterComposer,
-          $ReadingSpellfixOrderingComposer,
-          $ReadingSpellfixAnnotationComposer,
-          $ReadingSpellfixCreateCompanionBuilder,
-          $ReadingSpellfixUpdateCompanionBuilder,
-          (
-            ReadingSpellfixData,
-            BaseReferences<_$DaKanjiDB, ReadingSpellfix, ReadingSpellfixData>,
-          ),
-          ReadingSpellfixData,
-          PrefetchHooks Function()
-        > {
-  $ReadingSpellfixTableManager(_$DaKanjiDB db, ReadingSpellfix table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $ReadingSpellfixFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $ReadingSpellfixOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $ReadingSpellfixAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> word = const Value.absent(),
-                Value<int?> rank = const Value.absent(),
-                Value<int?> distance = const Value.absent(),
-                Value<int?> langid = const Value.absent(),
-                Value<int?> score = const Value.absent(),
-                Value<int?> matchlen = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => ReadingSpellfixCompanion(
-                word: word,
-                rank: rank,
-                distance: distance,
-                langid: langid,
-                score: score,
-                matchlen: matchlen,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String word,
-                Value<int?> rank = const Value.absent(),
-                Value<int?> distance = const Value.absent(),
-                Value<int?> langid = const Value.absent(),
-                Value<int?> score = const Value.absent(),
-                Value<int?> matchlen = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => ReadingSpellfixCompanion.insert(
-                word: word,
-                rank: rank,
-                distance: distance,
-                langid: langid,
-                score: score,
-                matchlen: matchlen,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $ReadingSpellfixProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      ReadingSpellfix,
-      ReadingSpellfixData,
-      $ReadingSpellfixFilterComposer,
-      $ReadingSpellfixOrderingComposer,
-      $ReadingSpellfixAnnotationComposer,
-      $ReadingSpellfixCreateCompanionBuilder,
-      $ReadingSpellfixUpdateCompanionBuilder,
-      (
-        ReadingSpellfixData,
-        BaseReferences<_$DaKanjiDB, ReadingSpellfix, ReadingSpellfixData>,
-      ),
-      ReadingSpellfixData,
-      PrefetchHooks Function()
-    >;
 typedef $$TermTableTableCreateCompanionBuilder =
     TermTableCompanion Function({
       Value<int> id,
@@ -24930,142 +25064,6 @@ typedef $$TermTableTableProcessedTableManager =
         bool termBankV3TableRefs,
         bool termMetaBankV3TableRefs,
       })
-    >;
-typedef $TermFtsCreateCompanionBuilder =
-    TermFtsCompanion Function({
-      required String term,
-      required String termTokens,
-      Value<int> rowid,
-    });
-typedef $TermFtsUpdateCompanionBuilder =
-    TermFtsCompanion Function({
-      Value<String> term,
-      Value<String> termTokens,
-      Value<int> rowid,
-    });
-
-class $TermFtsFilterComposer extends Composer<_$DaKanjiDB, TermFts> {
-  $TermFtsFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get term => $composableBuilder(
-    column: $table.term,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get termTokens => $composableBuilder(
-    column: $table.termTokens,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $TermFtsOrderingComposer extends Composer<_$DaKanjiDB, TermFts> {
-  $TermFtsOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get term => $composableBuilder(
-    column: $table.term,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get termTokens => $composableBuilder(
-    column: $table.termTokens,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $TermFtsAnnotationComposer extends Composer<_$DaKanjiDB, TermFts> {
-  $TermFtsAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get term =>
-      $composableBuilder(column: $table.term, builder: (column) => column);
-
-  GeneratedColumn<String> get termTokens => $composableBuilder(
-    column: $table.termTokens,
-    builder: (column) => column,
-  );
-}
-
-class $TermFtsTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          TermFts,
-          TermFt,
-          $TermFtsFilterComposer,
-          $TermFtsOrderingComposer,
-          $TermFtsAnnotationComposer,
-          $TermFtsCreateCompanionBuilder,
-          $TermFtsUpdateCompanionBuilder,
-          (TermFt, BaseReferences<_$DaKanjiDB, TermFts, TermFt>),
-          TermFt,
-          PrefetchHooks Function()
-        > {
-  $TermFtsTableManager(_$DaKanjiDB db, TermFts table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $TermFtsFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $TermFtsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $TermFtsAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> term = const Value.absent(),
-                Value<String> termTokens = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => TermFtsCompanion(
-                term: term,
-                termTokens: termTokens,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String term,
-                required String termTokens,
-                Value<int> rowid = const Value.absent(),
-              }) => TermFtsCompanion.insert(
-                term: term,
-                termTokens: termTokens,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $TermFtsProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      TermFts,
-      TermFt,
-      $TermFtsFilterComposer,
-      $TermFtsOrderingComposer,
-      $TermFtsAnnotationComposer,
-      $TermFtsCreateCompanionBuilder,
-      $TermFtsUpdateCompanionBuilder,
-      (TermFt, BaseReferences<_$DaKanjiDB, TermFts, TermFt>),
-      TermFt,
-      PrefetchHooks Function()
     >;
 typedef $$TermBankV3DefinitionJsonTableTableCreateCompanionBuilder =
     TermBankV3DefinitionJsonTableCompanion Function({
@@ -25463,34 +25461,6 @@ final class $$TermBankV3TableTableReferences
   }
 
   static MultiTypedResultKey<
-    $TermBankV3_X_DefinitionTableTable,
-    List<TermBankV3_X_DefinitionTableData>
-  >
-  _termBankV3XDefinitionTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termBankV3XDefinitionTable,
-        aliasName: $_aliasNameGenerator(
-          db.termBankV3Table.id,
-          db.termBankV3XDefinitionTable.termBankId,
-        ),
-      );
-
-  $$TermBankV3_X_DefinitionTableTableProcessedTableManager
-  get termBankV3XDefinitionTableRefs {
-    final manager = $$TermBankV3_X_DefinitionTableTableTableManager(
-      $_db,
-      $_db.termBankV3XDefinitionTable,
-    ).filter((f) => f.termBankId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _termBankV3XDefinitionTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
     $TermBankV3_X_DefinitionTagTableTable,
     List<TermBankV3_X_DefinitionTagTableData>
   >
@@ -25519,34 +25489,6 @@ final class $$TermBankV3TableTableReferences
   }
 
   static MultiTypedResultKey<
-    $TermBankV3_X_TagBankTableTable,
-    List<TermBankV3_X_TagBankTableData>
-  >
-  _termBankV3XTagBankTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termBankV3XTagBankTable,
-        aliasName: $_aliasNameGenerator(
-          db.termBankV3Table.id,
-          db.termBankV3XTagBankTable.termBankId,
-        ),
-      );
-
-  $$TermBankV3_X_TagBankTableTableProcessedTableManager
-  get termBankV3XTagBankTableRefs {
-    final manager = $$TermBankV3_X_TagBankTableTableTableManager(
-      $_db,
-      $_db.termBankV3XTagBankTable,
-    ).filter((f) => f.termBankId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _termBankV3XTagBankTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
     $TermBankV3_X_RuleIdentifierTableTable,
     List<TermBankV3_X_RuleIdentifierTableData>
   >
@@ -25568,6 +25510,62 @@ final class $$TermBankV3TableTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _termBankV3XRuleIdentifierTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $TermBankV3_X_DefinitionTableTable,
+    List<TermBankV3_X_DefinitionTableData>
+  >
+  _termBankV3XDefinitionTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.termBankV3XDefinitionTable,
+        aliasName: $_aliasNameGenerator(
+          db.termBankV3Table.id,
+          db.termBankV3XDefinitionTable.termBankId,
+        ),
+      );
+
+  $$TermBankV3_X_DefinitionTableTableProcessedTableManager
+  get termBankV3XDefinitionTableRefs {
+    final manager = $$TermBankV3_X_DefinitionTableTableTableManager(
+      $_db,
+      $_db.termBankV3XDefinitionTable,
+    ).filter((f) => f.termBankId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _termBankV3XDefinitionTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $TermBankV3_X_TagBankTableTable,
+    List<TermBankV3_X_TagBankTableData>
+  >
+  _termBankV3XTagBankTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.termBankV3XTagBankTable,
+        aliasName: $_aliasNameGenerator(
+          db.termBankV3Table.id,
+          db.termBankV3XTagBankTable.termBankId,
+        ),
+      );
+
+  $$TermBankV3_X_TagBankTableTableProcessedTableManager
+  get termBankV3XTagBankTableRefs {
+    final manager = $$TermBankV3_X_TagBankTableTableTableManager(
+      $_db,
+      $_db.termBankV3XTagBankTable,
+    ).filter((f) => f.termBankId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _termBankV3XTagBankTableRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -25698,35 +25696,6 @@ class $$TermBankV3TableTableFilterComposer
     return composer;
   }
 
-  Expression<bool> termBankV3XDefinitionTableRefs(
-    Expression<bool> Function(
-      $$TermBankV3_X_DefinitionTableTableFilterComposer f,
-    )
-    f,
-  ) {
-    final $$TermBankV3_X_DefinitionTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3XDefinitionTable,
-          getReferencedColumn: (t) => t.termBankId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3_X_DefinitionTableTableFilterComposer(
-                $db: $db,
-                $table: $db.termBankV3XDefinitionTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
   Expression<bool> termBankV3XDefinitionTagTableRefs(
     Expression<bool> Function(
       $$TermBankV3_X_DefinitionTagTableTableFilterComposer f,
@@ -25756,33 +25725,6 @@ class $$TermBankV3TableTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> termBankV3XTagBankTableRefs(
-    Expression<bool> Function($$TermBankV3_X_TagBankTableTableFilterComposer f)
-    f,
-  ) {
-    final $$TermBankV3_X_TagBankTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3XTagBankTable,
-          getReferencedColumn: (t) => t.termBankId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3_X_TagBankTableTableFilterComposer(
-                $db: $db,
-                $table: $db.termBankV3XTagBankTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
   Expression<bool> termBankV3XRuleIdentifierTableRefs(
     Expression<bool> Function(
       $$TermBankV3_X_RuleIdentifierTableTableFilterComposer f,
@@ -25803,6 +25745,62 @@ class $$TermBankV3TableTableFilterComposer
               }) => $$TermBankV3_X_RuleIdentifierTableTableFilterComposer(
                 $db: $db,
                 $table: $db.termBankV3XRuleIdentifierTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> termBankV3XDefinitionTableRefs(
+    Expression<bool> Function(
+      $$TermBankV3_X_DefinitionTableTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$TermBankV3_X_DefinitionTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.termBankV3XDefinitionTable,
+          getReferencedColumn: (t) => t.termBankId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3_X_DefinitionTableTableFilterComposer(
+                $db: $db,
+                $table: $db.termBankV3XDefinitionTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> termBankV3XTagBankTableRefs(
+    Expression<bool> Function($$TermBankV3_X_TagBankTableTableFilterComposer f)
+    f,
+  ) {
+    final $$TermBankV3_X_TagBankTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.termBankV3XTagBankTable,
+          getReferencedColumn: (t) => t.termBankId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3_X_TagBankTableTableFilterComposer(
+                $db: $db,
+                $table: $db.termBankV3XTagBankTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -26057,35 +26055,6 @@ class $$TermBankV3TableTableAnnotationComposer
     return composer;
   }
 
-  Expression<T> termBankV3XDefinitionTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$TermBankV3_X_DefinitionTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$TermBankV3_X_DefinitionTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3XDefinitionTable,
-          getReferencedColumn: (t) => t.termBankId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3_X_DefinitionTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.termBankV3XDefinitionTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
   Expression<T> termBankV3XDefinitionTagTableRefs<T extends Object>(
     Expression<T> Function(
       $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer a,
@@ -26106,33 +26075,6 @@ class $$TermBankV3TableTableAnnotationComposer
               }) => $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer(
                 $db: $db,
                 $table: $db.termBankV3XDefinitionTagTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
-  Expression<T> termBankV3XTagBankTableRefs<T extends Object>(
-    Expression<T> Function($$TermBankV3_X_TagBankTableTableAnnotationComposer a)
-    f,
-  ) {
-    final $$TermBankV3_X_TagBankTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3XTagBankTable,
-          getReferencedColumn: (t) => t.termBankId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3_X_TagBankTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.termBankV3XTagBankTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -26170,6 +26112,62 @@ class $$TermBankV3TableTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> termBankV3XDefinitionTableRefs<T extends Object>(
+    Expression<T> Function(
+      $$TermBankV3_X_DefinitionTableTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$TermBankV3_X_DefinitionTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.termBankV3XDefinitionTable,
+          getReferencedColumn: (t) => t.termBankId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3_X_DefinitionTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.termBankV3XDefinitionTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> termBankV3XTagBankTableRefs<T extends Object>(
+    Expression<T> Function($$TermBankV3_X_TagBankTableTableAnnotationComposer a)
+    f,
+  ) {
+    final $$TermBankV3_X_TagBankTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.termBankV3XTagBankTable,
+          getReferencedColumn: (t) => t.termBankId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3_X_TagBankTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.termBankV3XTagBankTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$TermBankV3TableTableTableManager
@@ -26190,10 +26188,10 @@ class $$TermBankV3TableTableTableManager
             bool termId,
             bool definitionJsonId,
             bool readingId,
-            bool termBankV3XDefinitionTableRefs,
             bool termBankV3XDefinitionTagTableRefs,
-            bool termBankV3XTagBankTableRefs,
             bool termBankV3XRuleIdentifierTableRefs,
+            bool termBankV3XDefinitionTableRefs,
+            bool termBankV3XTagBankTableRefs,
           })
         > {
   $$TermBankV3TableTableTableManager(
@@ -26263,21 +26261,21 @@ class $$TermBankV3TableTableTableManager
                 termId = false,
                 definitionJsonId = false,
                 readingId = false,
-                termBankV3XDefinitionTableRefs = false,
                 termBankV3XDefinitionTagTableRefs = false,
-                termBankV3XTagBankTableRefs = false,
                 termBankV3XRuleIdentifierTableRefs = false,
+                termBankV3XDefinitionTableRefs = false,
+                termBankV3XTagBankTableRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
-                    if (termBankV3XDefinitionTableRefs)
-                      db.termBankV3XDefinitionTable,
                     if (termBankV3XDefinitionTagTableRefs)
                       db.termBankV3XDefinitionTagTable,
-                    if (termBankV3XTagBankTableRefs) db.termBankV3XTagBankTable,
                     if (termBankV3XRuleIdentifierTableRefs)
                       db.termBankV3XRuleIdentifierTable,
+                    if (termBankV3XDefinitionTableRefs)
+                      db.termBankV3XDefinitionTable,
+                    if (termBankV3XTagBankTableRefs) db.termBankV3XTagBankTable,
                   ],
                   addJoins:
                       <
@@ -26360,27 +26358,6 @@ class $$TermBankV3TableTableTableManager
                       },
                   getPrefetchedDataCallback: (items) async {
                     return [
-                      if (termBankV3XDefinitionTableRefs)
-                        await $_getPrefetchedData<
-                          TermBankV3TableData,
-                          $TermBankV3TableTable,
-                          TermBankV3_X_DefinitionTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$TermBankV3TableTableReferences
-                              ._termBankV3XDefinitionTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$TermBankV3TableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).termBankV3XDefinitionTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.termBankId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
                       if (termBankV3XDefinitionTagTableRefs)
                         await $_getPrefetchedData<
                           TermBankV3TableData,
@@ -26402,27 +26379,6 @@ class $$TermBankV3TableTableTableManager
                               ),
                           typedResults: items,
                         ),
-                      if (termBankV3XTagBankTableRefs)
-                        await $_getPrefetchedData<
-                          TermBankV3TableData,
-                          $TermBankV3TableTable,
-                          TermBankV3_X_TagBankTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$TermBankV3TableTableReferences
-                              ._termBankV3XTagBankTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$TermBankV3TableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).termBankV3XTagBankTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.termBankId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
                       if (termBankV3XRuleIdentifierTableRefs)
                         await $_getPrefetchedData<
                           TermBankV3TableData,
@@ -26438,6 +26394,48 @@ class $$TermBankV3TableTableTableManager
                                 table,
                                 p0,
                               ).termBankV3XRuleIdentifierTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.termBankId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (termBankV3XDefinitionTableRefs)
+                        await $_getPrefetchedData<
+                          TermBankV3TableData,
+                          $TermBankV3TableTable,
+                          TermBankV3_X_DefinitionTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TermBankV3TableTableReferences
+                              ._termBankV3XDefinitionTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TermBankV3TableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).termBankV3XDefinitionTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.termBankId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (termBankV3XTagBankTableRefs)
+                        await $_getPrefetchedData<
+                          TermBankV3TableData,
+                          $TermBankV3TableTable,
+                          TermBankV3_X_TagBankTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TermBankV3TableTableReferences
+                              ._termBankV3XTagBankTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TermBankV3TableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).termBankV3XTagBankTableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.termBankId == item.id,
@@ -26469,634 +26467,11 @@ typedef $$TermBankV3TableTableProcessedTableManager =
         bool termId,
         bool definitionJsonId,
         bool readingId,
-        bool termBankV3XDefinitionTableRefs,
         bool termBankV3XDefinitionTagTableRefs,
-        bool termBankV3XTagBankTableRefs,
         bool termBankV3XRuleIdentifierTableRefs,
+        bool termBankV3XDefinitionTableRefs,
+        bool termBankV3XTagBankTableRefs,
       })
-    >;
-typedef $ReadingFtsCreateCompanionBuilder =
-    ReadingFtsCompanion Function({required String reading, Value<int> rowid});
-typedef $ReadingFtsUpdateCompanionBuilder =
-    ReadingFtsCompanion Function({Value<String> reading, Value<int> rowid});
-
-class $ReadingFtsFilterComposer extends Composer<_$DaKanjiDB, ReadingFts> {
-  $ReadingFtsFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get reading => $composableBuilder(
-    column: $table.reading,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $ReadingFtsOrderingComposer extends Composer<_$DaKanjiDB, ReadingFts> {
-  $ReadingFtsOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get reading => $composableBuilder(
-    column: $table.reading,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $ReadingFtsAnnotationComposer extends Composer<_$DaKanjiDB, ReadingFts> {
-  $ReadingFtsAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get reading =>
-      $composableBuilder(column: $table.reading, builder: (column) => column);
-}
-
-class $ReadingFtsTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          ReadingFts,
-          ReadingFt,
-          $ReadingFtsFilterComposer,
-          $ReadingFtsOrderingComposer,
-          $ReadingFtsAnnotationComposer,
-          $ReadingFtsCreateCompanionBuilder,
-          $ReadingFtsUpdateCompanionBuilder,
-          (ReadingFt, BaseReferences<_$DaKanjiDB, ReadingFts, ReadingFt>),
-          ReadingFt,
-          PrefetchHooks Function()
-        > {
-  $ReadingFtsTableManager(_$DaKanjiDB db, ReadingFts table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $ReadingFtsFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $ReadingFtsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $ReadingFtsAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> reading = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => ReadingFtsCompanion(reading: reading, rowid: rowid),
-          createCompanionCallback:
-              ({
-                required String reading,
-                Value<int> rowid = const Value.absent(),
-              }) => ReadingFtsCompanion.insert(reading: reading, rowid: rowid),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $ReadingFtsProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      ReadingFts,
-      ReadingFt,
-      $ReadingFtsFilterComposer,
-      $ReadingFtsOrderingComposer,
-      $ReadingFtsAnnotationComposer,
-      $ReadingFtsCreateCompanionBuilder,
-      $ReadingFtsUpdateCompanionBuilder,
-      (ReadingFt, BaseReferences<_$DaKanjiDB, ReadingFts, ReadingFt>),
-      ReadingFt,
-      PrefetchHooks Function()
-    >;
-typedef $DefinitionFtsCreateCompanionBuilder =
-    DefinitionFtsCompanion Function({
-      required String definition,
-      Value<int> rowid,
-    });
-typedef $DefinitionFtsUpdateCompanionBuilder =
-    DefinitionFtsCompanion Function({
-      Value<String> definition,
-      Value<int> rowid,
-    });
-
-class $DefinitionFtsFilterComposer
-    extends Composer<_$DaKanjiDB, DefinitionFts> {
-  $DefinitionFtsFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get definition => $composableBuilder(
-    column: $table.definition,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $DefinitionFtsOrderingComposer
-    extends Composer<_$DaKanjiDB, DefinitionFts> {
-  $DefinitionFtsOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get definition => $composableBuilder(
-    column: $table.definition,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $DefinitionFtsAnnotationComposer
-    extends Composer<_$DaKanjiDB, DefinitionFts> {
-  $DefinitionFtsAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get definition => $composableBuilder(
-    column: $table.definition,
-    builder: (column) => column,
-  );
-}
-
-class $DefinitionFtsTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          DefinitionFts,
-          DefinitionFt,
-          $DefinitionFtsFilterComposer,
-          $DefinitionFtsOrderingComposer,
-          $DefinitionFtsAnnotationComposer,
-          $DefinitionFtsCreateCompanionBuilder,
-          $DefinitionFtsUpdateCompanionBuilder,
-          (
-            DefinitionFt,
-            BaseReferences<_$DaKanjiDB, DefinitionFts, DefinitionFt>,
-          ),
-          DefinitionFt,
-          PrefetchHooks Function()
-        > {
-  $DefinitionFtsTableManager(_$DaKanjiDB db, DefinitionFts table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $DefinitionFtsFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $DefinitionFtsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $DefinitionFtsAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> definition = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) =>
-                  DefinitionFtsCompanion(definition: definition, rowid: rowid),
-          createCompanionCallback:
-              ({
-                required String definition,
-                Value<int> rowid = const Value.absent(),
-              }) => DefinitionFtsCompanion.insert(
-                definition: definition,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $DefinitionFtsProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      DefinitionFts,
-      DefinitionFt,
-      $DefinitionFtsFilterComposer,
-      $DefinitionFtsOrderingComposer,
-      $DefinitionFtsAnnotationComposer,
-      $DefinitionFtsCreateCompanionBuilder,
-      $DefinitionFtsUpdateCompanionBuilder,
-      (DefinitionFt, BaseReferences<_$DaKanjiDB, DefinitionFts, DefinitionFt>),
-      DefinitionFt,
-      PrefetchHooks Function()
-    >;
-typedef $$TermBankV3_X_DefinitionTableTableCreateCompanionBuilder =
-    TermBankV3_X_DefinitionTableCompanion Function({
-      Value<int> id,
-      required int definitionId,
-      required int termBankId,
-    });
-typedef $$TermBankV3_X_DefinitionTableTableUpdateCompanionBuilder =
-    TermBankV3_X_DefinitionTableCompanion Function({
-      Value<int> id,
-      Value<int> definitionId,
-      Value<int> termBankId,
-    });
-
-final class $$TermBankV3_X_DefinitionTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $TermBankV3_X_DefinitionTableTable,
-          TermBankV3_X_DefinitionTableData
-        > {
-  $$TermBankV3_X_DefinitionTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $DefinitionTableTable _definitionIdTable(_$DaKanjiDB db) =>
-      db.definitionTable.createAlias(
-        $_aliasNameGenerator(
-          db.termBankV3XDefinitionTable.definitionId,
-          db.definitionTable.id,
-        ),
-      );
-
-  $$DefinitionTableTableProcessedTableManager get definitionId {
-    final $_column = $_itemColumn<int>('definition_id')!;
-
-    final manager = $$DefinitionTableTableTableManager(
-      $_db,
-      $_db.definitionTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_definitionIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $TermBankV3TableTable _termBankIdTable(_$DaKanjiDB db) =>
-      db.termBankV3Table.createAlias(
-        $_aliasNameGenerator(
-          db.termBankV3XDefinitionTable.termBankId,
-          db.termBankV3Table.id,
-        ),
-      );
-
-  $$TermBankV3TableTableProcessedTableManager get termBankId {
-    final $_column = $_itemColumn<int>('term_bank_id')!;
-
-    final manager = $$TermBankV3TableTableTableManager(
-      $_db,
-      $_db.termBankV3Table,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_termBankIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$TermBankV3_X_DefinitionTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTableTable> {
-  $$TermBankV3_X_DefinitionTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$DefinitionTableTableFilterComposer get definitionId {
-    final $$DefinitionTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.definitionId,
-      referencedTable: $db.definitionTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$DefinitionTableTableFilterComposer(
-            $db: $db,
-            $table: $db.definitionTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermBankV3TableTableFilterComposer get termBankId {
-    final $$TermBankV3TableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termBankId,
-      referencedTable: $db.termBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermBankV3TableTableFilterComposer(
-            $db: $db,
-            $table: $db.termBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$TermBankV3_X_DefinitionTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTableTable> {
-  $$TermBankV3_X_DefinitionTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$DefinitionTableTableOrderingComposer get definitionId {
-    final $$DefinitionTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.definitionId,
-      referencedTable: $db.definitionTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$DefinitionTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.definitionTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermBankV3TableTableOrderingComposer get termBankId {
-    final $$TermBankV3TableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termBankId,
-      referencedTable: $db.termBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermBankV3TableTableOrderingComposer(
-            $db: $db,
-            $table: $db.termBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$TermBankV3_X_DefinitionTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTableTable> {
-  $$TermBankV3_X_DefinitionTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  $$DefinitionTableTableAnnotationComposer get definitionId {
-    final $$DefinitionTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.definitionId,
-      referencedTable: $db.definitionTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$DefinitionTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.definitionTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermBankV3TableTableAnnotationComposer get termBankId {
-    final $$TermBankV3TableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termBankId,
-      referencedTable: $db.termBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermBankV3TableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.termBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$TermBankV3_X_DefinitionTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $TermBankV3_X_DefinitionTableTable,
-          TermBankV3_X_DefinitionTableData,
-          $$TermBankV3_X_DefinitionTableTableFilterComposer,
-          $$TermBankV3_X_DefinitionTableTableOrderingComposer,
-          $$TermBankV3_X_DefinitionTableTableAnnotationComposer,
-          $$TermBankV3_X_DefinitionTableTableCreateCompanionBuilder,
-          $$TermBankV3_X_DefinitionTableTableUpdateCompanionBuilder,
-          (
-            TermBankV3_X_DefinitionTableData,
-            $$TermBankV3_X_DefinitionTableTableReferences,
-          ),
-          TermBankV3_X_DefinitionTableData,
-          PrefetchHooks Function({bool definitionId, bool termBankId})
-        > {
-  $$TermBankV3_X_DefinitionTableTableTableManager(
-    _$DaKanjiDB db,
-    $TermBankV3_X_DefinitionTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$TermBankV3_X_DefinitionTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$TermBankV3_X_DefinitionTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$TermBankV3_X_DefinitionTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> definitionId = const Value.absent(),
-                Value<int> termBankId = const Value.absent(),
-              }) => TermBankV3_X_DefinitionTableCompanion(
-                id: id,
-                definitionId: definitionId,
-                termBankId: termBankId,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int definitionId,
-                required int termBankId,
-              }) => TermBankV3_X_DefinitionTableCompanion.insert(
-                id: id,
-                definitionId: definitionId,
-                termBankId: termBankId,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$TermBankV3_X_DefinitionTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({definitionId = false, termBankId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (definitionId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.definitionId,
-                                referencedTable:
-                                    $$TermBankV3_X_DefinitionTableTableReferences
-                                        ._definitionIdTable(db),
-                                referencedColumn:
-                                    $$TermBankV3_X_DefinitionTableTableReferences
-                                        ._definitionIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (termBankId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.termBankId,
-                                referencedTable:
-                                    $$TermBankV3_X_DefinitionTableTableReferences
-                                        ._termBankIdTable(db),
-                                referencedColumn:
-                                    $$TermBankV3_X_DefinitionTableTableReferences
-                                        ._termBankIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$TermBankV3_X_DefinitionTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $TermBankV3_X_DefinitionTableTable,
-      TermBankV3_X_DefinitionTableData,
-      $$TermBankV3_X_DefinitionTableTableFilterComposer,
-      $$TermBankV3_X_DefinitionTableTableOrderingComposer,
-      $$TermBankV3_X_DefinitionTableTableAnnotationComposer,
-      $$TermBankV3_X_DefinitionTableTableCreateCompanionBuilder,
-      $$TermBankV3_X_DefinitionTableTableUpdateCompanionBuilder,
-      (
-        TermBankV3_X_DefinitionTableData,
-        $$TermBankV3_X_DefinitionTableTableReferences,
-      ),
-      TermBankV3_X_DefinitionTableData,
-      PrefetchHooks Function({bool definitionId, bool termBankId})
     >;
 typedef $$TermBankV3DefinitionTagsTableTableCreateCompanionBuilder =
     TermBankV3DefinitionTagsTableCompanion Function({
@@ -27796,405 +27171,6 @@ typedef $$TermBankV3_X_DefinitionTagTableTableProcessedTableManager =
       TermBankV3_X_DefinitionTagTableData,
       PrefetchHooks Function({bool definitionTagId, bool termBankId})
     >;
-typedef $$TermBankV3_X_TagBankTableTableCreateCompanionBuilder =
-    TermBankV3_X_TagBankTableCompanion Function({
-      Value<int> id,
-      required int tagBankId,
-      required int termBankId,
-    });
-typedef $$TermBankV3_X_TagBankTableTableUpdateCompanionBuilder =
-    TermBankV3_X_TagBankTableCompanion Function({
-      Value<int> id,
-      Value<int> tagBankId,
-      Value<int> termBankId,
-    });
-
-final class $$TermBankV3_X_TagBankTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $TermBankV3_X_TagBankTableTable,
-          TermBankV3_X_TagBankTableData
-        > {
-  $$TermBankV3_X_TagBankTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $TagBankV3TableTable _tagBankIdTable(_$DaKanjiDB db) =>
-      db.tagBankV3Table.createAlias(
-        $_aliasNameGenerator(
-          db.termBankV3XTagBankTable.tagBankId,
-          db.tagBankV3Table.id,
-        ),
-      );
-
-  $$TagBankV3TableTableProcessedTableManager get tagBankId {
-    final $_column = $_itemColumn<int>('tag_bank_id')!;
-
-    final manager = $$TagBankV3TableTableTableManager(
-      $_db,
-      $_db.tagBankV3Table,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_tagBankIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $TermBankV3TableTable _termBankIdTable(_$DaKanjiDB db) =>
-      db.termBankV3Table.createAlias(
-        $_aliasNameGenerator(
-          db.termBankV3XTagBankTable.termBankId,
-          db.termBankV3Table.id,
-        ),
-      );
-
-  $$TermBankV3TableTableProcessedTableManager get termBankId {
-    final $_column = $_itemColumn<int>('term_bank_id')!;
-
-    final manager = $$TermBankV3TableTableTableManager(
-      $_db,
-      $_db.termBankV3Table,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_termBankIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$TermBankV3_X_TagBankTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_TagBankTableTable> {
-  $$TermBankV3_X_TagBankTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$TagBankV3TableTableFilterComposer get tagBankId {
-    final $$TagBankV3TableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.tagBankId,
-      referencedTable: $db.tagBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TagBankV3TableTableFilterComposer(
-            $db: $db,
-            $table: $db.tagBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermBankV3TableTableFilterComposer get termBankId {
-    final $$TermBankV3TableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termBankId,
-      referencedTable: $db.termBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermBankV3TableTableFilterComposer(
-            $db: $db,
-            $table: $db.termBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$TermBankV3_X_TagBankTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_TagBankTableTable> {
-  $$TermBankV3_X_TagBankTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$TagBankV3TableTableOrderingComposer get tagBankId {
-    final $$TagBankV3TableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.tagBankId,
-      referencedTable: $db.tagBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TagBankV3TableTableOrderingComposer(
-            $db: $db,
-            $table: $db.tagBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermBankV3TableTableOrderingComposer get termBankId {
-    final $$TermBankV3TableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termBankId,
-      referencedTable: $db.termBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermBankV3TableTableOrderingComposer(
-            $db: $db,
-            $table: $db.termBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$TermBankV3_X_TagBankTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_TagBankTableTable> {
-  $$TermBankV3_X_TagBankTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  $$TagBankV3TableTableAnnotationComposer get tagBankId {
-    final $$TagBankV3TableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.tagBankId,
-      referencedTable: $db.tagBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TagBankV3TableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.tagBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermBankV3TableTableAnnotationComposer get termBankId {
-    final $$TermBankV3TableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termBankId,
-      referencedTable: $db.termBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermBankV3TableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.termBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$TermBankV3_X_TagBankTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $TermBankV3_X_TagBankTableTable,
-          TermBankV3_X_TagBankTableData,
-          $$TermBankV3_X_TagBankTableTableFilterComposer,
-          $$TermBankV3_X_TagBankTableTableOrderingComposer,
-          $$TermBankV3_X_TagBankTableTableAnnotationComposer,
-          $$TermBankV3_X_TagBankTableTableCreateCompanionBuilder,
-          $$TermBankV3_X_TagBankTableTableUpdateCompanionBuilder,
-          (
-            TermBankV3_X_TagBankTableData,
-            $$TermBankV3_X_TagBankTableTableReferences,
-          ),
-          TermBankV3_X_TagBankTableData,
-          PrefetchHooks Function({bool tagBankId, bool termBankId})
-        > {
-  $$TermBankV3_X_TagBankTableTableTableManager(
-    _$DaKanjiDB db,
-    $TermBankV3_X_TagBankTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$TermBankV3_X_TagBankTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$TermBankV3_X_TagBankTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$TermBankV3_X_TagBankTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> tagBankId = const Value.absent(),
-                Value<int> termBankId = const Value.absent(),
-              }) => TermBankV3_X_TagBankTableCompanion(
-                id: id,
-                tagBankId: tagBankId,
-                termBankId: termBankId,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int tagBankId,
-                required int termBankId,
-              }) => TermBankV3_X_TagBankTableCompanion.insert(
-                id: id,
-                tagBankId: tagBankId,
-                termBankId: termBankId,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$TermBankV3_X_TagBankTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({tagBankId = false, termBankId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (tagBankId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.tagBankId,
-                                referencedTable:
-                                    $$TermBankV3_X_TagBankTableTableReferences
-                                        ._tagBankIdTable(db),
-                                referencedColumn:
-                                    $$TermBankV3_X_TagBankTableTableReferences
-                                        ._tagBankIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (termBankId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.termBankId,
-                                referencedTable:
-                                    $$TermBankV3_X_TagBankTableTableReferences
-                                        ._termBankIdTable(db),
-                                referencedColumn:
-                                    $$TermBankV3_X_TagBankTableTableReferences
-                                        ._termBankIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$TermBankV3_X_TagBankTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $TermBankV3_X_TagBankTableTable,
-      TermBankV3_X_TagBankTableData,
-      $$TermBankV3_X_TagBankTableTableFilterComposer,
-      $$TermBankV3_X_TagBankTableTableOrderingComposer,
-      $$TermBankV3_X_TagBankTableTableAnnotationComposer,
-      $$TermBankV3_X_TagBankTableTableCreateCompanionBuilder,
-      $$TermBankV3_X_TagBankTableTableUpdateCompanionBuilder,
-      (
-        TermBankV3_X_TagBankTableData,
-        $$TermBankV3_X_TagBankTableTableReferences,
-      ),
-      TermBankV3_X_TagBankTableData,
-      PrefetchHooks Function({bool tagBankId, bool termBankId})
-    >;
 typedef $$TermBankV3RuleIdentifierTableTableCreateCompanionBuilder =
     TermBankV3RuleIdentifierTableCompanion Function({
       Value<int> id,
@@ -28893,6 +27869,804 @@ typedef $$TermBankV3_X_RuleIdentifierTableTableProcessedTableManager =
       ),
       TermBankV3_X_RuleIdentifierTableData,
       PrefetchHooks Function({bool ruleIdentifierId, bool termBankId})
+    >;
+typedef $$TermBankV3_X_DefinitionTableTableCreateCompanionBuilder =
+    TermBankV3_X_DefinitionTableCompanion Function({
+      Value<int> id,
+      required int definitionId,
+      required int termBankId,
+    });
+typedef $$TermBankV3_X_DefinitionTableTableUpdateCompanionBuilder =
+    TermBankV3_X_DefinitionTableCompanion Function({
+      Value<int> id,
+      Value<int> definitionId,
+      Value<int> termBankId,
+    });
+
+final class $$TermBankV3_X_DefinitionTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $TermBankV3_X_DefinitionTableTable,
+          TermBankV3_X_DefinitionTableData
+        > {
+  $$TermBankV3_X_DefinitionTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $DefinitionTableTable _definitionIdTable(_$DaKanjiDB db) =>
+      db.definitionTable.createAlias(
+        $_aliasNameGenerator(
+          db.termBankV3XDefinitionTable.definitionId,
+          db.definitionTable.id,
+        ),
+      );
+
+  $$DefinitionTableTableProcessedTableManager get definitionId {
+    final $_column = $_itemColumn<int>('definition_id')!;
+
+    final manager = $$DefinitionTableTableTableManager(
+      $_db,
+      $_db.definitionTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_definitionIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TermBankV3TableTable _termBankIdTable(_$DaKanjiDB db) =>
+      db.termBankV3Table.createAlias(
+        $_aliasNameGenerator(
+          db.termBankV3XDefinitionTable.termBankId,
+          db.termBankV3Table.id,
+        ),
+      );
+
+  $$TermBankV3TableTableProcessedTableManager get termBankId {
+    final $_column = $_itemColumn<int>('term_bank_id')!;
+
+    final manager = $$TermBankV3TableTableTableManager(
+      $_db,
+      $_db.termBankV3Table,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_termBankIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$TermBankV3_X_DefinitionTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTableTable> {
+  $$TermBankV3_X_DefinitionTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$DefinitionTableTableFilterComposer get definitionId {
+    final $$DefinitionTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.definitionId,
+      referencedTable: $db.definitionTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DefinitionTableTableFilterComposer(
+            $db: $db,
+            $table: $db.definitionTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermBankV3TableTableFilterComposer get termBankId {
+    final $$TermBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termBankId,
+      referencedTable: $db.termBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.termBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TermBankV3_X_DefinitionTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTableTable> {
+  $$TermBankV3_X_DefinitionTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$DefinitionTableTableOrderingComposer get definitionId {
+    final $$DefinitionTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.definitionId,
+      referencedTable: $db.definitionTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DefinitionTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.definitionTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermBankV3TableTableOrderingComposer get termBankId {
+    final $$TermBankV3TableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termBankId,
+      referencedTable: $db.termBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3TableTableOrderingComposer(
+            $db: $db,
+            $table: $db.termBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TermBankV3_X_DefinitionTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTableTable> {
+  $$TermBankV3_X_DefinitionTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$DefinitionTableTableAnnotationComposer get definitionId {
+    final $$DefinitionTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.definitionId,
+      referencedTable: $db.definitionTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DefinitionTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.definitionTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermBankV3TableTableAnnotationComposer get termBankId {
+    final $$TermBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termBankId,
+      referencedTable: $db.termBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.termBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TermBankV3_X_DefinitionTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $TermBankV3_X_DefinitionTableTable,
+          TermBankV3_X_DefinitionTableData,
+          $$TermBankV3_X_DefinitionTableTableFilterComposer,
+          $$TermBankV3_X_DefinitionTableTableOrderingComposer,
+          $$TermBankV3_X_DefinitionTableTableAnnotationComposer,
+          $$TermBankV3_X_DefinitionTableTableCreateCompanionBuilder,
+          $$TermBankV3_X_DefinitionTableTableUpdateCompanionBuilder,
+          (
+            TermBankV3_X_DefinitionTableData,
+            $$TermBankV3_X_DefinitionTableTableReferences,
+          ),
+          TermBankV3_X_DefinitionTableData,
+          PrefetchHooks Function({bool definitionId, bool termBankId})
+        > {
+  $$TermBankV3_X_DefinitionTableTableTableManager(
+    _$DaKanjiDB db,
+    $TermBankV3_X_DefinitionTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermBankV3_X_DefinitionTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$TermBankV3_X_DefinitionTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$TermBankV3_X_DefinitionTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> definitionId = const Value.absent(),
+                Value<int> termBankId = const Value.absent(),
+              }) => TermBankV3_X_DefinitionTableCompanion(
+                id: id,
+                definitionId: definitionId,
+                termBankId: termBankId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int definitionId,
+                required int termBankId,
+              }) => TermBankV3_X_DefinitionTableCompanion.insert(
+                id: id,
+                definitionId: definitionId,
+                termBankId: termBankId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TermBankV3_X_DefinitionTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({definitionId = false, termBankId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (definitionId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.definitionId,
+                                referencedTable:
+                                    $$TermBankV3_X_DefinitionTableTableReferences
+                                        ._definitionIdTable(db),
+                                referencedColumn:
+                                    $$TermBankV3_X_DefinitionTableTableReferences
+                                        ._definitionIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (termBankId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.termBankId,
+                                referencedTable:
+                                    $$TermBankV3_X_DefinitionTableTableReferences
+                                        ._termBankIdTable(db),
+                                referencedColumn:
+                                    $$TermBankV3_X_DefinitionTableTableReferences
+                                        ._termBankIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TermBankV3_X_DefinitionTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $TermBankV3_X_DefinitionTableTable,
+      TermBankV3_X_DefinitionTableData,
+      $$TermBankV3_X_DefinitionTableTableFilterComposer,
+      $$TermBankV3_X_DefinitionTableTableOrderingComposer,
+      $$TermBankV3_X_DefinitionTableTableAnnotationComposer,
+      $$TermBankV3_X_DefinitionTableTableCreateCompanionBuilder,
+      $$TermBankV3_X_DefinitionTableTableUpdateCompanionBuilder,
+      (
+        TermBankV3_X_DefinitionTableData,
+        $$TermBankV3_X_DefinitionTableTableReferences,
+      ),
+      TermBankV3_X_DefinitionTableData,
+      PrefetchHooks Function({bool definitionId, bool termBankId})
+    >;
+typedef $$TermBankV3_X_TagBankTableTableCreateCompanionBuilder =
+    TermBankV3_X_TagBankTableCompanion Function({
+      Value<int> id,
+      required int tagBankId,
+      required int termBankId,
+    });
+typedef $$TermBankV3_X_TagBankTableTableUpdateCompanionBuilder =
+    TermBankV3_X_TagBankTableCompanion Function({
+      Value<int> id,
+      Value<int> tagBankId,
+      Value<int> termBankId,
+    });
+
+final class $$TermBankV3_X_TagBankTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $TermBankV3_X_TagBankTableTable,
+          TermBankV3_X_TagBankTableData
+        > {
+  $$TermBankV3_X_TagBankTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $TagBankV3TableTable _tagBankIdTable(_$DaKanjiDB db) =>
+      db.tagBankV3Table.createAlias(
+        $_aliasNameGenerator(
+          db.termBankV3XTagBankTable.tagBankId,
+          db.tagBankV3Table.id,
+        ),
+      );
+
+  $$TagBankV3TableTableProcessedTableManager get tagBankId {
+    final $_column = $_itemColumn<int>('tag_bank_id')!;
+
+    final manager = $$TagBankV3TableTableTableManager(
+      $_db,
+      $_db.tagBankV3Table,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_tagBankIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TermBankV3TableTable _termBankIdTable(_$DaKanjiDB db) =>
+      db.termBankV3Table.createAlias(
+        $_aliasNameGenerator(
+          db.termBankV3XTagBankTable.termBankId,
+          db.termBankV3Table.id,
+        ),
+      );
+
+  $$TermBankV3TableTableProcessedTableManager get termBankId {
+    final $_column = $_itemColumn<int>('term_bank_id')!;
+
+    final manager = $$TermBankV3TableTableTableManager(
+      $_db,
+      $_db.termBankV3Table,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_termBankIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$TermBankV3_X_TagBankTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3_X_TagBankTableTable> {
+  $$TermBankV3_X_TagBankTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$TagBankV3TableTableFilterComposer get tagBankId {
+    final $$TagBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tagBankId,
+      referencedTable: $db.tagBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.tagBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermBankV3TableTableFilterComposer get termBankId {
+    final $$TermBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termBankId,
+      referencedTable: $db.termBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.termBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TermBankV3_X_TagBankTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3_X_TagBankTableTable> {
+  $$TermBankV3_X_TagBankTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$TagBankV3TableTableOrderingComposer get tagBankId {
+    final $$TagBankV3TableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tagBankId,
+      referencedTable: $db.tagBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagBankV3TableTableOrderingComposer(
+            $db: $db,
+            $table: $db.tagBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermBankV3TableTableOrderingComposer get termBankId {
+    final $$TermBankV3TableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termBankId,
+      referencedTable: $db.termBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3TableTableOrderingComposer(
+            $db: $db,
+            $table: $db.termBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TermBankV3_X_TagBankTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3_X_TagBankTableTable> {
+  $$TermBankV3_X_TagBankTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$TagBankV3TableTableAnnotationComposer get tagBankId {
+    final $$TagBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tagBankId,
+      referencedTable: $db.tagBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tagBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermBankV3TableTableAnnotationComposer get termBankId {
+    final $$TermBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termBankId,
+      referencedTable: $db.termBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.termBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TermBankV3_X_TagBankTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $TermBankV3_X_TagBankTableTable,
+          TermBankV3_X_TagBankTableData,
+          $$TermBankV3_X_TagBankTableTableFilterComposer,
+          $$TermBankV3_X_TagBankTableTableOrderingComposer,
+          $$TermBankV3_X_TagBankTableTableAnnotationComposer,
+          $$TermBankV3_X_TagBankTableTableCreateCompanionBuilder,
+          $$TermBankV3_X_TagBankTableTableUpdateCompanionBuilder,
+          (
+            TermBankV3_X_TagBankTableData,
+            $$TermBankV3_X_TagBankTableTableReferences,
+          ),
+          TermBankV3_X_TagBankTableData,
+          PrefetchHooks Function({bool tagBankId, bool termBankId})
+        > {
+  $$TermBankV3_X_TagBankTableTableTableManager(
+    _$DaKanjiDB db,
+    $TermBankV3_X_TagBankTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermBankV3_X_TagBankTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$TermBankV3_X_TagBankTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$TermBankV3_X_TagBankTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> tagBankId = const Value.absent(),
+                Value<int> termBankId = const Value.absent(),
+              }) => TermBankV3_X_TagBankTableCompanion(
+                id: id,
+                tagBankId: tagBankId,
+                termBankId: termBankId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int tagBankId,
+                required int termBankId,
+              }) => TermBankV3_X_TagBankTableCompanion.insert(
+                id: id,
+                tagBankId: tagBankId,
+                termBankId: termBankId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TermBankV3_X_TagBankTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({tagBankId = false, termBankId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (tagBankId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.tagBankId,
+                                referencedTable:
+                                    $$TermBankV3_X_TagBankTableTableReferences
+                                        ._tagBankIdTable(db),
+                                referencedColumn:
+                                    $$TermBankV3_X_TagBankTableTableReferences
+                                        ._tagBankIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (termBankId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.termBankId,
+                                referencedTable:
+                                    $$TermBankV3_X_TagBankTableTableReferences
+                                        ._termBankIdTable(db),
+                                referencedColumn:
+                                    $$TermBankV3_X_TagBankTableTableReferences
+                                        ._termBankIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TermBankV3_X_TagBankTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $TermBankV3_X_TagBankTableTable,
+      TermBankV3_X_TagBankTableData,
+      $$TermBankV3_X_TagBankTableTableFilterComposer,
+      $$TermBankV3_X_TagBankTableTableOrderingComposer,
+      $$TermBankV3_X_TagBankTableTableAnnotationComposer,
+      $$TermBankV3_X_TagBankTableTableCreateCompanionBuilder,
+      $$TermBankV3_X_TagBankTableTableUpdateCompanionBuilder,
+      (
+        TermBankV3_X_TagBankTableData,
+        $$TermBankV3_X_TagBankTableTableReferences,
+      ),
+      TermBankV3_X_TagBankTableData,
+      PrefetchHooks Function({bool tagBankId, bool termBankId})
     >;
 typedef $$TermMetaBankV3PitchTableTableCreateCompanionBuilder =
     TermMetaBankV3PitchTableCompanion Function({
@@ -32891,6 +32665,585 @@ typedef $$TermMetaBankV3_X_IpaTagTableTableProcessedTableManager =
       TermMetaBankV3_X_IpaTagTableData,
       PrefetchHooks Function({bool ipaId, bool tagId})
     >;
+typedef $ReadingSpellfixCreateCompanionBuilder =
+    ReadingSpellfixCompanion Function({
+      required String word,
+      Value<int?> rank,
+      Value<int?> distance,
+      Value<int?> langid,
+      Value<int?> score,
+      Value<int?> matchlen,
+      Value<int> rowid,
+    });
+typedef $ReadingSpellfixUpdateCompanionBuilder =
+    ReadingSpellfixCompanion Function({
+      Value<String> word,
+      Value<int?> rank,
+      Value<int?> distance,
+      Value<int?> langid,
+      Value<int?> score,
+      Value<int?> matchlen,
+      Value<int> rowid,
+    });
+
+class $ReadingSpellfixFilterComposer
+    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
+  $ReadingSpellfixFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get word => $composableBuilder(
+    column: $table.word,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get rank => $composableBuilder(
+    column: $table.rank,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get distance => $composableBuilder(
+    column: $table.distance,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get langid => $composableBuilder(
+    column: $table.langid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get score => $composableBuilder(
+    column: $table.score,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get matchlen => $composableBuilder(
+    column: $table.matchlen,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $ReadingSpellfixOrderingComposer
+    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
+  $ReadingSpellfixOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get word => $composableBuilder(
+    column: $table.word,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get rank => $composableBuilder(
+    column: $table.rank,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get distance => $composableBuilder(
+    column: $table.distance,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get langid => $composableBuilder(
+    column: $table.langid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get score => $composableBuilder(
+    column: $table.score,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get matchlen => $composableBuilder(
+    column: $table.matchlen,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $ReadingSpellfixAnnotationComposer
+    extends Composer<_$DaKanjiDB, ReadingSpellfix> {
+  $ReadingSpellfixAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get word =>
+      $composableBuilder(column: $table.word, builder: (column) => column);
+
+  GeneratedColumn<int> get rank =>
+      $composableBuilder(column: $table.rank, builder: (column) => column);
+
+  GeneratedColumn<int> get distance =>
+      $composableBuilder(column: $table.distance, builder: (column) => column);
+
+  GeneratedColumn<int> get langid =>
+      $composableBuilder(column: $table.langid, builder: (column) => column);
+
+  GeneratedColumn<int> get score =>
+      $composableBuilder(column: $table.score, builder: (column) => column);
+
+  GeneratedColumn<int> get matchlen =>
+      $composableBuilder(column: $table.matchlen, builder: (column) => column);
+}
+
+class $ReadingSpellfixTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          ReadingSpellfix,
+          ReadingSpellfixData,
+          $ReadingSpellfixFilterComposer,
+          $ReadingSpellfixOrderingComposer,
+          $ReadingSpellfixAnnotationComposer,
+          $ReadingSpellfixCreateCompanionBuilder,
+          $ReadingSpellfixUpdateCompanionBuilder,
+          (
+            ReadingSpellfixData,
+            BaseReferences<_$DaKanjiDB, ReadingSpellfix, ReadingSpellfixData>,
+          ),
+          ReadingSpellfixData,
+          PrefetchHooks Function()
+        > {
+  $ReadingSpellfixTableManager(_$DaKanjiDB db, ReadingSpellfix table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $ReadingSpellfixFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $ReadingSpellfixOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $ReadingSpellfixAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> word = const Value.absent(),
+                Value<int?> rank = const Value.absent(),
+                Value<int?> distance = const Value.absent(),
+                Value<int?> langid = const Value.absent(),
+                Value<int?> score = const Value.absent(),
+                Value<int?> matchlen = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReadingSpellfixCompanion(
+                word: word,
+                rank: rank,
+                distance: distance,
+                langid: langid,
+                score: score,
+                matchlen: matchlen,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String word,
+                Value<int?> rank = const Value.absent(),
+                Value<int?> distance = const Value.absent(),
+                Value<int?> langid = const Value.absent(),
+                Value<int?> score = const Value.absent(),
+                Value<int?> matchlen = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReadingSpellfixCompanion.insert(
+                word: word,
+                rank: rank,
+                distance: distance,
+                langid: langid,
+                score: score,
+                matchlen: matchlen,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $ReadingSpellfixProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      ReadingSpellfix,
+      ReadingSpellfixData,
+      $ReadingSpellfixFilterComposer,
+      $ReadingSpellfixOrderingComposer,
+      $ReadingSpellfixAnnotationComposer,
+      $ReadingSpellfixCreateCompanionBuilder,
+      $ReadingSpellfixUpdateCompanionBuilder,
+      (
+        ReadingSpellfixData,
+        BaseReferences<_$DaKanjiDB, ReadingSpellfix, ReadingSpellfixData>,
+      ),
+      ReadingSpellfixData,
+      PrefetchHooks Function()
+    >;
+typedef $TermFtsCreateCompanionBuilder =
+    TermFtsCompanion Function({
+      required String term,
+      required String termTokens,
+      Value<int> rowid,
+    });
+typedef $TermFtsUpdateCompanionBuilder =
+    TermFtsCompanion Function({
+      Value<String> term,
+      Value<String> termTokens,
+      Value<int> rowid,
+    });
+
+class $TermFtsFilterComposer extends Composer<_$DaKanjiDB, TermFts> {
+  $TermFtsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get term => $composableBuilder(
+    column: $table.term,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $TermFtsOrderingComposer extends Composer<_$DaKanjiDB, TermFts> {
+  $TermFtsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get term => $composableBuilder(
+    column: $table.term,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $TermFtsAnnotationComposer extends Composer<_$DaKanjiDB, TermFts> {
+  $TermFtsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get term =>
+      $composableBuilder(column: $table.term, builder: (column) => column);
+
+  GeneratedColumn<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => column,
+  );
+}
+
+class $TermFtsTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          TermFts,
+          TermFt,
+          $TermFtsFilterComposer,
+          $TermFtsOrderingComposer,
+          $TermFtsAnnotationComposer,
+          $TermFtsCreateCompanionBuilder,
+          $TermFtsUpdateCompanionBuilder,
+          (TermFt, BaseReferences<_$DaKanjiDB, TermFts, TermFt>),
+          TermFt,
+          PrefetchHooks Function()
+        > {
+  $TermFtsTableManager(_$DaKanjiDB db, TermFts table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $TermFtsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $TermFtsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $TermFtsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> term = const Value.absent(),
+                Value<String> termTokens = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TermFtsCompanion(
+                term: term,
+                termTokens: termTokens,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String term,
+                required String termTokens,
+                Value<int> rowid = const Value.absent(),
+              }) => TermFtsCompanion.insert(
+                term: term,
+                termTokens: termTokens,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $TermFtsProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      TermFts,
+      TermFt,
+      $TermFtsFilterComposer,
+      $TermFtsOrderingComposer,
+      $TermFtsAnnotationComposer,
+      $TermFtsCreateCompanionBuilder,
+      $TermFtsUpdateCompanionBuilder,
+      (TermFt, BaseReferences<_$DaKanjiDB, TermFts, TermFt>),
+      TermFt,
+      PrefetchHooks Function()
+    >;
+typedef $ReadingFtsCreateCompanionBuilder =
+    ReadingFtsCompanion Function({required String reading, Value<int> rowid});
+typedef $ReadingFtsUpdateCompanionBuilder =
+    ReadingFtsCompanion Function({Value<String> reading, Value<int> rowid});
+
+class $ReadingFtsFilterComposer extends Composer<_$DaKanjiDB, ReadingFts> {
+  $ReadingFtsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $ReadingFtsOrderingComposer extends Composer<_$DaKanjiDB, ReadingFts> {
+  $ReadingFtsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $ReadingFtsAnnotationComposer extends Composer<_$DaKanjiDB, ReadingFts> {
+  $ReadingFtsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get reading =>
+      $composableBuilder(column: $table.reading, builder: (column) => column);
+}
+
+class $ReadingFtsTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          ReadingFts,
+          ReadingFt,
+          $ReadingFtsFilterComposer,
+          $ReadingFtsOrderingComposer,
+          $ReadingFtsAnnotationComposer,
+          $ReadingFtsCreateCompanionBuilder,
+          $ReadingFtsUpdateCompanionBuilder,
+          (ReadingFt, BaseReferences<_$DaKanjiDB, ReadingFts, ReadingFt>),
+          ReadingFt,
+          PrefetchHooks Function()
+        > {
+  $ReadingFtsTableManager(_$DaKanjiDB db, ReadingFts table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $ReadingFtsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $ReadingFtsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $ReadingFtsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> reading = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReadingFtsCompanion(reading: reading, rowid: rowid),
+          createCompanionCallback:
+              ({
+                required String reading,
+                Value<int> rowid = const Value.absent(),
+              }) => ReadingFtsCompanion.insert(reading: reading, rowid: rowid),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $ReadingFtsProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      ReadingFts,
+      ReadingFt,
+      $ReadingFtsFilterComposer,
+      $ReadingFtsOrderingComposer,
+      $ReadingFtsAnnotationComposer,
+      $ReadingFtsCreateCompanionBuilder,
+      $ReadingFtsUpdateCompanionBuilder,
+      (ReadingFt, BaseReferences<_$DaKanjiDB, ReadingFts, ReadingFt>),
+      ReadingFt,
+      PrefetchHooks Function()
+    >;
+typedef $DefinitionFtsCreateCompanionBuilder =
+    DefinitionFtsCompanion Function({
+      required String definition,
+      Value<int> rowid,
+    });
+typedef $DefinitionFtsUpdateCompanionBuilder =
+    DefinitionFtsCompanion Function({
+      Value<String> definition,
+      Value<int> rowid,
+    });
+
+class $DefinitionFtsFilterComposer
+    extends Composer<_$DaKanjiDB, DefinitionFts> {
+  $DefinitionFtsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $DefinitionFtsOrderingComposer
+    extends Composer<_$DaKanjiDB, DefinitionFts> {
+  $DefinitionFtsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $DefinitionFtsAnnotationComposer
+    extends Composer<_$DaKanjiDB, DefinitionFts> {
+  $DefinitionFtsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => column,
+  );
+}
+
+class $DefinitionFtsTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          DefinitionFts,
+          DefinitionFt,
+          $DefinitionFtsFilterComposer,
+          $DefinitionFtsOrderingComposer,
+          $DefinitionFtsAnnotationComposer,
+          $DefinitionFtsCreateCompanionBuilder,
+          $DefinitionFtsUpdateCompanionBuilder,
+          (
+            DefinitionFt,
+            BaseReferences<_$DaKanjiDB, DefinitionFts, DefinitionFt>,
+          ),
+          DefinitionFt,
+          PrefetchHooks Function()
+        > {
+  $DefinitionFtsTableManager(_$DaKanjiDB db, DefinitionFts table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $DefinitionFtsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $DefinitionFtsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $DefinitionFtsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> definition = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) =>
+                  DefinitionFtsCompanion(definition: definition, rowid: rowid),
+          createCompanionCallback:
+              ({
+                required String definition,
+                Value<int> rowid = const Value.absent(),
+              }) => DefinitionFtsCompanion.insert(
+                definition: definition,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $DefinitionFtsProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      DefinitionFts,
+      DefinitionFt,
+      $DefinitionFtsFilterComposer,
+      $DefinitionFtsOrderingComposer,
+      $DefinitionFtsAnnotationComposer,
+      $DefinitionFtsCreateCompanionBuilder,
+      $DefinitionFtsUpdateCompanionBuilder,
+      (DefinitionFt, BaseReferences<_$DaKanjiDB, DefinitionFts, DefinitionFt>),
+      DefinitionFt,
+      PrefetchHooks Function()
+    >;
 typedef $HiraganaSpellfixCostCreateCompanionBuilder =
     HiraganaSpellfixCostCompanion Function({
       Value<int?> iLang,
@@ -36072,11 +36425,8 @@ class $DaKanjiDBManager {
       );
   $$KanjiMetaBankV3TableTableTableManager get kanjiMetaBankV3Table =>
       $$KanjiMetaBankV3TableTableTableManager(_db, _db.kanjiMetaBankV3Table);
-  $ReadingSpellfixTableManager get readingSpellfix =>
-      $ReadingSpellfixTableManager(_db, _db.readingSpellfix);
   $$TermTableTableTableManager get termTable =>
       $$TermTableTableTableManager(_db, _db.termTable);
-  $TermFtsTableManager get termFts => $TermFtsTableManager(_db, _db.termFts);
   $$TermBankV3DefinitionJsonTableTableTableManager
   get termBankV3DefinitionJsonTable =>
       $$TermBankV3DefinitionJsonTableTableTableManager(
@@ -36085,16 +36435,6 @@ class $DaKanjiDBManager {
       );
   $$TermBankV3TableTableTableManager get termBankV3Table =>
       $$TermBankV3TableTableTableManager(_db, _db.termBankV3Table);
-  $ReadingFtsTableManager get readingFts =>
-      $ReadingFtsTableManager(_db, _db.readingFts);
-  $DefinitionFtsTableManager get definitionFts =>
-      $DefinitionFtsTableManager(_db, _db.definitionFts);
-  $$TermBankV3_X_DefinitionTableTableTableManager
-  get termBankV3XDefinitionTable =>
-      $$TermBankV3_X_DefinitionTableTableTableManager(
-        _db,
-        _db.termBankV3XDefinitionTable,
-      );
   $$TermBankV3DefinitionTagsTableTableTableManager
   get termBankV3DefinitionTagsTable =>
       $$TermBankV3DefinitionTagsTableTableTableManager(
@@ -36107,11 +36447,6 @@ class $DaKanjiDBManager {
         _db,
         _db.termBankV3XDefinitionTagTable,
       );
-  $$TermBankV3_X_TagBankTableTableTableManager get termBankV3XTagBankTable =>
-      $$TermBankV3_X_TagBankTableTableTableManager(
-        _db,
-        _db.termBankV3XTagBankTable,
-      );
   $$TermBankV3RuleIdentifierTableTableTableManager
   get termBankV3RuleIdentifierTable =>
       $$TermBankV3RuleIdentifierTableTableTableManager(
@@ -36123,6 +36458,17 @@ class $DaKanjiDBManager {
       $$TermBankV3_X_RuleIdentifierTableTableTableManager(
         _db,
         _db.termBankV3XRuleIdentifierTable,
+      );
+  $$TermBankV3_X_DefinitionTableTableTableManager
+  get termBankV3XDefinitionTable =>
+      $$TermBankV3_X_DefinitionTableTableTableManager(
+        _db,
+        _db.termBankV3XDefinitionTable,
+      );
+  $$TermBankV3_X_TagBankTableTableTableManager get termBankV3XTagBankTable =>
+      $$TermBankV3_X_TagBankTableTableTableManager(
+        _db,
+        _db.termBankV3XTagBankTable,
       );
   $$TermMetaBankV3PitchTableTableTableManager get termMetaBankV3PitchTable =>
       $$TermMetaBankV3PitchTableTableTableManager(
@@ -36169,6 +36515,13 @@ class $DaKanjiDBManager {
         _db,
         _db.termMetaBankV3XIpaTagTable,
       );
+  $ReadingSpellfixTableManager get readingSpellfix =>
+      $ReadingSpellfixTableManager(_db, _db.readingSpellfix);
+  $TermFtsTableManager get termFts => $TermFtsTableManager(_db, _db.termFts);
+  $ReadingFtsTableManager get readingFts =>
+      $ReadingFtsTableManager(_db, _db.readingFts);
+  $DefinitionFtsTableManager get definitionFts =>
+      $DefinitionFtsTableManager(_db, _db.definitionFts);
   $HiraganaSpellfixCostTableManager get hiraganaSpellfixCost =>
       $HiraganaSpellfixCostTableManager(_db, _db.hiraganaSpellfixCost);
   $$ExampleTableTableTableManager get exampleTable =>
@@ -36202,38 +36555,40 @@ class $DaKanjiDBManager {
       $$KanjiVGTableTableTableManager(_db, _db.kanjiVGTable);
 }
 
-class DictionarySearchFts5DriftResult {
+class DictionarySearchDriftResult {
   final double? fts5Rank;
   final String matchedText;
   final int matchTypePriority;
   final int matchColumnPriority;
   final String? spellfixSuggestion;
   final int id;
+  final int indexId;
   final String? term;
   final String? reading;
+  final int popularity;
+  final int sequenceNumber;
   final String definitionTags;
   final String ruleIdentifiers;
-  final int popularity;
   final String definitions;
-  final Object? definitionOrder;
-  final int sequenceNumber;
   final String tags;
-  DictionarySearchFts5DriftResult({
+  final String termMetaEntries;
+  DictionarySearchDriftResult({
     this.fts5Rank,
     required this.matchedText,
     required this.matchTypePriority,
     required this.matchColumnPriority,
     this.spellfixSuggestion,
     required this.id,
+    required this.indexId,
     this.term,
     this.reading,
+    required this.popularity,
+    required this.sequenceNumber,
     required this.definitionTags,
     required this.ruleIdentifiers,
-    required this.popularity,
     required this.definitions,
-    required this.definitionOrder,
-    required this.sequenceNumber,
     required this.tags,
+    required this.termMetaEntries,
   });
 }
 

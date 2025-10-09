@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:isolate';
 
+import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
@@ -23,7 +24,7 @@ Future<void> addKanjiVGToDB(String dataSourcePath, DaKanjiDB db) async {
     await _addKanjiVGToDB(dataSourcePath, connection);
   });
 
-  await db.customStatement("PRAGMA wal_checkpoint(TRUNCATE);");
+  await optimizeDbAfterImport(db);
 }
 
 

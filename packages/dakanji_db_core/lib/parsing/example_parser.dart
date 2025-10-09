@@ -6,6 +6,7 @@ import 'dart:typed_data';
 
 import 'package:dakanji_db_core/parsing/example/example_text_parser.dart';
 import 'package:dakanji_db_core/parsing/index/index_parser.dart';
+import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/isolate.dart';
 
@@ -91,12 +92,7 @@ Future _parseExampleDataSource(({
 
   mecab.destroy();
 
-  // Optimize db
-  await db.customStatement('VACUUM;');
-  await db.customStatement('ANALYZE;');
-
-  // commit all changes to DB
-  await db.customStatement("PRAGMA wal_checkpoint(TRUNCATE);");
+  await optimizeDbAfterImport(db);
 
   // close isolate communication
   params.mainIsolateSendPort.send(null);
