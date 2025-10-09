@@ -29,7 +29,7 @@ CREATE VIEW IF NOT EXISTS dictionary_search_view AS
                     'type', Meta.type,
                     'frequency', Meta.frequency,
                     'frequencyDisplayValue', Meta.frequencyDisplayValue,
-                    'pitches', JSON(Meta.pitchs),
+                    'pitchs', JSON(Meta.pitchs),
                     'ipas', JSON(Meta.ipas)
                 )
             ) FILTER (WHERE Meta.type IS NOT NULL),
