@@ -11,3 +11,4 @@ workspace:
   - packages/dakanji_db_shared
   - packages/language_processing
   - apps/dakanji_db_ui_example
+  - apps/dakanji_db_example

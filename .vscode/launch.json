@@ -5,10 +5,19 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
             "name": "dakanji_db",
             "request": "launch",
             "type": "dart"
+        },
+        {
+            "name": "dakanji_db_example", // A descriptive name for the dropdown
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "program": "lib/main.dart", // The entry point relative to your app
+            "cwd": "${workspaceFolder}/apps/dakanji_db_example" // The crucial part!
         },
         {
             "name": "dakanji_db_ui_example", // A descriptive name for the dropdown
