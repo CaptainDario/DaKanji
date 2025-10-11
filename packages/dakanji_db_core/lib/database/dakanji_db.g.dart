@@ -6184,18 +6184,17 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _definitionJsonMeta = const VerificationMeta(
+    'definitionJson',
+  );
   @override
-  late final GeneratedColumnWithTypeConverter<String, Uint8List>
-  definitionJson =
-      GeneratedColumn<Uint8List>(
-        'definition_json',
-        aliasedName,
-        false,
-        type: DriftSqlType.blob,
-        requiredDuringInsert: true,
-      ).withConverter<String>(
-        $TermBankV3DefinitionJsonTableTable.$converterdefinitionJson,
-      );
+  late final GeneratedColumn<String> definitionJson = GeneratedColumn<String>(
+    'definition_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   @override
   List<GeneratedColumn> get $columns => [id, definitionJson];
   @override
@@ -6213,6 +6212,17 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
+    if (data.containsKey('definition_json')) {
+      context.handle(
+        _definitionJsonMeta,
+        definitionJson.isAcceptableOrUnknown(
+          data['definition_json']!,
+          _definitionJsonMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_definitionJsonMeta);
+    }
     return context;
   }
 
@@ -6229,14 +6239,10 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      definitionJson: $TermBankV3DefinitionJsonTableTable
-          .$converterdefinitionJson
-          .fromSql(
-            attachedDatabase.typeMapping.read(
-              DriftSqlType.blob,
-              data['${effectivePrefix}definition_json'],
-            )!,
-          ),
+      definitionJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition_json'],
+      )!,
     );
   }
 
@@ -6244,9 +6250,6 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
   $TermBankV3DefinitionJsonTableTable createAlias(String alias) {
     return $TermBankV3DefinitionJsonTableTable(attachedDatabase, alias);
   }
-
-  static TypeConverter<String, Uint8List> $converterdefinitionJson =
-      const ZlibStringConverter();
 }
 
 class TermBankV3DefinitionJsonTableData extends DataClass
@@ -6264,13 +6267,7 @@ class TermBankV3DefinitionJsonTableData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    {
-      map['definition_json'] = Variable<Uint8List>(
-        $TermBankV3DefinitionJsonTableTable.$converterdefinitionJson.toSql(
-          definitionJson,
-        ),
-      );
-    }
+    map['definition_json'] = Variable<String>(definitionJson);
     return map;
   }
 
@@ -6351,7 +6348,7 @@ class TermBankV3DefinitionJsonTableCompanion
   }) : definitionJson = Value(definitionJson);
   static Insertable<TermBankV3DefinitionJsonTableData> custom({
     Expression<int>? id,
-    Expression<Uint8List>? definitionJson,
+    Expression<String>? definitionJson,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -6376,11 +6373,7 @@ class TermBankV3DefinitionJsonTableCompanion
       map['id'] = Variable<int>(id.value);
     }
     if (definitionJson.present) {
-      map['definition_json'] = Variable<Uint8List>(
-        $TermBankV3DefinitionJsonTableTable.$converterdefinitionJson.toSql(
-          definitionJson.value,
-        ),
-      );
+      map['definition_json'] = Variable<String>(definitionJson.value);
     }
     return map;
   }
@@ -12932,6 +12925,469 @@ class DefinitionFtsCompanion extends UpdateCompanion<DefinitionFt> {
   }
 }
 
+class $MediaTableTable extends MediaTable
+    with TableInfo<$MediaTableTable, MediaTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MediaTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _indexIdMeta = const VerificationMeta(
+    'indexId',
+  );
+  @override
+  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
+    'index_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES index_table (id)',
+    ),
+  );
+  static const VerificationMeta _pathMeta = const VerificationMeta('path');
+  @override
+  late final GeneratedColumn<String> path = GeneratedColumn<String>(
+    'path',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _dataCompressedMeta = const VerificationMeta(
+    'dataCompressed',
+  );
+  @override
+  late final GeneratedColumn<Uint8List> dataCompressed =
+      GeneratedColumn<Uint8List>(
+        'data_compressed',
+        aliasedName,
+        false,
+        type: DriftSqlType.blob,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [id, indexId, path, dataCompressed];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'media_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MediaTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('index_id')) {
+      context.handle(
+        _indexIdMeta,
+        indexId.isAcceptableOrUnknown(data['index_id']!, _indexIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_indexIdMeta);
+    }
+    if (data.containsKey('path')) {
+      context.handle(
+        _pathMeta,
+        path.isAcceptableOrUnknown(data['path']!, _pathMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_pathMeta);
+    }
+    if (data.containsKey('data_compressed')) {
+      context.handle(
+        _dataCompressedMeta,
+        dataCompressed.isAcceptableOrUnknown(
+          data['data_compressed']!,
+          _dataCompressedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dataCompressedMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MediaTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MediaTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      indexId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}index_id'],
+      )!,
+      path: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}path'],
+      )!,
+      dataCompressed: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}data_compressed'],
+      )!,
+    );
+  }
+
+  @override
+  $MediaTableTable createAlias(String alias) {
+    return $MediaTableTable(attachedDatabase, alias);
+  }
+}
+
+class MediaTableData extends DataClass implements Insertable<MediaTableData> {
+  /// id of this entry
+  final int id;
+
+  /// The id of the dictionary this entry belongs to
+  final int indexId;
+
+  /// the path of this data file as found in the original data source
+  final String path;
+
+  /// The actual data of the file
+  final Uint8List dataCompressed;
+  const MediaTableData({
+    required this.id,
+    required this.indexId,
+    required this.path,
+    required this.dataCompressed,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['index_id'] = Variable<int>(indexId);
+    map['path'] = Variable<String>(path);
+    map['data_compressed'] = Variable<Uint8List>(dataCompressed);
+    return map;
+  }
+
+  MediaTableCompanion toCompanion(bool nullToAbsent) {
+    return MediaTableCompanion(
+      id: Value(id),
+      indexId: Value(indexId),
+      path: Value(path),
+      dataCompressed: Value(dataCompressed),
+    );
+  }
+
+  factory MediaTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MediaTableData(
+      id: serializer.fromJson<int>(json['id']),
+      indexId: serializer.fromJson<int>(json['indexId']),
+      path: serializer.fromJson<String>(json['path']),
+      dataCompressed: serializer.fromJson<Uint8List>(json['dataCompressed']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'indexId': serializer.toJson<int>(indexId),
+      'path': serializer.toJson<String>(path),
+      'dataCompressed': serializer.toJson<Uint8List>(dataCompressed),
+    };
+  }
+
+  MediaTableData copyWith({
+    int? id,
+    int? indexId,
+    String? path,
+    Uint8List? dataCompressed,
+  }) => MediaTableData(
+    id: id ?? this.id,
+    indexId: indexId ?? this.indexId,
+    path: path ?? this.path,
+    dataCompressed: dataCompressed ?? this.dataCompressed,
+  );
+  MediaTableData copyWithCompanion(MediaTableCompanion data) {
+    return MediaTableData(
+      id: data.id.present ? data.id.value : this.id,
+      indexId: data.indexId.present ? data.indexId.value : this.indexId,
+      path: data.path.present ? data.path.value : this.path,
+      dataCompressed: data.dataCompressed.present
+          ? data.dataCompressed.value
+          : this.dataCompressed,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MediaTableData(')
+          ..write('id: $id, ')
+          ..write('indexId: $indexId, ')
+          ..write('path: $path, ')
+          ..write('dataCompressed: $dataCompressed')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, indexId, path, $driftBlobEquality.hash(dataCompressed));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MediaTableData &&
+          other.id == this.id &&
+          other.indexId == this.indexId &&
+          other.path == this.path &&
+          $driftBlobEquality.equals(other.dataCompressed, this.dataCompressed));
+}
+
+class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
+  final Value<int> id;
+  final Value<int> indexId;
+  final Value<String> path;
+  final Value<Uint8List> dataCompressed;
+  const MediaTableCompanion({
+    this.id = const Value.absent(),
+    this.indexId = const Value.absent(),
+    this.path = const Value.absent(),
+    this.dataCompressed = const Value.absent(),
+  });
+  MediaTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int indexId,
+    required String path,
+    required Uint8List dataCompressed,
+  }) : indexId = Value(indexId),
+       path = Value(path),
+       dataCompressed = Value(dataCompressed);
+  static Insertable<MediaTableData> custom({
+    Expression<int>? id,
+    Expression<int>? indexId,
+    Expression<String>? path,
+    Expression<Uint8List>? dataCompressed,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (indexId != null) 'index_id': indexId,
+      if (path != null) 'path': path,
+      if (dataCompressed != null) 'data_compressed': dataCompressed,
+    });
+  }
+
+  MediaTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? indexId,
+    Value<String>? path,
+    Value<Uint8List>? dataCompressed,
+  }) {
+    return MediaTableCompanion(
+      id: id ?? this.id,
+      indexId: indexId ?? this.indexId,
+      path: path ?? this.path,
+      dataCompressed: dataCompressed ?? this.dataCompressed,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (indexId.present) {
+      map['index_id'] = Variable<int>(indexId.value);
+    }
+    if (path.present) {
+      map['path'] = Variable<String>(path.value);
+    }
+    if (dataCompressed.present) {
+      map['data_compressed'] = Variable<Uint8List>(dataCompressed.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MediaTableCompanion(')
+          ..write('id: $id, ')
+          ..write('indexId: $indexId, ')
+          ..write('path: $path, ')
+          ..write('dataCompressed: $dataCompressed')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class MediaTableViewData extends DataClass {
+  final int id;
+  final int indexId;
+  final String path;
+  final Uint8List? data;
+  const MediaTableViewData({
+    required this.id,
+    required this.indexId,
+    required this.path,
+    this.data,
+  });
+  factory MediaTableViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MediaTableViewData(
+      id: serializer.fromJson<int>(json['id']),
+      indexId: serializer.fromJson<int>(json['index_id']),
+      path: serializer.fromJson<String>(json['path']),
+      data: serializer.fromJson<Uint8List?>(json['data']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'index_id': serializer.toJson<int>(indexId),
+      'path': serializer.toJson<String>(path),
+      'data': serializer.toJson<Uint8List?>(data),
+    };
+  }
+
+  MediaTableViewData copyWith({
+    int? id,
+    int? indexId,
+    String? path,
+    Value<Uint8List?> data = const Value.absent(),
+  }) => MediaTableViewData(
+    id: id ?? this.id,
+    indexId: indexId ?? this.indexId,
+    path: path ?? this.path,
+    data: data.present ? data.value : this.data,
+  );
+  @override
+  String toString() {
+    return (StringBuffer('MediaTableViewData(')
+          ..write('id: $id, ')
+          ..write('indexId: $indexId, ')
+          ..write('path: $path, ')
+          ..write('data: $data')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, indexId, path, $driftBlobEquality.hash(data));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MediaTableViewData &&
+          other.id == this.id &&
+          other.indexId == this.indexId &&
+          other.path == this.path &&
+          $driftBlobEquality.equals(other.data, this.data));
+}
+
+class MediaTableView extends ViewInfo<MediaTableView, MediaTableViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  MediaTableView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [id, indexId, path, data];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'media_table_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW media_table_view AS SELECT id, index_id, path, decompress(data_compressed) AS data FROM media_table',
+  };
+  @override
+  MediaTableView get asDslTable => this;
+  @override
+  MediaTableViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MediaTableViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      indexId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}index_id'],
+      )!,
+      path: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}path'],
+      )!,
+      data: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}data'],
+      ),
+    );
+  }
+
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
+    'index_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> path = GeneratedColumn<String>(
+    'path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<Uint8List> data = GeneratedColumn<Uint8List>(
+    'data',
+    aliasedName,
+    true,
+    type: DriftSqlType.blob,
+  );
+  @override
+  MediaTableView createAlias(String alias) {
+    return MediaTableView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {'media_table'};
+}
+
 class HiraganaSpellfixCost extends Table
     with TableInfo<HiraganaSpellfixCost, HiraganaSpellfixCostData> {
   @override
@@ -13291,15 +13747,17 @@ class $ExampleTableTable extends ExampleTable
       'REFERENCES index_table (id)',
     ),
   );
+  static const VerificationMeta _exampleSentenceMeta = const VerificationMeta(
+    'exampleSentence',
+  );
   @override
-  late final GeneratedColumnWithTypeConverter<String, Uint8List>
-  exampleSentence = GeneratedColumn<Uint8List>(
+  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
     'example_sentence',
     aliasedName,
     false,
-    type: DriftSqlType.blob,
+    type: DriftSqlType.string,
     requiredDuringInsert: true,
-  ).withConverter<String>($ExampleTableTable.$converterexampleSentence);
+  );
   static const VerificationMeta _exampleSentenceTokenizedMeta =
       const VerificationMeta('exampleSentenceTokenized');
   @override
@@ -13341,6 +13799,17 @@ class $ExampleTableTable extends ExampleTable
     } else if (isInserting) {
       context.missing(_indexIdMeta);
     }
+    if (data.containsKey('example_sentence')) {
+      context.handle(
+        _exampleSentenceMeta,
+        exampleSentence.isAcceptableOrUnknown(
+          data['example_sentence']!,
+          _exampleSentenceMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleSentenceMeta);
+    }
     if (data.containsKey('example_sentence_tokenized')) {
       context.handle(
         _exampleSentenceTokenizedMeta,
@@ -13369,12 +13838,10 @@ class $ExampleTableTable extends ExampleTable
         DriftSqlType.int,
         data['${effectivePrefix}index_id'],
       )!,
-      exampleSentence: $ExampleTableTable.$converterexampleSentence.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.blob,
-          data['${effectivePrefix}example_sentence'],
-        )!,
-      ),
+      exampleSentence: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence'],
+      )!,
       exampleSentenceTokenized: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence_tokenized'],
@@ -13386,9 +13853,6 @@ class $ExampleTableTable extends ExampleTable
   $ExampleTableTable createAlias(String alias) {
     return $ExampleTableTable(attachedDatabase, alias);
   }
-
-  static TypeConverter<String, Uint8List> $converterexampleSentence =
-      const ZlibStringConverter();
 }
 
 class ExampleTableData extends DataClass
@@ -13415,11 +13879,7 @@ class ExampleTableData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['index_id'] = Variable<int>(indexId);
-    {
-      map['example_sentence'] = Variable<Uint8List>(
-        $ExampleTableTable.$converterexampleSentence.toSql(exampleSentence),
-      );
-    }
+    map['example_sentence'] = Variable<String>(exampleSentence);
     map['example_sentence_tokenized'] = Variable<String>(
       exampleSentenceTokenized,
     );
@@ -13533,7 +13993,7 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
   static Insertable<ExampleTableData> custom({
     Expression<int>? id,
     Expression<int>? indexId,
-    Expression<Uint8List>? exampleSentence,
+    Expression<String>? exampleSentence,
     Expression<String>? exampleSentenceTokenized,
   }) {
     return RawValuesInsertable({
@@ -13570,11 +14030,7 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
       map['index_id'] = Variable<int>(indexId.value);
     }
     if (exampleSentence.present) {
-      map['example_sentence'] = Variable<Uint8List>(
-        $ExampleTableTable.$converterexampleSentence.toSql(
-          exampleSentence.value,
-        ),
-      );
+      map['example_sentence'] = Variable<String>(exampleSentence.value);
     }
     if (exampleSentenceTokenized.present) {
       map['example_sentence_tokenized'] = Variable<String>(
@@ -14520,12 +14976,10 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
         DriftSqlType.int,
         data['${effectivePrefix}index_id'],
       )!,
-      exampleSentence: $ExampleTableTable.$converterexampleSentence.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.blob,
-          data['${effectivePrefix}example_sentence'],
-        )!,
-      ),
+      exampleSentence: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence'],
+      )!,
       exampleTranslation: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}example_translation'],
@@ -14553,13 +15007,12 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
     false,
     type: DriftSqlType.int,
   );
-  late final GeneratedColumnWithTypeConverter<String, Uint8List>
-  exampleSentence = GeneratedColumn<Uint8List>(
+  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
     'example_sentence',
     aliasedName,
     false,
-    type: DriftSqlType.blob,
-  ).withConverter<String>($ExampleTableTable.$converterexampleSentence);
+    type: DriftSqlType.string,
+  );
   late final GeneratedColumn<String> exampleTranslation =
       GeneratedColumn<String>(
         'example_translation',
@@ -15099,263 +15552,6 @@ class AudioSourceListTableCompanion
           ..write('indexId: $indexId, ')
           ..write('name: $name, ')
           ..write('uri: $uri')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $MediaTableTable extends MediaTable
-    with TableInfo<$MediaTableTable, MediaTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $MediaTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _pathMeta = const VerificationMeta('path');
-  @override
-  late final GeneratedColumn<String> path = GeneratedColumn<String>(
-    'path',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
-  );
-  @override
-  late final GeneratedColumnWithTypeConverter<List<int>, Uint8List> data =
-      GeneratedColumn<Uint8List>(
-        'data',
-        aliasedName,
-        false,
-        type: DriftSqlType.blob,
-        requiredDuringInsert: true,
-      ).withConverter<List<int>>($MediaTableTable.$converterdata);
-  @override
-  List<GeneratedColumn> get $columns => [id, path, data];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'media_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<MediaTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('path')) {
-      context.handle(
-        _pathMeta,
-        path.isAcceptableOrUnknown(data['path']!, _pathMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_pathMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  MediaTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MediaTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      path: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}path'],
-      )!,
-      data: $MediaTableTable.$converterdata.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.blob,
-          data['${effectivePrefix}data'],
-        )!,
-      ),
-    );
-  }
-
-  @override
-  $MediaTableTable createAlias(String alias) {
-    return $MediaTableTable(attachedDatabase, alias);
-  }
-
-  static TypeConverter<List<int>, Uint8List> $converterdata =
-      const ZlibBytesConverter();
-}
-
-class MediaTableData extends DataClass implements Insertable<MediaTableData> {
-  /// id of this entry
-  final int id;
-
-  /// the path of this data file as found in the original data source
-  final String path;
-
-  /// The actual data of the file
-  final List<int> data;
-  const MediaTableData({
-    required this.id,
-    required this.path,
-    required this.data,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['path'] = Variable<String>(path);
-    {
-      map['data'] = Variable<Uint8List>(
-        $MediaTableTable.$converterdata.toSql(data),
-      );
-    }
-    return map;
-  }
-
-  MediaTableCompanion toCompanion(bool nullToAbsent) {
-    return MediaTableCompanion(
-      id: Value(id),
-      path: Value(path),
-      data: Value(data),
-    );
-  }
-
-  factory MediaTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return MediaTableData(
-      id: serializer.fromJson<int>(json['id']),
-      path: serializer.fromJson<String>(json['path']),
-      data: serializer.fromJson<List<int>>(json['data']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'path': serializer.toJson<String>(path),
-      'data': serializer.toJson<List<int>>(data),
-    };
-  }
-
-  MediaTableData copyWith({int? id, String? path, List<int>? data}) =>
-      MediaTableData(
-        id: id ?? this.id,
-        path: path ?? this.path,
-        data: data ?? this.data,
-      );
-  MediaTableData copyWithCompanion(MediaTableCompanion data) {
-    return MediaTableData(
-      id: data.id.present ? data.id.value : this.id,
-      path: data.path.present ? data.path.value : this.path,
-      data: data.data.present ? data.data.value : this.data,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MediaTableData(')
-          ..write('id: $id, ')
-          ..write('path: $path, ')
-          ..write('data: $data')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, path, data);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is MediaTableData &&
-          other.id == this.id &&
-          other.path == this.path &&
-          other.data == this.data);
-}
-
-class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
-  final Value<int> id;
-  final Value<String> path;
-  final Value<List<int>> data;
-  const MediaTableCompanion({
-    this.id = const Value.absent(),
-    this.path = const Value.absent(),
-    this.data = const Value.absent(),
-  });
-  MediaTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String path,
-    required List<int> data,
-  }) : path = Value(path),
-       data = Value(data);
-  static Insertable<MediaTableData> custom({
-    Expression<int>? id,
-    Expression<String>? path,
-    Expression<Uint8List>? data,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (path != null) 'path': path,
-      if (data != null) 'data': data,
-    });
-  }
-
-  MediaTableCompanion copyWith({
-    Value<int>? id,
-    Value<String>? path,
-    Value<List<int>>? data,
-  }) {
-    return MediaTableCompanion(
-      id: id ?? this.id,
-      path: path ?? this.path,
-      data: data ?? this.data,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (path.present) {
-      map['path'] = Variable<String>(path.value);
-    }
-    if (data.present) {
-      map['data'] = Variable<Uint8List>(
-        $MediaTableTable.$converterdata.toSql(data.value),
-      );
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MediaTableCompanion(')
-          ..write('id: $id, ')
-          ..write('path: $path, ')
-          ..write('data: $data')
           ..write(')'))
         .toString();
   }
@@ -15933,15 +16129,17 @@ class $KanjiVGTableTable extends KanjiVGTable
       'REFERENCES kanji_table (id)',
     ),
   );
+  static const VerificationMeta _kanjiVGSVGMeta = const VerificationMeta(
+    'kanjiVGSVG',
+  );
   @override
-  late final GeneratedColumnWithTypeConverter<String, Uint8List> kanjiVGSVG =
-      GeneratedColumn<Uint8List>(
-        'kanji_v_g_s_v_g',
-        aliasedName,
-        false,
-        type: DriftSqlType.blob,
-        requiredDuringInsert: true,
-      ).withConverter<String>($KanjiVGTableTable.$converterkanjiVGSVG);
+  late final GeneratedColumn<String> kanjiVGSVG = GeneratedColumn<String>(
+    'kanji_v_g_s_v_g',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   @override
   List<GeneratedColumn> get $columns => [id, kanjiId, kanjiVGSVG];
   @override
@@ -15967,6 +16165,17 @@ class $KanjiVGTableTable extends KanjiVGTable
     } else if (isInserting) {
       context.missing(_kanjiIdMeta);
     }
+    if (data.containsKey('kanji_v_g_s_v_g')) {
+      context.handle(
+        _kanjiVGSVGMeta,
+        kanjiVGSVG.isAcceptableOrUnknown(
+          data['kanji_v_g_s_v_g']!,
+          _kanjiVGSVGMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiVGSVGMeta);
+    }
     return context;
   }
 
@@ -15984,12 +16193,10 @@ class $KanjiVGTableTable extends KanjiVGTable
         DriftSqlType.int,
         data['${effectivePrefix}kanji_id'],
       )!,
-      kanjiVGSVG: $KanjiVGTableTable.$converterkanjiVGSVG.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.blob,
-          data['${effectivePrefix}kanji_v_g_s_v_g'],
-        )!,
-      ),
+      kanjiVGSVG: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kanji_v_g_s_v_g'],
+      )!,
     );
   }
 
@@ -15997,9 +16204,6 @@ class $KanjiVGTableTable extends KanjiVGTable
   $KanjiVGTableTable createAlias(String alias) {
     return $KanjiVGTableTable(attachedDatabase, alias);
   }
-
-  static TypeConverter<String, Uint8List> $converterkanjiVGSVG =
-      const ZlibStringConverter();
 }
 
 class KanjiVGTableData extends DataClass
@@ -16022,11 +16226,7 @@ class KanjiVGTableData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['kanji_id'] = Variable<int>(kanjiId);
-    {
-      map['kanji_v_g_s_v_g'] = Variable<Uint8List>(
-        $KanjiVGTableTable.$converterkanjiVGSVG.toSql(kanjiVGSVG),
-      );
-    }
+    map['kanji_v_g_s_v_g'] = Variable<String>(kanjiVGSVG);
     return map;
   }
 
@@ -16114,7 +16314,7 @@ class KanjiVGTableCompanion extends UpdateCompanion<KanjiVGTableData> {
   static Insertable<KanjiVGTableData> custom({
     Expression<int>? id,
     Expression<int>? kanjiId,
-    Expression<Uint8List>? kanjiVGSVG,
+    Expression<String>? kanjiVGSVG,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -16145,9 +16345,7 @@ class KanjiVGTableCompanion extends UpdateCompanion<KanjiVGTableData> {
       map['kanji_id'] = Variable<int>(kanjiId.value);
     }
     if (kanjiVGSVG.present) {
-      map['kanji_v_g_s_v_g'] = Variable<Uint8List>(
-        $KanjiVGTableTable.$converterkanjiVGSVG.toSql(kanjiVGSVG.value),
-      );
+      map['kanji_v_g_s_v_g'] = Variable<String>(kanjiVGSVG.value);
     }
     return map;
   }
@@ -16271,6 +16469,24 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'kanji',
     'CREATE INDEX kanji ON kanji_table (kanji)',
   );
+  late final $MediaTableTable mediaTable = $MediaTableTable(this);
+  late final MediaTableView mediaTableView = MediaTableView(this);
+  late final Trigger mediaTableViewInsert = Trigger(
+    'CREATE TRIGGER media_table_view_insert INSTEAD OF INSERT ON media_table_view BEGIN INSERT INTO media_table (id, index_id, path, data_compressed) VALUES (NEW.id, NEW.index_id, NEW.path, compress(NEW.data));END',
+    'media_table_view_insert',
+  );
+  late final Trigger mediaTableViewUpdate = Trigger(
+    'CREATE TRIGGER media_table_view_update INSTEAD OF UPDATE ON media_table_view BEGIN UPDATE media_table SET index_id = NEW.index_id, path = NEW.path, data_compressed = compress(NEW.data) WHERE id = OLD.id;END',
+    'media_table_view_update',
+  );
+  late final Trigger mediaTableViewDelete = Trigger(
+    'CREATE TRIGGER media_table_view_delete INSTEAD OF DELETE ON media_table_view BEGIN DELETE FROM media_table WHERE id = OLD.id;END',
+    'media_table_view_delete',
+  );
+  late final Index path = Index(
+    'path',
+    'CREATE INDEX path ON media_table (path)',
+  );
   late final HiraganaSpellfixCost hiraganaSpellfixCost = HiraganaSpellfixCost(
     this,
   );
@@ -16350,15 +16566,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   );
   late final $AudioSourceListTableTable audioSourceListTable =
       $AudioSourceListTableTable(this);
-  late final $MediaTableTable mediaTable = $MediaTableTable(this);
   late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
   late final $Radical_X_KanjiRelationsTableTable radicalXKanjiRelationsTable =
       $Radical_X_KanjiRelationsTableTable(this);
   late final $KanjiVGTableTable kanjiVGTable = $KanjiVGTableTable(this);
-  late final Index path = Index(
-    'path',
-    'CREATE INDEX path ON media_table (path)',
-  );
   late final Index radical = Index(
     'radical',
     'CREATE INDEX radical ON radicals_table (radical)',
@@ -16610,9 +16821,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       (QueryRow row) => ExampleFtsSearchDriftResult(
         id: row.read<int>('id'),
         indexId: row.read<int>('index_id'),
-        exampleSentence: $ExampleTableTable.$converterexampleSentence.fromSql(
-          row.read<Uint8List>('example_sentence'),
-        ),
+        exampleSentence: row.read<String>('example_sentence'),
         translations: row.read<String>('translations'),
       ),
     );
@@ -16671,6 +16880,12 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     reading,
     term,
     kanji,
+    mediaTable,
+    mediaTableView,
+    mediaTableViewInsert,
+    mediaTableViewUpdate,
+    mediaTableViewDelete,
+    path,
     hiraganaSpellfixCost,
     definitionTableAi,
     definitionTableAd,
@@ -16695,15 +16910,34 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     exampleTableAd,
     exampleTableAu,
     audioSourceListTable,
-    mediaTable,
     radicalsTable,
     radicalXKanjiRelationsTable,
     kanjiVGTable,
-    path,
     radical,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'media_table_view',
+        limitUpdateKind: UpdateKind.insert,
+      ),
+      result: [TableUpdate('media_table', kind: UpdateKind.insert)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'media_table_view',
+        limitUpdateKind: UpdateKind.update,
+      ),
+      result: [TableUpdate('media_table', kind: UpdateKind.update)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'media_table_view',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('media_table', kind: UpdateKind.delete)],
+    ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
         'definition_table',
@@ -17529,6 +17763,24 @@ final class $$IndexTableTableReferences
     );
   }
 
+  static MultiTypedResultKey<$MediaTableTable, List<MediaTableData>>
+  _mediaTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+    db.mediaTable,
+    aliasName: $_aliasNameGenerator(db.indexTable.id, db.mediaTable.indexId),
+  );
+
+  $$MediaTableTableProcessedTableManager get mediaTableRefs {
+    final manager = $$MediaTableTableTableManager(
+      $_db,
+      $_db.mediaTable,
+    ).filter((f) => f.indexId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_mediaTableRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
   static MultiTypedResultKey<$ExampleTableTable, List<ExampleTableData>>
   _exampleTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
     db.exampleTable,
@@ -17781,6 +18033,31 @@ class $$IndexTableTableFilterComposer
           }) => $$TermMetaBankV3TableTableFilterComposer(
             $db: $db,
             $table: $db.termMetaBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> mediaTableRefs(
+    Expression<bool> Function($$MediaTableTableFilterComposer f) f,
+  ) {
+    final $$MediaTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mediaTable,
+      getReferencedColumn: (t) => t.indexId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MediaTableTableFilterComposer(
+            $db: $db,
+            $table: $db.mediaTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -18127,6 +18404,31 @@ class $$IndexTableTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> mediaTableRefs<T extends Object>(
+    Expression<T> Function($$MediaTableTableAnnotationComposer a) f,
+  ) {
+    final $$MediaTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.mediaTable,
+      getReferencedColumn: (t) => t.indexId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MediaTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.mediaTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<T> exampleTableRefs<T extends Object>(
     Expression<T> Function($$ExampleTableTableAnnotationComposer a) f,
   ) {
@@ -18198,6 +18500,7 @@ class $$IndexTableTableTableManager
             bool kanjiMetaBankV3TableRefs,
             bool termBankV3TableRefs,
             bool termMetaBankV3TableRefs,
+            bool mediaTableRefs,
             bool exampleTableRefs,
             bool audioSourceListTableRefs,
           })
@@ -18300,6 +18603,7 @@ class $$IndexTableTableTableManager
                 kanjiMetaBankV3TableRefs = false,
                 termBankV3TableRefs = false,
                 termMetaBankV3TableRefs = false,
+                mediaTableRefs = false,
                 exampleTableRefs = false,
                 audioSourceListTableRefs = false,
               }) {
@@ -18311,6 +18615,7 @@ class $$IndexTableTableTableManager
                     if (kanjiMetaBankV3TableRefs) db.kanjiMetaBankV3Table,
                     if (termBankV3TableRefs) db.termBankV3Table,
                     if (termMetaBankV3TableRefs) db.termMetaBankV3Table,
+                    if (mediaTableRefs) db.mediaTable,
                     if (exampleTableRefs) db.exampleTable,
                     if (audioSourceListTableRefs) db.audioSourceListTable,
                   ],
@@ -18422,6 +18727,27 @@ class $$IndexTableTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (mediaTableRefs)
+                        await $_getPrefetchedData<
+                          IndexTableData,
+                          $IndexTableTable,
+                          MediaTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$IndexTableTableReferences
+                              ._mediaTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$IndexTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).mediaTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.indexId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                       if (exampleTableRefs)
                         await $_getPrefetchedData<
                           IndexTableData,
@@ -18490,6 +18816,7 @@ typedef $$IndexTableTableProcessedTableManager =
         bool kanjiMetaBankV3TableRefs,
         bool termBankV3TableRefs,
         bool termMetaBankV3TableRefs,
+        bool mediaTableRefs,
         bool exampleTableRefs,
         bool audioSourceListTableRefs,
       })
@@ -25396,10 +25723,9 @@ class $$TermBankV3DefinitionJsonTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<String, String, Uint8List>
-  get definitionJson => $composableBuilder(
+  ColumnFilters<String> get definitionJson => $composableBuilder(
     column: $table.definitionJson,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
+    builder: (column) => ColumnFilters(column),
   );
 
   Expression<bool> termBankV3TableRefs(
@@ -25442,7 +25768,7 @@ class $$TermBankV3DefinitionJsonTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<Uint8List> get definitionJson => $composableBuilder(
+  ColumnOrderings<String> get definitionJson => $composableBuilder(
     column: $table.definitionJson,
     builder: (column) => ColumnOrderings(column),
   );
@@ -25460,11 +25786,10 @@ class $$TermBankV3DefinitionJsonTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<String, Uint8List> get definitionJson =>
-      $composableBuilder(
-        column: $table.definitionJson,
-        builder: (column) => column,
-      );
+  GeneratedColumn<String> get definitionJson => $composableBuilder(
+    column: $table.definitionJson,
+    builder: (column) => column,
+  );
 
   Expression<T> termBankV3TableRefs<T extends Object>(
     Expression<T> Function($$TermBankV3TableTableAnnotationComposer a) f,
@@ -33513,6 +33838,302 @@ typedef $DefinitionFtsProcessedTableManager =
       DefinitionFt,
       PrefetchHooks Function()
     >;
+typedef $$MediaTableTableCreateCompanionBuilder =
+    MediaTableCompanion Function({
+      Value<int> id,
+      required int indexId,
+      required String path,
+      required Uint8List dataCompressed,
+    });
+typedef $$MediaTableTableUpdateCompanionBuilder =
+    MediaTableCompanion Function({
+      Value<int> id,
+      Value<int> indexId,
+      Value<String> path,
+      Value<Uint8List> dataCompressed,
+    });
+
+final class $$MediaTableTableReferences
+    extends BaseReferences<_$DaKanjiDB, $MediaTableTable, MediaTableData> {
+  $$MediaTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
+      db.indexTable.createAlias(
+        $_aliasNameGenerator(db.mediaTable.indexId, db.indexTable.id),
+      );
+
+  $$IndexTableTableProcessedTableManager get indexId {
+    final $_column = $_itemColumn<int>('index_id')!;
+
+    final manager = $$IndexTableTableTableManager(
+      $_db,
+      $_db.indexTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_indexIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$MediaTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+  $$MediaTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get path => $composableBuilder(
+    column: $table.path,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<Uint8List> get dataCompressed => $composableBuilder(
+    column: $table.dataCompressed,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$IndexTableTableFilterComposer get indexId {
+    final $$IndexTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.indexId,
+      referencedTable: $db.indexTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$IndexTableTableFilterComposer(
+            $db: $db,
+            $table: $db.indexTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MediaTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+  $$MediaTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get path => $composableBuilder(
+    column: $table.path,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<Uint8List> get dataCompressed => $composableBuilder(
+    column: $table.dataCompressed,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$IndexTableTableOrderingComposer get indexId {
+    final $$IndexTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.indexId,
+      referencedTable: $db.indexTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$IndexTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.indexTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MediaTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+  $$MediaTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get path =>
+      $composableBuilder(column: $table.path, builder: (column) => column);
+
+  GeneratedColumn<Uint8List> get dataCompressed => $composableBuilder(
+    column: $table.dataCompressed,
+    builder: (column) => column,
+  );
+
+  $$IndexTableTableAnnotationComposer get indexId {
+    final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.indexId,
+      referencedTable: $db.indexTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$IndexTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.indexTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MediaTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $MediaTableTable,
+          MediaTableData,
+          $$MediaTableTableFilterComposer,
+          $$MediaTableTableOrderingComposer,
+          $$MediaTableTableAnnotationComposer,
+          $$MediaTableTableCreateCompanionBuilder,
+          $$MediaTableTableUpdateCompanionBuilder,
+          (MediaTableData, $$MediaTableTableReferences),
+          MediaTableData,
+          PrefetchHooks Function({bool indexId})
+        > {
+  $$MediaTableTableTableManager(_$DaKanjiDB db, $MediaTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MediaTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MediaTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MediaTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> indexId = const Value.absent(),
+                Value<String> path = const Value.absent(),
+                Value<Uint8List> dataCompressed = const Value.absent(),
+              }) => MediaTableCompanion(
+                id: id,
+                indexId: indexId,
+                path: path,
+                dataCompressed: dataCompressed,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int indexId,
+                required String path,
+                required Uint8List dataCompressed,
+              }) => MediaTableCompanion.insert(
+                id: id,
+                indexId: indexId,
+                path: path,
+                dataCompressed: dataCompressed,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$MediaTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({indexId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (indexId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.indexId,
+                                referencedTable: $$MediaTableTableReferences
+                                    ._indexIdTable(db),
+                                referencedColumn: $$MediaTableTableReferences
+                                    ._indexIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MediaTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $MediaTableTable,
+      MediaTableData,
+      $$MediaTableTableFilterComposer,
+      $$MediaTableTableOrderingComposer,
+      $$MediaTableTableAnnotationComposer,
+      $$MediaTableTableCreateCompanionBuilder,
+      $$MediaTableTableUpdateCompanionBuilder,
+      (MediaTableData, $$MediaTableTableReferences),
+      MediaTableData,
+      PrefetchHooks Function({bool indexId})
+    >;
 typedef $HiraganaSpellfixCostCreateCompanionBuilder =
     HiraganaSpellfixCostCompanion Function({
       Value<int?> iLang,
@@ -33783,10 +34404,9 @@ class $$ExampleTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<String, String, Uint8List>
-  get exampleSentence => $composableBuilder(
+  ColumnFilters<String> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
+    builder: (column) => ColumnFilters(column),
   );
 
   ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
@@ -33861,7 +34481,7 @@ class $$ExampleTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<Uint8List> get exampleSentence => $composableBuilder(
+  ColumnOrderings<String> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
     builder: (column) => ColumnOrderings(column),
   );
@@ -33907,11 +34527,10 @@ class $$ExampleTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<String, Uint8List> get exampleSentence =>
-      $composableBuilder(
-        column: $table.exampleSentence,
-        builder: (column) => column,
-      );
+  GeneratedColumn<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
     column: $table.exampleSentenceTokenized,
@@ -35667,155 +36286,6 @@ typedef $$AudioSourceListTableTableProcessedTableManager =
       AudioSourceListTableData,
       PrefetchHooks Function({bool indexId})
     >;
-typedef $$MediaTableTableCreateCompanionBuilder =
-    MediaTableCompanion Function({
-      Value<int> id,
-      required String path,
-      required List<int> data,
-    });
-typedef $$MediaTableTableUpdateCompanionBuilder =
-    MediaTableCompanion Function({
-      Value<int> id,
-      Value<String> path,
-      Value<List<int>> data,
-    });
-
-class $$MediaTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $MediaTableTable> {
-  $$MediaTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get path => $composableBuilder(
-    column: $table.path,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnWithTypeConverterFilters<List<int>, List<int>, Uint8List> get data =>
-      $composableBuilder(
-        column: $table.data,
-        builder: (column) => ColumnWithTypeConverterFilters(column),
-      );
-}
-
-class $$MediaTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $MediaTableTable> {
-  $$MediaTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get path => $composableBuilder(
-    column: $table.path,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<Uint8List> get data => $composableBuilder(
-    column: $table.data,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$MediaTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $MediaTableTable> {
-  $$MediaTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get path =>
-      $composableBuilder(column: $table.path, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<List<int>, Uint8List> get data =>
-      $composableBuilder(column: $table.data, builder: (column) => column);
-}
-
-class $$MediaTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $MediaTableTable,
-          MediaTableData,
-          $$MediaTableTableFilterComposer,
-          $$MediaTableTableOrderingComposer,
-          $$MediaTableTableAnnotationComposer,
-          $$MediaTableTableCreateCompanionBuilder,
-          $$MediaTableTableUpdateCompanionBuilder,
-          (
-            MediaTableData,
-            BaseReferences<_$DaKanjiDB, $MediaTableTable, MediaTableData>,
-          ),
-          MediaTableData,
-          PrefetchHooks Function()
-        > {
-  $$MediaTableTableTableManager(_$DaKanjiDB db, $MediaTableTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$MediaTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$MediaTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$MediaTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> path = const Value.absent(),
-                Value<List<int>> data = const Value.absent(),
-              }) => MediaTableCompanion(id: id, path: path, data: data),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required String path,
-                required List<int> data,
-              }) => MediaTableCompanion.insert(id: id, path: path, data: data),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $$MediaTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $MediaTableTable,
-      MediaTableData,
-      $$MediaTableTableFilterComposer,
-      $$MediaTableTableOrderingComposer,
-      $$MediaTableTableAnnotationComposer,
-      $$MediaTableTableCreateCompanionBuilder,
-      $$MediaTableTableUpdateCompanionBuilder,
-      (
-        MediaTableData,
-        BaseReferences<_$DaKanjiDB, $MediaTableTable, MediaTableData>,
-      ),
-      MediaTableData,
-      PrefetchHooks Function()
-    >;
 typedef $$RadicalsTableTableCreateCompanionBuilder =
     RadicalsTableCompanion Function({
       Value<int> id,
@@ -36551,11 +37021,10 @@ class $$KanjiVGTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<String, String, Uint8List> get kanjiVGSVG =>
-      $composableBuilder(
-        column: $table.kanjiVGSVG,
-        builder: (column) => ColumnWithTypeConverterFilters(column),
-      );
+  ColumnFilters<String> get kanjiVGSVG => $composableBuilder(
+    column: $table.kanjiVGSVG,
+    builder: (column) => ColumnFilters(column),
+  );
 
   $$KanjiTableTableFilterComposer get kanjiId {
     final $$KanjiTableTableFilterComposer composer = $composerBuilder(
@@ -36595,7 +37064,7 @@ class $$KanjiVGTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<Uint8List> get kanjiVGSVG => $composableBuilder(
+  ColumnOrderings<String> get kanjiVGSVG => $composableBuilder(
     column: $table.kanjiVGSVG,
     builder: (column) => ColumnOrderings(column),
   );
@@ -36636,11 +37105,10 @@ class $$KanjiVGTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<String, Uint8List> get kanjiVGSVG =>
-      $composableBuilder(
-        column: $table.kanjiVGSVG,
-        builder: (column) => column,
-      );
+  GeneratedColumn<String> get kanjiVGSVG => $composableBuilder(
+    column: $table.kanjiVGSVG,
+    builder: (column) => column,
+  );
 
   $$KanjiTableTableAnnotationComposer get kanjiId {
     final $$KanjiTableTableAnnotationComposer composer = $composerBuilder(
@@ -36942,6 +37410,8 @@ class $DaKanjiDBManager {
       $ReadingFtsTableManager(_db, _db.readingFts);
   $DefinitionFtsTableManager get definitionFts =>
       $DefinitionFtsTableManager(_db, _db.definitionFts);
+  $$MediaTableTableTableManager get mediaTable =>
+      $$MediaTableTableTableManager(_db, _db.mediaTable);
   $HiraganaSpellfixCostTableManager get hiraganaSpellfixCost =>
       $HiraganaSpellfixCostTableManager(_db, _db.hiraganaSpellfixCost);
   $$ExampleTableTableTableManager get exampleTable =>
@@ -36963,8 +37433,6 @@ class $DaKanjiDBManager {
       $ExampleFtsTableManager(_db, _db.exampleFts);
   $$AudioSourceListTableTableTableManager get audioSourceListTable =>
       $$AudioSourceListTableTableTableManager(_db, _db.audioSourceListTable);
-  $$MediaTableTableTableManager get mediaTable =>
-      $$MediaTableTableTableManager(_db, _db.mediaTable);
   $$RadicalsTableTableTableManager get radicalsTable =>
       $$RadicalsTableTableTableManager(_db, _db.radicalsTable);
   $$Radical_X_KanjiRelationsTableTableTableManager

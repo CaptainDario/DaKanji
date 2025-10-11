@@ -1,0 +1,43 @@
+import 'data_tables.dart';
+
+
+
+-- Automatically compressed/decompressed the data when read/written
+CREATE VIEW media_table_view AS
+    SELECT
+        id,
+        index_id,
+        path,
+        decompress(data_compressed) AS data
+    FROM
+        media_table;
+
+
+-- Trigger for INSERT operations
+CREATE TRIGGER media_table_view_insert
+    INSTEAD OF INSERT ON media_table_view
+    BEGIN
+        INSERT INTO media_table (id, index_id, path, data_compressed)
+        VALUES (NEW.id, NEW.index_id, NEW.path, compress(NEW.data));
+    END;
+
+-- Trigger for UPDATE operations
+CREATE TRIGGER media_table_view_update
+    INSTEAD OF UPDATE ON media_table_view
+    BEGIN
+        UPDATE media_table
+        SET
+            index_id = NEW.index_id,
+            path = NEW.path,
+            data_compressed = compress(NEW.data)
+        WHERE
+            id = OLD.id;
+    END;
+
+-- Trigger for DELETE operations
+CREATE TRIGGER media_table_view_delete
+    INSTEAD OF DELETE ON media_table_view
+    BEGIN
+        DELETE FROM media_table
+        WHERE id = OLD.id;
+    END;

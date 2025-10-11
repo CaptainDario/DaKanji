@@ -48,10 +48,6 @@ import '/extensions/sqlite_crsqlite_extension.dart';
 import '/extensions/sqlite_compress_extension.dart';
 // these are NECCESSARY
 // ignore: unused_import
-import '/helper/zlib_text_converter.dart';
-// ignore: unused_import
-import '/helper/zlib_bytes_converter.dart';
-// ignore: unused_import
 import '/helper/json_converter.dart';
 
 part 'dakanji_db.g.dart';
@@ -115,6 +111,7 @@ part 'dakanji_db.g.dart';
     'general_tables/reading_fts5_table.drift', 'general_tables/reading_spellfix_table.drift',
     'general_tables/definition_fts5_table.drift',
     'general_tables/hiragana_spellfix_cost.drift',
+    'general_tables/data_views.drift',
     
     'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
     'kanji_meta/kanji_meta_bank_v3_views.drift', 'kanji_meta/kanji_meta_bank_v3_queries.drift',

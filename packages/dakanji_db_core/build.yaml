@@ -12,3 +12,6 @@ targets:
                 - json1
                 - dbstat
                 - spellfix1
+              known_functions:
+                compress: "blob null (blob null)"
+                decompress: "blob null (blob null)"

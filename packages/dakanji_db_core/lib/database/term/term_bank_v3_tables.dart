@@ -4,7 +4,6 @@ import 'package:dakanji_db_core/helper/json_converter.dart';
 
 import '/database/general_tables/reading_tables.dart';
 import '/database/general_tables/term_tables.dart';
-import '/helper/zlib_text_converter.dart';
 import 'package:drift/drift.dart';
 
 
@@ -57,7 +56,7 @@ class TermBankV3DefinitionJsonTable extends Table {
   IntColumn get id => integer()();
 
   /// JSON representation of the term
-  BlobColumn get definitionJson => blob().map(const ZlibStringConverter())();
+  TextColumn get definitionJson => text()();
 
 }
 

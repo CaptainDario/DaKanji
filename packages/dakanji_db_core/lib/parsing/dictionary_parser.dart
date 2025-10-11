@@ -136,7 +136,7 @@ Future _parseDictionaryDataSource(({
     if(p.basename(data.fileName).contains(indexFileNamingScheme)) continue;
     if(!validDictionaryFiles.any((scheme) => p.basename(data.fileName).contains(scheme))){
       params.mainIsolateSendPort.send("Copying ${data.fileName} to DB ...");
-      await importMediaFile(data.fileName, data.fileContent, db);
+      await importMediaFile(data.fileName, data.fileContent, indexId, db);
       continue;
     }
 

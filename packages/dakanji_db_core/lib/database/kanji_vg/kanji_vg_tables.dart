@@ -3,7 +3,6 @@ import 'package:drift/drift.dart';
 
 // Project imports:
 import '/database/general_tables/kanji_tables.dart';
-import '/helper/zlib_text_converter.dart';
 
 
 
@@ -17,6 +16,6 @@ class KanjiVGTable extends Table {
   IntColumn get kanjiId => integer().references(KanjiTable, #id)();
 
   /// The svg data of this kanji
-  BlobColumn get kanjiVGSVG => blob().map(const ZlibStringConverter())();
+  TextColumn get kanjiVGSVG => text()();
 
 }
