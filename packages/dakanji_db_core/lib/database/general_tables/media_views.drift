@@ -1,4 +1,4 @@
-import 'data_tables.dart';
+import 'media_tables.dart';
 
 
 
@@ -8,7 +8,7 @@ CREATE VIEW media_table_view AS
         id,
         index_id,
         path,
-        decompress(data_compressed) AS data
+        uncompress(data_compressed) AS data
     FROM
         media_table;
 

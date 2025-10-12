@@ -17,7 +17,7 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseAudioFile(File(p.join(devExampleAudioPath, "audio_list.json")), db, 1);
+  await parseAudioFile(File(p.join(devExampleAudioListPath, "audio_list.json")), db, 1);
   //await parseDictionaryFolder(Directory(devExampleAudioPath), db, true);
   print("Conversion took ${s.elapsedMilliseconds} ms");
   
@@ -30,7 +30,7 @@ void main() async {
 /// tests the termBankV3 import of the sample database from the yomitan dictionary
 Future testAudio(DaKanjiDB db) async {
   // Check some kanji bank queries
-  for (int i = 0; i < audioTestCases.length; i++) {
+  for (int i = 0; i < audioListTestCases.length; i++) {
    
   }
 }

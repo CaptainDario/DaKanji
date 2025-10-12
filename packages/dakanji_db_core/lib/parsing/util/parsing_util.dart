@@ -53,14 +53,17 @@ Iterable<({String fileName, Uint8List fileContent})> dakanjiDBDataSourceIterator
   if (archiveBytes != null) inputStream = InputMemoryStream(archiveBytes);
   else if (archivePath != null) inputStream = InputFileStream(archivePath);
 
-  final Archive archive = ZipDecoder().decodeStream(inputStream);
-  yield* _archiveIteratorStreamed(
-    archive,
-    fileOrder: fileOrder,
-    filesToExclude: filesToExclude
-  );
-
-  inputStream.close();
+  try {
+    final Archive archive = ZipDecoder().decodeStream(inputStream);
+    yield* _archiveIteratorStreamed(
+      archive,
+      fileOrder: fileOrder,
+      filesToExclude: filesToExclude
+    ); 
+  }
+  finally {
+    inputStream.close();  
+  }
 
 }
 
@@ -98,6 +101,7 @@ Iterable<({String fileName, Uint8List fileContent})> _archiveIteratorStreamed(
     }
   }
 
+  print("asjkhdg ${archive.files}");
   // iterate over the remaining files
   for (final entity in archive.files.sorted((a, b) => a.name.compareTo(b.name))) {
     if (entity.isFile && !processedFiles.contains(entity.name)) {

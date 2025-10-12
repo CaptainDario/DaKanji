@@ -13326,7 +13326,7 @@ class MediaTableView extends ViewInfo<MediaTableView, MediaTableViewData>
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW media_table_view AS SELECT id, index_id, path, decompress(data_compressed) AS data FROM media_table',
+        'CREATE VIEW media_table_view AS SELECT id, index_id, path, uncompress(data_compressed) AS data FROM media_table',
   };
   @override
   MediaTableView get asDslTable => this;

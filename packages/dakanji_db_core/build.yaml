@@ -14,4 +14,4 @@ targets:
                 - spellfix1
               known_functions:
                 compress: "blob null (blob null)"
-                decompress: "blob null (blob null)"
+                uncompress: "blob null (blob null)"

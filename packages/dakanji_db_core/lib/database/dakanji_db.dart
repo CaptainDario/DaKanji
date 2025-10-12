@@ -1,5 +1,5 @@
 // Package imports:
-import 'package:dakanji_db_core/database/general_tables/data_tables.dart';
+import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
 import 'package:sqlite3/native_assets.dart';
 
 import '/database/dakanji_db_dao.dart';
@@ -111,7 +111,7 @@ part 'dakanji_db.g.dart';
     'general_tables/reading_fts5_table.drift', 'general_tables/reading_spellfix_table.drift',
     'general_tables/definition_fts5_table.drift',
     'general_tables/hiragana_spellfix_cost.drift',
-    'general_tables/data_views.drift',
+    'general_tables/media_views.drift',
     
     'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
     'kanji_meta/kanji_meta_bank_v3_views.drift', 'kanji_meta/kanji_meta_bank_v3_queries.drift',

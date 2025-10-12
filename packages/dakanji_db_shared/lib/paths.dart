@@ -68,10 +68,23 @@ final devExampleTextsPath = p.joinAll([dataFilesPath, "example_texts"]);
 /// Path to the folder that contains example texts for development
 final devExampleTextsZipPath = p.joinAll([dataFilesPath, "example_texts.zip"]);
 
-/// Path to the folder that contains audio examples for development
-final devExampleAudioPath = p.joinAll([dataFilesPath, "example_audio_sources"]);
-/// Path to the zip file that contains audio examples for development
-final devExampleAudioZipPath = p.joinAll([dataFilesPath, "example_audio_sources.zip"]);
+/// Path to the folder that contains audio list examples for development
+final devExampleAudioListPath = p.joinAll([dataFilesPath, "example_audio_sources"]);
+/// Path to the zip file that contains audio list examples for development
+final devExampleAudioListZipPath = p.joinAll([dataFilesPath, "example_audio_sources.zip"]);
+
+/// Path to the folder that contains audio examples (format 1, 2, 3) for development
+/// - format 1: file name format
+/// - format 2: index format
+/// - format 3: entries format
+final devExampleAudioPath = p.joinAll([dataFilesPath, "example_audio_files", ]);
+/// Path to the folder that contains audio examples (format 1) for development
+final devExampleAudio1Path = p.joinAll([devExampleAudioPath, "file_name_format"]);
+/// Path to the folder that contains audio examples (format 2) for development
+final devExampleAudio2Path = p.joinAll([devExampleAudioPath, "index_format"]);
+/// Path to the folder that contains audio examples (format 3) for development
+final devExampleAudio3Path = p.joinAll([devExampleAudioPath, "entries_format"]);
+
 
 /// --- DAKANJI DB FILES -------------------------------------------------------
 /// Path to the folder that contains the input files for creating DaKanji DB
