@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:universal_io/io.dart';
+import '../util/db_files.dart';
 import 'audio_test_cases.dart';
 
 
@@ -20,16 +21,14 @@ void main() async {
   DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
   db.clearDB();
 
-  // create a temporary zip folder form the base data
-  final encoder = ZipFileEncoder();
-  String zipFilePath = p.joinAll([tmpPath, "${p.basename(devExampleAudio1Path)}.zip"]);
-  await encoder.zipDirectory(Directory(devExampleAudio1Path), filename: zipFilePath);
+
 
   // parse the test files
   Stopwatch s = Stopwatch()..start();
-  //Stream<String> stream = 
+  String dataSourceZipPath = await createTmpZip(Directory(devExampleAudio1Path));
+  // TODO update to isolate based parsing
   await parseAudioDataSource(
-    audioDataSourceFile: zipFilePath, db: db);
+    audioDataSourceFile: dataSourceZipPath, db: db);
   //await for (final event in stream) {
   //  print(event);
   //}

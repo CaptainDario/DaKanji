@@ -8,6 +8,7 @@ import 'package:universal_io/io.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
+import '../../util/db_files.dart';
 import 'kanji_dictionary_search_test_cases.dart';
 
 void main() async {
@@ -21,8 +22,9 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
+  String dataSourceZipPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
   Stream<String> progress = await parseDictionaryDataSource(
-    dataSourcePath: yomitanSampleDictionaryZipPath,
+    dataSourcePath: dataSourceZipPath,
     db: db,
     addFullJsonDefinitions: false,
     mecab: mecab

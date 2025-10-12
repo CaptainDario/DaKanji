@@ -1,4 +1,6 @@
 // Package imports:
+import 'dart:io';
+
 import 'package:dakanji_db_core/parsing/example_parser.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
@@ -6,6 +8,7 @@ import 'package:test/test.dart';
 // Project imports:
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_shared/paths.dart';
+import '../util/db_files.dart';
 import 'example_sentences_test_cases.dart';
 
 
@@ -22,7 +25,8 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  Stream<String> stream = await parseExampleDataSource(devExampleSentencesZipPath, db, mecab);
+  String dataSourceZipPath = await createTmpZip(Directory(devExampleSentencesPath));
+  Stream<String> stream = await parseExampleDataSource(dataSourceZipPath, db, mecab);
   await for (final event in stream) {
     print(event);
   }

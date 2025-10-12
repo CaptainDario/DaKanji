@@ -53,3 +53,17 @@ Future<void> partialInit(
   print("Database setup and conversion took ${s.elapsedMilliseconds} ms.");
 
 }
+
+/// Create a temporary zip file from the base data for testing purposes
+/// 
+/// Returns the path to the created zip file
+Future<String> createTmpZip(Directory dicrectoryToZip) async {
+
+  // create a temporary zip folder form the base data
+  final encoder = ZipFileEncoder();
+  String zipFilePath = p.joinAll([tmpPath, "${p.basename(dicrectoryToZip.path)}.zip"]);
+  await encoder.zipDirectory(dicrectoryToZip, filename: zipFilePath);
+
+  return zipFilePath;
+
+}
