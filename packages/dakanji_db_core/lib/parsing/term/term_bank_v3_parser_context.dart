@@ -8,24 +8,24 @@ class TermBankV3ParserContext extends ParserContext{
   int currentMaxTermBankId;
 
   int currentMaxTermId;
-  Map allTerms;
+  Map<String, int> allTerms;
 
   int currentMaxReadingId;
-  Map allReadings;
+  Map<String, int> allReadings;
 
   int currentMaxDefTagId;
-  Map allDefTags;
+  Map<String, int> allDefTags;
 
   int currentMaxRuleIdentifiersId;
-  Map allRuleIdentifiers;
+  Map<String, int> allRuleIdentifiers;
 
   int currentMaxDefinitionJsonId;
 
   int currentMaxdefinitionId;
-  Map allDefinitions;
+  Map<String, int> allDefinitions;
 
   // tags are parsed from the meta bank and thus are ALWAYS in the DB
-  Map allTags;
+  Map<String, int> allTags;
 
 
   TermBankV3ParserContext._({

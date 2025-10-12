@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db_core/database/audio/audio_tables.dart';
 import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
 import 'package:sqlite3/native_assets.dart';
 
@@ -57,6 +58,7 @@ part 'dakanji_db.g.dart';
 @DriftDatabase(
   tables: [
     AudioSourceListTable,
+    AudioTable,
     KanjiTable, TermTable, ReadingTable, MediaTable,
     DefinitionTable, TermBankV3DefinitionJsonTable, LanguageCodeTable,
 

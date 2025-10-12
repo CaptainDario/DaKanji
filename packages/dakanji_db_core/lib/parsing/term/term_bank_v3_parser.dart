@@ -1,7 +1,8 @@
 // Dart imports:
 import 'dart:convert';
 
-import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_import_context.dart';
+import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
 import 'structured_content/parsed_term.dart';
@@ -70,12 +71,7 @@ Future parseTermBankV3(
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
         term: Value(term),
-        termTokens: Value(() {
-          List<String> tokens = mecab.parse(term).map((e) => e.surface).toList();
-          tokens = tokens.sublist(0, tokens.length-1);
-          String joinedTokens = tokens.join(" ");
-          return joinedTokens == term ? null : joinedTokens;
-        } ())
+        termTokens: Value(getMecabSurfacesOrNull(mecab, term))
       ));
     }
 
@@ -168,7 +164,7 @@ Future parseTermBankV3(
       for (var tag in jsonEntry[7].split(" ")) {
         // create relationship
         tagRelComps.add(TermBankV3_X_TagBankTableCompanion(
-          tagBankId: Value(pC.allTags[tag]),
+          tagBankId: Value(pC.allTags[tag]!),
           termBankId: Value(pC.currentMaxTermBankId)
         ));
       }

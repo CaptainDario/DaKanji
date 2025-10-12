@@ -1,6 +1,6 @@
 // Package imports:
-import 'package:archive/archive_io.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:path/path.dart' as p;
 
@@ -18,20 +18,24 @@ void main() async {
   print(coreTestsPath);
   
   // create the testing database (delete any existing database)
+  if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
-  db.clearDB();
 
-
+  Mecab mecab = Mecab();
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   // parse the test files
   Stopwatch s = Stopwatch()..start();
   String dataSourceZipPath = await createTmpZip(Directory(devExampleAudio1Path));
-  // TODO update to isolate based parsing
-  await parseAudioDataSource(
-    audioDataSourceFile: dataSourceZipPath, db: db);
-  //await for (final event in stream) {
-  //  print(event);
-  //}
+  Stream importProgress = await parseAudioDataSource(
+    audioDataSourceFile: dataSourceZipPath,
+    db: db,
+    audioSourceName: p.basenameWithoutExtension(devExampleAudio1Path),
+    mecab: mecab
+  );
+  await for (final event in importProgress) {
+    print(event);
+  }
   print("Conversion took ${s.elapsedMilliseconds} ms");
 
   await testExampleTexts(db);

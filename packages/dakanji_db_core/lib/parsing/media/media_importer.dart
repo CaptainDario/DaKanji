@@ -3,9 +3,9 @@ import 'package:drift/drift.dart';
 
 
 
-Future importMediaFile(String path, Uint8List mediaContent, int indexId, DaKanjiDB db) async {
+Future<int> importMediaFile(String path, Uint8List mediaContent, int indexId, DaKanjiDB db) async {
   
-  await db.customInsert(
+  return await db.customInsert(
     'INSERT INTO media_table_view (path, data, index_id) VALUES (?, ?, ?)',
     variables: [
       Variable.withString(path),

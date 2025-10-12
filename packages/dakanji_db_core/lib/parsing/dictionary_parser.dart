@@ -12,7 +12,7 @@ import 'package:dakanji_db_core/parsing/term_meta/term_meta_bank_v3_parser_conte
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/import_context.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
-import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_import_context.dart';
+import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_context.dart';
 import 'package:drift/isolate.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
@@ -62,7 +62,7 @@ Future<Stream<String>> parseDictionaryDataSource({
 
   assert(dataSourcePath != null);
 
-  // Use a completer to wait for the isolate to finish
+  // Stream so that the 'outside' can listen to the progress
   final StreamController<String> controller = StreamController();
 
   /// get parameters for isolate and spawn it
@@ -94,7 +94,7 @@ Future<Stream<String>> parseDictionaryDataSource({
 
 }
 
-/// Actual implementation of the [_parseDictionaryDataSource] that runs in an
+/// Actual implementation of [parseDictionaryDataSource] that runs in an
 /// isolate.
 Future _parseDictionaryDataSource(({
   String? dataSourcePath,
@@ -128,10 +128,11 @@ Future _parseDictionaryDataSource(({
 
   // parse the rest of the files (first tag bank, then the rest in sorted order)
   int progressCounter = 0;
+  final int noEntries = dataSources.length;
   for (final ({String fileName, Uint8List fileContent}) data in dataSources) {
 
     progressCounter++;
-    params.mainIsolateSendPort.send("Parsing ${data.fileName} ($progressCounter/${dataSources.length}) ...");
+    params.mainIsolateSendPort.send("Parsing ${data.fileName} ($progressCounter/$noEntries) ...");
 
     if(p.basename(data.fileName).contains(indexFileNamingScheme)) continue;
     if(!validDictionaryFiles.any((scheme) => p.basename(data.fileName).contains(scheme))){
