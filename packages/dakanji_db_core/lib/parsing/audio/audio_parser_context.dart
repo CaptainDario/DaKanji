@@ -15,8 +15,13 @@ class AudioParserContext extends ParserContext{
   /// A map of all readings in the database to their IDs
   Map<String, int> allReadings;
 
+  /// The current maximum media ID in the database
+  int currentMaxMediaId;
+
   /// A list of all [TermTableCompanion]s that should be inserted in the DB
   List<TermTableCompanion> termComps= [];
+  /// A list of all [ReadingTableCompanion]s that should be inserted in the DB
+  List<ReadingTableCompanion> readingComps = [];
   /// A list of all [AudioTableCompanion]s that should be inserted in the DB
   List<AudioTableCompanion> audioComps = [];
 
@@ -27,6 +32,7 @@ class AudioParserContext extends ParserContext{
     required this.allTerms,
     required this.currentMaxReadingId,
     required this.allReadings,
+    required this.currentMaxMediaId,
   });
 
   static Future<AudioParserContext> create(DaKanjiDB db) async {
@@ -37,6 +43,8 @@ class AudioParserContext extends ParserContext{
       
       currentMaxReadingId: await db.readingDao.maxReadingId(),
       allReadings: { for (var e in await db.readingDao.getAllReadings()) e.reading : e.id },
+
+      currentMaxMediaId: await db.mediaDao.maxMediaId(),
     );
 
   }

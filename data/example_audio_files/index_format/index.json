@@ -1,0 +1,57 @@
+{
+    "meta": {
+        "name": "JapanesePod101",
+        "year": 2020,
+        "version": 1,
+        "media_dir": "media"
+    },
+    "headwords": {
+        "お手前": [
+            "a6058cfcec4ac9623bbd2be4bc8e37da.opus"
+        ],
+        "強み": [
+            "3a3a8b7afa369534474651de4b494876.opus"
+        ],
+        "所業": [
+            "ef6c910fdf0090a68f67527b79aa92de.opus"
+        ],
+        "打ち込む": [
+            "c8388ad9826d29df1cbfe654412f2020.opus",
+            "b44ccb3694f0b1b408c193dc87576760.opus"
+        ],
+        "日本人": [
+            "fe7402f538a9c882806395c6e5a6330c.opus",
+            "4531b4a6ccd1ed9074977599be4d7d0f.opus"
+        ]
+    },
+    "files": {
+        "a6058cfcec4ac9623bbd2be4bc8e37da.opus": {
+            "kana_reading": "おてまえ",
+            "pitch_number": "?"
+        },
+        "3a3a8b7afa369534474651de4b494876.opus": {
+            "kana_reading": "つよみ",
+            "pitch_number": "?"
+        },
+        "ef6c910fdf0090a68f67527b79aa92de.opus": {
+            "kana_reading": "しょぎょう",
+            "pitch_number": "?"
+        },
+        "c8388ad9826d29df1cbfe654412f2020.opus": {
+            "kana_reading": "うちこむ",
+            "pitch_number": "?"
+        },
+        "b44ccb3694f0b1b408c193dc87576760.opus": {
+            "kana_reading": "ぶちこむ",
+            "pitch_number": "?"
+        },
+        "fe7402f538a9c882806395c6e5a6330c.opus": {
+            "kana_reading": "にっぽんじん",
+            "pitch_number": "?"
+        },
+        "4531b4a6ccd1ed9074977599be4d7d0f.opus": {
+            "kana_reading": "にほんじん",
+            "pitch_number": "?"
+        }
+    }
+}
