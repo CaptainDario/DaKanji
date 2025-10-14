@@ -12925,6 +12925,650 @@ class DefinitionFtsCompanion extends UpdateCompanion<DefinitionFt> {
   }
 }
 
+class $AudioTableTable extends AudioTable
+    with TableInfo<$AudioTableTable, AudioTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AudioTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _indexIdMeta = const VerificationMeta(
+    'indexId',
+  );
+  @override
+  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
+    'index_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES index_table (id)',
+    ),
+  );
+  static const VerificationMeta _readingIdMeta = const VerificationMeta(
+    'readingId',
+  );
+  @override
+  late final GeneratedColumn<int> readingId = GeneratedColumn<int>(
+    'reading_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES reading_table (id)',
+    ),
+  );
+  static const VerificationMeta _mediaIdMeta = const VerificationMeta(
+    'mediaId',
+  );
+  @override
+  late final GeneratedColumn<int> mediaId = GeneratedColumn<int>(
+    'media_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _pitchAccentPatternMeta =
+      const VerificationMeta('pitchAccentPattern');
+  @override
+  late final GeneratedColumn<int> pitchAccentPattern = GeneratedColumn<int>(
+    'pitch_accent_pattern',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    indexId,
+    readingId,
+    mediaId,
+    pitchAccentPattern,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'audio_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AudioTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('index_id')) {
+      context.handle(
+        _indexIdMeta,
+        indexId.isAcceptableOrUnknown(data['index_id']!, _indexIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_indexIdMeta);
+    }
+    if (data.containsKey('reading_id')) {
+      context.handle(
+        _readingIdMeta,
+        readingId.isAcceptableOrUnknown(data['reading_id']!, _readingIdMeta),
+      );
+    }
+    if (data.containsKey('media_id')) {
+      context.handle(
+        _mediaIdMeta,
+        mediaId.isAcceptableOrUnknown(data['media_id']!, _mediaIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_mediaIdMeta);
+    }
+    if (data.containsKey('pitch_accent_pattern')) {
+      context.handle(
+        _pitchAccentPatternMeta,
+        pitchAccentPattern.isAcceptableOrUnknown(
+          data['pitch_accent_pattern']!,
+          _pitchAccentPatternMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AudioTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AudioTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      indexId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}index_id'],
+      )!,
+      readingId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}reading_id'],
+      ),
+      mediaId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}media_id'],
+      )!,
+      pitchAccentPattern: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}pitch_accent_pattern'],
+      ),
+    );
+  }
+
+  @override
+  $AudioTableTable createAlias(String alias) {
+    return $AudioTableTable(attachedDatabase, alias);
+  }
+}
+
+class AudioTableData extends DataClass implements Insertable<AudioTableData> {
+  /// id of this entry
+  final int id;
+
+  /// The id of the dictionary this entry belongs to
+  final int indexId;
+
+  /// The id of the reading this audio is associated with
+  final int? readingId;
+
+  /// The id of the media file in the media table
+  final int mediaId;
+
+  /// The pitch accent pattern number
+  final int? pitchAccentPattern;
+  const AudioTableData({
+    required this.id,
+    required this.indexId,
+    this.readingId,
+    required this.mediaId,
+    this.pitchAccentPattern,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['index_id'] = Variable<int>(indexId);
+    if (!nullToAbsent || readingId != null) {
+      map['reading_id'] = Variable<int>(readingId);
+    }
+    map['media_id'] = Variable<int>(mediaId);
+    if (!nullToAbsent || pitchAccentPattern != null) {
+      map['pitch_accent_pattern'] = Variable<int>(pitchAccentPattern);
+    }
+    return map;
+  }
+
+  AudioTableCompanion toCompanion(bool nullToAbsent) {
+    return AudioTableCompanion(
+      id: Value(id),
+      indexId: Value(indexId),
+      readingId: readingId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(readingId),
+      mediaId: Value(mediaId),
+      pitchAccentPattern: pitchAccentPattern == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pitchAccentPattern),
+    );
+  }
+
+  factory AudioTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AudioTableData(
+      id: serializer.fromJson<int>(json['id']),
+      indexId: serializer.fromJson<int>(json['indexId']),
+      readingId: serializer.fromJson<int?>(json['readingId']),
+      mediaId: serializer.fromJson<int>(json['mediaId']),
+      pitchAccentPattern: serializer.fromJson<int?>(json['pitchAccentPattern']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'indexId': serializer.toJson<int>(indexId),
+      'readingId': serializer.toJson<int?>(readingId),
+      'mediaId': serializer.toJson<int>(mediaId),
+      'pitchAccentPattern': serializer.toJson<int?>(pitchAccentPattern),
+    };
+  }
+
+  AudioTableData copyWith({
+    int? id,
+    int? indexId,
+    Value<int?> readingId = const Value.absent(),
+    int? mediaId,
+    Value<int?> pitchAccentPattern = const Value.absent(),
+  }) => AudioTableData(
+    id: id ?? this.id,
+    indexId: indexId ?? this.indexId,
+    readingId: readingId.present ? readingId.value : this.readingId,
+    mediaId: mediaId ?? this.mediaId,
+    pitchAccentPattern: pitchAccentPattern.present
+        ? pitchAccentPattern.value
+        : this.pitchAccentPattern,
+  );
+  AudioTableData copyWithCompanion(AudioTableCompanion data) {
+    return AudioTableData(
+      id: data.id.present ? data.id.value : this.id,
+      indexId: data.indexId.present ? data.indexId.value : this.indexId,
+      readingId: data.readingId.present ? data.readingId.value : this.readingId,
+      mediaId: data.mediaId.present ? data.mediaId.value : this.mediaId,
+      pitchAccentPattern: data.pitchAccentPattern.present
+          ? data.pitchAccentPattern.value
+          : this.pitchAccentPattern,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AudioTableData(')
+          ..write('id: $id, ')
+          ..write('indexId: $indexId, ')
+          ..write('readingId: $readingId, ')
+          ..write('mediaId: $mediaId, ')
+          ..write('pitchAccentPattern: $pitchAccentPattern')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, indexId, readingId, mediaId, pitchAccentPattern);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AudioTableData &&
+          other.id == this.id &&
+          other.indexId == this.indexId &&
+          other.readingId == this.readingId &&
+          other.mediaId == this.mediaId &&
+          other.pitchAccentPattern == this.pitchAccentPattern);
+}
+
+class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
+  final Value<int> id;
+  final Value<int> indexId;
+  final Value<int?> readingId;
+  final Value<int> mediaId;
+  final Value<int?> pitchAccentPattern;
+  const AudioTableCompanion({
+    this.id = const Value.absent(),
+    this.indexId = const Value.absent(),
+    this.readingId = const Value.absent(),
+    this.mediaId = const Value.absent(),
+    this.pitchAccentPattern = const Value.absent(),
+  });
+  AudioTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int indexId,
+    this.readingId = const Value.absent(),
+    required int mediaId,
+    this.pitchAccentPattern = const Value.absent(),
+  }) : indexId = Value(indexId),
+       mediaId = Value(mediaId);
+  static Insertable<AudioTableData> custom({
+    Expression<int>? id,
+    Expression<int>? indexId,
+    Expression<int>? readingId,
+    Expression<int>? mediaId,
+    Expression<int>? pitchAccentPattern,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (indexId != null) 'index_id': indexId,
+      if (readingId != null) 'reading_id': readingId,
+      if (mediaId != null) 'media_id': mediaId,
+      if (pitchAccentPattern != null)
+        'pitch_accent_pattern': pitchAccentPattern,
+    });
+  }
+
+  AudioTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? indexId,
+    Value<int?>? readingId,
+    Value<int>? mediaId,
+    Value<int?>? pitchAccentPattern,
+  }) {
+    return AudioTableCompanion(
+      id: id ?? this.id,
+      indexId: indexId ?? this.indexId,
+      readingId: readingId ?? this.readingId,
+      mediaId: mediaId ?? this.mediaId,
+      pitchAccentPattern: pitchAccentPattern ?? this.pitchAccentPattern,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (indexId.present) {
+      map['index_id'] = Variable<int>(indexId.value);
+    }
+    if (readingId.present) {
+      map['reading_id'] = Variable<int>(readingId.value);
+    }
+    if (mediaId.present) {
+      map['media_id'] = Variable<int>(mediaId.value);
+    }
+    if (pitchAccentPattern.present) {
+      map['pitch_accent_pattern'] = Variable<int>(pitchAccentPattern.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AudioTableCompanion(')
+          ..write('id: $id, ')
+          ..write('indexId: $indexId, ')
+          ..write('readingId: $readingId, ')
+          ..write('mediaId: $mediaId, ')
+          ..write('pitchAccentPattern: $pitchAccentPattern')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AudioTable_X_TermTableTable extends AudioTable_X_TermTable
+    with TableInfo<$AudioTable_X_TermTableTable, AudioTable_X_TermTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AudioTable_X_TermTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _audioIdMeta = const VerificationMeta(
+    'audioId',
+  );
+  @override
+  late final GeneratedColumn<int> audioId = GeneratedColumn<int>(
+    'audio_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES audio_table (id)',
+    ),
+  );
+  static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
+  @override
+  late final GeneratedColumn<int> termId = GeneratedColumn<int>(
+    'term_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES term_table (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, audioId, termId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'audio_table_x_term_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AudioTable_X_TermTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('audio_id')) {
+      context.handle(
+        _audioIdMeta,
+        audioId.isAcceptableOrUnknown(data['audio_id']!, _audioIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_audioIdMeta);
+    }
+    if (data.containsKey('term_id')) {
+      context.handle(
+        _termIdMeta,
+        termId.isAcceptableOrUnknown(data['term_id']!, _termIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AudioTable_X_TermTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AudioTable_X_TermTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      audioId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}audio_id'],
+      )!,
+      termId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}term_id'],
+      )!,
+    );
+  }
+
+  @override
+  $AudioTable_X_TermTableTable createAlias(String alias) {
+    return $AudioTable_X_TermTableTable(attachedDatabase, alias);
+  }
+}
+
+class AudioTable_X_TermTableData extends DataClass
+    implements Insertable<AudioTable_X_TermTableData> {
+  /// id of this entry
+  final int id;
+
+  /// Link to the [AudioTable]
+  final int audioId;
+
+  /// Link to the [TermTable]
+  final int termId;
+  const AudioTable_X_TermTableData({
+    required this.id,
+    required this.audioId,
+    required this.termId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['audio_id'] = Variable<int>(audioId);
+    map['term_id'] = Variable<int>(termId);
+    return map;
+  }
+
+  AudioTable_X_TermTableCompanion toCompanion(bool nullToAbsent) {
+    return AudioTable_X_TermTableCompanion(
+      id: Value(id),
+      audioId: Value(audioId),
+      termId: Value(termId),
+    );
+  }
+
+  factory AudioTable_X_TermTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AudioTable_X_TermTableData(
+      id: serializer.fromJson<int>(json['id']),
+      audioId: serializer.fromJson<int>(json['audioId']),
+      termId: serializer.fromJson<int>(json['termId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'audioId': serializer.toJson<int>(audioId),
+      'termId': serializer.toJson<int>(termId),
+    };
+  }
+
+  AudioTable_X_TermTableData copyWith({int? id, int? audioId, int? termId}) =>
+      AudioTable_X_TermTableData(
+        id: id ?? this.id,
+        audioId: audioId ?? this.audioId,
+        termId: termId ?? this.termId,
+      );
+  AudioTable_X_TermTableData copyWithCompanion(
+    AudioTable_X_TermTableCompanion data,
+  ) {
+    return AudioTable_X_TermTableData(
+      id: data.id.present ? data.id.value : this.id,
+      audioId: data.audioId.present ? data.audioId.value : this.audioId,
+      termId: data.termId.present ? data.termId.value : this.termId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AudioTable_X_TermTableData(')
+          ..write('id: $id, ')
+          ..write('audioId: $audioId, ')
+          ..write('termId: $termId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, audioId, termId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AudioTable_X_TermTableData &&
+          other.id == this.id &&
+          other.audioId == this.audioId &&
+          other.termId == this.termId);
+}
+
+class AudioTable_X_TermTableCompanion
+    extends UpdateCompanion<AudioTable_X_TermTableData> {
+  final Value<int> id;
+  final Value<int> audioId;
+  final Value<int> termId;
+  const AudioTable_X_TermTableCompanion({
+    this.id = const Value.absent(),
+    this.audioId = const Value.absent(),
+    this.termId = const Value.absent(),
+  });
+  AudioTable_X_TermTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int audioId,
+    required int termId,
+  }) : audioId = Value(audioId),
+       termId = Value(termId);
+  static Insertable<AudioTable_X_TermTableData> custom({
+    Expression<int>? id,
+    Expression<int>? audioId,
+    Expression<int>? termId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (audioId != null) 'audio_id': audioId,
+      if (termId != null) 'term_id': termId,
+    });
+  }
+
+  AudioTable_X_TermTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? audioId,
+    Value<int>? termId,
+  }) {
+    return AudioTable_X_TermTableCompanion(
+      id: id ?? this.id,
+      audioId: audioId ?? this.audioId,
+      termId: termId ?? this.termId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (audioId.present) {
+      map['audio_id'] = Variable<int>(audioId.value);
+    }
+    if (termId.present) {
+      map['term_id'] = Variable<int>(termId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AudioTable_X_TermTableCompanion(')
+          ..write('id: $id, ')
+          ..write('audioId: $audioId, ')
+          ..write('termId: $termId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $MediaTableTable extends MediaTable
     with TableInfo<$MediaTableTable, MediaTableData> {
   @override
@@ -12964,10 +13608,18 @@ class $MediaTableTable extends MediaTable
     'path',
     aliasedName,
     false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
     additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
   static const VerificationMeta _dataCompressedMeta = const VerificationMeta(
     'dataCompressed',
@@ -12982,7 +13634,13 @@ class $MediaTableTable extends MediaTable
         requiredDuringInsert: true,
       );
   @override
-  List<GeneratedColumn> get $columns => [id, indexId, path, dataCompressed];
+  List<GeneratedColumn> get $columns => [
+    id,
+    indexId,
+    path,
+    name,
+    dataCompressed,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -13013,6 +13671,14 @@ class $MediaTableTable extends MediaTable
       );
     } else if (isInserting) {
       context.missing(_pathMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
     }
     if (data.containsKey('data_compressed')) {
       context.handle(
@@ -13046,6 +13712,10 @@ class $MediaTableTable extends MediaTable
         DriftSqlType.string,
         data['${effectivePrefix}path'],
       )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
       dataCompressed: attachedDatabase.typeMapping.read(
         DriftSqlType.blob,
         data['${effectivePrefix}data_compressed'],
@@ -13069,12 +13739,16 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
   /// the path of this data file as found in the original data source
   final String path;
 
+  /// A the name for this file
+  final String name;
+
   /// The actual data of the file
   final Uint8List dataCompressed;
   const MediaTableData({
     required this.id,
     required this.indexId,
     required this.path,
+    required this.name,
     required this.dataCompressed,
   });
   @override
@@ -13083,6 +13757,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
     map['id'] = Variable<int>(id);
     map['index_id'] = Variable<int>(indexId);
     map['path'] = Variable<String>(path);
+    map['name'] = Variable<String>(name);
     map['data_compressed'] = Variable<Uint8List>(dataCompressed);
     return map;
   }
@@ -13092,6 +13767,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
       id: Value(id),
       indexId: Value(indexId),
       path: Value(path),
+      name: Value(name),
       dataCompressed: Value(dataCompressed),
     );
   }
@@ -13105,6 +13781,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
       id: serializer.fromJson<int>(json['id']),
       indexId: serializer.fromJson<int>(json['indexId']),
       path: serializer.fromJson<String>(json['path']),
+      name: serializer.fromJson<String>(json['name']),
       dataCompressed: serializer.fromJson<Uint8List>(json['dataCompressed']),
     );
   }
@@ -13115,6 +13792,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
       'id': serializer.toJson<int>(id),
       'indexId': serializer.toJson<int>(indexId),
       'path': serializer.toJson<String>(path),
+      'name': serializer.toJson<String>(name),
       'dataCompressed': serializer.toJson<Uint8List>(dataCompressed),
     };
   }
@@ -13123,11 +13801,13 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
     int? id,
     int? indexId,
     String? path,
+    String? name,
     Uint8List? dataCompressed,
   }) => MediaTableData(
     id: id ?? this.id,
     indexId: indexId ?? this.indexId,
     path: path ?? this.path,
+    name: name ?? this.name,
     dataCompressed: dataCompressed ?? this.dataCompressed,
   );
   MediaTableData copyWithCompanion(MediaTableCompanion data) {
@@ -13135,6 +13815,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
       id: data.id.present ? data.id.value : this.id,
       indexId: data.indexId.present ? data.indexId.value : this.indexId,
       path: data.path.present ? data.path.value : this.path,
+      name: data.name.present ? data.name.value : this.name,
       dataCompressed: data.dataCompressed.present
           ? data.dataCompressed.value
           : this.dataCompressed,
@@ -13147,14 +13828,20 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
           ..write('id: $id, ')
           ..write('indexId: $indexId, ')
           ..write('path: $path, ')
+          ..write('name: $name, ')
           ..write('dataCompressed: $dataCompressed')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, indexId, path, $driftBlobEquality.hash(dataCompressed));
+  int get hashCode => Object.hash(
+    id,
+    indexId,
+    path,
+    name,
+    $driftBlobEquality.hash(dataCompressed),
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -13162,6 +13849,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
           other.id == this.id &&
           other.indexId == this.indexId &&
           other.path == this.path &&
+          other.name == this.name &&
           $driftBlobEquality.equals(other.dataCompressed, this.dataCompressed));
 }
 
@@ -13169,31 +13857,37 @@ class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
   final Value<int> id;
   final Value<int> indexId;
   final Value<String> path;
+  final Value<String> name;
   final Value<Uint8List> dataCompressed;
   const MediaTableCompanion({
     this.id = const Value.absent(),
     this.indexId = const Value.absent(),
     this.path = const Value.absent(),
+    this.name = const Value.absent(),
     this.dataCompressed = const Value.absent(),
   });
   MediaTableCompanion.insert({
     this.id = const Value.absent(),
     required int indexId,
     required String path,
+    required String name,
     required Uint8List dataCompressed,
   }) : indexId = Value(indexId),
        path = Value(path),
+       name = Value(name),
        dataCompressed = Value(dataCompressed);
   static Insertable<MediaTableData> custom({
     Expression<int>? id,
     Expression<int>? indexId,
     Expression<String>? path,
+    Expression<String>? name,
     Expression<Uint8List>? dataCompressed,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (indexId != null) 'index_id': indexId,
       if (path != null) 'path': path,
+      if (name != null) 'name': name,
       if (dataCompressed != null) 'data_compressed': dataCompressed,
     });
   }
@@ -13202,12 +13896,14 @@ class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
     Value<int>? id,
     Value<int>? indexId,
     Value<String>? path,
+    Value<String>? name,
     Value<Uint8List>? dataCompressed,
   }) {
     return MediaTableCompanion(
       id: id ?? this.id,
       indexId: indexId ?? this.indexId,
       path: path ?? this.path,
+      name: name ?? this.name,
       dataCompressed: dataCompressed ?? this.dataCompressed,
     );
   }
@@ -13224,6 +13920,9 @@ class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
     if (path.present) {
       map['path'] = Variable<String>(path.value);
     }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
     if (dataCompressed.present) {
       map['data_compressed'] = Variable<Uint8List>(dataCompressed.value);
     }
@@ -13236,6 +13935,7 @@ class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
           ..write('id: $id, ')
           ..write('indexId: $indexId, ')
           ..write('path: $path, ')
+          ..write('name: $name, ')
           ..write('dataCompressed: $dataCompressed')
           ..write(')'))
         .toString();
@@ -13246,11 +13946,13 @@ class MediaTableViewData extends DataClass {
   final int id;
   final int indexId;
   final String path;
+  final String name;
   final Uint8List? data;
   const MediaTableViewData({
     required this.id,
     required this.indexId,
     required this.path,
+    required this.name,
     this.data,
   });
   factory MediaTableViewData.fromJson(
@@ -13262,6 +13964,7 @@ class MediaTableViewData extends DataClass {
       id: serializer.fromJson<int>(json['id']),
       indexId: serializer.fromJson<int>(json['index_id']),
       path: serializer.fromJson<String>(json['path']),
+      name: serializer.fromJson<String>(json['name']),
       data: serializer.fromJson<Uint8List?>(json['data']),
     );
   }
@@ -13272,6 +13975,7 @@ class MediaTableViewData extends DataClass {
       'id': serializer.toJson<int>(id),
       'index_id': serializer.toJson<int>(indexId),
       'path': serializer.toJson<String>(path),
+      'name': serializer.toJson<String>(name),
       'data': serializer.toJson<Uint8List?>(data),
     };
   }
@@ -13280,11 +13984,13 @@ class MediaTableViewData extends DataClass {
     int? id,
     int? indexId,
     String? path,
+    String? name,
     Value<Uint8List?> data = const Value.absent(),
   }) => MediaTableViewData(
     id: id ?? this.id,
     indexId: indexId ?? this.indexId,
     path: path ?? this.path,
+    name: name ?? this.name,
     data: data.present ? data.value : this.data,
   );
   @override
@@ -13293,6 +13999,7 @@ class MediaTableViewData extends DataClass {
           ..write('id: $id, ')
           ..write('indexId: $indexId, ')
           ..write('path: $path, ')
+          ..write('name: $name, ')
           ..write('data: $data')
           ..write(')'))
         .toString();
@@ -13300,7 +14007,7 @@ class MediaTableViewData extends DataClass {
 
   @override
   int get hashCode =>
-      Object.hash(id, indexId, path, $driftBlobEquality.hash(data));
+      Object.hash(id, indexId, path, name, $driftBlobEquality.hash(data));
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -13308,6 +14015,7 @@ class MediaTableViewData extends DataClass {
           other.id == this.id &&
           other.indexId == this.indexId &&
           other.path == this.path &&
+          other.name == this.name &&
           $driftBlobEquality.equals(other.data, this.data));
 }
 
@@ -13318,7 +14026,7 @@ class MediaTableView extends ViewInfo<MediaTableView, MediaTableViewData>
   final _$DaKanjiDB attachedDatabase;
   MediaTableView(this.attachedDatabase, [this._alias]);
   @override
-  List<GeneratedColumn> get $columns => [id, indexId, path, data];
+  List<GeneratedColumn> get $columns => [id, indexId, path, name, data];
   @override
   String get aliasedName => _alias ?? entityName;
   @override
@@ -13326,7 +14034,7 @@ class MediaTableView extends ViewInfo<MediaTableView, MediaTableViewData>
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW media_table_view AS SELECT id, index_id, path, uncompress(data_compressed) AS data FROM media_table',
+        'CREATE VIEW media_table_view AS SELECT id, index_id, path, name, uncompress(data_compressed) AS data FROM media_table',
   };
   @override
   MediaTableView get asDslTable => this;
@@ -13345,6 +14053,10 @@ class MediaTableView extends ViewInfo<MediaTableView, MediaTableViewData>
       path: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}path'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
       )!,
       data: attachedDatabase.typeMapping.read(
         DriftSqlType.blob,
@@ -13371,6 +14083,12 @@ class MediaTableView extends ViewInfo<MediaTableView, MediaTableViewData>
     false,
     type: DriftSqlType.string,
   );
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
   late final GeneratedColumn<Uint8List> data = GeneratedColumn<Uint8List>(
     'data',
     aliasedName,
@@ -13386,6 +14104,251 @@ class MediaTableView extends ViewInfo<MediaTableView, MediaTableViewData>
   Query? get query => null;
   @override
   Set<String> get readTables => const {'media_table'};
+}
+
+class AudioEntryViewData extends DataClass {
+  final int id;
+  final int indexId;
+  final int? pitchAccentPattern;
+  final String termsJsonList;
+  final String? reading;
+  final String? path;
+  final String? name;
+  final Uint8List? data;
+  const AudioEntryViewData({
+    required this.id,
+    required this.indexId,
+    this.pitchAccentPattern,
+    required this.termsJsonList,
+    this.reading,
+    this.path,
+    this.name,
+    this.data,
+  });
+  factory AudioEntryViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AudioEntryViewData(
+      id: serializer.fromJson<int>(json['id']),
+      indexId: serializer.fromJson<int>(json['index_id']),
+      pitchAccentPattern: serializer.fromJson<int?>(
+        json['pitch_accent_pattern'],
+      ),
+      termsJsonList: serializer.fromJson<String>(json['terms_json_list']),
+      reading: serializer.fromJson<String?>(json['reading']),
+      path: serializer.fromJson<String?>(json['path']),
+      name: serializer.fromJson<String?>(json['name']),
+      data: serializer.fromJson<Uint8List?>(json['data']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'index_id': serializer.toJson<int>(indexId),
+      'pitch_accent_pattern': serializer.toJson<int?>(pitchAccentPattern),
+      'terms_json_list': serializer.toJson<String>(termsJsonList),
+      'reading': serializer.toJson<String?>(reading),
+      'path': serializer.toJson<String?>(path),
+      'name': serializer.toJson<String?>(name),
+      'data': serializer.toJson<Uint8List?>(data),
+    };
+  }
+
+  AudioEntryViewData copyWith({
+    int? id,
+    int? indexId,
+    Value<int?> pitchAccentPattern = const Value.absent(),
+    String? termsJsonList,
+    Value<String?> reading = const Value.absent(),
+    Value<String?> path = const Value.absent(),
+    Value<String?> name = const Value.absent(),
+    Value<Uint8List?> data = const Value.absent(),
+  }) => AudioEntryViewData(
+    id: id ?? this.id,
+    indexId: indexId ?? this.indexId,
+    pitchAccentPattern: pitchAccentPattern.present
+        ? pitchAccentPattern.value
+        : this.pitchAccentPattern,
+    termsJsonList: termsJsonList ?? this.termsJsonList,
+    reading: reading.present ? reading.value : this.reading,
+    path: path.present ? path.value : this.path,
+    name: name.present ? name.value : this.name,
+    data: data.present ? data.value : this.data,
+  );
+  @override
+  String toString() {
+    return (StringBuffer('AudioEntryViewData(')
+          ..write('id: $id, ')
+          ..write('indexId: $indexId, ')
+          ..write('pitchAccentPattern: $pitchAccentPattern, ')
+          ..write('termsJsonList: $termsJsonList, ')
+          ..write('reading: $reading, ')
+          ..write('path: $path, ')
+          ..write('name: $name, ')
+          ..write('data: $data')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    indexId,
+    pitchAccentPattern,
+    termsJsonList,
+    reading,
+    path,
+    name,
+    $driftBlobEquality.hash(data),
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AudioEntryViewData &&
+          other.id == this.id &&
+          other.indexId == this.indexId &&
+          other.pitchAccentPattern == this.pitchAccentPattern &&
+          other.termsJsonList == this.termsJsonList &&
+          other.reading == this.reading &&
+          other.path == this.path &&
+          other.name == this.name &&
+          $driftBlobEquality.equals(other.data, this.data));
+}
+
+class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  AudioEntryView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    indexId,
+    pitchAccentPattern,
+    termsJsonList,
+    reading,
+    path,
+    name,
+    data,
+  ];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'audio_entry_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW IF NOT EXISTS audio_entry_view AS SELECT AT.id, AT.index_id, AT.pitch_accent_pattern, JSON_GROUP_ARRAY(TT.term) AS terms_json_list, RT.reading, MTV.path, MTV.name, MTV.data FROM audio_table AS AT LEFT JOIN audio_table_x_term_table AS ATXTT ON ATXTT.audio_id = AT.id LEFT JOIN term_table AS TT ON TT.id = ATXTT.term_id LEFT JOIN reading_table AS RT ON RT.id = AT.reading_id LEFT JOIN media_table_view AS MTV ON AT.media_id = MTV.id GROUP BY AT.id',
+  };
+  @override
+  AudioEntryView get asDslTable => this;
+  @override
+  AudioEntryViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AudioEntryViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      indexId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}index_id'],
+      )!,
+      pitchAccentPattern: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}pitch_accent_pattern'],
+      ),
+      termsJsonList: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}terms_json_list'],
+      )!,
+      reading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading'],
+      ),
+      path: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}path'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      ),
+      data: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}data'],
+      ),
+    );
+  }
+
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
+    'index_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> pitchAccentPattern = GeneratedColumn<int>(
+    'pitch_accent_pattern',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> termsJsonList = GeneratedColumn<String>(
+    'terms_json_list',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
+    'reading',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> path = GeneratedColumn<String>(
+    'path',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<Uint8List> data = GeneratedColumn<Uint8List>(
+    'data',
+    aliasedName,
+    true,
+    type: DriftSqlType.blob,
+  );
+  @override
+  AudioEntryView createAlias(String alias) {
+    return AudioEntryView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {
+    'audio_table',
+    'audio_table_x_term_table',
+    'term_table',
+    'reading_table',
+    'media_table',
+  };
 }
 
 class HiraganaSpellfixCost extends Table
@@ -15557,650 +16520,6 @@ class AudioSourceListTableCompanion
   }
 }
 
-class $AudioTableTable extends AudioTable
-    with TableInfo<$AudioTableTable, AudioTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $AudioTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _indexIdMeta = const VerificationMeta(
-    'indexId',
-  );
-  @override
-  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
-    'index_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES index_table (id)',
-    ),
-  );
-  static const VerificationMeta _readingIdMeta = const VerificationMeta(
-    'readingId',
-  );
-  @override
-  late final GeneratedColumn<int> readingId = GeneratedColumn<int>(
-    'reading_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES reading_table (id)',
-    ),
-  );
-  static const VerificationMeta _mediaIdMeta = const VerificationMeta(
-    'mediaId',
-  );
-  @override
-  late final GeneratedColumn<int> mediaId = GeneratedColumn<int>(
-    'media_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _pitchAccentPatternMeta =
-      const VerificationMeta('pitchAccentPattern');
-  @override
-  late final GeneratedColumn<int> pitchAccentPattern = GeneratedColumn<int>(
-    'pitch_accent_pattern',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    indexId,
-    readingId,
-    mediaId,
-    pitchAccentPattern,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'audio_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<AudioTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('index_id')) {
-      context.handle(
-        _indexIdMeta,
-        indexId.isAcceptableOrUnknown(data['index_id']!, _indexIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_indexIdMeta);
-    }
-    if (data.containsKey('reading_id')) {
-      context.handle(
-        _readingIdMeta,
-        readingId.isAcceptableOrUnknown(data['reading_id']!, _readingIdMeta),
-      );
-    }
-    if (data.containsKey('media_id')) {
-      context.handle(
-        _mediaIdMeta,
-        mediaId.isAcceptableOrUnknown(data['media_id']!, _mediaIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_mediaIdMeta);
-    }
-    if (data.containsKey('pitch_accent_pattern')) {
-      context.handle(
-        _pitchAccentPatternMeta,
-        pitchAccentPattern.isAcceptableOrUnknown(
-          data['pitch_accent_pattern']!,
-          _pitchAccentPatternMeta,
-        ),
-      );
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  AudioTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return AudioTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      indexId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}index_id'],
-      )!,
-      readingId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}reading_id'],
-      ),
-      mediaId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}media_id'],
-      )!,
-      pitchAccentPattern: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}pitch_accent_pattern'],
-      ),
-    );
-  }
-
-  @override
-  $AudioTableTable createAlias(String alias) {
-    return $AudioTableTable(attachedDatabase, alias);
-  }
-}
-
-class AudioTableData extends DataClass implements Insertable<AudioTableData> {
-  /// id of this entry
-  final int id;
-
-  /// The id of the dictionary this entry belongs to
-  final int indexId;
-
-  /// The id of the reading this audio is associated with
-  final int? readingId;
-
-  /// The id of the media file in the media table
-  final int mediaId;
-
-  /// The pitch accent pattern number
-  final int? pitchAccentPattern;
-  const AudioTableData({
-    required this.id,
-    required this.indexId,
-    this.readingId,
-    required this.mediaId,
-    this.pitchAccentPattern,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['index_id'] = Variable<int>(indexId);
-    if (!nullToAbsent || readingId != null) {
-      map['reading_id'] = Variable<int>(readingId);
-    }
-    map['media_id'] = Variable<int>(mediaId);
-    if (!nullToAbsent || pitchAccentPattern != null) {
-      map['pitch_accent_pattern'] = Variable<int>(pitchAccentPattern);
-    }
-    return map;
-  }
-
-  AudioTableCompanion toCompanion(bool nullToAbsent) {
-    return AudioTableCompanion(
-      id: Value(id),
-      indexId: Value(indexId),
-      readingId: readingId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(readingId),
-      mediaId: Value(mediaId),
-      pitchAccentPattern: pitchAccentPattern == null && nullToAbsent
-          ? const Value.absent()
-          : Value(pitchAccentPattern),
-    );
-  }
-
-  factory AudioTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return AudioTableData(
-      id: serializer.fromJson<int>(json['id']),
-      indexId: serializer.fromJson<int>(json['indexId']),
-      readingId: serializer.fromJson<int?>(json['readingId']),
-      mediaId: serializer.fromJson<int>(json['mediaId']),
-      pitchAccentPattern: serializer.fromJson<int?>(json['pitchAccentPattern']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'indexId': serializer.toJson<int>(indexId),
-      'readingId': serializer.toJson<int?>(readingId),
-      'mediaId': serializer.toJson<int>(mediaId),
-      'pitchAccentPattern': serializer.toJson<int?>(pitchAccentPattern),
-    };
-  }
-
-  AudioTableData copyWith({
-    int? id,
-    int? indexId,
-    Value<int?> readingId = const Value.absent(),
-    int? mediaId,
-    Value<int?> pitchAccentPattern = const Value.absent(),
-  }) => AudioTableData(
-    id: id ?? this.id,
-    indexId: indexId ?? this.indexId,
-    readingId: readingId.present ? readingId.value : this.readingId,
-    mediaId: mediaId ?? this.mediaId,
-    pitchAccentPattern: pitchAccentPattern.present
-        ? pitchAccentPattern.value
-        : this.pitchAccentPattern,
-  );
-  AudioTableData copyWithCompanion(AudioTableCompanion data) {
-    return AudioTableData(
-      id: data.id.present ? data.id.value : this.id,
-      indexId: data.indexId.present ? data.indexId.value : this.indexId,
-      readingId: data.readingId.present ? data.readingId.value : this.readingId,
-      mediaId: data.mediaId.present ? data.mediaId.value : this.mediaId,
-      pitchAccentPattern: data.pitchAccentPattern.present
-          ? data.pitchAccentPattern.value
-          : this.pitchAccentPattern,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('AudioTableData(')
-          ..write('id: $id, ')
-          ..write('indexId: $indexId, ')
-          ..write('readingId: $readingId, ')
-          ..write('mediaId: $mediaId, ')
-          ..write('pitchAccentPattern: $pitchAccentPattern')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(id, indexId, readingId, mediaId, pitchAccentPattern);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is AudioTableData &&
-          other.id == this.id &&
-          other.indexId == this.indexId &&
-          other.readingId == this.readingId &&
-          other.mediaId == this.mediaId &&
-          other.pitchAccentPattern == this.pitchAccentPattern);
-}
-
-class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
-  final Value<int> id;
-  final Value<int> indexId;
-  final Value<int?> readingId;
-  final Value<int> mediaId;
-  final Value<int?> pitchAccentPattern;
-  const AudioTableCompanion({
-    this.id = const Value.absent(),
-    this.indexId = const Value.absent(),
-    this.readingId = const Value.absent(),
-    this.mediaId = const Value.absent(),
-    this.pitchAccentPattern = const Value.absent(),
-  });
-  AudioTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int indexId,
-    this.readingId = const Value.absent(),
-    required int mediaId,
-    this.pitchAccentPattern = const Value.absent(),
-  }) : indexId = Value(indexId),
-       mediaId = Value(mediaId);
-  static Insertable<AudioTableData> custom({
-    Expression<int>? id,
-    Expression<int>? indexId,
-    Expression<int>? readingId,
-    Expression<int>? mediaId,
-    Expression<int>? pitchAccentPattern,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (indexId != null) 'index_id': indexId,
-      if (readingId != null) 'reading_id': readingId,
-      if (mediaId != null) 'media_id': mediaId,
-      if (pitchAccentPattern != null)
-        'pitch_accent_pattern': pitchAccentPattern,
-    });
-  }
-
-  AudioTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? indexId,
-    Value<int?>? readingId,
-    Value<int>? mediaId,
-    Value<int?>? pitchAccentPattern,
-  }) {
-    return AudioTableCompanion(
-      id: id ?? this.id,
-      indexId: indexId ?? this.indexId,
-      readingId: readingId ?? this.readingId,
-      mediaId: mediaId ?? this.mediaId,
-      pitchAccentPattern: pitchAccentPattern ?? this.pitchAccentPattern,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (indexId.present) {
-      map['index_id'] = Variable<int>(indexId.value);
-    }
-    if (readingId.present) {
-      map['reading_id'] = Variable<int>(readingId.value);
-    }
-    if (mediaId.present) {
-      map['media_id'] = Variable<int>(mediaId.value);
-    }
-    if (pitchAccentPattern.present) {
-      map['pitch_accent_pattern'] = Variable<int>(pitchAccentPattern.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('AudioTableCompanion(')
-          ..write('id: $id, ')
-          ..write('indexId: $indexId, ')
-          ..write('readingId: $readingId, ')
-          ..write('mediaId: $mediaId, ')
-          ..write('pitchAccentPattern: $pitchAccentPattern')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $AudioTable_X_TermTableTable extends AudioTable_X_TermTable
-    with TableInfo<$AudioTable_X_TermTableTable, AudioTable_X_TermTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $AudioTable_X_TermTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _audioIdMeta = const VerificationMeta(
-    'audioId',
-  );
-  @override
-  late final GeneratedColumn<int> audioId = GeneratedColumn<int>(
-    'audio_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES audio_table (id)',
-    ),
-  );
-  static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
-  @override
-  late final GeneratedColumn<int> termId = GeneratedColumn<int>(
-    'term_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_table (id)',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, audioId, termId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'audio_table_x_term_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<AudioTable_X_TermTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('audio_id')) {
-      context.handle(
-        _audioIdMeta,
-        audioId.isAcceptableOrUnknown(data['audio_id']!, _audioIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_audioIdMeta);
-    }
-    if (data.containsKey('term_id')) {
-      context.handle(
-        _termIdMeta,
-        termId.isAcceptableOrUnknown(data['term_id']!, _termIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_termIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  AudioTable_X_TermTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return AudioTable_X_TermTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      audioId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}audio_id'],
-      )!,
-      termId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}term_id'],
-      )!,
-    );
-  }
-
-  @override
-  $AudioTable_X_TermTableTable createAlias(String alias) {
-    return $AudioTable_X_TermTableTable(attachedDatabase, alias);
-  }
-}
-
-class AudioTable_X_TermTableData extends DataClass
-    implements Insertable<AudioTable_X_TermTableData> {
-  /// id of this entry
-  final int id;
-
-  /// Link to the [AudioTable]
-  final int audioId;
-
-  /// Link to the [TermTable]
-  final int termId;
-  const AudioTable_X_TermTableData({
-    required this.id,
-    required this.audioId,
-    required this.termId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['audio_id'] = Variable<int>(audioId);
-    map['term_id'] = Variable<int>(termId);
-    return map;
-  }
-
-  AudioTable_X_TermTableCompanion toCompanion(bool nullToAbsent) {
-    return AudioTable_X_TermTableCompanion(
-      id: Value(id),
-      audioId: Value(audioId),
-      termId: Value(termId),
-    );
-  }
-
-  factory AudioTable_X_TermTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return AudioTable_X_TermTableData(
-      id: serializer.fromJson<int>(json['id']),
-      audioId: serializer.fromJson<int>(json['audioId']),
-      termId: serializer.fromJson<int>(json['termId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'audioId': serializer.toJson<int>(audioId),
-      'termId': serializer.toJson<int>(termId),
-    };
-  }
-
-  AudioTable_X_TermTableData copyWith({int? id, int? audioId, int? termId}) =>
-      AudioTable_X_TermTableData(
-        id: id ?? this.id,
-        audioId: audioId ?? this.audioId,
-        termId: termId ?? this.termId,
-      );
-  AudioTable_X_TermTableData copyWithCompanion(
-    AudioTable_X_TermTableCompanion data,
-  ) {
-    return AudioTable_X_TermTableData(
-      id: data.id.present ? data.id.value : this.id,
-      audioId: data.audioId.present ? data.audioId.value : this.audioId,
-      termId: data.termId.present ? data.termId.value : this.termId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('AudioTable_X_TermTableData(')
-          ..write('id: $id, ')
-          ..write('audioId: $audioId, ')
-          ..write('termId: $termId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, audioId, termId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is AudioTable_X_TermTableData &&
-          other.id == this.id &&
-          other.audioId == this.audioId &&
-          other.termId == this.termId);
-}
-
-class AudioTable_X_TermTableCompanion
-    extends UpdateCompanion<AudioTable_X_TermTableData> {
-  final Value<int> id;
-  final Value<int> audioId;
-  final Value<int> termId;
-  const AudioTable_X_TermTableCompanion({
-    this.id = const Value.absent(),
-    this.audioId = const Value.absent(),
-    this.termId = const Value.absent(),
-  });
-  AudioTable_X_TermTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int audioId,
-    required int termId,
-  }) : audioId = Value(audioId),
-       termId = Value(termId);
-  static Insertable<AudioTable_X_TermTableData> custom({
-    Expression<int>? id,
-    Expression<int>? audioId,
-    Expression<int>? termId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (audioId != null) 'audio_id': audioId,
-      if (termId != null) 'term_id': termId,
-    });
-  }
-
-  AudioTable_X_TermTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? audioId,
-    Value<int>? termId,
-  }) {
-    return AudioTable_X_TermTableCompanion(
-      id: id ?? this.id,
-      audioId: audioId ?? this.audioId,
-      termId: termId ?? this.termId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (audioId.present) {
-      map['audio_id'] = Variable<int>(audioId.value);
-    }
-    if (termId.present) {
-      map['term_id'] = Variable<int>(termId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('AudioTable_X_TermTableCompanion(')
-          ..write('id: $id, ')
-          ..write('audioId: $audioId, ')
-          ..write('termId: $termId')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $RadicalsTableTable extends RadicalsTable
     with TableInfo<$RadicalsTableTable, RadicalsTableData> {
   @override
@@ -17113,23 +17432,27 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'kanji',
     'CREATE INDEX kanji ON kanji_table (kanji)',
   );
+  late final $AudioTableTable audioTable = $AudioTableTable(this);
+  late final $AudioTable_X_TermTableTable audioTableXTermTable =
+      $AudioTable_X_TermTableTable(this);
   late final $MediaTableTable mediaTable = $MediaTableTable(this);
   late final MediaTableView mediaTableView = MediaTableView(this);
+  late final AudioEntryView audioEntryView = AudioEntryView(this);
+  late final Index path = Index(
+    'path',
+    'CREATE INDEX path ON media_table (path)',
+  );
   late final Trigger mediaTableViewInsert = Trigger(
-    'CREATE TRIGGER media_table_view_insert INSTEAD OF INSERT ON media_table_view BEGIN INSERT INTO media_table (id, index_id, path, data_compressed) VALUES (NEW.id, NEW.index_id, NEW.path, compress(NEW.data));END',
+    'CREATE TRIGGER media_table_view_insert INSTEAD OF INSERT ON media_table_view BEGIN INSERT INTO media_table (id, index_id, path, name, data_compressed) VALUES (NEW.id, NEW.index_id, NEW.path, NEW.name, compress(NEW.data));END',
     'media_table_view_insert',
   );
   late final Trigger mediaTableViewUpdate = Trigger(
-    'CREATE TRIGGER media_table_view_update INSTEAD OF UPDATE ON media_table_view BEGIN UPDATE media_table SET index_id = NEW.index_id, path = NEW.path, data_compressed = compress(NEW.data) WHERE id = OLD.id;END',
+    'CREATE TRIGGER media_table_view_update INSTEAD OF UPDATE ON media_table_view BEGIN UPDATE media_table SET index_id = NEW.index_id, path = NEW.path, name = NEW.name, data_compressed = compress(NEW.data) WHERE id = OLD.id;END',
     'media_table_view_update',
   );
   late final Trigger mediaTableViewDelete = Trigger(
     'CREATE TRIGGER media_table_view_delete INSTEAD OF DELETE ON media_table_view BEGIN DELETE FROM media_table WHERE id = OLD.id;END',
     'media_table_view_delete',
-  );
-  late final Index path = Index(
-    'path',
-    'CREATE INDEX path ON media_table (path)',
   );
   late final HiraganaSpellfixCost hiraganaSpellfixCost = HiraganaSpellfixCost(
     this,
@@ -17210,9 +17533,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   );
   late final $AudioSourceListTableTable audioSourceListTable =
       $AudioSourceListTableTable(this);
-  late final $AudioTableTable audioTable = $AudioTableTable(this);
-  late final $AudioTable_X_TermTableTable audioTableXTermTable =
-      $AudioTable_X_TermTableTable(this);
   late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
   late final $Radical_X_KanjiRelationsTableTable radicalXKanjiRelationsTable =
       $Radical_X_KanjiRelationsTableTable(this);
@@ -17529,12 +17849,15 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     reading,
     term,
     kanji,
+    audioTable,
+    audioTableXTermTable,
     mediaTable,
     mediaTableView,
+    audioEntryView,
+    path,
     mediaTableViewInsert,
     mediaTableViewUpdate,
     mediaTableViewDelete,
-    path,
     hiraganaSpellfixCost,
     definitionTableAi,
     definitionTableAd,
@@ -17559,8 +17882,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     exampleTableAd,
     exampleTableAu,
     audioSourceListTable,
-    audioTable,
-    audioTableXTermTable,
     radicalsTable,
     radicalXKanjiRelationsTable,
     kanjiVGTable,
@@ -18414,6 +18735,24 @@ final class $$IndexTableTableReferences
     );
   }
 
+  static MultiTypedResultKey<$AudioTableTable, List<AudioTableData>>
+  _audioTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+    db.audioTable,
+    aliasName: $_aliasNameGenerator(db.indexTable.id, db.audioTable.indexId),
+  );
+
+  $$AudioTableTableProcessedTableManager get audioTableRefs {
+    final manager = $$AudioTableTableTableManager(
+      $_db,
+      $_db.audioTable,
+    ).filter((f) => f.indexId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_audioTableRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
   static MultiTypedResultKey<$MediaTableTable, List<MediaTableData>>
   _mediaTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
     db.mediaTable,
@@ -18473,24 +18812,6 @@ final class $$IndexTableTableReferences
     final cache = $_typedResult.readTableOrNull(
       _audioSourceListTableRefsTable($_db),
     );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<$AudioTableTable, List<AudioTableData>>
-  _audioTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
-    db.audioTable,
-    aliasName: $_aliasNameGenerator(db.indexTable.id, db.audioTable.indexId),
-  );
-
-  $$AudioTableTableProcessedTableManager get audioTableRefs {
-    final manager = $$AudioTableTableTableManager(
-      $_db,
-      $_db.audioTable,
-    ).filter((f) => f.indexId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_audioTableRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -18711,6 +19032,31 @@ class $$IndexTableTableFilterComposer
     return f(composer);
   }
 
+  Expression<bool> audioTableRefs(
+    Expression<bool> Function($$AudioTableTableFilterComposer f) f,
+  ) {
+    final $$AudioTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.indexId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableFilterComposer(
+            $db: $db,
+            $table: $db.audioTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<bool> mediaTableRefs(
     Expression<bool> Function($$MediaTableTableFilterComposer f) f,
   ) {
@@ -18777,31 +19123,6 @@ class $$IndexTableTableFilterComposer
           }) => $$AudioSourceListTableTableFilterComposer(
             $db: $db,
             $table: $db.audioSourceListTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<bool> audioTableRefs(
-    Expression<bool> Function($$AudioTableTableFilterComposer f) f,
-  ) {
-    final $$AudioTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.audioTable,
-      getReferencedColumn: (t) => t.indexId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudioTableTableFilterComposer(
-            $db: $db,
-            $table: $db.audioTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -19098,6 +19419,31 @@ class $$IndexTableTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> audioTableRefs<T extends Object>(
+    Expression<T> Function($$AudioTableTableAnnotationComposer a) f,
+  ) {
+    final $$AudioTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.indexId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.audioTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<T> mediaTableRefs<T extends Object>(
     Expression<T> Function($$MediaTableTableAnnotationComposer a) f,
   ) {
@@ -19173,31 +19519,6 @@ class $$IndexTableTableAnnotationComposer
         );
     return f(composer);
   }
-
-  Expression<T> audioTableRefs<T extends Object>(
-    Expression<T> Function($$AudioTableTableAnnotationComposer a) f,
-  ) {
-    final $$AudioTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.audioTable,
-      getReferencedColumn: (t) => t.indexId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudioTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.audioTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
 }
 
 class $$IndexTableTableTableManager
@@ -19219,10 +19540,10 @@ class $$IndexTableTableTableManager
             bool kanjiMetaBankV3TableRefs,
             bool termBankV3TableRefs,
             bool termMetaBankV3TableRefs,
+            bool audioTableRefs,
             bool mediaTableRefs,
             bool exampleTableRefs,
             bool audioSourceListTableRefs,
-            bool audioTableRefs,
           })
         > {
   $$IndexTableTableTableManager(_$DaKanjiDB db, $IndexTableTable table)
@@ -19323,10 +19644,10 @@ class $$IndexTableTableTableManager
                 kanjiMetaBankV3TableRefs = false,
                 termBankV3TableRefs = false,
                 termMetaBankV3TableRefs = false,
+                audioTableRefs = false,
                 mediaTableRefs = false,
                 exampleTableRefs = false,
                 audioSourceListTableRefs = false,
-                audioTableRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -19336,10 +19657,10 @@ class $$IndexTableTableTableManager
                     if (kanjiMetaBankV3TableRefs) db.kanjiMetaBankV3Table,
                     if (termBankV3TableRefs) db.termBankV3Table,
                     if (termMetaBankV3TableRefs) db.termMetaBankV3Table,
+                    if (audioTableRefs) db.audioTable,
                     if (mediaTableRefs) db.mediaTable,
                     if (exampleTableRefs) db.exampleTable,
                     if (audioSourceListTableRefs) db.audioSourceListTable,
-                    if (audioTableRefs) db.audioTable,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -19449,6 +19770,27 @@ class $$IndexTableTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (audioTableRefs)
+                        await $_getPrefetchedData<
+                          IndexTableData,
+                          $IndexTableTable,
+                          AudioTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$IndexTableTableReferences
+                              ._audioTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$IndexTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).audioTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.indexId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                       if (mediaTableRefs)
                         await $_getPrefetchedData<
                           IndexTableData,
@@ -19512,27 +19854,6 @@ class $$IndexTableTableTableManager
                               ),
                           typedResults: items,
                         ),
-                      if (audioTableRefs)
-                        await $_getPrefetchedData<
-                          IndexTableData,
-                          $IndexTableTable,
-                          AudioTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$IndexTableTableReferences
-                              ._audioTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$IndexTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).audioTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.indexId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
                     ];
                   },
                 );
@@ -19559,10 +19880,10 @@ typedef $$IndexTableTableProcessedTableManager =
         bool kanjiMetaBankV3TableRefs,
         bool termBankV3TableRefs,
         bool termMetaBankV3TableRefs,
+        bool audioTableRefs,
         bool mediaTableRefs,
         bool exampleTableRefs,
         bool audioSourceListTableRefs,
-        bool audioTableRefs,
       })
     >;
 typedef $$KanjiBankV3TableTableCreateCompanionBuilder =
@@ -34786,11 +35107,921 @@ typedef $DefinitionFtsProcessedTableManager =
       DefinitionFt,
       PrefetchHooks Function()
     >;
+typedef $$AudioTableTableCreateCompanionBuilder =
+    AudioTableCompanion Function({
+      Value<int> id,
+      required int indexId,
+      Value<int?> readingId,
+      required int mediaId,
+      Value<int?> pitchAccentPattern,
+    });
+typedef $$AudioTableTableUpdateCompanionBuilder =
+    AudioTableCompanion Function({
+      Value<int> id,
+      Value<int> indexId,
+      Value<int?> readingId,
+      Value<int> mediaId,
+      Value<int?> pitchAccentPattern,
+    });
+
+final class $$AudioTableTableReferences
+    extends BaseReferences<_$DaKanjiDB, $AudioTableTable, AudioTableData> {
+  $$AudioTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
+      db.indexTable.createAlias(
+        $_aliasNameGenerator(db.audioTable.indexId, db.indexTable.id),
+      );
+
+  $$IndexTableTableProcessedTableManager get indexId {
+    final $_column = $_itemColumn<int>('index_id')!;
+
+    final manager = $$IndexTableTableTableManager(
+      $_db,
+      $_db.indexTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_indexIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $ReadingTableTable _readingIdTable(_$DaKanjiDB db) =>
+      db.readingTable.createAlias(
+        $_aliasNameGenerator(db.audioTable.readingId, db.readingTable.id),
+      );
+
+  $$ReadingTableTableProcessedTableManager? get readingId {
+    final $_column = $_itemColumn<int>('reading_id');
+    if ($_column == null) return null;
+    final manager = $$ReadingTableTableTableManager(
+      $_db,
+      $_db.readingTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_readingIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $AudioTable_X_TermTableTable,
+    List<AudioTable_X_TermTableData>
+  >
+  _audioTableXTermTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.audioTableXTermTable,
+        aliasName: $_aliasNameGenerator(
+          db.audioTable.id,
+          db.audioTableXTermTable.audioId,
+        ),
+      );
+
+  $$AudioTable_X_TermTableTableProcessedTableManager
+  get audioTableXTermTableRefs {
+    final manager = $$AudioTable_X_TermTableTableTableManager(
+      $_db,
+      $_db.audioTableXTermTable,
+    ).filter((f) => f.audioId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _audioTableXTermTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$AudioTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $AudioTableTable> {
+  $$AudioTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get mediaId => $composableBuilder(
+    column: $table.mediaId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get pitchAccentPattern => $composableBuilder(
+    column: $table.pitchAccentPattern,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$IndexTableTableFilterComposer get indexId {
+    final $$IndexTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.indexId,
+      referencedTable: $db.indexTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$IndexTableTableFilterComposer(
+            $db: $db,
+            $table: $db.indexTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ReadingTableTableFilterComposer get readingId {
+    final $$ReadingTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.readingId,
+      referencedTable: $db.readingTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReadingTableTableFilterComposer(
+            $db: $db,
+            $table: $db.readingTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> audioTableXTermTableRefs(
+    Expression<bool> Function($$AudioTable_X_TermTableTableFilterComposer f) f,
+  ) {
+    final $$AudioTable_X_TermTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.audioTableXTermTable,
+          getReferencedColumn: (t) => t.audioId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AudioTable_X_TermTableTableFilterComposer(
+                $db: $db,
+                $table: $db.audioTableXTermTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$AudioTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $AudioTableTable> {
+  $$AudioTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get mediaId => $composableBuilder(
+    column: $table.mediaId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get pitchAccentPattern => $composableBuilder(
+    column: $table.pitchAccentPattern,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$IndexTableTableOrderingComposer get indexId {
+    final $$IndexTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.indexId,
+      referencedTable: $db.indexTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$IndexTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.indexTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ReadingTableTableOrderingComposer get readingId {
+    final $$ReadingTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.readingId,
+      referencedTable: $db.readingTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReadingTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.readingTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AudioTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $AudioTableTable> {
+  $$AudioTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get mediaId =>
+      $composableBuilder(column: $table.mediaId, builder: (column) => column);
+
+  GeneratedColumn<int> get pitchAccentPattern => $composableBuilder(
+    column: $table.pitchAccentPattern,
+    builder: (column) => column,
+  );
+
+  $$IndexTableTableAnnotationComposer get indexId {
+    final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.indexId,
+      referencedTable: $db.indexTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$IndexTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.indexTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$ReadingTableTableAnnotationComposer get readingId {
+    final $$ReadingTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.readingId,
+      referencedTable: $db.readingTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReadingTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.readingTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> audioTableXTermTableRefs<T extends Object>(
+    Expression<T> Function($$AudioTable_X_TermTableTableAnnotationComposer a) f,
+  ) {
+    final $$AudioTable_X_TermTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.audioTableXTermTable,
+          getReferencedColumn: (t) => t.audioId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AudioTable_X_TermTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.audioTableXTermTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$AudioTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $AudioTableTable,
+          AudioTableData,
+          $$AudioTableTableFilterComposer,
+          $$AudioTableTableOrderingComposer,
+          $$AudioTableTableAnnotationComposer,
+          $$AudioTableTableCreateCompanionBuilder,
+          $$AudioTableTableUpdateCompanionBuilder,
+          (AudioTableData, $$AudioTableTableReferences),
+          AudioTableData,
+          PrefetchHooks Function({
+            bool indexId,
+            bool readingId,
+            bool audioTableXTermTableRefs,
+          })
+        > {
+  $$AudioTableTableTableManager(_$DaKanjiDB db, $AudioTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AudioTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AudioTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AudioTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> indexId = const Value.absent(),
+                Value<int?> readingId = const Value.absent(),
+                Value<int> mediaId = const Value.absent(),
+                Value<int?> pitchAccentPattern = const Value.absent(),
+              }) => AudioTableCompanion(
+                id: id,
+                indexId: indexId,
+                readingId: readingId,
+                mediaId: mediaId,
+                pitchAccentPattern: pitchAccentPattern,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int indexId,
+                Value<int?> readingId = const Value.absent(),
+                required int mediaId,
+                Value<int?> pitchAccentPattern = const Value.absent(),
+              }) => AudioTableCompanion.insert(
+                id: id,
+                indexId: indexId,
+                readingId: readingId,
+                mediaId: mediaId,
+                pitchAccentPattern: pitchAccentPattern,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$AudioTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                indexId = false,
+                readingId = false,
+                audioTableXTermTableRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (audioTableXTermTableRefs) db.audioTableXTermTable,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (indexId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.indexId,
+                                    referencedTable: $$AudioTableTableReferences
+                                        ._indexIdTable(db),
+                                    referencedColumn:
+                                        $$AudioTableTableReferences
+                                            ._indexIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (readingId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.readingId,
+                                    referencedTable: $$AudioTableTableReferences
+                                        ._readingIdTable(db),
+                                    referencedColumn:
+                                        $$AudioTableTableReferences
+                                            ._readingIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (audioTableXTermTableRefs)
+                        await $_getPrefetchedData<
+                          AudioTableData,
+                          $AudioTableTable,
+                          AudioTable_X_TermTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AudioTableTableReferences
+                              ._audioTableXTermTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AudioTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).audioTableXTermTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.audioId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$AudioTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $AudioTableTable,
+      AudioTableData,
+      $$AudioTableTableFilterComposer,
+      $$AudioTableTableOrderingComposer,
+      $$AudioTableTableAnnotationComposer,
+      $$AudioTableTableCreateCompanionBuilder,
+      $$AudioTableTableUpdateCompanionBuilder,
+      (AudioTableData, $$AudioTableTableReferences),
+      AudioTableData,
+      PrefetchHooks Function({
+        bool indexId,
+        bool readingId,
+        bool audioTableXTermTableRefs,
+      })
+    >;
+typedef $$AudioTable_X_TermTableTableCreateCompanionBuilder =
+    AudioTable_X_TermTableCompanion Function({
+      Value<int> id,
+      required int audioId,
+      required int termId,
+    });
+typedef $$AudioTable_X_TermTableTableUpdateCompanionBuilder =
+    AudioTable_X_TermTableCompanion Function({
+      Value<int> id,
+      Value<int> audioId,
+      Value<int> termId,
+    });
+
+final class $$AudioTable_X_TermTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $AudioTable_X_TermTableTable,
+          AudioTable_X_TermTableData
+        > {
+  $$AudioTable_X_TermTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $AudioTableTable _audioIdTable(_$DaKanjiDB db) =>
+      db.audioTable.createAlias(
+        $_aliasNameGenerator(db.audioTableXTermTable.audioId, db.audioTable.id),
+      );
+
+  $$AudioTableTableProcessedTableManager get audioId {
+    final $_column = $_itemColumn<int>('audio_id')!;
+
+    final manager = $$AudioTableTableTableManager(
+      $_db,
+      $_db.audioTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_audioIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TermTableTable _termIdTable(_$DaKanjiDB db) =>
+      db.termTable.createAlias(
+        $_aliasNameGenerator(db.audioTableXTermTable.termId, db.termTable.id),
+      );
+
+  $$TermTableTableProcessedTableManager get termId {
+    final $_column = $_itemColumn<int>('term_id')!;
+
+    final manager = $$TermTableTableTableManager(
+      $_db,
+      $_db.termTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_termIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$AudioTable_X_TermTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
+  $$AudioTable_X_TermTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$AudioTableTableFilterComposer get audioId {
+    final $$AudioTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.audioId,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableFilterComposer(
+            $db: $db,
+            $table: $db.audioTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermTableTableFilterComposer get termId {
+    final $$TermTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableFilterComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AudioTable_X_TermTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
+  $$AudioTable_X_TermTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$AudioTableTableOrderingComposer get audioId {
+    final $$AudioTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.audioId,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.audioTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermTableTableOrderingComposer get termId {
+    final $$TermTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AudioTable_X_TermTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
+  $$AudioTable_X_TermTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$AudioTableTableAnnotationComposer get audioId {
+    final $$AudioTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.audioId,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.audioTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermTableTableAnnotationComposer get termId {
+    final $$TermTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AudioTable_X_TermTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $AudioTable_X_TermTableTable,
+          AudioTable_X_TermTableData,
+          $$AudioTable_X_TermTableTableFilterComposer,
+          $$AudioTable_X_TermTableTableOrderingComposer,
+          $$AudioTable_X_TermTableTableAnnotationComposer,
+          $$AudioTable_X_TermTableTableCreateCompanionBuilder,
+          $$AudioTable_X_TermTableTableUpdateCompanionBuilder,
+          (AudioTable_X_TermTableData, $$AudioTable_X_TermTableTableReferences),
+          AudioTable_X_TermTableData,
+          PrefetchHooks Function({bool audioId, bool termId})
+        > {
+  $$AudioTable_X_TermTableTableTableManager(
+    _$DaKanjiDB db,
+    $AudioTable_X_TermTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AudioTable_X_TermTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$AudioTable_X_TermTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$AudioTable_X_TermTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> audioId = const Value.absent(),
+                Value<int> termId = const Value.absent(),
+              }) => AudioTable_X_TermTableCompanion(
+                id: id,
+                audioId: audioId,
+                termId: termId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int audioId,
+                required int termId,
+              }) => AudioTable_X_TermTableCompanion.insert(
+                id: id,
+                audioId: audioId,
+                termId: termId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$AudioTable_X_TermTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({audioId = false, termId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (audioId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.audioId,
+                                referencedTable:
+                                    $$AudioTable_X_TermTableTableReferences
+                                        ._audioIdTable(db),
+                                referencedColumn:
+                                    $$AudioTable_X_TermTableTableReferences
+                                        ._audioIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (termId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.termId,
+                                referencedTable:
+                                    $$AudioTable_X_TermTableTableReferences
+                                        ._termIdTable(db),
+                                referencedColumn:
+                                    $$AudioTable_X_TermTableTableReferences
+                                        ._termIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$AudioTable_X_TermTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $AudioTable_X_TermTableTable,
+      AudioTable_X_TermTableData,
+      $$AudioTable_X_TermTableTableFilterComposer,
+      $$AudioTable_X_TermTableTableOrderingComposer,
+      $$AudioTable_X_TermTableTableAnnotationComposer,
+      $$AudioTable_X_TermTableTableCreateCompanionBuilder,
+      $$AudioTable_X_TermTableTableUpdateCompanionBuilder,
+      (AudioTable_X_TermTableData, $$AudioTable_X_TermTableTableReferences),
+      AudioTable_X_TermTableData,
+      PrefetchHooks Function({bool audioId, bool termId})
+    >;
 typedef $$MediaTableTableCreateCompanionBuilder =
     MediaTableCompanion Function({
       Value<int> id,
       required int indexId,
       required String path,
+      required String name,
       required Uint8List dataCompressed,
     });
 typedef $$MediaTableTableUpdateCompanionBuilder =
@@ -34798,6 +36029,7 @@ typedef $$MediaTableTableUpdateCompanionBuilder =
       Value<int> id,
       Value<int> indexId,
       Value<String> path,
+      Value<String> name,
       Value<Uint8List> dataCompressed,
     });
 
@@ -34841,6 +36073,11 @@ class $$MediaTableTableFilterComposer
 
   ColumnFilters<String> get path => $composableBuilder(
     column: $table.path,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -34892,6 +36129,11 @@ class $$MediaTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<Uint8List> get dataCompressed => $composableBuilder(
     column: $table.dataCompressed,
     builder: (column) => ColumnOrderings(column),
@@ -34935,6 +36177,9 @@ class $$MediaTableTableAnnotationComposer
 
   GeneratedColumn<String> get path =>
       $composableBuilder(column: $table.path, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
 
   GeneratedColumn<Uint8List> get dataCompressed => $composableBuilder(
     column: $table.dataCompressed,
@@ -34996,11 +36241,13 @@ class $$MediaTableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<int> indexId = const Value.absent(),
                 Value<String> path = const Value.absent(),
+                Value<String> name = const Value.absent(),
                 Value<Uint8List> dataCompressed = const Value.absent(),
               }) => MediaTableCompanion(
                 id: id,
                 indexId: indexId,
                 path: path,
+                name: name,
                 dataCompressed: dataCompressed,
               ),
           createCompanionCallback:
@@ -35008,11 +36255,13 @@ class $$MediaTableTableTableManager
                 Value<int> id = const Value.absent(),
                 required int indexId,
                 required String path,
+                required String name,
                 required Uint8List dataCompressed,
               }) => MediaTableCompanion.insert(
                 id: id,
                 indexId: indexId,
                 path: path,
+                name: name,
                 dataCompressed: dataCompressed,
               ),
           withReferenceMapper: (p0) => p0
@@ -37234,915 +38483,6 @@ typedef $$AudioSourceListTableTableProcessedTableManager =
       AudioSourceListTableData,
       PrefetchHooks Function({bool indexId})
     >;
-typedef $$AudioTableTableCreateCompanionBuilder =
-    AudioTableCompanion Function({
-      Value<int> id,
-      required int indexId,
-      Value<int?> readingId,
-      required int mediaId,
-      Value<int?> pitchAccentPattern,
-    });
-typedef $$AudioTableTableUpdateCompanionBuilder =
-    AudioTableCompanion Function({
-      Value<int> id,
-      Value<int> indexId,
-      Value<int?> readingId,
-      Value<int> mediaId,
-      Value<int?> pitchAccentPattern,
-    });
-
-final class $$AudioTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $AudioTableTable, AudioTableData> {
-  $$AudioTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias(
-        $_aliasNameGenerator(db.audioTable.indexId, db.indexTable.id),
-      );
-
-  $$IndexTableTableProcessedTableManager get indexId {
-    final $_column = $_itemColumn<int>('index_id')!;
-
-    final manager = $$IndexTableTableTableManager(
-      $_db,
-      $_db.indexTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_indexIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $ReadingTableTable _readingIdTable(_$DaKanjiDB db) =>
-      db.readingTable.createAlias(
-        $_aliasNameGenerator(db.audioTable.readingId, db.readingTable.id),
-      );
-
-  $$ReadingTableTableProcessedTableManager? get readingId {
-    final $_column = $_itemColumn<int>('reading_id');
-    if ($_column == null) return null;
-    final manager = $$ReadingTableTableTableManager(
-      $_db,
-      $_db.readingTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_readingIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static MultiTypedResultKey<
-    $AudioTable_X_TermTableTable,
-    List<AudioTable_X_TermTableData>
-  >
-  _audioTableXTermTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.audioTableXTermTable,
-        aliasName: $_aliasNameGenerator(
-          db.audioTable.id,
-          db.audioTableXTermTable.audioId,
-        ),
-      );
-
-  $$AudioTable_X_TermTableTableProcessedTableManager
-  get audioTableXTermTableRefs {
-    final manager = $$AudioTable_X_TermTableTableTableManager(
-      $_db,
-      $_db.audioTableXTermTable,
-    ).filter((f) => f.audioId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _audioTableXTermTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$AudioTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $AudioTableTable> {
-  $$AudioTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get mediaId => $composableBuilder(
-    column: $table.mediaId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get pitchAccentPattern => $composableBuilder(
-    column: $table.pitchAccentPattern,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$IndexTableTableFilterComposer get indexId {
-    final $$IndexTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.indexId,
-      referencedTable: $db.indexTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$IndexTableTableFilterComposer(
-            $db: $db,
-            $table: $db.indexTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$ReadingTableTableFilterComposer get readingId {
-    final $$ReadingTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.readingId,
-      referencedTable: $db.readingTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ReadingTableTableFilterComposer(
-            $db: $db,
-            $table: $db.readingTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  Expression<bool> audioTableXTermTableRefs(
-    Expression<bool> Function($$AudioTable_X_TermTableTableFilterComposer f) f,
-  ) {
-    final $$AudioTable_X_TermTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.audioTableXTermTable,
-          getReferencedColumn: (t) => t.audioId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$AudioTable_X_TermTableTableFilterComposer(
-                $db: $db,
-                $table: $db.audioTableXTermTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$AudioTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $AudioTableTable> {
-  $$AudioTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get mediaId => $composableBuilder(
-    column: $table.mediaId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get pitchAccentPattern => $composableBuilder(
-    column: $table.pitchAccentPattern,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$IndexTableTableOrderingComposer get indexId {
-    final $$IndexTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.indexId,
-      referencedTable: $db.indexTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$IndexTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.indexTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$ReadingTableTableOrderingComposer get readingId {
-    final $$ReadingTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.readingId,
-      referencedTable: $db.readingTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ReadingTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.readingTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$AudioTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $AudioTableTable> {
-  $$AudioTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<int> get mediaId =>
-      $composableBuilder(column: $table.mediaId, builder: (column) => column);
-
-  GeneratedColumn<int> get pitchAccentPattern => $composableBuilder(
-    column: $table.pitchAccentPattern,
-    builder: (column) => column,
-  );
-
-  $$IndexTableTableAnnotationComposer get indexId {
-    final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.indexId,
-      referencedTable: $db.indexTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$IndexTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.indexTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$ReadingTableTableAnnotationComposer get readingId {
-    final $$ReadingTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.readingId,
-      referencedTable: $db.readingTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ReadingTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.readingTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  Expression<T> audioTableXTermTableRefs<T extends Object>(
-    Expression<T> Function($$AudioTable_X_TermTableTableAnnotationComposer a) f,
-  ) {
-    final $$AudioTable_X_TermTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.audioTableXTermTable,
-          getReferencedColumn: (t) => t.audioId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$AudioTable_X_TermTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.audioTableXTermTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$AudioTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $AudioTableTable,
-          AudioTableData,
-          $$AudioTableTableFilterComposer,
-          $$AudioTableTableOrderingComposer,
-          $$AudioTableTableAnnotationComposer,
-          $$AudioTableTableCreateCompanionBuilder,
-          $$AudioTableTableUpdateCompanionBuilder,
-          (AudioTableData, $$AudioTableTableReferences),
-          AudioTableData,
-          PrefetchHooks Function({
-            bool indexId,
-            bool readingId,
-            bool audioTableXTermTableRefs,
-          })
-        > {
-  $$AudioTableTableTableManager(_$DaKanjiDB db, $AudioTableTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$AudioTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$AudioTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$AudioTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> indexId = const Value.absent(),
-                Value<int?> readingId = const Value.absent(),
-                Value<int> mediaId = const Value.absent(),
-                Value<int?> pitchAccentPattern = const Value.absent(),
-              }) => AudioTableCompanion(
-                id: id,
-                indexId: indexId,
-                readingId: readingId,
-                mediaId: mediaId,
-                pitchAccentPattern: pitchAccentPattern,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int indexId,
-                Value<int?> readingId = const Value.absent(),
-                required int mediaId,
-                Value<int?> pitchAccentPattern = const Value.absent(),
-              }) => AudioTableCompanion.insert(
-                id: id,
-                indexId: indexId,
-                readingId: readingId,
-                mediaId: mediaId,
-                pitchAccentPattern: pitchAccentPattern,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$AudioTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback:
-              ({
-                indexId = false,
-                readingId = false,
-                audioTableXTermTableRefs = false,
-              }) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [
-                    if (audioTableXTermTableRefs) db.audioTableXTermTable,
-                  ],
-                  addJoins:
-                      <
-                        T extends TableManagerState<
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic
-                        >
-                      >(state) {
-                        if (indexId) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.indexId,
-                                    referencedTable: $$AudioTableTableReferences
-                                        ._indexIdTable(db),
-                                    referencedColumn:
-                                        $$AudioTableTableReferences
-                                            ._indexIdTable(db)
-                                            .id,
-                                  )
-                                  as T;
-                        }
-                        if (readingId) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.readingId,
-                                    referencedTable: $$AudioTableTableReferences
-                                        ._readingIdTable(db),
-                                    referencedColumn:
-                                        $$AudioTableTableReferences
-                                            ._readingIdTable(db)
-                                            .id,
-                                  )
-                                  as T;
-                        }
-
-                        return state;
-                      },
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (audioTableXTermTableRefs)
-                        await $_getPrefetchedData<
-                          AudioTableData,
-                          $AudioTableTable,
-                          AudioTable_X_TermTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$AudioTableTableReferences
-                              ._audioTableXTermTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$AudioTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).audioTableXTermTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.audioId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
-                  },
-                );
-              },
-        ),
-      );
-}
-
-typedef $$AudioTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $AudioTableTable,
-      AudioTableData,
-      $$AudioTableTableFilterComposer,
-      $$AudioTableTableOrderingComposer,
-      $$AudioTableTableAnnotationComposer,
-      $$AudioTableTableCreateCompanionBuilder,
-      $$AudioTableTableUpdateCompanionBuilder,
-      (AudioTableData, $$AudioTableTableReferences),
-      AudioTableData,
-      PrefetchHooks Function({
-        bool indexId,
-        bool readingId,
-        bool audioTableXTermTableRefs,
-      })
-    >;
-typedef $$AudioTable_X_TermTableTableCreateCompanionBuilder =
-    AudioTable_X_TermTableCompanion Function({
-      Value<int> id,
-      required int audioId,
-      required int termId,
-    });
-typedef $$AudioTable_X_TermTableTableUpdateCompanionBuilder =
-    AudioTable_X_TermTableCompanion Function({
-      Value<int> id,
-      Value<int> audioId,
-      Value<int> termId,
-    });
-
-final class $$AudioTable_X_TermTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $AudioTable_X_TermTableTable,
-          AudioTable_X_TermTableData
-        > {
-  $$AudioTable_X_TermTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $AudioTableTable _audioIdTable(_$DaKanjiDB db) =>
-      db.audioTable.createAlias(
-        $_aliasNameGenerator(db.audioTableXTermTable.audioId, db.audioTable.id),
-      );
-
-  $$AudioTableTableProcessedTableManager get audioId {
-    final $_column = $_itemColumn<int>('audio_id')!;
-
-    final manager = $$AudioTableTableTableManager(
-      $_db,
-      $_db.audioTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_audioIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $TermTableTable _termIdTable(_$DaKanjiDB db) =>
-      db.termTable.createAlias(
-        $_aliasNameGenerator(db.audioTableXTermTable.termId, db.termTable.id),
-      );
-
-  $$TermTableTableProcessedTableManager get termId {
-    final $_column = $_itemColumn<int>('term_id')!;
-
-    final manager = $$TermTableTableTableManager(
-      $_db,
-      $_db.termTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_termIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$AudioTable_X_TermTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
-  $$AudioTable_X_TermTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$AudioTableTableFilterComposer get audioId {
-    final $$AudioTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.audioId,
-      referencedTable: $db.audioTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudioTableTableFilterComposer(
-            $db: $db,
-            $table: $db.audioTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermTableTableFilterComposer get termId {
-    final $$TermTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableFilterComposer(
-            $db: $db,
-            $table: $db.termTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$AudioTable_X_TermTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
-  $$AudioTable_X_TermTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$AudioTableTableOrderingComposer get audioId {
-    final $$AudioTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.audioId,
-      referencedTable: $db.audioTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudioTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.audioTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermTableTableOrderingComposer get termId {
-    final $$TermTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.termTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$AudioTable_X_TermTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
-  $$AudioTable_X_TermTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  $$AudioTableTableAnnotationComposer get audioId {
-    final $$AudioTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.audioId,
-      referencedTable: $db.audioTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudioTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.audioTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermTableTableAnnotationComposer get termId {
-    final $$TermTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.termTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$AudioTable_X_TermTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $AudioTable_X_TermTableTable,
-          AudioTable_X_TermTableData,
-          $$AudioTable_X_TermTableTableFilterComposer,
-          $$AudioTable_X_TermTableTableOrderingComposer,
-          $$AudioTable_X_TermTableTableAnnotationComposer,
-          $$AudioTable_X_TermTableTableCreateCompanionBuilder,
-          $$AudioTable_X_TermTableTableUpdateCompanionBuilder,
-          (AudioTable_X_TermTableData, $$AudioTable_X_TermTableTableReferences),
-          AudioTable_X_TermTableData,
-          PrefetchHooks Function({bool audioId, bool termId})
-        > {
-  $$AudioTable_X_TermTableTableTableManager(
-    _$DaKanjiDB db,
-    $AudioTable_X_TermTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$AudioTable_X_TermTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$AudioTable_X_TermTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$AudioTable_X_TermTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> audioId = const Value.absent(),
-                Value<int> termId = const Value.absent(),
-              }) => AudioTable_X_TermTableCompanion(
-                id: id,
-                audioId: audioId,
-                termId: termId,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int audioId,
-                required int termId,
-              }) => AudioTable_X_TermTableCompanion.insert(
-                id: id,
-                audioId: audioId,
-                termId: termId,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$AudioTable_X_TermTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({audioId = false, termId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (audioId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.audioId,
-                                referencedTable:
-                                    $$AudioTable_X_TermTableTableReferences
-                                        ._audioIdTable(db),
-                                referencedColumn:
-                                    $$AudioTable_X_TermTableTableReferences
-                                        ._audioIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (termId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.termId,
-                                referencedTable:
-                                    $$AudioTable_X_TermTableTableReferences
-                                        ._termIdTable(db),
-                                referencedColumn:
-                                    $$AudioTable_X_TermTableTableReferences
-                                        ._termIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$AudioTable_X_TermTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $AudioTable_X_TermTableTable,
-      AudioTable_X_TermTableData,
-      $$AudioTable_X_TermTableTableFilterComposer,
-      $$AudioTable_X_TermTableTableOrderingComposer,
-      $$AudioTable_X_TermTableTableAnnotationComposer,
-      $$AudioTable_X_TermTableTableCreateCompanionBuilder,
-      $$AudioTable_X_TermTableTableUpdateCompanionBuilder,
-      (AudioTable_X_TermTableData, $$AudioTable_X_TermTableTableReferences),
-      AudioTable_X_TermTableData,
-      PrefetchHooks Function({bool audioId, bool termId})
-    >;
 typedef $$RadicalsTableTableCreateCompanionBuilder =
     RadicalsTableCompanion Function({
       Value<int> id,
@@ -39267,6 +39607,10 @@ class $DaKanjiDBManager {
       $ReadingFtsTableManager(_db, _db.readingFts);
   $DefinitionFtsTableManager get definitionFts =>
       $DefinitionFtsTableManager(_db, _db.definitionFts);
+  $$AudioTableTableTableManager get audioTable =>
+      $$AudioTableTableTableManager(_db, _db.audioTable);
+  $$AudioTable_X_TermTableTableTableManager get audioTableXTermTable =>
+      $$AudioTable_X_TermTableTableTableManager(_db, _db.audioTableXTermTable);
   $$MediaTableTableTableManager get mediaTable =>
       $$MediaTableTableTableManager(_db, _db.mediaTable);
   $HiraganaSpellfixCostTableManager get hiraganaSpellfixCost =>
@@ -39290,10 +39634,6 @@ class $DaKanjiDBManager {
       $ExampleFtsTableManager(_db, _db.exampleFts);
   $$AudioSourceListTableTableTableManager get audioSourceListTable =>
       $$AudioSourceListTableTableTableManager(_db, _db.audioSourceListTable);
-  $$AudioTableTableTableManager get audioTable =>
-      $$AudioTableTableTableManager(_db, _db.audioTable);
-  $$AudioTable_X_TermTableTableTableManager get audioTableXTermTable =>
-      $$AudioTable_X_TermTableTableTableManager(_db, _db.audioTableXTermTable);
   $$RadicalsTableTableTableManager get radicalsTable =>
       $$RadicalsTableTableTableManager(_db, _db.radicalsTable);
   $$Radical_X_KanjiRelationsTableTableTableManager

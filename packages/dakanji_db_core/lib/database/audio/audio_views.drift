@@ -1,0 +1,29 @@
+import 'audio_tables.dart';
+import 'audio_relation_tables.dart';
+import '/database/general_tables/term_tables.dart';
+import '/database/general_tables/reading_tables.dart';
+import '/database/general_tables/media_tables.dart';
+import '/database/general_tables/media_views.drift';
+
+
+
+CREATE VIEW IF NOT EXISTS audio_entry_view AS
+    SELECT 
+        AT.id,
+        AT.index_id,
+        AT.pitch_accent_pattern,
+        JSON_GROUP_ARRAY(TT.term) AS terms_json_list,
+        RT.reading,
+        MTV.path,
+        MTV.name,
+        MTV.data
+    FROM audio_table AS AT
+        -- get terms
+        LEFT JOIN audio_table_x_term_table as ATXTT ON ATXTT.audio_id = AT.id
+        LEFT JOIN term_table AS TT ON TT.id = ATXTT.term_id
+        -- get reading
+        LEFT JOIN reading_table AS RT ON RT.id = AT.reading_id
+        -- get media
+        LEFT JOIN media_table_view AS MTV ON AT.media_id = MTV.id
+    GROUP BY
+        AT.id;

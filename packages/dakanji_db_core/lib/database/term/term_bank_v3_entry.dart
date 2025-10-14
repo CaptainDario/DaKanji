@@ -17,7 +17,7 @@ part 'term_bank_v3_entry.g.dart';
 /// Class representing one term of the database
 class TermBankV3Entry with _$TermBankV3Entry {
 
-  ///
+  /// The index id of this entry
   @override
   final int indexId;
   /// The term of a dictionary entry, for example: 食べる
@@ -26,22 +26,22 @@ class TermBankV3Entry with _$TermBankV3Entry {
   /// The term of a dictionary entry, for example: たべる
   @override
   final String reading;
-  ///
+  /// 
   @override
   final List<String> definitionTags;
-  ///
+  /// Identifiers how this entry can be conjugated
   @override
   final List<String> ruleIdentifiers;
   /// The popularity of this entry
   @override
   final int popularity;
-  /// 
+  /// All definitions of this entry
   @override
   final List<String> definitions;
   /// 
   @override
   final int sequenceNumber;
-  ///
+  /// All tags associated with this entry
   @override
   final List<TagBankV3Entry> tags;
 
