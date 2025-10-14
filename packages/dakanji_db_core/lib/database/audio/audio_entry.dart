@@ -9,7 +9,8 @@ part 'audio_entry.freezed.dart';
 part 'audio_entry.g.dart';
 
 
-@freezed
+
+@Freezed()
 @JsonSerializable()
 /// Class representing one audio entry of the database
 class AudioEntry with _$AudioEntry {
@@ -46,7 +47,7 @@ class AudioEntry with _$AudioEntry {
     
   factory AudioEntry.fromAudioEntryViewData(AudioEntryViewData data) {
     return AudioEntry(
-      terms: jsonDecode(data.termsJsonList),
+      terms: List<String>.from(jsonDecode(data.termsJsonList)),
       reading: data.reading,
       pitchAccentPattern: data.pitchAccentPattern,
       filePath: data.path,

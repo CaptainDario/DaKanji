@@ -1,6 +1,7 @@
 import "dart:async";
 import "dart:convert";
 // Package imports:
+import "package:dakanji_db_core/database/audio/audio_entry.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
 import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
@@ -19,6 +20,16 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
   // this constructor is required so that the main database can create an instance
   // of this object.
   DaKanjiDBDao(super.db);
+
+  Future<List<AudioEntry>> audioSearch(String term) async {
+
+    final results = (await db.audio_search_drift(term).get())
+      .map((e) => AudioEntry.fromAudioEntryViewData(e))
+      .toList();
+    
+    return results;
+
+  }
 
   Future<List<KanjiDictionarySearchResult>> kanjiDictionarySearch(List<String> kanjis) async {
 

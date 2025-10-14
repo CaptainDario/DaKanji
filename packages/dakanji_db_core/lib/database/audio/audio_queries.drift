@@ -1,0 +1,12 @@
+import 'audio_views.drift';
+
+
+
+audio_search_drift:
+    SELECT * FROM audio_entry_view
+    WHERE id IN (
+        SELECT ATXTT.audio_id
+        FROM term_table AS TT
+        JOIN audio_table_x_term_table AS ATXTT ON TT.id = ATXTT.term_id
+        WHERE TT.term = :term
+    );

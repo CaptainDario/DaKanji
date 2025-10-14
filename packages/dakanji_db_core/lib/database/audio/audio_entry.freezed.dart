@@ -24,14 +24,7 @@ $AudioEntryCopyWith<AudioEntry> get copyWith => _$AudioEntryCopyWithImpl<AudioEn
 
 
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AudioEntry&&const DeepCollectionEquality().equals(other.terms, terms)&&(identical(other.reading, reading) || other.reading == reading)&&(identical(other.pitchAccentPattern, pitchAccentPattern) || other.pitchAccentPattern == pitchAccentPattern)&&(identical(other.filePath, filePath) || other.filePath == filePath)&&(identical(other.fileName, fileName) || other.fileName == fileName)&&const DeepCollectionEquality().equals(other.fileData, fileData));
-}
 
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(terms),reading,pitchAccentPattern,filePath,fileName,const DeepCollectionEquality().hash(fileData));
 
 @override
 String toString() {

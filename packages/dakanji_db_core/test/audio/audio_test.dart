@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dakanji_db_core/database/audio/audio_entry.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
@@ -9,14 +10,66 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:universal_io/io.dart';
 import '../util/db_files.dart';
-import 'audio_test_cases.dart';
+import 'audio_format_1_test_cases.dart';
+import 'audio_format_2_test_cases.dart';
+import 'audio_format_3_test_cases.dart';
 
 
+
+List<String> dataSources = [
+  devExampleAudio1Path, 
+  devExampleAudio2Path,
+  devExampleAudio3Path,
+];
+
+List<List<String>> searchTerms = [
+  audioFormat1TestCaseSearchTerms,
+  audioFormat2TestCaseSearchTerms,
+  audioFormat3TestCaseSearchTerms,
+];
+
+List<List<List<AudioEntry>>> testCases = [
+  audioFormat1TestCases,
+  audioFormat2TestCases,
+  audioFormat3TestCases,
+];
 
 void main() async {
-
-  print(coreTestsPath);
   
+  for (int l=0; l < dataSources.length; l++) {
+    group("Test importing audios from Audio Format ${l+1}", () {
+
+      late DaKanjiDB db;
+      setUpAll(() async{
+        db = await setupFreshDB(dataSources[l]);
+      },);
+      
+      // Check some kanji bank queries
+      for (int i = 0; i < testCases.length; i++) {
+        test('Searching: ${searchTerms[l][i]}', () async {
+
+          Stopwatch s = Stopwatch()..start();
+          final results = await db.daKanjiDBDao.audioSearch(searchTerms[l][i]);
+          print("Looking up XXX took ${s.elapsedMilliseconds}ms");
+
+          expect(results.length, testCases[l][i].length);
+          for (var j = 0; j < results.length; j++) {
+            final r = results[j]; final e = testCases[l][i][j];
+            expect(r.terms, e.terms);
+            expect(r.reading, e.reading);
+            expect(r.pitchAccentPattern, e.pitchAccentPattern);
+            expect(r.filePath, e.filePath);
+            expect(r.fileName, e.fileName); 
+          }
+        });
+      }
+    });
+  }
+
+}
+
+Future<DaKanjiDB> setupFreshDB(String dataSourcePath) async {
+
   // create the testing database (delete any existing database)
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
@@ -26,39 +79,17 @@ void main() async {
 
   // parse the test files
   Stopwatch s = Stopwatch()..start();
-  String dataSourceZipPath = 
-    //await createTmpZip(Directory(devExampleAudio1Path));
-    await createTmpZip(Directory(devExampleAudio3Path));
+  String dataSourceZipPath = await createTmpZip(Directory(dataSourcePath));
   Stream importProgress = await parseAudioDataSource(
     audioDataSourceFile: dataSourceZipPath,
     db: db,
-    audioSourceName: p.basenameWithoutExtension(devExampleAudio1Path),
+    audioSourceName: p.basenameWithoutExtension(dataSourcePath),
     mecab: mecab
   );
   await for (final event in importProgress) {
     print(event);
   }
   print("Conversion took ${s.elapsedMilliseconds} ms");
+  return db;
 
-  await testExampleTexts(db);
-
-}
-
-/// tests the termMetaBankV3 import of the sample database from the yomitan dictionary
-Future testExampleTexts(DaKanjiDB db) async {
-
-  group("Test importing audios texts", () {
-    // Check some kanji bank queries
-    for (int i = 0; i < audioTestCases.length; i++) {
-      test('Searching: ${audioTestCases[i]}', () async {
-
-        Stopwatch s = Stopwatch()..start();
-        // TODO look up
-        print("Looking up XXX took ${s.elapsedMilliseconds}ms");
-
-        // TODO expect
-
-      });
-    }
-  });
 }
