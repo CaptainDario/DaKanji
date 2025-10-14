@@ -1,4 +1,6 @@
 // Package imports:
+import 'package:dakanji_db_core/database/audio/audio_dao.dart';
+import 'package:dakanji_db_core/database/audio/audio_relation_tables.dart';
 import 'package:dakanji_db_core/database/audio/audio_tables.dart';
 import 'package:dakanji_db_core/database/general_tables/media_dao.dart';
 import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
@@ -59,9 +61,10 @@ part 'dakanji_db.g.dart';
 @DriftDatabase(
   tables: [
     AudioSourceListTable,
-    AudioTable,
     KanjiTable, TermTable, ReadingTable, MediaTable,
     DefinitionTable, TermBankV3DefinitionJsonTable, LanguageCodeTable,
+
+    AudioTable, AudioTable_X_TermTable,
 
     RadicalsTable, Radical_X_KanjiRelationsTable,
     KanjiVGTable,
@@ -97,7 +100,8 @@ part 'dakanji_db.g.dart';
   ],
   daos: [
     DaKanjiDBDao,
-    KanjiDao, TermDao, ReadingDao, DefinitionDao, LanguageCodeDao, MediaDao,
+    KanjiDao, TermDao, ReadingDao, DefinitionDao, LanguageCodeDao,
+    AudioDao, MediaDao,
     RadicalDao, KanjiVGDao,
     IndexDao, TagBankV3Dao,
     KanjiBankV3Dao, KanjiMetaBankV3Dao,

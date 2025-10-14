@@ -1,6 +1,5 @@
 // Package imports:
 import 'package:dakanji_db_core/database/general_tables/reading_tables.dart';
-import 'package:dakanji_db_core/database/general_tables/term_tables.dart';
 import 'package:dakanji_db_core/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
 
@@ -15,16 +14,13 @@ class AudioTable extends Table {
   /// The id of the dictionary this entry belongs to
   IntColumn get indexId => integer().references(IndexTable, #id)();
 
-  /// The id of the term (kanji) this audio is associated with, if any
-  IntColumn get termId => integer().references(TermTable, #id).nullable()();
-
   /// The id of the reading this audio is associated with
   IntColumn get readingId => integer().references(ReadingTable, #id).nullable()();
 
   /// The id of the media file in the media table
   IntColumn get mediaId => integer()();
 
-  /// The pitch accent pattern of this reading, if known
+  /// The pitch accent pattern number
   IntColumn get pitchAccentPattern => integer().nullable()();
 
 }

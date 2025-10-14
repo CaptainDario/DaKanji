@@ -28,7 +28,7 @@ void main() async {
   Stopwatch s = Stopwatch()..start();
   String dataSourceZipPath = 
     //await createTmpZip(Directory(devExampleAudio1Path));
-    await createTmpZip(Directory(devExampleAudio2Path));
+    await createTmpZip(Directory(devExampleAudio3Path));
   Stream importProgress = await parseAudioDataSource(
     audioDataSourceFile: dataSourceZipPath,
     db: db,

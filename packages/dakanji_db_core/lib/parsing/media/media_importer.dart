@@ -1,12 +1,10 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/parsing/audio/audio_parser_context.dart';
 import 'package:drift/drift.dart';
 
 
 
 Future importMediaFile(
-  String path, Uint8List mediaContent, int indexId, DaKanjiDB db, AudioParserContext
-  ? aC
+  String path, Uint8List mediaContent, int indexId, DaKanjiDB db, int? insertId
 ) async {
 
   List<Variable> vars = [
@@ -15,8 +13,8 @@ Future importMediaFile(
     Variable.withInt(indexId),
   ];
   (String, String) t = ('', '');
-  if(aC != null){
-    vars = <Variable>[Variable.withInt(++aC.currentMaxMediaId)] + vars;
+  if(insertId != null){
+    vars = <Variable>[Variable.withInt(insertId)] + vars;
     t = ('id, ', '?, ');
   }
   

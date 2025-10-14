@@ -116,7 +116,8 @@ Future _parseAudioDataSource(({
       break;
     case AudioDataSourceFormats.entriesJson:
       String jsonString = utf8.decode(dataSources.first.fileContent);
-      dataSources.skip(1);
+      await parseAudioDataSourceFormat3(
+        dataSources.skip(1), db, indexId, jsonString, aC, mecab, params.mainIsolateSendPort);
       break;
   }
 
@@ -133,7 +134,7 @@ Future _parseAudioDataSource(({
 }
 
 Future parseAudioDataSourceEntry(
-  String term,
+  List<String> terms,
   String? reading,
   int? pitchPattern,
   int indexId,
@@ -141,17 +142,18 @@ Future parseAudioDataSourceEntry(
   AudioParserContext aC,
   Mecab mecab
 ) async {
-
   
-  int? termId = aC.allTerms[term];
-  if(termId == null){
-    aC.termComps.add(TermTableCompanion(
-      id: Value(++aC.currentMaxTermId),
-      term: Value(term),
-      termTokens: Value(getMecabSurfacesOrNull(mecab, term)),
-    ));
-    aC.allTerms[term] = aC.currentMaxTermId;
-    termId = aC.currentMaxTermId;
+  for (final term in terms) {
+    int? termId = aC.allTerms[term];
+    if(termId == null){
+      aC.termComps.add(TermTableCompanion(
+        id: Value(++aC.currentMaxTermId),
+        term: Value(term),
+        termTokens: Value(getMecabSurfacesOrNull(mecab, term)),
+      ));
+      aC.allTerms[term] = aC.currentMaxTermId;
+      termId = aC.currentMaxTermId;
+    }
   }
   int? readingId;
   if(reading != null) {  
@@ -167,11 +169,15 @@ Future parseAudioDataSourceEntry(
   }
 
   aC.audioComps.add(AudioTableCompanion(
+    id: Value(++aC.currentMaxAudioId),
     indexId: Value(indexId),
-    termId: Value(termId),
     readingId: Value(readingId),
     mediaId: Value(aC.currentMaxMediaId),
     pitchAccentPattern: Value(pitchPattern),
+  ));
+  aC.audioXTermComps.add(AudioTable_X_TermTableCompanion(
+    audioId: Value(aC.currentMaxAudioId),
+    termId: Value(aC.currentMaxTermId),
   ));
 
 }
@@ -190,10 +196,10 @@ Future parseAudioDataSourceFormat1(
   for (final dataSource in dataSources) {
     mainIsolate.send("Processing audio source file: ${dataSource.fileName} ${++i}/$noEntries");
     await importMediaFile(
-      dataSource.fileName, dataSource.fileContent, indexId, db, aC);
+      dataSource.fileName, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
 
     String term = p.basenameWithoutExtension(dataSource.fileName);
-    await parseAudioDataSourceEntry(term, null, null, indexId, db, aC, mecab);
+    await parseAudioDataSourceEntry([term], null, null, indexId, db, aC, mecab);
   }
 }
 
@@ -210,7 +216,7 @@ Future parseAudioDataSourceFormat2(
 
   // get data from json
   Map jsonMap = jsonDecode(jsonString);
-  String mediaDir = jsonMap["meta"]["media_dir"];
+  //String mediaDir = jsonMap["meta"]["media_dir"];
   Map<String, List<String>> headwords = (jsonMap['headwords'] as Map).map(
     (key, value) => MapEntry(key, List<String>.from(value)),
   );
@@ -219,34 +225,33 @@ Future parseAudioDataSourceFormat2(
   );
 
   /// parse the original data into a more usable format
-  Map<String, Map<String, String?>> fileData = {};
+  Map<String, ({String term, String reading, int? pitchPattern})> fileData = {};
   mainIsolate.send("Parsing index data of ${files.length} files");
   headwords.forEach((headword, fileList) {
     for (final file in fileList) {
       Map<String, String> fileDetails = files[file]!;
       String pitchPattern = fileDetails["pitch_number"]!;
-      fileData[file] = {
-        "term": headword,
-        "reading": fileDetails["kana_reading"]!,
-        "pitch_pattern": pitchPattern=="?"?null:pitchPattern,
-      };
+      fileData[file] = (
+        term: headword,
+        reading: fileDetails["kana_reading"]!,
+        pitchPattern: int.tryParse(pitchPattern),
+      );
     }
   });
-  print(JsonEncoder.withIndent('  ').convert(fileData)  );
 
   // import the files into the DB
   int noEntries = dataSources.length; int i = 0;
   for (final dataSource in dataSources) {
     mainIsolate.send("Processing audio source file: ${dataSource.fileName} ${++i}/$noEntries");
     await importMediaFile(
-      dataSource.fileName, dataSource.fileContent, indexId, db, aC);
+      dataSource.fileName, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
 
     String fileName = p.basename(dataSource.fileName);
-    Map<String, String?> entry = fileData[fileName]!;
-    String term = entry["term"]!;
-    String? reading = entry["reading"];
-    int? pitchPattern = int.tryParse(entry["pitch_pattern"]??"");
-    await parseAudioDataSourceEntry(term, reading, pitchPattern, indexId, db, aC, mecab);
+    ({String term, String reading, int? pitchPattern}) entry = fileData[fileName]!;
+    String term = entry.term;
+    String? reading = entry.reading;
+    int? pitchPattern = entry.pitchPattern;
+    await parseAudioDataSourceEntry([term], reading, pitchPattern, indexId, db, aC, mecab);
   }
 }
 
@@ -254,10 +259,49 @@ Future parseAudioDataSourceFormat2(
 Future parseAudioDataSourceFormat3(
   Iterable<({String fileName, Uint8List fileContent})> dataSources,
   DaKanjiDB db,
-  int indexId
+  int indexId,
+  String jsonString,
+  AudioParserContext aC,
+  Mecab mecab,
+  SendPort mainIsolate
 ) async {
+
+  // parse the original data into a more usable format
+  final List jsonList = jsonDecode(jsonString);
+  Map<String, ({List<String> term, String reading, int? pitchPattern})> fileData = {};
+  mainIsolate.send("Parsing index data of ${jsonList.length} files");
+  for (final entry in jsonList){
+    List<String> kanjis = List<String>.from(entry["kanji"]);
+    for (final accent in entry["accents"]) {
+
+      if(accent["soundFile"] == null) continue;
+
+      fileData[accent["soundFile"]] = (
+        term: kanjis,
+        reading: accent["accent"][0]["pronunciation"] as String,
+        pitchPattern: accent["accent"][0]["pitchAccent"],
+      );
+    }
+  }
+
+  // import the files into the DB
+  int noEntries = dataSources.length; int i = 0;
   for (final dataSource in dataSources) {
-    print("Processing audio source file: ${dataSource.fileName}");
-;
+    mainIsolate.send("Processing audio source file: ${dataSource.fileName} ${++i}/$noEntries");
+    await importMediaFile(
+      dataSource.fileName, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
+
+    String fileName = p.basename(dataSource.fileName);
+    final entry = fileData[fileName]!;
+
+    await parseAudioDataSourceEntry(
+      entry.term,
+      entry.reading,
+      entry.pitchPattern,
+      indexId,
+      db,
+      aC,
+      mecab
+    );
   }
 }

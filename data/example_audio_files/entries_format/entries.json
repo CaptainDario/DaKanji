@@ -1,0 +1,471 @@
+[
+    {
+        "id": "05658",
+        "kana": "うつ",
+        "kanji": [
+            "打つ",
+            "討つ",
+            "撃つ"
+        ],
+        "kanjiNotUsed": [],
+        "kanjiRaw": [
+            "打つ",
+            "討つ",
+            "撃つ"
+        ],
+        "furigana": [],
+        "usage": null,
+        "category": null,
+        "accents": [
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 1,
+                        "silencedMora": [],
+                        "pronunciation": "ウツ",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": "20170928151250.opus"
+            }
+        ],
+        "subentries": [],
+        "examples": [],
+        "conjugations": [
+            [
+                {
+                    "pitchAccent": 1,
+                    "silencedMora": [],
+                    "pronunciation": "ウツ",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 2,
+                    "silencedMora": [],
+                    "pronunciation": "ウタナイ",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 3,
+                    "silencedMora": [],
+                    "pronunciation": "ウチマス",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 1,
+                    "silencedMora": [],
+                    "pronunciation": "ウチ",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 1,
+                    "silencedMora": [],
+                    "pronunciation": "ウッテ",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 1,
+                    "silencedMora": [],
+                    "pronunciation": "ウテバ",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 2,
+                    "silencedMora": [],
+                    "pronunciation": "ウトー",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ]
+        ],
+        "references": [],
+        "type": "headword",
+        "class": null,
+        "notes": []
+    },
+        {
+        "id": "51149",
+        "kana": "にほんじん",
+        "kanji": [
+            "日本人"
+        ],
+        "kanjiNotUsed": [],
+        "kanjiRaw": [
+            "日本人"
+        ],
+        "furigana": [],
+        "usage": null,
+        "category": null,
+        "accents": [
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 4,
+                        "silencedMora": [],
+                        "pronunciation": "ニホンジン",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": "20170720152242.opus"
+            },
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 5,
+                        "silencedMora": [],
+                        "pronunciation": "ニッポンジン",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": "20170720144825.opus"
+            }
+        ],
+        "subentries": [],
+        "examples": [],
+        "conjugations": [],
+        "references": [],
+        "type": "headword",
+        "class": null,
+        "notes": []
+    },
+    {
+        "id": "51023",
+        "kana": "にっぽんじん",
+        "kanji": [
+            "日本人"
+        ],
+        "kanjiNotUsed": [],
+        "kanjiRaw": [
+            "日本人"
+        ],
+        "furigana": [],
+        "usage": null,
+        "category": null,
+        "accents": [
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 5,
+                        "silencedMora": [],
+                        "pronunciation": "ニッポンジン",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": "20170720144825.opus"
+            },
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 4,
+                        "silencedMora": [],
+                        "pronunciation": "ニホンジン",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": "20170720152242.opus"
+            }
+        ],
+        "subentries": [],
+        "examples": [],
+        "conjugations": [],
+        "references": [],
+        "type": "headword",
+        "class": null,
+        "notes": []
+    },
+        {
+        "id": "12082",
+        "kana": "がぞう",
+        "kanji": [
+            "画像"
+        ],
+        "kanjiNotUsed": [],
+        "kanjiRaw": [
+            "画像"
+        ],
+        "furigana": [],
+        "usage": null,
+        "category": null,
+        "accents": [
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 0,
+                        "silencedMora": [],
+                        "pronunciation": "ガゾー",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": "20170706125624.opus"
+            }
+        ],
+        "subentries": [],
+        "examples": [],
+        "conjugations": [],
+        "references": [],
+        "type": "headword",
+        "class": null,
+        "notes": []
+    },
+    {
+        "id": "55818",
+        "kana": "ばんごう",
+        "kanji": [
+            "番号"
+        ],
+        "kanjiNotUsed": [],
+        "kanjiRaw": [
+            "番号"
+        ],
+        "furigana": [],
+        "usage": null,
+        "category": null,
+        "accents": [
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 3,
+                        "silencedMora": [],
+                        "pronunciation": "バンコ゚ー",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": "20171129110054.opus"
+            }
+        ],
+        "subentries": [],
+        "examples": [],
+        "conjugations": [],
+        "references": [],
+        "type": "headword",
+        "class": null,
+        "notes": []
+    },
+    {
+        "id": "75553",
+        "kana": "〜ばんごう",
+        "kanji": [
+            "番号"
+        ],
+        "kanjiNotUsed": [],
+        "kanjiRaw": [
+            "番号"
+        ],
+        "furigana": [],
+        "usage": null,
+        "category": null,
+        "accents": [
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 4,
+                        "silencedMora": [],
+                        "pronunciation": "○○○バンコ゚ー",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": null
+            }
+        ],
+        "subentries": [],
+        "examples": [
+            {
+                "head": "暗証番号",
+                "accents": [
+                    [
+                        {
+                            "pitchAccent": 5,
+                            "silencedMora": [],
+                            "pronunciation": "アンショーバンコ゚ー",
+                            "notes": [],
+                            "notStandardButPermissible": false
+                        }
+                    ]
+                ]
+            },
+            {
+                "head": "原子番号",
+                "accents": [
+                    [
+                        {
+                            "pitchAccent": 4,
+                            "silencedMora": [],
+                            "pronunciation": "ゲンシバンコ゚ー",
+                            "notes": [],
+                            "notStandardButPermissible": false
+                        }
+                    ]
+                ]
+            },
+            {
+                "head": "背番号",
+                "accents": [
+                    [
+                        {
+                            "pitchAccent": 2,
+                            "silencedMora": [],
+                            "pronunciation": "セバンコ゚ー",
+                            "notes": [],
+                            "notStandardButPermissible": false
+                        }
+                    ]
+                ]
+            },
+            {
+                "head": "郵便番号",
+                "accents": [
+                    [
+                        {
+                            "pitchAccent": 5,
+                            "silencedMora": [],
+                            "pronunciation": "ユービンバンコ゚ー",
+                            "notes": [],
+                            "notStandardButPermissible": false
+                        }
+                    ]
+                ]
+            }
+        ],
+        "conjugations": [],
+        "references": [],
+        "type": "compund",
+        "class": "後部一",
+        "notes": []
+    },
+    {
+        "id": "71556",
+        "kana": "よむ",
+        "kanji": [
+            "詠む",
+            "読む"
+        ],
+        "kanjiNotUsed": [],
+        "kanjiRaw": [
+            "詠む",
+            "読む"
+        ],
+        "furigana": [],
+        "usage": null,
+        "category": null,
+        "accents": [
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 1,
+                        "silencedMora": [],
+                        "pronunciation": "ヨム",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": "20180221161451.opus"
+            }
+        ],
+        "subentries": [],
+        "examples": [],
+        "conjugations": [
+            [
+                {
+                    "pitchAccent": 1,
+                    "silencedMora": [],
+                    "pronunciation": "ヨム",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 2,
+                    "silencedMora": [],
+                    "pronunciation": "ヨマナイ",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 3,
+                    "silencedMora": [],
+                    "pronunciation": "ヨミマス",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 1,
+                    "silencedMora": [],
+                    "pronunciation": "ヨミ",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 1,
+                    "silencedMora": [],
+                    "pronunciation": "ヨンデ",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 1,
+                    "silencedMora": [],
+                    "pronunciation": "ヨメバ",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ],
+            [
+                {
+                    "pitchAccent": 2,
+                    "silencedMora": [],
+                    "pronunciation": "ヨモー",
+                    "notes": [],
+                    "notStandardButPermissible": false
+                }
+            ]
+        ],
+        "references": [],
+        "type": "headword",
+        "class": null,
+        "notes": []
+    }
+]

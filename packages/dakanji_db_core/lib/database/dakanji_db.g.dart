@@ -15590,18 +15590,6 @@ class $AudioTableTable extends AudioTable
       'REFERENCES index_table (id)',
     ),
   );
-  static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
-  @override
-  late final GeneratedColumn<int> termId = GeneratedColumn<int>(
-    'term_id',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_table (id)',
-    ),
-  );
   static const VerificationMeta _readingIdMeta = const VerificationMeta(
     'readingId',
   );
@@ -15641,7 +15629,6 @@ class $AudioTableTable extends AudioTable
   List<GeneratedColumn> get $columns => [
     id,
     indexId,
-    termId,
     readingId,
     mediaId,
     pitchAccentPattern,
@@ -15668,12 +15655,6 @@ class $AudioTableTable extends AudioTable
       );
     } else if (isInserting) {
       context.missing(_indexIdMeta);
-    }
-    if (data.containsKey('term_id')) {
-      context.handle(
-        _termIdMeta,
-        termId.isAcceptableOrUnknown(data['term_id']!, _termIdMeta),
-      );
     }
     if (data.containsKey('reading_id')) {
       context.handle(
@@ -15715,10 +15696,6 @@ class $AudioTableTable extends AudioTable
         DriftSqlType.int,
         data['${effectivePrefix}index_id'],
       )!,
-      termId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}term_id'],
-      ),
       readingId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}reading_id'],
@@ -15747,21 +15724,17 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
   /// The id of the dictionary this entry belongs to
   final int indexId;
 
-  /// The id of the term (kanji) this audio is associated with, if any
-  final int? termId;
-
   /// The id of the reading this audio is associated with
   final int? readingId;
 
   /// The id of the media file in the media table
   final int mediaId;
 
-  /// The pitch accent pattern of this reading, if known
+  /// The pitch accent pattern number
   final int? pitchAccentPattern;
   const AudioTableData({
     required this.id,
     required this.indexId,
-    this.termId,
     this.readingId,
     required this.mediaId,
     this.pitchAccentPattern,
@@ -15771,9 +15744,6 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['index_id'] = Variable<int>(indexId);
-    if (!nullToAbsent || termId != null) {
-      map['term_id'] = Variable<int>(termId);
-    }
     if (!nullToAbsent || readingId != null) {
       map['reading_id'] = Variable<int>(readingId);
     }
@@ -15788,9 +15758,6 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
     return AudioTableCompanion(
       id: Value(id),
       indexId: Value(indexId),
-      termId: termId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(termId),
       readingId: readingId == null && nullToAbsent
           ? const Value.absent()
           : Value(readingId),
@@ -15809,7 +15776,6 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
     return AudioTableData(
       id: serializer.fromJson<int>(json['id']),
       indexId: serializer.fromJson<int>(json['indexId']),
-      termId: serializer.fromJson<int?>(json['termId']),
       readingId: serializer.fromJson<int?>(json['readingId']),
       mediaId: serializer.fromJson<int>(json['mediaId']),
       pitchAccentPattern: serializer.fromJson<int?>(json['pitchAccentPattern']),
@@ -15821,7 +15787,6 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'indexId': serializer.toJson<int>(indexId),
-      'termId': serializer.toJson<int?>(termId),
       'readingId': serializer.toJson<int?>(readingId),
       'mediaId': serializer.toJson<int>(mediaId),
       'pitchAccentPattern': serializer.toJson<int?>(pitchAccentPattern),
@@ -15831,14 +15796,12 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
   AudioTableData copyWith({
     int? id,
     int? indexId,
-    Value<int?> termId = const Value.absent(),
     Value<int?> readingId = const Value.absent(),
     int? mediaId,
     Value<int?> pitchAccentPattern = const Value.absent(),
   }) => AudioTableData(
     id: id ?? this.id,
     indexId: indexId ?? this.indexId,
-    termId: termId.present ? termId.value : this.termId,
     readingId: readingId.present ? readingId.value : this.readingId,
     mediaId: mediaId ?? this.mediaId,
     pitchAccentPattern: pitchAccentPattern.present
@@ -15849,7 +15812,6 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
     return AudioTableData(
       id: data.id.present ? data.id.value : this.id,
       indexId: data.indexId.present ? data.indexId.value : this.indexId,
-      termId: data.termId.present ? data.termId.value : this.termId,
       readingId: data.readingId.present ? data.readingId.value : this.readingId,
       mediaId: data.mediaId.present ? data.mediaId.value : this.mediaId,
       pitchAccentPattern: data.pitchAccentPattern.present
@@ -15863,7 +15825,6 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
     return (StringBuffer('AudioTableData(')
           ..write('id: $id, ')
           ..write('indexId: $indexId, ')
-          ..write('termId: $termId, ')
           ..write('readingId: $readingId, ')
           ..write('mediaId: $mediaId, ')
           ..write('pitchAccentPattern: $pitchAccentPattern')
@@ -15873,14 +15834,13 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
 
   @override
   int get hashCode =>
-      Object.hash(id, indexId, termId, readingId, mediaId, pitchAccentPattern);
+      Object.hash(id, indexId, readingId, mediaId, pitchAccentPattern);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AudioTableData &&
           other.id == this.id &&
           other.indexId == this.indexId &&
-          other.termId == this.termId &&
           other.readingId == this.readingId &&
           other.mediaId == this.mediaId &&
           other.pitchAccentPattern == this.pitchAccentPattern);
@@ -15889,14 +15849,12 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
 class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
   final Value<int> id;
   final Value<int> indexId;
-  final Value<int?> termId;
   final Value<int?> readingId;
   final Value<int> mediaId;
   final Value<int?> pitchAccentPattern;
   const AudioTableCompanion({
     this.id = const Value.absent(),
     this.indexId = const Value.absent(),
-    this.termId = const Value.absent(),
     this.readingId = const Value.absent(),
     this.mediaId = const Value.absent(),
     this.pitchAccentPattern = const Value.absent(),
@@ -15904,7 +15862,6 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
   AudioTableCompanion.insert({
     this.id = const Value.absent(),
     required int indexId,
-    this.termId = const Value.absent(),
     this.readingId = const Value.absent(),
     required int mediaId,
     this.pitchAccentPattern = const Value.absent(),
@@ -15913,7 +15870,6 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
   static Insertable<AudioTableData> custom({
     Expression<int>? id,
     Expression<int>? indexId,
-    Expression<int>? termId,
     Expression<int>? readingId,
     Expression<int>? mediaId,
     Expression<int>? pitchAccentPattern,
@@ -15921,7 +15877,6 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (indexId != null) 'index_id': indexId,
-      if (termId != null) 'term_id': termId,
       if (readingId != null) 'reading_id': readingId,
       if (mediaId != null) 'media_id': mediaId,
       if (pitchAccentPattern != null)
@@ -15932,7 +15887,6 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
   AudioTableCompanion copyWith({
     Value<int>? id,
     Value<int>? indexId,
-    Value<int?>? termId,
     Value<int?>? readingId,
     Value<int>? mediaId,
     Value<int?>? pitchAccentPattern,
@@ -15940,7 +15894,6 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
     return AudioTableCompanion(
       id: id ?? this.id,
       indexId: indexId ?? this.indexId,
-      termId: termId ?? this.termId,
       readingId: readingId ?? this.readingId,
       mediaId: mediaId ?? this.mediaId,
       pitchAccentPattern: pitchAccentPattern ?? this.pitchAccentPattern,
@@ -15955,9 +15908,6 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
     }
     if (indexId.present) {
       map['index_id'] = Variable<int>(indexId.value);
-    }
-    if (termId.present) {
-      map['term_id'] = Variable<int>(termId.value);
     }
     if (readingId.present) {
       map['reading_id'] = Variable<int>(readingId.value);
@@ -15976,10 +15926,276 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
     return (StringBuffer('AudioTableCompanion(')
           ..write('id: $id, ')
           ..write('indexId: $indexId, ')
-          ..write('termId: $termId, ')
           ..write('readingId: $readingId, ')
           ..write('mediaId: $mediaId, ')
           ..write('pitchAccentPattern: $pitchAccentPattern')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AudioTable_X_TermTableTable extends AudioTable_X_TermTable
+    with TableInfo<$AudioTable_X_TermTableTable, AudioTable_X_TermTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AudioTable_X_TermTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _audioIdMeta = const VerificationMeta(
+    'audioId',
+  );
+  @override
+  late final GeneratedColumn<int> audioId = GeneratedColumn<int>(
+    'audio_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES audio_table (id)',
+    ),
+  );
+  static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
+  @override
+  late final GeneratedColumn<int> termId = GeneratedColumn<int>(
+    'term_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES term_table (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, audioId, termId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'audio_table_x_term_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AudioTable_X_TermTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('audio_id')) {
+      context.handle(
+        _audioIdMeta,
+        audioId.isAcceptableOrUnknown(data['audio_id']!, _audioIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_audioIdMeta);
+    }
+    if (data.containsKey('term_id')) {
+      context.handle(
+        _termIdMeta,
+        termId.isAcceptableOrUnknown(data['term_id']!, _termIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AudioTable_X_TermTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AudioTable_X_TermTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      audioId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}audio_id'],
+      )!,
+      termId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}term_id'],
+      )!,
+    );
+  }
+
+  @override
+  $AudioTable_X_TermTableTable createAlias(String alias) {
+    return $AudioTable_X_TermTableTable(attachedDatabase, alias);
+  }
+}
+
+class AudioTable_X_TermTableData extends DataClass
+    implements Insertable<AudioTable_X_TermTableData> {
+  /// id of this entry
+  final int id;
+
+  /// Link to the [AudioTable]
+  final int audioId;
+
+  /// Link to the [TermTable]
+  final int termId;
+  const AudioTable_X_TermTableData({
+    required this.id,
+    required this.audioId,
+    required this.termId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['audio_id'] = Variable<int>(audioId);
+    map['term_id'] = Variable<int>(termId);
+    return map;
+  }
+
+  AudioTable_X_TermTableCompanion toCompanion(bool nullToAbsent) {
+    return AudioTable_X_TermTableCompanion(
+      id: Value(id),
+      audioId: Value(audioId),
+      termId: Value(termId),
+    );
+  }
+
+  factory AudioTable_X_TermTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AudioTable_X_TermTableData(
+      id: serializer.fromJson<int>(json['id']),
+      audioId: serializer.fromJson<int>(json['audioId']),
+      termId: serializer.fromJson<int>(json['termId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'audioId': serializer.toJson<int>(audioId),
+      'termId': serializer.toJson<int>(termId),
+    };
+  }
+
+  AudioTable_X_TermTableData copyWith({int? id, int? audioId, int? termId}) =>
+      AudioTable_X_TermTableData(
+        id: id ?? this.id,
+        audioId: audioId ?? this.audioId,
+        termId: termId ?? this.termId,
+      );
+  AudioTable_X_TermTableData copyWithCompanion(
+    AudioTable_X_TermTableCompanion data,
+  ) {
+    return AudioTable_X_TermTableData(
+      id: data.id.present ? data.id.value : this.id,
+      audioId: data.audioId.present ? data.audioId.value : this.audioId,
+      termId: data.termId.present ? data.termId.value : this.termId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AudioTable_X_TermTableData(')
+          ..write('id: $id, ')
+          ..write('audioId: $audioId, ')
+          ..write('termId: $termId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, audioId, termId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AudioTable_X_TermTableData &&
+          other.id == this.id &&
+          other.audioId == this.audioId &&
+          other.termId == this.termId);
+}
+
+class AudioTable_X_TermTableCompanion
+    extends UpdateCompanion<AudioTable_X_TermTableData> {
+  final Value<int> id;
+  final Value<int> audioId;
+  final Value<int> termId;
+  const AudioTable_X_TermTableCompanion({
+    this.id = const Value.absent(),
+    this.audioId = const Value.absent(),
+    this.termId = const Value.absent(),
+  });
+  AudioTable_X_TermTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int audioId,
+    required int termId,
+  }) : audioId = Value(audioId),
+       termId = Value(termId);
+  static Insertable<AudioTable_X_TermTableData> custom({
+    Expression<int>? id,
+    Expression<int>? audioId,
+    Expression<int>? termId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (audioId != null) 'audio_id': audioId,
+      if (termId != null) 'term_id': termId,
+    });
+  }
+
+  AudioTable_X_TermTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? audioId,
+    Value<int>? termId,
+  }) {
+    return AudioTable_X_TermTableCompanion(
+      id: id ?? this.id,
+      audioId: audioId ?? this.audioId,
+      termId: termId ?? this.termId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (audioId.present) {
+      map['audio_id'] = Variable<int>(audioId.value);
+    }
+    if (termId.present) {
+      map['term_id'] = Variable<int>(termId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AudioTable_X_TermTableCompanion(')
+          ..write('id: $id, ')
+          ..write('audioId: $audioId, ')
+          ..write('termId: $termId')
           ..write(')'))
         .toString();
   }
@@ -16995,6 +17211,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $AudioSourceListTableTable audioSourceListTable =
       $AudioSourceListTableTable(this);
   late final $AudioTableTable audioTable = $AudioTableTable(this);
+  late final $AudioTable_X_TermTableTable audioTableXTermTable =
+      $AudioTable_X_TermTableTable(this);
   late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
   late final $Radical_X_KanjiRelationsTableTable radicalXKanjiRelationsTable =
       $Radical_X_KanjiRelationsTableTable(this);
@@ -17011,6 +17229,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final LanguageCodeDao languageCodeDao = LanguageCodeDao(
     this as DaKanjiDB,
   );
+  late final AudioDao audioDao = AudioDao(this as DaKanjiDB);
   late final MediaDao mediaDao = MediaDao(this as DaKanjiDB);
   late final RadicalDao radicalDao = RadicalDao(this as DaKanjiDB);
   late final KanjiVGDao kanjiVGDao = KanjiVGDao(this as DaKanjiDB);
@@ -17341,6 +17560,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     exampleTableAu,
     audioSourceListTable,
     audioTable,
+    audioTableXTermTable,
     radicalsTable,
     radicalXKanjiRelationsTable,
     kanjiVGTable,
@@ -25973,19 +26193,29 @@ final class $$TermTableTableReferences
     );
   }
 
-  static MultiTypedResultKey<$AudioTableTable, List<AudioTableData>>
-  _audioTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
-    db.audioTable,
-    aliasName: $_aliasNameGenerator(db.termTable.id, db.audioTable.termId),
-  );
+  static MultiTypedResultKey<
+    $AudioTable_X_TermTableTable,
+    List<AudioTable_X_TermTableData>
+  >
+  _audioTableXTermTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.audioTableXTermTable,
+        aliasName: $_aliasNameGenerator(
+          db.termTable.id,
+          db.audioTableXTermTable.termId,
+        ),
+      );
 
-  $$AudioTableTableProcessedTableManager get audioTableRefs {
-    final manager = $$AudioTableTableTableManager(
+  $$AudioTable_X_TermTableTableProcessedTableManager
+  get audioTableXTermTableRefs {
+    final manager = $$AudioTable_X_TermTableTableTableManager(
       $_db,
-      $_db.audioTable,
+      $_db.audioTableXTermTable,
     ).filter((f) => f.termId.id.sqlEquals($_itemColumn<int>('id')!));
 
-    final cache = $_typedResult.readTableOrNull(_audioTableRefsTable($_db));
+    final cache = $_typedResult.readTableOrNull(
+      _audioTableXTermTableRefsTable($_db),
+    );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -26066,28 +26296,29 @@ class $$TermTableTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> audioTableRefs(
-    Expression<bool> Function($$AudioTableTableFilterComposer f) f,
+  Expression<bool> audioTableXTermTableRefs(
+    Expression<bool> Function($$AudioTable_X_TermTableTableFilterComposer f) f,
   ) {
-    final $$AudioTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.audioTable,
-      getReferencedColumn: (t) => t.termId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudioTableTableFilterComposer(
-            $db: $db,
-            $table: $db.audioTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
+    final $$AudioTable_X_TermTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.audioTableXTermTable,
+          getReferencedColumn: (t) => t.termId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer,
-          ),
-    );
+              }) => $$AudioTable_X_TermTableTableFilterComposer(
+                $db: $db,
+                $table: $db.audioTableXTermTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return f(composer);
   }
 }
@@ -26188,28 +26419,29 @@ class $$TermTableTableAnnotationComposer
     return f(composer);
   }
 
-  Expression<T> audioTableRefs<T extends Object>(
-    Expression<T> Function($$AudioTableTableAnnotationComposer a) f,
+  Expression<T> audioTableXTermTableRefs<T extends Object>(
+    Expression<T> Function($$AudioTable_X_TermTableTableAnnotationComposer a) f,
   ) {
-    final $$AudioTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.audioTable,
-      getReferencedColumn: (t) => t.termId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudioTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.audioTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
+    final $$AudioTable_X_TermTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.audioTableXTermTable,
+          getReferencedColumn: (t) => t.termId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
                 $removeJoinBuilderFromRootComposer,
-          ),
-    );
+              }) => $$AudioTable_X_TermTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.audioTableXTermTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return f(composer);
   }
 }
@@ -26230,7 +26462,7 @@ class $$TermTableTableTableManager
           PrefetchHooks Function({
             bool termBankV3TableRefs,
             bool termMetaBankV3TableRefs,
-            bool audioTableRefs,
+            bool audioTableXTermTableRefs,
           })
         > {
   $$TermTableTableTableManager(_$DaKanjiDB db, $TermTableTable table)
@@ -26276,14 +26508,14 @@ class $$TermTableTableTableManager
               ({
                 termBankV3TableRefs = false,
                 termMetaBankV3TableRefs = false,
-                audioTableRefs = false,
+                audioTableXTermTableRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (termBankV3TableRefs) db.termBankV3Table,
                     if (termMetaBankV3TableRefs) db.termMetaBankV3Table,
-                    if (audioTableRefs) db.audioTable,
+                    if (audioTableXTermTableRefs) db.audioTableXTermTable,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -26330,21 +26562,21 @@ class $$TermTableTableTableManager
                               ),
                           typedResults: items,
                         ),
-                      if (audioTableRefs)
+                      if (audioTableXTermTableRefs)
                         await $_getPrefetchedData<
                           TermTableData,
                           $TermTableTable,
-                          AudioTableData
+                          AudioTable_X_TermTableData
                         >(
                           currentTable: table,
                           referencedTable: $$TermTableTableReferences
-                              ._audioTableRefsTable(db),
+                              ._audioTableXTermTableRefsTable(db),
                           managerFromTypedResult: (p0) =>
                               $$TermTableTableReferences(
                                 db,
                                 table,
                                 p0,
-                              ).audioTableRefs,
+                              ).audioTableXTermTableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.termId == item.id,
@@ -26374,7 +26606,7 @@ typedef $$TermTableTableProcessedTableManager =
       PrefetchHooks Function({
         bool termBankV3TableRefs,
         bool termMetaBankV3TableRefs,
-        bool audioTableRefs,
+        bool audioTableXTermTableRefs,
       })
     >;
 typedef $$TermBankV3DefinitionJsonTableTableCreateCompanionBuilder =
@@ -37006,7 +37238,6 @@ typedef $$AudioTableTableCreateCompanionBuilder =
     AudioTableCompanion Function({
       Value<int> id,
       required int indexId,
-      Value<int?> termId,
       Value<int?> readingId,
       required int mediaId,
       Value<int?> pitchAccentPattern,
@@ -37015,7 +37246,6 @@ typedef $$AudioTableTableUpdateCompanionBuilder =
     AudioTableCompanion Function({
       Value<int> id,
       Value<int> indexId,
-      Value<int?> termId,
       Value<int?> readingId,
       Value<int> mediaId,
       Value<int?> pitchAccentPattern,
@@ -37044,23 +37274,6 @@ final class $$AudioTableTableReferences
     );
   }
 
-  static $TermTableTable _termIdTable(_$DaKanjiDB db) => db.termTable
-      .createAlias($_aliasNameGenerator(db.audioTable.termId, db.termTable.id));
-
-  $$TermTableTableProcessedTableManager? get termId {
-    final $_column = $_itemColumn<int>('term_id');
-    if ($_column == null) return null;
-    final manager = $$TermTableTableTableManager(
-      $_db,
-      $_db.termTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_termIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
   static $ReadingTableTable _readingIdTable(_$DaKanjiDB db) =>
       db.readingTable.createAlias(
         $_aliasNameGenerator(db.audioTable.readingId, db.readingTable.id),
@@ -37077,6 +37290,34 @@ final class $$AudioTableTableReferences
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $AudioTable_X_TermTableTable,
+    List<AudioTable_X_TermTableData>
+  >
+  _audioTableXTermTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.audioTableXTermTable,
+        aliasName: $_aliasNameGenerator(
+          db.audioTable.id,
+          db.audioTableXTermTable.audioId,
+        ),
+      );
+
+  $$AudioTable_X_TermTableTableProcessedTableManager
+  get audioTableXTermTableRefs {
+    final manager = $$AudioTable_X_TermTableTableTableManager(
+      $_db,
+      $_db.audioTableXTermTable,
+    ).filter((f) => f.audioId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _audioTableXTermTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
     );
   }
 }
@@ -37128,29 +37369,6 @@ class $$AudioTableTableFilterComposer
     return composer;
   }
 
-  $$TermTableTableFilterComposer get termId {
-    final $$TermTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableFilterComposer(
-            $db: $db,
-            $table: $db.termTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
   $$ReadingTableTableFilterComposer get readingId {
     final $$ReadingTableTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -37172,6 +37390,32 @@ class $$AudioTableTableFilterComposer
           ),
     );
     return composer;
+  }
+
+  Expression<bool> audioTableXTermTableRefs(
+    Expression<bool> Function($$AudioTable_X_TermTableTableFilterComposer f) f,
+  ) {
+    final $$AudioTable_X_TermTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.audioTableXTermTable,
+          getReferencedColumn: (t) => t.audioId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AudioTable_X_TermTableTableFilterComposer(
+                $db: $db,
+                $table: $db.audioTableXTermTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
   }
 }
 
@@ -37213,29 +37457,6 @@ class $$AudioTableTableOrderingComposer
           }) => $$IndexTableTableOrderingComposer(
             $db: $db,
             $table: $db.indexTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermTableTableOrderingComposer get termId {
-    final $$TermTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.termTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -37312,29 +37533,6 @@ class $$AudioTableTableAnnotationComposer
     return composer;
   }
 
-  $$TermTableTableAnnotationComposer get termId {
-    final $$TermTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.termTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
   $$ReadingTableTableAnnotationComposer get readingId {
     final $$ReadingTableTableAnnotationComposer composer = $composerBuilder(
       composer: this,
@@ -37357,6 +37555,32 @@ class $$AudioTableTableAnnotationComposer
     );
     return composer;
   }
+
+  Expression<T> audioTableXTermTableRefs<T extends Object>(
+    Expression<T> Function($$AudioTable_X_TermTableTableAnnotationComposer a) f,
+  ) {
+    final $$AudioTable_X_TermTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.audioTableXTermTable,
+          getReferencedColumn: (t) => t.audioId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$AudioTable_X_TermTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.audioTableXTermTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$AudioTableTableTableManager
@@ -37372,7 +37596,11 @@ class $$AudioTableTableTableManager
           $$AudioTableTableUpdateCompanionBuilder,
           (AudioTableData, $$AudioTableTableReferences),
           AudioTableData,
-          PrefetchHooks Function({bool indexId, bool termId, bool readingId})
+          PrefetchHooks Function({
+            bool indexId,
+            bool readingId,
+            bool audioTableXTermTableRefs,
+          })
         > {
   $$AudioTableTableTableManager(_$DaKanjiDB db, $AudioTableTable table)
     : super(
@@ -37389,14 +37617,12 @@ class $$AudioTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int> indexId = const Value.absent(),
-                Value<int?> termId = const Value.absent(),
                 Value<int?> readingId = const Value.absent(),
                 Value<int> mediaId = const Value.absent(),
                 Value<int?> pitchAccentPattern = const Value.absent(),
               }) => AudioTableCompanion(
                 id: id,
                 indexId: indexId,
-                termId: termId,
                 readingId: readingId,
                 mediaId: mediaId,
                 pitchAccentPattern: pitchAccentPattern,
@@ -37405,14 +37631,12 @@ class $$AudioTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required int indexId,
-                Value<int?> termId = const Value.absent(),
                 Value<int?> readingId = const Value.absent(),
                 required int mediaId,
                 Value<int?> pitchAccentPattern = const Value.absent(),
               }) => AudioTableCompanion.insert(
                 id: id,
                 indexId: indexId,
-                termId: termId,
                 readingId: readingId,
                 mediaId: mediaId,
                 pitchAccentPattern: pitchAccentPattern,
@@ -37426,10 +37650,16 @@ class $$AudioTableTableTableManager
               )
               .toList(),
           prefetchHooksCallback:
-              ({indexId = false, termId = false, readingId = false}) {
+              ({
+                indexId = false,
+                readingId = false,
+                audioTableXTermTableRefs = false,
+              }) {
                 return PrefetchHooks(
                   db: db,
-                  explicitlyWatchedTables: [],
+                  explicitlyWatchedTables: [
+                    if (audioTableXTermTableRefs) db.audioTableXTermTable,
+                  ],
                   addJoins:
                       <
                         T extends TableManagerState<
@@ -37460,20 +37690,6 @@ class $$AudioTableTableTableManager
                                   )
                                   as T;
                         }
-                        if (termId) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.termId,
-                                    referencedTable: $$AudioTableTableReferences
-                                        ._termIdTable(db),
-                                    referencedColumn:
-                                        $$AudioTableTableReferences
-                                            ._termIdTable(db)
-                                            .id,
-                                  )
-                                  as T;
-                        }
                         if (readingId) {
                           state =
                               state.withJoin(
@@ -37492,7 +37708,29 @@ class $$AudioTableTableTableManager
                         return state;
                       },
                   getPrefetchedDataCallback: (items) async {
-                    return [];
+                    return [
+                      if (audioTableXTermTableRefs)
+                        await $_getPrefetchedData<
+                          AudioTableData,
+                          $AudioTableTable,
+                          AudioTable_X_TermTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AudioTableTableReferences
+                              ._audioTableXTermTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AudioTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).audioTableXTermTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.audioId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
                 );
               },
@@ -37512,7 +37750,398 @@ typedef $$AudioTableTableProcessedTableManager =
       $$AudioTableTableUpdateCompanionBuilder,
       (AudioTableData, $$AudioTableTableReferences),
       AudioTableData,
-      PrefetchHooks Function({bool indexId, bool termId, bool readingId})
+      PrefetchHooks Function({
+        bool indexId,
+        bool readingId,
+        bool audioTableXTermTableRefs,
+      })
+    >;
+typedef $$AudioTable_X_TermTableTableCreateCompanionBuilder =
+    AudioTable_X_TermTableCompanion Function({
+      Value<int> id,
+      required int audioId,
+      required int termId,
+    });
+typedef $$AudioTable_X_TermTableTableUpdateCompanionBuilder =
+    AudioTable_X_TermTableCompanion Function({
+      Value<int> id,
+      Value<int> audioId,
+      Value<int> termId,
+    });
+
+final class $$AudioTable_X_TermTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $AudioTable_X_TermTableTable,
+          AudioTable_X_TermTableData
+        > {
+  $$AudioTable_X_TermTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $AudioTableTable _audioIdTable(_$DaKanjiDB db) =>
+      db.audioTable.createAlias(
+        $_aliasNameGenerator(db.audioTableXTermTable.audioId, db.audioTable.id),
+      );
+
+  $$AudioTableTableProcessedTableManager get audioId {
+    final $_column = $_itemColumn<int>('audio_id')!;
+
+    final manager = $$AudioTableTableTableManager(
+      $_db,
+      $_db.audioTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_audioIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TermTableTable _termIdTable(_$DaKanjiDB db) =>
+      db.termTable.createAlias(
+        $_aliasNameGenerator(db.audioTableXTermTable.termId, db.termTable.id),
+      );
+
+  $$TermTableTableProcessedTableManager get termId {
+    final $_column = $_itemColumn<int>('term_id')!;
+
+    final manager = $$TermTableTableTableManager(
+      $_db,
+      $_db.termTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_termIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$AudioTable_X_TermTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
+  $$AudioTable_X_TermTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$AudioTableTableFilterComposer get audioId {
+    final $$AudioTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.audioId,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableFilterComposer(
+            $db: $db,
+            $table: $db.audioTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermTableTableFilterComposer get termId {
+    final $$TermTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableFilterComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AudioTable_X_TermTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
+  $$AudioTable_X_TermTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$AudioTableTableOrderingComposer get audioId {
+    final $$AudioTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.audioId,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.audioTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermTableTableOrderingComposer get termId {
+    final $$TermTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AudioTable_X_TermTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
+  $$AudioTable_X_TermTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$AudioTableTableAnnotationComposer get audioId {
+    final $$AudioTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.audioId,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.audioTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermTableTableAnnotationComposer get termId {
+    final $$TermTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$AudioTable_X_TermTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $AudioTable_X_TermTableTable,
+          AudioTable_X_TermTableData,
+          $$AudioTable_X_TermTableTableFilterComposer,
+          $$AudioTable_X_TermTableTableOrderingComposer,
+          $$AudioTable_X_TermTableTableAnnotationComposer,
+          $$AudioTable_X_TermTableTableCreateCompanionBuilder,
+          $$AudioTable_X_TermTableTableUpdateCompanionBuilder,
+          (AudioTable_X_TermTableData, $$AudioTable_X_TermTableTableReferences),
+          AudioTable_X_TermTableData,
+          PrefetchHooks Function({bool audioId, bool termId})
+        > {
+  $$AudioTable_X_TermTableTableTableManager(
+    _$DaKanjiDB db,
+    $AudioTable_X_TermTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AudioTable_X_TermTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$AudioTable_X_TermTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$AudioTable_X_TermTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> audioId = const Value.absent(),
+                Value<int> termId = const Value.absent(),
+              }) => AudioTable_X_TermTableCompanion(
+                id: id,
+                audioId: audioId,
+                termId: termId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int audioId,
+                required int termId,
+              }) => AudioTable_X_TermTableCompanion.insert(
+                id: id,
+                audioId: audioId,
+                termId: termId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$AudioTable_X_TermTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({audioId = false, termId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (audioId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.audioId,
+                                referencedTable:
+                                    $$AudioTable_X_TermTableTableReferences
+                                        ._audioIdTable(db),
+                                referencedColumn:
+                                    $$AudioTable_X_TermTableTableReferences
+                                        ._audioIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (termId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.termId,
+                                referencedTable:
+                                    $$AudioTable_X_TermTableTableReferences
+                                        ._termIdTable(db),
+                                referencedColumn:
+                                    $$AudioTable_X_TermTableTableReferences
+                                        ._termIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$AudioTable_X_TermTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $AudioTable_X_TermTableTable,
+      AudioTable_X_TermTableData,
+      $$AudioTable_X_TermTableTableFilterComposer,
+      $$AudioTable_X_TermTableTableOrderingComposer,
+      $$AudioTable_X_TermTableTableAnnotationComposer,
+      $$AudioTable_X_TermTableTableCreateCompanionBuilder,
+      $$AudioTable_X_TermTableTableUpdateCompanionBuilder,
+      (AudioTable_X_TermTableData, $$AudioTable_X_TermTableTableReferences),
+      AudioTable_X_TermTableData,
+      PrefetchHooks Function({bool audioId, bool termId})
     >;
 typedef $$RadicalsTableTableCreateCompanionBuilder =
     RadicalsTableCompanion Function({
@@ -38663,6 +39292,8 @@ class $DaKanjiDBManager {
       $$AudioSourceListTableTableTableManager(_db, _db.audioSourceListTable);
   $$AudioTableTableTableManager get audioTable =>
       $$AudioTableTableTableManager(_db, _db.audioTable);
+  $$AudioTable_X_TermTableTableTableManager get audioTableXTermTable =>
+      $$AudioTable_X_TermTableTableTableManager(_db, _db.audioTableXTermTable);
   $$RadicalsTableTableTableManager get radicalsTable =>
       $$RadicalsTableTableTableManager(_db, _db.radicalsTable);
   $$Radical_X_KanjiRelationsTableTableTableManager

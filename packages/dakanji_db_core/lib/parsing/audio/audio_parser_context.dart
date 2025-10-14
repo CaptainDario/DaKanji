@@ -15,6 +15,9 @@ class AudioParserContext extends ParserContext{
   /// A map of all readings in the database to their IDs
   Map<String, int> allReadings;
 
+  /// The current maximum [AudioTable] ID in the database
+  int currentMaxAudioId;
+
   /// The current maximum media ID in the database
   int currentMaxMediaId;
 
@@ -24,6 +27,9 @@ class AudioParserContext extends ParserContext{
   List<ReadingTableCompanion> readingComps = [];
   /// A list of all [AudioTableCompanion]s that should be inserted in the DB
   List<AudioTableCompanion> audioComps = [];
+  /// A list of all [AudioTable_X_TermTableCompanion]s that should be inserted
+  /// in the DB
+  List<AudioTable_X_TermTableCompanion> audioXTermComps = [];
 
 
 
@@ -32,6 +38,7 @@ class AudioParserContext extends ParserContext{
     required this.allTerms,
     required this.currentMaxReadingId,
     required this.allReadings,
+    required this.currentMaxAudioId,
     required this.currentMaxMediaId,
   });
 
@@ -43,6 +50,8 @@ class AudioParserContext extends ParserContext{
       
       currentMaxReadingId: await db.readingDao.maxReadingId(),
       allReadings: { for (var e in await db.readingDao.getAllReadings()) e.reading : e.id },
+
+      currentMaxAudioId: await db.audioDao.maxAudioId(),
 
       currentMaxMediaId: await db.mediaDao.maxMediaId(),
     );
