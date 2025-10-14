@@ -15,7 +15,10 @@ class MediaTable extends Table {
   IntColumn get indexId => integer().references(IndexTable, #id)();
 
   /// the path of this data file as found in the original data source
-  TextColumn get path => text().unique().withLength(min: 1)();
+  TextColumn get path => text()();
+
+  /// A the name for this file
+  TextColumn get name => text().withLength(min: 1)();
 
   /// The actual data of the file
   BlobColumn get dataCompressed => blob()();

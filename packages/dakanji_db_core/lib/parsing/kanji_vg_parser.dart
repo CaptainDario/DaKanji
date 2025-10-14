@@ -36,8 +36,8 @@ Future<void> _addKanjiVGToDB(String dataSourcePath, DriftIsolate dbConnection) a
 
   // convert kanji vg to map
   Map<String, String> kanjiVGMap = {};
-  Iterable<({String fileName, Uint8List fileContent})> dataSources = dakanjiDBDataSourceIterator(archivePath: dataSourcePath);
-  for (final ({String fileName, Uint8List fileContent}) data in dataSources) {
+  Iterable<({String filePath, Uint8List fileContent})> dataSources = dakanjiDBDataSourceIterator(archivePath: dataSourcePath);
+  for (final ({String filePath, Uint8List fileContent}) data in dataSources) {
     final (kanji, svg) = parseKanjiVGFile(utf8.decode(data.fileContent));
     kanjiVGMap[kanji] = svg;
   }

@@ -63,7 +63,7 @@ Future _parseExampleDataSource(({
   final mecab = Mecab();
   await mecab.init(params.libmecabPath, params.mecabDictDir, true);
 
-  Iterable<({String fileName, Uint8List fileContent})> dataSources =
+  Iterable<({String filePath, Uint8List fileContent})> dataSources =
     dakanjiDBDataSourceIterator(archivePath: params.examplesZipPath,
     fileOrder: ["index.json"]
   );
@@ -75,14 +75,14 @@ Future _parseExampleDataSource(({
 
   // parse the example bank files
   int progressCounter = 1;
-  for (final ({String fileName, Uint8List fileContent}) data in dataSources) {
+  for (final ({String filePath, Uint8List fileContent}) data in dataSources) {
 
-    params.mainIsolateSendPort.send("Parsing ${data.fileName} ($progressCounter/${dataSources.length}) ...");
+    params.mainIsolateSendPort.send("Parsing ${data.filePath} ($progressCounter/${dataSources.length}) ...");
 
-    if(data.fileName.endsWith(".txt")) {
+    if(data.filePath.endsWith(".txt")) {
       await parseExampleText(utf8.decode(data.fileContent), db, mecab, indexEntry.id);
     }
-    else if(data.fileName.endsWith(".json")) {
+    else if(data.filePath.endsWith(".json")) {
       await parseExampleSentence(utf8.decode(data.fileContent), db, mecab, indexEntry.id);
     }
 

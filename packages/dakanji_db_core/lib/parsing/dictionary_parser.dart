@@ -110,7 +110,7 @@ Future _parseDictionaryDataSource(({
   final mecab = Mecab();
   await mecab.init(params.libmecabPath, params.mecabDictDir, true);
 
-  Iterable<({String fileName, Uint8List fileContent})> dataSources = dakanjiDBDataSourceIterator(
+  Iterable<({String filePath, Uint8List fileContent})> dataSources = dakanjiDBDataSourceIterator(
     archivePath: params.dataSourcePath,
     fileOrder: [indexFileNamingScheme, tagBankFileNamingScheme],
   );
@@ -129,30 +129,30 @@ Future _parseDictionaryDataSource(({
   // parse the rest of the files (first tag bank, then the rest in sorted order)
   int progressCounter = 0;
   final int noEntries = dataSources.length;
-  for (final ({String fileName, Uint8List fileContent}) data in dataSources) {
+  for (final ({String filePath, Uint8List fileContent}) data in dataSources) {
 
     progressCounter++;
-    params.mainIsolateSendPort.send("Parsing ${data.fileName} ($progressCounter/$noEntries) ...");
+    params.mainIsolateSendPort.send("Parsing ${data.filePath} ($progressCounter/$noEntries) ...");
 
-    if(p.basename(data.fileName).contains(indexFileNamingScheme)) continue;
-    if(!validDictionaryFiles.any((scheme) => p.basename(data.fileName).contains(scheme))){
-      params.mainIsolateSendPort.send("Copying ${data.fileName} to DB ...");
-      await importMediaFile(data.fileName, data.fileContent, indexId, db, null);
+    if(p.basename(data.filePath).contains(indexFileNamingScheme)) continue;
+    if(!validDictionaryFiles.any((scheme) => p.basename(data.filePath).contains(scheme))){
+      params.mainIsolateSendPort.send("Copying ${data.filePath} to DB ...");
+      await importMediaFile(data.filePath, data.fileContent, indexId, db, null);
       continue;
     }
 
     // manage import contexts
-    termImportContext = await manageImportContext(termImportContext, data.fileName, termBankFileNamingScheme,
+    termImportContext = await manageImportContext(termImportContext, data.filePath, termBankFileNamingScheme,
       () => TermBankV3ParserContext.create(db));
-    termMetaImportContext = await manageImportContext(termMetaImportContext, data.fileName, termMetaBankFileNamingScheme,
+    termMetaImportContext = await manageImportContext(termMetaImportContext, data.filePath, termMetaBankFileNamingScheme,
       () => TermMetaBankV3ParserContext.create(db));
-    kanjiImportContext = await manageImportContext(kanjiImportContext, data.fileName, kanjiBankFileNamingScheme,
+    kanjiImportContext = await manageImportContext(kanjiImportContext, data.filePath, kanjiBankFileNamingScheme,
       () => KanjiBankV3ParserContext.create(db, indexEntry.id));
-    kanjiMetaImportContext = await manageImportContext(kanjiMetaImportContext, data.fileName, kanjiMetaBankFileNamingScheme,
+    kanjiMetaImportContext = await manageImportContext(kanjiMetaImportContext, data.filePath, kanjiMetaBankFileNamingScheme,
       () => KanjiMetaBankV3ParserContext.create(db));
       
     await parseDictionaryFile(
-      fileName: data.fileName,
+      filePath: data.filePath,
       fileContent: utf8.decode(data.fileContent),
       importContext: [termImportContext, termMetaImportContext, kanjiImportContext, kanjiMetaImportContext]
         .nonNulls.firstOrNull,
@@ -175,16 +175,16 @@ Future _parseDictionaryDataSource(({
 
 /// Manages the lifecycle of an import context.
 ///
-/// Returns a new context if [currentContext] is null and [fileName] matches the [namingScheme].
-/// Returns null if [currentContext] exists and [fileName] no longer matches.
+/// Returns a new context if [currentContext] is null and [filePath] matches the [namingScheme].
+/// Returns null if [currentContext] exists and [filePath] no longer matches.
 /// Otherwise, returns the [currentContext] unchanged.
 Future<T?> manageImportContext<T>(
   T? currentContext,
-  String fileName,
+  String filePath,
   String namingScheme,
   Future<T> Function() create
 ) async {
-  final bool matchesScheme = fileName.contains(namingScheme);
+  final bool matchesScheme = filePath.contains(namingScheme);
 
   if (currentContext == null && matchesScheme) {
     // Condition to CREATE the context
@@ -200,7 +200,7 @@ Future<T?> manageImportContext<T>(
 
 /// Depending on the file name applies the correct parsing method
 Future parseDictionaryFile({
-  required String fileName,
+  required String filePath,
   required String fileContent,
   required ParserContext? importContext,
   required DaKanjiDB db,
@@ -219,7 +219,7 @@ Future parseDictionaryFile({
     termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, importContext as TermMetaBankV3ParserContext, db, ind.id),
   };
 
-  final baseName = p.basename(fileName);
+  final baseName = p.basename(filePath);
   for (final entry in parserConfig.entries) {
     final scheme = entry.key;
     final parserFunction = entry.value;

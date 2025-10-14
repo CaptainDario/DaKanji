@@ -77,7 +77,7 @@ Future _parseAudioDataSource(({
   AudioParserContext aC = await AudioParserContext.create(db);
 
   /// Iterator over the files in the data source zip
-  Iterable<({String fileName, Uint8List fileContent})> dataSources =
+  Iterable<({String filePath, Uint8List fileContent})> dataSources =
     dakanjiDBDataSourceIterator(
       archivePath: params.audioDataSourceFile,
       archiveBytes: params.audioDataSourceBytes,
@@ -86,9 +86,9 @@ Future _parseAudioDataSource(({
 
   // find the format
   late AudioDataSourceFormats format;
-  if(dataSources.first.fileName == "index.json") {
+  if(dataSources.first.filePath == "index.json") {
     format = AudioDataSourceFormats.indexJson;
-  } else if(dataSources.first.fileName == "entries.json") {
+  } else if(dataSources.first.filePath == "entries.json") {
     format = AudioDataSourceFormats.entriesJson;
   } else {
     format = AudioDataSourceFormats.filesNames;
@@ -124,6 +124,8 @@ Future _parseAudioDataSource(({
   await db.batch((batch) {
     batch.insertAll(db.termTable, aC.termComps);
     batch.insertAll(db.audioTable, aC.audioComps);
+    batch.insertAll(db.readingTable, aC.readingComps);
+    batch.insertAll(db.audioTableXTermTable, aC.audioXTermComps);
   });
 
   // finish import by optimizing db and freeing resources
@@ -142,49 +144,52 @@ Future parseAudioDataSourceEntry(
   AudioParserContext aC,
   Mecab mecab
 ) async {
+
+  aC.currentMaxAudioId++;
   
   for (final term in terms) {
     int? termId = aC.allTerms[term];
     if(termId == null){
+      termId = ++aC.currentMaxTermId;
       aC.termComps.add(TermTableCompanion(
-        id: Value(++aC.currentMaxTermId),
+        id: Value(termId),
         term: Value(term),
         termTokens: Value(getMecabSurfacesOrNull(mecab, term)),
       ));
-      aC.allTerms[term] = aC.currentMaxTermId;
-      termId = aC.currentMaxTermId;
+      aC.allTerms[term] = termId;
     }
+    aC.audioXTermComps.add(AudioTable_X_TermTableCompanion(
+      audioId: Value(aC.currentMaxAudioId),
+      termId: Value(termId),
+    ));
   }
+
   int? readingId;
-  if(reading != null) {  
+  if(reading != null) {
     readingId = aC.allReadings[reading];
     if(readingId == null) {
+      readingId = ++aC.currentMaxReadingId;
       aC.readingComps.add(ReadingTableCompanion(
-        id: Value(++aC.currentMaxReadingId),
+        id: Value(readingId),
         reading: Value(reading),
       ));
-      aC.allReadings[reading] = aC.currentMaxReadingId;
-      readingId = aC.currentMaxReadingId;
+      aC.allReadings[reading] = readingId;
     }
   }
 
   aC.audioComps.add(AudioTableCompanion(
-    id: Value(++aC.currentMaxAudioId),
+    id: Value(aC.currentMaxAudioId),
     indexId: Value(indexId),
     readingId: Value(readingId),
     mediaId: Value(aC.currentMaxMediaId),
     pitchAccentPattern: Value(pitchPattern),
-  ));
-  aC.audioXTermComps.add(AudioTable_X_TermTableCompanion(
-    audioId: Value(aC.currentMaxAudioId),
-    termId: Value(aC.currentMaxTermId),
   ));
 
 }
 
 /// Parses audio data source in format 1 (file names)
 Future parseAudioDataSourceFormat1(
-  Iterable<({String fileName, Uint8List fileContent})> dataSources,
+  Iterable<({String filePath, Uint8List fileContent})> dataSources,
   DaKanjiDB db,
   int indexId,
   AudioParserContext aC,
@@ -194,18 +199,18 @@ Future parseAudioDataSourceFormat1(
   final int noEntries = dataSources.length;
   int i = 0;
   for (final dataSource in dataSources) {
-    mainIsolate.send("Processing audio source file: ${dataSource.fileName} ${++i}/$noEntries");
+    mainIsolate.send("Processing audio source file: ${dataSource.filePath} ${++i}/$noEntries");
     await importMediaFile(
-      dataSource.fileName, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
+      dataSource.filePath, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
 
-    String term = p.basenameWithoutExtension(dataSource.fileName);
+    String term = p.basenameWithoutExtension(dataSource.filePath);
     await parseAudioDataSourceEntry([term], null, null, indexId, db, aC, mecab);
   }
 }
 
 /// Parses audio data source in format 2 (index.json)
 Future parseAudioDataSourceFormat2(
-  Iterable<({String fileName, Uint8List fileContent})> dataSources,
+  Iterable<({String filePath, Uint8List fileContent})> dataSources,
   DaKanjiDB db,
   int indexId,
   String jsonString,
@@ -242,12 +247,12 @@ Future parseAudioDataSourceFormat2(
   // import the files into the DB
   int noEntries = dataSources.length; int i = 0;
   for (final dataSource in dataSources) {
-    mainIsolate.send("Processing audio source file: ${dataSource.fileName} ${++i}/$noEntries");
+    mainIsolate.send("Processing audio source file: ${dataSource.filePath} ${++i}/$noEntries");
     await importMediaFile(
-      dataSource.fileName, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
+      dataSource.filePath, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
 
-    String fileName = p.basename(dataSource.fileName);
-    ({String term, String reading, int? pitchPattern}) entry = fileData[fileName]!;
+    String filePath = p.basename(dataSource.filePath);
+    ({String term, String reading, int? pitchPattern}) entry = fileData[filePath]!;
     String term = entry.term;
     String? reading = entry.reading;
     int? pitchPattern = entry.pitchPattern;
@@ -257,7 +262,7 @@ Future parseAudioDataSourceFormat2(
 
 /// Parses audio data source in format 3 (entries.json)
 Future parseAudioDataSourceFormat3(
-  Iterable<({String fileName, Uint8List fileContent})> dataSources,
+  Iterable<({String filePath, Uint8List fileContent})> dataSources,
   DaKanjiDB db,
   int indexId,
   String jsonString,
@@ -287,12 +292,12 @@ Future parseAudioDataSourceFormat3(
   // import the files into the DB
   int noEntries = dataSources.length; int i = 0;
   for (final dataSource in dataSources) {
-    mainIsolate.send("Processing audio source file: ${dataSource.fileName} ${++i}/$noEntries");
+    mainIsolate.send("Processing audio source file: ${dataSource.filePath} ${++i}/$noEntries");
     await importMediaFile(
-      dataSource.fileName, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
+      dataSource.filePath, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
 
-    String fileName = p.basename(dataSource.fileName);
-    final entry = fileData[fileName]!;
+    String filePath = p.basename(dataSource.filePath);
+    final entry = fileData[filePath]!;
 
     await parseAudioDataSourceEntry(
       entry.term,

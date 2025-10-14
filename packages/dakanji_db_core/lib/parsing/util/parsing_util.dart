@@ -49,7 +49,7 @@ Stream<String> getStringStreamFromTarBz2File(File file) {
 /// be processed. The name can be a RegExp pattern that will be matched. If the
 /// list is short than the number of files in the archive the unspecified files
 /// are processed in the order they are read.
-Iterable<({String fileName, Uint8List fileContent})> dakanjiDBDataSourceIterator(
+Iterable<({String filePath, Uint8List fileContent})> dakanjiDBDataSourceIterator(
   {
     String? archivePath,
     Uint8List? archiveBytes,
@@ -86,7 +86,7 @@ Iterable<({String fileName, Uint8List fileContent})> dakanjiDBDataSourceIterator
 /// be processed. The name can be a RegExp pattern that will be matched. If the
 /// list is short than the number of files in the archive the unspecified files
 /// are processed in sorted are read.
-Iterable<({String fileName, Uint8List fileContent})> _archiveIteratorStreamed(
+Iterable<({String filePath, Uint8List fileContent})> _archiveIteratorStreamed(
   Archive archive,
   {
     List<String> fileOrder=const [],
@@ -109,7 +109,7 @@ Iterable<({String fileName, Uint8List fileContent})> _archiveIteratorStreamed(
     for (ArchiveFile matchedFile in matchedFiles) {
       final content = matchedFile.readBytes()!;
       processedFiles.add(matchedFile.name);
-      yield (fileName: matchedFile.name, fileContent: content); 
+      yield (filePath: matchedFile.name, fileContent: content); 
     }
   }
 
@@ -118,7 +118,7 @@ Iterable<({String fileName, Uint8List fileContent})> _archiveIteratorStreamed(
     if (entity.isFile && !processedFiles.contains(entity.name)) {
       // get the file's content as a string
       final content = entity.readBytes()!;
-      yield (fileName: entity.name, fileContent: content);
+      yield (filePath: entity.name, fileContent: content);
     }
   }
 }

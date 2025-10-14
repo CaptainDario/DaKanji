@@ -8,6 +8,7 @@ CREATE VIEW media_table_view AS
         id,
         index_id,
         path,
+        name,
         uncompress(data_compressed) AS data
     FROM
         media_table;
@@ -17,8 +18,8 @@ CREATE VIEW media_table_view AS
 CREATE TRIGGER media_table_view_insert
     INSTEAD OF INSERT ON media_table_view
     BEGIN
-        INSERT INTO media_table (id, index_id, path, data_compressed)
-        VALUES (NEW.id, NEW.index_id, NEW.path, compress(NEW.data));
+        INSERT INTO media_table (id, index_id, path, name, data_compressed)
+        VALUES (NEW.id, NEW.index_id, NEW.path, NEW.name, compress(NEW.data));
     END;
 
 -- Trigger for UPDATE operations
@@ -29,6 +30,7 @@ CREATE TRIGGER media_table_view_update
         SET
             index_id = NEW.index_id,
             path = NEW.path,
+            name = NEW.name,
             data_compressed = compress(NEW.data)
         WHERE
             id = OLD.id;
