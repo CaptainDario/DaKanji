@@ -73,8 +73,9 @@ Future addRadicalsToDB(String radkPath, String kradPath, DaKanjiDB db) async {
   final connection = await db.attachedDatabase.serializableConnection();
 
   // spawn isolate
+  bool inMemory = db.inMemory;
   await Isolate.run(() async {
-    await _addRadicalsToDB(radkPath, kradPath, connection);
+    await _addRadicalsToDB(radkPath, kradPath, connection, inMemory);
   });
 
   await optimizeDbAfterImport(db);
@@ -82,10 +83,15 @@ Future addRadicalsToDB(String radkPath, String kradPath, DaKanjiDB db) async {
 
 
 /// Actual implementation of the [_addRadicalsToDB] that runs in an isolate
-Future _addRadicalsToDB(String radkPath, String kradPath, DriftIsolate dbConnection) async {
+Future _addRadicalsToDB(
+  String radkPath, String kradPath, DriftIsolate dbConnection, bool inMemory
+) async {
 
   // reconnect to the database
-  final db = DaKanjiDB(executor: await dbConnection.connect());
+  final db = DaKanjiDB(
+    executor: await dbConnection.connect(),
+    inMemory: inMemory
+  );
 
   // load radical files
   Map radkMap = jsonDecode(utf8.decode(dakanjiDBDataSourceIterator(

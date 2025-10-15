@@ -80,6 +80,7 @@ Future<Stream<String>> parseDictionaryDataSource({
     }
   });
 
+  bool inMemory = db.inMemory;
   await Isolate.spawn(_parseDictionaryDataSource, (
     dataSourcePath: dataSourcePath,
     archiveBytes: archiveBytes,
@@ -87,7 +88,8 @@ Future<Stream<String>> parseDictionaryDataSource({
     addFullJsonDefinitions: addFullJsonDefinitions,
     libmecabPath: libmecabPath,
     mecabDictDir: mecabDicPath,
-    mainIsolateSendPort: receivePort.sendPort
+    mainIsolateSendPort: receivePort.sendPort,
+    inMemory: inMemory
   ));
 
   return controller.stream;
@@ -103,10 +105,14 @@ Future _parseDictionaryDataSource(({
   bool addFullJsonDefinitions,
   String libmecabPath,
   String mecabDictDir,
-  SendPort mainIsolateSendPort
+  SendPort mainIsolateSendPort,
+  bool inMemory
 }) params) async {
 
-  final db = DaKanjiDB(executor: await params.dbConnection.connect());
+  final db = DaKanjiDB(
+    executor: await params.dbConnection.connect(),
+    inMemory: params.inMemory
+  );
   final mecab = Mecab();
   await mecab.init(params.libmecabPath, params.mecabDictDir, true);
 

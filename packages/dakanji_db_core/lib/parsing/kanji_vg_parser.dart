@@ -20,8 +20,9 @@ Future<void> addKanjiVGToDB(String dataSourcePath, DaKanjiDB db) async {
   final connection = await db.attachedDatabase.serializableConnection();
 
   // spawn isolate
+  bool inMemory = db.inMemory;
   await Isolate.run(() async {
-    await _addKanjiVGToDB(dataSourcePath, connection);
+    await _addKanjiVGToDB(dataSourcePath, connection, inMemory);
   });
 
   await optimizeDbAfterImport(db);
@@ -29,10 +30,15 @@ Future<void> addKanjiVGToDB(String dataSourcePath, DaKanjiDB db) async {
 
 
 /// Actual implementation of the [_addKanjiVGToDB] that runs in an isolate
-Future<void> _addKanjiVGToDB(String dataSourcePath, DriftIsolate dbConnection) async {
+Future<void> _addKanjiVGToDB(
+  String dataSourcePath, DriftIsolate dbConnection, bool inMemory
+) async {
 
   // reconnect to the database
-  final db = DaKanjiDB(executor: await dbConnection.connect());
+  final db = DaKanjiDB(
+    executor: await dbConnection.connect(),
+    inMemory: inMemory
+  );
 
   // convert kanji vg to map
   Map<String, String> kanjiVGMap = {};

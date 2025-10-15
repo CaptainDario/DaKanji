@@ -5,18 +5,20 @@ import 'package:test/test.dart';
 import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_shared/paths.dart';
+import 'package:universal_io/io.dart';
 import 'radicals_test_cases.dart';
 
 void main() async {
 
-  // setup 
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
-  await db.clearDB();
+  Stopwatch s = Stopwatch();
+  late DaKanjiDB db;
+   setUpAll(() async {
+     db = await setupFreshDB();
+   });
+   tearDownAll(() async {
+     await db.close();
+   });
 
-  // convert krad / radk file
-  Stopwatch s = Stopwatch()..start();
-  await addRadicalsToDB(radkInputPath, kradInputPath, db);
-  print("Converting radicals took: ${s.elapsedMilliseconds}ms");
 
   group('Radical Lookups', () {
     // test radical lookups
@@ -49,5 +51,20 @@ void main() async {
       });
     }
   });
+
+}
+
+Future<DaKanjiDB> setupFreshDB() async {
+
+  // setup 
+  if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+
+  // convert krad / radk file
+  Stopwatch s = Stopwatch()..start();
+  await addRadicalsToDB(radkInputPath, kradInputPath, db);
+  print("Converting radicals took: ${s.elapsedMilliseconds}ms");
+
+  return db;
 
 }

@@ -1,7 +1,7 @@
 [
     {
         "example": "今日よく勉強した。",
-        "tokenizedExample": "",
+        "indexId" : 1,
         "translations": [
             {
                 "translation": "Ich habe heute viel gelernt.",
@@ -15,7 +15,7 @@
     },
     {
         "example": "今日よく勉強しました。",
-        "tokenizedExample": "",
+        "indexId" : 1,
         "translations": [
             {
                 "translation": "Ich habe heute viel gelernt.",

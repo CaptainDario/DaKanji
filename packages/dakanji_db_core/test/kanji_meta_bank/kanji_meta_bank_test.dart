@@ -1,40 +1,26 @@
 // Package imports:
+import 'dart:io';
+
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
-import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
+import '../util/db_files.dart';
 import 'kanji_meta_bank_test_cases.dart';
 
-void main() async {
+void main() {
   
-  // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
-  db.clearDB();
-
-  final mecab = Mecab();
-  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
-
-  // convert the test files
-  Stopwatch s = Stopwatch()..start();
-  await parseDictionaryDataSource(
-    dataSourcePath: yomitanSampleDictionaryPath,
-    db: db,
-    addFullJsonDefinitions: false,
-    mecab: mecab
-  );
-  print("Conversion took ${s.elapsedMilliseconds} ms");
+  late DaKanjiDB db;
+   setUpAll(() async {
+     db = await setupFreshDB();
+   });
+   tearDownAll(() async {
+     await db.close();
+   });
   
-  await testKanjiMetaBankV3(db);
-
-}
-
-/// tests the kanjiMetaBankV3 import of the sample database from the yomitan dictionary
-Future testKanjiMetaBankV3(DaKanjiDB db) async {
-
   group("Test importing kanji meta bank", () {
     // Check some kanji bank queries
     for (var testCase in kanjiMetaBankTetsCases) {
@@ -51,4 +37,33 @@ Future testKanjiMetaBankV3(DaKanjiDB db) async {
       });
     }
   });
+
 }
+
+Future<DaKanjiDB> setupFreshDB() async {
+
+  // create the testing database (delete any existing database)
+  if (File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+
+  final mecab = Mecab();
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+
+  // convert the test files
+  Stopwatch s = Stopwatch()..start();
+  String dataSourceZipPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
+  Stream progress = await parseDictionaryDataSource(
+    dataSourcePath: dataSourceZipPath,
+    db: db,
+    addFullJsonDefinitions: false,
+    mecab: mecab
+  );
+  await for (var line in progress) {
+    print(line);
+  }
+  print("Conversion took ${s.elapsedMilliseconds} ms");
+
+  return db;
+
+}
+

@@ -16,14 +16,37 @@ List<(String, List<Iso639_1>)> exampleSentencesTestQueries = [
   ("勉強", [Iso639_1.de]),
 ];
 
-List<List<ExampleEntry>> exampleSentenceTestExpectedValues = Directory(p.join(coreTestsPath, "examples"))
-  .listSync().whereType<File>()
-  .map((e) => File(e.absolute.path))
-  .where((e) => p.basename(e.path).startsWith("example_sentences_test_case_"))
-  .toList()
-  .sorted((a, b) => (extractNumber(a)).compareTo(extractNumber(b)))
-  .map((e) => List.from(jsonDecode(e.readAsStringSync())))
-  .map((List testCase) =>
-    testCase.map((e) => ExampleEntry.fromJson(e)).toList()
-  )
-  .toList();
+List<List<ExampleEntry>> exampleSentenceTestExpectedValues = _loadTestData();
+
+// The private helper function that contains the complex logic
+List<List<ExampleEntry>> _loadTestData() {
+  try {
+    final testFiles = Directory(p.join(coreTestsPath, "examples"))
+      .listSync()
+      .whereType<File>()
+      .where((e) => p.basename(e.path).startsWith("example_sentences_test_case_"))
+      .toList()
+      ..sort((a, b) => (extractNumber(a)).compareTo(extractNumber(b))); // Use cascade operator for sorting in place
+
+    // This is the key part: process each file within its own try-catch
+    return testFiles.map((file) {
+      final fileName = p.basename(file.path);
+      try {
+        final content = file.readAsStringSync();
+        final List<dynamic> decodedJson = jsonDecode(content);
+        return decodedJson
+            .map((e) => ExampleEntry.fromJson(e))
+            .toList();
+      } catch (e) {
+        // This is your debugging print! It tells you which file failed and why.
+        print("❌ FAILED to parse test case file: $fileName. Error: $e");
+        return <ExampleEntry>[]; // Return an empty list for the failing file
+      }
+    }).toList();
+
+  } catch (e) {
+    // This catches errors in the directory listing or sorting
+    print("❌ FAILED to load test directory. Error: $e");
+    return []; // Return an empty list if the whole process fails
+  }
+}

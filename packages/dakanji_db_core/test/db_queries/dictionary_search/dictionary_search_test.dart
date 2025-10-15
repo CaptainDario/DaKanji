@@ -54,20 +54,7 @@ void main() {
   late DaKanjiDB db;
 
   setUpAll(() async {
-
-    if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-    db = DaKanjiDB(dbPath: dakanjiDbPath);
-
-    // init mecab
-    final mecab = Mecab();
-    await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
-
-    bool shouldIncludeFile(File file) => !p.basename(file.path).contains("term_bank");
-    await partialInit(db, shouldIncludeFile, "term_search_test", mecab,
-        otherFilesToCopy: [
-          File(p.join(dataFilesPath, "testing_db", 'term_bank_1.json')),
-          File(p.join(dataFilesPath, "testing_db", 'tag_bank_1.json')),
-        ]);
+    db = await setupFreshDB();
   });
 
   tearDownAll(() async {
@@ -124,4 +111,24 @@ void main() {
       }
     });
   }
+}
+
+Future setupFreshDB() async {
+
+    if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
+    DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+
+    // init mecab
+    final mecab = Mecab();
+    await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+
+    bool shouldIncludeFile(File file) => !p.basename(file.path).contains("term_bank");
+    await partialInit(db, shouldIncludeFile, "term_search_test", mecab,
+        otherFilesToCopy: [
+          File(p.join(dataFilesPath, "testing_db", 'term_bank_1.json')),
+          File(p.join(dataFilesPath, "testing_db", 'tag_bank_1.json')),
+        ]);
+
+  return db;
+  
 }

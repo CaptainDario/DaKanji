@@ -13,10 +13,43 @@ import 'example_sentences_test_cases.dart';
 
 
 
-void main() async {
+void main() {
   
+  late DaKanjiDB db;
+  setUpAll(() async {
+    db = await setupFreshDB();
+  });
+  tearDownAll(() async {
+    await db.close();
+  });
+
+  group("Test importing example sentences", () {
+    // Check some kanji bank queries
+    for (int i = 0; i < exampleSentencesTestQueries.length; i++) {
+      test('${exampleSentencesTestQueries[i]} ', () async {
+      
+        Stopwatch s = Stopwatch()..start();
+        final results = (await db.exampleDao.searchExamples(
+          exampleSentencesTestQueries[i].$1, exampleSentencesTestQueries[i].$2
+        ));
+        print("Looking up ${exampleSentencesTestQueries[i]} took ${s.elapsedMilliseconds}ms");
+        print(results);
+
+        bool allFound = true;
+        for (var result in results) {
+          if(!exampleSentenceTestExpectedValues[i].contains(result)) allFound = false; 
+        }
+        expect(allFound, true);
+      });
+    }
+  });
+
+}
+
+Future<DaKanjiDB> setupFreshDB() async {
+
   // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
   db.clearDB();
 
   // init mecab
@@ -32,31 +65,6 @@ void main() async {
   }
   print("Conversion took ${s.elapsedMilliseconds} ms");
 
-  await testExamplesV3(db);
-
-}
-
-/// tests the termMetaBankV3 import of the sample database from the yomitan dictionary
-Future testExamplesV3(DaKanjiDB db) async {
-
-  group("Test importing example sentences", () {
-    // Check some kanji bank queries
-    for (int i = 0; i < exampleSentencesTestQueries.length; i++) {
-      test('${exampleSentencesTestQueries[i]} ', () async {
-      
-        Stopwatch s = Stopwatch()..start();
-        final results = (await db.exampleDao.searchExamples(
-          exampleSentencesTestQueries[i].$1, exampleSentencesTestQueries[i].$2
-        ));
-        print("Looking up ${exampleSentencesTestQueries[i]} took ${s.elapsedMilliseconds}ms");
-
-        bool allFound = true;
-        for (var result in results) {
-          if(!exampleSentenceTestExpectedValues[i].contains(result)) allFound = false; 
-        }
-        expect(allFound, true);
-      });
-    }
-  });
+  return db;
 
 }

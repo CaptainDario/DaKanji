@@ -10,36 +10,15 @@ import 'package:universal_io/io.dart';
 import '../util/db_files.dart';
 import 'term_meta_bank_test_cases.dart';
 
-void main() async {
+void main() {
   
-  // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
-  await db.clearDB();
-
-  final mecab = Mecab();
-  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
-
-  // convert the test files
-  Stopwatch s = Stopwatch()..start();
-  String dataSourceZipPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
-  Stream<String> parsingProgress = await parseDictionaryDataSource(
-    dataSourcePath: dataSourceZipPath,
-    db: db,
-    addFullJsonDefinitions: false,
-    mecab: mecab
-  );
-  await for (final progress in parsingProgress) {
-    print(progress);
-  }
-  
-  print("Conversion took ${s.elapsedMilliseconds} ms");
-  
-  await testTermMetaBankV3(db);
-
-}
-
-/// tests the termMetaBankV3 import of the sample database from the yomitan dictionary
-Future testTermMetaBankV3(DaKanjiDB db) async {
+  late DaKanjiDB db;
+   setUpAll(() async {
+     db = await setupFreshDB();
+   });
+   tearDownAll(() async {
+     await db.close();
+   });
   
   group('Term meta bank import test', () {
     // Check some kanji bank queries
@@ -62,5 +41,32 @@ Future testTermMetaBankV3(DaKanjiDB db) async {
       });
     }
   });
+
 }
 
+Future<DaKanjiDB> setupFreshDB() async {
+
+  // create the testing database (delete any existing database)
+  if (File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+
+  final mecab = Mecab();
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+
+  // convert the test files
+  Stopwatch s = Stopwatch()..start();
+  String dataSourceZipPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
+  Stream<String> parsingProgress = await parseDictionaryDataSource(
+    dataSourcePath: dataSourceZipPath,
+    db: db,
+    addFullJsonDefinitions: false,
+    mecab: mecab
+  );
+  await for (final progress in parsingProgress) {
+    print(progress);
+  }
+  
+  print("Conversion took ${s.elapsedMilliseconds} ms");
+
+  return db;
+}

@@ -146,7 +146,7 @@ class DaKanjiDB extends _$DaKanjiDB {
   DaKanjiDB({
     this.dbPath,
     QueryExecutor? executor,
-    this.inMemory=false,
+    required this.inMemory,
   }) : super(executor ?? _openConnection(dbPath!, inMemory));
 
   @override

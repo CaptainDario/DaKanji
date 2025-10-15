@@ -8,6 +8,7 @@
 /// `is` -> `is_` 
 /// `new` -> `new_`
 /// `for` -> `for_`
+// ignore: camel_case_types
 enum Iso639_1{
 	// Afar, 
 	aa, 
@@ -386,7 +387,7 @@ enum Iso639_1{
 /// `is` -> `is_` 
 /// `new` -> `new_`
 /// `for` -> `for_`
-const Map<String, Iso639_1> isoToIso639_1 = const {
+const Map<String, Iso639_1> isoToIso639_1 = {
 	'aa' : Iso639_1.aa,
 	'aar' : Iso639_1.aa,
 	'ab' : Iso639_1.ab,
@@ -780,7 +781,7 @@ const Map<String, Iso639_1> isoToIso639_1 = const {
 
 
 /// Map to convert ISO 639-1, 639-2, 639-2T, 639-3, to an language string
-const Map<Enum, String> isoToLanguage = const {
+const Map<Enum, String> isoToLanguage = {
 	Iso639_1.aa : 'Afar', 
 	Iso639_1.ab : 'Abkhazian', 
 	Iso639_1.af : 'Afrikaans', 

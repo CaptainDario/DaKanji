@@ -8,7 +8,9 @@ import 'package:dakanji_db_core/parsing/example/example_text_parser.dart';
 import 'package:dakanji_db_core/parsing/index/index_parser.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
+import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
+import 'package:path/path.dart' as p;
 
 import '/parsing/example/example_sentence_parser.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
@@ -43,7 +45,8 @@ Future<Stream<String>> parseExampleDataSource(String examplesZipPath, DaKanjiDB 
     dbConnection: connection,
     libmecabPath: libmecabPath,
     mecabDictDir: mecabDicPath,
-    mainIsolateSendPort: receivePort.sendPort
+    mainIsolateSendPort: receivePort.sendPort,
+    inMemory: db.inMemory
   ));
 
   return controller.stream;
@@ -56,22 +59,28 @@ Future _parseExampleDataSource(({
   DriftIsolate dbConnection,
   String libmecabPath,
   String mecabDictDir,
-  SendPort mainIsolateSendPort
+  SendPort mainIsolateSendPort,
+  bool inMemory
 }) params) async {
 
-  final db = DaKanjiDB(executor: await params.dbConnection.connect());
+  final db = DaKanjiDB(
+    executor: await params.dbConnection.connect(),
+    inMemory: params.inMemory
+  );
   final mecab = Mecab();
   await mecab.init(params.libmecabPath, params.mecabDictDir, true);
 
   Iterable<({String filePath, Uint8List fileContent})> dataSources =
     dakanjiDBDataSourceIterator(archivePath: params.examplesZipPath,
-    fileOrder: ["index.json"]
   );
 
-  // parse the index file -> get dict index
-  final indexFile = dataSources.first;
-  int indexId = await parseIndex(utf8.decode(indexFile.fileContent), db);
-  final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
+  // add an index for the example entries
+  int indexId = await db.into(db.indexTable).insert(IndexTableCompanion(
+    title: Value(p.basenameWithoutExtension(params.examplesZipPath)),
+    revision: Value("1.0"),
+    updatable: Value(false),
+    description: Value("Examples data source, parsed from ${p.basename(params.examplesZipPath)}"),
+  ));
 
   // parse the example bank files
   int progressCounter = 1;
@@ -80,10 +89,10 @@ Future _parseExampleDataSource(({
     params.mainIsolateSendPort.send("Parsing ${data.filePath} ($progressCounter/${dataSources.length}) ...");
 
     if(data.filePath.endsWith(".txt")) {
-      await parseExampleText(utf8.decode(data.fileContent), db, mecab, indexEntry.id);
+      await parseExampleText(utf8.decode(data.fileContent), db, mecab, indexId);
     }
     else if(data.filePath.endsWith(".json")) {
-      await parseExampleSentence(utf8.decode(data.fileContent), db, mecab, indexEntry.id);
+      await parseExampleSentence(utf8.decode(data.fileContent), db, mecab, indexId);
     }
 
     progressCounter++;

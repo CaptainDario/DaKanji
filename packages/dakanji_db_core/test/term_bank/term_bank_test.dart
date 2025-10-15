@@ -22,10 +22,6 @@ final List testCases = [
 
 void main() async {
 
-  late DaKanjiDB db;
-  
-  late Mecab mecab;
-
   // Group all related term bank tests together.
   for (var testCaseIndex = 0; testCaseIndex < testCases.length; testCaseIndex++) {
     final termBankTestCases = testCases[testCaseIndex].$1;
@@ -33,17 +29,12 @@ void main() async {
 
     group('Term Bank V3 test cases: $testCaseIndex', () {
 
+      late DaKanjiDB db;
       setUpAll(() async {
-        db = DaKanjiDB(dbPath: dakanjiDbPath);
-        db.clearDB();
-
-        mecab = Mecab();
-        await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
-        
-        bool shouldIncludeFile(File file) =>
-          (p.basename(file.path) == "term_bank_${testCaseIndex+1}.json" ||
-          !p.basename(file.path).contains("term_bank"));
-        await partialInit(db, shouldIncludeFile, "term_bank_test", mecab); 
+        db = await setupFreshDB(testCaseIndex+1);
+      });
+      tearDownAll(() async {
+        await db.close();
       });
 
       // Loop through the test cases and dynamically create a test for each one.
@@ -74,5 +65,22 @@ void main() async {
       }
     });
   }
+
+}
+
+Future<DaKanjiDB> setupFreshDB(int testCaseIndex) async {
+
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+  db.clearDB();
+
+  Mecab mecab = Mecab();
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+  
+  bool shouldIncludeFile(File file) =>
+    (p.basename(file.path) == "term_bank_$testCaseIndex.json" ||
+    !p.basename(file.path).contains("term_bank"));
+  await partialInit(db, shouldIncludeFile, "term_bank_test", mecab); 
+
+  return db;
 
 }

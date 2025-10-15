@@ -12,7 +12,7 @@ import 'package:path/path.dart' as p;
 void main() async {
   
   // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
   db.clearDB();
 
   // convert the test files
@@ -31,6 +31,6 @@ void main() async {
 Future testAudio(DaKanjiDB db) async {
   // Check some kanji bank queries
   for (int i = 0; i < audioListTestCases.length; i++) {
-   
+    // TODO 
   }
 }

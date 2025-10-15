@@ -21,6 +21,7 @@ class ExampleEntry with _$ExampleEntry {
   final String example;
 
   /// The id of the dictionary this entry belongs to
+  @override
   final int indexId;
 
   /// The translations of the example

@@ -11,35 +11,16 @@ import 'package:dakanji_db_shared/paths.dart';
 import '../../util/db_files.dart';
 import 'kanji_dictionary_search_test_cases.dart';
 
-void main() async {
+void main() {
   
-  // create the testing database (delete any existing database)
-  if (File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
+  late DaKanjiDB db;
+  setUpAll(() async {
+    db = await setupFreshDB();
+  },);
+  tearDownAll(() async {
+    await db.close();
+  },);
 
-  final mecab = Mecab();
-  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
-
-  // convert the test files
-  Stopwatch s = Stopwatch()..start();
-  String dataSourceZipPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
-  Stream<String> progress = await parseDictionaryDataSource(
-    dataSourcePath: dataSourceZipPath,
-    db: db,
-    addFullJsonDefinitions: false,
-    mecab: mecab
-  );
-  await for (var line in progress) {
-    print(line);
-  }
-  print("Conversion took ${s.elapsedMilliseconds} ms");
-  
-  await testKanjiBankV3(db);
-
-}
-
-/// tests the kanjiBankV3 import of the sample database from the yomitan dictionary
-Future testKanjiBankV3(DaKanjiDB db) async {
   group('KanjiBankV3 Tests', () {
     // Check some kanji bank queries
     for (var testCase in kanjiDictionaryTestCases) {
@@ -58,4 +39,32 @@ Future testKanjiBankV3(DaKanjiDB db) async {
       });
     }
   });
+
+}
+
+Future<DaKanjiDB> setupFreshDB() async {
+
+  // create the testing database (delete any existing database)
+  if (File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+
+  final mecab = Mecab();
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+
+  // convert the test files
+  Stopwatch s = Stopwatch()..start();
+  String dataSourceZipPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
+  Stream<String> progress = await parseDictionaryDataSource(
+    dataSourcePath: dataSourceZipPath,
+    db: db,
+    addFullJsonDefinitions: false,
+    mecab: mecab
+  );
+  await for (var line in progress) {
+    print(line);
+  }
+  print("Conversion took ${s.elapsedMilliseconds} ms");
+
+  return db;
+
 }

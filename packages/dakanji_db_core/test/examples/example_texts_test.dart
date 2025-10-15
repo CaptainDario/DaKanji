@@ -18,29 +18,13 @@ void main() async {
 
   print(coreTestsPath);
   
-  // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
-  db.clearDB();
-
-  // init mecab
-  final mecab = Mecab();
-  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
-
-  // convert the test files
-  Stopwatch s = Stopwatch()..start();
-  String dataSourceZipPath = await createTmpZip(Directory(devExampleTextsPath));
-  Stream<String> stream = await parseExampleDataSource(dataSourceZipPath, db, mecab);
-  await for (final event in stream) {
-    print(event);
-  }
-  print("Conversion took ${s.elapsedMilliseconds} ms");
-
-  await testExampleTexts(db);
-
-}
-
-/// tests the termMetaBankV3 import of the sample database from the yomitan dictionary
-Future testExampleTexts(DaKanjiDB db) async {
+  late DaKanjiDB db;
+  setUpAll(() async {
+    db = await setupFreshDB();
+  });
+  tearDownAll(() async {
+    await db.close();
+  });
 
   group("Test importing example texts", () {
     // Check some kanji bank queries
@@ -59,4 +43,28 @@ Future testExampleTexts(DaKanjiDB db) async {
       });
     }
   });
+
+}
+
+Future<DaKanjiDB> setupFreshDB() async {
+
+  // create the testing database (delete any existing database)
+  if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+
+  // init mecab
+  final mecab = Mecab();
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+
+  // convert the test files
+  Stopwatch s = Stopwatch()..start();
+  String dataSourceZipPath = await createTmpZip(Directory(devExampleTextsPath));
+  Stream<String> stream = await parseExampleDataSource(dataSourceZipPath, db, mecab);
+  await for (final event in stream) {
+    print(event);
+  }
+  print("Conversion took ${s.elapsedMilliseconds} ms");
+
+  return db;
+
 }
