@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
     printAssetList();
     copyDb = copyDbFromAssetsToFS().then((path) {
       localDbPath = path;
-      daKanjiDB = DaKanjiDB(dbPath: localDbPath);
+      daKanjiDB = DaKanjiDB(dbPath: localDbPath, inMemory: false);
       return true;
     });
   }

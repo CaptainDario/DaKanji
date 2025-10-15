@@ -10,12 +10,12 @@ List<String> audioFormat1TestCaseSearchTerms = [
   'お手前',
   '強み',
   '所業',
-  '打ち込み',
+  '打ち込む',
   '日本人',
   '打つ',
   '画像',
   '番号',
-  '詠む',
+  '読む',
 ];
 
 List<List<AudioEntry>> audioFormat1TestCases = [

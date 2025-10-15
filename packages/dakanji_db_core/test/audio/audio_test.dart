@@ -35,6 +35,8 @@ List<List<List<AudioEntry>>> testCases = [
 ];
 
 void main() async {
+
+  print(devExampleAudio1Path);
   
   for (int l=0; l < dataSources.length; l++) {
     group("Test importing audios from Audio Format ${l+1}", () {
@@ -43,23 +45,26 @@ void main() async {
       setUpAll(() async{
         db = await setupFreshDB(dataSources[l]);
       },);
-      
+      tearDownAll(() async {
+        await db.close();
+      },);
+
       // Check some kanji bank queries
-      for (int i = 0; i < testCases.length; i++) {
+      for (int i = 0; i < testCases[l].length; i++) {
         test('Searching: ${searchTerms[l][i]}', () async {
 
           Stopwatch s = Stopwatch()..start();
           final results = await db.daKanjiDBDao.audioSearch(searchTerms[l][i]);
-          print("Looking up XXX took ${s.elapsedMilliseconds}ms");
+          print("Lookup took ${s.elapsedMilliseconds}ms");
 
-          expect(results.length, testCases[l][i].length);
+          expect(results.length, testCases[l][i].length, reason: "Number of results mismatch");
           for (var j = 0; j < results.length; j++) {
             final r = results[j]; final e = testCases[l][i][j];
-            expect(r.terms, e.terms);
-            expect(r.reading, e.reading);
-            expect(r.pitchAccentPattern, e.pitchAccentPattern);
-            expect(r.filePath, e.filePath);
-            expect(r.fileName, e.fileName); 
+            expect(r.terms, e.terms, reason: "Terms mismatch");
+            expect(r.reading, e.reading, reason: "Reading mismatch");
+            expect(r.pitchAccentPattern, e.pitchAccentPattern, reason: "Pitch accent pattern mismatch");
+            expect(r.filePath, e.filePath, reason: "File path mismatch");
+            expect(r.fileName, e.fileName, reason: "File name mismatch"); 
           }
         });
       }
@@ -72,7 +77,7 @@ Future<DaKanjiDB> setupFreshDB(String dataSourcePath) async {
 
   // create the testing database (delete any existing database)
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
 
   Mecab mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
@@ -80,6 +85,7 @@ Future<DaKanjiDB> setupFreshDB(String dataSourcePath) async {
   // parse the test files
   Stopwatch s = Stopwatch()..start();
   String dataSourceZipPath = await createTmpZip(Directory(dataSourcePath));
+  print(dataSourceZipPath);
   Stream importProgress = await parseAudioDataSource(
     audioDataSourceFile: dataSourceZipPath,
     db: db,

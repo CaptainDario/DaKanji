@@ -23,7 +23,7 @@ Future parseAudioDataSource({
   required Mecab mecab
   }) async {
 
-  assert(audioDataSourceFile != null && audioDataSourceBytes != null);
+  assert((audioDataSourceFile != null) ^ (audioDataSourceBytes != null));
 
   // Stream so that the 'outside' can listen to the progress
   final StreamController<String> controller = StreamController();
@@ -50,7 +50,8 @@ Future parseAudioDataSource({
     dbConnection: connection,
     libmecabPath: libmecabPath,
     mecabDictDir: mecabDicPath,
-    mainIsolateSendPort: receivePort.sendPort
+    mainIsolateSendPort: receivePort.sendPort,
+    inMemory: db.inMemory,
   ));
 
   return controller.stream;
@@ -66,10 +67,14 @@ Future _parseAudioDataSource(({
   DriftIsolate dbConnection,
   String libmecabPath,
   String mecabDictDir,
-  SendPort mainIsolateSendPort
+  SendPort mainIsolateSendPort,
+  bool inMemory
 }) params) async {
 
-  final db = DaKanjiDB(executor: await params.dbConnection.connect());
+  final db = DaKanjiDB(
+    executor: await params.dbConnection.connect(),
+    inMemory: params.inMemory
+  );
   final mecab = Mecab();
   await mecab.init(params.libmecabPath, params.mecabDictDir, true);
 

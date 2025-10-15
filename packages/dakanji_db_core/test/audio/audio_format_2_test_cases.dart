@@ -10,7 +10,7 @@ List<String> audioFormat2TestCaseSearchTerms = [
   'お手前',
   '強み',
   '所業',
-  '打ち込み',
+  '打ち込む',
   '日本人',
 ];
 

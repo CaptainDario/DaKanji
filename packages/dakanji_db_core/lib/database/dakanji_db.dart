@@ -5,6 +5,7 @@ import 'package:dakanji_db_core/database/audio/audio_tables.dart';
 import 'package:dakanji_db_core/database/general_tables/media_dao.dart';
 import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
 import 'package:sqlite3/native_assets.dart';
+import 'package:sqlite3/sqlite3.dart';
 
 import '/database/dakanji_db_dao.dart';
 import '/database/example/example_dao.dart';
@@ -136,13 +137,17 @@ part 'dakanji_db.g.dart';
   }
 )
 class DaKanjiDB extends _$DaKanjiDB {
+
+  bool inMemory;
+
   // After generating code, this class needs to define a schemaVersion getter
   // and a constructor telling drift where the database should be stored.
   // These are described in the getting started guide: https://drift.simonbinder.eu/getting-started/#open
   DaKanjiDB({
     this.dbPath,
     QueryExecutor? executor,
-  }) : super(executor ?? _openConnection(dbPath!));
+    this.inMemory=false,
+  }) : super(executor ?? _openConnection(dbPath!, inMemory));
 
   @override
   int get schemaVersion => 1;
@@ -162,24 +167,19 @@ class DaKanjiDB extends _$DaKanjiDB {
     );
   }
   
+  static QueryExecutor _openConnection(String path, bool inMemory) {
 
-  static QueryExecutor _openConnection(String path) {
+    if(inMemory) {
+      return NativeDatabase.memory(
+        sqlite3: loadExtensions,
+        setup: setupDb,
+      );
+    }
+
     QueryExecutor qe = NativeDatabase.createInBackground(
       File(path),
-      sqlite3: () {
-        sqlite3Native.loadSqliteVectorExtension();
-        sqlite3Native.loadSqliteSpellfixExtension();
-        sqlite3Native.loadSqliteCrsqliteExtension();
-        sqlite3Native.loadSqliteCompressExtension();
-        return sqlite3Native;
-      },
-      setup: (database) {
-        // This is important, as accessing the database across threads otherwise
-        // causes "database locked" errors.
-        // With write-ahead logging (WAL) enabled, a single writer and multiple
-        // readers can operate on the database in parallel.
-        database.execute('PRAGMA journal_mode = WAL;');
-      },
+      sqlite3: loadExtensions,
+      setup: setupDb,
       readPool: 8
     );
 
@@ -210,4 +210,21 @@ class DaKanjiDB extends _$DaKanjiDB {
     });
   }
 
+}
+
+void setupDb (Database database) {
+  // This is important, as accessing the database across threads otherwise
+  // causes "database locked" errors.
+  // With write-ahead logging (WAL) enabled, a single writer and multiple
+  // readers can operate on the database in parallel.
+  database.execute('PRAGMA journal_mode = WAL;');
+}
+
+Sqlite3 loadExtensions() {
+  final sqlite3 = sqlite3Native;
+  sqlite3.loadSqliteVectorExtension();
+  sqlite3.loadSqliteSpellfixExtension();
+  sqlite3.loadSqliteCrsqliteExtension();
+  sqlite3.loadSqliteCompressExtension();
+  return sqlite3;
 }

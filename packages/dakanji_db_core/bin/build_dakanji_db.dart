@@ -17,7 +17,7 @@ void main() async {
   await downloadSources();
 
   // setup 
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: false);
   await db.deleteDB();
 
   // init mecab
