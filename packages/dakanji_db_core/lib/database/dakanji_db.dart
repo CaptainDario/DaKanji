@@ -112,12 +112,13 @@ part 'dakanji_db.g.dart';
 
   ],
   include: {
+    'kanji_vg/kanji_vg_views.drift', 'kanji_vg/kanji_vg_queries.drift',
+
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
     'general_tables/term_fts5_table.drift',
     'general_tables/reading_fts5_table.drift', 'general_tables/reading_spellfix_table.drift',
     'general_tables/definition_fts5_table.drift',
     'general_tables/hiragana_spellfix_cost.drift',
-    'general_tables/media_views.drift',
     'audio/audio_views.drift', 'audio/audio_queries.drift',
     
     'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',

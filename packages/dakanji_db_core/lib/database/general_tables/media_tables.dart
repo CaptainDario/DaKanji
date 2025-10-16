@@ -1,4 +1,4 @@
-// Package imports:
+
 import 'package:dakanji_db_core/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
 
@@ -21,6 +21,6 @@ class MediaTable extends Table {
   TextColumn get name => text().withLength(min: 1)();
 
   /// The actual data of the file
-  BlobColumn get dataCompressed => blob()();
+  BlobColumn get data => blob()();
 
 }

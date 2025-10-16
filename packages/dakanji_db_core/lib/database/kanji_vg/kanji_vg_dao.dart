@@ -1,7 +1,6 @@
-// Package imports:
+
 import "package:drift/drift.dart";
 
-// Project imports:
 import "/database/kanji_vg/kanji_vg_tables.dart";
 import "../dakanji_db.dart";
 
@@ -25,18 +24,7 @@ class KanjiVGDao extends DatabaseAccessor<DaKanjiDB> with _$KanjiVGDaoMixin {
   /// Gets the KanjiVG of the given kanji
   Future<String?> getKanjiVG(String kanji) async {
 
-    final query = select(kanjiVGTable).join(
-      [
-        innerJoin(
-          kanjiTable,
-          kanjiTable.id.equalsExp(kanjiVGTable.kanjiId),
-        ),
-      ],
-    )
-    ..where(kanjiTable.kanji.equals(kanji));
-
-    final result = await query.getSingleOrNull();
-    return result?.readTable(kanjiVGTable).kanjiVGSVG;
+    return (await db.kanji_vg_search_drift(kanji).getSingle());
 
   }
   

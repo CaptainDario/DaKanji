@@ -13621,26 +13621,17 @@ class $MediaTableTable extends MediaTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _dataCompressedMeta = const VerificationMeta(
-    'dataCompressed',
+  static const VerificationMeta _dataMeta = const VerificationMeta('data');
+  @override
+  late final GeneratedColumn<Uint8List> data = GeneratedColumn<Uint8List>(
+    'data',
+    aliasedName,
+    false,
+    type: DriftSqlType.blob,
+    requiredDuringInsert: true,
   );
   @override
-  late final GeneratedColumn<Uint8List> dataCompressed =
-      GeneratedColumn<Uint8List>(
-        'data_compressed',
-        aliasedName,
-        false,
-        type: DriftSqlType.blob,
-        requiredDuringInsert: true,
-      );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    indexId,
-    path,
-    name,
-    dataCompressed,
-  ];
+  List<GeneratedColumn> get $columns => [id, indexId, path, name, data];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -13680,16 +13671,13 @@ class $MediaTableTable extends MediaTable
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (data.containsKey('data_compressed')) {
+    if (data.containsKey('data')) {
       context.handle(
-        _dataCompressedMeta,
-        dataCompressed.isAcceptableOrUnknown(
-          data['data_compressed']!,
-          _dataCompressedMeta,
-        ),
+        _dataMeta,
+        this.data.isAcceptableOrUnknown(data['data']!, _dataMeta),
       );
     } else if (isInserting) {
-      context.missing(_dataCompressedMeta);
+      context.missing(_dataMeta);
     }
     return context;
   }
@@ -13716,9 +13704,9 @@ class $MediaTableTable extends MediaTable
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
-      dataCompressed: attachedDatabase.typeMapping.read(
+      data: attachedDatabase.typeMapping.read(
         DriftSqlType.blob,
-        data['${effectivePrefix}data_compressed'],
+        data['${effectivePrefix}data'],
       )!,
     );
   }
@@ -13743,13 +13731,13 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
   final String name;
 
   /// The actual data of the file
-  final Uint8List dataCompressed;
+  final Uint8List data;
   const MediaTableData({
     required this.id,
     required this.indexId,
     required this.path,
     required this.name,
-    required this.dataCompressed,
+    required this.data,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -13758,7 +13746,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
     map['index_id'] = Variable<int>(indexId);
     map['path'] = Variable<String>(path);
     map['name'] = Variable<String>(name);
-    map['data_compressed'] = Variable<Uint8List>(dataCompressed);
+    map['data'] = Variable<Uint8List>(data);
     return map;
   }
 
@@ -13768,7 +13756,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
       indexId: Value(indexId),
       path: Value(path),
       name: Value(name),
-      dataCompressed: Value(dataCompressed),
+      data: Value(data),
     );
   }
 
@@ -13782,7 +13770,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
       indexId: serializer.fromJson<int>(json['indexId']),
       path: serializer.fromJson<String>(json['path']),
       name: serializer.fromJson<String>(json['name']),
-      dataCompressed: serializer.fromJson<Uint8List>(json['dataCompressed']),
+      data: serializer.fromJson<Uint8List>(json['data']),
     );
   }
   @override
@@ -13793,7 +13781,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
       'indexId': serializer.toJson<int>(indexId),
       'path': serializer.toJson<String>(path),
       'name': serializer.toJson<String>(name),
-      'dataCompressed': serializer.toJson<Uint8List>(dataCompressed),
+      'data': serializer.toJson<Uint8List>(data),
     };
   }
 
@@ -13802,13 +13790,13 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
     int? indexId,
     String? path,
     String? name,
-    Uint8List? dataCompressed,
+    Uint8List? data,
   }) => MediaTableData(
     id: id ?? this.id,
     indexId: indexId ?? this.indexId,
     path: path ?? this.path,
     name: name ?? this.name,
-    dataCompressed: dataCompressed ?? this.dataCompressed,
+    data: data ?? this.data,
   );
   MediaTableData copyWithCompanion(MediaTableCompanion data) {
     return MediaTableData(
@@ -13816,9 +13804,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
       indexId: data.indexId.present ? data.indexId.value : this.indexId,
       path: data.path.present ? data.path.value : this.path,
       name: data.name.present ? data.name.value : this.name,
-      dataCompressed: data.dataCompressed.present
-          ? data.dataCompressed.value
-          : this.dataCompressed,
+      data: data.data.present ? data.data.value : this.data,
     );
   }
 
@@ -13829,19 +13815,14 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
           ..write('indexId: $indexId, ')
           ..write('path: $path, ')
           ..write('name: $name, ')
-          ..write('dataCompressed: $dataCompressed')
+          ..write('data: $data')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-    id,
-    indexId,
-    path,
-    name,
-    $driftBlobEquality.hash(dataCompressed),
-  );
+  int get hashCode =>
+      Object.hash(id, indexId, path, name, $driftBlobEquality.hash(data));
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -13850,7 +13831,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
           other.indexId == this.indexId &&
           other.path == this.path &&
           other.name == this.name &&
-          $driftBlobEquality.equals(other.dataCompressed, this.dataCompressed));
+          $driftBlobEquality.equals(other.data, this.data));
 }
 
 class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
@@ -13858,37 +13839,37 @@ class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
   final Value<int> indexId;
   final Value<String> path;
   final Value<String> name;
-  final Value<Uint8List> dataCompressed;
+  final Value<Uint8List> data;
   const MediaTableCompanion({
     this.id = const Value.absent(),
     this.indexId = const Value.absent(),
     this.path = const Value.absent(),
     this.name = const Value.absent(),
-    this.dataCompressed = const Value.absent(),
+    this.data = const Value.absent(),
   });
   MediaTableCompanion.insert({
     this.id = const Value.absent(),
     required int indexId,
     required String path,
     required String name,
-    required Uint8List dataCompressed,
+    required Uint8List data,
   }) : indexId = Value(indexId),
        path = Value(path),
        name = Value(name),
-       dataCompressed = Value(dataCompressed);
+       data = Value(data);
   static Insertable<MediaTableData> custom({
     Expression<int>? id,
     Expression<int>? indexId,
     Expression<String>? path,
     Expression<String>? name,
-    Expression<Uint8List>? dataCompressed,
+    Expression<Uint8List>? data,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (indexId != null) 'index_id': indexId,
       if (path != null) 'path': path,
       if (name != null) 'name': name,
-      if (dataCompressed != null) 'data_compressed': dataCompressed,
+      if (data != null) 'data': data,
     });
   }
 
@@ -13897,14 +13878,14 @@ class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
     Value<int>? indexId,
     Value<String>? path,
     Value<String>? name,
-    Value<Uint8List>? dataCompressed,
+    Value<Uint8List>? data,
   }) {
     return MediaTableCompanion(
       id: id ?? this.id,
       indexId: indexId ?? this.indexId,
       path: path ?? this.path,
       name: name ?? this.name,
-      dataCompressed: dataCompressed ?? this.dataCompressed,
+      data: data ?? this.data,
     );
   }
 
@@ -13923,8 +13904,8 @@ class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
-    if (dataCompressed.present) {
-      map['data_compressed'] = Variable<Uint8List>(dataCompressed.value);
+    if (data.present) {
+      map['data'] = Variable<Uint8List>(data.value);
     }
     return map;
   }
@@ -13936,174 +13917,10 @@ class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
           ..write('indexId: $indexId, ')
           ..write('path: $path, ')
           ..write('name: $name, ')
-          ..write('dataCompressed: $dataCompressed')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class MediaTableViewData extends DataClass {
-  final int id;
-  final int indexId;
-  final String path;
-  final String name;
-  final Uint8List? data;
-  const MediaTableViewData({
-    required this.id,
-    required this.indexId,
-    required this.path,
-    required this.name,
-    this.data,
-  });
-  factory MediaTableViewData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return MediaTableViewData(
-      id: serializer.fromJson<int>(json['id']),
-      indexId: serializer.fromJson<int>(json['index_id']),
-      path: serializer.fromJson<String>(json['path']),
-      name: serializer.fromJson<String>(json['name']),
-      data: serializer.fromJson<Uint8List?>(json['data']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'index_id': serializer.toJson<int>(indexId),
-      'path': serializer.toJson<String>(path),
-      'name': serializer.toJson<String>(name),
-      'data': serializer.toJson<Uint8List?>(data),
-    };
-  }
-
-  MediaTableViewData copyWith({
-    int? id,
-    int? indexId,
-    String? path,
-    String? name,
-    Value<Uint8List?> data = const Value.absent(),
-  }) => MediaTableViewData(
-    id: id ?? this.id,
-    indexId: indexId ?? this.indexId,
-    path: path ?? this.path,
-    name: name ?? this.name,
-    data: data.present ? data.value : this.data,
-  );
-  @override
-  String toString() {
-    return (StringBuffer('MediaTableViewData(')
-          ..write('id: $id, ')
-          ..write('indexId: $indexId, ')
-          ..write('path: $path, ')
-          ..write('name: $name, ')
           ..write('data: $data')
           ..write(')'))
         .toString();
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(id, indexId, path, name, $driftBlobEquality.hash(data));
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is MediaTableViewData &&
-          other.id == this.id &&
-          other.indexId == this.indexId &&
-          other.path == this.path &&
-          other.name == this.name &&
-          $driftBlobEquality.equals(other.data, this.data));
-}
-
-class MediaTableView extends ViewInfo<MediaTableView, MediaTableViewData>
-    implements HasResultSet {
-  final String? _alias;
-  @override
-  final _$DaKanjiDB attachedDatabase;
-  MediaTableView(this.attachedDatabase, [this._alias]);
-  @override
-  List<GeneratedColumn> get $columns => [id, indexId, path, name, data];
-  @override
-  String get aliasedName => _alias ?? entityName;
-  @override
-  String get entityName => 'media_table_view';
-  @override
-  Map<SqlDialect, String> get createViewStatements => {
-    SqlDialect.sqlite:
-        'CREATE VIEW media_table_view AS SELECT id, index_id, path, name, uncompress(data_compressed) AS data FROM media_table',
-  };
-  @override
-  MediaTableView get asDslTable => this;
-  @override
-  MediaTableViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MediaTableViewData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      indexId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}index_id'],
-      )!,
-      path: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}path'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-      data: attachedDatabase.typeMapping.read(
-        DriftSqlType.blob,
-        data['${effectivePrefix}data'],
-      ),
-    );
-  }
-
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
-    'index_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<String> path = GeneratedColumn<String>(
-    'path',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<Uint8List> data = GeneratedColumn<Uint8List>(
-    'data',
-    aliasedName,
-    true,
-    type: DriftSqlType.blob,
-  );
-  @override
-  MediaTableView createAlias(String alias) {
-    return MediaTableView(attachedDatabase, alias);
-  }
-
-  @override
-  Query? get query => null;
-  @override
-  Set<String> get readTables => const {'media_table'};
 }
 
 class AudioEntryViewData extends DataClass {
@@ -14243,7 +14060,7 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS audio_entry_view AS SELECT AT.id, AT.index_id, AT.pitch_accent_pattern, JSON_GROUP_ARRAY(TT.term) AS terms_json_list, RT.reading, MTV.path, MTV.name, MTV.data FROM audio_table AS AT LEFT JOIN audio_table_x_term_table AS ATXTT ON ATXTT.audio_id = AT.id LEFT JOIN term_table AS TT ON TT.id = ATXTT.term_id LEFT JOIN reading_table AS RT ON RT.id = AT.reading_id LEFT JOIN media_table_view AS MTV ON AT.media_id = MTV.id GROUP BY AT.id',
+        'CREATE VIEW IF NOT EXISTS audio_entry_view AS SELECT AT.id, AT.index_id, AT.pitch_accent_pattern, JSON_GROUP_ARRAY(TT.term) AS terms_json_list, RT.reading, MT.path, MT.name, MT.data FROM audio_table AS AT LEFT JOIN audio_table_x_term_table AS ATXTT ON ATXTT.audio_id = AT.id LEFT JOIN term_table AS TT ON TT.id = ATXTT.term_id LEFT JOIN reading_table AS RT ON RT.id = AT.reading_id LEFT JOIN media_table AS MT ON AT.media_id = MT.id GROUP BY AT.id',
   };
   @override
   AudioEntryView get asDslTable => this;
@@ -16208,6 +16025,394 @@ class ExampleFtsCompanion extends UpdateCompanion<ExampleFt> {
   }
 }
 
+class $KanjiVGTableTable extends KanjiVGTable
+    with TableInfo<$KanjiVGTableTable, KanjiVGTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiVGTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
+    'kanjiId',
+  );
+  @override
+  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
+    'kanji_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES kanji_table (id)',
+    ),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<String, Uint8List> svg =
+      GeneratedColumn<Uint8List>(
+        'svg',
+        aliasedName,
+        false,
+        type: DriftSqlType.blob,
+        requiredDuringInsert: true,
+      ).withConverter<String>($KanjiVGTableTable.$convertersvg);
+  @override
+  List<GeneratedColumn> get $columns => [id, kanjiId, svg];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_v_g_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<KanjiVGTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('kanji_id')) {
+      context.handle(
+        _kanjiIdMeta,
+        kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  KanjiVGTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiVGTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      kanjiId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kanji_id'],
+      )!,
+      svg: $KanjiVGTableTable.$convertersvg.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.blob,
+          data['${effectivePrefix}svg'],
+        )!,
+      ),
+    );
+  }
+
+  @override
+  $KanjiVGTableTable createAlias(String alias) {
+    return $KanjiVGTableTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<String, Uint8List> $convertersvg =
+      const ZlibStringConverter();
+}
+
+class KanjiVGTableData extends DataClass
+    implements Insertable<KanjiVGTableData> {
+  /// id of this entry
+  final int id;
+
+  /// The id of the kanji character in the `KanjiTable`
+  final int kanjiId;
+
+  /// The svg data of this kanji
+  final String svg;
+  const KanjiVGTableData({
+    required this.id,
+    required this.kanjiId,
+    required this.svg,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['kanji_id'] = Variable<int>(kanjiId);
+    {
+      map['svg'] = Variable<Uint8List>(
+        $KanjiVGTableTable.$convertersvg.toSql(svg),
+      );
+    }
+    return map;
+  }
+
+  KanjiVGTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiVGTableCompanion(
+      id: Value(id),
+      kanjiId: Value(kanjiId),
+      svg: Value(svg),
+    );
+  }
+
+  factory KanjiVGTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiVGTableData(
+      id: serializer.fromJson<int>(json['id']),
+      kanjiId: serializer.fromJson<int>(json['kanjiId']),
+      svg: serializer.fromJson<String>(json['svg']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'kanjiId': serializer.toJson<int>(kanjiId),
+      'svg': serializer.toJson<String>(svg),
+    };
+  }
+
+  KanjiVGTableData copyWith({int? id, int? kanjiId, String? svg}) =>
+      KanjiVGTableData(
+        id: id ?? this.id,
+        kanjiId: kanjiId ?? this.kanjiId,
+        svg: svg ?? this.svg,
+      );
+  KanjiVGTableData copyWithCompanion(KanjiVGTableCompanion data) {
+    return KanjiVGTableData(
+      id: data.id.present ? data.id.value : this.id,
+      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
+      svg: data.svg.present ? data.svg.value : this.svg,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiVGTableData(')
+          ..write('id: $id, ')
+          ..write('kanjiId: $kanjiId, ')
+          ..write('svg: $svg')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, kanjiId, svg);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiVGTableData &&
+          other.id == this.id &&
+          other.kanjiId == this.kanjiId &&
+          other.svg == this.svg);
+}
+
+class KanjiVGTableCompanion extends UpdateCompanion<KanjiVGTableData> {
+  final Value<int> id;
+  final Value<int> kanjiId;
+  final Value<String> svg;
+  const KanjiVGTableCompanion({
+    this.id = const Value.absent(),
+    this.kanjiId = const Value.absent(),
+    this.svg = const Value.absent(),
+  });
+  KanjiVGTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int kanjiId,
+    required String svg,
+  }) : kanjiId = Value(kanjiId),
+       svg = Value(svg);
+  static Insertable<KanjiVGTableData> custom({
+    Expression<int>? id,
+    Expression<int>? kanjiId,
+    Expression<Uint8List>? svg,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (kanjiId != null) 'kanji_id': kanjiId,
+      if (svg != null) 'svg': svg,
+    });
+  }
+
+  KanjiVGTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? kanjiId,
+    Value<String>? svg,
+  }) {
+    return KanjiVGTableCompanion(
+      id: id ?? this.id,
+      kanjiId: kanjiId ?? this.kanjiId,
+      svg: svg ?? this.svg,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (kanjiId.present) {
+      map['kanji_id'] = Variable<int>(kanjiId.value);
+    }
+    if (svg.present) {
+      map['svg'] = Variable<Uint8List>(
+        $KanjiVGTableTable.$convertersvg.toSql(svg.value),
+      );
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiVGTableCompanion(')
+          ..write('id: $id, ')
+          ..write('kanjiId: $kanjiId, ')
+          ..write('svg: $svg')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class KanjiVGTableViewData extends DataClass {
+  final int id;
+  final int kanjiId;
+  final String? svg;
+  const KanjiVGTableViewData({
+    required this.id,
+    required this.kanjiId,
+    this.svg,
+  });
+  factory KanjiVGTableViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiVGTableViewData(
+      id: serializer.fromJson<int>(json['id']),
+      kanjiId: serializer.fromJson<int>(json['kanji_id']),
+      svg: serializer.fromJson<String?>(json['svg']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'kanji_id': serializer.toJson<int>(kanjiId),
+      'svg': serializer.toJson<String?>(svg),
+    };
+  }
+
+  KanjiVGTableViewData copyWith({
+    int? id,
+    int? kanjiId,
+    Value<String?> svg = const Value.absent(),
+  }) => KanjiVGTableViewData(
+    id: id ?? this.id,
+    kanjiId: kanjiId ?? this.kanjiId,
+    svg: svg.present ? svg.value : this.svg,
+  );
+  @override
+  String toString() {
+    return (StringBuffer('KanjiVGTableViewData(')
+          ..write('id: $id, ')
+          ..write('kanjiId: $kanjiId, ')
+          ..write('svg: $svg')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, kanjiId, svg);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiVGTableViewData &&
+          other.id == this.id &&
+          other.kanjiId == this.kanjiId &&
+          other.svg == this.svg);
+}
+
+class KanjiVGTableView extends ViewInfo<KanjiVGTableView, KanjiVGTableViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  KanjiVGTableView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [id, kanjiId, svg];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'kanji_v_g_table_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW kanji_v_g_table_view AS SELECT id, kanji_id, CAST(uncompress(KVGT.svg) AS TEXT) AS svg FROM kanji_v_g_table AS KVGT',
+  };
+  @override
+  KanjiVGTableView get asDslTable => this;
+  @override
+  KanjiVGTableViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiVGTableViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      kanjiId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kanji_id'],
+      )!,
+      svg: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}svg'],
+      ),
+    );
+  }
+
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
+    'kanji_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> svg = GeneratedColumn<String>(
+    'svg',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  @override
+  KanjiVGTableView createAlias(String alias) {
+    return KanjiVGTableView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {'kanji_v_g_table'};
+}
+
 class $AudioSourceListTableTable extends AudioSourceListTable
     with TableInfo<$AudioSourceListTableTable, AudioSourceListTableData> {
   @override
@@ -17059,271 +17264,6 @@ class Radical_X_KanjiRelationsTableCompanion
   }
 }
 
-class $KanjiVGTableTable extends KanjiVGTable
-    with TableInfo<$KanjiVGTableTable, KanjiVGTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $KanjiVGTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
-    'kanjiId',
-  );
-  @override
-  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
-    'kanji_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_table (id)',
-    ),
-  );
-  static const VerificationMeta _kanjiVGSVGMeta = const VerificationMeta(
-    'kanjiVGSVG',
-  );
-  @override
-  late final GeneratedColumn<String> kanjiVGSVG = GeneratedColumn<String>(
-    'kanji_v_g_s_v_g',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, kanjiId, kanjiVGSVG];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'kanji_v_g_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<KanjiVGTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('kanji_id')) {
-      context.handle(
-        _kanjiIdMeta,
-        kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_kanjiIdMeta);
-    }
-    if (data.containsKey('kanji_v_g_s_v_g')) {
-      context.handle(
-        _kanjiVGSVGMeta,
-        kanjiVGSVG.isAcceptableOrUnknown(
-          data['kanji_v_g_s_v_g']!,
-          _kanjiVGSVGMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_kanjiVGSVGMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  KanjiVGTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiVGTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      kanjiId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}kanji_id'],
-      )!,
-      kanjiVGSVG: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}kanji_v_g_s_v_g'],
-      )!,
-    );
-  }
-
-  @override
-  $KanjiVGTableTable createAlias(String alias) {
-    return $KanjiVGTableTable(attachedDatabase, alias);
-  }
-}
-
-class KanjiVGTableData extends DataClass
-    implements Insertable<KanjiVGTableData> {
-  /// id of this entry
-  final int id;
-
-  /// The id of the kanji character in the `KanjiTable`
-  final int kanjiId;
-
-  /// The svg data of this kanji
-  final String kanjiVGSVG;
-  const KanjiVGTableData({
-    required this.id,
-    required this.kanjiId,
-    required this.kanjiVGSVG,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['kanji_id'] = Variable<int>(kanjiId);
-    map['kanji_v_g_s_v_g'] = Variable<String>(kanjiVGSVG);
-    return map;
-  }
-
-  KanjiVGTableCompanion toCompanion(bool nullToAbsent) {
-    return KanjiVGTableCompanion(
-      id: Value(id),
-      kanjiId: Value(kanjiId),
-      kanjiVGSVG: Value(kanjiVGSVG),
-    );
-  }
-
-  factory KanjiVGTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiVGTableData(
-      id: serializer.fromJson<int>(json['id']),
-      kanjiId: serializer.fromJson<int>(json['kanjiId']),
-      kanjiVGSVG: serializer.fromJson<String>(json['kanjiVGSVG']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'kanjiId': serializer.toJson<int>(kanjiId),
-      'kanjiVGSVG': serializer.toJson<String>(kanjiVGSVG),
-    };
-  }
-
-  KanjiVGTableData copyWith({int? id, int? kanjiId, String? kanjiVGSVG}) =>
-      KanjiVGTableData(
-        id: id ?? this.id,
-        kanjiId: kanjiId ?? this.kanjiId,
-        kanjiVGSVG: kanjiVGSVG ?? this.kanjiVGSVG,
-      );
-  KanjiVGTableData copyWithCompanion(KanjiVGTableCompanion data) {
-    return KanjiVGTableData(
-      id: data.id.present ? data.id.value : this.id,
-      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
-      kanjiVGSVG: data.kanjiVGSVG.present
-          ? data.kanjiVGSVG.value
-          : this.kanjiVGSVG,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiVGTableData(')
-          ..write('id: $id, ')
-          ..write('kanjiId: $kanjiId, ')
-          ..write('kanjiVGSVG: $kanjiVGSVG')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, kanjiId, kanjiVGSVG);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is KanjiVGTableData &&
-          other.id == this.id &&
-          other.kanjiId == this.kanjiId &&
-          other.kanjiVGSVG == this.kanjiVGSVG);
-}
-
-class KanjiVGTableCompanion extends UpdateCompanion<KanjiVGTableData> {
-  final Value<int> id;
-  final Value<int> kanjiId;
-  final Value<String> kanjiVGSVG;
-  const KanjiVGTableCompanion({
-    this.id = const Value.absent(),
-    this.kanjiId = const Value.absent(),
-    this.kanjiVGSVG = const Value.absent(),
-  });
-  KanjiVGTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int kanjiId,
-    required String kanjiVGSVG,
-  }) : kanjiId = Value(kanjiId),
-       kanjiVGSVG = Value(kanjiVGSVG);
-  static Insertable<KanjiVGTableData> custom({
-    Expression<int>? id,
-    Expression<int>? kanjiId,
-    Expression<String>? kanjiVGSVG,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (kanjiId != null) 'kanji_id': kanjiId,
-      if (kanjiVGSVG != null) 'kanji_v_g_s_v_g': kanjiVGSVG,
-    });
-  }
-
-  KanjiVGTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? kanjiId,
-    Value<String>? kanjiVGSVG,
-  }) {
-    return KanjiVGTableCompanion(
-      id: id ?? this.id,
-      kanjiId: kanjiId ?? this.kanjiId,
-      kanjiVGSVG: kanjiVGSVG ?? this.kanjiVGSVG,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (kanjiId.present) {
-      map['kanji_id'] = Variable<int>(kanjiId.value);
-    }
-    if (kanjiVGSVG.present) {
-      map['kanji_v_g_s_v_g'] = Variable<String>(kanjiVGSVG.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiVGTableCompanion(')
-          ..write('id: $id, ')
-          ..write('kanjiId: $kanjiId, ')
-          ..write('kanjiVGSVG: $kanjiVGSVG')
-          ..write(')'))
-        .toString();
-  }
-}
-
 abstract class _$DaKanjiDB extends GeneratedDatabase {
   _$DaKanjiDB(QueryExecutor e) : super(e);
   $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
@@ -17436,23 +17376,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $AudioTable_X_TermTableTable audioTableXTermTable =
       $AudioTable_X_TermTableTable(this);
   late final $MediaTableTable mediaTable = $MediaTableTable(this);
-  late final MediaTableView mediaTableView = MediaTableView(this);
   late final AudioEntryView audioEntryView = AudioEntryView(this);
   late final Index path = Index(
     'path',
     'CREATE INDEX path ON media_table (path)',
-  );
-  late final Trigger mediaTableViewInsert = Trigger(
-    'CREATE TRIGGER media_table_view_insert INSTEAD OF INSERT ON media_table_view BEGIN INSERT INTO media_table (id, index_id, path, name, data_compressed) VALUES (NEW.id, NEW.index_id, NEW.path, NEW.name, compress(NEW.data));END',
-    'media_table_view_insert',
-  );
-  late final Trigger mediaTableViewUpdate = Trigger(
-    'CREATE TRIGGER media_table_view_update INSTEAD OF UPDATE ON media_table_view BEGIN UPDATE media_table SET index_id = NEW.index_id, path = NEW.path, name = NEW.name, data_compressed = compress(NEW.data) WHERE id = OLD.id;END',
-    'media_table_view_update',
-  );
-  late final Trigger mediaTableViewDelete = Trigger(
-    'CREATE TRIGGER media_table_view_delete INSTEAD OF DELETE ON media_table_view BEGIN DELETE FROM media_table WHERE id = OLD.id;END',
-    'media_table_view_delete',
   );
   late final HiraganaSpellfixCost hiraganaSpellfixCost = HiraganaSpellfixCost(
     this,
@@ -17531,12 +17458,25 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'CREATE TRIGGER example_table_au AFTER UPDATE OF example_sentence_tokenized ON example_table BEGIN INSERT INTO example_fts (example_fts, "rowid", example_sentence_tokenized) VALUES (\'delete\', old.id, old.example_sentence_tokenized);INSERT INTO example_fts ("rowid", example_sentence_tokenized) VALUES (new.id, new.example_sentence_tokenized);END',
     'example_table_au',
   );
+  late final $KanjiVGTableTable kanjiVGTable = $KanjiVGTableTable(this);
+  late final KanjiVGTableView kanjiVGTableView = KanjiVGTableView(this);
+  late final Trigger kanjiVGTableViewInsert = Trigger(
+    'CREATE TRIGGER kanji_v_g_table_view_insert INSTEAD OF INSERT ON kanji_v_g_table_view BEGIN INSERT INTO kanji_v_g_table (id, kanji_id, svg) VALUES (NEW.id, NEW.kanji_id, compress(NEW.svg));END',
+    'kanji_v_g_table_view_insert',
+  );
+  late final Trigger kanjiVGTableViewUpdate = Trigger(
+    'CREATE TRIGGER kanji_v_g_table_view_update INSTEAD OF UPDATE ON kanji_v_g_table_view BEGIN UPDATE kanji_v_g_table SET kanji_id = NEW.kanji_id, svg = compress(NEW.svg) WHERE id = OLD.id;END',
+    'kanji_v_g_table_view_update',
+  );
+  late final Trigger kanjiVGTableViewDelete = Trigger(
+    'CREATE TRIGGER kanji_v_g_table_view_delete INSTEAD OF DELETE ON kanji_v_g_table_view BEGIN DELETE FROM kanji_v_g_table WHERE id = OLD.id;END',
+    'kanji_v_g_table_view_delete',
+  );
   late final $AudioSourceListTableTable audioSourceListTable =
       $AudioSourceListTableTable(this);
   late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
   late final $Radical_X_KanjiRelationsTableTable radicalXKanjiRelationsTable =
       $Radical_X_KanjiRelationsTableTable(this);
-  late final $KanjiVGTableTable kanjiVGTable = $KanjiVGTableTable(this);
   late final Index radical = Index(
     'radical',
     'CREATE INDEX radical ON radicals_table (radical)',
@@ -17810,6 +17750,14 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     );
   }
 
+  Selectable<String?> kanji_vg_search_drift(String kanji) {
+    return customSelect(
+      'SELECT kvgv.svg FROM kanji_v_g_table_view AS kvgv INNER JOIN kanji_table AS kt ON kt.id = kvgv.kanji_id WHERE kt.kanji = ?1',
+      variables: [Variable<String>(kanji)],
+      readsFrom: {kanjiTable, kanjiVGTable},
+    ).map((QueryRow row) => row.readNullable<String>('svg'));
+  }
+
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -17866,12 +17814,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     audioTable,
     audioTableXTermTable,
     mediaTable,
-    mediaTableView,
     audioEntryView,
     path,
-    mediaTableViewInsert,
-    mediaTableViewUpdate,
-    mediaTableViewDelete,
     hiraganaSpellfixCost,
     definitionTableAi,
     definitionTableAd,
@@ -17895,35 +17839,18 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     exampleTableAi,
     exampleTableAd,
     exampleTableAu,
+    kanjiVGTable,
+    kanjiVGTableView,
+    kanjiVGTableViewInsert,
+    kanjiVGTableViewUpdate,
+    kanjiVGTableViewDelete,
     audioSourceListTable,
     radicalsTable,
     radicalXKanjiRelationsTable,
-    kanjiVGTable,
     radical,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'media_table_view',
-        limitUpdateKind: UpdateKind.insert,
-      ),
-      result: [TableUpdate('media_table', kind: UpdateKind.insert)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'media_table_view',
-        limitUpdateKind: UpdateKind.update,
-      ),
-      result: [TableUpdate('media_table', kind: UpdateKind.update)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'media_table_view',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [TableUpdate('media_table', kind: UpdateKind.delete)],
-    ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
         'definition_table',
@@ -18032,6 +17959,27 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       ),
       result: [TableUpdate('example_fts', kind: UpdateKind.insert)],
     ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'kanji_v_g_table_view',
+        limitUpdateKind: UpdateKind.insert,
+      ),
+      result: [TableUpdate('kanji_v_g_table', kind: UpdateKind.insert)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'kanji_v_g_table_view',
+        limitUpdateKind: UpdateKind.update,
+      ),
+      result: [TableUpdate('kanji_v_g_table', kind: UpdateKind.update)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'kanji_v_g_table_view',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('kanji_v_g_table', kind: UpdateKind.delete)],
+    ),
   ]);
 }
 
@@ -18095,6 +18043,24 @@ final class $$KanjiTableTableReferences
     );
   }
 
+  static MultiTypedResultKey<$KanjiVGTableTable, List<KanjiVGTableData>>
+  _kanjiVGTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+    db.kanjiVGTable,
+    aliasName: $_aliasNameGenerator(db.kanjiTable.id, db.kanjiVGTable.kanjiId),
+  );
+
+  $$KanjiVGTableTableProcessedTableManager get kanjiVGTableRefs {
+    final manager = $$KanjiVGTableTableTableManager(
+      $_db,
+      $_db.kanjiVGTable,
+    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_kanjiVGTableRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
   static MultiTypedResultKey<
     $Radical_X_KanjiRelationsTableTable,
     List<Radical_X_KanjiRelationsTableData>
@@ -18118,24 +18084,6 @@ final class $$KanjiTableTableReferences
     final cache = $_typedResult.readTableOrNull(
       _radicalXKanjiRelationsTableRefsTable($_db),
     );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<$KanjiVGTableTable, List<KanjiVGTableData>>
-  _kanjiVGTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
-    db.kanjiVGTable,
-    aliasName: $_aliasNameGenerator(db.kanjiTable.id, db.kanjiVGTable.kanjiId),
-  );
-
-  $$KanjiVGTableTableProcessedTableManager get kanjiVGTableRefs {
-    final manager = $$KanjiVGTableTableTableManager(
-      $_db,
-      $_db.kanjiVGTable,
-    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_kanjiVGTableRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -18211,6 +18159,31 @@ class $$KanjiTableTableFilterComposer
     return f(composer);
   }
 
+  Expression<bool> kanjiVGTableRefs(
+    Expression<bool> Function($$KanjiVGTableTableFilterComposer f) f,
+  ) {
+    final $$KanjiVGTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiVGTable,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiVGTableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiVGTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<bool> radicalXKanjiRelationsTableRefs(
     Expression<bool> Function(
       $$Radical_X_KanjiRelationsTableTableFilterComposer f,
@@ -18237,31 +18210,6 @@ class $$KanjiTableTableFilterComposer
                     $removeJoinBuilderFromRootComposer,
               ),
         );
-    return f(composer);
-  }
-
-  Expression<bool> kanjiVGTableRefs(
-    Expression<bool> Function($$KanjiVGTableTableFilterComposer f) f,
-  ) {
-    final $$KanjiVGTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiVGTable,
-      getReferencedColumn: (t) => t.kanjiId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiVGTableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiVGTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
     return f(composer);
   }
 }
@@ -18352,6 +18300,31 @@ class $$KanjiTableTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> kanjiVGTableRefs<T extends Object>(
+    Expression<T> Function($$KanjiVGTableTableAnnotationComposer a) f,
+  ) {
+    final $$KanjiVGTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiVGTable,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiVGTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiVGTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<T> radicalXKanjiRelationsTableRefs<T extends Object>(
     Expression<T> Function(
       $$Radical_X_KanjiRelationsTableTableAnnotationComposer a,
@@ -18380,31 +18353,6 @@ class $$KanjiTableTableAnnotationComposer
         );
     return f(composer);
   }
-
-  Expression<T> kanjiVGTableRefs<T extends Object>(
-    Expression<T> Function($$KanjiVGTableTableAnnotationComposer a) f,
-  ) {
-    final $$KanjiVGTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiVGTable,
-      getReferencedColumn: (t) => t.kanjiId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiVGTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiVGTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
 }
 
 class $$KanjiTableTableTableManager
@@ -18423,8 +18371,8 @@ class $$KanjiTableTableTableManager
           PrefetchHooks Function({
             bool kanjiBankV3TableRefs,
             bool kanjiMetaBankV3TableRefs,
-            bool radicalXKanjiRelationsTableRefs,
             bool kanjiVGTableRefs,
+            bool radicalXKanjiRelationsTableRefs,
           })
         > {
   $$KanjiTableTableTableManager(_$DaKanjiDB db, $KanjiTableTable table)
@@ -18458,17 +18406,17 @@ class $$KanjiTableTableTableManager
               ({
                 kanjiBankV3TableRefs = false,
                 kanjiMetaBankV3TableRefs = false,
-                radicalXKanjiRelationsTableRefs = false,
                 kanjiVGTableRefs = false,
+                radicalXKanjiRelationsTableRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (kanjiBankV3TableRefs) db.kanjiBankV3Table,
                     if (kanjiMetaBankV3TableRefs) db.kanjiMetaBankV3Table,
+                    if (kanjiVGTableRefs) db.kanjiVGTable,
                     if (radicalXKanjiRelationsTableRefs)
                       db.radicalXKanjiRelationsTable,
-                    if (kanjiVGTableRefs) db.kanjiVGTable,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -18515,27 +18463,6 @@ class $$KanjiTableTableTableManager
                               ),
                           typedResults: items,
                         ),
-                      if (radicalXKanjiRelationsTableRefs)
-                        await $_getPrefetchedData<
-                          KanjiTableData,
-                          $KanjiTableTable,
-                          Radical_X_KanjiRelationsTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$KanjiTableTableReferences
-                              ._radicalXKanjiRelationsTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$KanjiTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).radicalXKanjiRelationsTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.kanjiId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
                       if (kanjiVGTableRefs)
                         await $_getPrefetchedData<
                           KanjiTableData,
@@ -18551,6 +18478,27 @@ class $$KanjiTableTableTableManager
                                 table,
                                 p0,
                               ).kanjiVGTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.kanjiId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (radicalXKanjiRelationsTableRefs)
+                        await $_getPrefetchedData<
+                          KanjiTableData,
+                          $KanjiTableTable,
+                          Radical_X_KanjiRelationsTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$KanjiTableTableReferences
+                              ._radicalXKanjiRelationsTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$KanjiTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).radicalXKanjiRelationsTableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.kanjiId == item.id,
@@ -18580,8 +18528,8 @@ typedef $$KanjiTableTableProcessedTableManager =
       PrefetchHooks Function({
         bool kanjiBankV3TableRefs,
         bool kanjiMetaBankV3TableRefs,
-        bool radicalXKanjiRelationsTableRefs,
         bool kanjiVGTableRefs,
+        bool radicalXKanjiRelationsTableRefs,
       })
     >;
 typedef $$IndexTableTableCreateCompanionBuilder =
@@ -36036,7 +35984,7 @@ typedef $$MediaTableTableCreateCompanionBuilder =
       required int indexId,
       required String path,
       required String name,
-      required Uint8List dataCompressed,
+      required Uint8List data,
     });
 typedef $$MediaTableTableUpdateCompanionBuilder =
     MediaTableCompanion Function({
@@ -36044,7 +35992,7 @@ typedef $$MediaTableTableUpdateCompanionBuilder =
       Value<int> indexId,
       Value<String> path,
       Value<String> name,
-      Value<Uint8List> dataCompressed,
+      Value<Uint8List> data,
     });
 
 final class $$MediaTableTableReferences
@@ -36095,8 +36043,8 @@ class $$MediaTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<Uint8List> get dataCompressed => $composableBuilder(
-    column: $table.dataCompressed,
+  ColumnFilters<Uint8List> get data => $composableBuilder(
+    column: $table.data,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -36148,8 +36096,8 @@ class $$MediaTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<Uint8List> get dataCompressed => $composableBuilder(
-    column: $table.dataCompressed,
+  ColumnOrderings<Uint8List> get data => $composableBuilder(
+    column: $table.data,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -36195,10 +36143,8 @@ class $$MediaTableTableAnnotationComposer
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
 
-  GeneratedColumn<Uint8List> get dataCompressed => $composableBuilder(
-    column: $table.dataCompressed,
-    builder: (column) => column,
-  );
+  GeneratedColumn<Uint8List> get data =>
+      $composableBuilder(column: $table.data, builder: (column) => column);
 
   $$IndexTableTableAnnotationComposer get indexId {
     final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
@@ -36256,13 +36202,13 @@ class $$MediaTableTableTableManager
                 Value<int> indexId = const Value.absent(),
                 Value<String> path = const Value.absent(),
                 Value<String> name = const Value.absent(),
-                Value<Uint8List> dataCompressed = const Value.absent(),
+                Value<Uint8List> data = const Value.absent(),
               }) => MediaTableCompanion(
                 id: id,
                 indexId: indexId,
                 path: path,
                 name: name,
-                dataCompressed: dataCompressed,
+                data: data,
               ),
           createCompanionCallback:
               ({
@@ -36270,13 +36216,13 @@ class $$MediaTableTableTableManager
                 required int indexId,
                 required String path,
                 required String name,
-                required Uint8List dataCompressed,
+                required Uint8List data,
               }) => MediaTableCompanion.insert(
                 id: id,
                 indexId: indexId,
                 path: path,
                 name: name,
-                dataCompressed: dataCompressed,
+                data: data,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -38184,6 +38130,278 @@ typedef $ExampleFtsProcessedTableManager =
       ExampleFt,
       PrefetchHooks Function()
     >;
+typedef $$KanjiVGTableTableCreateCompanionBuilder =
+    KanjiVGTableCompanion Function({
+      Value<int> id,
+      required int kanjiId,
+      required String svg,
+    });
+typedef $$KanjiVGTableTableUpdateCompanionBuilder =
+    KanjiVGTableCompanion Function({
+      Value<int> id,
+      Value<int> kanjiId,
+      Value<String> svg,
+    });
+
+final class $$KanjiVGTableTableReferences
+    extends BaseReferences<_$DaKanjiDB, $KanjiVGTableTable, KanjiVGTableData> {
+  $$KanjiVGTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
+      db.kanjiTable.createAlias(
+        $_aliasNameGenerator(db.kanjiVGTable.kanjiId, db.kanjiTable.id),
+      );
+
+  $$KanjiTableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
+    final manager = $$KanjiTableTableTableManager(
+      $_db,
+      $_db.kanjiTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$KanjiVGTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+  $$KanjiVGTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<String, String, Uint8List> get svg =>
+      $composableBuilder(
+        column: $table.svg,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+
+  $$KanjiTableTableFilterComposer get kanjiId {
+    final $$KanjiTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiTableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiVGTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+  $$KanjiVGTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<Uint8List> get svg => $composableBuilder(
+    column: $table.svg,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$KanjiTableTableOrderingComposer get kanjiId {
+    final $$KanjiTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.kanjiTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiVGTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+  $$KanjiVGTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<String, Uint8List> get svg =>
+      $composableBuilder(column: $table.svg, builder: (column) => column);
+
+  $$KanjiTableTableAnnotationComposer get kanjiId {
+    final $$KanjiTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiVGTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $KanjiVGTableTable,
+          KanjiVGTableData,
+          $$KanjiVGTableTableFilterComposer,
+          $$KanjiVGTableTableOrderingComposer,
+          $$KanjiVGTableTableAnnotationComposer,
+          $$KanjiVGTableTableCreateCompanionBuilder,
+          $$KanjiVGTableTableUpdateCompanionBuilder,
+          (KanjiVGTableData, $$KanjiVGTableTableReferences),
+          KanjiVGTableData,
+          PrefetchHooks Function({bool kanjiId})
+        > {
+  $$KanjiVGTableTableTableManager(_$DaKanjiDB db, $KanjiVGTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiVGTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$KanjiVGTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$KanjiVGTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> kanjiId = const Value.absent(),
+                Value<String> svg = const Value.absent(),
+              }) => KanjiVGTableCompanion(id: id, kanjiId: kanjiId, svg: svg),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int kanjiId,
+                required String svg,
+              }) => KanjiVGTableCompanion.insert(
+                id: id,
+                kanjiId: kanjiId,
+                svg: svg,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$KanjiVGTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({kanjiId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (kanjiId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.kanjiId,
+                                referencedTable: $$KanjiVGTableTableReferences
+                                    ._kanjiIdTable(db),
+                                referencedColumn: $$KanjiVGTableTableReferences
+                                    ._kanjiIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$KanjiVGTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $KanjiVGTableTable,
+      KanjiVGTableData,
+      $$KanjiVGTableTableFilterComposer,
+      $$KanjiVGTableTableOrderingComposer,
+      $$KanjiVGTableTableAnnotationComposer,
+      $$KanjiVGTableTableCreateCompanionBuilder,
+      $$KanjiVGTableTableUpdateCompanionBuilder,
+      (KanjiVGTableData, $$KanjiVGTableTableReferences),
+      KanjiVGTableData,
+      PrefetchHooks Function({bool kanjiId})
+    >;
 typedef $$AudioSourceListTableTableCreateCompanionBuilder =
     AudioSourceListTableCompanion Function({
       Value<int> id,
@@ -39181,283 +39399,6 @@ typedef $$Radical_X_KanjiRelationsTableTableProcessedTableManager =
       Radical_X_KanjiRelationsTableData,
       PrefetchHooks Function({bool kanjiId, bool radicalId})
     >;
-typedef $$KanjiVGTableTableCreateCompanionBuilder =
-    KanjiVGTableCompanion Function({
-      Value<int> id,
-      required int kanjiId,
-      required String kanjiVGSVG,
-    });
-typedef $$KanjiVGTableTableUpdateCompanionBuilder =
-    KanjiVGTableCompanion Function({
-      Value<int> id,
-      Value<int> kanjiId,
-      Value<String> kanjiVGSVG,
-    });
-
-final class $$KanjiVGTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $KanjiVGTableTable, KanjiVGTableData> {
-  $$KanjiVGTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
-      db.kanjiTable.createAlias(
-        $_aliasNameGenerator(db.kanjiVGTable.kanjiId, db.kanjiTable.id),
-      );
-
-  $$KanjiTableTableProcessedTableManager get kanjiId {
-    final $_column = $_itemColumn<int>('kanji_id')!;
-
-    final manager = $$KanjiTableTableTableManager(
-      $_db,
-      $_db.kanjiTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$KanjiVGTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
-  $$KanjiVGTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get kanjiVGSVG => $composableBuilder(
-    column: $table.kanjiVGSVG,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$KanjiTableTableFilterComposer get kanjiId {
-    final $$KanjiTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiTableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiVGTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
-  $$KanjiVGTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get kanjiVGSVG => $composableBuilder(
-    column: $table.kanjiVGSVG,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$KanjiTableTableOrderingComposer get kanjiId {
-    final $$KanjiTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.kanjiTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiVGTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
-  $$KanjiVGTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get kanjiVGSVG => $composableBuilder(
-    column: $table.kanjiVGSVG,
-    builder: (column) => column,
-  );
-
-  $$KanjiTableTableAnnotationComposer get kanjiId {
-    final $$KanjiTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiVGTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $KanjiVGTableTable,
-          KanjiVGTableData,
-          $$KanjiVGTableTableFilterComposer,
-          $$KanjiVGTableTableOrderingComposer,
-          $$KanjiVGTableTableAnnotationComposer,
-          $$KanjiVGTableTableCreateCompanionBuilder,
-          $$KanjiVGTableTableUpdateCompanionBuilder,
-          (KanjiVGTableData, $$KanjiVGTableTableReferences),
-          KanjiVGTableData,
-          PrefetchHooks Function({bool kanjiId})
-        > {
-  $$KanjiVGTableTableTableManager(_$DaKanjiDB db, $KanjiVGTableTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$KanjiVGTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$KanjiVGTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$KanjiVGTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> kanjiId = const Value.absent(),
-                Value<String> kanjiVGSVG = const Value.absent(),
-              }) => KanjiVGTableCompanion(
-                id: id,
-                kanjiId: kanjiId,
-                kanjiVGSVG: kanjiVGSVG,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int kanjiId,
-                required String kanjiVGSVG,
-              }) => KanjiVGTableCompanion.insert(
-                id: id,
-                kanjiId: kanjiId,
-                kanjiVGSVG: kanjiVGSVG,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$KanjiVGTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({kanjiId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (kanjiId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.kanjiId,
-                                referencedTable: $$KanjiVGTableTableReferences
-                                    ._kanjiIdTable(db),
-                                referencedColumn: $$KanjiVGTableTableReferences
-                                    ._kanjiIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$KanjiVGTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $KanjiVGTableTable,
-      KanjiVGTableData,
-      $$KanjiVGTableTableFilterComposer,
-      $$KanjiVGTableTableOrderingComposer,
-      $$KanjiVGTableTableAnnotationComposer,
-      $$KanjiVGTableTableCreateCompanionBuilder,
-      $$KanjiVGTableTableUpdateCompanionBuilder,
-      (KanjiVGTableData, $$KanjiVGTableTableReferences),
-      KanjiVGTableData,
-      PrefetchHooks Function({bool kanjiId})
-    >;
 
 class $DaKanjiDBManager {
   final _$DaKanjiDB _db;
@@ -39646,6 +39587,8 @@ class $DaKanjiDBManager {
       );
   $ExampleFtsTableManager get exampleFts =>
       $ExampleFtsTableManager(_db, _db.exampleFts);
+  $$KanjiVGTableTableTableManager get kanjiVGTable =>
+      $$KanjiVGTableTableTableManager(_db, _db.kanjiVGTable);
   $$AudioSourceListTableTableTableManager get audioSourceListTable =>
       $$AudioSourceListTableTableTableManager(_db, _db.audioSourceListTable);
   $$RadicalsTableTableTableManager get radicalsTable =>
@@ -39656,8 +39599,6 @@ class $DaKanjiDBManager {
         _db,
         _db.radicalXKanjiRelationsTable,
       );
-  $$KanjiVGTableTableTableManager get kanjiVGTable =>
-      $$KanjiVGTableTableTableManager(_db, _db.kanjiVGTable);
 }
 
 class DictionarySearchDriftResult {

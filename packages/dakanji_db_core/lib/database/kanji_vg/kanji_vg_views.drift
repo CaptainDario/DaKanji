@@ -1,0 +1,39 @@
+import 'kanji_vg_tables.dart';
+
+-- Automatically compresses/decompresses the SVG data when read/written
+CREATE VIEW kanji_v_g_table_view AS
+    SELECT
+        id,
+        kanji_id,
+        CAST(uncompress(KVGT.svg) AS TEXT) AS svg
+    FROM
+        kanji_v_g_table AS KVGT;
+
+
+-- Trigger for INSERT operations
+CREATE TRIGGER kanji_v_g_table_view_insert
+    INSTEAD OF INSERT ON kanji_v_g_table_view
+    BEGIN
+        INSERT INTO kanji_v_g_table (id, kanji_id, svg)
+        VALUES (NEW.id, NEW.kanji_id, compress(NEW.svg));
+    END;
+
+-- Trigger for UPDATE operations
+CREATE TRIGGER kanji_v_g_table_view_update
+    INSTEAD OF UPDATE ON kanji_v_g_table_view
+    BEGIN
+        UPDATE kanji_v_g_table
+        SET
+            kanji_id = NEW.kanji_id,
+            svg = compress(NEW.svg)
+        WHERE
+            id = OLD.id;
+    END;
+
+-- Trigger for DELETE operations
+CREATE TRIGGER kanji_v_g_table_view_delete
+    INSTEAD OF DELETE ON kanji_v_g_table_view
+    BEGIN
+        DELETE FROM kanji_v_g_table
+        WHERE id = OLD.id;
+    END;

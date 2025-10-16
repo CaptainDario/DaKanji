@@ -1,7 +1,7 @@
-// Package imports:
+
+import 'package:dakanji_db_core/helper/zlib_text_converter_io.dart';
 import 'package:drift/drift.dart';
 
-// Project imports:
 import '/database/general_tables/kanji_tables.dart';
 
 
@@ -16,6 +16,6 @@ class KanjiVGTable extends Table {
   IntColumn get kanjiId => integer().references(KanjiTable, #id)();
 
   /// The svg data of this kanji
-  TextColumn get kanjiVGSVG => text()();
+  BlobColumn get svg => blob().map(const ZlibStringConverter())();
 
 }

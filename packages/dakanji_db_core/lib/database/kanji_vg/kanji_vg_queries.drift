@@ -1,0 +1,13 @@
+import 'kanji_vg_views.drift';
+import '/database/general_tables/kanji_tables.dart';
+
+
+kanji_vg_search_drift:
+    SELECT
+        kvgv.svg
+    FROM
+        kanji_v_g_table_view AS kvgv
+    INNER JOIN
+        kanji_table AS kt ON kt.id = kvgv.kanji_id
+    WHERE
+        kt.kanji = :kanji;
