@@ -1,13 +1,12 @@
-// Package imports:
+
 import 'dart:io';
 
-import 'package:mecab_for_dart/mecab_dart.dart';
-import 'package:test/test.dart';
-import 'package:path/path.dart' as p;
-
-// Project imports:
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_shared/paths.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:path/path.dart' as p;
+import 'package:test/test.dart';
+
 import '../util/db_files.dart';
 import 'term_bank_test_cases_1.dart';
 import 'term_bank_test_cases_2.dart';

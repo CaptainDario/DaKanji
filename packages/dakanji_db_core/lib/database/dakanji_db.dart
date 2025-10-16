@@ -1,31 +1,25 @@
-// Package imports:
+
 import 'package:dakanji_db_core/database/audio/audio_dao.dart';
 import 'package:dakanji_db_core/database/audio/audio_relation_tables.dart';
 import 'package:dakanji_db_core/database/audio/audio_tables.dart';
 import 'package:dakanji_db_core/database/general_tables/media_dao.dart';
 import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:sqlite3/native_assets.dart';
 import 'package:sqlite3/sqlite3.dart';
+import 'package:universal_io/io.dart';
 
 import '/database/dakanji_db_dao.dart';
 import '/database/example/example_dao.dart';
 import '/database/example/example_relation_tables.dart';
 import '/database/example/example_tables.dart';
-import '/database/general_tables/language_code_dao.dart';
-import '/database/general_tables/language_code_table.dart';
-import '/database/term/term_bank_v3_dao.dart';
-import '/database/term/term_bank_v3_relation_tables.dart';
-import '/database/term/term_bank_v3_tables.dart';
-import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:universal_io/io.dart';
-
-// Project imports:
-import 'audio_source_list/audio_source_list_tables.dart';
-import '/database/general_tables/kanji_dao.dart';
-import '/database/general_tables/kanji_tables.dart';
 import '/database/general_tables/definition_dao.dart';
 import '/database/general_tables/definition_tables.dart';
+import '/database/general_tables/kanji_dao.dart';
+import '/database/general_tables/kanji_tables.dart';
+import '/database/general_tables/language_code_dao.dart';
+import '/database/general_tables/language_code_table.dart';
 import '/database/general_tables/reading_dao.dart';
 import '/database/general_tables/reading_tables.dart';
 import '/database/general_tables/term_dao.dart';
@@ -44,16 +38,20 @@ import '/database/radicals/radical_relation_tables.dart';
 import '/database/radicals/radical_tables.dart';
 import '/database/tag/tag_bank_v3_dao.dart';
 import '/database/tag/tag_bank_v3_tables.dart';
+import '/database/term/term_bank_v3_dao.dart';
+import '/database/term/term_bank_v3_relation_tables.dart';
+import '/database/term/term_bank_v3_tables.dart';
 import '/database/term_meta/term_meta_bank_relation_tables.dart';
 import '/database/term_meta/term_meta_bank_v3_dao.dart';
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
-import '/extensions/sqlite_vector_extension.dart';
-import '/extensions/sqlite_spellfix_extension.dart';
-import '/extensions/sqlite_crsqlite_extension.dart';
 import '/extensions/sqlite_compress_extension.dart';
+import '/extensions/sqlite_crsqlite_extension.dart';
+import '/extensions/sqlite_spellfix_extension.dart';
+import '/extensions/sqlite_vector_extension.dart';
 // these are NECCESSARY
 // ignore: unused_import
 import '/helper/json_converter.dart';
+import 'audio_source_list/audio_source_list_tables.dart';
 
 part 'dakanji_db.g.dart';
 

@@ -1,12 +1,11 @@
-// Package imports:
+
 import 'dart:convert';
 
+import 'package:drift/drift.dart';
 import 'package:language_processing/iso/iso_table.dart';
 import 'package:language_processing/japanese/sentence_parsing.dart';
-import 'package:drift/drift.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
-// Project imports:
 import '/database/dakanji_db.dart';
 
 

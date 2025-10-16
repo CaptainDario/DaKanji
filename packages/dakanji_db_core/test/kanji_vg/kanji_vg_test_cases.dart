@@ -1,4 +1,4 @@
-// Package imports:
+
 import 'package:tuple/tuple.dart';
 
 /// List of kanjis of which the radicals should be looked up and the expected

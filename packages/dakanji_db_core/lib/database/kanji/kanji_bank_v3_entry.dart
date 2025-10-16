@@ -1,10 +1,9 @@
-// Package imports:
+
 import 'dart:convert';
 
-import '/database/dakanji_db.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-// Project imports:
+import '/database/dakanji_db.dart';
 import '/database/kanji/kanji_bank_v3_entry_stat.dart';
 import '/database/tag/tag_bank_v3_entry.dart';
 

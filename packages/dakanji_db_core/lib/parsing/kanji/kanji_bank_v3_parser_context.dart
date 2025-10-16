@@ -1,4 +1,4 @@
-// Project imports:
+
 import 'package:dakanji_db_core/parsing/util/import_context.dart';
 
 import '/database/dakanji_db.dart';

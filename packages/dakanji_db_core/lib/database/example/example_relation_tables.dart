@@ -1,6 +1,7 @@
-// Package imports:
-import '/database/example/example_tables.dart';
+
 import 'package:drift/drift.dart';
+
+import '/database/example/example_tables.dart';
 
 
 /// Contains the relationships between examples and their translations

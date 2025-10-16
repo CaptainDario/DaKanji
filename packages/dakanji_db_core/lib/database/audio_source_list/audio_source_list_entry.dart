@@ -1,6 +1,5 @@
-// Package imports:
-import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'audio_source_list_entry.freezed.dart';
 part 'audio_source_list_entry.g.dart';

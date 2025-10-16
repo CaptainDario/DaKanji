@@ -2,26 +2,25 @@
 
 import 'dart:io';
 
+import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:language_processing/iso/iso_table.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
-import 'package:test/test.dart';
 import 'package:path/path.dart' as p;
-
-import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:test/test.dart';
 
 import '../../util/db_files.dart';
 import 'dictionary_search_deconjugation_test_cases.dart';
 import 'dictionary_search_fuzzy_test_cases.dart';
-import 'dictionary_search_language_filtering_test_cases.dart';
 import 'dictionary_search_input_preprocessing_test_cases.dart';
+import 'dictionary_search_language_filtering_test_cases.dart';
 import 'dictionary_search_meta_bank_test_cases.dart';
 import 'dictionary_search_sorting_test_cases.dart';
 import 'dictionary_search_tag_filtering_test_cases.dart';
 import 'dictionary_search_test_cases.dart';
+import 'dictionary_search_test_helper_classes.dart';
 import 'dictionary_search_test_util.dart';
 import 'dictionary_search_wildcard_test_cases.dart';
-import 'dictionary_search_test_helper_classes.dart';
 
 
 // Lists are defined at the top level (this is fine)

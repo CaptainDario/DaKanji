@@ -1,13 +1,12 @@
-// Package imports:
+
+import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
+import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
+import 'package:dakanji_db_shared/paths.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
-// Project imports:
-import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
-import 'package:dakanji_db_shared/paths.dart';
 import '../../util/db_files.dart';
 import 'kanji_dictionary_search_test_cases.dart';
 

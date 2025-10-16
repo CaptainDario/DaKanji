@@ -1,23 +1,18 @@
-// Package imports:
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
-import 'dart:typed_data';
 
 import 'package:dakanji_db_core/parsing/example/example_text_parser.dart';
-import 'package:dakanji_db_core/parsing/index/index_parser.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 
-import '/parsing/example/example_sentence_parser.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
-
-
-// Project imports:
 import '/database/dakanji_db.dart';
+import '/parsing/example/example_sentence_parser.dart';
 
 /// Parses the given dakanji example folder
 Future<Stream<String>> parseExampleDataSource(String examplesZipPath, DaKanjiDB db, Mecab mecab) async {

@@ -1,8 +1,7 @@
-// Package imports:
-import "/database/general_tables/language_code_table.dart";
+
 import "package:drift/drift.dart";
 
-// Project imports:
+import "/database/general_tables/language_code_table.dart";
 import "../dakanji_db.dart";
 
 part 'language_code_dao.g.dart';

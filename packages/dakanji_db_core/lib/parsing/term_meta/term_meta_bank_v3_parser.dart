@@ -1,12 +1,10 @@
 // Dart imports:
 import 'dart:convert';
 
-// Package imports:
 import 'package:dakanji_db_core/parsing/term_meta/term_meta_bank_v3_parser_context.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
-// Project imports:
 import '/database/dakanji_db.dart';
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]

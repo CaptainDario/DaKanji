@@ -1,13 +1,12 @@
 import 'dart:convert';
+
 import 'package:dakanji_db_core/parsing/term/structured_content/css_preprocessing.dart';
 import 'package:html/dom.dart' as dom;
-import 'package:recase/recase.dart';
 import 'package:html/parser.dart' as html_parser;
+import 'package:recase/recase.dart';
 
-
-
-import 'parsed_term.dart';
 import '/parsing/term/term_parsing_method.dart';
+import 'parsed_term.dart';
 
 
 /// Recursively extracts all text from within a given JSON node.

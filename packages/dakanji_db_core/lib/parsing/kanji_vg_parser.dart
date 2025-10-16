@@ -1,4 +1,4 @@
-// Package imports:
+
 import 'dart:convert';
 import 'dart:isolate';
 
@@ -7,7 +7,6 @@ import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 
-// Project imports:
 import '/database/dakanji_db.dart';
 
 /// Converts the KanjiVG data source at the given path and adds it to the given
@@ -69,7 +68,7 @@ Future<void> _addKanjiVGToDB(
     kanjiVGTableComps.add(
       KanjiVGTableCompanion(
         kanjiId: Value(kanjis[kanjiVG.key]!),
-        kanjiVGSVG: Value(kanjiVG.value)
+        svg: Value(kanjiVG.value)
       )
     );
 

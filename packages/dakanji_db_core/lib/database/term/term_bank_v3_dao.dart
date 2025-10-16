@@ -1,12 +1,10 @@
-// Package imports:
+
 import "package:dakanji_db_core/database/term/term_bank_v3_entry.dart";
+import "package:drift/drift.dart";
 
 import "/database/general_tables/term_tables.dart";
 import "/database/tag/tag_bank_v3_tables.dart";
 import "/database/term/term_bank_v3_tables.dart";
-import "package:drift/drift.dart";
-
-// Project imports:
 import "../dakanji_db.dart";
 
 part 'term_bank_v3_dao.g.dart';

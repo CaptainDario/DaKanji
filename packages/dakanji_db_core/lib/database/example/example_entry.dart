@@ -1,11 +1,11 @@
-// Package imports:
+
 import 'dart:convert';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '/database/dakanji_db.dart';
 import '/database/example/example_entry_translation.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-// Project imports:
 part 'example_entry.freezed.dart';
 part 'example_entry.g.dart';
 

@@ -1,7 +1,7 @@
 //based on conjo_notes.csv which was scraped from
 //https://gitlab.com/yamagoya/jmdictdb/-/tree/master/jmdictdb/data
 
-// Project imports:
+
 import 'conjo_note.dart';
 
 // convenience vars  

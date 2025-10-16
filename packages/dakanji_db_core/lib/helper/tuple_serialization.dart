@@ -1,7 +1,7 @@
-// Package imports:
+
 import 'package:tuple/tuple.dart';
 
-/// Helper functions to deserialize Tuple2<int, String>
+/// Helper functions to deserialize `Tuple2<int, String>`
 Tuple2<int, String> tupleFromJson(Map<String, dynamic> json) {
   return Tuple2(json['item1'] as int, json['item2'] as String);
 }
@@ -14,7 +14,7 @@ Map<String, dynamic> tupleToJson(Tuple2<int, String> tuple) {
   };
 }
 
-/// Helper functions to deserialize List<Tuple2<int, String>>
+/// Helper functions to deserialize `List<Tuple2<int, String>>`
 List<Tuple2<int?, String?>> tupleListFromJson(List<dynamic> jsonList) {
   return jsonList.map((item) {
     final map = item as Map<String, dynamic>;

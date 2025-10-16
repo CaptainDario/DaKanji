@@ -1,11 +1,9 @@
 // Dart imports:
 import 'dart:convert';
 
-// Package imports:
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
-// Project imports:
 import '/database/dakanji_db.dart';
 import 'kanji_bank_v3_parser_context.dart';
 

@@ -1,8 +1,7 @@
-// Package imports:
+
 import 'package:kana_kit/kana_kit.dart';
 import 'package:language_processing/japanese/furigana_pair.dart';
 
-// Project imports:
 import 'japanese_string_operations.dart';
 
 

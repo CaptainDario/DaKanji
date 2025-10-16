@@ -1,13 +1,12 @@
 
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:dakanji_db_core/database/example/example_entry.dart';
-import 'package:language_processing/iso/iso_table.dart';
-import 'package:universal_io/io.dart';
-import 'package:path/path.dart' as p;
-
 import 'package:dakanji_db_shared/paths.dart';
+import 'package:language_processing/iso/iso_table.dart';
+import 'package:path/path.dart' as p;
+import 'package:universal_io/io.dart';
+
 import '../util/files.dart';
 
 

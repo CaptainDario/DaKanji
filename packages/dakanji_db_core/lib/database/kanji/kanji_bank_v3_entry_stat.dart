@@ -1,4 +1,4 @@
-// Package imports:
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'kanji_bank_v3_entry_stat.freezed.dart';

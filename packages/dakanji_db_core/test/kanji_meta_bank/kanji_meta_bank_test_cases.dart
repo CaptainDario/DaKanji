@@ -1,4 +1,4 @@
-// Project imports:
+
 import 'package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
 
 final int indexId = 1;

@@ -1,11 +1,10 @@
-// Package imports:
-import 'package:test/test.dart';
 
-// Project imports:
-import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
+import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
+
 import 'radicals_test_cases.dart';
 
 void main() async {

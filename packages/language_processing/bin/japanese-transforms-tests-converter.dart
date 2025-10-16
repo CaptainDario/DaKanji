@@ -8,7 +8,7 @@ import 'dart:convert';
 /// format, and writes the result to a new .dart file.
 ///
 /// Usage:
-/// dart convert_js_tests.dart <path_to_js_input_file> <path_to_dart_output_file>
+/// dart convert_js_tests.dart `<path_to_js_input_file>` `<path_to_dart_output_file>`
 void main(List<String> args) {
 	if (args.length != 2) {
 		print('Usage: dart convert_js_tests.dart <input.js> <output.dart>');

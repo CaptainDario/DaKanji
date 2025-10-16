@@ -1,8 +1,7 @@
-// Package imports:
+
 import "package:dakanji_db_core/database/audio/audio_tables.dart";
 import "package:drift/drift.dart";
 
-// Project imports:
 import "../dakanji_db.dart";
 
 part 'audio_dao.g.dart';

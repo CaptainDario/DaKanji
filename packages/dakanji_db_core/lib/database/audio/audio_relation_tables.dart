@@ -1,4 +1,4 @@
-// Package imports:
+
 import 'package:dakanji_db_core/database/audio/audio_tables.dart';
 import 'package:dakanji_db_core/database/general_tables/term_tables.dart';
 import 'package:drift/drift.dart';

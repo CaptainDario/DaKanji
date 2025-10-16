@@ -1,12 +1,11 @@
-// Package imports:
+
 import "dart:convert";
+
+import "package:drift/drift.dart";
+import 'package:language_processing/iso/iso_table.dart';
 
 import "/database/example/example_entry.dart";
 import "/database/example/example_tables.dart";
-import 'package:language_processing/iso/iso_table.dart';
-import "package:drift/drift.dart";
-
-// Project imports:
 import "../dakanji_db.dart";
 
 part 'example_dao.g.dart';

@@ -1,8 +1,7 @@
-// Package imports:
+
 import 'dart:io';
 
 import 'package:github/github.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 

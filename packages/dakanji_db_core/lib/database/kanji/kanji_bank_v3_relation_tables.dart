@@ -1,7 +1,6 @@
-// Package imports:
+
 import 'package:drift/drift.dart';
 
-// Project imports:
 import '/database/general_tables/definition_tables.dart';
 import '/database/general_tables/reading_tables.dart';
 import '/database/kanji/kanji_bank_v3_tables.dart';

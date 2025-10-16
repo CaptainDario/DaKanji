@@ -1,8 +1,7 @@
-// Package imports:
+
 import 'package:dakanji_db_core/helper/json_converter.dart';
 import 'package:drift/drift.dart';
 
-// Project imports:
 import '/database/general_tables/kanji_tables.dart';
 import '/database/index/index_tables.dart';
 

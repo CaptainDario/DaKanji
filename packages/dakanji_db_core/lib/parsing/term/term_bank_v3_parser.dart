@@ -3,15 +3,13 @@ import 'dart:convert';
 
 import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_context.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
-
-import 'structured_content/parsed_term.dart';
-import 'structured_content/structured_content_parser.dart';
 import 'package:drift/drift.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:universal_io/io.dart';
 
-// Project imports:
 import '/database/dakanji_db.dart';
+import 'structured_content/parsed_term.dart';
+import 'structured_content/structured_content_parser.dart';
 
 
 

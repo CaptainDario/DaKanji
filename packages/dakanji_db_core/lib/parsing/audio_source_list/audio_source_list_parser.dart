@@ -1,10 +1,8 @@
 // Dart imports:
 import 'dart:convert';
 
-// Package imports:
 import 'package:universal_io/io.dart';
 
-// Project imports:
 import '/database/dakanji_db.dart';
 
 

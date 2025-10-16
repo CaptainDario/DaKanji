@@ -3,9 +3,8 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
-import 'package:path/path.dart' as p;
-
-import 'package:disjoint_set/disjoint_set.dart'; 
+import 'package:disjoint_set/disjoint_set.dart';
+import 'package:path/path.dart' as p; 
 
 
 

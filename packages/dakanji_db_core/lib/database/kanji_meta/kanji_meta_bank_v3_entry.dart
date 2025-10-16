@@ -1,4 +1,4 @@
-// Package imports:
+
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

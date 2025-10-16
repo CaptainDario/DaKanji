@@ -1,7 +1,7 @@
+import 'package:fullwidth_halfwidth_converter/fullwidth_halfwidth_converter.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:language_processing/japanese/conjugation/yomitan_deconjugate.dart';
 import 'package:language_processing/japanese/japanese_string_operations.dart';
-import 'package:fullwidth_halfwidth_converter/fullwidth_halfwidth_converter.dart';
 
 
 

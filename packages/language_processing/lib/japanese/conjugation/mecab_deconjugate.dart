@@ -1,8 +1,7 @@
-// Package imports:
+
 import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
-// Project imports:
 import '../mecab_data.dart';
 
 

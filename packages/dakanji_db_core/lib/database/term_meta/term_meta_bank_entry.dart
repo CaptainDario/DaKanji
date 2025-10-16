@@ -1,10 +1,9 @@
-// Package imports:
+
 import 'dart:convert';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-// Project imports:
 import '/database/term_meta/term_meta_bank_ipa_entry.dart';
 import '/database/term_meta/term_meta_bank_pitch_entry.dart';
 

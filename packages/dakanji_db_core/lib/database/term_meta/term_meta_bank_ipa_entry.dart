@@ -1,4 +1,4 @@
-// Package imports:
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'term_meta_bank_ipa_entry.freezed.dart';

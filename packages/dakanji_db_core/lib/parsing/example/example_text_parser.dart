@@ -1,10 +1,9 @@
-// Package imports:
-import 'package:language_processing/japanese/sentence_parsing.dart';
-import 'package:language_processing/japanese/sentence_finding.dart';
+
 import 'package:drift/drift.dart';
+import 'package:language_processing/japanese/sentence_finding.dart';
+import 'package:language_processing/japanese/sentence_parsing.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
-// Project imports:
 import '/database/dakanji_db.dart';
 
 

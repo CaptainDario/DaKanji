@@ -1,6 +1,6 @@
 import "dart:async";
 import "dart:convert";
-// Package imports:
+
 import "package:dakanji_db_core/database/audio/audio_entry.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
@@ -8,7 +8,6 @@ import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanj
 import "package:drift/drift.dart";
 import "package:language_processing/iso/iso_table.dart";
 
-// Project imports:
 import "dakanji_db.dart";
 
 part 'dakanji_db_dao.g.dart';

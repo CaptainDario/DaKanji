@@ -1,9 +1,9 @@
-import 'package:test/test.dart';
-import 'package:sqlite3/native_assets.dart';
-import 'package:dakanji_db_core/extensions/sqlite_vector_extension.dart';
-import 'package:dakanji_db_core/extensions/sqlite_spellfix_extension.dart';
-import 'package:dakanji_db_core/extensions/sqlite_crsqlite_extension.dart';
 import 'package:dakanji_db_core/extensions/sqlite_compress_extension.dart';
+import 'package:dakanji_db_core/extensions/sqlite_crsqlite_extension.dart';
+import 'package:dakanji_db_core/extensions/sqlite_spellfix_extension.dart';
+import 'package:dakanji_db_core/extensions/sqlite_vector_extension.dart';
+import 'package:sqlite3/native_assets.dart';
+import 'package:test/test.dart';
 
 void main() async {
 

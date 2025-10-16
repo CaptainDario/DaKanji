@@ -1,7 +1,6 @@
-// Package imports:
+
 import 'package:drift/drift.dart';
 
-// Project imports:
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
 
 /// Relationship table between TermMetaBank and PitchTable

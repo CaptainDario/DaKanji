@@ -1,7 +1,6 @@
-// Package imports:
+
 import 'package:drift/drift.dart';
 
-// Project imports:
 import '/database/general_tables/kanji_tables.dart';
 import '/database/radicals/radical_tables.dart';
 

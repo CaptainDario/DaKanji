@@ -1,7 +1,6 @@
 // Dart imports:
 import 'dart:convert';
 
-// Package imports:
 import 'package:archive/archive.dart';
 import 'package:drift/drift.dart';
 

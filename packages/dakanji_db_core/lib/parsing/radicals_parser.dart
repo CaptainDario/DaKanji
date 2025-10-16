@@ -2,13 +2,11 @@
 import 'dart:convert';
 import 'dart:isolate';
 
-// Package imports:
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 
-// Project imports:
 import '/database/dakanji_db.dart';
 
 /// map to lookup the code that is stored in the krad/radk file to an actual

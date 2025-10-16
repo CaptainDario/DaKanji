@@ -1,7 +1,6 @@
-// Package imports:
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-// Project imports:
 part 'example_entry_translation.freezed.dart';
 part 'example_entry_translation.g.dart';
 

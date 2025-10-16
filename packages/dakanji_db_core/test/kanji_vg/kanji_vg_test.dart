@@ -1,12 +1,10 @@
-// Package imports:
 import 'dart:io';
 
+import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:test/test.dart';
 
-// Project imports:
-import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
-import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'kanji_vg_test_cases.dart';
 
 void main() {

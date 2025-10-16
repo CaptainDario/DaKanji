@@ -1,4 +1,4 @@
-// Project imports:
+
 import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry_stat.dart';

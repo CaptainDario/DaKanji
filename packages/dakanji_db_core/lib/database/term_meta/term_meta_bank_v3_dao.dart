@@ -1,7 +1,6 @@
-// Package imports:
+
 import "package:drift/drift.dart";
 
-// Project imports:
 import "/database/general_tables/reading_tables.dart";
 import "/database/general_tables/term_tables.dart";
 import "/database/term_meta/term_meta_bank_entry.dart";

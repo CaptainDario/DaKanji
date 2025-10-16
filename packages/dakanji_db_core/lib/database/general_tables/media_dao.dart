@@ -1,8 +1,7 @@
-// Package imports:
+
+import "package:dakanji_db_core/database/general_tables/media_tables.dart";
 import "package:drift/drift.dart";
 
-// Project imports:
-import "package:dakanji_db_core/database/general_tables/media_tables.dart";
 import "../dakanji_db.dart";
 
 part 'media_dao.g.dart';

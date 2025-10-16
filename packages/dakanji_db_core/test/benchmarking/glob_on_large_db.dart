@@ -1,8 +1,8 @@
-import 'dart:ffi';
 import 'dart:io';
-import 'package:sqlite3/sqlite3.dart';
-import 'package:path/path.dart' as p;
+
 import 'package:archive/archive.dart';
+import 'package:path/path.dart' as p;
+import 'package:sqlite3/sqlite3.dart';
 
 // A simple benchmark runner.
 void benchmark(String name, void Function() function) {
