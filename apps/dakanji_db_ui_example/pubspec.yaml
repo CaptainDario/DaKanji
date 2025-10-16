@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  path: ^1.9.1
   dakanji_db_ui:
   dakanji_db_shared:
   dakanji_db_core:

@@ -73,7 +73,7 @@ void main() {
           content = 'entry_${i}_some_data_abc_pattern_xyz_and_more_data_end';
         // For prefix search: ~0.01% of entries will start with the pattern. (500 matches)
         } else if (i % 10000 == 1) {
-          content = 'pattern_is_at_start_of_entry_${i}';
+          content = 'pattern_is_at_start_of_entry_$i';
         } else {
           content = 'entry_${i}_no_match_for_benchmark_end';
         }

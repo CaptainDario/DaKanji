@@ -24,7 +24,6 @@ class DefinitionItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // Convert the structured content JSON into a standard HTML string.
     final htmlString = convertDefinitionToHtml(content);
-    print(htmlString);
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: HtmlWidget(
@@ -40,7 +39,7 @@ class DefinitionItemWidget extends StatelessWidget {
             if (query != null) {
               // TODO 
               // In a real app, you would trigger a search here.
-              print('Internal link tapped! Search for: "$query"');
+              debugPrint('Internal link tapped! Search for: "$query"');
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Search for: $query')),
               );

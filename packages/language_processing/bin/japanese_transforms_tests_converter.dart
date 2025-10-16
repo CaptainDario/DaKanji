@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:convert';
 
 /// A script to convert JavaScript test cases from a .js file to a Dart file.
 ///

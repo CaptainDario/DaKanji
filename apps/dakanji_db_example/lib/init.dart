@@ -1,13 +1,11 @@
-import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 import 'globals.dart';
-
-import 'dart:io';
-import 'package:path/path.dart' as p;
-
-import 'package:path_provider/path_provider.dart';
 
 
 
@@ -29,10 +27,10 @@ Future<String> copyDbFromAssetsToFS() async {
     // 4. Write the bytes to the local file system
     await File(dbPath).writeAsBytes(bytes, flush: true);
     
-    print('Database copied from assets to: $dbPath');
+    debugPrint('Database copied from assets to: $dbPath');
 
   } else {
-    print('Database already exists at: $dbPath');
+    debugPrint('Database already exists at: $dbPath');
   }
 
   return dbPath;
@@ -41,5 +39,5 @@ Future<String> copyDbFromAssetsToFS() async {
 
 Future<void> printAssetList() async {
   final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
-  print(manifest.listAssets());
+  debugPrint("${manifest.listAssets()}");
 }

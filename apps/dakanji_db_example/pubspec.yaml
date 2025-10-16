@@ -15,6 +15,7 @@ dependencies:
   dakanji_db_core:
   path_provider: ^2.1.5
   cupertino_icons: ^1.0.8
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:

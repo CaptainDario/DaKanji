@@ -5,6 +5,7 @@ import '/database/general_tables/kanji_tables.dart';
 import '/database/radicals/radical_tables.dart';
 
 /// Contains the relationships between kanjis and radicals
+// ignore: camel_case_types
 class Radical_X_KanjiRelationsTable extends Table {
 
   /// id of this relation

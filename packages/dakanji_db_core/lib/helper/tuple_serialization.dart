@@ -22,7 +22,7 @@ List<Tuple2<int?, String?>> tupleListFromJson(List<dynamic> jsonList) {
   }).toList();
 }
 
-/// Helper functions to deserialize List<Tuple2<int, String>>
+/// Helper functions to deserialize `List<Tuple2<int, String>>`
 List<Map<String, dynamic>> tupleListToJson(List<Tuple2<int?, String?>> tupleList) {
   return tupleList.map((tuple) {
     return {

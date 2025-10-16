@@ -1,10 +1,9 @@
 import 'package:collection/collection.dart';
-import 'package:language_processing/japanese/conjugation/yomitan_conjugation_data/language_transformer.dart';
-import 'package:test/test.dart';
-
 // Your library imports
 
 import 'package:language_processing/japanese/conjugation/yomitan_conjugation_data/japanese_transforms.dart';
+import 'package:language_processing/japanese/conjugation/yomitan_conjugation_data/language_transformer.dart';
+import 'package:test/test.dart';
 
 // Import the externally defined test cases
 import 'yomitan_conjugate_test_cases.dart';
@@ -77,7 +76,7 @@ void main() {
       final isValid = data['valid'] as bool;
       final tests = data['tests'] as List;
 
-      group('$category', () {
+      group(category, () {
         for (final testCaseMap in tests) {
           // Convert the map from the file into our typed data class.
           final testCase = DeconjugationTestCase(
