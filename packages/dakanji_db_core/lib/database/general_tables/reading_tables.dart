@@ -2,7 +2,6 @@
 import 'package:drift/drift.dart';
 
 /// Contains the kanji entries and links to the radicals table
-@TableIndex(name: 'reading', columns: {#reading})
 class ReadingTable extends Table {
   
   /// id of this entry
@@ -10,5 +9,8 @@ class ReadingTable extends Table {
 
   /// the reading of this entry
   TextColumn get reading => text().unique()();
+
+  /// the normalized reading of this entry (e.g., コンピューター -> コンピュうたあ)
+  TextColumn get readingNormalized => text().nullable()();
 
 }

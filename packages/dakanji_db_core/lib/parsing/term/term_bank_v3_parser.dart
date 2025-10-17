@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:convert';
 
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
 import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_context.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
@@ -66,10 +67,24 @@ Future parseTermBankV3(
     String term = jsonEntry[0];
     if(pC.allTerms[term] == null){
       pC.allTerms[term] = termInsertId;
+
+      String? termNormalized = preprocessInput(term, false).hiraganaTerm;
+      String? termTokens = getMecabSurfacesOrNull(mecab, term);
+      String? termTokensNormalized = termTokens==null
+        ? null
+        : preprocessInput(termTokens, false).hiraganaTerm;
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
         term: Value(term),
-        termTokens: Value(getMecabSurfacesOrNull(mecab, term))
+        termNormalized: termNormalized!=term && termNormalized!=null
+          ? Value(termNormalized)
+          : const Value.absent(),
+        termTokens: termTokens != term && termTokens!=null
+          ? Value(termTokens)
+          : const Value.absent(),
+        termTokensNormalized: termTokensNormalized!=termTokens && termTokensNormalized!=null
+          ? Value(termTokensNormalized)
+          : const Value.absent(),
       ));
     }
 
@@ -77,9 +92,14 @@ Future parseTermBankV3(
     int readingInsertId = pC.allReadings[jsonEntry[1]] ?? ++pC.currentMaxReadingId;
     if(pC.allReadings[jsonEntry[1]] == null){
       pC.allReadings[jsonEntry[1]] = readingInsertId;
+
+      String? readingNormalized = preprocessInput(jsonEntry[1], false).hiraganaTerm;
       readingComps.add(ReadingTableCompanion(
         id: Value(readingInsertId),
-        reading: Value(jsonEntry[1])
+        reading: Value(jsonEntry[1]),
+        readingNormalized: readingNormalized!=jsonEntry[1] && readingNormalized!=null
+          ? Value(readingNormalized)
+          : const Value.absent()
       ));
     }
 

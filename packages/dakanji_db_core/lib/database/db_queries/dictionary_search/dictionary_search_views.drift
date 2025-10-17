@@ -6,9 +6,6 @@ import '/database/term_meta/term_meta_bank_v3_views.drift';
 CREATE VIEW IF NOT EXISTS dictionary_search_view AS
 
     SELECT
-        -- ====================================================================
-        -- 1. Expose important columns at the top level for joining and ordering.
-        -- ====================================================================
         Terms.id,
         Terms.indexId,
         Terms.term,
@@ -41,14 +38,13 @@ CREATE VIEW IF NOT EXISTS dictionary_search_view AS
         term_meta_bank_v3_entry_view AS Meta
             ON Terms.term = Meta.term AND Terms.reading = Meta.reading
     GROUP BY
-        -- Use the CORRECT snake_case names in the GROUP BY clause
         Terms.id,
         Terms.indexId,
         Terms.term,
         Terms.reading,
         Terms.popularity,
-        Terms.sequence_number, -- Corrected name
-        Terms.definition_tags, -- Corrected name
-        Terms.rule_identifiers, -- Corrected name
+        Terms.sequence_number,
+        Terms.definition_tags,
+        Terms.rule_identifiers,
         Terms.definitions,
         Terms.tags;

@@ -43,8 +43,13 @@ dictionary_search_drift:
       -- Find matches in 'reading'
       SELECT
         TB3T.id as term_bank_id, rank, RT.reading as matched_text,
-        CASE WHEN RT.reading = :query THEN 1 WHEN RT.reading LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
-        2 AS match_column_priority, NULL as spellfix_suggestion
+        CASE
+          WHEN RT.reading_normalized = :query THEN 1
+          WHEN RT.reading_normalized LIKE :query || '%' THEN 2
+          ELSE 3 END
+        AS match_type_priority,
+        2 AS match_column_priority,
+        NULL as spellfix_suggestion
       FROM reading_fts AS FTS
       JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.reading_id
       JOIN reading_table AS RT ON FTS.rowid = RT.id
@@ -81,15 +86,15 @@ dictionary_search_drift:
         TB3T.id as term_bank_id, 0 as rank,
         RT.reading as matched_text,
         CASE
-          WHEN RT.reading = :query 
-          THEN 1 WHEN RT.reading LIKE :query || '%'
+          WHEN RT.reading_normalized = :query 
+          THEN 1 WHEN RT.reading_normalized LIKE :query || '%'
           THEN 2 ELSE 3
         END AS match_type_priority,
         2 AS match_column_priority, 
         NULL as spellfix_suggestion
       FROM reading_table AS RT
       JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id
-      WHERE :use_glob = 1 AND RT.reading GLOB :query
+      WHERE :use_glob = 1 AND RT.reading_normalized GLOB :query
 
       UNION ALL
 
@@ -119,7 +124,7 @@ dictionary_search_drift:
         TB3T.id as term_bank_id, S.distance as rank, RT.reading as matched_text,
         4 AS match_type_priority, 2 AS match_column_priority, S.word as spellfix_suggestion
       FROM SpellfixSuggestions AS S
-      JOIN reading_table AS RT ON S.word = RT.reading
+      JOIN reading_table AS RT ON S.word = RT.reading_normalized
       JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id
     ),
 

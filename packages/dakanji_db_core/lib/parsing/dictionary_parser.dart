@@ -220,7 +220,7 @@ Future parseDictionaryFile({
     kanjiMetaBankFileNamingScheme: () => parseKanjiMetaBankV3(fileContent, importContext as KanjiMetaBankV3ParserContext, db, ind.id),
     tagBankFileNamingScheme: () => parseTagBankv3(fileContent, db, ind.id),
     termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext as TermBankV3ParserContext, db, ind.id, addFullJsonDefinitions, mecab),
-    termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, importContext as TermMetaBankV3ParserContext, db, ind.id),
+    termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, importContext as TermMetaBankV3ParserContext, db, ind.id, mecab),
   };
 
   final baseName = p.basename(filePath);

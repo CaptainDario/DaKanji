@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:convert';
 
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
@@ -111,8 +112,13 @@ Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserContext pC, DaKanji
         onyomiInsertId = ++pC.readingId;
         pC.readingsInDB[onyomi] = onyomiInsertId;
 
+        String? onyomiNormalized = preprocessInput(onyomi, false).hiraganaTerm;
         pC.readingCompanions.add(ReadingTableCompanion(
-          id: Value(onyomiInsertId), reading: Value(onyomi)
+          id: Value(onyomiInsertId),
+          reading: Value(onyomi),
+          readingNormalized: onyomiNormalized!=onyomi && onyomiNormalized!=null
+            ? Value(onyomiNormalized)
+            : const Value.absent(),
         ));
       }
       
@@ -141,8 +147,13 @@ Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserContext pC, DaKan
         kunyomiInsertId = ++pC.readingId;
         pC.readingsInDB[kunyomi] = kunyomiInsertId;
 
+        String? kunyomiNormalized = preprocessInput(kunyomi, false).hiraganaTerm;
         pC.readingCompanions.add(ReadingTableCompanion(
-          id: Value(kunyomiInsertId), reading: Value(kunyomi)
+          id: Value(kunyomiInsertId),
+          reading: Value(kunyomi),
+          readingNormalized: kunyomiNormalized!=kunyomi && kunyomiNormalized!=null
+            ? Value(kunyomiNormalized)
+            : const Value.absent(),
         ));
       }
       pC.kunyomisOrder.add(kunyomiInsertId);

@@ -1,22 +1,37 @@
 // Dart imports:
 import 'dart:convert';
 
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
 import 'package:dakanji_db_core/parsing/term_meta/term_meta_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:universal_io/io.dart';
 
 import '/database/dakanji_db.dart';
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
-Future parseTermMetaBankV3File(File termMetaBankFile, TermMetaBankV3ParserContext pC, DaKanjiDB db, int indexId) async {
+Future parseTermMetaBankV3File(
+  File termMetaBankFile,
+  TermMetaBankV3ParserContext pC,
+  DaKanjiDB db,
+  int indexId,
+  Mecab mecab
+) async {
 
   String termMetaBankJson = termMetaBankFile.readAsStringSync();
-  await parseTermMetaBankV3(termMetaBankJson, pC, db, indexId);
+  await parseTermMetaBankV3(termMetaBankJson, pC, db, indexId, mecab);
 
 }
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
-Future parseTermMetaBankV3(String termMetaBankJson, TermMetaBankV3ParserContext pC, DaKanjiDB db, int indexId) async {
+Future parseTermMetaBankV3(
+  String termMetaBankJson,
+  TermMetaBankV3ParserContext pC,
+  DaKanjiDB db,
+  int indexId,
+  Mecab mecab
+) async {
 
   // decode json
   List jsonList = jsonDecode(termMetaBankJson);
@@ -42,11 +57,27 @@ Future parseTermMetaBankV3(String termMetaBankJson, TermMetaBankV3ParserContext 
 
     // parse term
     int termInsertId = pC.allTerms[jsonEntry[0]] ?? ++pC.currentMaxTermId;
-    if(pC.allTerms[jsonEntry[0]] == null){
-      pC.allTerms[jsonEntry[0]] = termInsertId;
+    String term = jsonEntry[0];
+    if(pC.allTerms[term] == null){
+      pC.allTerms[term] = termInsertId;
+
+      String? termNormalized = preprocessInput(term, false).hiraganaTerm;
+      String? termTokens = getMecabSurfacesOrNull(mecab, term);
+      String? termTokensNormalized = termTokens==null
+        ? null
+        : preprocessInput(termTokens, false).hiraganaTerm;
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
-        term: Value(jsonEntry[0])
+        term: Value(jsonEntry[0]),
+        termNormalized: termNormalized!=term && termNormalized!=null
+          ? Value(termNormalized)
+          : const Value.absent(),
+        termTokens: termTokens != term && termTokens!=null
+          ? Value(termTokens)
+          : const Value.absent(),
+        termTokensNormalized: termTokensNormalized!=termTokens && termTokensNormalized!=null
+          ? Value(termTokensNormalized)
+          : const Value.absent(),
       ));
     }
 
@@ -76,9 +107,14 @@ Future parseTermMetaBankV3(String termMetaBankJson, TermMetaBankV3ParserContext 
         readingInsertId = pC.allReadings[reading] ?? ++pC.currentMaxReadingId;
         if(pC.allReadings[reading] == null){
           pC.allReadings[reading] = readingInsertId;
+
+          String? normalizedReading = preprocessInput(reading, false).hiraganaTerm;
           readingComps.add(ReadingTableCompanion(
             id: Value(readingInsertId!),
-            reading: Value(reading)
+            reading: Value(reading),
+            readingNormalized: normalizedReading!=reading && normalizedReading!=null
+              ? Value(normalizedReading)
+              : const Value.absent(),
           ));
         }
       }

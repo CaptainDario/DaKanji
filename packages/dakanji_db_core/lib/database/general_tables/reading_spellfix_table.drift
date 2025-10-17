@@ -8,7 +8,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS reading_spellfix USING spellfix1(edit_cost_ta
 CREATE TRIGGER reading_spellfix_insert
 AFTER INSERT ON reading_table
 BEGIN
-    INSERT INTO reading_spellfix(word) VALUES (new.reading);
+    INSERT INTO reading_spellfix(word) VALUES (new.reading_normalized);
 END;
 
 -- Trigger to remove a word from the spellfix table
@@ -17,16 +17,16 @@ AFTER DELETE ON reading_table
 BEGIN
     DELETE FROM reading_spellfix
     WHERE word = old.reading
-      AND NOT EXISTS (SELECT 1 FROM reading_table WHERE reading = old.reading);
+      AND NOT EXISTS (SELECT 1 FROM reading_table WHERE reading_normalized = old.reading_normalized);
 END;
 
 -- Trigger to handle updates to the reading column
 CREATE TRIGGER reading_spellfix_update
-AFTER UPDATE OF reading ON reading_table
-WHEN old.reading IS NOT new.reading
+AFTER UPDATE OF reading_normalized ON reading_table
+WHEN old.reading_normalized IS NOT new.reading_normalized
 BEGIN
-    INSERT INTO reading_spellfix(word) VALUES (new.reading);
+    INSERT INTO reading_spellfix(word) VALUES (new.reading_normalized);
     DELETE FROM reading_spellfix
-    WHERE word = old.reading
-      AND NOT EXISTS (SELECT 1 FROM reading_table WHERE reading = old.reading);
+    WHERE word = old.reading_normalized
+      AND NOT EXISTS (SELECT 1 FROM reading_table WHERE reading_normalized = old.reading_normalized);
 END;

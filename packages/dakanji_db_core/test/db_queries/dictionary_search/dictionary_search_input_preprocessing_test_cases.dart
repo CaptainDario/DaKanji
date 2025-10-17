@@ -24,4 +24,18 @@ List<SearchTestCase> inputPreprocessingSearchTestCases = [
       ],
     ),
   ),
+  SearchTestCase(
+    description: '$descriptionPrefix: Search for こんぴゅーたー should match コンピューター (term) and こんぴゅーたー (reading)',
+    query: 'こんぴゅーたー',
+    queryMatches: const ExpectedMatchGroup(
+      exactMatches: [
+        ExpectedSearchResult(term: '', reading: 'こんぴゅーたー', match: 'こんぴゅーたー', definitions: ["Computer"]),
+      ],
+    ),
+    hiraganaQueryMatches: const ExpectedMatchGroup(
+      exactMatches: [
+        ExpectedSearchResult(term: 'コンピューター', reading: '', match: 'コンピューター', definitions: ["Computer"]),
+      ],
+    ),
+  ),
 ];

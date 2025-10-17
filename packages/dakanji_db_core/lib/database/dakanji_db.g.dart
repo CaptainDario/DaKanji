@@ -1636,8 +1636,20 @@ class $ReadingTableTable extends ReadingTable
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
+  static const VerificationMeta _readingNormalizedMeta = const VerificationMeta(
+    'readingNormalized',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, reading];
+  late final GeneratedColumn<String> readingNormalized =
+      GeneratedColumn<String>(
+        'reading_normalized',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [id, reading, readingNormalized];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1661,6 +1673,15 @@ class $ReadingTableTable extends ReadingTable
     } else if (isInserting) {
       context.missing(_readingMeta);
     }
+    if (data.containsKey('reading_normalized')) {
+      context.handle(
+        _readingNormalizedMeta,
+        readingNormalized.isAcceptableOrUnknown(
+          data['reading_normalized']!,
+          _readingNormalizedMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -1678,6 +1699,10 @@ class $ReadingTableTable extends ReadingTable
         DriftSqlType.string,
         data['${effectivePrefix}reading'],
       )!,
+      readingNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading_normalized'],
+      ),
     );
   }
 
@@ -1694,17 +1719,33 @@ class ReadingTableData extends DataClass
 
   /// the reading of this entry
   final String reading;
-  const ReadingTableData({required this.id, required this.reading});
+
+  /// the normalized reading of this entry (e.g., コンピューター -> コンピュうたあ)
+  final String? readingNormalized;
+  const ReadingTableData({
+    required this.id,
+    required this.reading,
+    this.readingNormalized,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['reading'] = Variable<String>(reading);
+    if (!nullToAbsent || readingNormalized != null) {
+      map['reading_normalized'] = Variable<String>(readingNormalized);
+    }
     return map;
   }
 
   ReadingTableCompanion toCompanion(bool nullToAbsent) {
-    return ReadingTableCompanion(id: Value(id), reading: Value(reading));
+    return ReadingTableCompanion(
+      id: Value(id),
+      reading: Value(reading),
+      readingNormalized: readingNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(readingNormalized),
+    );
   }
 
   factory ReadingTableData.fromJson(
@@ -1715,6 +1756,9 @@ class ReadingTableData extends DataClass
     return ReadingTableData(
       id: serializer.fromJson<int>(json['id']),
       reading: serializer.fromJson<String>(json['reading']),
+      readingNormalized: serializer.fromJson<String?>(
+        json['readingNormalized'],
+      ),
     );
   }
   @override
@@ -1723,15 +1767,28 @@ class ReadingTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'reading': serializer.toJson<String>(reading),
+      'readingNormalized': serializer.toJson<String?>(readingNormalized),
     };
   }
 
-  ReadingTableData copyWith({int? id, String? reading}) =>
-      ReadingTableData(id: id ?? this.id, reading: reading ?? this.reading);
+  ReadingTableData copyWith({
+    int? id,
+    String? reading,
+    Value<String?> readingNormalized = const Value.absent(),
+  }) => ReadingTableData(
+    id: id ?? this.id,
+    reading: reading ?? this.reading,
+    readingNormalized: readingNormalized.present
+        ? readingNormalized.value
+        : this.readingNormalized,
+  );
   ReadingTableData copyWithCompanion(ReadingTableCompanion data) {
     return ReadingTableData(
       id: data.id.present ? data.id.value : this.id,
       reading: data.reading.present ? data.reading.value : this.reading,
+      readingNormalized: data.readingNormalized.present
+          ? data.readingNormalized.value
+          : this.readingNormalized,
     );
   }
 
@@ -1739,46 +1796,58 @@ class ReadingTableData extends DataClass
   String toString() {
     return (StringBuffer('ReadingTableData(')
           ..write('id: $id, ')
-          ..write('reading: $reading')
+          ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, reading);
+  int get hashCode => Object.hash(id, reading, readingNormalized);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ReadingTableData &&
           other.id == this.id &&
-          other.reading == this.reading);
+          other.reading == this.reading &&
+          other.readingNormalized == this.readingNormalized);
 }
 
 class ReadingTableCompanion extends UpdateCompanion<ReadingTableData> {
   final Value<int> id;
   final Value<String> reading;
+  final Value<String?> readingNormalized;
   const ReadingTableCompanion({
     this.id = const Value.absent(),
     this.reading = const Value.absent(),
+    this.readingNormalized = const Value.absent(),
   });
   ReadingTableCompanion.insert({
     this.id = const Value.absent(),
     required String reading,
+    this.readingNormalized = const Value.absent(),
   }) : reading = Value(reading);
   static Insertable<ReadingTableData> custom({
     Expression<int>? id,
     Expression<String>? reading,
+    Expression<String>? readingNormalized,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (reading != null) 'reading': reading,
+      if (readingNormalized != null) 'reading_normalized': readingNormalized,
     });
   }
 
-  ReadingTableCompanion copyWith({Value<int>? id, Value<String>? reading}) {
+  ReadingTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? reading,
+    Value<String?>? readingNormalized,
+  }) {
     return ReadingTableCompanion(
       id: id ?? this.id,
       reading: reading ?? this.reading,
+      readingNormalized: readingNormalized ?? this.readingNormalized,
     );
   }
 
@@ -1791,6 +1860,9 @@ class ReadingTableCompanion extends UpdateCompanion<ReadingTableData> {
     if (reading.present) {
       map['reading'] = Variable<String>(reading.value);
     }
+    if (readingNormalized.present) {
+      map['reading_normalized'] = Variable<String>(readingNormalized.value);
+    }
     return map;
   }
 
@@ -1798,7 +1870,8 @@ class ReadingTableCompanion extends UpdateCompanion<ReadingTableData> {
   String toString() {
     return (StringBuffer('ReadingTableCompanion(')
           ..write('id: $id, ')
-          ..write('reading: $reading')
+          ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized')
           ..write(')'))
         .toString();
   }
@@ -5936,6 +6009,17 @@ class $TermTableTable extends TermTable
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
+  static const VerificationMeta _termNormalizedMeta = const VerificationMeta(
+    'termNormalized',
+  );
+  @override
+  late final GeneratedColumn<String> termNormalized = GeneratedColumn<String>(
+    'term_normalized',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _termTokensMeta = const VerificationMeta(
     'termTokens',
   );
@@ -5948,8 +6032,25 @@ class $TermTableTable extends TermTable
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
+  static const VerificationMeta _termTokensNormalizedMeta =
+      const VerificationMeta('termTokensNormalized');
   @override
-  List<GeneratedColumn> get $columns => [id, term, termTokens];
+  late final GeneratedColumn<String> termTokensNormalized =
+      GeneratedColumn<String>(
+        'term_tokens_normalized',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    term,
+    termNormalized,
+    termTokens,
+    termTokensNormalized,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -5973,10 +6074,28 @@ class $TermTableTable extends TermTable
     } else if (isInserting) {
       context.missing(_termMeta);
     }
+    if (data.containsKey('term_normalized')) {
+      context.handle(
+        _termNormalizedMeta,
+        termNormalized.isAcceptableOrUnknown(
+          data['term_normalized']!,
+          _termNormalizedMeta,
+        ),
+      );
+    }
     if (data.containsKey('term_tokens')) {
       context.handle(
         _termTokensMeta,
         termTokens.isAcceptableOrUnknown(data['term_tokens']!, _termTokensMeta),
+      );
+    }
+    if (data.containsKey('term_tokens_normalized')) {
+      context.handle(
+        _termTokensNormalizedMeta,
+        termTokensNormalized.isAcceptableOrUnknown(
+          data['term_tokens_normalized']!,
+          _termTokensNormalizedMeta,
+        ),
       );
     }
     return context;
@@ -5996,9 +6115,17 @@ class $TermTableTable extends TermTable
         DriftSqlType.string,
         data['${effectivePrefix}term'],
       )!,
+      termNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_normalized'],
+      ),
       termTokens: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}term_tokens'],
+      ),
+      termTokensNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_tokens_normalized'],
       ),
     );
   }
@@ -6016,16 +6143,34 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
   /// the term of this entry
   final String term;
 
+  /// the normalized form of the term (省エネ → 省えね)
+  final String? termNormalized;
+
   /// the term's tokens (space-separated) of this entry
   final String? termTokens;
-  const TermTableData({required this.id, required this.term, this.termTokens});
+
+  /// the normalized form of the term's tokens (space-separated) of this entry
+  final String? termTokensNormalized;
+  const TermTableData({
+    required this.id,
+    required this.term,
+    this.termNormalized,
+    this.termTokens,
+    this.termTokensNormalized,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['term'] = Variable<String>(term);
+    if (!nullToAbsent || termNormalized != null) {
+      map['term_normalized'] = Variable<String>(termNormalized);
+    }
     if (!nullToAbsent || termTokens != null) {
       map['term_tokens'] = Variable<String>(termTokens);
+    }
+    if (!nullToAbsent || termTokensNormalized != null) {
+      map['term_tokens_normalized'] = Variable<String>(termTokensNormalized);
     }
     return map;
   }
@@ -6034,9 +6179,15 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
     return TermTableCompanion(
       id: Value(id),
       term: Value(term),
+      termNormalized: termNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(termNormalized),
       termTokens: termTokens == null && nullToAbsent
           ? const Value.absent()
           : Value(termTokens),
+      termTokensNormalized: termTokensNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(termTokensNormalized),
     );
   }
 
@@ -6048,7 +6199,11 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
     return TermTableData(
       id: serializer.fromJson<int>(json['id']),
       term: serializer.fromJson<String>(json['term']),
+      termNormalized: serializer.fromJson<String?>(json['termNormalized']),
       termTokens: serializer.fromJson<String?>(json['termTokens']),
+      termTokensNormalized: serializer.fromJson<String?>(
+        json['termTokensNormalized'],
+      ),
     );
   }
   @override
@@ -6057,26 +6212,42 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'term': serializer.toJson<String>(term),
+      'termNormalized': serializer.toJson<String?>(termNormalized),
       'termTokens': serializer.toJson<String?>(termTokens),
+      'termTokensNormalized': serializer.toJson<String?>(termTokensNormalized),
     };
   }
 
   TermTableData copyWith({
     int? id,
     String? term,
+    Value<String?> termNormalized = const Value.absent(),
     Value<String?> termTokens = const Value.absent(),
+    Value<String?> termTokensNormalized = const Value.absent(),
   }) => TermTableData(
     id: id ?? this.id,
     term: term ?? this.term,
+    termNormalized: termNormalized.present
+        ? termNormalized.value
+        : this.termNormalized,
     termTokens: termTokens.present ? termTokens.value : this.termTokens,
+    termTokensNormalized: termTokensNormalized.present
+        ? termTokensNormalized.value
+        : this.termTokensNormalized,
   );
   TermTableData copyWithCompanion(TermTableCompanion data) {
     return TermTableData(
       id: data.id.present ? data.id.value : this.id,
       term: data.term.present ? data.term.value : this.term,
+      termNormalized: data.termNormalized.present
+          ? data.termNormalized.value
+          : this.termNormalized,
       termTokens: data.termTokens.present
           ? data.termTokens.value
           : this.termTokens,
+      termTokensNormalized: data.termTokensNormalized.present
+          ? data.termTokensNormalized.value
+          : this.termTokensNormalized,
     );
   }
 
@@ -6085,57 +6256,77 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
     return (StringBuffer('TermTableData(')
           ..write('id: $id, ')
           ..write('term: $term, ')
-          ..write('termTokens: $termTokens')
+          ..write('termNormalized: $termNormalized, ')
+          ..write('termTokens: $termTokens, ')
+          ..write('termTokensNormalized: $termTokensNormalized')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, term, termTokens);
+  int get hashCode =>
+      Object.hash(id, term, termNormalized, termTokens, termTokensNormalized);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TermTableData &&
           other.id == this.id &&
           other.term == this.term &&
-          other.termTokens == this.termTokens);
+          other.termNormalized == this.termNormalized &&
+          other.termTokens == this.termTokens &&
+          other.termTokensNormalized == this.termTokensNormalized);
 }
 
 class TermTableCompanion extends UpdateCompanion<TermTableData> {
   final Value<int> id;
   final Value<String> term;
+  final Value<String?> termNormalized;
   final Value<String?> termTokens;
+  final Value<String?> termTokensNormalized;
   const TermTableCompanion({
     this.id = const Value.absent(),
     this.term = const Value.absent(),
+    this.termNormalized = const Value.absent(),
     this.termTokens = const Value.absent(),
+    this.termTokensNormalized = const Value.absent(),
   });
   TermTableCompanion.insert({
     this.id = const Value.absent(),
     required String term,
+    this.termNormalized = const Value.absent(),
     this.termTokens = const Value.absent(),
+    this.termTokensNormalized = const Value.absent(),
   }) : term = Value(term);
   static Insertable<TermTableData> custom({
     Expression<int>? id,
     Expression<String>? term,
+    Expression<String>? termNormalized,
     Expression<String>? termTokens,
+    Expression<String>? termTokensNormalized,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (term != null) 'term': term,
+      if (termNormalized != null) 'term_normalized': termNormalized,
       if (termTokens != null) 'term_tokens': termTokens,
+      if (termTokensNormalized != null)
+        'term_tokens_normalized': termTokensNormalized,
     });
   }
 
   TermTableCompanion copyWith({
     Value<int>? id,
     Value<String>? term,
+    Value<String?>? termNormalized,
     Value<String?>? termTokens,
+    Value<String?>? termTokensNormalized,
   }) {
     return TermTableCompanion(
       id: id ?? this.id,
       term: term ?? this.term,
+      termNormalized: termNormalized ?? this.termNormalized,
       termTokens: termTokens ?? this.termTokens,
+      termTokensNormalized: termTokensNormalized ?? this.termTokensNormalized,
     );
   }
 
@@ -6148,8 +6339,16 @@ class TermTableCompanion extends UpdateCompanion<TermTableData> {
     if (term.present) {
       map['term'] = Variable<String>(term.value);
     }
+    if (termNormalized.present) {
+      map['term_normalized'] = Variable<String>(termNormalized.value);
+    }
     if (termTokens.present) {
       map['term_tokens'] = Variable<String>(termTokens.value);
+    }
+    if (termTokensNormalized.present) {
+      map['term_tokens_normalized'] = Variable<String>(
+        termTokensNormalized.value,
+      );
     }
     return map;
   }
@@ -6159,7 +6358,9 @@ class TermTableCompanion extends UpdateCompanion<TermTableData> {
     return (StringBuffer('TermTableCompanion(')
           ..write('id: $id, ')
           ..write('term: $term, ')
-          ..write('termTokens: $termTokens')
+          ..write('termNormalized: $termNormalized, ')
+          ..write('termTokens: $termTokens, ')
+          ..write('termTokensNormalized: $termTokensNormalized')
           ..write(')'))
         .toString();
   }
@@ -6184,17 +6385,18 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _definitionJsonMeta = const VerificationMeta(
-    'definitionJson',
-  );
   @override
-  late final GeneratedColumn<String> definitionJson = GeneratedColumn<String>(
-    'definition_json',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
+  late final GeneratedColumnWithTypeConverter<String, Uint8List>
+  definitionJson =
+      GeneratedColumn<Uint8List>(
+        'definition_json',
+        aliasedName,
+        false,
+        type: DriftSqlType.blob,
+        requiredDuringInsert: true,
+      ).withConverter<String>(
+        $TermBankV3DefinitionJsonTableTable.$converterdefinitionJson,
+      );
   @override
   List<GeneratedColumn> get $columns => [id, definitionJson];
   @override
@@ -6212,17 +6414,6 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('definition_json')) {
-      context.handle(
-        _definitionJsonMeta,
-        definitionJson.isAcceptableOrUnknown(
-          data['definition_json']!,
-          _definitionJsonMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_definitionJsonMeta);
-    }
     return context;
   }
 
@@ -6239,10 +6430,14 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      definitionJson: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}definition_json'],
-      )!,
+      definitionJson: $TermBankV3DefinitionJsonTableTable
+          .$converterdefinitionJson
+          .fromSql(
+            attachedDatabase.typeMapping.read(
+              DriftSqlType.blob,
+              data['${effectivePrefix}definition_json'],
+            )!,
+          ),
     );
   }
 
@@ -6250,6 +6445,9 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
   $TermBankV3DefinitionJsonTableTable createAlias(String alias) {
     return $TermBankV3DefinitionJsonTableTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<String, Uint8List> $converterdefinitionJson =
+      const ZlibStringConverter();
 }
 
 class TermBankV3DefinitionJsonTableData extends DataClass
@@ -6267,7 +6465,13 @@ class TermBankV3DefinitionJsonTableData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['definition_json'] = Variable<String>(definitionJson);
+    {
+      map['definition_json'] = Variable<Uint8List>(
+        $TermBankV3DefinitionJsonTableTable.$converterdefinitionJson.toSql(
+          definitionJson,
+        ),
+      );
+    }
     return map;
   }
 
@@ -6348,7 +6552,7 @@ class TermBankV3DefinitionJsonTableCompanion
   }) : definitionJson = Value(definitionJson);
   static Insertable<TermBankV3DefinitionJsonTableData> custom({
     Expression<int>? id,
-    Expression<String>? definitionJson,
+    Expression<Uint8List>? definitionJson,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -6373,7 +6577,11 @@ class TermBankV3DefinitionJsonTableCompanion
       map['id'] = Variable<int>(id.value);
     }
     if (definitionJson.present) {
-      map['definition_json'] = Variable<String>(definitionJson.value);
+      map['definition_json'] = Variable<Uint8List>(
+        $TermBankV3DefinitionJsonTableTable.$converterdefinitionJson.toSql(
+          definitionJson.value,
+        ),
+      );
     }
     return map;
   }
@@ -11937,6 +12145,386 @@ class DictionarySearchView
   };
 }
 
+class SearchFts extends Table
+    with TableInfo<SearchFts, SearchFt>, VirtualTableInfo<SearchFts, SearchFt> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  SearchFts(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
+  late final GeneratedColumn<String> termId = GeneratedColumn<String>(
+    'term_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _readingIdMeta = const VerificationMeta(
+    'readingId',
+  );
+  late final GeneratedColumn<String> readingId = GeneratedColumn<String>(
+    'reading_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _definitionIdMeta = const VerificationMeta(
+    'definitionId',
+  );
+  late final GeneratedColumn<String> definitionId = GeneratedColumn<String>(
+    'definition_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _isNormalizedMeta = const VerificationMeta(
+    'isNormalized',
+  );
+  late final GeneratedColumn<String> isNormalized = GeneratedColumn<String>(
+    'is_normalized',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _textMeta = const VerificationMeta('text');
+  late final GeneratedColumn<String> text = GeneratedColumn<String>(
+    'text',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    termId,
+    readingId,
+    definitionId,
+    isNormalized,
+    text,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'search_fts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SearchFt> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('term_id')) {
+      context.handle(
+        _termIdMeta,
+        termId.isAcceptableOrUnknown(data['term_id']!, _termIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termIdMeta);
+    }
+    if (data.containsKey('reading_id')) {
+      context.handle(
+        _readingIdMeta,
+        readingId.isAcceptableOrUnknown(data['reading_id']!, _readingIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_readingIdMeta);
+    }
+    if (data.containsKey('definition_id')) {
+      context.handle(
+        _definitionIdMeta,
+        definitionId.isAcceptableOrUnknown(
+          data['definition_id']!,
+          _definitionIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_definitionIdMeta);
+    }
+    if (data.containsKey('is_normalized')) {
+      context.handle(
+        _isNormalizedMeta,
+        isNormalized.isAcceptableOrUnknown(
+          data['is_normalized']!,
+          _isNormalizedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_isNormalizedMeta);
+    }
+    if (data.containsKey('text')) {
+      context.handle(
+        _textMeta,
+        text.isAcceptableOrUnknown(data['text']!, _textMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_textMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  SearchFt map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SearchFt(
+      termId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_id'],
+      )!,
+      readingId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading_id'],
+      )!,
+      definitionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition_id'],
+      )!,
+      isNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}is_normalized'],
+      )!,
+      text: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}text'],
+      )!,
+    );
+  }
+
+  @override
+  SearchFts createAlias(String alias) {
+    return SearchFts(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(term_id UNINDEXED, reading_id UNINDEXED, definition_id UNINDEXED, is_normalized UNINDEXED, text, tokenize = \'unicode61\', prefix = \'2 3\')';
+}
+
+class SearchFt extends DataClass implements Insertable<SearchFt> {
+  final String termId;
+  final String readingId;
+  final String definitionId;
+  final String isNormalized;
+  final String text;
+  const SearchFt({
+    required this.termId,
+    required this.readingId,
+    required this.definitionId,
+    required this.isNormalized,
+    required this.text,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['term_id'] = Variable<String>(termId);
+    map['reading_id'] = Variable<String>(readingId);
+    map['definition_id'] = Variable<String>(definitionId);
+    map['is_normalized'] = Variable<String>(isNormalized);
+    map['text'] = Variable<String>(text);
+    return map;
+  }
+
+  SearchFtsCompanion toCompanion(bool nullToAbsent) {
+    return SearchFtsCompanion(
+      termId: Value(termId),
+      readingId: Value(readingId),
+      definitionId: Value(definitionId),
+      isNormalized: Value(isNormalized),
+      text: Value(text),
+    );
+  }
+
+  factory SearchFt.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SearchFt(
+      termId: serializer.fromJson<String>(json['term_id']),
+      readingId: serializer.fromJson<String>(json['reading_id']),
+      definitionId: serializer.fromJson<String>(json['definition_id']),
+      isNormalized: serializer.fromJson<String>(json['is_normalized']),
+      text: serializer.fromJson<String>(json['text']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'term_id': serializer.toJson<String>(termId),
+      'reading_id': serializer.toJson<String>(readingId),
+      'definition_id': serializer.toJson<String>(definitionId),
+      'is_normalized': serializer.toJson<String>(isNormalized),
+      'text': serializer.toJson<String>(text),
+    };
+  }
+
+  SearchFt copyWith({
+    String? termId,
+    String? readingId,
+    String? definitionId,
+    String? isNormalized,
+    String? text,
+  }) => SearchFt(
+    termId: termId ?? this.termId,
+    readingId: readingId ?? this.readingId,
+    definitionId: definitionId ?? this.definitionId,
+    isNormalized: isNormalized ?? this.isNormalized,
+    text: text ?? this.text,
+  );
+  SearchFt copyWithCompanion(SearchFtsCompanion data) {
+    return SearchFt(
+      termId: data.termId.present ? data.termId.value : this.termId,
+      readingId: data.readingId.present ? data.readingId.value : this.readingId,
+      definitionId: data.definitionId.present
+          ? data.definitionId.value
+          : this.definitionId,
+      isNormalized: data.isNormalized.present
+          ? data.isNormalized.value
+          : this.isNormalized,
+      text: data.text.present ? data.text.value : this.text,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SearchFt(')
+          ..write('termId: $termId, ')
+          ..write('readingId: $readingId, ')
+          ..write('definitionId: $definitionId, ')
+          ..write('isNormalized: $isNormalized, ')
+          ..write('text: $text')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(termId, readingId, definitionId, isNormalized, text);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SearchFt &&
+          other.termId == this.termId &&
+          other.readingId == this.readingId &&
+          other.definitionId == this.definitionId &&
+          other.isNormalized == this.isNormalized &&
+          other.text == this.text);
+}
+
+class SearchFtsCompanion extends UpdateCompanion<SearchFt> {
+  final Value<String> termId;
+  final Value<String> readingId;
+  final Value<String> definitionId;
+  final Value<String> isNormalized;
+  final Value<String> text;
+  final Value<int> rowid;
+  const SearchFtsCompanion({
+    this.termId = const Value.absent(),
+    this.readingId = const Value.absent(),
+    this.definitionId = const Value.absent(),
+    this.isNormalized = const Value.absent(),
+    this.text = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SearchFtsCompanion.insert({
+    required String termId,
+    required String readingId,
+    required String definitionId,
+    required String isNormalized,
+    required String text,
+    this.rowid = const Value.absent(),
+  }) : termId = Value(termId),
+       readingId = Value(readingId),
+       definitionId = Value(definitionId),
+       isNormalized = Value(isNormalized),
+       text = Value(text);
+  static Insertable<SearchFt> custom({
+    Expression<String>? termId,
+    Expression<String>? readingId,
+    Expression<String>? definitionId,
+    Expression<String>? isNormalized,
+    Expression<String>? text,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (termId != null) 'term_id': termId,
+      if (readingId != null) 'reading_id': readingId,
+      if (definitionId != null) 'definition_id': definitionId,
+      if (isNormalized != null) 'is_normalized': isNormalized,
+      if (text != null) 'text': text,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SearchFtsCompanion copyWith({
+    Value<String>? termId,
+    Value<String>? readingId,
+    Value<String>? definitionId,
+    Value<String>? isNormalized,
+    Value<String>? text,
+    Value<int>? rowid,
+  }) {
+    return SearchFtsCompanion(
+      termId: termId ?? this.termId,
+      readingId: readingId ?? this.readingId,
+      definitionId: definitionId ?? this.definitionId,
+      isNormalized: isNormalized ?? this.isNormalized,
+      text: text ?? this.text,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (termId.present) {
+      map['term_id'] = Variable<String>(termId.value);
+    }
+    if (readingId.present) {
+      map['reading_id'] = Variable<String>(readingId.value);
+    }
+    if (definitionId.present) {
+      map['definition_id'] = Variable<String>(definitionId.value);
+    }
+    if (isNormalized.present) {
+      map['is_normalized'] = Variable<String>(isNormalized.value);
+    }
+    if (text.present) {
+      map['text'] = Variable<String>(text.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SearchFtsCompanion(')
+          ..write('termId: $termId, ')
+          ..write('readingId: $readingId, ')
+          ..write('definitionId: $definitionId, ')
+          ..write('isNormalized: $isNormalized, ')
+          ..write('text: $text, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class ReadingSpellfix extends Table
     with
         TableInfo<ReadingSpellfix, ReadingSpellfixData>,
@@ -12584,19 +13172,20 @@ class ReadingFts extends Table
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   ReadingFts(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _readingMeta = const VerificationMeta(
-    'reading',
+  static const VerificationMeta _readingNormalizedMeta = const VerificationMeta(
+    'readingNormalized',
   );
-  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
-    'reading',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: '',
-  );
+  late final GeneratedColumn<String> readingNormalized =
+      GeneratedColumn<String>(
+        'reading_normalized',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        $customConstraints: '',
+      );
   @override
-  List<GeneratedColumn> get $columns => [reading];
+  List<GeneratedColumn> get $columns => [readingNormalized];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -12609,13 +13198,16 @@ class ReadingFts extends Table
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('reading')) {
+    if (data.containsKey('reading_normalized')) {
       context.handle(
-        _readingMeta,
-        reading.isAcceptableOrUnknown(data['reading']!, _readingMeta),
+        _readingNormalizedMeta,
+        readingNormalized.isAcceptableOrUnknown(
+          data['reading_normalized']!,
+          _readingNormalizedMeta,
+        ),
       );
     } else if (isInserting) {
-      context.missing(_readingMeta);
+      context.missing(_readingNormalizedMeta);
     }
     return context;
   }
@@ -12626,9 +13218,9 @@ class ReadingFts extends Table
   ReadingFt map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ReadingFt(
-      reading: attachedDatabase.typeMapping.read(
+      readingNormalized: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}reading'],
+        data['${effectivePrefix}reading_normalized'],
       )!,
     );
   }
@@ -12642,21 +13234,21 @@ class ReadingFts extends Table
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(reading, content=\'reading_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
+      'fts5(reading_normalized, content=\'reading_table\', content_rowid=\'id\', tokenize=\'unicode61\', prefix=\'2 3\')';
 }
 
 class ReadingFt extends DataClass implements Insertable<ReadingFt> {
-  final String reading;
-  const ReadingFt({required this.reading});
+  final String readingNormalized;
+  const ReadingFt({required this.readingNormalized});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['reading'] = Variable<String>(reading);
+    map['reading_normalized'] = Variable<String>(readingNormalized);
     return map;
   }
 
   ReadingFtsCompanion toCompanion(bool nullToAbsent) {
-    return ReadingFtsCompanion(reading: Value(reading));
+    return ReadingFtsCompanion(readingNormalized: Value(readingNormalized));
   }
 
   factory ReadingFt.fromJson(
@@ -12664,62 +13256,73 @@ class ReadingFt extends DataClass implements Insertable<ReadingFt> {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ReadingFt(reading: serializer.fromJson<String>(json['reading']));
+    return ReadingFt(
+      readingNormalized: serializer.fromJson<String>(
+        json['reading_normalized'],
+      ),
+    );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{'reading': serializer.toJson<String>(reading)};
+    return <String, dynamic>{
+      'reading_normalized': serializer.toJson<String>(readingNormalized),
+    };
   }
 
-  ReadingFt copyWith({String? reading}) =>
-      ReadingFt(reading: reading ?? this.reading);
+  ReadingFt copyWith({String? readingNormalized}) =>
+      ReadingFt(readingNormalized: readingNormalized ?? this.readingNormalized);
   ReadingFt copyWithCompanion(ReadingFtsCompanion data) {
     return ReadingFt(
-      reading: data.reading.present ? data.reading.value : this.reading,
+      readingNormalized: data.readingNormalized.present
+          ? data.readingNormalized.value
+          : this.readingNormalized,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('ReadingFt(')
-          ..write('reading: $reading')
+          ..write('readingNormalized: $readingNormalized')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => reading.hashCode;
+  int get hashCode => readingNormalized.hashCode;
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ReadingFt && other.reading == this.reading);
+      (other is ReadingFt && other.readingNormalized == this.readingNormalized);
 }
 
 class ReadingFtsCompanion extends UpdateCompanion<ReadingFt> {
-  final Value<String> reading;
+  final Value<String> readingNormalized;
   final Value<int> rowid;
   const ReadingFtsCompanion({
-    this.reading = const Value.absent(),
+    this.readingNormalized = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ReadingFtsCompanion.insert({
-    required String reading,
+    required String readingNormalized,
     this.rowid = const Value.absent(),
-  }) : reading = Value(reading);
+  }) : readingNormalized = Value(readingNormalized);
   static Insertable<ReadingFt> custom({
-    Expression<String>? reading,
+    Expression<String>? readingNormalized,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (reading != null) 'reading': reading,
+      if (readingNormalized != null) 'reading_normalized': readingNormalized,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
-  ReadingFtsCompanion copyWith({Value<String>? reading, Value<int>? rowid}) {
+  ReadingFtsCompanion copyWith({
+    Value<String>? readingNormalized,
+    Value<int>? rowid,
+  }) {
     return ReadingFtsCompanion(
-      reading: reading ?? this.reading,
+      readingNormalized: readingNormalized ?? this.readingNormalized,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -12727,8 +13330,8 @@ class ReadingFtsCompanion extends UpdateCompanion<ReadingFt> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (reading.present) {
-      map['reading'] = Variable<String>(reading.value);
+    if (readingNormalized.present) {
+      map['reading_normalized'] = Variable<String>(readingNormalized.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -12739,7 +13342,7 @@ class ReadingFtsCompanion extends UpdateCompanion<ReadingFt> {
   @override
   String toString() {
     return (StringBuffer('ReadingFtsCompanion(')
-          ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -17352,6 +17955,43 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final DictionarySearchView dictionarySearchView = DictionarySearchView(
     this,
   );
+  late final SearchFts searchFts = SearchFts(this);
+  late final Trigger termTableAi = Trigger(
+    'CREATE TRIGGER term_table_ai AFTER INSERT ON term_table BEGIN INSERT INTO search_fts (term_id, reading_id, definition_id, is_normalized, text) VALUES (NEW.id, NULL, NULL, 0, NEW.term || \' \' || IFNULL(NEW.term_tokens, \'\'));INSERT INTO search_fts (term_id, reading_id, definition_id, is_normalized, text) VALUES (NEW.id, NULL, NULL, 1, IFNULL(NEW.term_normalized, NEW.term) || \' \' || IFNULL(NEW.term_tokens, \'\'));END',
+    'term_table_ai',
+  );
+  late final Trigger termTableAu = Trigger(
+    'CREATE TRIGGER term_table_au AFTER UPDATE OF term, term_normalized, term_tokens ON term_table BEGIN DELETE FROM search_fts WHERE term_id = OLD.id;INSERT INTO search_fts (term_id, reading_id, definition_id, is_normalized, text) VALUES (NEW.id, NULL, NULL, 0, NEW.term || \' \' || IFNULL(NEW.term_tokens, \'\'));INSERT INTO search_fts (term_id, reading_id, definition_id, is_normalized, text) VALUES (NEW.id, NULL, NULL, 1, IFNULL(NEW.term_normalized, NEW.term) || \' \' || IFNULL(NEW.term_tokens, \'\'));END',
+    'term_table_au',
+  );
+  late final Trigger termTableAd = Trigger(
+    'CREATE TRIGGER term_table_ad AFTER DELETE ON term_table BEGIN DELETE FROM search_fts WHERE term_id = OLD.id;END',
+    'term_table_ad',
+  );
+  late final Trigger readingTableAi = Trigger(
+    'CREATE TRIGGER reading_table_ai AFTER INSERT ON reading_table BEGIN INSERT INTO search_fts (term_id, reading_id, definition_id, is_normalized, text) VALUES (NULL, NEW.id, NULL, 0, NEW.reading);INSERT INTO search_fts (term_id, reading_id, definition_id, is_normalized, text) VALUES (NULL, NEW.id, NULL, 1, IFNULL(NEW.reading_normalized, NEW.reading));END',
+    'reading_table_ai',
+  );
+  late final Trigger readingTableAu = Trigger(
+    'CREATE TRIGGER reading_table_au AFTER UPDATE OF reading, reading_normalized ON reading_table BEGIN DELETE FROM search_fts WHERE reading_id = OLD.id;INSERT INTO search_fts (term_id, reading_id, definition_id, is_normalized, text) VALUES (NULL, NEW.id, NULL, 0, NEW.reading);INSERT INTO search_fts (term_id, reading_id, definition_id, is_normalized, text) VALUES (NULL, NEW.id, NULL, 1, IFNULL(NEW.reading_normalized, NEW.reading));END',
+    'reading_table_au',
+  );
+  late final Trigger readingTableAd = Trigger(
+    'CREATE TRIGGER reading_table_ad AFTER DELETE ON reading_table BEGIN DELETE FROM search_fts WHERE reading_id = OLD.id;END',
+    'reading_table_ad',
+  );
+  late final Trigger definitionTableAi = Trigger(
+    'CREATE TRIGGER definition_table_ai AFTER INSERT ON definition_table BEGIN INSERT INTO search_fts (term_id, reading_id, definition_id, is_normalized, text) VALUES (NULL, NULL, NEW.id, 0, NEW.definition);END',
+    'definition_table_ai',
+  );
+  late final Trigger definitionTableAu = Trigger(
+    'CREATE TRIGGER definition_table_au AFTER UPDATE OF definition ON definition_table BEGIN UPDATE search_fts SET text = NEW.definition WHERE definition_id = NEW.id;END',
+    'definition_table_au',
+  );
+  late final Trigger definitionTableAd = Trigger(
+    'CREATE TRIGGER definition_table_ad AFTER DELETE ON definition_table BEGIN DELETE FROM search_fts WHERE definition_id = OLD.id;END',
+    'definition_table_ad',
+  );
   late final ReadingSpellfix readingSpellfix = ReadingSpellfix(this);
   late final TermFts termFts = TermFts(this);
   late final ReadingFts readingFts = ReadingFts(this);
@@ -17359,14 +17999,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final Index name = Index(
     'name',
     'CREATE INDEX name ON tag_bank_v3_table (name)',
-  );
-  late final Index reading = Index(
-    'reading',
-    'CREATE INDEX reading ON reading_table (reading)',
-  );
-  late final Index term = Index(
-    'term',
-    'CREATE INDEX term ON term_table (term)',
   );
   late final Index kanji = Index(
     'kanji',
@@ -17397,27 +18029,27 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'definition_table_au',
   );
   late final Trigger readingSpellfixInsert = Trigger(
-    'CREATE TRIGGER reading_spellfix_insert AFTER INSERT ON reading_table BEGIN INSERT INTO reading_spellfix (word) VALUES (new.reading);END',
+    'CREATE TRIGGER reading_spellfix_insert AFTER INSERT ON reading_table BEGIN INSERT INTO reading_spellfix (word) VALUES (new.reading_normalized);END',
     'reading_spellfix_insert',
   );
   late final Trigger readingSpellfixDelete = Trigger(
-    'CREATE TRIGGER reading_spellfix_delete AFTER DELETE ON reading_table BEGIN DELETE FROM reading_spellfix WHERE word = old.reading AND NOT EXISTS (SELECT 1 FROM reading_table WHERE reading = old.reading);END',
+    'CREATE TRIGGER reading_spellfix_delete AFTER DELETE ON reading_table BEGIN DELETE FROM reading_spellfix WHERE word = old.reading AND NOT EXISTS (SELECT 1 FROM reading_table WHERE reading_normalized = old.reading_normalized);END',
     'reading_spellfix_delete',
   );
   late final Trigger readingSpellfixUpdate = Trigger(
-    'CREATE TRIGGER reading_spellfix_update AFTER UPDATE OF reading ON reading_table WHEN old.reading IS NOT new.reading BEGIN INSERT INTO reading_spellfix (word) VALUES (new.reading);DELETE FROM reading_spellfix WHERE word = old.reading AND NOT EXISTS (SELECT 1 FROM reading_table WHERE reading = old.reading);END',
+    'CREATE TRIGGER reading_spellfix_update AFTER UPDATE OF reading_normalized ON reading_table WHEN old.reading_normalized IS NOT new.reading_normalized BEGIN INSERT INTO reading_spellfix (word) VALUES (new.reading_normalized);DELETE FROM reading_spellfix WHERE word = old.reading_normalized AND NOT EXISTS (SELECT 1 FROM reading_table WHERE reading_normalized = old.reading_normalized);END',
     'reading_spellfix_update',
   );
   late final Trigger readingTableAi = Trigger(
-    'CREATE TRIGGER reading_table_ai AFTER INSERT ON reading_table BEGIN INSERT INTO reading_fts ("rowid", reading) VALUES (new.id, new.reading);END',
+    'CREATE TRIGGER reading_table_ai AFTER INSERT ON reading_table BEGIN INSERT INTO reading_fts ("rowid", reading_normalized) VALUES (new.id, new.reading_normalized);END',
     'reading_table_ai',
   );
   late final Trigger readingTableAd = Trigger(
-    'CREATE TRIGGER reading_table_ad AFTER DELETE ON reading_table BEGIN INSERT INTO reading_fts (reading_fts, "rowid", reading) VALUES (\'delete\', old.id, old.reading);END',
+    'CREATE TRIGGER reading_table_ad AFTER DELETE ON reading_table BEGIN INSERT INTO reading_fts (reading_fts, "rowid", reading_normalized) VALUES (\'delete\', old.id, old.reading_normalized);END',
     'reading_table_ad',
   );
   late final Trigger readingTableAu = Trigger(
-    'CREATE TRIGGER reading_table_au AFTER UPDATE OF reading ON reading_table BEGIN INSERT INTO reading_fts (reading_fts, "rowid", reading) VALUES (\'delete\', old.id, old.reading);INSERT INTO reading_fts ("rowid", reading) VALUES (new.id, new.reading);END',
+    'CREATE TRIGGER reading_table_au AFTER UPDATE OF reading_normalized ON reading_table BEGIN INSERT INTO reading_fts (reading_fts, "rowid", reading_normalized) VALUES (\'delete\', old.id, old.reading_normalized);INSERT INTO reading_fts ("rowid", reading_normalized) VALUES (new.id, new.reading_normalized);END',
     'reading_table_au',
   );
   late final Trigger termTableAi = Trigger(
@@ -17542,7 +18174,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     String tagFilter,
   ) {
     return customSelect(
-      'WITH SpellfixSuggestions AS (SELECT word, distance FROM reading_spellfix WHERE word MATCH ?1 AND distance > 0 AND distance < ?2 AND ?3 = 0 ORDER BY distance LIMIT 10), FtsMatches AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE ?3 = 0 AND term_fts MATCH ?4 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE ?3 = 0 AND reading_fts MATCH ?4 UNION ALL SELECT DefJoin.term_bank_id, rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_fts AS FTS JOIN term_bank_v3_x_definition_table AS DefJoin ON FTS."rowid" = DefJoin.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE ?3 = 0 AND definition_fts MATCH ?4), GlobMatches AS (SELECT TB3T.id AS term_bank_id, 0 AS rank, TT.term AS matched_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_table AS TT JOIN term_bank_v3_table AS TB3T ON TT.id = TB3T.term_id WHERE ?3 = 1 AND TT.term GLOB ?1 UNION ALL SELECT TB3T.id AS term_bank_id, 0 AS rank, RT.reading AS matched_text, CASE WHEN RT.reading = ?1 THEN 1 WHEN RT.reading LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_table AS RT JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id WHERE ?3 = 1 AND RT.reading GLOB ?1 UNION ALL SELECT DefJoin.term_bank_id, 0 AS rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_table AS DT JOIN term_bank_v3_x_definition_table AS DefJoin ON DT.id = DefJoin.definition_id WHERE ?3 = 1 AND DT.definition GLOB ?1), RankedIDs AS (SELECT * FROM FtsMatches UNION ALL SELECT * FROM GlobMatches UNION ALL SELECT TB3T.id AS term_bank_id, S.distance AS rank, RT.reading AS matched_text, 4 AS match_type_priority, 2 AS match_column_priority, S.word AS spellfix_suggestion FROM SpellfixSuggestions AS S JOIN reading_table AS RT ON S.word = RT.reading JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id), FilteredByPoS AS (SELECT T3XDT.term_bank_id FROM term_bank_v3_x_definition_tag_table AS T3XDT JOIN term_bank_v3_definition_tags_table AS T3DT ON T3DT.id = T3XDT.definition_tag_id WHERE LENGTH(?5) > 2 AND T3DT.definition_tag IN (SELECT value FROM json_each(?5)) GROUP BY T3XDT.term_bank_id), FilteredByTags AS (SELECT T3XT.term_bank_id FROM term_bank_v3_x_tag_bank_table AS T3XT JOIN tag_bank_v3_table AS T3T ON T3T.id = T3XT.tag_bank_id WHERE LENGTH(?6) > 2 AND T3T.name IN (SELECT value FROM json_each(?6)) GROUP BY T3XT.term_bank_id), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, matched_text, spellfix_suggestion FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs WHERE(LENGTH(?5) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByPoS))AND(LENGTH(?6) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByTags))) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, matched_text, R.match_type_priority, R.match_column_priority, R.spellfix_suggestion, V.* FROM dictionary_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, V.popularity DESC, R.best_rank, LENGTH(R.matched_text)',
+      'WITH SpellfixSuggestions AS (SELECT word, distance FROM reading_spellfix WHERE word MATCH ?1 AND distance > 0 AND distance < ?2 AND ?3 = 0 ORDER BY distance LIMIT 10), FtsMatches AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.term_id JOIN term_table AS TT ON FTS."rowid" = TT.id WHERE ?3 = 0 AND term_fts MATCH ?4 UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, CASE WHEN RT.reading_normalized = ?1 THEN 1 WHEN RT.reading_normalized LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS."rowid" = TB3T.reading_id JOIN reading_table AS RT ON FTS."rowid" = RT.id WHERE ?3 = 0 AND reading_fts MATCH ?4 UNION ALL SELECT DefJoin.term_bank_id, rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_fts AS FTS JOIN term_bank_v3_x_definition_table AS DefJoin ON FTS."rowid" = DefJoin.definition_id JOIN definition_table AS DT ON FTS."rowid" = DT.id WHERE ?3 = 0 AND definition_fts MATCH ?4), GlobMatches AS (SELECT TB3T.id AS term_bank_id, 0 AS rank, TT.term AS matched_text, CASE WHEN TT.term = ?1 THEN 1 WHEN TT.term LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_table AS TT JOIN term_bank_v3_table AS TB3T ON TT.id = TB3T.term_id WHERE ?3 = 1 AND TT.term GLOB ?1 UNION ALL SELECT TB3T.id AS term_bank_id, 0 AS rank, RT.reading AS matched_text, CASE WHEN RT.reading_normalized = ?1 THEN 1 WHEN RT.reading_normalized LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_table AS RT JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id WHERE ?3 = 1 AND RT.reading_normalized GLOB ?1 UNION ALL SELECT DefJoin.term_bank_id, 0 AS rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_table AS DT JOIN term_bank_v3_x_definition_table AS DefJoin ON DT.id = DefJoin.definition_id WHERE ?3 = 1 AND DT.definition GLOB ?1), RankedIDs AS (SELECT * FROM FtsMatches UNION ALL SELECT * FROM GlobMatches UNION ALL SELECT TB3T.id AS term_bank_id, S.distance AS rank, RT.reading AS matched_text, 4 AS match_type_priority, 2 AS match_column_priority, S.word AS spellfix_suggestion FROM SpellfixSuggestions AS S JOIN reading_table AS RT ON S.word = RT.reading_normalized JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id), FilteredByPoS AS (SELECT T3XDT.term_bank_id FROM term_bank_v3_x_definition_tag_table AS T3XDT JOIN term_bank_v3_definition_tags_table AS T3DT ON T3DT.id = T3XDT.definition_tag_id WHERE LENGTH(?5) > 2 AND T3DT.definition_tag IN (SELECT value FROM json_each(?5)) GROUP BY T3XDT.term_bank_id), FilteredByTags AS (SELECT T3XT.term_bank_id FROM term_bank_v3_x_tag_bank_table AS T3XT JOIN tag_bank_v3_table AS T3T ON T3T.id = T3XT.tag_bank_id WHERE LENGTH(?6) > 2 AND T3T.name IN (SELECT value FROM json_each(?6)) GROUP BY T3XT.term_bank_id), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, matched_text, spellfix_suggestion FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs WHERE(LENGTH(?5) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByPoS))AND(LENGTH(?6) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByTags))) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, matched_text, R.match_type_priority, R.match_column_priority, R.spellfix_suggestion, V.* FROM dictionary_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, V.popularity DESC, R.best_rank, LENGTH(R.matched_text)',
       variables: [
         Variable<String>(query),
         Variable<int>(spellfixDistance),
@@ -17803,13 +18435,21 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termMetaBankV3XIpaTagTable,
     termMetaBankV3EntryView,
     dictionarySearchView,
+    searchFts,
+    termTableAi,
+    termTableAu,
+    termTableAd,
+    readingTableAi,
+    readingTableAu,
+    readingTableAd,
+    definitionTableAi,
+    definitionTableAu,
+    definitionTableAd,
     readingSpellfix,
     termFts,
     readingFts,
     definitionFts,
     name,
-    reading,
-    term,
     kanji,
     audioTable,
     audioTableXTermTable,
@@ -17851,6 +18491,75 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_table',
+        limitUpdateKind: UpdateKind.insert,
+      ),
+      result: [TableUpdate('search_fts', kind: UpdateKind.insert)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_table',
+        limitUpdateKind: UpdateKind.update,
+      ),
+      result: [
+        TableUpdate('search_fts', kind: UpdateKind.delete),
+        TableUpdate('search_fts', kind: UpdateKind.insert),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('search_fts', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'reading_table',
+        limitUpdateKind: UpdateKind.insert,
+      ),
+      result: [TableUpdate('search_fts', kind: UpdateKind.insert)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'reading_table',
+        limitUpdateKind: UpdateKind.update,
+      ),
+      result: [
+        TableUpdate('search_fts', kind: UpdateKind.delete),
+        TableUpdate('search_fts', kind: UpdateKind.insert),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'reading_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('search_fts', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'definition_table',
+        limitUpdateKind: UpdateKind.insert,
+      ),
+      result: [TableUpdate('search_fts', kind: UpdateKind.insert)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'definition_table',
+        limitUpdateKind: UpdateKind.update,
+      ),
+      result: [TableUpdate('search_fts', kind: UpdateKind.update)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'definition_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('search_fts', kind: UpdateKind.delete)],
+    ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
         'definition_table',
@@ -20868,9 +21577,17 @@ typedef $$KanjiBankV3TableTableProcessedTableManager =
       })
     >;
 typedef $$ReadingTableTableCreateCompanionBuilder =
-    ReadingTableCompanion Function({Value<int> id, required String reading});
+    ReadingTableCompanion Function({
+      Value<int> id,
+      required String reading,
+      Value<String?> readingNormalized,
+    });
 typedef $$ReadingTableTableUpdateCompanionBuilder =
-    ReadingTableCompanion Function({Value<int> id, Value<String> reading});
+    ReadingTableCompanion Function({
+      Value<int> id,
+      Value<String> reading,
+      Value<String?> readingNormalized,
+    });
 
 final class $$ReadingTableTableReferences
     extends BaseReferences<_$DaKanjiDB, $ReadingTableTable, ReadingTableData> {
@@ -21020,6 +21737,11 @@ class $$ReadingTableTableFilterComposer
 
   ColumnFilters<String> get reading => $composableBuilder(
     column: $table.reading,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -21175,6 +21897,11 @@ class $$ReadingTableTableOrderingComposer
     column: $table.reading,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$ReadingTableTableAnnotationComposer
@@ -21191,6 +21918,11 @@ class $$ReadingTableTableAnnotationComposer
 
   GeneratedColumn<String> get reading =>
       $composableBuilder(column: $table.reading, builder: (column) => column);
+
+  GeneratedColumn<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => column,
+  );
 
   Expression<T> kanjiBankV3XOnyomiReadingTableRefs<T extends Object>(
     Expression<T> Function(
@@ -21363,12 +22095,22 @@ class $$ReadingTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> reading = const Value.absent(),
-              }) => ReadingTableCompanion(id: id, reading: reading),
+                Value<String?> readingNormalized = const Value.absent(),
+              }) => ReadingTableCompanion(
+                id: id,
+                reading: reading,
+                readingNormalized: readingNormalized,
+              ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String reading,
-              }) => ReadingTableCompanion.insert(id: id, reading: reading),
+                Value<String?> readingNormalized = const Value.absent(),
+              }) => ReadingTableCompanion.insert(
+                id: id,
+                reading: reading,
+                readingNormalized: readingNormalized,
+              ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
@@ -26416,13 +27158,17 @@ typedef $$TermTableTableCreateCompanionBuilder =
     TermTableCompanion Function({
       Value<int> id,
       required String term,
+      Value<String?> termNormalized,
       Value<String?> termTokens,
+      Value<String?> termTokensNormalized,
     });
 typedef $$TermTableTableUpdateCompanionBuilder =
     TermTableCompanion Function({
       Value<int> id,
       Value<String> term,
+      Value<String?> termNormalized,
       Value<String?> termTokens,
+      Value<String?> termTokensNormalized,
     });
 
 final class $$TermTableTableReferences
@@ -26524,8 +27270,18 @@ class $$TermTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<String> get termTokens => $composableBuilder(
     column: $table.termTokens,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get termTokensNormalized => $composableBuilder(
+    column: $table.termTokensNormalized,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -26625,8 +27381,18 @@ class $$TermTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get termTokens => $composableBuilder(
     column: $table.termTokens,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get termTokensNormalized => $composableBuilder(
+    column: $table.termTokensNormalized,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -26646,8 +27412,18 @@ class $$TermTableTableAnnotationComposer
   GeneratedColumn<String> get term =>
       $composableBuilder(column: $table.term, builder: (column) => column);
 
+  GeneratedColumn<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<String> get termTokens => $composableBuilder(
     column: $table.termTokens,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get termTokensNormalized => $composableBuilder(
+    column: $table.termTokensNormalized,
     builder: (column) => column,
   );
 
@@ -26763,21 +27539,29 @@ class $$TermTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> term = const Value.absent(),
+                Value<String?> termNormalized = const Value.absent(),
                 Value<String?> termTokens = const Value.absent(),
+                Value<String?> termTokensNormalized = const Value.absent(),
               }) => TermTableCompanion(
                 id: id,
                 term: term,
+                termNormalized: termNormalized,
                 termTokens: termTokens,
+                termTokensNormalized: termTokensNormalized,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String term,
+                Value<String?> termNormalized = const Value.absent(),
                 Value<String?> termTokens = const Value.absent(),
+                Value<String?> termTokensNormalized = const Value.absent(),
               }) => TermTableCompanion.insert(
                 id: id,
                 term: term,
+                termNormalized: termNormalized,
                 termTokens: termTokens,
+                termTokensNormalized: termTokensNormalized,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -26954,9 +27738,10 @@ class $$TermBankV3DefinitionJsonTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get definitionJson => $composableBuilder(
+  ColumnWithTypeConverterFilters<String, String, Uint8List>
+  get definitionJson => $composableBuilder(
     column: $table.definitionJson,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   Expression<bool> termBankV3TableRefs(
@@ -26999,7 +27784,7 @@ class $$TermBankV3DefinitionJsonTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get definitionJson => $composableBuilder(
+  ColumnOrderings<Uint8List> get definitionJson => $composableBuilder(
     column: $table.definitionJson,
     builder: (column) => ColumnOrderings(column),
   );
@@ -27017,10 +27802,11 @@ class $$TermBankV3DefinitionJsonTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get definitionJson => $composableBuilder(
-    column: $table.definitionJson,
-    builder: (column) => column,
-  );
+  GeneratedColumnWithTypeConverter<String, Uint8List> get definitionJson =>
+      $composableBuilder(
+        column: $table.definitionJson,
+        builder: (column) => column,
+      );
 
   Expression<T> termBankV3TableRefs<T extends Object>(
     Expression<T> Function($$TermBankV3TableTableAnnotationComposer a) f,
@@ -34490,6 +35276,201 @@ typedef $$TermMetaBankV3_X_IpaTagTableTableProcessedTableManager =
       TermMetaBankV3_X_IpaTagTableData,
       PrefetchHooks Function({bool ipaId, bool tagId})
     >;
+typedef $SearchFtsCreateCompanionBuilder =
+    SearchFtsCompanion Function({
+      required String termId,
+      required String readingId,
+      required String definitionId,
+      required String isNormalized,
+      required String text,
+      Value<int> rowid,
+    });
+typedef $SearchFtsUpdateCompanionBuilder =
+    SearchFtsCompanion Function({
+      Value<String> termId,
+      Value<String> readingId,
+      Value<String> definitionId,
+      Value<String> isNormalized,
+      Value<String> text,
+      Value<int> rowid,
+    });
+
+class $SearchFtsFilterComposer extends Composer<_$DaKanjiDB, SearchFts> {
+  $SearchFtsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get termId => $composableBuilder(
+    column: $table.termId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get readingId => $composableBuilder(
+    column: $table.readingId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get definitionId => $composableBuilder(
+    column: $table.definitionId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get isNormalized => $composableBuilder(
+    column: $table.isNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get text => $composableBuilder(
+    column: $table.text,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $SearchFtsOrderingComposer extends Composer<_$DaKanjiDB, SearchFts> {
+  $SearchFtsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get termId => $composableBuilder(
+    column: $table.termId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get readingId => $composableBuilder(
+    column: $table.readingId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get definitionId => $composableBuilder(
+    column: $table.definitionId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get isNormalized => $composableBuilder(
+    column: $table.isNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get text => $composableBuilder(
+    column: $table.text,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $SearchFtsAnnotationComposer extends Composer<_$DaKanjiDB, SearchFts> {
+  $SearchFtsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get termId =>
+      $composableBuilder(column: $table.termId, builder: (column) => column);
+
+  GeneratedColumn<String> get readingId =>
+      $composableBuilder(column: $table.readingId, builder: (column) => column);
+
+  GeneratedColumn<String> get definitionId => $composableBuilder(
+    column: $table.definitionId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get isNormalized => $composableBuilder(
+    column: $table.isNormalized,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get text =>
+      $composableBuilder(column: $table.text, builder: (column) => column);
+}
+
+class $SearchFtsTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          SearchFts,
+          SearchFt,
+          $SearchFtsFilterComposer,
+          $SearchFtsOrderingComposer,
+          $SearchFtsAnnotationComposer,
+          $SearchFtsCreateCompanionBuilder,
+          $SearchFtsUpdateCompanionBuilder,
+          (SearchFt, BaseReferences<_$DaKanjiDB, SearchFts, SearchFt>),
+          SearchFt,
+          PrefetchHooks Function()
+        > {
+  $SearchFtsTableManager(_$DaKanjiDB db, SearchFts table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $SearchFtsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $SearchFtsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $SearchFtsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> termId = const Value.absent(),
+                Value<String> readingId = const Value.absent(),
+                Value<String> definitionId = const Value.absent(),
+                Value<String> isNormalized = const Value.absent(),
+                Value<String> text = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SearchFtsCompanion(
+                termId: termId,
+                readingId: readingId,
+                definitionId: definitionId,
+                isNormalized: isNormalized,
+                text: text,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String termId,
+                required String readingId,
+                required String definitionId,
+                required String isNormalized,
+                required String text,
+                Value<int> rowid = const Value.absent(),
+              }) => SearchFtsCompanion.insert(
+                termId: termId,
+                readingId: readingId,
+                definitionId: definitionId,
+                isNormalized: isNormalized,
+                text: text,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $SearchFtsProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      SearchFts,
+      SearchFt,
+      $SearchFtsFilterComposer,
+      $SearchFtsOrderingComposer,
+      $SearchFtsAnnotationComposer,
+      $SearchFtsCreateCompanionBuilder,
+      $SearchFtsUpdateCompanionBuilder,
+      (SearchFt, BaseReferences<_$DaKanjiDB, SearchFts, SearchFt>),
+      SearchFt,
+      PrefetchHooks Function()
+    >;
 typedef $ReadingSpellfixCreateCompanionBuilder =
     ReadingSpellfixCompanion Function({
       required String word,
@@ -34846,9 +35827,15 @@ typedef $TermFtsProcessedTableManager =
       PrefetchHooks Function()
     >;
 typedef $ReadingFtsCreateCompanionBuilder =
-    ReadingFtsCompanion Function({required String reading, Value<int> rowid});
+    ReadingFtsCompanion Function({
+      required String readingNormalized,
+      Value<int> rowid,
+    });
 typedef $ReadingFtsUpdateCompanionBuilder =
-    ReadingFtsCompanion Function({Value<String> reading, Value<int> rowid});
+    ReadingFtsCompanion Function({
+      Value<String> readingNormalized,
+      Value<int> rowid,
+    });
 
 class $ReadingFtsFilterComposer extends Composer<_$DaKanjiDB, ReadingFts> {
   $ReadingFtsFilterComposer({
@@ -34858,8 +35845,8 @@ class $ReadingFtsFilterComposer extends Composer<_$DaKanjiDB, ReadingFts> {
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<String> get reading => $composableBuilder(
-    column: $table.reading,
+  ColumnFilters<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -34872,8 +35859,8 @@ class $ReadingFtsOrderingComposer extends Composer<_$DaKanjiDB, ReadingFts> {
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<String> get reading => $composableBuilder(
-    column: $table.reading,
+  ColumnOrderings<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -34886,8 +35873,10 @@ class $ReadingFtsAnnotationComposer extends Composer<_$DaKanjiDB, ReadingFts> {
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<String> get reading =>
-      $composableBuilder(column: $table.reading, builder: (column) => column);
+  GeneratedColumn<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => column,
+  );
 }
 
 class $ReadingFtsTableManager
@@ -34918,14 +35907,20 @@ class $ReadingFtsTableManager
               $ReadingFtsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<String> reading = const Value.absent(),
+                Value<String> readingNormalized = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => ReadingFtsCompanion(reading: reading, rowid: rowid),
+              }) => ReadingFtsCompanion(
+                readingNormalized: readingNormalized,
+                rowid: rowid,
+              ),
           createCompanionCallback:
               ({
-                required String reading,
+                required String readingNormalized,
                 Value<int> rowid = const Value.absent(),
-              }) => ReadingFtsCompanion.insert(reading: reading, rowid: rowid),
+              }) => ReadingFtsCompanion.insert(
+                readingNormalized: readingNormalized,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),
@@ -39555,6 +40550,8 @@ class $DaKanjiDBManager {
         _db,
         _db.termMetaBankV3XIpaTagTable,
       );
+  $SearchFtsTableManager get searchFts =>
+      $SearchFtsTableManager(_db, _db.searchFts);
   $ReadingSpellfixTableManager get readingSpellfix =>
       $ReadingSpellfixTableManager(_db, _db.readingSpellfix);
   $TermFtsTableManager get termFts => $TermFtsTableManager(_db, _db.termFts);

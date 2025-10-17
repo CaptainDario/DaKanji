@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_data_source_formats.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_parser_context.dart';
 import 'package:dakanji_db_core/parsing/media/media_importer.dart';
@@ -156,10 +157,24 @@ Future parseAudioDataSourceEntry(
     int? termId = aC.allTerms[term];
     if(termId == null){
       termId = ++aC.currentMaxTermId;
+
+      String? termNormalized = preprocessInput(term, false).hiraganaTerm;
+      String? termTokens = getMecabSurfacesOrNull(mecab, term);
+      String? termTokensNormalized = termTokens==null
+        ? null
+        : preprocessInput(termTokens, false).hiraganaTerm;
       aC.termComps.add(TermTableCompanion(
         id: Value(termId),
         term: Value(term),
-        termTokens: Value(getMecabSurfacesOrNull(mecab, term)),
+        termNormalized: termNormalized!=term && termNormalized!=null
+          ? Value(termNormalized)
+          : const Value.absent(),
+        termTokens: termTokens != term && termTokens!=null
+          ? Value(termTokens)
+          : const Value.absent(),
+        termTokensNormalized: termTokensNormalized!=termTokens && termTokensNormalized!=null
+          ? Value(termTokensNormalized)
+          : const Value.absent(),
       ));
       aC.allTerms[term] = termId;
     }
@@ -174,9 +189,14 @@ Future parseAudioDataSourceEntry(
     readingId = aC.allReadings[reading];
     if(readingId == null) {
       readingId = ++aC.currentMaxReadingId;
+
+      String? readingNormalized = preprocessInput(reading, false).hiraganaTerm;
       aC.readingComps.add(ReadingTableCompanion(
         id: Value(readingId),
         reading: Value(reading),
+        readingNormalized: readingNormalized!=reading && readingNormalized!=null
+          ? Value(readingNormalized)
+          : const Value.absent(),
       ));
       aC.allReadings[reading] = readingId;
     }
