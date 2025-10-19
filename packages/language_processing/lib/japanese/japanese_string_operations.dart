@@ -75,14 +75,14 @@ String romajiToHiragana(String romaji){
 /// Converts all katakana in the given `text` string to hiragana
 /// Does nothing with non-katakana characters
 /// 
-/// /// Note:
-///   * `-` long vowel mark are converted to double vowels
+/// Note:
+///   * `-` long vowel mark are converted to explicit vowels
 String katakanaToHiragana(String text) {
   KanaKit kanaKit = KanaKit(config: KanaKitConfig(
     passRomaji: true,
     passKanji: true,
     upcaseKatakana: false
   ));
-  return kanaKit.toHiragana(text);
+  return kanaKit.toHiragana(kanaKit.toKatakana(text));
 }
 

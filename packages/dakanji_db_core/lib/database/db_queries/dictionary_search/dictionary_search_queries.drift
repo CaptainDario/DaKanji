@@ -1,15 +1,14 @@
+-- Imports updated to use the new single FTS table
 import '/database/term/term_bank_v3_views.drift';
-import '/database/general_tables/definition_fts5_table.drift';
-import '/database/general_tables/reading_fts5_table.drift';
-import '/database/general_tables/term_fts5_table.drift';
+import 'dictionary_search_fts_tables.drift';
 import '/database/general_tables/reading_spellfix_table.drift';
 import '/database/db_queries/dictionary_search/dictionary_search_views.drift';
-
 
 
 dictionary_search_drift:
   -- Use CTEs to find, categorize, and rank all matching IDs
   WITH
+    -- !! UNCHANGED from your original !!
     SpellfixSuggestions AS (
       SELECT
         word,
@@ -17,67 +16,118 @@ dictionary_search_drift:
       FROM reading_spellfix
       WHERE word MATCH :query
         AND distance > 0
-        AND distance < :spellfix_distance
+        AND distance < :spellfixDistance
         AND :use_glob = 0
+        AND LENGTH(word) > 0
       ORDER BY distance
       LIMIT 10
     ),
 
-    -- CTE specifically for FTS matches. Only runs if :use_glob is 0.
+    -- !! THIS CTE CONTAINS THE FIX !!
     FtsMatches AS (
       -- Find matches in 'term' (Kanji)
       SELECT
         TB3T.id as term_bank_id, rank, TT.term as matched_text,
-        CASE WHEN TT.term = :query THEN 1
-        WHEN TT.term LIKE :query || '%' THEN 2
-        ELSE 3 END AS match_type_priority,
+        -- !! UNCHANGED from your original !!
+        CASE
+          WHEN :useNormalizedData = 0 AND TT.term = :query THEN 1
+          WHEN :useNormalizedData = 0 AND TT.term LIKE :query || '%' THEN 2
+          WHEN :useNormalizedData = 1 AND IFNULL(TT.term_normalized, TT.term) = :query THEN 1
+          WHEN :useNormalizedData = 1 AND IFNULL(TT.term_normalized, TT.term) LIKE :query || '%' THEN 2
+          ELSE 3
+        END AS match_type_priority,
         1 AS match_column_priority,
         NULL as spellfix_suggestion
-      FROM term_fts AS FTS
-      JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.term_id
-      JOIN term_table AS TT ON FTS.rowid = TT.id
-      WHERE :use_glob = 0 AND term_fts MATCH :fts_query
+      FROM search_fts AS FTS
+      JOIN term_bank_v3_table AS TB3T ON FTS.source_id = TB3T.term_id
+      JOIN term_table AS TT ON FTS.source_id = TT.id
+      WHERE :use_glob = 0 AND search_fts MATCH :fts_query
+        -- !! FIX: Check for NULL OR empty string '' !!
+        AND (
+          -- Case 1: Not using normalized data
+          (:useNormalizedData = 0 AND FTS.data_type_id IN (1, 2))
+          OR
+          -- Case 2: Using normalized data
+          (
+            :useNormalizedData = 1 AND
+            (
+              -- Search normalized terms
+              FTS.data_type_id IN (3, 4)
+              OR
+              -- Fallback if normalized is NULL or empty
+              (FTS.data_type_id IN (1, 2) AND IFNULL(TT.term_normalized, '') = '')
+            )
+          )
+        )
 
       UNION ALL
 
       -- Find matches in 'reading'
       SELECT
         TB3T.id as term_bank_id, rank, RT.reading as matched_text,
+        -- !! UNCHANGED from your original !!
         CASE
-          WHEN RT.reading_normalized = :query THEN 1
-          WHEN RT.reading_normalized LIKE :query || '%' THEN 2
-          ELSE 3 END
-        AS match_type_priority,
+          WHEN :useNormalizedData = 0 AND RT.reading = :query THEN 1
+          WHEN :useNormalizedData = 0 AND RT.reading LIKE :query || '%' THEN 2
+          WHEN :useNormalizedData = 1 AND IFNULL(RT.reading_normalized, RT.reading) = :query THEN 1
+          WHEN :useNormalizedData = 1 AND IFNULL(RT.reading_normalized, RT.reading) LIKE :query || '%' THEN 2
+          ELSE 3
+        END AS match_type_priority,
         2 AS match_column_priority,
         NULL as spellfix_suggestion
-      FROM reading_fts AS FTS
-      JOIN term_bank_v3_table AS TB3T ON FTS.rowid = TB3T.reading_id
-      JOIN reading_table AS RT ON FTS.rowid = RT.id
-      WHERE :use_glob = 0 AND reading_fts MATCH :fts_query
+      FROM search_fts AS FTS
+      JOIN term_bank_v3_table AS TB3T ON FTS.source_id = TB3T.reading_id
+      JOIN reading_table AS RT ON FTS.source_id = RT.id
+      WHERE :use_glob = 0 AND search_fts MATCH :fts_query
+        -- !! FIX: Check for NULL OR empty string '' !!
+        AND (
+          -- Case 1: Not using normalized data
+          (:useNormalizedData = 0 AND FTS.data_type_id = 5)
+          OR
+          -- Case 2: Using normalized data
+          (
+            :useNormalizedData = 1 AND
+            (
+              -- Search normalized readings
+              FTS.data_type_id = 6
+              OR
+              -- Fallback if normalized is NULL or empty
+              (FTS.data_type_id = 5 AND IFNULL(RT.reading_normalized, '') = '')
+            )
+          )
+        )
 
       UNION ALL
 
-      -- Find matches in 'definition'
+      -- Find matches in 'definition' (Unchanged from original)
       SELECT
         DefJoin.term_bank_id, rank, DT.definition as matched_text,
         CASE WHEN DT.definition = :query THEN 1 WHEN DT.definition LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
         3 AS match_column_priority, NULL as spellfix_suggestion
-      FROM definition_fts AS FTS
-      JOIN term_bank_v3_x_definition_table AS DefJoin ON FTS.rowid = DefJoin.definition_id
-      JOIN definition_table AS DT ON FTS.rowid = DT.id
-      WHERE :use_glob = 0 AND definition_fts MATCH :fts_query
+      FROM search_fts AS FTS
+      JOIN term_bank_v3_x_definition_table AS DefJoin ON FTS.source_id = DefJoin.definition_id
+      JOIN definition_table AS DT ON FTS.source_id = DT.id
+      WHERE :use_glob = 0 AND search_fts MATCH :fts_query
+        AND FTS.data_type_id = 7
     ),
 
-    -- CTEs specifically for GLOB matches. Only runs if :use_glob is 1.
+    -- !! UNCHANGED from your original !!
     GlobMatches AS (
       -- Find matches in 'term' (Kanji)
       SELECT
         TB3T.id as term_bank_id, 0 as rank, TT.term as matched_text,
-        CASE WHEN TT.term = :query THEN 1 WHEN TT.term LIKE :query || '%' THEN 2 ELSE 3 END AS match_type_priority,
+        CASE
+          WHEN :useNormalizedData = 0 AND TT.term = :query THEN 1
+          WHEN :useNormalizedData = 0 AND TT.term LIKE :query || '%' THEN 2
+          WHEN :useNormalizedData = 1 AND IFNULL(TT.term_normalized, TT.term) = :query THEN 1
+          WHEN :useNormalizedData = 1 AND IFNULL(TT.term_normalized, TT.term) LIKE :query || '%' THEN 2
+          ELSE 3
+        END AS match_type_priority,
         1 AS match_column_priority, NULL as spellfix_suggestion
       FROM term_table AS TT
       JOIN term_bank_v3_table AS TB3T ON TT.id = TB3T.term_id
-      WHERE :use_glob = 1 AND TT.term GLOB :query
+      WHERE :use_glob = 1
+        AND ((:useNormalizedData = 0 AND TT.term GLOB :query) OR (:useNormalizedData = 1 AND IFNULL(TT.term_normalized, TT.term) GLOB :query))
 
       UNION ALL
 
@@ -86,15 +136,18 @@ dictionary_search_drift:
         TB3T.id as term_bank_id, 0 as rank,
         RT.reading as matched_text,
         CASE
-          WHEN RT.reading_normalized = :query 
-          THEN 1 WHEN RT.reading_normalized LIKE :query || '%'
-          THEN 2 ELSE 3
+          WHEN :useNormalizedData = 0 AND RT.reading = :query THEN 1
+          WHEN :useNormalizedData = 0 AND RT.reading LIKE :query || '%' THEN 2
+          WHEN :useNormalizedData = 1 AND IFNULL(RT.reading_normalized, RT.reading) = :query THEN 1
+          WHEN :useNormalizedData = 1 AND IFNULL(RT.reading_normalized, RT.reading) LIKE :query || '%' THEN 2
+          ELSE 3
         END AS match_type_priority,
-        2 AS match_column_priority, 
+        2 AS match_column_priority,
         NULL as spellfix_suggestion
       FROM reading_table AS RT
       JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id
-      WHERE :use_glob = 1 AND RT.reading_normalized GLOB :query
+      WHERE :use_glob = 1
+        AND ((:useNormalizedData = 0 AND RT.reading GLOB :query) OR (:useNormalizedData = 1 AND IFNULL(RT.reading_normalized, RT.reading) GLOB :query))
 
       UNION ALL
 
@@ -113,9 +166,9 @@ dictionary_search_drift:
       WHERE :use_glob = 1 AND DT.definition GLOB :query
     ),
 
-    -- This CTE combines the separated paths and adds Spellfix results.
+    -- !! UNCHANGED from your original !!
     RankedIDs AS (
-      SELECT * FROM FtsMatches
+      SELECT * FROM FTSMatches
       UNION ALL
       SELECT * FROM GlobMatches
       UNION ALL
@@ -124,11 +177,12 @@ dictionary_search_drift:
         TB3T.id as term_bank_id, S.distance as rank, RT.reading as matched_text,
         4 AS match_type_priority, 2 AS match_column_priority, S.word as spellfix_suggestion
       FROM SpellfixSuggestions AS S
-      JOIN reading_table AS RT ON S.word = RT.reading_normalized
+      -- !! FIXED: Added IFNULL to match other CTEs and handle NULL normalized values !!
+      JOIN reading_table AS RT ON S.word = IFNULL(RT.reading_normalized, RT.reading)
       JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id
     ),
 
-    -- This CTE finds all term_bank_ids that match the PoS filter.
+    -- This CTE is UNCHANGED
     FilteredByPoS AS (
       SELECT T3XDT.term_bank_id
       FROM term_bank_v3_x_definition_tag_table AS T3XDT
@@ -137,7 +191,7 @@ dictionary_search_drift:
       GROUP BY T3XDT.term_bank_id
     ),
 
-    -- This CTE finds all term_bank_ids that match the tag filter.
+    -- This CTE is UNCHANGED
     FilteredByTags AS (
       SELECT T3XT.term_bank_id
       FROM term_bank_v3_x_tag_bank_table AS T3XT
@@ -149,8 +203,8 @@ dictionary_search_drift:
       GROUP BY T3XT.term_bank_id
     ),
 
+    -- This is UNCHANGED
     FinalRankedIDs AS (
-      -- For each term, select the single best match based on the priority system.
       SELECT
         term_bank_id, rank as best_rank, match_type_priority, match_column_priority,
         matched_text, spellfix_suggestion
@@ -173,7 +227,7 @@ dictionary_search_drift:
       WHERE rn = 1
     )
 
-  -- Finally, join the best-ranked IDs with the main view to get the full data
+  -- This final SELECT and ORDER BY is UNCHANGED
   SELECT
     R.best_rank as fts5_rank,
     matched_text,

@@ -1,32 +1,32 @@
 import 'reading_tables.dart';
 import 'hiragana_spellfix_cost.drift';
 
+
+
 -- Create the virtual table and tell it to use your custom cost table.
 CREATE VIRTUAL TABLE IF NOT EXISTS reading_spellfix USING spellfix1(edit_cost_table=hiragana_spellfix_cost);
 
--- Trigger to add a new word to the spellfix table
+-- Trigger to add a new word to the spellfix table when a new reading is inserted.
 CREATE TRIGGER reading_spellfix_insert
 AFTER INSERT ON reading_table
 BEGIN
-    INSERT INTO reading_spellfix(word) VALUES (new.reading_normalized);
+    INSERT INTO reading_spellfix(word) VALUES (new.reading);
 END;
 
--- Trigger to remove a word from the spellfix table
+-- Trigger to remove a word from the spellfix table when a reading is deleted.
 CREATE TRIGGER reading_spellfix_delete
 AFTER DELETE ON reading_table
 BEGIN
-    DELETE FROM reading_spellfix
-    WHERE word = old.reading
-      AND NOT EXISTS (SELECT 1 FROM reading_table WHERE reading_normalized = old.reading_normalized);
+    DELETE FROM reading_spellfix WHERE word = old.reading;
 END;
 
--- Trigger to handle updates to the reading column
+-- Trigger to handle updates to the reading column.
 CREATE TRIGGER reading_spellfix_update
-AFTER UPDATE OF reading_normalized ON reading_table
-WHEN old.reading_normalized IS NOT new.reading_normalized
+AFTER UPDATE OF reading ON reading_table
+WHEN old.reading IS NOT new.reading
 BEGIN
-    INSERT INTO reading_spellfix(word) VALUES (new.reading_normalized);
-    DELETE FROM reading_spellfix
-    WHERE word = old.reading_normalized
-      AND NOT EXISTS (SELECT 1 FROM reading_table WHERE reading_normalized = old.reading_normalized);
+    -- Add the new reading to the spellfix table.
+    INSERT INTO reading_spellfix(word) VALUES (new.reading);
+    -- Remove the old reading from the spellfix table.
+    DELETE FROM reading_spellfix WHERE word = old.reading;
 END;

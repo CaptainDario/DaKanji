@@ -42,7 +42,7 @@
 
 1. Sort by matched query
    1. Exact search term matches
-   2. Search term converted to hiragana matches
+   2. Normalized search term matches
    3. Any of the preprocessed terms matches
 2. Sort by match type
    1. Exact match: 食べる→食べる

@@ -23,7 +23,7 @@ class DictionarySearchResultWidget extends StatelessWidget {
     return Column(
       children: [
         SearchMatchGroupWidget(result.queryMatches),
-        SearchMatchGroupWidget(result.hiraganaQueryMatches),
+        SearchMatchGroupWidget(result.normalizedQueryMatches),
         for (final m in result.queryVariantMatches)
           SearchMatchGroupWidget(m)
       ],

@@ -61,11 +61,11 @@ Future parseTermMetaBankV3(
     if(pC.allTerms[term] == null){
       pC.allTerms[term] = termInsertId;
 
-      String? termNormalized = preprocessInput(term, false).hiraganaTerm;
+      String? termNormalized = preprocessInput(term, false).normalizedTerm;
       String? termTokens = getMecabSurfacesOrNull(mecab, term);
       String? termTokensNormalized = termTokens==null
         ? null
-        : preprocessInput(termTokens, false).hiraganaTerm;
+        : preprocessInput(termTokens, false).normalizedTerm;
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
         term: Value(jsonEntry[0]),
@@ -108,7 +108,7 @@ Future parseTermMetaBankV3(
         if(pC.allReadings[reading] == null){
           pC.allReadings[reading] = readingInsertId;
 
-          String? normalizedReading = preprocessInput(reading, false).hiraganaTerm;
+          String? normalizedReading = preprocessInput(reading, false).normalizedTerm;
           readingComps.add(ReadingTableCompanion(
             id: Value(readingInsertId!),
             reading: Value(reading),

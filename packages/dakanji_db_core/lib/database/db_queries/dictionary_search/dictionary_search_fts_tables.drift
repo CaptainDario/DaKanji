@@ -1,0 +1,111 @@
+import '/database/general_tables/term_tables.dart';
+import '/database/general_tables/reading_tables.dart';
+import '/database/general_tables/definition_tables.dart';
+
+
+-- #############################################################################
+-- SECTION 1: The FTS Table Definition
+-- #############################################################################
+
+CREATE TABLE IF NOT EXISTS fts_data_types (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL UNIQUE
+);
+
+CREATE VIRTUAL TABLE IF NOT EXISTS search_fts USING fts5(
+  -- id that link to: term, reading, or definition table entry
+  source_id UNINDEXED,
+  data_type_id UNINDEXED,
+  text_data,
+  tokenize = 'unicode61',
+  prefix = '2 3'
+);
+
+
+-- #############################################################################
+-- SECTION 2: Triggers for term_table
+-- #############################################################################
+
+-- When a new term is created.
+CREATE TRIGGER term_table_ai AFTER INSERT ON term_table BEGIN
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 1, NEW.term WHERE NEW.term IS NOT NULL;
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 2, NEW.term_tokens WHERE NEW.term_tokens IS NOT NULL;
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 3, IFNULL(NEW.term_normalized, NEW.term) WHERE IFNULL(NEW.term_normalized, NEW.term) IS NOT NULL;
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 4, NEW.term_tokens_normalized WHERE NEW.term_tokens_normalized IS NOT NULL;
+END;
+
+-- When a term is updated.
+CREATE TRIGGER term_table_au AFTER UPDATE ON term_table BEGIN
+  -- Delete all FTS entries related to this specific term ID.
+  DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id IN (1, 2, 3, 4);
+  -- Re-insert the new data.
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 1, NEW.term WHERE NEW.term IS NOT NULL;
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 2, NEW.term_tokens WHERE NEW.term_tokens IS NOT NULL;
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 3, NEW.term_normalized WHERE NEW.term_normalized IS NOT NULL;
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 4, NEW.term_tokens_normalized WHERE NEW.term_tokens_normalized IS NOT NULL;
+END;
+
+-- When a term is deleted.
+CREATE TRIGGER term_table_ad AFTER DELETE ON term_table BEGIN
+  DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id IN (1, 2, 3, 4);
+END;
+
+
+-- #############################################################################
+-- SECTION 3: Triggers for reading_table
+-- #############################################################################
+
+-- When a reading is created.
+CREATE TRIGGER reading_table_ai AFTER INSERT ON reading_table BEGIN
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 5, NEW.reading WHERE NEW.reading IS NOT NULL;
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 6, IFNULL(NEW.reading_normalized, NEW.reading) WHERE IFNULL(NEW.reading_normalized, NEW.reading) IS NOT NULL;
+END;
+
+-- When a reading is updated.
+CREATE TRIGGER reading_table_au AFTER UPDATE ON reading_table BEGIN
+  -- Delete all FTS entries related to this specific reading ID.
+  DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id IN (5, 6);
+  -- Re-insert the new data.
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 5, NEW.reading WHERE NEW.reading IS NOT NULL;
+  INSERT INTO search_fts(source_id, data_type_id, text_data) SELECT NEW.id, 6, IFNULL(NEW.reading_normalized, NEW.reading) WHERE IFNULL(NEW.reading_normalized, NEW.reading) IS NOT NULL;
+END;
+
+-- When a reading is deleted.
+CREATE TRIGGER reading_table_ad AFTER DELETE ON reading_table BEGIN
+  DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id IN (5, 6);
+END;
+
+-- #############################################################################
+-- SECTION 4: Triggers for definition_table
+-- #############################################################################
+
+-- When a new definition is created.
+CREATE TRIGGER definition_table_ai AFTER INSERT ON definition_table BEGIN
+  INSERT INTO search_fts(source_id, data_type_id, text_data)
+  SELECT NEW.id, 7, NEW.definition WHERE NEW.definition IS NOT NULL;
+END;
+
+-- When a definition is updated.
+CREATE TRIGGER definition_table_au AFTER UPDATE ON definition_table BEGIN
+  -- Delete the FTS entry for this specific definition ID.
+  DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id = 7;
+  -- Re-insert the new data.
+  INSERT INTO search_fts(source_id, data_type_id, text_data)
+  SELECT NEW.id, 7, NEW.definition WHERE NEW.definition IS NOT NULL;
+END;
+
+-- When a definition is deleted.
+CREATE TRIGGER definition_table_ad AFTER DELETE ON definition_table BEGIN
+  DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id = 7;
+END;
+
+-- Populate it with all possible types
+populdate_fts_data_types:
+  INSERT OR IGNORE INTO fts_data_types (id, name) VALUES
+    (1, 'term_full'),
+    (2, 'term_token'),
+    (3, 'term_full_normalized'),
+    (4, 'term_token_normalized'),
+    (5, 'reading_full'),
+    (6, 'reading_full_normalized'),
+    (7, 'definition');

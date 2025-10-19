@@ -56,26 +56,26 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
     }
   ) async {
 
-    final (:hiraganaTerm, :termVariants) = preprocessInput(term, convertRomajiToHiragana);
-
+    var (:normalizedTerm, :termVariants) = preprocessInput(term, convertRomajiToHiragana);
+    
     bool isWildcardSearch = term.contains(RegExp(r'\*|\?'));
     int useGlobInt = isWildcardSearch ? 1 : 0;
 
     // run the queries in parallel
     final results = (await Future.wait([
-      db.dictionary_search_drift(term, spellfixDistance, useGlobInt,
+      db.dictionary_search_drift(term, spellfixDistance, useGlobInt, 0,
                                       "$term *", jsonEncode([]), jsonEncode(tags)).get(),
 
-      if(hiraganaTerm != null)
-        db.dictionary_search_drift(hiraganaTerm, spellfixDistance, useGlobInt,
-                                      "$hiraganaTerm *", jsonEncode([]), jsonEncode(tags)).get(),
-      if(hiraganaTerm == null) Future.sync(() => <DictionarySearchDriftResult>[]),
+      if(normalizedTerm != null)
+        db.dictionary_search_drift(normalizedTerm, spellfixDistance, useGlobInt, 1,
+                                      "$normalizedTerm *", jsonEncode([]), jsonEncode(tags)).get(),
+      if(normalizedTerm == null) Future.sync(() => <DictionarySearchDriftResult>[]),
       
-      if(termVariants != null && !isWildcardSearch)
+      if(termVariants.isNotEmpty && !isWildcardSearch)
         for (final variant in termVariants) 
           db.dictionary_search_drift(
-            variant.deconjugatedTerm, 0, useGlobInt, "${variant.deconjugatedTerm} *",
-            jsonEncode(variant.requiredPartsOfSpeech), jsonEncode(tags)
+            variant.deconjugatedTerm, 0, useGlobInt, 1,
+            "${variant.deconjugatedTerm} *", jsonEncode(variant.requiredPartsOfSpeech), jsonEncode(tags)
           ).get()
     ]));
 
@@ -85,7 +85,7 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
     for (var i = 0; i < queryVariantMatches.length; i++) {
       if(results[i+2].isNotEmpty) {
         filteredQueryVariantMatches.add(SearchMatchGroup.fromDictionaryMatchList(
-          results[i+2], termVariants![i].deconjugatedTerm, isWildcardSearch,
+          results[i+2], termVariants[i].deconjugatedTerm, isWildcardSearch,
           variantReason: termVariants[i].transformRules.join(" -> ")
         ));
       }
@@ -93,8 +93,8 @@ class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin 
 
     return DictionarySearchResult(
       queryMatches: SearchMatchGroup.fromDictionaryMatchList(results[0], term, isWildcardSearch),
-      hiraganaQueryMatches: results.length >= 2 && results[1].isNotEmpty
-        ? SearchMatchGroup.fromDictionaryMatchList(results[1], hiraganaTerm!, isWildcardSearch)
+      normalizedQueryMatches: results.length >= 2 && results[1].isNotEmpty
+        ? SearchMatchGroup.fromDictionaryMatchList(results[1], normalizedTerm!, isWildcardSearch)
         : SearchMatchGroup.empty(),
       queryVariantMatches: filteredQueryVariantMatches
     );

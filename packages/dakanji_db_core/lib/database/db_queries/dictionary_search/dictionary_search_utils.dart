@@ -16,9 +16,9 @@ import 'package:language_processing/japanese/japanese_string_operations.dart';
 /// - `hiraganaTerm`: The hiragana conversion of the term if romaji conversion
 ///    was performed, otherwise null.
 /// - `processedTerms`: A list of processed terms
-({String? hiraganaTerm, List<DeconjugationResult>? termVariants}) preprocessInput(String searchTerm, bool convertRomajiToHiragana) {
+({String? normalizedTerm, List<DeconjugationResult> termVariants}) preprocessInput(String searchTerm, bool convertRomajiToHiragana) {
 
-  if(searchTerm == "") return (hiraganaTerm: null, termVariants: null);
+  if(searchTerm == "") return (normalizedTerm: searchTerm, termVariants: []);
 
   // 1. convert full-width romaji to half-width and half-width kana to full-width
   String normalizedTerm = searchTerm.toFullwidth(convertKana: true);
@@ -36,32 +36,32 @@ import 'package:language_processing/japanese/japanese_string_operations.dart';
   // AND the result contains ONLY Japanese characters
   String? hiraganaTerm;
   if (romajiToHiraganaResult != null &&
-    romajiToHiraganaResult != searchTerm && KanaKit().isJapanese(romajiToHiraganaResult)) {
+    KanaKit().isJapanese(romajiToHiraganaResult)) {
     hiraganaTerm = romajiToHiraganaResult;
   }
   // OR the normalized term is different from the input term
-  else if (normalizedTerm != searchTerm) {
+  else {
     hiraganaTerm = normalizedTerm;
   }
 
   // 4. find all possible deconjugations of the hiragana term
-  String? deconjugate;
-  if(KanaKit().isJapanese(searchTerm)) deconjugate = searchTerm;
-  else if(hiraganaTerm != null) deconjugate = hiraganaTerm; 
+  Iterable<String>? deconjugate = [searchTerm, hiraganaTerm].nonNulls;
   
   List<DeconjugationResult>? termVariants;
-  if(deconjugate != null){
+  for (String d in deconjugate) {
     JapaneseDeconjugator deconjugator = JapaneseDeconjugator();
-    termVariants = deconjugator.deconjugate(deconjugate)
+    termVariants = deconjugator.deconjugate(d)
       .where((e) =>
-        e.deconjugatedTerm != deconjugate // filter out the input term itself
+        e.deconjugatedTerm != d // filter out the input term itself
         && e.deconjugatedTerm != hiraganaTerm // filter out the hiragana term if applicable
+        && e.deconjugatedTerm != searchTerm // filter out the original search term
       )
+      .toSet() /// remove duplicates
       .toList();
   }
 
   return (
-    hiraganaTerm: hiraganaTerm,
-    termVariants: (termVariants ?? []).isEmpty ? null : termVariants
+    normalizedTerm: hiraganaTerm,
+    termVariants: termVariants ?? []
   );
 }

@@ -44,13 +44,11 @@ import '/database/term/term_bank_v3_tables.dart';
 import '/database/term_meta/term_meta_bank_relation_tables.dart';
 import '/database/term_meta/term_meta_bank_v3_dao.dart';
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
-import '/extensions/sqlite_compress_extension.dart';
-import '/extensions/sqlite_crsqlite_extension.dart';
 import '/extensions/sqlite_spellfix_extension.dart';
 import '/extensions/sqlite_vector_extension.dart';
-// these are NECCESSARY
 // ignore: unused_import
-import '/helper/json_converter.dart';
+import '/helper/json_converter.dart'; // neccessary for drift generator
+import '/helper/zlib_text_converter_io.dart';   // neccessary for drift generator
 import 'audio_source_list/audio_source_list_tables.dart';
 
 part 'dakanji_db.g.dart';
@@ -115,9 +113,7 @@ part 'dakanji_db.g.dart';
     'kanji_vg/kanji_vg_views.drift', 'kanji_vg/kanji_vg_queries.drift',
 
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
-    'general_tables/term_fts5_table.drift',
-    'general_tables/reading_fts5_table.drift', 'general_tables/reading_spellfix_table.drift',
-    'general_tables/definition_fts5_table.drift',
+    'general_tables/reading_spellfix_table.drift',
     'general_tables/hiragana_spellfix_cost.drift',
     'audio/audio_views.drift', 'audio/audio_queries.drift',
     
@@ -161,7 +157,8 @@ class DaKanjiDB extends _$DaKanjiDB {
         // First, create all the tables defined in the @DriftDatabase annotation
         await m.createAll();
 
-        // Init spellfix
+        // Init data tables
+        await populdate_fts_data_types();
         await populateHiraganaSpellfixCostTable();
       },
     );

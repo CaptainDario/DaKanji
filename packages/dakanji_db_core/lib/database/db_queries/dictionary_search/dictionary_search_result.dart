@@ -12,16 +12,64 @@ class DictionarySearchResult {
   /// Matches from the original search query.
   final SearchMatchGroup queryMatches;
   /// Matches from the hiragana-converted search query.
-  final SearchMatchGroup hiraganaQueryMatches;
+  final SearchMatchGroup normalizedQueryMatches;
   /// Matches from pre-processed variants of the search term.
   /// For example, de-conjugated forms.
   final List<SearchMatchGroup> queryVariantMatches;
 
   DictionarySearchResult({
     required this.queryMatches,
-    required this.hiraganaQueryMatches,
+    required this.normalizedQueryMatches,
     required this.queryVariantMatches,
-  });
+  }){
+
+    // This set will store the unique IDs of dictionary entries that have
+    // already been included in a higher-priority result list.
+    final Set<String> seenEntryIds = {};
+
+    // 1. Sort by matched query (Level 1)
+    processMatchGroup(queryMatches, seenEntryIds);
+
+    // 2. Normalized (Hiragana) search term matches
+    processMatchGroup(normalizedQueryMatches, seenEntryIds);
+
+    // 3. Preprocessed terms matche
+    for (final variantGroup in queryVariantMatches) {
+      processMatchGroup(variantGroup, seenEntryIds);
+    }
+  }
+
+  void processMatchGroup(SearchMatchGroup group, Set<String> seenEntryIds) {
+      filterList(group.exactMatches, seenEntryIds);
+      filterList(group.prefixMatches, seenEntryIds);
+      filterList(group.tokenMatches, seenEntryIds);
+      filterList(group.fuzzyMatches, seenEntryIds);
+      filterList(group.wildcardMatches, seenEntryIds);
+    }
+
+  // Helper function to filter a list in-place.
+  // It removes any matches whose entry ID is already in the `seenEntryIds` set.
+  // For new entries, it adds their ID to the set.
+  void filterList(List<DictionaryMatch> matches, Set<String> seenEntryIds) {
+    matches.removeWhere((match) {
+      // Create a unique identifier for the dictionary entry.
+      // Using term + reading is a robust way to do this if no
+      // single database ID (like `sequence` or `id`) is available
+      // on the TermBankV3Entry.
+      final String entryId = match.entry.hashCode.toString();
+
+      if (seenEntryIds.contains(entryId)) {
+        // This entry was already found in a more important list.
+        // Remove it from this (less important) list.
+        return true;
+      } else {
+        // This is the first time we've seen this entry.
+        // Add it to the set and keep it in this list.
+        seenEntryIds.add(entryId);
+        return false;
+      }
+    });
+  }
 
   /// Override for a comprehensive and readable summary of all search results.
   @override
@@ -30,6 +78,7 @@ class DictionarySearchResult {
     const sectionIndent = '  ';
 
     buffer.writeln('\n--- 📖 Dictionary Search Results ---');
+    buffer.writeln('Search Term: ${queryMatches.searchTerm}');
 
     // 1. Original Query Matches
     if (!queryMatches.isEmpty) {
@@ -38,9 +87,9 @@ class DictionarySearchResult {
     }
 
     // 2. Hiragana Query Matches
-    if (!hiraganaQueryMatches.isEmpty) {
+    if (!normalizedQueryMatches.isEmpty) {
       buffer.writeln('\n▼ Matches for Hiragana Query');
-      buffer.write(hiraganaQueryMatches.toFormattedString(indent: sectionIndent));
+      buffer.write(normalizedQueryMatches.toFormattedString(indent: sectionIndent));
     }
 
     // 3. De-conjugated / Variant Matches
@@ -59,7 +108,7 @@ class DictionarySearchResult {
 
     // Check if any matches were found at all.
     if (queryMatches.isEmpty &&
-        hiraganaQueryMatches.isEmpty &&
+        normalizedQueryMatches.isEmpty &&
         nonEmptyVariants.isEmpty) {
       buffer.writeln("\n<No matches found anywhere>");
     }

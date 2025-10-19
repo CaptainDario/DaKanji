@@ -83,7 +83,7 @@ void main() {
             print("Expected:\n $testCase");
             
             expectMatchGroup(results.queryMatches, testCase.queryMatches, testCase.query, 'termMatches');
-            expectMatchGroup(results.hiraganaQueryMatches, testCase.hiraganaQueryMatches, testCase.query, 'hiraganaMatches');
+            expectMatchGroup(results.normalizedQueryMatches, testCase.hiraganaQueryMatches, testCase.query, 'hiraganaMatches');
 
             final actualVariants = results.queryVariantMatches;
             final expectedVariants = testCase.queryVariantMatches;
@@ -115,7 +115,7 @@ void main() {
 Future setupFreshDB() async {
 
     if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-    DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+    DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: false);
 
     // init mecab
     final mecab = Mecab();

@@ -158,11 +158,11 @@ Future parseAudioDataSourceEntry(
     if(termId == null){
       termId = ++aC.currentMaxTermId;
 
-      String? termNormalized = preprocessInput(term, false).hiraganaTerm;
+      String? termNormalized = preprocessInput(term, false).normalizedTerm;
       String? termTokens = getMecabSurfacesOrNull(mecab, term);
       String? termTokensNormalized = termTokens==null
         ? null
-        : preprocessInput(termTokens, false).hiraganaTerm;
+        : preprocessInput(termTokens, false).normalizedTerm;
       aC.termComps.add(TermTableCompanion(
         id: Value(termId),
         term: Value(term),
@@ -190,7 +190,7 @@ Future parseAudioDataSourceEntry(
     if(readingId == null) {
       readingId = ++aC.currentMaxReadingId;
 
-      String? readingNormalized = preprocessInput(reading, false).hiraganaTerm;
+      String? readingNormalized = preprocessInput(reading, false).normalizedTerm;
       aC.readingComps.add(ReadingTableCompanion(
         id: Value(readingId),
         reading: Value(reading),
