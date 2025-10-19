@@ -37,6 +37,9 @@ class DictionarySearchResult {
     for (final variantGroup in queryVariantMatches) {
       processMatchGroup(variantGroup, seenEntryIds);
     }
+
+    // remove all empty variant groups
+    queryVariantMatches.removeWhere((group) => group.isEmpty);
   }
 
   void processMatchGroup(SearchMatchGroup group, Set<String> seenEntryIds) {
