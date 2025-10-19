@@ -100,7 +100,7 @@ class SearchTestCase {
   final ExpectedMatchGroup queryMatches;
 
   /// Expected results from the Romaji-to-Hiragana converted query.
-  final ExpectedMatchGroup hiraganaQueryMatches;
+  final List<ExpectedMatchGroup> normalizedQueryMatchGroups;
 
   /// Expected results from de-conjugated or other normalized query variants.
   final List<ExpectedMatchGroup> queryVariantMatches;
@@ -110,7 +110,7 @@ class SearchTestCase {
     required this.query,
     this.tags = const [],
     this.queryMatches = const ExpectedMatchGroup(),
-    this.hiraganaQueryMatches = const ExpectedMatchGroup(),
+    this.normalizedQueryMatchGroups = const [],
     this.queryVariantMatches = const [],
   });
 
@@ -131,9 +131,17 @@ class SearchTestCase {
     }
 
     // --- 2. Hiragana Query Matches ---
-    if (!hiraganaQueryMatches.isEmpty) {
-      buffer.writeln('\n▼ Matches for Hiragana Query');
-      buffer.write(hiraganaQueryMatches.toFormattedString(indent: sectionIndent));
+    final nonEmptyNormalized =
+        normalizedQueryMatchGroups.where((v) => !v.isEmpty).toList();
+    if (nonEmptyNormalized.isNotEmpty) {
+      buffer.writeln(
+          '\n▼ Matches for Normalized queries (${nonEmptyNormalized.length})');
+      for (var i = 0; i < nonEmptyNormalized.length; i++) {
+        buffer.writeln('$sectionIndent- Variant ${i + 1}:');
+        // Add extra indentation for the content of each variant
+        buffer.write(
+            nonEmptyNormalized[i].toFormattedString(indent: '$sectionIndent  '));
+      }
     }
 
     // --- 3. De-conjugated / Variant Matches ---
@@ -153,7 +161,7 @@ class SearchTestCase {
 
     // --- No Matches Check ---
     if (queryMatches.isEmpty &&
-        hiraganaQueryMatches.isEmpty &&
+        nonEmptyNormalized.isEmpty &&
         nonEmptyVariants.isEmpty) {
       buffer.writeln("\n<No matches found anywhere>");
     }

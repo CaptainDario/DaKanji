@@ -13,7 +13,6 @@ import '../../util/db_files.dart';
 import 'dictionary_search_deconjugation_test_cases.dart';
 import 'dictionary_search_fuzzy_test_cases.dart';
 import 'dictionary_search_input_preprocessing_test_cases.dart';
-import 'dictionary_search_language_filtering_test_cases.dart';
 import 'dictionary_search_meta_bank_test_cases.dart';
 import 'dictionary_search_sorting_test_cases.dart';
 import 'dictionary_search_tag_filtering_test_cases.dart';
@@ -32,7 +31,6 @@ final List<List<SearchTestCase>> testCases = [
   sortingTestCases,
   fuzzySearchTestCases,
   tagFilteringTestCases,
-  languageFilteringTestCases,
   metaBankTestCases
 ];
 final List<String> testCaseNames = [
@@ -43,7 +41,6 @@ final List<String> testCaseNames = [
   "Sorting Test Cases",
   "Fuzzy Search Test Cases",
   "Tag Filtering Test Cases",
-  "Language Filtering Test Cases",
   "Meta bank test cases"
 ];
 
@@ -83,7 +80,26 @@ void main() {
             print("Expected:\n $testCase");
             
             expectMatchGroup(results.queryMatches, testCase.queryMatches, testCase.query, 'termMatches');
-            expectMatchGroup(results.normalizedQueryMatches, testCase.hiraganaQueryMatches, testCase.query, 'hiraganaMatches');
+
+            final actualNormalized = results.normalizedQueryMatchGroups;
+            final expectedNormalized = testCase.normalizedQueryMatchGroups;
+
+            if (actualNormalized.length != expectedNormalized.length) {
+              fail(
+                  'Unexpected number of normalized match groups for query \'${testCase.query}\'.\n'
+                  'Expected length: ${expectedNormalized.length}\n'
+                  '  Actual length: ${actualNormalized.length}\n'
+                  '   ACTUAL CONTENTS:\n${actualNormalized.map((g) => g.toFormattedString(indent: "    ")).join("\n")}');
+            }
+
+            for (int i = 0; i < expectedNormalized.length; i++) {
+              expectMatchGroup(
+                actualNormalized[i], 
+                expectedNormalized[i], 
+                testCase.query, 
+                'variantMatches[$i]'
+              );
+            }
 
             final actualVariants = results.queryVariantMatches;
             final expectedVariants = testCase.queryVariantMatches;

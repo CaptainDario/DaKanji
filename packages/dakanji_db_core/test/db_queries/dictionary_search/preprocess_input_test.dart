@@ -14,7 +14,7 @@ void main() {
 
       test('Test Case $input', () {
         final result = preprocessInput(input, convertRomajiToHiragana);
-        expect(result.normalizedTerm, equals(expectedHiragana));
+        expect(result.normalizedTerms.firstOrNull, equals(expectedHiragana));
         expect(
           result.termVariants.map((e) => e.deconjugatedTerm).toList(),
           equals(expectedTermVariants)

@@ -112,7 +112,7 @@ Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserContext pC, DaKanji
         onyomiInsertId = ++pC.readingId;
         pC.readingsInDB[onyomi] = onyomiInsertId;
 
-        String? onyomiNormalized = preprocessInput(onyomi, false).normalizedTerm;
+        String? onyomiNormalized = preprocessInput(onyomi, false).normalizedTerms.firstOrNull;
         pC.readingCompanions.add(ReadingTableCompanion(
           id: Value(onyomiInsertId),
           reading: Value(onyomi),
@@ -147,7 +147,7 @@ Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserContext pC, DaKan
         kunyomiInsertId = ++pC.readingId;
         pC.readingsInDB[kunyomi] = kunyomiInsertId;
 
-        String? kunyomiNormalized = preprocessInput(kunyomi, false).normalizedTerm;
+        String? kunyomiNormalized = preprocessInput(kunyomi, false).normalizedTerms.firstOrNull;
         pC.readingCompanions.add(ReadingTableCompanion(
           id: Value(kunyomiInsertId),
           reading: Value(kunyomi),

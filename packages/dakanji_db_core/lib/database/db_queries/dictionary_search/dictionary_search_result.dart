@@ -11,15 +11,15 @@ import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 class DictionarySearchResult {
   /// Matches from the original search query.
   final SearchMatchGroup queryMatches;
-  /// Matches from the hiragana-converted search query.
-  final SearchMatchGroup normalizedQueryMatches;
+  /// Matches from the hiragana-converted search queries.
+  final List<SearchMatchGroup> normalizedQueryMatchGroups;
   /// Matches from pre-processed variants of the search term.
   /// For example, de-conjugated forms.
   final List<SearchMatchGroup> queryVariantMatches;
 
   DictionarySearchResult({
     required this.queryMatches,
-    required this.normalizedQueryMatches,
+    required this.normalizedQueryMatchGroups,
     required this.queryVariantMatches,
   }){
 
@@ -31,14 +31,15 @@ class DictionarySearchResult {
     processMatchGroup(queryMatches, seenEntryIds);
 
     // 2. Normalized (Hiragana) search term matches
-    processMatchGroup(normalizedQueryMatches, seenEntryIds);
+    for (final normalizedQueryMatch in normalizedQueryMatchGroups)
+      processMatchGroup(normalizedQueryMatch, seenEntryIds);
 
     // 3. Preprocessed terms matche
-    for (final variantGroup in queryVariantMatches) {
+    for (final variantGroup in queryVariantMatches)
       processMatchGroup(variantGroup, seenEntryIds);
-    }
 
     // remove all empty variant groups
+    normalizedQueryMatchGroups.removeWhere((group) => group.isEmpty);
     queryVariantMatches.removeWhere((group) => group.isEmpty);
   }
 
@@ -90,29 +91,29 @@ class DictionarySearchResult {
     }
 
     // 2. Hiragana Query Matches
-    if (!normalizedQueryMatches.isEmpty) {
-      buffer.writeln('\n▼ Matches for Hiragana Query');
-      buffer.write(normalizedQueryMatches.toFormattedString(indent: sectionIndent));
+    if (normalizedQueryMatchGroups.isNotEmpty) {
+      buffer.writeln('\n▼ Matches for Normalized queries (${normalizedQueryMatchGroups.length})');
+      for (var i = 0; i < normalizedQueryMatchGroups.length; i++) {
+        buffer.writeln('$sectionIndent- Variant ${i + 1}:');
+        // Add extra indentation for the content of each variant.
+        buffer.write(normalizedQueryMatchGroups[i].toFormattedString(indent: '$sectionIndent  '));
+      }
     }
 
     // 3. De-conjugated / Variant Matches
-    final nonEmptyVariants =
-        queryVariantMatches.where((v) => !v.isEmpty).toList();
-    if (nonEmptyVariants.isNotEmpty) {
-      buffer.writeln(
-          '\n▼ Matches for De-conjugated Variants (${nonEmptyVariants.length})');
-      for (var i = 0; i < nonEmptyVariants.length; i++) {
+    if (queryVariantMatches.isNotEmpty) {
+      buffer.writeln('\n▼ Matches for De-conjugated Variants (${queryVariantMatches.length})');
+      for (var i = 0; i < queryVariantMatches.length; i++) {
         buffer.writeln('$sectionIndent- Variant ${i + 1}:');
         // Add extra indentation for the content of each variant.
-        buffer.write(
-            nonEmptyVariants[i].toFormattedString(indent: '$sectionIndent  '));
+        buffer.write(queryVariantMatches[i].toFormattedString(indent: '$sectionIndent  '));
       }
     }
 
     // Check if any matches were found at all.
     if (queryMatches.isEmpty &&
-        normalizedQueryMatches.isEmpty &&
-        nonEmptyVariants.isEmpty) {
+        normalizedQueryMatchGroups.isEmpty &&
+        queryVariantMatches.isEmpty) {
       buffer.writeln("\n<No matches found anywhere>");
     }
 

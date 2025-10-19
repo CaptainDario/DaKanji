@@ -68,12 +68,12 @@ Future parseTermBankV3(
     if(pC.allTerms[term] == null){
       pC.allTerms[term] = termInsertId;
 
-      String? termNormalized = preprocessInput(term, false).normalizedTerm;
+      String? termNormalized = preprocessInput(term, false).normalizedTerms.firstOrNull;
       print("TESTTEST $termNormalized");
       String? termTokens = getMecabSurfacesOrNull(mecab, term);
       String? termTokensNormalized = termTokens==null
         ? null
-        : preprocessInput(termTokens, false).normalizedTerm;
+        : preprocessInput(termTokens, false).normalizedTerms.firstOrNull;
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
         term: Value(term),
@@ -94,7 +94,7 @@ Future parseTermBankV3(
     if(pC.allReadings[jsonEntry[1]] == null){
       pC.allReadings[jsonEntry[1]] = readingInsertId;
 
-      String? readingNormalized = preprocessInput(jsonEntry[1], false).normalizedTerm;
+      String? readingNormalized = preprocessInput(jsonEntry[1], false).normalizedTerms.firstOrNull;
       readingComps.add(ReadingTableCompanion(
         id: Value(readingInsertId),
         reading: Value(jsonEntry[1]),
