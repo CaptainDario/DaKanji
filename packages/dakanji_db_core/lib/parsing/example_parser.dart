@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
+import 'package:dakanji_db_core/database/dictionary_types.dart';
 import 'package:dakanji_db_core/parsing/example/example_text_parser.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
@@ -72,6 +73,7 @@ Future _parseExampleDataSource(({
   // add an index for the example entries
   int indexId = await db.into(db.indexTable).insert(IndexTableCompanion(
     title: Value(p.basenameWithoutExtension(params.examplesZipPath)),
+    dictionaryType: Value(DictionaryTypes.audio),
     revision: Value("1.0"),
     updatable: Value(false),
     description: Value("Examples data source, parsed from ${p.basename(params.examplesZipPath)}"),

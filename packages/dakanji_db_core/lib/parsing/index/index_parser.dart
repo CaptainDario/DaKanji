@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:convert';
 
+import 'package:dakanji_db_core/database/dictionary_types.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
@@ -21,6 +22,8 @@ Future<int> parseIndex(String indexJson, DaKanjiDB db) async {
   Map jsonMap = jsonDecode(indexJson);
 
   IndexTableCompanion comp = IndexTableCompanion(
+    dictionaryType: Value(DictionaryTypes.yomitan),
+
     title: Value(jsonMap["title"]),
     revision: Value(jsonMap["revision"]),
 

@@ -4,6 +4,7 @@ import 'dart:isolate';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
+import 'package:dakanji_db_core/database/dictionary_types.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_data_source_formats.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_parser_context.dart';
 import 'package:dakanji_db_core/parsing/media/media_importer.dart';
@@ -103,6 +104,7 @@ Future _parseAudioDataSource(({
   // add an index for the audio entries
   int indexId = await db.into(db.indexTable).insert(IndexTableCompanion(
     title: Value(params.audioSourceName),
+    dictionaryType: Value(DictionaryTypes.audio),
     revision: Value("1.0"),
     format: Value(format.index),
     updatable: Value(false),

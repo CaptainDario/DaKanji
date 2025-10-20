@@ -1,4 +1,5 @@
 
+import 'package:dakanji_db_core/database/dictionary_types.dart';
 import 'package:drift/drift.dart';
 
 /// Contains the main Kanji entries to which the other tables link
@@ -6,6 +7,9 @@ class IndexTable extends Table {
 
   /// id of this entry
   IntColumn get id => integer().autoIncrement()();
+
+  /// Type of dictionary stored in this index.
+  TextColumn get dictionaryType => textEnum<DictionaryTypes>()() ;
 
   /// Title of the dictionary.
   TextColumn get title => text()();
