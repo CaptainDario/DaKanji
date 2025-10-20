@@ -16,7 +16,8 @@ class TermBankV3_X_DefinitionTagTable extends Table {
   /// the id of the associated defintion tag
   IntColumn get definitionTagId => integer().references(TermBankV3DefinitionTagsTable, #id)();
   /// the id of the associated term in the term bank
-  IntColumn get termBankId => integer().references(TermBankV3Table, #id)();
+  IntColumn get termBankId => integer()
+    .references(TermBankV3Table, #id, onDelete: KeyAction.cascade)();
 
 }
 
@@ -29,7 +30,8 @@ class TermBankV3_X_RuleIdentifierTable extends Table {
   /// the id of the associated rule identifier reading
   IntColumn get ruleIdentifierId => integer().references(TermBankV3RuleIdentifierTable, #id)();
   /// the id of the associated term in the term bank
-  IntColumn get termBankId => integer().references(TermBankV3Table, #id)();
+  IntColumn get termBankId => integer()
+    .references(TermBankV3Table, #id, onDelete: KeyAction.cascade)();
 
 }
 
@@ -42,7 +44,8 @@ class TermBankV3_X_DefinitionTable extends Table {
   /// the id of the associated definition
   IntColumn get definitionId => integer().references(DefinitionTable, #id)();
   /// the id of the associated term in the term bank
-  IntColumn get termBankId => integer().references(TermBankV3Table, #id)();
+  IntColumn get termBankId => integer()
+    .references(TermBankV3Table, #id, onDelete: KeyAction.cascade)();
 
 }
 
@@ -55,6 +58,7 @@ class TermBankV3_X_TagBankTable extends Table {
   /// the id of the associated tag bank entry
   IntColumn get tagBankId => integer().references(TagBankV3Table, #id)();
   /// the id of the associated term in the term bank
-  IntColumn get termBankId => integer().references(TermBankV3Table, #id)();
+  IntColumn get termBankId => integer()
+    .references(TermBankV3Table, #id, onDelete: KeyAction.cascade)();
 
 }

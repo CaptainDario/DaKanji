@@ -13,7 +13,9 @@ class ExampleTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// The id of the dictionary this entry belongs to
-  IntColumn get indexId => integer().references(IndexTable, #id)();
+  IntColumn get indexId => integer().references(IndexTable, #id,
+    onDelete: KeyAction.cascade
+  )();
 
   /// the example of this entry
   TextColumn get exampleSentence => text()();

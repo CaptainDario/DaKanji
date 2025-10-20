@@ -40,7 +40,6 @@ Future parseExampleSentence(
     indexId: Value(indexId),
     exampleSentence: Value(jap),
     exampleSentenceTokenized: Value(tokenized)
-  
   ));
 
 

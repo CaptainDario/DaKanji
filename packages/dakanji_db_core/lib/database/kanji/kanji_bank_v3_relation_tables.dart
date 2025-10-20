@@ -15,7 +15,8 @@ class KanjiBankV3_X_OnyomiReadingTable extends Table {
   /// the id of the associated onyomi reading
   IntColumn get onyomiReadingId => integer().references(ReadingTable, #id)();
   /// the id of the associated kanji
-  IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
+  IntColumn get kanjiId => integer()
+    .references(KanjiBankV3Table, #id, onDelete: KeyAction.cascade)();
 
 }
 
@@ -28,7 +29,8 @@ class KanjiBankV3_X_KunyomiReadingTable extends Table {
   /// the id of the associated kunyomi reading
   IntColumn get kunyomiReadingId => integer().references(ReadingTable, #id)();
   /// the id of the associated kanji
-  IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
+  IntColumn get kanjiId => integer()
+    .references(KanjiBankV3Table, #id, onDelete: KeyAction.cascade)();
 
 }
 
@@ -41,7 +43,8 @@ class KanjiBankV3_X_TagBankV3Table extends Table {
   /// the id of the associated tag
   IntColumn get tagId => integer().references(TagBankV3Table, #id)();
   /// the id of the associated kanji
-  IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
+  IntColumn get kanjiId => integer()
+    .references(KanjiBankV3Table, #id, onDelete: KeyAction.cascade)();
 
 }
 
@@ -54,7 +57,8 @@ class KanjiBankV3_X_DefinitionTable extends Table {
   /// the id of the associated definition
   IntColumn get definitionId => integer().references(DefinitionTable, #id)();
   /// the id of the associated kanji
-  IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
+  IntColumn get kanjiId => integer()
+    .references(KanjiBankV3Table, #id, onDelete: KeyAction.cascade)();
 
 }
 
@@ -67,6 +71,7 @@ class KanjiBankV3_X_KanjiBankV3StatsTable extends Table {
   /// the id of the associated stats element
   IntColumn get statId => integer().references(KanjiBankV3StatsTable, #id)();
   /// the id of the associated kanji
-  IntColumn get kanjiId => integer().references(KanjiBankV3Table, #id)();
+  IntColumn get kanjiId => integer()
+    .references(KanjiBankV3Table, #id, onDelete: KeyAction.cascade)();
 
 }

@@ -216,6 +216,15 @@ class $IndexTableTable extends IndexTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
+  @override
+  late final GeneratedColumnWithTypeConverter<DictionaryTypes, String>
+  dictionaryType = GeneratedColumn<String>(
+    'dictionary_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  ).withConverter<DictionaryTypes>($IndexTableTable.$converterdictionaryType);
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
@@ -382,6 +391,7 @@ class $IndexTableTable extends IndexTable
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    dictionaryType,
     title,
     revision,
     sequenced,
@@ -538,6 +548,12 @@ class $IndexTableTable extends IndexTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
+      dictionaryType: $IndexTableTable.$converterdictionaryType.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}dictionary_type'],
+        )!,
+      ),
       title: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}title'],
@@ -605,11 +621,19 @@ class $IndexTableTable extends IndexTable
   $IndexTableTable createAlias(String alias) {
     return $IndexTableTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<DictionaryTypes, String, String>
+  $converterdictionaryType = const EnumNameConverter<DictionaryTypes>(
+    DictionaryTypes.values,
+  );
 }
 
 class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   /// id of this entry
   final int id;
+
+  /// Type of dictionary stored in this index.
+  final DictionaryTypes dictionaryType;
 
   /// Title of the dictionary.
   final String title;
@@ -658,6 +682,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   final String? frequencyMode;
   const IndexTableData({
     required this.id,
+    required this.dictionaryType,
     required this.title,
     required this.revision,
     this.sequenced,
@@ -678,6 +703,11 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    {
+      map['dictionary_type'] = Variable<String>(
+        $IndexTableTable.$converterdictionaryType.toSql(dictionaryType),
+      );
+    }
     map['title'] = Variable<String>(title);
     map['revision'] = Variable<String>(revision);
     if (!nullToAbsent || sequenced != null) {
@@ -725,6 +755,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   IndexTableCompanion toCompanion(bool nullToAbsent) {
     return IndexTableCompanion(
       id: Value(id),
+      dictionaryType: Value(dictionaryType),
       title: Value(title),
       revision: Value(revision),
       sequenced: sequenced == null && nullToAbsent
@@ -774,6 +805,9 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return IndexTableData(
       id: serializer.fromJson<int>(json['id']),
+      dictionaryType: $IndexTableTable.$converterdictionaryType.fromJson(
+        serializer.fromJson<String>(json['dictionaryType']),
+      ),
       title: serializer.fromJson<String>(json['title']),
       revision: serializer.fromJson<String>(json['revision']),
       sequenced: serializer.fromJson<bool?>(json['sequenced']),
@@ -796,6 +830,9 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'dictionaryType': serializer.toJson<String>(
+        $IndexTableTable.$converterdictionaryType.toJson(dictionaryType),
+      ),
       'title': serializer.toJson<String>(title),
       'revision': serializer.toJson<String>(revision),
       'sequenced': serializer.toJson<bool?>(sequenced),
@@ -816,6 +853,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
 
   IndexTableData copyWith({
     int? id,
+    DictionaryTypes? dictionaryType,
     String? title,
     String? revision,
     Value<bool?> sequenced = const Value.absent(),
@@ -833,6 +871,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     Value<String?> frequencyMode = const Value.absent(),
   }) => IndexTableData(
     id: id ?? this.id,
+    dictionaryType: dictionaryType ?? this.dictionaryType,
     title: title ?? this.title,
     revision: revision ?? this.revision,
     sequenced: sequenced.present ? sequenced.value : this.sequenced,
@@ -858,6 +897,9 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   IndexTableData copyWithCompanion(IndexTableCompanion data) {
     return IndexTableData(
       id: data.id.present ? data.id.value : this.id,
+      dictionaryType: data.dictionaryType.present
+          ? data.dictionaryType.value
+          : this.dictionaryType,
       title: data.title.present ? data.title.value : this.title,
       revision: data.revision.present ? data.revision.value : this.revision,
       sequenced: data.sequenced.present ? data.sequenced.value : this.sequenced,
@@ -892,6 +934,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   String toString() {
     return (StringBuffer('IndexTableData(')
           ..write('id: $id, ')
+          ..write('dictionaryType: $dictionaryType, ')
           ..write('title: $title, ')
           ..write('revision: $revision, ')
           ..write('sequenced: $sequenced, ')
@@ -914,6 +957,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   @override
   int get hashCode => Object.hash(
     id,
+    dictionaryType,
     title,
     revision,
     sequenced,
@@ -935,6 +979,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       identical(this, other) ||
       (other is IndexTableData &&
           other.id == this.id &&
+          other.dictionaryType == this.dictionaryType &&
           other.title == this.title &&
           other.revision == this.revision &&
           other.sequenced == this.sequenced &&
@@ -954,6 +999,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
 
 class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   final Value<int> id;
+  final Value<DictionaryTypes> dictionaryType;
   final Value<String> title;
   final Value<String> revision;
   final Value<bool?> sequenced;
@@ -971,6 +1017,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   final Value<String?> frequencyMode;
   const IndexTableCompanion({
     this.id = const Value.absent(),
+    this.dictionaryType = const Value.absent(),
     this.title = const Value.absent(),
     this.revision = const Value.absent(),
     this.sequenced = const Value.absent(),
@@ -989,6 +1036,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   });
   IndexTableCompanion.insert({
     this.id = const Value.absent(),
+    required DictionaryTypes dictionaryType,
     required String title,
     required String revision,
     this.sequenced = const Value.absent(),
@@ -1004,10 +1052,12 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     this.sourceLanguage = const Value.absent(),
     this.targetLanguage = const Value.absent(),
     this.frequencyMode = const Value.absent(),
-  }) : title = Value(title),
+  }) : dictionaryType = Value(dictionaryType),
+       title = Value(title),
        revision = Value(revision);
   static Insertable<IndexTableData> custom({
     Expression<int>? id,
+    Expression<String>? dictionaryType,
     Expression<String>? title,
     Expression<String>? revision,
     Expression<bool>? sequenced,
@@ -1026,6 +1076,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (dictionaryType != null) 'dictionary_type': dictionaryType,
       if (title != null) 'title': title,
       if (revision != null) 'revision': revision,
       if (sequenced != null) 'sequenced': sequenced,
@@ -1046,6 +1097,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
 
   IndexTableCompanion copyWith({
     Value<int>? id,
+    Value<DictionaryTypes>? dictionaryType,
     Value<String>? title,
     Value<String>? revision,
     Value<bool?>? sequenced,
@@ -1064,6 +1116,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   }) {
     return IndexTableCompanion(
       id: id ?? this.id,
+      dictionaryType: dictionaryType ?? this.dictionaryType,
       title: title ?? this.title,
       revision: revision ?? this.revision,
       sequenced: sequenced ?? this.sequenced,
@@ -1087,6 +1140,11 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (dictionaryType.present) {
+      map['dictionary_type'] = Variable<String>(
+        $IndexTableTable.$converterdictionaryType.toSql(dictionaryType.value),
+      );
     }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
@@ -1140,6 +1198,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   String toString() {
     return (StringBuffer('IndexTableCompanion(')
           ..write('id: $id, ')
+          ..write('dictionaryType: $dictionaryType, ')
           ..write('title: $title, ')
           ..write('revision: $revision, ')
           ..write('sequenced: $sequenced, ')
@@ -1926,7 +1985,7 @@ class $KanjiBankV3_X_OnyomiReadingTableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_bank_v3_table (id)',
+      'REFERENCES kanji_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -2208,7 +2267,7 @@ class $KanjiBankV3_X_KunyomiReadingTableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_bank_v3_table (id)',
+      'REFERENCES kanji_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -2952,7 +3011,7 @@ class $KanjiBankV3_X_TagBankV3TableTable extends KanjiBankV3_X_TagBankV3Table
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_bank_v3_table (id)',
+      'REFERENCES kanji_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -3438,7 +3497,7 @@ class $KanjiBankV3_X_DefinitionTableTable extends KanjiBankV3_X_DefinitionTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_bank_v3_table (id)',
+      'REFERENCES kanji_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -4443,7 +4502,7 @@ class $KanjiBankV3_X_KanjiBankV3StatsTableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_bank_v3_table (id)',
+      'REFERENCES kanji_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -7419,7 +7478,7 @@ class $TermBankV3_X_DefinitionTagTableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_bank_v3_table (id)',
+      'REFERENCES term_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -7930,7 +7989,7 @@ class $TermBankV3_X_RuleIdentifierTableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_bank_v3_table (id)',
+      'REFERENCES term_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -8216,7 +8275,7 @@ class $TermBankV3_X_DefinitionTableTable extends TermBankV3_X_DefinitionTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_bank_v3_table (id)',
+      'REFERENCES term_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -8502,7 +8561,7 @@ class $TermBankV3_X_TagBankTableTable extends TermBankV3_X_TagBankTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_bank_v3_table (id)',
+      'REFERENCES term_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -10105,7 +10164,7 @@ class $TermMetaBankV3_X_PitchTableTable extends TermMetaBankV3_X_PitchTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_meta_bank_v3_table (id)',
+      'REFERENCES term_meta_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -10575,7 +10634,7 @@ class $TermMetaBankV3_X_PitchTagTableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_meta_bank_v3_pitch_table (id)',
+      'REFERENCES term_meta_bank_v3_pitch_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
@@ -11062,7 +11121,7 @@ class $TermMetaBankV3_X_IpaTableTable extends TermMetaBankV3_X_IpaTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_meta_bank_v3_table (id)',
+      'REFERENCES term_meta_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -11327,7 +11386,7 @@ class $TermMetaBankV3_X_IpaTagTableTable extends TermMetaBankV3_X_IpaTagTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_meta_bank_v3_ipa_table (id)',
+      'REFERENCES term_meta_bank_v3_ipa_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _tagIdMeta = const VerificationMeta('tagId');
@@ -13026,6 +13085,360 @@ class ReadingSpellfixCompanion extends UpdateCompanion<ReadingSpellfixData> {
   }
 }
 
+class $MediaTableTable extends MediaTable
+    with TableInfo<$MediaTableTable, MediaTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MediaTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _indexIdMeta = const VerificationMeta(
+    'indexId',
+  );
+  @override
+  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
+    'index_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES index_table (id)',
+    ),
+  );
+  static const VerificationMeta _pathMeta = const VerificationMeta('path');
+  @override
+  late final GeneratedColumn<String> path = GeneratedColumn<String>(
+    'path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dataMeta = const VerificationMeta('data');
+  @override
+  late final GeneratedColumn<Uint8List> data = GeneratedColumn<Uint8List>(
+    'data',
+    aliasedName,
+    false,
+    type: DriftSqlType.blob,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, indexId, path, name, data];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'media_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MediaTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('index_id')) {
+      context.handle(
+        _indexIdMeta,
+        indexId.isAcceptableOrUnknown(data['index_id']!, _indexIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_indexIdMeta);
+    }
+    if (data.containsKey('path')) {
+      context.handle(
+        _pathMeta,
+        path.isAcceptableOrUnknown(data['path']!, _pathMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_pathMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('data')) {
+      context.handle(
+        _dataMeta,
+        this.data.isAcceptableOrUnknown(data['data']!, _dataMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dataMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MediaTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MediaTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      indexId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}index_id'],
+      )!,
+      path: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}path'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      data: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}data'],
+      )!,
+    );
+  }
+
+  @override
+  $MediaTableTable createAlias(String alias) {
+    return $MediaTableTable(attachedDatabase, alias);
+  }
+}
+
+class MediaTableData extends DataClass implements Insertable<MediaTableData> {
+  /// id of this entry
+  final int id;
+
+  /// The id of the dictionary this entry belongs to
+  final int indexId;
+
+  /// the path of this data file as found in the original data source
+  final String path;
+
+  /// A the name for this file
+  final String name;
+
+  /// The actual data of the file
+  final Uint8List data;
+  const MediaTableData({
+    required this.id,
+    required this.indexId,
+    required this.path,
+    required this.name,
+    required this.data,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['index_id'] = Variable<int>(indexId);
+    map['path'] = Variable<String>(path);
+    map['name'] = Variable<String>(name);
+    map['data'] = Variable<Uint8List>(data);
+    return map;
+  }
+
+  MediaTableCompanion toCompanion(bool nullToAbsent) {
+    return MediaTableCompanion(
+      id: Value(id),
+      indexId: Value(indexId),
+      path: Value(path),
+      name: Value(name),
+      data: Value(data),
+    );
+  }
+
+  factory MediaTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MediaTableData(
+      id: serializer.fromJson<int>(json['id']),
+      indexId: serializer.fromJson<int>(json['indexId']),
+      path: serializer.fromJson<String>(json['path']),
+      name: serializer.fromJson<String>(json['name']),
+      data: serializer.fromJson<Uint8List>(json['data']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'indexId': serializer.toJson<int>(indexId),
+      'path': serializer.toJson<String>(path),
+      'name': serializer.toJson<String>(name),
+      'data': serializer.toJson<Uint8List>(data),
+    };
+  }
+
+  MediaTableData copyWith({
+    int? id,
+    int? indexId,
+    String? path,
+    String? name,
+    Uint8List? data,
+  }) => MediaTableData(
+    id: id ?? this.id,
+    indexId: indexId ?? this.indexId,
+    path: path ?? this.path,
+    name: name ?? this.name,
+    data: data ?? this.data,
+  );
+  MediaTableData copyWithCompanion(MediaTableCompanion data) {
+    return MediaTableData(
+      id: data.id.present ? data.id.value : this.id,
+      indexId: data.indexId.present ? data.indexId.value : this.indexId,
+      path: data.path.present ? data.path.value : this.path,
+      name: data.name.present ? data.name.value : this.name,
+      data: data.data.present ? data.data.value : this.data,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MediaTableData(')
+          ..write('id: $id, ')
+          ..write('indexId: $indexId, ')
+          ..write('path: $path, ')
+          ..write('name: $name, ')
+          ..write('data: $data')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, indexId, path, name, $driftBlobEquality.hash(data));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MediaTableData &&
+          other.id == this.id &&
+          other.indexId == this.indexId &&
+          other.path == this.path &&
+          other.name == this.name &&
+          $driftBlobEquality.equals(other.data, this.data));
+}
+
+class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
+  final Value<int> id;
+  final Value<int> indexId;
+  final Value<String> path;
+  final Value<String> name;
+  final Value<Uint8List> data;
+  const MediaTableCompanion({
+    this.id = const Value.absent(),
+    this.indexId = const Value.absent(),
+    this.path = const Value.absent(),
+    this.name = const Value.absent(),
+    this.data = const Value.absent(),
+  });
+  MediaTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int indexId,
+    required String path,
+    required String name,
+    required Uint8List data,
+  }) : indexId = Value(indexId),
+       path = Value(path),
+       name = Value(name),
+       data = Value(data);
+  static Insertable<MediaTableData> custom({
+    Expression<int>? id,
+    Expression<int>? indexId,
+    Expression<String>? path,
+    Expression<String>? name,
+    Expression<Uint8List>? data,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (indexId != null) 'index_id': indexId,
+      if (path != null) 'path': path,
+      if (name != null) 'name': name,
+      if (data != null) 'data': data,
+    });
+  }
+
+  MediaTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? indexId,
+    Value<String>? path,
+    Value<String>? name,
+    Value<Uint8List>? data,
+  }) {
+    return MediaTableCompanion(
+      id: id ?? this.id,
+      indexId: indexId ?? this.indexId,
+      path: path ?? this.path,
+      name: name ?? this.name,
+      data: data ?? this.data,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (indexId.present) {
+      map['index_id'] = Variable<int>(indexId.value);
+    }
+    if (path.present) {
+      map['path'] = Variable<String>(path.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (data.present) {
+      map['data'] = Variable<Uint8List>(data.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MediaTableCompanion(')
+          ..write('id: $id, ')
+          ..write('indexId: $indexId, ')
+          ..write('path: $path, ')
+          ..write('name: $name, ')
+          ..write('data: $data')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $AudioTableTable extends AudioTable
     with TableInfo<$AudioTableTable, AudioTableData> {
   @override
@@ -13083,6 +13496,9 @@ class $AudioTableTable extends AudioTable
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES media_table (id) ON DELETE CASCADE',
+    ),
   );
   static const VerificationMeta _pitchAccentPatternMeta =
       const VerificationMeta('pitchAccentPattern');
@@ -13665,360 +14081,6 @@ class AudioTable_X_TermTableCompanion
           ..write('id: $id, ')
           ..write('audioId: $audioId, ')
           ..write('termId: $termId')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $MediaTableTable extends MediaTable
-    with TableInfo<$MediaTableTable, MediaTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $MediaTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _indexIdMeta = const VerificationMeta(
-    'indexId',
-  );
-  @override
-  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
-    'index_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES index_table (id)',
-    ),
-  );
-  static const VerificationMeta _pathMeta = const VerificationMeta('path');
-  @override
-  late final GeneratedColumn<String> path = GeneratedColumn<String>(
-    'path',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _dataMeta = const VerificationMeta('data');
-  @override
-  late final GeneratedColumn<Uint8List> data = GeneratedColumn<Uint8List>(
-    'data',
-    aliasedName,
-    false,
-    type: DriftSqlType.blob,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, indexId, path, name, data];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'media_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<MediaTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('index_id')) {
-      context.handle(
-        _indexIdMeta,
-        indexId.isAcceptableOrUnknown(data['index_id']!, _indexIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_indexIdMeta);
-    }
-    if (data.containsKey('path')) {
-      context.handle(
-        _pathMeta,
-        path.isAcceptableOrUnknown(data['path']!, _pathMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_pathMeta);
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('data')) {
-      context.handle(
-        _dataMeta,
-        this.data.isAcceptableOrUnknown(data['data']!, _dataMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_dataMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  MediaTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MediaTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      indexId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}index_id'],
-      )!,
-      path: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}path'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-      data: attachedDatabase.typeMapping.read(
-        DriftSqlType.blob,
-        data['${effectivePrefix}data'],
-      )!,
-    );
-  }
-
-  @override
-  $MediaTableTable createAlias(String alias) {
-    return $MediaTableTable(attachedDatabase, alias);
-  }
-}
-
-class MediaTableData extends DataClass implements Insertable<MediaTableData> {
-  /// id of this entry
-  final int id;
-
-  /// The id of the dictionary this entry belongs to
-  final int indexId;
-
-  /// the path of this data file as found in the original data source
-  final String path;
-
-  /// A the name for this file
-  final String name;
-
-  /// The actual data of the file
-  final Uint8List data;
-  const MediaTableData({
-    required this.id,
-    required this.indexId,
-    required this.path,
-    required this.name,
-    required this.data,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['index_id'] = Variable<int>(indexId);
-    map['path'] = Variable<String>(path);
-    map['name'] = Variable<String>(name);
-    map['data'] = Variable<Uint8List>(data);
-    return map;
-  }
-
-  MediaTableCompanion toCompanion(bool nullToAbsent) {
-    return MediaTableCompanion(
-      id: Value(id),
-      indexId: Value(indexId),
-      path: Value(path),
-      name: Value(name),
-      data: Value(data),
-    );
-  }
-
-  factory MediaTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return MediaTableData(
-      id: serializer.fromJson<int>(json['id']),
-      indexId: serializer.fromJson<int>(json['indexId']),
-      path: serializer.fromJson<String>(json['path']),
-      name: serializer.fromJson<String>(json['name']),
-      data: serializer.fromJson<Uint8List>(json['data']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'indexId': serializer.toJson<int>(indexId),
-      'path': serializer.toJson<String>(path),
-      'name': serializer.toJson<String>(name),
-      'data': serializer.toJson<Uint8List>(data),
-    };
-  }
-
-  MediaTableData copyWith({
-    int? id,
-    int? indexId,
-    String? path,
-    String? name,
-    Uint8List? data,
-  }) => MediaTableData(
-    id: id ?? this.id,
-    indexId: indexId ?? this.indexId,
-    path: path ?? this.path,
-    name: name ?? this.name,
-    data: data ?? this.data,
-  );
-  MediaTableData copyWithCompanion(MediaTableCompanion data) {
-    return MediaTableData(
-      id: data.id.present ? data.id.value : this.id,
-      indexId: data.indexId.present ? data.indexId.value : this.indexId,
-      path: data.path.present ? data.path.value : this.path,
-      name: data.name.present ? data.name.value : this.name,
-      data: data.data.present ? data.data.value : this.data,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MediaTableData(')
-          ..write('id: $id, ')
-          ..write('indexId: $indexId, ')
-          ..write('path: $path, ')
-          ..write('name: $name, ')
-          ..write('data: $data')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(id, indexId, path, name, $driftBlobEquality.hash(data));
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is MediaTableData &&
-          other.id == this.id &&
-          other.indexId == this.indexId &&
-          other.path == this.path &&
-          other.name == this.name &&
-          $driftBlobEquality.equals(other.data, this.data));
-}
-
-class MediaTableCompanion extends UpdateCompanion<MediaTableData> {
-  final Value<int> id;
-  final Value<int> indexId;
-  final Value<String> path;
-  final Value<String> name;
-  final Value<Uint8List> data;
-  const MediaTableCompanion({
-    this.id = const Value.absent(),
-    this.indexId = const Value.absent(),
-    this.path = const Value.absent(),
-    this.name = const Value.absent(),
-    this.data = const Value.absent(),
-  });
-  MediaTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int indexId,
-    required String path,
-    required String name,
-    required Uint8List data,
-  }) : indexId = Value(indexId),
-       path = Value(path),
-       name = Value(name),
-       data = Value(data);
-  static Insertable<MediaTableData> custom({
-    Expression<int>? id,
-    Expression<int>? indexId,
-    Expression<String>? path,
-    Expression<String>? name,
-    Expression<Uint8List>? data,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (indexId != null) 'index_id': indexId,
-      if (path != null) 'path': path,
-      if (name != null) 'name': name,
-      if (data != null) 'data': data,
-    });
-  }
-
-  MediaTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? indexId,
-    Value<String>? path,
-    Value<String>? name,
-    Value<Uint8List>? data,
-  }) {
-    return MediaTableCompanion(
-      id: id ?? this.id,
-      indexId: indexId ?? this.indexId,
-      path: path ?? this.path,
-      name: name ?? this.name,
-      data: data ?? this.data,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (indexId.present) {
-      map['index_id'] = Variable<int>(indexId.value);
-    }
-    if (path.present) {
-      map['path'] = Variable<String>(path.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (data.present) {
-      map['data'] = Variable<Uint8List>(data.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MediaTableCompanion(')
-          ..write('id: $id, ')
-          ..write('indexId: $indexId, ')
-          ..write('path: $path, ')
-          ..write('name: $name, ')
-          ..write('data: $data')
           ..write(')'))
         .toString();
   }
@@ -14625,7 +14687,7 @@ class $ExampleTableTable extends ExampleTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES index_table (id)',
+      'REFERENCES index_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _exampleSentenceMeta = const VerificationMeta(
@@ -17500,10 +17562,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'kanji',
     'CREATE INDEX kanji ON kanji_table (kanji)',
   );
+  late final $MediaTableTable mediaTable = $MediaTableTable(this);
   late final $AudioTableTable audioTable = $AudioTableTable(this);
   late final $AudioTable_X_TermTableTable audioTableXTermTable =
       $AudioTable_X_TermTableTable(this);
-  late final $MediaTableTable mediaTable = $MediaTableTable(this);
   late final AudioEntryView audioEntryView = AudioEntryView(this);
   late final Index path = Index(
     'path',
@@ -17596,6 +17658,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     this as DaKanjiDB,
   );
   late final ExampleDao exampleDao = ExampleDao(this as DaKanjiDB);
+  late final Deletion deletion = Deletion(this as DaKanjiDB);
   Selectable<KanjiDictionarySearchViewData> kanji_dictionary_search_drift(
     List<String> kanjis,
   ) {
@@ -17643,7 +17706,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     String tagFilter,
   ) {
     return customSelect(
-      'WITH SpellfixSuggestions AS (SELECT word, distance FROM reading_spellfix WHERE word MATCH ?1 AND distance > 0 AND distance < ?2 AND ?3 = 0 AND LENGTH(word) > 0 ORDER BY distance LIMIT 10), FtsMatches AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, CASE WHEN ?4 = 0 AND TT.term = ?1 THEN 1 WHEN ?4 = 0 AND TT.term LIKE ?1 || \'%\' THEN 2 WHEN ?4 = 1 AND IFNULL(TT.term_normalized, TT.term) = ?1 THEN 1 WHEN ?4 = 1 AND IFNULL(TT.term_normalized, TT.term) LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM search_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS.source_id = TB3T.term_id JOIN term_table AS TT ON FTS.source_id = TT.id WHERE ?3 = 0 AND search_fts MATCH ?5 AND((?4 = 0 AND FTS.data_type_id IN (1, 2))OR(?4 = 1 AND((FTS.data_type_id IN (3, 4) AND IFNULL(TT.term_normalized, \'\') != \'\')OR(FTS.data_type_id IN (1, 2) AND IFNULL(TT.term_normalized, \'\') = \'\'))))UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, CASE WHEN ?4 = 0 AND RT.reading = ?1 THEN 1 WHEN ?4 = 0 AND RT.reading LIKE ?1 || \'%\' THEN 2 WHEN ?4 = 1 AND IFNULL(RT.reading_normalized, RT.reading) = ?1 THEN 1 WHEN ?4 = 1 AND IFNULL(RT.reading_normalized, RT.reading) LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM search_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS.source_id = TB3T.reading_id JOIN reading_table AS RT ON FTS.source_id = RT.id WHERE ?3 = 0 AND search_fts MATCH ?5 AND((?4 = 0 AND FTS.data_type_id = 5)OR(?4 = 1 AND((FTS.data_type_id = 6 AND IFNULL(RT.reading_normalized, \'\') != \'\')OR(FTS.data_type_id = 5 AND IFNULL(RT.reading_normalized, \'\') = \'\'))))UNION ALL SELECT DefJoin.term_bank_id, rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM search_fts AS FTS JOIN term_bank_v3_x_definition_table AS DefJoin ON FTS.source_id = DefJoin.definition_id JOIN definition_table AS DT ON FTS.source_id = DT.id WHERE ?3 = 0 AND search_fts MATCH ?5 AND FTS.data_type_id = 7), GlobMatches AS (SELECT TB3T.id AS term_bank_id, 0 AS rank, TT.term AS matched_text, CASE WHEN ?4 = 0 AND TT.term = ?1 THEN 1 WHEN ?4 = 0 AND TT.term LIKE ?1 || \'%\' THEN 2 WHEN ?4 = 1 AND IFNULL(TT.term_normalized, TT.term) = ?1 THEN 1 WHEN ?4 = 1 AND IFNULL(TT.term_normalized, TT.term) LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_table AS TT JOIN term_bank_v3_table AS TB3T ON TT.id = TB3T.term_id WHERE ?3 = 1 AND((?4 = 0 AND TT.term GLOB ?1)OR(?4 = 1 AND IFNULL(TT.term_normalized, TT.term) GLOB ?1))UNION ALL SELECT TB3T.id AS term_bank_id, 0 AS rank, RT.reading AS matched_text, CASE WHEN ?4 = 0 AND RT.reading = ?1 THEN 1 WHEN ?4 = 0 AND RT.reading LIKE ?1 || \'%\' THEN 2 WHEN ?4 = 1 AND IFNULL(RT.reading_normalized, RT.reading) = ?1 THEN 1 WHEN ?4 = 1 AND IFNULL(RT.reading_normalized, RT.reading) LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_table AS RT JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id WHERE ?3 = 1 AND((?4 = 0 AND RT.reading GLOB ?1)OR(?4 = 1 AND IFNULL(RT.reading_normalized, RT.reading) GLOB ?1))UNION ALL SELECT DefJoin.term_bank_id, 0 AS rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_table AS DT JOIN term_bank_v3_x_definition_table AS DefJoin ON DT.id = DefJoin.definition_id WHERE ?3 = 1 AND DT.definition GLOB ?1), RankedIDs AS (SELECT * FROM FTSMatches UNION ALL SELECT * FROM GlobMatches UNION ALL SELECT TB3T.id AS term_bank_id, S.distance AS rank, RT.reading AS matched_text, 4 AS match_type_priority, 2 AS match_column_priority, S.word AS spellfix_suggestion FROM SpellfixSuggestions AS S JOIN reading_table AS RT ON S.word = IFNULL(RT.reading_normalized, RT.reading) JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id), FilteredByPoS AS (SELECT T3XDT.term_bank_id FROM term_bank_v3_x_definition_tag_table AS T3XDT JOIN term_bank_v3_definition_tags_table AS T3DT ON T3DT.id = T3XDT.definition_tag_id WHERE LENGTH(?6) > 2 AND T3DT.definition_tag IN (SELECT value FROM json_each(?6)) GROUP BY T3XDT.term_bank_id), FilteredByTags AS (SELECT T3XT.term_bank_id FROM term_bank_v3_x_tag_bank_table AS T3XT JOIN tag_bank_v3_table AS T3T ON T3T.id = T3XT.tag_bank_id WHERE LENGTH(?7) > 2 AND T3T.name IN (SELECT value FROM json_each(?7)) GROUP BY T3XT.term_bank_id), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, matched_text, spellfix_suggestion FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs WHERE(LENGTH(?6) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByPoS))AND(LENGTH(?7) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByTags))) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, matched_text, R.match_type_priority, R.match_column_priority, R.spellfix_suggestion, V.* FROM dictionary_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, V.popularity DESC, R.best_rank, LENGTH(R.matched_text)',
+      'WITH SpellfixSuggestions AS (SELECT word, distance FROM reading_spellfix WHERE word MATCH ?1 AND distance > 0 AND distance < ?2 AND ?3 = 0 AND LENGTH(word) > 0 ORDER BY distance LIMIT 10), FtsMatches AS (SELECT TB3T.id AS term_bank_id, rank, TT.term AS matched_text, CASE WHEN ?4 = 0 AND TT.term = ?1 THEN 1 WHEN ?4 = 0 AND TT.term LIKE ?1 || \'%\' THEN 2 WHEN ?4 = 1 AND IFNULL(TT.term_normalized, TT.term) = ?1 THEN 1 WHEN ?4 = 1 AND IFNULL(TT.term_normalized, TT.term) LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM search_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS.source_id = TB3T.term_id JOIN term_table AS TT ON FTS.source_id = TT.id WHERE ?3 = 0 AND search_fts MATCH ?5 AND((?4 = 0 AND FTS.data_type_id IN (1, 2))OR(?4 = 1 AND(FTS.data_type_id IN (3, 4) OR(FTS.data_type_id IN (1, 2) AND IFNULL(TT.term_normalized, \'\') = \'\'))))UNION ALL SELECT TB3T.id AS term_bank_id, rank, RT.reading AS matched_text, CASE WHEN ?4 = 0 AND RT.reading = ?1 THEN 1 WHEN ?4 = 0 AND RT.reading LIKE ?1 || \'%\' THEN 2 WHEN ?4 = 1 AND IFNULL(RT.reading_normalized, RT.reading) = ?1 THEN 1 WHEN ?4 = 1 AND IFNULL(RT.reading_normalized, RT.reading) LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM search_fts AS FTS JOIN term_bank_v3_table AS TB3T ON FTS.source_id = TB3T.reading_id JOIN reading_table AS RT ON FTS.source_id = RT.id WHERE ?3 = 0 AND search_fts MATCH ?5 AND((?4 = 0 AND FTS.data_type_id = 5)OR(?4 = 1 AND(FTS.data_type_id = 6 OR(FTS.data_type_id = 5 AND IFNULL(RT.reading_normalized, \'\') = \'\'))))UNION ALL SELECT DefJoin.term_bank_id, rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM search_fts AS FTS JOIN term_bank_v3_x_definition_table AS DefJoin ON FTS.source_id = DefJoin.definition_id JOIN definition_table AS DT ON FTS.source_id = DT.id WHERE ?3 = 0 AND search_fts MATCH ?5 AND FTS.data_type_id = 7), GlobMatches AS (SELECT TB3T.id AS term_bank_id, 0 AS rank, TT.term AS matched_text, CASE WHEN ?4 = 0 AND TT.term = ?1 THEN 1 WHEN ?4 = 0 AND TT.term LIKE ?1 || \'%\' THEN 2 WHEN ?4 = 1 AND IFNULL(TT.term_normalized, TT.term) = ?1 THEN 1 WHEN ?4 = 1 AND IFNULL(TT.term_normalized, TT.term) LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 1 AS match_column_priority, NULL AS spellfix_suggestion FROM term_table AS TT JOIN term_bank_v3_table AS TB3T ON TT.id = TB3T.term_id WHERE ?3 = 1 AND((?4 = 0 AND TT.term GLOB ?1)OR(?4 = 1 AND IFNULL(TT.term_normalized, TT.term) GLOB ?1))UNION ALL SELECT TB3T.id AS term_bank_id, 0 AS rank, RT.reading AS matched_text, CASE WHEN ?4 = 0 AND RT.reading = ?1 THEN 1 WHEN ?4 = 0 AND RT.reading LIKE ?1 || \'%\' THEN 2 WHEN ?4 = 1 AND IFNULL(RT.reading_normalized, RT.reading) = ?1 THEN 1 WHEN ?4 = 1 AND IFNULL(RT.reading_normalized, RT.reading) LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 2 AS match_column_priority, NULL AS spellfix_suggestion FROM reading_table AS RT JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id WHERE ?3 = 1 AND((?4 = 0 AND RT.reading GLOB ?1)OR(?4 = 1 AND IFNULL(RT.reading_normalized, RT.reading) GLOB ?1))UNION ALL SELECT DefJoin.term_bank_id, 0 AS rank, DT.definition AS matched_text, CASE WHEN DT.definition = ?1 THEN 1 WHEN DT.definition LIKE ?1 || \'%\' THEN 2 ELSE 3 END AS match_type_priority, 3 AS match_column_priority, NULL AS spellfix_suggestion FROM definition_table AS DT JOIN term_bank_v3_x_definition_table AS DefJoin ON DT.id = DefJoin.definition_id WHERE ?3 = 1 AND DT.definition GLOB ?1), RankedIDs AS (SELECT * FROM FTSMatches UNION ALL SELECT * FROM GlobMatches UNION ALL SELECT TB3T.id AS term_bank_id, S.distance AS rank, RT.reading AS matched_text, 4 AS match_type_priority, 2 AS match_column_priority, S.word AS spellfix_suggestion FROM SpellfixSuggestions AS S JOIN reading_table AS RT ON S.word = IFNULL(RT.reading_normalized, RT.reading) JOIN term_bank_v3_table AS TB3T ON RT.id = TB3T.reading_id), FilteredByPoS AS (SELECT T3XDT.term_bank_id FROM term_bank_v3_x_definition_tag_table AS T3XDT JOIN term_bank_v3_definition_tags_table AS T3DT ON T3DT.id = T3XDT.definition_tag_id WHERE LENGTH(?6) > 2 AND T3DT.definition_tag IN (SELECT value FROM json_each(?6)) GROUP BY T3XDT.term_bank_id), FilteredByTags AS (SELECT T3XT.term_bank_id FROM term_bank_v3_x_tag_bank_table AS T3XT JOIN tag_bank_v3_table AS T3T ON T3T.id = T3XT.tag_bank_id WHERE LENGTH(?7) > 2 AND T3T.name IN (SELECT value FROM json_each(?7)) GROUP BY T3XT.term_bank_id), FinalRankedIDs AS (SELECT term_bank_id, rank AS best_rank, match_type_priority, match_column_priority, matched_text, spellfix_suggestion FROM (SELECT *, ROW_NUMBER()OVER (PARTITION BY term_bank_id ORDER BY match_type_priority, match_column_priority, rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM RankedIDs WHERE(LENGTH(?6) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByPoS))AND(LENGTH(?7) <= 2 OR term_bank_id IN (SELECT term_bank_id FROM FilteredByTags))) WHERE rn = 1) SELECT R.best_rank AS fts5_rank, matched_text, R.match_type_priority, R.match_column_priority, R.spellfix_suggestion, V.* FROM dictionary_search_view AS V JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id ORDER BY R.match_type_priority, R.match_column_priority, V.popularity DESC, R.best_rank, LENGTH(R.matched_text)',
       variables: [
         Variable<String>(query),
         Variable<int>(spellfixDistance),
@@ -17917,9 +17980,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     readingSpellfix,
     name,
     kanji,
+    mediaTable,
     audioTable,
     audioTableXTermTable,
-    mediaTable,
     audioEntryView,
     path,
     hiraganaSpellfixCost,
@@ -17950,6 +18013,150 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
     WritePropagation(
       on: TableUpdateQuery.onTableName(
+        'kanji_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'kanji_bank_v3_x_onyomi_reading_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'kanji_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'kanji_bank_v3_x_kunyomi_reading_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'kanji_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'kanji_bank_v3_x_tag_bank_v3_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'kanji_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'kanji_bank_v3_x_definition_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'kanji_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'kanji_bank_v3_x_kanji_bank_v3_stats_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'term_bank_v3_x_definition_tag_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'term_bank_v3_x_rule_identifier_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('term_bank_v3_x_definition_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('term_bank_v3_x_tag_bank_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_meta_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('term_meta_bank_v3_x_pitch_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_meta_bank_v3_pitch_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'term_meta_bank_v3_x_pitch_tag_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_meta_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('term_meta_bank_v3_x_ipa_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_meta_bank_v3_ipa_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'term_meta_bank_v3_x_ipa_tag_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
         'term_table',
         limitUpdateKind: UpdateKind.insert,
       ),
@@ -18019,6 +18226,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('search_fts', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'media_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('audio_table', kind: UpdateKind.delete)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
@@ -18043,6 +18257,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         TableUpdate('reading_spellfix', kind: UpdateKind.insert),
         TableUpdate('reading_spellfix', kind: UpdateKind.delete),
       ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'index_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('example_table', kind: UpdateKind.delete)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
@@ -18641,6 +18862,7 @@ typedef $$KanjiTableTableProcessedTableManager =
 typedef $$IndexTableTableCreateCompanionBuilder =
     IndexTableCompanion Function({
       Value<int> id,
+      required DictionaryTypes dictionaryType,
       required String title,
       required String revision,
       Value<bool?> sequenced,
@@ -18660,6 +18882,7 @@ typedef $$IndexTableTableCreateCompanionBuilder =
 typedef $$IndexTableTableUpdateCompanionBuilder =
     IndexTableCompanion Function({
       Value<int> id,
+      Value<DictionaryTypes> dictionaryType,
       Value<String> title,
       Value<String> revision,
       Value<bool?> sequenced,
@@ -18803,24 +19026,6 @@ final class $$IndexTableTableReferences
     );
   }
 
-  static MultiTypedResultKey<$AudioTableTable, List<AudioTableData>>
-  _audioTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
-    db.audioTable,
-    aliasName: $_aliasNameGenerator(db.indexTable.id, db.audioTable.indexId),
-  );
-
-  $$AudioTableTableProcessedTableManager get audioTableRefs {
-    final manager = $$AudioTableTableTableManager(
-      $_db,
-      $_db.audioTable,
-    ).filter((f) => f.indexId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_audioTableRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
   static MultiTypedResultKey<$MediaTableTable, List<MediaTableData>>
   _mediaTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
     db.mediaTable,
@@ -18834,6 +19039,24 @@ final class $$IndexTableTableReferences
     ).filter((f) => f.indexId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_mediaTableRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$AudioTableTable, List<AudioTableData>>
+  _audioTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+    db.audioTable,
+    aliasName: $_aliasNameGenerator(db.indexTable.id, db.audioTable.indexId),
+  );
+
+  $$AudioTableTableProcessedTableManager get audioTableRefs {
+    final manager = $$AudioTableTableTableManager(
+      $_db,
+      $_db.audioTable,
+    ).filter((f) => f.indexId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_audioTableRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -18898,6 +19121,12 @@ class $$IndexTableTableFilterComposer
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<DictionaryTypes, DictionaryTypes, String>
+  get dictionaryType => $composableBuilder(
+    column: $table.dictionaryType,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   ColumnFilters<String> get title => $composableBuilder(
@@ -19100,31 +19329,6 @@ class $$IndexTableTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> audioTableRefs(
-    Expression<bool> Function($$AudioTableTableFilterComposer f) f,
-  ) {
-    final $$AudioTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.audioTable,
-      getReferencedColumn: (t) => t.indexId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudioTableTableFilterComposer(
-            $db: $db,
-            $table: $db.audioTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
   Expression<bool> mediaTableRefs(
     Expression<bool> Function($$MediaTableTableFilterComposer f) f,
   ) {
@@ -19141,6 +19345,31 @@ class $$IndexTableTableFilterComposer
           }) => $$MediaTableTableFilterComposer(
             $db: $db,
             $table: $db.mediaTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> audioTableRefs(
+    Expression<bool> Function($$AudioTableTableFilterComposer f) f,
+  ) {
+    final $$AudioTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.indexId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableFilterComposer(
+            $db: $db,
+            $table: $db.audioTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -19212,6 +19441,11 @@ class $$IndexTableTableOrderingComposer
   });
   ColumnOrderings<int> get id => $composableBuilder(
     column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get dictionaryType => $composableBuilder(
+    column: $table.dictionaryType,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -19302,6 +19536,12 @@ class $$IndexTableTableAnnotationComposer
   });
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<DictionaryTypes, String>
+  get dictionaryType => $composableBuilder(
+    column: $table.dictionaryType,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get title =>
       $composableBuilder(column: $table.title, builder: (column) => column);
@@ -19487,31 +19727,6 @@ class $$IndexTableTableAnnotationComposer
     return f(composer);
   }
 
-  Expression<T> audioTableRefs<T extends Object>(
-    Expression<T> Function($$AudioTableTableAnnotationComposer a) f,
-  ) {
-    final $$AudioTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.audioTable,
-      getReferencedColumn: (t) => t.indexId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudioTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.audioTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
   Expression<T> mediaTableRefs<T extends Object>(
     Expression<T> Function($$MediaTableTableAnnotationComposer a) f,
   ) {
@@ -19528,6 +19743,31 @@ class $$IndexTableTableAnnotationComposer
           }) => $$MediaTableTableAnnotationComposer(
             $db: $db,
             $table: $db.mediaTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> audioTableRefs<T extends Object>(
+    Expression<T> Function($$AudioTableTableAnnotationComposer a) f,
+  ) {
+    final $$AudioTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.indexId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.audioTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -19608,8 +19848,8 @@ class $$IndexTableTableTableManager
             bool kanjiMetaBankV3TableRefs,
             bool termBankV3TableRefs,
             bool termMetaBankV3TableRefs,
-            bool audioTableRefs,
             bool mediaTableRefs,
+            bool audioTableRefs,
             bool exampleTableRefs,
             bool audioSourceListTableRefs,
           })
@@ -19628,6 +19868,7 @@ class $$IndexTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                Value<DictionaryTypes> dictionaryType = const Value.absent(),
                 Value<String> title = const Value.absent(),
                 Value<String> revision = const Value.absent(),
                 Value<bool?> sequenced = const Value.absent(),
@@ -19645,6 +19886,7 @@ class $$IndexTableTableTableManager
                 Value<String?> frequencyMode = const Value.absent(),
               }) => IndexTableCompanion(
                 id: id,
+                dictionaryType: dictionaryType,
                 title: title,
                 revision: revision,
                 sequenced: sequenced,
@@ -19664,6 +19906,7 @@ class $$IndexTableTableTableManager
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                required DictionaryTypes dictionaryType,
                 required String title,
                 required String revision,
                 Value<bool?> sequenced = const Value.absent(),
@@ -19681,6 +19924,7 @@ class $$IndexTableTableTableManager
                 Value<String?> frequencyMode = const Value.absent(),
               }) => IndexTableCompanion.insert(
                 id: id,
+                dictionaryType: dictionaryType,
                 title: title,
                 revision: revision,
                 sequenced: sequenced,
@@ -19712,8 +19956,8 @@ class $$IndexTableTableTableManager
                 kanjiMetaBankV3TableRefs = false,
                 termBankV3TableRefs = false,
                 termMetaBankV3TableRefs = false,
-                audioTableRefs = false,
                 mediaTableRefs = false,
+                audioTableRefs = false,
                 exampleTableRefs = false,
                 audioSourceListTableRefs = false,
               }) {
@@ -19725,8 +19969,8 @@ class $$IndexTableTableTableManager
                     if (kanjiMetaBankV3TableRefs) db.kanjiMetaBankV3Table,
                     if (termBankV3TableRefs) db.termBankV3Table,
                     if (termMetaBankV3TableRefs) db.termMetaBankV3Table,
-                    if (audioTableRefs) db.audioTable,
                     if (mediaTableRefs) db.mediaTable,
+                    if (audioTableRefs) db.audioTable,
                     if (exampleTableRefs) db.exampleTable,
                     if (audioSourceListTableRefs) db.audioSourceListTable,
                   ],
@@ -19838,27 +20082,6 @@ class $$IndexTableTableTableManager
                               ),
                           typedResults: items,
                         ),
-                      if (audioTableRefs)
-                        await $_getPrefetchedData<
-                          IndexTableData,
-                          $IndexTableTable,
-                          AudioTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$IndexTableTableReferences
-                              ._audioTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$IndexTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).audioTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.indexId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
                       if (mediaTableRefs)
                         await $_getPrefetchedData<
                           IndexTableData,
@@ -19874,6 +20097,27 @@ class $$IndexTableTableTableManager
                                 table,
                                 p0,
                               ).mediaTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.indexId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (audioTableRefs)
+                        await $_getPrefetchedData<
+                          IndexTableData,
+                          $IndexTableTable,
+                          AudioTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$IndexTableTableReferences
+                              ._audioTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$IndexTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).audioTableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.indexId == item.id,
@@ -19948,8 +20192,8 @@ typedef $$IndexTableTableProcessedTableManager =
         bool kanjiMetaBankV3TableRefs,
         bool termBankV3TableRefs,
         bool termMetaBankV3TableRefs,
-        bool audioTableRefs,
         bool mediaTableRefs,
+        bool audioTableRefs,
         bool exampleTableRefs,
         bool audioSourceListTableRefs,
       })
@@ -35163,6 +35407,407 @@ typedef $ReadingSpellfixProcessedTableManager =
       ReadingSpellfixData,
       PrefetchHooks Function()
     >;
+typedef $$MediaTableTableCreateCompanionBuilder =
+    MediaTableCompanion Function({
+      Value<int> id,
+      required int indexId,
+      required String path,
+      required String name,
+      required Uint8List data,
+    });
+typedef $$MediaTableTableUpdateCompanionBuilder =
+    MediaTableCompanion Function({
+      Value<int> id,
+      Value<int> indexId,
+      Value<String> path,
+      Value<String> name,
+      Value<Uint8List> data,
+    });
+
+final class $$MediaTableTableReferences
+    extends BaseReferences<_$DaKanjiDB, $MediaTableTable, MediaTableData> {
+  $$MediaTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
+      db.indexTable.createAlias(
+        $_aliasNameGenerator(db.mediaTable.indexId, db.indexTable.id),
+      );
+
+  $$IndexTableTableProcessedTableManager get indexId {
+    final $_column = $_itemColumn<int>('index_id')!;
+
+    final manager = $$IndexTableTableTableManager(
+      $_db,
+      $_db.indexTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_indexIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$AudioTableTable, List<AudioTableData>>
+  _audioTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+    db.audioTable,
+    aliasName: $_aliasNameGenerator(db.mediaTable.id, db.audioTable.mediaId),
+  );
+
+  $$AudioTableTableProcessedTableManager get audioTableRefs {
+    final manager = $$AudioTableTableTableManager(
+      $_db,
+      $_db.audioTable,
+    ).filter((f) => f.mediaId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_audioTableRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$MediaTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+  $$MediaTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get path => $composableBuilder(
+    column: $table.path,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<Uint8List> get data => $composableBuilder(
+    column: $table.data,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$IndexTableTableFilterComposer get indexId {
+    final $$IndexTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.indexId,
+      referencedTable: $db.indexTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$IndexTableTableFilterComposer(
+            $db: $db,
+            $table: $db.indexTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> audioTableRefs(
+    Expression<bool> Function($$AudioTableTableFilterComposer f) f,
+  ) {
+    final $$AudioTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.mediaId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableFilterComposer(
+            $db: $db,
+            $table: $db.audioTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MediaTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+  $$MediaTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get path => $composableBuilder(
+    column: $table.path,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<Uint8List> get data => $composableBuilder(
+    column: $table.data,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$IndexTableTableOrderingComposer get indexId {
+    final $$IndexTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.indexId,
+      referencedTable: $db.indexTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$IndexTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.indexTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MediaTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+  $$MediaTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get path =>
+      $composableBuilder(column: $table.path, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<Uint8List> get data =>
+      $composableBuilder(column: $table.data, builder: (column) => column);
+
+  $$IndexTableTableAnnotationComposer get indexId {
+    final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.indexId,
+      referencedTable: $db.indexTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$IndexTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.indexTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> audioTableRefs<T extends Object>(
+    Expression<T> Function($$AudioTableTableAnnotationComposer a) f,
+  ) {
+    final $$AudioTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.audioTable,
+      getReferencedColumn: (t) => t.mediaId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudioTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.audioTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MediaTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $MediaTableTable,
+          MediaTableData,
+          $$MediaTableTableFilterComposer,
+          $$MediaTableTableOrderingComposer,
+          $$MediaTableTableAnnotationComposer,
+          $$MediaTableTableCreateCompanionBuilder,
+          $$MediaTableTableUpdateCompanionBuilder,
+          (MediaTableData, $$MediaTableTableReferences),
+          MediaTableData,
+          PrefetchHooks Function({bool indexId, bool audioTableRefs})
+        > {
+  $$MediaTableTableTableManager(_$DaKanjiDB db, $MediaTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MediaTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MediaTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MediaTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> indexId = const Value.absent(),
+                Value<String> path = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<Uint8List> data = const Value.absent(),
+              }) => MediaTableCompanion(
+                id: id,
+                indexId: indexId,
+                path: path,
+                name: name,
+                data: data,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int indexId,
+                required String path,
+                required String name,
+                required Uint8List data,
+              }) => MediaTableCompanion.insert(
+                id: id,
+                indexId: indexId,
+                path: path,
+                name: name,
+                data: data,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$MediaTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({indexId = false, audioTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (audioTableRefs) db.audioTable],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (indexId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.indexId,
+                                referencedTable: $$MediaTableTableReferences
+                                    ._indexIdTable(db),
+                                referencedColumn: $$MediaTableTableReferences
+                                    ._indexIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (audioTableRefs)
+                    await $_getPrefetchedData<
+                      MediaTableData,
+                      $MediaTableTable,
+                      AudioTableData
+                    >(
+                      currentTable: table,
+                      referencedTable: $$MediaTableTableReferences
+                          ._audioTableRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$MediaTableTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).audioTableRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.mediaId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MediaTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $MediaTableTable,
+      MediaTableData,
+      $$MediaTableTableFilterComposer,
+      $$MediaTableTableOrderingComposer,
+      $$MediaTableTableAnnotationComposer,
+      $$MediaTableTableCreateCompanionBuilder,
+      $$MediaTableTableUpdateCompanionBuilder,
+      (MediaTableData, $$MediaTableTableReferences),
+      MediaTableData,
+      PrefetchHooks Function({bool indexId, bool audioTableRefs})
+    >;
 typedef $$AudioTableTableCreateCompanionBuilder =
     AudioTableCompanion Function({
       Value<int> id,
@@ -35222,6 +35867,25 @@ final class $$AudioTableTableReferences
     );
   }
 
+  static $MediaTableTable _mediaIdTable(_$DaKanjiDB db) =>
+      db.mediaTable.createAlias(
+        $_aliasNameGenerator(db.audioTable.mediaId, db.mediaTable.id),
+      );
+
+  $$MediaTableTableProcessedTableManager get mediaId {
+    final $_column = $_itemColumn<int>('media_id')!;
+
+    final manager = $$MediaTableTableTableManager(
+      $_db,
+      $_db.mediaTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_mediaIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
   static MultiTypedResultKey<
     $AudioTable_X_TermTableTable,
     List<AudioTable_X_TermTableData>
@@ -35262,11 +35926,6 @@ class $$AudioTableTableFilterComposer
   });
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get mediaId => $composableBuilder(
-    column: $table.mediaId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -35321,6 +35980,29 @@ class $$AudioTableTableFilterComposer
     return composer;
   }
 
+  $$MediaTableTableFilterComposer get mediaId {
+    final $$MediaTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.mediaId,
+      referencedTable: $db.mediaTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MediaTableTableFilterComposer(
+            $db: $db,
+            $table: $db.mediaTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
   Expression<bool> audioTableXTermTableRefs(
     Expression<bool> Function($$AudioTable_X_TermTableTableFilterComposer f) f,
   ) {
@@ -35359,11 +36041,6 @@ class $$AudioTableTableOrderingComposer
   });
   ColumnOrderings<int> get id => $composableBuilder(
     column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get mediaId => $composableBuilder(
-    column: $table.mediaId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -35417,6 +36094,29 @@ class $$AudioTableTableOrderingComposer
     );
     return composer;
   }
+
+  $$MediaTableTableOrderingComposer get mediaId {
+    final $$MediaTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.mediaId,
+      referencedTable: $db.mediaTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MediaTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.mediaTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$AudioTableTableAnnotationComposer
@@ -35430,9 +36130,6 @@ class $$AudioTableTableAnnotationComposer
   });
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<int> get mediaId =>
-      $composableBuilder(column: $table.mediaId, builder: (column) => column);
 
   GeneratedColumn<int> get pitchAccentPattern => $composableBuilder(
     column: $table.pitchAccentPattern,
@@ -35485,6 +36182,29 @@ class $$AudioTableTableAnnotationComposer
     return composer;
   }
 
+  $$MediaTableTableAnnotationComposer get mediaId {
+    final $$MediaTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.mediaId,
+      referencedTable: $db.mediaTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MediaTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.mediaTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
   Expression<T> audioTableXTermTableRefs<T extends Object>(
     Expression<T> Function($$AudioTable_X_TermTableTableAnnotationComposer a) f,
   ) {
@@ -35528,6 +36248,7 @@ class $$AudioTableTableTableManager
           PrefetchHooks Function({
             bool indexId,
             bool readingId,
+            bool mediaId,
             bool audioTableXTermTableRefs,
           })
         > {
@@ -35582,6 +36303,7 @@ class $$AudioTableTableTableManager
               ({
                 indexId = false,
                 readingId = false,
+                mediaId = false,
                 audioTableXTermTableRefs = false,
               }) {
                 return PrefetchHooks(
@@ -35629,6 +36351,20 @@ class $$AudioTableTableTableManager
                                     referencedColumn:
                                         $$AudioTableTableReferences
                                             ._readingIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (mediaId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.mediaId,
+                                    referencedTable: $$AudioTableTableReferences
+                                        ._mediaIdTable(db),
+                                    referencedColumn:
+                                        $$AudioTableTableReferences
+                                            ._mediaIdTable(db)
                                             .id,
                                   )
                                   as T;
@@ -35682,6 +36418,7 @@ typedef $$AudioTableTableProcessedTableManager =
       PrefetchHooks Function({
         bool indexId,
         bool readingId,
+        bool mediaId,
         bool audioTableXTermTableRefs,
       })
     >;
@@ -36071,319 +36808,6 @@ typedef $$AudioTable_X_TermTableTableProcessedTableManager =
       (AudioTable_X_TermTableData, $$AudioTable_X_TermTableTableReferences),
       AudioTable_X_TermTableData,
       PrefetchHooks Function({bool audioId, bool termId})
-    >;
-typedef $$MediaTableTableCreateCompanionBuilder =
-    MediaTableCompanion Function({
-      Value<int> id,
-      required int indexId,
-      required String path,
-      required String name,
-      required Uint8List data,
-    });
-typedef $$MediaTableTableUpdateCompanionBuilder =
-    MediaTableCompanion Function({
-      Value<int> id,
-      Value<int> indexId,
-      Value<String> path,
-      Value<String> name,
-      Value<Uint8List> data,
-    });
-
-final class $$MediaTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $MediaTableTable, MediaTableData> {
-  $$MediaTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias(
-        $_aliasNameGenerator(db.mediaTable.indexId, db.indexTable.id),
-      );
-
-  $$IndexTableTableProcessedTableManager get indexId {
-    final $_column = $_itemColumn<int>('index_id')!;
-
-    final manager = $$IndexTableTableTableManager(
-      $_db,
-      $_db.indexTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_indexIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$MediaTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $MediaTableTable> {
-  $$MediaTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get path => $composableBuilder(
-    column: $table.path,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<Uint8List> get data => $composableBuilder(
-    column: $table.data,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$IndexTableTableFilterComposer get indexId {
-    final $$IndexTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.indexId,
-      referencedTable: $db.indexTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$IndexTableTableFilterComposer(
-            $db: $db,
-            $table: $db.indexTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$MediaTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $MediaTableTable> {
-  $$MediaTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get path => $composableBuilder(
-    column: $table.path,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<Uint8List> get data => $composableBuilder(
-    column: $table.data,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$IndexTableTableOrderingComposer get indexId {
-    final $$IndexTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.indexId,
-      referencedTable: $db.indexTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$IndexTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.indexTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$MediaTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $MediaTableTable> {
-  $$MediaTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get path =>
-      $composableBuilder(column: $table.path, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<Uint8List> get data =>
-      $composableBuilder(column: $table.data, builder: (column) => column);
-
-  $$IndexTableTableAnnotationComposer get indexId {
-    final $$IndexTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.indexId,
-      referencedTable: $db.indexTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$IndexTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.indexTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$MediaTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $MediaTableTable,
-          MediaTableData,
-          $$MediaTableTableFilterComposer,
-          $$MediaTableTableOrderingComposer,
-          $$MediaTableTableAnnotationComposer,
-          $$MediaTableTableCreateCompanionBuilder,
-          $$MediaTableTableUpdateCompanionBuilder,
-          (MediaTableData, $$MediaTableTableReferences),
-          MediaTableData,
-          PrefetchHooks Function({bool indexId})
-        > {
-  $$MediaTableTableTableManager(_$DaKanjiDB db, $MediaTableTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$MediaTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$MediaTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$MediaTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> indexId = const Value.absent(),
-                Value<String> path = const Value.absent(),
-                Value<String> name = const Value.absent(),
-                Value<Uint8List> data = const Value.absent(),
-              }) => MediaTableCompanion(
-                id: id,
-                indexId: indexId,
-                path: path,
-                name: name,
-                data: data,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int indexId,
-                required String path,
-                required String name,
-                required Uint8List data,
-              }) => MediaTableCompanion.insert(
-                id: id,
-                indexId: indexId,
-                path: path,
-                name: name,
-                data: data,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$MediaTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({indexId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (indexId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.indexId,
-                                referencedTable: $$MediaTableTableReferences
-                                    ._indexIdTable(db),
-                                referencedColumn: $$MediaTableTableReferences
-                                    ._indexIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$MediaTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $MediaTableTable,
-      MediaTableData,
-      $$MediaTableTableFilterComposer,
-      $$MediaTableTableOrderingComposer,
-      $$MediaTableTableAnnotationComposer,
-      $$MediaTableTableCreateCompanionBuilder,
-      $$MediaTableTableUpdateCompanionBuilder,
-      (MediaTableData, $$MediaTableTableReferences),
-      MediaTableData,
-      PrefetchHooks Function({bool indexId})
     >;
 typedef $HiraganaSpellfixCostCreateCompanionBuilder =
     HiraganaSpellfixCostCompanion Function({
@@ -39655,12 +40079,12 @@ class $DaKanjiDBManager {
       $FtsDataTypesTableManager(_db, _db.ftsDataTypes);
   $ReadingSpellfixTableManager get readingSpellfix =>
       $ReadingSpellfixTableManager(_db, _db.readingSpellfix);
+  $$MediaTableTableTableManager get mediaTable =>
+      $$MediaTableTableTableManager(_db, _db.mediaTable);
   $$AudioTableTableTableManager get audioTable =>
       $$AudioTableTableTableManager(_db, _db.audioTable);
   $$AudioTable_X_TermTableTableTableManager get audioTableXTermTable =>
       $$AudioTable_X_TermTableTableTableManager(_db, _db.audioTableXTermTable);
-  $$MediaTableTableTableManager get mediaTable =>
-      $$MediaTableTableTableManager(_db, _db.mediaTable);
   $HiraganaSpellfixCostTableManager get hiraganaSpellfixCost =>
       $HiraganaSpellfixCostTableManager(_db, _db.hiraganaSpellfixCost);
   $$ExampleTableTableTableManager get exampleTable =>

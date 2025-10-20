@@ -6,5 +6,6 @@ part of 'audio_dao.dart';
 mixin _$AudioDaoMixin on DatabaseAccessor<DaKanjiDB> {
   $IndexTableTable get indexTable => attachedDatabase.indexTable;
   $ReadingTableTable get readingTable => attachedDatabase.readingTable;
+  $MediaTableTable get mediaTable => attachedDatabase.mediaTable;
   $AudioTableTable get audioTable => attachedDatabase.audioTable;
 }

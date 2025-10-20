@@ -1,4 +1,5 @@
 
+import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
 import 'package:dakanji_db_core/database/general_tables/reading_tables.dart';
 import 'package:dakanji_db_core/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
@@ -18,7 +19,8 @@ class AudioTable extends Table {
   IntColumn get readingId => integer().references(ReadingTable, #id).nullable()();
 
   /// The id of the media file in the media table
-  IntColumn get mediaId => integer()();
+  IntColumn get mediaId => integer()
+    .references(MediaTable, #id, onDelete: KeyAction.cascade)();
 
   /// The pitch accent pattern number
   IntColumn get pitchAccentPattern => integer().nullable()();

@@ -4,6 +4,7 @@ import 'package:dakanji_db_core/database/audio/audio_relation_tables.dart';
 import 'package:dakanji_db_core/database/audio/audio_tables.dart';
 import 'package:dakanji_db_core/database/general_tables/media_dao.dart';
 import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
+import 'package:dakanji_db_core/delete/dakanji_db_deletion_dao.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:sqlite3/native_assets.dart';
@@ -105,6 +106,7 @@ part 'dakanji_db.g.dart';
     TermBankV3Dao,
     TermMetaBankV3Dao,
     ExampleDao,
+    Deletion,
   ],
   views: [
 
