@@ -8,8 +8,6 @@ import 'package:universal_io/io.dart';
 
 import '../util/db_files.dart';
 
-
-
 void main() {
   late DaKanjiDB db;
   late Mecab mecab;
@@ -18,7 +16,7 @@ void main() {
   // Set up the DB, Mecab, and Zipped Dictionary Path ONCE for all tests
   setUpAll(() async {
     db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
-    
+
     mecab = Mecab();
     await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
@@ -42,89 +40,109 @@ void main() {
       // 1. --- VERIFY DB IS EMPTY ---
       var indexes = await (db.select(db.indexTable)).get();
       expect(indexes, isEmpty);
+      // Verify all data tables are empty (using a non-existent ID)
+      await _verifyAllDictionaryData(db, -1, equals(0));
 
-      // 2. --- IMPORT FIRST DICTIONARY ---
+      // 2. --- IMPORT & VERIFY FIRST DICTIONARY ---
       print("Importing dictionary 1...");
-      await importDictionary(db, mecab, dataSourceZipPath);
-      
+      final import1 = await _importAndVerify(db, mecab, dataSourceZipPath);
+      final indexId1 = import1.indexId;
+      print(
+          "Import 1 complete (ID: $indexId1). Terms: ${import1.termCount}, Kanji: ${import1.kanjiCount}");
+
       indexes = await (db.select(db.indexTable)).get();
       expect(indexes, hasLength(1));
-      final int indexId1 = indexes.first.id;
 
-      // 3. --- VERIFY DATA EXISTS FOR ID 1 ---
-      final int termCount1 = await countTerms(db, indexId1);
-      final int kanjiCount1 = await countKanji(db, indexId1);
-      // You can add other counts here (examples, audio) if needed
-      
-      expect(termCount1, greaterThan(0));
-      expect(kanjiCount1, greaterThan(0));
-      print("Import 1 complete. Terms: $termCount1, Kanji: $kanjiCount1");
-
-
-      // 4. --- IMPORT SECOND DICTIONARY ---
+      // 3. --- IMPORT & VERIFY SECOND DICTIONARY ---
       print("Importing dictionary 2...");
-      await importDictionary(db, mecab, dataSourceZipPath);
+      final import2 = await _importAndVerify(db, mecab, dataSourceZipPath);
+      final indexId2 = import2.indexId;
+      print(
+          "Import 2 complete (ID: $indexId2). Terms: ${import2.termCount}, Kanji: ${import2.kanjiCount}");
 
+      // 4. --- VERIFY DATA FOR ID 2 (and ID 1 is unchanged) ---
+      expect(indexId2, isNot(indexId1));
+      expect(import2.termCount, equals(import1.termCount));
+      expect(import2.kanjiCount, equals(import1.kanjiCount));
+
+      // Check ID 1 is still there
+      expect(await countTerms(db, indexId1), equals(import1.termCount));
+      expect(await countKanji(db, indexId1), equals(import1.kanjiCount));
       indexes = await (db.select(db.indexTable)).get();
       expect(indexes, hasLength(2));
-      final int indexId2 = indexes.last.id;
-      expect(indexId2, isNot(indexId1));
 
-      // 5. --- VERIFY DATA EXISTS FOR ID 2 (and ID 1 is unchanged) ---
-      final int termCount2 = await countTerms(db, indexId2);
-      final int kanjiCount2 = await countKanji(db, indexId2);
-
-      expect(termCount2, equals(termCount1)); // Should be same data
-      expect(kanjiCount2, equals(kanjiCount1));
-      
-      // Check ID 1 is still there
-      expect(await countTerms(db, indexId1), equals(termCount1));
-      expect(await countKanji(db, indexId1), equals(kanjiCount1));
-      print("Import 2 complete. Terms: $termCount2, Kanji: $kanjiCount2");
-
-
-      // 6. --- DELETE FIRST DICTIONARY (ID 1) ---
+      // 5. --- DELETE FIRST DICTIONARY (ID 1) ---
       print("Deleting dictionary 1 (ID: $indexId1)...");
-      await deleteAllDataForIndex(db, indexId1); // This now calls your REAL functions
+      await db.deletion.deleteDictionary(indexId1);
 
-      // 7. --- VERIFY ID 1 IS GONE, ID 2 REMAINS ---
+      // 6. --- VERIFY ID 1 IS GONE, ID 2 REMAINS ---
       print("Verifying deletion of ID 1...");
-      expect(await countTerms(db, indexId1), equals(0));
-      expect(await countKanji(db, indexId1), equals(0));
-      // Add other counts to verify all data is gone
-      expect(await countExamples(db, indexId1), equals(0));
-      expect(await countAudio(db, indexId1), equals(0));
-      expect(await countKanjiMeta(db, indexId1), equals(0));
-      expect(await countTermMeta(db, indexId1), equals(0));
-
+      await _verifyAllDictionaryData(db, indexId1, equals(0));
 
       // Check ID 2 is untouched
-      expect(await countTerms(db, indexId2), equals(termCount2));
-      expect(await countKanji(db, indexId2), equals(kanjiCount2));
+      print("Verifying dictionary 2 (ID: $indexId2) remains...");
+      expect(await countTerms(db, indexId2), equals(import2.termCount));
+      expect(await countKanji(db, indexId2), equals(import2.kanjiCount));
+      // You could also re-run the _verifyAllDictionaryData with greaterThan(0)
+      // await _verifyAllDictionaryData(db, indexId2, greaterThan(0));
 
       indexes = await (db.select(db.indexTable)).get();
       expect(indexes, hasLength(1));
       expect(indexes.first.id, equals(indexId2));
 
-
-      // 8. --- DELETE SECOND DICTIONARY (ID 2) ---
+      // 7. --- DELETE SECOND DICTIONARY (ID 2) ---
       print("Deleting dictionary 2 (ID: $indexId2)...");
-      await deleteAllDataForIndex(db, indexId2);
+      await db.deletion.deleteDictionary(indexId2);
 
-      // 9. --- VERIFY ALL DATA IS GONE ---
+      // 8. --- VERIFY ALL DATA IS GONE ---
       print("Verifying deletion of ID 2...");
-      expect(await countTerms(db, indexId2), equals(0));
-      expect(await countKanji(db, indexId2), equals(0));
-      
+      await _verifyAllDictionaryData(db, indexId2, equals(0));
+
       indexes = await (db.select(db.indexTable)).get();
       expect(indexes, isEmpty);
       print("Deletion test complete.");
-
     });
   });
 }
 
 // --- HELPER FUNCTIONS ---
+
+/// Imports a dictionary and verifies its main data, returning its new ID and counts.
+Future<({int indexId, int termCount, int kanjiCount})> _importAndVerify(
+  DaKanjiDB db,
+  Mecab mecab,
+  String dataSourceZipPath,
+) async {
+  await importDictionary(db, mecab, dataSourceZipPath);
+
+  final indexes = await (db.select(db.indexTable)).get();
+  final newIndexId = indexes.last.id;
+
+  final termCount = await countTerms(db, newIndexId);
+  final kanjiCount = await countKanji(db, newIndexId);
+
+  expect(termCount, greaterThan(0));
+  expect(kanjiCount, greaterThan(0));
+
+  return (indexId: newIndexId, termCount: termCount, kanjiCount: kanjiCount);
+}
+
+/// Checks all data tables for a given indexId against a count matcher.
+Future<void> _verifyAllDictionaryData(
+    DaKanjiDB db, int indexId, Matcher countMatcher) async {
+  expect(await countTerms(db, indexId), countMatcher,
+      reason: "Term count mismatch for index $indexId");
+  expect(await countKanji(db, indexId), countMatcher,
+      reason: "Kanji count mismatch for index $indexId");
+  expect(await countExamples(db, indexId), countMatcher,
+      reason: "Example count mismatch for index $indexId");
+  expect(await countAudio(db, indexId), countMatcher,
+      reason: "Audio count mismatch for index $indexId");
+  expect(await countKanjiMeta(db, indexId), countMatcher,
+      reason: "KanjiMeta count mismatch for index $indexId");
+  expect(await countTermMeta(db, indexId), countMatcher,
+      reason: "TermMeta count mismatch for index $indexId");
+}
 
 /// Imports a dictionary from the given path
 Future importDictionary(
@@ -135,74 +153,46 @@ Future importDictionary(
       db: db,
       addFullJsonDefinitions: false,
       mecab: mecab);
-  
+
   // Consume the stream
   await for (var line in progress) {
-    // print(line); // Optional: for debugging
+    print(line); // Optional: for debugging
   }
   print("Conversion took ${s.elapsedMilliseconds} ms");
 }
 
-/// Top-level delete function that calls all other delete functions
-/// This function **assumes you have imported** all the individual delete functions
-Future deleteAllDataForIndex(DaKanjiDB db, int indexId) async {
-  await db.transaction(() async {
-    // Call all the delete functions we've created
-    // These functions are now imported from your app's code
-    await db.deletion.deleteDictionary(indexId);
+// --- Generic Count Helper ---
 
-    // Finally, delete the main IndexTable entry
-    await (db.delete(db.indexTable)..where((tbl) => tbl.id.equals(indexId)))
-        .go();
-  });
-}
-
-// --- Count Helpers for Verification (Test-Specific) ---
-
-Future<int> countTerms(DaKanjiDB db, int indexId) async {
-  final count = db.termBankV3Table.indexId.count();
-  final query = db.selectOnly(db.termBankV3Table)
+/// Generic helper to count rows in a table matching an indexId.
+Future<int> _countTableForIndex(
+  DaKanjiDB db,
+  TableInfo table,
+  Expression<int> indexIdColumn,
+  int indexId,
+) async {
+  final count = indexIdColumn.count();
+  final query = db.selectOnly(table)
     ..addColumns([count])
-    ..where(db.termBankV3Table.indexId.equals(indexId));
+    ..where(indexIdColumn.equals(indexId));
   return await query.map((row) => row.read(count)).getSingle() ?? 0;
 }
 
-Future<int> countKanji(DaKanjiDB db, int indexId) async {
-  final count = db.kanjiBankV3Table.indexId.count();
-  final query = db.selectOnly(db.kanjiBankV3Table)
-    ..addColumns([count])
-    ..where(db.kanjiBankV3Table.indexId.equals(indexId));
-  return await query.map((row) => row.read(count)).getSingle() ?? 0;
-}
+// --- Specific Count Helpers (Refactored) ---
 
-Future<int> countExamples(DaKanjiDB db, int indexId) async {
-  final count = db.exampleTable.indexId.count();
-  final query = db.selectOnly(db.exampleTable)
-    ..addColumns([count])
-    ..where(db.exampleTable.indexId.equals(indexId));
-  return await query.map((row) => row.read(count)).getSingle() ?? 0;
-}
+Future<int> countTerms(DaKanjiDB db, int indexId) => _countTableForIndex(
+    db, db.termBankV3Table, db.termBankV3Table.indexId, indexId);
 
-Future<int> countAudio(DaKanjiDB db, int indexId) async {
-  final count = db.audioTable.indexId.count();
-  final query = db.selectOnly(db.audioTable)
-    ..addColumns([count])
-    ..where(db.audioTable.indexId.equals(indexId));
-  return await query.map((row) => row.read(count)).getSingle() ?? 0;
-}
+Future<int> countKanji(DaKanjiDB db, int indexId) => _countTableForIndex(
+    db, db.kanjiBankV3Table, db.kanjiBankV3Table.indexId, indexId);
 
-Future<int> countKanjiMeta(DaKanjiDB db, int indexId) async {
-  final count = db.kanjiMetaBankV3Table.indexId.count();
-  final query = db.selectOnly(db.kanjiMetaBankV3Table)
-    ..addColumns([count])
-    ..where(db.kanjiMetaBankV3Table.indexId.equals(indexId));
-  return await query.map((row) => row.read(count)).getSingle() ?? 0;
-}
+Future<int> countExamples(DaKanjiDB db, int indexId) => _countTableForIndex(
+    db, db.exampleTable, db.exampleTable.indexId, indexId);
 
-Future<int> countTermMeta(DaKanjiDB db, int indexId) async {
-  final count = db.termMetaBankV3Table.indexId.count();
-  final query = db.selectOnly(db.termMetaBankV3Table)
-    ..addColumns([count])
-    ..where(db.termMetaBankV3Table.indexId.equals(indexId));
-  return await query.map((row) => row.read(count)).getSingle() ?? 0;
-}
+Future<int> countAudio(DaKanjiDB db, int indexId) =>
+    _countTableForIndex(db, db.audioTable, db.audioTable.indexId, indexId);
+
+Future<int> countKanjiMeta(DaKanjiDB db, int indexId) => _countTableForIndex(
+    db, db.kanjiMetaBankV3Table, db.kanjiMetaBankV3Table.indexId, indexId);
+
+Future<int> countTermMeta(DaKanjiDB db, int indexId) => _countTableForIndex(
+    db, db.termMetaBankV3Table, db.termMetaBankV3Table.indexId, indexId);

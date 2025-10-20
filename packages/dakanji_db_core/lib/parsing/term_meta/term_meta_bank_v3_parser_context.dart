@@ -36,7 +36,7 @@ class TermMetaBankV3ParserContext extends ParserContext {
 
   static Future<TermMetaBankV3ParserContext> create(DaKanjiDB db) async {
     return TermMetaBankV3ParserContext._(
-      currentMaxTermMetaId: await db.termMetaBankV3Dao.maxTermMetaBankV3TypeId(),
+      currentMaxTermMetaId: await db.termMetaBankV3Dao.maxTermMetaBankV3Id(),
       allTerms: { for (var e in await db.termDao.getAllTerms()) e.term : e.id },
       currentMaxTermId: await db.termDao.maxTermId(),
       allTypes: { for (var e in await db.termMetaBankV3Dao.getAllTypes()) e.type : e.id },

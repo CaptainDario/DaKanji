@@ -63,6 +63,18 @@ class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV
   }
 
   // ---------------------------------------------------------------------------
+  /// Get the maximum term meta bank v3 id 
+  Future<int> maxTermMetaBankV3Id() async {
+    
+    final query = await (selectOnly(termMetaBankV3Table)
+        ..addColumns([termMetaBankV3Table.id.max()]))
+      .getSingle();
+
+    // Extract the max ID value, defaulting to 0 if null
+    return query.read(termMetaBankV3Table.id.max()) ?? 0;
+
+  }
+
   /// Get the maximum type id 
   Future<int> maxTermMetaBankV3TypeId() async {
     

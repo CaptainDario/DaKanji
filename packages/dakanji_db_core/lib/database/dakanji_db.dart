@@ -2,6 +2,7 @@
 import 'package:dakanji_db_core/database/audio/audio_dao.dart';
 import 'package:dakanji_db_core/database/audio/audio_relation_tables.dart';
 import 'package:dakanji_db_core/database/audio/audio_tables.dart';
+import 'package:dakanji_db_core/database/dictionary_types.dart';
 import 'package:dakanji_db_core/database/general_tables/media_dao.dart';
 import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
 import 'package:dakanji_db_core/delete/dakanji_db_deletion_dao.dart';
@@ -53,8 +54,6 @@ import '/helper/zlib_text_converter_io.dart';   // neccessary for drift generato
 import 'audio_source_list/audio_source_list_tables.dart';
 
 part 'dakanji_db.g.dart';
-
-
 
 @DriftDatabase(
   tables: [

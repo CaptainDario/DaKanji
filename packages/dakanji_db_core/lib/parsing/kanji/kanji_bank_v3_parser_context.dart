@@ -120,27 +120,4 @@ class KanjiBankV3ParserContext extends ParserContext {
     );
   }
 
-  void resetCompanions(){
-    kanjiCompanions = [];
-    kanjiBankCompanions = [];
-    
-    readingCompanions  = [];
-    kanjiOnyomiReadingRelCompanions = [];
-    kanjiKunyomiReadingRelCompanions = [];
-    
-    tagRelCompanions = [];
-    
-    definitionsCompanions  = [];
-    definitionRelCompanions = [];
-    
-    statCompanions = [];
-    statNamesCompanions  = [];
-    statValuesCompanions  = [];
-    statValueRelCompanions = [];
-    
-    onyomisOrder = [];
-    kunyomisOrder = [];
-    definitionsOrder = [];
-  }
-
 }

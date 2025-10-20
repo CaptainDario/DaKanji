@@ -27,8 +27,6 @@ Future parseKanjiBankV3(String kanjiBankV3Json, KanjiBankV3ParserContext pC, DaK
   List jsonList = jsonDecode(kanjiBankV3Json);
   print("Parsing ${jsonList.length} kanji entries");
 
-  pC.resetCompanions();
-
   // populate the companion lists
   Stopwatch s = Stopwatch()..start();
   for (var i = 0; i < jsonList.length; i++) {

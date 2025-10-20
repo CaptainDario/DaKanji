@@ -56,8 +56,8 @@ Future parseTermMetaBankV3(
     pC.currentMaxTermMetaId++;
 
     // parse term
-    int termInsertId = pC.allTerms[jsonEntry[0]] ?? ++pC.currentMaxTermId;
     String term = jsonEntry[0];
+    int termInsertId = pC.allTerms[term] ?? ++pC.currentMaxTermId;
     if(pC.allTerms[term] == null){
       pC.allTerms[term] = termInsertId;
 
@@ -68,7 +68,7 @@ Future parseTermMetaBankV3(
         : preprocessInput(termTokens, false).normalizedTerms.firstOrNull;
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
-        term: Value(jsonEntry[0]),
+        term: Value(term),
         termNormalized: termNormalized!=term && termNormalized!=null
           ? Value(termNormalized)
           : const Value.absent(),
