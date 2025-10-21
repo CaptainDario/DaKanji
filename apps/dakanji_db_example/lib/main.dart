@@ -1,8 +1,8 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
-import 'package:dakanji_db_example/dictionary_search_result_widget.dart';
 import 'package:dakanji_db_example/init.dart';
 import 'package:flutter/material.dart';
+
 import 'globals.dart';
 
 
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         lastSearchResult = null;
                       }
                       else {
-                        lastSearchResult = await daKanjiDB.daKanjiDBDao.dictionarySearch(
+                        lastSearchResult = await daKanjiDB.dBQueriesDao.dictionarySearch(
                           value, [], [], true);
                       }
                       setState(() {});

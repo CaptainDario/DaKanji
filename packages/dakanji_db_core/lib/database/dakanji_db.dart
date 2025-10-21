@@ -2,6 +2,7 @@
 import 'package:dakanji_db_core/database/audio/audio_dao.dart';
 import 'package:dakanji_db_core/database/audio/audio_relation_tables.dart';
 import 'package:dakanji_db_core/database/audio/audio_tables.dart';
+import 'package:dakanji_db_core/database/db_queries/db_queries_dao.dart';
 import 'package:dakanji_db_core/database/dictionary_types.dart';
 import 'package:dakanji_db_core/database/general_tables/media_dao.dart';
 import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
@@ -106,6 +107,7 @@ part 'dakanji_db.g.dart';
     TermBankV3Dao,
     TermMetaBankV3Dao,
     ExampleDao,
+    DBQueriesDao,
     DeletionDao,
     SettingsDao,
   ],

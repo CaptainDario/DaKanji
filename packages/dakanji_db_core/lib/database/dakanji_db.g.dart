@@ -17658,6 +17658,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     this as DaKanjiDB,
   );
   late final ExampleDao exampleDao = ExampleDao(this as DaKanjiDB);
+  late final DBQueriesDao dBQueriesDao = DBQueriesDao(this as DaKanjiDB);
   late final DeletionDao deletionDao = DeletionDao(this as DaKanjiDB);
   late final SettingsDao settingsDao = SettingsDao(this as DaKanjiDB);
   Selectable<KanjiDictionarySearchViewData> kanji_dictionary_search_drift(

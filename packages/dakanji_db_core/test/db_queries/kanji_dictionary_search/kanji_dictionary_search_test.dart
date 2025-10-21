@@ -26,7 +26,7 @@ void main() {
       test('Looking up $testCase', () async {
         Stopwatch s = Stopwatch()..start();
         List<KanjiDictionarySearchResult> result =
-          (await db.daKanjiDBDao.kanjiDictionarySearch(testCase));
+          (await db.dBQueriesDao.kanjiDictionarySearch(testCase));
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
         print(result);
 

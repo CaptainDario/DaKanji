@@ -53,7 +53,7 @@ void main() async {
         test('Searching: ${searchTerms[l][i]}', () async {
 
           Stopwatch s = Stopwatch()..start();
-          final results = await db.daKanjiDBDao.audioSearch(searchTerms[l][i]);
+          final results = await db.dBQueriesDao.audioSearch(searchTerms[l][i]);
           print("Lookup took ${s.elapsedMilliseconds}ms");
 
           expect(results.length, testCases[l][i].length, reason: "Number of results mismatch");

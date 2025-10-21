@@ -70,7 +70,7 @@ void main() {
           testCase.description,
           () async {
             // Perform the search
-            final results = await db.daKanjiDBDao.dictionarySearch(
+            final results = await db.dBQueriesDao.dictionarySearch(
               testCase.query,
               [Iso639_1.en],
               testCase.tags, 
