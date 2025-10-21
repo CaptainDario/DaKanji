@@ -73,7 +73,7 @@ void main() {
 
       // 5. --- DELETE FIRST DICTIONARY (ID 1) ---
       print("Deleting dictionary 1 (ID: $indexId1)...");
-      await db.deletion.deleteDictionary(indexId1);
+      await db.deletionDao.deleteDictionary(indexId1);
 
       // 6. --- VERIFY ID 1 IS GONE, ID 2 REMAINS ---
       print("Verifying deletion of ID 1...");
@@ -92,7 +92,7 @@ void main() {
 
       // 7. --- DELETE SECOND DICTIONARY (ID 2) ---
       print("Deleting dictionary 2 (ID: $indexId2)...");
-      await db.deletion.deleteDictionary(indexId2);
+      await db.deletionDao.deleteDictionary(indexId2);
 
       // 8. --- VERIFY ALL DATA IS GONE ---
       print("Verifying deletion of ID 2...");
