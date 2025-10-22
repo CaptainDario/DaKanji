@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 
@@ -200,6 +201,7 @@ class SearchMatchGroup {
         metaEntries: (jsonDecode(driftResult.termMetaEntries) as List)
             .map((me) => TermMetaBankV3Entry.fromJson(me))
             .toList(),
+        indexTableData: IndexTableEntry.fromDictionarySearchDrift(driftResult),
       );
 
       if(isWildcardSearch) {
@@ -262,6 +264,8 @@ class DictionaryMatch {
   final TermBankV3Entry entry;
   /// Any associated metadata entries for this term.
   final List<TermMetaBankV3Entry> metaEntries;
+  /// Index table data for this entry
+  final IndexTableEntry indexTableData;
 
   DictionaryMatch(
     {
@@ -269,6 +273,7 @@ class DictionaryMatch {
       this.spellfixSuggestion,
       required this.entry,
       this.metaEntries = const [],
+      required this.indexTableData,
     }
   );
 

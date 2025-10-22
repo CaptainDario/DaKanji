@@ -9,6 +9,9 @@ part of 'kanji_dictionary_search_result.dart';
 KanjiDictionarySearchResult _$KanjiDictionarySearchResultFromJson(
   Map<String, dynamic> json,
 ) => KanjiDictionarySearchResult(
+  indexTableEntry: IndexTableEntry.fromJson(
+    json['indexTableEntry'] as Map<String, dynamic>,
+  ),
   kanjiBankEntry: KanjiBankV3Entry.fromJson(
     json['kanjiBankEntry'] as Map<String, dynamic>,
   ),
@@ -20,6 +23,7 @@ KanjiDictionarySearchResult _$KanjiDictionarySearchResultFromJson(
 Map<String, dynamic> _$KanjiDictionarySearchResultToJson(
   KanjiDictionarySearchResult instance,
 ) => <String, dynamic>{
+  'indexTableEntry': instance.indexTableEntry,
   'kanjiBankEntry': instance.kanjiBankEntry,
   'kanjiMetaBankEntry': instance.kanjiMetaBankEntry,
 };

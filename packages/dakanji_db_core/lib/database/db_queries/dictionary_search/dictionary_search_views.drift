@@ -17,6 +17,10 @@ CREATE VIEW IF NOT EXISTS dictionary_search_view AS
         Terms.definitions,
         Terms.tags,
 
+        -- include index info
+        Indices.*,
+
+        -- Assemble term meta entries as JSON array
         COALESce(
             JSON_GROUP_ARRAY(
                 JSON_OBJECT(
@@ -37,14 +41,7 @@ CREATE VIEW IF NOT EXISTS dictionary_search_view AS
     LEFT JOIN
         term_meta_bank_v3_entry_view AS Meta
             ON Terms.term = Meta.term AND Terms.reading = Meta.reading
+    LEFT JOIN
+        index_table AS Indices ON Terms.indexId = Indices.id
     GROUP BY
-        Terms.id,
-        Terms.indexId,
-        Terms.term,
-        Terms.reading,
-        Terms.popularity,
-        Terms.sequence_number,
-        Terms.definition_tags,
-        Terms.rule_identifiers,
-        Terms.definitions,
-        Terms.tags;
+        Terms.id;
