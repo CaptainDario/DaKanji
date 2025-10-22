@@ -39,5 +39,20 @@ class IndexDao extends DatabaseAccessor<DaKanjiDB> with _$IndexDaoMixin {
     return result;
 
   }
+
+
+  // ---------------------------------------------------------------------------
+
+  /// Get the maximum index id
+  Future<int> maxIndexId() async {
+    
+    final query = await (selectOnly(indexTable)
+        ..addColumns([indexTable.id.max()]))
+      .getSingle();
+
+    // Extract the max ID value, defaulting to 0 if null
+    return query.read(indexTable.id.max()) ?? 0;
+
+  }
   
 }

@@ -103,8 +103,10 @@ Future _parseAudioDataSource(({
 
   // add an index for the audio entries
   int indexId = await db.into(db.indexTable).insert(IndexTableCompanion(
-    title: Value(params.audioSourceName),
     dictionaryType: Value(DictionaryTypes.audio),
+    currentSortingOrder: Value(await db.indexDao.maxIndexId()+1),
+    
+    title: Value(params.audioSourceName),
     revision: Value("1.0"),
     format: Value(format.index),
     updatable: Value(false),

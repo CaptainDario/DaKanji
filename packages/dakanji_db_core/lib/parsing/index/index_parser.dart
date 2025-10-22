@@ -23,6 +23,7 @@ Future<int> parseIndex(String indexJson, DaKanjiDB db) async {
 
   IndexTableCompanion comp = IndexTableCompanion(
     dictionaryType: Value(DictionaryTypes.yomitan),
+    currentSortingOrder: Value(await db.indexDao.maxIndexId()+1),
 
     title: Value(jsonMap["title"]),
     revision: Value(jsonMap["revision"]),
