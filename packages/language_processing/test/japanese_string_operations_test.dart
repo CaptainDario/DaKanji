@@ -33,7 +33,7 @@ void main() async {
   group("Katakana to hiragana", () {
     for (var testCase in katakanaToHiraganaTestCases) {
       test('Converting: ${testCase.$1}', () {
-        String result = katakanaToHiragana(testCase.$1);
+        String result = katakanaToHiragana(testCase.$1, false).first;
         expect(result, equals(testCase.$2));
       });
     }

@@ -1,5 +1,6 @@
 import "dart:convert";
 
+import "package:collection/collection.dart";
 import "package:dakanji_db_core/database/audio/audio_entry.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
@@ -42,6 +43,23 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
 
   }
 
+  String buildQueryFilters(
+    List<String> terms, List<List<String>> posTags
+  ){
+    List<Map<String, dynamic> > queryFilters = [];
+
+    assert(terms.length == posTags.length);
+
+    for (int i = 0; i < terms.length; i++) {
+      queryFilters.add({
+        "term": terms[i],
+        "pos": posTags[i],
+      });
+    }
+
+    return jsonEncode(queryFilters);
+  }
+
   Future<DictionarySearchResult> dictionarySearch(
     String term,
     List<Iso639_1> languages,
@@ -61,53 +79,64 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
 
     // run the queries in parallel
     final results = (await Future.wait([
-        db.dictionary_search_drift(term, spellfixDistance, useGlobInt, 0,
-                                  "$term *", jsonEncode([]), jsonEncode(tags)).get(),
+
+      db.dictionary_search_drift(
+        buildQueryFilters([term], [[]]),
+        spellfixDistance,
+        useGlobInt,
+        0,
+        "$term *",
+        jsonEncode(tags)
+      ).get(),
 
       if(normalizedTerms.isNotEmpty)
-        for (final normalizedTerm in normalizedTerms) 
-          db.dictionary_search_drift(normalizedTerm, spellfixDistance, useGlobInt, 1,
-                                    "$normalizedTerm *", jsonEncode([]), jsonEncode(tags)).get(),
+        db.dictionary_search_drift(
+          buildQueryFilters(
+            normalizedTerms.map((e) => e).toList(),
+            normalizedTerms.map((e) => <String>[]).toList(),
+          ),
+          spellfixDistance,
+          useGlobInt,
+          1,
+          normalizedTerms.map((e) => '$e *').join(" OR "),
+          jsonEncode(tags)
+        ).get()
+      else Future.sync(() => <DictionarySearchDriftResult>[]),
 
-      
-      if(termVariants.isNotEmpty && !isWildcardSearch)
-        for (final variant in termVariants) 
-          db.dictionary_search_drift(
-            variant.deconjugatedTerm, 0, useGlobInt, 1,
-            "${variant.deconjugatedTerm} *", jsonEncode(variant.requiredPartsOfSpeech), jsonEncode(tags)
-          ).get()
+      if(termVariants.isNotEmpty)
+        db.dictionary_search_drift(
+          buildQueryFilters(
+            termVariants.map((e) => e.deconjugatedTerm).toList(),
+            termVariants.map((e) => e.requiredPartsOfSpeech).toList(),
+          ),
+          0,
+          useGlobInt,
+          1,
+          termVariants.map((e) => "${e.deconjugatedTerm} *").join(" OR "),
+          jsonEncode(tags)
+        ).get()
+      else Future.sync(() => <DictionarySearchDriftResult>[])
     ]));
 
-    // process all normalized term search results
-    List<SearchMatchGroup> filteredQueryNormalizedMatches = [];
-    final queryNormalizedMatches = results.length > 1
-      ? results.sublist(1, 1+normalizedTerms.length)
-      : List<List<DictionarySearchDriftResult>>.from([]);
-    for (var i = 0; i < queryNormalizedMatches.length; i++) {
-      if(queryNormalizedMatches[i].isNotEmpty) {
-        filteredQueryNormalizedMatches.add(SearchMatchGroup.fromDictionaryMatchList(
-          queryNormalizedMatches[i],
-          normalizedTerms[i],
-          isWildcardSearch,
-        ));
-      }
-    }
+    // merge all normalized search results from the same normalized term
+    final groupedNormalizedMatches = groupBy(results[1], (result) => result.queryTerm);
+    final filteredQueryNormalizedMatches = <SearchMatchGroup>[];
+    groupedNormalizedMatches.forEach((term, matches) {
+      filteredQueryNormalizedMatches.add(
+        SearchMatchGroup.fromDictionaryMatchList(
+          matches, term, isWildcardSearch,),
+      );
+    });
 
-    // process all variant search results
-    List<SearchMatchGroup> filteredQueryVariantMatches = [];
-    final queryVariantMatches = results.length > 2
-      ? results.sublist(1+normalizedTerms.length)
-      : List<List<DictionarySearchDriftResult>>.from([]);
-    for (var i = 0; i < queryVariantMatches.length; i++) {
-      if(queryVariantMatches[i].isNotEmpty) {
-        filteredQueryVariantMatches.add(SearchMatchGroup.fromDictionaryMatchList(
-          queryVariantMatches[i],
-          termVariants[i].deconjugatedTerm,
-          isWildcardSearch,
-          variantReason: termVariants[i].transformRules.join(" -> ")
-        ));
-      }
-    }
+    // merge all variant search results from the same variant term
+    final groupedVariantMatches = groupBy(results[2], (result) => result.queryTerm);
+    final filteredQueryVariantMatches = <SearchMatchGroup>[];
+    groupedVariantMatches.forEach((term, matches) {
+      filteredQueryVariantMatches.add(
+        SearchMatchGroup.fromDictionaryMatchList(
+          matches, term, isWildcardSearch,),
+      );
+    });
 
     return DictionarySearchResult(
       queryMatches: SearchMatchGroup.fromDictionaryMatchList(results[0], term, isWildcardSearch),

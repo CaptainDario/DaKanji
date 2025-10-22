@@ -182,7 +182,7 @@ class DaKanjiDB extends _$DaKanjiDB {
       File(path),
       sqlite3: loadExtensions,
       setup: setupDb,
-      readPool: 8
+      readPool: 3 // each dictionary search query runs 3 differen queries
     );
 
     return qe;

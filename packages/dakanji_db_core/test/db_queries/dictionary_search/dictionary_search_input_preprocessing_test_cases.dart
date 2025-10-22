@@ -137,11 +137,11 @@ List<SearchTestCase> inputPreprocessingSearchTestCases = [
     query: 'kani',
     normalizedQueryMatchGroups: [
       ExpectedMatchGroup(exactMatches: [
-        ExpectedSearchResult(term: '簡易', reading: 'かんい', definitions: ['simplicity; easiness'], match: 'かんい')
+        ExpectedSearchResult(term: '蟹', reading: 'かに', definitions: ['crab'], match: 'かに')
       ]),
       ExpectedMatchGroup(exactMatches: [
-        ExpectedSearchResult(term: '蟹', reading: 'かに', definitions: ['crab'], match: 'かに')
-      ])
+        ExpectedSearchResult(term: '簡易', reading: 'かんい', definitions: ['simplicity; easiness'], match: 'かんい')
+      ]),
     ],
   ),
 ];
