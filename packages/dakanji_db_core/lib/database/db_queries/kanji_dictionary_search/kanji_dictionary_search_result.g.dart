@@ -15,7 +15,7 @@ KanjiDictionarySearchResult _$KanjiDictionarySearchResultFromJson(
   kanjiBankEntry: KanjiBankV3Entry.fromJson(
     json['kanjiBankEntry'] as Map<String, dynamic>,
   ),
-  kanjiMetaBankEntry: (json['kanjiMetaBankEntry'] as List<dynamic>)
+  kanjiMetaBankEntries: (json['kanjiMetaBankEntries'] as List<dynamic>)
       .map((e) => KanjiMetaBankV3Entry.fromJson(e as Map<String, dynamic>))
       .toList(),
 );
@@ -25,5 +25,5 @@ Map<String, dynamic> _$KanjiDictionarySearchResultToJson(
 ) => <String, dynamic>{
   'indexTableEntry': instance.indexTableEntry,
   'kanjiBankEntry': instance.kanjiBankEntry,
-  'kanjiMetaBankEntry': instance.kanjiMetaBankEntry,
+  'kanjiMetaBankEntries': instance.kanjiMetaBankEntries,
 };
