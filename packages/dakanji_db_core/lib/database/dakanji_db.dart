@@ -6,7 +6,6 @@ import 'package:dakanji_db_core/database/db_queries/db_queries_dao.dart';
 import 'package:dakanji_db_core/database/dictionary_types.dart';
 import 'package:dakanji_db_core/database/general_tables/media_dao.dart';
 import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
-import 'package:dakanji_db_core/database/settings/settings_dao.dart';
 import 'package:dakanji_db_core/delete/deletion_dao.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -109,7 +108,6 @@ part 'dakanji_db.g.dart';
     ExampleDao,
     DBQueriesDao,
     DeletionDao,
-    SettingsDao,
   ],
   views: [
 

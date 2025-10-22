@@ -10,7 +10,12 @@ class IndexTable extends Table {
 
   /// Type of dictionary stored in this index.
   TextColumn get dictionaryType => textEnum<DictionaryTypes>()() ;
+  /// Current sorting order of this dictionary (DESC)
+  IntColumn get currentSortingOrder => integer()();
+  /// Whether this dictionary is used to override frequency data when searching
+  BoolColumn get currentFrequencyDictionary => boolean().withDefault(const Constant(false))();
 
+  // --- Yomitan fields ----------
   /// Title of the dictionary.
   TextColumn get title => text()();
   /// Revision of the dictionary. This value is displayed, and used to check for dictionary updates.
