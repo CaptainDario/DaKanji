@@ -1,9 +1,10 @@
 
-import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry_stat.dart';
 import 'package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
+
+import 'kanji_dictionary_search_result_helper_classes.dart';
 
 
 int indexId = 1;
@@ -15,7 +16,7 @@ final kanjiDictionaryTestCases = [
 
 /// kanji bank test case expected values
 final kanjiDictionarySearchTestCaseExpectations = [
-  KanjiDictionarySearchResult(
+  KanjiDictionarySearchResultTestCaseExpectation(
     kanjiBankEntry: KanjiBankV3Entry(
       indexId: indexId,
       kanji: "打",
@@ -67,7 +68,7 @@ final kanjiDictionarySearchTestCaseExpectations = [
         )
       ]
     ),
-    kanjiMetaBankEntry: [
+    kanjiMetaBankEntries: [
       KanjiMetaBankV3Entry(
         kanji: "打",
         indexId: 1,
@@ -91,7 +92,7 @@ final kanjiDictionarySearchTestCaseExpectations = [
       )
     ]
   ),
-  KanjiDictionarySearchResult(
+  KanjiDictionarySearchResultTestCaseExpectation(
   kanjiBankEntry: KanjiBankV3Entry(
     kanji: "込",
     indexId: 1,
@@ -151,7 +152,7 @@ final kanjiDictionarySearchTestCaseExpectations = [
       )
     ]
   ),
-  kanjiMetaBankEntry: [
+  kanjiMetaBankEntries: [
     KanjiMetaBankV3Entry(
       kanji: "込",
       indexId: 1,

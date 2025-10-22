@@ -26,13 +26,13 @@ class KanjiDictionarySearchResult with _$KanjiDictionarySearchResult {
   @override
   /// List of lists of kanji meta bank entries, each list corresponds to one
   /// kanji bank entry of [kanjiBankEntry]
-  List<KanjiMetaBankV3Entry> kanjiMetaBankEntry;
+  List<KanjiMetaBankV3Entry> kanjiMetaBankEntries;
 
 
   KanjiDictionarySearchResult({
     required this.indexTableEntry,
     required this.kanjiBankEntry,
-    required this.kanjiMetaBankEntry,
+    required this.kanjiMetaBankEntries,
   });
 
   factory KanjiDictionarySearchResult.fromKanjiDictionarySearchViewData(KanjiDictionarySearchViewData data){
@@ -40,7 +40,7 @@ class KanjiDictionarySearchResult with _$KanjiDictionarySearchResult {
     return KanjiDictionarySearchResult(
       indexTableEntry: IndexTableEntry.fromKanjiDictionarySearchViewData(data),
       kanjiBankEntry: KanjiBankV3Entry.fromKanjiDictionarySearchViewData(data),
-      kanjiMetaBankEntry: (jsonDecode(data.kanjiMetaBankV3Entries) as List)
+      kanjiMetaBankEntries: (jsonDecode(data.kanjiMetaBankV3Entries) as List)
         .map((e) => KanjiMetaBankV3Entry.fromJson(e))
         .toList()
     );
