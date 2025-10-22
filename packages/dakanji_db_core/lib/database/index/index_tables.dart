@@ -9,7 +9,7 @@ class IndexTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// Type of dictionary stored in this index.
-  TextColumn get dictionaryType => textEnum<DictionaryTypes>()() ;
+  TextColumn get dictionaryType => textEnum<DictionaryTypes>()();
   /// Current sorting order of this dictionary (DESC)
   IntColumn get currentSortingOrder => integer()();
   /// Whether this dictionary is used to override frequency data when searching

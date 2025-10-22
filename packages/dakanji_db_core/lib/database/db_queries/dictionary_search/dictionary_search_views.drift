@@ -41,7 +41,7 @@ CREATE VIEW IF NOT EXISTS dictionary_search_view AS
     LEFT JOIN
         term_meta_bank_v3_entry_view AS Meta
             ON Terms.term = Meta.term AND Terms.reading = Meta.reading
-    LEFT JOIN
+    JOIN
         index_table AS Indices ON Terms.indexId = Indices.id
     GROUP BY
         Terms.id;

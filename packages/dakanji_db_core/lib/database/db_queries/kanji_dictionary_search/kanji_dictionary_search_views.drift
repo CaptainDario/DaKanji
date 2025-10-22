@@ -23,5 +23,5 @@ CREATE VIEW IF NOT EXISTS kanji_dictionary_search_view AS
         WHERE km.kanji = k.kanji
     ) AS kanjiMetaBankV3Entries
     FROM kanji_bank_v3_entry_view AS k
-    JOIN
+    INNER JOIN
         index_table AS it ON k.indexId = it.id;

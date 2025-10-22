@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$IndexTableEntry {
 
- DictionaryTypes get dictionaryType; int get currentSortingOrder; bool get currentFrequencyDictionary; String? get title; String? get revision; bool? get sequenced; int? get format; int? get version; String? get author; bool? get updatable; String? get indexUrl; String? get downloadUrl; String? get url; String? get description; String? get attribution; String? get sourceLanguage; String? get targetLanguage; String? get frequencyMode;
+ DictionaryTypes get dictionaryType; int get currentSortingOrder; bool get currentFrequencyDictionary; String get title; String get revision; bool? get sequenced; int? get format; int? get version; String? get author; bool? get updatable; String? get indexUrl; String? get downloadUrl; String? get url; String? get description; String? get attribution; String? get sourceLanguage; String? get targetLanguage; String? get frequencyMode;
 /// Create a copy of IndexTableEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +46,7 @@ abstract mixin class $IndexTableEntryCopyWith<$Res>  {
   factory $IndexTableEntryCopyWith(IndexTableEntry value, $Res Function(IndexTableEntry) _then) = _$IndexTableEntryCopyWithImpl;
 @useResult
 $Res call({
- DictionaryTypes dictionaryType, int currentSortingOrder, bool currentFrequencyDictionary, String? title, String? revision, bool? sequenced, int? format, int? version, String? author, bool? updatable, String? indexUrl, String? downloadUrl, String? url, String? description, String? attribution, String? sourceLanguage, String? targetLanguage, String? frequencyMode
+ DictionaryTypes dictionaryType, int currentSortingOrder, bool currentFrequencyDictionary, String title, String revision, bool? sequenced, int? format, int? version, String? author, bool? updatable, String? indexUrl, String? downloadUrl, String? url, String? description, String? attribution, String? sourceLanguage, String? targetLanguage, String? frequencyMode
 });
 
 
@@ -63,14 +63,14 @@ class _$IndexTableEntryCopyWithImpl<$Res>
 
 /// Create a copy of IndexTableEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? dictionaryType = null,Object? currentSortingOrder = null,Object? currentFrequencyDictionary = null,Object? title = freezed,Object? revision = freezed,Object? sequenced = freezed,Object? format = freezed,Object? version = freezed,Object? author = freezed,Object? updatable = freezed,Object? indexUrl = freezed,Object? downloadUrl = freezed,Object? url = freezed,Object? description = freezed,Object? attribution = freezed,Object? sourceLanguage = freezed,Object? targetLanguage = freezed,Object? frequencyMode = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? dictionaryType = null,Object? currentSortingOrder = null,Object? currentFrequencyDictionary = null,Object? title = null,Object? revision = null,Object? sequenced = freezed,Object? format = freezed,Object? version = freezed,Object? author = freezed,Object? updatable = freezed,Object? indexUrl = freezed,Object? downloadUrl = freezed,Object? url = freezed,Object? description = freezed,Object? attribution = freezed,Object? sourceLanguage = freezed,Object? targetLanguage = freezed,Object? frequencyMode = freezed,}) {
   return _then(IndexTableEntry(
 dictionaryType: null == dictionaryType ? _self.dictionaryType : dictionaryType // ignore: cast_nullable_to_non_nullable
 as DictionaryTypes,currentSortingOrder: null == currentSortingOrder ? _self.currentSortingOrder : currentSortingOrder // ignore: cast_nullable_to_non_nullable
 as int,currentFrequencyDictionary: null == currentFrequencyDictionary ? _self.currentFrequencyDictionary : currentFrequencyDictionary // ignore: cast_nullable_to_non_nullable
-as bool,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String?,revision: freezed == revision ? _self.revision : revision // ignore: cast_nullable_to_non_nullable
-as String?,sequenced: freezed == sequenced ? _self.sequenced : sequenced // ignore: cast_nullable_to_non_nullable
+as bool,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,revision: null == revision ? _self.revision : revision // ignore: cast_nullable_to_non_nullable
+as String,sequenced: freezed == sequenced ? _self.sequenced : sequenced // ignore: cast_nullable_to_non_nullable
 as bool?,format: freezed == format ? _self.format : format // ignore: cast_nullable_to_non_nullable
 as int?,version: freezed == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
 as int?,author: freezed == author ? _self.author : author // ignore: cast_nullable_to_non_nullable

@@ -6248,7 +6248,7 @@ class KanjiDictionarySearchView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS kanji_dictionary_search_view AS SELECT k.*, it.*, (SELECT json_group_array(json_object(\'kanji\', km.kanji, \'indexId\', km.index_id, \'type\', km.type, \'freqValue\', km.freq_value, \'freqDisplayValue\', km.freq_display_value)) FROM kanji_meta_bank_v3_entry_view AS km WHERE km.kanji = k.kanji) AS kanjiMetaBankV3Entries FROM kanji_bank_v3_entry_view AS k JOIN index_table AS it ON k.indexId = it.id',
+        'CREATE VIEW IF NOT EXISTS kanji_dictionary_search_view AS SELECT k.*, it.*, (SELECT json_group_array(json_object(\'kanji\', km.kanji, \'indexId\', km.index_id, \'type\', km.type, \'freqValue\', km.freq_value, \'freqDisplayValue\', km.freq_display_value)) FROM kanji_meta_bank_v3_entry_view AS km WHERE km.kanji = k.kanji) AS kanjiMetaBankV3Entries FROM kanji_bank_v3_entry_view AS k INNER JOIN index_table AS it ON k.indexId = it.id',
   };
   @override
   KanjiDictionarySearchView get asDslTable => this;
@@ -12430,12 +12430,12 @@ class DictionarySearchViewData extends DataClass {
   final String ruleIdentifiers;
   final String definitions;
   final String tags;
-  final int? id1;
-  final DictionaryTypes? dictionaryType;
-  final int? currentSortingOrder;
-  final bool? currentFrequencyDictionary;
-  final String? title;
-  final String? revision;
+  final int id1;
+  final DictionaryTypes dictionaryType;
+  final int currentSortingOrder;
+  final bool currentFrequencyDictionary;
+  final String title;
+  final String revision;
   final bool? sequenced;
   final int? format;
   final int? version;
@@ -12461,12 +12461,12 @@ class DictionarySearchViewData extends DataClass {
     required this.ruleIdentifiers,
     required this.definitions,
     required this.tags,
-    this.id1,
-    this.dictionaryType,
-    this.currentSortingOrder,
-    this.currentFrequencyDictionary,
-    this.title,
-    this.revision,
+    required this.id1,
+    required this.dictionaryType,
+    required this.currentSortingOrder,
+    required this.currentFrequencyDictionary,
+    required this.title,
+    required this.revision,
     this.sequenced,
     this.format,
     this.version,
@@ -12498,18 +12498,18 @@ class DictionarySearchViewData extends DataClass {
       ruleIdentifiers: serializer.fromJson<String>(json['ruleIdentifiers']),
       definitions: serializer.fromJson<String>(json['definitions']),
       tags: serializer.fromJson<String>(json['tags']),
-      id1: serializer.fromJson<int?>(json['id']),
-      dictionaryType: NullAwareTypeConverter.wrap(
-        const EnumNameConverter<DictionaryTypes>(DictionaryTypes.values),
-      ).fromJson(serializer.fromJson<String?>(json['dictionary_type'])),
-      currentSortingOrder: serializer.fromJson<int?>(
+      id1: serializer.fromJson<int>(json['id']),
+      dictionaryType: $IndexTableTable.$converterdictionaryType.fromJson(
+        serializer.fromJson<String>(json['dictionary_type']),
+      ),
+      currentSortingOrder: serializer.fromJson<int>(
         json['current_sorting_order'],
       ),
-      currentFrequencyDictionary: serializer.fromJson<bool?>(
+      currentFrequencyDictionary: serializer.fromJson<bool>(
         json['current_frequency_dictionary'],
       ),
-      title: serializer.fromJson<String?>(json['title']),
-      revision: serializer.fromJson<String?>(json['revision']),
+      title: serializer.fromJson<String>(json['title']),
+      revision: serializer.fromJson<String>(json['revision']),
       sequenced: serializer.fromJson<bool?>(json['sequenced']),
       format: serializer.fromJson<int?>(json['format']),
       version: serializer.fromJson<int?>(json['version']),
@@ -12540,18 +12540,16 @@ class DictionarySearchViewData extends DataClass {
       'ruleIdentifiers': serializer.toJson<String>(ruleIdentifiers),
       'definitions': serializer.toJson<String>(definitions),
       'tags': serializer.toJson<String>(tags),
-      'id': serializer.toJson<int?>(id1),
-      'dictionary_type': serializer.toJson<String?>(
-        NullAwareTypeConverter.wrap(
-          const EnumNameConverter<DictionaryTypes>(DictionaryTypes.values),
-        ).toJson(dictionaryType),
+      'id': serializer.toJson<int>(id1),
+      'dictionary_type': serializer.toJson<String>(
+        $IndexTableTable.$converterdictionaryType.toJson(dictionaryType),
       ),
-      'current_sorting_order': serializer.toJson<int?>(currentSortingOrder),
-      'current_frequency_dictionary': serializer.toJson<bool?>(
+      'current_sorting_order': serializer.toJson<int>(currentSortingOrder),
+      'current_frequency_dictionary': serializer.toJson<bool>(
         currentFrequencyDictionary,
       ),
-      'title': serializer.toJson<String?>(title),
-      'revision': serializer.toJson<String?>(revision),
+      'title': serializer.toJson<String>(title),
+      'revision': serializer.toJson<String>(revision),
       'sequenced': serializer.toJson<bool?>(sequenced),
       'format': serializer.toJson<int?>(format),
       'version': serializer.toJson<int?>(version),
@@ -12580,12 +12578,12 @@ class DictionarySearchViewData extends DataClass {
     String? ruleIdentifiers,
     String? definitions,
     String? tags,
-    Value<int?> id1 = const Value.absent(),
-    Value<DictionaryTypes?> dictionaryType = const Value.absent(),
-    Value<int?> currentSortingOrder = const Value.absent(),
-    Value<bool?> currentFrequencyDictionary = const Value.absent(),
-    Value<String?> title = const Value.absent(),
-    Value<String?> revision = const Value.absent(),
+    int? id1,
+    DictionaryTypes? dictionaryType,
+    int? currentSortingOrder,
+    bool? currentFrequencyDictionary,
+    String? title,
+    String? revision,
     Value<bool?> sequenced = const Value.absent(),
     Value<int?> format = const Value.absent(),
     Value<int?> version = const Value.absent(),
@@ -12611,18 +12609,13 @@ class DictionarySearchViewData extends DataClass {
     ruleIdentifiers: ruleIdentifiers ?? this.ruleIdentifiers,
     definitions: definitions ?? this.definitions,
     tags: tags ?? this.tags,
-    id1: id1.present ? id1.value : this.id1,
-    dictionaryType: dictionaryType.present
-        ? dictionaryType.value
-        : this.dictionaryType,
-    currentSortingOrder: currentSortingOrder.present
-        ? currentSortingOrder.value
-        : this.currentSortingOrder,
-    currentFrequencyDictionary: currentFrequencyDictionary.present
-        ? currentFrequencyDictionary.value
-        : this.currentFrequencyDictionary,
-    title: title.present ? title.value : this.title,
-    revision: revision.present ? revision.value : this.revision,
+    id1: id1 ?? this.id1,
+    dictionaryType: dictionaryType ?? this.dictionaryType,
+    currentSortingOrder: currentSortingOrder ?? this.currentSortingOrder,
+    currentFrequencyDictionary:
+        currentFrequencyDictionary ?? this.currentFrequencyDictionary,
+    title: title ?? this.title,
+    revision: revision ?? this.revision,
     sequenced: sequenced.present ? sequenced.value : this.sequenced,
     format: format.present ? format.value : this.format,
     version: version.present ? version.value : this.version,
@@ -12797,7 +12790,7 @@ class DictionarySearchView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS dictionary_search_view AS SELECT Terms.id, Terms.indexId, Terms.term, Terms.reading, Terms.popularity, Terms.sequence_number AS sequenceNumber, Terms.definition_tags AS definitionTags, Terms.rule_identifiers AS ruleIdentifiers, Terms.definitions, Terms.tags, Indices.*, COALESce(JSON_GROUP_ARRAY(JSON_OBJECT(\'indexId\', Meta.indexId, \'term\', Meta.term, \'reading\', Meta.reading, \'type\', Meta.type, \'frequency\', Meta.frequency, \'frequencyDisplayValue\', Meta.frequencyDisplayValue, \'pitchs\', JSON(Meta.pitchs), \'ipas\', JSON(Meta.ipas)))FILTER (WHERE Meta.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM term_bank_v3_entry_view AS Terms LEFT JOIN term_meta_bank_v3_entry_view AS Meta ON Terms.term = Meta.term AND Terms.reading = Meta.reading LEFT JOIN index_table AS Indices ON Terms.indexId = Indices.id GROUP BY Terms.id',
+        'CREATE VIEW IF NOT EXISTS dictionary_search_view AS SELECT Terms.id, Terms.indexId, Terms.term, Terms.reading, Terms.popularity, Terms.sequence_number AS sequenceNumber, Terms.definition_tags AS definitionTags, Terms.rule_identifiers AS ruleIdentifiers, Terms.definitions, Terms.tags, Indices.*, COALESce(JSON_GROUP_ARRAY(JSON_OBJECT(\'indexId\', Meta.indexId, \'term\', Meta.term, \'reading\', Meta.reading, \'type\', Meta.type, \'frequency\', Meta.frequency, \'frequencyDisplayValue\', Meta.frequencyDisplayValue, \'pitchs\', JSON(Meta.pitchs), \'ipas\', JSON(Meta.ipas)))FILTER (WHERE Meta.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM term_bank_v3_entry_view AS Terms LEFT JOIN term_meta_bank_v3_entry_view AS Meta ON Terms.term = Meta.term AND Terms.reading = Meta.reading JOIN index_table AS Indices ON Terms.indexId = Indices.id GROUP BY Terms.id',
   };
   @override
   DictionarySearchView get asDslTable => this;
@@ -12851,32 +12844,29 @@ class DictionarySearchView
       id1: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
+      )!,
+      dictionaryType: $IndexTableTable.$converterdictionaryType.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}dictionary_type'],
+        )!,
       ),
-      dictionaryType:
-          NullAwareTypeConverter.wrap(
-            const EnumNameConverter<DictionaryTypes>(DictionaryTypes.values),
-          ).fromSql(
-            attachedDatabase.typeMapping.read(
-              DriftSqlType.string,
-              data['${effectivePrefix}dictionary_type'],
-            ),
-          ),
       currentSortingOrder: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}current_sorting_order'],
-      ),
+      )!,
       currentFrequencyDictionary: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}current_frequency_dictionary'],
-      ),
+      )!,
       title: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}title'],
-      ),
+      )!,
       revision: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}revision'],
-      ),
+      )!,
       sequenced: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}sequenced'],
@@ -12999,32 +12989,27 @@ class DictionarySearchView
   late final GeneratedColumn<int> id1 = GeneratedColumn<int>(
     'id',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.int,
   );
-  late final GeneratedColumnWithTypeConverter<DictionaryTypes?, String>
-  dictionaryType =
-      GeneratedColumn<String>(
-        'dictionary_type',
-        aliasedName,
-        true,
-        type: DriftSqlType.string,
-      ).withConverter<DictionaryTypes?>(
-        NullAwareTypeConverter.wrap(
-          const EnumNameConverter<DictionaryTypes>(DictionaryTypes.values),
-        ),
-      );
+  late final GeneratedColumnWithTypeConverter<DictionaryTypes, String>
+  dictionaryType = GeneratedColumn<String>(
+    'dictionary_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  ).withConverter<DictionaryTypes>($IndexTableTable.$converterdictionaryType);
   late final GeneratedColumn<int> currentSortingOrder = GeneratedColumn<int>(
     'current_sorting_order',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.int,
   );
   late final GeneratedColumn<bool> currentFrequencyDictionary =
       GeneratedColumn<bool>(
         'current_frequency_dictionary',
         aliasedName,
-        true,
+        false,
         type: DriftSqlType.bool,
         defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("current_frequency_dictionary" IN (0, 1))',
@@ -13033,13 +13018,13 @@ class DictionarySearchView
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
     'title',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.string,
   );
   late final GeneratedColumn<String> revision = GeneratedColumn<String>(
     'revision',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.string,
   );
   late final GeneratedColumn<bool> sequenced = GeneratedColumn<bool>(
@@ -18720,17 +18705,16 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         ruleIdentifiers: row.read<String>('ruleIdentifiers'),
         definitions: row.read<String>('definitions'),
         tags: row.read<String>('tags'),
-        id1: row.readNullable<int>('id'),
-        dictionaryType: NullAwareTypeConverter.wrapFromSql(
-          $IndexTableTable.$converterdictionaryType,
-          row.readNullable<String>('dictionary_type'),
+        id1: row.read<int>('id'),
+        dictionaryType: $IndexTableTable.$converterdictionaryType.fromSql(
+          row.read<String>('dictionary_type'),
         ),
-        currentSortingOrder: row.readNullable<int>('current_sorting_order'),
-        currentFrequencyDictionary: row.readNullable<bool>(
+        currentSortingOrder: row.read<int>('current_sorting_order'),
+        currentFrequencyDictionary: row.read<bool>(
           'current_frequency_dictionary',
         ),
-        title: row.readNullable<String>('title'),
-        revision: row.readNullable<String>('revision'),
+        title: row.read<String>('title'),
+        revision: row.read<String>('revision'),
         sequenced: row.readNullable<bool>('sequenced'),
         format: row.readNullable<int>('format'),
         version: row.readNullable<int>('version'),
@@ -41164,12 +41148,12 @@ class DictionarySearchDriftResult {
   final String ruleIdentifiers;
   final String definitions;
   final String tags;
-  final int? id1;
-  final DictionaryTypes? dictionaryType;
-  final int? currentSortingOrder;
-  final bool? currentFrequencyDictionary;
-  final String? title;
-  final String? revision;
+  final int id1;
+  final DictionaryTypes dictionaryType;
+  final int currentSortingOrder;
+  final bool currentFrequencyDictionary;
+  final String title;
+  final String revision;
   final bool? sequenced;
   final int? format;
   final int? version;
@@ -41201,12 +41185,12 @@ class DictionarySearchDriftResult {
     required this.ruleIdentifiers,
     required this.definitions,
     required this.tags,
-    this.id1,
-    this.dictionaryType,
-    this.currentSortingOrder,
-    this.currentFrequencyDictionary,
-    this.title,
-    this.revision,
+    required this.id1,
+    required this.dictionaryType,
+    required this.currentSortingOrder,
+    required this.currentFrequencyDictionary,
+    required this.title,
+    required this.revision,
     this.sequenced,
     this.format,
     this.version,

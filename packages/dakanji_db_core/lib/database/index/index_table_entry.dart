@@ -26,10 +26,10 @@ class IndexTableEntry with _$IndexTableEntry {
   /// --- Yomitan fields ----------
   /// Title of the dictionary.
   @override
-  final String? title;
+  final String title;
   /// Revision of the dictionary. This value is displayed, and used to check for dictionary updates.
   @override
-  final String? revision;
+  final String revision;
   /// Whether or not this dictionary contains sequencing information for related terms.
   @override
   final bool? sequenced;
@@ -76,8 +76,8 @@ class IndexTableEntry with _$IndexTableEntry {
     required this.dictionaryType,
     required this.currentSortingOrder,
     required this.currentFrequencyDictionary,
-    this.title,
-    this.revision,
+    required this.title,
+    required this.revision,
     this.sequenced,
     this.format,
     this.version,
