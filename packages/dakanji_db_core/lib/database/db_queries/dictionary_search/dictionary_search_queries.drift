@@ -344,6 +344,11 @@ dictionary_search_drift:
       )
       WHERE
         rn = 1 -- Select only the #1 best match
+    ),
+    -- CTE 8: CTE to get the frequency override dictionary ID
+    FrequencyDict AS (
+      SELECT
+        (SELECT IT.id FROM index_table AS IT WHERE IT.current_frequency_dictionary = 1 LIMIT 1) AS index_id
     )
 
   -- Final SELECT: Join best matches with the main view to get full data
@@ -354,14 +359,25 @@ dictionary_search_drift:
     R.match_column_priority,
     R.spellfix_suggestion,
     R.query_term,
-    V.*
+    V.*,
+    -- Get the popularity override if set
+    CASE
+      WHEN FrequencyDict.index_id IS NULL THEN V.popularity
+      ELSE FreqPop.popularity
+    END AS final_popularity
   FROM dictionary_search_view AS V
   JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id
+  -- popularity override join
+  CROSS JOIN FrequencyDict
+  LEFT JOIN term_bank_v3_table AS FreqPop
+    ON FreqPop.id = V.id
+    AND FreqPop.index_id = FrequencyDict.index_id
+    
   -- Final result ordering
   ORDER BY
     R.match_type_priority,
     V.current_sorting_order, -- User's dictionary priority
     R.match_column_priority,
-    V.popularity DESC,
+    final_popularity DESC,
     R.best_rank,
     LENGTH(R.matched_text);

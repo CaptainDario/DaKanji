@@ -10,7 +10,7 @@ _TermMetaBankV3IpaEntry _$TermMetaBankV3IpaEntryFromJson(
   Map<String, dynamic> json,
 ) => _TermMetaBankV3IpaEntry(
   ipa: json['ipa'] as String,
-  tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
+  tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
 );
 
 Map<String, dynamic> _$TermMetaBankV3IpaEntryToJson(

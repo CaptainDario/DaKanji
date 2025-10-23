@@ -20,6 +20,7 @@ import 'dictionary_search_test_cases.dart';
 import 'dictionary_search_test_helper_classes.dart';
 import 'dictionary_search_test_util.dart';
 import 'dictionary_search_wildcard_test_cases.dart';
+import 'dictionary_sort_order_test_cases.dart';
 
 
 // Lists are defined at the top level (this is fine)
@@ -31,7 +32,8 @@ final List<List<SearchTestCase>> testCases = [
   sortingTestCases,
   fuzzySearchTestCases,
   tagFilteringTestCases,
-  metaBankTestCases
+  metaBankTestCases,
+  dictionarySortOrderTestCases,
 ];
 final List<String> testCaseNames = [
   "Search Test Cases",
@@ -41,7 +43,8 @@ final List<String> testCaseNames = [
   "Sorting Test Cases",
   "Fuzzy Search Test Cases",
   "Tag Filtering Test Cases",
-  "Meta bank test cases"
+  "Meta bank test cases",
+  "Dictionary Sort Order",
 ];
 
 
@@ -137,12 +140,17 @@ Future setupFreshDB() async {
     final mecab = Mecab();
     await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
-    bool shouldIncludeFile(File file) => !p.basename(file.path).contains("term_bank");
-    await partialInit(db, shouldIncludeFile, "term_search_test", mecab,
-        otherFilesToCopy: [
-          File(p.join(dataFilesPath, "testing_db", 'term_bank_1.json')),
-          File(p.join(dataFilesPath, "testing_db", 'tag_bank_1.json')),
-        ]);
+    for (int i in [2, 1, 3]) {
+      bool shouldIncludeFile(File file) =>
+        (i == 1 && !p.basename(file.path).contains("term_bank")) ||
+        (i != 1 && p.basename(file.path).contains("index"));
+
+      await partialInit(db, shouldIncludeFile, "term_search_test", mecab,
+          otherFilesToCopy: [
+            File(p.join(dataFilesPath, "testing_db", 'term_bank_$i.json')),
+            if(i == 1) File(p.join(dataFilesPath, "testing_db", 'tag_bank_1.json')),
+          ]);
+    }
 
   return db;
   

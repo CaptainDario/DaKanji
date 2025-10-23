@@ -10,7 +10,7 @@ _TermMetaBankV3PitchEntry _$TermMetaBankV3PitchEntryFromJson(
   Map<String, dynamic> json,
 ) => _TermMetaBankV3PitchEntry(
   position: (json['position'] as num).toInt(),
-  tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
+  tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
   nasal: (json['nasal'] as num?)?.toInt(),
   devoice: (json['devoice'] as num?)?.toInt(),
 );

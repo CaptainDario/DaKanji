@@ -1,3 +1,6 @@
+import 'package:dakanji_db_core/database/term_meta/term_meta_bank_ipa_entry.dart';
+import 'package:dakanji_db_core/database/term_meta/term_meta_bank_pitch_entry.dart';
+
 /// Represents an expected search result, including the matched text.
 class ExpectedSearchResult {
   final String term;
@@ -6,14 +9,17 @@ class ExpectedSearchResult {
   /// The text that was matched (e.g., highlighted text)
   final String match;
 
-  final List<String> termMetaTypes;
+  final List<(
+    List<TermMetaBankV3PitchEntry>,
+    List<TermMetaBankV3IpaEntry>
+  )> metas;
 
   const ExpectedSearchResult({
     required this.term,
     required this.reading,
     required this.definitions,
     required this.match,
-    this.termMetaTypes = const [],
+    this.metas = const [],
   });
 
   /// Formats this result with indentation.

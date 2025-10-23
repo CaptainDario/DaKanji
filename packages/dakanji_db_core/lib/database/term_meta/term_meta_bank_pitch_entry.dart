@@ -15,7 +15,7 @@ abstract class TermMetaBankV3PitchEntry with _$TermMetaBankV3PitchEntry {
       /// the position of this pitch entry
       required int position,
       /// all tags of this pitch entry
-      required List<String> tags,
+      List<String>? tags,
       /// nasal data of this pitch entry
       int? nasal,
       /// devoice data of this pitch entry
