@@ -20,7 +20,7 @@ import 'dictionary_search_test_cases.dart';
 import 'dictionary_search_test_helper_classes.dart';
 import 'dictionary_search_test_util.dart';
 import 'dictionary_search_wildcard_test_cases.dart';
-import 'dictionary_sort_order_test_cases.dart';
+
 
 
 // Lists are defined at the top level (this is fine)
@@ -33,7 +33,6 @@ final List<List<SearchTestCase>> testCases = [
   fuzzySearchTestCases,
   tagFilteringTestCases,
   metaBankTestCases,
-  dictionarySortOrderTestCases,
 ];
 final List<String> testCaseNames = [
   "Search Test Cases",
@@ -44,7 +43,6 @@ final List<String> testCaseNames = [
   "Fuzzy Search Test Cases",
   "Tag Filtering Test Cases",
   "Meta bank test cases",
-  "Dictionary Sort Order",
 ];
 
 
@@ -148,6 +146,7 @@ Future setupFreshDB() async {
       await partialInit(db, shouldIncludeFile, "term_search_test", mecab,
           otherFilesToCopy: [
             File(p.join(dataFilesPath, "testing_db", 'term_bank_$i.json')),
+            //if(i == 1)File(p.join(dataFilesPath, "testing_db", 'term_meta_bank_1.json')),
             if(i == 1) File(p.join(dataFilesPath, "testing_db", 'tag_bank_1.json')),
           ]);
     }

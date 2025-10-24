@@ -39,8 +39,6 @@ class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV
 
   }
 
-
-
   // ---------------------------------------------------------------------------
   /// Get all types and their ids 
   Future<List<TermMetaBankV3TypeTableData>> getAllTypes() async {
