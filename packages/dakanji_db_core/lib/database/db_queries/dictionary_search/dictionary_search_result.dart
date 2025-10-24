@@ -197,6 +197,7 @@ class SearchMatchGroup {
       DictionaryMatch r = DictionaryMatch(
         match: driftResult.matchedText,
         spellfixSuggestion: driftResult.spellfixSuggestion,
+        popularity: driftResult.finalPopularity,
         entry: TermBankV3Entry.fromDictionarySearchDrift(driftResult),
         metaEntries: (jsonDecode(driftResult.termMetaEntries) as List)
             .map((me) => TermMetaBankV3Entry.fromJson(me))
@@ -260,6 +261,8 @@ class DictionaryMatch {
   /// If this match was found via spellfix, this field contains the suggestion
   /// that was used to find it.
   final String? spellfixSuggestion;
+  /// The popularity of this term.
+  final int? popularity;
   /// The full dictionary entry that was matched.
   final TermBankV3Entry entry;
   /// Any associated metadata entries for this term.
@@ -271,6 +274,7 @@ class DictionaryMatch {
     {
       required this.match,
       this.spellfixSuggestion,
+      this.popularity,
       required this.entry,
       this.metaEntries = const [],
       required this.indexTableData,
