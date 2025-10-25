@@ -10,6 +10,7 @@ import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
 import '../../util/db_files.dart';
+import 'dictionary_popularity_override_test_cases.dart';
 import 'dictionary_search_deconjugation_test_cases.dart';
 import 'dictionary_search_fuzzy_test_cases.dart';
 import 'dictionary_search_input_preprocessing_test_cases.dart';
@@ -33,6 +34,7 @@ final List<List<SearchTestCase>> testCases = [
   fuzzySearchTestCases,
   tagFilteringTestCases,
   metaBankTestCases,
+  popularityOverrideTestCases
 ];
 final List<String> testCaseNames = [
   "Search Test Cases",
@@ -43,17 +45,18 @@ final List<String> testCaseNames = [
   "Fuzzy Search Test Cases",
   "Tag Filtering Test Cases",
   "Meta bank test cases",
+  "Popularity Override"
 ];
 
-
+String currentTestCase = "";
 void main() {
   // Define db here so it's accessible to setUpAll and tearDownAll
   late DaKanjiDB db;
 
+
   setUpAll(() async {
     db = await setupFreshDB();
   });
-
   tearDownAll(() async {
     await db.close();
   });
@@ -63,13 +66,18 @@ void main() {
   for (int i = 0; i < testCases.length; i++) {
     final subTestCases = testCases[i];
     final testCaseName = testCaseNames[i];
-    
+
     // This `group` call is now correctly discovered.
     group(testCaseName, () {
       for (final testCase in subTestCases) {
         test(
           testCase.description,
           () async {
+            // set frequency overrides if any
+            if(testCaseName == "Popularity Override")
+              await db.indexDao.updatePopularityOverride(3);
+            else 
+              await db.indexDao.clearFrequencyOverride();
             // Perform the search
             final results = await db.dBQueriesDao.dictionarySearch(
               testCase.query,
@@ -131,25 +139,26 @@ void main() {
 
 Future setupFreshDB() async {
 
-    if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-    DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: false);
+  if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: false);
 
-    // init mecab
-    final mecab = Mecab();
-    await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+  // init mecab
+  final mecab = Mecab();
+  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
-    for (int i in [2, 1, 3]) {
-      bool shouldIncludeFile(File file) =>
-        (i == 1 && !p.basename(file.path).contains("term_bank")) ||
-        (i != 1 && p.basename(file.path).contains("index"));
+  for (int i in [2, 1, 3]) {
+    bool shouldIncludeFile(File file) =>
+      // take the full dictionary only once
+      (i == 1 && !p.basename(file.path).contains("term_bank")) || 
+      p.basename(file.path).contains("index"); // always include index files
 
-      await partialInit(db, shouldIncludeFile, "term_search_test", mecab,
-          otherFilesToCopy: [
-            File(p.join(dataFilesPath, "testing_db", 'term_bank_$i.json')),
-            //if(i == 1)File(p.join(dataFilesPath, "testing_db", 'term_meta_bank_1.json')),
-            if(i == 1) File(p.join(dataFilesPath, "testing_db", 'tag_bank_1.json')),
-          ]);
-    }
+    await partialInit(db, shouldIncludeFile, "term_search_test", mecab,
+      otherFilesToCopy: [
+        File(p.join(dataFilesPath, "testing_db", 'term_bank_$i.json')),
+        if(i == 3)File(p.join(dataFilesPath, "testing_db", 'term_meta_bank_2.json')),
+        if(i == 1) File(p.join(dataFilesPath, "testing_db", 'tag_bank_1.json')),
+      ]);
+  }
 
   return db;
   

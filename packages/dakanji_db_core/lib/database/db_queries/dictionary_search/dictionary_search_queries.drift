@@ -363,15 +363,27 @@ dictionary_search_drift:
     -- Get the popularity override if set
     CASE
       WHEN FrequencyDict.index_id IS NULL THEN V.popularity
-      ELSE FreqPop.popularity
+      ELSE
+        IFNULL(
+          (
+            SELECT
+              TMB.freq_value
+            FROM term_table AS TT
+            JOIN term_meta_bank_v3_table AS TMB ON TMB.term_id = TT.id
+            JOIN term_meta_bank_v3_type_table AS TMT ON TMT.id = TMB.type_id
+            WHERE
+              TT.term = V.term -- 1. Match the term string (e.g., "生餃子")
+              AND TMB.index_id = FrequencyDict.index_id -- 2. Match the override dictionary
+              AND TMT.type = 'freq' -- 3. Make sure it's a 'freq' entry
+            LIMIT 1
+          ),
+          -9999999 -- Fallback if not found
+        )
     END AS final_popularity
   FROM dictionary_search_view AS V
   JOIN FinalRankedIDs AS R ON V.id = R.term_bank_id
-  -- popularity override join
+  -- This CROSS JOIN is the only one needed for popularity
   CROSS JOIN FrequencyDict
-  LEFT JOIN term_bank_v3_table AS FreqPop
-    ON FreqPop.id = V.id
-    AND FreqPop.index_id = FrequencyDict.index_id
     
   -- Final result ordering
   ORDER BY

@@ -286,7 +286,7 @@ class DictionaryMatch {
 
   String toFormattedString({String indent = ''}) {
     final buffer = StringBuffer();
-    buffer.writeln('$indent${entry.term} [${entry.reading}] (Matched: "$match")');
+    buffer.writeln('$indent${entry.term} [${entry.reading}] (Matched: "$match", Popularity: $popularity)');
     for (var i = 0; i < entry.definitions.length; i++) {
       buffer.writeln('$indent  ${i + 1}. ${entry.definitions[i]}');
     }
