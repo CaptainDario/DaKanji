@@ -39,6 +39,7 @@ Future parseAudioDataSource({
   ReceivePort receivePort = ReceivePort();
   receivePort.listen((message) {
     if(message is String) controller.add(message);
+    else if(message is Exception) controller.addError(message);
     else if(message == null) {
       receivePort.close();
       controller.close();
@@ -91,55 +92,61 @@ Future _parseAudioDataSource(({
       fileOrder: ["index.json", "entries.json"]
   );
 
-  // find the format
-  late AudioDataSourceFormats format;
-  if(dataSources.first.filePath == "index.json") {
-    format = AudioDataSourceFormats.indexJson;
-  } else if(dataSources.first.filePath == "entries.json") {
-    format = AudioDataSourceFormats.entriesJson;
-  } else {
-    format = AudioDataSourceFormats.filesNames;
+  try {
+    // find the format
+    late AudioDataSourceFormats format;
+    if(dataSources.first.filePath == "index.json") {
+      format = AudioDataSourceFormats.indexJson;
+    } else if(dataSources.first.filePath == "entries.json") {
+      format = AudioDataSourceFormats.entriesJson;
+    } else {
+      format = AudioDataSourceFormats.filesNames;
+    }
+
+    // add an index for the audio entries
+    int indexId = await db.into(db.indexTable).insert(IndexTableCompanion(
+      dictionaryType: Value(DictionaryTypes.audio),
+      currentSortingOrder: Value(await db.indexDao.maxIndexId()+1),
+      
+      title: Value(params.audioSourceName),
+      revision: Value("1.0"),
+      format: Value(format.index),
+      updatable: Value(false),
+      description: Value("Audio data source, parsed from ${params.audioSourceName}.zip using format ${format.name}"),
+    ));
+
+    // parse according to the format
+    switch (format) {
+      case AudioDataSourceFormats.filesNames:
+        await parseAudioDataSourceFormat1(
+          dataSources, db, indexId, aC, mecab, params.mainIsolateSendPort);
+        break;
+      case AudioDataSourceFormats.indexJson:
+        String jsonString = utf8.decode(dataSources.first.fileContent);
+        await parseAudioDataSourceFormat2(
+          dataSources.skip(1), db, indexId, jsonString, aC, mecab, params.mainIsolateSendPort);
+        break;
+      case AudioDataSourceFormats.entriesJson:
+        String jsonString = utf8.decode(dataSources.first.fileContent);
+        await parseAudioDataSourceFormat3(
+          dataSources.skip(1), db, indexId, jsonString, aC, mecab, params.mainIsolateSendPort);
+        break;
+    }
+
+    await db.batch((batch) {
+      batch.insertAll(db.termTable, aC.termComps);
+      batch.insertAll(db.audioTable, aC.audioComps);
+      batch.insertAll(db.readingTable, aC.readingComps);
+      batch.insertAll(db.audioTableXTermTable, aC.audioXTermComps);
+    });
+
+    // finish import by optimizing db and freeing resources
+    await optimizeDbAfterImport(db);
   }
-
-  // add an index for the audio entries
-  int indexId = await db.into(db.indexTable).insert(IndexTableCompanion(
-    dictionaryType: Value(DictionaryTypes.audio),
-    currentSortingOrder: Value(await db.indexDao.maxIndexId()+1),
-    
-    title: Value(params.audioSourceName),
-    revision: Value("1.0"),
-    format: Value(format.index),
-    updatable: Value(false),
-    description: Value("Audio data source, parsed from ${params.audioSourceName}.zip using format ${format.name}"),
-  ));
-
-  // parse according to the format
-  switch (format) {
-    case AudioDataSourceFormats.filesNames:
-      await parseAudioDataSourceFormat1(
-        dataSources, db, indexId, aC, mecab, params.mainIsolateSendPort);
-      break;
-    case AudioDataSourceFormats.indexJson:
-      String jsonString = utf8.decode(dataSources.first.fileContent);
-      await parseAudioDataSourceFormat2(
-        dataSources.skip(1), db, indexId, jsonString, aC, mecab, params.mainIsolateSendPort);
-      break;
-    case AudioDataSourceFormats.entriesJson:
-      String jsonString = utf8.decode(dataSources.first.fileContent);
-      await parseAudioDataSourceFormat3(
-        dataSources.skip(1), db, indexId, jsonString, aC, mecab, params.mainIsolateSendPort);
-      break;
+  catch (e) {
+    params.mainIsolateSendPort.send(e);
   }
-
-  await db.batch((batch) {
-    batch.insertAll(db.termTable, aC.termComps);
-    batch.insertAll(db.audioTable, aC.audioComps);
-    batch.insertAll(db.readingTable, aC.readingComps);
-    batch.insertAll(db.audioTableXTermTable, aC.audioXTermComps);
-  });
-
-  // finish import by optimizing db and freeing resources
-  await optimizeDbAfterImport(db);
+  
   mecab.destroy();
   params.mainIsolateSendPort.send(null);
 
