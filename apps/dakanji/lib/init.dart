@@ -44,7 +44,7 @@ import 'package:da_kanji_mobile/entities/platform_dependent_variables.dart';
 import 'package:da_kanji_mobile/entities/releases/version.dart';
 import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';

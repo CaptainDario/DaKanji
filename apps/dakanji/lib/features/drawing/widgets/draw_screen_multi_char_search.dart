@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/drawing/draw_screen_state.dart';
 import 'package:da_kanji_mobile/entities/drawing/kanji_buffer.dart';
-import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/kanji_buffer_widget.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
 

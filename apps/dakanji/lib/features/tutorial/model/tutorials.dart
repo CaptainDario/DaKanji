@@ -4,18 +4,18 @@
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/show_cases/clipboard_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/dictionary_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/dojg_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/draw_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/kana_table_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/kanji_table_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/ocr_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/text_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/immersion_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/webbrowser_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/word_lists_screen_tutorial.dart';
-import 'package:da_kanji_mobile/entities/show_cases/youtube_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/clipboard_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/dictionary_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/dojg_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/draw_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/kana_table_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/kanji_table_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/ocr_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/text_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/immersion_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/webbrowser_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/word_lists_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/youtube_screen_tutorial.dart';
 
 class Tutorials{
 

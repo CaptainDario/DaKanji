@@ -2,7 +2,7 @@
 import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/show_cases/tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorial.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 class WordListsScreenTutorial extends Tutorial {

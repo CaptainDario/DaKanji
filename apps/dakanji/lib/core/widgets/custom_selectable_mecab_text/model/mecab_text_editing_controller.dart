@@ -2,7 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/japanese_text_processing/mecab_data_ui.dart';
+import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/model/mecab_data_ui.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,7 +13,7 @@ import 'package:mecab_for_flutter/mecab_flutter.dart';
 // Project imports:
 import 'package:language_processing/japanese/furigana_matching.dart';
 import 'package:language_processing/japanese/japanese_string_operations.dart';
-import 'package:da_kanji_mobile/features/custom_selectable_mecab_text/controller/custom_selectable_text_processing.dart';
+import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/controller/custom_selectable_text_processing.dart';
 import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 
 /// [TextEditingController] that can show rubys over Japanese text and also

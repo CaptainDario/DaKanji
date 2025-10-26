@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 
 String youtubeVideoUrl = "https://www.youtube.com/watch?v=XnkQKn67qzM&t=74s";

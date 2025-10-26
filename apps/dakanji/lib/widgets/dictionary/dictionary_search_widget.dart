@@ -25,7 +25,7 @@ import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_alt_search_flushbar.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/filter_popup_body.dart';
