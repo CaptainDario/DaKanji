@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -80,12 +79,6 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   FocusNode f = FocusNode();
 
 
-  void setReadOnly(bool newValue){
-
-    if(!widget.editable) return;
-
-    textInputController.readOnly = newValue;
-  }
 
   @override
   void initState() {
@@ -95,15 +88,12 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       showRubys: widget.showRubys,
       addSpaces: widget.addSpaces,
       showColors: widget.showColors,
-      readOnly: true,
+      readOnly: widget.editable,
       onTap: (TextSelection selection) {
-        if(textInputController.text.isNotEmpty){
-          setState(() {
-            setReadOnly(true);  
-          });
+        if(!widget.editable){
+          //widget.onTap?.call(selection);
         }
-        widget.onTap?.call(selection);
-      },
+      }, 
       onDoubleTap: widget.onDoubleTap,
       onTripleTap: widget.onTripleTap,
       onSelectionChange: (TextSelection selecion) {
@@ -111,7 +101,6 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
       },
       onLongPress: (TextSelection selection) {
         f.requestFocus();
-        setReadOnly(false);
         widget.onLongPress?.call(selection);
       },
     );
@@ -131,6 +120,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
   void didUpdateWidget (CustomSelectableText oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    textInputController.readOnly   = !widget.editable;
     textInputController.showRubys  = widget.showRubys;
     textInputController.addSpaces  = widget.addSpaces;
     textInputController.showColors = widget.showColors;

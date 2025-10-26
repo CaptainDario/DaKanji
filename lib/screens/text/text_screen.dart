@@ -70,6 +70,8 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   /// Should continously be copied from the clipboard
   bool continouslyCopy = false;
 
+  /// if the option for allowing text editing is enabled
+  bool allowTextEditing = true;
   /// if the option for showing furigana above words is enabled
   bool showRubys = false;
   /// if the option for showing spaces between words is enabled
@@ -253,6 +255,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
                                 child: Align(
                                   alignment: Alignment.bottomLeft,
                                   child: CustomSelectableText(
+                                    editable: allowTextEditing,
                                     initialText: inputText,
                                     showRubys: showRubys,
                                     addSpaces: addSpaces,
@@ -282,6 +285,19 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
                                   child: Wrap(
                                     runAlignment: WrapAlignment.end,
                                     children: [
+                                      // spaces toggle
+                                      Focus(
+                                        focusNode: widget.includeTutorial ?
+                                          GetIt.I<Tutorials>().textScreenTutorial.spacesButtonSteps : null,
+                                        child: AnalysisOptionButton(
+                                          allowTextEditing,
+                                          offIcon: Icons.edit,
+                                          onIcon: Icons.lock,
+                                          onPressed: (() => 
+                                            setState(() {allowTextEditing = !allowTextEditing;})
+                                          ),
+                                        ),
+                                      ),
                                       // spaces toggle
                                       Focus(
                                         focusNode: widget.includeTutorial ?
