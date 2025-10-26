@@ -213,10 +213,10 @@ packages:
     dependency: transitive
     description:
       name: code_assets
-      sha256: "5865a34983367f6884e8311f67d9ae459945b99bad20c0e66484a1aae7feaae0"
+      sha256: "450f46c55509b7215f2b2ead126bad1567a2edf3207ea0eb7a91d3d508cea0f8"
       url: "https://pub.dev"
     source: hosted
-    version: "0.19.7"
+    version: "0.19.9"
   code_builder:
     dependency: transitive
     description:
@@ -508,10 +508,10 @@ packages:
     dependency: transitive
     description:
       name: hooks
-      sha256: "22abd27b650a571e53576abe732e4d9053aacaaa6dee23e9ff106c63e3e5b96c"
+      sha256: "6274d1fe704962cbb881d437aae11af3e6eecc810da7438cc100c85679b4feb6"
       url: "https://pub.dev"
     source: hosted
-    version: "0.20.1"
+    version: "0.20.4"
   html:
     dependency: transitive
     description:
@@ -1025,10 +1025,10 @@ packages:
     dependency: transitive
     description:
       name: sqlite3
-      sha256: f393d92c71bdcc118d6203d07c991b9be0f84b1a6f89dd4f7eed348131329924
+      sha256: f18fd9a72d7a1ad2920db61368f2a69368f1cc9b56b8233e9d83b47b0a8435aa
       url: "https://pub.dev"
     source: hosted
-    version: "2.9.0"
+    version: "2.9.3"
   sqlite3_native_assets:
     dependency: transitive
     description:

@@ -1,4 +1,5 @@
 import 'package:code_assets/code_assets.dart';
+import 'package:dakanji_db_shared/paths.dart';
 import 'package:hooks/hooks.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
@@ -12,7 +13,8 @@ void main(List<String> args) async {
   
   await build(args, (input, output) async {
 
-    String extensionPath = "/Users/darioklepoch/dev/DaKanji/dakanji_db/packages/dakanji_db_core/hook";
+    String extensionPath = p.join(dakanjiDbProjectRoot, "packages/dakanji_sqlite_extensions/hook");
+    extensionPath = "/Users/darioklepoch/dev/DaKanji/dakanji_db/packages/dakanji_sqlite_extensions/hook";
     String dylibExtension = getDylibExtension();
     String platformName = getPlatformName();
     String cpuArchitecture = getCpuArchitecture();
@@ -22,11 +24,11 @@ void main(List<String> args) async {
       output.assets.code.add(
         // "package:dakanji_db_core/
         CodeAsset(
-          package: input.packageName,
+          package: "dakanji_sqlite_extensions",
           name: 'extensions/sqlite_${extensionName}_extension.dart',
           linkMode: DynamicLoadingBundled(),
           file: Uri.parse(p.join(extensionPath, '${extensionName}_${platformName}_$cpuArchitecture.$dylibExtension'))
-        )
+        ),
       ); 
     }
     

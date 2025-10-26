@@ -1,0 +1,20 @@
+name: dakanji_sqlite_extensions
+description: SQLite extensions for DaKanji
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: ^3.10.0-162.1.beta
+
+# Add regular dependencies here.
+dependencies:
+  path: ^1.9.0
+  sqlite3: ^2.9.3
+  universal_io: ^2.2.2
+  hooks: ^0.20.4
+  code_assets: ^0.19.9
+  dakanji_db_shared:
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.6

@@ -7,6 +7,7 @@ import 'package:dakanji_db_core/database/dictionary_types.dart';
 import 'package:dakanji_db_core/database/general_tables/media_dao.dart';
 import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
 import 'package:dakanji_db_core/delete/deletion_dao.dart';
+import 'package:dakanji_sqlite_extensions/dakanji_sqlite_extensions.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:sqlite3/native_assets.dart';
@@ -47,8 +48,6 @@ import '/database/term/term_bank_v3_tables.dart';
 import '/database/term_meta/term_meta_bank_relation_tables.dart';
 import '/database/term_meta/term_meta_bank_v3_dao.dart';
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
-import '/extensions/sqlite_spellfix_extension.dart';
-import '/extensions/sqlite_vector_extension.dart';
 // ignore: unused_import
 import '/helper/json_converter.dart'; // neccessary for drift generator
 import '/helper/zlib_text_converter_io.dart';   // neccessary for drift generator
@@ -225,6 +224,5 @@ Sqlite3 loadExtensions() {
   sqlite3.loadSqliteVectorExtension();
   sqlite3.loadSqliteSpellfixExtension();
   //sqlite3.loadSqliteCrsqliteExtension();
-  //sqlite3.loadSqliteCompressExtension();
   return sqlite3;
 }

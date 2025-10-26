@@ -1,7 +1,4 @@
-import 'package:dakanji_db_core/extensions/sqlite_compress_extension.dart';
-import 'package:dakanji_db_core/extensions/sqlite_crsqlite_extension.dart';
-import 'package:dakanji_db_core/extensions/sqlite_spellfix_extension.dart';
-import 'package:dakanji_db_core/extensions/sqlite_vector_extension.dart';
+import 'package:dakanji_sqlite_extensions/dakanji_sqlite_extensions.dart';
 import 'package:sqlite3/native_assets.dart';
 import 'package:test/test.dart';
 
