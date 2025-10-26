@@ -1,0 +1,6 @@
+[submodule "plugins/DaKanji-Dictionary"]
+	path = dart_packages/DaKanji-Dictionary
+	url = https://github.com/CaptainDario/DaKanji-Dictionary
+[submodule "dart_packages/dakanji-dictionary"]
+	path = dart_packages/dakanji-dictionary
+	url = https://github.com/CaptainDario/DaKanji-Dictionary

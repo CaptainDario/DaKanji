@@ -1,7 +1,0 @@
-[submodule "plugins/DaKanji-dependencies"]
-	path = plugins/DaKanji-dependencies
-	url = https://github.com/CaptainDario/DaKanji-dependencies
-[submodule "plugins/DaKanji-Dictionary"]
-	path = plugins/DaKanji-Dictionary
-	url = https://github.com/CaptainDario/DaKanji-Dictionary
-

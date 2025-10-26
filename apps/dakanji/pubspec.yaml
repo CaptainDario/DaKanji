@@ -9,7 +9,7 @@ resolution: workspace
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 3.5.3+142
-isar_version: &isar_version 3.2.0-dev.2
+isar_version: &isar_version 3.3.0-dev.1
 
 
 environment:
@@ -131,9 +131,7 @@ dependencies:
     git:
       url: https://github.com/CaptainDario/awesomeDialogs
   liquid_swipe:
-    path: ./plugins/DaKanji-dependencies/liquid_swipe_flutter
   database_builder:
-    path: ./plugins/DaKanji-Dictionary/database_builder
   
   # Not all platforms supported
   flutter_inappwebview: 6.1.5

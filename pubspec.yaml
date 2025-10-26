@@ -1,0 +1,11 @@
+name: _
+publish_to: none
+environment:
+  sdk: ^3.9.0
+workspace:
+
+  - apps/dakanji
+
+  - flutter_packages/liquid_swipe_flutter
+
+  - dart_packages/dakanji-dictionary/database_builder
