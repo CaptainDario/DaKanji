@@ -33,13 +33,13 @@ AwesomeDialog optimizeBackendsPopup(BuildContext context){
       // wait a bit so the dialog can be shown
       await Future.delayed(const Duration(seconds: 1));
 
-      final results = await optimizeTFLiteBackendsForModels();
+      // TODO optimize ML models ?
       
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
 
       // ignore: use_build_context_synchronously
-      await resultsDialog(context, results).show();
+      //await resultsDialog(context, results).show();
 
     },
     body: Column(

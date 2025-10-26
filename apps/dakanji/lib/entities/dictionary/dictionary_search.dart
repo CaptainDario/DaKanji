@@ -8,7 +8,7 @@ import 'package:language_processing/japanese/japanese_string_operations.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/dictionary/dictionary_search_sorting.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search_sorting.dart';
 import 'search_isolate.dart';
 
 /// Class that spawns a number of isolates to search multi-processed in the

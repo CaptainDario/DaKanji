@@ -281,31 +281,4 @@ Future<void> desktopWindowSetup() async {
   await windowManager.setTitleBarStyle(TitleBarStyle.normal);
 }
 
-/// Tests all TF Lite models for the backends that are available on the device
-/// This is done by loading the model and running a dummy input through it.
-/// The results are stored in UserData, so that this function does only need to
-/// be called only once.
-Future<List<Tuple2<String, List<MapEntry<InferenceBackend, double>>>>> optimizeTFLiteBackendsForModels() async {
-
-  List<Tuple2<String, List<MapEntry<InferenceBackend, double>>>> allTestResults = [];
-
-  debugPrint("Optimizing TFLite backends for models...");
-
-  // find the best backend for the drawing ml
-  DrawingInterpreter d = DrawingInterpreter();
-  await d.init();
-  final results = await d.getBestBackend();
-  GetIt.I<UserData>().drawingBackend = results.item1;
-  allTestResults.add(Tuple2(LocaleKeys.DrawScreen_title.tr(), results.item2));
-  d.free();
-
-  // other
-
-  debugPrint("Finished optimizing TFLite backends for models...");
-  
-  await GetIt.I<UserData>().save();
-
-  return allTestResults;
-
-}
 

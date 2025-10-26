@@ -14,10 +14,10 @@ import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/screen_saver/controller/screensaver.dart';
-import 'package:da_kanji_mobile/application/word_lists/anki.dart';
-import 'package:da_kanji_mobile/application/word_lists/csv.dart';
-import 'package:da_kanji_mobile/application/word_lists/images.dart';
-import 'package:da_kanji_mobile/application/word_lists/pdf.dart';
+import 'package:da_kanji_mobile/features/word_lists/controller/anki.dart';
+import 'package:da_kanji_mobile/features/word_lists/controller/csv.dart';
+import 'package:da_kanji_mobile/features/word_lists/controller/images.dart';
+import 'package:da_kanji_mobile/features/word_lists/controller/pdf.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';

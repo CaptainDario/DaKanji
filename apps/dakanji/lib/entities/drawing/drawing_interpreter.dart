@@ -9,7 +9,7 @@ import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/tf_lite/interpreter_utils.dart';
+import 'package:da_kanji_mobile/features/drawing/util/interpreter_utils.dart';
 import 'package:da_kanji_mobile/entities/drawing/drawing_data.dart';
 import 'package:da_kanji_mobile/entities/drawing/drawing_isolate.dart';
 import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
@@ -104,34 +104,6 @@ class DrawingInterpreter with ChangeNotifier{
     }
 
     return iB;
-  }
-
-  /// Tests all available backends on this platform and returns it.
-  Future<Tuple2<InferenceBackend, List<MapEntry<InferenceBackend, double>>>> getBestBackend() async {
-
-    InferenceBackend iB;
-
-    // test all backends on this platform
-    List<MapEntry<InferenceBackend, double>> tests = (await testBackends(
-      _usedTFLiteAssetPath,
-      data.input,
-      data.output,
-      (Interpreter interpreter, Object input, Object output) => 
-        data.runInterpreter(
-          interpreter, 
-          input as List<List<List<List<double>>>>,
-          output as List<List<double>>
-        ),
-      iterations: 10,
-    )).entries.toList()..sort(((a, b) => a.value.compareTo(b.value)));
-
-    // store the best backend to disk
-    iB = tests.first.key;
-    debugPrint("Inference timings for Drawing: $tests");
-    
-    
-    debugPrint("Using: $iB");
-    return Tuple2(iB, tests);
   }
 
   /// load the labels from file

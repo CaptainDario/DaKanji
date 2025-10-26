@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/dictionary/kanji_vg.dart';
+import 'package:da_kanji_mobile/core/kanji_vg/kanji_vg.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/animated_kanji.dart';
 
  /// Widget that shows an animated KanjiVG entry. After the animation finished,

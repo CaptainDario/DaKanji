@@ -19,7 +19,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/assets/assets.dart';
-import 'package:da_kanji_mobile/application/dictionary/send.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/send.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_widgets_to_image.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
