@@ -9,7 +9,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/kana/kana.dart';
+import 'package:da_kanji_mobile/core/japanese_text_processing/kana.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 
 class KanaGrid extends StatefulWidget {

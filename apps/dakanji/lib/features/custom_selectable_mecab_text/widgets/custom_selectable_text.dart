@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
-import 'package:da_kanji_mobile/application/text/mecab_text_field_formatter.dart';
+import 'package:da_kanji_mobile/features/custom_selectable_mecab_text/model/mecab_text_editing_controller.dart';
+import 'package:da_kanji_mobile/features/custom_selectable_mecab_text/model/mecab_text_field_formatter.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 /// Widget that implements custom text selection and furigana rendering

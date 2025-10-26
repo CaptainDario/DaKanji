@@ -11,7 +11,7 @@ import 'package:isar_community/isar.dart';
 import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/kana/kana.dart';
+import 'package:da_kanji_mobile/core/japanese_text_processing/kana.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/kana/kana.dart';
 import 'package:da_kanji_mobile/entities/kana/mnemonics.dart';

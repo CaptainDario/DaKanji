@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/text/mecab_text_editing_controller.dart';
+import 'package:da_kanji_mobile/features/custom_selectable_mecab_text/model/mecab_text_editing_controller.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
@@ -26,7 +26,7 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/text/analysis_option_button.dart';
-import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
+import 'package:da_kanji_mobile/features/custom_selectable_mecab_text/widgets/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
 

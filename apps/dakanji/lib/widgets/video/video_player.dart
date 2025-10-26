@@ -14,8 +14,8 @@ import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:video_player/video_player.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
-import 'package:da_kanji_mobile/widgets/text/custom_selectable_text.dart';
+import 'package:da_kanji_mobile/features/custom_selectable_mecab_text/controller/custom_selectable_text_processing.dart';
+import 'package:da_kanji_mobile/features/custom_selectable_mecab_text/widgets/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
 
