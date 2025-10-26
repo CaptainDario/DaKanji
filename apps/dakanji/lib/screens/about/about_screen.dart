@@ -11,7 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/reviews.dart';
+import 'package:da_kanji_mobile/features/feedback/controller/reviews.dart';
 import 'package:da_kanji_mobile/entities/platform_dependent_variables.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/globals.dart';

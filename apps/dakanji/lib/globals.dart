@@ -104,7 +104,7 @@ const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", 
 /// variable that indicates if a webivew is available on this platform
 late bool g_webViewSupported;
 
-/// variable that is true if app is running on a mobile platform
+/// variable that is true if app is running on a desktop platform
 final bool g_desktopPlatform = 
   Platform.isWindows || Platform.isMacOS || Platform.isLinux;
 

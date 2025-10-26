@@ -11,8 +11,8 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_flutter/mecab_flutter.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/japanese_text_processing/furigana_matching.dart';
-import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
+import 'package:language_processing/japanese/furigana_matching.dart';
+import 'package:language_processing/japanese/japanese_string_operations.dart';
 import 'package:da_kanji_mobile/application/text/custom_selectable_text_processing.dart';
 import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 

@@ -9,9 +9,9 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/helper/stores.dart';
-import 'package:da_kanji_mobile/application/migrate/migrate.dart';
-import 'package:da_kanji_mobile/application/routing/deep_links.dart';
+import 'package:da_kanji_mobile/features/feedback/controller/stores.dart';
+import 'package:da_kanji_mobile/core/migration/migration.dart';
+import 'package:da_kanji_mobile/core/routing/deep_links.dart';
 import 'package:da_kanji_mobile/entities/releases/version.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
@@ -19,7 +19,7 @@ import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/init.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
+import 'package:da_kanji_mobile/core/analytics/event_logging.dart';
 import 'package:da_kanji_mobile/repositories/releases/releases.dart';
 import 'package:da_kanji_mobile/widgets/home/downgrade_dialog.dart';
 import 'package:da_kanji_mobile/widgets/home/rate_dialog.dart' as rate_popup;

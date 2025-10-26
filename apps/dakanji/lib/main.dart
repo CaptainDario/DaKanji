@@ -17,7 +17,7 @@ import 'package:window_manager/window_manager.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
-import 'package:da_kanji_mobile/application/helper/feedback.dart';
+import 'package:da_kanji_mobile/features/feedback/controller/feedback.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
 import 'package:da_kanji_mobile/entities/feedback_localization.dart';
 import 'package:da_kanji_mobile/env.dart';

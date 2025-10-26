@@ -29,26 +29,26 @@ packages:
     dependency: transitive
     description:
       name: android_intent_plus
-      sha256: "2329378af63f49b985cb2e110ac784d08374f1e2b1984be77ba9325b1c8cce11"
+      sha256: "14a9f94c5825a528e8c38ee89a33dbeba947efbbf76f066c174f4f3ae4f48feb"
       url: "https://pub.dev"
     source: hosted
-    version: "5.3.1"
+    version: "6.0.0"
   ankidroid_for_flutter:
     dependency: transitive
     description:
       name: ankidroid_for_flutter
-      sha256: "0f6f7b1d9bd568a5c7f506d15e2c893f92b7db3a2582f7b22cb00cecc5276df3"
+      sha256: fd56fd269b5c4f1f6de740530bfccc8fbdeed0daeb622eb814740afe68454734
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   another_flushbar:
     dependency: transitive
     description:
       name: another_flushbar
-      sha256: "19bf9520230ec40b300aaf9dd2a8fefcb277b25ecd1c4838f530566965befc2a"
+      sha256: "2b99671c010a7d5770acf5cb24c9f508b919c3a7948b6af9646e773e7da7b757"
       url: "https://pub.dev"
     source: hosted
-    version: "1.12.30"
+    version: "1.12.32"
   ansicolor:
     dependency: transitive
     description:
@@ -709,10 +709,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_native_splash
-      sha256: "8321a6d11a8d13977fa780c89de8d257cce3d841eecfb7a4cadffcc4f12d82dc"
+      sha256: "4fb9f4113350d3a80841ce05ebf1976a36de622af7d19aca0ca9a9911c7ff002"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.6"
+    version: "2.4.7"
   flutter_phoenix:
     dependency: transitive
     description:
@@ -812,10 +812,10 @@ packages:
     dependency: transitive
     description:
       name: fvp
-      sha256: cb867b293ee684fbc5de188040f88bae8603d967d825b9407ecb96e191dcadc9
+      sha256: "33e34a78d3e4bd3ab87af7279d7bc88ff6025291574edc7e8592abea91e04cb4"
       url: "https://pub.dev"
     source: hosted
-    version: "0.33.1"
+    version: "0.35.0"
   get_it:
     dependency: transitive
     description:
@@ -844,10 +844,10 @@ packages:
     dependency: transitive
     description:
       name: graphview
-      sha256: bdba183583b23c30c71edea09ad5f0beef612572d3e39e855467a925bd08392f
+      sha256: a683865b36172cc8c470f45f6d34bb901ba5b4e80fc345f6a0021abc57fa8f4c
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.5.1"
   gtk:
     dependency: transitive
     description:
@@ -908,10 +908,10 @@ packages:
     dependency: transitive
     description:
       name: in_app_review
-      sha256: "36a06771b88fb0e79985b15e7f2ac0f1142e903fe72517f3c055d78bc3bc1819"
+      sha256: ab26ac54dbd802896af78c670b265eaeab7ecddd6af4d0751e9604b60574817f
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.10"
+    version: "2.0.11"
   in_app_review_platform_interface:
     dependency: transitive
     description:
@@ -1034,10 +1034,17 @@ packages:
     dependency: transitive
     description:
       name: keyboard_detection
-      sha256: "8eba8e340595216872fbef9d1b97e1bf560d59110fe4847cca69cfa9a568a136"
+      sha256: e25924923c9f94dbdb705eac5f3149ac4ec7503ec99a7476a13c86baa4174bdb
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.0"
+    version: "0.8.1"
+  language_processing:
+    dependency: transitive
+    description:
+      path: "/Users/darioklepoch/dev/DaKanji/dakanji_db/packages/language_processing"
+      relative: false
+    source: path
+    version: "1.0.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -1168,10 +1175,10 @@ packages:
     dependency: transitive
     description:
       name: lottie
-      sha256: c5fa04a80a620066c15cf19cc44773e19e9b38e989ff23ea32e5903ef1015950
+      sha256: "8ae0be46dbd9e19641791dc12ee480d34e1fd3f84c749adc05f3ad9342b71b95"
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.1"
+    version: "3.3.2"
   markdown:
     dependency: transitive
     description:
@@ -1208,10 +1215,10 @@ packages:
     dependency: transitive
     description:
       name: mecab_for_flutter
-      sha256: "95f3607d99f3a3b8c426873dc4b9872b375799810681b891c3e99318678b4723"
+      sha256: d35bcb2fc48ac43526970c69997550456aa4f4d9a1fd05b9f45f41caf105a3a7
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.6"
   meta:
     dependency: transitive
     description:
@@ -1252,14 +1259,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  objective_c:
+    dependency: transitive
+    description:
+      name: objective_c
+      sha256: "64e35e1e2e79da4e83f2ace3bf4e5437cef523f46c7db2eba9a1419c49573790"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.0.0"
   onboarding_overlay:
     dependency: transitive
     description:
       name: onboarding_overlay
-      sha256: "94626772a69494533f370ffe614882a7bf58d3bf964bfe39dcb480efa4c10444"
+      sha256: e0a3699846f9c2d9f61bba47b29a63a485922b18d49d161d30afb0d4b187fc64
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.2"
+    version: "3.2.3"
   package_config:
     dependency: transitive
     description:
@@ -1552,26 +1567,26 @@ packages:
     dependency: transitive
     description:
       name: sentry
-      sha256: d9f3dcf1ecdd600cf9ce134f622383adde5423ecfdaf0ca9b20fbc1c44849337
+      sha256: "0a3a1e6b3b3873070d4dbefc6968f0d31e698ed55b4eb8ee185b230f35733b59"
       url: "https://pub.dev"
     source: hosted
-    version: "9.6.0"
+    version: "9.7.0"
   sentry_flutter:
     dependency: transitive
     description:
       name: sentry_flutter
-      sha256: "37deb4ef8837d10b5c1f527ec18591f8d2d2da9c34f19b3d97ccbbe7f84077c0"
+      sha256: "493b4adb378dfc93fb1595acca91834bbf56194a9038c400c9306588ad6a2f88"
       url: "https://pub.dev"
     source: hosted
-    version: "9.6.0"
+    version: "9.7.0"
   share_plus:
     dependency: transitive
     description:
       name: share_plus
-      sha256: d7dc0630a923883c6328ca31b89aa682bacbf2f8304162d29f7c6aaff03a27a1
+      sha256: "14c8860d4de93d3a7e53af51bff479598c4e999605290756bbbe45cf65b37840"
       url: "https://pub.dev"
     source: hosted
-    version: "11.1.0"
+    version: "12.0.1"
   share_plus_platform_interface:
     dependency: transitive
     description:
@@ -2194,5 +2209,5 @@ packages:
     source: hosted
     version: "3.1.3"
 sdks:
-  dart: ">=3.9.0 <4.0.0"
+  dart: "3.10.0-162.1.beta"
   flutter: ">=3.35.1"

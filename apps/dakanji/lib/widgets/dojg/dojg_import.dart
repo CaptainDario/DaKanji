@@ -6,9 +6,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/app/restart.dart';
-import 'package:da_kanji_mobile/application/manual/manual.dart';
-import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
+import 'package:da_kanji_mobile/core/app/restart.dart';
+import 'package:da_kanji_mobile/features/manual/controller/manual.dart';
+import 'package:da_kanji_mobile/features/manual/model/manual_types.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/repositories/dojg/dojg.dart';

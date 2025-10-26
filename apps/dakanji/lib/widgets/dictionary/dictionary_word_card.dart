@@ -10,7 +10,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/conjugation/kwpos.dart';
+import 'package:language_processing/japanese/conjugation/jmdict_conjugation_data/kwpos.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_dictionary.dart';
 import 'package:da_kanji_mobile/globals.dart';

@@ -9,8 +9,8 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
-import 'package:da_kanji_mobile/application/manual/manual.dart';
-import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
+import 'package:da_kanji_mobile/features/manual/controller/manual.dart';
+import 'package:da_kanji_mobile/features/manual/model/manual_types.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';

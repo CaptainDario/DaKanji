@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,11 +11,12 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
+import 'package:language_processing/japanese/conjugation/mecab_deconjugate.dart';
+import 'package:language_processing/japanese/japanese_string_operations.dart';
 import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/japanese_text_processing/deconjugate.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dict_search_result.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/dictionary_filters/filter_options.dart';

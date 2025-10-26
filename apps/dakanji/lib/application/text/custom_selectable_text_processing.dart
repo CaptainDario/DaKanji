@@ -1,10 +1,8 @@
 // Package imports:
 import 'package:kana_kit/kana_kit.dart';
+import 'package:language_processing/japanese/mecab_data.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:tuple/tuple.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/application/japanese_text_processing/mecab_data.dart';
 
 
 

@@ -6,10 +6,10 @@ import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/repositories/dictionary/kanjidic2.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_card.dart';
+import 'package:language_processing/japanese/japanese_string_operations.dart';
 
 class DictionaryKanjiTab extends StatefulWidget {
   /// The entry for which examples should be shown
@@ -56,7 +56,7 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
     }
 
     // update search results
-    List<String> kanjis = removeAllButKanji(widget.entry!.kanjis);
+    List<String> kanjis = extractKanji(widget.entry!.kanjis).toList();
     kanjiDic2s = findMatchingKanjiDic2(kanjis);
   }
 

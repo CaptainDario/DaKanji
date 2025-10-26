@@ -1,6 +1,6 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/application/japanese_text_processing/mecab_data.dart';
 import 'package:flutter/material.dart';
+import 'package:language_processing/japanese/mecab_data.dart';
 
 /// Color for showing na-adjectives
 const Color naAdjectiveColor = Color.fromARGB(255, 255, 113, 205);

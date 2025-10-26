@@ -6,7 +6,7 @@ import 'package:database_builder/database_builder.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/japanese_text_processing/japanese_string_operations.dart';
+import 'package:language_processing/japanese/japanese_string_operations.dart';
 
 /// Sorts a list of Jmdict entries given a query text.
 /// If it is a search *without* wildcards the order is determined

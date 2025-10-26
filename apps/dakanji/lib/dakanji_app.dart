@@ -10,14 +10,14 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:window_manager/window_manager.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/routing/routing.dart';
-import 'package:da_kanji_mobile/application/stats/stats.dart';
-import 'package:da_kanji_mobile/application/tutorial/tutorial_on_step.dart';
+import 'package:da_kanji_mobile/core/routing/routing.dart';
+import 'package:da_kanji_mobile/features/stats/model/stats.dart';
+import 'package:da_kanji_mobile/core/tutorial/tutorial_on_step.dart';
 import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/entities/theme/dark_theme.dart';
-import 'package:da_kanji_mobile/entities/theme/light_theme.dart';
+import 'package:da_kanji_mobile/core/theme/dark_theme.dart';
+import 'package:da_kanji_mobile/core/theme/light_theme.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';

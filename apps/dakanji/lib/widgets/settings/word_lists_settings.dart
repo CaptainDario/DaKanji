@@ -14,8 +14,8 @@ import 'package:path/path.dart' as p;
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/app/restart.dart';
-import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
+import 'package:da_kanji_mobile/core/app/restart.dart';
+import 'package:da_kanji_mobile/features/screen_saver/controller/screensaver.dart';
 import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';

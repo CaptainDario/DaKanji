@@ -1,5 +1,3 @@
-library snappable;
-
 // Dart imports:
 import 'dart:math' as math;
 import 'dart:typed_data';
@@ -8,7 +6,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/bitmap.dart';
+import 'package:da_kanji_mobile/core/utils/bitmap.dart';
 
 class CanvasSnappable extends StatefulWidget {
   /// Widget to be snapped

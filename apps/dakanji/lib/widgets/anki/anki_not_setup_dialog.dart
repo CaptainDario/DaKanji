@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/manual/manual.dart';
-import 'package:da_kanji_mobile/entities/manual/manual_types.dart';
+import 'package:da_kanji_mobile/features/manual/controller/manual.dart';
+import 'package:da_kanji_mobile/features/manual/model/manual_types.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 // Project imports:

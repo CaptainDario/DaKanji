@@ -13,7 +13,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/screensaver/screensaver.dart';
+import 'package:da_kanji_mobile/features/screen_saver/controller/screensaver.dart';
 import 'package:da_kanji_mobile/application/word_lists/anki.dart';
 import 'package:da_kanji_mobile/application/word_lists/csv.dart';
 import 'package:da_kanji_mobile/application/word_lists/images.dart';

@@ -24,9 +24,9 @@ import 'package:yaml/yaml.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/application/anki/anki.dart';
-import 'package:da_kanji_mobile/application/assets/assets.dart';
-import 'package:da_kanji_mobile/application/routing/deep_links.dart';
-import 'package:da_kanji_mobile/application/stats/stats.dart';
+import 'package:da_kanji_mobile/core/assets/assets.dart';
+import 'package:da_kanji_mobile/core/routing/deep_links.dart';
+import 'package:da_kanji_mobile/features/stats/model/stats.dart';
 import 'package:da_kanji_mobile/entities/changelog.dart';
 import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
@@ -50,7 +50,7 @@ import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/repositories/analytics/event_logging.dart';
+import 'package:da_kanji_mobile/core/analytics/event_logging.dart';
 
 /// Initializes the app, by initializing all the providers, services, etc.
 Future<bool> init() async {

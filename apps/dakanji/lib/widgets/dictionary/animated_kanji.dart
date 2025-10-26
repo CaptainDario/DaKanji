@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:path_parsing/path_parsing.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/dictionary/path_modifier.dart';
+import 'package:da_kanji_mobile/core/utils/path_modifier.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/animated_kanji_painter.dart';
 
 /// Widget that shows an animated version of a kanjiVG entry
