@@ -6,6 +6,4 @@
 custom_sqlite/build/**
 
 # sqlite binaries
-hook/*.dylib
-hook/*.so
-hook/*.dll
+dynamic_libraries/**
