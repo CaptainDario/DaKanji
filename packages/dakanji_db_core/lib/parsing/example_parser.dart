@@ -23,8 +23,8 @@ Future<Stream<String>> parseExampleDataSource(String examplesZipPath, DaKanjiDB 
 
   /// get parameters for isolate and spawn it
   final connection = await db.attachedDatabase.serializableConnection();
-  String libmecabPath = mecab.libmecabPath;
-  String mecabDicPath = mecab.dictDir;
+  String libmecabPath = mecab.libmecabPath!;
+  String mecabDicPath = mecab.mecabDictDirPath!;
 
   // setup isolate communication
   ReceivePort receivePort = ReceivePort();

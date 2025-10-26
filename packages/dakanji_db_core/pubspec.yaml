@@ -21,7 +21,7 @@ dependencies:
   json_annotation: 4.9.0
   universal_io: 2.2.2
   collection: 1.19.1
-  mecab_for_dart: 1.1.5
+  mecab_for_dart: 1.1.6
   html: 0.15.6
   recase: 4.1.0
   disjoint_set: 1.0.0
