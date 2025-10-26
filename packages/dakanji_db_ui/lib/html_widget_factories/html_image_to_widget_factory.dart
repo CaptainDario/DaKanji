@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+
 
 BuildOp htmlToImage(String path) {
   return BuildOp.inline(

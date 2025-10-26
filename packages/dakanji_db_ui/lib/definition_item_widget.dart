@@ -1,7 +1,8 @@
 import 'package:dakanji_db_core/parsing/term/structured_content/structured_content_parser.dart';
 import 'package:dakanji_db_ui/html_widget_factories/custom_html_to_widget_factory.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+
 
 
 /// Widget that can render a definition entry of a yomitan dictionary
@@ -38,7 +39,6 @@ class DefinitionItemWidget extends StatelessWidget {
             final query = uri.queryParameters['query'];
             if (query != null) {
               // TODO 
-              // In a real app, you would trigger a search here.
               debugPrint('Internal link tapped! Search for: "$query"');
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Search for: $query')),

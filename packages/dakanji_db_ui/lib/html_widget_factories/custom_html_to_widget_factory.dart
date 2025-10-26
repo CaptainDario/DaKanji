@@ -1,6 +1,6 @@
 import 'package:dakanji_db_ui/html_widget_factories/html_help_attribute_to_widget_factory.dart';
 import 'package:dakanji_db_ui/html_widget_factories/html_image_to_widget_factory.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:path/path.dart' as p;
 
 class CustomHtmlToWidgetFactory extends WidgetFactory {
