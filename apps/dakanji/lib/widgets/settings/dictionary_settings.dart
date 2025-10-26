@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_dictionary.dart';
@@ -28,7 +28,7 @@ import 'package:da_kanji_mobile/widgets/settings/dictionary_search_priority_sett
 import 'package:da_kanji_mobile/widgets/settings/disable_english_dict_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/info_popup.dart';
 import 'package:da_kanji_mobile/widgets/settings/show_word_frequency_setting.dart';
-import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
+import 'package:da_kanji_mobile/core/widgets/loading_popup.dart';
 
 class DictionarySettings extends StatefulWidget {
   

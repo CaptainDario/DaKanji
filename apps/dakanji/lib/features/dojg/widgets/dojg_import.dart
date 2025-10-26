@@ -11,8 +11,8 @@ import 'package:da_kanji_mobile/features/manual/controller/manual.dart';
 import 'package:da_kanji_mobile/features/manual/model/manual_types.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/repositories/dojg/dojg.dart';
-import 'package:da_kanji_mobile/widgets/dojg/dojg_import_dialog.dart';
+import 'package:da_kanji_mobile/features/dojg/controller/import_dojg_from_anki.dart';
+import 'package:da_kanji_mobile/features/dojg/widgets/dojg_import_dialog.dart';
 
 class DojgImport extends StatefulWidget {
   const DojgImport({super.key});

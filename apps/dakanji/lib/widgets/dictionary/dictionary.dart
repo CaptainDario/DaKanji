@@ -12,9 +12,9 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/features/dictionary/model/falling_word_stack_controller.dart';
-import 'package:da_kanji_mobile/entities/dictionary/dict_search_result.dart';
-import 'package:da_kanji_mobile/entities/dictionary/floating_word.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/falling_word_stack_controller.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/dict_search_result.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/floating_word.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';

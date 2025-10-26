@@ -10,7 +10,7 @@ import 'package:da_kanji_mobile/entities/drawing/draw_screen_state.dart';
 import 'package:da_kanji_mobile/entities/drawing/kanji_buffer.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/kanji_buffer_widget.dart';
-import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
+import 'package:da_kanji_mobile/core/widgets/multi_focus.dart';
 
 class DrawScreenMultiCharSearch extends StatelessWidget {
   const DrawScreenMultiCharSearch(

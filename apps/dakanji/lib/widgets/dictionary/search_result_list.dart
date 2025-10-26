@@ -6,7 +6,7 @@ import 'package:database_builder/database_builder.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/features/dictionary/model/search_result_list_controller.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/search_result_list_controller.dart';
 import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
 import 'search_result_card.dart';
 

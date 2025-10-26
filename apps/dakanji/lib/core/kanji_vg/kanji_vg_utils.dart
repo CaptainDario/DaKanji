@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:collection';
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:graphview/GraphView.dart';
@@ -69,8 +70,8 @@ Tuple2<List<String>, List<String>> kanjiVGToGraph(String kanjiVGEntry, Graph gra
 
 /// Preprocesses the KanjiVG entry to make it compatible with the SVG parser
 /// 
-/// In particular, it merges all <g> elements that are not a complete kanji,
-/// i.E. all <g> elements that have a `kvg:part` attribute
+/// In particular, it merges all `<g>` elements that are not a complete kanji,
+/// i.E. all `<g>` elements that have a `kvg:part` attribute
 /// 
 /// Examples that need separating: 彭, 樹, 懺
 String preprocessKanjiVGString(String kanjiVGEntry){
@@ -92,8 +93,8 @@ String preprocessKanjiVGString(String kanjiVGEntry){
   return document.toXmlString(pretty: true);
 }
 
-/// Merges all <g> elements that are not a complete kanji,
-/// i.E. all <g> elements that have a `kvg:part` attribute
+/// Merges all `<g>` elements that are not a complete kanji,
+/// i.E. all `<g>` elements that have a `kvg:part` attribute
 Map<String, XmlElement> _preprocessKanjiVGStringMergeKvgParts(XmlElement firstElem){
   Map<String, XmlElement> mergedParts = {};
 
@@ -296,4 +297,25 @@ String changeTextWidthAndColor(String kanjiVGEntry, double width, String color) 
   }
 
   return document.toString();
+}
+
+/// Increases the font size of the stroke numbers to `size` and sets stroke
+/// number's color to `color`.
+String modifyKanjiVGSvg(String svg,
+  {
+    int size=14, Color textColor=g_Dakanji_red, Color strokeColor=Colors.white
+  }
+){
+
+  String textHexColor = textColor.toARGB32().toRadixString(16)
+    .padLeft(6, '0').substring(2, 8);
+  String strokeHexColor = strokeColor.toARGB32().toRadixString(16)
+    .padLeft(6, '0').substring(2, 8);
+
+  String s = svg.replaceAll(
+    "<text", "<text font-size=\"$size\" fill=\"#$textHexColor\" stroke=\"#$textHexColor\""
+  );
+  s = s.replaceAll("stroke:#000000", "stroke:#$strokeHexColor");
+
+  return s;
 }

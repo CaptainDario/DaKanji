@@ -27,7 +27,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/anki/widgets/anki_not_setup_dialog.dart';
-import 'package:da_kanji_mobile/widgets/widgets/loading_popup.dart';
+import 'package:da_kanji_mobile/core/widgets/loading_popup.dart';
 
 /// All actions a user can do when clicking the 
 enum  WordListNodePopupMenuButtonItems {

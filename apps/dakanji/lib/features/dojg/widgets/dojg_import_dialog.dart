@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
+import 'package:da_kanji_mobile/core/widgets/da_kanji_loading_indicator.dart';
 
 /// [AwesomeDialog] that shows a loading indicator while the dojg deck is
 /// being imported

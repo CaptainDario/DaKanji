@@ -9,7 +9,7 @@ import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search_sorting.dart';
-import 'search_isolate.dart';
+import '../model/search_isolate.dart';
 
 /// Class that spawns a number of isolates to search multi-processed in the
 /// dictionary.

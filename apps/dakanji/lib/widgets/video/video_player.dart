@@ -17,7 +17,7 @@ import 'package:video_player/video_player.dart';
 import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/controller/custom_selectable_text_processing.dart';
 import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/widgets/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
+import 'package:da_kanji_mobile/core/widgets/da_kanji_loading_indicator.dart';
 
 class VideoPlayer extends StatefulWidget {
 

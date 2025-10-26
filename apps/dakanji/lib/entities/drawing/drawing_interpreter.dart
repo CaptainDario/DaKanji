@@ -9,7 +9,6 @@ import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/features/drawing/util/interpreter_utils.dart';
 import 'package:da_kanji_mobile/entities/drawing/drawing_data.dart';
 import 'package:da_kanji_mobile/entities/drawing/drawing_isolate.dart';
 import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
@@ -70,10 +69,12 @@ class DrawingInterpreter with ChangeNotifier{
     // load data
     data = DrawingData(await loadLabels());
     InferenceBackend iB = await getBackend();
-    interpreter = await initInterpreterFromBackend(
-      iB,
-      _tfLiteAssetPath
-    );
+
+    final options = InterpreterOptions()
+      ..threads = 1;
+    interpreter = Interpreter.fromFile(
+      File(_tfLiteAssetPath), options: options);
+
 
     // create and setup isolate
     _inferenceIsolate = DrawingIsolate();

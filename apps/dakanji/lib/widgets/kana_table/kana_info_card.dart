@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/kanji_vg/kanji_vg_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

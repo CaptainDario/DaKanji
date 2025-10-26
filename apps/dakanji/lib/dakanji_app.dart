@@ -20,7 +20,7 @@ import 'package:da_kanji_mobile/core/theme/dark_theme.dart';
 import 'package:da_kanji_mobile/core/theme/light_theme.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/widgets/widgets/dakanji_splash.dart';
+import 'package:da_kanji_mobile/core/widgets/dakanji_splash.dart';
 
 /// The starting widget of the app
 class DaKanjiApp extends StatefulWidget {

@@ -16,12 +16,12 @@ import 'package:share_plus/share_plus.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/dojg/dojg_entry.dart';
-import 'package:da_kanji_mobile/entities/dojg/dojg_search_provider.dart';
+import 'package:da_kanji_mobile/features/dojg/model/dojg_entry.dart';
+import 'package:da_kanji_mobile/features/dojg/model/dojg_search_provider.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/dojg/dojg_key_sentence_table.dart';
+import 'package:da_kanji_mobile/features/dojg/widgets/dojg_key_sentence_table.dart';
 
 /// A page that shows all details about the given dojg entry
 class DojgEntryPage extends StatefulWidget {

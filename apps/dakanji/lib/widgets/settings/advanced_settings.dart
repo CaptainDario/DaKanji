@@ -12,7 +12,7 @@ import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/app/restart.dart';
-import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';

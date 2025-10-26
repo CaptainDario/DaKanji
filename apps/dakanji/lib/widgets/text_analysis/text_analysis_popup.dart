@@ -14,7 +14,7 @@ import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary.dart';
-import 'package:da_kanji_mobile/widgets/dojg/dojg.dart';
+import 'package:da_kanji_mobile/features/dojg/widgets/dojg.dart';
 
 /// A popup used for showing dictionary entries and translations. Given a
 /// text.

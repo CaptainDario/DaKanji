@@ -28,7 +28,7 @@ import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
 import 'package:da_kanji_mobile/widgets/text/analysis_option_button.dart';
 import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/widgets/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
-import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
+import 'package:da_kanji_mobile/core/widgets/multi_focus.dart';
 
 /// The "draw"-screen.
 /// 

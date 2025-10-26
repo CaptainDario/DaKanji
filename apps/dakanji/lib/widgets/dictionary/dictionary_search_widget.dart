@@ -17,9 +17,9 @@ import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/dictionary/dict_search_result.dart';
-import 'package:da_kanji_mobile/entities/dictionary/dictionary_search.dart';
-import 'package:da_kanji_mobile/entities/dictionary_filters/filter_options.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/dict_search_result.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/filter_options.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
@@ -31,7 +31,7 @@ import 'package:da_kanji_mobile/widgets/dictionary/dictionary_alt_search_flushba
 import 'package:da_kanji_mobile/widgets/dictionary/filter_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/radical_popup_body.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/search_result_list.dart';
-import 'package:da_kanji_mobile/widgets/widgets/multi_focus.dart';
+import 'package:da_kanji_mobile/core/widgets/multi_focus.dart';
 
 /// The search widget for the dictionary.
 /// 

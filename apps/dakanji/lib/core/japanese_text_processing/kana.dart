@@ -7,26 +7,6 @@ import 'package:kana_kit/kana_kit.dart';
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
 
-/// Increases the font size of the stroke numbers to `size` and sets stroke
-/// number's color to `color`.
-String modifyKanjiVGSvg(String svg,
-  {
-    int size=14, Color textColor=g_Dakanji_red, Color strokeColor=Colors.white
-  }
-){
-
-  String textHexColor = textColor.toARGB32().toRadixString(16)
-    .padLeft(6, '0').substring(2, 8);
-  String strokeHexColor = strokeColor.toARGB32().toRadixString(16)
-    .padLeft(6, '0').substring(2, 8);
-
-  String s = svg.replaceAll(
-    "<text", "<text font-size=\"$size\" fill=\"#$textHexColor\" stroke=\"#$textHexColor\""
-  );
-  s = s.replaceAll("stroke:#000000", "stroke:#$strokeHexColor");
-
-  return s;
-}
 
 /// Stlyes a given svg string to fit the given theme `darkTheme`
 /// Turns the mnemonics color to black/white and the kana color to red

@@ -20,7 +20,7 @@ import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/example_sentence_card.dart';
-import 'package:da_kanji_mobile/widgets/widgets/da_kanji_loading_indicator.dart';
+import 'package:da_kanji_mobile/core/widgets/da_kanji_loading_indicator.dart';
 
 class DictionaryExampleTab extends StatefulWidget {
 
