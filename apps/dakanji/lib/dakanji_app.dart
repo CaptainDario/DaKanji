@@ -13,7 +13,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:da_kanji_mobile/core/routing/routing.dart';
 import 'package:da_kanji_mobile/features/stats/model/stats.dart';
 import 'package:da_kanji_mobile/core/tutorial/tutorial_on_step.dart';
-import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
 import 'package:da_kanji_mobile/core/theme/dark_theme.dart';

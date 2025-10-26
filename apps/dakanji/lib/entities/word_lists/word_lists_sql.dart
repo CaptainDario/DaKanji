@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/sqlite/sql_utils.dart';
+import 'package:da_kanji_mobile/core/utils/sql_utils.dart';
 import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/default_names.dart';
 import 'package:da_kanji_mobile/entities/word_lists/default_word_lists_queries.dart';

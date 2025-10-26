@@ -9,10 +9,10 @@ import 'package:tuple/tuple.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/drawing/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/widgets/drawing/draw_screen_landscape.dart';
-import 'package:da_kanji_mobile/widgets/drawing/draw_screen_landscape_with_webview.dart';
-import 'package:da_kanji_mobile/widgets/drawing/draw_screen_portrait.dart';
-import 'package:da_kanji_mobile/widgets/drawing/draw_screen_portrait_with_webview.dart';
+import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_landscape.dart';
+import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_landscape_with_webview.dart';
+import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_portrait.dart';
+import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_portrait_with_webview.dart';
 
 // Widget which builds the DrawScreen matching the current screen orientation
 class DrawScreenResponsiveLayout extends StatelessWidget {

@@ -19,7 +19,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:da_kanji_mobile/CodegenLoader.dart';
 import 'package:da_kanji_mobile/features/feedback/controller/feedback.dart';
 import 'package:da_kanji_mobile/dakanji_app.dart';
-import 'package:da_kanji_mobile/entities/feedback_localization.dart';
+import 'package:da_kanji_mobile/features/feedback/model/feedback_localization.dart';
 import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/init.dart';

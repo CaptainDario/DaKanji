@@ -23,7 +23,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/anki/anki.dart';
+import 'package:da_kanji_mobile/features/anki/controller/anki.dart';
 import 'package:da_kanji_mobile/core/assets/assets.dart';
 import 'package:da_kanji_mobile/core/routing/deep_links.dart';
 import 'package:da_kanji_mobile/features/stats/model/stats.dart';

@@ -9,7 +9,7 @@ import 'package:get_it/get_it.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
-import 'package:da_kanji_mobile/repositories/anki/anki_data.dart';
+import 'package:da_kanji_mobile/features/anki/model/anki_data.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_example_tab.dart';
 
 /// Represents a DaKanji-style Anki note

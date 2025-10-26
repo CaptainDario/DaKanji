@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:da_kanji_mobile/entities/drawing/drawing_interpreter.dart';
 import 'package:da_kanji_mobile/entities/drawing/strokes.dart';
 import 'package:da_kanji_mobile/entities/show_cases/tutorials.dart';
-import 'package:da_kanji_mobile/widgets/drawing/drawing_canvas.dart';
+import 'package:da_kanji_mobile/features/drawing/widgets/drawing_canvas.dart';
 
 class DrawScreenDrawingCanvas extends StatelessWidget {
   const DrawScreenDrawingCanvas(

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:da_kanji_mobile/entities/drawing/drawing_lookup.dart';
 import 'package:da_kanji_mobile/entities/drawing/kanji_buffer.dart';
 import 'package:da_kanji_mobile/entities/drawing/strokes.dart';
-import 'package:da_kanji_mobile/widgets/drawing/canvas_snappable.dart';
+import 'package:da_kanji_mobile/features/drawing/widgets/canvas_snappable.dart';
 import 'draw_screen_layout.dart';
 
 /// Represents the state of the drawing screen

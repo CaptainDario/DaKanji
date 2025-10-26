@@ -9,14 +9,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
+import 'package:da_kanji_mobile/features/anki/model/anki_note.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/repositories/anki/anki_android.dart';
-import 'package:da_kanji_mobile/repositories/anki/anki_desktop.dart';
-import 'package:da_kanji_mobile/repositories/anki/anki_ios.dart';
+import 'package:da_kanji_mobile/features/anki/controller/anki_android.dart';
+import 'package:da_kanji_mobile/features/anki/controller/anki_desktop.dart';
+import 'package:da_kanji_mobile/features/anki/controller/anki_ios.dart';
 
 /// Class to handle anki communication
 class Anki {

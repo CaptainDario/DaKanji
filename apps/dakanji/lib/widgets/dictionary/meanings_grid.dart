@@ -14,7 +14,7 @@ import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
-import 'package:da_kanji_mobile/entities/navigation_arguments.dart';
+import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/entities/screens.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 

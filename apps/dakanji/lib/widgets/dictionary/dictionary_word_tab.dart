@@ -29,8 +29,8 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/anki/anki_dialog.dart';
-import 'package:da_kanji_mobile/widgets/anki/anki_not_setup_dialog.dart';
+import 'package:da_kanji_mobile/features/anki/widgets/anki_dialog.dart';
+import 'package:da_kanji_mobile/features/anki/widgets/anki_not_setup_dialog.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists_selection_dialog.dart';
 

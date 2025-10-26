@@ -6,7 +6,7 @@ import 'package:database_builder/database_builder.dart';
 import 'package:drift/drift.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/application/sqlite/sql_utils.dart';
+import 'package:da_kanji_mobile/core/utils/sql_utils.dart';
 
 part 'search_history_sql.g.dart';
 

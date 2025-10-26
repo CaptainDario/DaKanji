@@ -5,13 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/widgets/drawing/draw_screen_portrait.dart';
+import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_landscape.dart';
 
-// Package imports:
-
-
-// Drawscreen in portrait layout with a webview side by side
-class DrawScreenPortraitWithWebview extends StatelessWidget {
+class DrawScreenLandscapeWithWebview extends StatelessWidget {
   
   final Widget drawingCanvas;
   final Widget predictionButtons;
@@ -21,7 +17,7 @@ class DrawScreenPortraitWithWebview extends StatelessWidget {
   final double canvasSize;
   final InAppWebView? webView;
   
-  const DrawScreenPortraitWithWebview(
+  const DrawScreenLandscapeWithWebview(
     this.drawingCanvas,
     this.predictionButtons,
     this.multiCharSearch,
@@ -33,32 +29,28 @@ class DrawScreenPortraitWithWebview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    Widget drawScreen = DrawScreenPortrait(
-      drawingCanvas, predictionButtons, multiCharSearch, 
-      undoButton, clearButton, canvasSize
-    );
+      Widget drawScreen = DrawScreenLandscape(
+        drawingCanvas, predictionButtons, multiCharSearch, 
+        undoButton, clearButton, canvasSize
+      );
 
     // if there is enough space for a webview add it to the layout
     if(webView != null){
       drawScreen = Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const SizedBox(width: 5,),
           Expanded(
             child: Center(child: 
               drawScreen
             )
           ),
-          const SizedBox(width: 5,),
           Expanded(
             child: webView!,
-          ),
-          const SizedBox(width: 5,),
+          )
         ],
       );
     }
-
+    
     return drawScreen;
   }
 }

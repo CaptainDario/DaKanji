@@ -8,9 +8,9 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/anki/anki_note.dart';
+import 'package:da_kanji_mobile/features/anki/model/anki_note.dart';
 import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
-import 'package:da_kanji_mobile/repositories/anki/anki_data.dart';
+import 'package:da_kanji_mobile/features/anki/model/anki_data.dart';
 
 /// Class to communicate with anki desktop
 class AnkiDesktop {
