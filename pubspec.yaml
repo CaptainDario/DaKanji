@@ -14,7 +14,7 @@ isar_version: &isar_version 3.2.0-dev.2
 
 environment:
   sdk: ">=3.9.0"
-  flutter: "3.35.1"
+  flutter: ">=3.35.1"
 
 platforms:
   android:
@@ -115,7 +115,7 @@ dependencies:
   screenshot: 3.0.0
   super_clipboard: ^0.9.1
   keyboard_actions: 4.2.0
-  meta: 1.16.0
+  meta: 1.17.0
   collection: 1.19.1
   dart_style: ^3.1.1
   archive: ^4.0.7
