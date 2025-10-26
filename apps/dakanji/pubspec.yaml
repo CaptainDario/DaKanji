@@ -5,7 +5,7 @@ repository: https://github.com/captaindario/dakanji
 issue_tracker: https://github.com/captaindario/dakanji/issues
 funding:
   - https://github.com/sponsors/captaindario
-
+resolution: workspace
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 3.5.3+142
