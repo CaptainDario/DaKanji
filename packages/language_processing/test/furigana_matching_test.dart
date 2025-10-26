@@ -1,9 +1,7 @@
+import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:language_processing/japanese/furigana_matching.dart';
-import 'package:language_processing/japanese/furigana_pair.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
-import 'package:path/path.dart' as p;
-import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 
 import 'furigana_matching_test_cases.dart';
 

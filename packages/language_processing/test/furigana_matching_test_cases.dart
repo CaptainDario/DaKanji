@@ -1,4 +1,4 @@
-import 'package:language_processing/japanese/furigana_pair.dart';
+import 'package:language_processing/japanese/furigana_matching.dart';
 
 
 
