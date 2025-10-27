@@ -14,14 +14,30 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
 		term,
 		reading,
 		-- DEFINITION TAGS
-		'[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || TB3DTT.definition_tag || '"'), '') || ']' AS definition_tags,
-		-- 
-		'[' || COALESCE(GROUP_CONCAT(DISTINCT '"' || TB3RIT.rule_identifier || '"'), '') || ']' AS rule_identifiers,
+		'[' || COALESCE(
+			GROUP_CONCAT(
+				DISTINCT CASE
+					WHEN TB3DTT.definition_tag IS NULL THEN NULL
+					ELSE json_quote(TB3DTT.definition_tag)
+				END
+			),
+			''
+		) || ']' AS definition_tags,
+		-- RULE IDENTIFIERS
+		'[' || COALESCE(
+			GROUP_CONCAT(
+				DISTINCT CASE
+					WHEN TB3RIT.rule_identifier IS NULL THEN NULL
+					ELSE json_quote(TB3RIT.rule_identifier)
+				END
+			),
+			''
+		) || ']' AS rule_identifiers,
 		popularity,
 		-- DEFINITIONS,
 		'[' || COALESCE(
 			GROUP_CONCAT(
-				DISTINCT '"' || MT.definition || '"'
+				DISTINCT json_quote(MT.definition)
 				ORDER BY j.key
 			),
 			''
