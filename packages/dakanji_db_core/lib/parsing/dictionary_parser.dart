@@ -32,8 +32,8 @@ List<String> validDictionaryFiles = [
   tagBankFileNamingScheme,
   kanjiBankFileNamingScheme, kanjiMetaBankFileNamingScheme,
   termBankFileNamingScheme, termMetaBankFileNamingScheme
-
 ];
+/// The name of the audio source list file
 String audioFileNamingScheme = "audio_list";
 /// The name of the dictionary index files
 String indexFileNamingScheme = "index.json";
@@ -199,9 +199,11 @@ Future<T?> manageImportContext<T>(
 
   if (currentContext == null && matchesScheme) {
     // Condition to CREATE the context
+    print("Creating new import context for $namingScheme");
     return await create();
   } else if (currentContext != null && !matchesScheme) {
     // Condition to DISPOSE of the context
+    print("Disposing import context for $namingScheme");
     return null;
   }
   

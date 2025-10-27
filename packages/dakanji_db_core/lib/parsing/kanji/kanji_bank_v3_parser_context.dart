@@ -10,39 +10,40 @@ import '/database/kanji/kanji_bank_v3_tables.dart';
 class KanjiBankV3ParserContext extends ParserContext {
 
   /// The SQLite id of the dictionary that is currently being parsed
-  int dictId = 0;
+  int indexId = 0;
 
-  ///
+  /// List of [KanjiTableCompanion] that should be batch inserted
   List<KanjiTableCompanion> kanjiCompanions = [];
-  ///
-  int kanjiId = 0;
-  ///
+  /// The currently highest id in the [KanjiTable]
+  int maxKanjiId = 0;
+  /// A local cache for kanjis. This way lookups are O(1)
   Map<String, int> kanjisInDB = {};
 
   /// List of [KanjiBankV3TableCompanion] that should be batch inserted
   List<KanjiBankV3TableCompanion> kanjiBankCompanions = [];
   /// The currently highest id in the [KanjiBankV3Table]
-  int kanjiBankId = 0;
+  int maxKanjiBankId = 0;
 
   /// List of [ReadingTableCompanion] that should be batch inserted
   List<ReadingTableCompanion> readingCompanions  = [];
   /// The currently highest id in the [ReadingTable]
-  int readingId = 0;
+  int maxReadingId = 0;
   /// List of [KanjiBankV3_X_OnyomiReadingTableCompanion] that should be batch inserted
   List<KanjiBankV3_X_OnyomiReadingTableCompanion> kanjiOnyomiReadingRelCompanions = [];
+  /// The order of onyomis for the current kanji being parsed
+  List<int> onyomisOrder = [];
   /// List of [KanjiBankV3_X_KunyomiReadingTableCompanion] that should be batch inserted
   List<KanjiBankV3_X_KunyomiReadingTableCompanion> kanjiKunyomiReadingRelCompanions = [];
+  /// The order of kunyomis for the current kanji being parsed
+  List<int> kunyomisOrder = [];
   /// A local cache for readings. Every reading should only be looked up once
   /// in the database
   Map<String, int> readingsInDB = {};
-
-  List<int> onyomisOrder = [];
-  List<int> kunyomisOrder = [];
   
   /// List of [KanjiBankV3_X_TagBankV3TableCompanion] that should be batch inserted
   List<KanjiBankV3_X_TagBankV3TableCompanion> tagRelCompanions = [];
   /// The currently highest id in the [KanjiBankV3TagsKanjiRelationsTableData]
-  int tagId = 0;
+  int maxTagId = 0;
   /// A local cache for tags. Every tag should only be looked up once
   /// in the database
   Map<String, int> tagsInDB = {};
@@ -50,13 +51,13 @@ class KanjiBankV3ParserContext extends ParserContext {
   /// List of [DefinitionTableCompanion] that should be batch inserted
   List<DefinitionTableCompanion> definitionsCompanions  = [];
   /// The currently highest id in the [DefinitionTable]
-  int definitionId = 0;
+  int maxDefinitionId = 0;
   /// List of [KanjiBankV3_X_DefinitionTableCompanion] that should be batch inserted
   List<KanjiBankV3_X_DefinitionTableCompanion> definitionRelCompanions = [];
   /// A local cache for definitions. Every definition should only be looked up once
   /// in the database
   Map<String, int> definitionsInDB = {};
-
+  /// The order of definitions for the current kanji being parsed
   List<int> definitionsOrder = [];
 
   /// List of [KanjiBankV3StatsTableCompanion] that should be batch inserted
@@ -66,11 +67,11 @@ class KanjiBankV3ParserContext extends ParserContext {
   /// List of [KanjiBankV3StatValuesTableCompanion] that should be batch inserted
   List<KanjiBankV3StatValuesTableCompanion> statValuesCompanions  = [];
   /// The currently highest id in the [KanjiBankV3StatsTable]
-  int statsId = 0;
+  int maxStatsId = 0;
   /// The currently highest id in the [KanjiBankV3StatValuesTable]
-  int statNamesId = 0;
+  int maxStatNamesId = 0;
   /// The currently highest id in the [KanjiBankV3StatNamesTable]
-  int statValuesId = 0;
+  int maxStatValuesId = 0;
   /// List of [KanjiBankV3_X_KanjiBankV3StatsTableCompanion] that should be batch inserted
   List<KanjiBankV3_X_KanjiBankV3StatsTableCompanion> statValueRelCompanions = [];
   /// A local cache for stat names. Every stat name should only be looked up
@@ -81,18 +82,18 @@ class KanjiBankV3ParserContext extends ParserContext {
   Map<String, int> statValuesInDB = {};
 
   KanjiBankV3ParserContext._({
-    required this.dictId,
-    required this.kanjiId,
+    required this.indexId,
+    required this.maxKanjiId,
     required this.kanjisInDB,
-    required this.kanjiBankId,
-    required this.readingId,
+    required this.maxKanjiBankId,
+    required this.maxReadingId,
     required this.readingsInDB,
     required this.tagsInDB,
-    required this.definitionId,
+    required this.maxDefinitionId,
     required this.definitionsInDB,
-    required this.statsId,
-    required this.statNamesId,
-    required this.statValuesId,
+    required this.maxStatsId,
+    required this.maxStatNamesId,
+    required this.maxStatValuesId,
     required this.statNamesInDB,
     required this.statValuesInDB,
   });
@@ -100,7 +101,7 @@ class KanjiBankV3ParserContext extends ParserContext {
   static Future<KanjiBankV3ParserContext> create(DaKanjiDB db, int dictId) async {
 
     return KanjiBankV3ParserContext._(
-      dictId: dictId,
+      indexId: dictId,
 
       kanjisInDB: { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id },
       readingsInDB: { for (var e in await db.kanjiBankV3Dao.getAllReadings()) e.reading : e.id },
@@ -110,14 +111,29 @@ class KanjiBankV3ParserContext extends ParserContext {
       statValuesInDB: { for (var e in await db.kanjiBankV3Dao.getAllStatValues()) e.statValue : e.id },
 
       // get current maximum values
-      kanjiId:       await db.kanjiDao.maxKanjiId(),
-      kanjiBankId:   await db.kanjiBankV3Dao.maxKanjiId(),
-      readingId:     await db.readingDao.maxReadingId(),
-      definitionId:  await db.kanjiBankV3Dao.maxDefinitionId(),
-      statsId:       await db.kanjiBankV3Dao.maxStatsId(),
-      statValuesId:  await db.kanjiBankV3Dao.maxStatsValueId(),
-      statNamesId:   await db.kanjiBankV3Dao.maxStatsNameId()
+      maxKanjiId:       await db.kanjiDao.maxKanjiId(),
+      maxKanjiBankId:   await db.kanjiBankV3Dao.maxKanjiId(),
+      maxReadingId:     await db.readingDao.maxReadingId(),
+      maxDefinitionId:  await db.kanjiBankV3Dao.maxDefinitionId(),
+      maxStatsId:       await db.kanjiBankV3Dao.maxStatsId(),
+      maxStatValuesId:  await db.kanjiBankV3Dao.maxStatsValueId(),
+      maxStatNamesId:   await db.kanjiBankV3Dao.maxStatsNameId()
     );
+  }
+
+  void clearInsertLists() {
+    kanjiCompanions.clear();
+    kanjiBankCompanions.clear();
+    readingCompanions.clear();
+    kanjiOnyomiReadingRelCompanions.clear();
+    kanjiKunyomiReadingRelCompanions.clear();
+    tagRelCompanions.clear();
+    definitionsCompanions.clear();
+    definitionRelCompanions.clear();
+    statCompanions.clear();
+    statNamesCompanions.clear();
+    statValuesCompanions.clear();
+    statValueRelCompanions.clear();
   }
 
 }

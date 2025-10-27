@@ -6,15 +6,21 @@ import 'package:dakanji_db_core/parsing/util/import_context.dart';
 class TermMetaBankV3ParserContext extends ParserContext {
 
   int currentMaxTermMetaId;
+  
   Map allTerms;
   int currentMaxTermId;
+  
   Map allTypes;
   int currentMaxTypeId;
+  
   Map allReadings;
   int currentMaxReadingId;
+  
   Map allTags;
   int currentMaxTagId;
+  
   int currentMaxPitchId;
+  
   int currentMaxIpaId;
   
 
