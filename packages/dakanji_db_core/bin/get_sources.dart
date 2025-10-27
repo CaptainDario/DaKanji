@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 
 
-Future<String> getSourceFromGHRelease(String owner, String repo,
+Future<(String downloadInfo, String fileName)> getSourceFromGHRelease(String owner, String repo,
   String assetNameStartsWith, String assetNameEndsWith,
   Directory outputDir) async {
   GitHub github = GitHub();
@@ -33,10 +33,13 @@ Future<String> getSourceFromGHRelease(String owner, String repo,
     print('Failed to download. Status code: ${response.statusCode}');
   }
 
-  return 'Downloaded ${targetAsset.name} from $owner/$repo release ${latestTag.tagName} at ${DateTime.now()}...';
+  return (
+    'Downloaded ${targetAsset.name} from $owner/$repo release ${latestTag.tagName} at ${DateTime.now()}...',
+    targetAsset.name!
+  );
 }
 
-Future<String> getSourceFromUri(Uri url, Directory outputDir) async {
+Future<(String downloadInfo, String fileName)> getSourceFromUri(Uri url, Directory outputDir) async {
 
   // Get the filename from the URL
   final fileName = url.pathSegments.last;
@@ -55,5 +58,8 @@ Future<String> getSourceFromUri(Uri url, Directory outputDir) async {
     print('Error: Failed to download file. Status code: ${response.statusCode}');
   }
 
-  return 'Downloaded $fileName from $url at ${DateTime.now()}...';
+  return (
+    'Downloaded $fileName from $url at ${DateTime.now()}...',
+    fileName
+  );
 }

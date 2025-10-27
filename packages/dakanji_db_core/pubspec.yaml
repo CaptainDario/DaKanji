@@ -30,6 +30,7 @@ dependencies:
   language_processing:
   fullwidth_halfwidth_converter: 1.2.0
   dakanji_sqlite_extensions: 1.0.0
+  dakanji_db_shared:
 
 dev_dependencies:
   drift_dev: 2.29.0
@@ -39,6 +40,5 @@ dev_dependencies:
   lints: 6.0.0
   test: ^1.26.0
   json_serializable: ^6.11.1
-  dakanji_db_shared:
 
 #dependency_overrides:

@@ -40,11 +40,11 @@ final String dakanjiDbProjectRoot = findProjectRoot();
 final String tmpPath = p.joinAll([dakanjiDbProjectRoot, "tmp"]);
 
 /// the path where the dakanji database should be created and populated
-final dakanjiDbPath = p.joinAll([tmpPath,"dakanji.db"]);
+final dakanjiDbPath = p.joinAll([tmpPath, "dakanji.db"]);
 /// Path to the folder that contains data files
 final dataFilesPath = p.joinAll([dakanjiDbProjectRoot, "data"]);
 
-/// --- MECAB FILES ------------------------------------------------------------
+// --- MECAB FILES ------------------------------------------------------------
 /// Path to the folder that contains the files for mecab
 final mecabFilesPath = p.joinAll([dakanjiDbProjectRoot, "mecab"]);
 /// Path to the mecab dynamic library
@@ -53,7 +53,7 @@ final mecabDynamicLibPath = p.joinAll([mecabFilesPath, "mecab.dylib"]);
 final mecabDicPath = p.joinAll([mecabFilesPath, "unidic"]);
 
 
-/// --- TESTING FILES ----------------------------------------------------------
+// --- TESTING FILES ----------------------------------------------------------
 /// Path to the folder that contains yomitan dictionary samples for development
 final yomitanSampleDictionaryPath = p.joinAll([dataFilesPath, "yomitan"]);
 
@@ -78,7 +78,7 @@ final devExampleAudio2Path = p.joinAll([devExampleAudioPath, "index_format"]);
 final devExampleAudio3Path = p.joinAll([devExampleAudioPath, "entries_format"]);
 
 
-/// --- DAKANJI DB FILES -------------------------------------------------------
+// --- DAKANJI DB FILES -------------------------------------------------------
 /// Path to the folder that contains the input files for creating DaKanji DB
 final dakanjiDBInputFilesPath = p.joinAll([dataFilesPath, "dakanji_db_input_files"]);
 
