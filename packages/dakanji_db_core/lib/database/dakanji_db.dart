@@ -223,6 +223,5 @@ Sqlite3 loadExtensions() {
   final sqlite3 = sqlite3Native;
   sqlite3.loadSqliteVectorExtension();
   sqlite3.loadSqliteSpellfixExtension();
-  //sqlite3.loadSqliteCrsqliteExtension();
   return sqlite3;
 }
