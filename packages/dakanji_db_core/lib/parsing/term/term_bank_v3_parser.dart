@@ -69,7 +69,6 @@ Future parseTermBankV3(
       pC.allTerms[term] = termInsertId;
 
       String? termNormalized = preprocessInput(term, false).normalizedTerms.firstOrNull;
-      print("TESTTEST $termNormalized");
       String? termTokens = getMecabSurfacesOrNull(mecab, term);
       String? termTokensNormalized = termTokens==null
         ? null
@@ -158,7 +157,7 @@ Future parseTermBankV3(
         pC.allDefinitions[text] = definitionInsertId;
         definitionComps.add(DefinitionTableCompanion(
           id: Value(definitionInsertId),
-          definition: Value(text)
+          definition: Value(jsonEncode(text))
         ));
       }
       definitionIds.add(definitionInsertId);
