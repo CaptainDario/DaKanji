@@ -1,0 +1,79 @@
+# Makefile to build loadable extensions for SQLite for macOS (Universal)
+# Specifically, spellfix1 and compress
+
+# 1. Configuration
+# =================================
+# Compiler
+CC = gcc
+
+# Directories
+SRC_DIR := $(firstword $(wildcard sqlite-source-* sqlite-amalgamation-*))
+EXT_DIR = ext
+
+ifeq ($(SRC_DIR),)
+$(error No 'sqlite-source-*' or 'sqlite-amalgamation-*' directory found. Please download the SQLite source zip first.)
+endif
+
+# --- NEW --- Default to arm64 if not specified by recursive call
+CPU_ARCH ?= $(shell uname -m)
+
+# --- UPDATED --- Build directory is now arch-specific
+BUILD_DIR = build/mac/$(CPU_ARCH)
+
+# --- UPDATED --- Compiler flags now include the -arch flag
+CFLAGS = -g -O2 -fPIC -shared -arch $(CPU_ARCH)
+
+# LIBS are for linking external libraries
+LIBS = -lpthread -ldl -lz -framework Accelerate
+
+# --- NEW --- Configuration for final output
+ARCHS_TO_BUILD = arm64 x86_64
+COPY_DEST_DIR = ../dynamic_libraries/mac
+PLATFORM_NAME = macos
+DYLIB_EXT = dylib
+
+
+# 2. Build Targets
+# =================================
+# Default 'all' target now builds all ARCHS and copies them
+all: $(COPY_DEST_DIR)
+	@echo "==> 🚀 Building all macOS ARCHS: $(ARCHS_TO_BUILD)..."
+	@for arch in $(ARCHS_TO_BUILD); do \
+		echo "==> Building for $$arch..."; \
+		$(MAKE) -f Makefile.mac _build_and_copy_arch CPU_ARCH=$$arch; \
+	done
+	@echo "==> ✅ All ARCHS built and copied to $(COPY_DEST_DIR)"
+
+# --- NEW --- Internal target to build for the current arch
+_build_for_current_arch: loadable_spellfix_mac loadable_compress_mac
+
+# --- NEW --- Internal target to build and copy for a single arch
+_build_and_copy_arch: _build_for_current_arch
+	@echo "==> 🚚 Copying files for $(PLATFORM_NAME)_$(CPU_ARCH)..."
+	@cp $(BUILD_DIR)/spellfix.dylib $(COPY_DEST_DIR)/spellfix_$(PLATFORM_NAME)_$(CPU_ARCH).$(DYLIB_EXT)
+	@cp $(BUILD_DIR)/compress.dylib $(COPY_DEST_DIR)/compress_$(PLATFORM_NAME)_$(CPU_ARCH).$(DYLIB_EXT)
+
+# --- NEW --- Target to create the final copy destination
+$(COPY_DEST_DIR):
+	@mkdir -p $(COPY_DEST_DIR)
+
+# Rule to clean up the build directory.
+clean:
+	@echo "==> 🧹 Cleaning up build directory..."
+	@rm -rf build/mac
+	@echo "==> 🧹 Cleaning up dynamic_libraries directory..."
+	@rm -rf $(COPY_DEST_DIR)
+
+# --- UPDATED --- Rule to create the arch-specific build directory
+$(BUILD_DIR):
+	@mkdir -p $(BUILD_DIR)
+
+# Build rules now depend on the build directory existing
+loadable_spellfix_mac: $(BUILD_DIR)
+	@echo "==> 🍏 Building spellfix for $(CPU_ARCH)..."
+	$(CC) $(CFLAGS) -I./$(SRC_DIR) ./$(EXT_DIR)/spellfix.c -o ./$(BUILD_DIR)/spellfix.dylib
+
+loadable_compress_mac: $(BUILD_DIR)
+	@echo "==> 🍏 Building compress for $(CPU_ARCH)..."
+	$(CC) $(CFLAGS) $(LIBS) -I./$(SRC_DIR) ./$(EXT_DIR)/compress.c -o ./$(BUILD_DIR)/compress.dylib
+

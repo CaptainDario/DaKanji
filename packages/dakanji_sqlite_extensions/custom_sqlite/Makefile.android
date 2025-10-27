@@ -1,0 +1,127 @@
+# Makefile to build loadable extensions for SQLite for Android
+
+# 1. Directories
+# =================================
+SRC_DIR := $(firstword $(wildcard sqlite-source-* sqlite-amalgamation-*))
+EXT_DIR = ext
+
+ifeq ($(SRC_DIR),)
+$(error No 'sqlite-source-*' or 'sqlite-amalgamation-*' directory found. Please download the SQLite source zip first.)
+endif
+
+BUILD_DIR = build
+
+# 2. Android NDK Configuration
+# =================================
+
+# Set this path to your NDK location.
+NDK_PATH=$(HOME)/Library/Android/sdk/ndk/27.0.12077973asd
+# Check if the NDK_PATH directory actually exists by checking for a known file
+ifneq ($(wildcard $(NDK_PATH)/.*),)
+$("Found NDK_PATH at $(NDK_PATH).")
+else
+$(error NDK_PATH is set to "$(NDK_PATH)", but does not exist.)
+endif
+
+# Android build parameters (can be overridden from the command line)
+# Default to arm64-v8a.
+# Other common values: armeabi-v7a, x86_64, x86
+ANDROID_ABI ?= arm64-v8a
+ANDROID_API ?= 21
+
+# --- NDK Toolchain Setup ---
+# Auto-detect host OS for NDK toolchain path
+HOST_OS := $(shell uname -s)
+ifeq ($(HOST_OS),Darwin)
+	HOST_TAG = darwin-x86_64
+else ifeq ($(HOST_OS),Linux)
+	HOST_TAG = linux-x86_64
+else
+	$(error Unsupported host OS: $(HOST_OS). Only Darwin (macOS) and Linux are supported.)
+endif
+
+# NDK toolchain paths
+TOOLCHAIN = $(NDK_PATH)/toolchains/llvm/prebuilt/$(HOST_TAG)
+SYSROOT = $(TOOLCHAIN)/sysroot
+
+# Set compiler and target triple based on the ABI
+ifeq ($(ANDROID_ABI),arm64-v8a)
+	TARGET_TRIPLE = aarch64-linux-android
+else ifeq ($(ANDROID_ABI),armeabi-v7a)
+	TARGET_TRIPLE = armv7a-linux-androideabi
+else ifeq ($(ANDROID_ABI),x86_64)
+	TARGET_TRIPLE = x86_64-linux-android
+else ifeq ($(ANDROID_ABI),x86)
+	TARGET_TRIPLE = i686-linux-android
+else
+	$(error Unsupported ANDROID_ABI: $(ANDROID_ABI). Use arm64-v8a, armeabi-v7a, x86_64, or x86)
+endif
+
+# Android C Compiler
+CC_ANDROID = $(TOOLCHAIN)/bin/clang
+
+# Android-specific CFLAGS
+# --- FIX --- Added -I$(SYSROOT)/usr/include to find standard headers like string.h
+CFLAGS_ANDROID = -g -O2 -fPIC -shared --target=$(TARGET_TRIPLE)$(ANDROID_API) --sysroot=$(SYSROOT) -I$(SYSROOT)/usr/include
+
+# Android-specific LIBS (zlib is available in NDK)
+LIBS_ANDROID = -lz
+
+# Android output directory
+ANDROID_BUILD_DIR = $(BUILD_DIR)/android/$(ANDROID_ABI)
+
+# --- NEW --- Configuration for final output
+ABIS_TO_BUILD = arm64-v8a armeabi-v7a x86_64
+COPY_DEST_DIR = ../dynamic_libraries/android
+PLATFORM_NAME = android
+DYLIB_EXT = so
+
+
+# 3. Build Targets
+# =================================
+
+# Default 'all' target now builds all ABIs and copies them
+all: $(COPY_DEST_DIR)
+	@echo "==> 🚀 Building all Android ABIs: $(ABIS_TO_BUILD)..."
+	@for abi in $(ABIS_TO_BUILD); do \
+		echo "==> Building for $$abi..."; \
+		$(MAKE) -f Makefile.android _build_and_copy_abi ANDROID_ABI=$$abi; \
+	done
+	@echo "==> ✅ All ABIs built and copied to $(COPY_DEST_DIR)"
+
+# --- NEW --- Internal target to build for the current ABI
+# This was the old 'all' target
+_build_for_current_abi: loadable_spellfix_android loadable_compress_android
+
+# --- NEW --- Internal target to build and copy for a single ABI
+# This is what the recursive 'make' call runs
+_build_and_copy_abi: _build_for_current_abi
+	@echo "==> 🚚 Copying files for $(ANDROID_ABI)..."
+	@cp $(ANDROID_BUILD_DIR)/spellfix.so $(COPY_DEST_DIR)/spellfix_$(PLATFORM_NAME)_$(ANDROID_ABI).$(DYLIB_EXT)
+	@cp $(ANDROID_BUILD_DIR)/compress.so $(COPY_DEST_DIR)/compress_$(PLATFORM_NAME)_$(ANDROID_ABI).$(DYLIB_EXT)
+
+# Rule to clean up the build directory and the final output directory
+clean:
+	@echo "==> 🧹 Cleaning up build directory..."
+	@rm -rf $(BUILD_DIR)
+	@echo "==> 🧹 Cleaning up dynamic_libraries directory..."
+	@rm -rf $(COPY_DEST_DIR)
+
+# Rule to create the ABI-specific output directory
+$(ANDROID_BUILD_DIR):
+	@mkdir -p $(ANDROID_BUILD_DIR)
+
+# --- NEW --- Target to create the final copy destination
+$(COPY_DEST_DIR):
+	@mkdir -p $(COPY_DEST_DIR)
+
+# Android spellfix rule (outputs .so file)
+loadable_spellfix_android: $(ANDROID_BUILD_DIR)
+	@echo "==> 📱 Building spellfix for $(ANDROID_ABI)..."
+	$(CC_ANDROID) $(CFLAGS_ANDROID) -I./$(SRC_DIR) ./$(EXT_DIR)/spellfix.c -o $(ANDROID_BUILD_DIR)/spellfix.so
+
+# Android compress rule (outputs .so file, links against libz)
+loadable_compress_android: $(ANDROID_BUILD_DIR)
+	@echo "==> 📱 Building compress for $(ANDROID_ABI)..."
+	$(CC_ANDROID) $(CFLAGS_ANDROID) $(LIBS_ANDROID) -I./$(SRC_DIR) ./$(EXT_DIR)/compress.c -o $(ANDROID_BUILD_DIR)/compress.so
+
