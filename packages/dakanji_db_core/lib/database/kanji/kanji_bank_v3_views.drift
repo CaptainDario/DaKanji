@@ -16,14 +16,14 @@ CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
         KT.kanji,
         '[' || COALESCE(
 			GROUP_CONCAT(
-				DISTINCT '"' || onyomi.reading || '"'
+				DISTINCT json_quote(onyomi.reading)
 				ORDER BY OOJ.key
 			),
 			''
 		) || ']' AS onyomis,
         '[' || COALESCE(
 			GROUP_CONCAT(
-				DISTINCT '"' || kunyomi.reading || '"'
+				DISTINCT json_quote(kunyomi.reading)
 				ORDER BY KOJ.key
 			),
 			''
@@ -39,7 +39,7 @@ CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
         )), '') || ']' AS tags,
         '[' || COALESCE(
 			GROUP_CONCAT(
-				DISTINCT '"' || DT.definition || '"'
+				DISTINCT json_quote(DT.definition)
 				ORDER BY DOJ.key
 			),
 			''
