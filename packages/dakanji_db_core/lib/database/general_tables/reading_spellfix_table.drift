@@ -10,14 +10,16 @@ CREATE VIRTUAL TABLE IF NOT EXISTS reading_spellfix USING spellfix1(edit_cost_ta
 CREATE TRIGGER reading_spellfix_insert
 AFTER INSERT ON reading_table
 BEGIN
-    INSERT INTO reading_spellfix(word) VALUES (new.reading);
+    -- Store the reading.id in the spellfix.rowid column
+    INSERT INTO reading_spellfix(rowid, word) VALUES (new.id, new.reading);
 END;
 
 -- Trigger to remove a word from the spellfix table when a reading is deleted.
 CREATE TRIGGER reading_spellfix_delete
 AFTER DELETE ON reading_table
 BEGIN
-    DELETE FROM reading_spellfix WHERE word = old.reading;
+    -- Delete using the ID, which is a fast lookup
+    DELETE FROM reading_spellfix WHERE rowid = old.id;
 END;
 
 -- Trigger to handle updates to the reading column.
@@ -25,8 +27,7 @@ CREATE TRIGGER reading_spellfix_update
 AFTER UPDATE OF reading ON reading_table
 WHEN old.reading IS NOT new.reading
 BEGIN
-    -- Add the new reading to the spellfix table.
-    INSERT INTO reading_spellfix(word) VALUES (new.reading);
-    -- Remove the old reading from the spellfix table.
-    DELETE FROM reading_spellfix WHERE word = old.reading;
+    -- Update the word at the existing rowid
+    -- This is much faster than deleting and re-inserting
+    UPDATE reading_spellfix SET word = new.reading WHERE rowid = old.id;
 END;
