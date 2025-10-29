@@ -11,3 +11,12 @@ term_bank_v3_search_drift:
     term = :query
   LIMIT :limit OFFSET :offset
   ;
+
+get_term_bank_v3_entries_for_ids:
+  SELECT
+    *
+  FROM
+    term_bank_v3_entry_view
+  WHERE
+    id IN :ids
+  ;
