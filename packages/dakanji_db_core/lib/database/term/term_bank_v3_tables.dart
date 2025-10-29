@@ -10,6 +10,10 @@ import '/database/general_tables/term_tables.dart';
 
 
 /// Table that stores term bank entries to which other tables link
+@TableIndex(name: 'TermBankV3Table_indexIdIndex', columns: {#indexId})
+@TableIndex(name: 'TermBankV3Table_termId', columns: {#termId})
+@TableIndex(name: 'TermBankV3Table_readingIdIndex', columns: {#readingId})
+@TableIndex(name: 'TermBankV3Table_definitionJsonIdIndex', columns: {#definitionJsonId})
 class TermBankV3Table extends Table {
 
   @override

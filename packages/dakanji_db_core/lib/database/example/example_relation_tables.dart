@@ -5,6 +5,8 @@ import '/database/example/example_tables.dart';
 
 
 /// Contains the relationships between examples and their translations
+@TableIndex(name: 'ExampleTable_X_ExampleTranslationTable_exampleIdIndex', columns: {#exampleId})
+@TableIndex(name: 'ExampleTable_X_ExampleTranslationTable_translationIdIndex', columns: {#translationId})
 // ignore: camel_case_types
 class ExampleTable_X_ExampleTranslationTable extends Table {
 

@@ -6,6 +6,10 @@ import '/database/general_tables/term_tables.dart';
 import '/database/index/index_tables.dart';
 
 /// Table that store the main term of a meta term bank and links to its data
+@TableIndex(name: 'TermMetaBankV3Table_indexIdIndex', columns: {#indexId})
+@TableIndex(name: 'TermMetaBankV3Table_termIdIndex', columns: {#termId})
+@TableIndex(name: 'TermMetaBankV3Table_readingIdIndex', columns: {#readingId})
+@TableIndex(name: 'TermMetaBankV3Table_typeIdIndex', columns: {#typeId})
 class TermMetaBankV3Table extends Table {
   
   /// id of this entry

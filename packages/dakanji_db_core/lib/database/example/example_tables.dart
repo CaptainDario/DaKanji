@@ -7,6 +7,7 @@ import '/database/general_tables/language_code_table.dart';
 
 
 /// Contains the example sentences
+@TableIndex(name: 'ExampleTable_indexIdIndex', columns: {#indexId})
 class ExampleTable extends Table {
   
   /// id of this entry
@@ -26,6 +27,7 @@ class ExampleTable extends Table {
 }
 
 /// Contains the example sentences' translations
+@TableIndex(name: 'ExampleTranslationTable_languageCodeIdIndex', columns: {#languageCodeId})
 class ExampleTranslationTable extends Table {
   
   /// id of this entry

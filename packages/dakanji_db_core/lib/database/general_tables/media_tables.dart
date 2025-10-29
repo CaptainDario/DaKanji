@@ -5,7 +5,8 @@ import 'package:drift/drift.dart';
 
 
 /// Contains media files included in dictionaries, such as audio files
-@TableIndex(name: 'path', columns: {#path})
+@TableIndex(name: 'MediaTable_indexIdIndex', columns: {#indexId})
+@TableIndex(name: 'MediaTable_path', columns: {#path})
 class MediaTable extends Table {
   
   /// id of this entry

@@ -2,7 +2,8 @@
 import 'package:drift/drift.dart';
 
 /// Contains the kanji entries and links to the radicals table
-@TableIndex(name: 'radical', columns: {#radical})
+@TableIndex(name: 'RadicalsTable_radical', columns: {#radical})
+@TableIndex(name: 'RadicalsTable_strokeCount', columns: {#strokeCount})
 class RadicalsTable extends Table {
   
   /// id of this entry

@@ -3,7 +3,8 @@ import 'package:dakanji_db_core/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
 
 /// Contains the tag defintions
-@TableIndex(name: 'name', columns: {#name})
+@TableIndex(name: 'TagBankV3Table_indexIdIndex', columns: {#indexId})
+@TableIndex(name: 'TagBankV3Table_name', columns: {#name})
 class TagBankV3Table extends Table {
   
   /// id of this entry

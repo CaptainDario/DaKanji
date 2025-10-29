@@ -4,7 +4,7 @@ import 'package:drift/drift.dart';
 
 
 /// Contains the laguage codes
-@TableIndex(name: 'languageCode', columns: {#languageCode})
+@TableIndex(name: 'LanguageCodeTable_languageCode', columns: {#languageCode})
 class LanguageCodeTable extends Table {
   
   /// id of this entry

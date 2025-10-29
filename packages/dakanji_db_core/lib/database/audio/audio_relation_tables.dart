@@ -6,6 +6,8 @@ import 'package:drift/drift.dart';
 
 
 /// Contains media files included in dictionaries, such as audio files
+@TableIndex(name: 'AudioTable_X_TermTable_audioIdIndex', columns: {#audioId})
+@TableIndex(name: 'AudioTable_X_TermTable_termIdIndex', columns: {#termId})
 // ignore: camel_case_types
 class AudioTable_X_TermTable extends Table {
   

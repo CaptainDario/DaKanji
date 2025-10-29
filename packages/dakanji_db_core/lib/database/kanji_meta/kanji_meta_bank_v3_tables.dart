@@ -5,6 +5,9 @@ import '/database/general_tables/kanji_tables.dart';
 import '/database/index/index_tables.dart';
 
 /// Table that store the main term of a meta term bank and links to its data
+@TableIndex(name: 'KanjiMetaBankV3Table_indexIdIndex', columns: {#indexId})
+@TableIndex(name: 'KanjiMetaBankV3Table_kanjiIdIndex', columns: {#kanjiId})
+@TableIndex(name: 'KanjiMetaBankV3Table_typeIdIndex', columns: {#typeId})
 class KanjiMetaBankV3Table extends Table {
   
   /// id of this entry

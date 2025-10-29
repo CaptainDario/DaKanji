@@ -4,6 +4,8 @@ import 'package:drift/drift.dart';
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
 
 /// Relationship table between TermMetaBank and PitchTable
+@TableIndex(name: 'TermMetaBankV3_X_PitchTable_pitchIdIndex', columns: {#pitchId})
+@TableIndex(name: 'TermMetaBankV3_X_PitchTable_termMetaIdIndex', columns: {#termMetaId})
 // ignore: camel_case_types
 class TermMetaBankV3_X_PitchTable extends Table {
 
@@ -18,6 +20,8 @@ class TermMetaBankV3_X_PitchTable extends Table {
 }
 
 /// Relationship table between TermMetaBank and IpaTable
+@TableIndex(name: 'TermMetaBankV3_X_IpaTable_ipaIdIndex', columns: {#ipaId})
+@TableIndex(name: 'TermMetaBankV3_X_IpaTable_termMetaIdIndex', columns: {#termMetaId})
 // ignore: camel_case_types
 class TermMetaBankV3_X_IpaTable extends Table {
 
@@ -32,6 +36,8 @@ class TermMetaBankV3_X_IpaTable extends Table {
 }
 
 /// Relationship table between Ipa transcription and its tags
+@TableIndex(name: 'TermMetaBankV3_X_IpaTagTable_ipaIdIndex', columns: {#ipaId})
+@TableIndex(name: 'TermMetaBankV3_X_IpaTagTable_tagIdIndex', columns: {#tagId})
 // ignore: camel_case_types
 class TermMetaBankV3_X_IpaTagTable extends Table {
 
@@ -46,6 +52,8 @@ class TermMetaBankV3_X_IpaTagTable extends Table {
 }
 
 /// Relationship table between pitch and its tags
+@TableIndex(name: 'TermMetaBankV3_X_PitchTagTable_pitchIdIndex', columns: {#pitchId})
+@TableIndex(name: 'TermMetaBankV3_X_PitchTagTable_tagIdIndex', columns: {#tagId})
 // ignore: camel_case_types
 class TermMetaBankV3_X_PitchTagTable extends Table {
 

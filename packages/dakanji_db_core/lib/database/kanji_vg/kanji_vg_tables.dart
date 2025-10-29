@@ -7,6 +7,7 @@ import '/database/general_tables/kanji_tables.dart';
 
 
 /// Contains the kanji entries and links to the radicals table
+@TableIndex(name: 'KanjiVGTable_kanjiIdIndex', columns: {#kanjiId})
 class KanjiVGTable extends Table {
   
   /// id of this entry
