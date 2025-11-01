@@ -40,23 +40,28 @@
 
 ## Search Result Sorting
 
+--- APPLICATION LOGIC --------
+
 1. Sort by matched query
    1. Exact search term matches
    2. Normalized search term matches
    3. Any of the preprocessed terms matches
-2. If multiple dictionaries are used: Sort by dictionary order
-3. Sort by match type
+   4. Fuzzy Match: りょこ → りょこう
+
+--- INSIDE SQL --------
+
+1. If multiple dictionaries are used: Sort by dictionary order
+2. Sort by match type
    1. Exact match: 食べる→食べる
    2. Prefix Match: 食べる→食べるラー油
    3. Infix/N-gram Match: 日 → 一日中
-   4. Fuzzy Math: りょこ → りょこう
-4. Sort by match column
+3. Sort by match column
    1. Kanji
    2. Reading
    3. Definition
-5. Sort by result frequency
-6. Sort by fts5 relevance
-7. Sort by length difference of search term and match
+4. Sort by result frequency
+5. Sort by fts5 relevance
+6. Sort by length difference of search term and match
 
 ## Filtering
 
