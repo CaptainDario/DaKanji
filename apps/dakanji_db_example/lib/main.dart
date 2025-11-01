@@ -97,8 +97,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         lastSearchResult = null;
                       }
                       else {
+                        print("Searching for: $value");
+                        Stopwatch stopwatch = Stopwatch()..start();
                         lastSearchResult = await daKanjiDB.dBQueriesDao.dictionarySearch(
                           value, [], [], true);
+                        print("Search complete. Found ${lastSearchResult ?? 0} entries in ${stopwatch.elapsed}.");
                       }
                       setState(() {});
                     },
