@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
-import 'package:language_processing/iso/iso_table.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -53,7 +52,6 @@ void main() {
   // Define db here so it's accessible to setUpAll and tearDownAll
   late DaKanjiDB db;
 
-
   setUpAll(() async {
     db = await setupFreshDB();
   });
@@ -81,15 +79,17 @@ void main() {
             // Perform the search
             final results = await db.dBQueriesDao.dictionarySearch(
               testCase.query,
-              [Iso639_1.en],
               testCase.tags, 
               true, 
             );
+
             print("Results:\n $results");
             print("Expected:\n $testCase");
-            
+
+            // --- direct matches ---            
             expectMatchGroup(results.queryMatches, testCase.queryMatches, testCase.query, 'termMatches');
 
+            // --- normalized matches ---
             final actualNormalized = results.normalizedQueryMatchGroups;
             final expectedNormalized = testCase.normalizedQueryMatchGroups;
 
@@ -110,6 +110,7 @@ void main() {
               );
             }
 
+            // --- variant matches ---
             final actualVariants = results.queryVariantMatches;
             final expectedVariants = testCase.queryVariantMatches;
 
@@ -130,6 +131,19 @@ void main() {
                 'variantMatches[$i]'
               );
             }
+
+            // --- fuzzy matches ---
+            final actualFuzzy = results.fuzzyMatches;
+            final expectedFuzzy = testCase.fuzzyMatches;
+
+            if (actualFuzzy.length != expectedFuzzy.length) {
+              fail(
+                'Unexpected number of fuzzy matches for query \'${testCase.query}\'.\n'
+                'Expected length: ${expectedFuzzy.length}\n'
+                '  Actual length: ${actualFuzzy.length}\n'
+                '   ACTUAL CONTENTS:\n${actualFuzzy.map((m) => m.toFormattedString(indent: "    ")).join("\n")}'
+              );
+            }
           },
         );
       }
@@ -139,8 +153,8 @@ void main() {
 
 Future setupFreshDB() async {
 
-  if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: false);
+  //if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
 
   // init mecab
   final mecab = Mecab();

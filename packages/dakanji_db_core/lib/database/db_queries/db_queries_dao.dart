@@ -5,7 +5,6 @@ import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
 import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:drift/drift.dart";
-import "package:language_processing/iso/iso_table.dart";
 
 import "../dakanji_db.dart";
 
@@ -61,7 +60,6 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
 
   Future<DictionarySearchResult> dictionarySearch(
     String term,
-    List<Iso639_1> languages,
     List<String> tags,
     bool convertRomajiToHiragana,
     {
@@ -76,75 +74,63 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     bool isWildcardSearch = term.contains(RegExp(r'\*|\?'));
     int useGlobInt = isWildcardSearch ? 1 : 0;
 
+    print("Searching $term (normalized: $normalizedTerms, variants: $termVariants)");
+
     // run the queries in parallel
     final results = (await Future.wait([
 
-      db.dictionary_search_drift(
-        jsonEncode([term])
-        //buildQueryFilters([term], [[]]),
-        //spellfixDistance,
-        //useGlobInt,
-        //0,
-        //"$term *",
-        //jsonEncode(tags)
-      ).get(),
-
-      /*if(normalizedTerms.isNotEmpty)
-        db.dictionary_search_drift(
-          buildQueryFilters(
-            normalizedTerms.map((e) => e).toList(),
-            normalizedTerms.map((e) => <String>[]).toList(),
-          ),
-          spellfixDistance,
-          useGlobInt,
-          1,
-          normalizedTerms.map((e) => '$e *').join(" OR "),
-          jsonEncode(tags)
-        ).get()
-      else Future.sync(() => <DictionarySearchDriftResult>[]),*/
-
-      /*if(termVariants.isNotEmpty)
-        db.dictionary_search_drift(
-          buildQueryFilters(
-            termVariants.map((e) => e.deconjugatedTerm).toList(),
-            termVariants.map((e) => e.requiredPartsOfSpeech).toList(),
-          ),
-          0,
-          useGlobInt,
-          1,
-          termVariants.map((e) => "${e.deconjugatedTerm} *").join(" OR "),
-          jsonEncode(tags)
-        ).get()
-      else Future.sync(() => <DictionarySearchDriftResult>[])*/
+      _querySQLite([term], tags, useGlobInt, 0),
+      _querySQLite(normalizedTerms, tags, useGlobInt, 1),
+      _querySQLite(
+        termVariants.map((e) => e.deconjugatedTerm).toList(), tags, useGlobInt, 1)
     ]));
 
-    // merge all normalized search results from the same normalized term
-    /*final groupedNormalizedMatches = groupBy(results[1], (result) => result.queryTerm);
-    final filteredQueryNormalizedMatches = <SearchMatchGroup>[];
-    groupedNormalizedMatches.forEach((term, matches) {
-      filteredQueryNormalizedMatches.add(
-        SearchMatchGroup.fromDictionaryMatchList(
-          matches, term, isWildcardSearch,),
-      );
-    });
+    print("RESULTS: ${results}");
 
-    // merge all variant search results from the same variant term
-    final groupedVariantMatches = groupBy(results[2], (result) => result.queryTerm);
-    final filteredQueryVariantMatches = <SearchMatchGroup>[];
-    groupedVariantMatches.forEach((term, matches) {
-      filteredQueryVariantMatches.add(
-        SearchMatchGroup.fromDictionaryMatchList(
-          matches, term, isWildcardSearch,),
-      );
-    });*/
 
     return DictionarySearchResult(
-      queryMatches: SearchMatchGroup.fromDictionaryMatchList(results[0], term, isWildcardSearch),
-      normalizedQueryMatchGroups: [], //filteredQueryNormalizedMatches,
-      queryVariantMatches: [], //filteredQueryVariantMatches
+      queryMatches: SearchMatchGroup.fromDictionarySearch(
+        results[0], isWildcardSearch).firstOrNull ?? SearchMatchGroup.empty(),
+      normalizedQueryMatchGroups: SearchMatchGroup.fromDictionarySearch(
+        results[1], isWildcardSearch),
+      queryVariantMatches: SearchMatchGroup.fromDictionarySearch(
+        results[2], isWildcardSearch),
+      fuzzyMatches: []
     );
 
     
   }
+
+  /// Helper method to run the the SQLite queries for term, normalized terms, 
+  /// variants and sllfix searches in parallel (async)
+  Future<(
+    List<DictionarySearchDriftFindTermBankEntriesResult> results,
+    List<DictionarySearchDriftFindTermBankDetailsResult> resultDetails
+  )> _querySQLite(
+    List<String> terms,
+    List<String> tags,
+    int useGlob,
+    int searchNormalized
+  ) async {
+
+    // 1. Run Query 1 to get matching term bank entries
+    final searchResults = await db.dictionary_search_drift_find_term_bank_entries(
+      jsonEncode(terms),
+      jsonEncode(tags),
+      useGlob,
+      searchNormalized
+    ).get();
+
+    // 2. Run Query 2 to get details for all results from Query 1
+    List<DictionarySearchDriftFindTermBankDetailsResult> details;
+    if (searchResults.isEmpty) details = <DictionarySearchDriftFindTermBankDetailsResult>[];
+    else {
+      final idJson = jsonEncode(searchResults.map((e) => e.termBankId).toList());
+      details = await db.dictionary_search_drift_find_term_bank_details(idJson).get();
+    }
+    return (searchResults, details);
+
+  }
+
 
 }

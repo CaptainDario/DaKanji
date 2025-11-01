@@ -19878,19 +19878,58 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     );
   }
 
-  Selectable<DictionarySearchDriftResult> dictionary_search_drift(
-    String searchTerms,
+  Selectable<DictionarySearchDriftFindTermBankEntriesResult>
+  dictionary_search_drift_find_term_bank_entries(
+    String searchTermsJson,
+    String tagFiltersJson,
+    int useGlob,
+    int normalizedSearch,
   ) {
     return customSelect(
-      'WITH SearchTerms (term) AS (SELECT value FROM json_each(?1)), SearchResults AS (SELECT SearchTerms.term AS search_term, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH SearchTerms.term || \' *\' ORDER BY data_type_id ASC), SearchResultsDeduplicated AS (SELECT SearchResults.* FROM SearchResults GROUP BY source_id), SearchResultMatchesClassified AS (SELECT SearchResultsDeduplicated.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResultsDeduplicated), TermBankMatches AS (SELECT SearchResultMatchesClassified.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 1 AS match_column FROM SearchResultMatchesClassified JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) UNION ALL SELECT SearchResultMatchesClassified.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 2 AS match_column FROM SearchResultMatchesClassified JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) UNION ALL SELECT SearchResultMatchesClassified.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 3 AS match_column FROM SearchResultMatchesClassified JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id WHERE data_type_id = 7), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\'), definitions_agg AS (SELECT term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(json_quote(definition) ORDER BY sort_key), \'\') || \']\' AS definitions FROM term_bank_v3_definitions_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TermBankMatches) GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_quote(definition_tag)), \'\') || \']\' AS definition_tags FROM term_bank_v3_def_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TermBankMatches) GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_quote(rule_identifier)), \'\') || \']\' AS rule_identifiers FROM term_bank_v3_rules_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TermBankMatches) GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT tag_json), \'\') || \']\' AS tags FROM term_bank_v3_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TermBankMatches) GROUP BY term_bank_id), FilteredMetaBank AS (SELECT Base.*, TBM.term_bank_id FROM term_meta_bank_v3_base_view AS Base JOIN (SELECT DISTINCT term_id, reading_id, term_bank_id FROM TermBankMatches) AS TBM ON Base.term_id = TBM.term_id AND Base.reading_id = TBM.reading_id), term_meta_agg AS (SELECT FMB.term_bank_id, COALESCE(JSON_GROUP_ARRAY(JSON_OBJECT(\'indexId\', FMB.indexId, \'term\', FMB.term, \'reading\', FMB.reading, \'type\', FMB.type, \'frequency\', FMB.frequency, \'frequencyDisplayValue\', FMB.frequencyDisplayValue, \'pitchs\', CASE WHEN FMB.type = \'pitch\' THEN JSON(COALESCE(ap.pitches, \'[]\')) ELSE JSON(\'[]\') END, \'ipas\', CASE WHEN FMB.type = \'ipa\' THEN JSON(COALESCE(ai.ipas, \'[]\')) ELSE JSON(\'[]\') END))FILTER (WHERE FMB.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM FilteredMetaBank AS FMB LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id WHERE((FMB.type = \'pitch\' AND ap.pitches IS NOT NULL)OR(FMB.type = \'ipa\' AND ai.ipas IS NOT NULL)OR(FMB.type = \'freq\'))GROUP BY FMB.term_bank_id) SELECT TBM.rank AS fts5_rank, TBM.text_data, TBM.match_type, TBM.match_column, TBM.data_type_id, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, index_table.*, COALESCE(ActiveCheck.is_active, 0) AS hasPopularityOverride, OP.freq_value AS overriddenPopularityValue, TB3T.popularity AS originalPopularity, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, TBM.term_bank_id AS term_bank_v3_id, TB3T.index_id AS indexId, TT.term, RT.reading, TB3T.popularity, TB3T.definition_order, TB3T.sequence_number, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, COALESCE(DA.definitions, \'[]\') AS definitions, COALESCE(TA.tags, \'[]\') AS tags, COALESCE(TMA.termMetaEntries, \'[]\') AS termMetaEntries FROM TermBankMatches AS TBM JOIN index_table ON TB3T.index_id = index_table.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN definitions_agg AS DA ON TBM.term_bank_id = DA.term_bank_id LEFT JOIN def_tags_agg AS DTA ON TBM.term_bank_id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TBM.term_bank_id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TBM.term_bank_id = TA.term_bank_id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id LEFT JOIN term_meta_agg AS TMA ON TBM.term_bank_id = TMA.term_bank_id ORDER BY index_table.current_sorting_order, TBM.match_type, TBM.match_column, finalPopularity DESC, TBM.rank, LENGTH(TBM.text_data)',
-      variables: [Variable<String>(searchTerms)],
+      'WITH SearchTerms (term) AS (SELECT value FROM json_each(?1)WHERE value IS NOT NULL), TagFilters (tag_name) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), SearchResults AS (SELECT COALESCE(SearchTerms.term, \'\') AS search_term, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH SearchTerms.term || \' *\' WHERE ?3 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))UNION ALL SELECT COALESCE(SearchTerms.term, \'\') AS search_term, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?3 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResults.*, ROW_NUMBER()OVER (PARTITION BY source_id ORDER BY rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResults) AS Ranked WHERE rn = 1), SearchResultMatchesClassified AS (SELECT SearchResultsDeduplicated.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResultsDeduplicated), TermBankMatches AS (SELECT SearchResultMatchesClassified.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 1 AS match_column FROM SearchResultMatchesClassified JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) UNION ALL SELECT SearchResultMatchesClassified.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 2 AS match_column FROM SearchResultMatchesClassified JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) UNION ALL SELECT SearchResultMatchesClassified.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 3 AS match_column FROM SearchResultMatchesClassified JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id WHERE data_type_id = 7), TermBankMatchesFilteredByTag AS (SELECT TBM.* FROM TermBankMatches AS TBM WHERE LENGTH(?2) <= 2 OR EXISTS (SELECT 1 AS _c0 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN TagFilters AS TF ON TagTable.name = TF.tag_name WHERE LinkTable.term_bank_id = TBM.term_bank_id)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, index_table.current_sorting_order, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFilteredByTag AS TBM JOIN index_table ON TB3T.index_id = index_table.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY index_table.current_sorting_order, TBM.match_type, TBM.match_column, finalPopularity DESC, TBM.rank, LENGTH(matchedText)',
+      variables: [
+        Variable<String>(searchTermsJson),
+        Variable<String>(tagFiltersJson),
+        Variable<int>(useGlob),
+        Variable<int>(normalizedSearch),
+      ],
       readsFrom: {
         searchFts,
         termBankV3Table,
         termBankV3XDefinitionTable,
+        termBankV3XTagBankTable,
+        tagBankV3Table,
         indexTable,
         termMetaBankV3Table,
         termMetaBankV3TypeTable,
+        termTable,
+        readingTable,
+      },
+    ).map(
+      (QueryRow row) => DictionarySearchDriftFindTermBankEntriesResult(
+        termBankId: row.read<int>('term_bank_id'),
+        searchTerm: row.read<String>('search_term'),
+        fts5Rank: row.readNullable<double>('fts5_rank'),
+        matchType: row.read<int>('match_type'),
+        matchColumn: row.read<int>('match_column'),
+        currentSortingOrder: row.read<int>('current_sorting_order'),
+        finalPopularity: row.readNullable<int>('finalPopularity'),
+        matchedText: row.readNullable<String>('matchedText'),
+        matchedTextLength: row.read<int>('matchedTextLength'),
+      ),
+    );
+  }
+
+  Selectable<DictionarySearchDriftFindTermBankDetailsResult>
+  dictionary_search_drift_find_term_bank_details(String termBankIdJson) {
+    return customSelect(
+      'WITH TargetIds (term_bank_id) AS (SELECT CAST(value AS INTEGER) FROM json_each(?1)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\'), definitions_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(definition ORDER BY sort_key)AS definitions FROM term_bank_v3_definitions_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds) GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(definition_tag) AS definition_tags FROM (SELECT DISTINCT term_bank_id, definition_tag FROM term_bank_v3_def_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(rule_identifier) AS rule_identifiers FROM (SELECT DISTINCT term_bank_id, rule_identifier FROM term_bank_v3_rules_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctRules GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), FilteredMetaBank AS (SELECT Base.*, TBM.term_bank_id FROM term_meta_bank_v3_base_view AS Base JOIN (SELECT DISTINCT id AS term_bank_id, term_id, reading_id FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM ON Base.term_id = TBM.term_id AND Base.reading_id = TBM.reading_id), term_meta_agg AS (SELECT FMB.term_bank_id, COALESCE(JSON_GROUP_ARRAY(JSON_OBJECT(\'indexId\', FMB.indexId, \'term\', FMB.term, \'reading\', FMB.reading, \'type\', FMB.type, \'frequency\', FMB.frequency, \'frequencyDisplayValue\', FMB.frequencyDisplayValue, \'pitchs\', CASE WHEN FMB.type = \'pitch\' THEN JSON(COALESCE(ap.pitches, \'[]\')) ELSE JSON(\'[]\') END, \'ipas\', CASE WHEN FMB.type = \'ipa\' THEN JSON(COALESCE(ai.ipas, \'[]\')) ELSE JSON(\'[]\') END))FILTER (WHERE FMB.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM FilteredMetaBank AS FMB LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id WHERE((FMB.type = \'pitch\' AND ap.pitches IS NOT NULL)OR(FMB.type = \'ipa\' AND ai.ipas IS NOT NULL)OR(FMB.type = \'freq\'))GROUP BY FMB.term_bank_id) SELECT index_table.*, COALESCE(ActiveCheck.is_active, 0) AS hasPopularityOverride, OP.freq_value AS overriddenPopularityValue, TB3T.popularity AS originalPopularity, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, TB3T.id AS term_bank_v3_id, TB3T.index_id AS indexId, TT.term, RT.reading, TB3T.popularity, TB3T.definition_order, TB3T.sequence_number, COALESCE(DA.definitions, \'[]\') AS definitions, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, COALESCE(TA.tags, \'[]\') AS tags, COALESCE(TMA.termMetaEntries, \'[]\') AS termMetaEntries FROM term_bank_v3_table AS TB3T JOIN index_table ON TB3T.index_id = index_table.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id WHERE TB3T.id IN (SELECT term_bank_id FROM TargetIds)',
+      variables: [Variable<String>(termBankIdJson)],
+      readsFrom: {
+        indexTable,
+        termMetaBankV3Table,
+        termMetaBankV3TypeTable,
+        termBankV3Table,
         termTable,
         readingTable,
         definitionTable,
@@ -19909,13 +19948,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         termMetaBankV3XIpaTagTable,
       },
     ).map(
-      (QueryRow row) => DictionarySearchDriftResult(
-        fts5Rank: row.readNullable<double>('fts5_rank'),
-        textData: row.read<String>('text_data'),
-        matchType: row.read<int>('match_type'),
-        matchColumn: row.read<int>('match_column'),
-        dataTypeId: row.read<String>('data_type_id'),
-        matchedText: row.readNullable<String>('matchedText'),
+      (QueryRow row) => DictionarySearchDriftFindTermBankDetailsResult(
         id: row.read<int>('id'),
         dictionaryType: $IndexTableTable.$converterdictionaryType.fromSql(
           row.read<String>('dictionary_type'),
@@ -19953,9 +19986,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         definitionOrder: $TermBankV3TableTable.$converterdefinitionOrder
             .fromSql(row.read<String>('definition_order')),
         sequenceNumber: row.read<int>('sequence_number'),
+        definitions: row.read<String>('definitions'),
         definitionTags: row.read<String>('definition_tags'),
         ruleIdentifiers: row.read<String>('rule_identifiers'),
-        definitions: row.read<String>('definitions'),
         tags: row.read<String>('tags'),
         termMetaEntries: row.read<String>('termMetaEntries'),
       ),
@@ -42444,13 +42477,30 @@ class $DaKanjiDBManager {
       );
 }
 
-class DictionarySearchDriftResult {
+class DictionarySearchDriftFindTermBankEntriesResult {
+  final int termBankId;
+  final String searchTerm;
   final double? fts5Rank;
-  final String textData;
   final int matchType;
   final int matchColumn;
-  final String dataTypeId;
+  final int currentSortingOrder;
+  final int? finalPopularity;
   final String? matchedText;
+  final int matchedTextLength;
+  DictionarySearchDriftFindTermBankEntriesResult({
+    required this.termBankId,
+    required this.searchTerm,
+    this.fts5Rank,
+    required this.matchType,
+    required this.matchColumn,
+    required this.currentSortingOrder,
+    this.finalPopularity,
+    this.matchedText,
+    required this.matchedTextLength,
+  });
+}
+
+class DictionarySearchDriftFindTermBankDetailsResult {
   final int id;
   final DictionaryTypes dictionaryType;
   final int currentSortingOrder;
@@ -42481,18 +42531,12 @@ class DictionarySearchDriftResult {
   final int popularity;
   final Object? definitionOrder;
   final int sequenceNumber;
+  final String definitions;
   final String definitionTags;
   final String ruleIdentifiers;
-  final String definitions;
   final String tags;
   final String termMetaEntries;
-  DictionarySearchDriftResult({
-    this.fts5Rank,
-    required this.textData,
-    required this.matchType,
-    required this.matchColumn,
-    required this.dataTypeId,
-    this.matchedText,
+  DictionarySearchDriftFindTermBankDetailsResult({
     required this.id,
     required this.dictionaryType,
     required this.currentSortingOrder,
@@ -42523,9 +42567,9 @@ class DictionarySearchDriftResult {
     required this.popularity,
     required this.definitionOrder,
     required this.sequenceNumber,
+    required this.definitions,
     required this.definitionTags,
     required this.ruleIdentifiers,
-    required this.definitions,
     required this.tags,
     required this.termMetaEntries,
   });

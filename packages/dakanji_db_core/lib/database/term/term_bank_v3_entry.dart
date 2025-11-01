@@ -67,7 +67,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
   }
 
   // 2. Factory constructor for DictionarySearchFts5DriftResult
-  factory TermBankV3Entry.fromDictionarySearchDrift(DictionarySearchDriftResult r) {
+  factory TermBankV3Entry.fromDictionarySearchDrift(DictionarySearchDriftFindTermBankDetailsResult r) {
     return TermBankV3Entry._fromDataSource(r);
   }
 

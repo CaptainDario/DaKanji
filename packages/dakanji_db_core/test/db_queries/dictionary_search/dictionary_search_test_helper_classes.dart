@@ -46,14 +46,12 @@ class ExpectedMatchGroup {
   final List<ExpectedSearchResult> exactMatches;
   final List<ExpectedSearchResult> prefixMatches;
   final List<ExpectedSearchResult> tokenMatches;
-  final List<ExpectedSearchResult> fuzzyMatches;
   final List<ExpectedSearchResult> wildcardMatches;
 
   const ExpectedMatchGroup({
     this.exactMatches = const [],
     this.prefixMatches = const [],
     this.tokenMatches = const [],
-    this.fuzzyMatches = const [],
     this.wildcardMatches = const [],
   });
 
@@ -61,7 +59,6 @@ class ExpectedMatchGroup {
       exactMatches.isEmpty &&
       prefixMatches.isEmpty &&
       tokenMatches.isEmpty &&
-      fuzzyMatches.isEmpty &&
       wildcardMatches.isEmpty;
 
   /// Formats this entire group with indentation.
@@ -82,7 +79,6 @@ class ExpectedMatchGroup {
     printSection('Exact Matches', exactMatches);
     printSection('Prefix Matches', prefixMatches);
     printSection('Token Matches', tokenMatches);
-    printSection('Fuzzy Matches', fuzzyMatches);
     printSection('Wildcard Matches', wildcardMatches);
 
     // Note: Do not trim trailing newline here.
@@ -111,6 +107,9 @@ class SearchTestCase {
   /// Expected results from de-conjugated or other normalized query variants.
   final List<ExpectedMatchGroup> queryVariantMatches;
 
+  /// Expected results from fuzzy matching.
+  final List<ExpectedMatchGroup> fuzzyMatches;
+
   const SearchTestCase({
     required this.description,
     required this.query,
@@ -118,6 +117,7 @@ class SearchTestCase {
     this.queryMatches = const ExpectedMatchGroup(),
     this.normalizedQueryMatchGroups = const [],
     this.queryVariantMatches = const [],
+    this.fuzzyMatches = const [],
   });
 
   @override
@@ -162,6 +162,19 @@ class SearchTestCase {
         // Add extra indentation for the content of each variant
         buffer.write(
             nonEmptyVariants[i].toFormattedString(indent: '$sectionIndent  '));
+      }
+    }
+
+    // --- 4. Fuzzy Matches ---
+    final nonEmptyFuzzy = fuzzyMatches.where((f) => !f.isEmpty).toList();
+    if (nonEmptyFuzzy.isNotEmpty) {
+      buffer.writeln(
+          '\n▼ Fuzzy Matches (${nonEmptyFuzzy.length})');
+      for (var i = 0; i < nonEmptyFuzzy.length; i++) {
+        buffer.writeln('$sectionIndent- Variant ${i + 1}:');
+        // Add extra indentation for the content of each variant
+        buffer.write(
+            nonEmptyFuzzy[i].toFormattedString(indent: '$sectionIndent  '));
       }
     }
 

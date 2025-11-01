@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
@@ -17,11 +18,15 @@ class DictionarySearchResult {
   /// Matches from pre-processed variants of the search term.
   /// For example, de-conjugated forms.
   final List<SearchMatchGroup> queryVariantMatches;
+  /// Matches from fuzzy search
+  /// For example: りょこお -> りょこう 
+  final List fuzzyMatches;
 
   DictionarySearchResult({
     required this.queryMatches,
     required this.normalizedQueryMatchGroups,
     required this.queryVariantMatches,
+    required this.fuzzyMatches,
   }){
 
     // This set will store the unique IDs of dictionary entries that have
@@ -39,16 +44,19 @@ class DictionarySearchResult {
     for (final variantGroup in queryVariantMatches)
       processMatchGroup(variantGroup, seenEntryIds);
 
+    for (final fuzzyMatch in fuzzyMatches)
+      processMatchGroup(fuzzyMatch, seenEntryIds);
+
     // remove all empty variant groups
     normalizedQueryMatchGroups.removeWhere((group) => group.isEmpty);
     queryVariantMatches.removeWhere((group) => group.isEmpty);
+    fuzzyMatches.removeWhere((group) => group.isEmpty);
   }
 
   void processMatchGroup(SearchMatchGroup group, Set<String> seenEntryIds) {
       filterList(group.exactMatches, seenEntryIds);
       filterList(group.prefixMatches, seenEntryIds);
       filterList(group.tokenMatches, seenEntryIds);
-      filterList(group.fuzzyMatches, seenEntryIds);
       filterList(group.wildcardMatches, seenEntryIds);
     }
 
@@ -111,6 +119,16 @@ class DictionarySearchResult {
       }
     }
 
+    // 4. Fuzzy Matches
+    if (fuzzyMatches.isNotEmpty) {
+      buffer.writeln('\n▼ Matches for fuzzy search (${fuzzyMatches.length})');
+      for (var i = 0; i < fuzzyMatches.length; i++) {
+        buffer.writeln('$sectionIndent- Variant ${i + 1}:');
+        // Add extra indentation for the content of each variant.
+        buffer.write(fuzzyMatches[i].toFormattedString(indent: '$sectionIndent  '));
+      }
+    }
+
     // Check if any matches were found at all.
     if (queryMatches.isEmpty &&
         normalizedQueryMatchGroups.isEmpty &&
@@ -143,9 +161,6 @@ class SearchMatchGroup {
   /// Matches that contain the search term as a token.
   /// E.g., searching for 'でんしゃ' returns '満員電車 (man'in densha)'.
   final List<DictionaryMatch> tokenMatches;
-  /// Matches that are similar to the search term (fuzzy).
-  /// E.g., searching for 'りょこお' returns '旅行 (ryokou)'.
-  final List<DictionaryMatch> fuzzyMatches;
   /// Matches that fit wildcard patterns.
   /// E.g., searching for 'で*しゃ' returns '電車 (densha)'.
   final List<DictionaryMatch> wildcardMatches;
@@ -156,7 +171,6 @@ class SearchMatchGroup {
     required this.exactMatches,
     required this.prefixMatches,
     required this.tokenMatches,
-    required this.fuzzyMatches,
     required this.wildcardMatches,
   });
 
@@ -166,64 +180,90 @@ class SearchMatchGroup {
         exactMatches = [],
         prefixMatches = [],
         tokenMatches = [],
-        fuzzyMatches = [],
         wildcardMatches = [];
 
   bool get isEmpty =>
       exactMatches.isEmpty &&
       prefixMatches.isEmpty &&
       tokenMatches.isEmpty &&
-      fuzzyMatches.isEmpty &&
       wildcardMatches.isEmpty;
 
-  factory SearchMatchGroup.fromDictionaryMatchList(
-      List<DictionarySearchDriftResult> matches,
-      String searchTerm,
-      bool isWildcardSearch,
-      {
-        String? variantReason
-      }
-    ) {
+  static List<SearchMatchGroup> fromDictionarySearch(
+    (
+      List<DictionarySearchDriftFindTermBankEntriesResult>,
+      List<DictionarySearchDriftFindTermBankDetailsResult>
+    ) resultTuple,
+    bool isWildcardSearch, {
+    String? variantReason,
+  }) {
+    final (searchInfos, detailInfos) = resultTuple;
 
-    if(matches.isEmpty) return SearchMatchGroup.empty();
+    if (searchInfos.isEmpty) return [];
 
-    List<DictionaryMatch> exactMatches = [], prefixMatches = [],
-                          tokenMatches = [], fuzzyMatches = [], 
-                          wildcardMatches = [];
+    // 1. Create a fast lookup map for the details
+    final detailMap = {
+      for (var detail in detailInfos) detail.termBankV3Id: detail
+    };
+
+    // 2. Group the 'searchInfo' list (from Query 1) by its 'searchTerm'
+    //    (Requires 'package:collection/collection.dart')
+    final groupedByTerm = groupBy(searchInfos, (info) => info.searchTerm);
+
+    // 3. Create one SearchMatchGroup for each term
+    final finalGroups = <SearchMatchGroup>[];
     
-    for (int i = 0; i < matches.length; i++) {
-      
-      DictionarySearchDriftResult driftResult = matches[i];
-      DictionaryMatch r = DictionaryMatch(
-        match: driftResult.matchedText,
-        spellfixSuggestion: driftResult.spellfixSuggestion,
-        popularity: driftResult.finalPopularity,
-        entry: TermBankV3Entry.fromDictionarySearchDrift(driftResult),
-        metaEntries: (jsonDecode(driftResult.termMetaEntries) as List)
-            .map((me) => TermMetaBankV3Entry.fromJson(me))
-            .toList(),
-        indexTableData: IndexTableEntry.fromDictionarySearchDrift(driftResult),
-      );
+    groupedByTerm.forEach((searchTerm, infosForThisTerm) {
+      // 'infosForThisTerm' is the List<DictionarySearchDriftFindTermBankEntriesResult>
+      // for just this one search term (e.g., all matches for "たべる")
 
-      if(isWildcardSearch) {
-        wildcardMatches.add(r);
-        continue;
+      List<DictionaryMatch> exactMatches = [],
+          prefixMatches = [],
+          tokenMatches = [],
+          wildcardMatches = [];
+
+      // 4. Loop through the matches for this term
+      for (final searchInfo in infosForThisTerm) {
+        
+        // Find the matching entry data
+        final entryInfo = detailMap[searchInfo.termBankId];
+        if (entryInfo == null) continue;
+
+        // 5. Build the DictionaryMatch object (using your exact constructor)
+        final r = DictionaryMatch(
+          match: searchInfo.matchedText ?? "",
+          popularity: searchInfo.finalPopularity,
+          entry: TermBankV3Entry.fromDictionarySearchDrift(entryInfo),
+          metaEntries: (jsonDecode(entryInfo.termMetaEntries) as List)
+              .map((me) => TermMetaBankV3Entry.fromJson(me))
+              .toList(),
+          indexTableData: IndexTableEntry.fromDictionarySearchDrift(entryInfo),
+        );
+
+        // 6. Categorize the match using the 'searchInfo'
+        if (isWildcardSearch) {
+          wildcardMatches.add(r);
+          continue;
+        }
+
+        if (searchInfo.matchType == 1) exactMatches.add(r);
+        else if (searchInfo.matchType == 2) prefixMatches.add(r);
+        else if (searchInfo.matchType == 3) tokenMatches.add(r);
       }
-      if (driftResult.matchTypePriority == 1) exactMatches.add(r);
-      else if (driftResult.matchTypePriority == 2) prefixMatches.add(r);
-      else if (driftResult.matchTypePriority == 3) tokenMatches.add(r);
-      else if (driftResult.matchTypePriority == 4) fuzzyMatches.add(r);
-    }
 
-    return SearchMatchGroup(
-      searchTerm: searchTerm,
-      variantReason: variantReason,
-      exactMatches: exactMatches,
-      prefixMatches: prefixMatches,
-      tokenMatches: tokenMatches,
-      fuzzyMatches: fuzzyMatches,
-      wildcardMatches: wildcardMatches
-    );
+      // 7. Add the newly created group to the final list
+      finalGroups.add(
+        SearchMatchGroup(
+          searchTerm: searchTerm,
+          variantReason: variantReason,
+          exactMatches: exactMatches,
+          prefixMatches: prefixMatches,
+          tokenMatches: tokenMatches,
+          wildcardMatches: wildcardMatches,
+        ),
+      );
+    });
+
+    return finalGroups;
   }
 
   @override
@@ -247,7 +287,6 @@ class SearchMatchGroup {
     printSection('Exact Matches', exactMatches);
     printSection('Prefix Matches', prefixMatches);
     printSection('Token Matches', tokenMatches);
-    printSection('Fuzzy Matches', fuzzyMatches);
     printSection('Wildcard Matches', wildcardMatches);
 
     return buffer.toString();
@@ -258,9 +297,6 @@ class SearchMatchGroup {
 class DictionaryMatch {
   /// The tokens that was matched (e.g., 食べるラー油 -> 食べる).
   final String match;
-  /// If this match was found via spellfix, this field contains the suggestion
-  /// that was used to find it.
-  final String? spellfixSuggestion;
   /// The popularity of this term.
   final int? popularity;
   /// The full dictionary entry that was matched.
@@ -273,7 +309,6 @@ class DictionaryMatch {
   DictionaryMatch(
     {
       required this.match,
-      this.spellfixSuggestion,
       this.popularity,
       required this.entry,
       this.metaEntries = const [],

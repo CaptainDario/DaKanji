@@ -96,7 +96,7 @@ List<SearchTestCase> inputPreprocessingSearchTestCases = [
     ]
   ),
   SearchTestCase(
-    description: '$descriptionPrefix: Search for とうきょう (explicit vowel) should match トーキョー (long vowel mark)',
+    description: '$descriptionPrefix: Search for とうきょう (explicit vowel) should match トーキョー (long vowel mark) ONLY in normalized matches',
     query: 'とうきょう',
     normalizedQueryMatchGroups: [
       const ExpectedMatchGroup(

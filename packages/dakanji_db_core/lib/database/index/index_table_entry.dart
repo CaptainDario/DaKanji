@@ -97,7 +97,7 @@ class IndexTableEntry with _$IndexTableEntry {
     return IndexTableEntry._fromDataSource(r);
   }
     
-  factory IndexTableEntry.fromDictionarySearchDrift(DictionarySearchDriftResult r) {
+  factory IndexTableEntry.fromDictionarySearchDrift(DictionarySearchDriftFindTermBankDetailsResult r) {
     return IndexTableEntry._fromDataSource(r);
   }
 

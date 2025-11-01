@@ -14,6 +14,9 @@ List<SearchTestCase> deconjugationTestCases = [
         exactMatches: [
           ExpectedSearchResult(term: '食べる', reading: 'たべる', match: '食べる', definitions: ["to eat"]),
         ],
+        prefixMatches: [
+          ExpectedSearchResult(term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油', definitions: ["chili oil with garlic, etc. for eating with rice"])
+        ],
       )
     ],
   ),

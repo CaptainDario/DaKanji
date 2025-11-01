@@ -12,86 +12,96 @@ List<SearchTestCase> fuzzySearchTestCases = [
   SearchTestCase(
     description: "Fuzzy (Sort Order): Lower cost errors (voiced kana, cost 10) should rank higher than higher cost errors (default substitution, cost 100+)",
     query: "ちゅうごくしん",
-    queryMatches: const ExpectedMatchGroup(
-      fuzzyMatches: [
-        // 1. Expected: 中国人 (ちゅうごくじん)
-        // Reason: 'し' -> 'じ' is a single, low-cost (10) substitution.
-        ExpectedSearchResult(
-          term: '中国人',
-          reading: 'ちゅうごくじん',
-          definitions: ['Chinese person'],
-          match: 'ちゅうごくじん',
-        ),
-        // 2. Expected: 日本史 (にほんし)
-        // Reason: One high cost deletion (100)
-        ExpectedSearchResult(
-          term: '中国史',
-          reading: 'ちゅうごくし',
-          definitions: ['Chinese history; history of China'],
-          match: 'ちゅうごくし',
-        ),
-      ],
-    ),
+    fuzzyMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          // 1. Expected: 中国人 (ちゅうごくじん)
+          // Reason: 'し' -> 'じ' is a single, low-cost (10) substitution.
+          ExpectedSearchResult(
+            term: '中国人',
+            reading: 'ちゅうごくじん',
+            definitions: ['Chinese person'],
+            match: 'ちゅうごくじん',
+          ),
+          // 2. Expected: 日本史 (にほんし)
+          // Reason: One high cost deletion (100)
+          ExpectedSearchResult(
+            term: '中国史',
+            reading: 'ちゅうごくし',
+            definitions: ['Chinese history; history of China'],
+            match: 'ちゅうごくし',
+          ),
+        ],
+      ),
+    ]
   ),
 
   // Tests a common phonetic error defined in your cost table.
   SearchTestCase(
     description: "Fuzzy (match): Long vowel confusion りょこお -> りょこう (Cost 25)",
     query: "りょこお",
-    queryMatches: const ExpectedMatchGroup(
-      fuzzyMatches: [
-        ExpectedSearchResult(
-          term: '旅行',
-          reading: 'りょこう',
-          definitions: ['travel; trip'],
-          match: 'りょこう',
-        ),
-      ],
-    ),
+    fuzzyMatches: [
+      ExpectedMatchGroup(
+        exactMatches: [
+          ExpectedSearchResult(
+            term: '旅行',
+            reading: 'りょこう',
+            definitions: ['travel; trip'],
+            match: 'りょこう',
+          )
+        ]
+      ),
+    ],
   ),
   // Tests a common phonetic error defined in your cost table.
   SearchTestCase(
     description: "Fuzzy (match): Long vowel confusion りょこしゃ -> りょこうしゃ",
     query: "りょこしゃ",
-    queryMatches: const ExpectedMatchGroup(
-      fuzzyMatches: [
-        ExpectedSearchResult(
-          term: '旅行者',
-          reading: 'りょこうしゃ',
-          definitions: ["traveller; traveler"],
-          match: 'りょこうしゃ',
-        ),
-      ],
-    ),
+    fuzzyMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          ExpectedSearchResult(
+            term: '旅行者',
+            reading: 'りょこうしゃ',
+            definitions: ["traveller; traveler"],
+            match: 'りょこうしゃ',
+          ),
+        ],
+      ),
+    ]
   ),
 
   // Tests a common typing mistake involving yōon characters.
   SearchTestCase(
     description: "Fuzzy (match): Small vs large kana でんしや -> でんしゃ (Cost 20)",
     query: "でんしや",
-    queryMatches: const ExpectedMatchGroup(
-      fuzzyMatches: [
-        ExpectedSearchResult(
-          term: '電車',
-          reading: 'でんしゃ',
-          definitions: ['(electric) train'],
-          match: 'でんしゃ',
-        ),
-      ],
-    ),
+    fuzzyMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          ExpectedSearchResult(
+            term: '電車',
+            reading: 'でんしゃ',
+            definitions: ['(electric) train'],
+            match: 'でんしゃ',
+          ),
+        ],
+      ),
+    ],
   ),
   SearchTestCase(
     description: "Fuzzy (match): delete extra character",
     query: "たべものう",
-    queryMatches: const ExpectedMatchGroup(
-      fuzzyMatches: [
-        ExpectedSearchResult(
-          term: '食べ物',
-          reading: 'たべもの',
-          definitions: ["food"],
-          match: 'たべもの',
-        ),
-      ],
-    ),
+    fuzzyMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          ExpectedSearchResult(
+            term: '食べ物',
+            reading: 'たべもの',
+            definitions: ["food"],
+            match: 'たべもの',
+          ),
+        ],
+      ),
+    ]
   ),
 ];

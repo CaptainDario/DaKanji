@@ -4,34 +4,70 @@ import '/database/general_tables/reading_spellfix_table.drift';
 import '/database/db_queries/dictionary_search/dictionary_search_views.drift';
 
 
-dictionary_search_drift:
+dictionary_search_drift_find_term_bank_entries:
 
     WITH
-    
-    	SearchTerms(term) AS (
-		    SELECT value FROM json_each(:searchTerms)
-		),
+        SearchTerms(term) AS (
+            SELECT value FROM json_each(:searchTermsJson)
+            WHERE value IS NOT NULL
+        ),
+
+        TagFilters(tag_name) AS (
+            SELECT value FROM json_each(:tagFiltersJson)
+            WHERE value IS NOT NULL
+        ),
     
         -- Search
         SearchResults AS (
+            -- FTS Search
             SELECT
-            	SearchTerms.term AS search_term,
+                COALESCE(SearchTerms.term, '') AS search_term,
                 search_fts.*,
                 search_fts.rank
             FROM SearchTerms
             JOIN search_fts ON search_fts.text_data MATCH SearchTerms.term || ' *'
-            ORDER BY data_type_id ASC
+            WHERE
+                :useGlob = 0 
+                AND (
+                    (data_type_id IN (1, 2, 5, 7) AND :normalizedSearch = 0)
+                    OR (data_type_id IN (3, 4, 6) AND :normalizedSearch = 1)
+                )
+
+            UNION ALL
+
+            -- GLOB Search
+            SELECT
+                COALESCE(SearchTerms.term, '') AS search_term,
+                search_fts.*,
+                0 AS rank -- GLOB has no rank, so we provide 0
+            FROM SearchTerms
+            JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term
+            WHERE 
+                :useGlob = 1
+                AND (
+                    (data_type_id IN (1, 2, 5, 7) AND :normalizedSearch = 0)
+                    OR (data_type_id IN (3, 4, 6) AND :normalizedSearch = 1)
+                )
         ),
         
-        -- Only take the BEST entry for each found entry
+        -- Only take the BEST entry for each found entry (FIXED with ROW_NUMBER)
         SearchResultsDeduplicated AS (
             SELECT
-            	SearchResults.*
-            FROM SearchResults
-            GROUP BY source_id -- Picks the first row from the ordered FtsSearch
+                *
+            FROM (
+                SELECT
+                    SearchResults.*,
+                    ROW_NUMBER() OVER(
+                        PARTITION BY source_id
+                        ORDER BY rank -- Picks the best FTS rank
+                    ) AS rn
+                FROM SearchResults
+            ) AS Ranked
+            WHERE
+                rn = 1
         ),
         
-        -- classify each match: exact (1), prefix (2), token (3)
+        -- classify each match
         SearchResultMatchesClassified AS (
             SELECT
                 SearchResultsDeduplicated.*,
@@ -43,8 +79,7 @@ dictionary_search_drift:
             FROM SearchResultsDeduplicated
         ),
         
-        -- Get the term bank entries and
-        -- classify the matched column: term (1), reading (2), definition (3)
+        -- Get the term bank entries
         TermBankMatches as (
             -- get all term / reading matches
             SELECT
@@ -87,6 +122,21 @@ dictionary_search_drift:
             WHERE data_type_id  = 7
 
         ),
+
+        -- Filter the TermBankMatches based on the TagFilters
+        TermBankMatchesFilteredByTag AS (
+            SELECT TBM.*
+            FROM TermBankMatches AS TBM
+            WHERE
+                LENGTH(:tagFiltersJson) <= 2
+                OR EXISTS (
+                    SELECT 1
+                    FROM term_bank_v3_x_tag_bank_table AS LinkTable
+                    JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id
+                    JOIN TagFilters AS TF ON TagTable.name = TF.tag_name
+                    WHERE LinkTable.term_bank_id = TBM.term_bank_id
+                )
+        ),
         
         -- is an popularity override present?
         IsPopulairtyOverrideActive AS (
@@ -105,80 +155,154 @@ dictionary_search_drift:
             JOIN term_meta_bank_v3_table ON
                 term_meta_bank_v3_table.index_id = IT.id
             JOIN term_meta_bank_v3_type_table ON
-            	term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id
+                term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id
+            WHERE
+                IT.current_frequency_dictionary = TRUE 
+                AND term_meta_bank_v3_type_table.type = 'freq'
+        )
+
+    --- FINAL SELECT 
+    -- This now returns only the ID and sorting columns
+    SELECT
+        TBM.term_bank_id,
+        TBM.search_term,
+        TBM.rank as fts5_rank,
+        TBM.match_type,
+        TBM.match_column,
+        index_table.current_sorting_order,
+        CASE 
+            WHEN ActiveCheck.is_active = 1 THEN OP.freq_value
+            ELSE TB3T.popularity
+        END as finalPopularity,
+        -- This is the column you need for your factory logic
+        CASE
+            WHEN TBM.match_column = 1 THEN TT.term 
+            WHEN TBM.match_column = 2 THEN RT.reading
+            ELSE TBM.text_data
+        END as matchedText,
+        LENGTH(CASE
+            WHEN TBM.match_column = 1 THEN TT.term 
+            WHEN TBM.match_column = 2 THEN RT.reading
+            ELSE TBM.text_data
+        END) as matchedTextLength
+    FROM 
+        TermBankMatchesFilteredByTag AS TBM
+        
+    JOIN index_table ON TB3T.index_id = index_table.id
+    JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id
+    LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
+    LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id
+    LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1
+    LEFT JOIN PopularityDictionary AS OP
+        ON OP.term_id = TB3T.term_id
+        
+    -- The ORDER BY is preserved
+    ORDER BY
+        index_table.current_sorting_order,
+        TBM.match_type,
+        TBM.match_column,
+        finalPopularity DESC,
+        TBM.rank,
+        LENGTH(matchedText);
+
+
+dictionary_search_drift_find_term_bank_details:
+    WITH
+        -- This CTE unpacks the JSON string of IDs
+        TargetIds(term_bank_id) AS (
+            SELECT CAST(value AS INTEGER) FROM json_each(:termBankIdJson)
+        ),
+    
+        -- is an popularity override present?
+        IsPopulairtyOverrideActive AS (
+            SELECT 1 AS is_active 
+            FROM index_table 
+            WHERE current_frequency_dictionary = TRUE 
+            LIMIT 1
+        ),
+
+        -- Get the popularity override dictionary
+        PopularityDictionary AS (
+            SELECT
+                term_meta_bank_v3_table.*
+            FROM
+                index_table AS IT
+            JOIN term_meta_bank_v3_table ON
+                term_meta_bank_v3_table.index_id = IT.id
+            JOIN term_meta_bank_v3_type_table ON
+                term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id
             WHERE
                 IT.current_frequency_dictionary = TRUE 
                 AND term_meta_bank_v3_type_table.type = 'freq'
         ),
 
-        --- ASSEMBLE ALL JSON ENTRIES FOR THE TERM BANK ENTRIES    
-        -- 1. Aggregate the definitions (using our new view)
+        --- ASSEMBLE TERM BANK ENTRIES ---
+        -- These are your original CTEs, just filtered by TargetIds
         definitions_agg AS (
             SELECT
                 term_bank_id,
-                '[' || COALESCE(
-                    GROUP_CONCAT(json_quote(definition) ORDER BY sort_key), 
-                    ''
-                ) || ']' AS definitions
+                JSON_GROUP_ARRAY(definition ORDER BY sort_key) AS definitions
             FROM term_bank_v3_definitions_json_view
-            WHERE term_bank_id IN (SELECT term_bank_id FROM TermBankMatches)
+            WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)
             GROUP BY term_bank_id
         ),
         
-        -- 2. Aggregate the definition tags (using our new view)
         def_tags_agg AS (
-            SELECT
-                term_bank_id,
-                '[' || COALESCE(
-                    GROUP_CONCAT(DISTINCT json_quote(definition_tag)), 
-                    ''
-                ) || ']' AS definition_tags
-            FROM term_bank_v3_def_tags_json_view
-            WHERE term_bank_id IN (SELECT term_bank_id FROM TermBankMatches)
-            GROUP BY term_bank_id
-        ),
+		    SELECT
+		        term_bank_id,
+		        JSON_GROUP_ARRAY(definition_tag) AS definition_tags
+		    FROM (
+		        SELECT DISTINCT
+		            term_bank_id,
+		            definition_tag
+		        FROM term_bank_v3_def_tags_json_view
+		        WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)
+		    ) AS DistinctTags
+		    GROUP BY term_bank_id
+		),
         
-        -- 3. Aggregate the rule identifiers (using our new view)
         rules_agg AS (
             SELECT
                 term_bank_id,
-                '[' || COALESCE(
-                    GROUP_CONCAT(DISTINCT json_quote(rule_identifier)), 
-                    ''
-                ) || ']' AS rule_identifiers
-            FROM term_bank_v3_rules_json_view
-            WHERE term_bank_id IN (SELECT term_bank_id FROM TermBankMatches)
+                JSON_GROUP_ARRAY(rule_identifier) AS rule_identifiers
+            FROM (
+                SELECT DISTINCT
+                    term_bank_id,
+                    rule_identifier
+                FROM term_bank_v3_rules_json_view
+                WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)
+            ) AS DistinctRules
             GROUP BY term_bank_id
         ),
         
-        -- 4. Aggregate the tags (using our new view)
         tags_agg AS (
             SELECT
                 term_bank_id,
-                '[' || COALESCE(GROUP_CONCAT(DISTINCT tag_json), '') || ']' AS tags
-            FROM term_bank_v3_tags_json_view
-            WHERE term_bank_id IN (SELECT term_bank_id FROM TermBankMatches)
+                JSON_GROUP_ARRAY(JSON(tag_json)) AS tags
+            FROM (
+                SELECT DISTINCT
+                    term_bank_id,
+                    tag_json
+                FROM term_bank_v3_tags_json_view
+                WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)
+            ) AS DistinctTags
             GROUP BY term_bank_id
         ),
-        --- ASSEMBLE END -------------------
+        --- ASSEMBLE TERM BANK ENTRIES END -------------------
         
         --- ASSEMBLE TERM META ENTRIES ---
-        
-        -- 5. Find the *specific* meta entries that match our search results
-        --    This is the "FILTER FIRST" step.
         FilteredMetaBank AS (
             SELECT
-                Base.*, -- Gets all columns from the term_meta_bank_v3_base_view
+                Base.*,
                 TBM.term_bank_id
             FROM
                 term_meta_bank_v3_base_view AS Base
-            -- This is the fast, integer-based filter join
             JOIN
-                (SELECT DISTINCT term_id, reading_id, term_bank_id FROM TermBankMatches) AS TBM
+                (SELECT DISTINCT id as term_bank_id, term_id, reading_id 
+                 FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM
                     ON Base.term_id = TBM.term_id AND Base.reading_id = TBM.reading_id
         ),
         
-        -- 6. Assemble the final JSON for *only* the filtered meta entries
         term_meta_agg AS (
             SELECT
                 FMB.term_bank_id,
@@ -191,7 +315,6 @@ dictionary_search_drift:
                             'type', FMB.type,
                             'frequency', FMB.frequency,
                             'frequencyDisplayValue', FMB.frequencyDisplayValue,
-                            -- Join the pre-aggregated helper views AFTER filtering
                             'pitchs', CASE WHEN FMB.type = 'pitch' THEN JSON(COALESCE(ap.pitches, '[]')) ELSE JSON('[]') END,
                             'ipas', CASE WHEN FMB.type = 'ipa' THEN JSON(COALESCE(ai.ipas, '[]')) ELSE JSON('[]') END
                         )
@@ -199,7 +322,6 @@ dictionary_search_drift:
                     JSON('[]')
                 ) AS termMetaEntries
             FROM FilteredMetaBank AS FMB
-            -- We join the helper views here, *after* FMB has been filtered
             LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id
             LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id
             WHERE (
@@ -210,22 +332,11 @@ dictionary_search_drift:
             GROUP BY
                 FMB.term_bank_id
         )
-        --- TERM META END -------------------
+        --- ASSEMBLE TERM META END -------------------
 
-    --- === FINAL SELECT ===
+    --- === FINAL SELECT (MODIFIED) ===
+    -- This selects all your original data, but NO search metadata
     SELECT
-        -- important data during/from the query
-        TBM.rank as fts5_rank,
-        TBM.text_data,
-        TBM.match_type,
-        TBM.match_column,
-        TBM.data_type_id,
-        CASE
-    		WHEN TBM.match_column = 1 THEN TT.term 
-    		WHEN TBM.match_column = 2 THEN RT.reading
-    		ELSE TBM.text_data
-        END as matchedText,
-        
         -- index
         index_table.*,
 
@@ -239,51 +350,36 @@ dictionary_search_drift:
         END as finalPopularity,
         
         -- term bank entry
-        -- Get the base data
-        TBM.term_bank_id AS term_bank_v3_id,
+        TB3T.id AS term_bank_v3_id,
         TB3T.index_id AS indexId,
         TT.term,
         RT.reading,
         TB3T.popularity,
         TB3T.definition_order,
         TB3T.sequence_number,
+        
         -- Get the aggregated data
+        COALESCE(DA.definitions, '[]') AS definitions,
         COALESCE(DTA.definition_tags, '[]') AS definition_tags,
         COALESCE(RA.rule_identifiers, '[]') AS rule_identifiers,
-        COALESCE(DA.definitions, '[]') AS definitions,
         COALESCE(TA.tags, '[]') AS tags,
 
         -- term meta entry
         COALESCE(TMA.termMetaEntries, '[]') AS termMetaEntries
     FROM 
-        TermBankMatches AS TBM
+        term_bank_v3_table AS TB3T
         
-    -- get the index data
     JOIN index_table ON TB3T.index_id = index_table.id
-
-    -- Join to get the base term data
-    JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id
     LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
     LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id
-
-    -- Join to the pre-filtered aggregation CTEs
-    LEFT JOIN definitions_agg AS DA ON TBM.term_bank_id = DA.term_bank_id
-    LEFT JOIN def_tags_agg AS DTA ON TBM.term_bank_id = DTA.term_bank_id
-    LEFT JOIN rules_agg AS RA ON TBM.term_bank_id = RA.term_bank_id
-    LEFT JOIN tags_agg AS TA ON TBM.term_bank_id = TA.term_bank_id
-
-    -- Get the overriden popularity
+    LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id
+    LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id
+    LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id
+    LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id
     LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1
     LEFT JOIN PopularityDictionary AS OP
         ON OP.term_id = TB3T.term_id
-        
-    -- Get the meta entries
-    LEFT JOIN term_meta_agg AS TMA ON TBM.term_bank_id = TMA.term_bank_id
+    LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id
 
-    ORDER BY
-        index_table.current_sorting_order,
-        TBM.match_type,
-        TBM.match_column,
-        finalPopularity DESC,
-        TBM.rank,
-        LENGTH(TBM.text_data);
+    -- Filter by the list of IDs from the parameter
+    WHERE TB3T.id IN (SELECT term_bank_id FROM TargetIds);
