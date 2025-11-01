@@ -1,6 +1,5 @@
 import "dart:convert";
 
-import "package:collection/collection.dart";
 import "package:dakanji_db_core/database/audio/audio_entry.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
@@ -81,15 +80,16 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     final results = (await Future.wait([
 
       db.dictionary_search_drift(
-        buildQueryFilters([term], [[]]),
-        spellfixDistance,
-        useGlobInt,
-        0,
-        "$term *",
-        jsonEncode(tags)
+        jsonEncode([term])
+        //buildQueryFilters([term], [[]]),
+        //spellfixDistance,
+        //useGlobInt,
+        //0,
+        //"$term *",
+        //jsonEncode(tags)
       ).get(),
 
-      if(normalizedTerms.isNotEmpty)
+      /*if(normalizedTerms.isNotEmpty)
         db.dictionary_search_drift(
           buildQueryFilters(
             normalizedTerms.map((e) => e).toList(),
@@ -101,9 +101,9 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
           normalizedTerms.map((e) => '$e *').join(" OR "),
           jsonEncode(tags)
         ).get()
-      else Future.sync(() => <DictionarySearchDriftResult>[]),
+      else Future.sync(() => <DictionarySearchDriftResult>[]),*/
 
-      if(termVariants.isNotEmpty)
+      /*if(termVariants.isNotEmpty)
         db.dictionary_search_drift(
           buildQueryFilters(
             termVariants.map((e) => e.deconjugatedTerm).toList(),
@@ -115,11 +115,11 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
           termVariants.map((e) => "${e.deconjugatedTerm} *").join(" OR "),
           jsonEncode(tags)
         ).get()
-      else Future.sync(() => <DictionarySearchDriftResult>[])
+      else Future.sync(() => <DictionarySearchDriftResult>[])*/
     ]));
 
     // merge all normalized search results from the same normalized term
-    final groupedNormalizedMatches = groupBy(results[1], (result) => result.queryTerm);
+    /*final groupedNormalizedMatches = groupBy(results[1], (result) => result.queryTerm);
     final filteredQueryNormalizedMatches = <SearchMatchGroup>[];
     groupedNormalizedMatches.forEach((term, matches) {
       filteredQueryNormalizedMatches.add(
@@ -136,12 +136,12 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         SearchMatchGroup.fromDictionaryMatchList(
           matches, term, isWildcardSearch,),
       );
-    });
+    });*/
 
     return DictionarySearchResult(
       queryMatches: SearchMatchGroup.fromDictionaryMatchList(results[0], term, isWildcardSearch),
-      normalizedQueryMatchGroups: filteredQueryNormalizedMatches,
-      queryVariantMatches: filteredQueryVariantMatches
+      normalizedQueryMatchGroups: [], //filteredQueryNormalizedMatches,
+      queryVariantMatches: [], //filteredQueryVariantMatches
     );
 
     

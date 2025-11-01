@@ -6,49 +6,123 @@ import '/database/term/term_bank_v3_relation_tables.dart';
 import '/database/tag/tag_bank_v3_tables.dart';
 
 
+-- VIEW 1: For Definitions (handles the JSON ordering)
+CREATE VIEW IF NOT EXISTS term_bank_v3_definitions_json_view AS
+SELECT
+    TB3T.id AS term_bank_id,
+    MT.definition,
+    j.key AS sort_key
+FROM
+    term_bank_v3_table AS TB3T,
+    json_each(TB3T.definition_order) AS j
+JOIN
+    definition_table AS MT ON j.value = MT.id;
+
+---
+    
+-- VIEW 2: For Definition Tags
+CREATE VIEW IF NOT EXISTS term_bank_v3_def_tags_json_view AS
+SELECT
+    TB3DTRT.term_bank_id,
+    TB3DTT.definition_tag
+FROM
+    term_bank_v3_x_definition_tag_table AS TB3DTRT
+JOIN
+    term_bank_v3_definition_tags_table AS TB3DTT
+        ON TB3DTRT.definition_tag_id = TB3DTT.id;
+
+---
+
+-- VIEW 3: For Rule Identifiers
+CREATE VIEW IF NOT EXISTS term_bank_v3_rules_json_view AS
+SELECT
+    TB3RIRT.term_bank_id,
+    TB3RIT.rule_identifier
+FROM
+    term_bank_v3_x_rule_identifier_table AS TB3RIRT
+JOIN
+    term_bank_v3_rule_identifier_table AS TB3RIT
+        ON TB3RIRT.rule_identifier_id = TB3RIT.id;
+
+---
+        
+-- VIEW 4: For Tags (pre-builds the JSON object)
+CREATE VIEW IF NOT EXISTS term_bank_v3_tags_json_view AS
+SELECT
+    TB3TBRT.term_bank_id,
+    json_object(
+        'id', TagB3T.id,
+        'indexId', TagB3T.index_id,
+        'name', TagB3T.name,
+        'category', TagB3T.category,
+        'sortingOrder', TagB3T.sorting_order,
+        'notes', TagB3T.notes,
+        'score', TagB3T.score
+    ) AS tag_json
+FROM
+    term_bank_v3_x_tag_bank_table AS TB3TBRT
+JOIN
+    tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id;
 
 CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
-	SELECT
-		TB3T.id,
-		TB3T.index_id AS indexId,
-		term,
-		reading,
-		-- DEFINITION TAGS
-		'[' || COALESCE(
-			GROUP_CONCAT(
-				DISTINCT CASE
-					WHEN TB3DTT.definition_tag IS NULL THEN NULL
-					ELSE json_quote(TB3DTT.definition_tag)
-				END
-			),
-			''
-		) || ']' AS definition_tags,
-		-- RULE IDENTIFIERS
-		'[' || COALESCE(
-			GROUP_CONCAT(
-				DISTINCT CASE
-					WHEN TB3RIT.rule_identifier IS NULL THEN NULL
-					ELSE json_quote(TB3RIT.rule_identifier)
-				END
-			),
-			''
-		) || ']' AS rule_identifiers,
-		popularity,
-		-- DEFINITIONS,
-		'[' || COALESCE(
-			GROUP_CONCAT(
-				DISTINCT json_quote(MT.definition)
-				ORDER BY j.key
-			),
-			''
-		) || ']' AS definitions,
-		definition_order,
-		sequence_number,
-		-- TAG
-		'[' || COALESCE(
-			GROUP_CONCAT(DISTINCT
-				CASE WHEN TagB3T.id IS NOT NULL THEN
-					json_object(
+	WITH
+		-- 1. Aggregate the definitions, ordered by the JSON key
+		definitions_agg AS (
+			SELECT
+				TB3T.id AS term_bank_id,
+				'[' || COALESCE(
+					GROUP_CONCAT(
+						json_quote(MT.definition)
+						ORDER BY j.key
+					),
+					''
+				) || ']' AS definitions
+			FROM
+				term_bank_v3_table AS TB3T,
+				json_each(TB3T.definition_order) AS j
+			JOIN
+				definition_table AS MT ON j.value = MT.id
+			GROUP BY
+				TB3T.id
+		),
+		-- 2. Aggregate the definition tags
+		def_tags_agg AS (
+			SELECT
+				TB3DTRT.term_bank_id,
+				'[' || COALESCE(
+					GROUP_CONCAT(DISTINCT json_quote(TB3DTT.definition_tag)),
+					''
+				) || ']' AS definition_tags
+			FROM
+				term_bank_v3_x_definition_tag_table AS TB3DTRT
+			JOIN
+				term_bank_v3_definition_tags_table AS TB3DTT
+					ON TB3DTRT.definition_tag_id = TB3DTT.id
+			GROUP BY
+				TB3DTRT.term_bank_id
+		),
+		-- 3. Aggregate the rule identifiers
+		rules_agg AS (
+			SELECT
+				TB3RIRT.term_bank_id,
+				'[' || COALESCE(
+					GROUP_CONCAT(DISTINCT json_quote(TB3RIT.rule_identifier)),
+					''
+				) || ']' AS rule_identifiers
+			FROM
+				term_bank_v3_x_rule_identifier_table AS TB3RIRT
+			JOIN
+				term_bank_v3_rule_identifier_table AS TB3RIT
+					ON TB3RIRT.rule_identifier_id = TB3RIT.id
+			GROUP BY
+				TB3RIRT.term_bank_id
+		),
+		-- 4. Aggregate the tags into JSON objects
+		tags_agg AS (
+			SELECT
+				TB3TBRT.term_bank_id,
+				'[' || COALESCE(
+					GROUP_CONCAT(DISTINCT json_object(
 						'id', TagB3T.id,
 						'indexId', TagB3T.index_id,
 						'name', TagB3T.name,
@@ -56,30 +130,37 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
 						'sortingOrder', TagB3T.sorting_order,
 						'notes', TagB3T.notes,
 						'score', TagB3T.score
-					)
-				ELSE NULL END
-			),
-		''
-		) || ']' AS tags
+					)),
+					''
+				) || ']' AS tags
+			FROM
+				term_bank_v3_x_tag_bank_table AS TB3TBRT
+			JOIN
+				tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id
+			GROUP BY
+				TB3TBRT.term_bank_id
+		)
+	-- 5. Final, fast SELECT by joining all pre-aggregated data
+	SELECT
+		TB3T.id,
+		TB3T.index_id AS indexId,
+		TT.term,
+		RT.reading,
+		COALESCE(DTA.definition_tags, '[]') AS definition_tags,
+		COALESCE(RA.rule_identifiers, '[]') AS rule_identifiers,
+		TB3T.popularity,
+		COALESCE(DA.definitions, '[]') AS definitions,
+		TB3T.definition_order,
+		TB3T.sequence_number,
+		COALESCE(TA.tags, '[]') AS tags
 	FROM
 		term_bank_v3_table AS TB3T
-	-- get all terms
-	LEFT JOIN term_table as TT ON TB3T.term_id = TT.id
-	-- get all readings
-	LEFT JOIN reading_table as RT ON TB3T.reading_id = RT.id
-	-- get all defintion tags such as 'vt' (verb)
-	LEFT JOIN term_bank_v3_x_definition_tag_table as TB3DTRT ON TB3T.id = TB3DTRT.term_bank_id 
-	LEFT JOIN term_bank_v3_definition_tags_table as TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id
-	-- get all rule identifiers such as 'v5'
-	LEFT JOIN term_bank_v3_x_rule_identifier_table as TB3RIRT ON TB3T.id = TB3RIRT.term_bank_id 
-	LEFT JOIN term_bank_v3_rule_identifier_table as TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id
-	-- get the definitions
-	LEFT JOIN term_bank_v3_x_definition_table as TB3MRT ON TB3T.id = TB3MRT.term_bank_id 
-	LEFT JOIN definition_table as MT ON TB3MRT.definition_id = MT.id
-	JOIN json_each(TB3T.definition_order) j ON j.value = TB3MRT.definition_id
-	-- get the tags
-	LEFT JOIN term_bank_v3_x_tag_bank_table as TB3TBRT ON TB3T.id = TB3TBRT.term_bank_id 
-	LEFT JOIN tag_bank_v3_table as TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id
-	
-	GROUP BY TB3T.id
-	;
+	-- 1-to-1 Joins
+	LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
+	LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id
+	-- 1-to-1 Joins (to pre-aggregated CTEs)
+	LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id
+	LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id
+	LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id
+	LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id;
+

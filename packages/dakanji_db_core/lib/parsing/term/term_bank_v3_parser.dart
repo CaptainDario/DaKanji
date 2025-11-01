@@ -157,7 +157,7 @@ Future parseTermBankV3(
         pC.allDefinitions[text] = definitionInsertId;
         definitionComps.add(DefinitionTableCompanion(
           id: Value(definitionInsertId),
-          definition: Value(jsonEncode(text))
+          definition: Value(text)
         ));
       }
       definitionIds.add(definitionInsertId);

@@ -4,85 +4,99 @@ import '/database/index/index_tables.dart';
 import 'term_meta_bank_relation_tables.dart';
 import 'term_meta_bank_v3_tables.dart';
 
+-- VIEW 1: The non-aggregated base data
+CREATE VIEW IF NOT EXISTS term_meta_bank_v3_base_view AS
+SELECT
+  tmb.id AS term_meta_id,
+  tmb.index_id AS indexId,
+  tmb.term_id,    -- Keep the ID for fast joins
+  tmb.reading_id, -- Keep the ID for fast joins
+  t.term,
+  r.reading,
+  type.type,
+  tmb.freq_value AS frequency,
+  tmb.freq_display_value AS frequencyDisplayValue
+FROM term_meta_bank_v3_table AS tmb
+JOIN term_table AS t ON tmb.term_id = t.id
+JOIN term_meta_bank_v3_type_table AS type ON tmb.type_id = type.id
+LEFT JOIN reading_table AS r ON tmb.reading_id = r.id;
 
-CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_view AS
+---
 
-  WITH
-    -- 1. Aggregates all pitches and their associated tags into a JSON array for each metadata entry.
-    AggregatedPitches AS (
-      SELECT
-        xp.term_meta_id,
-        JSON_GROUP_ARRAY(
-          JSON_OBJECT(
-            'position', p.position,
-            'devoice',  p.devoice,
-            'nasal',    p.nasal,
-            'tags',     COALESCE(
-              (
-                SELECT JSON_GROUP_ARRAY(tag.tag)
-                FROM term_meta_bank_v3_x_pitch_tag_table AS xpt
-                JOIN term_meta_bank_v3_tag_table AS tag ON xpt.tag_id = tag.id
-                WHERE xpt.pitch_id = p.id
-              ),
-              JSON('[]')
-            )
-          )
-        ) AS pitches
-      FROM term_meta_bank_v3_x_pitch_table AS xp
-      JOIN term_meta_bank_v3_pitch_table AS p ON xp.pitch_id = p.id
-      GROUP BY xp.term_meta_id
-    ),
-
-    -- 2. Aggregates all IPAs and their associated tags into a JSON array for each metadata entry.
-    AggregatedIpas AS (
-      SELECT
-        xi.term_meta_id,
-        JSON_GROUP_ARRAY(
-          JSON_OBJECT(
-            'ipa',  i.ipa,
-            'tags', COALESCE(
-                      (
-                        SELECT JSON_GROUP_ARRAY(tag.tag)
-                        FROM term_meta_bank_v3_x_ipa_tag_table AS xit
-                        JOIN term_meta_bank_v3_tag_table AS tag ON xit.tag_id = tag.id
-                        WHERE xit.ipa_id = i.id
-                      ),
-                      JSON('[]')
-                    )
-          )
-        ) AS ipas
-      FROM term_meta_bank_v3_x_ipa_table AS xi
-      JOIN term_meta_bank_v3_ipa_table AS i ON xi.ipa_id = i.id
-      GROUP BY xi.term_meta_id
+-- VIEW 2: Pre-aggregated pitches
+CREATE VIEW IF NOT EXISTS term_meta_bank_v3_pitches_json_view AS
+SELECT
+  xp.term_meta_id,
+  JSON_GROUP_ARRAY(
+    JSON_OBJECT(
+      'position', p.position,
+      'devoice',  p.devoice,
+      'nasal',    p.nasal,
+      'tags',     COALESCE(
+        (
+          SELECT JSON_GROUP_ARRAY(tag.tag)
+          FROM term_meta_bank_v3_x_pitch_tag_table AS xpt
+          JOIN term_meta_bank_v3_tag_table AS tag ON xpt.tag_id = tag.id
+          WHERE xpt.pitch_id = p.id
+        ),
+        JSON('[]')
+      )
     )
+  ) AS pitches
+FROM term_meta_bank_v3_x_pitch_table AS xp
+JOIN term_meta_bank_v3_pitch_table AS p ON xp.pitch_id = p.id
+GROUP BY xp.term_meta_id;
 
-  -- 3. Final SELECT statement that defines the structure of the view.
-  SELECT
-    tmb.index_id AS indexId,
-    t.term,
-    type.type,
-    r.reading,
-    tmb.freq_value AS frequency,
-    tmb.freq_display_value AS frequencyDisplayValue,
-    -- Use CASE to ensure pitches data only appears on 'pitch' type rows
-    CASE
-      WHEN type.type = 'pitch' THEN COALESCE(ap.pitches, '[]')
-      ELSE '[]'
-    END AS pitchs,
-    -- Use CASE to ensure ipas data only appears on 'ipa' type rows
-    CASE
-      WHEN type.type = 'ipa' THEN COALESCE(ai.ipas, '[]')
-      ELSE '[]'
-    END AS ipas
-  FROM term_meta_bank_v3_table AS tmb
-  JOIN term_table AS t ON tmb.term_id = t.id
-  JOIN term_meta_bank_v3_type_table AS type ON tmb.type_id = type.id
-  LEFT JOIN reading_table AS r ON tmb.reading_id = r.id
-  LEFT JOIN AggregatedPitches AS ap ON tmb.id = ap.term_meta_id
-  LEFT JOIN AggregatedIpas AS ai ON tmb.id = ai.term_meta_id
-  -- This WHERE clause ensures the view doesn't contain empty shell rows
-  WHERE (
-    (type.type = 'pitch' AND ap.pitches IS NOT NULL) OR
-    (type.type = 'ipa' AND ai.ipas IS NOT NULL) OR
-    (type.type = 'freq') -- Add other valid types here if necessary
-  );
+---
+
+-- VIEW 3: Pre-aggregated IPAs
+CREATE VIEW IF NOT EXISTS term_meta_bank_v3_ipas_json_view AS
+SELECT
+  xi.term_meta_id,
+  JSON_GROUP_ARRAY(
+    JSON_OBJECT(
+      'ipa',  i.ipa,
+      'tags', COALESCE(
+                (
+                  SELECT JSON_GROUP_ARRAY(tag.tag)
+                  FROM term_meta_bank_v3_x_ipa_tag_table AS xit
+                  JOIN term_meta_bank_v3_tag_table AS tag ON xit.tag_id = tag.id
+                  WHERE xit.ipa_id = i.id
+                ),
+                JSON('[]')
+              )
+    )
+  ) AS ipas
+FROM term_meta_bank_v3_x_ipa_table AS xi
+JOIN term_meta_bank_v3_ipa_table AS i ON xi.ipa_id = i.id
+GROUP BY xi.term_meta_id;
+
+
+-- final VIEW: The full term meta entry view
+CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_view AS
+SELECT
+  Base.indexId,
+  Base.term,
+  Base.type,
+  Base.reading,
+  Base.frequency,
+  Base.frequencyDisplayValue,
+  -- Use CASE to ensure pitches data only appears on 'pitch' type rows
+  CASE
+    WHEN Base.type = 'pitch' THEN COALESCE(ap.pitches, '[]')
+    ELSE '[]'
+  END AS pitchs,
+  -- Use CASE to ensure ipas data only appears on 'ipa' type rows
+  CASE
+    WHEN Base.type = 'ipa' THEN COALESCE(ai.ipas, '[]')
+    ELSE '[]'
+  END AS ipas
+FROM term_meta_bank_v3_base_view AS Base
+LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON Base.term_meta_id = ap.term_meta_id
+LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON Base.term_meta_id = ai.term_meta_id
+-- This WHERE clause ensures the view doesn't contain empty shell rows
+WHERE (
+  (Base.type = 'pitch' AND ap.pitches IS NOT NULL) OR
+  (Base.type = 'ipa' AND ai.ipas IS NOT NULL) OR
+  (Base.type = 'freq')
+);

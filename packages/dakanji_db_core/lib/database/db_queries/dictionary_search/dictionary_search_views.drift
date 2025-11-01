@@ -21,7 +21,7 @@ CREATE VIEW IF NOT EXISTS dictionary_search_view AS
         Indices.*,
 
         -- Assemble term meta entries as JSON array
-        COALESce(
+        COALESCE(
             JSON_GROUP_ARRAY(
                 JSON_OBJECT(
                     'indexId', Meta.indexId,
