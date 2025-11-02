@@ -123,7 +123,7 @@ Future _parseDictionaryDataSource(({
     
     // parse the index file -> get dict index
     final indexFile = dataSources.first;
-    int indexId = await parseIndex(utf8.decode(indexFile.fileContent), db);
+    int indexId = await parseAndInsertIndex(utf8.decode(indexFile.fileContent), db);
     final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
 
     // create import context for parsing

@@ -8,15 +8,15 @@ import 'package:universal_io/io.dart';
 import '/database/dakanji_db.dart';
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future<int> parseIndexFile(File indexJsonPath, DaKanjiDB db) async {
+Future<int> parseAndInsertIndexFile(File indexJsonPath, DaKanjiDB db) async {
 
   String jsonString = indexJsonPath.readAsStringSync();
-  return await parseIndex(jsonString, db);
+  return await parseAndInsertIndex(jsonString, db);
 
 }
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future<int> parseIndex(String indexJson, DaKanjiDB db) async {
+Future<int> parseAndInsertIndex(String indexJson, DaKanjiDB db) async {
 
   // read and decode the json
   Map jsonMap = jsonDecode(indexJson);
