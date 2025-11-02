@@ -115,7 +115,7 @@ part 'dakanji_db.g.dart';
     'kanji_vg/kanji_vg_views.drift', 'kanji_vg/kanji_vg_queries.drift',
 
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
-    'general_tables/reading_spellfix_table.drift',
+    //'general_tables/reading_spellfix_table.drift',
     'general_tables/hiragana_spellfix_cost.drift',
     'audio/audio_views.drift', 'audio/audio_queries.drift',
     
