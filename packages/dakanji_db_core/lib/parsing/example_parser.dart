@@ -3,14 +3,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
-import 'package:dakanji_db_core/database/dictionary_types.dart';
 import 'package:dakanji_db_core/parsing/example/example_text_parser.dart';
+import 'package:dakanji_db_core/parsing/index/index_parser.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
-import 'package:path/path.dart' as p;
 
 import '/database/dakanji_db.dart';
 import '/parsing/example/example_sentence_parser.dart';
@@ -69,19 +68,13 @@ Future _parseExampleDataSource(({
 
   try {
     Iterable<({String filePath, Uint8List fileContent})> dataSources =
-      dakanjiDBDataSourceIterator(archivePath: params.examplesZipPath,
-    );
+      dakanjiDBDataSourceIterator(
+        archivePath: params.examplesZipPath, fileOrder: ["yomitan_index.json"]);
 
-    // add an index for the example entries
-    int indexId = await db.into(db.indexTable).insert(IndexTableCompanion(
-      dictionaryType: Value(DictionaryTypes.examples),
-      currentSortingOrder: Value(await db.indexDao.maxIndexId()+1),
-
-      title: Value(p.basenameWithoutExtension(params.examplesZipPath)),
-      revision: Value("1.0"),
-      updatable: Value(false),
-      description: Value("Examples data source, parsed from ${p.basename(params.examplesZipPath)}"),
-    ));
+    final indexFile = dataSources.first;
+    int indexId = await parseAndInsertIndex(utf8.decode(indexFile.fileContent), db);
+    final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
+    dataSources = dataSources.skip(1);
 
     // parse the example bank files
     int progressCounter = 1;
