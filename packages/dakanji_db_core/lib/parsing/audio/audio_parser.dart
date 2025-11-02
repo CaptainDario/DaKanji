@@ -4,9 +4,9 @@ import 'dart:isolate';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
-import 'package:dakanji_db_core/database/dictionary_types.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_data_source_formats.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_parser_context.dart';
+import 'package:dakanji_db_core/parsing/index/index_parser.dart';
 import 'package:dakanji_db_core/parsing/media/media_importer.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
@@ -89,8 +89,14 @@ Future _parseAudioDataSource(({
     dakanjiDBDataSourceIterator(
       archivePath: params.audioDataSourceFile,
       archiveBytes: params.audioDataSourceBytes,
-      fileOrder: ["index.json", "entries.json"]
+      fileOrder: ["yomitan_index.json", r"^index.json", "entries.json"]
   );
+
+  // add an index for the audio entries
+  final indexFile = dataSources.first;
+  int indexId = await parseAndInsertIndex(utf8.decode(indexFile.fileContent), db);
+  final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
+  dataSources = dataSources.skip(1);
 
   try {
     // find the format
@@ -102,18 +108,6 @@ Future _parseAudioDataSource(({
     } else {
       format = AudioDataSourceFormats.filesNames;
     }
-
-    // add an index for the audio entries
-    int indexId = await db.into(db.indexTable).insert(IndexTableCompanion(
-      dictionaryType: Value(DictionaryTypes.audio),
-      currentSortingOrder: Value(await db.indexDao.maxIndexId()+1),
-      
-      title: Value(params.audioSourceName),
-      revision: Value("1.0"),
-      format: Value(format.index),
-      updatable: Value(false),
-      description: Value("Audio data source, parsed from ${params.audioSourceName}.zip using format ${format.name}"),
-    ));
 
     // parse according to the format
     switch (format) {
