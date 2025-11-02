@@ -5,6 +5,7 @@ import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
 import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:drift/drift.dart";
+import "package:language_processing/japanese/spellfix/spellfix.dart";
 
 import "../dakanji_db.dart";
 
@@ -70,6 +71,9 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
   ) async {
 
     var (:normalizedTerms, :termVariants) = preprocessInput(term, convertRomajiToHiragana);
+    List<String> spellingVariations = normalizedTerms.expand((e) => 
+      generateSpellingVariations(word: e, n: 10, maxCost: 10)
+    ).toList();
     
     bool isWildcardSearch = term.contains(RegExp(r'\*|\?'));
     int useGlobInt = isWildcardSearch ? 1 : 0;
@@ -78,16 +82,18 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
 
     // run the queries in parallel
     final results = (await Future.wait([
-
+      // exact query
       _querySQLite([term], tags, useGlobInt, 0),
+      // normalized terms
       _querySQLite(normalizedTerms, tags, useGlobInt, 1),
+      // term variants (deconjugated forms)
       _querySQLite(
-        termVariants.map((e) => e.deconjugatedTerm).toList(), tags, useGlobInt, 1)
+        termVariants.map((e) => e.deconjugatedTerm).toList(), tags, useGlobInt, 1),
+      // spellfix / fuzzy search
+      _querySQLite(spellingVariations, tags, useGlobInt, 1)
     ]));
 
-    print("RESULTS: ${results}");
-
-
+    
     return DictionarySearchResult(
       queryMatches: SearchMatchGroup.fromDictionarySearch(
         results[0], isWildcardSearch).firstOrNull ?? SearchMatchGroup.empty(),
@@ -95,7 +101,8 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         results[1], isWildcardSearch),
       queryVariantMatches: SearchMatchGroup.fromDictionarySearch(
         results[2], isWildcardSearch),
-      fuzzyMatches: []
+      fuzzyMatches: SearchMatchGroup.fromDictionarySearch(
+        results[3], isWildcardSearch)
     );
 
     
