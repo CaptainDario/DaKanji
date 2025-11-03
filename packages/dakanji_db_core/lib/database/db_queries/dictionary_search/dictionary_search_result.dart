@@ -251,12 +251,12 @@ static List<SearchMatchGroup> fromDictionarySearch(
         
         // Create ONE base match from the first item
         final baseRecord = group.first;
-        final baseMatch = _buildDictionaryMatch(baseRecord);
+        final baseMatch = DictionaryMatch.fromDictionarySearchDrift(baseRecord);
         final baseMatchType = baseRecord.$1.matchType;
 
         // Add all OTHER matches to it
         for (int i = 1; i < group.length; i++) {
-          final otherMatch = _buildDictionaryMatch(group[i]);
+          final otherMatch = DictionaryMatch.fromDictionarySearchDrift(group[i]);
           baseMatch.addDictionaryMatch(otherMatch);
         }
 
@@ -279,28 +279,6 @@ static List<SearchMatchGroup> fromDictionarySearch(
     });
 
     return finalGroups;
-  }
-  /// Helper: Builds a [DictionaryMatch] (SoA) for a *single* entry.
-  static DictionaryMatch _buildDictionaryMatch(
-    (
-      DictionarySearchDriftFindTermBankEntriesResult,
-      DictionarySearchDriftFindTermBankDetailsResult
-    ) record,
-  ) {
-    final (searchInfo, entryInfo) = record;
-    final entry = TermBankV3Entry.fromDictionarySearchDrift(entryInfo);
-    
-    return DictionaryMatch(
-      matches: [searchInfo.matchedText ?? ""],
-      popularities: [searchInfo.finalPopularity],
-      entries: [entry], // This is List<TermBankV3Entry>
-      metaEntriesForEachEntry: [
-        (jsonDecode(entryInfo.termMetaEntries) as List)
-            .map((me) => TermMetaBankV3Entry.fromJson(me))
-            .toList()
-      ],
-      indexTableData: [IndexTableEntry.fromDictionarySearchDrift(entryInfo)],
-    );
   }
 
   @override
@@ -355,6 +333,28 @@ class DictionaryMatch {
       required this.indexTableData,
     }
   );
+
+  factory DictionaryMatch.fromDictionarySearchDrift(
+    (
+      DictionarySearchDriftFindTermBankEntriesResult,
+      DictionarySearchDriftFindTermBankDetailsResult
+    ) record,
+  ) {
+    final (searchInfo, entryInfo) = record;
+    final entry = TermBankV3Entry.fromDictionarySearchDetails(entryInfo);
+
+    return DictionaryMatch(
+      matches: [searchInfo.matchedText ?? ""],
+      popularities: [searchInfo.finalPopularity],
+      entries: [entry], // This is List<TermBankV3Entry>
+      metaEntriesForEachEntry: [
+        (jsonDecode(entryInfo.termMetaEntries) as List)
+            .map((me) => TermMetaBankV3Entry.fromJson(me))
+            .toList()
+      ],
+      indexTableData: [IndexTableEntry.fromDictionarySearchDrift(entryInfo)],
+    );
+  }
 
   /// Adds `other` to this match, combining them while putting `this` first.
   void addDictionaryMatch(DictionaryMatch other) {

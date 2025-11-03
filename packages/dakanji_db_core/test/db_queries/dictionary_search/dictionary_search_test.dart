@@ -24,7 +24,7 @@ import 'dictionary_search_wildcard_test_cases.dart';
 
 
 // Lists are defined at the top level (this is fine)
-final List<List<SearchTestCase>> testCases = [
+final List<List<ExpectedDictionarySearchResult>> testCases = [
   searchTestCases,
   deconjugationTestCases,
   wildcardSearchTestCases,

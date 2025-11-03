@@ -58,25 +58,47 @@ Matcher matchesMetaEntry((List<TermMetaBankV3PitchEntry>, List<TermMetaBankV3Ipa
 ///
 /// It checks the `match` text and the nested `entry`'s term, reading,
 /// and definitions. This has been updated to use `DictionaryMatch`.
-Matcher matchesSearchResult(ExpectedSearchResult expected) {
+Matcher matchesSearchResult(List<ExpectedDictionaryMatch> expectedGroup) {
+  final expectedMatches =
+      expectedGroup.map((e) => e.match).toList();
+  final expectedTerms =
+      expectedGroup.map((e) => e.term).toList();
+  final expectedReadings =
+      expectedGroup.map((e) => e.reading).toList();
+  final expectedDefinitionMatchers = expectedGroup
+      .map((e) => orderedEquals(e.definitions))
+      .toList();
+  final expectedMetaMatchers = expectedGroup
+      .map((e) => unorderedEquals(
+            e.metas.map(matchesMetaEntry).toList(),
+          ))
+      .toList();
+
   return isA<DictionaryMatch>()
-      // --- Check that lists are not empty ---
-      .having((res) => res.matches, 'matches list', isNotEmpty)
-      .having((res) => res.entries, 'entries list', isNotEmpty)
-      .having((res) => res.metaEntriesForEachEntry, 'meta entries list', isNotEmpty)
-      
-      // --- Then, check the properties of the first item ---
-      .having((res) => res.matches.first, 'match', expected.match)
-      .having((res) => res.entries.first.term, 'entry.term', expected.term)
-      .having((res) => res.entries.first.reading, 'entry.reading', expected.reading)
-      .having((res) => res.entries.first.definitions, 'entry.definitions', orderedEquals(expected.definitions))
       .having(
-        (res) => res.metaEntriesForEachEntry.first, // Check the first meta list
-        'entry.metaEntries',
-        unorderedEquals(
-          // Map each expected meta-tuple into its own matcher
-          expected.metas.map((metaTuple) => matchesMetaEntry(metaTuple)).toList(),
-        ),
+        (res) => res.matches,
+        'matches',
+        orderedEquals(expectedMatches),
+      )
+      .having(
+        (res) => res.entries.map((e) => e.term).toList(),
+        'entry terms',
+        orderedEquals(expectedTerms),
+      )
+      .having(
+        (res) => res.entries.map((e) => e.reading).toList(),
+        'entry readings',
+        orderedEquals(expectedReadings),
+      )
+      .having(
+        (res) => res.entries.map((e) => e.definitions).toList(),
+        'entry definitions',
+        orderedEquals(expectedDefinitionMatchers),
+      )
+      .having(
+        (res) => res.metaEntriesForEachEntry,
+        'entry meta entries',
+        orderedEquals(expectedMetaMatchers),
       );
 }
 
@@ -88,17 +110,119 @@ void expectMatchGroup(
     String query,
     String groupName,
 ) {
-    
-    final exactMatchers = expected.exactMatches.map(matchesSearchResult).toList();
-    expect(actual.exactMatches, orderedEquals(exactMatchers), reason: "ExactMatches in group '$groupName' for query '$query' did not match.");
+  _compareMatchBucket(
+    actual.exactMatches,
+    expected.exactMatches,
+    query,
+    groupName,
+    'ExactMatches',
+  );
 
-    final prefixMatchers = expected.prefixMatches.map(matchesSearchResult).toList();
-    expect(actual.prefixMatches, orderedEquals(prefixMatchers), reason: "PrefixMatches in group '$groupName' for query '$query' did not match.");
-    
-    final tokenMatchers = expected.tokenMatches.map(matchesSearchResult).toList();
-    expect(actual.tokenMatches, orderedEquals(tokenMatchers), reason: "TokenMatches in group '$groupName' for query '$query' did not match.");
+  _compareMatchBucket(
+    actual.prefixMatches,
+    expected.prefixMatches,
+    query,
+    groupName,
+    'PrefixMatches',
+  );
 
-    final wildcardMatchers = expected.wildcardMatches.map(matchesSearchResult).toList();
-    expect(actual.wildcardMatches, orderedEquals(wildcardMatchers), reason: "WildcardMatches in group '$groupName' for query '$query' did not match.");
+  _compareMatchBucket(
+    actual.tokenMatches,
+    expected.tokenMatches,
+    query,
+    groupName,
+    'TokenMatches',
+  );
 
+  _compareMatchBucket(
+    actual.wildcardMatches,
+    expected.wildcardMatches,
+    query,
+    groupName,
+    'WildcardMatches',
+  );
+}
+
+void _compareMatchBucket(
+  List<DictionaryMatch> actual,
+  List<List<ExpectedDictionaryMatch>> expected,
+  String query,
+  String groupName,
+  String bucketLabel,
+) {
+  var actualIndex = 0;
+
+  for (var groupIndex = 0; groupIndex < expected.length; groupIndex++) {
+    final expectedGroup = expected[groupIndex];
+
+    if (actualIndex >= actual.length) {
+      fail(
+        'Missing $bucketLabel for group \'$groupName\' in query \'$query\'. '
+        'Expected ${expected.length} groups but only ${actual.length} present.',
+      );
+    }
+
+    final current = actual[actualIndex];
+
+    final aggregatedMatch =
+        current.entries.length == expectedGroup.length;
+
+    if (expectedGroup.length > 1 && !aggregatedMatch) {
+      final remaining = actual.length - actualIndex;
+      if (remaining < expectedGroup.length) {
+        fail(
+          'Missing $bucketLabel entries in group \'$groupName\' for query \'$query\'. '
+          'Needed ${expectedGroup.length}, but only $remaining remain.',
+        );
+      }
+
+      for (var offset = 0; offset < expectedGroup.length; offset++) {
+        expect(
+          actual[actualIndex + offset],
+          matchesSearchResult([expectedGroup[offset]]),
+          reason:
+              "$bucketLabel[$groupIndex][$offset] in group '$groupName' for query '$query' did not match.",
+        );
+      }
+      actualIndex += expectedGroup.length;
+      continue;
+    }
+
+    expect(
+      current,
+      matchesSearchResult(expectedGroup),
+      reason:
+          "$bucketLabel[$groupIndex] in group '$groupName' for query '$query' did not match.",
+    );
+    actualIndex++;
+  }
+
+  if (actualIndex != actual.length) {
+    final extras = actual
+        .sublist(actualIndex)
+        .map((m) => m.toFormattedString(indent: '  '))
+        .join('\n');
+    fail(
+      'Unexpected extra $bucketLabel in group \'$groupName\' for query \'$query\':\n$extras',
+    );
+  }
+}
+
+void expectMatchGroupList(
+  List<SearchMatchGroup> actual,
+  List<ExpectedMatchGroup> expected,
+  String query,
+  String label,
+) {
+  if (actual.length != expected.length) {
+    fail(
+      'Unexpected number of $label for query \'$query\'.\n'
+      'Expected length: ${expected.length}\n'
+      '  Actual length: ${actual.length}\n'
+      '   ACTUAL CONTENTS:\n${actual.map((g) => g.toFormattedString(indent: "    ")).join("\n")}',
+    );
+  }
+  for (var i = 0; i < expected.length; i++) {
+    expectMatchGroup(actual[i], expected[i], query, '$label[$i]');
+  }
 }

@@ -1,99 +1,11 @@
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_ipa_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_pitch_entry.dart';
 
-/// Represents an expected search result, including the matched text.
-class ExpectedSearchResult {
-  final String term;
-  final String reading;
-  final List<String> definitions;
-  /// The text that was matched (e.g., highlighted text)
-  final String match;
 
-  final List<(
-    List<TermMetaBankV3PitchEntry>,
-    List<TermMetaBankV3IpaEntry>
-  )> metas;
-
-  const ExpectedSearchResult({
-    required this.term,
-    required this.reading,
-    required this.definitions,
-    required this.match,
-    this.metas = const [],
-  });
-
-  /// Formats this result with indentation.
-  String toFormattedString({String indent = ''}) {
-    final buffer = StringBuffer();
-    // E.g., 食べる [たべる] (Matched: "食べる")
-    buffer.writeln('$indent$term [$reading] (Matched: "$match")');
-    
-    // E.g.,   1. to eat
-    for (var i = 0; i < definitions.length; i++) {
-      buffer.writeln('$indent  ${i + 1}. ${definitions[i]}');
-    }
-    // Trim the final newline so the caller can use writeln()
-    return buffer.toString().trimRight();
-  }
-
-  @override
-  String toString() => toFormattedString();
-}
-
-/// A container for the expected results of a single search query form,
-/// categorized by match type. This structure mirrors the `SearchMatchGroup` class.
-class ExpectedMatchGroup {
-  final List<ExpectedSearchResult> exactMatches;
-  final List<ExpectedSearchResult> prefixMatches;
-  final List<ExpectedSearchResult> tokenMatches;
-  final List<ExpectedSearchResult> wildcardMatches;
-
-  const ExpectedMatchGroup({
-    this.exactMatches = const [],
-    this.prefixMatches = const [],
-    this.tokenMatches = const [],
-    this.wildcardMatches = const [],
-  });
-
-  bool get isEmpty =>
-      exactMatches.isEmpty &&
-      prefixMatches.isEmpty &&
-      tokenMatches.isEmpty &&
-      wildcardMatches.isEmpty;
-
-  /// Formats this entire group with indentation.
-  String toFormattedString({String indent = ''}) {
-    final buffer = StringBuffer();
-    final nextIndent = '$indent  ';
-
-    void printSection(String title, List<ExpectedSearchResult> matches) {
-      if (matches.isNotEmpty) {
-        // E.g., ▶ Prefix Matches (4):
-        buffer.writeln('$indent▶ $title (${matches.length}):');
-        for (final match in matches) {
-          buffer.writeln(match.toFormattedString(indent: nextIndent));
-        }
-      }
-    }
-
-    printSection('Exact Matches', exactMatches);
-    printSection('Prefix Matches', prefixMatches);
-    printSection('Token Matches', tokenMatches);
-    printSection('Wildcard Matches', wildcardMatches);
-
-    // Note: Do not trim trailing newline here.
-    // The top-level caller (SearchTestCase) uses write()
-    // and expects a trailing newline if content exists.
-    return buffer.toString();
-  }
-
-  @override
-  String toString() => toFormattedString();
-}
 
 /// Defines a single, comprehensive test case that can assert against the different
 /// categories of results from a `DictionaryLookupResult`.
-class SearchTestCase {
+class ExpectedDictionarySearchResult {
   final String description;
   final String query;
   final List<String> tags;
@@ -110,7 +22,7 @@ class SearchTestCase {
   /// Expected results from fuzzy matching.
   final List<ExpectedMatchGroup> fuzzyMatches;
 
-  const SearchTestCase({
+  const ExpectedDictionarySearchResult({
     required this.description,
     required this.query,
     this.tags = const [],
@@ -195,3 +107,121 @@ class SearchTestCase {
     return buffer.toString();
   }
 }
+
+/// A container for the expected results of a single search query form,
+/// categorized by match type. This structure mirrors the `SearchMatchGroup` class.
+class ExpectedMatchGroup {
+
+  final List<List<ExpectedDictionaryMatch>> exactMatches;
+  final List<List<ExpectedDictionaryMatch>> prefixMatches;
+  final List<List<ExpectedDictionaryMatch>> tokenMatches;
+  final List<List<ExpectedDictionaryMatch>> wildcardMatches;
+
+  const ExpectedMatchGroup({
+    this.exactMatches = const [],
+    this.prefixMatches = const [],
+    this.tokenMatches = const [],
+    this.wildcardMatches = const [],
+  });
+
+  bool get isEmpty =>
+      exactMatches.isEmpty &&
+      prefixMatches.isEmpty &&
+      tokenMatches.isEmpty &&
+      wildcardMatches.isEmpty;
+
+  /// Formats this entire group with indentation.
+  String toFormattedString({String indent = ''}) {
+    final buffer = StringBuffer();
+    
+
+    _printSection('Exact Matches', exactMatches, buffer);
+    _printSection('Prefix Matches', prefixMatches, buffer);
+    _printSection('Token Matches', tokenMatches, buffer);
+    _printSection('Wildcard Matches', wildcardMatches, buffer);
+
+    return buffer.toString();
+  }
+
+  void _printSection(
+    String title,
+    List<List<ExpectedDictionaryMatch>> groups,
+    StringBuffer buffer,
+    {String indent = ''}
+  ) {
+    if (groups.isEmpty) return;
+
+    final nextIndent = '$indent  ';
+
+    final totalMatches = groups.fold<int>(0, (sum, group) => sum + group.length);
+    buffer.writeln('$indent▶ $title ($totalMatches):');
+
+    final bool multipleGroups = groups.length > 1;
+    for (var i = 0; i < groups.length; i++) {
+      final group = groups[i];
+      final groupIndent = multipleGroups ? '$nextIndent  ' : nextIndent;
+
+      if (multipleGroups) {
+        buffer.writeln('$nextIndent- Group ${i + 1}:');
+      }
+
+      for (final match in group) {
+        buffer.writeln(match.toFormattedString(indent: groupIndent));
+      }
+    }
+  }
+
+  @override
+  String toString() => toFormattedString();
+}
+
+/// Represents an expected grouped search match, containing multiple entries
+/// that got grouped by term+reading or sequence number.
+class ExpectedGroupedDictionaryMatch {
+  final String match;
+  final List<ExpectedDictionaryMatch> entries;
+  const ExpectedGroupedDictionaryMatch({
+    required this.match,
+    required this.entries,
+  });
+}
+
+/// Represents an expected search result, including the matched text.
+class ExpectedDictionaryMatch {
+  final String term;
+  final String reading;
+  final List<String> definitions;
+  /// The text that was matched
+  final String match;
+
+  final List<(
+    List<TermMetaBankV3PitchEntry>,
+    List<TermMetaBankV3IpaEntry>
+  )> metas;
+
+  const ExpectedDictionaryMatch({
+    required this.term,
+    required this.reading,
+    required this.definitions,
+    required this.match,
+    this.metas = const [],
+  });
+
+  /// Formats this result with indentation.
+  String toFormattedString({String indent = ''}) {
+    final buffer = StringBuffer();
+    // E.g., 食べる [たべる] (Matched: "食べる")
+    buffer.writeln('$indent$term [$reading] (Matched: "$match")');
+    
+    // E.g.,   1. to eat
+    for (var i = 0; i < definitions.length; i++) {
+      buffer.writeln('$indent  ${i + 1}. ${definitions[i]}');
+    }
+    // Trim the final newline so the caller can use writeln()
+    return buffer.toString().trimRight();
+  }
+
+  @override
+  String toString() => toFormattedString();
+}
+
