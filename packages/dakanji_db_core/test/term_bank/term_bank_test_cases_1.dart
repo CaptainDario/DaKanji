@@ -38,6 +38,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "打"
   [
     TermBankV3Entry(
+      termBankV3TableId: 1,
       indexId: dictId,
       term: "打",
       reading: "だ",
@@ -57,6 +58,7 @@ final termBankTestCaseExpectations1 = [
       ]
     ),
     TermBankV3Entry(
+      termBankV3TableId: 2,
       indexId: dictId,
       term: "打",
       reading: "ダース",
@@ -80,6 +82,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "打つ"
   [
     TermBankV3Entry(
+        termBankV3TableId: 3,
         indexId: dictId,
         term: "打つ",
         reading: "うつ",
@@ -105,6 +108,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        termBankV3TableId: 4,
         indexId: dictId,
         term: "打つ",
         reading: "うつ",
@@ -130,6 +134,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        termBankV3TableId: 5,
         indexId: dictId,
         term: "打つ",
         reading: "ぶつ",
@@ -155,6 +160,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        termBankV3TableId: 6,
         indexId: dictId,
         term: "打つ",
         reading: "ぶつ",
@@ -183,6 +189,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "打ち込む"
   [
     TermBankV3Entry(
+        termBankV3TableId: 7,
         indexId: dictId,
         term: "打ち込む",
         reading: "うちこむ",
@@ -208,6 +215,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        termBankV3TableId: 8,
         indexId: dictId,
         term: "打ち込む",
         reading: "うちこむ",
@@ -233,6 +241,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        termBankV3TableId: 9,
         indexId: dictId,
         term: "打ち込む",
         reading: "ぶちこむ",
@@ -258,6 +267,7 @@ final termBankTestCaseExpectations1 = [
               score: 0)
         ]),
     TermBankV3Entry(
+        termBankV3TableId: 10,
         indexId: dictId,
         term: "打ち込む",
         reading: "ぶちこむ",
@@ -286,6 +296,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "画像"
   [
     TermBankV3Entry(
+        termBankV3TableId: 11,
         indexId: dictId,
         term: "画像",
         reading: "がぞう",
@@ -314,6 +325,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "読む"
   [
     TermBankV3Entry(
+        termBankV3TableId: 12,
         indexId: dictId,
         term: "読む",
         reading: "よむ",
@@ -342,6 +354,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "強み"
   [
     TermBankV3Entry(
+        termBankV3TableId: 13,
         indexId: dictId,
         term: "強み",
         reading: "つよみ",
@@ -370,6 +383,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "テキスト"
   [
     TermBankV3Entry(
+        termBankV3TableId: 14,
         indexId: dictId,
         term: "テキスト",
         reading: "テキスト",
@@ -398,6 +412,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "お手前"
   [
     TermBankV3Entry(
+        termBankV3TableId: 15,
         indexId: dictId,
         term: "お手前",
         reading: "おてまえ",
@@ -411,6 +426,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "番号"
   [
     TermBankV3Entry(
+        termBankV3TableId: 16,
         indexId: dictId,
         term: "番号",
         reading: "ばんごう",
@@ -424,6 +440,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "中腰"
   [
     TermBankV3Entry(
+        termBankV3TableId: 17,
         indexId: dictId,
         term: "中腰",
         reading: "ちゅうごし",
@@ -437,6 +454,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "所業"
   [
     TermBankV3Entry(
+        termBankV3TableId: 18,
         indexId: dictId,
         term: "所業",
         reading: "しょぎょう",
@@ -450,6 +468,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "土木工事"
   [
     TermBankV3Entry(
+        termBankV3TableId: 19,
         indexId: dictId,
         term: "土木工事",
         reading: "どぼくこうじ",
@@ -463,6 +482,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "好き"
   [
     TermBankV3Entry(
+        termBankV3TableId: 20,
         indexId: dictId,
         term: "好き",
         reading: "すき",
@@ -476,6 +496,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "内容"
   [
     TermBankV3Entry(
+        termBankV3TableId: 21,
         indexId: dictId,
         term: "内容",
         reading: "ないよう",
@@ -529,6 +550,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "構造"
   [
     TermBankV3Entry(
+        termBankV3TableId: 22,
         indexId: dictId,
         term: "構造",
         reading: "こうぞう",
@@ -561,6 +583,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "のたまう"
   [
     TermBankV3Entry(
+        termBankV3TableId: 23,
         indexId: dictId,
         term: "のたまう",
         reading: "のたまう",
@@ -574,6 +597,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "のたもうた"
   [
     TermBankV3Entry(
+        termBankV3TableId: 24,
         indexId: dictId,
         term: "のたもうた",
         reading: "のたもうた",
@@ -587,6 +611,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "３９"
   [
     TermBankV3Entry(
+        termBankV3TableId: 25,
         indexId: dictId,
         term: "３９",
         reading: "さんきゅう",
@@ -600,6 +625,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "凄い"
   [
     TermBankV3Entry(
+        termBankV3TableId: 26,
         indexId: dictId,
         term: "凄い",
         reading: "すごい",
@@ -613,6 +639,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "English"
   [
     TermBankV3Entry(
+        termBankV3TableId: 27,
         indexId: dictId,
         term: "English",
         reading: "",
@@ -626,6 +653,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "language"
   [
     TermBankV3Entry(
+        termBankV3TableId: 28,
         indexId: dictId, 
         term: "language",
         reading: "",
@@ -639,6 +667,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "ＵＳＢ"
   [
     TermBankV3Entry(
+        termBankV3TableId: 29,
         indexId: dictId,
         term: "ＵＳＢ",
         reading: "ユーエスビー",
@@ -652,6 +681,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "마시다"
   [
     TermBankV3Entry(
+        termBankV3TableId: 30,
         indexId: dictId,
         term: "마시다",
         reading: "",
@@ -665,6 +695,7 @@ final termBankTestCaseExpectations1 = [
   // Test case for "自重"
   [
     TermBankV3Entry(
+        termBankV3TableId: 31,
         indexId: dictId,
         term: "自重",
         reading: "じちょう",
@@ -675,6 +706,7 @@ final termBankTestCaseExpectations1 = [
         sequenceNumber: 23,
         tags: []),
     TermBankV3Entry(
+        termBankV3TableId: 32,
         indexId: dictId,
         term: "自重",
         reading: "じじゅう",

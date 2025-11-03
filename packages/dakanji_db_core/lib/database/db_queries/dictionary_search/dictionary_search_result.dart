@@ -54,30 +54,25 @@ class DictionarySearchResult {
   }
 
   void processMatchGroup(SearchMatchGroup group, Set<String> seenEntryIds) {
-      filterList(group.exactMatches, seenEntryIds);
-      filterList(group.prefixMatches, seenEntryIds);
-      filterList(group.tokenMatches, seenEntryIds);
-      filterList(group.wildcardMatches, seenEntryIds);
-    }
+    filterList(group.exactMatches, seenEntryIds);
+    filterList(group.prefixMatches, seenEntryIds);
+    filterList(group.tokenMatches, seenEntryIds);
+    filterList(group.wildcardMatches, seenEntryIds);
+  }
 
-  // Helper function to filter a list in-place.
-  // It removes any matches whose entry ID is already in the `seenEntryIds` set.
-  // For new entries, it adds their ID to the set.
+  // Helper function to filter out all previously seen matches.
   void filterList(List<DictionaryMatch> matches, Set<String> seenEntryIds) {
     matches.removeWhere((match) {
       // Create a unique identifier for the dictionary entry.
-      // Using term + reading is a robust way to do this if no
-      // single database ID (like `sequence` or `id`) is available
-      // on the TermBankV3Entry.
-      final String entryId = match.entry.hashCode.toString();
+      final String entryId = (match.entries.map((e) => e.termBankV3TableId)
+        .toList()..sort)
+        .join(", ");
 
       if (seenEntryIds.contains(entryId)) {
-        // This entry was already found in a more important list.
-        // Remove it from this (less important) list.
+        // This entry was already found in a more important list, remove it
         return true;
       } else {
-        // This is the first time we've seen this entry.
-        // Add it to the set and keep it in this list.
+        // first time seeing this entry, keep it and mark as seen
         seenEntryIds.add(entryId);
         return false;
       }
@@ -188,12 +183,21 @@ class SearchMatchGroup {
       tokenMatches.isEmpty &&
       wildcardMatches.isEmpty;
 
-  static List<SearchMatchGroup> fromDictionarySearch(
+  /// Factory method to create [SearchMatchGroup] objects from raw
+  /// database query results.
+  /// Can group sequences or group on
+  /// 1. same term + reading
+  /// 2. same index + sequence number
+  /// [variantReason] can be provided to indicate why this group
+  /// was created (e.g., de-conjugation).
+static List<SearchMatchGroup> fromDictionarySearch(
     (
       List<DictionarySearchDriftFindTermBankEntriesResult>,
       List<DictionarySearchDriftFindTermBankDetailsResult>
     ) resultTuple,
     bool isWildcardSearch, {
+    bool groupSequences = false,
+    bool groupOnSameTermAndReading = false,
     String? variantReason,
   }) {
     final (searchInfos, detailInfos) = resultTuple;
@@ -201,69 +205,102 @@ class SearchMatchGroup {
     if (searchInfos.isEmpty) return [];
 
     // 1. Create a fast lookup map for the details
-    final detailMap = {
-      for (var detail in detailInfos) detail.termBankV3Id: detail
-    };
+    final detailMap = <int, DictionarySearchDriftFindTermBankDetailsResult>{};
+    for (var detail in detailInfos) {
+      detailMap[detail.termBankV3Id] = detail;
+    }
 
-    // 2. Group the 'searchInfo' list (from Query 1) by its 'searchTerm'
-    //    (Requires 'package:collection/collection.dart')
-    final groupedByTerm = groupBy(searchInfos, (info) => info.searchTerm);
+    // 2. Create a list of combined records
+    final combinedMatches = searchInfos
+        .map((searchInfo) {
+          final detailInfo = detailMap[searchInfo.termBankId];
+          return detailInfo != null ? (searchInfo, detailInfo) : null;
+        })
+        .whereType<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)>()
+        .toList();
 
-    // 3. Create one SearchMatchGroup for each term
+    // 3. Group by the original search term
+    final groupedByTerm = groupBy(combinedMatches, (record) => record.$1.searchTerm);
+
     final finalGroups = <SearchMatchGroup>[];
-    
-    groupedByTerm.forEach((searchTerm, infosForThisTerm) {
-      // 'infosForThisTerm' is the List<DictionarySearchDriftFindTermBankEntriesResult>
-      // for just this one search term (e.g., all matches for "たべる")
 
+    // 4. Create one SearchMatchGroup for each term
+    groupedByTerm.forEach((searchTerm, matchesForThisTerm) {
       List<DictionaryMatch> exactMatches = [],
           prefixMatches = [],
           tokenMatches = [],
           wildcardMatches = [];
-
-      // 4. Loop through the matches for this term
-      for (final searchInfo in infosForThisTerm) {
+      
+      // 5. Build the grouping map (based on the grouping strategy)
+      Map<String, List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)>> groups;
+      if (groupSequences) {
+        groups = groupBy(matchesForThisTerm,
+          (record) => '${record.$2.indexId}_${record.$2.sequenceNumber}');
+      } else if (groupOnSameTermAndReading) {
+        groups = groupBy(
+          matchesForThisTerm, (record) => '${record.$2.term}_${record.$2.reading}');
+      } else {
+        groups = {};
+        for (final record in matchesForThisTerm) {
+          groups[identityHashCode(record).toString()] = [record];
+        }
+      }
+      
+      // 6. Iterate through the map and "add" matches
+      for (final group in groups.values) {
         
-        // Find the matching entry data
-        final entryInfo = detailMap[searchInfo.termBankId];
-        if (entryInfo == null) continue;
+        // Create ONE base match from the first item
+        final baseRecord = group.first;
+        final baseMatch = _buildDictionaryMatch(baseRecord);
+        final baseMatchType = baseRecord.$1.matchType;
 
-        // 5. Build the DictionaryMatch object (using your exact constructor)
-        final r = DictionaryMatch(
-          match: searchInfo.matchedText ?? "",
-          popularity: searchInfo.finalPopularity,
-          entry: TermBankV3Entry.fromDictionarySearchDrift(entryInfo),
-          metaEntries: (jsonDecode(entryInfo.termMetaEntries) as List)
-              .map((me) => TermMetaBankV3Entry.fromJson(me))
-              .toList(),
-          indexTableData: IndexTableEntry.fromDictionarySearchDrift(entryInfo),
-        );
-
-        // 6. Categorize the match using the 'searchInfo'
-        if (isWildcardSearch) {
-          wildcardMatches.add(r);
-          continue;
+        // Add all OTHER matches to it
+        for (int i = 1; i < group.length; i++) {
+          final otherMatch = _buildDictionaryMatch(group[i]);
+          baseMatch.addDictionaryMatch(otherMatch);
         }
 
-        if (searchInfo.matchType == 1) exactMatches.add(r);
-        else if (searchInfo.matchType == 2) prefixMatches.add(r);
-        else if (searchInfo.matchType == 3) tokenMatches.add(r);
+        // 7. Categorize the final, combined match
+        if (isWildcardSearch) wildcardMatches.add(baseMatch);
+        else if (baseMatchType == 1) exactMatches.add(baseMatch);
+        else if (baseMatchType == 2) prefixMatches.add(baseMatch);
+        else if (baseMatchType == 3) tokenMatches.add(baseMatch);
       }
-
-      // 7. Add the newly created group to the final list
-      finalGroups.add(
-        SearchMatchGroup(
-          searchTerm: searchTerm,
-          variantReason: variantReason,
-          exactMatches: exactMatches,
-          prefixMatches: prefixMatches,
-          tokenMatches: tokenMatches,
-          wildcardMatches: wildcardMatches,
-        ),
-      );
+      
+      // 8. Add the newly created group to the final list
+      finalGroups.add(SearchMatchGroup(
+        searchTerm: searchTerm,
+        variantReason: variantReason,
+        exactMatches: exactMatches,
+        prefixMatches: prefixMatches,
+        tokenMatches: tokenMatches,
+        wildcardMatches: wildcardMatches,
+      ));
     });
 
     return finalGroups;
+  }
+  /// Helper: Builds a [DictionaryMatch] (SoA) for a *single* entry.
+  static DictionaryMatch _buildDictionaryMatch(
+    (
+      DictionarySearchDriftFindTermBankEntriesResult,
+      DictionarySearchDriftFindTermBankDetailsResult
+    ) record,
+  ) {
+    final (searchInfo, entryInfo) = record;
+    final entry = TermBankV3Entry.fromDictionarySearchDrift(entryInfo);
+    
+    return DictionaryMatch(
+      matches: [searchInfo.matchedText ?? ""],
+      popularities: [searchInfo.finalPopularity],
+      entries: [entry], // This is List<TermBankV3Entry>
+      metaEntriesForEachEntry: [
+        (jsonDecode(entryInfo.termMetaEntries) as List)
+            .map((me) => TermMetaBankV3Entry.fromJson(me))
+            .toList()
+      ],
+      indexTableData: [IndexTableEntry.fromDictionarySearchDrift(entryInfo)],
+    );
   }
 
   @override
@@ -294,36 +331,56 @@ class SearchMatchGroup {
 }
 
 /// Utility class representing a single search result from the dictionary search.
+/// This can include multple dictionary entries if
+/// 1. Join on term + reading is used
+/// 2. The matched term has multiple entries (sequence numbers)
 class DictionaryMatch {
   /// The tokens that was matched (e.g., 食べるラー油 -> 食べる).
-  final String match;
+  final List<String> matches;
   /// The popularity of this term.
-  final int? popularity;
+  final List<int?> popularities;
   /// The full dictionary entry that was matched.
-  final TermBankV3Entry entry;
+  final List<TermBankV3Entry> entries;
   /// Any associated metadata entries for this term.
-  final List<TermMetaBankV3Entry> metaEntries;
-  /// Index table data for this entry
-  final IndexTableEntry indexTableData;
+  final List<List<TermMetaBankV3Entry>> metaEntriesForEachEntry;
+  /// Index table data for all entries
+  final List<IndexTableEntry> indexTableData;
 
   DictionaryMatch(
     {
-      required this.match,
-      this.popularity,
-      required this.entry,
-      this.metaEntries = const [],
+      required this.matches,
+      required this.popularities,
+      required this.entries,
+      this.metaEntriesForEachEntry = const [],
       required this.indexTableData,
     }
   );
+
+  /// Adds `other` to this match, combining them while putting `this` first.
+  void addDictionaryMatch(DictionaryMatch other) {
+    matches.addAll(other.matches);
+    popularities.addAll(other.popularities);
+    entries.addAll(other.entries);
+    metaEntriesForEachEntry.addAll(other.metaEntriesForEachEntry);
+    indexTableData.addAll(other.indexTableData);
+  }
 
   @override
   String toString() => toFormattedString();
 
   String toFormattedString({String indent = ''}) {
     final buffer = StringBuffer();
-    buffer.writeln('$indent${entry.term} [${entry.reading}] (Matched: "$match", Popularity: $popularity)');
-    for (var i = 0; i < entry.definitions.length; i++) {
-      buffer.writeln('$indent  ${i + 1}. ${entry.definitions[i]}');
+    for (var i = 0; i < entries.length; i++) {
+      
+      // --- THESE ARE THE FIXES ---
+      final entry = entries[i];
+      final match = matches[i];
+      final popularity = popularities[i]?.toString() ?? "N/A";
+
+      buffer.writeln('$indent${entry.term} [${entry.reading}] (Matched: "$match", Popularity: $popularity)');
+      for (var j = 0; j < entry.definitions.length; j++) {
+        buffer.writeln('$indent  ${j + 1}. ${entry.definitions[j]}');
+      }
     }
     return buffer.toString().trimRight();
   }

@@ -18,5 +18,5 @@ get_term_bank_v3_entries_for_ids:
   FROM
     term_bank_v3_entry_view
   WHERE
-    id IN :ids
+    termBankV3Id IN :ids
   ;

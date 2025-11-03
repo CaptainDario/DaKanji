@@ -142,7 +142,7 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
 		)
 	-- 5. Final, fast SELECT by joining all pre-aggregated data
 	SELECT
-		TB3T.id,
+		TB3T.id as termBankV3Id,
 		TB3T.index_id AS indexId,
 		TT.term,
 		RT.reading,

@@ -16,6 +16,8 @@ part 'term_bank_v3_entry.g.dart';
 /// Class representing one term of the database
 class TermBankV3Entry with _$TermBankV3Entry {
 
+  /// The id of this entry in the term bank v3 table
+  final int termBankV3TableId;
   /// The index id of this entry
   @override
   final int indexId;
@@ -46,6 +48,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
 
     
   TermBankV3Entry({
+    required this.termBankV3TableId,
     required this.indexId,
     required this.term,
     required this.reading,
@@ -74,6 +77,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
   factory TermBankV3Entry._fromDataSource(dynamic r) {
 
     return TermBankV3Entry(
+      termBankV3TableId: r.termBankV3Id,
       indexId: r.indexId,
       term: r.term!,
       reading: r.reading!,

@@ -79,8 +79,11 @@ void main() {
             // Perform the search
             final results = await db.dBQueriesDao.dictionarySearch(
               testCase.query,
-              testCase.tags, 
-              true, 
+              tags: testCase.tags, 
+              normalizedSearch: true,
+              normalizedSearchConvertsRomajiToHiragana: true,
+              deconjugationSearch: true,
+              spellfixSearch: true
             );
 
             print("Results:\n $results");

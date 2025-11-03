@@ -11,6 +11,7 @@ final termBankTestCaseExpectations2 = [
   // Test case for "発条"
   [
     TermBankV3Entry(
+      termBankV3TableId: 1,
       indexId: dictId,
       term: '発条',
       reading: 'ばね',

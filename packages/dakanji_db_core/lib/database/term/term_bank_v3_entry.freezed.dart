@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TermBankV3Entry {
 
- int get indexId; String get term; String get reading; List<String> get definitionTags; List<String> get ruleIdentifiers; int get popularity; List<String> get definitions; int get sequenceNumber; List<TagBankV3Entry> get tags;
+ int get termBankV3TableId; int get indexId; String get term; String get reading; List<String> get definitionTags; List<String> get ruleIdentifiers; int get popularity; List<String> get definitions; int get sequenceNumber; List<TagBankV3Entry> get tags;
 /// Create a copy of TermBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $TermBankV3EntryCopyWith<TermBankV3Entry> get copyWith => _$TermBankV3EntryCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TermBankV3Entry&&(identical(other.indexId, indexId) || other.indexId == indexId)&&(identical(other.term, term) || other.term == term)&&(identical(other.reading, reading) || other.reading == reading)&&const DeepCollectionEquality().equals(other.definitionTags, definitionTags)&&const DeepCollectionEquality().equals(other.ruleIdentifiers, ruleIdentifiers)&&(identical(other.popularity, popularity) || other.popularity == popularity)&&const DeepCollectionEquality().equals(other.definitions, definitions)&&(identical(other.sequenceNumber, sequenceNumber) || other.sequenceNumber == sequenceNumber)&&const DeepCollectionEquality().equals(other.tags, tags));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TermBankV3Entry&&(identical(other.termBankV3TableId, termBankV3TableId) || other.termBankV3TableId == termBankV3TableId)&&(identical(other.indexId, indexId) || other.indexId == indexId)&&(identical(other.term, term) || other.term == term)&&(identical(other.reading, reading) || other.reading == reading)&&const DeepCollectionEquality().equals(other.definitionTags, definitionTags)&&const DeepCollectionEquality().equals(other.ruleIdentifiers, ruleIdentifiers)&&(identical(other.popularity, popularity) || other.popularity == popularity)&&const DeepCollectionEquality().equals(other.definitions, definitions)&&(identical(other.sequenceNumber, sequenceNumber) || other.sequenceNumber == sequenceNumber)&&const DeepCollectionEquality().equals(other.tags, tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,indexId,term,reading,const DeepCollectionEquality().hash(definitionTags),const DeepCollectionEquality().hash(ruleIdentifiers),popularity,const DeepCollectionEquality().hash(definitions),sequenceNumber,const DeepCollectionEquality().hash(tags));
+int get hashCode => Object.hash(runtimeType,termBankV3TableId,indexId,term,reading,const DeepCollectionEquality().hash(definitionTags),const DeepCollectionEquality().hash(ruleIdentifiers),popularity,const DeepCollectionEquality().hash(definitions),sequenceNumber,const DeepCollectionEquality().hash(tags));
 
 @override
 String toString() {
-  return 'TermBankV3Entry(indexId: $indexId, term: $term, reading: $reading, definitionTags: $definitionTags, ruleIdentifiers: $ruleIdentifiers, popularity: $popularity, definitions: $definitions, sequenceNumber: $sequenceNumber, tags: $tags)';
+  return 'TermBankV3Entry(termBankV3TableId: $termBankV3TableId, indexId: $indexId, term: $term, reading: $reading, definitionTags: $definitionTags, ruleIdentifiers: $ruleIdentifiers, popularity: $popularity, definitions: $definitions, sequenceNumber: $sequenceNumber, tags: $tags)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $TermBankV3EntryCopyWith<$Res>  {
   factory $TermBankV3EntryCopyWith(TermBankV3Entry value, $Res Function(TermBankV3Entry) _then) = _$TermBankV3EntryCopyWithImpl;
 @useResult
 $Res call({
- int indexId, String term, String reading, List<String> definitionTags, List<String> ruleIdentifiers, int popularity, List<String> definitions, int sequenceNumber, List<TagBankV3Entry> tags
+ int termBankV3TableId, int indexId, String term, String reading, List<String> definitionTags, List<String> ruleIdentifiers, int popularity, List<String> definitions, int sequenceNumber, List<TagBankV3Entry> tags
 });
 
 
@@ -63,9 +63,10 @@ class _$TermBankV3EntryCopyWithImpl<$Res>
 
 /// Create a copy of TermBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? indexId = null,Object? term = null,Object? reading = null,Object? definitionTags = null,Object? ruleIdentifiers = null,Object? popularity = null,Object? definitions = null,Object? sequenceNumber = null,Object? tags = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? termBankV3TableId = null,Object? indexId = null,Object? term = null,Object? reading = null,Object? definitionTags = null,Object? ruleIdentifiers = null,Object? popularity = null,Object? definitions = null,Object? sequenceNumber = null,Object? tags = null,}) {
   return _then(TermBankV3Entry(
-indexId: null == indexId ? _self.indexId : indexId // ignore: cast_nullable_to_non_nullable
+termBankV3TableId: null == termBankV3TableId ? _self.termBankV3TableId : termBankV3TableId // ignore: cast_nullable_to_non_nullable
+as int,indexId: null == indexId ? _self.indexId : indexId // ignore: cast_nullable_to_non_nullable
 as int,term: null == term ? _self.term : term // ignore: cast_nullable_to_non_nullable
 as String,reading: null == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
 as String,definitionTags: null == definitionTags ? _self.definitionTags : definitionTags // ignore: cast_nullable_to_non_nullable

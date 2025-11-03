@@ -42,57 +42,50 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
 
   }
 
-  String buildQueryFilters(
-    List<String> terms, List<List<String>> posTags
-  ){
-    List<Map<String, dynamic> > queryFilters = [];
-
-    assert(terms.length == posTags.length);
-
-    for (int i = 0; i < terms.length; i++) {
-      queryFilters.add({
-        "term": terms[i],
-        "pos": posTags[i],
-      });
-    }
-
-    return jsonEncode(queryFilters);
-  }
-
   Future<DictionarySearchResult> dictionarySearch(
     String term,
-    List<String> tags,
-    bool convertRomajiToHiragana,
     {
+      required bool normalizedSearch,
+      required bool normalizedSearchConvertsRomajiToHiragana,
+      required bool deconjugationSearch,
+      required bool spellfixSearch,
+
+      List<String> tags = const [],
+
+      bool joinSequences=false,
+      bool joinOnTermAndReading=false,
+      int spellfixMaxCost=10,
+      int spellfixMaxResults=10,
       int limit=-1,
       int offset=0,
-      int spellfixDistance = 150,
     }
   ) async {
 
-    var (:normalizedTerms, :termVariants) = preprocessInput(term, convertRomajiToHiragana);
-    List<String> spellingVariations = normalizedTerms.expand((e) => 
-      generateSpellingVariations(word: e, n: 10, maxCost: 10)
-    ).toList();
+    var (:normalizedTerms, :termVariants) = preprocessInput(term, normalizedSearchConvertsRomajiToHiragana);
+    List<String> spellingVariations = [];
+    if(spellfixSearch)
+      spellingVariations = normalizedTerms.expand((e) => 
+        generateSpellingVariations(word: e, n: spellfixMaxCost, maxCost: spellfixMaxCost)
+      ).toList();
     
     bool isWildcardSearch = term.contains(RegExp(r'\*|\?'));
     int useGlobInt = isWildcardSearch ? 1 : 0;
 
-    print("Searching $term (normalized: $normalizedTerms, variants: $termVariants)");
-
     // run the queries in parallel
+    final emptyResult = (<DictionarySearchDriftFindTermBankEntriesResult>[], <DictionarySearchDriftFindTermBankDetailsResult>[]);
     final results = (await Future.wait([
       // exact query
       _querySQLite([term], tags, useGlobInt, 0),
       // normalized terms
-      _querySQLite(normalizedTerms, tags, useGlobInt, 1),
+      normalizedSearch ? _querySQLite(normalizedTerms, tags, useGlobInt, 1)
+        : Future.value(emptyResult),
       // term variants (deconjugated forms)
-      _querySQLite(
-        termVariants.map((e) => e.deconjugatedTerm).toList(), tags, useGlobInt, 1),
+      deconjugationSearch ? _querySQLite(termVariants.map((e) => e.deconjugatedTerm).toList(), tags, useGlobInt, 1)
+        : Future.value(emptyResult),
       // spellfix / fuzzy search
-      _querySQLite(spellingVariations, tags, useGlobInt, 1)
+      spellfixSearch ? _querySQLite(spellingVariations, tags, useGlobInt, 1)
+        : Future.value(emptyResult)
     ]));
-
     
     return DictionarySearchResult(
       queryMatches: SearchMatchGroup.fromDictionarySearch(
@@ -139,5 +132,6 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
 
   }
 
+  
 
 }

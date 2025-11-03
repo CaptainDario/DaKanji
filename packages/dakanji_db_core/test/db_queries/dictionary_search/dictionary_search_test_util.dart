@@ -60,14 +60,18 @@ Matcher matchesMetaEntry((List<TermMetaBankV3PitchEntry>, List<TermMetaBankV3Ipa
 /// and definitions. This has been updated to use `DictionaryMatch`.
 Matcher matchesSearchResult(ExpectedSearchResult expected) {
   return isA<DictionaryMatch>()
-      .having((res) => res.match, 'match', expected.match)
-      .having((res) => res.entry.term, 'entry.term', expected.term)
-      .having((res) => res.entry.reading, 'entry.reading', expected.reading)
-      .having((res) => res.entry.definitions, 'entry.definitions', orderedEquals(expected.definitions))
+      // --- Check that lists are not empty ---
+      .having((res) => res.matches, 'matches list', isNotEmpty)
+      .having((res) => res.entries, 'entries list', isNotEmpty)
+      .having((res) => res.metaEntriesForEachEntry, 'meta entries list', isNotEmpty)
       
-      // This is much cleaner now
+      // --- Then, check the properties of the first item ---
+      .having((res) => res.matches.first, 'match', expected.match)
+      .having((res) => res.entries.first.term, 'entry.term', expected.term)
+      .having((res) => res.entries.first.reading, 'entry.reading', expected.reading)
+      .having((res) => res.entries.first.definitions, 'entry.definitions', orderedEquals(expected.definitions))
       .having(
-        (res) => res.metaEntries,
+        (res) => res.metaEntriesForEachEntry.first, // Check the first meta list
         'entry.metaEntries',
         unorderedEquals(
           // Map each expected meta-tuple into its own matcher
