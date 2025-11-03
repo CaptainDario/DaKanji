@@ -135,10 +135,10 @@ class ExpectedMatchGroup {
     final buffer = StringBuffer();
     
 
-    _printSection('Exact Matches', exactMatches, buffer);
-    _printSection('Prefix Matches', prefixMatches, buffer);
-    _printSection('Token Matches', tokenMatches, buffer);
-    _printSection('Wildcard Matches', wildcardMatches, buffer);
+    _printSection('Exact Matches', exactMatches, buffer, indent: indent);
+    _printSection('Prefix Matches', prefixMatches, buffer, indent: indent);
+    _printSection('Token Matches', tokenMatches, buffer, indent: indent);
+    _printSection('Wildcard Matches', wildcardMatches, buffer, indent: indent);
 
     return buffer.toString();
   }

@@ -197,7 +197,7 @@ static List<SearchMatchGroup> fromDictionarySearch(
     ) resultTuple,
     bool isWildcardSearch, {
     bool groupSequences = false,
-    bool groupOnSameTermAndReading = false,
+    bool groupByTermAndReading = false,
     String? variantReason,
   }) {
     final (searchInfos, detailInfos) = resultTuple;
@@ -236,7 +236,7 @@ static List<SearchMatchGroup> fromDictionarySearch(
       if (groupSequences) {
         groups = groupBy(matchesForThisTerm,
           (record) => '${record.$2.indexId}_${record.$2.sequenceNumber}');
-      } else if (groupOnSameTermAndReading) {
+      } else if (groupByTermAndReading) {
         groups = groupBy(
           matchesForThisTerm, (record) => '${record.$2.term}_${record.$2.reading}');
       } else {
@@ -346,7 +346,7 @@ class DictionaryMatch {
     return DictionaryMatch(
       matches: [searchInfo.matchedText ?? ""],
       popularities: [searchInfo.finalPopularity],
-      entries: [entry], // This is List<TermBankV3Entry>
+      entries: [entry],
       metaEntriesForEachEntry: [
         (jsonDecode(entryInfo.termMetaEntries) as List)
             .map((me) => TermMetaBankV3Entry.fromJson(me))
@@ -369,17 +369,23 @@ class DictionaryMatch {
   String toString() => toFormattedString();
 
   String toFormattedString({String indent = ''}) {
+    if (entries.isEmpty) return '';
+    
     final buffer = StringBuffer();
+    final entryIndent = '$indent  ';
+
+    // Print a single group header for the entire DictionaryMatch
+    buffer.writeln("$indent- Group:");
+
+    // Loop through all the entries that have been combined into this match
     for (var i = 0; i < entries.length; i++) {
-      
-      // --- THESE ARE THE FIXES ---
       final entry = entries[i];
       final match = matches[i];
       final popularity = popularities[i]?.toString() ?? "N/A";
 
-      buffer.writeln('$indent${entry.term} [${entry.reading}] (Matched: "$match", Popularity: $popularity)');
+      buffer.writeln('$entryIndent${entry.term} [${entry.reading}] (Matched: "$match", Popularity: $popularity)');
       for (var j = 0; j < entry.definitions.length; j++) {
-        buffer.writeln('$indent  ${j + 1}. ${entry.definitions[j]}');
+        buffer.writeln('$entryIndent  ${j + 1}. ${entry.definitions[j]}');
       }
     }
     return buffer.toString().trimRight();

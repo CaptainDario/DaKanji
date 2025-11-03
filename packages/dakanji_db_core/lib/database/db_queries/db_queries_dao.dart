@@ -52,8 +52,8 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
 
       List<String> tags = const [],
 
-      bool joinSequences=false,
-      bool joinOnTermAndReading=false,
+      bool groupSequences=false,
+      bool groupByTermAndReading=false,
       int spellfixMaxCost=10,
       int spellfixMaxResults=10,
       int limit=-1,
@@ -89,13 +89,18 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     
     return DictionarySearchResult(
       queryMatches: SearchMatchGroup.fromDictionarySearch(
-        results[0], isWildcardSearch).firstOrNull ?? SearchMatchGroup.empty(),
+        results[0], isWildcardSearch,
+        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading)
+        .firstOrNull ?? SearchMatchGroup.empty(),
       normalizedQueryMatchGroups: SearchMatchGroup.fromDictionarySearch(
-        results[1], isWildcardSearch),
+        results[1], isWildcardSearch,
+        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading),
       queryVariantMatches: SearchMatchGroup.fromDictionarySearch(
-        results[2], isWildcardSearch),
+        results[2], isWildcardSearch,
+        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading),
       fuzzyMatches: SearchMatchGroup.fromDictionarySearch(
-        results[3], isWildcardSearch)
+        results[3], isWildcardSearch,
+        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading)
     );
 
     

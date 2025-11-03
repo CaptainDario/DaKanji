@@ -12,6 +12,7 @@ import '../../util/db_files.dart';
 import 'dictionary_popularity_override_test_cases.dart';
 import 'dictionary_search_deconjugation_test_cases.dart';
 import 'dictionary_search_fuzzy_test_cases.dart';
+import 'dictionary_search_grouping_test_cases.dart';
 import 'dictionary_search_input_preprocessing_test_cases.dart';
 import 'dictionary_search_meta_bank_test_cases.dart';
 import 'dictionary_search_sorting_test_cases.dart';
@@ -24,16 +25,21 @@ import 'dictionary_search_wildcard_test_cases.dart';
 
 
 // Lists are defined at the top level (this is fine)
-final List<List<ExpectedDictionarySearchResult>> testCases = [
-  searchTestCases,
-  deconjugationTestCases,
-  wildcardSearchTestCases,
-  inputPreprocessingSearchTestCases,
-  sortingTestCases,
-  fuzzySearchTestCases,
-  tagFilteringTestCases,
-  metaBankTestCases,
-  popularityOverrideTestCases
+final List<(
+  List<ExpectedDictionarySearchResult> expectations,
+  bool groupSeqeunces,
+  bool groupByReadingAndTerms
+  )> testCases = [
+  (searchTestCases, false, false),
+  (deconjugationTestCases, false, false),
+  (wildcardSearchTestCases, false, false),
+  (inputPreprocessingSearchTestCases, false, false),
+  (sortingTestCases, false, false),
+  (fuzzySearchTestCases, false, false),
+  (tagFilteringTestCases, false, false),
+  (metaBankTestCases, false, false),
+  (popularityOverrideTestCases, false, false),
+  (groupingTests, true, false)
 ];
 final List<String> testCaseNames = [
   "Search Test Cases",
@@ -44,7 +50,8 @@ final List<String> testCaseNames = [
   "Fuzzy Search Test Cases",
   "Tag Filtering Test Cases",
   "Meta bank test cases",
-  "Popularity Override"
+  "Popularity Override",
+  "Grouping Test Cases"
 ];
 
 String currentTestCase = "";
@@ -67,7 +74,8 @@ void main() {
 
     // This `group` call is now correctly discovered.
     group(testCaseName, () {
-      for (final testCase in subTestCases) {
+      for (int i=0; i < subTestCases.$1.length; i++) {
+        final testCase = subTestCases.$1[i];
         test(
           testCase.description,
           () async {
@@ -83,7 +91,9 @@ void main() {
               normalizedSearch: true,
               normalizedSearchConvertsRomajiToHiragana: true,
               deconjugationSearch: true,
-              spellfixSearch: true
+              spellfixSearch: true,
+              groupSequences: subTestCases.$2,
+              groupByTermAndReading: subTestCases.$3,
             );
 
             print("Results:\n $results");
