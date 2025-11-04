@@ -12,7 +12,8 @@ import '../../util/db_files.dart';
 import 'dictionary_popularity_override_test_cases.dart';
 import 'dictionary_search_deconjugation_test_cases.dart';
 import 'dictionary_search_fuzzy_test_cases.dart';
-import 'dictionary_search_grouping_test_cases.dart';
+import 'dictionary_search_grouping_by_sequence_test_cases.dart';
+import 'dictionary_search_grouping_by_term_test_cases.dart';
 import 'dictionary_search_input_preprocessing_test_cases.dart';
 import 'dictionary_search_meta_bank_test_cases.dart';
 import 'dictionary_search_sorting_test_cases.dart';
@@ -39,7 +40,8 @@ final List<(
   (tagFilteringTestCases, false, false),
   (metaBankTestCases, false, false),
   (popularityOverrideTestCases, false, false),
-  (groupingTests, true, false)
+  (groupBySequenceTests, true, false),
+  (groupByTermTests, false, true)
 ];
 final List<String> testCaseNames = [
   "Search Test Cases",
@@ -51,7 +53,8 @@ final List<String> testCaseNames = [
   "Tag Filtering Test Cases",
   "Meta bank test cases",
   "Popularity Override",
-  "Grouping Test Cases"
+  "Grouping Test Cases",
+  "Grouping by Term and Reading Test Cases"
 ];
 
 String currentTestCase = "";

@@ -164,33 +164,9 @@ void _compareMatchBucket(
 
     final current = actual[actualIndex];
 
-    final aggregatedMatch =
-        current.entries.length == expectedGroup.length;
-
-    if (expectedGroup.length > 1 && !aggregatedMatch) {
-      final remaining = actual.length - actualIndex;
-      if (remaining < expectedGroup.length) {
-        fail(
-          'Missing $bucketLabel entries in group \'$groupName\' for query \'$query\'. '
-          'Needed ${expectedGroup.length}, but only $remaining remain.',
-        );
-      }
-
-      for (var offset = 0; offset < expectedGroup.length; offset++) {
-        expect(
-          actual[actualIndex + offset],
-          matchesSearchResult([expectedGroup[offset]]),
-          reason:
-              "$bucketLabel[$groupIndex][$offset] in group '$groupName' for query '$query' did not match.",
-        );
-      }
-      actualIndex += expectedGroup.length;
-      continue;
-    }
-
     expect(
       current,
-      matchesSearchResult(expectedGroup),
+      matchesSearchResult(expectedGroup), // This matcher is correct
       reason:
           "$bucketLabel[$groupIndex] in group '$groupName' for query '$query' did not match.",
     );

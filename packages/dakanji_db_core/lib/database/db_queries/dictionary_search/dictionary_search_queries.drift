@@ -88,7 +88,8 @@ dictionary_search_drift_find_term_bank_entries:
                 term_bank_v3_table.id as term_bank_id,
                 term_bank_v3_table.term_id as term_id,
                 term_bank_v3_table.reading_id as reading_id,
-                1 as match_column
+                1 as match_column,
+                term_bank_v3_table.sequence_number
             FROM SearchResultMatchesClassified 
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4)
@@ -101,7 +102,8 @@ dictionary_search_drift_find_term_bank_entries:
                 term_bank_v3_table.id as term_bank_id,
                 term_bank_v3_table.term_id as term_id,
                 term_bank_v3_table.reading_id as reading_id,
-                2 as match_column
+                2 as match_column,
+                term_bank_v3_table.sequence_number
             FROM SearchResultMatchesClassified
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6)
@@ -114,7 +116,8 @@ dictionary_search_drift_find_term_bank_entries:
                 term_bank_v3_x_definition_table.term_bank_id as term_bank_id,
                 term_bank_v3_table.term_id as term_id,
                 term_bank_v3_table.reading_id as reading_id,
-                3 as match_column
+                3 as match_column,
+                term_bank_v3_table.sequence_number
             FROM SearchResultMatchesClassified
             JOIN term_bank_v3_x_definition_table
                 ON term_bank_v3_x_definition_table.definition_id = source_id
@@ -170,6 +173,7 @@ dictionary_search_drift_find_term_bank_entries:
         TBM.rank as fts5_rank,
         TBM.match_type,
         TBM.match_column,
+        TBM.sequence_number,
         index_table.current_sorting_order,
         CASE 
             WHEN ActiveCheck.is_active = 1 THEN OP.freq_value
@@ -206,6 +210,38 @@ dictionary_search_drift_find_term_bank_entries:
         TBM.rank,
         LENGTH(matchedText);
 
+dictionary_search_drift_find_term_bank_sequences:
+
+    WITH
+        SequenceNumbers(seqNumber) AS (
+            SELECT value FROM json_each(:sequence_numbers)
+            WHERE value IS NOT NULL
+        ),
+        ExcludedTermBankIds(termBankId) AS (
+            SELECT value FROM json_each(:excluded_term_bank_ids)
+            WHERE value IS NOT NULL
+        )
+        
+    SELECT 
+        term_bank_v3_table.id as term_bank_id,
+        NULL as search_term,
+        NULL as fts5_rank,
+        4 as match_type,
+        NULL as match_column,
+        index_table.current_sorting_order AS current_sorting_order,
+        NULL AS finalPopularity,
+        NULL as matchedText,
+        NULL as matchedTextLength,
+        term_bank_v3_table.sequence_number
+    FROM SequenceNumbers
+    JOIN term_bank_v3_table
+        ON term_bank_v3_table.sequence_number = SequenceNumbers.seqNumber
+    LEFT JOIN ExcludedTermBankIds AS Excluded
+        ON term_bank_v3_table.id = Excluded.termBankId
+    JOIN index_table
+        ON term_bank_v3_table.index_id = index_table.id
+    WHERE
+        Excluded.termBankId IS NULL;
 
 dictionary_search_drift_find_term_bank_details:
     WITH
@@ -335,7 +371,7 @@ dictionary_search_drift_find_term_bank_details:
         )
         --- ASSEMBLE TERM META END -------------------
 
-    --- === FINAL SELECT (MODIFIED) ===
+    -- FINAL SELECT
     -- This selects all your original data, but NO search metadata
     SELECT
         -- index

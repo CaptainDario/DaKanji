@@ -38,7 +38,7 @@ class ExpectedDictionarySearchResult {
     const sectionIndent = '  '; // Two spaces
 
     // --- Header ---
-    buffer.writeln('\n--- 📖 Dictionary Search Results ---');
+    buffer.writeln('\n--- 📖 Dictionary Search Expectation ---');
     buffer.writeln('Search Term: $query');
 
     // --- 1. Original Query Matches ---
@@ -151,19 +151,21 @@ class ExpectedMatchGroup {
   ) {
     if (groups.isEmpty) return;
 
-    final nextIndent = '$indent  ';
+    final nextIndent = '$indent  '; // e.g., "  "
 
     final totalMatches = groups.fold<int>(0, (sum, group) => sum + group.length);
-    buffer.writeln('$indent▶ $title ($totalMatches):');
+    buffer.writeln('$indent▶ $title ($totalMatches):'); // e.g., "▶ Exact Matches (3):"
 
-    final bool multipleGroups = groups.length > 1;
+    // Removed the 'multipleGroups' check. We will now print
+    // the group header for every group to match the real output.
     for (var i = 0; i < groups.length; i++) {
       final group = groups[i];
-      final groupIndent = multipleGroups ? '$nextIndent  ' : nextIndent;
+      
+      // Always print the group header, just like DictionaryMatch.toFormattedString
+      buffer.writeln('$nextIndent- Group:'); 
 
-      if (multipleGroups) {
-        buffer.writeln('$nextIndent- Group ${i + 1}:');
-      }
+      // Indent the entries *inside* the group
+      final groupIndent = '$nextIndent  '; // e.g., "    "
 
       for (final match in group) {
         buffer.writeln(match.toFormattedString(indent: groupIndent));

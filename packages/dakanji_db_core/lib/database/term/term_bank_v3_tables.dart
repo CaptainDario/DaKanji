@@ -14,6 +14,7 @@ import '/database/general_tables/term_tables.dart';
 @TableIndex(name: 'TermBankV3Table_termId', columns: {#termId})
 @TableIndex(name: 'TermBankV3Table_readingIdIndex', columns: {#readingId})
 @TableIndex(name: 'TermBankV3Table_definitionJsonIdIndex', columns: {#definitionJsonId})
+@TableIndex(name: 'TermBankV3Table_sequenceNumberIndex', columns: {#sequenceNumber})
 class TermBankV3Table extends Table {
 
   @override

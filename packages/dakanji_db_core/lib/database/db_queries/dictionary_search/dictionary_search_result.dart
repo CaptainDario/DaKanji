@@ -190,9 +190,10 @@ class SearchMatchGroup {
   /// 2. same index + sequence number
   /// [variantReason] can be provided to indicate why this group
   /// was created (e.g., de-conjugation).
-static List<SearchMatchGroup> fromDictionarySearch(
+  static List<SearchMatchGroup> fromDictionarySearch(
     (
       List<DictionarySearchDriftFindTermBankEntriesResult>,
+      List<DictionarySearchDriftFindTermBankSequencesResult>,
       List<DictionarySearchDriftFindTermBankDetailsResult>
     ) resultTuple,
     bool isWildcardSearch, {
@@ -200,18 +201,22 @@ static List<SearchMatchGroup> fromDictionarySearch(
     bool groupByTermAndReading = false,
     String? variantReason,
   }) {
-    final (searchInfos, detailInfos) = resultTuple;
+    final (searchResults, additionalSequences, resultInfos) = resultTuple;
 
-    if (searchInfos.isEmpty) return [];
+    if (searchResults.isEmpty) return [];
 
-    // 1. Create a fast lookup map for the details
+    // Create a fast lookup map for the sequences and details 
     final detailMap = <int, DictionarySearchDriftFindTermBankDetailsResult>{};
-    for (var detail in detailInfos) {
-      detailMap[detail.termBankV3Id] = detail;
+    for (var detail in resultInfos) detailMap[detail.termBankV3Id] = detail;
+    final sequenceMap = <int, List<DictionaryMatch>>{};
+    for (var seq in additionalSequences){
+      sequenceMap.putIfAbsent(seq.sequenceNumber, () => []).add(
+        DictionaryMatch.fromDictionarySequenceWithDetails((seq, detailMap[seq.termBankId]!))
+      );
     }
-
-    // 2. Create a list of combined records
-    final combinedMatches = searchInfos
+    
+    // Create a list of combined records
+    final combinedMatches = searchResults
         .map((searchInfo) {
           final detailInfo = detailMap[searchInfo.termBankId];
           return detailInfo != null ? (searchInfo, detailInfo) : null;
@@ -219,55 +224,58 @@ static List<SearchMatchGroup> fromDictionarySearch(
         .whereType<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)>()
         .toList();
 
-    // 3. Group by the original search term
+    // Group by the original search term
     final groupedByTerm = groupBy(combinedMatches, (record) => record.$1.searchTerm);
-
     final finalGroups = <SearchMatchGroup>[];
 
-    // 4. Create one SearchMatchGroup for each term
+    // Create one SearchMatchGroup for each term
     groupedByTerm.forEach((searchTerm, matchesForThisTerm) {
-      List<DictionaryMatch> exactMatches = [],
-          prefixMatches = [],
-          tokenMatches = [],
-          wildcardMatches = [];
+      List<DictionaryMatch> exactMatches = [], prefixMatches = [], tokenMatches = [], wildcardMatches = [];
       
-      // 5. Build the grouping map (based on the grouping strategy)
+      // Build the grouping map (based on the grouping strategy)
       Map<String, List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)>> groups;
       if (groupSequences) {
         groups = groupBy(matchesForThisTerm,
           (record) => '${record.$2.indexId}_${record.$2.sequenceNumber}');
-      } else if (groupByTermAndReading) {
+      }
+      else if (groupByTermAndReading) {
         groups = groupBy(
           matchesForThisTerm, (record) => '${record.$2.term}_${record.$2.reading}');
-      } else {
+      }
+      else {
         groups = {};
         for (final record in matchesForThisTerm) {
           groups[identityHashCode(record).toString()] = [record];
         }
       }
       
-      // 6. Iterate through the map and "add" matches
+      // Iterate through the map and "add" matches
       for (final group in groups.values) {
         
         // Create ONE base match from the first item
         final baseRecord = group.first;
-        final baseMatch = DictionaryMatch.fromDictionarySearchDrift(baseRecord);
+        final baseMatch = DictionaryMatch.fromDictionarySearchWithDetails(baseRecord);
         final baseMatchType = baseRecord.$1.matchType;
 
         // Add all OTHER matches to it
         for (int i = 1; i < group.length; i++) {
-          final otherMatch = DictionaryMatch.fromDictionarySearchDrift(group[i]);
+          final otherMatch = DictionaryMatch.fromDictionarySearchWithDetails(group[i]);
           baseMatch.addDictionaryMatch(otherMatch);
         }
 
-        // 7. Categorize the final, combined match
+        // add all group matcehs if grouping by sequence number
+        for (final match in sequenceMap[baseRecord.$2.sequenceNumber] ?? []) {
+          baseMatch.addDictionaryMatch(match);
+        } 
+
+        // Categorize the final, combined match
         if (isWildcardSearch) wildcardMatches.add(baseMatch);
         else if (baseMatchType == 1) exactMatches.add(baseMatch);
         else if (baseMatchType == 2) prefixMatches.add(baseMatch);
         else if (baseMatchType == 3) tokenMatches.add(baseMatch);
       }
-      
-      // 8. Add the newly created group to the final list
+
+      // Add the newly created group to the final list
       finalGroups.add(SearchMatchGroup(
         searchTerm: searchTerm,
         variantReason: variantReason,
@@ -334,7 +342,29 @@ class DictionaryMatch {
     }
   );
 
-  factory DictionaryMatch.fromDictionarySearchDrift(
+  factory DictionaryMatch.fromDictionarySequenceWithDetails(
+    (
+      DictionarySearchDriftFindTermBankSequencesResult,
+      DictionarySearchDriftFindTermBankDetailsResult
+    ) record,
+  ) {
+    final (searchInfo, entryInfo) = record;
+    final entry = TermBankV3Entry.fromDictionarySearchDetails(entryInfo);
+
+    return DictionaryMatch(
+      matches: ["Sequence number"],
+      popularities: [null],
+      entries: [entry],
+      metaEntriesForEachEntry: [
+        (jsonDecode(entryInfo.termMetaEntries) as List)
+            .map((me) => TermMetaBankV3Entry.fromJson(me))
+            .toList()
+      ],
+      indexTableData: [IndexTableEntry.fromDictionarySearchDrift(entryInfo)],
+    );
+  }
+
+  factory DictionaryMatch.fromDictionarySearchWithDetails(
     (
       DictionarySearchDriftFindTermBankEntriesResult,
       DictionarySearchDriftFindTermBankDetailsResult

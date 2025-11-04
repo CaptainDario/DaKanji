@@ -33,12 +33,10 @@ final List<ExpectedDictionarySearchResult> searchTestCases = [
     query: '食べ',
     queryMatches: const ExpectedMatchGroup(
       prefixMatches: [
-        [
-          ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: '食べる', definitions: ["to eat"]),
-          ExpectedDictionaryMatch(term: '食べ物', reading: 'たべもの', match: '食べ物', definitions: ["food"]),
-          ExpectedDictionaryMatch(term: '食べます', reading: 'たべます', match: '食べます', definitions: ["to eat (polite)"]),
-          ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油', definitions: ["chili oil with garlic, etc. for eating with rice"]),
-        ]
+        [ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: '食べる', definitions: ["to eat"])],
+        [ExpectedDictionaryMatch(term: '食べ物', reading: 'たべもの', match: '食べ物', definitions: ["food"])],
+        [ExpectedDictionaryMatch(term: '食べます', reading: 'たべます', match: '食べます', definitions: ["to eat (polite)"])],
+        [ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油', definitions: ["chili oil with garlic, etc. for eating with rice"])],
       ],
     ),
   ),
@@ -81,18 +79,14 @@ final List<ExpectedDictionarySearchResult> searchTestCases = [
     query: 'eat',
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
-        [
-          ExpectedDictionaryMatch(term: 'イート', reading: 'いーと', match: 'eat', definitions: ["eat"]),
-        ]
+        [ExpectedDictionaryMatch(term: 'イート', reading: 'いーと', match: 'eat', definitions: ["eat"]),]
       ],
-      tokenMatches: [
-        [
-          ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: 'to eat', definitions: ["to eat"]),
-          ExpectedDictionaryMatch(term: '召し上がる', reading: 'めしあがる', match: 'to eat', definitions: ["to eat (honorific)", "to eat"]),
-          ExpectedDictionaryMatch(term: '食べます', reading: 'たべます', match: 'to eat (polite)', definitions: ["to eat (polite)"]),
-          ExpectedDictionaryMatch(term: 'イート', reading: 'いーと', match: "the act of eating", definitions: ["the act of eating"]),
-          ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: 'chili oil with garlic, etc. for eating with rice', definitions: ["chili oil with garlic, etc. for eating with rice"]),
-        ]
+    tokenMatches: [
+        [ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: 'to eat', definitions: ["to eat"])],
+        [ExpectedDictionaryMatch(term: '召し上がる', reading: 'めしあがる', match: 'to eat', definitions: ["to eat (honorific)", "to eat"])],
+        [ExpectedDictionaryMatch(term: '食べます', reading: 'たべます', match: 'to eat (polite)', definitions: ["to eat (polite)"])],
+        [ExpectedDictionaryMatch(term: 'イート', reading: 'いーと', match: "the act of eating", definitions: ["the act of eating"])],
+        [ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: 'chili oil with garlic, etc. for eating with rice', definitions: ["chili oil with garlic, etc. for eating with rice"])],
       ],
     )
   ),
@@ -104,14 +98,12 @@ final List<ExpectedDictionarySearchResult> searchTestCases = [
     // Expected results for the hiragana-converted query: 'でんしゃ'
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
-        [
-          ExpectedDictionaryMatch(
-            term: '電車',
-            reading: 'でんしゃ',
-            definitions: ['(electric) train'],
-            match: '電車',
-          ),
-        ]
+        [ExpectedDictionaryMatch(
+          term: '電車',
+          reading: 'でんしゃ',
+          definitions: ['(electric) train'],
+          match: '電車',
+        )]
       ],
       prefixMatches: [
         [

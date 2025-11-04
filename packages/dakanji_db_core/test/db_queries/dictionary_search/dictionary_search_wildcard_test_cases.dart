@@ -8,10 +8,8 @@ List<ExpectedDictionarySearchResult> wildcardSearchTestCases = [
     query: '?本',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
-        [
-          ExpectedDictionaryMatch(term: '日本', reading: 'にほん', match: '日本', definitions: ["Japan"]),
-          ExpectedDictionaryMatch(term: '二本', reading: 'にほん', match: '二本', definitions: ["two long objects"]),
-        ]
+        [ExpectedDictionaryMatch(term: '日本', reading: 'にほん', match: '日本', definitions: ["Japan"])],
+        [ExpectedDictionaryMatch(term: '二本', reading: 'にほん', match: '二本', definitions: ["two long objects"])],
       ],
     ),
   ),
@@ -20,10 +18,8 @@ List<ExpectedDictionarySearchResult> wildcardSearchTestCases = [
     query: '?本?',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
-        [
-          ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"]),
-          ExpectedDictionaryMatch(term: '日本酒', reading: 'にほんしゅ', match: '日本酒', definitions: ["sake; Japanese rice wine"]),
-        ]
+        [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"])],
+        [ExpectedDictionaryMatch(term: '日本酒', reading: 'にほんしゅ', match: '日本酒', definitions: ["sake; Japanese rice wine"])],
       ],
     ),
   ),
@@ -35,12 +31,10 @@ List<ExpectedDictionarySearchResult> wildcardSearchTestCases = [
     query: '*人',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
-        [
-          ExpectedDictionaryMatch(term: '中国人', reading: 'ちゅうごくじん', match: '中国人', definitions: ["Chinese person"]),
-          ExpectedDictionaryMatch(term: '人', reading: 'じん', match: '人', definitions: ["Person"]),
-          ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"]),
-          ExpectedDictionaryMatch(term: 'ドイツ人', reading: 'どいつじん', match: 'ドイツ人', definitions: ["Eine deutsche Person"]),
-        ]
+        [ExpectedDictionaryMatch(term: '中国人', reading: 'ちゅうごくじん', match: '中国人', definitions: ["Chinese person"])],
+        [ExpectedDictionaryMatch(term: '人', reading: 'じん', match: '人', definitions: ["Person"])],
+        [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"])],
+        [ExpectedDictionaryMatch(term: 'ドイツ人', reading: 'どいつじん', match: 'ドイツ人', definitions: ["Eine deutsche Person"])],
       ],
     ),
   ),
@@ -48,9 +42,8 @@ List<ExpectedDictionarySearchResult> wildcardSearchTestCases = [
     description: "Wildcard '*': zero characters",
     query: '*日本人',
     queryMatches: const ExpectedMatchGroup(
-      wildcardMatches: [[
-          ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"]),
-        ]
+      wildcardMatches: [
+        [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"]),]
       ],
     ),
   ),
@@ -59,22 +52,20 @@ ExpectedDictionarySearchResult(
     query: '*本*',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
-        [
           // Rule 4: Sorted by frequency (99 > 95 > 90 > 80).
-          ExpectedDictionaryMatch(term: '日本', reading: 'にほん', match: '日本', definitions: ["Japan"]),
+          [ExpectedDictionaryMatch(term: '日本', reading: 'にほん', match: '日本', definitions: ["Japan"])],
 
           // This group is tied by frequency (95) and length (3), so order is by appearance.
-          ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"]),
-          ExpectedDictionaryMatch(term: '日本酒', reading: 'にほんしゅ', match: '日本酒', definitions: ["sake; Japanese rice wine"]),
-          ExpectedDictionaryMatch(term: '日本晴れ', reading: 'にほんばれ', match: '日本晴れ', definitions: ["clear weather; cloudless sky"]),
+          [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"])],
+          [ExpectedDictionaryMatch(term: '日本酒', reading: 'にほんしゅ', match: '日本酒', definitions: ["sake; Japanese rice wine"])],
+          [ExpectedDictionaryMatch(term: '日本晴れ', reading: 'にほんばれ', match: '日本晴れ', definitions: ["clear weather; cloudless sky"])],
 
-          ExpectedDictionaryMatch(term: '本日', reading: 'ほんじつ', match: '本日', definitions: ["today"]),
+          [ExpectedDictionaryMatch(term: '本日', reading: 'ほんじつ', match: '本日', definitions: ["today"])],
           
           // Rule 6: This group is tied by frequency (80) but broken by length.
           // '二本' (len 2) comes before '全日本' (len 3).
-          ExpectedDictionaryMatch(term: '二本', reading: 'にほん', match: '二本', definitions: ["two long objects"]),
-          ExpectedDictionaryMatch(term: '全日本', reading: 'ぜんにほん', match: '全日本', definitions: ["all Japan"]),
-        ]
+          [ExpectedDictionaryMatch(term: '二本', reading: 'にほん', match: '二本', definitions: ["two long objects"])],
+          [ExpectedDictionaryMatch(term: '全日本', reading: 'ぜんにほん', match: '全日本', definitions: ["all Japan"])],
       ],
     ),
   ),
@@ -83,11 +74,9 @@ ExpectedDictionarySearchResult(
     query: '*本?',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
-        [
-          ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"]),
-          ExpectedDictionaryMatch(term: '日本酒', reading: 'にほんしゅ', match: '日本酒', definitions: ["sake; Japanese rice wine"]),
-          ExpectedDictionaryMatch(term: '本日', reading: 'ほんじつ', match: '本日', definitions: ["today"]),
-        ]
+        [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"])],
+        [ExpectedDictionaryMatch(term: '日本酒', reading: 'にほんしゅ', match: '日本酒', definitions: ["sake; Japanese rice wine"])],
+        [ExpectedDictionaryMatch(term: '本日', reading: 'ほんじつ', match: '本日', definitions: ["today"])],
       ],
     ),
   ),

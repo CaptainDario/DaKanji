@@ -72,18 +72,21 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     int useGlobInt = isWildcardSearch ? 1 : 0;
 
     // run the queries in parallel
-    final emptyResult = (<DictionarySearchDriftFindTermBankEntriesResult>[], <DictionarySearchDriftFindTermBankDetailsResult>[]);
+    final emptyResult = (<DictionarySearchDriftFindTermBankEntriesResult>[],
+      <DictionarySearchDriftFindTermBankSequencesResult>[],
+      <DictionarySearchDriftFindTermBankDetailsResult>[]);
     final results = (await Future.wait([
       // exact query
-      _querySQLite([term], tags, useGlobInt, 0),
+      _querySQLite([term], tags, useGlobInt, 0, groupSequences),
       // normalized terms
-      normalizedSearch ? _querySQLite(normalizedTerms, tags, useGlobInt, 1)
+      normalizedSearch ? _querySQLite(normalizedTerms, tags, useGlobInt, 1, groupSequences)
         : Future.value(emptyResult),
       // term variants (deconjugated forms)
-      deconjugationSearch ? _querySQLite(termVariants.map((e) => e.deconjugatedTerm).toList(), tags, useGlobInt, 1)
+      deconjugationSearch ? _querySQLite(
+        termVariants.map((e) => e.deconjugatedTerm).toList(), tags, useGlobInt, 1, groupSequences)
         : Future.value(emptyResult),
       // spellfix / fuzzy search
-      spellfixSearch ? _querySQLite(spellingVariations, tags, useGlobInt, 1)
+      spellfixSearch ? _querySQLite(spellingVariations, tags, useGlobInt, 1, groupSequences)
         : Future.value(emptyResult)
     ]));
     
@@ -110,12 +113,14 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
   /// variants and sllfix searches in parallel (async)
   Future<(
     List<DictionarySearchDriftFindTermBankEntriesResult> results,
+    List<DictionarySearchDriftFindTermBankSequencesResult> sequenceMatches,
     List<DictionarySearchDriftFindTermBankDetailsResult> resultDetails
   )> _querySQLite(
     List<String> terms,
     List<String> tags,
     int useGlob,
-    int searchNormalized
+    int searchNormalized,
+    bool groupSequences
   ) async {
 
     // 1. Run Query 1 to get matching term bank entries
@@ -126,17 +131,26 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       searchNormalized
     ).get();
 
-    // 2. Run Query 2 to get details for all results from Query 1
+    // Get all term bank entries that belong to any sequence of any of the results
+    final foundTermBankIds = searchResults.map((e) => e.termBankId).toSet().toList();
+    late final List<DictionarySearchDriftFindTermBankSequencesResult> sequenceMatches;
+    if(groupSequences)
+      sequenceMatches = await db.dictionary_search_drift_find_term_bank_sequences(
+        jsonEncode(searchResults.map((e) => e.sequenceNumber).toSet().toList()), 
+        jsonEncode(foundTermBankIds)
+      ).get();
+    else sequenceMatches = <DictionarySearchDriftFindTermBankSequencesResult>[];
+
+    // Run third query to get details for all results from Query 1
+    final getDetailsIds = jsonEncode(foundTermBankIds..addAll(
+      sequenceMatches.map((e) => e.termBankId)));
     List<DictionarySearchDriftFindTermBankDetailsResult> details;
     if (searchResults.isEmpty) details = <DictionarySearchDriftFindTermBankDetailsResult>[];
     else {
-      final idJson = jsonEncode(searchResults.map((e) => e.termBankId).toList());
-      details = await db.dictionary_search_drift_find_term_bank_details(idJson).get();
+      details = await db.dictionary_search_drift_find_term_bank_details(getDetailsIds).get();
     }
-    return (searchResults, details);
+    return (searchResults, sequenceMatches, details);
 
   }
-
-  
 
 }

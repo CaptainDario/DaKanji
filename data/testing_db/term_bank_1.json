@@ -52,7 +52,7 @@
         [
             "to eat (honorific)",
             "to eat"
-    ],
+        ],
         201,
         ""
     ],
@@ -454,6 +454,16 @@
         70,
         ["1) raw gyoza; uncooked dumplings"],
         803,
+        ""
+    ],
+    [
+        "水餃子",
+        "すいぎょうざ",
+        "n",
+        "",
+        70,
+        ["1) dumplings cooked in boiling water; boiled dumplings"],
+        999,
         ""
     ]
 ]

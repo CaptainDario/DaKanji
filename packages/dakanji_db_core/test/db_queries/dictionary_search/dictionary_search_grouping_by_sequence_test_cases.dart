@@ -3,11 +3,11 @@ import 'dictionary_search_test_helper_classes.dart';
 
 
 
-List<ExpectedDictionarySearchResult> groupingTests = [
+List<ExpectedDictionarySearchResult> groupBySequenceTests = [
 
   ExpectedDictionarySearchResult(
     description: "The entries with the same sequence number as 食べる should be found",
-    query: "食べ",
+    query: "食べる",
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
         [
@@ -23,16 +23,24 @@ List<ExpectedDictionarySearchResult> groupingTests = [
             definitions: ['to eat (polite)'],
             match: 'Sequence number',
           ),
+          ExpectedDictionaryMatch(
+            term: '召し上がる',
+            reading: 'めしあがる',
+            definitions: ['to eat (honorific)', 'to eat'],
+            match: 'Sequence number',
+          ),
         ],
+      ],
+      prefixMatches: [
         [
           ExpectedDictionaryMatch(
             term: '食べるラー油',
-            reading: 'たべるラーゆ',
+            reading: 'たべるらーゆ',
             definitions: ['chili oil with garlic, etc. for eating with rice'],
-            match: 'Sequence number',
+            match: '食べるラー油',
           ),
         ]
-      ],
+      ]
     ),
   ),
 

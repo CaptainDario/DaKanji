@@ -12,41 +12,39 @@ List<ExpectedDictionarySearchResult> popularityOverrideTestCases = [
     query: "生",
     queryMatches: const ExpectedMatchGroup(
       prefixMatches: [
-        [
-          // --- dictionary 1 ----------------------------------------------------
-          ExpectedDictionaryMatch(
-            term: '生餃子',
-            reading: 'なまぎょうざ',
-            match: '生餃子',
-            definitions: ['2) raw gyoza; uncooked dumplings'],
-          ),
-          // --- dictionary 2 ----------------------------------------------------
-          ExpectedDictionaryMatch(
-            term: '生餃子',
-            reading: 'なまぎょうざ',
-            match: '生餃子',
-            definitions: ['1) raw gyoza; uncooked dumplings'],
-          ),
-          ExpectedDictionaryMatch(
-            term: '生ける',
-            reading: 'いける',
-            match: '生ける',
-            definitions: ['to arrange (flowers)'],
-          ),
-          ExpectedDictionaryMatch(
-            term: '生ビール',
-            reading: '',
-            match: '生ビール',
-            definitions: ['draft beer; draught beer'],
-          ),
-          // --- dictionary 3 ----------------------------------------------------
-          ExpectedDictionaryMatch(
-            term: '生餃子',
-            reading: 'なまぎょうざ',
-            match: '生餃子',
-            definitions: ['3) raw gyoza; uncooked dumplings'],
-          ),
-        ]
+        // --- dictionary 1 ----------------------------------------------------
+        [ExpectedDictionaryMatch(
+          term: '生餃子',
+          reading: 'なまぎょうざ',
+          match: '生餃子',
+          definitions: ['2) raw gyoza; uncooked dumplings'],
+        )],
+        // --- dictionary 2 ----------------------------------------------------
+        [ExpectedDictionaryMatch(
+          term: '生餃子',
+          reading: 'なまぎょうざ',
+          match: '生餃子',
+          definitions: ['1) raw gyoza; uncooked dumplings'],
+        )],
+        [ExpectedDictionaryMatch(
+          term: '生ける',
+          reading: 'いける',
+          match: '生ける',
+          definitions: ['to arrange (flowers)'],
+        )],
+        [ExpectedDictionaryMatch(
+          term: '生ビール',
+          reading: '',
+          match: '生ビール',
+          definitions: ['draft beer; draught beer'],
+        )],
+        // --- dictionary 3 ----------------------------------------------------
+        [ExpectedDictionaryMatch(
+          term: '生餃子',
+          reading: 'なまぎょうざ',
+          match: '生餃子',
+          definitions: ['3) raw gyoza; uncooked dumplings'],
+        )],
       ],
     ),
   ),
