@@ -16,6 +16,7 @@ dependencies:
   path_provider: ^2.1.5
   cupertino_icons: ^1.0.8
   path: ^1.9.1
+  language_processing:
 
 dev_dependencies:
   flutter_test:

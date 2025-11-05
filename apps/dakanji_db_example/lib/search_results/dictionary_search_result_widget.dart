@@ -2,7 +2,7 @@
 
 
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
-import 'package:dakanji_db_example/search_match_group_widget.dart';
+import 'package:dakanji_db_example/search_results/search_match_group_widget.dart';
 import 'package:flutter/material.dart';
 
 class DictionarySearchResultWidget extends StatelessWidget {
@@ -23,10 +23,11 @@ class DictionarySearchResultWidget extends StatelessWidget {
     return Column(
       children: [
         SearchMatchGroupWidget(result.queryMatches),
-        for (final m in result.normalizedQueryMatchGroups)
-          SearchMatchGroupWidget(m),
-        for (final m in result.queryVariantMatches)
-          SearchMatchGroupWidget(m)
+        // TODO
+        //for (final m in result.normalizedQueryMatchGroups)
+        //  SearchMatchGroupWidget(m),
+        //for (final m in result.queryVariantMatches)
+        //  SearchMatchGroupWidget(m)
       ],
     );
   }
