@@ -1,6 +1,7 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:dakanji_db_example/init.dart';
+import 'package:dakanji_db_example/search_results/dictionary_search_result_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'globals.dart';
@@ -100,27 +101,31 @@ class _MyHomePageState extends State<MyHomePage> {
                         print("Searching for: $value");
                         Stopwatch stopwatch = Stopwatch()..start();
                         lastSearchResult = await daKanjiDB.dBQueriesDao.dictionarySearch(
-                          value, [], true);
-                        print("Search complete. Found ${lastSearchResult ?? 0} entries in ${stopwatch.elapsed}.");
+                          value,
+                          normalizedSearch: false,
+                          normalizedSearchConvertsRomajiToHiragana: false,
+                          deconjugationSearch: false,
+                          spellfixSearch: false,
+                          groupSequences: true
+                        );
+                        print("Search completed in ${stopwatch.elapsed}.");
                       }
                       setState(() {});
                     },
                   ),
                 ),
                 
+                //search
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Text("$lastSearchResult")
+                  child: ListView(
+                    children: [
+                      if(lastSearchResult != null)
+                        DictionarySearchResultWidget(
+                          lastSearchResult!
+                        )
+                    ],
                   ),
                 ),
-                /*
-                if(lastSearchResult != null)
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: DictionarySearchResultWidget(lastSearchResult!),
-                    ),
-                  ),
-                */
               ],
             );
           }
