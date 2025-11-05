@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:language_processing/japanese/furigana_matching.dart';
 
 
-class DictionaryMatchTermWidget extends StatefulWidget {
+class DictionaryMatchTermBankTermWidget extends StatefulWidget {
 
   /// The terms to display.
   final List<TermBankV3Entry> entries;
 
-  const DictionaryMatchTermWidget(this.entries, {super.key});
+  const DictionaryMatchTermBankTermWidget(this.entries, {super.key});
 
   @override
-  State<DictionaryMatchTermWidget> createState() => _DictionaryMatchTermWidgetState();
+  State<DictionaryMatchTermBankTermWidget> createState() => _DictionaryMatchTermBankTermWidgetState();
 }
 
-class _DictionaryMatchTermWidgetState extends State<DictionaryMatchTermWidget> {
+class _DictionaryMatchTermBankTermWidgetState extends State<DictionaryMatchTermBankTermWidget> {
 
   /// The terms and readings bundled as furigana pairs.
   List<List<FuriganaPair>> termsAndReadings = [];
