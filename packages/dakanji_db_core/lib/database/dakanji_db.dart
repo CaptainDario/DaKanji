@@ -80,7 +80,7 @@ part 'dakanji_db.g.dart';
     KanjiMetaBankV3Table, KanjiMetaBankV3TypeTable,
     
     TermBankV3Table,
-    TermBankV3DefinitionTagsTable, TermBankV3_X_DefinitionTagTable,
+    TermBankV3_X_DefinitionTagTable,
     TermBankV3RuleIdentifierTable, TermBankV3_X_RuleIdentifierTable,
     TermBankV3_X_DefinitionTable,
     TermBankV3_X_TagBankTable,
