@@ -48,7 +48,8 @@ final termBankTestCaseExpectations1 = [
       ruleIdentifiers: ["n"],
       popularity: 1,
       definitions: ["da definition 1", "da definition 2"],
-      sequenceNumber: 1,
+      structuredContentDefinitions: [],
+        sequenceNumber: 1,
       tags: [
         TagBankV3Entry(
           indexId: dictId,
@@ -68,7 +69,8 @@ final termBankTestCaseExpectations1 = [
       ruleIdentifiers: ["n"],
       popularity: 1,
       definitions: ["daasu definition 1", "daasu definition 2"],
-      sequenceNumber: 2,
+      structuredContentDefinitions: [],
+        sequenceNumber: 2,
       tags: [
         TagBankV3Entry(
           indexId: dictId,
@@ -92,6 +94,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["v5"],
         popularity: 10,
         definitions: ["utsu definition 1", "utsu definition 2"],
+        structuredContentDefinitions: [],
         sequenceNumber: 3,
         tags: [
           TagBankV3Entry(
@@ -118,6 +121,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["v5"],
         popularity: 1,
         definitions: ["utsu definition 3", "utsu definition 4"],
+        structuredContentDefinitions: [],
         sequenceNumber: 3,
         tags: [
           TagBankV3Entry(
@@ -144,6 +148,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["v5"],
         popularity: 10,
         definitions: ["butsu definition 1", "butsu definition 2"],
+        structuredContentDefinitions: [],
         sequenceNumber: 3,
         tags: [
           TagBankV3Entry(
@@ -170,6 +175,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["v5"],
         popularity: 1,
         definitions: ["butsu definition 3", "butsu definition 4"],
+        structuredContentDefinitions: [],
         sequenceNumber: 3,
         tags: [
           TagBankV3Entry(
@@ -199,6 +205,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["v5"],
         popularity: 10,
         definitions: ["uchikomu definition 1", "uchikomu definition 2"],
+        structuredContentDefinitions: [],
         sequenceNumber: 4,
         tags: [
           TagBankV3Entry(
@@ -225,6 +232,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["v5"],
         popularity: 1,
         definitions: ["uchikomu definition 3", "uchikomu definition 4"],
+        structuredContentDefinitions: [],
         sequenceNumber: 4,
         tags: [
           TagBankV3Entry(
@@ -251,6 +259,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["v5"],
         popularity: 10,
         definitions: ["buchikomu definition 1", "buchikomu definition 2"],
+        structuredContentDefinitions: [],
         sequenceNumber: 4,
         tags: [
           TagBankV3Entry(
@@ -277,6 +286,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["v5"],
         popularity: 1,
         definitions: ["buchikomu definition 3", "buchikomu definition 4"],
+        structuredContentDefinitions: [],
         sequenceNumber: 4,
         tags: [
           TagBankV3Entry(
@@ -306,6 +316,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 1,
         definitions: ["gazou definition 1", "gazou definition 2"],
+        structuredContentDefinitions: [],
         sequenceNumber: 5,
         tags: [
           TagBankV3Entry(
@@ -335,6 +346,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["v5"],
         popularity: 100,
         definitions: ["to read"],
+        structuredContentDefinitions: [],
         sequenceNumber: 6,
         tags: [
           TagBankV3Entry(
@@ -364,6 +376,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 90,
         definitions: ["strong point"],
+        structuredContentDefinitions: [],
         sequenceNumber: 7,
         tags: [
           TagBankV3Entry(
@@ -393,6 +406,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 1,
         definitions: ["text definition 1", "text definition 2"],
+        structuredContentDefinitions: [],
         sequenceNumber: 8,
         tags: [
           TagBankV3Entry(
@@ -422,6 +436,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 1,
         definitions: ["otemae definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 9,
         tags: []),
   ],
@@ -436,6 +451,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 1,
         definitions: ["bangou definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 10,
         tags: []),
   ],
@@ -450,6 +466,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 1,
         definitions: ["chuugoshi definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 11,
         tags: []),
   ],
@@ -464,6 +481,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 1,
         definitions: ["shogyouu definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 12,
         tags: []),
   ],
@@ -478,6 +496,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 1,
         definitions: ["dobokukouji definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 13,
         tags: []),
   ],
@@ -488,10 +507,11 @@ final termBankTestCaseExpectations1 = [
         indexId: dictId,
         term: "好き",
         reading: "すき",
-        definitionTags: ["adj-na", nTag],
+        definitionTags: [naAdjTag, nTag],
         ruleIdentifiers: [],
         popularity: 1,
         definitions: ["suki definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 14,
         tags: []),
   ],
@@ -531,6 +551,7 @@ final termBankTestCaseExpectations1 = [
           'lang=ja applied to whole table 直次茶冷',
           'lang=zh-CN applied to whole table 直次茶冷',
         ],
+        structuredContentDefinitions: [],
         sequenceNumber: 100,
         tags: [
           TagBankV3Entry(
@@ -564,6 +585,7 @@ final termBankTestCaseExpectations1 = [
           "kouzou definition 2",
           "kouzou definition 3 (構造)"
         ],
+        structuredContentDefinitions: [],
         sequenceNumber: 101,
         tags: [
           TagBankV3Entry(
@@ -589,10 +611,11 @@ final termBankTestCaseExpectations1 = [
         indexId: dictId,
         term: "のたまう",
         reading: "のたまう",
-        definitionTags: ["v5"],
+        definitionTags: [v5Tag],
         ruleIdentifiers: ["v5"],
         popularity: 1,
         definitions: ["notamau definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 15,
         tags: []),
   ],
@@ -607,6 +630,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: [],
         popularity: 1,
         definitions: ["のたまう → past"],
+        structuredContentDefinitions: [],
         sequenceNumber: 16,
         tags: []),
   ],
@@ -621,6 +645,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: [],
         popularity: 1,
         definitions: ["sankyuu definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 17,
         tags: []),
   ],
@@ -631,10 +656,11 @@ final termBankTestCaseExpectations1 = [
         indexId: dictId,
         term: "凄い",
         reading: "すごい",
-        definitionTags: ["adj-i"],
+        definitionTags: [iAdjTag],
         ruleIdentifiers: ["adj-i"],
         popularity: 1,
         definitions: ["sugoi definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 18,
         tags: []),
   ],
@@ -649,6 +675,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 1,
         definitions: ["English definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 19,
         tags: []),
   ],
@@ -663,6 +690,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 1,
         definitions: ["language definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 20,
         tags: []),
   ],
@@ -677,6 +705,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 1,
         definitions: ["ＵＳＢ definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 21,
         tags: []),
   ],
@@ -687,10 +716,11 @@ final termBankTestCaseExpectations1 = [
         indexId: dictId,
         term: "마시다",
         reading: "",
-        definitionTags: ["v"],
+        definitionTags: [vtag],
         ruleIdentifiers: ["v"],
         popularity: 1,
         definitions: ["masida definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 22,
         tags: []),
   ],
@@ -705,6 +735,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 1,
         definitions: ["jichou definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 23,
         tags: []),
     TermBankV3Entry(
@@ -716,6 +747,7 @@ final termBankTestCaseExpectations1 = [
         ruleIdentifiers: ["n"],
         popularity: 2,
         definitions: ["jijuu definition"],
+        structuredContentDefinitions: [],
         sequenceNumber: 24,
         tags: []),
   ],

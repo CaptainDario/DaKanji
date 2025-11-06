@@ -394,6 +394,7 @@ dictionary_search_drift_find_term_bank_details:
         TB3T.popularity,
         TB3T.definition_order,
         TB3T.sequence_number,
+        TDJT.definition_json AS structuredContentDefinitions,
         
         -- Get the aggregated data
         COALESCE(DA.definitions, '[]') AS definitions,
@@ -410,6 +411,7 @@ dictionary_search_drift_find_term_bank_details:
     LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
     LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id
     LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id
+    LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id
     LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id
     LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id
     LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id

@@ -32,8 +32,8 @@ class TermBankV3Entry with _$TermBankV3Entry {
   @override
   final List<String> definitions;
   /// All structured content definitions of this entry
-  //@override
-  //final List<String> structuredContentDefinitions; TODO
+  @override
+  final List<String> structuredContentDefinitions;
   /// Tags assigned to each definition of this entry (inorder of `definitions`)
   @override
   final List<TagBankV3Entry> definitionTags;
@@ -58,7 +58,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
     required this.term,
     required this.reading,
     required this.definitions,
-    //required this.structuredContentDefinitions,
+    required this.structuredContentDefinitions,
     required this.definitionTags,
     required this.ruleIdentifiers,
     required this.popularity,
@@ -88,7 +88,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
       term: r.term!,
       reading: r.reading!,
       definitions: List<String>.from(jsonDecode(r.definitions)),
-      //structuredContentDefinitions: [], //TODO
+      structuredContentDefinitions: List<String>.from(jsonDecode(r.structuredContentDefinitions ?? "[]")),
       definitionTags: List.from(jsonDecode(r.tags))
           .where((tagJson) => tagJson != null && tagJson['name'] != null)
           .map((e) => TagBankV3Entry.fromJson(e))

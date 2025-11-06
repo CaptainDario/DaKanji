@@ -7898,7 +7898,7 @@ class TermBankV3TableData extends DataClass
   /// The ID of the text for the term.
   final int termId;
 
-  /// The order of the terms, used to sort them in the order they were
+  /// The order of the definitions, used to sort them in the order they were
   /// provided by the dictionary. This is a JSON array of integers, where each
   /// integer corresponds to `termId`.
   final Object? definitionOrder;
@@ -9600,229 +9600,6 @@ class TermBankV3DefinitionsJsonView
   };
 }
 
-class $TermBankV3DefinitionTagsTableTable extends TermBankV3DefinitionTagsTable
-    with
-        TableInfo<
-          $TermBankV3DefinitionTagsTableTable,
-          TermBankV3DefinitionTagsTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $TermBankV3DefinitionTagsTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _definitionTagMeta = const VerificationMeta(
-    'definitionTag',
-  );
-  @override
-  late final GeneratedColumn<String> definitionTag = GeneratedColumn<String>(
-    'definition_tag',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, definitionTag];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'term_bank_v3_definition_tags_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<TermBankV3DefinitionTagsTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('definition_tag')) {
-      context.handle(
-        _definitionTagMeta,
-        definitionTag.isAcceptableOrUnknown(
-          data['definition_tag']!,
-          _definitionTagMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_definitionTagMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  TermBankV3DefinitionTagsTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermBankV3DefinitionTagsTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      definitionTag: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}definition_tag'],
-      )!,
-    );
-  }
-
-  @override
-  $TermBankV3DefinitionTagsTableTable createAlias(String alias) {
-    return $TermBankV3DefinitionTagsTableTable(attachedDatabase, alias);
-  }
-}
-
-class TermBankV3DefinitionTagsTableData extends DataClass
-    implements Insertable<TermBankV3DefinitionTagsTableData> {
-  /// id of this entry
-  final int id;
-
-  /// Tags for the definition
-  final String definitionTag;
-  const TermBankV3DefinitionTagsTableData({
-    required this.id,
-    required this.definitionTag,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['definition_tag'] = Variable<String>(definitionTag);
-    return map;
-  }
-
-  TermBankV3DefinitionTagsTableCompanion toCompanion(bool nullToAbsent) {
-    return TermBankV3DefinitionTagsTableCompanion(
-      id: Value(id),
-      definitionTag: Value(definitionTag),
-    );
-  }
-
-  factory TermBankV3DefinitionTagsTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermBankV3DefinitionTagsTableData(
-      id: serializer.fromJson<int>(json['id']),
-      definitionTag: serializer.fromJson<String>(json['definitionTag']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'definitionTag': serializer.toJson<String>(definitionTag),
-    };
-  }
-
-  TermBankV3DefinitionTagsTableData copyWith({
-    int? id,
-    String? definitionTag,
-  }) => TermBankV3DefinitionTagsTableData(
-    id: id ?? this.id,
-    definitionTag: definitionTag ?? this.definitionTag,
-  );
-  TermBankV3DefinitionTagsTableData copyWithCompanion(
-    TermBankV3DefinitionTagsTableCompanion data,
-  ) {
-    return TermBankV3DefinitionTagsTableData(
-      id: data.id.present ? data.id.value : this.id,
-      definitionTag: data.definitionTag.present
-          ? data.definitionTag.value
-          : this.definitionTag,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermBankV3DefinitionTagsTableData(')
-          ..write('id: $id, ')
-          ..write('definitionTag: $definitionTag')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, definitionTag);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TermBankV3DefinitionTagsTableData &&
-          other.id == this.id &&
-          other.definitionTag == this.definitionTag);
-}
-
-class TermBankV3DefinitionTagsTableCompanion
-    extends UpdateCompanion<TermBankV3DefinitionTagsTableData> {
-  final Value<int> id;
-  final Value<String> definitionTag;
-  const TermBankV3DefinitionTagsTableCompanion({
-    this.id = const Value.absent(),
-    this.definitionTag = const Value.absent(),
-  });
-  TermBankV3DefinitionTagsTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String definitionTag,
-  }) : definitionTag = Value(definitionTag);
-  static Insertable<TermBankV3DefinitionTagsTableData> custom({
-    Expression<int>? id,
-    Expression<String>? definitionTag,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (definitionTag != null) 'definition_tag': definitionTag,
-    });
-  }
-
-  TermBankV3DefinitionTagsTableCompanion copyWith({
-    Value<int>? id,
-    Value<String>? definitionTag,
-  }) {
-    return TermBankV3DefinitionTagsTableCompanion(
-      id: id ?? this.id,
-      definitionTag: definitionTag ?? this.definitionTag,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (definitionTag.present) {
-      map['definition_tag'] = Variable<String>(definitionTag.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermBankV3DefinitionTagsTableCompanion(')
-          ..write('id: $id, ')
-          ..write('definitionTag: $definitionTag')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $TermBankV3_X_DefinitionTagTableTable
     extends TermBankV3_X_DefinitionTagTable
     with
@@ -9858,7 +9635,7 @@ class $TermBankV3_X_DefinitionTagTableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_bank_v3_definition_tags_table (id)',
+      'REFERENCES tag_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _termBankIdMeta = const VerificationMeta(
@@ -10112,10 +9889,10 @@ class TermBankV3_X_DefinitionTagTableCompanion
 
 class TermBankV3DefTagsJsonViewData extends DataClass {
   final int termBankId;
-  final String definitionTag;
+  final String tagJson;
   const TermBankV3DefTagsJsonViewData({
     required this.termBankId,
-    required this.definitionTag,
+    required this.tagJson,
   });
   factory TermBankV3DefTagsJsonViewData.fromJson(
     Map<String, dynamic> json, {
@@ -10124,7 +9901,7 @@ class TermBankV3DefTagsJsonViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TermBankV3DefTagsJsonViewData(
       termBankId: serializer.fromJson<int>(json['term_bank_id']),
-      definitionTag: serializer.fromJson<String>(json['definition_tag']),
+      tagJson: serializer.fromJson<String>(json['tag_json']),
     );
   }
   @override
@@ -10132,34 +9909,32 @@ class TermBankV3DefTagsJsonViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'term_bank_id': serializer.toJson<int>(termBankId),
-      'definition_tag': serializer.toJson<String>(definitionTag),
+      'tag_json': serializer.toJson<String>(tagJson),
     };
   }
 
-  TermBankV3DefTagsJsonViewData copyWith({
-    int? termBankId,
-    String? definitionTag,
-  }) => TermBankV3DefTagsJsonViewData(
-    termBankId: termBankId ?? this.termBankId,
-    definitionTag: definitionTag ?? this.definitionTag,
-  );
+  TermBankV3DefTagsJsonViewData copyWith({int? termBankId, String? tagJson}) =>
+      TermBankV3DefTagsJsonViewData(
+        termBankId: termBankId ?? this.termBankId,
+        tagJson: tagJson ?? this.tagJson,
+      );
   @override
   String toString() {
     return (StringBuffer('TermBankV3DefTagsJsonViewData(')
           ..write('termBankId: $termBankId, ')
-          ..write('definitionTag: $definitionTag')
+          ..write('tagJson: $tagJson')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(termBankId, definitionTag);
+  int get hashCode => Object.hash(termBankId, tagJson);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TermBankV3DefTagsJsonViewData &&
           other.termBankId == this.termBankId &&
-          other.definitionTag == this.definitionTag);
+          other.tagJson == this.tagJson);
 }
 
 class TermBankV3DefTagsJsonView
@@ -10170,7 +9945,7 @@ class TermBankV3DefTagsJsonView
   final _$DaKanjiDB attachedDatabase;
   TermBankV3DefTagsJsonView(this.attachedDatabase, [this._alias]);
   @override
-  List<GeneratedColumn> get $columns => [termBankId, definitionTag];
+  List<GeneratedColumn> get $columns => [termBankId, tagJson];
   @override
   String get aliasedName => _alias ?? entityName;
   @override
@@ -10178,7 +9953,7 @@ class TermBankV3DefTagsJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_bank_v3_def_tags_json_view AS SELECT TB3DTRT.term_bank_id, TB3DTT.definition_tag FROM term_bank_v3_x_definition_tag_table AS TB3DTRT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id',
+        'CREATE VIEW IF NOT EXISTS term_bank_v3_def_tags_json_view AS SELECT TB3DTRT.term_bank_id, json_object(\'id\', TagB3T.id, \'indexId\', TagB3T.index_id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score) AS tag_json FROM term_bank_v3_x_definition_tag_table AS TB3DTRT JOIN tag_bank_v3_table AS TagB3T ON TB3DTRT.definition_tag_id = TagB3T.id',
   };
   @override
   TermBankV3DefTagsJsonView get asDslTable => this;
@@ -10193,9 +9968,9 @@ class TermBankV3DefTagsJsonView
         DriftSqlType.int,
         data['${effectivePrefix}term_bank_id'],
       )!,
-      definitionTag: attachedDatabase.typeMapping.read(
+      tagJson: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}definition_tag'],
+        data['${effectivePrefix}tag_json'],
       )!,
     );
   }
@@ -10206,8 +9981,8 @@ class TermBankV3DefTagsJsonView
     false,
     type: DriftSqlType.int,
   );
-  late final GeneratedColumn<String> definitionTag = GeneratedColumn<String>(
-    'definition_tag',
+  late final GeneratedColumn<String> tagJson = GeneratedColumn<String>(
+    'tag_json',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -10222,7 +9997,7 @@ class TermBankV3DefTagsJsonView
   @override
   Set<String> get readTables => const {
     'term_bank_v3_x_definition_tag_table',
-    'term_bank_v3_definition_tags_table',
+    'tag_bank_v3_table',
   };
 }
 
@@ -13729,6 +13504,7 @@ class TermBankV3EntryViewData extends DataClass {
   final int popularity;
   final String definitions;
   final Object? definitionOrder;
+  final String? structuredContentDefinitions;
   final int sequenceNumber;
   final String tags;
   const TermBankV3EntryViewData({
@@ -13741,6 +13517,7 @@ class TermBankV3EntryViewData extends DataClass {
     required this.popularity,
     required this.definitions,
     this.definitionOrder,
+    this.structuredContentDefinitions,
     required this.sequenceNumber,
     required this.tags,
   });
@@ -13759,6 +13536,9 @@ class TermBankV3EntryViewData extends DataClass {
       popularity: serializer.fromJson<int>(json['popularity']),
       definitions: serializer.fromJson<String>(json['definitions']),
       definitionOrder: serializer.fromJson<Object?>(json['definition_order']),
+      structuredContentDefinitions: serializer.fromJson<String?>(
+        json['structuredContentDefinitions'],
+      ),
       sequenceNumber: serializer.fromJson<int>(json['sequence_number']),
       tags: serializer.fromJson<String>(json['tags']),
     );
@@ -13776,6 +13556,9 @@ class TermBankV3EntryViewData extends DataClass {
       'popularity': serializer.toJson<int>(popularity),
       'definitions': serializer.toJson<String>(definitions),
       'definition_order': serializer.toJson<Object?>(definitionOrder),
+      'structuredContentDefinitions': serializer.toJson<String?>(
+        structuredContentDefinitions,
+      ),
       'sequence_number': serializer.toJson<int>(sequenceNumber),
       'tags': serializer.toJson<String>(tags),
     };
@@ -13791,6 +13574,7 @@ class TermBankV3EntryViewData extends DataClass {
     int? popularity,
     String? definitions,
     Value<Object?> definitionOrder = const Value.absent(),
+    Value<String?> structuredContentDefinitions = const Value.absent(),
     int? sequenceNumber,
     String? tags,
   }) => TermBankV3EntryViewData(
@@ -13805,6 +13589,9 @@ class TermBankV3EntryViewData extends DataClass {
     definitionOrder: definitionOrder.present
         ? definitionOrder.value
         : this.definitionOrder,
+    structuredContentDefinitions: structuredContentDefinitions.present
+        ? structuredContentDefinitions.value
+        : this.structuredContentDefinitions,
     sequenceNumber: sequenceNumber ?? this.sequenceNumber,
     tags: tags ?? this.tags,
   );
@@ -13820,6 +13607,9 @@ class TermBankV3EntryViewData extends DataClass {
           ..write('popularity: $popularity, ')
           ..write('definitions: $definitions, ')
           ..write('definitionOrder: $definitionOrder, ')
+          ..write(
+            'structuredContentDefinitions: $structuredContentDefinitions, ',
+          )
           ..write('sequenceNumber: $sequenceNumber, ')
           ..write('tags: $tags')
           ..write(')'))
@@ -13837,6 +13627,7 @@ class TermBankV3EntryViewData extends DataClass {
     popularity,
     definitions,
     definitionOrder,
+    structuredContentDefinitions,
     sequenceNumber,
     tags,
   );
@@ -13853,6 +13644,8 @@ class TermBankV3EntryViewData extends DataClass {
           other.popularity == this.popularity &&
           other.definitions == this.definitions &&
           other.definitionOrder == this.definitionOrder &&
+          other.structuredContentDefinitions ==
+              this.structuredContentDefinitions &&
           other.sequenceNumber == this.sequenceNumber &&
           other.tags == this.tags);
 }
@@ -13875,6 +13668,7 @@ class TermBankV3EntryView
     popularity,
     definitions,
     definitionOrder,
+    structuredContentDefinitions,
     sequenceNumber,
     tags,
   ];
@@ -13885,7 +13679,7 @@ class TermBankV3EntryView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS WITH definitions_agg AS (SELECT TB3T.id AS term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(json_quote(MT.definition) ORDER BY j."key"), \'\') || \']\' AS definitions FROM term_bank_v3_table AS TB3T,json_each(TB3T.definition_order)AS j JOIN definition_table AS MT ON j.value = MT.id GROUP BY TB3T.id), def_tags_agg AS (SELECT TB3DTRT.term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_quote(TB3DTT.definition_tag)), \'\') || \']\' AS definition_tags FROM term_bank_v3_x_definition_tag_table AS TB3DTRT JOIN term_bank_v3_definition_tags_table AS TB3DTT ON TB3DTRT.definition_tag_id = TB3DTT.id GROUP BY TB3DTRT.term_bank_id), rules_agg AS (SELECT TB3RIRT.term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_quote(TB3RIT.rule_identifier)), \'\') || \']\' AS rule_identifiers FROM term_bank_v3_x_rule_identifier_table AS TB3RIRT JOIN term_bank_v3_rule_identifier_table AS TB3RIT ON TB3RIRT.rule_identifier_id = TB3RIT.id GROUP BY TB3RIRT.term_bank_id), tags_agg AS (SELECT TB3TBRT.term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', TagB3T.id, \'indexId\', TagB3T.index_id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score)), \'\') || \']\' AS tags FROM term_bank_v3_x_tag_bank_table AS TB3TBRT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id GROUP BY TB3TBRT.term_bank_id) SELECT TB3T.id AS termBankV3Id, TB3T.index_id AS indexId, TT.term, RT.reading, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, TB3T.popularity, COALESCE(DA.definitions, \'[]\') AS definitions, TB3T.definition_order, TB3T.sequence_number, COALESCE(TA.tags, \'[]\') AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id',
+        'CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS WITH definitions_agg AS (SELECT term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(json_quote(definition) ORDER BY sort_key), \'\') || \']\' AS definitions FROM term_bank_v3_definitions_json_view GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_def_tags_json_view) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_quote(rule_identifier)), \'\') || \']\' AS rule_identifiers FROM term_bank_v3_rules_json_view GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view) AS DistinctTags GROUP BY term_bank_id) SELECT TB3T.id AS termBankV3Id, TB3T.index_id AS indexId, TT.term, RT.reading, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, TB3T.popularity, COALESCE(DA.definitions, \'[]\') AS definitions, TB3T.definition_order, TDJT.definition_json AS structuredContentDefinitions, TB3T.sequence_number, COALESCE(TA.tags, \'[]\') AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id',
   };
   @override
   TermBankV3EntryView get asDslTable => this;
@@ -13934,6 +13728,13 @@ class TermBankV3EntryView
           data['${effectivePrefix}definition_order'],
         )!,
       ),
+      structuredContentDefinitions:
+          NullAwareTypeConverter.wrap(const ZlibStringConverter()).fromSql(
+            attachedDatabase.typeMapping.read(
+              DriftSqlType.blob,
+              data['${effectivePrefix}structuredContentDefinitions'],
+            ),
+          ),
       sequenceNumber: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}sequence_number'],
@@ -14000,6 +13801,16 @@ class TermBankV3EntryView
         false,
         type: DriftSqlType.string,
       ).withConverter<Object?>($TermBankV3TableTable.$converterdefinitionOrder);
+  late final GeneratedColumnWithTypeConverter<String?, Uint8List>
+  structuredContentDefinitions =
+      GeneratedColumn<Uint8List>(
+        'structuredContentDefinitions',
+        aliasedName,
+        true,
+        type: DriftSqlType.blob,
+      ).withConverter<String?>(
+        NullAwareTypeConverter.wrap(const ZlibStringConverter()),
+      );
   late final GeneratedColumn<int> sequenceNumber = GeneratedColumn<int>(
     'sequence_number',
     aliasedName,
@@ -14024,13 +13835,13 @@ class TermBankV3EntryView
     'term_bank_v3_table',
     'definition_table',
     'term_bank_v3_x_definition_tag_table',
-    'term_bank_v3_definition_tags_table',
+    'tag_bank_v3_table',
     'term_bank_v3_x_rule_identifier_table',
     'term_bank_v3_rule_identifier_table',
     'term_bank_v3_x_tag_bank_table',
-    'tag_bank_v3_table',
     'term_table',
     'reading_table',
+    'term_bank_v3_definition_json_table',
   };
 }
 
@@ -18732,8 +18543,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       $TermMetaBankV3TableTable(this);
   late final TermBankV3DefinitionsJsonView termBankV3DefinitionsJsonView =
       TermBankV3DefinitionsJsonView(this);
-  late final $TermBankV3DefinitionTagsTableTable termBankV3DefinitionTagsTable =
-      $TermBankV3DefinitionTagsTableTable(this);
   late final $TermBankV3_X_DefinitionTagTableTable
   termBankV3XDefinitionTagTable = $TermBankV3_X_DefinitionTagTableTable(this);
   late final TermBankV3DefTagsJsonView termBankV3DefTagsJsonView =
@@ -19157,7 +18966,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     int normalizedSearch,
   ) {
     return customSelect(
-      'WITH SearchTerms (term) AS (SELECT value FROM json_each(?1)WHERE value IS NOT NULL), TagFilters (tag_name) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), SearchResults AS (SELECT COALESCE(SearchTerms.term, \'\') AS search_term, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH SearchTerms.term || \' *\' WHERE ?3 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))UNION ALL SELECT COALESCE(SearchTerms.term, \'\') AS search_term, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?3 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResults.*, ROW_NUMBER()OVER (PARTITION BY source_id ORDER BY rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResults) AS Ranked WHERE rn = 1), SearchResultMatchesClassified AS (SELECT SearchResultsDeduplicated.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResultsDeduplicated), TermBankMatches AS (SELECT SearchResultMatchesClassified.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultMatchesClassified JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) UNION ALL SELECT SearchResultMatchesClassified.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultMatchesClassified JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) UNION ALL SELECT SearchResultMatchesClassified.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultMatchesClassified JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id WHERE data_type_id = 7), TermBankMatchesFilteredByTag AS (SELECT TBM.* FROM TermBankMatches AS TBM WHERE LENGTH(?2) <= 2 OR EXISTS (SELECT 1 AS _c0 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN TagFilters AS TF ON TagTable.name = TF.tag_name WHERE LinkTable.term_bank_id = TBM.term_bank_id)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, index_table.current_sorting_order, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFilteredByTag AS TBM JOIN index_table ON TB3T.index_id = index_table.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY index_table.current_sorting_order, TBM.match_type, TBM.match_column, finalPopularity DESC, TBM.rank, LENGTH(matchedText)',
+      'WITH SearchTerms (term) AS (SELECT value FROM json_each(?1)WHERE value IS NOT NULL), TagFilters (tag_name) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), SearchResults AS (SELECT COALESCE(SearchTerms.term, \'\') AS search_term, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH SearchTerms.term || \' *\' WHERE ?3 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))UNION ALL SELECT COALESCE(SearchTerms.term, \'\') AS search_term, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?3 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResults.*, ROW_NUMBER()OVER (PARTITION BY source_id ORDER BY rank RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResults) AS Ranked WHERE rn = 1), SearchResultMatchesClassified AS (SELECT SearchResultsDeduplicated.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResultsDeduplicated), TermBankMatches AS (SELECT SearchResultMatchesClassified.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultMatchesClassified JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) UNION ALL SELECT SearchResultMatchesClassified.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultMatchesClassified JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) UNION ALL SELECT SearchResultMatchesClassified.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultMatchesClassified JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id WHERE data_type_id = 7), TermBankMatchesFilteredByTag AS (SELECT TBM.* FROM TermBankMatches AS TBM WHERE LENGTH(?2) <= 2 OR EXISTS (SELECT 1 AS _c0 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN TagFilters AS TF ON TagTable.name = TF.tag_name WHERE LinkTable.term_bank_id = TBM.term_bank_id)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, index_table.current_sorting_order, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFilteredByTag AS TBM JOIN index_table ON TB3T.index_id = index_table.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY index_table.current_sorting_order, TBM.match_type, TBM.match_column, finalPopularity DESC, TBM.rank, LENGTH(matchedText) LIMIT 100',
       variables: [
         Variable<String>(searchTermsJson),
         Variable<String>(tagFiltersJson),
@@ -19223,7 +19032,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   Selectable<DictionarySearchDriftFindTermBankDetailsResult>
   dictionary_search_drift_find_term_bank_details(String termBankIdJson) {
     return customSelect(
-      'WITH TargetIds (term_bank_id) AS (SELECT CAST(value AS INTEGER) FROM json_each(?1)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\'), definitions_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(definition ORDER BY sort_key)AS definitions FROM term_bank_v3_definitions_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds) GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(definition_tag) AS definition_tags FROM (SELECT DISTINCT term_bank_id, definition_tag FROM term_bank_v3_def_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(rule_identifier) AS rule_identifiers FROM (SELECT DISTINCT term_bank_id, rule_identifier FROM term_bank_v3_rules_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctRules GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), FilteredMetaBank AS (SELECT Base.*, TBM.term_bank_id FROM term_meta_bank_v3_base_view AS Base JOIN (SELECT DISTINCT id AS term_bank_id, term_id, reading_id FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM ON Base.term_id = TBM.term_id AND Base.reading_id = TBM.reading_id), term_meta_agg AS (SELECT FMB.term_bank_id, COALESCE(JSON_GROUP_ARRAY(JSON_OBJECT(\'indexId\', FMB.indexId, \'term\', FMB.term, \'reading\', FMB.reading, \'type\', FMB.type, \'frequency\', FMB.frequency, \'frequencyDisplayValue\', FMB.frequencyDisplayValue, \'pitchs\', CASE WHEN FMB.type = \'pitch\' THEN JSON(COALESCE(ap.pitches, \'[]\')) ELSE JSON(\'[]\') END, \'ipas\', CASE WHEN FMB.type = \'ipa\' THEN JSON(COALESCE(ai.ipas, \'[]\')) ELSE JSON(\'[]\') END))FILTER (WHERE FMB.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM FilteredMetaBank AS FMB LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id WHERE((FMB.type = \'pitch\' AND ap.pitches IS NOT NULL)OR(FMB.type = \'ipa\' AND ai.ipas IS NOT NULL)OR(FMB.type = \'freq\'))GROUP BY FMB.term_bank_id) SELECT index_table.*, COALESCE(ActiveCheck.is_active, 0) AS hasPopularityOverride, OP.freq_value AS overriddenPopularityValue, TB3T.popularity AS originalPopularity, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, TB3T.id AS term_bank_v3_id, TB3T.index_id AS indexId, TT.term, RT.reading, TB3T.popularity, TB3T.definition_order, TB3T.sequence_number, COALESCE(DA.definitions, \'[]\') AS definitions, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, COALESCE(TA.tags, \'[]\') AS tags, COALESCE(TMA.termMetaEntries, \'[]\') AS termMetaEntries FROM term_bank_v3_table AS TB3T JOIN index_table ON TB3T.index_id = index_table.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id WHERE TB3T.id IN (SELECT term_bank_id FROM TargetIds)',
+      'WITH TargetIds (term_bank_id) AS (SELECT CAST(value AS INTEGER) FROM json_each(?1)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\'), definitions_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(definition ORDER BY sort_key)AS definitions FROM term_bank_v3_definitions_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds) GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_def_tags_json_view) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(rule_identifier) AS rule_identifiers FROM (SELECT DISTINCT term_bank_id, rule_identifier FROM term_bank_v3_rules_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctRules GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), FilteredMetaBank AS (SELECT Base.*, TBM.term_bank_id FROM term_meta_bank_v3_base_view AS Base JOIN (SELECT DISTINCT id AS term_bank_id, term_id, reading_id FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM ON Base.term_id = TBM.term_id AND Base.reading_id = TBM.reading_id), term_meta_agg AS (SELECT FMB.term_bank_id, COALESCE(JSON_GROUP_ARRAY(JSON_OBJECT(\'indexId\', FMB.indexId, \'term\', FMB.term, \'reading\', FMB.reading, \'type\', FMB.type, \'frequency\', FMB.frequency, \'frequencyDisplayValue\', FMB.frequencyDisplayValue, \'pitchs\', CASE WHEN FMB.type = \'pitch\' THEN JSON(COALESCE(ap.pitches, \'[]\')) ELSE JSON(\'[]\') END, \'ipas\', CASE WHEN FMB.type = \'ipa\' THEN JSON(COALESCE(ai.ipas, \'[]\')) ELSE JSON(\'[]\') END))FILTER (WHERE FMB.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM FilteredMetaBank AS FMB LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id WHERE((FMB.type = \'pitch\' AND ap.pitches IS NOT NULL)OR(FMB.type = \'ipa\' AND ai.ipas IS NOT NULL)OR(FMB.type = \'freq\'))GROUP BY FMB.term_bank_id) SELECT index_table.*, COALESCE(ActiveCheck.is_active, 0) AS hasPopularityOverride, OP.freq_value AS overriddenPopularityValue, TB3T.popularity AS originalPopularity, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, TB3T.id AS term_bank_v3_id, TB3T.index_id AS indexId, TT.term, RT.reading, TB3T.popularity, TB3T.definition_order, TB3T.sequence_number, TDJT.definition_json AS structuredContentDefinitions, COALESCE(DA.definitions, \'[]\') AS definitions, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, COALESCE(TA.tags, \'[]\') AS tags, COALESCE(TMA.termMetaEntries, \'[]\') AS termMetaEntries FROM term_bank_v3_table AS TB3T JOIN index_table ON TB3T.index_id = index_table.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id WHERE TB3T.id IN (SELECT term_bank_id FROM TargetIds)',
       variables: [Variable<String>(termBankIdJson)],
       readsFrom: {
         indexTable,
@@ -19232,13 +19041,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         termBankV3Table,
         termTable,
         readingTable,
+        termBankV3DefinitionJsonTable,
         definitionTable,
         termBankV3XDefinitionTagTable,
-        termBankV3DefinitionTagsTable,
+        tagBankV3Table,
         termBankV3XRuleIdentifierTable,
         termBankV3RuleIdentifierTable,
         termBankV3XTagBankTable,
-        tagBankV3Table,
         termMetaBankV3XPitchTable,
         termMetaBankV3PitchTable,
         termMetaBankV3XPitchTagTable,
@@ -19286,6 +19095,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         definitionOrder: $TermBankV3TableTable.$converterdefinitionOrder
             .fromSql(row.read<String>('definition_order')),
         sequenceNumber: row.read<int>('sequence_number'),
+        structuredContentDefinitions: NullAwareTypeConverter.wrapFromSql(
+          $TermBankV3DefinitionJsonTableTable.$converterdefinitionJson,
+          row.readNullable<Uint8List>('structuredContentDefinitions'),
+        ),
         definitions: row.read<String>('definitions'),
         definitionTags: row.read<String>('definition_tags'),
         ruleIdentifiers: row.read<String>('rule_identifiers'),
@@ -19325,13 +19138,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         termBankV3Table,
         definitionTable,
         termBankV3XDefinitionTagTable,
-        termBankV3DefinitionTagsTable,
+        tagBankV3Table,
         termBankV3XRuleIdentifierTable,
         termBankV3RuleIdentifierTable,
         termBankV3XTagBankTable,
-        tagBankV3Table,
         termTable,
         readingTable,
+        termBankV3DefinitionJsonTable,
       },
     ).asyncMap(termBankV3EntryView.mapFromRow);
   }
@@ -19349,13 +19162,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         termBankV3Table,
         definitionTable,
         termBankV3XDefinitionTagTable,
-        termBankV3DefinitionTagsTable,
+        tagBankV3Table,
         termBankV3XRuleIdentifierTable,
         termBankV3RuleIdentifierTable,
         termBankV3XTagBankTable,
-        tagBankV3Table,
         termTable,
         readingTable,
+        termBankV3DefinitionJsonTable,
       },
     ).asyncMap(termBankV3EntryView.mapFromRow);
   }
@@ -19520,7 +19333,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termMetaBankV3TypeTable,
     termMetaBankV3Table,
     termBankV3DefinitionsJsonView,
-    termBankV3DefinitionTagsTable,
     termBankV3XDefinitionTagTable,
     termBankV3DefTagsJsonView,
     termBankV3RuleIdentifierTable,
@@ -19779,6 +19591,18 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       ),
       result: [
         TableUpdate('term_bank_v3_x_tag_bank_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'tag_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'term_bank_v3_x_definition_tag_table',
+          kind: UpdateKind.delete,
+        ),
       ],
     ),
     WritePropagation(
@@ -24484,6 +24308,34 @@ final class $$TagBankV3TableTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $TermBankV3_X_DefinitionTagTableTable,
+    List<TermBankV3_X_DefinitionTagTableData>
+  >
+  _termBankV3XDefinitionTagTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.termBankV3XDefinitionTagTable,
+        aliasName: $_aliasNameGenerator(
+          db.tagBankV3Table.id,
+          db.termBankV3XDefinitionTagTable.definitionTagId,
+        ),
+      );
+
+  $$TermBankV3_X_DefinitionTagTableTableProcessedTableManager
+  get termBankV3XDefinitionTagTableRefs {
+    final manager = $$TermBankV3_X_DefinitionTagTableTableTableManager(
+      $_db,
+      $_db.termBankV3XDefinitionTagTable,
+    ).filter((f) => f.definitionTagId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _termBankV3XDefinitionTagTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$TagBankV3TableTableFilterComposer
@@ -24595,6 +24447,35 @@ class $$TagBankV3TableTableFilterComposer
               }) => $$TermBankV3_X_TagBankTableTableFilterComposer(
                 $db: $db,
                 $table: $db.termBankV3XTagBankTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> termBankV3XDefinitionTagTableRefs(
+    Expression<bool> Function(
+      $$TermBankV3_X_DefinitionTagTableTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$TermBankV3_X_DefinitionTagTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.termBankV3XDefinitionTagTable,
+          getReferencedColumn: (t) => t.definitionTagId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3_X_DefinitionTagTableTableFilterComposer(
+                $db: $db,
+                $table: $db.termBankV3XDefinitionTagTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -24775,6 +24656,35 @@ class $$TagBankV3TableTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> termBankV3XDefinitionTagTableRefs<T extends Object>(
+    Expression<T> Function(
+      $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.termBankV3XDefinitionTagTable,
+          getReferencedColumn: (t) => t.definitionTagId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.termBankV3XDefinitionTagTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$TagBankV3TableTableTableManager
@@ -24794,6 +24704,7 @@ class $$TagBankV3TableTableTableManager
             bool indexId,
             bool kanjiBankV3XTagBankV3TableRefs,
             bool termBankV3XTagBankTableRefs,
+            bool termBankV3XDefinitionTagTableRefs,
           })
         > {
   $$TagBankV3TableTableTableManager(_$DaKanjiDB db, $TagBankV3TableTable table)
@@ -24856,6 +24767,7 @@ class $$TagBankV3TableTableTableManager
                 indexId = false,
                 kanjiBankV3XTagBankV3TableRefs = false,
                 termBankV3XTagBankTableRefs = false,
+                termBankV3XDefinitionTagTableRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -24863,6 +24775,8 @@ class $$TagBankV3TableTableTableManager
                     if (kanjiBankV3XTagBankV3TableRefs)
                       db.kanjiBankV3XTagBankV3Table,
                     if (termBankV3XTagBankTableRefs) db.termBankV3XTagBankTable,
+                    if (termBankV3XDefinitionTagTableRefs)
+                      db.termBankV3XDefinitionTagTable,
                   ],
                   addJoins:
                       <
@@ -24942,6 +24856,27 @@ class $$TagBankV3TableTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (termBankV3XDefinitionTagTableRefs)
+                        await $_getPrefetchedData<
+                          TagBankV3TableData,
+                          $TagBankV3TableTable,
+                          TermBankV3_X_DefinitionTagTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TagBankV3TableTableReferences
+                              ._termBankV3XDefinitionTagTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TagBankV3TableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).termBankV3XDefinitionTagTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.definitionTagId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -24966,6 +24901,7 @@ typedef $$TagBankV3TableTableProcessedTableManager =
         bool indexId,
         bool kanjiBankV3XTagBankV3TableRefs,
         bool termBankV3XTagBankTableRefs,
+        bool termBankV3XDefinitionTagTableRefs,
       })
     >;
 typedef $$KanjiBankV3_X_TagBankV3TableTableCreateCompanionBuilder =
@@ -32606,296 +32542,6 @@ typedef $$TermMetaBankV3TableTableProcessedTableManager =
         bool termMetaBankV3XIpaTableRefs,
       })
     >;
-typedef $$TermBankV3DefinitionTagsTableTableCreateCompanionBuilder =
-    TermBankV3DefinitionTagsTableCompanion Function({
-      Value<int> id,
-      required String definitionTag,
-    });
-typedef $$TermBankV3DefinitionTagsTableTableUpdateCompanionBuilder =
-    TermBankV3DefinitionTagsTableCompanion Function({
-      Value<int> id,
-      Value<String> definitionTag,
-    });
-
-final class $$TermBankV3DefinitionTagsTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $TermBankV3DefinitionTagsTableTable,
-          TermBankV3DefinitionTagsTableData
-        > {
-  $$TermBankV3DefinitionTagsTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static MultiTypedResultKey<
-    $TermBankV3_X_DefinitionTagTableTable,
-    List<TermBankV3_X_DefinitionTagTableData>
-  >
-  _termBankV3XDefinitionTagTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termBankV3XDefinitionTagTable,
-        aliasName: $_aliasNameGenerator(
-          db.termBankV3DefinitionTagsTable.id,
-          db.termBankV3XDefinitionTagTable.definitionTagId,
-        ),
-      );
-
-  $$TermBankV3_X_DefinitionTagTableTableProcessedTableManager
-  get termBankV3XDefinitionTagTableRefs {
-    final manager = $$TermBankV3_X_DefinitionTagTableTableTableManager(
-      $_db,
-      $_db.termBankV3XDefinitionTagTable,
-    ).filter((f) => f.definitionTagId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _termBankV3XDefinitionTagTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$TermBankV3DefinitionTagsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionTagsTableTable> {
-  $$TermBankV3DefinitionTagsTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get definitionTag => $composableBuilder(
-    column: $table.definitionTag,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  Expression<bool> termBankV3XDefinitionTagTableRefs(
-    Expression<bool> Function(
-      $$TermBankV3_X_DefinitionTagTableTableFilterComposer f,
-    )
-    f,
-  ) {
-    final $$TermBankV3_X_DefinitionTagTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3XDefinitionTagTable,
-          getReferencedColumn: (t) => t.definitionTagId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3_X_DefinitionTagTableTableFilterComposer(
-                $db: $db,
-                $table: $db.termBankV3XDefinitionTagTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$TermBankV3DefinitionTagsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionTagsTableTable> {
-  $$TermBankV3DefinitionTagsTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get definitionTag => $composableBuilder(
-    column: $table.definitionTag,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$TermBankV3DefinitionTagsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionTagsTableTable> {
-  $$TermBankV3DefinitionTagsTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get definitionTag => $composableBuilder(
-    column: $table.definitionTag,
-    builder: (column) => column,
-  );
-
-  Expression<T> termBankV3XDefinitionTagTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3XDefinitionTagTable,
-          getReferencedColumn: (t) => t.definitionTagId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.termBankV3XDefinitionTagTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$TermBankV3DefinitionTagsTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $TermBankV3DefinitionTagsTableTable,
-          TermBankV3DefinitionTagsTableData,
-          $$TermBankV3DefinitionTagsTableTableFilterComposer,
-          $$TermBankV3DefinitionTagsTableTableOrderingComposer,
-          $$TermBankV3DefinitionTagsTableTableAnnotationComposer,
-          $$TermBankV3DefinitionTagsTableTableCreateCompanionBuilder,
-          $$TermBankV3DefinitionTagsTableTableUpdateCompanionBuilder,
-          (
-            TermBankV3DefinitionTagsTableData,
-            $$TermBankV3DefinitionTagsTableTableReferences,
-          ),
-          TermBankV3DefinitionTagsTableData,
-          PrefetchHooks Function({bool termBankV3XDefinitionTagTableRefs})
-        > {
-  $$TermBankV3DefinitionTagsTableTableTableManager(
-    _$DaKanjiDB db,
-    $TermBankV3DefinitionTagsTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$TermBankV3DefinitionTagsTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$TermBankV3DefinitionTagsTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$TermBankV3DefinitionTagsTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> definitionTag = const Value.absent(),
-              }) => TermBankV3DefinitionTagsTableCompanion(
-                id: id,
-                definitionTag: definitionTag,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required String definitionTag,
-              }) => TermBankV3DefinitionTagsTableCompanion.insert(
-                id: id,
-                definitionTag: definitionTag,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$TermBankV3DefinitionTagsTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({termBankV3XDefinitionTagTableRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (termBankV3XDefinitionTagTableRefs)
-                  db.termBankV3XDefinitionTagTable,
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (termBankV3XDefinitionTagTableRefs)
-                    await $_getPrefetchedData<
-                      TermBankV3DefinitionTagsTableData,
-                      $TermBankV3DefinitionTagsTableTable,
-                      TermBankV3_X_DefinitionTagTableData
-                    >(
-                      currentTable: table,
-                      referencedTable:
-                          $$TermBankV3DefinitionTagsTableTableReferences
-                              ._termBankV3XDefinitionTagTableRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$TermBankV3DefinitionTagsTableTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).termBankV3XDefinitionTagTableRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where(
-                            (e) => e.definitionTagId == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                ];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$TermBankV3DefinitionTagsTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $TermBankV3DefinitionTagsTableTable,
-      TermBankV3DefinitionTagsTableData,
-      $$TermBankV3DefinitionTagsTableTableFilterComposer,
-      $$TermBankV3DefinitionTagsTableTableOrderingComposer,
-      $$TermBankV3DefinitionTagsTableTableAnnotationComposer,
-      $$TermBankV3DefinitionTagsTableTableCreateCompanionBuilder,
-      $$TermBankV3DefinitionTagsTableTableUpdateCompanionBuilder,
-      (
-        TermBankV3DefinitionTagsTableData,
-        $$TermBankV3DefinitionTagsTableTableReferences,
-      ),
-      TermBankV3DefinitionTagsTableData,
-      PrefetchHooks Function({bool termBankV3XDefinitionTagTableRefs})
-    >;
 typedef $$TermBankV3_X_DefinitionTagTableTableCreateCompanionBuilder =
     TermBankV3_X_DefinitionTagTableCompanion Function({
       Value<int> id,
@@ -32922,22 +32568,20 @@ final class $$TermBankV3_X_DefinitionTagTableTableReferences
     super.$_typedResult,
   );
 
-  static $TermBankV3DefinitionTagsTableTable _definitionTagIdTable(
-    _$DaKanjiDB db,
-  ) => db.termBankV3DefinitionTagsTable.createAlias(
-    $_aliasNameGenerator(
-      db.termBankV3XDefinitionTagTable.definitionTagId,
-      db.termBankV3DefinitionTagsTable.id,
-    ),
-  );
+  static $TagBankV3TableTable _definitionTagIdTable(_$DaKanjiDB db) =>
+      db.tagBankV3Table.createAlias(
+        $_aliasNameGenerator(
+          db.termBankV3XDefinitionTagTable.definitionTagId,
+          db.tagBankV3Table.id,
+        ),
+      );
 
-  $$TermBankV3DefinitionTagsTableTableProcessedTableManager
-  get definitionTagId {
+  $$TagBankV3TableTableProcessedTableManager get definitionTagId {
     final $_column = $_itemColumn<int>('definition_tag_id')!;
 
-    final manager = $$TermBankV3DefinitionTagsTableTableTableManager(
+    final manager = $$TagBankV3TableTableTableManager(
       $_db,
-      $_db.termBankV3DefinitionTagsTable,
+      $_db.tagBankV3Table,
     ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_definitionTagIdTable($_db));
     if (item == null) return manager;
@@ -32983,27 +32627,26 @@ class $$TermBankV3_X_DefinitionTagTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  $$TermBankV3DefinitionTagsTableTableFilterComposer get definitionTagId {
-    final $$TermBankV3DefinitionTagsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.definitionTagId,
-          referencedTable: $db.termBankV3DefinitionTagsTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+  $$TagBankV3TableTableFilterComposer get definitionTagId {
+    final $$TagBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.definitionTagId,
+      referencedTable: $db.tagBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.tagBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3DefinitionTagsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.termBankV3DefinitionTagsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return composer;
   }
 
@@ -33045,27 +32688,26 @@ class $$TermBankV3_X_DefinitionTagTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  $$TermBankV3DefinitionTagsTableTableOrderingComposer get definitionTagId {
-    final $$TermBankV3DefinitionTagsTableTableOrderingComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.definitionTagId,
-          referencedTable: $db.termBankV3DefinitionTagsTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+  $$TagBankV3TableTableOrderingComposer get definitionTagId {
+    final $$TagBankV3TableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.definitionTagId,
+      referencedTable: $db.tagBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagBankV3TableTableOrderingComposer(
+            $db: $db,
+            $table: $db.tagBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3DefinitionTagsTableTableOrderingComposer(
-                $db: $db,
-                $table: $db.termBankV3DefinitionTagsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return composer;
   }
 
@@ -33105,27 +32747,26 @@ class $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  $$TermBankV3DefinitionTagsTableTableAnnotationComposer get definitionTagId {
-    final $$TermBankV3DefinitionTagsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.definitionTagId,
-          referencedTable: $db.termBankV3DefinitionTagsTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+  $$TagBankV3TableTableAnnotationComposer get definitionTagId {
+    final $$TagBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.definitionTagId,
+      referencedTable: $db.tagBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tagBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3DefinitionTagsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.termBankV3DefinitionTagsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return composer;
   }
 
@@ -41674,12 +41315,6 @@ class $DaKanjiDBManager {
       );
   $$TermMetaBankV3TableTableTableManager get termMetaBankV3Table =>
       $$TermMetaBankV3TableTableTableManager(_db, _db.termMetaBankV3Table);
-  $$TermBankV3DefinitionTagsTableTableTableManager
-  get termBankV3DefinitionTagsTable =>
-      $$TermBankV3DefinitionTagsTableTableTableManager(
-        _db,
-        _db.termBankV3DefinitionTagsTable,
-      );
   $$TermBankV3_X_DefinitionTagTableTableTableManager
   get termBankV3XDefinitionTagTable =>
       $$TermBankV3_X_DefinitionTagTableTableTableManager(
@@ -41858,6 +41493,7 @@ class DictionarySearchDriftFindTermBankDetailsResult {
   final int popularity;
   final Object? definitionOrder;
   final int sequenceNumber;
+  final String? structuredContentDefinitions;
   final String definitions;
   final String definitionTags;
   final String ruleIdentifiers;
@@ -41894,6 +41530,7 @@ class DictionarySearchDriftFindTermBankDetailsResult {
     required this.popularity,
     required this.definitionOrder,
     required this.sequenceNumber,
+    this.structuredContentDefinitions,
     required this.definitions,
     required this.definitionTags,
     required this.ruleIdentifiers,

@@ -23,6 +23,11 @@ final termBankTestCaseExpectations2 = [
         'spring (in one\'s legs); bounce',
         'springboard; impetus',
       ],
+      structuredContentDefinitions: [ // TODO
+        '{"type":"definition","content":"spring"}',
+        '{"type":"definition","content":"spring (in one\'s legs); bounce"}',
+        '{"type":"definition","content":"springboard; impetus"}',
+      ],
       sequenceNumber: 1099490,
       tags: [],
     ),

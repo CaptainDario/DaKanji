@@ -75,7 +75,6 @@ JOIN
 CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
     WITH
         -- 1. Aggregate definitions from the definitions view
-        -- We use GROUP_CONCAT here to preserve the sort_key ordering
         definitions_agg AS (
             SELECT
                 term_bank_id,
@@ -92,23 +91,21 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
                 term_bank_id
         ),
 
-        -- 2. Aggregate the definition tags (REUSES VIEW)
+        -- 2. Aggregate the definition tags
         def_tags_agg AS (
             SELECT
                 term_bank_id,
-                -- Uses the JSON_GROUP_ARRAY pattern you wanted
                 JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags
             FROM (
                 SELECT DISTINCT
                     term_bank_id,
                     tag_json
-                FROM term_bank_v3_def_tags_json_view -- Using the new view
+                FROM term_bank_v3_def_tags_json_view
             ) AS DistinctTags
             GROUP BY term_bank_id
         ),
 
-        -- 3. Aggregate the rule identifiers (REUSES VIEW)
-        -- Sticking to GROUP_CONCAT to match your original view's logic
+        -- 3. Aggregate the rule identifiers
         rules_agg AS (
             SELECT
                 term_bank_id,
@@ -117,22 +114,21 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
                     ''
                 ) || ']' AS rule_identifiers
             FROM
-                term_bank_v3_rules_json_view -- Using the existing view
+                term_bank_v3_rules_json_view
             GROUP BY
                 term_bank_id
         ),
 
-        -- 4. Aggregate the tags (REUSES VIEW)
+        -- 4. Aggregate the tags
         tags_agg AS (
             SELECT
                 term_bank_id,
-                -- Uses the JSON_GROUP_ARRAY pattern you wanted
                 JSON_GROUP_ARRAY(JSON(tag_json)) AS tags
             FROM (
                 SELECT DISTINCT
                     term_bank_id,
                     tag_json
-                FROM term_bank_v3_tags_json_view -- Using the existing view
+                FROM term_bank_v3_tags_json_view
             ) AS DistinctTags
             GROUP BY term_bank_id
         )
@@ -148,6 +144,7 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
         TB3T.popularity,
         COALESCE(DA.definitions, '[]') AS definitions,
         TB3T.definition_order,
+        TDJT.definition_json AS structuredContentDefinitions,
         TB3T.sequence_number,
         COALESCE(TA.tags, '[]') AS tags
     FROM
@@ -155,6 +152,7 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
     -- 1-to-1 Joins
     LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
     LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id
+    LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id
     -- 1-to-1 Joins (to pre-aggregated CTEs)
     LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id
     LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id

@@ -124,12 +124,15 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
   ) async {
 
     // 1. Run Query 1 to get matching term bank entries
+    Stopwatch s = Stopwatch()..start();
     final searchResults = await db.dictionary_search_drift_find_term_bank_entries(
       jsonEncode(terms),
       jsonEncode(tags),
       useGlob,
       searchNormalized
     ).get();
+    print("Query 1 completed in ${s.elapsedMilliseconds}. Found ${searchResults.length} entries.");
+    s.reset();
 
     // Get all term bank entries that belong to any sequence of any of the results
     final foundTermBankIds = searchResults.map((e) => e.termBankId).toSet().toList();
@@ -140,6 +143,8 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         jsonEncode(foundTermBankIds)
       ).get();
     else sequenceMatches = <DictionarySearchDriftFindTermBankSequencesResult>[];
+    print("Query 2 completed in ${s.elapsedMilliseconds}. Found ${sequenceMatches.length} sequence entries.");
+    s.reset();
 
     // Run third query to get details for all results from Query 1
     final getDetailsIds = jsonEncode(foundTermBankIds..addAll(
@@ -148,6 +153,8 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     if (searchResults.isEmpty) details = <DictionarySearchDriftFindTermBankDetailsResult>[];
     else {
       details = await db.dictionary_search_drift_find_term_bank_details(getDetailsIds).get();
+      print("Query 3 completed in ${s.elapsedMilliseconds}. Found ${details.length} detail entries.");
+      s.reset();
     }
     return (searchResults, sequenceMatches, details);
 
