@@ -47,7 +47,6 @@ Future parseTermBankV3(
   List<TermBankV3DefinitionJsonTableCompanion> termBankDefJsonComps = [];
   List<TermTableCompanion> termComps = [];
   List<ReadingTableCompanion> readingComps = [];
-  List<TermBankV3DefinitionTagsTableCompanion> definitionTagComps = [];
   List<TermBankV3_X_DefinitionTagTableCompanion> definitionTagRelComps = [];
   List<TermBankV3RuleIdentifierTableCompanion> ruleIdentifiersComps = [];
   List<TermBankV3_X_RuleIdentifierTableCompanion> ruleIdentifiersRelComps = [];
@@ -107,18 +106,9 @@ Future parseTermBankV3(
     List<String> defTags = jsonEntry[2].split(" ");
     if(jsonEntry[2] != ""){
       for (var defTag in defTags) {
-        // get tag from DB
-        int defTagInsertId = pC.allDefTags[defTag] ?? ++pC.currentMaxDefTagId;
-        if(pC.allDefTags[defTag] == null){
-          pC.allDefTags[defTag] = defTagInsertId;
-          definitionTagComps.add(TermBankV3DefinitionTagsTableCompanion(
-            id: Value(defTagInsertId),
-            definitionTag: Value(defTag)
-          ));
-        }
         // create relationship
         definitionTagRelComps.add(TermBankV3_X_DefinitionTagTableCompanion(
-          definitionTagId: Value(defTagInsertId),
+          definitionTagId: Value(pC.allTags[defTag]!),
           termBankId: Value(pC.currentMaxTermBankId)
         ));
       }
@@ -212,7 +202,6 @@ Future parseTermBankV3(
     batch.insertAll(db.termBankV3Table, termBankComps);
     batch.insertAll(db.termBankV3DefinitionJsonTable, termBankDefJsonComps);
 
-    batch.insertAll(db.termBankV3DefinitionTagsTable, definitionTagComps);
     batch.insertAll(db.termBankV3XDefinitionTagTable, definitionTagRelComps);
 
     batch.insertAll(db.termBankV3RuleIdentifierTable, ruleIdentifiersComps);

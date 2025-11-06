@@ -16,7 +16,7 @@ part 'term_bank_v3_dao.g.dart';
   tables: [
     TermTable,
     TermBankV3Table,
-    TermBankV3DefinitionTagsTable, TermBankV3RuleIdentifierTable,
+    TermBankV3RuleIdentifierTable,
     TagBankV3Table
   ],
 )
@@ -34,10 +34,6 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
   }
 
   // ---------------------------------------------------------------------------
-  /// Get all definition tags and their ids 
-  Future<List<TermBankV3DefinitionTagsTableData>> getAllDefinitionTags() async {
-    return await select(termBankV3DefinitionTagsTable).get();
-  }
 
   /// Get all rule identifiers and their ids 
   Future<List<TermBankV3RuleIdentifierTableData>> getAllRuleIdentifiers() async {
@@ -59,18 +55,6 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
 
     // Extract the max ID value, defaulting to 0 if null
     return query.read(termBankV3Table.id.max()) ?? 0;
-
-  }
-
-  /// Get the maximum definition tag id 
-  Future<int> maxTermBankV3DefinitionTagId() async {
-    
-    final query = await (selectOnly(termBankV3DefinitionTagsTable)
-        ..addColumns([termBankV3DefinitionTagsTable.id.max()]))
-      .getSingle();
-
-    // Extract the max ID value, defaulting to 0 if null
-    return query.read(termBankV3DefinitionTagsTable.id.max()) ?? 0;
 
   }
 

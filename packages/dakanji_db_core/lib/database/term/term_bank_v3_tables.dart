@@ -29,7 +29,7 @@ class TermBankV3Table extends Table {
   /// The ID of the text for the term.
   IntColumn get termId => integer().references(TermTable, #id)();
 
-  /// The order of the terms, used to sort them in the order they were
+  /// The order of the definitions, used to sort them in the order they were
   /// provided by the dictionary. This is a JSON array of integers, where each
   /// integer corresponds to `termId`.
   TextColumn get definitionOrder => text().map(const JsonConverter())();
@@ -63,20 +63,6 @@ class TermBankV3DefinitionJsonTable extends Table {
 
   /// JSON representation of the term
   BlobColumn get definitionJson => blob().map(const ZlibStringConverter())();
-
-}
-
-/// Table that stores tags for definitions
-class TermBankV3DefinitionTagsTable extends Table {
-
-  @override
-  Set<Column> get primaryKey => {id};
-  
-  /// id of this entry
-  IntColumn get id => integer()();
-
-  /// Tags for the definition
-  TextColumn get definitionTag => text()();
 
 }
 

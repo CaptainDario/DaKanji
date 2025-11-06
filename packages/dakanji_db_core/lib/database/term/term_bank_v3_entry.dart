@@ -16,6 +16,7 @@ part 'term_bank_v3_entry.g.dart';
 /// Class representing one term of the database
 class TermBankV3Entry with _$TermBankV3Entry {
 
+  @override
   /// The id of this entry in the term bank v3 table
   final int termBankV3TableId;
   /// The index id of this entry
@@ -27,19 +28,23 @@ class TermBankV3Entry with _$TermBankV3Entry {
   /// The term of a dictionary entry, for example: たべる
   @override
   final String reading;
-  /// 
+  /// All definitions of this entry
   @override
-  final List<String> definitionTags;
+  final List<String> definitions;
+  /// All structured content definitions of this entry
+  //@override
+  //final List<String> structuredContentDefinitions; TODO
+  /// Tags assigned to each definition of this entry (inorder of `definitions`)
+  @override
+  final List<TagBankV3Entry> definitionTags;
   /// Identifiers how this entry can be conjugated
   @override
   final List<String> ruleIdentifiers;
   /// The popularity of this entry
   @override
   final int popularity;
-  /// All definitions of this entry
-  @override
-  final List<String> definitions;
-  /// 
+  /// Number that can be shared across entries to group them
+  /// Tags assigned to each definition of this entry
   @override
   final int sequenceNumber;
   /// All tags associated with this entry
@@ -52,10 +57,11 @@ class TermBankV3Entry with _$TermBankV3Entry {
     required this.indexId,
     required this.term,
     required this.reading,
+    required this.definitions,
+    //required this.structuredContentDefinitions,
     required this.definitionTags,
     required this.ruleIdentifiers,
     required this.popularity,
-    required this.definitions,
     required this.sequenceNumber,
     required this.tags,
   }) {
@@ -81,10 +87,14 @@ class TermBankV3Entry with _$TermBankV3Entry {
       indexId: r.indexId,
       term: r.term!,
       reading: r.reading!,
-      definitionTags: List<String>.from(jsonDecode(r.definitionTags)),
+      definitions: List<String>.from(jsonDecode(r.definitions)),
+      //structuredContentDefinitions: [], //TODO
+      definitionTags: List.from(jsonDecode(r.tags))
+          .where((tagJson) => tagJson != null && tagJson['name'] != null)
+          .map((e) => TagBankV3Entry.fromJson(e))
+          .toList(),
       ruleIdentifiers: List<String>.from(jsonDecode(r.ruleIdentifiers)),
       popularity: r.popularity,
-      definitions: List<String>.from(jsonDecode(r.definitions)),
       sequenceNumber: r.sequenceNumber,
       tags: List.from(jsonDecode(r.tags))
           .where((tagJson) => tagJson != null && tagJson['name'] != null)

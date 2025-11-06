@@ -12,16 +12,16 @@ TermBankV3Entry _$TermBankV3EntryFromJson(Map<String, dynamic> json) =>
       indexId: (json['indexId'] as num).toInt(),
       term: json['term'] as String,
       reading: json['reading'] as String,
-      definitionTags: (json['definitionTags'] as List<dynamic>)
+      definitions: (json['definitions'] as List<dynamic>)
           .map((e) => e as String)
+          .toList(),
+      definitionTags: (json['definitionTags'] as List<dynamic>)
+          .map((e) => TagBankV3Entry.fromJson(e as Map<String, dynamic>))
           .toList(),
       ruleIdentifiers: (json['ruleIdentifiers'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
       popularity: (json['popularity'] as num).toInt(),
-      definitions: (json['definitions'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
       sequenceNumber: (json['sequenceNumber'] as num).toInt(),
       tags: (json['tags'] as List<dynamic>)
           .map((e) => TagBankV3Entry.fromJson(e as Map<String, dynamic>))
@@ -34,10 +34,10 @@ Map<String, dynamic> _$TermBankV3EntryToJson(TermBankV3Entry instance) =>
       'indexId': instance.indexId,
       'term': instance.term,
       'reading': instance.reading,
+      'definitions': instance.definitions,
       'definitionTags': instance.definitionTags,
       'ruleIdentifiers': instance.ruleIdentifiers,
       'popularity': instance.popularity,
-      'definitions': instance.definitions,
       'sequenceNumber': instance.sequenceNumber,
       'tags': instance.tags,
     };

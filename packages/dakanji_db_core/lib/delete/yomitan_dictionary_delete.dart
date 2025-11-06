@@ -110,12 +110,7 @@ Future deleteTermBankV3(DaKanjiDB db, int indexId) async {
         .map((row) => row.definitionJsonId)
         .toSet(); // Use Set for automatic deduplication
 
-    // B) Definition Tag IDs (from the link table)
-    final defTagIdsQuery = db.select(db.termBankV3XDefinitionTagTable, distinct: true)
-      ..where((tbl) => tbl.termBankId.isIn(termIdsToDelete));
-    final defTagIdsToDelete = await defTagIdsQuery.map((row) => row.definitionTagId).get();
-
-    // C) Rule Identifier IDs (from the link table)
+    // B) Rule Identifier IDs (from the link table)
     final ruleIdsQuery = db.select(db.termBankV3XRuleIdentifierTable, distinct: true)
       ..where((tbl) => tbl.termBankId.isIn(termIdsToDelete));
     final ruleIdsToDelete = await ruleIdsQuery.map((row) => row.ruleIdentifierId).get();
@@ -127,13 +122,7 @@ Future deleteTermBankV3(DaKanjiDB db, int indexId) async {
             ..where((tbl) => tbl.id.isIn(defJsonIdsToDelete)))
             .go();
     }
-    // B) Delete Definition Tags
-    if (defTagIdsToDelete.isNotEmpty) {
-      await (db.delete(db.termBankV3DefinitionTagsTable)
-            ..where((tbl) => tbl.id.isIn(defTagIdsToDelete)))
-            .go();
-    }
-    // C) Delete Rule Identifiers
+    // B) Delete Rule Identifiers
     if (ruleIdsToDelete.isNotEmpty) {
       await (db.delete(db.termBankV3RuleIdentifierTable)
             ..where((tbl) => tbl.id.isIn(ruleIdsToDelete)))

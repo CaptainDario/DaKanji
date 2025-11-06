@@ -16,7 +16,8 @@ class TermBankV3_X_DefinitionTagTable extends Table {
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
   /// the id of the associated defintion tag
-  IntColumn get definitionTagId => integer().references(TermBankV3DefinitionTagsTable, #id)();
+  IntColumn get definitionTagId => integer()
+    .references(TagBankV3Table, #id, onDelete: KeyAction.cascade)();
   /// the id of the associated term in the term bank
   IntColumn get termBankId => integer()
     .references(TermBankV3Table, #id, onDelete: KeyAction.cascade)();
