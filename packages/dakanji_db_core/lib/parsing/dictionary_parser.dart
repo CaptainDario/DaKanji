@@ -137,8 +137,6 @@ Future _parseDictionaryDataSource(({
     final int noEntries = 1;//dataSources.length;
     for (final ({String filePath, Uint8List fileContent}) data in dataSources) {
 
-      params.mainIsolateSendPort.send("------------- ${data.filePath} -------------");
-
       progressCounter++;
       params.mainIsolateSendPort.send("Parsing ${data.filePath} ($progressCounter/$noEntries) ...");
 
