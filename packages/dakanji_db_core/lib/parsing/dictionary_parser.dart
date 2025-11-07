@@ -72,11 +72,11 @@ Future<Stream<String>> parseDictionaryDataSource({
   ReceivePort receivePort = ReceivePort();
   receivePort.listen((message) {
     if(message is String) controller.add(message);
-    else if(message is Exception) controller.addError(message);
     else if(message == null) {
       receivePort.close();
       controller.close();
     }
+    else controller.addError(message);
   });
 
   bool inMemory = db.inMemory;
@@ -134,13 +134,15 @@ Future _parseDictionaryDataSource(({
 
     // parse the rest of the files (first tag bank, then the rest in sorted order)
     int progressCounter = 0;
-    final int noEntries = dataSources.length;
+    final int noEntries = 1;//dataSources.length;
     for (final ({String filePath, Uint8List fileContent}) data in dataSources) {
+
+      params.mainIsolateSendPort.send("------------- ${data.filePath} -------------");
 
       progressCounter++;
       params.mainIsolateSendPort.send("Parsing ${data.filePath} ($progressCounter/$noEntries) ...");
 
-      if(p.basename(data.filePath).contains(indexFileNamingScheme)) continue;
+      if(p.basename(data.filePath).contains(indexFileNamingScheme)) continue; // skip index file (already parsed)
       if(!validDictionaryFiles.any((scheme) => p.basename(data.filePath).contains(scheme))){
         params.mainIsolateSendPort.send("Copying ${data.filePath} to DB ...");
         await importMediaFile(data.filePath, data.fileContent, indexId, db, null);
@@ -225,11 +227,11 @@ Future parseDictionaryFile({
   // create config to pass the different arguments to the functions
   final parserConfig = {
     audioFileNamingScheme: () => parseAudio(fileContent, db, ind.id),
-    kanjiBankFileNamingScheme: () => parseKanjiBankV3(fileContent, importContext as KanjiBankV3ParserContext, db, ind.id),
     kanjiMetaBankFileNamingScheme: () => parseKanjiMetaBankV3(fileContent, importContext as KanjiMetaBankV3ParserContext, db, ind.id),
+    kanjiBankFileNamingScheme: () => parseKanjiBankV3(fileContent, importContext as KanjiBankV3ParserContext, db, ind.id),
     tagBankFileNamingScheme: () => parseTagBankv3(fileContent, db, ind.id),
-    termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext as TermBankV3ParserContext, db, ind.id, addFullJsonDefinitions, mecab),
     termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, importContext as TermMetaBankV3ParserContext, db, ind.id, mecab),
+    termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext as TermBankV3ParserContext, db, ind.id, addFullJsonDefinitions, mecab),
   };
 
   final baseName = p.basename(filePath);
