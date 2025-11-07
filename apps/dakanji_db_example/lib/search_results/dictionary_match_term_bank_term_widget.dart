@@ -20,7 +20,7 @@ class _DictionaryMatchTermBankTermWidgetState extends State<DictionaryMatchTermB
   List<List<FuriganaPair>> termsAndReadings = [];
 
   TextStyle get readingTextStyle => const TextStyle(
-    fontSize: 14,
+    fontSize: 12,
     color: Colors.grey,
   );
 
@@ -51,9 +51,14 @@ class _DictionaryMatchTermBankTermWidgetState extends State<DictionaryMatchTermB
                   for (final pair in termAndReading)
                     Column(
                       mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        if (pair.kanji.isNotEmpty && pair.reading.isNotEmpty)
-                          Text(pair.reading, style: readingTextStyle),
+                        // only show the reading if there is kanji
+                        Text(
+                          pair.kanji.isNotEmpty && pair.reading.isNotEmpty
+                            ? pair.reading
+                            : " ",
+                          style: readingTextStyle),
                         Text(
                           pair.kanji.isNotEmpty ? pair.kanji : pair.reading,
                           style: kanjiTextStyle

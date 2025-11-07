@@ -106,9 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           normalizedSearchConvertsRomajiToHiragana: false,
                           deconjugationSearch: false,
                           spellfixSearch: false,
-                          groupSequences: true
+                          groupByTermAndReading: true
                         );
-                        print("Search completed in ${stopwatch.elapsed}.");
+                        print("Search completed in ${stopwatch.elapsedMilliseconds}ms.");
                       }
                       setState(() {});
                     },
