@@ -20,16 +20,19 @@ void main() {
   group('KanjiVG Lookups', () {
     // test radical lookups
     for (final testCase in kanjiVGLookuptests) {
-      test('Looking up SVG of ${testCase.item1}', () async {
+      test('Looking up SVG of ${testCase.$1}', () async {
         Stopwatch s = Stopwatch()..start();
-        String? svg = await db.kanjiVGDao.getKanjiVG(testCase.item1);
-        print("Looking up SVG of ${testCase.item1} took ${s.elapsedMilliseconds}ms");
+        List<KanjiVgSearchDriftResult> svgs = await db.kanjiVGDao.getKanjiVG(testCase.$1);
+        print("Looking up SVG of ${testCase.$1} took ${s.elapsedMilliseconds}ms");
         
-        expect(svg?.length, testCase.item2);
-
-        if(testCase.item2 != null){
-          expect(svg!.contains(testCase.item1), true);
+        // assure the expected number of results
+        expect(svgs.length, testCase.$2.length);
+        // check each expected result
+        for (int i = 0; i < svgs.length; i++) {
+          expect(svgs[i].kanji, testCase.$1);
+          expect(svgs[i].svg.length, testCase.$2[i]);
         }
+
       });  
     }
   });

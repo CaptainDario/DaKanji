@@ -17467,133 +17467,6 @@ class KanjiVGTableCompanion extends UpdateCompanion<KanjiVGTableData> {
   }
 }
 
-class KanjiVGTableViewData extends DataClass {
-  final int id;
-  final int kanjiId;
-  final String? svg;
-  const KanjiVGTableViewData({
-    required this.id,
-    required this.kanjiId,
-    this.svg,
-  });
-  factory KanjiVGTableViewData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiVGTableViewData(
-      id: serializer.fromJson<int>(json['id']),
-      kanjiId: serializer.fromJson<int>(json['kanji_id']),
-      svg: serializer.fromJson<String?>(json['svg']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'kanji_id': serializer.toJson<int>(kanjiId),
-      'svg': serializer.toJson<String?>(svg),
-    };
-  }
-
-  KanjiVGTableViewData copyWith({
-    int? id,
-    int? kanjiId,
-    Value<String?> svg = const Value.absent(),
-  }) => KanjiVGTableViewData(
-    id: id ?? this.id,
-    kanjiId: kanjiId ?? this.kanjiId,
-    svg: svg.present ? svg.value : this.svg,
-  );
-  @override
-  String toString() {
-    return (StringBuffer('KanjiVGTableViewData(')
-          ..write('id: $id, ')
-          ..write('kanjiId: $kanjiId, ')
-          ..write('svg: $svg')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, kanjiId, svg);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is KanjiVGTableViewData &&
-          other.id == this.id &&
-          other.kanjiId == this.kanjiId &&
-          other.svg == this.svg);
-}
-
-class KanjiVGTableView extends ViewInfo<KanjiVGTableView, KanjiVGTableViewData>
-    implements HasResultSet {
-  final String? _alias;
-  @override
-  final _$DaKanjiDB attachedDatabase;
-  KanjiVGTableView(this.attachedDatabase, [this._alias]);
-  @override
-  List<GeneratedColumn> get $columns => [id, kanjiId, svg];
-  @override
-  String get aliasedName => _alias ?? entityName;
-  @override
-  String get entityName => 'kanji_v_g_table_view';
-  @override
-  Map<SqlDialect, String> get createViewStatements => {
-    SqlDialect.sqlite:
-        'CREATE VIEW kanji_v_g_table_view AS SELECT id, kanji_id, CAST(uncompress(KVGT.svg) AS TEXT) AS svg FROM kanji_v_g_table AS KVGT',
-  };
-  @override
-  KanjiVGTableView get asDslTable => this;
-  @override
-  KanjiVGTableViewData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiVGTableViewData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      kanjiId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}kanji_id'],
-      )!,
-      svg: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}svg'],
-      ),
-    );
-  }
-
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
-    'kanji_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<String> svg = GeneratedColumn<String>(
-    'svg',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-  );
-  @override
-  KanjiVGTableView createAlias(String alias) {
-    return KanjiVGTableView(attachedDatabase, alias);
-  }
-
-  @override
-  Query? get query => null;
-  @override
-  Set<String> get readTables => const {'kanji_v_g_table'};
-}
-
 class $AudioSourceListTableTable extends AudioSourceListTable
     with TableInfo<$AudioSourceListTableTable, AudioSourceListTableData> {
   @override
@@ -18853,19 +18726,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'example_table_au',
   );
   late final $KanjiVGTableTable kanjiVGTable = $KanjiVGTableTable(this);
-  late final KanjiVGTableView kanjiVGTableView = KanjiVGTableView(this);
-  late final Trigger kanjiVGTableViewInsert = Trigger(
-    'CREATE TRIGGER kanji_v_g_table_view_insert INSTEAD OF INSERT ON kanji_v_g_table_view BEGIN INSERT INTO kanji_v_g_table (id, kanji_id, svg) VALUES (NEW.id, NEW.kanji_id, compress(NEW.svg));END',
-    'kanji_v_g_table_view_insert',
-  );
-  late final Trigger kanjiVGTableViewUpdate = Trigger(
-    'CREATE TRIGGER kanji_v_g_table_view_update INSTEAD OF UPDATE ON kanji_v_g_table_view BEGIN UPDATE kanji_v_g_table SET kanji_id = NEW.kanji_id, svg = compress(NEW.svg) WHERE id = OLD.id;END',
-    'kanji_v_g_table_view_update',
-  );
-  late final Trigger kanjiVGTableViewDelete = Trigger(
-    'CREATE TRIGGER kanji_v_g_table_view_delete INSTEAD OF DELETE ON kanji_v_g_table_view BEGIN DELETE FROM kanji_v_g_table WHERE id = OLD.id;END',
-    'kanji_v_g_table_view_delete',
-  );
   late final Index kanjiVGTableKanjiIdIndex = Index(
     'KanjiVGTable_kanjiIdIndex',
     'CREATE INDEX KanjiVGTable_kanjiIdIndex ON kanji_v_g_table (kanji_id)',
@@ -19032,7 +18892,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   Selectable<DictionarySearchDriftFindTermBankDetailsResult>
   dictionary_search_drift_find_term_bank_details(String termBankIdJson) {
     return customSelect(
-      'WITH TargetIds (term_bank_id) AS (SELECT CAST(value AS INTEGER) FROM json_each(?1)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\'), definitions_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(definition ORDER BY sort_key)AS definitions FROM term_bank_v3_definitions_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds) GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_def_tags_json_view) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(rule_identifier) AS rule_identifiers FROM (SELECT DISTINCT term_bank_id, rule_identifier FROM term_bank_v3_rules_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctRules GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), FilteredMetaBank AS (SELECT Base.*, TBM.term_bank_id FROM term_meta_bank_v3_base_view AS Base JOIN (SELECT DISTINCT id AS term_bank_id, term_id, reading_id FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM ON Base.term_id = TBM.term_id AND Base.reading_id = TBM.reading_id), term_meta_agg AS (SELECT FMB.term_bank_id, COALESCE(JSON_GROUP_ARRAY(JSON_OBJECT(\'indexId\', FMB.indexId, \'term\', FMB.term, \'reading\', FMB.reading, \'type\', FMB.type, \'frequency\', FMB.frequency, \'frequencyDisplayValue\', FMB.frequencyDisplayValue, \'pitchs\', CASE WHEN FMB.type = \'pitch\' THEN JSON(COALESCE(ap.pitches, \'[]\')) ELSE JSON(\'[]\') END, \'ipas\', CASE WHEN FMB.type = \'ipa\' THEN JSON(COALESCE(ai.ipas, \'[]\')) ELSE JSON(\'[]\') END))FILTER (WHERE FMB.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM FilteredMetaBank AS FMB LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id WHERE((FMB.type = \'pitch\' AND ap.pitches IS NOT NULL)OR(FMB.type = \'ipa\' AND ai.ipas IS NOT NULL)OR(FMB.type = \'freq\'))GROUP BY FMB.term_bank_id) SELECT index_table.*, COALESCE(ActiveCheck.is_active, 0) AS hasPopularityOverride, OP.freq_value AS overriddenPopularityValue, TB3T.popularity AS originalPopularity, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, TB3T.id AS term_bank_v3_id, TB3T.index_id AS indexId, TT.term, RT.reading, TB3T.popularity, TB3T.definition_order, TB3T.sequence_number, TDJT.definition_json AS structuredContentDefinitions, COALESCE(DA.definitions, \'[]\') AS definitions, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, COALESCE(TA.tags, \'[]\') AS tags, COALESCE(TMA.termMetaEntries, \'[]\') AS termMetaEntries FROM term_bank_v3_table AS TB3T JOIN index_table ON TB3T.index_id = index_table.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id WHERE TB3T.id IN (SELECT term_bank_id FROM TargetIds)',
+      'WITH TargetIds (term_bank_id) AS (SELECT CAST(value AS INTEGER) FROM json_each(?1)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\'), definitions_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(definition ORDER BY sort_key)AS definitions FROM term_bank_v3_definitions_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds) GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_def_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(rule_identifier) AS rule_identifiers FROM (SELECT DISTINCT term_bank_id, rule_identifier FROM term_bank_v3_rules_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctRules GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), FilteredMetaBank AS (SELECT Base.*, TBM.term_bank_id FROM term_meta_bank_v3_base_view AS Base JOIN (SELECT DISTINCT id AS term_bank_id, term_id, reading_id FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM ON Base.term_id = TBM.term_id AND Base.reading_id = TBM.reading_id), term_meta_agg AS (SELECT FMB.term_bank_id, COALESCE(JSON_GROUP_ARRAY(JSON_OBJECT(\'indexId\', FMB.indexId, \'term\', FMB.term, \'reading\', FMB.reading, \'type\', FMB.type, \'frequency\', FMB.frequency, \'frequencyDisplayValue\', FMB.frequencyDisplayValue, \'pitchs\', CASE WHEN FMB.type = \'pitch\' THEN JSON(COALESCE(ap.pitches, \'[]\')) ELSE JSON(\'[]\') END, \'ipas\', CASE WHEN FMB.type = \'ipa\' THEN JSON(COALESCE(ai.ipas, \'[]\')) ELSE JSON(\'[]\') END))FILTER (WHERE FMB.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM FilteredMetaBank AS FMB LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id WHERE((FMB.type = \'pitch\' AND ap.pitches IS NOT NULL)OR(FMB.type = \'ipa\' AND ai.ipas IS NOT NULL)OR(FMB.type = \'freq\'))GROUP BY FMB.term_bank_id) SELECT index_table.*, COALESCE(ActiveCheck.is_active, 0) AS hasPopularityOverride, OP.freq_value AS overriddenPopularityValue, TB3T.popularity AS originalPopularity, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, TB3T.id AS term_bank_v3_id, TB3T.index_id AS indexId, TT.term, RT.reading, TB3T.popularity, TB3T.definition_order, TB3T.sequence_number, TDJT.definition_json AS structuredContentDefinitions, COALESCE(DA.definitions, \'[]\') AS definitions, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, COALESCE(TA.tags, \'[]\') AS tags, COALESCE(TMA.termMetaEntries, \'[]\') AS termMetaEntries FROM term_bank_v3_table AS TB3T JOIN index_table ON TB3T.index_id = index_table.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id WHERE TB3T.id IN (SELECT term_bank_id FROM TargetIds)',
       variables: [Variable<String>(termBankIdJson)],
       readsFrom: {
         indexTable,
@@ -19282,12 +19142,19 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     );
   }
 
-  Selectable<String?> kanji_vg_search_drift(String kanji) {
+  Selectable<KanjiVgSearchDriftResult> kanji_vg_search_drift(String kanji) {
     return customSelect(
-      'SELECT kvgv.svg FROM kanji_v_g_table_view AS kvgv INNER JOIN kanji_table AS kt ON kt.id = kvgv.kanji_id WHERE kt.kanji = ?1',
+      'SELECT svg, kt.kanji FROM kanji_v_g_table INNER JOIN kanji_table AS kt ON kt.id = kanji_v_g_table.kanji_id WHERE kt.kanji = ?1',
       variables: [Variable<String>(kanji)],
-      readsFrom: {kanjiTable, kanjiVGTable},
-    ).map((QueryRow row) => row.readNullable<String>('svg'));
+      readsFrom: {kanjiVGTable, kanjiTable},
+    ).map(
+      (QueryRow row) => KanjiVgSearchDriftResult(
+        svg: $KanjiVGTableTable.$convertersvg.fromSql(
+          row.read<Uint8List>('svg'),
+        ),
+        kanji: row.read<String>('kanji'),
+      ),
+    );
   }
 
   @override
@@ -19427,10 +19294,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     exampleTableAd,
     exampleTableAu,
     kanjiVGTable,
-    kanjiVGTableView,
-    kanjiVGTableViewInsert,
-    kanjiVGTableViewUpdate,
-    kanjiVGTableViewDelete,
     kanjiVGTableKanjiIdIndex,
     audioSourceListTable,
     radicalsTable,
@@ -19726,27 +19589,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.update,
       ),
       result: [TableUpdate('example_fts', kind: UpdateKind.insert)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'kanji_v_g_table_view',
-        limitUpdateKind: UpdateKind.insert,
-      ),
-      result: [TableUpdate('kanji_v_g_table', kind: UpdateKind.insert)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'kanji_v_g_table_view',
-        limitUpdateKind: UpdateKind.update,
-      ),
-      result: [TableUpdate('kanji_v_g_table', kind: UpdateKind.update)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'kanji_v_g_table_view',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [TableUpdate('kanji_v_g_table', kind: UpdateKind.delete)],
     ),
   ]);
 }
@@ -41561,4 +41403,10 @@ class ExampleFtsSearchDriftResult {
     required this.exampleSentence,
     required this.translations,
   });
+}
+
+class KanjiVgSearchDriftResult {
+  final String svg;
+  final String kanji;
+  KanjiVgSearchDriftResult({required this.svg, required this.kanji});
 }

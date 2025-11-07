@@ -22,9 +22,9 @@ class KanjiVGDao extends DatabaseAccessor<DaKanjiDB> with _$KanjiVGDaoMixin {
 
 
   /// Gets the KanjiVG of the given kanji
-  Future<String?> getKanjiVG(String kanji) async {
+  Future<List<KanjiVgSearchDriftResult>> getKanjiVG(String kanji) async {
 
-    return (await db.kanji_vg_search_drift(kanji).getSingle());
+    return (await db.kanji_vg_search_drift(kanji).get());
 
   }
   
