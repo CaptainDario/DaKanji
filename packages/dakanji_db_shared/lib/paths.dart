@@ -83,10 +83,12 @@ final devExampleAudio3Path = p.joinAll([devExampleAudioPath, "entries_format"]);
 final dakanjiDBInputFilesPath = p.joinAll([dataFilesPath, "dakanji_db_input_files"]);
 
 
-/// JMdict input file name
+/// JMdict input zip file name
 final jmdictFileName = "JMdict";
-/// KANJIDIC input file folder 'pattern'
+/// KANJIDIC input file zip 'pattern'
 final kanjidic2Pattern = "KANJIDIC";
+/// JPDB 2.2 input file zip 'pattern'
+final jpdb2_2Pattern = "JPDB_v2.2_Frequency_Kana";
 /// KanjiVG input file folder name
 final kanjiVGPathPattern = "kanjivg";
 /// Krad input file name
@@ -105,9 +107,13 @@ final processedSuffix = "_processed";
 final jmdictInputPath = Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(jmdictFileName))
   .first.path;
-/// path to the kanjidic2 files input files that should be parsed
+/// path to the kanjidic2 input zip that should be parsed
 final kanjidic2InputPath = Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(kanjidic2Pattern))
+  .first.path;
+/// path to the jpdb2_2 input zip that should be parsed
+final jpdb2_2InputPath = Directory(dakanjiDBInputFilesPath)
+  .listSync().where((e) => p.basename(e.path).contains(jpdb2_2Pattern))
   .first.path;
 /// path to the kanjivg folder input files that should be parsed
 final kanjiVGInputPath = Directory(dakanjiDBInputFilesPath)

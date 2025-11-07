@@ -29,16 +29,16 @@ void main(List<String> args) async {
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   print("Adding KanjiVG...");
-  await kanjiVG(db);
+  await importKanjiVG(db);
 
   print("Adding radicals data...");
-  await radicals(db);
+  await importRadicals(db);
 
   print("Adding KanjiDic2...");
-  await kanjidic2(db, mecab);
-
-  print("Adding JMDict");
-  await jmdict(db, mecab);
+  await importYomitanDicts(db, mecab,
+    [kanjidic2InputPath, jmdictInputPath, jpdb2_2InputPath],
+    ["KanjiDic2", "JMdict", "JPDB 2.2"]
+  );
 
   exit(0);
 
@@ -67,6 +67,10 @@ Future downloadSources() async {
   final (kanjiDic2DownloadInfo, kanjiDic2FileName) =
     await getSourceFromGHRelease('yomidevs', 'jmdict-yomitan', 'KANJIDIC', 'english.zip', out);
 
+  final (jpdb2_2FreqDownloadInfo, jpdb2_2FreqFileName) = 
+    await getSourceFromUri(
+      Uri.parse('https://github.com/Kuuuube/yomitan-dictionaries/raw/main/dictionaries/JPDB_v2.2_Frequency_Kana_2024-10-13.zip'), out);
+
   //final (tatoebaLinksDownloadInfo, tatoebaLinksFileName) =
   //  await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/links.tar.bz2'), out);
   //final (tatoebaSentencesDownloadInfo, tatoebaSentencesFileName) =
@@ -82,6 +86,7 @@ Future downloadSources() async {
     'Radk: $radkDownloadInfo\n'
     'JMDict: $jmdictDownloadInfo\n'
     'KanjiDic2: $kanjiDic2DownloadInfo\n'
+    'JPDB v2.2 Frequency Kana: $jpdb2_2FreqDownloadInfo\n'
     //'Tatoeba Links: $tatoebaLinksDownloadInfo\n'
     //'Tatoeba Sentences: $tatoebaSentencesDownloadInfo'
   );
@@ -96,7 +101,7 @@ Future downloadSources() async {
 }
 
 /// parses KanjiVG and adds it to the given [DaKanjiDB]
-Future kanjiVG(DaKanjiDB db) async {
+Future importKanjiVG(DaKanjiDB db) async {
 
   Stopwatch s = Stopwatch()..start();
   await addKanjiVGToDB(kanjiVGInputPath, db);
@@ -105,7 +110,7 @@ Future kanjiVG(DaKanjiDB db) async {
 }
 
 /// parses Radicals and adds it to the given [DaKanjiDB]
-Future radicals(DaKanjiDB db) async {
+Future importRadicals(DaKanjiDB db) async {
 
   Stopwatch s = Stopwatch()..start();
   await addRadicalsToDB(radkInputPath, kradInputPath, db);
@@ -114,40 +119,31 @@ Future radicals(DaKanjiDB db) async {
 }
 
 /// parses the kanjidic2 and adds it to the given [DaKanjiDB]
-Future kanjidic2(DaKanjiDB db, Mecab mecab) async {
+Future importYomitanDicts(
+  DaKanjiDB db,
+  Mecab mecab,
+  List<String> inputPaths,
+  List<String> inputNames
+) async {
 
-  Stopwatch s = Stopwatch()..start();
-  Stream<String> kanjiDic2Progress = await parseDictionaryDataSource(
-    dataSourcePath:  kanjidic2InputPath,
-    db: db,
-    addFullJsonDefinitions: false,
-    mecab: mecab
-  );
+  for (var i = 0; i < inputPaths.length; i++) {
 
-  await for (final progress in kanjiDic2Progress) {
-    print(progress);
+    print("Importing ${inputNames[i]}...");
+    
+    Stopwatch s = Stopwatch()..start();
+    Stream<String> progress = await parseDictionaryDataSource(
+      dataSourcePath:  inputPaths[i],
+      db: db,
+      addFullJsonDefinitions: false,
+      mecab: mecab
+    );
+
+    await for (final progress in progress) {
+      print(progress);
+    }
+    
+    print("Imported ${inputNames[i]} in: ${s.elapsedMilliseconds}ms"); 
   }
-  
-  print("Converting KanjiDic2 took: ${s.elapsedMilliseconds}ms");
-
-}
-
-/// parses jmdict and adds it to the given [DaKanjiDB]
-Future jmdict(DaKanjiDB db, Mecab mecab) async {
-
-  Stopwatch s = Stopwatch()..start();
-  Stream<String> jmdictProgress = await parseDictionaryDataSource(
-    dataSourcePath: jmdictInputPath,
-    db: db,
-    addFullJsonDefinitions: false,
-    mecab: mecab
-  );
-
-  await for (final progress in jmdictProgress) {
-    print(progress);
-  }
-
-  print("Converting JMDict took: ${s.elapsedMilliseconds}ms");
 
 }
 
