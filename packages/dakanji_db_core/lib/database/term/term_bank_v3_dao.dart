@@ -40,11 +40,6 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
     return await select(termBankV3RuleIdentifierTable).get();
   }
 
-  /// Get all tags and their ids 
-  Future<List<TagBankV3TableData>> getAllTags() async {
-    return await select(tagBankV3Table).get();
-  }
-
   // ---------------------------------------------------------------------------
   /// Get the maximum definition tag id 
   Future<int> maxTermBankV3Id() async {

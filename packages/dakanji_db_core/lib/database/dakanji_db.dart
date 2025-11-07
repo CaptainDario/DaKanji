@@ -112,7 +112,7 @@ part 'dakanji_db.g.dart';
 
   ],
   include: {
-    'kanji_vg/kanji_vg_views.drift', 'kanji_vg/kanji_vg_queries.drift',
+    'kanji_vg/kanji_vg_queries.drift',
 
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
     //'general_tables/reading_spellfix_table.drift',
@@ -121,9 +121,10 @@ part 'dakanji_db.g.dart';
     
     'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
     'kanji_meta/kanji_meta_bank_v3_views.drift', 'kanji_meta/kanji_meta_bank_v3_queries.drift',
+
     'term_meta/term_meta_bank_v3_views.drift', 'term_meta/term_meta_bank_v3_queries.drift',
     'term/term_bank_v3_views.drift', 'term/term_bank_v3_queries.drift',
-    
+
     'db_queries/stat_queries.drift',
 
     'db_queries/dictionary_search/dictionary_search_queries.drift',
@@ -137,9 +138,6 @@ class DaKanjiDB extends _$DaKanjiDB {
 
   bool inMemory;
 
-  // After generating code, this class needs to define a schemaVersion getter
-  // and a constructor telling drift where the database should be stored.
-  // These are described in the getting started guide: https://drift.simonbinder.eu/getting-started/#open
   DaKanjiDB({
     this.dbPath,
     QueryExecutor? executor,

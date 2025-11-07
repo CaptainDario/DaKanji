@@ -65,10 +65,9 @@ class TermBankV3Entry with _$TermBankV3Entry {
     required this.sequenceNumber,
     required this.tags,
   }) {
-    definitionTags.sort();
     ruleIdentifiers.sort();
-    definitions;
     tags.sort((a, b) => a.name.compareTo(b.name),);
+    definitionTags.sort((a, b) => a.name.compareTo(b.name),);
   }
     
   factory TermBankV3Entry.fromTermBankV3EntryViewData(TermBankV3EntryViewData r) {
@@ -89,7 +88,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
       reading: r.reading!,
       definitions: List<String>.from(jsonDecode(r.definitions)),
       structuredContentDefinitions: List<String>.from(jsonDecode(r.structuredContentDefinitions ?? "[]")),
-      definitionTags: List.from(jsonDecode(r.tags))
+      definitionTags: List.from(jsonDecode(r.definitionTags))
           .where((tagJson) => tagJson != null && tagJson['name'] != null)
           .map((e) => TagBankV3Entry.fromJson(e))
           .toList(),

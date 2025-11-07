@@ -52,6 +52,7 @@ Future parseTermBankV3(
   List<TermBankV3_X_RuleIdentifierTableCompanion> ruleIdentifiersRelComps = [];
   List<DefinitionTableCompanion> definitionComps = [];
   List<TermBankV3_X_DefinitionTableCompanion> definitionRelComps = [];
+  List<TagBankV3TableCompanion> tagComps = [];
   List<TermBankV3_X_TagBankTableCompanion> tagRelComps = [];
 
 
@@ -106,6 +107,21 @@ Future parseTermBankV3(
     List<String> defTags = jsonEntry[2].split(" ");
     if(jsonEntry[2] != ""){
       for (var defTag in defTags) {
+        if(pC.allTags[defTag] == null){
+          // add new tag to map
+          pC.allTags[defTag] = ++pC.currentMaxTagId;
+          // insert tag
+          tagComps.add(TagBankV3TableCompanion(
+            id: Value(pC.currentMaxTagId),
+            indexId: Value(dictId),
+            predefined: Value(false),
+            name: Value(defTag),
+            category: Value(""),
+            sortingOrder: Value(0),
+            notes: Value(""),
+            score: Value(0)
+          ));
+        }
         // create relationship
         definitionTagRelComps.add(TermBankV3_X_DefinitionTagTableCompanion(
           definitionTagId: Value(pC.allTags[defTag]!),

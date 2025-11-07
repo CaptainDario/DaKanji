@@ -25,7 +25,7 @@ Future parseTagBankv3(String json, DaKanjiDB db, int dictId) async {
   // List of all tags in the database file
   List<TagBankV3TableCompanion> tagComps = [];
 
-  int maxTagId = await db.tagBankV3Dao.maxTagId();
+  int maxTagId = await db.tagBankV3Dao.maxTagBankId();
 
   // iterate over the json and parse each entry
   for (var tag in jsonList) {    

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
@@ -116,7 +117,7 @@ Iterable<({String filePath, Uint8List fileContent})> _archiveIteratorStreamed(
   // iterate over the remaining files
   for (final entity in archive.files.sorted((a, b) => a.name.compareTo(b.name))) {
     if (entity.isFile && !processedFiles.contains(entity.name)) {
-      // get the file's content as a string
+      // get the file's content
       final content = entity.readBytes()!;
       yield (filePath: entity.name, fileContent: content);
     }

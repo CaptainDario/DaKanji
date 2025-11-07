@@ -39,7 +39,7 @@ class TagBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TagBankV3DaoMixin 
   }
 
   /// Get the maximum id of the tag table
-  Future<int> maxTagId() async {
+  Future<int> maxTagBankId() async {
 
     final query = selectOnly(tagBankV3Table)
         ..addColumns([tagBankV3Table.id.max()]);

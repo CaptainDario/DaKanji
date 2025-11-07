@@ -5,23 +5,35 @@ import '/database/dakanji_db.dart';
 
 class TermBankV3ParserContext extends ParserContext{
 
+  /// Current max id for term bank entries
   int currentMaxTermBankId;
 
+  /// Current max id for terms
   int currentMaxTermId;
+  /// Map of all terms to their ids
   Map<String, int> allTerms;
 
+  /// Current max id for readings
   int currentMaxReadingId;
+  /// Map of all readings to their ids
   Map<String, int> allReadings;
 
+  /// Current max id for rule identifiers
   int currentMaxRuleIdentifiersId;
+  /// Map of all rule identifiers to their ids
   Map<String, int> allRuleIdentifiers;
 
+  /// Current max id for definition jsons
   int currentMaxDefinitionJsonId;
 
+  /// Current max id for definitions
   int currentMaxdefinitionId;
+  /// Map of all definitions to their ids
   Map<String, int> allDefinitions;
 
-  // tags are parsed from the meta bank and thus are ALWAYS in the DB
+  /// Current max id for tags
+  int currentMaxTagId;
+  /// tags are parsed from the meta bank and thus are ALWAYS in the DB
   Map<String, int> allTags;
 
 
@@ -36,6 +48,7 @@ class TermBankV3ParserContext extends ParserContext{
     required this.currentMaxDefinitionJsonId,
     required this.currentMaxdefinitionId,
     required this.allDefinitions,
+    required this.currentMaxTagId,
     required this.allTags,
   });
 
@@ -52,7 +65,8 @@ class TermBankV3ParserContext extends ParserContext{
       currentMaxDefinitionJsonId: await db.termBankV3Dao.maxTermBankV3DefinitionJsonId(),
       currentMaxdefinitionId: await db.definitionDao.maxDefinitionId(),
       allDefinitions: { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id },
-      allTags: { for (var e in await db.termBankV3Dao.getAllTags()) e.name : e.id },
+      currentMaxTagId: await db.tagBankV3Dao.maxTagBankId(),
+      allTags: { for (var e in await db.tagBankV3Dao.getAllTags()) e.name : e.id },
     );
 
   }
