@@ -123,19 +123,19 @@ Future parseTermMetaBankV3(
 
         final freq = jsonEntry[2];
 
-        if(freq is int){ freqValue = freq; }
-        else if(freq is String){ freqDisplayValue = freq; }
+        if(freq is int) freqValue = freq;
+        else if(freq is String) freqDisplayValue = freq;
         else if(freq is Map){
 
-          freqValue        = jsonEntry[2]['value'];
-          freqDisplayValue = jsonEntry[2]['displayValue'];
+          freqValue        = freq['value'];
+          freqDisplayValue = freq['displayValue'];
 
           final frequency = freq["frequency"];
           if(frequency is int){ freqValue = frequency; }
           else if(frequency is String){ freqDisplayValue = frequency; }
           else if(frequency is Map) {
-            freqValue        = jsonEntry[2]['value'];
-            freqDisplayValue = jsonEntry[2]['displayValue'];
+            freqValue        = frequency['value'];
+            freqDisplayValue = frequency['displayValue'];
           }
         }      
       }
