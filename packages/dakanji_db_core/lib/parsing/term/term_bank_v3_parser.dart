@@ -33,7 +33,7 @@ Future parseTermBankV3(
   String termMetaBankJson,
   TermBankV3ParserContext pC,
   DaKanjiDB db,
-  int dictId,
+  int indexId,
   bool addFullJsonDefinitions,
   Mecab mecab) async {
 
@@ -113,8 +113,7 @@ Future parseTermBankV3(
           // insert tag
           tagComps.add(TagBankV3TableCompanion(
             id: Value(pC.currentMaxTagId),
-            indexId: Value(dictId),
-            predefined: Value(false),
+            indexId: Value(indexId),
             name: Value(defTag),
             category: Value(""),
             sortingOrder: Value(0),
@@ -197,7 +196,7 @@ Future parseTermBankV3(
     // create TermBankEntry
     termBankComps.add(TermBankV3TableCompanion(
       id: Value(pC.currentMaxTermBankId),
-      indexId: Value(dictId),
+      indexId: Value(indexId),
       termId: Value(termInsertId),
       definitionOrder: Value(definitionIds),
       definitionJsonId: Value(pC.currentMaxDefinitionJsonId),
