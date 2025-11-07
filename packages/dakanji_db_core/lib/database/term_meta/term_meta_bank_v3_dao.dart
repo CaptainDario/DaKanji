@@ -1,4 +1,5 @@
 
+import "package:dakanji_db_core/database/tag/tag_bank_v3_tables.dart";
 import "package:drift/drift.dart";
 
 import "/database/general_tables/reading_tables.dart";
@@ -16,11 +17,10 @@ part 'term_meta_bank_v3_dao.g.dart';
 // fields for the tables. The <MyDatabase> type annotation is the database class
 // that should use this dao.
 @DriftAccessor(tables: [
-    TermTable, ReadingTable,
+    TermTable, ReadingTable, TagBankV3Table,
     TermMetaBankV3Table,
-    TermMetaBankV3PitchTable, TermMetaBankV3_X_PitchTagTable, TermMetaBankV3_X_PitchTable,
-    TermMetaBankV3IpaTable, TermMetaBankV3_X_IpaTagTable, TermMetaBankV3_X_IpaTable,
-    TermMetaBankV3TagTable
+    TermMetaBankV3PitchTable, TermMetaBankV3_X_PitchTable, TermMetaBankV3IpaTable_X_TagBankV3Table,
+    TermMetaBankV3IpaTable, TermMetaBankV3_X_IpaTable, TermMetaBankV3PitchTable_X_TagBankV3Table
 ])
 class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV3DaoMixin {
   
@@ -55,10 +55,6 @@ class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV
     return await select(termMetaBankV3IpaTable).get();
   }
 
-  /// Get all tags and their ids 
-  Future<List<TermMetaBankV3TagTableData>> getAllTags() async {
-    return await select(termMetaBankV3TagTable).get();
-  }
 
   // ---------------------------------------------------------------------------
   /// Get the maximum term meta bank v3 id 
@@ -106,18 +102,6 @@ class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV
 
     // Extract the max ID value, defaulting to 0 if null
     return query.read(termMetaBankV3IpaTable.id.max()) ?? 0;
-
-  }
-
-  /// Get the maximum tag id 
-  Future<int> maxTermMetaBankV3TagId() async {
-    
-    final query = await (selectOnly(termMetaBankV3TagTable)
-        ..addColumns([termMetaBankV3TagTable.id.max()]))
-      .getSingle();
-
-    // Extract the max ID value, defaulting to 0 if null
-    return query.read(termMetaBankV3TagTable.id.max()) ?? 0;
 
   }
 

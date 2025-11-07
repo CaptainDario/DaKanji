@@ -41,15 +41,16 @@ Future parseTermMetaBankV3(
   List<TermMetaBankV3TableCompanion> termMetaBankComps = [];
   List<TermMetaBankV3TypeTableCompanion> termMetaBankTypeComps = [];
   List<ReadingTableCompanion> readingComps = [];
-  List<TermMetaBankV3TagTableCompanion> termMetaBankV3TagTableComps = [];
+  List<TagBankV3TableCompanion> tagComps = [];
 
   List<TermMetaBankV3IpaTableCompanion> termMetaBankIpaComps = [];
-  List<TermMetaBankV3_X_IpaTagTableCompanion> termMetaBankIpaTagRelsComps = [];
   List<TermMetaBankV3_X_IpaTableCompanion> termMetaBankIpaRelsComps = [];
+  List<TermMetaBankV3IpaTable_X_TagBankV3TableCompanion> termMetaBankIpaTagRelsComps = [];
 
   List<TermMetaBankV3PitchTableCompanion> termMetaBankPitchComps = [];
-  List<TermMetaBankV3_X_PitchTagTableCompanion> termMetaBankPitchTagRelsComps = [];
   List<TermMetaBankV3_X_PitchTableCompanion> termMetaBankPitchRelsComps = [];
+  List<TermMetaBankV3PitchTable_X_TagBankV3TableCompanion> termMetaBankPitchTagRelsComps = [];
+
 
   // parse the entires
   for (var jsonEntry in jsonList) {
@@ -155,18 +156,28 @@ Future parseTermMetaBankV3(
             termMetaId: Value(pC.currentMaxTermMetaId),
           ));
 
-          for (var tag in pitch["tags"] ?? []) {
-            int tagInsertId = pC.allTags[tag] ?? ++pC.currentMaxTagId;
+          for (var tag in pitch["tags"] ?? []) {     
+            int tagInsertId = pC.allTags[tag] ?? ++pC.currentMaxTagId;       
             if(pC.allTags[tag] == null){
+              // add new tag to map
               pC.allTags[tag] = tagInsertId;
-              termMetaBankV3TagTableComps.add(TermMetaBankV3TagTableCompanion(
-                id: Value(tagInsertId), tag: Value(tag)
+              // add tag
+              tagComps.add(TagBankV3TableCompanion(
+                id: Value(tagInsertId),
+                indexId: Value(indexId),
+                name: Value(tag),
+                category: Value(""),
+                sortingOrder: Value(0),
+                notes: Value(""),
+                score: Value(0)
               ));
             }
-            termMetaBankPitchTagRelsComps.add(TermMetaBankV3_X_PitchTagTableCompanion(
-              pitchId: Value(pitchInsertId),
-              tagId: Value(tagInsertId)
-            ));
+            termMetaBankPitchTagRelsComps.add(
+              TermMetaBankV3PitchTable_X_TagBankV3TableCompanion(
+                pitchId: Value(pitchInsertId),
+                tagId: Value(tagInsertId)
+              )
+            );
           }
         }
       }
@@ -176,7 +187,7 @@ Future parseTermMetaBankV3(
           ipaInsertId = ++pC.currentMaxIpaId;
 
           termMetaBankIpaComps.add(TermMetaBankV3IpaTableCompanion(
-            id: Value(++ipaInsertId),
+            id: Value(ipaInsertId),
             ipa: Value(transcription["ipa"]),
           ));
           termMetaBankIpaRelsComps.add(TermMetaBankV3_X_IpaTableCompanion(
@@ -187,15 +198,25 @@ Future parseTermMetaBankV3(
           for (var tag in transcription["tags"] ?? []) {
             int tagInsertId = pC.allTags[tag] ?? ++pC.currentMaxTagId;
             if(pC.allTags[tag] == null){
+              // add new tag to map
               pC.allTags[tag] = tagInsertId;
-              termMetaBankV3TagTableComps.add(TermMetaBankV3TagTableCompanion(
-                id: Value(tagInsertId), tag: Value(tag)
+              // add tag
+              tagComps.add(TagBankV3TableCompanion(
+                id: Value(tagInsertId),
+                indexId: Value(indexId),
+                name: Value(tag),
+                category: Value(""),
+                sortingOrder: Value(0),
+                notes: Value(""),
+                score: Value(0)
               ));
             }
-            termMetaBankIpaTagRelsComps.add(TermMetaBankV3_X_IpaTagTableCompanion(
-              ipaId: Value(ipaInsertId),
-              tagId: Value(tagInsertId)
-            ));
+            termMetaBankIpaTagRelsComps.add(
+              TermMetaBankV3IpaTable_X_TagBankV3TableCompanion(
+                ipaId: Value(ipaInsertId),
+                tagId: Value(tagInsertId)
+              )
+            );
           }
         }
       }
@@ -220,15 +241,14 @@ Future parseTermMetaBankV3(
     batch.insertAll(db.termMetaBankV3TypeTable, termMetaBankTypeComps);
 
     batch.insertAll(db.readingTable, readingComps);
-
-    batch.insertAll(db.termMetaBankV3TagTable, termMetaBankV3TagTableComps);
+    batch.insertAll(db.tagBankV3Table, tagComps);
 
     batch.insertAll(db.termMetaBankV3PitchTable, termMetaBankPitchComps);
-    batch.insertAll(db.termMetaBankV3XPitchTagTable, termMetaBankPitchTagRelsComps);
+    batch.insertAll(db.termMetaBankV3PitchTableXTagBankV3Table, termMetaBankPitchTagRelsComps);
     batch.insertAll(db.termMetaBankV3XPitchTable, termMetaBankPitchRelsComps);
 
     batch.insertAll(db.termMetaBankV3IpaTable, termMetaBankIpaComps);
-    batch.insertAll(db.termMetaBankV3XIpaTagTable, termMetaBankIpaTagRelsComps);
+    batch.insertAll(db.termMetaBankV3IpaTableXTagBankV3Table, termMetaBankIpaTagRelsComps);
     batch.insertAll(db.termMetaBankV3XIpaTable, termMetaBankIpaRelsComps);
   },);
 

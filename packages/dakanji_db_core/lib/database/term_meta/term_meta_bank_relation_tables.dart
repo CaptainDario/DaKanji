@@ -1,4 +1,5 @@
 
+import 'package:dakanji_db_core/database/tag/tag_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
 
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
@@ -36,10 +37,10 @@ class TermMetaBankV3_X_IpaTable extends Table {
 }
 
 /// Relationship table between Ipa transcription and its tags
-@TableIndex(name: 'TermMetaBankV3_X_IpaTagTable_ipaIdIndex', columns: {#ipaId})
-@TableIndex(name: 'TermMetaBankV3_X_IpaTagTable_tagIdIndex', columns: {#tagId})
+@TableIndex(name: 'TermMetaBankV3IpaTable_X_TagBankV3Table_ipaIdIndex', columns: {#ipaId})
+@TableIndex(name: 'TermMetaBankV3IpaTable_X_TagBankV3Table_tagIdIndex', columns: {#tagId})
 // ignore: camel_case_types
-class TermMetaBankV3_X_IpaTagTable extends Table {
+class TermMetaBankV3IpaTable_X_TagBankV3Table extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -47,15 +48,15 @@ class TermMetaBankV3_X_IpaTagTable extends Table {
   IntColumn get ipaId => integer()
     .references(TermMetaBankV3IpaTable, #id, onDelete: KeyAction.cascade)();
   /// the id of the tag
-  IntColumn get tagId => integer().references(TermMetaBankV3TagTable, #id)();
+  IntColumn get tagId => integer().references(TagBankV3Table, #id)();
 
 }
 
 /// Relationship table between pitch and its tags
-@TableIndex(name: 'TermMetaBankV3_X_PitchTagTable_pitchIdIndex', columns: {#pitchId})
-@TableIndex(name: 'TermMetaBankV3_X_PitchTagTable_tagIdIndex', columns: {#tagId})
+@TableIndex(name: 'TermMetaBankV3PitchTable_X_TagBankV3Table_pitchIdIndex', columns: {#pitchId})
+@TableIndex(name: 'TermMetaBankV3PitchTable_X_TagBankV3Table_tagIdIndex', columns: {#tagId})
 // ignore: camel_case_types
-class TermMetaBankV3_X_PitchTagTable extends Table {
+class TermMetaBankV3PitchTable_X_TagBankV3Table extends Table {
 
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
@@ -63,6 +64,6 @@ class TermMetaBankV3_X_PitchTagTable extends Table {
   IntColumn get pitchId => integer()
     .references(TermMetaBankV3PitchTable, #id, onDelete: KeyAction.cascade)();
   /// the id of the tag
-  IntColumn get tagId => integer().references(TermMetaBankV3TagTable, #id)();
+  IntColumn get tagId => integer().references(TagBankV3Table, #id)();
 
 }

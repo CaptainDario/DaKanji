@@ -82,17 +82,3 @@ class TermMetaBankV3IpaTable extends Table {
   TextColumn get ipa => text()();
 
 }
-
-/// Class that stores the meta term tags
-class TermMetaBankV3TagTable extends Table {
-
-  @override
-  Set<Column> get primaryKey => {id};
-  
-  /// id of this entry
-  IntColumn get id => integer()();
-
-  /// The tag of this table transcription
-  TextColumn get tag => text().unique()();
-
-}

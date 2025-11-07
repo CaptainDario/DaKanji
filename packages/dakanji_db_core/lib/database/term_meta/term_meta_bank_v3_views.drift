@@ -1,5 +1,6 @@
 import '/database/general_tables/term_tables.dart';
 import '/database/general_tables/reading_tables.dart';
+import '/database/tag/tag_bank_v3_tables.dart';
 import '/database/index/index_tables.dart';
 import 'term_meta_bank_relation_tables.dart';
 import 'term_meta_bank_v3_tables.dart';
@@ -34,9 +35,9 @@ SELECT
       'nasal',    p.nasal,
       'tags',     COALESCE(
         (
-          SELECT JSON_GROUP_ARRAY(tag.tag)
-          FROM term_meta_bank_v3_x_pitch_tag_table AS xpt
-          JOIN term_meta_bank_v3_tag_table AS tag ON xpt.tag_id = tag.id
+          SELECT JSON_GROUP_ARRAY(tag.name)
+          FROM term_meta_bank_v3_pitch_table_x_tag_bank_v3_table AS xpt
+          JOIN tag_bank_v3_table AS tag ON xpt.tag_id = tag.id
           WHERE xpt.pitch_id = p.id
         ),
         JSON('[]')
@@ -58,9 +59,9 @@ SELECT
       'ipa',  i.ipa,
       'tags', COALESCE(
                 (
-                  SELECT JSON_GROUP_ARRAY(tag.tag)
-                  FROM term_meta_bank_v3_x_ipa_tag_table AS xit
-                  JOIN term_meta_bank_v3_tag_table AS tag ON xit.tag_id = tag.id
+                  SELECT JSON_GROUP_ARRAY(tag.name)
+                  FROM term_meta_bank_v3_ipa_table_x_tag_bank_v3_table AS xit
+                  JOIN tag_bank_v3_table AS tag ON xit.tag_id = tag.id
                   WHERE xit.ipa_id = i.id
                 ),
                 JSON('[]')

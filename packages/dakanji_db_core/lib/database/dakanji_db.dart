@@ -87,9 +87,10 @@ part 'dakanji_db.g.dart';
 
     TermMetaBankV3Table,
     TermMetaBankV3TypeTable, 
-    TermMetaBankV3PitchTable, TermMetaBankV3_X_PitchTable, TermMetaBankV3_X_PitchTagTable,
-    TermMetaBankV3IpaTable, TermMetaBankV3_X_IpaTable, TermMetaBankV3_X_IpaTagTable,
-    TermMetaBankV3TagTable,
+    TermMetaBankV3PitchTable, TermMetaBankV3_X_PitchTable, 
+    TermMetaBankV3IpaTable_X_TagBankV3Table,
+    TermMetaBankV3IpaTable, TermMetaBankV3_X_IpaTable, 
+    TermMetaBankV3PitchTable_X_TagBankV3Table,
 
     ExampleTable,
     ExampleTranslationTable,
