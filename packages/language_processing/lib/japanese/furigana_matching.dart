@@ -33,7 +33,7 @@ class FuriganaPair{
   int get hashCode => kanji.hashCode ^ reading.hashCode;
 }
 
-List<FuriganaPair> matchFurigana(String text, String reading) {
+List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKatakana = true}) {
 
   // handle edge cases
   if(text.replaceAll(" ", "").isEmpty)    return [FuriganaPair("", reading)];
@@ -41,28 +41,30 @@ List<FuriganaPair> matchFurigana(String text, String reading) {
 
   List<FuriganaPair> result = [];
 
-  KanaKit k = const KanaKit();
-  String textKata    = k.toKatakana(text);
-  String readingKata = k.toKatakana(reading);
+  if(convertToKatakana) {
+    KanaKit k = const KanaKit();
+    text    = k.toKatakana(text);
+    reading = k.toKatakana(reading);
+  }
 
   FuriganaPair currentPair = FuriganaPair("", "");
   int readingIndex = 0;
-  for (var i = 0; i < textKata.length; i++) {
+  for (var i = 0; i < text.length; i++) {
 
     // current character is not a kanji
-    if(!kanjiRegex.hasMatch(textKata[i])) {
+    if(!kanjiRegex.hasMatch(text[i])) {
       // current character is also in reading 
-      int kanaIdx = readingKata.indexOf(textKata[i], readingIndex);
+      int kanaIdx = reading.indexOf(text[i], readingIndex);
       if(kanaIdx != -1){
         // add the kanji with its reading to the result
-        currentPair.reading = readingKata.substring(readingIndex, kanaIdx);
+        currentPair.reading = reading.substring(readingIndex, kanaIdx);
         readingIndex = kanaIdx;
         result.add(currentPair); currentPair = FuriganaPair("", "");
 
         // get all kana only characters
-        while (i < text.length && readingIndex < readingKata.length && 
-          textKata[i] == readingKata[readingIndex]) {
-          currentPair.reading += readingKata[readingIndex];
+        while (i < text.length && readingIndex < reading.length && 
+          text[i] == reading[readingIndex]) {
+          currentPair.reading += reading[readingIndex];
           i++; readingIndex++;
         }
         result.add(currentPair);
@@ -70,13 +72,13 @@ List<FuriganaPair> matchFurigana(String text, String reading) {
       }
     }
     else {
-      currentPair.kanji += textKata[i];
+      currentPair.kanji += text[i];
     }
 
   }
   // add all leftover readings to kanji
   if(!currentPair.isEmpty()) {
-    currentPair.reading += readingKata.substring(readingIndex);
+    currentPair.reading += reading.substring(readingIndex);
     result.add(currentPair);
   }
 
