@@ -50,8 +50,6 @@ Description describeMismatch(
   mismatchDescription.add('has the following mismatches:\n');
   const equality = DeepCollectionEquality();
 
-  // --- START: UPGRADED MISMATCH LOGIC FOR LISTS ---
-
   // Check the definitions list specifically for a diff-like output
   if (!equality.equals(item.definitions, expected.definitions)) {
     mismatchDescription.add('  - definitions list did not match:\n');
@@ -74,9 +72,6 @@ Description describeMismatch(
         mismatchDescription.add('    - Actual list is longer. Extra item at index ${expected.definitions.length}: "${item.definitions[expected.definitions.length]}"\n');
     }
   }
-
-  // --- END: UPGRADED MISMATCH LOGIC FOR LISTS ---
-
   // You can keep checks for other simple fields if you like
   if (item.term != expected.term) {
     mismatchDescription.add(

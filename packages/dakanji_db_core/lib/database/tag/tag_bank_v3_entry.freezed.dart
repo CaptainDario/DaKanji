@@ -221,8 +221,8 @@ return $default(_that.indexId,_that.name,_that.category,_that.sortingOrder,_that
 /// @nodoc
 @JsonSerializable()
 
-class _TagBankV3Entry implements TagBankV3Entry {
-  const _TagBankV3Entry({required this.indexId, required this.name, required this.category, required this.sortingOrder, required this.notes, required this.score});
+class _TagBankV3Entry extends TagBankV3Entry {
+  const _TagBankV3Entry({required this.indexId, required this.name, required this.category, required this.sortingOrder, required this.notes, required this.score}): super._();
   factory _TagBankV3Entry.fromJson(Map<String, dynamic> json) => _$TagBankV3EntryFromJson(json);
 
 /// id of this entry's dictionary

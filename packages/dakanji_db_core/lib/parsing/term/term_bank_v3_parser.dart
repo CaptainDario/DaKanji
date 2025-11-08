@@ -107,12 +107,13 @@ Future parseTermBankV3(
     List<String> defTags = jsonEntry[2].split(" ");
     if(jsonEntry[2] != ""){
       for (var defTag in defTags) {
+        int tagInsertId = pC.allTags[defTag] ?? ++pC.currentMaxTagId;
         if(pC.allTags[defTag] == null){
           // add new tag to map
-          pC.allTags[defTag] = ++pC.currentMaxTagId;
+          pC.allTags[defTag] = tagInsertId;
           // insert tag
           tagComps.add(TagBankV3TableCompanion(
-            id: Value(pC.currentMaxTagId),
+            id: Value(tagInsertId),
             indexId: Value(indexId),
             name: Value(defTag),
             category: Value(""),
@@ -123,7 +124,7 @@ Future parseTermBankV3(
         }
         // create relationship
         definitionTagRelComps.add(TermBankV3_X_DefinitionTagTableCompanion(
-          definitionTagId: Value(pC.allTags[defTag]!),
+          definitionTagId: Value(tagInsertId),
           termBankId: Value(pC.currentMaxTermBankId)
         ));
       }
@@ -225,6 +226,7 @@ Future parseTermBankV3(
     batch.insertAll(db.definitionTable, definitionComps);
     batch.insertAll(db.termBankV3XDefinitionTable, definitionRelComps);
 
+    batch.insertAll(db.tagBankV3Table, tagComps);
     batch.insertAll(db.termBankV3XTagBankTable, tagRelComps);
   },);
   //print("Inserted all entries in ${s.elapsedMilliseconds}ms");

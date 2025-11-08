@@ -24,7 +24,7 @@ TagBankV3Entry pTag = TagBankV3Entry(
   indexId: 1,
   name: "P",
   category: "popular",
-  sortingOrder: 0, 
+  sortingOrder: 0,
   notes: "popular term",
   score: 0
 );
@@ -60,10 +60,10 @@ TagBankV3Entry abbrTag = TagBankV3Entry(
 // --- made up tags for testing ---
 TagBankV3Entry naAdjTag = TagBankV3Entry(
   indexId: 1,
-  name: "na-adj",
+  name: "adj-na",
   category: "",
   sortingOrder: 0, 
-  notes: "na-adjective",
+  notes: "",
   score: 0
 );
 
@@ -72,16 +72,16 @@ TagBankV3Entry v5Tag = TagBankV3Entry(
   name: "v5",
   category: "",
   sortingOrder: 0, 
-  notes: "godan verb",
+  notes: "",
   score: 0
 );
 
 TagBankV3Entry iAdjTag = TagBankV3Entry(
   indexId: 1,
-  name: "i-adj",
+  name: "adj-i",
   category: "",
   sortingOrder: 0, 
-  notes: "i-adjective",
+  notes: "",
   score: 0
 );
 
@@ -90,6 +90,6 @@ TagBankV3Entry vtag = TagBankV3Entry(
   name: "v",
   category: "",
   sortingOrder: 0, 
-  notes: "verb",
+  notes: "",
   score: 0
 );

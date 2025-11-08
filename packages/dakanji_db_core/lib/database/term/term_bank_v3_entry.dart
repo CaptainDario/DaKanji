@@ -66,8 +66,9 @@ class TermBankV3Entry with _$TermBankV3Entry {
     required this.tags,
   }) {
     ruleIdentifiers.sort();
-    tags.sort((a, b) => a.name.compareTo(b.name),);
-    definitionTags.sort((a, b) => a.name.compareTo(b.name),);
+    // sort tags first by sortingOrder then by name to ensure consistent order
+    tags.sort((a, b) => a.sortComparedTo(b));
+    definitionTags.sort((a, b) => a.sortComparedTo(b));
   }
     
   factory TermBankV3Entry.fromTermBankV3EntryViewData(TermBankV3EntryViewData r) {

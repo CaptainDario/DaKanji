@@ -10,6 +10,8 @@ part 'tag_bank_v3_entry.g.dart';
 /// Class representing one stat of a tag entry of DaKanjiDB
 abstract class TagBankV3Entry with _$TagBankV3Entry {
 
+  const TagBankV3Entry._();
+
   const factory TagBankV3Entry(
     {
       /// id of this entry's dictionary
@@ -28,6 +30,15 @@ abstract class TagBankV3Entry with _$TagBankV3Entry {
       required int score,
 
     }) = _TagBankV3Entry;
+
+  /// sort tags first by sortingOrder then by name to ensure consistent order
+  int sortComparedTo(TagBankV3Entry other) {
+    int orderComparison = sortingOrder.compareTo(other.sortingOrder);
+    if (orderComparison != 0) {
+      return orderComparison;
+    }
+    return name.compareTo(other.name);
+  }
 
   factory TagBankV3Entry.fromJson(Map<String, Object?> json)
     => _$TagBankV3EntryFromJson(json);

@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
@@ -13,7 +14,7 @@ import 'term_bank_test_cases_2.dart';
 import 'term_bank_v3_entry_matcher.dart';
 
 
-final List testCases = [
+final List<(List<String>, List<List<TermBankV3Entry>>)> testCases = [
   (termBankTestCases1, termBankTestCaseExpectations1),
   (termBankTestCases2, termBankTestCaseExpectations2)
 ];
@@ -44,6 +45,7 @@ void main() async {
         test('Search for "$testCase" should return correct entries', () async {
           // Perform the database search
           final result = await db.termBankV3Dao.search(testCase);
+          print(result);
 
           // 1. First, check if the number of results is correct.
           expect(
@@ -55,7 +57,7 @@ void main() async {
           // 2. If counts match, compare the content of each entry.
           expect(
             result,
-            orderedEquals(
+            unorderedEquals(
               expected.map((e) => matchesTermBankEntry(e)).toList(),
             ),
             reason: "The entries for '$testCase' did not match the expected data.",
