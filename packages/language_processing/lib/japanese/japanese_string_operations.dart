@@ -78,6 +78,8 @@ String romajiToHiragana(String romaji){
 /// Note:
 ///   * `-` long vowel mark are converted to explicit vowels
 List<String> katakanaToHiragana(String text, bool convertRomaji) {
+
+  if(text == "") return [""];
   
   List<String> romajiConversionVariants = [text];
   if(convertRomaji){
