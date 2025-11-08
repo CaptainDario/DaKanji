@@ -30,10 +30,26 @@ void main() {
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
         print(result);
 
-        expect(result.isNotEmpty, true);
-        for (var entry in result) {
-          //print(JsonEncoder.withIndent("  ").convert(entry));
-          expect(kanjiDictionarySearchTestCaseExpectations.contains(entry), true);
+        // 1. First, check that the number of results we got from the DB
+        expect(result.length, equals(kanjiDictionarySearchTestCaseExpectations.length));
+
+        for (int i = 0; i < result.length; i++) {
+          final actualResult = result[i];
+          final expectedResult = kanjiDictionarySearchTestCaseExpectations[i];
+
+          // Compare the kanji bank entry
+          expect(
+            actualResult.kanjiBankEntry, 
+            equals(expectedResult.kanjiBankEntry),
+            reason: "KanjiBankV3Entry for '${actualResult.kanjiBankEntry.kanji}' did not match expectation."
+          );
+
+          // Compare the list of meta entries
+          expect(
+            actualResult.kanjiMetaBankEntries, 
+            equals(expectedResult.kanjiMetaBankEntries),
+            reason: "KanjiMetaBankV3Entry list for '${actualResult.kanjiBankEntry.kanji}' did not match expectation."
+          );
         }
       });
     }

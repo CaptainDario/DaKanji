@@ -15,7 +15,7 @@ final kanjiDictionaryTestCases = [
 ];
 
 /// kanji bank test case expected values
-final kanjiDictionarySearchTestCaseExpectations = [
+final List<KanjiDictionarySearchResultTestCaseExpectation> kanjiDictionarySearchTestCaseExpectations = [
   KanjiDictionarySearchResultTestCaseExpectation(
     kanjiBankEntry: KanjiBankV3Entry(
       indexId: indexId,
