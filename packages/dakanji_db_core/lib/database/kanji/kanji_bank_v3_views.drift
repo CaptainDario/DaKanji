@@ -16,14 +16,14 @@ CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
         KT.kanji,
         '[' || COALESCE(
 			GROUP_CONCAT(
-				DISTINCT json_quote(onyomi.reading)
+				DISTINCT NULLIF(json_quote(onyomi.reading), 'null')
 				ORDER BY OOJ.key
 			),
 			''
 		) || ']' AS onyomis,
         '[' || COALESCE(
 			GROUP_CONCAT(
-				DISTINCT json_quote(kunyomi.reading)
+				DISTINCT NULLIF(json_quote(kunyomi.reading), 'null')
 				ORDER BY KOJ.key
 			),
 			''
@@ -39,7 +39,7 @@ CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
         )), '') || ']' AS tags,
         '[' || COALESCE(
 			GROUP_CONCAT(
-				DISTINCT json_quote(DT.definition)
+				DISTINCT NULLIF(json_quote(DT.definition), 'null')
 				ORDER BY DOJ.key
 			),
 			''
@@ -81,6 +81,6 @@ CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
     LEFT JOIN kanji_bank_v3_stat_names_table AS KB3SNT ON KB3SNT.id = KB3ST.stat_name_id
     LEFT JOIN kanji_bank_v3_stat_values_table AS KB3SVT ON KB3SVT.id = KB3ST.stat_value_id
 
-    -- Group all the joined rows by the kanji character to aggregate them.
+    -- Group all the joined rows by the kanji id
     GROUP BY
-        KT.kanji;
+        KT.id;

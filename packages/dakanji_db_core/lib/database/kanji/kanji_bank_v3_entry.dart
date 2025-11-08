@@ -49,7 +49,7 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
       required this.definitions,
       required this.stats,
     }){
-      tags.sort((a, b) => a.sortingOrder.compareTo(b.sortingOrder));
+      tags.sort((a, b) => a.comparedTo(b));
       stats.sort((a, b) {
         if (a.name != b.name) return a.name.compareTo(b.name);
         else return a.value.compareTo(b.value);

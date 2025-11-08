@@ -1,5 +1,6 @@
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
@@ -24,7 +25,7 @@ void main() {
     for (var testCase in kanjiBankTestCases) {
       test('Looking up $testCase', () async {
         Stopwatch s = Stopwatch()..start();
-        List result = (await db.kanjiBankV3Dao.search(testCase))!;
+        List<KanjiBankV3Entry> result = (await db.kanjiBankV3Dao.search(testCase));
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
         print(result);
 
