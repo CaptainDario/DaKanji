@@ -88,9 +88,10 @@ List<String> katakanaToHiragana(String text, bool convertRomaji) {
     passKanji: true,
     upcaseKatakana: false
   ));
-  return romajiConversionVariants.toSet().map((e) 
-    => kanaKit.toHiragana(kanaKit.toKatakana(e))
-  ).toList();
+  return romajiConversionVariants.toSet()
+    .map((e) => kanaKit.toHiragana(kanaKit.toKatakana(e)))
+    .where((e) => (kanaKit.isJapanese(e) && convertRomaji) || !convertRomaji)
+  .toList();
 }
 
 /// Generates all possible variants of `romaji` that will have different results

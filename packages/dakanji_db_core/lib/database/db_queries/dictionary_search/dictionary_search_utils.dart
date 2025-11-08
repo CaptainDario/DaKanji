@@ -11,24 +11,25 @@ import 'package:language_processing/japanese/japanese_string_operations.dart';
 /// and optionally converts romaji to hiragana (if `convertRomajiToHiragana` is
 /// true).
 /// 
-/// Returns a tuple containing:
-/// - `hiraganaTerm`: The hiragana conversion of the term if romaji conversion
-///    was performed, otherwise null.
-/// - `processedTerms`: A list of processed terms
-({List<String> normalizedTerms, List<DeconjugationResult> termVariants}) preprocessInput(String searchTerm, bool convertRomajiToHiragana) {
+/// Returns
+/// - `normalizedTerms`: All possible normalized terms
+/// - `deconjugatedTerms`: A list of found deconjugations of the input term
+({List<String> normalizedTerms, List<DeconjugationResult> termVariants}) 
+  preprocessInput(String searchTerm, bool convertRomajiToHiragana) {
 
   if(searchTerm == "") return (normalizedTerms: [], termVariants: []);
 
-  // 1. convert full-width romaji to half-width and half-width kana to full-width
+  // convert full-width romaji to half-width and half-width kana to full-width
   String widthNormalizedTerm = searchTerm.toFullwidth(convertKana: true);
   widthNormalizedTerm = widthNormalizedTerm.toHalfwidth(
     convertAlphabet: true, convertNumber: true, convertSymbol: true);
 
-  // 2. convert all kana to hiragana and optionally romaji to hiragana
-  // if romaji are converted multiple hiragana terms may be returned
+  // convert all kana to hiragana
+  // optionally: convet romaji to hiragana if romaji are converted multiple
+  //             hiragana terms may be returned
   List<String> normalizedTerms = katakanaToHiragana(widthNormalizedTerm, convertRomajiToHiragana);
 
-  // 4. find all possible deconjugations of the terms
+  // find all possible deconjugations of the terms
   Iterable<String>? deconjugate = {searchTerm, ...normalizedTerms}.toList();
   
   List<DeconjugationResult> termVariants = [];

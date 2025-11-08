@@ -9,12 +9,12 @@ void main() {
       final testCase = preprocessInputTestCases[i];
       final input = testCase.$1;
       final convertRomajiToHiragana = testCase.$2;
-      final expectedHiragana = testCase.$3;
+      final expectedNormalizedTerm = testCase.$3;
       final expectedTermVariants = testCase.$4;
 
       test('Test Case $input', () {
         final result = preprocessInput(input, convertRomajiToHiragana);
-        expect(result.normalizedTerms.firstOrNull, equals(expectedHiragana));
+        expect(result.normalizedTerms, equals(expectedNormalizedTerm));
         expect(
           result.termVariants.map((e) => e.deconjugatedTerm).toList(),
           equals(expectedTermVariants)
