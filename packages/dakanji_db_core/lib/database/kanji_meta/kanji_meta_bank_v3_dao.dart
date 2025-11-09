@@ -23,7 +23,7 @@ class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBan
   
 
   /// Returns all kanji entries that match contain any of the given Kanji
-  Future<List<KanjiMetaBankV3Entry>?> search(String kanji) async {
+  Future<List<KanjiMetaBankV3Entry>> search(String kanji) async {
   
     List<KanjiMetaBankV3EntryViewData> results =
       await db.kanji_meta_bank_v3_search_drift(kanji).get();

@@ -9,8 +9,8 @@ part of 'term_meta_bank_entry.dart';
 _TermMetaBankV3Entry _$TermMetaBankV3EntryFromJson(
   Map<String, dynamic> json,
 ) => _TermMetaBankV3Entry(
-  termMetaBankV3TableId: (json['termMetaBankV3TableId'] as num).toInt(),
-  indexEntry: IndexEntry.fromJson(json['indexEntry'] as Map<String, dynamic>),
+  id: (json['id'] as num).toInt(),
+  indexEntry: const IndexEntryJsonConverter().fromJson(json['indexEntry']),
   term: json['term'] as String,
   type: json['type'] as String,
   reading: json['reading'] as String?,
@@ -27,8 +27,8 @@ _TermMetaBankV3Entry _$TermMetaBankV3EntryFromJson(
 Map<String, dynamic> _$TermMetaBankV3EntryToJson(
   _TermMetaBankV3Entry instance,
 ) => <String, dynamic>{
-  'termMetaBankV3TableId': instance.termMetaBankV3TableId,
-  'indexEntry': instance.indexEntry,
+  'id': instance.id,
+  'indexEntry': const IndexEntryJsonConverter().toJson(instance.indexEntry),
   'term': instance.term,
   'type': instance.type,
   'reading': instance.reading,

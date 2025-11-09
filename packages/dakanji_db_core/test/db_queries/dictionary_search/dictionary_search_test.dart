@@ -88,7 +88,7 @@ void main() {
             else 
               await db.indexDao.clearFrequencyOverride();
             // Perform the search
-            final results = await db.dBQueriesDao.dictionarySearch(
+            final results = (await db.dBQueriesDao.dictionarySearch(
               testCase.query,
               tags: testCase.tags, 
               normalizedSearch: true,
@@ -97,7 +97,7 @@ void main() {
               spellfixSearch: true,
               groupSequences: subTestCases.$2,
               groupByTermAndReading: subTestCases.$3,
-            );
+            ));
 
             print("Results:\n $results");
             print("Expected:\n $testCase");

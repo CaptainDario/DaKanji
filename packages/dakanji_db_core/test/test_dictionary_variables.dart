@@ -6,9 +6,9 @@ import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 
 // --- data from tag_bank_1.json ---
 IndexEntry testDictionaryIndexEntry = IndexEntry(
-  id: 1,
+  id: 0,
   dictionaryType: DictionaryTypes.yomitan,
-  currentSortingOrder: 1,
+  currentSortingOrder: 0,
   currentFrequencyDictionary: false,
 
   title: "Test Dictionary",

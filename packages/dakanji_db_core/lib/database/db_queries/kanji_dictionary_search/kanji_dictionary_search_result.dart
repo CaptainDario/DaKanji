@@ -38,7 +38,7 @@ class KanjiDictionarySearchResult with _$KanjiDictionarySearchResult {
   factory KanjiDictionarySearchResult.fromKanjiDictionarySearchViewData(KanjiDictionarySearchViewData data){
     
     return KanjiDictionarySearchResult(
-      indexTableEntry: IndexEntry.fromKanjiDictionarySearchViewData(data),
+      indexTableEntry: IndexEntry.fromJson(jsonDecode(data.indexEntry)),
       kanjiBankEntry: KanjiBankV3Entry.fromKanjiDictionarySearchViewData(data),
       kanjiMetaBankEntries: (jsonDecode(data.kanjiMetaBankV3Entries) as List)
         .map((e) => KanjiMetaBankV3Entry.fromJson(e))

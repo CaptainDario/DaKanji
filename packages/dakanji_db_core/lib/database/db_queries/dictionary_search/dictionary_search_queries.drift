@@ -346,7 +346,8 @@ dictionary_search_drift_find_term_bank_details:
                 COALESCE(
                     JSON_GROUP_ARRAY(
                         JSON_OBJECT(
-                            'index_entry', FMB.index_entry,
+                            'id', FMB.term_meta_id,
+                            'indexEntry', FMB.index_entry,
                             'term', FMB.term,
                             'reading', FMB.reading,
                             'type', FMB.type,
@@ -388,6 +389,7 @@ dictionary_search_drift_find_term_bank_details:
         
         -- term bank entry
         TB3T.id AS term_bank_v3_id,
+        IV.id as indexId,
         IV.index_entry AS indexEntry,
         TT.term,
         RT.reading,

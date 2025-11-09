@@ -1,5 +1,4 @@
 import 'package:dakanji_db_core/data/dictionary_types.dart';
-import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/helper/bool_as_int_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -98,38 +97,6 @@ class IndexEntry with _$IndexEntry {
     this.frequencyMode,
   }) ;
 
-  factory IndexEntry.fromKanjiDictionarySearchViewData(KanjiDictionarySearchViewData r) {
-    return IndexEntry._fromDataSource(r);
-  }
-    
-  factory IndexEntry.fromDictionarySearchDrift(DictionarySearchDriftFindTermBankDetailsResult r) {
-    return IndexEntry._fromDataSource(r);
-  }
-
-  factory IndexEntry._fromDataSource(dynamic r) {
-
-    return IndexEntry(
-      id: r.indexId,
-      dictionaryType: r.dictionaryType,
-      currentSortingOrder: r.currentSortingOrder,
-      currentFrequencyDictionary: r.currentFrequencyDictionary,
-      title: r.title,
-      revision: r.revision,
-      sequenced: r.sequenced,
-      format: r.format,
-      version: r.version,
-      author: r.author,
-      updatable: r.updatable,
-      indexUrl: r.indexUrl,
-      downloadUrl: r.downloadUrl,
-      url: r.url,
-      description: r.description,
-      attribution: r.attribution,
-      sourceLanguage: r.sourceLanguage,
-      targetLanguage: r.targetLanguage,
-      frequencyMode: r.frequencyMode
-    );
-  }
 
   Map<String, Object?> toJson() => _$IndexEntryToJson(this);
 

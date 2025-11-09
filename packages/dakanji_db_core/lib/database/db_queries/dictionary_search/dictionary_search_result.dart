@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 
@@ -329,8 +328,6 @@ class DictionaryMatch {
   final List<TermBankV3Entry> entries;
   /// Any associated metadata entries for this term.
   final List<List<TermMetaBankV3Entry>> metaEntriesForEachEntry;
-  /// Index table data for all entries
-  final List<IndexEntry> indexTableData;
 
   DictionaryMatch(
     {
@@ -338,7 +335,6 @@ class DictionaryMatch {
       required this.popularities,
       required this.entries,
       this.metaEntriesForEachEntry = const [],
-      required this.indexTableData,
     }
   );
 
@@ -357,10 +353,8 @@ class DictionaryMatch {
       entries: [entry],
       metaEntriesForEachEntry: [
         (jsonDecode(entryInfo.termMetaEntries) as List)
-            .map((me) => TermMetaBankV3Entry.fromJson(me))
-            .toList()
+          .map((me) => TermMetaBankV3Entry.fromJson(me)).toList()
       ],
-      indexTableData: [IndexEntry.fromDictionarySearchDrift(entryInfo)],
     );
   }
 
@@ -379,10 +373,8 @@ class DictionaryMatch {
       entries: [entry],
       metaEntriesForEachEntry: [
         (jsonDecode(entryInfo.termMetaEntries) as List)
-            .map((me) => TermMetaBankV3Entry.fromJson(me))
-            .toList()
+          .map((me) => TermMetaBankV3Entry.fromJson(me)).toList()
       ],
-      indexTableData: [IndexEntry.fromDictionarySearchDrift(entryInfo)],
     );
   }
 
@@ -392,7 +384,6 @@ class DictionaryMatch {
     popularities.addAll(other.popularities);
     entries.addAll(other.entries);
     metaEntriesForEachEntry.addAll(other.metaEntriesForEachEntry);
-    indexTableData.addAll(other.indexTableData);
   }
 
   @override

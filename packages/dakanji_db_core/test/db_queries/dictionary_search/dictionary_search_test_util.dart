@@ -8,17 +8,25 @@ import 'package:test/test.dart';
 import 'dictionary_search_test_helper_classes.dart';
 
 Matcher matchesPitch(int position, {List<TagBankV3Entry>? tags, int? nasal, int? devoice}) {
+  
   return isA<TermMetaBankV3PitchEntry>()
     .having((p) => p.position, 'position', position)
-    .having((p) => p.tags, 'tags', tags ?? isEmpty)
+    .having((p) => p.tags.map((e) => e.copyWith(
+      id: 0,
+      indexEntry: e.indexEntry.copyWith(id: 0, currentSortingOrder: 0)
+    )).toList(), 'tags', tags ?? isEmpty)
     .having((p) => p.nasal, 'nasal', nasal)
     .having((p) => p.devoice, 'devoice', devoice);
 }
 
 Matcher matchesIpa(String ipa, {List<TagBankV3Entry>? tags}) {
+
   return isA<TermMetaBankV3IpaEntry>()
     .having((e) => e.ipa, 'ipa', ipa)
-    .having((e) => e.tags, 'tags', tags ?? isEmpty);
+    .having((p) => p.tags.map((e) => e.copyWith(
+      id: 0,
+      indexEntry: e.indexEntry.copyWith(id: 0, currentSortingOrder: 0)
+    )).toList(), 'tags', tags ?? isEmpty);
 }
 
 // Matches a single TermMetaBankV3Entry against one of the expected tuples
@@ -168,8 +176,7 @@ void _compareMatchBucket(
     expect(
       current,
       matchesSearchResult(expectedGroup), // This matcher is correct
-      reason:
-          "$bucketLabel[$groupIndex] in group '$groupName' for query '$query' did not match.",
+      reason: "$bucketLabel[$groupIndex] in group '$groupName' for query '$query' did not match.",
     );
     actualIndex++;
   }
@@ -179,9 +186,7 @@ void _compareMatchBucket(
         .sublist(actualIndex)
         .map((m) => m.toFormattedString(indent: '  '))
         .join('\n');
-    fail(
-      'Unexpected extra $bucketLabel in group \'$groupName\' for query \'$query\':\n$extras',
-    );
+    fail('Unexpected extra $bucketLabel in group \'$groupName\' for query \'$query\':\n$extras',);
   }
 }
 
