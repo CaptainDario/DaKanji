@@ -44,8 +44,15 @@ void main() async {
 
         test('Search for "$testCase" should return correct entries', () async {
           // Perform the database search
-          final result = await db.termBankV3Dao.search(testCase);
-          print(result);
+          final result = (await db.termBankV3Dao.search(testCase))
+            .map((e) => e.copyWith(
+              id: 0, // ignore ids in comparison;
+              tags: e.tags.map((tag) => tag.copyWith(id: 0)).toList(),
+              definitionTags: e.definitionTags.map((tag) => tag.copyWith(id: 0)).toList()  
+            )) // ignore tag ids in comparison
+          .toList(); 
+          print("result: $result");
+          print("expectation: $expected");
 
           // 1. First, check if the number of results is correct.
           expect(

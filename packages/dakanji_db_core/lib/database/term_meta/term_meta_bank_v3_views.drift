@@ -2,6 +2,7 @@ import '/database/general_tables/term_tables.dart';
 import '/database/general_tables/reading_tables.dart';
 import '/database/tag/tag_bank_v3_tables.dart';
 import '/database/index/index_tables.dart';
+import '/database/index/index_views.drift';
 import 'term_meta_bank_relation_tables.dart';
 import 'term_meta_bank_v3_tables.dart';
 
@@ -9,28 +10,7 @@ import 'term_meta_bank_v3_tables.dart';
 CREATE VIEW IF NOT EXISTS term_meta_bank_v3_base_view AS
 SELECT
   tmb.id AS term_meta_id,
-  JSON_OBJECT(
-    'id', IT.id,
-    'dictionaryType', IT.dictionary_type,
-    'currentSortingOrder', IT.current_sorting_order,
-    'currentFrequencyDictionary', IT.current_frequency_dictionary,
-    
-    'title', IT.title,
-    'revision', IT.revision,
-    'sequenced', IT.sequenced,
-    'format', IT.format,
-    'version', IT.version,
-    'author', IT.author,
-    'updatable', IT.updatable,
-    'indexUrl', IT.index_url,
-    'downloadUrl', IT.download_url,
-    'url', IT.url,
-    'description', IT.description,
-    'attribution', IT.attribution,
-    'sourceLanguage', IT.source_language,
-    'targetLanguage', IT.target_language,
-    'frequencyMode', IT.frequency_mode
-  ) AS index_entry,
+  index_json_view.index_entry,
   tmb.term_id,    -- Keep the ID for fast joins
   tmb.reading_id, -- Keep the ID for fast joins
   t.term,
@@ -42,6 +22,7 @@ FROM term_meta_bank_v3_table AS tmb
 JOIN term_table AS t ON tmb.term_id = t.id
 JOIN term_meta_bank_v3_type_table AS type ON tmb.type_id = type.id
 JOIN index_table AS IT ON tmb.index_id = IT.id
+JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON tmb.index_id = index_json_view.id
 LEFT JOIN reading_table AS r ON tmb.reading_id = r.id;
 
 ---
@@ -80,14 +61,14 @@ SELECT
     JSON_OBJECT(
       'ipa',  i.ipa,
       'tags', COALESCE(
-                (
-                  SELECT JSON_GROUP_ARRAY(tag.name)
-                  FROM term_meta_bank_v3_ipa_table_x_tag_bank_v3_table AS xit
-                  JOIN tag_bank_v3_table AS tag ON xit.tag_id = tag.id
-                  WHERE xit.ipa_id = i.id
-                ),
-                JSON('[]')
-              )
+        (
+          SELECT JSON_GROUP_ARRAY(tag.name)
+          FROM term_meta_bank_v3_ipa_table_x_tag_bank_v3_table AS xit
+          JOIN tag_bank_v3_table AS tag ON xit.tag_id = tag.id
+          WHERE xit.ipa_id = i.id
+        ),
+        JSON('[]')
+      )
     )
   ) AS ipas
 FROM term_meta_bank_v3_x_ipa_table AS xi

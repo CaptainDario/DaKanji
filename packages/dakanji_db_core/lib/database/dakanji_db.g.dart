@@ -9887,6 +9887,121 @@ class TermBankV3_X_DefinitionTagTableCompanion
   }
 }
 
+class TermMetaBankV3EntryAsJsonViewData extends DataClass {
+  final int id;
+  final String indexEntry;
+  const TermMetaBankV3EntryAsJsonViewData({
+    required this.id,
+    required this.indexEntry,
+  });
+  factory TermMetaBankV3EntryAsJsonViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermMetaBankV3EntryAsJsonViewData(
+      id: serializer.fromJson<int>(json['id']),
+      indexEntry: serializer.fromJson<String>(json['index_entry']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'index_entry': serializer.toJson<String>(indexEntry),
+    };
+  }
+
+  TermMetaBankV3EntryAsJsonViewData copyWith({int? id, String? indexEntry}) =>
+      TermMetaBankV3EntryAsJsonViewData(
+        id: id ?? this.id,
+        indexEntry: indexEntry ?? this.indexEntry,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3EntryAsJsonViewData(')
+          ..write('id: $id, ')
+          ..write('indexEntry: $indexEntry')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, indexEntry);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermMetaBankV3EntryAsJsonViewData &&
+          other.id == this.id &&
+          other.indexEntry == this.indexEntry);
+}
+
+class TermMetaBankV3EntryAsJsonView
+    extends
+        ViewInfo<
+          TermMetaBankV3EntryAsJsonView,
+          TermMetaBankV3EntryAsJsonViewData
+        >
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  TermMetaBankV3EntryAsJsonView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [id, indexEntry];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'term_meta_bank_v3_entry_as_json_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_as_json_view AS SELECT IT.id, JSON_OBJECT(\'id\', IT.id, \'dictionaryType\', IT.dictionary_type, \'currentSortingOrder\', IT.current_sorting_order, \'currentFrequencyDictionary\', IT.current_frequency_dictionary, \'title\', IT.title, \'revision\', IT.revision, \'sequenced\', IT.sequenced, \'format\', IT.format, \'version\', IT.version, \'author\', IT.author, \'updatable\', IT.updatable, \'indexUrl\', IT.index_url, \'downloadUrl\', IT.download_url, \'url\', IT.url, \'description\', IT.description, \'attribution\', IT.attribution, \'sourceLanguage\', IT.source_language, \'targetLanguage\', IT.target_language, \'frequencyMode\', IT.frequency_mode) AS index_entry FROM index_table AS IT',
+  };
+  @override
+  TermMetaBankV3EntryAsJsonView get asDslTable => this;
+  @override
+  TermMetaBankV3EntryAsJsonViewData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermMetaBankV3EntryAsJsonViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      indexEntry: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}index_entry'],
+      )!,
+    );
+  }
+
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> indexEntry = GeneratedColumn<String>(
+    'index_entry',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  @override
+  TermMetaBankV3EntryAsJsonView createAlias(String alias) {
+    return TermMetaBankV3EntryAsJsonView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {'index_table'};
+}
+
 class TermBankV3DefTagsJsonViewData extends DataClass {
   final int termBankId;
   final String tagJson;
@@ -9953,7 +10068,7 @@ class TermBankV3DefTagsJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_bank_v3_def_tags_json_view AS SELECT TB3DTRT.term_bank_id, json_object(\'id\', TagB3T.id, \'indexId\', TagB3T.index_id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score) AS tag_json FROM term_bank_v3_x_definition_tag_table AS TB3DTRT JOIN tag_bank_v3_table AS TagB3T ON TB3DTRT.definition_tag_id = TagB3T.id',
+        'CREATE VIEW IF NOT EXISTS term_bank_v3_def_tags_json_view AS SELECT TB3DTRT.term_bank_id, json_object(\'id\', TagB3T.id, \'indexEntry\', index_json_view.index_entry, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score) AS tag_json FROM term_bank_v3_x_definition_tag_table AS TB3DTRT JOIN tag_bank_v3_table AS TagB3T ON TB3DTRT.definition_tag_id = TagB3T.id JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON TagB3T.index_id = index_json_view.id',
   };
   @override
   TermBankV3DefTagsJsonView get asDslTable => this;
@@ -9998,6 +10113,7 @@ class TermBankV3DefTagsJsonView
   Set<String> get readTables => const {
     'term_bank_v3_x_definition_tag_table',
     'tag_bank_v3_table',
+    'index_table',
   };
 }
 
@@ -10694,7 +10810,7 @@ class TermBankV3TagsJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_bank_v3_tags_json_view AS SELECT TB3TBRT.term_bank_id, json_object(\'id\', TagB3T.id, \'indexId\', TagB3T.index_id, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score) AS tag_json FROM term_bank_v3_x_tag_bank_table AS TB3TBRT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id',
+        'CREATE VIEW IF NOT EXISTS term_bank_v3_tags_json_view AS SELECT TB3TBRT.term_bank_id, json_object(\'id\', TagB3T.id, \'indexEntry\', index_json_view.index_entry, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score) AS tag_json FROM term_bank_v3_x_tag_bank_table AS TB3TBRT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON TagB3T.index_id = index_json_view.id',
   };
   @override
   TermBankV3TagsJsonView get asDslTable => this;
@@ -10739,6 +10855,7 @@ class TermBankV3TagsJsonView
   Set<String> get readTables => const {
     'term_bank_v3_x_tag_bank_table',
     'tag_bank_v3_table',
+    'index_table',
   };
 }
 
@@ -10892,7 +11009,7 @@ class TermMetaBankV3BaseView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_base_view AS SELECT tmb.id AS term_meta_id, JSON_OBJECT(\'id\', IT.id, \'dictionaryType\', IT.dictionary_type, \'currentSortingOrder\', IT.current_sorting_order, \'currentFrequencyDictionary\', IT.current_frequency_dictionary, \'title\', IT.title, \'revision\', IT.revision, \'sequenced\', IT.sequenced, \'format\', IT.format, \'version\', IT.version, \'author\', IT.author, \'updatable\', IT.updatable, \'indexUrl\', IT.index_url, \'downloadUrl\', IT.download_url, \'url\', IT.url, \'description\', IT.description, \'attribution\', IT.attribution, \'sourceLanguage\', IT.source_language, \'targetLanguage\', IT.target_language, \'frequencyMode\', IT.frequency_mode) AS index_entry, tmb.term_id, tmb.reading_id, t.term, r.reading, type.type, tmb.freq_value AS frequency, tmb.freq_display_value AS frequencyDisplayValue FROM term_meta_bank_v3_table AS tmb JOIN term_table AS t ON tmb.term_id = t.id JOIN term_meta_bank_v3_type_table AS type ON tmb.type_id = type.id JOIN index_table AS IT ON tmb.index_id = IT.id LEFT JOIN reading_table AS r ON tmb.reading_id = r.id',
+        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_base_view AS SELECT tmb.id AS term_meta_id, index_json_view.index_entry, tmb.term_id, tmb.reading_id, t.term, r.reading, type.type, tmb.freq_value AS frequency, tmb.freq_display_value AS frequencyDisplayValue FROM term_meta_bank_v3_table AS tmb JOIN term_table AS t ON tmb.term_id = t.id JOIN term_meta_bank_v3_type_table AS type ON tmb.type_id = type.id JOIN index_table AS IT ON tmb.index_id = IT.id JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON tmb.index_id = index_json_view.id LEFT JOIN reading_table AS r ON tmb.reading_id = r.id',
   };
   @override
   TermMetaBankV3BaseView get asDslTable => this;
@@ -13313,7 +13430,7 @@ class ReadingSpellfixCompanion extends UpdateCompanion<ReadingSpellfixData> {
 
 class TermBankV3EntryViewData extends DataClass {
   final int termBankV3Id;
-  final int indexId;
+  final String indexEntry;
   final String? term;
   final String? reading;
   final String definitionTags;
@@ -13326,7 +13443,7 @@ class TermBankV3EntryViewData extends DataClass {
   final String tags;
   const TermBankV3EntryViewData({
     required this.termBankV3Id,
-    required this.indexId,
+    required this.indexEntry,
     this.term,
     this.reading,
     required this.definitionTags,
@@ -13345,7 +13462,7 @@ class TermBankV3EntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TermBankV3EntryViewData(
       termBankV3Id: serializer.fromJson<int>(json['termBankV3Id']),
-      indexId: serializer.fromJson<int>(json['indexId']),
+      indexEntry: serializer.fromJson<String>(json['indexEntry']),
       term: serializer.fromJson<String?>(json['term']),
       reading: serializer.fromJson<String?>(json['reading']),
       definitionTags: serializer.fromJson<String>(json['definition_tags']),
@@ -13365,7 +13482,7 @@ class TermBankV3EntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'termBankV3Id': serializer.toJson<int>(termBankV3Id),
-      'indexId': serializer.toJson<int>(indexId),
+      'indexEntry': serializer.toJson<String>(indexEntry),
       'term': serializer.toJson<String?>(term),
       'reading': serializer.toJson<String?>(reading),
       'definition_tags': serializer.toJson<String>(definitionTags),
@@ -13383,7 +13500,7 @@ class TermBankV3EntryViewData extends DataClass {
 
   TermBankV3EntryViewData copyWith({
     int? termBankV3Id,
-    int? indexId,
+    String? indexEntry,
     Value<String?> term = const Value.absent(),
     Value<String?> reading = const Value.absent(),
     String? definitionTags,
@@ -13396,7 +13513,7 @@ class TermBankV3EntryViewData extends DataClass {
     String? tags,
   }) => TermBankV3EntryViewData(
     termBankV3Id: termBankV3Id ?? this.termBankV3Id,
-    indexId: indexId ?? this.indexId,
+    indexEntry: indexEntry ?? this.indexEntry,
     term: term.present ? term.value : this.term,
     reading: reading.present ? reading.value : this.reading,
     definitionTags: definitionTags ?? this.definitionTags,
@@ -13416,7 +13533,7 @@ class TermBankV3EntryViewData extends DataClass {
   String toString() {
     return (StringBuffer('TermBankV3EntryViewData(')
           ..write('termBankV3Id: $termBankV3Id, ')
-          ..write('indexId: $indexId, ')
+          ..write('indexEntry: $indexEntry, ')
           ..write('term: $term, ')
           ..write('reading: $reading, ')
           ..write('definitionTags: $definitionTags, ')
@@ -13436,7 +13553,7 @@ class TermBankV3EntryViewData extends DataClass {
   @override
   int get hashCode => Object.hash(
     termBankV3Id,
-    indexId,
+    indexEntry,
     term,
     reading,
     definitionTags,
@@ -13453,7 +13570,7 @@ class TermBankV3EntryViewData extends DataClass {
       identical(this, other) ||
       (other is TermBankV3EntryViewData &&
           other.termBankV3Id == this.termBankV3Id &&
-          other.indexId == this.indexId &&
+          other.indexEntry == this.indexEntry &&
           other.term == this.term &&
           other.reading == this.reading &&
           other.definitionTags == this.definitionTags &&
@@ -13477,7 +13594,7 @@ class TermBankV3EntryView
   @override
   List<GeneratedColumn> get $columns => [
     termBankV3Id,
-    indexId,
+    indexEntry,
     term,
     reading,
     definitionTags,
@@ -13496,7 +13613,7 @@ class TermBankV3EntryView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS WITH definitions_agg AS (SELECT term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(json_quote(definition) ORDER BY sort_key), \'\') || \']\' AS definitions FROM term_bank_v3_definitions_json_view GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_def_tags_json_view) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_quote(rule_identifier)), \'\') || \']\' AS rule_identifiers FROM term_bank_v3_rules_json_view GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view) AS DistinctTags GROUP BY term_bank_id) SELECT TB3T.id AS termBankV3Id, TB3T.index_id AS indexId, TT.term, RT.reading, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, TB3T.popularity, COALESCE(DA.definitions, \'[]\') AS definitions, TB3T.definition_order, TDJT.definition_json AS structuredContentDefinitions, TB3T.sequence_number, COALESCE(TA.tags, \'[]\') AS tags FROM term_bank_v3_table AS TB3T LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id',
+        'CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS WITH definitions_agg AS (SELECT term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(json_quote(definition) ORDER BY sort_key), \'\') || \']\' AS definitions FROM term_bank_v3_definitions_json_view GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_def_tags_json_view) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_quote(rule_identifier)), \'\') || \']\' AS rule_identifiers FROM term_bank_v3_rules_json_view GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view) AS DistinctTags GROUP BY term_bank_id) SELECT TB3T.id AS termBankV3Id, IV.index_entry AS indexEntry, TT.term, RT.reading, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, TB3T.popularity, COALESCE(DA.definitions, \'[]\') AS definitions, TB3T.definition_order, TDJT.definition_json AS structuredContentDefinitions, TB3T.sequence_number, COALESCE(TA.tags, \'[]\') AS tags FROM term_bank_v3_table AS TB3T JOIN term_meta_bank_v3_entry_as_json_view AS IV ON TB3T.index_id = IV.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id',
   };
   @override
   TermBankV3EntryView get asDslTable => this;
@@ -13511,9 +13628,9 @@ class TermBankV3EntryView
         DriftSqlType.int,
         data['${effectivePrefix}termBankV3Id'],
       )!,
-      indexId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}indexId'],
+      indexEntry: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}indexEntry'],
       )!,
       term: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -13569,11 +13686,11 @@ class TermBankV3EntryView
     false,
     type: DriftSqlType.int,
   );
-  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
-    'indexId',
+  late final GeneratedColumn<String> indexEntry = GeneratedColumn<String>(
+    'indexEntry',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
   );
   late final GeneratedColumn<String> term = GeneratedColumn<String>(
     'term',
@@ -13653,6 +13770,7 @@ class TermBankV3EntryView
     'definition_table',
     'term_bank_v3_x_definition_tag_table',
     'tag_bank_v3_table',
+    'index_table',
     'term_bank_v3_x_rule_identifier_table',
     'term_bank_v3_rule_identifier_table',
     'term_bank_v3_x_tag_bank_table',
@@ -18256,6 +18374,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       TermBankV3DefinitionsJsonView(this);
   late final $TermBankV3_X_DefinitionTagTableTable
   termBankV3XDefinitionTagTable = $TermBankV3_X_DefinitionTagTableTable(this);
+  late final TermMetaBankV3EntryAsJsonView termMetaBankV3EntryAsJsonView =
+      TermMetaBankV3EntryAsJsonView(this);
   late final TermBankV3DefTagsJsonView termBankV3DefTagsJsonView =
       TermBankV3DefTagsJsonView(this);
   late final $TermBankV3RuleIdentifierTableTable termBankV3RuleIdentifierTable =
@@ -18730,7 +18850,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   Selectable<DictionarySearchDriftFindTermBankDetailsResult>
   dictionary_search_drift_find_term_bank_details(String termBankIdJson) {
     return customSelect(
-      'WITH TargetIds (term_bank_id) AS (SELECT CAST(value AS INTEGER) FROM json_each(?1)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\'), definitions_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(definition ORDER BY sort_key)AS definitions FROM term_bank_v3_definitions_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds) GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_def_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(rule_identifier) AS rule_identifiers FROM (SELECT DISTINCT term_bank_id, rule_identifier FROM term_bank_v3_rules_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctRules GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), FilteredMetaBank AS (SELECT Base.*, TBM.term_bank_id FROM term_meta_bank_v3_base_view AS Base JOIN (SELECT DISTINCT id AS term_bank_id, term_id, reading_id FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM ON Base.term_id = TBM.term_id AND Base.reading_id = TBM.reading_id), term_meta_agg AS (SELECT FMB.term_bank_id, COALESCE(JSON_GROUP_ARRAY(JSON_OBJECT(\'index_entry\', FMB.index_entry, \'term\', FMB.term, \'reading\', FMB.reading, \'type\', FMB.type, \'frequency\', FMB.frequency, \'frequencyDisplayValue\', FMB.frequencyDisplayValue, \'pitchs\', CASE WHEN FMB.type = \'pitch\' THEN JSON(COALESCE(ap.pitches, \'[]\')) ELSE JSON(\'[]\') END, \'ipas\', CASE WHEN FMB.type = \'ipa\' THEN JSON(COALESCE(ai.ipas, \'[]\')) ELSE JSON(\'[]\') END))FILTER (WHERE FMB.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM FilteredMetaBank AS FMB LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id WHERE((FMB.type = \'pitch\' AND ap.pitches IS NOT NULL)OR(FMB.type = \'ipa\' AND ai.ipas IS NOT NULL)OR(FMB.type = \'freq\'))GROUP BY FMB.term_bank_id) SELECT index_table.*, COALESCE(ActiveCheck.is_active, 0) AS hasPopularityOverride, OP.freq_value AS overriddenPopularityValue, TB3T.popularity AS originalPopularity, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, TB3T.id AS term_bank_v3_id, TB3T.index_id AS indexId, TT.term, RT.reading, TB3T.popularity, TB3T.definition_order, TB3T.sequence_number, TDJT.definition_json AS structuredContentDefinitions, COALESCE(DA.definitions, \'[]\') AS definitions, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, COALESCE(TA.tags, \'[]\') AS tags, COALESCE(TMA.termMetaEntries, \'[]\') AS termMetaEntries FROM term_bank_v3_table AS TB3T JOIN index_table ON TB3T.index_id = index_table.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id WHERE TB3T.id IN (SELECT term_bank_id FROM TargetIds)',
+      'WITH TargetIds (term_bank_id) AS (SELECT CAST(value AS INTEGER) FROM json_each(?1)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\'), definitions_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(definition ORDER BY sort_key)AS definitions FROM term_bank_v3_definitions_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds) GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_def_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(rule_identifier) AS rule_identifiers FROM (SELECT DISTINCT term_bank_id, rule_identifier FROM term_bank_v3_rules_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctRules GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), FilteredMetaBank AS (SELECT Base.*, TBM.term_bank_id FROM term_meta_bank_v3_base_view AS Base JOIN (SELECT DISTINCT id AS term_bank_id, term_id, reading_id FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM ON Base.term_id = TBM.term_id AND Base.reading_id = TBM.reading_id), term_meta_agg AS (SELECT FMB.term_bank_id, COALESCE(JSON_GROUP_ARRAY(JSON_OBJECT(\'index_entry\', FMB.index_entry, \'term\', FMB.term, \'reading\', FMB.reading, \'type\', FMB.type, \'frequency\', FMB.frequency, \'frequencyDisplayValue\', FMB.frequencyDisplayValue, \'pitchs\', CASE WHEN FMB.type = \'pitch\' THEN JSON(COALESCE(ap.pitches, \'[]\')) ELSE JSON(\'[]\') END, \'ipas\', CASE WHEN FMB.type = \'ipa\' THEN JSON(COALESCE(ai.ipas, \'[]\')) ELSE JSON(\'[]\') END))FILTER (WHERE FMB.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM FilteredMetaBank AS FMB LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id WHERE((FMB.type = \'pitch\' AND ap.pitches IS NOT NULL)OR(FMB.type = \'ipa\' AND ai.ipas IS NOT NULL)OR(FMB.type = \'freq\'))GROUP BY FMB.term_bank_id) SELECT index_table.*, COALESCE(ActiveCheck.is_active, 0) AS hasPopularityOverride, OP.freq_value AS overriddenPopularityValue, TB3T.popularity AS originalPopularity, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, TB3T.id AS term_bank_v3_id, IV.index_entry AS indexEntry, TT.term, RT.reading, TB3T.popularity, TB3T.definition_order, TB3T.sequence_number, TDJT.definition_json AS structuredContentDefinitions, COALESCE(DA.definitions, \'[]\') AS definitions, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, COALESCE(TA.tags, \'[]\') AS tags, COALESCE(TMA.termMetaEntries, \'[]\') AS termMetaEntries FROM term_bank_v3_table AS TB3T JOIN index_table ON TB3T.index_id = index_table.id JOIN term_meta_bank_v3_entry_as_json_view AS IV ON TB3T.index_id = IV.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id WHERE TB3T.id IN (SELECT term_bank_id FROM TargetIds)',
       variables: [Variable<String>(termBankIdJson)],
       readsFrom: {
         indexTable,
@@ -18785,7 +18905,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         originalPopularity: row.read<int>('originalPopularity'),
         finalPopularity: row.readNullable<int>('finalPopularity'),
         termBankV3Id: row.read<int>('term_bank_v3_id'),
-        indexId: row.read<int>('indexId'),
+        indexEntry: row.read<String>('indexEntry'),
         term: row.readNullable<String>('term'),
         reading: row.readNullable<String>('reading'),
         popularity: row.read<int>('popularity'),
@@ -18836,6 +18956,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         definitionTable,
         termBankV3XDefinitionTagTable,
         tagBankV3Table,
+        indexTable,
         termBankV3XRuleIdentifierTable,
         termBankV3RuleIdentifierTable,
         termBankV3XTagBankTable,
@@ -18860,6 +18981,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         definitionTable,
         termBankV3XDefinitionTagTable,
         tagBankV3Table,
+        indexTable,
         termBankV3XRuleIdentifierTable,
         termBankV3RuleIdentifierTable,
         termBankV3XTagBankTable,
@@ -19039,6 +19161,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termMetaBankV3Table,
     termBankV3DefinitionsJsonView,
     termBankV3XDefinitionTagTable,
+    termMetaBankV3EntryAsJsonView,
     termBankV3DefTagsJsonView,
     termBankV3RuleIdentifierTable,
     termBankV3XRuleIdentifierTable,
@@ -41011,7 +41134,7 @@ class DictionarySearchDriftFindTermBankDetailsResult {
   final int originalPopularity;
   final int? finalPopularity;
   final int termBankV3Id;
-  final int indexId;
+  final String indexEntry;
   final String? term;
   final String? reading;
   final int popularity;
@@ -41048,7 +41171,7 @@ class DictionarySearchDriftFindTermBankDetailsResult {
     required this.originalPopularity,
     this.finalPopularity,
     required this.termBankV3Id,
-    required this.indexId,
+    required this.indexEntry,
     this.term,
     this.reading,
     required this.popularity,

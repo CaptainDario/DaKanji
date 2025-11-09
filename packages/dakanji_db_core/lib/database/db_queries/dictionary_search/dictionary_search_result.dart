@@ -64,7 +64,7 @@ class DictionarySearchResult {
   void filterList(List<DictionaryMatch> matches, Set<String> seenEntryIds) {
     matches.removeWhere((match) {
       // Create a unique identifier for the dictionary entry.
-      final String entryId = (match.entries.map((e) => e.termBankV3TableId)
+      final String entryId = (match.entries.map((e) => e.id)
         .toList()..sort)
         .join(", ");
 
@@ -236,7 +236,7 @@ class SearchMatchGroup {
       Map<String, List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)>> groups;
       if (groupSequences) {
         groups = groupBy(matchesForThisTerm,
-          (record) => '${record.$2.indexId}_${record.$2.sequenceNumber}');
+          (record) => '${record.$2.id}_${record.$2.sequenceNumber}');
       }
       else if (groupByTermAndReading) {
         groups = groupBy(

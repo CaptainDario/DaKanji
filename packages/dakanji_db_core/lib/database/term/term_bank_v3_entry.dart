@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '/database/dakanji_db.dart';
@@ -18,10 +19,10 @@ class TermBankV3Entry with _$TermBankV3Entry {
 
   @override
   /// The id of this entry in the term bank v3 table
-  final int termBankV3TableId;
-  /// The index id of this entry
+  final int id;
+  /// The index (dictionary) in which this entry is defined
   @override
-  final int indexId;
+  final IndexEntry indexEntry;
   /// The term of a dictionary entry, for example: 食べる
   @override
   final String term;
@@ -53,8 +54,8 @@ class TermBankV3Entry with _$TermBankV3Entry {
 
     
   TermBankV3Entry({
-    required this.termBankV3TableId,
-    required this.indexId,
+    required this.id,
+    required this.indexEntry,
     required this.term,
     required this.reading,
     required this.definitions,
@@ -83,8 +84,8 @@ class TermBankV3Entry with _$TermBankV3Entry {
   factory TermBankV3Entry._fromDataSource(dynamic r) {
 
     return TermBankV3Entry(
-      termBankV3TableId: r.termBankV3Id,
-      indexId: r.indexId,
+      id: r.termBankV3Id,
+      indexEntry: IndexEntry.fromJson(jsonDecode(r.indexEntry)),
       term: r.term!,
       reading: r.reading!,
       definitions: List<String>.from(jsonDecode(r.definitions)),

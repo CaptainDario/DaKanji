@@ -1,5 +1,5 @@
 
-import 'package:dakanji_db_core/helper/json_converter.dart';
+import 'package:dakanji_db_core/helper/sql_json_converter.dart';
 import 'package:drift/drift.dart';
 
 import '/database/general_tables/kanji_tables.dart';

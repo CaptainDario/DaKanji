@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TermBankV3Entry {
 
- int get termBankV3TableId; int get indexId; String get term; String get reading; List<String> get definitions; List<String> get structuredContentDefinitions; List<TagBankV3Entry> get definitionTags; List<String> get ruleIdentifiers; int get popularity; int get sequenceNumber; List<TagBankV3Entry> get tags;
+ int get id; IndexEntry get indexEntry; String get term; String get reading; List<String> get definitions; List<String> get structuredContentDefinitions; List<TagBankV3Entry> get definitionTags; List<String> get ruleIdentifiers; int get popularity; int get sequenceNumber; List<TagBankV3Entry> get tags;
 /// Create a copy of TermBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $TermBankV3EntryCopyWith<TermBankV3Entry> get copyWith => _$TermBankV3EntryCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TermBankV3Entry&&(identical(other.termBankV3TableId, termBankV3TableId) || other.termBankV3TableId == termBankV3TableId)&&(identical(other.indexId, indexId) || other.indexId == indexId)&&(identical(other.term, term) || other.term == term)&&(identical(other.reading, reading) || other.reading == reading)&&const DeepCollectionEquality().equals(other.definitions, definitions)&&const DeepCollectionEquality().equals(other.structuredContentDefinitions, structuredContentDefinitions)&&const DeepCollectionEquality().equals(other.definitionTags, definitionTags)&&const DeepCollectionEquality().equals(other.ruleIdentifiers, ruleIdentifiers)&&(identical(other.popularity, popularity) || other.popularity == popularity)&&(identical(other.sequenceNumber, sequenceNumber) || other.sequenceNumber == sequenceNumber)&&const DeepCollectionEquality().equals(other.tags, tags));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TermBankV3Entry&&(identical(other.id, id) || other.id == id)&&(identical(other.indexEntry, indexEntry) || other.indexEntry == indexEntry)&&(identical(other.term, term) || other.term == term)&&(identical(other.reading, reading) || other.reading == reading)&&const DeepCollectionEquality().equals(other.definitions, definitions)&&const DeepCollectionEquality().equals(other.structuredContentDefinitions, structuredContentDefinitions)&&const DeepCollectionEquality().equals(other.definitionTags, definitionTags)&&const DeepCollectionEquality().equals(other.ruleIdentifiers, ruleIdentifiers)&&(identical(other.popularity, popularity) || other.popularity == popularity)&&(identical(other.sequenceNumber, sequenceNumber) || other.sequenceNumber == sequenceNumber)&&const DeepCollectionEquality().equals(other.tags, tags));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,termBankV3TableId,indexId,term,reading,const DeepCollectionEquality().hash(definitions),const DeepCollectionEquality().hash(structuredContentDefinitions),const DeepCollectionEquality().hash(definitionTags),const DeepCollectionEquality().hash(ruleIdentifiers),popularity,sequenceNumber,const DeepCollectionEquality().hash(tags));
+int get hashCode => Object.hash(runtimeType,id,indexEntry,term,reading,const DeepCollectionEquality().hash(definitions),const DeepCollectionEquality().hash(structuredContentDefinitions),const DeepCollectionEquality().hash(definitionTags),const DeepCollectionEquality().hash(ruleIdentifiers),popularity,sequenceNumber,const DeepCollectionEquality().hash(tags));
 
 @override
 String toString() {
-  return 'TermBankV3Entry(termBankV3TableId: $termBankV3TableId, indexId: $indexId, term: $term, reading: $reading, definitions: $definitions, structuredContentDefinitions: $structuredContentDefinitions, definitionTags: $definitionTags, ruleIdentifiers: $ruleIdentifiers, popularity: $popularity, sequenceNumber: $sequenceNumber, tags: $tags)';
+  return 'TermBankV3Entry(id: $id, indexEntry: $indexEntry, term: $term, reading: $reading, definitions: $definitions, structuredContentDefinitions: $structuredContentDefinitions, definitionTags: $definitionTags, ruleIdentifiers: $ruleIdentifiers, popularity: $popularity, sequenceNumber: $sequenceNumber, tags: $tags)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $TermBankV3EntryCopyWith<$Res>  {
   factory $TermBankV3EntryCopyWith(TermBankV3Entry value, $Res Function(TermBankV3Entry) _then) = _$TermBankV3EntryCopyWithImpl;
 @useResult
 $Res call({
- int termBankV3TableId, int indexId, String term, String reading, List<String> definitions, List<String> structuredContentDefinitions, List<TagBankV3Entry> definitionTags, List<String> ruleIdentifiers, int popularity, int sequenceNumber, List<TagBankV3Entry> tags
+ int id, IndexEntry indexEntry, String term, String reading, List<String> definitions, List<String> structuredContentDefinitions, List<TagBankV3Entry> definitionTags, List<String> ruleIdentifiers, int popularity, int sequenceNumber, List<TagBankV3Entry> tags
 });
 
 
@@ -63,11 +63,11 @@ class _$TermBankV3EntryCopyWithImpl<$Res>
 
 /// Create a copy of TermBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? termBankV3TableId = null,Object? indexId = null,Object? term = null,Object? reading = null,Object? definitions = null,Object? structuredContentDefinitions = null,Object? definitionTags = null,Object? ruleIdentifiers = null,Object? popularity = null,Object? sequenceNumber = null,Object? tags = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? indexEntry = null,Object? term = null,Object? reading = null,Object? definitions = null,Object? structuredContentDefinitions = null,Object? definitionTags = null,Object? ruleIdentifiers = null,Object? popularity = null,Object? sequenceNumber = null,Object? tags = null,}) {
   return _then(TermBankV3Entry(
-termBankV3TableId: null == termBankV3TableId ? _self.termBankV3TableId : termBankV3TableId // ignore: cast_nullable_to_non_nullable
-as int,indexId: null == indexId ? _self.indexId : indexId // ignore: cast_nullable_to_non_nullable
-as int,term: null == term ? _self.term : term // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,indexEntry: null == indexEntry ? _self.indexEntry : indexEntry // ignore: cast_nullable_to_non_nullable
+as IndexEntry,term: null == term ? _self.term : term // ignore: cast_nullable_to_non_nullable
 as String,reading: null == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
 as String,definitions: null == definitions ? _self.definitions : definitions // ignore: cast_nullable_to_non_nullable
 as List<String>,structuredContentDefinitions: null == structuredContentDefinitions ? _self.structuredContentDefinitions : structuredContentDefinitions // ignore: cast_nullable_to_non_nullable

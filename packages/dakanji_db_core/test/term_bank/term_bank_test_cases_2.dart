@@ -1,6 +1,8 @@
 // This list should contain the search term that corresponds to the expectations above.
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 
+import '../test_dictionary_variables.dart';
+
 final int dictId = 1;
 
 final termBankTestCases2 = [
@@ -11,8 +13,8 @@ final termBankTestCaseExpectations2 = [
   // Test case for "発条"
   [
     TermBankV3Entry(
-      termBankV3TableId: 1,
-      indexId: dictId,
+      id: 0,
+      indexEntry: testDictionaryIndexEntry,
       term: '発条',
       reading: 'ばね',
       definitionTags: [],

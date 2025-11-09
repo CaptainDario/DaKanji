@@ -4,10 +4,9 @@ import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry_stat.dart';
 import 'package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 
+import '../../test_dictionary_variables.dart';
 import 'kanji_dictionary_search_result_helper_classes.dart';
 
-
-int indexId = 1;
 
 /// Test cases for the kanji bank
 final kanjiDictionaryTestCases = [
@@ -18,20 +17,22 @@ final kanjiDictionaryTestCases = [
 final List<KanjiDictionarySearchResultTestCaseExpectation> kanjiDictionarySearchTestCaseExpectations = [
   KanjiDictionarySearchResultTestCaseExpectation(
     kanjiBankEntry: KanjiBankV3Entry(
-      indexId: indexId,
+      indexId: -999,
       kanji: "打",
       onyomis: ["ダ", "ダアス"],
       kunyomis: ["う.つ", "う.ち-", "ぶ.つ"],
       tags: [
         TagBankV3Entry(
-          indexId: indexId,
+          id: 0,
+          indexEntry: testDictionaryIndexEntry,
           name: "K1",
           category: "default",
           sortingOrder: 0,
           notes: "example kanji tag 1",
           score: 0),
         TagBankV3Entry(
-          indexId: indexId,
+          id: 0,
+          indexEntry: testDictionaryIndexEntry,
           name: "K2",
           category: "default",
           sortingOrder: 0, 
@@ -106,7 +107,8 @@ final List<KanjiDictionarySearchResultTestCaseExpectation> kanjiDictionarySearch
     ],
     tags: [
       TagBankV3Entry(
-        indexId: 1,
+        id: 0,
+        indexEntry: testDictionaryIndexEntry,
         name: "K1",
         category: "default",
         sortingOrder: 0,
@@ -114,7 +116,8 @@ final List<KanjiDictionarySearchResultTestCaseExpectation> kanjiDictionarySearch
         score: 0
       ),
       TagBankV3Entry(
-        indexId: 1,
+        id: 0,
+        indexEntry: testDictionaryIndexEntry,
         name: "K2",
         category: "default",
         sortingOrder: 0,

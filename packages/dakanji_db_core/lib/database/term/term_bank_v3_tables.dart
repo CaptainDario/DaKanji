@@ -1,6 +1,6 @@
 
 import 'package:dakanji_db_core/database/index/index_tables.dart';
-import 'package:dakanji_db_core/helper/json_converter.dart';
+import 'package:dakanji_db_core/helper/sql_json_converter.dart';
 import 'package:dakanji_db_core/helper/zlib_text_converter_io.dart';
 import 'package:drift/drift.dart';
 

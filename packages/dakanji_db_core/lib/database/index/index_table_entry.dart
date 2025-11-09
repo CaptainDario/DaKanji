@@ -131,6 +131,8 @@ class IndexEntry with _$IndexEntry {
     );
   }
 
+  Map<String, Object?> toJson() => _$IndexEntryToJson(this);
+
   factory IndexEntry.fromJson(Map<String, Object?> json) 
     => _$IndexEntryFromJson(json);
 

@@ -1,3 +1,4 @@
+import '/database/index/index_views.drift';
 import '/database/general_tables/term_tables.dart';
 import '/database/general_tables/reading_tables.dart';
 import '/database/general_tables/definition_tables.dart';
@@ -39,7 +40,7 @@ SELECT
     TB3DTRT.term_bank_id,
     json_object(
         'id', TagB3T.id,
-        'indexId', TagB3T.index_id,
+        'indexEntry', index_json_view.index_entry,
         'name', TagB3T.name,
         'category', TagB3T.category,
         'sortingOrder', TagB3T.sorting_order,
@@ -49,27 +50,29 @@ SELECT
 FROM
     term_bank_v3_x_definition_tag_table AS TB3DTRT
 JOIN
-    tag_bank_v3_table AS TagB3T
-        ON TB3DTRT.definition_tag_id = TagB3T.id;
+    tag_bank_v3_table AS TagB3T ON TB3DTRT.definition_tag_id = TagB3T.id
+    JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON TagB3T.index_id = index_json_view.id;
+
 ---
         
 -- VIEW : For Tags (pre-builds the JSON object)
 CREATE VIEW IF NOT EXISTS term_bank_v3_tags_json_view AS
-SELECT
-    TB3TBRT.term_bank_id,
-    json_object(
-        'id', TagB3T.id,
-        'indexId', TagB3T.index_id,
-        'name', TagB3T.name,
-        'category', TagB3T.category,
-        'sortingOrder', TagB3T.sorting_order,
-        'notes', TagB3T.notes,
-        'score', TagB3T.score
-    ) AS tag_json
-FROM
-    term_bank_v3_x_tag_bank_table AS TB3TBRT
-JOIN
-    tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id;
+    SELECT
+        TB3TBRT.term_bank_id,
+        json_object(
+            'id', TagB3T.id,
+            'indexEntry', index_json_view.index_entry,
+            'name', TagB3T.name,
+            'category', TagB3T.category,
+            'sortingOrder', TagB3T.sorting_order,
+            'notes', TagB3T.notes,
+            'score', TagB3T.score
+        ) AS tag_json
+    FROM
+        term_bank_v3_x_tag_bank_table AS TB3TBRT
+    JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id
+    JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON TagB3T.index_id = index_json_view.id;
+
 ---
 
 CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
@@ -136,7 +139,7 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
     -- 5. Final, fast SELECT by joining all pre-aggregated data
     SELECT
         TB3T.id as termBankV3Id,
-        TB3T.index_id AS indexId,
+        IV.index_entry AS indexEntry,
         TT.term,
         RT.reading,
         COALESCE(DTA.definition_tags, '[]') AS definition_tags,
@@ -149,6 +152,7 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
         COALESCE(TA.tags, '[]') AS tags
     FROM
         term_bank_v3_table AS TB3T
+    JOIN term_meta_bank_v3_entry_as_json_view AS IV ON TB3T.index_id = IV.id
     -- 1-to-1 Joins
     LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
     LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id

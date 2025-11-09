@@ -48,9 +48,9 @@ import '/database/term/term_bank_v3_tables.dart';
 import '/database/term_meta/term_meta_bank_relation_tables.dart';
 import '/database/term_meta/term_meta_bank_v3_dao.dart';
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
-// ignore: unused_import
-import '/helper/json_converter.dart'; // neccessary for drift generator
 import '/helper/zlib_text_converter_io.dart';   // neccessary for drift generator
+// ignore: unused_import
+import '../helper/sql_json_converter.dart'; // neccessary for drift generator
 import 'audio_source_list/audio_source_list_tables.dart';
 
 part 'dakanji_db.g.dart';
@@ -114,6 +114,8 @@ part 'dakanji_db.g.dart';
   ],
   include: {
     'kanji_vg/kanji_vg_queries.drift',
+
+    'index/index_views.drift',
 
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
     //'general_tables/reading_spellfix_table.drift',
