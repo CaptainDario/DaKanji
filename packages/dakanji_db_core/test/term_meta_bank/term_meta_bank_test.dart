@@ -27,7 +27,7 @@ void main() {
         final testCase = termMetaBankTestCases[i];
         final result = (await db.termMetaBankV3Dao.searchTermMetaBankV3Entries(testCase))
           .map((e) => e.copyWith(
-            termMetaBankV3TableId: 0, // ignore the id in comparison
+            id: 0, // ignore the id in comparison
             ipas: e.ipas.map((ipa) => ipa.copyWith(
               tags: ipa.tags.map((tag) => tag.copyWith(id: 0)).toList() // ignore tag ids in comparison
             )).toList(),
