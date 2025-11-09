@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class DictionaryMatchTermBankDefinitionsWidget extends StatefulWidget {
 
   /// The indexes from which the entries come.
-  final List<IndexTableEntry> indexes;
+  final List<IndexEntry> indexes;
   /// The term bank entries to display 
   final List<TermBankV3Entry> entries;
 
@@ -35,13 +35,10 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // numbering for each entry (1., 2. etc)
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 4, 0, 0), // align number with tags
-                      child: Text(
-                        '${i + 1}. ',
-                        style: const TextStyle(
-                          color: Colors.grey
-                        ),
+                    Text(
+                      '${i + 1}. ',
+                      style: const TextStyle(
+                        color: Colors.grey
                       ),
                     ),
                     // the rule identifiers for this definition
@@ -52,13 +49,13 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
                         children: [
                           for (final definitionTag in widget.entries[i].definitionTags)
                             DictionaryMatchTag(
-                              definitionTag.name,
-                              definitionTag.notes.nullIfEmptyOrNull
+                              text: definitionTag.name,
+                              details: definitionTag.notes.nullIfEmptyOrNull
                             ),
                           // the index from which this definitions comes
                           DictionaryMatchTag(
-                            widget.indexes[i].title,
-                            widget.indexes[i].description.nullIfEmptyOrNull,
+                            text: widget.indexes[i].title,
+                            details: widget.indexes[i].description.nullIfEmptyOrNull,
                             color: Colors.grey[350],
                           )
                         ],
@@ -69,7 +66,7 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
               ),
               // the actual definitions
               Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0.0, 4.0),
+                padding: const EdgeInsets.fromLTRB(16.0, 2.0, 0.0, 6.0),
                 child: Column(
                   children: [
                     for (final definition in widget.entries[i].definitions)

@@ -37,7 +37,7 @@ class _DictionaryMatchTagBankWidgetState extends State<DictionaryMatchTagBankWid
       spacing: 4.0,
       children: [
         for (final tag in uniqueTags)
-          DictionaryMatchTag(tag.name, tag.notes)
+          DictionaryMatchTag(text: tag.name, details: tag.notes)
       ],
     );
   }

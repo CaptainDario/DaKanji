@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 
 class DictionaryMatchTag extends StatelessWidget {
 
+  /// The tag's leading text to display.
+  final String? leadingText;
+
   /// The tag's text to display.
-  final String name;
+  final String text;
 
   /// The tag's notes to show in a snackbar.
   final String? details;
@@ -13,24 +16,61 @@ class DictionaryMatchTag extends StatelessWidget {
   /// The tag's color.
   final Color? color;
 
-  const DictionaryMatchTag(this.name, this.details, {this.color, super.key});
+  const DictionaryMatchTag(
+    {
+      required this.text,
+      this.details,
+      this.leadingText,
+      this.color,
+      super.key
+    }
+  );
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      mouseCursor: details == null || details!.isEmpty
+        ? null
+        : SystemMouseCursors.click,
       /// show snackbar
-      onTap: details == null
+      onTap: details == null || details!.isEmpty
         ? null
         : () => ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(details!)),
         ),
-      child: Chip(
-        labelPadding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 0.0),
-        padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
-        backgroundColor: color,
-        label: Text(
-          name,
-          style: const TextStyle(fontSize: 11),
+      child: Container(        
+        padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(
+            color: color ?? Colors.grey,
+            width: 1,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if(leadingText != null)
+              ...[
+                Text(
+                  leadingText!,
+                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w300),
+                ),
+                SizedBox(
+                  height: 14,
+                  child: VerticalDivider(
+                    width: 8,
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            Text(
+              text,
+              style: const TextStyle(fontSize: 11),
+            )
+          ],
         ),
       ),
     );
