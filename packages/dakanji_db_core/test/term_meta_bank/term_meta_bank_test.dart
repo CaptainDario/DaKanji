@@ -26,7 +26,15 @@ void main() {
         Stopwatch s = Stopwatch()..start();
         final testCase = termMetaBankTestCases[i];
         final result = (await db.termMetaBankV3Dao.searchTermMetaBankV3Entries(testCase))
-          .map((e) => e.copyWith(termMetaBankV3TableId: 0) // ignore the id in comparison
+          .map((e) => e.copyWith(
+            termMetaBankV3TableId: 0, // ignore the id in comparison
+            ipas: e.ipas.map((ipa) => ipa.copyWith(
+              tags: ipa.tags.map((tag) => tag.copyWith(id: 0)).toList()
+            )).toList(),
+            pitchs: e.pitchs.map((pitch) => pitch.copyWith(
+              tags: pitch.tags.map((tag) => tag.copyWith(id: 0)).toList()
+            )).toList()
+          )
         ).toList();
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
 

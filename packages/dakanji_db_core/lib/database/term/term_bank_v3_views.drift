@@ -5,6 +5,7 @@ import '/database/general_tables/definition_tables.dart';
 import '/database/term/term_bank_v3_tables.dart';
 import '/database/term/term_bank_v3_relation_tables.dart';
 import '/database/tag/tag_bank_v3_tables.dart';
+import '/database/tag/tag_bank_v3_views.drift';
 
 
 -- VIEW : For Definitions (handles the JSON ordering)
@@ -38,40 +39,27 @@ JOIN
 CREATE VIEW IF NOT EXISTS term_bank_v3_def_tags_json_view AS
 SELECT
     TB3DTRT.term_bank_id,
-    json_object(
-        'id', TagB3T.id,
-        'indexEntry', index_json_view.index_entry,
-        'name', TagB3T.name,
-        'category', TagB3T.category,
-        'sortingOrder', TagB3T.sorting_order,
-        'notes', TagB3T.notes,
-        'score', TagB3T.score
-    ) AS tag_json
+    TagJSON.tag_json -- Just select the pre-built JSON
 FROM
     term_bank_v3_x_definition_tag_table AS TB3DTRT
+-- Join the link table to the new reusable view
 JOIN
-    tag_bank_v3_table AS TagB3T ON TB3DTRT.definition_tag_id = TagB3T.id
-    JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON TagB3T.index_id = index_json_view.id;
+    tag_bank_v3_as_json_view AS TagJSON
+    ON TB3DTRT.definition_tag_id = TagJSON.tag_id;
 
 ---
         
 -- VIEW : For Tags (pre-builds the JSON object)
 CREATE VIEW IF NOT EXISTS term_bank_v3_tags_json_view AS
-    SELECT
-        TB3TBRT.term_bank_id,
-        json_object(
-            'id', TagB3T.id,
-            'indexEntry', index_json_view.index_entry,
-            'name', TagB3T.name,
-            'category', TagB3T.category,
-            'sortingOrder', TagB3T.sorting_order,
-            'notes', TagB3T.notes,
-            'score', TagB3T.score
-        ) AS tag_json
-    FROM
-        term_bank_v3_x_tag_bank_table AS TB3TBRT
-    JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id
-    JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON TagB3T.index_id = index_json_view.id;
+SELECT
+    TB3TBRT.term_bank_id,
+    TagJSON.tag_json -- Just select the pre-built JSON
+FROM
+    term_bank_v3_x_tag_bank_table AS TB3TBRT
+-- Join the link table to the new reusable view
+JOIN
+    tag_bank_v3_as_json_view AS TagJSON
+    ON TB3TBRT.tag_bank_id = TagJSON.tag_id;
 
 ---
 

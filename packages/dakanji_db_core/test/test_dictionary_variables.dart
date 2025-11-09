@@ -4,6 +4,7 @@ import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 
 
 
+// --- data from tag_bank_1.json ---
 IndexEntry testDictionaryIndexEntry = IndexEntry(
   id: 1,
   dictionaryType: DictionaryTypes.yomitan,
@@ -15,9 +16,6 @@ IndexEntry testDictionaryIndexEntry = IndexEntry(
   revision: "test",
   sequenced: true
 );
-
-
-
 TagBankV3Entry e1Tag = TagBankV3Entry(
   id: 0,
   indexEntry: testDictionaryIndexEntry,
@@ -27,7 +25,6 @@ TagBankV3Entry e1Tag = TagBankV3Entry(
   notes: "example tag 1",
   score: 0
 );
-
 TagBankV3Entry e2Tag = TagBankV3Entry(
   id: 0,
   indexEntry: testDictionaryIndexEntry,
@@ -37,7 +34,6 @@ TagBankV3Entry e2Tag = TagBankV3Entry(
   notes: "example tag 2",
   score: 0
 );
-
 TagBankV3Entry pTag = TagBankV3Entry(
   id: 0,
   indexEntry: testDictionaryIndexEntry,
@@ -47,7 +43,6 @@ TagBankV3Entry pTag = TagBankV3Entry(
   notes: "popular term",
   score: 0
 );
-
 TagBankV3Entry nTag = TagBankV3Entry(
   id: 0,
   indexEntry: testDictionaryIndexEntry,
@@ -57,7 +52,6 @@ TagBankV3Entry nTag = TagBankV3Entry(
   notes: "noun",
   score: 0
 );
-
 TagBankV3Entry vtTag = TagBankV3Entry(
   id: 0,
   indexEntry: testDictionaryIndexEntry,
@@ -67,7 +61,6 @@ TagBankV3Entry vtTag = TagBankV3Entry(
   notes: "transitive verb",
   score: 0
 );
-
 TagBankV3Entry abbrTag = TagBankV3Entry(
   id: 0,
   indexEntry: testDictionaryIndexEntry,
@@ -78,8 +71,99 @@ TagBankV3Entry abbrTag = TagBankV3Entry(
   score: 0
 );
 
+// --- data from tag_bank_2.json ---
+TagBankV3Entry k1Tag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "K1",
+  category: "default",
+  sortingOrder: 0, 
+  notes: "example kanji tag 1",
+  score: 0
+);
 
-// --- made up tags for testing ---
+TagBankV3Entry k2Tag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "K2",
+  category: "default",
+  sortingOrder: 0, 
+  notes: "example kanji tag 2",
+  score: 0
+);
+
+TagBankV3Entry kstat1Tag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "kstat1",
+  category: "class",
+  sortingOrder: 0, 
+  notes: "kanji stat 1",
+  score: 0
+);
+
+TagBankV3Entry kstat2Tag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "kstat2",
+  category: "code",
+  sortingOrder: 0, 
+  notes: "kanji stat 2",
+  score: 0
+);
+
+TagBankV3Entry kstat3Tag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "kstat3",
+  category: "index",
+  sortingOrder: 0, 
+  notes: "kanji stat 3",
+  score: 0
+);
+
+TagBankV3Entry kstat4Tag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "kstat4",
+  category: "misc",
+  sortingOrder: 0, 
+  notes: "kanji stat 4",
+  score: 0
+);
+
+TagBankV3Entry kstat5Tag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "kstat5",
+  category: "misc",
+  sortingOrder: 0, 
+  notes: "kanji stat 5",
+  score: 0
+);
+
+// --- data from tag_bank_3.json ---
+TagBankV3Entry p1Tag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "P1",
+  category: "default",
+  sortingOrder: 0, 
+  notes: "example pitch tag 1",
+  score: 0
+);
+TagBankV3Entry p2Tag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "P2",
+  category: "default",
+  sortingOrder: 0, 
+  notes: "example pitch tag 2",
+  score: 0
+);
+
+
+// --- tags created DURING parsing of dictionary ---
 TagBankV3Entry naAdjTag = TagBankV3Entry(
   id: 0,
   indexEntry: testDictionaryIndexEntry,
@@ -114,6 +198,46 @@ TagBankV3Entry vtag = TagBankV3Entry(
   id: 0,
   indexEntry: testDictionaryIndexEntry,
   name: "v",
+  category: "",
+  sortingOrder: 0, 
+  notes: "",
+  score: 0
+);
+
+TagBankV3Entry tokyoTag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "東京",
+  category: "",
+  sortingOrder: 0, 
+  notes: "",
+  score: 0
+);
+
+TagBankV3Entry kyotoTag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "京東",
+  category: "",
+  sortingOrder: 0, 
+  notes: "",
+  score: 0
+);
+
+TagBankV3Entry testTag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "test",
+  category: "",
+  sortingOrder: 0, 
+  notes: "",
+  score: 0
+);
+
+TagBankV3Entry asdTag = TagBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  name: "asd",
   category: "",
   sortingOrder: 0, 
   notes: "",

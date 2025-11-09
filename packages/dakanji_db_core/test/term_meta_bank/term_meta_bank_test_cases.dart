@@ -114,15 +114,15 @@ final termMetaBankTestCaseExpectations = [
     pitchs: [
       TermMetaBankV3PitchEntry(
         position: 2,
-        tags: ["P1"]
+        tags: [p1Tag]
       ),
       TermMetaBankV3PitchEntry(
         position: 2,
-        tags: ["P2"]
+        tags: [p2Tag]
       ),
       TermMetaBankV3PitchEntry(
         position: 0,
-        tags: ["P1", "P2"]
+        tags: [p1Tag, p2Tag]
       ),
     ]
   ),
@@ -157,7 +157,7 @@ final termMetaBankTestCaseExpectations = [
       TermMetaBankV3PitchEntry(
         position: 2,
         nasal: 23,
-        tags: ["P1"]
+        tags: [p1Tag]
       ),
       TermMetaBankV3PitchEntry(
         position: 3,
@@ -167,7 +167,7 @@ final termMetaBankTestCaseExpectations = [
       TermMetaBankV3PitchEntry(
         devoice: 45,
         position: 4,
-        tags: ["P1", "P2"]
+        tags: [p1Tag, p2Tag]
       ),
     ]
   ),
@@ -182,7 +182,7 @@ final termMetaBankTestCaseExpectations = [
     ipas: [
       TermMetaBankV3IpaEntry(
         ipa: "[sɨᵝkʲi]",
-        tags: ["東京", "京東"]
+        tags: [tokyoTag, kyotoTag]
       ),
     ]
   ),
@@ -196,7 +196,7 @@ final termMetaBankTestCaseExpectations = [
     ipas: [
       TermMetaBankV3IpaEntry(
         ipa: "[sɨᵝkʲi]",
-        tags: ["東京", "京東"]
+        tags: [tokyoTag, kyotoTag]
       ),
       TermMetaBankV3IpaEntry(
         ipa: "[laerglaeh]",
@@ -204,11 +204,11 @@ final termMetaBankTestCaseExpectations = [
       ),
       TermMetaBankV3IpaEntry(
         ipa: "[alsjega]",
-        tags: ["東京"]
+        tags: [tokyoTag]
       ),
       TermMetaBankV3IpaEntry(
         ipa: "[laheig]",
-        tags: ["test", "asd"]
+        tags: [testTag, asdTag]
       ),
     ]
   ),

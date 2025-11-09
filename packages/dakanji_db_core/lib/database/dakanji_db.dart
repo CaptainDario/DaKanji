@@ -116,6 +116,7 @@ part 'dakanji_db.g.dart';
     'kanji_vg/kanji_vg_queries.drift',
 
     'index/index_views.drift',
+    'tag/tag_bank_v3_views.drift',
 
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
     //'general_tables/reading_spellfix_table.drift',

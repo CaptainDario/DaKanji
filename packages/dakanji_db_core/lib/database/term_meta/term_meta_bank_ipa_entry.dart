@@ -1,4 +1,6 @@
 
+import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
+import 'package:dakanji_db_core/helper/json_tag_bank_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'term_meta_bank_ipa_entry.freezed.dart';
@@ -15,7 +17,9 @@ abstract class TermMetaBankV3IpaEntry with _$TermMetaBankV3IpaEntry {
       /// the ipa transcription of this entry
       required String ipa,
       /// all tags of this pitch entry
-      List<String>? tags,
+      @TagBankV3EntryConverter()
+      @Default([])
+      List<TagBankV3Entry> tags,
     }) = _TermMetaBankV3IpaEntry;
 
   factory TermMetaBankV3IpaEntry.fromJson(Map<String, Object?> json)

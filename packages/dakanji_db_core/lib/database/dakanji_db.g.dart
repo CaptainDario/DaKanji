@@ -10002,6 +10002,114 @@ class TermMetaBankV3EntryAsJsonView
   Set<String> get readTables => const {'index_table'};
 }
 
+class TagBankV3AsJsonViewData extends DataClass {
+  final int tagId;
+  final String tagJson;
+  const TagBankV3AsJsonViewData({required this.tagId, required this.tagJson});
+  factory TagBankV3AsJsonViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TagBankV3AsJsonViewData(
+      tagId: serializer.fromJson<int>(json['tag_id']),
+      tagJson: serializer.fromJson<String>(json['tag_json']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'tag_id': serializer.toJson<int>(tagId),
+      'tag_json': serializer.toJson<String>(tagJson),
+    };
+  }
+
+  TagBankV3AsJsonViewData copyWith({int? tagId, String? tagJson}) =>
+      TagBankV3AsJsonViewData(
+        tagId: tagId ?? this.tagId,
+        tagJson: tagJson ?? this.tagJson,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('TagBankV3AsJsonViewData(')
+          ..write('tagId: $tagId, ')
+          ..write('tagJson: $tagJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(tagId, tagJson);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TagBankV3AsJsonViewData &&
+          other.tagId == this.tagId &&
+          other.tagJson == this.tagJson);
+}
+
+class TagBankV3AsJsonView
+    extends ViewInfo<TagBankV3AsJsonView, TagBankV3AsJsonViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  TagBankV3AsJsonView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [tagId, tagJson];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'tag_bank_v3_as_json_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW IF NOT EXISTS tag_bank_v3_as_json_view AS SELECT TagB3T.id AS tag_id, json_object(\'id\', TagB3T.id, \'indexEntry\', index_json_view.index_entry, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score) AS tag_json FROM tag_bank_v3_table AS TagB3T JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON TagB3T.index_id = index_json_view.id',
+  };
+  @override
+  TagBankV3AsJsonView get asDslTable => this;
+  @override
+  TagBankV3AsJsonViewData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TagBankV3AsJsonViewData(
+      tagId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tag_id'],
+      )!,
+      tagJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_json'],
+      )!,
+    );
+  }
+
+  late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
+    'tag_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> tagJson = GeneratedColumn<String>(
+    'tag_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  @override
+  TagBankV3AsJsonView createAlias(String alias) {
+    return TagBankV3AsJsonView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {'tag_bank_v3_table', 'index_table'};
+}
+
 class TermBankV3DefTagsJsonViewData extends DataClass {
   final int termBankId;
   final String tagJson;
@@ -10068,7 +10176,7 @@ class TermBankV3DefTagsJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_bank_v3_def_tags_json_view AS SELECT TB3DTRT.term_bank_id, json_object(\'id\', TagB3T.id, \'indexEntry\', index_json_view.index_entry, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score) AS tag_json FROM term_bank_v3_x_definition_tag_table AS TB3DTRT JOIN tag_bank_v3_table AS TagB3T ON TB3DTRT.definition_tag_id = TagB3T.id JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON TagB3T.index_id = index_json_view.id',
+        'CREATE VIEW IF NOT EXISTS term_bank_v3_def_tags_json_view AS SELECT TB3DTRT.term_bank_id, TagJSON.tag_json FROM term_bank_v3_x_definition_tag_table AS TB3DTRT JOIN tag_bank_v3_as_json_view AS TagJSON ON TB3DTRT.definition_tag_id = TagJSON.tag_id',
   };
   @override
   TermBankV3DefTagsJsonView get asDslTable => this;
@@ -10810,7 +10918,7 @@ class TermBankV3TagsJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_bank_v3_tags_json_view AS SELECT TB3TBRT.term_bank_id, json_object(\'id\', TagB3T.id, \'indexEntry\', index_json_view.index_entry, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score) AS tag_json FROM term_bank_v3_x_tag_bank_table AS TB3TBRT JOIN tag_bank_v3_table AS TagB3T ON TB3TBRT.tag_bank_id = TagB3T.id JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON TagB3T.index_id = index_json_view.id',
+        'CREATE VIEW IF NOT EXISTS term_bank_v3_tags_json_view AS SELECT TB3TBRT.term_bank_id, TagJSON.tag_json FROM term_bank_v3_x_tag_bank_table AS TB3TBRT JOIN tag_bank_v3_as_json_view AS TagJSON ON TB3TBRT.tag_bank_id = TagJSON.tag_id',
   };
   @override
   TermBankV3TagsJsonView get asDslTable => this;
@@ -12082,7 +12190,7 @@ class TermMetaBankV3PitchesJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_pitches_json_view AS SELECT xp.term_meta_id, JSON_GROUP_ARRAY(JSON_OBJECT(\'position\', p.position, \'devoice\', p.devoice, \'nasal\', p.nasal, \'tags\', COALESCE((SELECT JSON_GROUP_ARRAY(tag.name) FROM term_meta_bank_v3_pitch_table_x_tag_bank_v3_table AS xpt JOIN tag_bank_v3_table AS tag ON xpt.tag_id = tag.id WHERE xpt.pitch_id = p.id), JSON(\'[]\')))) AS pitches FROM term_meta_bank_v3_x_pitch_table AS xp JOIN term_meta_bank_v3_pitch_table AS p ON xp.pitch_id = p.id GROUP BY xp.term_meta_id',
+        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_pitches_json_view AS SELECT xp.term_meta_id, JSON_GROUP_ARRAY(JSON_OBJECT(\'position\', p.position, \'devoice\', p.devoice, \'nasal\', p.nasal, \'tags\', COALESCE((SELECT JSON_GROUP_ARRAY(TagJSON.tag_json) FROM term_meta_bank_v3_pitch_table_x_tag_bank_v3_table AS xpt JOIN tag_bank_v3_as_json_view AS TagJSON ON xpt.tag_id = TagJSON.tag_id WHERE xpt.pitch_id = p.id), JSON(\'[]\')))) AS pitches FROM term_meta_bank_v3_x_pitch_table AS xp JOIN term_meta_bank_v3_pitch_table AS p ON xp.pitch_id = p.id GROUP BY xp.term_meta_id',
   };
   @override
   TermMetaBankV3PitchesJsonView get asDslTable => this;
@@ -12129,6 +12237,7 @@ class TermMetaBankV3PitchesJsonView
     'term_meta_bank_v3_pitch_table',
     'term_meta_bank_v3_pitch_table_x_tag_bank_v3_table',
     'tag_bank_v3_table',
+    'index_table',
   };
 }
 
@@ -12959,7 +13068,7 @@ class TermMetaBankV3IpasJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_ipas_json_view AS SELECT xi.term_meta_id, JSON_GROUP_ARRAY(JSON_OBJECT(\'ipa\', i.ipa, \'tags\', COALESCE((SELECT JSON_GROUP_ARRAY(tag.name) FROM term_meta_bank_v3_ipa_table_x_tag_bank_v3_table AS xit JOIN tag_bank_v3_table AS tag ON xit.tag_id = tag.id WHERE xit.ipa_id = i.id), JSON(\'[]\')))) AS ipas FROM term_meta_bank_v3_x_ipa_table AS xi JOIN term_meta_bank_v3_ipa_table AS i ON xi.ipa_id = i.id GROUP BY xi.term_meta_id',
+        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_ipas_json_view AS SELECT xi.term_meta_id, JSON_GROUP_ARRAY(JSON_OBJECT(\'ipa\', i.ipa, \'tags\', COALESCE((SELECT JSON_GROUP_ARRAY(TagJSON.tag_json) FROM term_meta_bank_v3_ipa_table_x_tag_bank_v3_table AS xit JOIN tag_bank_v3_as_json_view AS TagJSON ON xit.tag_id = TagJSON.tag_id WHERE xit.ipa_id = i.id), JSON(\'[]\')))) AS ipas FROM term_meta_bank_v3_x_ipa_table AS xi JOIN term_meta_bank_v3_ipa_table AS i ON xi.ipa_id = i.id GROUP BY xi.term_meta_id',
   };
   @override
   TermMetaBankV3IpasJsonView get asDslTable => this;
@@ -13006,6 +13115,7 @@ class TermMetaBankV3IpasJsonView
     'term_meta_bank_v3_ipa_table',
     'term_meta_bank_v3_ipa_table_x_tag_bank_v3_table',
     'tag_bank_v3_table',
+    'index_table',
   };
 }
 
@@ -18376,6 +18486,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   termBankV3XDefinitionTagTable = $TermBankV3_X_DefinitionTagTableTable(this);
   late final TermMetaBankV3EntryAsJsonView termMetaBankV3EntryAsJsonView =
       TermMetaBankV3EntryAsJsonView(this);
+  late final TagBankV3AsJsonView tagBankV3AsJsonView = TagBankV3AsJsonView(
+    this,
+  );
   late final TermBankV3DefTagsJsonView termBankV3DefTagsJsonView =
       TermBankV3DefTagsJsonView(this);
   late final $TermBankV3RuleIdentifierTableTable termBankV3RuleIdentifierTable =
@@ -19162,6 +19275,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termBankV3DefinitionsJsonView,
     termBankV3XDefinitionTagTable,
     termMetaBankV3EntryAsJsonView,
+    tagBankV3AsJsonView,
     termBankV3DefTagsJsonView,
     termBankV3RuleIdentifierTable,
     termBankV3XRuleIdentifierTable,
