@@ -29,10 +29,10 @@ void main() {
           .map((e) => e.copyWith(
             termMetaBankV3TableId: 0, // ignore the id in comparison
             ipas: e.ipas.map((ipa) => ipa.copyWith(
-              tags: ipa.tags.map((tag) => tag.copyWith(id: 0)).toList()
+              tags: ipa.tags.map((tag) => tag.copyWith(id: 0)).toList() // ignore tag ids in comparison
             )).toList(),
             pitchs: e.pitchs.map((pitch) => pitch.copyWith(
-              tags: pitch.tags.map((tag) => tag.copyWith(id: 0)).toList()
+              tags: pitch.tags.map((tag) => tag.copyWith(id: 0)).toList() // ignore tag ids in comparison
             )).toList()
           )
         ).toList();
