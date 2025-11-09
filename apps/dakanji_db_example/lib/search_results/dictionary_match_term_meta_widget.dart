@@ -46,7 +46,7 @@ class _DictionaryMatchTermMetaWidgetState extends State<DictionaryMatchTermMetaW
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if(groupedTermMetaEntries[TermMetaBankEntryTypes.freq.name] != null)
-        DictionaryMatchTermMetaFreqWidget(groupedTermMetaEntries[TermMetaBankEntryTypes.freq.name]!)
+          DictionaryMatchTermMetaFreqWidget(groupedTermMetaEntries[TermMetaBankEntryTypes.freq.name]!)
       ]
     );
   }

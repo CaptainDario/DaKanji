@@ -21,7 +21,7 @@ class DictionaryMatchTermMetaFreqWidget extends StatelessWidget {
             text: entries.map((e) => 
               e.frequencyDisplayValue ?? e.frequency
             ).join(", "),
-            leadingText: index.toString(),
+            leadingText: entries.first.indexEntry.title.toString(),
           )
       ]
     );

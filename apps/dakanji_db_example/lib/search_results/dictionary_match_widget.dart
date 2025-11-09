@@ -1,5 +1,6 @@
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_tag_bank_widget.dart';
+import 'package:dakanji_db_example/search_results/dictionary_match_term_bank_definitions_widget.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_term_bank_term_widget.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_term_meta_widget.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class DictionaryMatchWidget extends StatelessWidget {
                 SizedBox(height: 8.0),
                 DictionaryMatchTagBankWidget(match.entries.map((e) => e.tags).toList()),
                 SizedBox(height: 8.0),
-                //DictionaryMatchTermBankDefinitionsWidget(match.indexTableData, match.entries),
+                DictionaryMatchTermBankDefinitionsWidget(match.entries)
               ],
             ),
           ),
