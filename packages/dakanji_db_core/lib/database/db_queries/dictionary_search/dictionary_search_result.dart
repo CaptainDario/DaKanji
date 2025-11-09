@@ -330,7 +330,7 @@ class DictionaryMatch {
   /// Any associated metadata entries for this term.
   final List<List<TermMetaBankV3Entry>> metaEntriesForEachEntry;
   /// Index table data for all entries
-  final List<IndexTableEntry> indexTableData;
+  final List<IndexEntry> indexTableData;
 
   DictionaryMatch(
     {
@@ -360,7 +360,7 @@ class DictionaryMatch {
             .map((me) => TermMetaBankV3Entry.fromJson(me))
             .toList()
       ],
-      indexTableData: [IndexTableEntry.fromDictionarySearchDrift(entryInfo)],
+      indexTableData: [IndexEntry.fromDictionarySearchDrift(entryInfo)],
     );
   }
 
@@ -382,7 +382,7 @@ class DictionaryMatch {
             .map((me) => TermMetaBankV3Entry.fromJson(me))
             .toList()
       ],
-      indexTableData: [IndexTableEntry.fromDictionarySearchDrift(entryInfo)],
+      indexTableData: [IndexEntry.fromDictionarySearchDrift(entryInfo)],
     );
   }
 

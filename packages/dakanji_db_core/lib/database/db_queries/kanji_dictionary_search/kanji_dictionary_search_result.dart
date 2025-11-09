@@ -18,7 +18,7 @@ class KanjiDictionarySearchResult with _$KanjiDictionarySearchResult {
 
   @override
   /// The index table entry for the dictionary this result comes from
-  IndexTableEntry indexTableEntry;
+  IndexEntry indexTableEntry;
   
   @override
   /// List of kanji bank entries found for the search
@@ -38,7 +38,7 @@ class KanjiDictionarySearchResult with _$KanjiDictionarySearchResult {
   factory KanjiDictionarySearchResult.fromKanjiDictionarySearchViewData(KanjiDictionarySearchViewData data){
     
     return KanjiDictionarySearchResult(
-      indexTableEntry: IndexTableEntry.fromKanjiDictionarySearchViewData(data),
+      indexTableEntry: IndexEntry.fromKanjiDictionarySearchViewData(data),
       kanjiBankEntry: KanjiBankV3Entry.fromKanjiDictionarySearchViewData(data),
       kanjiMetaBankEntries: (jsonDecode(data.kanjiMetaBankV3Entries) as List)
         .map((e) => KanjiMetaBankV3Entry.fromJson(e))

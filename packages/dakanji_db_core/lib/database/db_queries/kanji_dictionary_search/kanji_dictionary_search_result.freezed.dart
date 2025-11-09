@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$KanjiDictionarySearchResult {
 
- IndexTableEntry get indexTableEntry; set indexTableEntry(IndexTableEntry value); KanjiBankV3Entry get kanjiBankEntry; set kanjiBankEntry(KanjiBankV3Entry value); List<KanjiMetaBankV3Entry> get kanjiMetaBankEntries; set kanjiMetaBankEntries(List<KanjiMetaBankV3Entry> value);
+ IndexEntry get indexTableEntry; set indexTableEntry(IndexEntry value); KanjiBankV3Entry get kanjiBankEntry; set kanjiBankEntry(KanjiBankV3Entry value); List<KanjiMetaBankV3Entry> get kanjiMetaBankEntries; set kanjiMetaBankEntries(List<KanjiMetaBankV3Entry> value);
 /// Create a copy of KanjiDictionarySearchResult
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +46,7 @@ abstract mixin class $KanjiDictionarySearchResultCopyWith<$Res>  {
   factory $KanjiDictionarySearchResultCopyWith(KanjiDictionarySearchResult value, $Res Function(KanjiDictionarySearchResult) _then) = _$KanjiDictionarySearchResultCopyWithImpl;
 @useResult
 $Res call({
- IndexTableEntry indexTableEntry, KanjiBankV3Entry kanjiBankEntry, List<KanjiMetaBankV3Entry> kanjiMetaBankEntries
+ IndexEntry indexTableEntry, KanjiBankV3Entry kanjiBankEntry, List<KanjiMetaBankV3Entry> kanjiMetaBankEntries
 });
 
 
@@ -66,7 +66,7 @@ class _$KanjiDictionarySearchResultCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? indexTableEntry = null,Object? kanjiBankEntry = null,Object? kanjiMetaBankEntries = null,}) {
   return _then(KanjiDictionarySearchResult(
 indexTableEntry: null == indexTableEntry ? _self.indexTableEntry : indexTableEntry // ignore: cast_nullable_to_non_nullable
-as IndexTableEntry,kanjiBankEntry: null == kanjiBankEntry ? _self.kanjiBankEntry : kanjiBankEntry // ignore: cast_nullable_to_non_nullable
+as IndexEntry,kanjiBankEntry: null == kanjiBankEntry ? _self.kanjiBankEntry : kanjiBankEntry // ignore: cast_nullable_to_non_nullable
 as KanjiBankV3Entry,kanjiMetaBankEntries: null == kanjiMetaBankEntries ? _self.kanjiMetaBankEntries : kanjiMetaBankEntries // ignore: cast_nullable_to_non_nullable
 as List<KanjiMetaBankV3Entry>,
   ));

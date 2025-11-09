@@ -1,5 +1,6 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/dictionary_types.dart';
+import 'package:dakanji_db_core/helper/bool_as_int_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'index_table_entry.freezed.dart';
@@ -10,9 +11,10 @@ part 'index_table_entry.g.dart';
 @Freezed()
 @JsonSerializable()
 /// Class representing one term meta entry of the database
-class IndexTableEntry with _$IndexTableEntry {
+class IndexEntry with _$IndexEntry {
 
-  
+  @override
+  final int id;
   /// Type of dictionary stored in this index.
   @override
   final DictionaryTypes dictionaryType;
@@ -21,6 +23,7 @@ class IndexTableEntry with _$IndexTableEntry {
   final int currentSortingOrder;
   /// Whether this dictionary is used to override frequency data when searching
   @override
+  @BoolAsIntConverter()
   final bool currentFrequencyDictionary;
 
   /// --- Yomitan fields ----------
@@ -32,6 +35,7 @@ class IndexTableEntry with _$IndexTableEntry {
   final String revision;
   /// Whether or not this dictionary contains sequencing information for related terms.
   @override
+  @NullableBoolAsIntConverter()
   final bool? sequenced;
   /// Format of data found in the JSON data files.
   @override
@@ -72,7 +76,8 @@ class IndexTableEntry with _$IndexTableEntry {
   final String? frequencyMode;
 
     
-  IndexTableEntry({
+  IndexEntry({
+    required this.id,
     required this.dictionaryType,
     required this.currentSortingOrder,
     required this.currentFrequencyDictionary,
@@ -93,17 +98,18 @@ class IndexTableEntry with _$IndexTableEntry {
     this.frequencyMode,
   }) ;
 
-  factory IndexTableEntry.fromKanjiDictionarySearchViewData(KanjiDictionarySearchViewData r) {
-    return IndexTableEntry._fromDataSource(r);
+  factory IndexEntry.fromKanjiDictionarySearchViewData(KanjiDictionarySearchViewData r) {
+    return IndexEntry._fromDataSource(r);
   }
     
-  factory IndexTableEntry.fromDictionarySearchDrift(DictionarySearchDriftFindTermBankDetailsResult r) {
-    return IndexTableEntry._fromDataSource(r);
+  factory IndexEntry.fromDictionarySearchDrift(DictionarySearchDriftFindTermBankDetailsResult r) {
+    return IndexEntry._fromDataSource(r);
   }
 
-  factory IndexTableEntry._fromDataSource(dynamic r) {
+  factory IndexEntry._fromDataSource(dynamic r) {
 
-    return IndexTableEntry(
+    return IndexEntry(
+      id: r.indexId,
       dictionaryType: r.dictionaryType,
       currentSortingOrder: r.currentSortingOrder,
       currentFrequencyDictionary: r.currentFrequencyDictionary,
@@ -125,7 +131,7 @@ class IndexTableEntry with _$IndexTableEntry {
     );
   }
 
-  factory IndexTableEntry.fromJson(Map<String, Object?> json) 
-    => _$IndexTableEntryFromJson(json);
+  factory IndexEntry.fromJson(Map<String, Object?> json) 
+    => _$IndexEntryFromJson(json);
 
 }
