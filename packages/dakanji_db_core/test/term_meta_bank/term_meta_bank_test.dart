@@ -25,7 +25,9 @@ void main() {
       test('should return correct metadata for "${termMetaBankTestCases[i]}"', () async {
         Stopwatch s = Stopwatch()..start();
         final testCase = termMetaBankTestCases[i];
-        final result = (await db.termMetaBankV3Dao.searchTermMetaBankV3Entries(testCase));
+        final result = (await db.termMetaBankV3Dao.searchTermMetaBankV3Entries(testCase))
+          .map((e) => e.copyWith(termMetaBankV3TableId: 0) // ignore the id in comparison
+        ).toList();
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
 
         print("\n\n$i: ${termMetaBankTestCases[i]}");

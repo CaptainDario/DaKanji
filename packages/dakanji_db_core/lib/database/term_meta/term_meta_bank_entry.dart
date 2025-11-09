@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '/database/term_meta/term_meta_bank_ipa_entry.dart';
@@ -18,8 +19,10 @@ abstract class TermMetaBankV3Entry with _$TermMetaBankV3Entry {
 
   const factory TermMetaBankV3Entry(
     {
-      /// id of this entry's dictionary
-      required int indexId,
+      /// The id of this entry in the sqlite database
+      required int termMetaBankV3TableId,
+      /// The index (dictionary) in which this entry was found
+      required IndexEntry indexEntry,
       /// The term of this entry
       required String term,
       /// The type of this entry
@@ -39,7 +42,8 @@ abstract class TermMetaBankV3Entry with _$TermMetaBankV3Entry {
   factory TermMetaBankV3Entry.fromTermMetaBankV3EntryViewData(TermMetaBankV3EntryViewData data) {
 
     return TermMetaBankV3Entry(
-      indexId: data.indexId,
+      termMetaBankV3TableId: data.termMetaId,
+      indexEntry: IndexEntry.fromJson(jsonDecode(data.indexEntry)),
       term: data.term,
       type: data.type,
       reading: data.reading,

@@ -134,7 +134,7 @@ Future _parseDictionaryDataSource(({
 
     // parse the rest of the files (first tag bank, then the rest in sorted order)
     int progressCounter = 0;
-    final int noEntries = 1;//dataSources.length;
+    final int noEntries = dataSources.length;
     for (final ({String filePath, Uint8List fileContent}) data in dataSources) {
 
       progressCounter++;

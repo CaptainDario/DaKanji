@@ -166,7 +166,6 @@ dictionary_search_drift_find_term_bank_entries:
         )
 
     --- FINAL SELECT 
-    -- This now returns only the ID and sorting columns
     SELECT
         TBM.term_bank_id,
         TBM.search_term,
@@ -179,7 +178,6 @@ dictionary_search_drift_find_term_bank_entries:
             WHEN ActiveCheck.is_active = 1 THEN OP.freq_value
             ELSE TB3T.popularity
         END as finalPopularity,
-        -- This is the column you need for your factory logic
         CASE
             WHEN TBM.match_column = 1 THEN TT.term 
             WHEN TBM.match_column = 2 THEN RT.reading
@@ -294,6 +292,7 @@ dictionary_search_drift_find_term_bank_details:
                     term_bank_id,
                     tag_json
                 FROM term_bank_v3_def_tags_json_view
+                WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)
             ) AS DistinctTags
             GROUP BY term_bank_id
         ),
@@ -346,7 +345,7 @@ dictionary_search_drift_find_term_bank_details:
                 COALESCE(
                     JSON_GROUP_ARRAY(
                         JSON_OBJECT(
-                            'indexId', FMB.indexId,
+                            'index_entry', FMB.index_entry,
                             'term', FMB.term,
                             'reading', FMB.reading,
                             'type', FMB.type,

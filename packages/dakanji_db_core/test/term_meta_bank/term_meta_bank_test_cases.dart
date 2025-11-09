@@ -2,8 +2,8 @@ import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_ipa_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_pitch_entry.dart';
 
+import '../test_dictionary_variables.dart';
 
-int indexId = 1;
 
 /// Test cases for the kanji meta bank
 final termMetaBankTestCases = [
@@ -27,7 +27,8 @@ final termMetaBankTestCases = [
 /// kanjiMetaBankV3 test case expected values
 final termMetaBankTestCaseExpectations = [
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "打",
     type: "freq",
     frequency: 1,
@@ -35,7 +36,8 @@ final termMetaBankTestCaseExpectations = [
     ipas: []
   ),
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "打",
     type: "freq",
     frequencyDisplayValue: "four",
@@ -43,7 +45,8 @@ final termMetaBankTestCaseExpectations = [
     ipas: []
   ),
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "打つ",
     type: "freq",
     frequency: 6,
@@ -51,7 +54,8 @@ final termMetaBankTestCaseExpectations = [
     ipas: []
   ),
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "打ち込む",
     type: "freq",
     frequency: 7,
@@ -61,7 +65,8 @@ final termMetaBankTestCaseExpectations = [
   ),
 
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "打",
     type: "freq",
     reading: "だ",
@@ -71,7 +76,8 @@ final termMetaBankTestCaseExpectations = [
   ),
 
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "打つ",
     type: "freq",
     reading: "ぶつ",
@@ -81,7 +87,8 @@ final termMetaBankTestCaseExpectations = [
   ),
 
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "打ち込む",
     type: "pitch",
     reading: "うちこむ",
@@ -98,7 +105,8 @@ final termMetaBankTestCaseExpectations = [
     ]
   ),
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "お手前",
     type: "pitch",
     reading: "おてまえ",
@@ -119,7 +127,8 @@ final termMetaBankTestCaseExpectations = [
     ]
   ),
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "番号",
     type: "pitch",
     reading: "ばんごう",
@@ -133,7 +142,8 @@ final termMetaBankTestCaseExpectations = [
     ]
   ),
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "土木工事",
     type: "pitch",
     reading: "どぼくこうじ",
@@ -163,7 +173,8 @@ final termMetaBankTestCaseExpectations = [
   ),
 
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "好き",
     type: "ipa",
     reading: "すき",
@@ -176,7 +187,8 @@ final termMetaBankTestCaseExpectations = [
     ]
   ),
   TermMetaBankV3Entry(
-    indexId: indexId,
+    indexEntry: testDictionaryIndexEntry,
+    termMetaBankV3TableId: 0,
     term: "土木工事",
     type: "ipa",
     reading: "どぼくこうじ",
