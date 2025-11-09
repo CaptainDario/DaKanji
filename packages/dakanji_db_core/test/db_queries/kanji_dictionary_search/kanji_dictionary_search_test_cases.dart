@@ -17,7 +17,8 @@ final kanjiDictionaryTestCases = [
 final List<KanjiDictionarySearchResultTestCaseExpectation> kanjiDictionarySearchTestCaseExpectations = [
   KanjiDictionarySearchResultTestCaseExpectation(
     kanjiBankEntry: KanjiBankV3Entry(
-      indexId: -999,
+      id: 0,
+      indexEntry: testDictionaryIndexEntry,
       kanji: "打",
       onyomis: ["ダ", "ダアス"],
       kunyomis: ["う.つ", "う.ち-", "ぶ.つ"],
@@ -96,7 +97,8 @@ final List<KanjiDictionarySearchResultTestCaseExpectation> kanjiDictionarySearch
   KanjiDictionarySearchResultTestCaseExpectation(
   kanjiBankEntry: KanjiBankV3Entry(
     kanji: "込",
-    indexId: 1,
+    id: 0,
+    indexEntry: testDictionaryIndexEntry,
     onyomis: [],
     kunyomis: [
       "-こ.む",

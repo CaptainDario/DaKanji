@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '/database/dakanji_db.dart';
@@ -18,11 +19,13 @@ part 'kanji_bank_v3_entry.g.dart';
 class KanjiBankV3Entry with _$KanjiBankV3Entry {
 
   @override
+  int id;
+  @override
   /// The kanji character of this entry
   String kanji;
   @override
   /// The id of the dictionary this entry belongs to
-  final int indexId;
+  final IndexEntry indexEntry;
   @override
   /// The onyomi readings of this entry (sorted lexicographically)
   List<String> onyomis;
@@ -41,8 +44,9 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
 
   KanjiBankV3Entry(
     {
+      required this.id,
       required this.kanji,
-      required this.indexId,
+      required this.indexEntry,
       required this.onyomis,
       required this.kunyomis,
       required this.tags,
@@ -66,8 +70,9 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
 
   factory KanjiBankV3Entry._fromData(dynamic r){
     return KanjiBankV3Entry(
+      id: r.id,
       kanji: r.kanji,
-      indexId: r.indexId,
+      indexEntry: IndexEntry.fromJson(jsonDecode(r.indexEntry)),
       onyomis: List<String>.from(jsonDecode(r.onyomis)),
       kunyomis: List<String>.from(jsonDecode(r.kunyomis)),
       tags: List.from(jsonDecode(r.tags))

@@ -14,7 +14,8 @@ final kanjiBankTestCases = [
 /// kanji bank test case expected values
 final kanjiBankTestCaseExpectations = [
   KanjiBankV3Entry(
-    indexId: -999,
+    id: 0,
+    indexEntry: testDictionaryIndexEntry,
     kanji: "打",
     onyomis: ["ダ", "ダアス"],
     kunyomis: ["う.つ", "う.ち-", "ぶ.つ"],

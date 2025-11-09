@@ -1,4 +1,5 @@
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_ipa_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_pitch_entry.dart';
@@ -6,7 +7,7 @@ import 'package:test/test.dart';
 
 import 'dictionary_search_test_helper_classes.dart';
 
-Matcher matchesPitch(int position, {List<String>? tags, int? nasal, int? devoice}) {
+Matcher matchesPitch(int position, {List<TagBankV3Entry>? tags, int? nasal, int? devoice}) {
   return isA<TermMetaBankV3PitchEntry>()
     .having((p) => p.position, 'position', position)
     .having((p) => p.tags, 'tags', tags ?? isEmpty)
@@ -14,7 +15,7 @@ Matcher matchesPitch(int position, {List<String>? tags, int? nasal, int? devoice
     .having((p) => p.devoice, 'devoice', devoice);
 }
 
-Matcher matchesIpa(String ipa, {List<String>? tags}) {
+Matcher matchesIpa(String ipa, {List<TagBankV3Entry>? tags}) {
   return isA<TermMetaBankV3IpaEntry>()
     .having((e) => e.ipa, 'ipa', ipa)
     .having((e) => e.tags, 'tags', tags ?? isEmpty);

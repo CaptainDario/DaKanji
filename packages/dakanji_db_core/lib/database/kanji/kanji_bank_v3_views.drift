@@ -2,85 +2,77 @@ import '/database/general_tables/term_tables.dart';
 import '/database/general_tables/reading_tables.dart';
 import '/database/general_tables/kanji_tables.dart';
 import '/database/general_tables/definition_tables.dart';
-import '/database/tag/tag_bank_v3_tables.dart';
+import '/database/tag/tag_bank_v3_views.drift';
 import '/database/kanji/kanji_bank_v3_tables.dart';
 import '/database/kanji/kanji_bank_v3_relation_tables.dart';
 import '/database/kanji_meta/kanji_meta_bank_v3_views.drift';
 
 
 
-
 CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
     SELECT
+        KB3T.id AS id,
+        IV.index_entry AS indexEntry,
         KB3T.index_id as indexId,
         KT.kanji,
-        '[' || COALESCE(
-			GROUP_CONCAT(
-				DISTINCT NULLIF(json_quote(onyomi.reading), 'null')
-				ORDER BY OOJ.key
-			),
-			''
-		) || ']' AS onyomis,
-        '[' || COALESCE(
-			GROUP_CONCAT(
-				DISTINCT NULLIF(json_quote(kunyomi.reading), 'null')
-				ORDER BY KOJ.key
-			),
-			''
-		) || ']' AS kunyomis,
-        '[' || COALESCE(GROUP_CONCAT(DISTINCT json_object(
-            'id', TB3T.id,
-            'indexId', TB3T.index_id,
-            'name', TB3T.name,
-            'category', TB3T.category,
-            'sortingOrder', TB3T.sorting_order,
-            'notes', TB3T.notes,
-            'score', TB3T.score
-        )), '') || ']' AS tags,
-        '[' || COALESCE(
-			GROUP_CONCAT(
-				DISTINCT NULLIF(json_quote(DT.definition), 'null')
-				ORDER BY DOJ.key
-			),
-			''
-		) || ']' AS definitions,
-        '[' || COALESCE(GROUP_CONCAT(DISTINCT json_object(
-            'name', KB3SNT.stat_name,
-            'value', KB3SVT.stat_value
-        )), '') || ']' AS stats
+        COALESCE(
+            JSON_GROUP_ARRAY(
+                DISTINCT onyomi.reading
+                ORDER BY OOJ.key
+            ),
+            JSON('[]')
+        ) AS onyomis,
+        COALESCE(
+            JSON_GROUP_ARRAY(
+                DISTINCT kunyomi.reading
+                ORDER BY KOJ.key
+            ),
+            JSON('[]')
+        ) AS kunyomis,
+        COALESCE(
+            JSON_GROUP_ARRAY(DISTINCT JSON(TagJSON.tag_json)),
+            JSON('[]')
+        ) AS tags,
+        COALESCE(
+            JSON_GROUP_ARRAY(
+                DISTINCT DT.definition
+                ORDER BY DOJ.key
+            ),
+            JSON('[]')
+        ) AS definitions,
+        COALESCE(
+            JSON_GROUP_ARRAY(DISTINCT JSON_OBJECT(
+                'name', KB3SNT.stat_name,
+                'value', KB3SVT.stat_value
+            )),
+            JSON('[]')
+        ) AS stats
     FROM
         kanji_bank_v3_table AS KB3T
 
-    INNER JOIN kanji_table AS KT
-        ON KT.id = KB3T.kanji_id
+    INNER JOIN kanji_table AS KT ON KT.id = KB3T.kanji_id
 
-    -- Onyomi Joins
+    JOIN term_meta_bank_v3_entry_as_json_view AS IV ON KB3T.index_id = IV.id
+
     LEFT JOIN kanji_bank_v3_x_onyomi_reading_table AS KB3ORRT ON KB3ORRT.kanji_id = KB3T.id
     LEFT JOIN reading_table AS onyomi ON KB3ORRT.onyomi_reading_id = onyomi.id
-    -- Correction 1: Join on the correct onyomi reading ID
     LEFT JOIN json_each(KB3T.onyomi_order) AS OOJ ON OOJ.value = KB3ORRT.onyomi_reading_id
 
-    -- Kunyomi Joins
     LEFT JOIN kanji_bank_v3_x_kunyomi_reading_table AS KB3KRRT ON KB3KRRT.kanji_id = KB3T.id
     LEFT JOIN reading_table AS kunyomi ON KB3KRRT.kunyomi_reading_id = kunyomi.id
-    -- Correction 2: Join on the correct kunyomi reading ID
     LEFT JOIN json_each(KB3T.kunyomi_order) AS KOJ ON KOJ.value = KB3KRRT.kunyomi_reading_id
 
-    -- Tag Joins
     LEFT JOIN kanji_bank_v3_x_tag_bank_v3_table AS KB3TKRT ON KB3TKRT.kanji_id = KB3T.id
-    LEFT JOIN tag_bank_v3_table AS TB3T ON KB3TKRT.tag_id = TB3T.id
+    LEFT JOIN tag_bank_v3_as_json_view AS TagJSON ON KB3TKRT.tag_id = TagJSON.tag_id
 
-    -- Definition Joins
     LEFT JOIN kanji_bank_v3_x_definition_table AS KB3DKRT ON KB3DKRT.kanji_id = KB3T.id
     LEFT JOIN definition_table AS DT ON KB3DKRT.definition_id = DT.id
     LEFT JOIN json_each(KB3T.definition_order) AS DOJ ON DOJ.value = KB3DKRT.definition_id
 
-    -- Stats Joins
     LEFT JOIN kanji_bank_v3_x_kanji_bank_v3_stats_table AS KB3SKRT ON KB3SKRT.kanji_id = KB3T.id
     LEFT JOIN kanji_bank_v3_stats_table AS KB3ST ON KB3SKRT.stat_id = KB3ST.id
     LEFT JOIN kanji_bank_v3_stat_names_table AS KB3SNT ON KB3SNT.id = KB3ST.stat_name_id
     LEFT JOIN kanji_bank_v3_stat_values_table AS KB3SVT ON KB3SVT.id = KB3ST.stat_value_id
 
-    -- Group all the joined rows by the kanji id
     GROUP BY
         KT.id;

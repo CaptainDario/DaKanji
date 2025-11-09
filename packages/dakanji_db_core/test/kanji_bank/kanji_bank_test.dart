@@ -25,7 +25,11 @@ void main() {
     for (var testCase in kanjiBankTestCases) {
       test('Looking up $testCase', () async {
         Stopwatch s = Stopwatch()..start();
-        List<KanjiBankV3Entry> result = (await db.kanjiBankV3Dao.search(testCase));
+        List<KanjiBankV3Entry> result = (await db.kanjiBankV3Dao.search(testCase))
+          .map((e) => e.copyWith(
+            id: 0,
+            tags: e.tags.map((t) => t.copyWith(id: 0)).toList(),
+          )).toList();
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
         print(result);
 

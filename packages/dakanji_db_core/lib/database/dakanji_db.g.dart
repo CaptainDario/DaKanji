@@ -1788,6 +1788,121 @@ class KanjiBankV3TableCompanion extends UpdateCompanion<KanjiBankV3TableData> {
   }
 }
 
+class TermMetaBankV3EntryAsJsonViewData extends DataClass {
+  final int id;
+  final String indexEntry;
+  const TermMetaBankV3EntryAsJsonViewData({
+    required this.id,
+    required this.indexEntry,
+  });
+  factory TermMetaBankV3EntryAsJsonViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermMetaBankV3EntryAsJsonViewData(
+      id: serializer.fromJson<int>(json['id']),
+      indexEntry: serializer.fromJson<String>(json['index_entry']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'index_entry': serializer.toJson<String>(indexEntry),
+    };
+  }
+
+  TermMetaBankV3EntryAsJsonViewData copyWith({int? id, String? indexEntry}) =>
+      TermMetaBankV3EntryAsJsonViewData(
+        id: id ?? this.id,
+        indexEntry: indexEntry ?? this.indexEntry,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaBankV3EntryAsJsonViewData(')
+          ..write('id: $id, ')
+          ..write('indexEntry: $indexEntry')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, indexEntry);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermMetaBankV3EntryAsJsonViewData &&
+          other.id == this.id &&
+          other.indexEntry == this.indexEntry);
+}
+
+class TermMetaBankV3EntryAsJsonView
+    extends
+        ViewInfo<
+          TermMetaBankV3EntryAsJsonView,
+          TermMetaBankV3EntryAsJsonViewData
+        >
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  TermMetaBankV3EntryAsJsonView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [id, indexEntry];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'term_meta_bank_v3_entry_as_json_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_as_json_view AS SELECT IT.id, JSON_OBJECT(\'id\', IT.id, \'dictionaryType\', IT.dictionary_type, \'currentSortingOrder\', IT.current_sorting_order, \'currentFrequencyDictionary\', IT.current_frequency_dictionary, \'title\', IT.title, \'revision\', IT.revision, \'sequenced\', IT.sequenced, \'format\', IT.format, \'version\', IT.version, \'author\', IT.author, \'updatable\', IT.updatable, \'indexUrl\', IT.index_url, \'downloadUrl\', IT.download_url, \'url\', IT.url, \'description\', IT.description, \'attribution\', IT.attribution, \'sourceLanguage\', IT.source_language, \'targetLanguage\', IT.target_language, \'frequencyMode\', IT.frequency_mode) AS index_entry FROM index_table AS IT',
+  };
+  @override
+  TermMetaBankV3EntryAsJsonView get asDslTable => this;
+  @override
+  TermMetaBankV3EntryAsJsonViewData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermMetaBankV3EntryAsJsonViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      indexEntry: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}index_entry'],
+      )!,
+    );
+  }
+
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> indexEntry = GeneratedColumn<String>(
+    'index_entry',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  @override
+  TermMetaBankV3EntryAsJsonView createAlias(String alias) {
+    return TermMetaBankV3EntryAsJsonView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {'index_table'};
+}
+
 class $ReadingTableTable extends ReadingTable
     with TableInfo<$ReadingTableTable, ReadingTableData> {
   @override
@@ -3363,6 +3478,114 @@ class KanjiBankV3_X_TagBankV3TableCompanion
   }
 }
 
+class TagBankV3AsJsonViewData extends DataClass {
+  final int tagId;
+  final String tagJson;
+  const TagBankV3AsJsonViewData({required this.tagId, required this.tagJson});
+  factory TagBankV3AsJsonViewData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TagBankV3AsJsonViewData(
+      tagId: serializer.fromJson<int>(json['tag_id']),
+      tagJson: serializer.fromJson<String>(json['tag_json']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'tag_id': serializer.toJson<int>(tagId),
+      'tag_json': serializer.toJson<String>(tagJson),
+    };
+  }
+
+  TagBankV3AsJsonViewData copyWith({int? tagId, String? tagJson}) =>
+      TagBankV3AsJsonViewData(
+        tagId: tagId ?? this.tagId,
+        tagJson: tagJson ?? this.tagJson,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('TagBankV3AsJsonViewData(')
+          ..write('tagId: $tagId, ')
+          ..write('tagJson: $tagJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(tagId, tagJson);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TagBankV3AsJsonViewData &&
+          other.tagId == this.tagId &&
+          other.tagJson == this.tagJson);
+}
+
+class TagBankV3AsJsonView
+    extends ViewInfo<TagBankV3AsJsonView, TagBankV3AsJsonViewData>
+    implements HasResultSet {
+  final String? _alias;
+  @override
+  final _$DaKanjiDB attachedDatabase;
+  TagBankV3AsJsonView(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [tagId, tagJson];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'tag_bank_v3_as_json_view';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite:
+        'CREATE VIEW IF NOT EXISTS tag_bank_v3_as_json_view AS SELECT TagB3T.id AS tag_id, json_object(\'id\', TagB3T.id, \'indexEntry\', index_json_view.index_entry, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score) AS tag_json FROM tag_bank_v3_table AS TagB3T JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON TagB3T.index_id = index_json_view.id',
+  };
+  @override
+  TagBankV3AsJsonView get asDslTable => this;
+  @override
+  TagBankV3AsJsonViewData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TagBankV3AsJsonViewData(
+      tagId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tag_id'],
+      )!,
+      tagJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_json'],
+      )!,
+    );
+  }
+
+  late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
+    'tag_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> tagJson = GeneratedColumn<String>(
+    'tag_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  @override
+  TagBankV3AsJsonView createAlias(String alias) {
+    return TagBankV3AsJsonView(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {'tag_bank_v3_table', 'index_table'};
+}
+
 class $DefinitionTableTable extends DefinitionTable
     with TableInfo<$DefinitionTableTable, DefinitionTableData> {
   @override
@@ -4855,6 +5078,8 @@ class KanjiBankV3_X_KanjiBankV3StatsTableCompanion
 }
 
 class KanjiBankV3EntryViewData extends DataClass {
+  final int id;
+  final String indexEntry;
   final int indexId;
   final String kanji;
   final String onyomis;
@@ -4863,6 +5088,8 @@ class KanjiBankV3EntryViewData extends DataClass {
   final String definitions;
   final String stats;
   const KanjiBankV3EntryViewData({
+    required this.id,
+    required this.indexEntry,
     required this.indexId,
     required this.kanji,
     required this.onyomis,
@@ -4877,6 +5104,8 @@ class KanjiBankV3EntryViewData extends DataClass {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return KanjiBankV3EntryViewData(
+      id: serializer.fromJson<int>(json['id']),
+      indexEntry: serializer.fromJson<String>(json['indexEntry']),
       indexId: serializer.fromJson<int>(json['indexId']),
       kanji: serializer.fromJson<String>(json['kanji']),
       onyomis: serializer.fromJson<String>(json['onyomis']),
@@ -4890,6 +5119,8 @@ class KanjiBankV3EntryViewData extends DataClass {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'indexEntry': serializer.toJson<String>(indexEntry),
       'indexId': serializer.toJson<int>(indexId),
       'kanji': serializer.toJson<String>(kanji),
       'onyomis': serializer.toJson<String>(onyomis),
@@ -4901,6 +5132,8 @@ class KanjiBankV3EntryViewData extends DataClass {
   }
 
   KanjiBankV3EntryViewData copyWith({
+    int? id,
+    String? indexEntry,
     int? indexId,
     String? kanji,
     String? onyomis,
@@ -4909,6 +5142,8 @@ class KanjiBankV3EntryViewData extends DataClass {
     String? definitions,
     String? stats,
   }) => KanjiBankV3EntryViewData(
+    id: id ?? this.id,
+    indexEntry: indexEntry ?? this.indexEntry,
     indexId: indexId ?? this.indexId,
     kanji: kanji ?? this.kanji,
     onyomis: onyomis ?? this.onyomis,
@@ -4920,6 +5155,8 @@ class KanjiBankV3EntryViewData extends DataClass {
   @override
   String toString() {
     return (StringBuffer('KanjiBankV3EntryViewData(')
+          ..write('id: $id, ')
+          ..write('indexEntry: $indexEntry, ')
           ..write('indexId: $indexId, ')
           ..write('kanji: $kanji, ')
           ..write('onyomis: $onyomis, ')
@@ -4932,12 +5169,23 @@ class KanjiBankV3EntryViewData extends DataClass {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(indexId, kanji, onyomis, kunyomis, tags, definitions, stats);
+  int get hashCode => Object.hash(
+    id,
+    indexEntry,
+    indexId,
+    kanji,
+    onyomis,
+    kunyomis,
+    tags,
+    definitions,
+    stats,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiBankV3EntryViewData &&
+          other.id == this.id &&
+          other.indexEntry == this.indexEntry &&
           other.indexId == this.indexId &&
           other.kanji == this.kanji &&
           other.onyomis == this.onyomis &&
@@ -4956,6 +5204,8 @@ class KanjiBankV3EntryView
   KanjiBankV3EntryView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [
+    id,
+    indexEntry,
     indexId,
     kanji,
     onyomis,
@@ -4971,7 +5221,7 @@ class KanjiBankV3EntryView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS SELECT KB3T.index_id AS indexId, KT.kanji, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT NULLIF(json_quote(onyomi.reading), \'null\') ORDER BY OOJ."key"), \'\') || \']\' AS onyomis, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT NULLIF(json_quote(kunyomi.reading), \'null\') ORDER BY KOJ."key"), \'\') || \']\' AS kunyomis, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'id\', TB3T.id, \'indexId\', TB3T.index_id, \'name\', TB3T.name, \'category\', TB3T.category, \'sortingOrder\', TB3T.sorting_order, \'notes\', TB3T.notes, \'score\', TB3T.score)), \'\') || \']\' AS tags, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT NULLIF(json_quote(DT.definition), \'null\') ORDER BY DOJ."key"), \'\') || \']\' AS definitions, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT json_object(\'name\', KB3SNT.stat_name, \'value\', KB3SVT.stat_value)), \'\') || \']\' AS stats FROM kanji_bank_v3_table AS KB3T INNER JOIN kanji_table AS KT ON KT.id = KB3T.kanji_id LEFT JOIN kanji_bank_v3_x_onyomi_reading_table AS KB3ORRT ON KB3ORRT.kanji_id = KB3T.id LEFT JOIN reading_table AS onyomi ON KB3ORRT.onyomi_reading_id = onyomi.id LEFT JOIN json_each(KB3T.onyomi_order)AS OOJ ON OOJ.value = KB3ORRT.onyomi_reading_id LEFT JOIN kanji_bank_v3_x_kunyomi_reading_table AS KB3KRRT ON KB3KRRT.kanji_id = KB3T.id LEFT JOIN reading_table AS kunyomi ON KB3KRRT.kunyomi_reading_id = kunyomi.id LEFT JOIN json_each(KB3T.kunyomi_order)AS KOJ ON KOJ.value = KB3KRRT.kunyomi_reading_id LEFT JOIN kanji_bank_v3_x_tag_bank_v3_table AS KB3TKRT ON KB3TKRT.kanji_id = KB3T.id LEFT JOIN tag_bank_v3_table AS TB3T ON KB3TKRT.tag_id = TB3T.id LEFT JOIN kanji_bank_v3_x_definition_table AS KB3DKRT ON KB3DKRT.kanji_id = KB3T.id LEFT JOIN definition_table AS DT ON KB3DKRT.definition_id = DT.id LEFT JOIN json_each(KB3T.definition_order)AS DOJ ON DOJ.value = KB3DKRT.definition_id LEFT JOIN kanji_bank_v3_x_kanji_bank_v3_stats_table AS KB3SKRT ON KB3SKRT.kanji_id = KB3T.id LEFT JOIN kanji_bank_v3_stats_table AS KB3ST ON KB3SKRT.stat_id = KB3ST.id LEFT JOIN kanji_bank_v3_stat_names_table AS KB3SNT ON KB3SNT.id = KB3ST.stat_name_id LEFT JOIN kanji_bank_v3_stat_values_table AS KB3SVT ON KB3SVT.id = KB3ST.stat_value_id GROUP BY KT.id',
+        'CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS SELECT KB3T.id AS id, IV.index_entry AS indexEntry, KB3T.index_id AS indexId, KT.kanji, COALESCE(JSON_GROUP_ARRAY(DISTINCT onyomi.reading ORDER BY OOJ."key"), JSON(\'[]\')) AS onyomis, COALESCE(JSON_GROUP_ARRAY(DISTINCT kunyomi.reading ORDER BY KOJ."key"), JSON(\'[]\')) AS kunyomis, COALESCE(JSON_GROUP_ARRAY(DISTINCT JSON(TagJSON.tag_json)), JSON(\'[]\')) AS tags, COALESCE(JSON_GROUP_ARRAY(DISTINCT DT.definition ORDER BY DOJ."key"), JSON(\'[]\')) AS definitions, COALESCE(JSON_GROUP_ARRAY(DISTINCT JSON_OBJECT(\'name\', KB3SNT.stat_name, \'value\', KB3SVT.stat_value)), JSON(\'[]\')) AS stats FROM kanji_bank_v3_table AS KB3T INNER JOIN kanji_table AS KT ON KT.id = KB3T.kanji_id JOIN term_meta_bank_v3_entry_as_json_view AS IV ON KB3T.index_id = IV.id LEFT JOIN kanji_bank_v3_x_onyomi_reading_table AS KB3ORRT ON KB3ORRT.kanji_id = KB3T.id LEFT JOIN reading_table AS onyomi ON KB3ORRT.onyomi_reading_id = onyomi.id LEFT JOIN json_each(KB3T.onyomi_order)AS OOJ ON OOJ.value = KB3ORRT.onyomi_reading_id LEFT JOIN kanji_bank_v3_x_kunyomi_reading_table AS KB3KRRT ON KB3KRRT.kanji_id = KB3T.id LEFT JOIN reading_table AS kunyomi ON KB3KRRT.kunyomi_reading_id = kunyomi.id LEFT JOIN json_each(KB3T.kunyomi_order)AS KOJ ON KOJ.value = KB3KRRT.kunyomi_reading_id LEFT JOIN kanji_bank_v3_x_tag_bank_v3_table AS KB3TKRT ON KB3TKRT.kanji_id = KB3T.id LEFT JOIN tag_bank_v3_as_json_view AS TagJSON ON KB3TKRT.tag_id = TagJSON.tag_id LEFT JOIN kanji_bank_v3_x_definition_table AS KB3DKRT ON KB3DKRT.kanji_id = KB3T.id LEFT JOIN definition_table AS DT ON KB3DKRT.definition_id = DT.id LEFT JOIN json_each(KB3T.definition_order)AS DOJ ON DOJ.value = KB3DKRT.definition_id LEFT JOIN kanji_bank_v3_x_kanji_bank_v3_stats_table AS KB3SKRT ON KB3SKRT.kanji_id = KB3T.id LEFT JOIN kanji_bank_v3_stats_table AS KB3ST ON KB3SKRT.stat_id = KB3ST.id LEFT JOIN kanji_bank_v3_stat_names_table AS KB3SNT ON KB3SNT.id = KB3ST.stat_name_id LEFT JOIN kanji_bank_v3_stat_values_table AS KB3SVT ON KB3SVT.id = KB3ST.stat_value_id GROUP BY KT.id',
   };
   @override
   KanjiBankV3EntryView get asDslTable => this;
@@ -4982,6 +5232,14 @@ class KanjiBankV3EntryView
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return KanjiBankV3EntryViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      indexEntry: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}indexEntry'],
+      )!,
       indexId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}indexId'],
@@ -5013,6 +5271,18 @@ class KanjiBankV3EntryView
     );
   }
 
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> indexEntry = GeneratedColumn<String>(
+    'indexEntry',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
   late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
     'indexId',
     aliasedName,
@@ -5066,6 +5336,7 @@ class KanjiBankV3EntryView
   Set<String> get readTables => const {
     'kanji_bank_v3_table',
     'kanji_table',
+    'index_table',
     'kanji_bank_v3_x_onyomi_reading_table',
     'reading_table',
     'kanji_bank_v3_x_kunyomi_reading_table',
@@ -5903,6 +6174,8 @@ class KanjiMetaBankV3EntryView
 }
 
 class KanjiDictionarySearchViewData extends DataClass {
+  final int id;
+  final String indexEntry;
   final int indexId;
   final String kanji;
   final String onyomis;
@@ -5910,7 +6183,7 @@ class KanjiDictionarySearchViewData extends DataClass {
   final String tags;
   final String definitions;
   final String stats;
-  final int id;
+  final int id1;
   final DictionaryTypes dictionaryType;
   final int currentSortingOrder;
   final bool currentFrequencyDictionary;
@@ -5931,6 +6204,8 @@ class KanjiDictionarySearchViewData extends DataClass {
   final String? frequencyMode;
   final String kanjiMetaBankV3Entries;
   const KanjiDictionarySearchViewData({
+    required this.id,
+    required this.indexEntry,
     required this.indexId,
     required this.kanji,
     required this.onyomis,
@@ -5938,7 +6213,7 @@ class KanjiDictionarySearchViewData extends DataClass {
     required this.tags,
     required this.definitions,
     required this.stats,
-    required this.id,
+    required this.id1,
     required this.dictionaryType,
     required this.currentSortingOrder,
     required this.currentFrequencyDictionary,
@@ -5965,6 +6240,8 @@ class KanjiDictionarySearchViewData extends DataClass {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return KanjiDictionarySearchViewData(
+      id: serializer.fromJson<int>(json['id']),
+      indexEntry: serializer.fromJson<String>(json['indexEntry']),
       indexId: serializer.fromJson<int>(json['indexId']),
       kanji: serializer.fromJson<String>(json['kanji']),
       onyomis: serializer.fromJson<String>(json['onyomis']),
@@ -5972,7 +6249,7 @@ class KanjiDictionarySearchViewData extends DataClass {
       tags: serializer.fromJson<String>(json['tags']),
       definitions: serializer.fromJson<String>(json['definitions']),
       stats: serializer.fromJson<String>(json['stats']),
-      id: serializer.fromJson<int>(json['id']),
+      id1: serializer.fromJson<int>(json['id']),
       dictionaryType: $IndexTableTable.$converterdictionaryType.fromJson(
         serializer.fromJson<String>(json['dictionary_type']),
       ),
@@ -6006,6 +6283,8 @@ class KanjiDictionarySearchViewData extends DataClass {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'indexEntry': serializer.toJson<String>(indexEntry),
       'indexId': serializer.toJson<int>(indexId),
       'kanji': serializer.toJson<String>(kanji),
       'onyomis': serializer.toJson<String>(onyomis),
@@ -6013,7 +6292,7 @@ class KanjiDictionarySearchViewData extends DataClass {
       'tags': serializer.toJson<String>(tags),
       'definitions': serializer.toJson<String>(definitions),
       'stats': serializer.toJson<String>(stats),
-      'id': serializer.toJson<int>(id),
+      'id': serializer.toJson<int>(id1),
       'dictionary_type': serializer.toJson<String>(
         $IndexTableTable.$converterdictionaryType.toJson(dictionaryType),
       ),
@@ -6043,6 +6322,8 @@ class KanjiDictionarySearchViewData extends DataClass {
   }
 
   KanjiDictionarySearchViewData copyWith({
+    int? id,
+    String? indexEntry,
     int? indexId,
     String? kanji,
     String? onyomis,
@@ -6050,7 +6331,7 @@ class KanjiDictionarySearchViewData extends DataClass {
     String? tags,
     String? definitions,
     String? stats,
-    int? id,
+    int? id1,
     DictionaryTypes? dictionaryType,
     int? currentSortingOrder,
     bool? currentFrequencyDictionary,
@@ -6071,6 +6352,8 @@ class KanjiDictionarySearchViewData extends DataClass {
     Value<String?> frequencyMode = const Value.absent(),
     String? kanjiMetaBankV3Entries,
   }) => KanjiDictionarySearchViewData(
+    id: id ?? this.id,
+    indexEntry: indexEntry ?? this.indexEntry,
     indexId: indexId ?? this.indexId,
     kanji: kanji ?? this.kanji,
     onyomis: onyomis ?? this.onyomis,
@@ -6078,7 +6361,7 @@ class KanjiDictionarySearchViewData extends DataClass {
     tags: tags ?? this.tags,
     definitions: definitions ?? this.definitions,
     stats: stats ?? this.stats,
-    id: id ?? this.id,
+    id1: id1 ?? this.id1,
     dictionaryType: dictionaryType ?? this.dictionaryType,
     currentSortingOrder: currentSortingOrder ?? this.currentSortingOrder,
     currentFrequencyDictionary:
@@ -6110,6 +6393,8 @@ class KanjiDictionarySearchViewData extends DataClass {
   @override
   String toString() {
     return (StringBuffer('KanjiDictionarySearchViewData(')
+          ..write('id: $id, ')
+          ..write('indexEntry: $indexEntry, ')
           ..write('indexId: $indexId, ')
           ..write('kanji: $kanji, ')
           ..write('onyomis: $onyomis, ')
@@ -6117,7 +6402,7 @@ class KanjiDictionarySearchViewData extends DataClass {
           ..write('tags: $tags, ')
           ..write('definitions: $definitions, ')
           ..write('stats: $stats, ')
-          ..write('id: $id, ')
+          ..write('id1: $id1, ')
           ..write('dictionaryType: $dictionaryType, ')
           ..write('currentSortingOrder: $currentSortingOrder, ')
           ..write('currentFrequencyDictionary: $currentFrequencyDictionary, ')
@@ -6143,6 +6428,8 @@ class KanjiDictionarySearchViewData extends DataClass {
 
   @override
   int get hashCode => Object.hashAll([
+    id,
+    indexEntry,
     indexId,
     kanji,
     onyomis,
@@ -6150,7 +6437,7 @@ class KanjiDictionarySearchViewData extends DataClass {
     tags,
     definitions,
     stats,
-    id,
+    id1,
     dictionaryType,
     currentSortingOrder,
     currentFrequencyDictionary,
@@ -6175,6 +6462,8 @@ class KanjiDictionarySearchViewData extends DataClass {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiDictionarySearchViewData &&
+          other.id == this.id &&
+          other.indexEntry == this.indexEntry &&
           other.indexId == this.indexId &&
           other.kanji == this.kanji &&
           other.onyomis == this.onyomis &&
@@ -6182,7 +6471,7 @@ class KanjiDictionarySearchViewData extends DataClass {
           other.tags == this.tags &&
           other.definitions == this.definitions &&
           other.stats == this.stats &&
-          other.id == this.id &&
+          other.id1 == this.id1 &&
           other.dictionaryType == this.dictionaryType &&
           other.currentSortingOrder == this.currentSortingOrder &&
           other.currentFrequencyDictionary == this.currentFrequencyDictionary &&
@@ -6213,6 +6502,8 @@ class KanjiDictionarySearchView
   KanjiDictionarySearchView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [
+    id,
+    indexEntry,
     indexId,
     kanji,
     onyomis,
@@ -6220,7 +6511,7 @@ class KanjiDictionarySearchView
     tags,
     definitions,
     stats,
-    id,
+    id1,
     dictionaryType,
     currentSortingOrder,
     currentFrequencyDictionary,
@@ -6259,6 +6550,14 @@ class KanjiDictionarySearchView
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return KanjiDictionarySearchViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      indexEntry: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}indexEntry'],
+      )!,
       indexId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}indexId'],
@@ -6287,7 +6586,7 @@ class KanjiDictionarySearchView
         DriftSqlType.string,
         data['${effectivePrefix}stats'],
       )!,
-      id: attachedDatabase.typeMapping.read(
+      id1: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
@@ -6372,6 +6671,18 @@ class KanjiDictionarySearchView
     );
   }
 
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<String> indexEntry = GeneratedColumn<String>(
+    'indexEntry',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
   late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
     'indexId',
     aliasedName,
@@ -6414,7 +6725,7 @@ class KanjiDictionarySearchView
     false,
     type: DriftSqlType.string,
   );
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+  late final GeneratedColumn<int> id1 = GeneratedColumn<int>(
     'id',
     aliasedName,
     false,
@@ -6557,6 +6868,7 @@ class KanjiDictionarySearchView
   Set<String> get readTables => const {
     'kanji_bank_v3_table',
     'kanji_table',
+    'index_table',
     'kanji_bank_v3_x_onyomi_reading_table',
     'reading_table',
     'kanji_bank_v3_x_kunyomi_reading_table',
@@ -6568,7 +6880,6 @@ class KanjiDictionarySearchView
     'kanji_bank_v3_stats_table',
     'kanji_bank_v3_stat_names_table',
     'kanji_bank_v3_stat_values_table',
-    'index_table',
     'kanji_meta_bank_v3_table',
     'kanji_meta_bank_v3_type_table',
   };
@@ -9885,229 +10196,6 @@ class TermBankV3_X_DefinitionTagTableCompanion
           ..write(')'))
         .toString();
   }
-}
-
-class TermMetaBankV3EntryAsJsonViewData extends DataClass {
-  final int id;
-  final String indexEntry;
-  const TermMetaBankV3EntryAsJsonViewData({
-    required this.id,
-    required this.indexEntry,
-  });
-  factory TermMetaBankV3EntryAsJsonViewData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermMetaBankV3EntryAsJsonViewData(
-      id: serializer.fromJson<int>(json['id']),
-      indexEntry: serializer.fromJson<String>(json['index_entry']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'index_entry': serializer.toJson<String>(indexEntry),
-    };
-  }
-
-  TermMetaBankV3EntryAsJsonViewData copyWith({int? id, String? indexEntry}) =>
-      TermMetaBankV3EntryAsJsonViewData(
-        id: id ?? this.id,
-        indexEntry: indexEntry ?? this.indexEntry,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('TermMetaBankV3EntryAsJsonViewData(')
-          ..write('id: $id, ')
-          ..write('indexEntry: $indexEntry')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, indexEntry);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TermMetaBankV3EntryAsJsonViewData &&
-          other.id == this.id &&
-          other.indexEntry == this.indexEntry);
-}
-
-class TermMetaBankV3EntryAsJsonView
-    extends
-        ViewInfo<
-          TermMetaBankV3EntryAsJsonView,
-          TermMetaBankV3EntryAsJsonViewData
-        >
-    implements HasResultSet {
-  final String? _alias;
-  @override
-  final _$DaKanjiDB attachedDatabase;
-  TermMetaBankV3EntryAsJsonView(this.attachedDatabase, [this._alias]);
-  @override
-  List<GeneratedColumn> get $columns => [id, indexEntry];
-  @override
-  String get aliasedName => _alias ?? entityName;
-  @override
-  String get entityName => 'term_meta_bank_v3_entry_as_json_view';
-  @override
-  Map<SqlDialect, String> get createViewStatements => {
-    SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_as_json_view AS SELECT IT.id, JSON_OBJECT(\'id\', IT.id, \'dictionaryType\', IT.dictionary_type, \'currentSortingOrder\', IT.current_sorting_order, \'currentFrequencyDictionary\', IT.current_frequency_dictionary, \'title\', IT.title, \'revision\', IT.revision, \'sequenced\', IT.sequenced, \'format\', IT.format, \'version\', IT.version, \'author\', IT.author, \'updatable\', IT.updatable, \'indexUrl\', IT.index_url, \'downloadUrl\', IT.download_url, \'url\', IT.url, \'description\', IT.description, \'attribution\', IT.attribution, \'sourceLanguage\', IT.source_language, \'targetLanguage\', IT.target_language, \'frequencyMode\', IT.frequency_mode) AS index_entry FROM index_table AS IT',
-  };
-  @override
-  TermMetaBankV3EntryAsJsonView get asDslTable => this;
-  @override
-  TermMetaBankV3EntryAsJsonViewData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermMetaBankV3EntryAsJsonViewData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      indexEntry: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}index_entry'],
-      )!,
-    );
-  }
-
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<String> indexEntry = GeneratedColumn<String>(
-    'index_entry',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  @override
-  TermMetaBankV3EntryAsJsonView createAlias(String alias) {
-    return TermMetaBankV3EntryAsJsonView(attachedDatabase, alias);
-  }
-
-  @override
-  Query? get query => null;
-  @override
-  Set<String> get readTables => const {'index_table'};
-}
-
-class TagBankV3AsJsonViewData extends DataClass {
-  final int tagId;
-  final String tagJson;
-  const TagBankV3AsJsonViewData({required this.tagId, required this.tagJson});
-  factory TagBankV3AsJsonViewData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TagBankV3AsJsonViewData(
-      tagId: serializer.fromJson<int>(json['tag_id']),
-      tagJson: serializer.fromJson<String>(json['tag_json']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'tag_id': serializer.toJson<int>(tagId),
-      'tag_json': serializer.toJson<String>(tagJson),
-    };
-  }
-
-  TagBankV3AsJsonViewData copyWith({int? tagId, String? tagJson}) =>
-      TagBankV3AsJsonViewData(
-        tagId: tagId ?? this.tagId,
-        tagJson: tagJson ?? this.tagJson,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('TagBankV3AsJsonViewData(')
-          ..write('tagId: $tagId, ')
-          ..write('tagJson: $tagJson')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(tagId, tagJson);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TagBankV3AsJsonViewData &&
-          other.tagId == this.tagId &&
-          other.tagJson == this.tagJson);
-}
-
-class TagBankV3AsJsonView
-    extends ViewInfo<TagBankV3AsJsonView, TagBankV3AsJsonViewData>
-    implements HasResultSet {
-  final String? _alias;
-  @override
-  final _$DaKanjiDB attachedDatabase;
-  TagBankV3AsJsonView(this.attachedDatabase, [this._alias]);
-  @override
-  List<GeneratedColumn> get $columns => [tagId, tagJson];
-  @override
-  String get aliasedName => _alias ?? entityName;
-  @override
-  String get entityName => 'tag_bank_v3_as_json_view';
-  @override
-  Map<SqlDialect, String> get createViewStatements => {
-    SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS tag_bank_v3_as_json_view AS SELECT TagB3T.id AS tag_id, json_object(\'id\', TagB3T.id, \'indexEntry\', index_json_view.index_entry, \'name\', TagB3T.name, \'category\', TagB3T.category, \'sortingOrder\', TagB3T.sorting_order, \'notes\', TagB3T.notes, \'score\', TagB3T.score) AS tag_json FROM tag_bank_v3_table AS TagB3T JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON TagB3T.index_id = index_json_view.id',
-  };
-  @override
-  TagBankV3AsJsonView get asDslTable => this;
-  @override
-  TagBankV3AsJsonViewData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TagBankV3AsJsonViewData(
-      tagId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}tag_id'],
-      )!,
-      tagJson: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}tag_json'],
-      )!,
-    );
-  }
-
-  late final GeneratedColumn<int> tagId = GeneratedColumn<int>(
-    'tag_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<String> tagJson = GeneratedColumn<String>(
-    'tag_json',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  @override
-  TagBankV3AsJsonView createAlias(String alias) {
-    return TagBankV3AsJsonView(attachedDatabase, alias);
-  }
-
-  @override
-  Query? get query => null;
-  @override
-  Set<String> get readTables => const {'tag_bank_v3_table', 'index_table'};
 }
 
 class TermBankV3DefTagsJsonViewData extends DataClass {
@@ -18392,6 +18480,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $KanjiBankV3TableTable kanjiBankV3Table = $KanjiBankV3TableTable(
     this,
   );
+  late final TermMetaBankV3EntryAsJsonView termMetaBankV3EntryAsJsonView =
+      TermMetaBankV3EntryAsJsonView(this);
   late final $ReadingTableTable readingTable = $ReadingTableTable(this);
   late final $KanjiBankV3_X_OnyomiReadingTableTable
   kanjiBankV3XOnyomiReadingTable = $KanjiBankV3_X_OnyomiReadingTableTable(this);
@@ -18402,6 +18492,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $TagBankV3TableTable tagBankV3Table = $TagBankV3TableTable(this);
   late final $KanjiBankV3_X_TagBankV3TableTable kanjiBankV3XTagBankV3Table =
       $KanjiBankV3_X_TagBankV3TableTable(this);
+  late final TagBankV3AsJsonView tagBankV3AsJsonView = TagBankV3AsJsonView(
+    this,
+  );
   late final $DefinitionTableTable definitionTable = $DefinitionTableTable(
     this,
   );
@@ -18484,11 +18577,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       TermBankV3DefinitionsJsonView(this);
   late final $TermBankV3_X_DefinitionTagTableTable
   termBankV3XDefinitionTagTable = $TermBankV3_X_DefinitionTagTableTable(this);
-  late final TermMetaBankV3EntryAsJsonView termMetaBankV3EntryAsJsonView =
-      TermMetaBankV3EntryAsJsonView(this);
-  late final TagBankV3AsJsonView tagBankV3AsJsonView = TagBankV3AsJsonView(
-    this,
-  );
   late final TermBankV3DefTagsJsonView termBankV3DefTagsJsonView =
       TermBankV3DefTagsJsonView(this);
   late final $TermBankV3RuleIdentifierTableTable termBankV3RuleIdentifierTable =
@@ -18863,6 +18951,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       readsFrom: {
         kanjiBankV3Table,
         kanjiTable,
+        indexTable,
         kanjiBankV3XOnyomiReadingTable,
         readingTable,
         kanjiBankV3XKunyomiReadingTable,
@@ -18874,7 +18963,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         kanjiBankV3StatsTable,
         kanjiBankV3StatNamesTable,
         kanjiBankV3StatValuesTable,
-        indexTable,
         kanjiMetaBankV3Table,
         kanjiMetaBankV3TypeTable,
       },
@@ -19147,6 +19235,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       readsFrom: {
         kanjiBankV3Table,
         kanjiTable,
+        indexTable,
         kanjiBankV3XOnyomiReadingTable,
         readingTable,
         kanjiBankV3XKunyomiReadingTable,
@@ -19238,11 +19327,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     indexTable,
     kanjiTable,
     kanjiBankV3Table,
+    termMetaBankV3EntryAsJsonView,
     readingTable,
     kanjiBankV3XOnyomiReadingTable,
     kanjiBankV3XKunyomiReadingTable,
     tagBankV3Table,
     kanjiBankV3XTagBankV3Table,
+    tagBankV3AsJsonView,
     definitionTable,
     kanjiBankV3XDefinitionTable,
     kanjiBankV3StatNamesTable,
@@ -19274,8 +19365,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termMetaBankV3Table,
     termBankV3DefinitionsJsonView,
     termBankV3XDefinitionTagTable,
-    termMetaBankV3EntryAsJsonView,
-    tagBankV3AsJsonView,
     termBankV3DefTagsJsonView,
     termBankV3RuleIdentifierTable,
     termBankV3XRuleIdentifierTable,
