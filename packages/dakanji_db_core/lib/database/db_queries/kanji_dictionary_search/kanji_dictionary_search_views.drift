@@ -4,24 +4,19 @@ import '/database/index/index_tables.dart';
 
 CREATE VIEW IF NOT EXISTS kanji_dictionary_search_view AS
     SELECT
-    -- Select all columns from the base kanji view
     k.*,
-    it.*,
-    -- Group the joined metadata for each kanji into a single JSON array
     (
         SELECT
             json_group_array(
                 json_object(
-                'kanji', km.kanji,
-                'indexId', km.index_id,
-                'type', km.type,
-                'freqValue', km.freq_value,
-                'freqDisplayValue', km.freq_display_value
+                    'kanji', km.kanji,
+                    'indexEntry', km.indexEntry,
+                    'type', km.type,
+                    'freqValue', (km.freq_value),
+                    'freqDisplayValue', km.freq_display_value
                 )
             )
         FROM kanji_meta_bank_v3_entry_view AS km
         WHERE km.kanji = k.kanji
     ) AS kanjiMetaBankV3Entries
-    FROM kanji_bank_v3_entry_view AS k
-    INNER JOIN
-        index_table AS it ON k.indexId = it.id;
+    FROM kanji_bank_v3_entry_view AS k;

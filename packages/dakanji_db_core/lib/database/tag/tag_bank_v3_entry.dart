@@ -20,7 +20,7 @@ abstract class TagBankV3Entry with _$TagBankV3Entry {
       /// id of this tag entry in sqlite database
       required int id,
       /// id of this entry's dictionary
-      @IndexEntryConverter()
+      @IndexEntryJsonConverter()
       required IndexEntry indexEntry,
       /// Tag name.
       required String name,

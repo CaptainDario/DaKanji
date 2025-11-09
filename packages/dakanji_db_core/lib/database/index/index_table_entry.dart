@@ -1,5 +1,5 @@
+import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/database/dictionary_types.dart';
 import 'package:dakanji_db_core/helper/bool_as_int_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

@@ -1,4 +1,4 @@
-import 'package:dakanji_db_core/database/dictionary_types.dart';
+import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 

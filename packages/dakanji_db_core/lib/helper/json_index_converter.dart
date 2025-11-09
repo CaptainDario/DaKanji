@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-class IndexEntryConverter implements JsonConverter<IndexEntry, Object?> {
-  const IndexEntryConverter();
+class IndexEntryJsonConverter implements JsonConverter<IndexEntry, Object?> {
+  const IndexEntryJsonConverter();
 
   @override
   IndexEntry fromJson(Object? json) {

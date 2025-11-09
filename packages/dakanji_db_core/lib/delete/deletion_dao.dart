@@ -1,5 +1,5 @@
+import "package:dakanji_db_core/data/dictionary_types.dart";
 import "package:dakanji_db_core/database/dakanji_db.dart";
-import "package:dakanji_db_core/database/dictionary_types.dart";
 import "package:dakanji_db_core/delete/audio_delete.dart";
 import "package:dakanji_db_core/delete/examples_delete.dart";
 import "package:dakanji_db_core/delete/yomitan_dictionary_delete.dart";

@@ -5992,14 +5992,16 @@ class KanjiMetaBankV3TableCompanion
 }
 
 class KanjiMetaBankV3EntryViewData extends DataClass {
+  final int id;
   final String kanji;
-  final int indexId;
+  final String indexEntry;
   final String type;
   final int? freqValue;
   final String? freqDisplayValue;
   const KanjiMetaBankV3EntryViewData({
+    required this.id,
     required this.kanji,
-    required this.indexId,
+    required this.indexEntry,
     required this.type,
     this.freqValue,
     this.freqDisplayValue,
@@ -6010,8 +6012,9 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return KanjiMetaBankV3EntryViewData(
+      id: serializer.fromJson<int>(json['id']),
       kanji: serializer.fromJson<String>(json['kanji']),
-      indexId: serializer.fromJson<int>(json['index_id']),
+      indexEntry: serializer.fromJson<String>(json['indexEntry']),
       type: serializer.fromJson<String>(json['type']),
       freqValue: serializer.fromJson<int?>(json['freq_value']),
       freqDisplayValue: serializer.fromJson<String?>(
@@ -6023,8 +6026,9 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
       'kanji': serializer.toJson<String>(kanji),
-      'index_id': serializer.toJson<int>(indexId),
+      'indexEntry': serializer.toJson<String>(indexEntry),
       'type': serializer.toJson<String>(type),
       'freq_value': serializer.toJson<int?>(freqValue),
       'freq_display_value': serializer.toJson<String?>(freqDisplayValue),
@@ -6032,14 +6036,16 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
   }
 
   KanjiMetaBankV3EntryViewData copyWith({
+    int? id,
     String? kanji,
-    int? indexId,
+    String? indexEntry,
     String? type,
     Value<int?> freqValue = const Value.absent(),
     Value<String?> freqDisplayValue = const Value.absent(),
   }) => KanjiMetaBankV3EntryViewData(
+    id: id ?? this.id,
     kanji: kanji ?? this.kanji,
-    indexId: indexId ?? this.indexId,
+    indexEntry: indexEntry ?? this.indexEntry,
     type: type ?? this.type,
     freqValue: freqValue.present ? freqValue.value : this.freqValue,
     freqDisplayValue: freqDisplayValue.present
@@ -6049,8 +6055,9 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
   @override
   String toString() {
     return (StringBuffer('KanjiMetaBankV3EntryViewData(')
+          ..write('id: $id, ')
           ..write('kanji: $kanji, ')
-          ..write('indexId: $indexId, ')
+          ..write('indexEntry: $indexEntry, ')
           ..write('type: $type, ')
           ..write('freqValue: $freqValue, ')
           ..write('freqDisplayValue: $freqDisplayValue')
@@ -6060,13 +6067,14 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
 
   @override
   int get hashCode =>
-      Object.hash(kanji, indexId, type, freqValue, freqDisplayValue);
+      Object.hash(id, kanji, indexEntry, type, freqValue, freqDisplayValue);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiMetaBankV3EntryViewData &&
+          other.id == this.id &&
           other.kanji == this.kanji &&
-          other.indexId == this.indexId &&
+          other.indexEntry == this.indexEntry &&
           other.type == this.type &&
           other.freqValue == this.freqValue &&
           other.freqDisplayValue == this.freqDisplayValue);
@@ -6081,8 +6089,9 @@ class KanjiMetaBankV3EntryView
   KanjiMetaBankV3EntryView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [
+    id,
     kanji,
-    indexId,
+    indexEntry,
     type,
     freqValue,
     freqDisplayValue,
@@ -6094,7 +6103,7 @@ class KanjiMetaBankV3EntryView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW kanji_meta_bank_v3_entry_view AS SELECT KT.kanji, KMBV3T.index_id AS index_id, KMBV3TT.type, KMBV3T.freq_value, KMBV3T.freq_display_value FROM kanji_meta_bank_v3_table AS KMBV3T INNER JOIN kanji_meta_bank_v3_type_table AS KMBV3TT ON KMBV3TT.id = KMBV3T.type_id INNER JOIN kanji_table AS KT ON KT.id = KMBV3T.kanji_id',
+        'CREATE VIEW kanji_meta_bank_v3_entry_view AS SELECT KMBV3T.id AS id, KT.kanji, IV.index_entry AS indexEntry, KMBV3TT.type, KMBV3T.freq_value, KMBV3T.freq_display_value FROM kanji_meta_bank_v3_table AS KMBV3T JOIN term_meta_bank_v3_entry_as_json_view AS IV ON KMBV3T.index_id = IV.id INNER JOIN kanji_meta_bank_v3_type_table AS KMBV3TT ON KMBV3TT.id = KMBV3T.type_id INNER JOIN kanji_table AS KT ON KT.id = KMBV3T.kanji_id',
   };
   @override
   KanjiMetaBankV3EntryView get asDslTable => this;
@@ -6105,13 +6114,17 @@ class KanjiMetaBankV3EntryView
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return KanjiMetaBankV3EntryViewData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
       kanji: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}kanji'],
       )!,
-      indexId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}index_id'],
+      indexEntry: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}indexEntry'],
       )!,
       type: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -6128,17 +6141,23 @@ class KanjiMetaBankV3EntryView
     );
   }
 
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
   late final GeneratedColumn<String> kanji = GeneratedColumn<String>(
     'kanji',
     aliasedName,
     false,
     type: DriftSqlType.string,
   );
-  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
-    'index_id',
+  late final GeneratedColumn<String> indexEntry = GeneratedColumn<String>(
+    'indexEntry',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
   );
   late final GeneratedColumn<String> type = GeneratedColumn<String>(
     'type',
@@ -6168,6 +6187,7 @@ class KanjiMetaBankV3EntryView
   @override
   Set<String> get readTables => const {
     'kanji_meta_bank_v3_table',
+    'index_table',
     'kanji_meta_bank_v3_type_table',
     'kanji_table',
   };
@@ -6183,25 +6203,6 @@ class KanjiDictionarySearchViewData extends DataClass {
   final String tags;
   final String definitions;
   final String stats;
-  final int id1;
-  final DictionaryTypes dictionaryType;
-  final int currentSortingOrder;
-  final bool currentFrequencyDictionary;
-  final String title;
-  final String revision;
-  final bool? sequenced;
-  final int? format;
-  final int? version;
-  final String? author;
-  final bool? updatable;
-  final String? indexUrl;
-  final String? downloadUrl;
-  final String? url;
-  final String? description;
-  final String? attribution;
-  final String? sourceLanguage;
-  final String? targetLanguage;
-  final String? frequencyMode;
   final String kanjiMetaBankV3Entries;
   const KanjiDictionarySearchViewData({
     required this.id,
@@ -6213,25 +6214,6 @@ class KanjiDictionarySearchViewData extends DataClass {
     required this.tags,
     required this.definitions,
     required this.stats,
-    required this.id1,
-    required this.dictionaryType,
-    required this.currentSortingOrder,
-    required this.currentFrequencyDictionary,
-    required this.title,
-    required this.revision,
-    this.sequenced,
-    this.format,
-    this.version,
-    this.author,
-    this.updatable,
-    this.indexUrl,
-    this.downloadUrl,
-    this.url,
-    this.description,
-    this.attribution,
-    this.sourceLanguage,
-    this.targetLanguage,
-    this.frequencyMode,
     required this.kanjiMetaBankV3Entries,
   });
   factory KanjiDictionarySearchViewData.fromJson(
@@ -6249,31 +6231,6 @@ class KanjiDictionarySearchViewData extends DataClass {
       tags: serializer.fromJson<String>(json['tags']),
       definitions: serializer.fromJson<String>(json['definitions']),
       stats: serializer.fromJson<String>(json['stats']),
-      id1: serializer.fromJson<int>(json['id']),
-      dictionaryType: $IndexTableTable.$converterdictionaryType.fromJson(
-        serializer.fromJson<String>(json['dictionary_type']),
-      ),
-      currentSortingOrder: serializer.fromJson<int>(
-        json['current_sorting_order'],
-      ),
-      currentFrequencyDictionary: serializer.fromJson<bool>(
-        json['current_frequency_dictionary'],
-      ),
-      title: serializer.fromJson<String>(json['title']),
-      revision: serializer.fromJson<String>(json['revision']),
-      sequenced: serializer.fromJson<bool?>(json['sequenced']),
-      format: serializer.fromJson<int?>(json['format']),
-      version: serializer.fromJson<int?>(json['version']),
-      author: serializer.fromJson<String?>(json['author']),
-      updatable: serializer.fromJson<bool?>(json['updatable']),
-      indexUrl: serializer.fromJson<String?>(json['index_url']),
-      downloadUrl: serializer.fromJson<String?>(json['download_url']),
-      url: serializer.fromJson<String?>(json['url']),
-      description: serializer.fromJson<String?>(json['description']),
-      attribution: serializer.fromJson<String?>(json['attribution']),
-      sourceLanguage: serializer.fromJson<String?>(json['source_language']),
-      targetLanguage: serializer.fromJson<String?>(json['target_language']),
-      frequencyMode: serializer.fromJson<String?>(json['frequency_mode']),
       kanjiMetaBankV3Entries: serializer.fromJson<String>(
         json['kanjiMetaBankV3Entries'],
       ),
@@ -6292,29 +6249,6 @@ class KanjiDictionarySearchViewData extends DataClass {
       'tags': serializer.toJson<String>(tags),
       'definitions': serializer.toJson<String>(definitions),
       'stats': serializer.toJson<String>(stats),
-      'id': serializer.toJson<int>(id1),
-      'dictionary_type': serializer.toJson<String>(
-        $IndexTableTable.$converterdictionaryType.toJson(dictionaryType),
-      ),
-      'current_sorting_order': serializer.toJson<int>(currentSortingOrder),
-      'current_frequency_dictionary': serializer.toJson<bool>(
-        currentFrequencyDictionary,
-      ),
-      'title': serializer.toJson<String>(title),
-      'revision': serializer.toJson<String>(revision),
-      'sequenced': serializer.toJson<bool?>(sequenced),
-      'format': serializer.toJson<int?>(format),
-      'version': serializer.toJson<int?>(version),
-      'author': serializer.toJson<String?>(author),
-      'updatable': serializer.toJson<bool?>(updatable),
-      'index_url': serializer.toJson<String?>(indexUrl),
-      'download_url': serializer.toJson<String?>(downloadUrl),
-      'url': serializer.toJson<String?>(url),
-      'description': serializer.toJson<String?>(description),
-      'attribution': serializer.toJson<String?>(attribution),
-      'source_language': serializer.toJson<String?>(sourceLanguage),
-      'target_language': serializer.toJson<String?>(targetLanguage),
-      'frequency_mode': serializer.toJson<String?>(frequencyMode),
       'kanjiMetaBankV3Entries': serializer.toJson<String>(
         kanjiMetaBankV3Entries,
       ),
@@ -6331,25 +6265,6 @@ class KanjiDictionarySearchViewData extends DataClass {
     String? tags,
     String? definitions,
     String? stats,
-    int? id1,
-    DictionaryTypes? dictionaryType,
-    int? currentSortingOrder,
-    bool? currentFrequencyDictionary,
-    String? title,
-    String? revision,
-    Value<bool?> sequenced = const Value.absent(),
-    Value<int?> format = const Value.absent(),
-    Value<int?> version = const Value.absent(),
-    Value<String?> author = const Value.absent(),
-    Value<bool?> updatable = const Value.absent(),
-    Value<String?> indexUrl = const Value.absent(),
-    Value<String?> downloadUrl = const Value.absent(),
-    Value<String?> url = const Value.absent(),
-    Value<String?> description = const Value.absent(),
-    Value<String?> attribution = const Value.absent(),
-    Value<String?> sourceLanguage = const Value.absent(),
-    Value<String?> targetLanguage = const Value.absent(),
-    Value<String?> frequencyMode = const Value.absent(),
     String? kanjiMetaBankV3Entries,
   }) => KanjiDictionarySearchViewData(
     id: id ?? this.id,
@@ -6361,32 +6276,6 @@ class KanjiDictionarySearchViewData extends DataClass {
     tags: tags ?? this.tags,
     definitions: definitions ?? this.definitions,
     stats: stats ?? this.stats,
-    id1: id1 ?? this.id1,
-    dictionaryType: dictionaryType ?? this.dictionaryType,
-    currentSortingOrder: currentSortingOrder ?? this.currentSortingOrder,
-    currentFrequencyDictionary:
-        currentFrequencyDictionary ?? this.currentFrequencyDictionary,
-    title: title ?? this.title,
-    revision: revision ?? this.revision,
-    sequenced: sequenced.present ? sequenced.value : this.sequenced,
-    format: format.present ? format.value : this.format,
-    version: version.present ? version.value : this.version,
-    author: author.present ? author.value : this.author,
-    updatable: updatable.present ? updatable.value : this.updatable,
-    indexUrl: indexUrl.present ? indexUrl.value : this.indexUrl,
-    downloadUrl: downloadUrl.present ? downloadUrl.value : this.downloadUrl,
-    url: url.present ? url.value : this.url,
-    description: description.present ? description.value : this.description,
-    attribution: attribution.present ? attribution.value : this.attribution,
-    sourceLanguage: sourceLanguage.present
-        ? sourceLanguage.value
-        : this.sourceLanguage,
-    targetLanguage: targetLanguage.present
-        ? targetLanguage.value
-        : this.targetLanguage,
-    frequencyMode: frequencyMode.present
-        ? frequencyMode.value
-        : this.frequencyMode,
     kanjiMetaBankV3Entries:
         kanjiMetaBankV3Entries ?? this.kanjiMetaBankV3Entries,
   );
@@ -6402,32 +6291,13 @@ class KanjiDictionarySearchViewData extends DataClass {
           ..write('tags: $tags, ')
           ..write('definitions: $definitions, ')
           ..write('stats: $stats, ')
-          ..write('id1: $id1, ')
-          ..write('dictionaryType: $dictionaryType, ')
-          ..write('currentSortingOrder: $currentSortingOrder, ')
-          ..write('currentFrequencyDictionary: $currentFrequencyDictionary, ')
-          ..write('title: $title, ')
-          ..write('revision: $revision, ')
-          ..write('sequenced: $sequenced, ')
-          ..write('format: $format, ')
-          ..write('version: $version, ')
-          ..write('author: $author, ')
-          ..write('updatable: $updatable, ')
-          ..write('indexUrl: $indexUrl, ')
-          ..write('downloadUrl: $downloadUrl, ')
-          ..write('url: $url, ')
-          ..write('description: $description, ')
-          ..write('attribution: $attribution, ')
-          ..write('sourceLanguage: $sourceLanguage, ')
-          ..write('targetLanguage: $targetLanguage, ')
-          ..write('frequencyMode: $frequencyMode, ')
           ..write('kanjiMetaBankV3Entries: $kanjiMetaBankV3Entries')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hashAll([
+  int get hashCode => Object.hash(
     id,
     indexEntry,
     indexId,
@@ -6437,27 +6307,8 @@ class KanjiDictionarySearchViewData extends DataClass {
     tags,
     definitions,
     stats,
-    id1,
-    dictionaryType,
-    currentSortingOrder,
-    currentFrequencyDictionary,
-    title,
-    revision,
-    sequenced,
-    format,
-    version,
-    author,
-    updatable,
-    indexUrl,
-    downloadUrl,
-    url,
-    description,
-    attribution,
-    sourceLanguage,
-    targetLanguage,
-    frequencyMode,
     kanjiMetaBankV3Entries,
-  ]);
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -6471,25 +6322,6 @@ class KanjiDictionarySearchViewData extends DataClass {
           other.tags == this.tags &&
           other.definitions == this.definitions &&
           other.stats == this.stats &&
-          other.id1 == this.id1 &&
-          other.dictionaryType == this.dictionaryType &&
-          other.currentSortingOrder == this.currentSortingOrder &&
-          other.currentFrequencyDictionary == this.currentFrequencyDictionary &&
-          other.title == this.title &&
-          other.revision == this.revision &&
-          other.sequenced == this.sequenced &&
-          other.format == this.format &&
-          other.version == this.version &&
-          other.author == this.author &&
-          other.updatable == this.updatable &&
-          other.indexUrl == this.indexUrl &&
-          other.downloadUrl == this.downloadUrl &&
-          other.url == this.url &&
-          other.description == this.description &&
-          other.attribution == this.attribution &&
-          other.sourceLanguage == this.sourceLanguage &&
-          other.targetLanguage == this.targetLanguage &&
-          other.frequencyMode == this.frequencyMode &&
           other.kanjiMetaBankV3Entries == this.kanjiMetaBankV3Entries);
 }
 
@@ -6511,25 +6343,6 @@ class KanjiDictionarySearchView
     tags,
     definitions,
     stats,
-    id1,
-    dictionaryType,
-    currentSortingOrder,
-    currentFrequencyDictionary,
-    title,
-    revision,
-    sequenced,
-    format,
-    version,
-    author,
-    updatable,
-    indexUrl,
-    downloadUrl,
-    url,
-    description,
-    attribution,
-    sourceLanguage,
-    targetLanguage,
-    frequencyMode,
     kanjiMetaBankV3Entries,
   ];
   @override
@@ -6539,7 +6352,7 @@ class KanjiDictionarySearchView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS kanji_dictionary_search_view AS SELECT k.*, it.*, (SELECT json_group_array(json_object(\'kanji\', km.kanji, \'indexId\', km.index_id, \'type\', km.type, \'freqValue\', km.freq_value, \'freqDisplayValue\', km.freq_display_value)) FROM kanji_meta_bank_v3_entry_view AS km WHERE km.kanji = k.kanji) AS kanjiMetaBankV3Entries FROM kanji_bank_v3_entry_view AS k INNER JOIN index_table AS it ON k.indexId = it.id',
+        'CREATE VIEW IF NOT EXISTS kanji_dictionary_search_view AS SELECT k.*, (SELECT json_group_array(json_object(\'kanji\', km.kanji, \'indexEntry\', km.indexEntry, \'type\', km.type, \'freqValue\',(km.freq_value), \'freqDisplayValue\', km.freq_display_value)) FROM kanji_meta_bank_v3_entry_view AS km WHERE km.kanji = k.kanji) AS kanjiMetaBankV3Entries FROM kanji_bank_v3_entry_view AS k',
   };
   @override
   KanjiDictionarySearchView get asDslTable => this;
@@ -6586,84 +6399,6 @@ class KanjiDictionarySearchView
         DriftSqlType.string,
         data['${effectivePrefix}stats'],
       )!,
-      id1: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      dictionaryType: $IndexTableTable.$converterdictionaryType.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.string,
-          data['${effectivePrefix}dictionary_type'],
-        )!,
-      ),
-      currentSortingOrder: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}current_sorting_order'],
-      )!,
-      currentFrequencyDictionary: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}current_frequency_dictionary'],
-      )!,
-      title: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}title'],
-      )!,
-      revision: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}revision'],
-      )!,
-      sequenced: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}sequenced'],
-      ),
-      format: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}format'],
-      ),
-      version: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}version'],
-      ),
-      author: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}author'],
-      ),
-      updatable: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}updatable'],
-      ),
-      indexUrl: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}index_url'],
-      ),
-      downloadUrl: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}download_url'],
-      ),
-      url: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}url'],
-      ),
-      description: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}description'],
-      ),
-      attribution: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}attribution'],
-      ),
-      sourceLanguage: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}source_language'],
-      ),
-      targetLanguage: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}target_language'],
-      ),
-      frequencyMode: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}frequency_mode'],
-      ),
       kanjiMetaBankV3Entries: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}kanjiMetaBankV3Entries'],
@@ -6723,131 +6458,6 @@ class KanjiDictionarySearchView
     'stats',
     aliasedName,
     false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<int> id1 = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumnWithTypeConverter<DictionaryTypes, String>
-  dictionaryType = GeneratedColumn<String>(
-    'dictionary_type',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  ).withConverter<DictionaryTypes>($IndexTableTable.$converterdictionaryType);
-  late final GeneratedColumn<int> currentSortingOrder = GeneratedColumn<int>(
-    'current_sorting_order',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<bool> currentFrequencyDictionary =
-      GeneratedColumn<bool>(
-        'current_frequency_dictionary',
-        aliasedName,
-        false,
-        type: DriftSqlType.bool,
-        defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("current_frequency_dictionary" IN (0, 1))',
-        ),
-      );
-  late final GeneratedColumn<String> title = GeneratedColumn<String>(
-    'title',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> revision = GeneratedColumn<String>(
-    'revision',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<bool> sequenced = GeneratedColumn<bool>(
-    'sequenced',
-    aliasedName,
-    true,
-    type: DriftSqlType.bool,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("sequenced" IN (0, 1))',
-    ),
-  );
-  late final GeneratedColumn<int> format = GeneratedColumn<int>(
-    'format',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<int> version = GeneratedColumn<int>(
-    'version',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<String> author = GeneratedColumn<String>(
-    'author',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<bool> updatable = GeneratedColumn<bool>(
-    'updatable',
-    aliasedName,
-    true,
-    type: DriftSqlType.bool,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("updatable" IN (0, 1))',
-    ),
-  );
-  late final GeneratedColumn<String> indexUrl = GeneratedColumn<String>(
-    'index_url',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> downloadUrl = GeneratedColumn<String>(
-    'download_url',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> url = GeneratedColumn<String>(
-    'url',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> description = GeneratedColumn<String>(
-    'description',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> attribution = GeneratedColumn<String>(
-    'attribution',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> sourceLanguage = GeneratedColumn<String>(
-    'source_language',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> targetLanguage = GeneratedColumn<String>(
-    'target_language',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> frequencyMode = GeneratedColumn<String>(
-    'frequency_mode',
-    aliasedName,
-    true,
     type: DriftSqlType.string,
   );
   late final GeneratedColumn<String> kanjiMetaBankV3Entries =
@@ -19222,7 +18832,12 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     return customSelect(
       'SELECT * FROM kanji_meta_bank_v3_entry_view WHERE kanji = ?1',
       variables: [Variable<String>(kanji)],
-      readsFrom: {kanjiMetaBankV3Table, kanjiMetaBankV3TypeTable, kanjiTable},
+      readsFrom: {
+        kanjiMetaBankV3Table,
+        indexTable,
+        kanjiMetaBankV3TypeTable,
+        kanjiTable,
+      },
     ).asyncMap(kanjiMetaBankV3EntryView.mapFromRow);
   }
 

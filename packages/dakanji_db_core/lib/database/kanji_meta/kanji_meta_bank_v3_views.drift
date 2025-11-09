@@ -1,15 +1,19 @@
 import '../general_tables/kanji_tables.dart';
 import 'kanji_meta_bank_v3_tables.dart';
+import '/database/index/index_views.drift';
 
 CREATE VIEW kanji_meta_bank_v3_entry_view AS
     SELECT
+        KMBV3T.id AS id,
         KT.kanji,
-        KMBV3T.index_id AS index_id,
+        IV.index_entry AS indexEntry,
         KMBV3TT.type,
         KMBV3T.freq_value,
         KMBV3T.freq_display_value
     FROM
         kanji_meta_bank_v3_table AS KMBV3T
+    JOIN
+        term_meta_bank_v3_entry_as_json_view AS IV ON KMBV3T.index_id = IV.id
     INNER JOIN
         kanji_meta_bank_v3_type_table AS KMBV3TT ON KMBV3TT.id = KMBV3T.type_id
     INNER JOIN

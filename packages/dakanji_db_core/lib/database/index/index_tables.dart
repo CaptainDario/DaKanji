@@ -1,5 +1,5 @@
 
-import 'package:dakanji_db_core/database/dictionary_types.dart';
+import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:drift/drift.dart';
 
 /// Contains the main Kanji entries to which the other tables link

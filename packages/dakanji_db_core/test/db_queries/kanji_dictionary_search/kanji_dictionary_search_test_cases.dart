@@ -72,22 +72,25 @@ final List<KanjiDictionarySearchResultTestCaseExpectation> kanjiDictionarySearch
     ),
     kanjiMetaBankEntries: [
       KanjiMetaBankV3Entry(
+        id: 0,
+        indexEntry: testDictionaryIndexEntry,
         kanji: "打",
-        indexId: 1,
         type: "freq",
         freqValue: 1,
         freqDisplayValue: null
       ),
       KanjiMetaBankV3Entry(
+        id: 0,
+        indexEntry: testDictionaryIndexEntry,
         kanji: "打",
-        indexId: 1,
         type: "freq",
         freqValue: null,
         freqDisplayValue: "three"
       ),
       KanjiMetaBankV3Entry(
+        id: 0,
+        indexEntry: testDictionaryIndexEntry,
         kanji: "打",
-        indexId: 1,
         type: "freq",
         freqValue: 5,
         freqDisplayValue: null
@@ -159,22 +162,25 @@ final List<KanjiDictionarySearchResultTestCaseExpectation> kanjiDictionarySearch
   ),
   kanjiMetaBankEntries: [
     KanjiMetaBankV3Entry(
+      id: 0,
+      indexEntry: testDictionaryIndexEntry,
       kanji: "込",
-      indexId: 1,
       type: "freq",
       freqValue: 2,
       freqDisplayValue: null
     ),
     KanjiMetaBankV3Entry(
+      id: 0,
+      indexEntry: testDictionaryIndexEntry,
       kanji: "込",
-      indexId: 1,
       type: "freq",
       freqValue: null,
       freqDisplayValue: "four (4)"
     ),
     KanjiMetaBankV3Entry(
+      id: 0,
+      indexEntry: testDictionaryIndexEntry,
       kanji: "込",
-      indexId: 1,
       type: "freq",
       freqValue: 6,
       freqDisplayValue: "six"

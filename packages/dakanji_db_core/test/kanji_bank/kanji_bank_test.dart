@@ -45,7 +45,7 @@ void main() {
 
 Future setupFreshDB() async {
 
-    // create the testing database (delete any existing database)
+  // create the testing database (delete any existing database)
   DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
   await db.clearDB();
 

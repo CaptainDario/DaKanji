@@ -17,7 +17,7 @@ mixin _$TagBankV3Entry {
 
 /// id of this tag entry in sqlite database
  int get id;/// id of this entry's dictionary
-@IndexEntryConverter() IndexEntry get indexEntry;/// Tag name.
+@IndexEntryJsonConverter() IndexEntry get indexEntry;/// Tag name.
  String get name;/// Categories for the tag.
  String get category;/// Sorting order for the tag.
  int get sortingOrder;/// Notes for the tag.
@@ -57,7 +57,7 @@ abstract mixin class $TagBankV3EntryCopyWith<$Res>  {
   factory $TagBankV3EntryCopyWith(TagBankV3Entry value, $Res Function(TagBankV3Entry) _then) = _$TagBankV3EntryCopyWithImpl;
 @useResult
 $Res call({
- int id,@IndexEntryConverter() IndexEntry indexEntry, String name, String category, int sortingOrder, String notes, int score
+ int id,@IndexEntryJsonConverter() IndexEntry indexEntry, String name, String category, int sortingOrder, String notes, int score
 });
 
 
@@ -177,7 +177,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @IndexEntryConverter()  IndexEntry indexEntry,  String name,  String category,  int sortingOrder,  String notes,  int score)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @IndexEntryJsonConverter()  IndexEntry indexEntry,  String name,  String category,  int sortingOrder,  String notes,  int score)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TagBankV3Entry() when $default != null:
 return $default(_that.id,_that.indexEntry,_that.name,_that.category,_that.sortingOrder,_that.notes,_that.score);case _:
@@ -198,7 +198,7 @@ return $default(_that.id,_that.indexEntry,_that.name,_that.category,_that.sortin
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @IndexEntryConverter()  IndexEntry indexEntry,  String name,  String category,  int sortingOrder,  String notes,  int score)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @IndexEntryJsonConverter()  IndexEntry indexEntry,  String name,  String category,  int sortingOrder,  String notes,  int score)  $default,) {final _that = this;
 switch (_that) {
 case _TagBankV3Entry():
 return $default(_that.id,_that.indexEntry,_that.name,_that.category,_that.sortingOrder,_that.notes,_that.score);case _:
@@ -218,7 +218,7 @@ return $default(_that.id,_that.indexEntry,_that.name,_that.category,_that.sortin
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @IndexEntryConverter()  IndexEntry indexEntry,  String name,  String category,  int sortingOrder,  String notes,  int score)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @IndexEntryJsonConverter()  IndexEntry indexEntry,  String name,  String category,  int sortingOrder,  String notes,  int score)?  $default,) {final _that = this;
 switch (_that) {
 case _TagBankV3Entry() when $default != null:
 return $default(_that.id,_that.indexEntry,_that.name,_that.category,_that.sortingOrder,_that.notes,_that.score);case _:
@@ -233,13 +233,13 @@ return $default(_that.id,_that.indexEntry,_that.name,_that.category,_that.sortin
 @JsonSerializable()
 
 class _TagBankV3Entry extends TagBankV3Entry {
-  const _TagBankV3Entry({required this.id, @IndexEntryConverter() required this.indexEntry, required this.name, required this.category, required this.sortingOrder, required this.notes, required this.score}): super._();
+  const _TagBankV3Entry({required this.id, @IndexEntryJsonConverter() required this.indexEntry, required this.name, required this.category, required this.sortingOrder, required this.notes, required this.score}): super._();
   factory _TagBankV3Entry.fromJson(Map<String, dynamic> json) => _$TagBankV3EntryFromJson(json);
 
 /// id of this tag entry in sqlite database
 @override final  int id;
 /// id of this entry's dictionary
-@override@IndexEntryConverter() final  IndexEntry indexEntry;
+@override@IndexEntryJsonConverter() final  IndexEntry indexEntry;
 /// Tag name.
 @override final  String name;
 /// Categories for the tag.
@@ -286,7 +286,7 @@ abstract mixin class _$TagBankV3EntryCopyWith<$Res> implements $TagBankV3EntryCo
   factory _$TagBankV3EntryCopyWith(_TagBankV3Entry value, $Res Function(_TagBankV3Entry) _then) = __$TagBankV3EntryCopyWithImpl;
 @override @useResult
 $Res call({
- int id,@IndexEntryConverter() IndexEntry indexEntry, String name, String category, int sortingOrder, String notes, int score
+ int id,@IndexEntryJsonConverter() IndexEntry indexEntry, String name, String category, int sortingOrder, String notes, int score
 });
 
 
