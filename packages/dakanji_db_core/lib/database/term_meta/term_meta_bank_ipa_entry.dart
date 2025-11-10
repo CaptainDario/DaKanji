@@ -9,20 +9,31 @@ part 'term_meta_bank_ipa_entry.g.dart';
 
 
 @Freezed(makeCollectionsUnmodifiable: false)
+@JsonSerializable()
 /// Class representing one term meta entry's pitch data
-abstract class TermMetaBankV3IpaEntry with _$TermMetaBankV3IpaEntry {
+class TermMetaBankV3IpaEntry with _$TermMetaBankV3IpaEntry {
 
-  const factory TermMetaBankV3IpaEntry(
+  /// the ipa transcription of this entry
+  @override
+  String ipa;
+  /// all tags of this pitch entry
+  @TagBankV3EntryConverter()
+  @Default([])
+  @override
+  List<TagBankV3Entry> tags;
+
+  TermMetaBankV3IpaEntry(
     {
       /// the ipa transcription of this entry
-      required String ipa,
-      /// all tags of this pitch entry
-      @TagBankV3EntryConverter()
-      @Default([])
-      List<TagBankV3Entry> tags,
-    }) = _TermMetaBankV3IpaEntry;
+      required this.ipa,
+      required this.tags,
+    }) {
+      tags.sort((a, b) => a.compareTo(b));
+    }
 
   factory TermMetaBankV3IpaEntry.fromJson(Map<String, Object?> json)
     => _$TermMetaBankV3IpaEntryFromJson(json);
+
+  Map<String, Object?> toJson() => _$TermMetaBankV3IpaEntryToJson(this);
 
 }

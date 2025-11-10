@@ -15,19 +15,13 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TermMetaBankV3PitchEntry {
 
-/// the position of this pitch entry
- int get position;/// all tags of this pitch entry
-@TagBankV3EntryConverter() List<TagBankV3Entry> get tags;/// nasal data of this pitch entry
- int? get nasal;/// devoice data of this pitch entry
- int? get devoice;
+ int get position; set position(int value); List<TagBankV3Entry> get tags; set tags(List<TagBankV3Entry> value); int? get nasal; set nasal(int? value); int? get devoice; set devoice(int? value);
 /// Create a copy of TermMetaBankV3PitchEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $TermMetaBankV3PitchEntryCopyWith<TermMetaBankV3PitchEntry> get copyWith => _$TermMetaBankV3PitchEntryCopyWithImpl<TermMetaBankV3PitchEntry>(this as TermMetaBankV3PitchEntry, _$identity);
 
-  /// Serializes this TermMetaBankV3PitchEntry to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
@@ -52,7 +46,7 @@ abstract mixin class $TermMetaBankV3PitchEntryCopyWith<$Res>  {
   factory $TermMetaBankV3PitchEntryCopyWith(TermMetaBankV3PitchEntry value, $Res Function(TermMetaBankV3PitchEntry) _then) = _$TermMetaBankV3PitchEntryCopyWithImpl;
 @useResult
 $Res call({
- int position,@TagBankV3EntryConverter() List<TagBankV3Entry> tags, int? nasal, int? devoice
+ int position, List<TagBankV3Entry> tags, int? nasal, int? devoice
 });
 
 
@@ -70,7 +64,7 @@ class _$TermMetaBankV3PitchEntryCopyWithImpl<$Res>
 /// Create a copy of TermMetaBankV3PitchEntry
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? position = null,Object? tags = null,Object? nasal = freezed,Object? devoice = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(TermMetaBankV3PitchEntry(
 position: null == position ? _self.position : position // ignore: cast_nullable_to_non_nullable
 as int,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<TagBankV3Entry>,nasal: freezed == nasal ? _self.nasal : nasal // ignore: cast_nullable_to_non_nullable
@@ -96,11 +90,10 @@ extension TermMetaBankV3PitchEntryPatterns on TermMetaBankV3PitchEntry {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TermMetaBankV3PitchEntry value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _TermMetaBankV3PitchEntry() when $default != null:
-return $default(_that);case _:
+case _:
   return orElse();
 
 }
@@ -118,11 +111,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TermMetaBankV3PitchEntry value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(){
 final _that = this;
 switch (_that) {
-case _TermMetaBankV3PitchEntry():
-return $default(_that);case _:
+case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -139,11 +131,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TermMetaBankV3PitchEntry value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(){
 final _that = this;
 switch (_that) {
-case _TermMetaBankV3PitchEntry() when $default != null:
-return $default(_that);case _:
+case _:
   return null;
 
 }
@@ -160,10 +151,9 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int position, @TagBankV3EntryConverter()  List<TagBankV3Entry> tags,  int? nasal,  int? devoice)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _TermMetaBankV3PitchEntry() when $default != null:
-return $default(_that.position,_that.tags,_that.nasal,_that.devoice);case _:
+case _:
   return orElse();
 
 }
@@ -181,10 +171,9 @@ return $default(_that.position,_that.tags,_that.nasal,_that.devoice);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int position, @TagBankV3EntryConverter()  List<TagBankV3Entry> tags,  int? nasal,  int? devoice)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>() {final _that = this;
 switch (_that) {
-case _TermMetaBankV3PitchEntry():
-return $default(_that.position,_that.tags,_that.nasal,_that.devoice);case _:
+case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,93 +190,13 @@ return $default(_that.position,_that.tags,_that.nasal,_that.devoice);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int position, @TagBankV3EntryConverter()  List<TagBankV3Entry> tags,  int? nasal,  int? devoice)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>() {final _that = this;
 switch (_that) {
-case _TermMetaBankV3PitchEntry() when $default != null:
-return $default(_that.position,_that.tags,_that.nasal,_that.devoice);case _:
+case _:
   return null;
 
 }
 }
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _TermMetaBankV3PitchEntry implements TermMetaBankV3PitchEntry {
-  const _TermMetaBankV3PitchEntry({required this.position, @TagBankV3EntryConverter() this.tags = const [], this.nasal, this.devoice});
-  factory _TermMetaBankV3PitchEntry.fromJson(Map<String, dynamic> json) => _$TermMetaBankV3PitchEntryFromJson(json);
-
-/// the position of this pitch entry
-@override final  int position;
-/// all tags of this pitch entry
-@override@JsonKey()@TagBankV3EntryConverter() final  List<TagBankV3Entry> tags;
-/// nasal data of this pitch entry
-@override final  int? nasal;
-/// devoice data of this pitch entry
-@override final  int? devoice;
-
-/// Create a copy of TermMetaBankV3PitchEntry
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$TermMetaBankV3PitchEntryCopyWith<_TermMetaBankV3PitchEntry> get copyWith => __$TermMetaBankV3PitchEntryCopyWithImpl<_TermMetaBankV3PitchEntry>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$TermMetaBankV3PitchEntryToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TermMetaBankV3PitchEntry&&(identical(other.position, position) || other.position == position)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.nasal, nasal) || other.nasal == nasal)&&(identical(other.devoice, devoice) || other.devoice == devoice));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,position,const DeepCollectionEquality().hash(tags),nasal,devoice);
-
-@override
-String toString() {
-  return 'TermMetaBankV3PitchEntry(position: $position, tags: $tags, nasal: $nasal, devoice: $devoice)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$TermMetaBankV3PitchEntryCopyWith<$Res> implements $TermMetaBankV3PitchEntryCopyWith<$Res> {
-  factory _$TermMetaBankV3PitchEntryCopyWith(_TermMetaBankV3PitchEntry value, $Res Function(_TermMetaBankV3PitchEntry) _then) = __$TermMetaBankV3PitchEntryCopyWithImpl;
-@override @useResult
-$Res call({
- int position,@TagBankV3EntryConverter() List<TagBankV3Entry> tags, int? nasal, int? devoice
-});
-
-
-
-
-}
-/// @nodoc
-class __$TermMetaBankV3PitchEntryCopyWithImpl<$Res>
-    implements _$TermMetaBankV3PitchEntryCopyWith<$Res> {
-  __$TermMetaBankV3PitchEntryCopyWithImpl(this._self, this._then);
-
-  final _TermMetaBankV3PitchEntry _self;
-  final $Res Function(_TermMetaBankV3PitchEntry) _then;
-
-/// Create a copy of TermMetaBankV3PitchEntry
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? position = null,Object? tags = null,Object? nasal = freezed,Object? devoice = freezed,}) {
-  return _then(_TermMetaBankV3PitchEntry(
-position: null == position ? _self.position : position // ignore: cast_nullable_to_non_nullable
-as int,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
-as List<TagBankV3Entry>,nasal: freezed == nasal ? _self.nasal : nasal // ignore: cast_nullable_to_non_nullable
-as int?,devoice: freezed == devoice ? _self.devoice : devoice // ignore: cast_nullable_to_non_nullable
-as int?,
-  ));
-}
-
 
 }
 
