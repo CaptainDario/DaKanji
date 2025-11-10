@@ -103,8 +103,16 @@ class _PitchAndIpaGroup extends StatelessWidget {
         DictionaryMatchTag(text: title),
         const SizedBox(height: 4),
 
-        if (pitchEntries != null) DictionaryMatchTermMetaPitchWidget(pitchEntries!),
-        if (ipaEntries != null) DictionaryMatchTermMetaIpaWidget(ipaEntries!),
+        if (pitchEntries != null)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+            child: DictionaryMatchTermMetaPitchWidget(pitchEntries!),
+          ),
+        if (ipaEntries != null)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+            child: DictionaryMatchTermMetaIpaWidget(ipaEntries!),
+          ),
 
       ],
     );
