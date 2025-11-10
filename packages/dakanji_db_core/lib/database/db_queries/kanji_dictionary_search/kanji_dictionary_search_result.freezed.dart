@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$KanjiDictionarySearchResult {
 
- IndexEntry get indexTableEntry; set indexTableEntry(IndexEntry value); KanjiBankV3Entry get kanjiBankEntry; set kanjiBankEntry(KanjiBankV3Entry value); List<KanjiMetaBankV3Entry> get kanjiMetaBankEntries; set kanjiMetaBankEntries(List<KanjiMetaBankV3Entry> value);
+ KanjiBankV3Entry get kanjiBankEntry; set kanjiBankEntry(KanjiBankV3Entry value); List<KanjiMetaBankV3Entry> get kanjiMetaBankEntries; set kanjiMetaBankEntries(List<KanjiMetaBankV3Entry> value);
 /// Create a copy of KanjiDictionarySearchResult
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $KanjiDictionarySearchResultCopyWith<KanjiDictionarySearchResult> get copyWith =
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is KanjiDictionarySearchResult&&(identical(other.indexTableEntry, indexTableEntry) || other.indexTableEntry == indexTableEntry)&&(identical(other.kanjiBankEntry, kanjiBankEntry) || other.kanjiBankEntry == kanjiBankEntry)&&const DeepCollectionEquality().equals(other.kanjiMetaBankEntries, kanjiMetaBankEntries));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is KanjiDictionarySearchResult&&(identical(other.kanjiBankEntry, kanjiBankEntry) || other.kanjiBankEntry == kanjiBankEntry)&&const DeepCollectionEquality().equals(other.kanjiMetaBankEntries, kanjiMetaBankEntries));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,indexTableEntry,kanjiBankEntry,const DeepCollectionEquality().hash(kanjiMetaBankEntries));
+int get hashCode => Object.hash(runtimeType,kanjiBankEntry,const DeepCollectionEquality().hash(kanjiMetaBankEntries));
 
 @override
 String toString() {
-  return 'KanjiDictionarySearchResult(indexTableEntry: $indexTableEntry, kanjiBankEntry: $kanjiBankEntry, kanjiMetaBankEntries: $kanjiMetaBankEntries)';
+  return 'KanjiDictionarySearchResult(kanjiBankEntry: $kanjiBankEntry, kanjiMetaBankEntries: $kanjiMetaBankEntries)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $KanjiDictionarySearchResultCopyWith<$Res>  {
   factory $KanjiDictionarySearchResultCopyWith(KanjiDictionarySearchResult value, $Res Function(KanjiDictionarySearchResult) _then) = _$KanjiDictionarySearchResultCopyWithImpl;
 @useResult
 $Res call({
- IndexEntry indexTableEntry, KanjiBankV3Entry kanjiBankEntry, List<KanjiMetaBankV3Entry> kanjiMetaBankEntries
+ KanjiBankV3Entry kanjiBankEntry, List<KanjiMetaBankV3Entry> kanjiMetaBankEntries
 });
 
 
@@ -63,10 +63,9 @@ class _$KanjiDictionarySearchResultCopyWithImpl<$Res>
 
 /// Create a copy of KanjiDictionarySearchResult
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? indexTableEntry = null,Object? kanjiBankEntry = null,Object? kanjiMetaBankEntries = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? kanjiBankEntry = null,Object? kanjiMetaBankEntries = null,}) {
   return _then(KanjiDictionarySearchResult(
-indexTableEntry: null == indexTableEntry ? _self.indexTableEntry : indexTableEntry // ignore: cast_nullable_to_non_nullable
-as IndexEntry,kanjiBankEntry: null == kanjiBankEntry ? _self.kanjiBankEntry : kanjiBankEntry // ignore: cast_nullable_to_non_nullable
+kanjiBankEntry: null == kanjiBankEntry ? _self.kanjiBankEntry : kanjiBankEntry // ignore: cast_nullable_to_non_nullable
 as KanjiBankV3Entry,kanjiMetaBankEntries: null == kanjiMetaBankEntries ? _self.kanjiMetaBankEntries : kanjiMetaBankEntries // ignore: cast_nullable_to_non_nullable
 as List<KanjiMetaBankV3Entry>,
   ));
