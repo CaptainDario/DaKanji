@@ -33,7 +33,7 @@ class FuriganaPair{
   int get hashCode => kanji.hashCode ^ reading.hashCode;
 }
 
-List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKatakana = true}) {
+List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKatakana = false}) {
 
   // handle edge cases
   if(text.replaceAll(" ", "").isEmpty)    return [FuriganaPair("", reading)];

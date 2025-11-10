@@ -19,7 +19,7 @@ void main() async {
       test('Matching furigana for: ${testCase.$1}', () async {
         print("Input: ${testCase.$1['kanji']} → ${testCase.$1['kana']}");
         
-        List<FuriganaPair> result = matchFurigana(testCase.$1["kanji"]!, testCase.$1["kana"]!);
+        List<FuriganaPair> result = matchFurigana(testCase.$1["kanji"]!, testCase.$1["kana"]!, convertToKatakana: true);
         print("Output: ${result.toString()}");
         expect(result, equals(testCase.$2));
         print("----");
