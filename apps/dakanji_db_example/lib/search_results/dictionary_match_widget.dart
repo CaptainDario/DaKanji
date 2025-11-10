@@ -32,9 +32,9 @@ class DictionaryMatchWidget extends StatelessWidget {
               children: [
                 DictionaryMatchTermBankTermWidget(match.entries),
                 SizedBox(height: 8.0),
-                DictionaryMatchTermMetaWidget(match.metaEntriesForEachEntry),
-                SizedBox(height: 8.0),
                 DictionaryMatchTagBankWidget(match.entries.map((e) => e.tags).toList()),
+                SizedBox(height: 4.0),
+                DictionaryMatchTermMetaWidget(match.metaEntriesForEachEntry),
                 SizedBox(height: 8.0),
                 DictionaryMatchTermBankDefinitionsWidget(match.entries)
               ],
