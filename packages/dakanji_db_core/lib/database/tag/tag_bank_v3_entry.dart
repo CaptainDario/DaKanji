@@ -38,7 +38,7 @@ abstract class TagBankV3Entry with _$TagBankV3Entry {
     }) = _TagBankV3Entry;
 
   /// sort tags first by sortingOrder then by name to ensure consistent order
-  int comparedTo(TagBankV3Entry other) {
+  int compareTo(TagBankV3Entry other) {
     int orderComparison = sortingOrder.compareTo(other.sortingOrder);
     if (orderComparison != 0) {
       return orderComparison;
