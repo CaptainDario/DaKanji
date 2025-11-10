@@ -9,14 +9,30 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
+import '../test/util/db_files.dart';
 import 'get_sources.dart';
 
 void main(List<String> args) async {
 
-  // parse command line args
-  bool downloadSourcesArg = args.contains('--download-sources');
-  if(downloadSourcesArg) await downloadSources();
+  // --- parse command line args -----------------------------------------------
   
+  // clear old sources and redownload
+  bool downloadSourcesArg = args.contains('--download-sources');
+  if(downloadSourcesArg) {
+    print("Redownloading source files...");
+    await downloadSources();
+  }
+
+  // include yomitan example dictionary
+  bool includeExampleDictArg = args.contains('--include-example-dict');
+  String? exampleDictPath;
+  if(includeExampleDictArg) {
+    print("Including example dictionary...");
+    exampleDictPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
+  }
+  
+  // --- build database ----------------------------------------------------------
+
   // setup 
   if(File(dakanjiDbPath).existsSync()) {
     print("Deleting old database at $dakanjiDbPath");
@@ -36,8 +52,10 @@ void main(List<String> args) async {
 
   print("Adding KanjiDic2...");
   await importYomitanDicts(db, mecab,
-    [kanjidic2InputPath, jmdictInputPath, jpdb2_2InputPath],
+    [kanjidic2InputPath, jmdictInputPath, jpdb2_2InputPath]
+      + (includeExampleDictArg ? [exampleDictPath!] : []),
     ["KanjiDic2", "JMdict", "JPDB 2.2"]
+      + (includeExampleDictArg ? ["yomitan example dictionary"] : []),
   );
 
   exit(0);
