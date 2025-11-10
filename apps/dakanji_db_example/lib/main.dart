@@ -46,6 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   DictionarySearchResult? lastSearchResult;
 
+  TextEditingController searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -88,30 +90,33 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter a search term',
-                    ),
-                    onChanged: (value) async {
-                      if(value.isEmpty) {
-                        lastSearchResult = null;
-                      }
-                      else {
-                        print("Searching for: $value");
-                        Stopwatch stopwatch = Stopwatch()..start();
-                        lastSearchResult = await daKanjiDB.dBQueriesDao.dictionarySearch(
-                          value,
-                          normalizedSearch: false,
-                          normalizedSearchConvertsRomajiToHiragana: false,
-                          deconjugationSearch: false,
-                          spellfixSearch: false,
-                          groupByTermAndReading: true
-                        );
-                        print("Search completed in ${stopwatch.elapsedMilliseconds}ms.");
-                      }
-                      setState(() {});
-                    },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: searchController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Enter a search term',
+                          ),
+                          onChanged: (value) async {
+                            searchDb(value);
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 4.0),
+                      DropdownButton<String>(
+                        value: "",
+                        items: List.generate(exampleDictionaryTerms.length, (i) => DropdownMenuItem<String>(
+                          value: exampleDictionaryTerms[i],
+                          child: Text(exampleDictionaryTerms[i])
+                        )),
+                        onChanged: (value) {
+                          searchController.text = value ?? "";
+                          searchDb(searchController.text);
+                        },
+                      )
+                    ],
                   ),
                 ),
                 
@@ -132,5 +137,25 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  Future searchDb(String term) async {
+    if(term.isEmpty) {
+      lastSearchResult = null;
+    }
+    else {
+      print("Searching for: $term");
+      Stopwatch stopwatch = Stopwatch()..start();
+      lastSearchResult = await daKanjiDB.dBQueriesDao.dictionarySearch(
+        term,
+        normalizedSearch: false,
+        normalizedSearchConvertsRomajiToHiragana: false,
+        deconjugationSearch: false,
+        spellfixSearch: false,
+        groupByTermAndReading: true
+      );
+      print("Search completed in ${stopwatch.elapsedMilliseconds}ms.");
+    }
+    setState(() {});
   }
 }
