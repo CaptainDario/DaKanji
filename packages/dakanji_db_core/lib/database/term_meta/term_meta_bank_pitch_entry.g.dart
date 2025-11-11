@@ -10,9 +10,11 @@ TermMetaBankV3PitchEntry _$TermMetaBankV3PitchEntryFromJson(
   Map<String, dynamic> json,
 ) => TermMetaBankV3PitchEntry(
   position: (json['position'] as num).toInt(),
-  tags: (json['tags'] as List<dynamic>)
-      .map(const TagBankV3EntryConverter().fromJson)
-      .toList(),
+  tags:
+      (json['tags'] as List<dynamic>?)
+          ?.map(const TagBankV3EntryConverter().fromJson)
+          .toList() ??
+      const [],
   nasal: (json['nasal'] as num?)?.toInt(),
   devoice: (json['devoice'] as num?)?.toInt(),
 );

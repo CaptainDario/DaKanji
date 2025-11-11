@@ -26,9 +26,9 @@ class TermMetaBankV3IpaEntry with _$TermMetaBankV3IpaEntry {
     {
       /// the ipa transcription of this entry
       required this.ipa,
-      required this.tags,
+      this.tags = const [],
     }) {
-      tags.sort((a, b) => a.compareTo(b));
+      tags = List.from(tags)..sort((a, b) => a.compareTo(b));
     }
 
   factory TermMetaBankV3IpaEntry.fromJson(Map<String, Object?> json)

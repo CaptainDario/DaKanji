@@ -10,9 +10,11 @@ TermMetaBankV3IpaEntry _$TermMetaBankV3IpaEntryFromJson(
   Map<String, dynamic> json,
 ) => TermMetaBankV3IpaEntry(
   ipa: json['ipa'] as String,
-  tags: (json['tags'] as List<dynamic>)
-      .map(const TagBankV3EntryConverter().fromJson)
-      .toList(),
+  tags:
+      (json['tags'] as List<dynamic>?)
+          ?.map(const TagBankV3EntryConverter().fromJson)
+          .toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$TermMetaBankV3IpaEntryToJson(

@@ -31,11 +31,11 @@ class TermMetaBankV3PitchEntry with _$TermMetaBankV3PitchEntry {
   TermMetaBankV3PitchEntry(
     {
       required this.position,
-      required this.tags,
-      required this.nasal,
-      required this.devoice    
+      this.tags = const [],
+      this.nasal,
+      this.devoice    
     }){
-      tags.sort((a, b) => a.compareTo(b));
+      tags = List.from(tags)..sort((a, b) => a.compareTo(b));
     }
 
   factory TermMetaBankV3PitchEntry.fromJson(Map<String, Object?> json)
