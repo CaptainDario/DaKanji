@@ -52,21 +52,22 @@ class TermBankV3ParserContext extends ParserContext{
     required this.allTags,
   });
 
-  static Future<TermBankV3ParserContext> create(DaKanjiDB db) async {
+  static Future<TermBankV3ParserContext> create(DaKanjiDB db, int indexId) async {
 
     return TermBankV3ParserContext._(
+      allTerms: { for (var e in await db.termDao.getAllTerms()) e.term : e.id },
+      allReadings: { for (var e in await db.readingDao.getAllReadings()) e.reading : e.id },
+      allRuleIdentifiers: { for (var e in await db.termBankV3Dao.getAllRuleIdentifiers()) e.ruleIdentifier : e.id },
+      allDefinitions: { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id },
+      allTags: { for (var e in await db.tagBankV3Dao.getAllTags(indexId)) e.name : e.id },
+
       currentMaxTermBankId: await db.termBankV3Dao.maxTermBankV3Id(),
       currentMaxTermId: await db.termDao.maxTermId(),
-      allTerms: { for (var e in await db.termDao.getAllTerms()) e.term : e.id },
       currentMaxReadingId: await db.readingDao.maxReadingId(),
-      allReadings: { for (var e in await db.readingDao.getAllReadings()) e.reading : e.id },
       currentMaxRuleIdentifiersId: await db.termBankV3Dao.maxTermBankV3RuleIdentifierId(),
-      allRuleIdentifiers: { for (var e in await db.termBankV3Dao.getAllRuleIdentifiers()) e.ruleIdentifier : e.id },
       currentMaxDefinitionJsonId: await db.termBankV3Dao.maxTermBankV3DefinitionJsonId(),
       currentMaxdefinitionId: await db.definitionDao.maxDefinitionId(),
-      allDefinitions: { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id },
       currentMaxTagId: await db.tagBankV3Dao.maxTagBankId(),
-      allTags: { for (var e in await db.tagBankV3Dao.getAllTags()) e.name : e.id },
     );
 
   }

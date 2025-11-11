@@ -151,11 +151,11 @@ Future _parseDictionaryDataSource(({
 
       // manage import contexts
       termImportContext = await manageImportContext(termImportContext, data.filePath, termBankFileNamingScheme,
-        () => TermBankV3ParserContext.create(db));
+        () => TermBankV3ParserContext.create(db, indexId));
       termMetaImportContext = await manageImportContext(termMetaImportContext, data.filePath, termMetaBankFileNamingScheme,
-        () => TermMetaBankV3ParserContext.create(db));
+        () => TermMetaBankV3ParserContext.create(db, indexId));
       kanjiImportContext = await manageImportContext(kanjiImportContext, data.filePath, kanjiBankFileNamingScheme,
-        () => KanjiBankV3ParserContext.create(db, indexEntry.id));
+        () => KanjiBankV3ParserContext.create(db, indexId));
       kanjiMetaImportContext = await manageImportContext(kanjiMetaImportContext, data.filePath, kanjiMetaBankFileNamingScheme,
         () => KanjiMetaBankV3ParserContext.create(db));
         

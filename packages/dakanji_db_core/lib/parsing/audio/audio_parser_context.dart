@@ -45,14 +45,12 @@ class AudioParserContext extends ParserContext{
   static Future<AudioParserContext> create(DaKanjiDB db) async {
 
     return AudioParserContext._(
-      currentMaxTermId: await db.termDao.maxTermId(),
       allTerms: { for (var e in await db.termDao.getAllTerms()) e.term : e.id },
-      
-      currentMaxReadingId: await db.readingDao.maxReadingId(),
       allReadings: { for (var e in await db.readingDao.getAllReadings()) e.reading : e.id },
 
+      currentMaxTermId: await db.termDao.maxTermId(),
+      currentMaxReadingId: await db.readingDao.maxReadingId(),
       currentMaxAudioId: await db.audioDao.maxAudioId(),
-
       currentMaxMediaId: await db.mediaDao.maxMediaId(),
     );
 

@@ -40,22 +40,19 @@ class TermMetaBankV3ParserContext extends ParserContext {
     required this.currentMaxIpaId,
   });
 
-  static Future<TermMetaBankV3ParserContext> create(DaKanjiDB db) async {
+  static Future<TermMetaBankV3ParserContext> create(DaKanjiDB db, int indexId) async {
     return TermMetaBankV3ParserContext._(
-      currentMaxTermMetaId: await db.termMetaBankV3Dao.maxTermMetaBankV3Id(),
       
       allTerms: { for (var e in await db.termDao.getAllTerms()) e.term : e.id },
-      currentMaxTermId: await db.termDao.maxTermId(),
-      
       allTypes: { for (var e in await db.termMetaBankV3Dao.getAllTypes()) e.type : e.id },
-      currentMaxTypeId: await db.termMetaBankV3Dao.maxTermMetaBankV3TypeId(),
-      
       allReadings: { for (var e in await db.readingDao.getAllReadings()) e.reading : e.id },
+      allTags: { for (var e in await db.tagBankV3Dao.getAllTags(indexId)) e.name : e.id },
+
+      currentMaxTermMetaId: await db.termMetaBankV3Dao.maxTermMetaBankV3Id(),      
+      currentMaxTermId: await db.termDao.maxTermId(),
+      currentMaxTypeId: await db.termMetaBankV3Dao.maxTermMetaBankV3TypeId(),
       currentMaxReadingId: await db.readingDao.maxReadingId(),
-
-      allTags: { for (var e in await db.tagBankV3Dao.getAllTags()) e.name : e.id },
       currentMaxTagId: await db.tagBankV3Dao.maxTagBankId(),
-
       currentMaxPitchId: await db.termMetaBankV3Dao.maxTermMetaBankV3PitchId(),
       currentMaxIpaId: await db.termMetaBankV3Dao.maxTermMetaBankV3IpaId(),
     );

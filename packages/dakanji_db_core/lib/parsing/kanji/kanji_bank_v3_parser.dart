@@ -12,16 +12,16 @@ import 'kanji_bank_v3_parser_context.dart';
 
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseKanjiBankV3File(File kanjiBankV3JsonFile, KanjiBankV3ParserContext pC, DaKanjiDB db, int dictId) async {
+Future parseKanjiBankV3File(File kanjiBankV3JsonFile, KanjiBankV3ParserContext pC, DaKanjiDB db, int indexId) async {
 
   String jsonString = kanjiBankV3JsonFile.readAsStringSync();
 
-  await parseKanjiBankV3(jsonString, pC, db, dictId);
+  await parseKanjiBankV3(jsonString, pC, db, indexId);
 
 }
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseKanjiBankV3(String kanjiBankV3Json, KanjiBankV3ParserContext pC, DaKanjiDB db, int dictId) async {
+Future parseKanjiBankV3(String kanjiBankV3Json, KanjiBankV3ParserContext pC, DaKanjiDB db, int indexId) async {
 
   // assure that the insert data is empty
   pC.clearInsertLists();
@@ -46,7 +46,7 @@ Future parseKanjiBankV3(String kanjiBankV3Json, KanjiBankV3ParserContext pC, DaK
     pC.kanjiBankCompanions.add(KanjiBankV3TableCompanion(
       id: Value(pC.maxKanjiBankId),
       kanjiId: Value(kanjiInsertId),
-      indexId: Value(pC.indexId),
+      indexId: Value(indexId),
       onyomiOrder: Value(jsonEncode(pC.onyomisOrder)),
       kunyomiOrder: Value(jsonEncode(pC.kunyomisOrder)),
       definitionOrder: Value(jsonEncode(pC.definitionsOrder))

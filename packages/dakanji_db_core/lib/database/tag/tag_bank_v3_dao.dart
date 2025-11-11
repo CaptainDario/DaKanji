@@ -34,8 +34,10 @@ class TagBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TagBankV3DaoMixin 
 
 
   /// Get all tags and their ids 
-  Future<List<TagBankV3TableData>> getAllTags() async {
-    return await select(tagBankV3Table).get();
+  Future<List<TagBankV3TableData>> getAllTags(int indexId) async {
+    return await ((select(tagBankV3Table)
+      ..where((tbl) => tbl.indexId.equals(indexId)))
+    .get());
   }
 
   /// Get the maximum id of the tag table

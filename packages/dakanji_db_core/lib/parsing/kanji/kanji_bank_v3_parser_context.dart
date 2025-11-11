@@ -9,9 +9,6 @@ import '/database/kanji/kanji_bank_v3_tables.dart';
 /// Simple class to keep track of the different IDs needed to parse a kanji dict
 class KanjiBankV3ParserContext extends ParserContext {
 
-  /// The SQLite id of the dictionary that is currently being parsed
-  int indexId = 0;
-
   /// List of [KanjiTableCompanion] that should be batch inserted
   List<KanjiTableCompanion> kanjiCompanions = [];
   /// The currently highest id in the [KanjiTable]
@@ -82,7 +79,6 @@ class KanjiBankV3ParserContext extends ParserContext {
   Map<String, int> statValuesInDB = {};
 
   KanjiBankV3ParserContext._({
-    required this.indexId,
     required this.maxKanjiId,
     required this.kanjisInDB,
     required this.maxKanjiBankId,
@@ -98,15 +94,15 @@ class KanjiBankV3ParserContext extends ParserContext {
     required this.statValuesInDB,
   });
 
-  static Future<KanjiBankV3ParserContext> create(DaKanjiDB db, int dictId) async {
+  static Future<KanjiBankV3ParserContext> create(DaKanjiDB db, int indexId) async {
 
     return KanjiBankV3ParserContext._(
-      indexId: dictId,
 
+      // cache existing entries in the database
       kanjisInDB: { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id },
       readingsInDB: { for (var e in await db.kanjiBankV3Dao.getAllReadings()) e.reading : e.id },
       definitionsInDB: { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id },
-      tagsInDB: { for (var e in await db.tagBankV3Dao.getAllTags()) e.name : e.id },
+      tagsInDB: { for (var e in await db.tagBankV3Dao.getAllTags(indexId)) e.name : e.id },
       statNamesInDB: { for (var e in await db.kanjiBankV3Dao.getAllStatNames()) e.statName : e.id },
       statValuesInDB: { for (var e in await db.kanjiBankV3Dao.getAllStatValues()) e.statValue : e.id },
 
