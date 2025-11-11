@@ -1,13 +1,6 @@
-
-import 'dart:convert';
-
-import 'package:collection/collection.dart';
 import 'package:dakanji_db_core/database/example/example_entry.dart';
-import 'package:dakanji_db_shared/paths.dart';
-import 'package:path/path.dart' as p;
-import 'package:universal_io/io.dart';
 
-import '../util/files.dart';
+import '../dictionary_test_variables.dart';
 
 
 List<String> exampleTextsTestQueries = [
@@ -17,11 +10,29 @@ List<String> exampleTextsTestQueries = [
   "アニメーション"
 ];
 
-List<ExampleEntry> exampleTextTestsExpectedValues = Directory(p.join(coreTestsPath, "examples"))
-  .listSync().whereType<File>()
-  .map((e) => File(e.absolute.path))
-  .where((e) => p.basename(e.path).startsWith("example_texts_test_case_"))
-  .toList()
-  .sorted((a, b) => (extractNumber(a)).compareTo(extractNumber(b)))
-  .map((e) => ExampleEntry.fromJson(jsonDecode(e.readAsStringSync())))
-  .toList();
+List<ExampleEntry> exampleTextTestsExpectedValues = [
+  ExampleEntry(
+    id: 0,
+    indexEntry: exampleTextsIndexEntry,
+    example: "東京に暮らす男子高校生・瀧は、夢を見ることをきっかけに田舎町の女子高生・三葉と入れ替わるようになる。",
+    translations: []
+  ),
+  ExampleEntry(
+    id: 0,
+    indexEntry: exampleTextsIndexEntry,
+    example: "新しい環境に慣れるまで時間がかかる。",
+    translations: []
+  ),
+  ExampleEntry(
+    id: 0,
+    indexEntry: exampleTextsIndexEntry,
+    example: "彼はその家の持ち主です。",
+    translations: []
+  ),
+  ExampleEntry(
+    id: 0,
+    indexEntry: exampleTextsIndexEntry,
+    example: "最新のアニメーション映画を見に行った。",
+    translations: []
+  ),
+];

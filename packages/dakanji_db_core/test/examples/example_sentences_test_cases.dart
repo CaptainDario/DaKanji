@@ -1,13 +1,9 @@
 
-import 'dart:convert';
-
 import 'package:dakanji_db_core/database/example/example_entry.dart';
-import 'package:dakanji_db_shared/paths.dart';
+import 'package:dakanji_db_core/database/example/example_entry_translation.dart';
 import 'package:language_processing/iso/iso_table.dart';
-import 'package:path/path.dart' as p;
-import 'package:universal_io/io.dart';
 
-import '../util/files.dart';
+import '../dictionary_test_variables.dart';
 
 
 List<(String, List<Iso639_1>)> exampleSentencesTestQueries = [
@@ -15,37 +11,61 @@ List<(String, List<Iso639_1>)> exampleSentencesTestQueries = [
   ("勉強", [Iso639_1.de]),
 ];
 
-List<List<ExampleEntry>> exampleSentenceTestExpectedValues = _loadTestData();
-
-// The private helper function that contains the complex logic
-List<List<ExampleEntry>> _loadTestData() {
-  try {
-    final testFiles = Directory(p.join(coreTestsPath, "examples"))
-      .listSync()
-      .whereType<File>()
-      .where((e) => p.basename(e.path).startsWith("example_sentences_test_case_"))
-      .toList()
-      ..sort((a, b) => (extractNumber(a)).compareTo(extractNumber(b))); // Use cascade operator for sorting in place
-
-    // This is the key part: process each file within its own try-catch
-    return testFiles.map((file) {
-      final fileName = p.basename(file.path);
-      try {
-        final content = file.readAsStringSync();
-        final List<dynamic> decodedJson = jsonDecode(content);
-        return decodedJson
-            .map((e) => ExampleEntry.fromJson(e))
-            .toList();
-      } catch (e) {
-        // This is your debugging print! It tells you which file failed and why.
-        print("❌ FAILED to parse test case file: $fileName. Error: $e");
-        return <ExampleEntry>[]; // Return an empty list for the failing file
-      }
-    }).toList();
-
-  } catch (e) {
-    // This catches errors in the directory listing or sorting
-    print("❌ FAILED to load test directory. Error: $e");
-    return []; // Return an empty list if the whole process fails
-  }
-}
+List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
+  [
+    ExampleEntry(
+      id: 0,
+      indexEntry: exampleSentencesIndexEntry,
+      example: "今日よく勉強した。",
+      translations: [
+        ExampleEntryTranslation(
+          translation: "Ich habe heute viel gelernt.",
+          languageCode: "de"
+        ),
+        ExampleEntryTranslation(
+          translation: "I studied a lot today.",
+          languageCode: "en"
+        )
+      ]
+    ),
+    ExampleEntry(
+      id: 0,
+      indexEntry: exampleSentencesIndexEntry,
+      example: "今日よく勉強しました。",
+      translations: [
+        ExampleEntryTranslation(
+          translation: "Ich habe heute viel gelernt.",
+          languageCode: "de"
+        ),
+        ExampleEntryTranslation(
+          translation: "I studied a lot today.",
+          languageCode: "en"
+        )
+      ]
+    )
+  ],
+  [
+    ExampleEntry(
+      id: 0,
+      indexEntry: exampleSentencesIndexEntry,
+      example: "今日よく勉強した。",
+      translations: [
+        ExampleEntryTranslation(
+          translation: "Ich habe heute viel gelernt.",
+          languageCode: "de"
+        )
+      ]
+    ),
+    ExampleEntry(
+      id: 0,
+      indexEntry: exampleSentencesIndexEntry,
+      example: "今日よく勉強しました。",
+      translations: [
+        ExampleEntryTranslation(
+          translation: "Ich habe heute viel gelernt.",
+          languageCode: "de"
+        )
+      ]
+    )
+  ]
+];
