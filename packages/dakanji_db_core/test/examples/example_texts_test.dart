@@ -37,8 +37,16 @@ void main() async {
         print("This are my results: $results");
         print("Looking up ${exampleTextsTestQueries[i]} took ${s.elapsedMilliseconds}ms");
 
-        expect(results.first, equals(exampleTextTestsExpectedValues[i]));
-
+        expect(
+          results.first.copyWith(
+            id: 0,
+            indexEntry: results.first.indexEntry.copyWith(
+              id: 0,
+              currentSortingOrder: 0
+            )
+          ),
+          equals(exampleTextTestsExpectedValues[i])
+        );
       });
     }
   });
@@ -49,7 +57,7 @@ Future<DaKanjiDB> setupFreshDB() async {
 
   // create the testing database (delete any existing database)
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: false);
 
   // init mecab
   final mecab = Mecab();

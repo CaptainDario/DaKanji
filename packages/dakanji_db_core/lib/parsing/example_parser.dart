@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
+import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/parsing/example/example_text_parser.dart';
 import 'package:dakanji_db_core/parsing/index/index_parser.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
@@ -72,12 +73,14 @@ Future _parseExampleDataSource(({
         archivePath: params.examplesZipPath, fileOrder: ["yomitan_index.json"]);
 
     final indexFile = dataSources.first;
-    int indexId = await parseAndInsertIndex(utf8.decode(indexFile.fileContent), db);
+    int indexId = await parseAndInsertIndex(
+      utf8.decode(indexFile.fileContent), db, DictionaryTypes.examples);
     final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
     dataSources = dataSources.skip(1);
 
     // parse the example bank files
     int progressCounter = 1;
+    int exampleSentenceChunkSize = 1000; List<String> currentSentencesBuffer = [];
     for (final ({String filePath, Uint8List fileContent}) data in dataSources) {
 
       params.mainIsolateSendPort.send("Parsing ${data.filePath} ($progressCounter/${dataSources.length}) ...");
@@ -86,7 +89,12 @@ Future _parseExampleDataSource(({
         await parseExampleText(utf8.decode(data.fileContent), db, mecab, indexId);
       }
       else if(data.filePath.endsWith(".json")) {
-        await parseExampleSentence(utf8.decode(data.fileContent), db, mecab, indexId);
+        currentSentencesBuffer.add(utf8.decode(data.fileContent));
+        if(currentSentencesBuffer.length >= exampleSentenceChunkSize ||
+          progressCounter == dataSources.length) {
+          await parseExampleSentences(currentSentencesBuffer, db, mecab, indexId);
+          currentSentencesBuffer = [];
+        }
       }
 
       progressCounter++;

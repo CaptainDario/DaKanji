@@ -10,9 +10,7 @@ import '/database/dakanji_db.dart';
 /// parses the given file's contents and adds it to the given [DaKanjiDB]
 Future parseExampleText(String exampleText, DaKanjiDB db, Mecab mecab, int indexId) async {
 
-  // read values from current db
-  int maxExampleId = await db.exampleDao.maxExampleId();
-  // read the examples
+  /// list of examples to add
   List<ExampleTableCompanion> exampleComps = [];
 
   // split text into sentences
@@ -23,7 +21,6 @@ Future parseExampleText(String exampleText, DaKanjiDB db, Mecab mecab, int index
 
     // add sentence to db
     exampleComps.add(ExampleTableCompanion(
-      id: Value(++maxExampleId),
       indexId: Value(indexId),
       exampleSentence: Value(sentence),
       exampleSentenceTokenized: Value(tokenized)
@@ -33,9 +30,7 @@ Future parseExampleText(String exampleText, DaKanjiDB db, Mecab mecab, int index
 
   // bulk add all data
   await db.batch((batch) {
-
-    db.exampleTable.insertAll(exampleComps);
-
+    db.exampleTable.insertAll(exampleComps, mode: InsertMode.insertOrIgnore);
   },);
 
 }

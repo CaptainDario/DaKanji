@@ -36,7 +36,12 @@ void main() {
 
         bool allFound = true;
         for (var result in results) {
-          if(!exampleSentenceTestExpectedValues[i].contains(result)) allFound = false; 
+          final resultForTesting = result.copyWith(
+            id: 0,
+            indexEntry: result.indexEntry.copyWith(id: 0, currentSortingOrder: 0)
+          );
+          if(!exampleSentenceTestExpectedValues[i].contains(resultForTesting))
+            allFound = false; 
         }
         expect(allFound, true);
       });

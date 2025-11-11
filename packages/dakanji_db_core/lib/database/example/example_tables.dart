@@ -19,7 +19,7 @@ class ExampleTable extends Table {
   )();
 
   /// the example of this entry
-  TextColumn get exampleSentence => text()();
+  TextColumn get exampleSentence => text().unique()();
   
   /// the example of this entry tokenized
   TextColumn get exampleSentenceTokenized => text()();
