@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:dakanji_db_core/parsing/example/example_parser_context.dart';
 import 'package:drift/drift.dart';
 import 'package:language_processing/iso/iso_table.dart';
 import 'package:language_processing/japanese/sentence_parsing.dart';
@@ -11,7 +12,11 @@ import '/database/dakanji_db.dart';
 
 
 Future parseExampleSentences(
-  List<String> exampleSentenceJsonString, DaKanjiDB db, Mecab mecab, int indexId
+  List<String> exampleSentenceJsonString,
+  DaKanjiDB db, 
+  Mecab mecab,
+  int indexId,
+  ExampleParserContext context
 ) async {
 
 
@@ -19,14 +24,6 @@ Future parseExampleSentences(
     => jsonDecode(e) as Map<String, dynamic>)
   .toList();
   
-
-  // read values from current db
-  int maxExampleId = await db.exampleDao.maxExampleId();
-  int maxExampleTransId = await db.exampleDao.maxExampleTranslationId();
-  Map<String, int> allLanguageCodes =
-    { for (var e in await db.languageCodeDao.getAllLanguageCodes()) e.languageCode : e.id };
-  int maxLanguageCodeId = await db.languageCodeDao.maxExampleTranslationId();
-
   // read the examples
   List<ExampleTableCompanion> exampleComps = [];
   List<LanguageCodeTableCompanion> languageCodeComps = [];
@@ -43,7 +40,7 @@ Future parseExampleSentences(
 
     // create japanese
     exampleComps.add(ExampleTableCompanion(
-      id: Value(++maxExampleId),
+      id: Value(++context.maxExampleId),
       indexId: Value(indexId),
       exampleSentence: Value(jap),
       exampleSentenceTokenized: Value(tokenized)
@@ -54,22 +51,22 @@ Future parseExampleSentences(
       String locale = entry.key;
       String example = entry.value;
 
-      if(allLanguageCodes[locale] == null){
-        allLanguageCodes[locale] = ++maxLanguageCodeId;
+      if(context.allLanguageCodes[locale] == null){
+        context.allLanguageCodes[locale] = ++context.maxLanguageCodeId;
         languageCodeComps.add(LanguageCodeTableCompanion(
-          id: Value(maxLanguageCodeId), languageCode: Value(locale)
+          id: Value(context.maxLanguageCodeId), languageCode: Value(locale)
         ));
       }
 
       exampleTranslationComps.add(ExampleTranslationTableCompanion(
-        id: Value(++maxExampleTransId),
+        id: Value(++context.maxExampleTransId),
         exampleTranslation: Value(example),
-        languageCodeId: Value(allLanguageCodes[locale]!)
+        languageCodeId: Value(context.allLanguageCodes[locale]!)
       ));
 
       exampleTransRelComps.add(ExampleTable_X_ExampleTranslationTableCompanion(
-        exampleId: Value(maxExampleId),
-        translationId: Value(maxExampleTransId),
+        exampleId: Value(context.maxExampleId),
+        translationId: Value(context.maxExampleTransId),
       ));
 
     }

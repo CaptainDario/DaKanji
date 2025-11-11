@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:dakanji_db_core/data/dictionary_types.dart';
+import 'package:dakanji_db_core/parsing/example/example_parser_context.dart';
 import 'package:dakanji_db_core/parsing/example/example_text_parser.dart';
 import 'package:dakanji_db_core/parsing/index/index_parser.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
@@ -78,6 +79,9 @@ Future _parseExampleDataSource(({
     final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
     dataSources = dataSources.skip(1);
 
+    // get the parsing context
+    ExampleParserContext context = await ExampleParserContext.create(db);
+
     // parse the example bank files
     int progressCounter = 1;
     int exampleSentenceChunkSize = 1000; List<String> currentSentencesBuffer = [];
@@ -92,7 +96,7 @@ Future _parseExampleDataSource(({
         currentSentencesBuffer.add(utf8.decode(data.fileContent));
         if(currentSentencesBuffer.length >= exampleSentenceChunkSize ||
           progressCounter == dataSources.length) {
-          await parseExampleSentences(currentSentencesBuffer, db, mecab, indexId);
+          await parseExampleSentences(currentSentencesBuffer, db, mecab, indexId, context);
           currentSentencesBuffer = [];
         }
       }
