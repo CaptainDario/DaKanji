@@ -221,8 +221,8 @@ void setupDb (Database database) {
 }
 
 Sqlite3 loadExtensions() {
-  final sqlite3 = sqlite3Native;
-  sqlite3.loadSqliteVectorExtension();
-  sqlite3.loadSqliteSpellfixExtension();
-  return sqlite3;
+
+  sqlite3Native.loadSqliteVectorExtension();
+  sqlite3Native.loadSqliteSpellfixExtension();
+  return sqlite3Native;
 }
