@@ -1,7 +1,7 @@
 
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 
-import '../test_dictionary_variables.dart';
+import '../dictionary_test_variables.dart';
 
 int dictId = 1;
 

@@ -3,7 +3,7 @@
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_ipa_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_pitch_entry.dart';
 
-import '../../test_dictionary_variables.dart';
+import '../../dictionary_test_variables.dart';
 import 'dictionary_search_test_helper_classes.dart';
 
 

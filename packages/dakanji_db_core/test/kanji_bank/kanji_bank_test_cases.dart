@@ -3,7 +3,7 @@ import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry_stat.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 
-import '../test_dictionary_variables.dart';
+import '../dictionary_test_variables.dart';
 
 
 /// Test cases for the kanji bank

@@ -15,6 +15,28 @@ IndexEntry testDictionaryIndexEntry = IndexEntry(
   revision: "test",
   sequenced: true
 );
+
+IndexEntry exampleSentencesIndexEntry = IndexEntry(
+  id: 0,
+  dictionaryType: DictionaryTypes.examples,
+  currentSortingOrder: 0,
+  currentFrequencyDictionary: false,
+
+  title: "Example sentences Test [2025-11-02]",
+  format: 3,
+  revision: "example_sentences_entries_format_test.2025-11-02",
+);
+IndexEntry exampleTextsIndexEntry = IndexEntry(
+  id: 0,
+  dictionaryType: DictionaryTypes.examples,
+  currentSortingOrder: 0,
+  currentFrequencyDictionary: false,
+
+  title: "Example texts Test [2025-11-02]",
+  format: 3,
+  revision: "example_audio_entries_format_test.2025-11-02",
+);
+
 IndexEntry audioFormat1ExampleDictionaryIndexEntry = IndexEntry(
   id: 1,
   dictionaryType: DictionaryTypes.audio,

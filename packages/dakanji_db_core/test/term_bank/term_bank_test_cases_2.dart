@@ -1,7 +1,7 @@
 // This list should contain the search term that corresponds to the expectations above.
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 
-import '../test_dictionary_variables.dart';
+import '../dictionary_test_variables.dart';
 
 final int dictId = 1;
 

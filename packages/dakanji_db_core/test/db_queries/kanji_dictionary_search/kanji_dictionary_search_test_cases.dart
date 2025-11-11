@@ -4,7 +4,7 @@ import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry_stat.dart';
 import 'package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 
-import '../../test_dictionary_variables.dart';
+import '../../dictionary_test_variables.dart';
 import 'kanji_dictionary_search_result_helper_classes.dart';
 
 
