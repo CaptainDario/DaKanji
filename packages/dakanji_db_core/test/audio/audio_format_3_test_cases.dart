@@ -2,6 +2,8 @@ import 'dart:typed_data';
 
 import 'package:dakanji_db_core/database/audio/audio_entry.dart';
 
+import '../test_dictionary_variables.dart';
+
 
 
 final placeholderAudioData = Uint8List.fromList([1, 2, 3]);
@@ -17,6 +19,8 @@ List<String> audioFormat3TestCaseSearchTerms = [
 List<List<AudioEntry>> audioFormat3TestCases = [
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat3ExampleDictionaryIndexEntry,
       pitchAccentPattern: 0,
       terms: ['画像'],
       reading: 'ガゾー',
@@ -27,6 +31,8 @@ List<List<AudioEntry>> audioFormat3TestCases = [
   ],
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat3ExampleDictionaryIndexEntry,
       pitchAccentPattern: 5,
       terms: ['日本人'],
       reading: 'ニッポンジン',
@@ -35,6 +41,8 @@ List<List<AudioEntry>> audioFormat3TestCases = [
       fileData: placeholderAudioData,
     ),
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat3ExampleDictionaryIndexEntry,
       pitchAccentPattern: 4,
       terms: ['日本人'],
       reading: 'ニホンジン',
@@ -45,6 +53,8 @@ List<List<AudioEntry>> audioFormat3TestCases = [
   ],
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat3ExampleDictionaryIndexEntry,
       pitchAccentPattern: 1,
       terms: ['打つ', '討つ', '撃つ'],
       reading: 'ウツ',
@@ -55,6 +65,8 @@ List<List<AudioEntry>> audioFormat3TestCases = [
   ],
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat3ExampleDictionaryIndexEntry,
       pitchAccentPattern: 3,
       terms: ['番号'],
       reading: 'バンコ゚ー',
@@ -65,6 +77,8 @@ List<List<AudioEntry>> audioFormat3TestCases = [
   ],
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat3ExampleDictionaryIndexEntry,
       pitchAccentPattern: 1,
       terms: ['詠む', '読む'],
       reading: 'ヨム',

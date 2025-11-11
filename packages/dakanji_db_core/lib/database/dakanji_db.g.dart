@@ -14870,7 +14870,7 @@ class AudioTable_X_TermTableCompanion
 
 class AudioEntryViewData extends DataClass {
   final int id;
-  final int indexId;
+  final String indexEntry;
   final int? pitchAccentPattern;
   final String termsJsonList;
   final String? reading;
@@ -14879,7 +14879,7 @@ class AudioEntryViewData extends DataClass {
   final Uint8List? data;
   const AudioEntryViewData({
     required this.id,
-    required this.indexId,
+    required this.indexEntry,
     this.pitchAccentPattern,
     required this.termsJsonList,
     this.reading,
@@ -14894,7 +14894,7 @@ class AudioEntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return AudioEntryViewData(
       id: serializer.fromJson<int>(json['id']),
-      indexId: serializer.fromJson<int>(json['index_id']),
+      indexEntry: serializer.fromJson<String>(json['indexEntry']),
       pitchAccentPattern: serializer.fromJson<int?>(
         json['pitch_accent_pattern'],
       ),
@@ -14910,7 +14910,7 @@ class AudioEntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'index_id': serializer.toJson<int>(indexId),
+      'indexEntry': serializer.toJson<String>(indexEntry),
       'pitch_accent_pattern': serializer.toJson<int?>(pitchAccentPattern),
       'terms_json_list': serializer.toJson<String>(termsJsonList),
       'reading': serializer.toJson<String?>(reading),
@@ -14922,7 +14922,7 @@ class AudioEntryViewData extends DataClass {
 
   AudioEntryViewData copyWith({
     int? id,
-    int? indexId,
+    String? indexEntry,
     Value<int?> pitchAccentPattern = const Value.absent(),
     String? termsJsonList,
     Value<String?> reading = const Value.absent(),
@@ -14931,7 +14931,7 @@ class AudioEntryViewData extends DataClass {
     Value<Uint8List?> data = const Value.absent(),
   }) => AudioEntryViewData(
     id: id ?? this.id,
-    indexId: indexId ?? this.indexId,
+    indexEntry: indexEntry ?? this.indexEntry,
     pitchAccentPattern: pitchAccentPattern.present
         ? pitchAccentPattern.value
         : this.pitchAccentPattern,
@@ -14945,7 +14945,7 @@ class AudioEntryViewData extends DataClass {
   String toString() {
     return (StringBuffer('AudioEntryViewData(')
           ..write('id: $id, ')
-          ..write('indexId: $indexId, ')
+          ..write('indexEntry: $indexEntry, ')
           ..write('pitchAccentPattern: $pitchAccentPattern, ')
           ..write('termsJsonList: $termsJsonList, ')
           ..write('reading: $reading, ')
@@ -14959,7 +14959,7 @@ class AudioEntryViewData extends DataClass {
   @override
   int get hashCode => Object.hash(
     id,
-    indexId,
+    indexEntry,
     pitchAccentPattern,
     termsJsonList,
     reading,
@@ -14972,7 +14972,7 @@ class AudioEntryViewData extends DataClass {
       identical(this, other) ||
       (other is AudioEntryViewData &&
           other.id == this.id &&
-          other.indexId == this.indexId &&
+          other.indexEntry == this.indexEntry &&
           other.pitchAccentPattern == this.pitchAccentPattern &&
           other.termsJsonList == this.termsJsonList &&
           other.reading == this.reading &&
@@ -14990,7 +14990,7 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
   @override
   List<GeneratedColumn> get $columns => [
     id,
-    indexId,
+    indexEntry,
     pitchAccentPattern,
     termsJsonList,
     reading,
@@ -15005,7 +15005,7 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS audio_entry_view AS SELECT AT.id, AT.index_id, AT.pitch_accent_pattern, JSON_GROUP_ARRAY(TT.term) AS terms_json_list, RT.reading, MT.path, MT.name, MT.data FROM audio_table AS AT LEFT JOIN audio_table_x_term_table AS ATXTT ON ATXTT.audio_id = AT.id LEFT JOIN term_table AS TT ON TT.id = ATXTT.term_id LEFT JOIN reading_table AS RT ON RT.id = AT.reading_id LEFT JOIN media_table AS MT ON AT.media_id = MT.id GROUP BY AT.id',
+        'CREATE VIEW IF NOT EXISTS audio_entry_view AS SELECT AT.id, ITV.index_entry AS indexEntry, AT.pitch_accent_pattern, JSON_GROUP_ARRAY(TT.term) AS terms_json_list, RT.reading, MT.path, MT.name, MT.data FROM audio_table AS AT JOIN term_meta_bank_v3_entry_as_json_view AS ITV ON ITV.id = AT.index_id LEFT JOIN audio_table_x_term_table AS ATXTT ON ATXTT.audio_id = AT.id LEFT JOIN term_table AS TT ON TT.id = ATXTT.term_id LEFT JOIN reading_table AS RT ON RT.id = AT.reading_id LEFT JOIN media_table AS MT ON AT.media_id = MT.id GROUP BY AT.id',
   };
   @override
   AudioEntryView get asDslTable => this;
@@ -15017,9 +15017,9 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      indexId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}index_id'],
+      indexEntry: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}indexEntry'],
       )!,
       pitchAccentPattern: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -15054,11 +15054,11 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
     false,
     type: DriftSqlType.int,
   );
-  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
-    'index_id',
+  late final GeneratedColumn<String> indexEntry = GeneratedColumn<String>(
+    'indexEntry',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
   );
   late final GeneratedColumn<int> pitchAccentPattern = GeneratedColumn<int>(
     'pitch_accent_pattern',
@@ -15106,6 +15106,7 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
   @override
   Set<String> get readTables => const {
     'audio_table',
+    'index_table',
     'audio_table_x_term_table',
     'term_table',
     'reading_table',
@@ -18875,6 +18876,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         audioTableXTermTable,
         termTable,
         audioTable,
+        indexTable,
         readingTable,
         mediaTable,
       },

@@ -2,6 +2,8 @@ import 'dart:typed_data';
 
 import 'package:dakanji_db_core/database/audio/audio_entry.dart';
 
+import '../test_dictionary_variables.dart';
+
 
 
 final placeholderAudioData = Uint8List.fromList([1, 2, 3]);
@@ -22,6 +24,8 @@ List<List<AudioEntry>> audioFormat1TestCases = [
   // Results for 'お手前'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['お手前'],
       reading: null,
       pitchAccentPattern: null,
@@ -33,6 +37,8 @@ List<List<AudioEntry>> audioFormat1TestCases = [
   // Results for '強み'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['強み'],
       reading: null,
       pitchAccentPattern: null,
@@ -44,6 +50,8 @@ List<List<AudioEntry>> audioFormat1TestCases = [
   // Results for '所業'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['所業'],
       reading: null,
       pitchAccentPattern: null,
@@ -55,6 +63,8 @@ List<List<AudioEntry>> audioFormat1TestCases = [
   // Results for '打ち込む'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['打ち込む'],
       reading: null,
       pitchAccentPattern: null,
@@ -66,6 +76,8 @@ List<List<AudioEntry>> audioFormat1TestCases = [
   // Results for '日本人'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['日本人'],
       reading: null,
       pitchAccentPattern: null,
@@ -74,6 +86,8 @@ List<List<AudioEntry>> audioFormat1TestCases = [
       fileData: placeholderAudioData,
     ),
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['日本人'],
       reading: null,
       pitchAccentPattern: null,
@@ -85,6 +99,8 @@ List<List<AudioEntry>> audioFormat1TestCases = [
   // Results for '打つ'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['打つ'],
       reading: null,
       pitchAccentPattern: null,
@@ -96,6 +112,8 @@ List<List<AudioEntry>> audioFormat1TestCases = [
   // Results for '画像'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['画像'],
       reading: null,
       pitchAccentPattern: null,
@@ -107,6 +125,8 @@ List<List<AudioEntry>> audioFormat1TestCases = [
   // Results for '番号'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['番号'],
       reading: null,
       pitchAccentPattern: null,
@@ -118,6 +138,8 @@ List<List<AudioEntry>> audioFormat1TestCases = [
   // Results for '詠む' (matching '読む' from data)
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['読む'],
       reading: null,
       pitchAccentPattern: null,

@@ -2,6 +2,8 @@ import 'dart:typed_data';
 
 import 'package:dakanji_db_core/database/audio/audio_entry.dart';
 
+import '../test_dictionary_variables.dart';
+
 
 
 final placeholderAudioData = Uint8List.fromList([1, 2, 3]);
@@ -18,6 +20,8 @@ List<List<AudioEntry>> audioFormat2TestCases = [
   // Results for 'お手前'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
       terms: ['お手前'],
       reading: 'おてまえ',
       pitchAccentPattern: null,
@@ -29,6 +33,8 @@ List<List<AudioEntry>> audioFormat2TestCases = [
   // Results for '強み'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
       terms: ['強み'],
       reading: 'つよみ',
       pitchAccentPattern: null,
@@ -40,6 +46,8 @@ List<List<AudioEntry>> audioFormat2TestCases = [
   // Results for '所業'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
       terms: ['所業'],
       reading: 'しょぎょう',
       pitchAccentPattern: null,
@@ -51,6 +59,8 @@ List<List<AudioEntry>> audioFormat2TestCases = [
   // Results for '打ち込む'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
       terms: ['打ち込む'],
       reading: 'ぶちこむ',
       pitchAccentPattern: null,
@@ -59,6 +69,8 @@ List<List<AudioEntry>> audioFormat2TestCases = [
       fileData: placeholderAudioData,
     ),
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
       terms: ['打ち込む'],
       reading: 'うちこむ',
       pitchAccentPattern: null,
@@ -70,6 +82,8 @@ List<List<AudioEntry>> audioFormat2TestCases = [
   // Results for '日本人'
   [
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
       terms: ['日本人'],
       reading: 'にほんじん',
       pitchAccentPattern: null,
@@ -78,6 +92,8 @@ List<List<AudioEntry>> audioFormat2TestCases = [
       fileData: placeholderAudioData,
     ),
     AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
       terms: ['日本人'],
       reading: 'にっぽんじん',
       pitchAccentPattern: null,

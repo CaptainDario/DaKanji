@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'audio_entry.freezed.dart';
@@ -15,6 +16,10 @@ part 'audio_entry.g.dart';
 /// Class representing one audio entry of the database
 class AudioEntry with _$AudioEntry {
 
+  /// The id of this entry in the audio table
+  int id;
+  /// The index (dictionary) in which this entry is defined
+  IndexEntry indexEntry;
   /// The terms associated with this audio entry
   @override
   final List<String> terms;
@@ -36,7 +41,8 @@ class AudioEntry with _$AudioEntry {
   final Uint8List fileData;
     
   AudioEntry({
-    /// The terms associated with this audio entry
+    required this.id,
+    required this.indexEntry,
     required this.terms,
     required this.reading,
     required this.pitchAccentPattern,
@@ -47,6 +53,8 @@ class AudioEntry with _$AudioEntry {
     
   factory AudioEntry.fromAudioEntryViewData(AudioEntryViewData data) {
     return AudioEntry(
+      id: data.id,
+      indexEntry: IndexEntry.fromJson(jsonDecode(data.indexEntry)),
       terms: List<String>.from(jsonDecode(data.termsJsonList)),
       reading: data.reading,
       pitchAccentPattern: data.pitchAccentPattern,

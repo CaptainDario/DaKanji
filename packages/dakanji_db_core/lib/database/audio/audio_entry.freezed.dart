@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AudioEntry {
 
- List<String> get terms; String? get reading; int? get pitchAccentPattern; String? get filePath; String get fileName; Uint8List get fileData;
+ int get id; set id(int value); IndexEntry get indexEntry; set indexEntry(IndexEntry value); List<String> get terms; String? get reading; int? get pitchAccentPattern; String? get filePath; String get fileName; Uint8List get fileData;
 /// Create a copy of AudioEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $AudioEntryCopyWith<AudioEntry> get copyWith => _$AudioEntryCopyWithImpl<AudioEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AudioEntry&&const DeepCollectionEquality().equals(other.terms, terms)&&(identical(other.reading, reading) || other.reading == reading)&&(identical(other.pitchAccentPattern, pitchAccentPattern) || other.pitchAccentPattern == pitchAccentPattern)&&(identical(other.filePath, filePath) || other.filePath == filePath)&&(identical(other.fileName, fileName) || other.fileName == fileName)&&const DeepCollectionEquality().equals(other.fileData, fileData));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AudioEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.indexEntry, indexEntry) || other.indexEntry == indexEntry)&&const DeepCollectionEquality().equals(other.terms, terms)&&(identical(other.reading, reading) || other.reading == reading)&&(identical(other.pitchAccentPattern, pitchAccentPattern) || other.pitchAccentPattern == pitchAccentPattern)&&(identical(other.filePath, filePath) || other.filePath == filePath)&&(identical(other.fileName, fileName) || other.fileName == fileName)&&const DeepCollectionEquality().equals(other.fileData, fileData));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(terms),reading,pitchAccentPattern,filePath,fileName,const DeepCollectionEquality().hash(fileData));
+int get hashCode => Object.hash(runtimeType,id,indexEntry,const DeepCollectionEquality().hash(terms),reading,pitchAccentPattern,filePath,fileName,const DeepCollectionEquality().hash(fileData));
 
 @override
 String toString() {
-  return 'AudioEntry(terms: $terms, reading: $reading, pitchAccentPattern: $pitchAccentPattern, filePath: $filePath, fileName: $fileName, fileData: $fileData)';
+  return 'AudioEntry(id: $id, indexEntry: $indexEntry, terms: $terms, reading: $reading, pitchAccentPattern: $pitchAccentPattern, filePath: $filePath, fileName: $fileName, fileData: $fileData)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $AudioEntryCopyWith<$Res>  {
   factory $AudioEntryCopyWith(AudioEntry value, $Res Function(AudioEntry) _then) = _$AudioEntryCopyWithImpl;
 @useResult
 $Res call({
- List<String> terms, String? reading, int? pitchAccentPattern, String? filePath, String fileName, Uint8List fileData
+ int id, IndexEntry indexEntry, List<String> terms, String? reading, int? pitchAccentPattern, String? filePath, String fileName, Uint8List fileData
 });
 
 
@@ -63,9 +63,11 @@ class _$AudioEntryCopyWithImpl<$Res>
 
 /// Create a copy of AudioEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? terms = null,Object? reading = freezed,Object? pitchAccentPattern = freezed,Object? filePath = freezed,Object? fileName = null,Object? fileData = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? indexEntry = null,Object? terms = null,Object? reading = freezed,Object? pitchAccentPattern = freezed,Object? filePath = freezed,Object? fileName = null,Object? fileData = null,}) {
   return _then(AudioEntry(
-terms: null == terms ? _self.terms : terms // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,indexEntry: null == indexEntry ? _self.indexEntry : indexEntry // ignore: cast_nullable_to_non_nullable
+as IndexEntry,terms: null == terms ? _self.terms : terms // ignore: cast_nullable_to_non_nullable
 as List<String>,reading: freezed == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
 as String?,pitchAccentPattern: freezed == pitchAccentPattern ? _self.pitchAccentPattern : pitchAccentPattern // ignore: cast_nullable_to_non_nullable
 as int?,filePath: freezed == filePath ? _self.filePath : filePath // ignore: cast_nullable_to_non_nullable

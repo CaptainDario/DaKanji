@@ -4,7 +4,6 @@ import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 
 
 
-// --- data from tag_bank_1.json ---
 IndexEntry testDictionaryIndexEntry = IndexEntry(
   id: 0,
   dictionaryType: DictionaryTypes.yomitan,
@@ -16,6 +15,41 @@ IndexEntry testDictionaryIndexEntry = IndexEntry(
   revision: "test",
   sequenced: true
 );
+IndexEntry audioFormat1ExampleDictionaryIndexEntry = IndexEntry(
+  id: 1,
+  dictionaryType: DictionaryTypes.audio,
+  currentSortingOrder: 0,
+  currentFrequencyDictionary: false,
+
+  title: "Example Audio Entries Format Test [2025-11-02]",
+  format: 3,
+  revision: "example_audio_entries_format_test.2025-11-02",
+  sequenced: false
+);
+IndexEntry audioFormat2ExampleDictionaryIndexEntry = IndexEntry(
+  id: 1,
+  dictionaryType: DictionaryTypes.audio,
+  currentSortingOrder: 0,
+  currentFrequencyDictionary: false,
+
+  title: "Example Audio Index Format Test [2025-11-02]",
+  format: 3,
+  revision: "example_audio_index_format_test.2025-11-02",
+  sequenced: false
+);
+IndexEntry audioFormat3ExampleDictionaryIndexEntry = IndexEntry(
+  id: 1,
+  dictionaryType: DictionaryTypes.audio,
+  currentSortingOrder: 0,
+  currentFrequencyDictionary: false,
+
+  title: "Example Audio File Name Format Test [2025-11-02]",
+  format: 3,
+  revision: "example_audio_file_name_format_test.2025-11-02",
+  sequenced: false
+);
+
+// --- data from tag_bank_1.json ---
 TagBankV3Entry e1Tag = TagBankV3Entry(
   id: 0,
   indexEntry: testDictionaryIndexEntry,
