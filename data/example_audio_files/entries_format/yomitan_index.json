@@ -1,13 +1,5 @@
 {
     "title": "Example Audio Entries Format Test [2025-11-02]",
     "format": 3,
-    "revision": "example_audio_entries_format_test.2025-11-02",
-    "sequenced": false,
-    "author": "CaptainDario",
-    "url": "https://github.com/captaindario/dakanji",
-    "description": "Jus some random test",
-    "attribution": "Just some random test",
-    "isUpdatable": true,
-    "indexUrl": "https://github.com/yomidevs/jmdict-yomitan/releases/latest/download/JMdict_english.json",
-    "downloadUrl": "https://github.com/yomidevs/jmdict-yomitan/releases/latest/download/JMdict_english.zip"
+    "revision": "example_audio_entries_format_test.2025-11-02"
 }
