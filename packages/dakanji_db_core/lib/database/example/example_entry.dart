@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '/database/dakanji_db.dart';
@@ -16,22 +17,27 @@ part 'example_entry.g.dart';
 /// Class representing one example sentence and its translations of the database
 class ExampleEntry with _$ExampleEntry {
 
-  /// The example sentence
+  /// The id of this entry in the example table
   @override
-  final String example;
+  int id;
 
   /// The id of the dictionary this entry belongs to
   @override
-  final int indexId;
+  final IndexEntry indexEntry;
+
+  /// The example sentence
+  @override
+  final String example;
 
   /// The translations of the example
   @override
   final List<ExampleEntryTranslation> translations;
 
   ExampleEntry({
+    required this.id,
+    required this.indexEntry,
     required this.example,
     required this.translations,
-    required this.indexId
   }) {
     translations.sort((a, b) => a.languageCode.compareTo(b.languageCode));
   }
@@ -42,7 +48,8 @@ class ExampleEntry with _$ExampleEntry {
   factory ExampleEntry.fromExampleFtsSearchSql(ExampleFtsSearchDriftResult r){
 
     return ExampleEntry(
-      indexId: r.indexId,
+      id: r.id,
+      indexEntry: IndexEntry.fromJson(jsonDecode(r.indexEntry)),
       example: r.exampleSentence,
       translations: List.from(jsonDecode(r.translations)).map((e) => 
         ExampleEntryTranslation.fromJson(e)  

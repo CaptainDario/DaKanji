@@ -1,5 +1,6 @@
 import 'example_tables.dart';
 import 'example_relation_tables.dart';
+import '/database/index/index_views.drift';
 import '/database/general_tables/language_code_table.dart';
 import 'example_fts5_table.drift';
 
@@ -7,13 +8,15 @@ CREATE VIEW IF NOT EXISTS example_entry_view AS
 
     SELECT
         ET.id,
-        ET.index_id,
+        IT.index_entry as indexEntry,
         ET.example_sentence,
         ETT.example_translation,
         LCT.language_code,
         ETT.id AS translation_id
     FROM
         example_table AS ET
+    JOIN term_meta_bank_v3_entry_as_json_view AS IT
+        ON IT.id = ET.index_id
     LEFT JOIN example_table_x_example_translation_table AS ETRT
         ON ETRT.example_id = ET.id
     LEFT JOIN example_translation_table AS ETT

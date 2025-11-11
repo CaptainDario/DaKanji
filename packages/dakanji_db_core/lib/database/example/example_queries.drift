@@ -7,7 +7,7 @@ import '/database/example/example_views.drift';
 example_fts_search_drift:
     SELECT
         EDV.id,
-        EDV.index_id,
+        EDV.indexEntry,
         EDV.example_sentence,
         '[' || COALESCE(GROUP_CONCAT(DISTINCT
             -- Only create the JSON object if the translation is not NULL

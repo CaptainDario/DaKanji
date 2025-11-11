@@ -16569,14 +16569,14 @@ class ExampleTable_X_ExampleTranslationTableCompanion
 
 class ExampleEntryViewData extends DataClass {
   final int id;
-  final int indexId;
+  final String indexEntry;
   final String exampleSentence;
   final String? exampleTranslation;
   final String? languageCode;
   final int? translationId;
   const ExampleEntryViewData({
     required this.id,
-    required this.indexId,
+    required this.indexEntry,
     required this.exampleSentence,
     this.exampleTranslation,
     this.languageCode,
@@ -16589,7 +16589,7 @@ class ExampleEntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ExampleEntryViewData(
       id: serializer.fromJson<int>(json['id']),
-      indexId: serializer.fromJson<int>(json['index_id']),
+      indexEntry: serializer.fromJson<String>(json['indexEntry']),
       exampleSentence: serializer.fromJson<String>(json['example_sentence']),
       exampleTranslation: serializer.fromJson<String?>(
         json['example_translation'],
@@ -16603,7 +16603,7 @@ class ExampleEntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'index_id': serializer.toJson<int>(indexId),
+      'indexEntry': serializer.toJson<String>(indexEntry),
       'example_sentence': serializer.toJson<String>(exampleSentence),
       'example_translation': serializer.toJson<String?>(exampleTranslation),
       'language_code': serializer.toJson<String?>(languageCode),
@@ -16613,14 +16613,14 @@ class ExampleEntryViewData extends DataClass {
 
   ExampleEntryViewData copyWith({
     int? id,
-    int? indexId,
+    String? indexEntry,
     String? exampleSentence,
     Value<String?> exampleTranslation = const Value.absent(),
     Value<String?> languageCode = const Value.absent(),
     Value<int?> translationId = const Value.absent(),
   }) => ExampleEntryViewData(
     id: id ?? this.id,
-    indexId: indexId ?? this.indexId,
+    indexEntry: indexEntry ?? this.indexEntry,
     exampleSentence: exampleSentence ?? this.exampleSentence,
     exampleTranslation: exampleTranslation.present
         ? exampleTranslation.value
@@ -16634,7 +16634,7 @@ class ExampleEntryViewData extends DataClass {
   String toString() {
     return (StringBuffer('ExampleEntryViewData(')
           ..write('id: $id, ')
-          ..write('indexId: $indexId, ')
+          ..write('indexEntry: $indexEntry, ')
           ..write('exampleSentence: $exampleSentence, ')
           ..write('exampleTranslation: $exampleTranslation, ')
           ..write('languageCode: $languageCode, ')
@@ -16646,7 +16646,7 @@ class ExampleEntryViewData extends DataClass {
   @override
   int get hashCode => Object.hash(
     id,
-    indexId,
+    indexEntry,
     exampleSentence,
     exampleTranslation,
     languageCode,
@@ -16657,7 +16657,7 @@ class ExampleEntryViewData extends DataClass {
       identical(this, other) ||
       (other is ExampleEntryViewData &&
           other.id == this.id &&
-          other.indexId == this.indexId &&
+          other.indexEntry == this.indexEntry &&
           other.exampleSentence == this.exampleSentence &&
           other.exampleTranslation == this.exampleTranslation &&
           other.languageCode == this.languageCode &&
@@ -16673,7 +16673,7 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
   @override
   List<GeneratedColumn> get $columns => [
     id,
-    indexId,
+    indexEntry,
     exampleSentence,
     exampleTranslation,
     languageCode,
@@ -16686,7 +16686,7 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS example_entry_view AS SELECT ET.id, ET.index_id, ET.example_sentence, ETT.example_translation, LCT.language_code, ETT.id AS translation_id FROM example_table AS ET LEFT JOIN example_table_x_example_translation_table AS ETRT ON ETRT.example_id = ET.id LEFT JOIN example_translation_table AS ETT ON ETRT.translation_id = ETT.id LEFT JOIN language_code_table AS LCT ON LCT.id = ETT.language_code_id',
+        'CREATE VIEW IF NOT EXISTS example_entry_view AS SELECT ET.id, IT.index_entry AS indexEntry, ET.example_sentence, ETT.example_translation, LCT.language_code, ETT.id AS translation_id FROM example_table AS ET JOIN term_meta_bank_v3_entry_as_json_view AS IT ON IT.id = ET.index_id LEFT JOIN example_table_x_example_translation_table AS ETRT ON ETRT.example_id = ET.id LEFT JOIN example_translation_table AS ETT ON ETRT.translation_id = ETT.id LEFT JOIN language_code_table AS LCT ON LCT.id = ETT.language_code_id',
   };
   @override
   ExampleEntryView get asDslTable => this;
@@ -16698,9 +16698,9 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      indexId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}index_id'],
+      indexEntry: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}indexEntry'],
       )!,
       exampleSentence: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -16727,11 +16727,11 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
     false,
     type: DriftSqlType.int,
   );
-  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
-    'index_id',
+  late final GeneratedColumn<String> indexEntry = GeneratedColumn<String>(
+    'indexEntry',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
   );
   late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
     'example_sentence',
@@ -16768,6 +16768,7 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
   @override
   Set<String> get readTables => const {
     'example_table',
+    'index_table',
     'example_table_x_example_translation_table',
     'example_translation_table',
     'language_code_table',
@@ -18898,7 +18899,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     int offset,
   ) {
     return customSelect(
-      'SELECT EDV.id, EDV.index_id, EDV.example_sentence, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT CASE WHEN EDV.example_translation IS NOT NULL THEN json_object(\'translation\', EDV.example_translation, \'languageCode\', EDV.language_code) END), \'\') || \']\' AS translations FROM example_entry_view AS EDV INNER JOIN example_fts AS FTS ON FTS."rowid" = EDV.id WHERE example_fts MATCH ?1 AND((LENGTH(?2) <= 2)OR(EDV.language_code IN (SELECT value FROM json_each(?2)))OR EDV.translation_id IS NULL)GROUP BY EDV.id LIMIT ?3 OFFSET ?4',
+      'SELECT EDV.id, EDV.indexEntry, EDV.example_sentence, \'[\' || COALESCE(GROUP_CONCAT(DISTINCT CASE WHEN EDV.example_translation IS NOT NULL THEN json_object(\'translation\', EDV.example_translation, \'languageCode\', EDV.language_code) END), \'\') || \']\' AS translations FROM example_entry_view AS EDV INNER JOIN example_fts AS FTS ON FTS."rowid" = EDV.id WHERE example_fts MATCH ?1 AND((LENGTH(?2) <= 2)OR(EDV.language_code IN (SELECT value FROM json_each(?2)))OR EDV.translation_id IS NULL)GROUP BY EDV.id LIMIT ?3 OFFSET ?4',
       variables: [
         Variable<String>(query),
         Variable<String>(languageCodes),
@@ -18908,6 +18909,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       readsFrom: {
         exampleFts,
         exampleTable,
+        indexTable,
         exampleTableXExampleTranslationTable,
         exampleTranslationTable,
         languageCodeTable,
@@ -18915,7 +18917,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ).map(
       (QueryRow row) => ExampleFtsSearchDriftResult(
         id: row.read<int>('id'),
-        indexId: row.read<int>('index_id'),
+        indexEntry: row.read<String>('indexEntry'),
         exampleSentence: row.read<String>('example_sentence'),
         translations: row.read<String>('translations'),
       ),
@@ -41022,12 +41024,12 @@ class GetMbSizesDriftResult {
 
 class ExampleFtsSearchDriftResult {
   final int id;
-  final int indexId;
+  final String indexEntry;
   final String exampleSentence;
   final String translations;
   ExampleFtsSearchDriftResult({
     required this.id,
-    required this.indexId,
+    required this.indexEntry,
     required this.exampleSentence,
     required this.translations,
   });
