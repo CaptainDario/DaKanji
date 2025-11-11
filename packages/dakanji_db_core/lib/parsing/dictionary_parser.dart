@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:isolate';
 import 'dart:typed_data';
 
+import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/parsing/audio_source_list/audio_source_list_parser.dart';
 import 'package:dakanji_db_core/parsing/kanji/kanji_bank_v3_parser_context.dart';
 import 'package:dakanji_db_core/parsing/kanji_meta/kanji_meta_bank_v3_parser_context.dart';
@@ -123,7 +124,8 @@ Future _parseDictionaryDataSource(({
     
     // parse the index file -> get dict index
     final indexFile = dataSources.first;
-    int indexId = await parseAndInsertIndex(utf8.decode(indexFile.fileContent), db);
+    int indexId = await parseAndInsertIndex(
+      utf8.decode(indexFile.fileContent), db, DictionaryTypes.yomitan);
     final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
 
     // create import context for parsing
