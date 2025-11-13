@@ -14,14 +14,22 @@ class DictionaryMatchTag extends StatelessWidget {
   final String? details;
 
   /// The tag's color.
-  final Color? color;
+  final Color color;
+
+  /// The tag's lading color
+  final Color leadingColor;
+
+  /// The tag's border color.
+  final Color borderColor;
 
   const DictionaryMatchTag(
     {
       required this.text,
       this.details,
       this.leadingText,
-      this.color,
+      this.color = Colors.transparent,
+      this.leadingColor = Colors.transparent,
+      this.borderColor = Colors.grey,
       super.key
     }
   );
@@ -44,7 +52,7 @@ class DictionaryMatchTag extends StatelessWidget {
           color: color,
           borderRadius: BorderRadius.circular(4),
           border: Border.all(
-            color: color ?? Colors.grey,
+            color: borderColor,
             width: 1,
           ),
         ),
@@ -62,7 +70,7 @@ class DictionaryMatchTag extends StatelessWidget {
                   child: VerticalDivider(
                     width: 8,
                     thickness: 1,
-                    color: Colors.grey,
+                    color: borderColor,
                   ),
                 ),
               ],
