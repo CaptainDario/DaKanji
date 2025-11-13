@@ -209,7 +209,7 @@ dictionary_search_drift_find_term_bank_entries:
         TBM.rank,
         LENGTH(matchedText)
 
-    LIMIT 100;
+    LIMIT 2500;
 
 dictionary_search_drift_find_term_bank_sequences:
 
