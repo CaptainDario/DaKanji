@@ -111,9 +111,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           value: exampleDictionaryTerms[i],
                           child: Text(exampleDictionaryTerms[i])
                         )),
-                        onChanged: (value) {
+                        onChanged: (value) async {
+                          setState(() {
+                            searchController.text = "";
+                            lastSearchResult = null;
+                          });
                           searchController.text = value ?? "";
-                          searchDb(searchController.text);
+                          await searchDb(searchController.text);
                         },
                       )
                     ],
