@@ -380,10 +380,20 @@ class DictionaryMatch {
 
   /// Adds `other` to this match, combining them while putting `this` first.
   void addDictionaryMatch(DictionaryMatch other) {
-    matches.addAll(other.matches);
-    popularities.addAll(other.popularities);
-    entries.addAll(other.entries);
-    metaEntriesForEachEntry.addAll(other.metaEntriesForEachEntry);
+    // keep track of duplicates
+    final existingDefIds = entries.map((e) => e.id).toSet();
+
+    for (int i = 0; i < other.entries.length; i++) {
+      
+      if (!existingDefIds.contains(other.entries[i].id)) {
+        existingDefIds.add(other.entries[i].id); 
+        
+        entries.add(other.entries[i]);
+        matches.add(other.matches[i]);
+        popularities.add(other.popularities[i]);
+        metaEntriesForEachEntry.add(other.metaEntriesForEachEntry[i]);
+      }
+    }
   }
 
   @override
