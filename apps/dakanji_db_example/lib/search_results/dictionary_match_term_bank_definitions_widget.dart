@@ -53,7 +53,7 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
                           DictionaryMatchTag(
                             text: widget.entries[i].indexEntry.title,
                             details: widget.entries[i].indexEntry.description.nullIfEmptyOrNull,
-                            color: Colors.grey[350],
+                            color: Colors.grey[350]!,
                           )
                         ],
                       ),
