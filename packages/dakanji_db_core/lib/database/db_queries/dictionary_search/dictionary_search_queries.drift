@@ -1,7 +1,6 @@
 import '/database/index/index_views.drift';
 import '/database/term/term_bank_v3_views.drift';
 import 'dictionary_search_fts_tables.drift';
-import '/database/general_tables/reading_spellfix_table.drift';
 import '/database/term/term_bank_v3_views.drift';
 import '/database/term_meta/term_meta_bank_v3_views.drift';
 

@@ -162,7 +162,7 @@ class DaKanjiDB extends _$DaKanjiDB {
 
         // Init data tables
         await populdate_fts_data_types();
-        await populateHiraganaSpellfixCostTable();
+        //await populateHiraganaSpellfixCostTable();
       },
     );
   }
