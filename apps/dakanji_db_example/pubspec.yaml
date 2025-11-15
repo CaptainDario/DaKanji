@@ -13,6 +13,7 @@ dependencies:
 
   dakanji_db_core:
   path_provider: ^2.1.5
+  flutter_widget_from_html_core: ^0.17.0
   cupertino_icons: ^1.0.8
   path: ^1.9.1
   language_processing:
