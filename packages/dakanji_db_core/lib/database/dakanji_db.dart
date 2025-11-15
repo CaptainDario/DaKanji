@@ -223,6 +223,5 @@ void setupDb (Database database) {
 Sqlite3 loadExtensions() {
 
   sqlite3Native.loadSqliteVectorExtension();
-  sqlite3Native.loadSqliteSpellfixExtension();
   return sqlite3Native;
 }
