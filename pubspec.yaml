@@ -9,11 +9,9 @@ environment:
 
 workspace:
 
-  - apps/dakanji_db_ui_example
   - apps/dakanji_db_example
 
   - packages/dakanji_db_core
-  - packages/dakanji_db_ui
   - packages/dakanji_db_shared
   - packages/dakanji_sqlite_extensions
   - packages/language_processing
