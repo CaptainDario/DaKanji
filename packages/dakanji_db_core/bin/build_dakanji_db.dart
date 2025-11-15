@@ -30,6 +30,9 @@ void main(List<String> args) async {
     print("Including example dictionary...");
     exampleDictPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
   }
+
+  // should the structured content JSON-definitions be added to the database
+  bool addStructuredContentJsonDefs = args.contains('--add-structured-content-json-definitions');
   
   // --- build database ----------------------------------------------------------
 
@@ -56,6 +59,7 @@ void main(List<String> args) async {
       + (includeExampleDictArg ? [exampleDictPath!] : []),
     ["KanjiDic2", "JMdict", "JPDB 2.2"]
       + (includeExampleDictArg ? ["yomitan example dictionary"] : []),
+    addStructuredContentJsonDefs,
   );
 
   exit(0);
@@ -141,7 +145,8 @@ Future importYomitanDicts(
   DaKanjiDB db,
   Mecab mecab,
   List<String> inputPaths,
-  List<String> inputNames
+  List<String> inputNames,
+  bool addStructuredContentJsonDefs,
 ) async {
 
   for (var i = 0; i < inputPaths.length; i++) {
@@ -152,7 +157,7 @@ Future importYomitanDicts(
     Stream<String> progress = await parseDictionaryDataSource(
       dataSourcePath:  inputPaths[i],
       db: db,
-      addFullJsonDefinitions: false,
+      addStructuredContentJsonDefs: addStructuredContentJsonDefs,
       mecab: mecab
     );
 

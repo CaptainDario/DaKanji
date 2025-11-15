@@ -151,7 +151,7 @@ Future importDictionary(
   Stream<String> progress = await parseDictionaryDataSource(
       dataSourcePath: dataSourceZipPath,
       db: db,
-      addFullJsonDefinitions: false,
+      addStructuredContentJsonDefs: false,
       mecab: mecab);
 
   // Consume the stream

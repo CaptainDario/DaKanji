@@ -16,7 +16,7 @@ void main() async {
   Stream<String> progressStream = await parseDictionaryDataSource(
     dataSourcePath: jmdictInputPath,
     db: db,
-    addFullJsonDefinitions: false,
+    addStructuredContentJsonDefs: false,
     mecab: Mecab()..init(mecabDynamicLibPath, mecabDicPath, true)
   );
   await for (final String progressMessage in progressStream) {

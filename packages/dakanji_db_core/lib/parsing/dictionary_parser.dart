@@ -55,7 +55,7 @@ Future<Stream<String>> parseDictionaryDataSource({
   String? dataSourcePath,
   Uint8List? archiveBytes,
   required DaKanjiDB db,
-  required bool addFullJsonDefinitions,
+  required bool addStructuredContentJsonDefs,
   required Mecab mecab,
 }) async {
 
@@ -85,7 +85,7 @@ Future<Stream<String>> parseDictionaryDataSource({
     dataSourcePath: dataSourcePath,
     archiveBytes: archiveBytes,
     dbConnection: connection,
-    addFullJsonDefinitions: addFullJsonDefinitions,
+    addFullJsonDefinitions: addStructuredContentJsonDefs,
     libmecabPath: libmecabPath,
     mecabDictDir: mecabDicPath,
     mainIsolateSendPort: receivePort.sendPort,

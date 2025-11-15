@@ -67,7 +67,7 @@ Future<DaKanjiDB> setupFreshDB() async {
   Stream<String> parsingProgress = await parseDictionaryDataSource(
     dataSourcePath: dataSourceZipPath,
     db: db,
-    addFullJsonDefinitions: false,
+    addStructuredContentJsonDefs: false,
     mecab: mecab
   );
   await for (final progress in parsingProgress) {
