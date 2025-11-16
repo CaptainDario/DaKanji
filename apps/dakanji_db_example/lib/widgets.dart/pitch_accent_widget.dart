@@ -27,11 +27,11 @@ class PitchAccentWidget extends StatelessWidget {
   static const BoxDecoration falling = BoxDecoration(
     border: Border(
       left: empty,
-      top: const BorderSide(
+      top: BorderSide(
         color: Colors.grey,
         width: 1.5,
       ),
-      right: const BorderSide(
+      right: BorderSide(
         color: Colors.grey,
         width: 1.5,
       ),
@@ -42,11 +42,11 @@ class PitchAccentWidget extends StatelessWidget {
     border: Border(
       left: empty,
       top: empty,
-      right: const BorderSide(
+      right: BorderSide(
         color: Colors.grey,
         width: 1.5,
       ),
-      bottom: const BorderSide(
+      bottom: BorderSide(
         color: Colors.grey,
         width: 1.5,
       ),
@@ -57,7 +57,7 @@ class PitchAccentWidget extends StatelessWidget {
       left: empty,
       top: empty,
       right: empty,
-      bottom: const BorderSide(
+      bottom: BorderSide(
         color: Colors.grey,
         width: 1.5,
       ),
@@ -66,7 +66,7 @@ class PitchAccentWidget extends StatelessWidget {
   static const BoxDecoration high = BoxDecoration(
     border: Border(
       left: empty,
-      top: const BorderSide(
+      top: BorderSide(
         color: Colors.grey,
         width: 1.5,
       ),

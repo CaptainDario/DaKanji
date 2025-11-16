@@ -218,7 +218,6 @@ dom.Element _createElementFromStructuredContent(Map<String, dynamic> content) {
   
   final element = dom.Element.tag(tag);
 
-  // START: MODIFIED LOGIC TO DYNAMICALLY ADD ATTRIBUTES
   // Loop through all keys in the JSON object to add them as attributes.
   content.forEach((key, value) {
     // Skip keys that are not HTML attributes.
@@ -233,11 +232,11 @@ dom.Element _createElementFromStructuredContent(Map<String, dynamic> content) {
     // Special case: map the 'path' property to the 'src' attribute for images.
     if (tag == 'img' && attributeName == 'path') {
       element.attributes['src'] = attributeValue;
-    } else {
+    }
+    else {
       element.attributes[attributeName] = attributeValue;
     }
   });
-  // END: MODIFIED LOGIC
 
   // Handle the 'style' attribute separately.
   final styleData = content['style'];

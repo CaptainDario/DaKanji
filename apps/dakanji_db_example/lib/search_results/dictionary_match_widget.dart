@@ -2,7 +2,6 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_tag_bank_widget.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_term_bank_definitions_widget.dart';
-import 'package:dakanji_db_example/search_results/dictionary_match_term_bank_structured_content_definitions_widget.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_term_bank_term_widget.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_term_meta_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class DictionaryMatchWidget extends StatelessWidget {
 
   /// Whether to use structured content display
   /// Or only the extracted definitions.
-  final bool useStructuredContent = true;
+  final bool useStructuredContentDefinitions = true;
 
   const DictionaryMatchWidget(
     this.match,
@@ -52,9 +51,10 @@ class DictionaryMatchWidget extends StatelessWidget {
                     DictionaryMatchTermMetaWidget(match.metaEntriesForEachEntry),
                     SizedBox(height: 8.0),
                   ],
-                useStructuredContent
-                  ? DictionaryMatchTermBankStructuredContentDefinitionsWidget(match.entries)
-                  : DictionaryMatchTermBankDefinitionsWidget(match.entries)
+                DictionaryMatchTermBankDefinitionsWidget(
+                  match.entries,
+                  useStructuredContentDefinitions
+                )
               ],
             ),
           ),

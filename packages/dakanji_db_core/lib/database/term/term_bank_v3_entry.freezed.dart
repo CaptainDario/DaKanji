@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TermBankV3Entry {
 
- int get id; IndexEntry get indexEntry; String get term; String get reading; List<String> get definitions; List<String> get structuredContentDefinitions; List<TagBankV3Entry> get definitionTags; List<String> get ruleIdentifiers; int get popularity; int get sequenceNumber; List<TagBankV3Entry> get tags;
+ int get id; IndexEntry get indexEntry; String get term; String get reading; List<String> get definitions; List<dynamic> get structuredContentDefinitions; List<TagBankV3Entry> get definitionTags; List<String> get ruleIdentifiers; int get popularity; int get sequenceNumber; List<TagBankV3Entry> get tags;
 /// Create a copy of TermBankV3Entry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +46,7 @@ abstract mixin class $TermBankV3EntryCopyWith<$Res>  {
   factory $TermBankV3EntryCopyWith(TermBankV3Entry value, $Res Function(TermBankV3Entry) _then) = _$TermBankV3EntryCopyWithImpl;
 @useResult
 $Res call({
- int id, IndexEntry indexEntry, String term, String reading, List<String> definitions, List<String> structuredContentDefinitions, List<TagBankV3Entry> definitionTags, List<String> ruleIdentifiers, int popularity, int sequenceNumber, List<TagBankV3Entry> tags
+ int id, IndexEntry indexEntry, String term, String reading, List<String> definitions, List<dynamic> structuredContentDefinitions, List<TagBankV3Entry> definitionTags, List<String> ruleIdentifiers, int popularity, int sequenceNumber, List<TagBankV3Entry> tags
 });
 
 
@@ -71,7 +71,7 @@ as IndexEntry,term: null == term ? _self.term : term // ignore: cast_nullable_to
 as String,reading: null == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
 as String,definitions: null == definitions ? _self.definitions : definitions // ignore: cast_nullable_to_non_nullable
 as List<String>,structuredContentDefinitions: null == structuredContentDefinitions ? _self.structuredContentDefinitions : structuredContentDefinitions // ignore: cast_nullable_to_non_nullable
-as List<String>,definitionTags: null == definitionTags ? _self.definitionTags : definitionTags // ignore: cast_nullable_to_non_nullable
+as List<dynamic>,definitionTags: null == definitionTags ? _self.definitionTags : definitionTags // ignore: cast_nullable_to_non_nullable
 as List<TagBankV3Entry>,ruleIdentifiers: null == ruleIdentifiers ? _self.ruleIdentifiers : ruleIdentifiers // ignore: cast_nullable_to_non_nullable
 as List<String>,popularity: null == popularity ? _self.popularity : popularity // ignore: cast_nullable_to_non_nullable
 as int,sequenceNumber: null == sequenceNumber ? _self.sequenceNumber : sequenceNumber // ignore: cast_nullable_to_non_nullable

@@ -1,34 +1,39 @@
+import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_example/search_results/structured_content/html_widget_factories/html_help_attribute_to_widget_factory.dart';
 import 'package:dakanji_db_example/search_results/structured_content/html_widget_factories/html_image_to_widget_factory.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:path/path.dart' as p;
 
 class CustomHtmlToWidgetFactory extends WidgetFactory {
 
-  /// The base directory in which all image assets are stored.
-  final String imageAssetBasePath;
+  /// The id of the index this definition belongs to
+  final int indexId;
 
-  CustomHtmlToWidgetFactory(this.imageAssetBasePath);
+  /// The database instance to fetch media from
+  final DaKanjiDB db;
+
+  CustomHtmlToWidgetFactory(this.indexId, this.db);
+
 
   @override
-  void parse(BuildTree meta) {
+  void parse(BuildTree tree) {
     // Check if the element has the target style and title attribute
-    final style = meta.element.attributes['style'];
-    final title = meta.element.attributes['title'];
+    final style = tree.element.attributes['style'];
+    final title = tree.element.attributes['title'];
 
     if (title != null && style != null && style.contains('cursor: help')) {
       // Register a BuildOp to customize rendering
-      meta.register(htmlHelpAttributeToWidget(title));
+      tree.register(htmlHelpAttributeToWidget(title));
     }
-    if (meta.element.localName == 'img') {
-      final src = meta.element.attributes['src'];
+    if (tree.element.localName == 'img') {
+      final src = tree.element.attributes['src'];
       if (src != null && src.isNotEmpty) {
         // Register a BuildOp to customize rendering
-        meta.register(htmlToImage(p.join(imageAssetBasePath, src)));
+        tree.register(htmlImgToImageWidget(src, indexId, db));
       }
     }
 
     // Always call super.parse() to handle other elements
-    super.parse(meta);
+    super.parse(tree);
   }
+
 }

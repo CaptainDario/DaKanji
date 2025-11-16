@@ -1,5 +1,6 @@
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_tag.dart';
+import 'package:dakanji_db_example/search_results/structured_content/structured_content_definition_widget.dart';
 import 'package:dakanji_db_example/util.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,15 @@ class DictionaryMatchTermBankDefinitionsWidget extends StatefulWidget {
   /// The term bank entries to display 
   final List<TermBankV3Entry> entries;
 
-  const DictionaryMatchTermBankDefinitionsWidget(this.entries, {super.key});
+  final bool useStructuredContentDefinitions;
+
+  const DictionaryMatchTermBankDefinitionsWidget(
+    this.entries,
+    this.useStructuredContentDefinitions,
+    {
+      super.key
+    }
+  );
 
   @override
   State<DictionaryMatchTermBankDefinitionsWidget> createState() => _DictionaryMatchTermBankDefinitionsWidgetState();
@@ -24,6 +33,7 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
       children: [
         for (int i = 0; i < widget.entries.length; i++) 
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: double.infinity, // make sure the wrap uses the full width
@@ -53,7 +63,7 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
                           DictionaryMatchTag(
                             text: widget.entries[i].indexEntry.title,
                             details: widget.entries[i].indexEntry.description.nullIfEmptyOrNull,
-                            color: Colors.grey[350]!,
+                            textColor: Colors.grey,
                           )
                         ],
                       ),
@@ -61,35 +71,46 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
                   ],
                 ),
               ),
-              // the actual definitions
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 2.0, 0.0, 6.0),
-                child: Column(
-                  children: [
-                    for (final definition in widget.entries[i].definitions)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("• "),
-                              Expanded(
-                                child: Text(
-                                  definition,
-                                  style: const TextStyle(
-                                    fontSize: 14,
+              // the actual definitions (structured content or not)
+              widget.useStructuredContentDefinitions
+              ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (int j = 0; j < widget.entries[i].structuredContentDefinitions.length; j++)
+                  StructuredContentDefinitionWidget(
+                    content: widget.entries[i].structuredContentDefinitions[j],
+                    indexId: widget.entries[i].indexEntry.id
+                  )
+                ],
+              )
+              :  Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 2.0, 0.0, 6.0),
+                  child: Column(
+                    children: [
+                      for (final definition in widget.entries[i].definitions)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("• "),
+                                Expanded(
+                                  child: Text(
+                                    definition,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                  ]
-                ),
-              )
+                    ]
+                  ),
+                )
             ],
           ),
       ],

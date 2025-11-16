@@ -34,7 +34,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
   final List<String> definitions;
   /// All structured content definitions of this entry
   @override
-  final List<String> structuredContentDefinitions;
+  final List<dynamic> structuredContentDefinitions;
   /// Tags assigned to each definition of this entry (inorder of `definitions`)
   @override
   final List<TagBankV3Entry> definitionTags;
@@ -89,7 +89,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
       term: r.term!,
       reading: r.reading!,
       definitions: List<String>.from(jsonDecode(r.definitions)),
-      structuredContentDefinitions: List<String>.from(jsonDecode(r.structuredContentDefinitions ?? "[]")),
+      structuredContentDefinitions: List<dynamic>.from(jsonDecode(r.structuredContentDefinitions ?? "[]")),
       definitionTags: List.from(jsonDecode(r.definitionTags))
           .where((tagJson) => tagJson != null && tagJson['name'] != null)
           .map((e) => TagBankV3Entry.fromJson(e))

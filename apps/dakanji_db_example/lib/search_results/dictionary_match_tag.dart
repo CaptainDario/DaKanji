@@ -7,8 +7,14 @@ class DictionaryMatchTag extends StatelessWidget {
   /// The tag's leading text to display.
   final String? leadingText;
 
+  /// The tag's leading text color.
+  final Color? leadingTextColor;
+
   /// The tag's text to display.
   final String text;
+
+  /// The tag's text color.
+  final Color? textColor;
 
   /// The tag's notes to show in a snackbar.
   final String? details;
@@ -25,8 +31,10 @@ class DictionaryMatchTag extends StatelessWidget {
   const DictionaryMatchTag(
     {
       required this.text,
+      this.leadingTextColor,
       this.details,
       this.leadingText,
+      this.textColor,
       this.color = Colors.transparent,
       this.leadingColor = Colors.transparent,
       this.borderColor = Colors.grey,
@@ -63,7 +71,11 @@ class DictionaryMatchTag extends StatelessWidget {
               ...[
                 Text(
                   leadingText!,
-                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w300),
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: leadingTextColor,
+                    fontWeight: FontWeight.w300
+                  ),
                 ),
                 SizedBox(
                   height: 14,
@@ -76,7 +88,7 @@ class DictionaryMatchTag extends StatelessWidget {
               ],
             Text(
               text,
-              style: const TextStyle(fontSize: 11),
+              style: TextStyle(fontSize: 11, color: textColor),
             )
           ],
         ),

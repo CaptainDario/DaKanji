@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:github/github.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
@@ -22,16 +23,19 @@ Future<(String downloadInfo, String fileName)> getSourceFromGHRelease(String own
     orElse: () => throw Exception('Asset not found'),
   );
   print('Downloading ${targetAsset.name} from $owner/$repo release ${latestTag.tagName}...');
-  final downloadUrl = Uri.parse(targetAsset.browserDownloadUrl!);
-  final response = await http.get(downloadUrl);
+  final downloadPath = p.join(outputDir.path, targetAsset.name!);
+  final response = await Dio().download(
+    targetAsset.browserDownloadUrl!,
+    downloadPath,
+    onReceiveProgress: (count, total) {
+      if (total != -1) {
+        final progress = (count / total * 100).toStringAsFixed(2);
+        stdout.write('\rDownloading... $progress%');
+      }
+    },
+  );
 
-  if (response.statusCode == 200) {
-    final file = File(p.join(outputDir.path, targetAsset.name!));
-    await file.writeAsBytes(response.bodyBytes);
-    print('✅ Download complete! Saved to ${file.path}');
-  } else {
-    print('Failed to download. Status code: ${response.statusCode}');
-  }
+  print('\n✅ Download complete! Saved to $downloadPath');
 
   return (
     'Downloaded ${targetAsset.name} from $owner/$repo release ${latestTag.tagName} at ${DateTime.now()}...',

@@ -18,9 +18,7 @@ TermBankV3Entry _$TermBankV3EntryFromJson(Map<String, dynamic> json) =>
           .map((e) => e as String)
           .toList(),
       structuredContentDefinitions:
-          (json['structuredContentDefinitions'] as List<dynamic>)
-              .map((e) => e as String)
-              .toList(),
+          json['structuredContentDefinitions'] as List<dynamic>,
       definitionTags: (json['definitionTags'] as List<dynamic>)
           .map((e) => TagBankV3Entry.fromJson(e as Map<String, dynamic>))
           .toList(),
