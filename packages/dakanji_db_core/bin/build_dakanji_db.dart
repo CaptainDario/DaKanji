@@ -12,15 +12,34 @@ import 'package:universal_io/io.dart';
 import '../test/util/db_files.dart';
 import 'get_sources.dart';
 
+
+enum DictsToUse {
+  jmdict,
+  jitendex,
+} 
+
+Map<DictsToUse, String> dictNameToPath = {
+  DictsToUse.jmdict: kanjidic2InputPath,
+  DictsToUse.jitendex: jitendexInputPath,
+};
+
 void main(List<String> args) async {
 
   // --- parse command line args -----------------------------------------------
   
+  // check which dictionary to use 
+  DictsToUse dictToUse = DictsToUse.jmdict;
+  bool useJitendexArg = args.contains('--use-jitendex');
+  if(useJitendexArg) {
+    print("Using jitendex as dictionary...");
+    dictToUse = DictsToUse.jitendex;
+  }
+
   // clear old sources and redownload
   bool downloadSourcesArg = args.contains('--download-sources');
   if(downloadSourcesArg) {
     print("Redownloading source files...");
-    await downloadSources();
+    await downloadSources(dictToUse);
   }
 
   // include yomitan example dictionary
@@ -53,9 +72,10 @@ void main(List<String> args) async {
   print("Adding radicals data...");
   await importRadicals(db);
 
-  print("Adding KanjiDic2...");
+  print("Importing yomitan dicts...");
   await importYomitanDicts(db, mecab,
-    [kanjidic2InputPath, jmdictInputPath, jpdb2_2InputPath]
+    [kanjidic2InputPath, jpdb2_2InputPath]
+      + ([dictNameToPath[dictToUse]!])
       + (includeExampleDictArg ? [exampleDictPath!] : []),
     ["KanjiDic2", "JMdict", "JPDB 2.2"]
       + (includeExampleDictArg ? ["yomitan example dictionary"] : []),
@@ -67,7 +87,7 @@ void main(List<String> args) async {
 }
 
 /// Downloads all source files into the input files directory
-Future downloadSources() async {
+Future downloadSources(DictsToUse dictToUse) async {
 
   print("Cleaning up old source files...");
   Directory out = Directory(dakanjiDBInputFilesPath);
@@ -84,10 +104,20 @@ Future downloadSources() async {
   final (kradDownloadInfo, kradFileName) =
     await getSourceFromGHRelease('scriptin', 'jmdict-simplified', 'krad', '.json.zip', out);
 
-  final (jmdictDownloadInfo, jmdictFileName) =
-    await getSourceFromGHRelease('yomidevs', 'jmdict-yomitan', 'JMdict', 'english.zip', out);
+  String? jmdictDownloadInfo, jmdictFileName;
+  if(dictToUse == DictsToUse.jmdict) {
+    (jmdictDownloadInfo, jmdictFileName) =
+      await getSourceFromGHRelease('yomidevs', 'jmdict-yomitan', 'JMdict', 'english.zip', out);
+  }
   final (kanjiDic2DownloadInfo, kanjiDic2FileName) =
     await getSourceFromGHRelease('yomidevs', 'jmdict-yomitan', 'KANJIDIC', 'english.zip', out);
+
+  String? jitendexDownloadInfo, jitendexFileName;
+  if(dictToUse == DictsToUse.jitendex) {
+    (jitendexDownloadInfo, jitendexFileName) = 
+      await getSourceFromUri(
+        Uri.parse('https://github.com/stephenmk/stephenmk.github.io/releases/latest/download/jitendex-yomitan.zip'), out);
+  }
 
   final (jpdb2_2FreqDownloadInfo, jpdb2_2FreqFileName) = 
     await getSourceFromUri(
@@ -98,15 +128,14 @@ Future downloadSources() async {
   //final (tatoebaSentencesDownloadInfo, tatoebaSentencesFileName) =
   //  await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/sentences.tar.bz2'), out);
 
-  // TODO audio files
-
   print("All downloads completed, writing summary file.");
   File sourcesList = File(p.join(out.path, 'sources_list.txt'))..createSync();
   sourcesList.writeAsStringSync(
     'KanjiVG: $kanjiVGDownloadInfo\n'
     'Krad: $kradDownloadInfo\n'
     'Radk: $radkDownloadInfo\n'
-    'JMDict: $jmdictDownloadInfo\n'
+    '${jmdictDownloadInfo!=null ? 'JMDict: $jmdictDownloadInfo\n' : ''}'
+    '${jitendexDownloadInfo!=null ? 'jitendex: $jitendexDownloadInfo\n' : ''}'
     'KanjiDic2: $kanjiDic2DownloadInfo\n'
     'JPDB v2.2 Frequency Kana: $jpdb2_2FreqDownloadInfo\n'
     //'Tatoeba Links: $tatoebaLinksDownloadInfo\n'

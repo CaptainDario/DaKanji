@@ -85,6 +85,8 @@ final dakanjiDBInputFilesPath = p.joinAll([dataFilesPath, "dakanji_db_input_file
 
 /// JMdict input zip file name
 final jmdictFileName = "JMdict";
+/// jitendex-yomitan input zip file name
+final jitendexFileName = "jitendex-yomitan";
 /// KANJIDIC input file zip 'pattern'
 final kanjidic2Pattern = "KANJIDIC";
 /// JPDB 2.2 input file zip 'pattern'
@@ -104,35 +106,39 @@ final processedSuffix = "_processed";
 
 
 /// path to the jmdict input file that should be parsed
-final jmdictInputPath = Directory(dakanjiDBInputFilesPath)
+String get jmdictInputPath => Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(jmdictFileName))
   .first.path;
+/// path to the jitendex input zip that should be parsed
+String get jitendexInputPath => Directory(dakanjiDBInputFilesPath)
+  .listSync().where((e) => p.basename(e.path).contains(jitendexFileName))
+  .first.path;
 /// path to the kanjidic2 input zip that should be parsed
-final kanjidic2InputPath = Directory(dakanjiDBInputFilesPath)
+String get kanjidic2InputPath => Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(kanjidic2Pattern))
   .first.path;
 /// path to the jpdb2_2 input zip that should be parsed
-final jpdb2_2InputPath = Directory(dakanjiDBInputFilesPath)
+String get jpdb2_2InputPath => Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(jpdb2_2Pattern))
   .first.path;
 /// path to the kanjivg folder input files that should be parsed
-final kanjiVGInputPath = Directory(dakanjiDBInputFilesPath)
+String get kanjiVGInputPath => Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(kanjiVGPathPattern))
   .first.path;
 /// path to the krad file input files that should be parsed
-final kradInputPath = Directory(dakanjiDBInputFilesPath)
+String get kradInputPath => Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(kradPathPattern))
   .first.path;
 /// path to the radk file input files that should be parsed
-final radkInputPath = Directory(dakanjiDBInputFilesPath)
+String get radkInputPath => Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(radkPathPattern))
   .first.path;
 /// path to the tatoeba input files that should be parsed
-final tatoebaLinksInputPath = Directory(dakanjiDBInputFilesPath)
+String get tatoebaLinksInputPath => Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(tatoebaLinksFilePattern))
   .first.path;
 /// path to the tatoeba input files that should be parsed
-final tatoebaSentencesInputPath = Directory(dakanjiDBInputFilesPath)
+String get tatoebaSentencesInputPath => Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(tatoebaSentencesFilePattern))
   .first.path;
 
