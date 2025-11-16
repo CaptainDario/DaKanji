@@ -105,7 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           onChanged: (value) async {
                             setState(() {
-                              searchController.text = "";
                               lastSearchResult = null;
                             });
                             searchController.text = value;
