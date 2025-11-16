@@ -12,11 +12,14 @@ dependencies:
     sdk: flutter
 
   dakanji_db_core:
+  language_processing:
+
+  csslib: ^1.0.2
+  provider: ^6.1.5+1
   path_provider: ^2.1.5
   flutter_widget_from_html_core: ^0.17.0
   cupertino_icons: ^1.0.8
   path: ^1.9.1
-  language_processing:
 
 dev_dependencies:
   flutter_test:
