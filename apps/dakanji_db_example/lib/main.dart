@@ -20,8 +20,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: title,
+      themeMode: ThemeMode.dark,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 26, 93, 71)),
+        colorScheme: ColorScheme.fromSeed(
+          brightness: Brightness.dark,
+          seedColor: Color.fromARGB(255, 26, 93, 71)
+        ),
       ),
       home: MyHomePage(title: title),
     );
@@ -134,9 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: ListView(
                     children: [
                       if(lastSearchResult != null)
-                        DictionarySearchResultWidget(
-                          lastSearchResult!
-                        )
+                        DictionarySearchResultWidget(lastSearchResult!, daKanjiDB)
                     ],
                   ),
                 ),
