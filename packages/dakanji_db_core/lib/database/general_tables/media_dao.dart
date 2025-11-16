@@ -1,6 +1,7 @@
 
 import "package:dakanji_db_core/database/general_tables/media_tables.dart";
 import "package:drift/drift.dart";
+import 'package:path/path.dart' as p;
 
 import "../dakanji_db.dart";
 
@@ -18,6 +19,23 @@ class MediaDao extends DatabaseAccessor<DaKanjiDB> with _$MediaDaoMixin {
   // of this object.
   MediaDao(super.db);
   
+  Future<Uint8List?> getMediaByPath(String fullPath, int indexId) async {
+
+    String pathToDir = p.dirname(fullPath);
+    String name = p.basename(fullPath);
+    
+    final result = await (db.select(db.mediaTable)
+      ..where((tbl) => (
+        tbl.indexId.equals(indexId) &
+        tbl.path.equals(pathToDir) &
+        tbl.name.equals(name)
+      ))
+    ).getSingleOrNull();
+
+    return result?.data;
+
+  }
+
   /// Get the maximum id of the media table
   Future<int> maxMediaId() async {
     
