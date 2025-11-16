@@ -19,7 +19,7 @@ class DictionarySearchResult {
   final List<SearchMatchGroup> queryVariantMatches;
   /// Matches from fuzzy search
   /// For example: りょこお -> りょこう 
-  final List fuzzyMatches;
+  final List<SearchMatchGroup> fuzzyMatches;
 
   DictionarySearchResult({
     required this.queryMatches,
