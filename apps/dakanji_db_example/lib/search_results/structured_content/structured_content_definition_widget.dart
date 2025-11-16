@@ -29,18 +29,6 @@ class _StructuredContentDefinitionWidgetState extends State<StructuredContentDef
 
   final YomitanParser parser = YomitanParser();
 
-  late final externalCss = '''
-ul[data-sc-content='glossary'] {
-    color: #ffff00;
-}
-  ''';
-
-  @override
-  void initState() {
-    super.initState();
-    parser.addExternalCss(externalCss);
-  }
-
   @override
   Widget build(BuildContext context) {
     // Convert the structured content JSON into a standard HTML string.
