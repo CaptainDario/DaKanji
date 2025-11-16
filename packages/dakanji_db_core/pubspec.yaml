@@ -18,6 +18,7 @@ dependencies:
   archive: ^4.0.7
   tuple: ^2.0.2
   freezed_annotation: ^3.1.0
+  dio: ^5.9.0
   json_annotation: 4.9.0
   universal_io: 2.2.2
   collection: 1.19.1
