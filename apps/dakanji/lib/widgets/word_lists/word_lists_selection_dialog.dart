@@ -11,7 +11,7 @@ import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/widgets/word_lists/word_lists.dart' as word_lists_ui;
 
 // Project imports:
- import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
+ import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 
 
 

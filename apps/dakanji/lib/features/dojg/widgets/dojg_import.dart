@@ -9,7 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:da_kanji_mobile/core/app/restart.dart';
 import 'package:da_kanji_mobile/features/manual/controller/manual.dart';
 import 'package:da_kanji_mobile/features/manual/model/manual_types.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/dojg/controller/import_dojg_from_anki.dart';
 import 'package:da_kanji_mobile/features/dojg/widgets/dojg_import_dialog.dart';

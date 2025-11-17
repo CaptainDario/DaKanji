@@ -8,8 +8,8 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_icon_button_tile.dart';

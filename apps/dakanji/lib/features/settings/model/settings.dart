@@ -8,16 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/settings/settings_advanced.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_clipboard.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_dictionary.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_drawing.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_kana_table.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_kanji_table.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_misc.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_text.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_advanced.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_anki.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_clipboard.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_dictionary.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_drawing.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_kana_table.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_kanji_table.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_misc.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_text.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_word_lists.dart';
 
 /// Class to store all settings of DaKanji
 /// 

@@ -6,7 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/settings/dictionary_search_priority_interface.dart';
+import 'package:da_kanji_mobile/features/settings/model/dictionary_search_priority_interface.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_filter_chips.dart';
 

@@ -11,8 +11,8 @@ import 'package:tuple/tuple.dart';
 // Project imports:
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/core/iso/iso_table.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_list/word_list_action.dart';
 import 'package:da_kanji_mobile/entities/word_list/word_list_sorting.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';

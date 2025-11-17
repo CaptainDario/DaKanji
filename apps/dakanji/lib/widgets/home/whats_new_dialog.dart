@@ -10,7 +10,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/changelog.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
 

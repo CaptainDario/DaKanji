@@ -9,9 +9,9 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_drawing.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_drawing.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/responsive_widgets/responsive_check_box_tile.dart';

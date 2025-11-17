@@ -3,7 +3,7 @@ import 'package:ankidroid_for_flutter/ankidroid_for_flutter.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/anki/model/anki_note.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_anki.dart';
 import 'package:da_kanji_mobile/features/anki/model/anki_data.dart';
 
 /// Class to communicate with AnkiDroid (anki on android)

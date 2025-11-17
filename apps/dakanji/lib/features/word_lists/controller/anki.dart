@@ -8,8 +8,8 @@ import 'package:get_it/get_it.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/anki/controller/anki.dart';
 import 'package:da_kanji_mobile/features/anki/model/anki_note.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/tree/tree_node.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';

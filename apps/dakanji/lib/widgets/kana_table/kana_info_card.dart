@@ -14,9 +14,9 @@ import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/japanese_text_processing/kana.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
-import 'package:da_kanji_mobile/entities/kana/kana.dart';
-import 'package:da_kanji_mobile/entities/kana/mnemonics.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/features/kana_table/model/kana.dart';
+import 'package:da_kanji_mobile/features/kana_table/model/mnemonics.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/kanji_vg_widget.dart';
 
 /// Widget that shows information about a given kana. This information is

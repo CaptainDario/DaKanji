@@ -8,7 +8,7 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/dojg/model/dojg_entry.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/dojg/widgets/dojg_entry_list.dart';
 import 'package:da_kanji_mobile/features/dojg/widgets/dojg_entry_page.dart';
 

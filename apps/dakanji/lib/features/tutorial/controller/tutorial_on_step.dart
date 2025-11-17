@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 
 /// When the step of tutorial changes
 void onTutorialStep (int index) async {

@@ -17,7 +17,7 @@ import 'package:da_kanji_mobile/core/icons/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/features/drawer/model/drawer_entries.dart';
 import 'package:da_kanji_mobile/features/drawer/controller/drawer_listener.dart';
 import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/drawer/view/drawer_app_bar.dart';
 import 'package:da_kanji_mobile/features/drawer/view/drawer_element.dart';

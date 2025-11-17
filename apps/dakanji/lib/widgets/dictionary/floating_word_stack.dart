@@ -14,7 +14,7 @@ import 'package:isar_community/isar.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/falling_word_stack_controller.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/floating_word.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:provider/provider.dart';
 

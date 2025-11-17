@@ -10,8 +10,8 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/anki/model/anki_note.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_anki.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_anki.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/anki/controller/anki_android.dart';

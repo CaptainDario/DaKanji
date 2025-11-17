@@ -18,7 +18,7 @@ import 'package:universal_io/io.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/dojg/model/dojg_entry.dart';
 import 'package:da_kanji_mobile/features/dojg/model/dojg_search_provider.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/dojg/widgets/dojg_key_sentence_table.dart';

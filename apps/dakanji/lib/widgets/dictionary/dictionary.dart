@@ -16,7 +16,7 @@ import 'package:da_kanji_mobile/features/dictionary/controller/falling_word_stac
 import 'package:da_kanji_mobile/features/dictionary/model/dict_search_result.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/floating_word.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/dictionary_example_tab.dart';

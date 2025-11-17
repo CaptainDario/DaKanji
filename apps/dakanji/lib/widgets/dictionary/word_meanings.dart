@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/iso/iso_table.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/meanings_grid.dart';
 
 class WordMeanings extends StatefulWidget {

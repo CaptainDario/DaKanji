@@ -13,8 +13,8 @@ import 'package:screen_retriever/screen_retriever.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/screen_saver/controller/screensaver.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/core/analytics/event_logging.dart';
 

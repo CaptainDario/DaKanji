@@ -11,8 +11,8 @@ import 'package:integration_test/integration_test.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/drawing_canvas.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/kanji_buffer_widget.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/prediction_button.dart';

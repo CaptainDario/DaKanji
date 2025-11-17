@@ -14,11 +14,11 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/japanese_text_processing/kana.dart';
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/entities/kana/kana.dart';
+import 'package:da_kanji_mobile/features/kana_table/model/kana.dart';
 import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
 import 'package:da_kanji_mobile/widgets/kana_table/kana_grid.dart';

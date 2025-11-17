@@ -13,8 +13,8 @@ import 'package:printing/printing.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/iso/iso_table.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_word_lists.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_word_lists.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
 
 // Project imports

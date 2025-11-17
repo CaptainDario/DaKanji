@@ -9,7 +9,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/init.dart';

@@ -11,8 +11,8 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:language_processing/japanese/conjugation/jmdict_conjugation_data/kwpos.dart';
-import 'package:da_kanji_mobile/entities/settings/settings.dart';
-import 'package:da_kanji_mobile/entities/settings/settings_dictionary.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings_dictionary.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/widgets/dictionary/conjugation_expansion_tile.dart';
