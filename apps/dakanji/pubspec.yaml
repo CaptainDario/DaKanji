@@ -13,7 +13,7 @@ version: 4.0.0+144
 
 environment:
   sdk: ">=3.9.0"
-  flutter: ">=3.35.1"
+  flutter: ">=3.38.1"
 
 platforms:
   android:
@@ -52,7 +52,7 @@ dependencies:
   file_picker: ^10.3.2
   sqlite3: ^2.9.0
   sqlite3_flutter_libs: ^0.5.39
-  drift: ^2.28.1
+  drift: ^2.29.0
   json_annotation: 4.9.0
   flutter_spinkit: ^5.2.2
   sentry: 9.7.0
