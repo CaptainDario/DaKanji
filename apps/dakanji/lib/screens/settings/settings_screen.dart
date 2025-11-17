@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/screens.dart';
-import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
+import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
 import 'package:da_kanji_mobile/widgets/settings/anki_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/clipboard_settings.dart';
 import 'package:da_kanji_mobile/widgets/settings/dictionary_settings.dart';

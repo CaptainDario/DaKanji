@@ -10,7 +10,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
-import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 

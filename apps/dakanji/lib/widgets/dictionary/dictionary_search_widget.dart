@@ -22,7 +22,7 @@ import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search
 import 'package:da_kanji_mobile/features/dictionary/model/filter_options.dart';
 import 'package:da_kanji_mobile/entities/isar/isars.dart';
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
-import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/entities/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';

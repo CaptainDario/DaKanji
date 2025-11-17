@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
+import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
+import 'package:da_kanji_mobile/core/icons/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/features/manual/model/manual_types.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_anki.dart';

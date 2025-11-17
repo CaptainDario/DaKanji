@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/drawing/drawing_lookup.dart';
-import 'package:da_kanji_mobile/entities/drawing/kanji_buffer.dart';
-import 'package:da_kanji_mobile/entities/drawing/strokes.dart';
+import 'package:da_kanji_mobile/features/drawing/model/drawing_lookup.dart';
+import 'package:da_kanji_mobile/features/drawing/model/kanji_buffer.dart';
+import 'package:da_kanji_mobile/features/drawing/model/strokes.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/canvas_snappable.dart';
 import 'draw_screen_layout.dart';
 

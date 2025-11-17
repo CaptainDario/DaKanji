@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/features/dojg/widgets/dojg.dart';
 import 'package:da_kanji_mobile/features/dojg/widgets/dojg_import.dart';
-import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
 
 class DoJGScreen extends StatefulWidget {
 

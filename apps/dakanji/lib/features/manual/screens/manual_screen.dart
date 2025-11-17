@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/manual/controller/manual.dart';
 import 'package:da_kanji_mobile/features/manual/model/manual_data.dart';
-import 'package:da_kanji_mobile/entities/screens.dart';
-import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
+import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_button.dart';
 
 // Project imports:

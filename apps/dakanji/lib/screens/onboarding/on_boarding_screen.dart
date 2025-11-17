@@ -11,7 +11,7 @@ import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';

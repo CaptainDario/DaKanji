@@ -7,9 +7,9 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/controller/send.dart';
-import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/entities/da_kanji_icons_icons.dart';
-import 'package:da_kanji_mobile/entities/iso/iso_table.dart';
+import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
+import 'package:da_kanji_mobile/core/icons/da_kanji_icons_icons.dart';
+import 'package:da_kanji_mobile/core/iso/iso_table.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 
 /// A Card that is used to preview the content of a search result

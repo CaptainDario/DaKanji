@@ -13,7 +13,7 @@ import 'package:da_kanji_mobile/features/feedback/controller/stores.dart';
 import 'package:da_kanji_mobile/core/migration/migration.dart';
 import 'package:da_kanji_mobile/core/routing/deep_links.dart';
 import 'package:da_kanji_mobile/core/releases/version.dart';
-import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';

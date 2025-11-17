@@ -9,13 +9,13 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/drawing/controller/handle_predictions.dart';
-import 'package:da_kanji_mobile/entities/drawing/draw_screen_layout.dart';
-import 'package:da_kanji_mobile/entities/drawing/draw_screen_state.dart';
-import 'package:da_kanji_mobile/entities/drawing/drawing_interpreter.dart';
-import 'package:da_kanji_mobile/entities/screens.dart';
+import 'package:da_kanji_mobile/features/drawing/model/draw_screen_layout.dart';
+import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
+import 'package:da_kanji_mobile/features/drawing/controller/drawing_interpreter.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
-import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
+import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_clear_button.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_drawing_canvas.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_multi_char_search.dart';

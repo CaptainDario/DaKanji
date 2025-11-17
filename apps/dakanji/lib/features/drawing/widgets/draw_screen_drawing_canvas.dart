@@ -9,8 +9,8 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/drawing/drawing_interpreter.dart';
-import 'package:da_kanji_mobile/entities/drawing/strokes.dart';
+import 'package:da_kanji_mobile/features/drawing/controller/drawing_interpreter.dart';
+import 'package:da_kanji_mobile/features/drawing/model/strokes.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/drawing_canvas.dart';
 

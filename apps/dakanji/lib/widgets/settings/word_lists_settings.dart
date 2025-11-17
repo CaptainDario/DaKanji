@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/app/restart.dart';
 import 'package:da_kanji_mobile/features/screen_saver/controller/screensaver.dart';
-import 'package:da_kanji_mobile/entities/da_kanji_icons.dart';
+import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/entities/settings/settings.dart';
 import 'package:da_kanji_mobile/entities/user_data/user_data.dart';
 import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
