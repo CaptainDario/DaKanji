@@ -4,28 +4,26 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/screens/about/about_screen.dart';
-import 'package:da_kanji_mobile/screens/changelog/changelog_screen.dart';
-import 'package:da_kanji_mobile/screens/clipboard/clipboard_screen.dart';
-import 'package:da_kanji_mobile/screens/dictionary/dictionary_screen.dart';
-import 'package:da_kanji_mobile/screens/dojg/dojg_screen.dart';
+import 'package:da_kanji_mobile/features/about/screens/about_screen.dart';
+import 'package:da_kanji_mobile/features/changelog/screens/changelog_screen.dart';
+import 'package:da_kanji_mobile/features/clipboard/screens/clipboard_screen.dart';
+import 'package:da_kanji_mobile/features/dictionary/screens/dictionary_screen.dart';
+import 'package:da_kanji_mobile/features/dojg/screens/dojg_screen.dart';
 import 'package:da_kanji_mobile/features/drawing/screens/draw_screen.dart';
-import 'package:da_kanji_mobile/screens/home/home_screen.dart';
-import 'package:da_kanji_mobile/screens/kana_table/kana_table_screen.dart';
-import 'package:da_kanji_mobile/screens/kana_trainer/kana_trainer_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji_table/kanji_table_screen.dart';
-import 'package:da_kanji_mobile/screens/kanji_trainer/kanji_trainer_screen.dart';
-import 'package:da_kanji_mobile/screens/kuzushiji/kuzushiji_screen.dart';
+import 'package:da_kanji_mobile/features/init/screens/home_screen.dart';
+import 'package:da_kanji_mobile/features/kana_table/screens/kana_table_screen.dart';
+import 'package:da_kanji_mobile/features/kana_trainer/screens/kana_trainer_screen.dart';
+import 'package:da_kanji_mobile/features/kanji_table/screens/kanji_table_screen.dart';
+import 'package:da_kanji_mobile/features/kanji_trainer/screens/kanji_trainer_screen.dart';
 import 'package:da_kanji_mobile/features/manual/screens/manual_screen.dart';
-import 'package:da_kanji_mobile/screens/ocr/ocr_screen.dart';
-import 'package:da_kanji_mobile/screens/onboarding/on_boarding_screen.dart';
-import 'package:da_kanji_mobile/screens/immersion/immersion_screen.dart';
-import 'package:da_kanji_mobile/screens/settings/settings_screen.dart';
-import 'package:da_kanji_mobile/screens/test/test_screen.dart';
-import 'package:da_kanji_mobile/screens/text/text_screen.dart';
-import 'package:da_kanji_mobile/screens/webbrowser/webbrowser_screen.dart';
-import 'package:da_kanji_mobile/screens/word_lists/word_lists_screen.dart';
-import 'package:da_kanji_mobile/screens/youtube/youtube_screen.dart';
+import 'package:da_kanji_mobile/features/ocr/screens/ocr_screen.dart';
+import 'package:da_kanji_mobile/features/onboarding/screens/on_boarding_screen.dart';
+import 'package:da_kanji_mobile/features/immersion/screens/immersion_screen.dart';
+import 'package:da_kanji_mobile/features/settings/screens/settings_screen.dart';
+import 'package:da_kanji_mobile/features/text/screens/text_screen.dart';
+import 'package:da_kanji_mobile/features/webbrowser/screens/webbrowser_screen.dart';
+import 'package:da_kanji_mobile/features/word_lists/screens/word_lists_screen.dart';
+import 'package:da_kanji_mobile/features/youtube/screens/youtube_screen.dart';
 
 /// Returns the screen matching `name` 
 Widget getWidgetFromScreen(String? name, NavigationArguments args){
@@ -33,7 +31,7 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
   Widget newRoute;
   
   if(name == "/${Screens.home.name}"){
-    newRoute = const HomeScreen();
+    newRoute = const InitScreen();
   }
   else if(name == "/${Screens.onboarding.name}"){
     newRoute = const OnBoardingScreen();
@@ -108,11 +106,6 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
       args.navigatedByDrawer, true
     );
   }
-  else if(name == "/${Screens.kuzushiji.name}"){
-    newRoute = KuzushijiScreen(
-      args.navigatedByDrawer, true
-    );
-  }
   else if(name == "/${Screens.wordLists.name}"){
     newRoute = WordListsScreen(
       args.navigatedByDrawer, true
@@ -135,9 +128,6 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
     newRoute = ManualScreen(
       args.navigatedByDrawer
     );
-  }
-  else if(name == "/${Screens.test.name}"){
-    newRoute = const TestScreen();
   }
   else{
     throw UnsupportedError("Unknown route: $name"); 

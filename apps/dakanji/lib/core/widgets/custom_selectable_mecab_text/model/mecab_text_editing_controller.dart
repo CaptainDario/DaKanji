@@ -14,7 +14,7 @@ import 'package:mecab_for_flutter/mecab_flutter.dart';
 import 'package:language_processing/japanese/furigana_matching.dart';
 import 'package:language_processing/japanese/japanese_string_operations.dart';
 import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/controller/custom_selectable_text_processing.dart';
-import 'package:da_kanji_mobile/widgets/helper/conditional_parent_widget.dart';
+import 'package:da_kanji_mobile/core/widgets/conditional_parent_widget.dart';
 
 /// [TextEditingController] that can show rubys over Japanese text and also
 /// colorize words based on their PoS based on analysis of MeCab

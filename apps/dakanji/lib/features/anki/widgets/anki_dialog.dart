@@ -14,7 +14,7 @@ import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_anki.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/settings/anki_settings_column.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/anki_settings_column.dart';
 
 /// A dialog that allows to change the export to anki settings just this time.
 /// `useAnkiSettings` defines if the settings of Anki are used or the settings

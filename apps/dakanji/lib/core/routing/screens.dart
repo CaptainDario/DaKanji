@@ -46,13 +46,11 @@ enum Screens{
   kanjiTable,
   kanaTable,
   kanaTrainer,
-  kuzushiji,
   wordLists,
   home,
   settings,
   onboarding,
   webviewDict,
   manual,
-  test
 }
 

@@ -10,9 +10,9 @@ import 'package:da_kanji_mobile/features/anki/controller/anki.dart';
 import 'package:da_kanji_mobile/features/anki/model/anki_note.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/core/tree/tree_node.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_data.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
+import 'package:da_kanji_mobile/features/word_lists/controller/word_lists_queries.dart';
+import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
 
 /// Renders each word list entry to an image and stores it in the temp directory
 /// returns a List with all the [File]s created

@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/dojg/model/dojg_entry.dart';
 import 'package:da_kanji_mobile/features/dojg/model/dojg_search_provider.dart';
-import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';

@@ -115,9 +115,6 @@ class DrawerAppBar extends StatelessWidget {
                     case Screens.kanaTrainer:
                       title = LocaleKeys.KanaTrainerScreen_title.tr();
                       break;
-                    case Screens.kuzushiji:
-                      title = LocaleKeys.KuzushijiScreen_title.tr();
-                      break;
                     case Screens.wordLists:
                       title = LocaleKeys.WordListsScreen_title.tr();
                       break;
@@ -133,9 +130,6 @@ class DrawerAppBar extends StatelessWidget {
                       throw Exception("OnBoardingScreen should not be navigated to via drawer");
                     case Screens.webviewDict:
                       title = LocaleKeys.WebviewScreen_title.tr();
-                      break;
-                    case Screens.test:
-                      title = "Testing";
                       break;
                   }
                   return title;

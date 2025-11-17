@@ -18,7 +18,7 @@ import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_drawing.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/screens/webview/webview_screen.dart';
+import 'package:da_kanji_mobile/features/webview/screens/webview_screen.dart';
 import 'package:da_kanji_mobile/widgets/downloads/download_app_dialogue.dart';
 
 /// Convenience classes to handle long and short presses for the 

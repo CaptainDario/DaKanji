@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/releases/version.dart';
-import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
+import 'package:da_kanji_mobile/core/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 part 'user_data.g.dart';

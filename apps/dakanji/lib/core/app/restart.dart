@@ -10,9 +10,9 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/model/search_history/search_history_sql.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/init.dart';
+import 'package:da_kanji_mobile/features/init/controller/init.dart';
 
 /// Restarts the app. It resets all services
 Future<void> restartApp(BuildContext context) async {

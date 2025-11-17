@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/main.dart' as app;
-import 'package:da_kanji_mobile/widgets/dictionary/floating_word_stack.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/floating_word_stack.dart';
 
 Future<void> waitTillFinder(WidgetTester tester, Finder finder, String waitingMessage) async {
   int cnt = 0;

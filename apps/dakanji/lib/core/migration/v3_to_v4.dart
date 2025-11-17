@@ -11,9 +11,9 @@ import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/word_lists/word_list_types.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_queries.dart';
-import 'package:da_kanji_mobile/entities/word_lists/word_lists_sql.dart';
+import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
+import 'package:da_kanji_mobile/features/word_lists/controller/word_lists_queries.dart';
+import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 /// Stores all word lists in a directory called `v4_word_list_migration` in the

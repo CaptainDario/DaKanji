@@ -7,10 +7,10 @@ import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/core/iso/iso_table.dart';
 import 'package:da_kanji_mobile/features/anki/model/anki_data.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/dictionary_example_tab.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_example_tab.dart';
 
 /// Represents a DaKanji-style Anki note
 class AnkiNote{

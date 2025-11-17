@@ -8,7 +8,7 @@ import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/drawing/model/drawing_data.dart';
-import 'package:da_kanji_mobile/entities/tf_lite/inference_stats.dart';
+import 'package:da_kanji_mobile/core/tf_lite/inference_stats.dart';
 
 /// Bundles data to pass between Isolate
 class DrawingIsolate {

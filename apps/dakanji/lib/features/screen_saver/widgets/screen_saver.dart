@@ -14,11 +14,11 @@ import 'package:window_manager/window_manager.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/screen_saver/controller/screensaver.dart';
-import 'package:da_kanji_mobile/entities/isar/isars.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/widgets/dictionary/dictionary_word_card.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_word_card.dart';
 
 /// Shows a screen saver that iterates through different dictionary entries
 class ScreenSaver extends StatefulWidget {

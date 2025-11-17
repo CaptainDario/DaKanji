@@ -169,12 +169,6 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
         "/${Screens.ocr.name}", Screens.ocr,
         null, null,
         kDebugMode, null),
-    if(kDebugMode)
-      DrawerEntry(
-        DaKanjiIcons.kuzushiji, LocaleKeys.KuzushijiScreen_title,
-        "/${Screens.kuzushiji.name}", Screens.kuzushiji,
-        0.7, const Alignment(-1000, 0),
-        kDebugMode, null),
   ];
 
   late List<int> drawerElementsIndexOrder;
