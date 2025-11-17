@@ -11,7 +11,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
 
-/// Returns a String containing details about the system the app is running on
+/// Returns a String containing details about the device the app is running on
 Future<String> getDeviceInfoText(BuildContext context) async {
   Map<String, dynamic> t = (await DeviceInfoPlugin().deviceInfo).data;
 

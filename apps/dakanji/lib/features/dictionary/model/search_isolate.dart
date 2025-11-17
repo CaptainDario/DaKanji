@@ -13,7 +13,7 @@ import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/repositories/dictionary/dictionary_search_queries.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_queries.dart';
 
 class DictionarySearchIsolate {
 

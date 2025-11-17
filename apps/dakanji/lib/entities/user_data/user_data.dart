@@ -10,7 +10,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/releases/version.dart';
+import 'package:da_kanji_mobile/core/releases/version.dart';
 import 'package:da_kanji_mobile/entities/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/globals.dart';
 
@@ -202,7 +202,7 @@ class UserData{
     debugPrint("used: $versionUsed now: $g_Version");
     versionUsed ??= Version(0, 0, 0);
     if(versionUsed! < g_Version && appOpenedTimes > 1){
-      newVersionUsed = true;debugPrint("New version installed");
+      newVersionUsed = true; debugPrint("New version installed");
       // show the changelog
       showChangelog = true;
       

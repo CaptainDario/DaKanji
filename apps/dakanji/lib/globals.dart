@@ -13,7 +13,7 @@ import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/entities/files/path_manager.dart';
-import 'package:da_kanji_mobile/entities/releases/version.dart';
+import 'package:da_kanji_mobile/core/releases/version.dart';
 import 'package:da_kanji_mobile/init.dart';
 
 /// the title of the app

@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:da_kanji_mobile/entities/releases/version.dart';
+import 'package:da_kanji_mobile/core/releases/version.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Checks if any migration is necessary and if so runs the them
