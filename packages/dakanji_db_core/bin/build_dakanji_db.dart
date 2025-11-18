@@ -18,9 +18,9 @@ enum DictsToUse {
   jitendex,
 } 
 
-Map<DictsToUse, String> dictNameToPath = {
-  DictsToUse.jmdict: kanjidic2InputPath,
-  DictsToUse.jitendex: jitendexInputPath,
+Map<DictsToUse, String Function()> dictNameToPath = {
+  DictsToUse.jmdict: () => jmdictInputPath,
+  DictsToUse.jitendex: () => jitendexInputPath,
 };
 
 void main(List<String> args) async {
@@ -75,9 +75,10 @@ void main(List<String> args) async {
   print("Importing yomitan dicts...");
   await importYomitanDicts(db, mecab,
     [kanjidic2InputPath, jpdb2_2InputPath]
-      + ([dictNameToPath[dictToUse]!])
+      + ([dictNameToPath[dictToUse]!()])
       + (includeExampleDictArg ? [exampleDictPath!] : []),
-    ["KanjiDic2", "JMdict", "JPDB 2.2"]
+    ["KanjiDic2", "JPDB 2.2"]
+      + [dictToUse.name]
       + (includeExampleDictArg ? ["yomitan example dictionary"] : []),
     addStructuredContentJsonDefs,
   );
@@ -180,7 +181,7 @@ Future importYomitanDicts(
 
   for (var i = 0; i < inputPaths.length; i++) {
 
-    print("Importing ${inputNames[i]}...");
+    print(" --- Importing ${inputNames[i]}... ---");
     
     Stopwatch s = Stopwatch()..start();
     Stream<String> progress = await parseDictionaryDataSource(
