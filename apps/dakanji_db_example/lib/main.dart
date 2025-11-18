@@ -133,14 +133,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 
                 //search
-                Expanded(
-                  child: ListView(
-                    children: [
-                      if(lastSearchResult != null)
-                        DictionarySearchResultWidget(lastSearchResult!, daKanjiDB)
-                    ],
+                if(lastSearchResult != null)
+                  Expanded(
+                    child: 
+                      DictionarySearchResultWidget(lastSearchResult!, daKanjiDB),
                   ),
-                ),
               ],
             );
           }

@@ -1,11 +1,10 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
-// 1. Import the final item widget directly
 import 'package:dakanji_db_example/search_results/dictionary_match_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// 2. DO NOT import SearchMatchGroupWidget.dart
+
 
 class DictionarySearchResultWidget extends StatelessWidget {
   final DictionarySearchResult result;
@@ -21,7 +20,6 @@ class DictionarySearchResultWidget extends StatelessWidget {
 
     return Provider.value(
       value: db,
-      // 3. The one and only scrolling view
       child: CustomScrollView(
         slivers: [
           // Section 1: Query Matches
@@ -50,15 +48,13 @@ class DictionarySearchResultWidget extends StatelessWidget {
     );
   }
 
-  /// 4. This helper function REPLACES 'SearchMatchGroupWidget'
-  /// It builds the sub-headers and lazy-loaded lists (Slivers).
+
   List<Widget> _buildSliversForMatchGroup(SearchMatchGroup matchGroup) {
     final List<Widget> slivers = [];
 
     // Sub-Section: Exact Matches
     if (matchGroup.exactMatches.isNotEmpty) {
       slivers.add(const SliverToBoxAdapter(child: _SubHeader("Exact Matches")));
-      // 5. This is the lazy-loaded list for the lowest level
       slivers.add(SliverList.builder(
         itemCount: matchGroup.exactMatches.length,
         itemBuilder: (context, i) =>
