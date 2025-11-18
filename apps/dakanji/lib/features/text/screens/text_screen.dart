@@ -25,9 +25,9 @@ import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
-import 'package:da_kanji_mobile/widgets/text/analysis_option_button.dart';
+import 'package:da_kanji_mobile/features/text/widgets/analysis_option_button.dart';
 import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/widgets/custom_selectable_text.dart';
-import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_stack.dart';
+import 'package:da_kanji_mobile/features/text/widgets/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/core/widgets/multi_focus.dart';
 
 /// The "draw"-screen.

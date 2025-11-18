@@ -16,7 +16,7 @@ import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/dictionary/screens/dictionary_screen.dart';
-import 'package:da_kanji_mobile/widgets/onboarding/on_boarding_page.dart';
+import 'package:da_kanji_mobile/features/onboarding/widgets/on_boarding_page.dart';
 
 /// The "home"-screen
 /// 

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
-import 'package:da_kanji_mobile/widgets/kanji_trainer/kanji_drawing.dart';
+import 'package:da_kanji_mobile/features/kanji_trainer/widgets/kanji_drawing.dart';
 
 /// The screen for all kanji related functionalities
 class KanjiTrainerScreen extends StatefulWidget {

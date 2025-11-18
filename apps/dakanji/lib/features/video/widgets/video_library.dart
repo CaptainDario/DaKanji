@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/widgets/video/video_player.dart';
+import 'package:da_kanji_mobile/features/video/widgets/video_player.dart';
 
 class VideoLibrary extends StatefulWidget {
   const VideoLibrary({super.key});
@@ -36,11 +36,12 @@ class _VideoLibraryState extends State<VideoLibrary> {
           if(result == null || result.files.isEmpty) return;
           File subsFile = File(result.files.first.path!);
 
-          Navigator.push(context,
-            MaterialPageRoute(builder: (context) {
-              return Scaffold(
-                body: VideoPlayer(videoFile, subsFile));
-            },));
+          if(context.mounted)
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) {
+                return Scaffold(
+                  body: VideoPlayer(videoFile, subsFile));
+              },));
         },
         icon: const Icon(Icons.add)
       ),

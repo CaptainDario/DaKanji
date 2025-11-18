@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
-import 'package:da_kanji_mobile/widgets/ocr/ocr_widget.dart';
+import 'package:da_kanji_mobile/features/ocr/widgets/ocr_widget.dart';
 
 class OcrScreen extends StatefulWidget {
 

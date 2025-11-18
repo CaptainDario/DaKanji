@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/widgets/reading/reader.dart';
+import 'package:da_kanji_mobile/features/reading/widgets/reader.dart';
 
 class ReadingWidget extends StatefulWidget {
 

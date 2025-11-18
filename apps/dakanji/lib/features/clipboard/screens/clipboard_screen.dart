@@ -20,7 +20,7 @@ import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
 import 'package:da_kanji_mobile/core/widgets/conditional_parent_widget.dart';
-import 'package:da_kanji_mobile/widgets/text_analysis/text_analysis_popup.dart';
+import 'package:da_kanji_mobile/features/text/widgets/text_analysis_popup.dart';
 
 /// Screen that listens to clipboard changes and displays them in a
 /// [TextAnalysisPopup]
