@@ -1,6 +1,6 @@
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_tag.dart';
-import 'package:dakanji_db_example/widgets.dart/pitch_accent_widget.dart';
+import 'package:dakanji_db_example/widgets/pitch_accent_widget.dart';
 import 'package:flutter/material.dart';
 
 
@@ -34,7 +34,9 @@ class DictionaryMatchTermMetaPitchWidget extends StatelessWidget {
                   ),
                 PitchAccentWidget(
                   entry.reading ?? entry.term,
-                  pitch.position
+                  pitch.position,
+                  nasalPosition: pitch.nasal,
+                  devoicePosition: pitch.devoice,
                 ),
               ]
             ),
