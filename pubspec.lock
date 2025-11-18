@@ -543,10 +543,10 @@ packages:
     dependency: transitive
     description:
       name: mecab_for_dart
-      sha256: "132aa2fb658b2295e0c0e1b1c2644a6d0d7e841a3f2d7e1b4362e747371519c9"
+      sha256: "51d9aa2f573fa698af9e153033245020917456b6800700267e395621cb920499"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.6"
+    version: "1.1.7"
   meta:
     dependency: transitive
     description:
