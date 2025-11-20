@@ -26,7 +26,12 @@ dictionary_search_drift_find_term_bank_entries:
                 search_fts.*,
                 search_fts.rank
             FROM SearchTerms
-            JOIN search_fts ON search_fts.text_data MATCH SearchTerms.term || ' *'
+            JOIN search_fts ON search_fts.text_data MATCH 
+                SearchTerms.term || 
+                CASE 
+                    WHEN LENGTH(SearchTerms.term) < 2 THEN '' 
+                    ELSE ' *' 
+                END
             WHERE
                 :useGlob = 0 
                 AND (
