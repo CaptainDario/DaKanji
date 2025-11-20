@@ -55,47 +55,54 @@ dictionary_search_drift_find_term_bank_entries:
                     OR (data_type_id IN (3, 4, 6) AND :normalizedSearch = 1)
                 )
         ),
-        
-        -- Only take the BEST entry for each found entry (FIXED with ROW_NUMBER)
-        SearchResultsDeduplicated AS (
-            SELECT
-                *
-            FROM (
-                SELECT
-                    SearchResults.*,
-                    ROW_NUMBER() OVER(
-                        PARTITION BY source_id
-                        ORDER BY rank -- Picks the best FTS rank
-                    ) AS rn
-                FROM SearchResults
-            ) AS Ranked
-            WHERE
-                rn = 1
-        ),
-        
+
         -- classify each match
         SearchResultMatchesClassified AS (
             SELECT
-                SearchResultsDeduplicated.*,
+                SearchResults.*,
                 CASE
                     WHEN text_data = search_term THEN 1
                     WHEN text_data GLOB search_term || '*' THEN 2
                     ELSE 3
                 END as match_type
-            FROM SearchResultsDeduplicated
+            FROM SearchResults
+        ),
+        
+        -- Only take the BEST entry for each found entry (FIXED with ROW_NUMBER)
+        SearchResultsDeduplicated AS (
+            SELECT * FROM (
+                SELECT
+                    SearchResultMatchesClassified.*,
+                    ROW_NUMBER() OVER(
+                        -- Partition by Source ID AND Data Type Group
+                        -- This ensures ID 100 (Term) is not compared to ID 100 (Definition)
+                        PARTITION BY 
+                            source_id, 
+                            CASE 
+                                WHEN data_type_id IN (1, 2, 3, 4) THEN 'term'
+                                WHEN data_type_id IN (5, 6) THEN 'reading'
+                                ELSE 'def'
+                            END
+                        ORDER BY 
+                            match_type ASC,     -- Exact matches first
+                            rank ASC,           -- Better FTS rank
+                            LENGTH(text_data) ASC -- Shorter matches
+                    ) AS rn
+                FROM SearchResultMatchesClassified
+            ) WHERE rn = 1
         ),
         
         -- Get the term bank entries
         TermBankMatches as (
             -- get all term / reading matches
             SELECT
-                SearchResultMatchesClassified.*,
+                SearchResultsDeduplicated.*,
                 term_bank_v3_table.id as term_bank_id,
                 term_bank_v3_table.term_id as term_id,
                 term_bank_v3_table.reading_id as reading_id,
                 1 as match_column,
                 term_bank_v3_table.sequence_number
-            FROM SearchResultMatchesClassified 
+            FROM SearchResultsDeduplicated 
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4)
             
@@ -103,13 +110,13 @@ dictionary_search_drift_find_term_bank_entries:
             
             -- get all term / reading matches
             SELECT 
-                SearchResultMatchesClassified.*,
+                SearchResultsDeduplicated.*,
                 term_bank_v3_table.id as term_bank_id,
                 term_bank_v3_table.term_id as term_id,
                 term_bank_v3_table.reading_id as reading_id,
                 2 as match_column,
                 term_bank_v3_table.sequence_number
-            FROM SearchResultMatchesClassified
+            FROM SearchResultsDeduplicated
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6)
             
@@ -117,13 +124,13 @@ dictionary_search_drift_find_term_bank_entries:
             
             -- get all definition matches
             SELECT
-                SearchResultMatchesClassified.*,
+                SearchResultsDeduplicated.*,
                 term_bank_v3_x_definition_table.term_bank_id as term_bank_id,
                 term_bank_v3_table.term_id as term_id,
                 term_bank_v3_table.reading_id as reading_id,
                 3 as match_column,
                 term_bank_v3_table.sequence_number
-            FROM SearchResultMatchesClassified
+            FROM SearchResultsDeduplicated
             JOIN term_bank_v3_x_definition_table
                 ON term_bank_v3_x_definition_table.definition_id = source_id
             JOIN term_bank_v3_table
@@ -204,7 +211,6 @@ dictionary_search_drift_find_term_bank_entries:
     LEFT JOIN PopularityDictionary AS OP
         ON OP.term_id = TB3T.term_id
         
-    -- The ORDER BY is preserved
     ORDER BY
         index_table.current_sorting_order,
         TBM.match_type,
@@ -213,7 +219,7 @@ dictionary_search_drift_find_term_bank_entries:
         TBM.rank,
         LENGTH(matchedText)
 
-    LIMIT 2500;
+    LIMIT :limit OFFSET :offset;
 
 dictionary_search_drift_find_term_bank_sequences:
 
@@ -377,7 +383,7 @@ dictionary_search_drift_find_term_bank_details:
         --- ASSEMBLE TERM META END -------------------
 
     -- FINAL SELECT
-    -- This selects all your original data, but NO search metadata
+    -- This selects all data, but NO search metadata
     SELECT
         -- index
         index_table.*,
