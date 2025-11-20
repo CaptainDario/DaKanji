@@ -11,8 +11,6 @@ import "../dakanji_db.dart";
 
 part "db_queries_dao.g.dart";
 
-
-
 @DriftAccessor()
 class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin {
   
@@ -71,93 +69,100 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     bool isWildcardSearch = term.contains(RegExp(r'\*|\?'));
     int useGlobInt = isWildcardSearch ? 1 : 0;
 
-    // run the queries in parallel
-    final emptyResult = (<DictionarySearchDriftFindTermBankEntriesResult>[],
-      <DictionarySearchDriftFindTermBankSequencesResult>[],
-      <DictionarySearchDriftFindTermBankDetailsResult>[]);
-    final results = (await Future.wait([
+    Stopwatch s = Stopwatch()..start();
+
+    // 1. Run the lightweight search queries in parallel (IDs only)
+    final resultsRaw = await Future.wait([
       // exact query
-      _querySQLite([term], tags, useGlobInt, 0, groupSequences),
+      _findTermBankEntries([term], tags, useGlobInt, 0),
       // normalized terms
-      normalizedSearch ? _querySQLite(normalizedTerms, tags, useGlobInt, 1, groupSequences)
-        : Future.value(emptyResult),
+      normalizedSearch ? _findTermBankEntries(normalizedTerms, tags, useGlobInt, 1)
+        : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
       // term variants (deconjugated forms)
-      deconjugationSearch ? _querySQLite(
-        termVariants.map((e) => e.deconjugatedTerm).toList(), tags, useGlobInt, 1, groupSequences)
-        : Future.value(emptyResult),
+      deconjugationSearch
+        ? _findTermBankEntries(
+          termVariants.map((e) => e.deconjugatedTerm).toList(), tags, useGlobInt, 1)
+        : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
       // spellfix / fuzzy search
-      spellfixSearch ? _querySQLite(spellingVariations, tags, useGlobInt, 1, groupSequences)
-        : Future.value(emptyResult)
-    ]));
+      spellfixSearch
+        ? _findTermBankEntries(spellingVariations, tags, useGlobInt, 1)
+        : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[])
+    ]);
+
+    print("Phase 1 (Search IDs) completed in ${s.elapsedMilliseconds}ms.");
+    s.reset();
+
+    // 2. Aggregate unique IDs and Sequence Numbers to prevent over-fetching details
+    final Set<int> allTermBankIds = {};
+    final Set<int> allSequenceNumbers = {};
+
+    for (final group in resultsRaw) {
+      for (final entry in group) {
+        allTermBankIds.add(entry.termBankId);
+        if (groupSequences) {
+          allSequenceNumbers.add(entry.sequenceNumber);
+        }
+      }
+    }
+
+    // 3. Find Sequences (if enabled)
+    List<DictionarySearchDriftFindTermBankSequencesResult> sequenceMatches = [];
+    if (groupSequences && allSequenceNumbers.isNotEmpty) {
+      sequenceMatches = await db.dictionary_search_drift_find_term_bank_sequences(
+        jsonEncode(allSequenceNumbers.toList()), 
+        jsonEncode(allTermBankIds.toList()) // Exclude IDs we already found
+      ).get();
+      
+      // Add the newly found sequence IDs to the fetch list
+      allTermBankIds.addAll(sequenceMatches.map((e) => e.termBankId));
+    }
+
+    // 4. Fetch details for ALL unique IDs found in any step
+    List<DictionarySearchDriftFindTermBankDetailsResult> allDetails = [];
+    if (allTermBankIds.isNotEmpty) {
+      allDetails = await db.dictionary_search_drift_find_term_bank_details(
+        jsonEncode(allTermBankIds.toList())
+      ).get();
+    }
+
+    print("Phase 2 (Details & Sequences) completed in ${s.elapsedMilliseconds}ms. Fetched details for ${allDetails.length} entries.");
+    s.stop();
     
+    // 5. Assemble the result
     return DictionarySearchResult(
       queryMatches: SearchMatchGroup.fromDictionarySearch(
-        results[0], isWildcardSearch,
+        (resultsRaw[0], sequenceMatches, allDetails), isWildcardSearch,
         groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading)
         .firstOrNull ?? SearchMatchGroup.empty(),
       normalizedQueryMatchGroups: SearchMatchGroup.fromDictionarySearch(
-        results[1], isWildcardSearch,
+        (resultsRaw[1], sequenceMatches, allDetails), isWildcardSearch,
         groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading),
       queryVariantMatches: SearchMatchGroup.fromDictionarySearch(
-        results[2], isWildcardSearch,
+        (resultsRaw[2], sequenceMatches, allDetails), isWildcardSearch,
         groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading),
       fuzzyMatches: SearchMatchGroup.fromDictionarySearch(
-        results[3], isWildcardSearch,
+        (resultsRaw[3], sequenceMatches, allDetails), isWildcardSearch,
         groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading)
     );
-
-    
   }
 
-  /// Helper method to run the the SQLite queries for term, normalized terms, 
-  /// variants and sllfix searches in parallel (async)
-  Future<(
-    List<DictionarySearchDriftFindTermBankEntriesResult> results,
-    List<DictionarySearchDriftFindTermBankSequencesResult> sequenceMatches,
-    List<DictionarySearchDriftFindTermBankDetailsResult> resultDetails
-  )> _querySQLite(
+  /// Helper method to run ONLY the ID search (Query 1)
+  Future<List<DictionarySearchDriftFindTermBankEntriesResult>> _findTermBankEntries(
     List<String> terms,
     List<String> tags,
     int useGlob,
     int searchNormalized,
-    bool groupSequences
   ) async {
+    if (terms.isEmpty) return [];
 
-    // 1. Run Query 1 to get matching term bank entries
-    Stopwatch s = Stopwatch()..start();
-    final searchResults = await db.dictionary_search_drift_find_term_bank_entries(
+    return await db.dictionary_search_drift_find_term_bank_entries(
       jsonEncode(terms),
       jsonEncode(tags),
       useGlob,
-      searchNormalized
+      searchNormalized,
+      50,
+      0
     ).get();
-    print("Query 1 completed in ${s.elapsedMilliseconds}. Found ${searchResults.length} entries.");
-    s.reset();
-
-    // Get all term bank entries that belong to any sequence of any of the results
-    final foundTermBankIds = searchResults.map((e) => e.termBankId).toSet().toList();
-    late final List<DictionarySearchDriftFindTermBankSequencesResult> sequenceMatches;
-    if(groupSequences)
-      sequenceMatches = await db.dictionary_search_drift_find_term_bank_sequences(
-        jsonEncode(searchResults.map((e) => e.sequenceNumber).toSet().toList()), 
-        jsonEncode(foundTermBankIds)
-      ).get();
-    else sequenceMatches = <DictionarySearchDriftFindTermBankSequencesResult>[];
-    print("Query 2 completed in ${s.elapsedMilliseconds}. Found ${sequenceMatches.length} sequence entries.");
-    s.reset();
-
-    // Run third query to get details for all results from Query 1
-    final getDetailsIds = jsonEncode(foundTermBankIds..addAll(
-      sequenceMatches.map((e) => e.termBankId)));
-    List<DictionarySearchDriftFindTermBankDetailsResult> details;
-    if (searchResults.isEmpty) details = <DictionarySearchDriftFindTermBankDetailsResult>[];
-    else {
-      details = await db.dictionary_search_drift_find_term_bank_details(getDetailsIds).get();
-      print("Query 3 completed in ${s.elapsedMilliseconds}. Found ${details.length} detail entries.");
-      s.reset();
-    }
-    return (searchResults, sequenceMatches, details);
-
   }
 
 }

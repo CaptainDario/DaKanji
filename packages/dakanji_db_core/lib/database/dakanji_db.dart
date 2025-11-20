@@ -180,7 +180,7 @@ class DaKanjiDB extends _$DaKanjiDB {
       File(path),
       sqlite3: loadExtensions,
       setup: setupDb,
-      readPool: 3 // each dictionary search query runs 3 differen queries
+      readPool: 4 // each dictionary search query runs 4 differen queries
     );
 
     return qe;
@@ -218,6 +218,8 @@ void setupDb (Database database) {
   // With write-ahead logging (WAL) enabled, a single writer and multiple
   // readers can operate on the database in parallel.
   database.execute('PRAGMA journal_mode = WAL;');
+  // TODO look at this
+  database.execute('PRAGMA mmap_size = 1000000000;');
 }
 
 Sqlite3 loadExtensions() {
