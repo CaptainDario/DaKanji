@@ -11,6 +11,9 @@ IndexEntry _$IndexEntryFromJson(Map<String, dynamic> json) => IndexEntry(
   isDefaultDictionary: const BoolAsIntConverter().fromJson(
     (json['isDefaultDictionary'] as num).toInt(),
   ),
+  enabled: const BoolAsIntConverter().fromJson(
+    (json['enabled'] as num).toInt(),
+  ),
   dictionaryType: $enumDecode(_$DictionaryTypesEnumMap, json['dictionaryType']),
   currentSortingOrder: (json['currentSortingOrder'] as num).toInt(),
   currentFrequencyDictionary: const BoolAsIntConverter().fromJson(
@@ -42,6 +45,7 @@ Map<String, dynamic> _$IndexEntryToJson(
   'isDefaultDictionary': const BoolAsIntConverter().toJson(
     instance.isDefaultDictionary,
   ),
+  'enabled': const BoolAsIntConverter().toJson(instance.enabled),
   'dictionaryType': _$DictionaryTypesEnumMap[instance.dictionaryType]!,
   'currentSortingOrder': instance.currentSortingOrder,
   'currentFrequencyDictionary': const BoolAsIntConverter().toJson(

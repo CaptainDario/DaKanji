@@ -46,7 +46,7 @@ abstract mixin class $IndexEntryCopyWith<$Res>  {
   factory $IndexEntryCopyWith(IndexEntry value, $Res Function(IndexEntry) _then) = _$IndexEntryCopyWithImpl;
 @useResult
 $Res call({
- int id, bool isDefaultDictionary, DictionaryTypes dictionaryType, int currentSortingOrder, bool currentFrequencyDictionary, String title, String revision, bool? sequenced, int? format, int? version, String? author, bool? updatable, String? indexUrl, String? downloadUrl, String? url, String? description, String? attribution, String? sourceLanguage, String? targetLanguage, String? frequencyMode
+ int id, bool isDefaultDictionary, bool enabled, DictionaryTypes dictionaryType, int currentSortingOrder, bool currentFrequencyDictionary, String title, String revision, bool? sequenced, int? format, int? version, String? author, bool? updatable, String? indexUrl, String? downloadUrl, String? url, String? description, String? attribution, String? sourceLanguage, String? targetLanguage, String? frequencyMode
 });
 
 
@@ -63,10 +63,11 @@ class _$IndexEntryCopyWithImpl<$Res>
 
 /// Create a copy of IndexEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? isDefaultDictionary = null,Object? dictionaryType = null,Object? currentSortingOrder = null,Object? currentFrequencyDictionary = null,Object? title = null,Object? revision = null,Object? sequenced = freezed,Object? format = freezed,Object? version = freezed,Object? author = freezed,Object? updatable = freezed,Object? indexUrl = freezed,Object? downloadUrl = freezed,Object? url = freezed,Object? description = freezed,Object? attribution = freezed,Object? sourceLanguage = freezed,Object? targetLanguage = freezed,Object? frequencyMode = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? isDefaultDictionary = null,Object? enabled = null,Object? dictionaryType = null,Object? currentSortingOrder = null,Object? currentFrequencyDictionary = null,Object? title = null,Object? revision = null,Object? sequenced = freezed,Object? format = freezed,Object? version = freezed,Object? author = freezed,Object? updatable = freezed,Object? indexUrl = freezed,Object? downloadUrl = freezed,Object? url = freezed,Object? description = freezed,Object? attribution = freezed,Object? sourceLanguage = freezed,Object? targetLanguage = freezed,Object? frequencyMode = freezed,}) {
   return _then(IndexEntry(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,isDefaultDictionary: null == isDefaultDictionary ? _self.isDefaultDictionary : isDefaultDictionary // ignore: cast_nullable_to_non_nullable
+as bool,enabled: null == enabled ? _self.enabled : enabled // ignore: cast_nullable_to_non_nullable
 as bool,dictionaryType: null == dictionaryType ? _self.dictionaryType : dictionaryType // ignore: cast_nullable_to_non_nullable
 as DictionaryTypes,currentSortingOrder: null == currentSortingOrder ? _self.currentSortingOrder : currentSortingOrder // ignore: cast_nullable_to_non_nullable
 as int,currentFrequencyDictionary: null == currentFrequencyDictionary ? _self.currentFrequencyDictionary : currentFrequencyDictionary // ignore: cast_nullable_to_non_nullable

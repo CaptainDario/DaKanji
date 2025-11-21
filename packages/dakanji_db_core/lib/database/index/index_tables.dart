@@ -10,7 +10,7 @@ class IndexTable extends Table {
   /// Whether this is a dictionary included with DaKanji by default or not
   BoolColumn get isDefaultDictionary => boolean()();
   /// Whether this dictionary is enabled or not
-  BoolColumn get enabled => boolean()();
+  BoolColumn get enabled => boolean().withDefault(const Constant(true))();
   /// Type of dictionary stored in this index.
   TextColumn get dictionaryType => textEnum<DictionaryTypes>()();
   /// Current sorting order of this dictionary (DESC)

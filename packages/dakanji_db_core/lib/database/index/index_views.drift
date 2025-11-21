@@ -6,6 +6,9 @@ CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_as_json_view AS
         IT.id,
         JSON_OBJECT(
             'id', IT.id,
+
+            'isDefaultDictionary', IT.is_default_dictionary,
+            'enabled', IT.enabled,
             'dictionaryType', IT.dictionary_type,
             'currentSortingOrder', IT.current_sorting_order,
             'currentFrequencyDictionary', IT.current_frequency_dictionary,
