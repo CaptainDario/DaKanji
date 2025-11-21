@@ -30,18 +30,23 @@ Matcher matchesIpa(String ipa, {List<TagBankV3Entry>? tags}) {
 }
 
 // Matches a single TermMetaBankV3Entry against one of the expected tuples
-Matcher matchesMetaEntry((List<TermMetaBankV3PitchEntry>, List<TermMetaBankV3IpaEntry>) expectedMeta) {
-  final expectedPitches = expectedMeta.$1;
-  final expectedIpas = expectedMeta.$2;
+Matcher matchesMetaEntry(TermMetaBankV3Entry expectedMeta) {
+  return isA<TermMetaBankV3Entry>()
+      // --- 1. Match Core Identity Fields ---
+      .having((e) => e.term, 'term', expectedMeta.term)
+      .having((e) => e.reading, 'reading', expectedMeta.reading)
+      .having((e) => e.type, 'type', expectedMeta.type)
 
-  // Assumes the object in res.metaEntries is TermMetaBankV3Entry
-  return isA<TermMetaBankV3Entry>()      
-      //  Match the list of pitches
+      // --- 2. match freq data 
+      .having((e) => e.frequency, 'frequency', expectedMeta.frequency,)
+      .having((e) => e.frequencyDisplayValue, 'frequencyDisplayValue', expectedMeta.frequencyDisplayValue,)
+      
+      // --- 2. Match Pitch List ---
       .having(
         (e) => e.pitchs,
         'pitchs',
         unorderedEquals(
-          expectedPitches.map((p) => matchesPitch(
+          expectedMeta.pitchs.map((p) => matchesPitch(
                 p.position,
                 tags: p.tags,
                 nasal: p.nasal,
@@ -49,13 +54,13 @@ Matcher matchesMetaEntry((List<TermMetaBankV3PitchEntry>, List<TermMetaBankV3Ipa
               )).toList(),
         ),
       )
-      
-      // Match the list of IPAs
+
+      // --- 3. Match IPA List ---
       .having(
         (e) => e.ipas,
         'ipas',
         unorderedEquals(
-          expectedIpas.map((ipa) => matchesIpa(
+          expectedMeta.ipas.map((ipa) => matchesIpa(
                 ipa.ipa,
                 tags: ipa.tags,
               )).toList(),

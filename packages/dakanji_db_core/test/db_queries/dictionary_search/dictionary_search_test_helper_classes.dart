@@ -1,5 +1,4 @@
-import 'package:dakanji_db_core/database/term_meta/term_meta_bank_ipa_entry.dart';
-import 'package:dakanji_db_core/database/term_meta/term_meta_bank_pitch_entry.dart';
+import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 
 
 
@@ -196,10 +195,7 @@ class ExpectedDictionaryMatch {
   /// The text that was matched
   final String match;
 
-  final List<(
-    List<TermMetaBankV3PitchEntry>,
-    List<TermMetaBankV3IpaEntry>
-  )> metas;
+  final List<TermMetaBankV3Entry> metas;
 
   const ExpectedDictionaryMatch({
     required this.term,
