@@ -176,6 +176,8 @@ Future setupFreshDB() async {
   final mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
+  // emulate importing 3 dictionaries
+  // take all data form the yomitan sample dictionary except term banks
   for (int i in [2, 1, 3]) {
     bool shouldIncludeFile(File file) =>
       // take the full dictionary only once
