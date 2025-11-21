@@ -21,7 +21,7 @@ class DictionaryMatchTermMetaWidget extends StatefulWidget {
 class _DictionaryMatchTermMetaWidgetState extends State<DictionaryMatchTermMetaWidget> {
 
   /// A list that groups frequency term meta entries by their index ID.
-  late Map<String, Map<String, List<TermMetaBankV3Entry>>> groupedTermMetaEntries;
+  late Map<TermMetaBankEntryTypes, Map<String, List<TermMetaBankV3Entry>>> groupedTermMetaEntries;
 
   @override
   void initState() {
@@ -46,9 +46,9 @@ class _DictionaryMatchTermMetaWidgetState extends State<DictionaryMatchTermMetaW
   @override
   Widget build(BuildContext context) {
 
-    final freqMap = groupedTermMetaEntries[TermMetaBankEntryTypes.freq.name] ?? {};
-    final pitchMap = groupedTermMetaEntries[TermMetaBankEntryTypes.pitch.name] ?? {};
-    final ipaMap = groupedTermMetaEntries[TermMetaBankEntryTypes.ipa.name] ?? {};
+    final freqMap = groupedTermMetaEntries[TermMetaBankEntryTypes.freq] ?? {};
+    final pitchMap = groupedTermMetaEntries[TermMetaBankEntryTypes.pitch] ?? {};
+    final ipaMap = groupedTermMetaEntries[TermMetaBankEntryTypes.ipa] ?? {};
 
     final ipaAndPitchIndexIds = {...pitchMap.keys, ...ipaMap.keys};
 
