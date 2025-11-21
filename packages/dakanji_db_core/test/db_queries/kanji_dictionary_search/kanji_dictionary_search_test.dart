@@ -73,7 +73,8 @@ Future<DaKanjiDB> setupFreshDB() async {
     dataSourcePath: dataSourceZipPath,
     db: db,
     addStructuredContentJsonDefs: false,
-    mecab: mecab
+    mecab: mecab,
+    isDefaultDictionary: false
   );
   await for (var line in progress) {
     print(line);

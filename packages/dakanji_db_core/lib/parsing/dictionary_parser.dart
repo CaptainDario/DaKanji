@@ -54,6 +54,7 @@ String termMetaBankFileNamingScheme = "term_meta_bank";
 Future<Stream<String>> parseDictionaryDataSource({
   String? dataSourcePath,
   Uint8List? archiveBytes,
+  required bool isDefaultDictionary,
   required DaKanjiDB db,
   required bool addStructuredContentJsonDefs,
   required Mecab mecab,
@@ -89,7 +90,8 @@ Future<Stream<String>> parseDictionaryDataSource({
     libmecabPath: libmecabPath,
     mecabDictDir: mecabDicPath,
     mainIsolateSendPort: receivePort.sendPort,
-    inMemory: inMemory
+    inMemory: inMemory,
+    isDefaultDictionary: isDefaultDictionary
   ));
 
   return controller.stream;
@@ -106,7 +108,8 @@ Future _parseDictionaryDataSource(({
   String libmecabPath,
   String mecabDictDir,
   SendPort mainIsolateSendPort,
-  bool inMemory
+  bool inMemory,
+  bool isDefaultDictionary
 }) params) async {
 
   final db = DaKanjiDB(
@@ -125,7 +128,7 @@ Future _parseDictionaryDataSource(({
     // parse the index file -> get dict index
     final indexFile = dataSources.first;
     int indexId = await parseAndInsertIndex(
-      utf8.decode(indexFile.fileContent), db, DictionaryTypes.yomitan);
+      utf8.decode(indexFile.fileContent), db, DictionaryTypes.yomitan, params.isDefaultDictionary);
     final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
 
     // create import context for parsing

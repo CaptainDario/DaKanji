@@ -17,7 +17,14 @@ import '/database/dakanji_db.dart';
 import '/parsing/example/example_sentence_parser.dart';
 
 /// Parses the given dakanji example folder
-Future<Stream<String>> parseExampleDataSource(String examplesZipPath, DaKanjiDB db, Mecab mecab) async {
+Future<Stream<String>> parseExampleDataSource(
+  {
+    required String examplesZipPath,
+    required  DaKanjiDB db,
+    required Mecab mecab,
+    required bool isDefaultDictionary
+  }
+) async {
 
   // Use a stream to allow listening for progress and end of processing
   final StreamController<String> controller = StreamController();
@@ -44,7 +51,8 @@ Future<Stream<String>> parseExampleDataSource(String examplesZipPath, DaKanjiDB 
     libmecabPath: libmecabPath,
     mecabDictDir: mecabDicPath,
     mainIsolateSendPort: receivePort.sendPort,
-    inMemory: db.inMemory
+    inMemory: db.inMemory,
+    isDefaultDictionary: isDefaultDictionary
   ));
 
   return controller.stream;
@@ -58,7 +66,8 @@ Future _parseExampleDataSource(({
   String libmecabPath,
   String mecabDictDir,
   SendPort mainIsolateSendPort,
-  bool inMemory
+  bool inMemory,
+  bool isDefaultDictionary
 }) params) async {
 
   final db = DaKanjiDB(
@@ -75,7 +84,7 @@ Future _parseExampleDataSource(({
 
     final indexFile = dataSources.first;
     int indexId = await parseAndInsertIndex(
-      utf8.decode(indexFile.fileContent), db, DictionaryTypes.examples);
+      utf8.decode(indexFile.fileContent), db, DictionaryTypes.examples, params.isDefaultDictionary);
     final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
     dataSources = dataSources.skip(1);
 

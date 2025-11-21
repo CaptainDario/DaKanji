@@ -87,7 +87,8 @@ Future<DaKanjiDB> setupFreshDB(int testCaseIndex) async {
   bool shouldIncludeFile(File file) =>
     (p.basename(file.path) == "term_bank_$testCaseIndex.json" ||
     !p.basename(file.path).contains("term_bank"));
-  await partialInit(db, shouldIncludeFile, "term_bank_test", mecab); 
+  await partialInit(db, shouldIncludeFile, "term_bank_test", mecab,
+    isDefaultDictionary: false); 
 
   return db;
 

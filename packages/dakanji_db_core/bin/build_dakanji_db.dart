@@ -188,7 +188,8 @@ Future importYomitanDicts(
       dataSourcePath:  inputPaths[i],
       db: db,
       addStructuredContentJsonDefs: addStructuredContentJsonDefs,
-      mecab: mecab
+      mecab: mecab,
+      isDefaultDictionary: true
     );
 
     await for (final progress in progress) {
@@ -204,7 +205,12 @@ Future importYomitanDicts(
 Future tatoeba(DaKanjiDB db, Mecab mecab) async {
 
   Stopwatch s = Stopwatch()..start();
-  await parseExampleDataSource("", db, mecab);
+  await parseExampleDataSource(
+    examplesZipPath: "",
+    db: db,
+    mecab: mecab,
+    isDefaultDictionary: true
+  );
   print("Converting Tatoeba took: ${s.elapsedMilliseconds}ms");
 
 }

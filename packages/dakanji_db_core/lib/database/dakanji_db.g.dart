@@ -44,10 +44,11 @@ class $IndexTableTable extends IndexTable
     aliasedName,
     false,
     type: DriftSqlType.bool,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
       'CHECK ("enabled" IN (0, 1))',
     ),
+    defaultValue: const Constant(true),
   );
   @override
   late final GeneratedColumnWithTypeConverter<DictionaryTypes, String>
@@ -301,8 +302,6 @@ class $IndexTableTable extends IndexTable
         _enabledMeta,
         enabled.isAcceptableOrUnknown(data['enabled']!, _enabledMeta),
       );
-    } else if (isInserting) {
-      context.missing(_enabledMeta);
     }
     if (data.containsKey('current_sorting_order')) {
       context.handle(
@@ -1035,7 +1034,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   IndexTableCompanion.insert({
     this.id = const Value.absent(),
     required bool isDefaultDictionary,
-    required bool enabled,
+    this.enabled = const Value.absent(),
     required DictionaryTypes dictionaryType,
     required int currentSortingOrder,
     this.currentFrequencyDictionary = const Value.absent(),
@@ -1055,7 +1054,6 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     this.targetLanguage = const Value.absent(),
     this.frequencyMode = const Value.absent(),
   }) : isDefaultDictionary = Value(isDefaultDictionary),
-       enabled = Value(enabled),
        dictionaryType = Value(dictionaryType),
        currentSortingOrder = Value(currentSortingOrder),
        title = Value(title),
@@ -1971,7 +1969,7 @@ class TermMetaBankV3EntryAsJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_as_json_view AS SELECT IT.id, JSON_OBJECT(\'id\', IT.id, \'dictionaryType\', IT.dictionary_type, \'currentSortingOrder\', IT.current_sorting_order, \'currentFrequencyDictionary\', IT.current_frequency_dictionary, \'title\', IT.title, \'revision\', IT.revision, \'sequenced\', IT.sequenced, \'format\', IT.format, \'version\', IT.version, \'author\', IT.author, \'updatable\', IT.updatable, \'indexUrl\', IT.index_url, \'downloadUrl\', IT.download_url, \'url\', IT.url, \'description\', IT.description, \'attribution\', IT.attribution, \'sourceLanguage\', IT.source_language, \'targetLanguage\', IT.target_language, \'frequencyMode\', IT.frequency_mode) AS index_entry FROM index_table AS IT',
+        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_as_json_view AS SELECT IT.id, JSON_OBJECT(\'id\', IT.id, \'isDefaultDictionary\', IT.is_default_dictionary, \'enabled\', IT.enabled, \'dictionaryType\', IT.dictionary_type, \'currentSortingOrder\', IT.current_sorting_order, \'currentFrequencyDictionary\', IT.current_frequency_dictionary, \'title\', IT.title, \'revision\', IT.revision, \'sequenced\', IT.sequenced, \'format\', IT.format, \'version\', IT.version, \'author\', IT.author, \'updatable\', IT.updatable, \'indexUrl\', IT.index_url, \'downloadUrl\', IT.download_url, \'url\', IT.url, \'description\', IT.description, \'attribution\', IT.attribution, \'sourceLanguage\', IT.source_language, \'targetLanguage\', IT.target_language, \'frequencyMode\', IT.frequency_mode) AS index_entry FROM index_table AS IT',
   };
   @override
   TermMetaBankV3EntryAsJsonView get asDslTable => this;
@@ -19043,7 +19041,7 @@ typedef $$IndexTableTableCreateCompanionBuilder =
     IndexTableCompanion Function({
       Value<int> id,
       required bool isDefaultDictionary,
-      required bool enabled,
+      Value<bool> enabled,
       required DictionaryTypes dictionaryType,
       required int currentSortingOrder,
       Value<bool> currentFrequencyDictionary,
@@ -20161,7 +20159,7 @@ class $$IndexTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required bool isDefaultDictionary,
-                required bool enabled,
+                Value<bool> enabled = const Value.absent(),
                 required DictionaryTypes dictionaryType,
                 required int currentSortingOrder,
                 Value<bool> currentFrequencyDictionary = const Value.absent(),

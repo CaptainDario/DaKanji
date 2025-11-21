@@ -21,6 +21,7 @@ import 'package:path/path.dart' as p;
 Future parseAudioDataSource({
   String? audioDataSourceFile,
   Uint8List? audioDataSourceBytes,
+  required bool isDefaultDictionary,
   required String audioSourceName,
   required DaKanjiDB db,
   required Mecab mecab
@@ -55,6 +56,7 @@ Future parseAudioDataSource({
     libmecabPath: libmecabPath,
     mecabDictDir: mecabDicPath,
     mainIsolateSendPort: receivePort.sendPort,
+    isDefaultDictionary: isDefaultDictionary,
     inMemory: db.inMemory,
   ));
 
@@ -72,6 +74,7 @@ Future _parseAudioDataSource(({
   String libmecabPath,
   String mecabDictDir,
   SendPort mainIsolateSendPort,
+  bool isDefaultDictionary,
   bool inMemory
 }) params) async {
 
@@ -96,7 +99,7 @@ Future _parseAudioDataSource(({
   // add an index for the audio entries
   final indexFile = dataSources.first;
   int indexId = await parseAndInsertIndex(
-    utf8.decode(indexFile.fileContent), db, DictionaryTypes.audio);
+    utf8.decode(indexFile.fileContent), db, DictionaryTypes.audio, params.isDefaultDictionary);
   final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
   dataSources = dataSources.skip(1);
 

@@ -152,7 +152,9 @@ Future importDictionary(
       dataSourcePath: dataSourceZipPath,
       db: db,
       addStructuredContentJsonDefs: false,
-      mecab: mecab);
+      mecab: mecab,
+      isDefaultDictionary: false
+    );
 
   // Consume the stream
   await for (var line in progress) {

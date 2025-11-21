@@ -189,7 +189,9 @@ Future setupFreshDB() async {
         File(p.join(dataFilesPath, "testing_db", 'term_bank_$i.json')),
         if(i == 3)File(p.join(dataFilesPath, "testing_db", 'term_meta_bank_2.json')),
         if(i == 1) File(p.join(dataFilesPath, "testing_db", 'tag_bank_1.json')),
-      ]);
+      ],
+      isDefaultDictionary: i<4
+    );
   }
 
   return db;

@@ -42,7 +42,7 @@ void main() async {
 
       late DaKanjiDB db;
       setUpAll(() async{
-        db = await setupFreshDB(dataSources[l]);
+        db = await setupFreshDB(dataSources[l], false);
       },);
       tearDownAll(() async {
         await db.close();
@@ -72,7 +72,8 @@ void main() async {
 
 }
 
-Future<DaKanjiDB> setupFreshDB(String dataSourcePath) async {
+Future<DaKanjiDB> setupFreshDB(
+  String dataSourcePath, bool isDefaultDictionary) async {
 
   // create the testing database (delete any existing database)
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
@@ -89,7 +90,8 @@ Future<DaKanjiDB> setupFreshDB(String dataSourcePath) async {
     audioDataSourceFile: dataSourceZipPath,
     db: db,
     audioSourceName: p.basenameWithoutExtension(dataSourcePath),
-    mecab: mecab
+    mecab: mecab,
+    isDefaultDictionary: isDefaultDictionary
   );
   await for (final event in importProgress) {
     print(event);

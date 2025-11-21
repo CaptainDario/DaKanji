@@ -9,23 +9,31 @@ import '/database/dakanji_db.dart';
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
 Future<int> parseAndInsertIndexFile(
-  File indexJsonPath, DaKanjiDB db, DictionaryTypes dictionaryType
+  File indexJsonPath,
+  DaKanjiDB db, 
+  DictionaryTypes dictionaryType,
+  bool isDefaultDictionary,
 ) async {
 
   String jsonString = indexJsonPath.readAsStringSync();
-  return await parseAndInsertIndex(jsonString, db, dictionaryType);
+  return await parseAndInsertIndex(jsonString, db, dictionaryType, isDefaultDictionary);
 
 }
 
 /// parses the given json's contents and adds it to the given [DaKanjiDB]
 Future<int> parseAndInsertIndex(
-  String indexJson, DaKanjiDB db, DictionaryTypes dictionaryType
+  String indexJson,
+  DaKanjiDB db,
+  DictionaryTypes dictionaryType,
+  bool isDefaultDictionary,
 ) async {
 
   // read and decode the json
   Map jsonMap = jsonDecode(indexJson);
-
   IndexTableCompanion comp = IndexTableCompanion(
+
+    isDefaultDictionary: Value(isDefaultDictionary),
+    enabled: Value(true),
     dictionaryType: Value(dictionaryType),
     currentSortingOrder: Value(await db.indexDao.maxIndexId()+1),
 

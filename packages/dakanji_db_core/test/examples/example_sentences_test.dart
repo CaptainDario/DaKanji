@@ -63,7 +63,12 @@ Future<DaKanjiDB> setupFreshDB() async {
   // convert the test files
   Stopwatch s = Stopwatch()..start();
   String dataSourceZipPath = await createTmpZip(Directory(devExampleSentencesPath));
-  Stream<String> stream = await parseExampleDataSource(dataSourceZipPath, db, mecab);
+  Stream<String> stream = await parseExampleDataSource(
+    examplesZipPath: dataSourceZipPath,
+    db: db,
+    mecab: mecab,
+    isDefaultDictionary: false
+  );
   await for (final event in stream) {
     print(event);
   }

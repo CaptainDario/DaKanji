@@ -17,7 +17,8 @@ void main() async {
     dataSourcePath: jmdictInputPath,
     db: db,
     addStructuredContentJsonDefs: false,
-    mecab: Mecab()..init(mecabDynamicLibPath, mecabDicPath, true)
+    mecab: Mecab()..init(mecabDynamicLibPath, mecabDicPath, true),
+    isDefaultDictionary: false,
   );
   await for (final String progressMessage in progressStream) {
     print(progressMessage);
