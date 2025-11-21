@@ -5,6 +5,7 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_context.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
+import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:universal_io/io.dart';
 
@@ -58,6 +59,7 @@ Future parseTermBankV3(
 
   // --- parse the entires
   s..reset()..start();
+  KanaKit k = KanaKit();
   for (var jsonEntry in jsonList) {
 
     pC.currentMaxTermBankId++;
@@ -69,7 +71,9 @@ Future parseTermBankV3(
       pC.allTerms[term] = termInsertId;
 
       String? termNormalized = preprocessInput(term, false).normalizedTerms.firstOrNull;
-      String? termTokens = getMecabSurfacesOrNull(mecab, term);
+      String? termTokens = term.isNotEmpty && k.isJapanese(term)
+        ? getMecabSurfacesOrNull(mecab, term)
+        : null;
       String? termTokensNormalized = termTokens==null
         ? null
         : preprocessInput(termTokens, false).normalizedTerms.firstOrNull;
