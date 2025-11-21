@@ -1,0 +1,82 @@
+# referenc: https://github.com/ubuntu-flutter-community/software/blob/main/snap/snapcraft.yaml
+
+name: dakanji
+adopt-info: dakanji
+summary: You are learning Japanese? Then you need to give "DaKanji" a try!
+description: You are learning Japanese? Then you need to give "DaKanji" a try! Lookup words, find unknow Kanji, analyze texts and more!
+issues: https://github.com/CaptainDario/DaKanji/issues
+source-code: https://github.com/CaptainDario/DaKanji
+
+confinement: strict
+base: core24
+grade: stable
+platforms:
+  amd64:
+assumes:
+  - snapd2.60.3
+
+slots:
+  dbus-dakanji:
+    interface: dbus
+    bus: session
+    name: com.DaAppLab.DaKanji
+    
+apps:
+  dakanji:
+    command: bin/DaKanji
+    extensions: [gnome]
+    plugs:
+      - network
+      - home
+      - desktop
+      - audio-playback
+      - audio-record
+    slots:
+      - dbus-dakanji
+    environment:
+      GTK_USE_PORTAL: 1
+      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy
+
+parts:
+
+  flutter-git:
+    source: https://github.com/flutter/flutter.git
+    source-tag: "3.32.0"
+    plugin: nil
+    override-build: |
+      set -eux
+      mkdir -p $CRAFT_PART_INSTALL/usr/bin
+      mkdir -p $CRAFT_PART_INSTALL/usr/libexec
+      cp -r $CRAFT_PART_SRC $CRAFT_PART_INSTALL/usr/libexec/flutter
+      ln -sf $CRAFT_PART_INSTALL/usr/libexec/flutter/bin/flutter $CRAFT_PART_INSTALL/usr/bin/flutter
+      export PATH="$CRAFT_PART_INSTALL/usr/bin:$PATH"
+      flutter doctor
+    build-packages:
+      - clang
+      - cmake
+      - curl
+      - ninja-build
+      - unzip
+      - openjdk-17-jdk
+    override-prime: ''
+
+  zenity:
+    plugin: nil
+    stage-packages:
+      - zenity
+
+  dakanji:
+    after:
+      - flutter-git
+      - zenity
+    source: .
+    plugin: nil
+    build-packages:
+      - jq
+    override-build: |
+      set -eux
+      flutter pub get || true
+      flutter build linux --release -v
+      craftctl set version="$(jq -r '.version' build/flutter_assets/version.json)"
+      mkdir -p $CRAFT_PART_INSTALL/bin
+      cp -r build/linux/*/release/bundle/* $CRAFT_PART_INSTALL/bin/
