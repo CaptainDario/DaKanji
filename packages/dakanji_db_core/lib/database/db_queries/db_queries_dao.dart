@@ -147,21 +147,33 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
   }
 
   /// Helper method to run ONLY the ID search (Query 1)
-  Future<List<DictionarySearchDriftFindTermBankEntriesResult>> _findTermBankEntries(
-    List<String> terms,
-    List<String> tags,
-    int useGlob,
-    int searchNormalized,
-  ) async {
+  Future<List<DictionarySearchDriftFindTermBankEntriesResult>> _findTermBankEntries({
+    required List<String> terms,
+    required List<String> tags,
+    required bool useGlob,
+    required bool searchNormalized,
+    int limit = -1,
+    int offset = 0,
+  }) async {
     if (terms.isEmpty) return [];
 
+    // only run prefix search for terms longer than 2 characters or containing kanji
+    List<List<dynamic>> searchInputs = [];
+    for (final term in terms) {
+      int runPrefixSearch = 0;
+      if(term.length > 1 || kanjiRegex.hasMatch(term)) runPrefixSearch = 1;
+      
+      searchInputs.add([term, runPrefixSearch]);
+    }
+    print(searchInputs);
+
     return await db.dictionary_search_drift_find_term_bank_entries(
-      jsonEncode(terms),
+      jsonEncode(searchInputs),
       jsonEncode(tags),
-      useGlob,
-      searchNormalized,
-      50,
-      0
+      useGlob ? 1 : 0,
+      searchNormalized ? 1 : 0,
+      limit,
+      offset
     ).get();
   }
 
