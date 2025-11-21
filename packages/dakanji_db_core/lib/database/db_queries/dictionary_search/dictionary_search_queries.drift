@@ -347,7 +347,8 @@ dictionary_search_drift_find_term_bank_details:
             JOIN
                 (SELECT DISTINCT id as term_bank_id, term_id, reading_id 
                  FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM
-                    ON Base.term_id = TBM.term_id AND Base.reading_id = TBM.reading_id
+                    ON Base.term_id = TBM.term_id
+                        AND (Base.reading_id = TBM.reading_id OR Base.reading_id IS NULL)
         ),
         
         term_meta_agg AS (
