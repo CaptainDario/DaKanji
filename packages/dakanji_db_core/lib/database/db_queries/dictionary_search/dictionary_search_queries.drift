@@ -8,9 +8,16 @@ import '/database/term_meta/term_meta_bank_v3_views.drift';
 dictionary_search_drift_find_term_bank_entries:
 
     WITH
-        SearchTerms(term) AS (
-            SELECT value FROM json_each(:searchTermsJson)
-            WHERE value IS NOT NULL
+        SearchTerms(term, should_prefix, fts_query) AS (
+            SELECT 
+                CAST(json_extract(value, '$[0]') AS TEXT),
+                CAST(json_extract(value, '$[1]') AS INTEGER),
+                '"' || CAST(json_extract(value, '$[0]') AS TEXT) || '"' || 
+                CASE 
+                    WHEN CAST(json_extract(value, '$[1]') AS INTEGER) = 1 THEN ''--' *' 
+                    ELSE '' 
+                END
+            FROM json_each(:searchInputs)
         ),
 
         TagFilters(tag_name) AS (
@@ -22,16 +29,13 @@ dictionary_search_drift_find_term_bank_entries:
         SearchResults AS (
             -- FTS Search
             SELECT
-                COALESCE(SearchTerms.term, '') AS search_term,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix AS should_prefix,
+                SearchTerms.fts_query AS fts_query,
                 search_fts.*,
                 search_fts.rank
             FROM SearchTerms
-            JOIN search_fts ON search_fts.text_data MATCH 
-                SearchTerms.term || 
-                CASE 
-                    WHEN LENGTH(SearchTerms.term) < 2 THEN '' 
-                    ELSE ' *' 
-                END
+            JOIN search_fts ON search_fts.text_data MATCH fts_query
             WHERE
                 :useGlob = 0 
                 AND (
@@ -43,7 +47,9 @@ dictionary_search_drift_find_term_bank_entries:
 
             -- GLOB Search
             SELECT
-                COALESCE(SearchTerms.term, '') AS search_term,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix AS should_prefix,
+                SearchTerms.fts_query AS fts_query,
                 search_fts.*,
                 0 AS rank -- GLOB has no rank, so we provide 0
             FROM SearchTerms
