@@ -5,6 +5,7 @@ import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
 import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:drift/drift.dart";
+import "package:language_processing/japanese/japanese_string_operations.dart";
 import "package:language_processing/japanese/spellfix/spellfix.dart";
 
 import "../dakanji_db.dart";
@@ -67,25 +68,44 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       ).toList();
     
     bool isWildcardSearch = term.contains(RegExp(r'\*|\?'));
-    int useGlobInt = isWildcardSearch ? 1 : 0;
 
     Stopwatch s = Stopwatch()..start();
 
     // 1. Run the lightweight search queries in parallel (IDs only)
     final resultsRaw = await Future.wait([
       // exact query
-      _findTermBankEntries([term], tags, useGlobInt, 0),
+      _findTermBankEntries(
+        terms: [term],
+        tags: tags,
+        useGlob: isWildcardSearch,
+        searchNormalized: false,
+      ),
       // normalized terms
-      normalizedSearch ? _findTermBankEntries(normalizedTerms, tags, useGlobInt, 1)
+      normalizedSearch
+        ? _findTermBankEntries(
+          terms: normalizedTerms,
+          tags: tags,
+          useGlob: isWildcardSearch,
+          searchNormalized: true
+        )
         : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
       // term variants (deconjugated forms)
       deconjugationSearch
         ? _findTermBankEntries(
-          termVariants.map((e) => e.deconjugatedTerm).toList(), tags, useGlobInt, 1)
+          terms: termVariants.map((e) => e.deconjugatedTerm).toList(),
+          tags: tags,
+          useGlob: isWildcardSearch,
+          searchNormalized: true
+        )
         : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
       // spellfix / fuzzy search
       spellfixSearch
-        ? _findTermBankEntries(spellingVariations, tags, useGlobInt, 1)
+        ? _findTermBankEntries(
+          terms: spellingVariations,
+          tags: tags,
+          useGlob: isWildcardSearch,
+          searchNormalized: true
+        )
         : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[])
     ]);
 
