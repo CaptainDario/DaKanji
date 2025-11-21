@@ -25,26 +25,27 @@ List<String> generateSpellingVariations({
       Set<int> appliedKeys,
       String historyKey,
     ) {
-        if (_containsForbiddenSequence(next, forbiddenSequences)) return; // Skip words containing banned fragments.
-        final totalCost = directCost + steps * substitutionPenalty; // Combine direct cost with per-step penalty.
-        if (totalCost > maxCost) return;
-        final entry = best.putIfAbsent(next, () => <String, _Score>{});
-        final prev = entry[historyKey];
-        if (prev != null) {
-            if (prev.directCost < directCost) return; // Already have a cheaper direct cost.
-            if (prev.directCost == directCost && prev.steps <= steps) return; // Same direct cost with fewer or equal substitutions.
-        }
-        entry[historyKey] = _Score(directCost, steps);
-        q.add(
-          _State(
-            next,
-            directCost,
-            steps,
-            totalCost,
-            Set<int>.unmodifiable(appliedKeys),
-            historyKey,
-          ),
-        );
+
+      if (_containsForbiddenSequence(next, forbiddenSequences)) return; // Skip words containing banned fragments.
+      final totalCost = directCost + steps * substitutionPenalty; // Combine direct cost with per-step penalty.
+      if (totalCost > maxCost) return;
+      final entry = best.putIfAbsent(next, () => <String, _Score>{});
+      final prev = entry[historyKey];
+      if (prev != null) {
+          if (prev.directCost < directCost) return; // Already have a cheaper direct cost.
+          if (prev.directCost == directCost && prev.steps <= steps) return; // Same direct cost with fewer or equal substitutions.
+      }
+      entry[historyKey] = _Score(directCost, steps);
+      q.add(
+        _State(
+          next,
+          directCost,
+          steps,
+          totalCost,
+          Set<int>.unmodifiable(appliedKeys),
+          historyKey,
+        ),
+      );
     }
 
     while (q.isNotEmpty && res.length < n) {
