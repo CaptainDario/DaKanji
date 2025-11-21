@@ -54,7 +54,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       bool groupSequences=false,
       bool groupByTermAndReading=false,
       int spellfixMaxCost=10,
-      int spellfixMaxResults=10,
+      int spellfixMaxResults=20,
       int limit=-1,
       int offset=0,
     }
@@ -64,7 +64,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     List<String> spellingVariations = [];
     if(spellfixSearch)
       spellingVariations = normalizedTerms.expand((e) => 
-        generateSpellingVariations(word: e, n: spellfixMaxCost, maxCost: spellfixMaxCost)
+        generateSpellingVariations(word: e, n: spellfixMaxResults, maxCost: spellfixMaxCost)
       ).toList();
     
     bool isWildcardSearch = term.contains(RegExp(r'\*|\?'));
