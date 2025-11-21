@@ -12,8 +12,18 @@ part 'index_table_entry.g.dart';
 /// Class representing one term meta entry of the database
 class IndexEntry with _$IndexEntry {
 
+  /// The id of this entry in the SQLite DB
   @override
   final int id;
+
+  /// Whether this is a dictionary included with DaKanji by default or not
+  @override
+  @BoolAsIntConverter()
+  final bool isDefaultDictionary;
+  /// Whether this dictionary is enabled or not
+  @override
+  @BoolAsIntConverter()
+  final bool enabled;
   /// Type of dictionary stored in this index.
   @override
   final DictionaryTypes dictionaryType;
@@ -32,6 +42,7 @@ class IndexEntry with _$IndexEntry {
   /// Revision of the dictionary. This value is displayed, and used to check for dictionary updates.
   @override
   final String revision;
+  
   /// Whether or not this dictionary contains sequencing information for related terms.
   @override
   @NullableBoolAsIntConverter()
@@ -77,6 +88,8 @@ class IndexEntry with _$IndexEntry {
     
   IndexEntry({
     required this.id,
+    required this.isDefaultDictionary,
+    required this.enabled,
     required this.dictionaryType,
     required this.currentSortingOrder,
     required this.currentFrequencyDictionary,

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$IndexEntry {
 
- int get id; DictionaryTypes get dictionaryType; int get currentSortingOrder; bool get currentFrequencyDictionary; String get title; String get revision; bool? get sequenced; int? get format; int? get version; String? get author; bool? get updatable; String? get indexUrl; String? get downloadUrl; String? get url; String? get description; String? get attribution; String? get sourceLanguage; String? get targetLanguage; String? get frequencyMode;
+ int get id; bool get isDefaultDictionary; bool get enabled; DictionaryTypes get dictionaryType; int get currentSortingOrder; bool get currentFrequencyDictionary; String get title; String get revision; bool? get sequenced; int? get format; int? get version; String? get author; bool? get updatable; String? get indexUrl; String? get downloadUrl; String? get url; String? get description; String? get attribution; String? get sourceLanguage; String? get targetLanguage; String? get frequencyMode;
 /// Create a copy of IndexEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $IndexEntryCopyWith<IndexEntry> get copyWith => _$IndexEntryCopyWithImpl<IndexEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is IndexEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.dictionaryType, dictionaryType) || other.dictionaryType == dictionaryType)&&(identical(other.currentSortingOrder, currentSortingOrder) || other.currentSortingOrder == currentSortingOrder)&&(identical(other.currentFrequencyDictionary, currentFrequencyDictionary) || other.currentFrequencyDictionary == currentFrequencyDictionary)&&(identical(other.title, title) || other.title == title)&&(identical(other.revision, revision) || other.revision == revision)&&(identical(other.sequenced, sequenced) || other.sequenced == sequenced)&&(identical(other.format, format) || other.format == format)&&(identical(other.version, version) || other.version == version)&&(identical(other.author, author) || other.author == author)&&(identical(other.updatable, updatable) || other.updatable == updatable)&&(identical(other.indexUrl, indexUrl) || other.indexUrl == indexUrl)&&(identical(other.downloadUrl, downloadUrl) || other.downloadUrl == downloadUrl)&&(identical(other.url, url) || other.url == url)&&(identical(other.description, description) || other.description == description)&&(identical(other.attribution, attribution) || other.attribution == attribution)&&(identical(other.sourceLanguage, sourceLanguage) || other.sourceLanguage == sourceLanguage)&&(identical(other.targetLanguage, targetLanguage) || other.targetLanguage == targetLanguage)&&(identical(other.frequencyMode, frequencyMode) || other.frequencyMode == frequencyMode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is IndexEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.isDefaultDictionary, isDefaultDictionary) || other.isDefaultDictionary == isDefaultDictionary)&&(identical(other.enabled, enabled) || other.enabled == enabled)&&(identical(other.dictionaryType, dictionaryType) || other.dictionaryType == dictionaryType)&&(identical(other.currentSortingOrder, currentSortingOrder) || other.currentSortingOrder == currentSortingOrder)&&(identical(other.currentFrequencyDictionary, currentFrequencyDictionary) || other.currentFrequencyDictionary == currentFrequencyDictionary)&&(identical(other.title, title) || other.title == title)&&(identical(other.revision, revision) || other.revision == revision)&&(identical(other.sequenced, sequenced) || other.sequenced == sequenced)&&(identical(other.format, format) || other.format == format)&&(identical(other.version, version) || other.version == version)&&(identical(other.author, author) || other.author == author)&&(identical(other.updatable, updatable) || other.updatable == updatable)&&(identical(other.indexUrl, indexUrl) || other.indexUrl == indexUrl)&&(identical(other.downloadUrl, downloadUrl) || other.downloadUrl == downloadUrl)&&(identical(other.url, url) || other.url == url)&&(identical(other.description, description) || other.description == description)&&(identical(other.attribution, attribution) || other.attribution == attribution)&&(identical(other.sourceLanguage, sourceLanguage) || other.sourceLanguage == sourceLanguage)&&(identical(other.targetLanguage, targetLanguage) || other.targetLanguage == targetLanguage)&&(identical(other.frequencyMode, frequencyMode) || other.frequencyMode == frequencyMode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,dictionaryType,currentSortingOrder,currentFrequencyDictionary,title,revision,sequenced,format,version,author,updatable,indexUrl,downloadUrl,url,description,attribution,sourceLanguage,targetLanguage,frequencyMode]);
+int get hashCode => Object.hashAll([runtimeType,id,isDefaultDictionary,enabled,dictionaryType,currentSortingOrder,currentFrequencyDictionary,title,revision,sequenced,format,version,author,updatable,indexUrl,downloadUrl,url,description,attribution,sourceLanguage,targetLanguage,frequencyMode]);
 
 @override
 String toString() {
-  return 'IndexEntry(id: $id, dictionaryType: $dictionaryType, currentSortingOrder: $currentSortingOrder, currentFrequencyDictionary: $currentFrequencyDictionary, title: $title, revision: $revision, sequenced: $sequenced, format: $format, version: $version, author: $author, updatable: $updatable, indexUrl: $indexUrl, downloadUrl: $downloadUrl, url: $url, description: $description, attribution: $attribution, sourceLanguage: $sourceLanguage, targetLanguage: $targetLanguage, frequencyMode: $frequencyMode)';
+  return 'IndexEntry(id: $id, isDefaultDictionary: $isDefaultDictionary, enabled: $enabled, dictionaryType: $dictionaryType, currentSortingOrder: $currentSortingOrder, currentFrequencyDictionary: $currentFrequencyDictionary, title: $title, revision: $revision, sequenced: $sequenced, format: $format, version: $version, author: $author, updatable: $updatable, indexUrl: $indexUrl, downloadUrl: $downloadUrl, url: $url, description: $description, attribution: $attribution, sourceLanguage: $sourceLanguage, targetLanguage: $targetLanguage, frequencyMode: $frequencyMode)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $IndexEntryCopyWith<$Res>  {
   factory $IndexEntryCopyWith(IndexEntry value, $Res Function(IndexEntry) _then) = _$IndexEntryCopyWithImpl;
 @useResult
 $Res call({
- int id, DictionaryTypes dictionaryType, int currentSortingOrder, bool currentFrequencyDictionary, String title, String revision, bool? sequenced, int? format, int? version, String? author, bool? updatable, String? indexUrl, String? downloadUrl, String? url, String? description, String? attribution, String? sourceLanguage, String? targetLanguage, String? frequencyMode
+ int id, bool isDefaultDictionary, DictionaryTypes dictionaryType, int currentSortingOrder, bool currentFrequencyDictionary, String title, String revision, bool? sequenced, int? format, int? version, String? author, bool? updatable, String? indexUrl, String? downloadUrl, String? url, String? description, String? attribution, String? sourceLanguage, String? targetLanguage, String? frequencyMode
 });
 
 
@@ -63,10 +63,11 @@ class _$IndexEntryCopyWithImpl<$Res>
 
 /// Create a copy of IndexEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? dictionaryType = null,Object? currentSortingOrder = null,Object? currentFrequencyDictionary = null,Object? title = null,Object? revision = null,Object? sequenced = freezed,Object? format = freezed,Object? version = freezed,Object? author = freezed,Object? updatable = freezed,Object? indexUrl = freezed,Object? downloadUrl = freezed,Object? url = freezed,Object? description = freezed,Object? attribution = freezed,Object? sourceLanguage = freezed,Object? targetLanguage = freezed,Object? frequencyMode = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? isDefaultDictionary = null,Object? dictionaryType = null,Object? currentSortingOrder = null,Object? currentFrequencyDictionary = null,Object? title = null,Object? revision = null,Object? sequenced = freezed,Object? format = freezed,Object? version = freezed,Object? author = freezed,Object? updatable = freezed,Object? indexUrl = freezed,Object? downloadUrl = freezed,Object? url = freezed,Object? description = freezed,Object? attribution = freezed,Object? sourceLanguage = freezed,Object? targetLanguage = freezed,Object? frequencyMode = freezed,}) {
   return _then(IndexEntry(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,dictionaryType: null == dictionaryType ? _self.dictionaryType : dictionaryType // ignore: cast_nullable_to_non_nullable
+as int,isDefaultDictionary: null == isDefaultDictionary ? _self.isDefaultDictionary : isDefaultDictionary // ignore: cast_nullable_to_non_nullable
+as bool,dictionaryType: null == dictionaryType ? _self.dictionaryType : dictionaryType // ignore: cast_nullable_to_non_nullable
 as DictionaryTypes,currentSortingOrder: null == currentSortingOrder ? _self.currentSortingOrder : currentSortingOrder // ignore: cast_nullable_to_non_nullable
 as int,currentFrequencyDictionary: null == currentFrequencyDictionary ? _self.currentFrequencyDictionary : currentFrequencyDictionary // ignore: cast_nullable_to_non_nullable
 as bool,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable

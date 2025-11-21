@@ -8,6 +8,9 @@ part of 'index_table_entry.dart';
 
 IndexEntry _$IndexEntryFromJson(Map<String, dynamic> json) => IndexEntry(
   id: (json['id'] as num).toInt(),
+  isDefaultDictionary: const BoolAsIntConverter().fromJson(
+    (json['isDefaultDictionary'] as num).toInt(),
+  ),
   dictionaryType: $enumDecode(_$DictionaryTypesEnumMap, json['dictionaryType']),
   currentSortingOrder: (json['currentSortingOrder'] as num).toInt(),
   currentFrequencyDictionary: const BoolAsIntConverter().fromJson(
@@ -36,6 +39,9 @@ Map<String, dynamic> _$IndexEntryToJson(
   IndexEntry instance,
 ) => <String, dynamic>{
   'id': instance.id,
+  'isDefaultDictionary': const BoolAsIntConverter().toJson(
+    instance.isDefaultDictionary,
+  ),
   'dictionaryType': _$DictionaryTypesEnumMap[instance.dictionaryType]!,
   'currentSortingOrder': instance.currentSortingOrder,
   'currentFrequencyDictionary': const BoolAsIntConverter().toJson(
@@ -62,4 +68,5 @@ const _$DictionaryTypesEnumMap = {
   DictionaryTypes.yomitan: 'yomitan',
   DictionaryTypes.examples: 'examples',
   DictionaryTypes.audio: 'audio',
+  DictionaryTypes.grammar: 'grammar',
 };

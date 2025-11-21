@@ -22,6 +22,33 @@ class $IndexTableTable extends IndexTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
+  static const VerificationMeta _isDefaultDictionaryMeta =
+      const VerificationMeta('isDefaultDictionary');
+  @override
+  late final GeneratedColumn<bool> isDefaultDictionary = GeneratedColumn<bool>(
+    'is_default_dictionary',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_default_dictionary" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _enabledMeta = const VerificationMeta(
+    'enabled',
+  );
+  @override
+  late final GeneratedColumn<bool> enabled = GeneratedColumn<bool>(
+    'enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("enabled" IN (0, 1))',
+    ),
+  );
   @override
   late final GeneratedColumnWithTypeConverter<DictionaryTypes, String>
   dictionaryType = GeneratedColumn<String>(
@@ -222,6 +249,8 @@ class $IndexTableTable extends IndexTable
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    isDefaultDictionary,
+    enabled,
     dictionaryType,
     currentSortingOrder,
     currentFrequencyDictionary,
@@ -255,6 +284,25 @@ class $IndexTableTable extends IndexTable
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('is_default_dictionary')) {
+      context.handle(
+        _isDefaultDictionaryMeta,
+        isDefaultDictionary.isAcceptableOrUnknown(
+          data['is_default_dictionary']!,
+          _isDefaultDictionaryMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_isDefaultDictionaryMeta);
+    }
+    if (data.containsKey('enabled')) {
+      context.handle(
+        _enabledMeta,
+        enabled.isAcceptableOrUnknown(data['enabled']!, _enabledMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_enabledMeta);
     }
     if (data.containsKey('current_sorting_order')) {
       context.handle(
@@ -401,6 +449,14 @@ class $IndexTableTable extends IndexTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
+      isDefaultDictionary: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_default_dictionary'],
+      )!,
+      enabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}enabled'],
+      )!,
       dictionaryType: $IndexTableTable.$converterdictionaryType.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
@@ -493,6 +549,12 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   /// id of this entry
   final int id;
 
+  /// Whether this is a dictionary included with DaKanji by default or not
+  final bool isDefaultDictionary;
+
+  /// Whether this dictionary is enabled or not
+  final bool enabled;
+
   /// Type of dictionary stored in this index.
   final DictionaryTypes dictionaryType;
 
@@ -549,6 +611,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   final String? frequencyMode;
   const IndexTableData({
     required this.id,
+    required this.isDefaultDictionary,
+    required this.enabled,
     required this.dictionaryType,
     required this.currentSortingOrder,
     required this.currentFrequencyDictionary,
@@ -572,6 +636,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['is_default_dictionary'] = Variable<bool>(isDefaultDictionary);
+    map['enabled'] = Variable<bool>(enabled);
     {
       map['dictionary_type'] = Variable<String>(
         $IndexTableTable.$converterdictionaryType.toSql(dictionaryType),
@@ -628,6 +694,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   IndexTableCompanion toCompanion(bool nullToAbsent) {
     return IndexTableCompanion(
       id: Value(id),
+      isDefaultDictionary: Value(isDefaultDictionary),
+      enabled: Value(enabled),
       dictionaryType: Value(dictionaryType),
       currentSortingOrder: Value(currentSortingOrder),
       currentFrequencyDictionary: Value(currentFrequencyDictionary),
@@ -680,6 +748,10 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return IndexTableData(
       id: serializer.fromJson<int>(json['id']),
+      isDefaultDictionary: serializer.fromJson<bool>(
+        json['isDefaultDictionary'],
+      ),
+      enabled: serializer.fromJson<bool>(json['enabled']),
       dictionaryType: $IndexTableTable.$converterdictionaryType.fromJson(
         serializer.fromJson<String>(json['dictionaryType']),
       ),
@@ -711,6 +783,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'isDefaultDictionary': serializer.toJson<bool>(isDefaultDictionary),
+      'enabled': serializer.toJson<bool>(enabled),
       'dictionaryType': serializer.toJson<String>(
         $IndexTableTable.$converterdictionaryType.toJson(dictionaryType),
       ),
@@ -738,6 +812,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
 
   IndexTableData copyWith({
     int? id,
+    bool? isDefaultDictionary,
+    bool? enabled,
     DictionaryTypes? dictionaryType,
     int? currentSortingOrder,
     bool? currentFrequencyDictionary,
@@ -758,6 +834,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     Value<String?> frequencyMode = const Value.absent(),
   }) => IndexTableData(
     id: id ?? this.id,
+    isDefaultDictionary: isDefaultDictionary ?? this.isDefaultDictionary,
+    enabled: enabled ?? this.enabled,
     dictionaryType: dictionaryType ?? this.dictionaryType,
     currentSortingOrder: currentSortingOrder ?? this.currentSortingOrder,
     currentFrequencyDictionary:
@@ -787,6 +865,10 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   IndexTableData copyWithCompanion(IndexTableCompanion data) {
     return IndexTableData(
       id: data.id.present ? data.id.value : this.id,
+      isDefaultDictionary: data.isDefaultDictionary.present
+          ? data.isDefaultDictionary.value
+          : this.isDefaultDictionary,
+      enabled: data.enabled.present ? data.enabled.value : this.enabled,
       dictionaryType: data.dictionaryType.present
           ? data.dictionaryType.value
           : this.dictionaryType,
@@ -830,6 +912,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   String toString() {
     return (StringBuffer('IndexTableData(')
           ..write('id: $id, ')
+          ..write('isDefaultDictionary: $isDefaultDictionary, ')
+          ..write('enabled: $enabled, ')
           ..write('dictionaryType: $dictionaryType, ')
           ..write('currentSortingOrder: $currentSortingOrder, ')
           ..write('currentFrequencyDictionary: $currentFrequencyDictionary, ')
@@ -853,8 +937,10 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     id,
+    isDefaultDictionary,
+    enabled,
     dictionaryType,
     currentSortingOrder,
     currentFrequencyDictionary,
@@ -873,12 +959,14 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     sourceLanguage,
     targetLanguage,
     frequencyMode,
-  );
+  ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is IndexTableData &&
           other.id == this.id &&
+          other.isDefaultDictionary == this.isDefaultDictionary &&
+          other.enabled == this.enabled &&
           other.dictionaryType == this.dictionaryType &&
           other.currentSortingOrder == this.currentSortingOrder &&
           other.currentFrequencyDictionary == this.currentFrequencyDictionary &&
@@ -901,6 +989,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
 
 class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   final Value<int> id;
+  final Value<bool> isDefaultDictionary;
+  final Value<bool> enabled;
   final Value<DictionaryTypes> dictionaryType;
   final Value<int> currentSortingOrder;
   final Value<bool> currentFrequencyDictionary;
@@ -921,6 +1011,8 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   final Value<String?> frequencyMode;
   const IndexTableCompanion({
     this.id = const Value.absent(),
+    this.isDefaultDictionary = const Value.absent(),
+    this.enabled = const Value.absent(),
     this.dictionaryType = const Value.absent(),
     this.currentSortingOrder = const Value.absent(),
     this.currentFrequencyDictionary = const Value.absent(),
@@ -942,6 +1034,8 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   });
   IndexTableCompanion.insert({
     this.id = const Value.absent(),
+    required bool isDefaultDictionary,
+    required bool enabled,
     required DictionaryTypes dictionaryType,
     required int currentSortingOrder,
     this.currentFrequencyDictionary = const Value.absent(),
@@ -960,12 +1054,16 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     this.sourceLanguage = const Value.absent(),
     this.targetLanguage = const Value.absent(),
     this.frequencyMode = const Value.absent(),
-  }) : dictionaryType = Value(dictionaryType),
+  }) : isDefaultDictionary = Value(isDefaultDictionary),
+       enabled = Value(enabled),
+       dictionaryType = Value(dictionaryType),
        currentSortingOrder = Value(currentSortingOrder),
        title = Value(title),
        revision = Value(revision);
   static Insertable<IndexTableData> custom({
     Expression<int>? id,
+    Expression<bool>? isDefaultDictionary,
+    Expression<bool>? enabled,
     Expression<String>? dictionaryType,
     Expression<int>? currentSortingOrder,
     Expression<bool>? currentFrequencyDictionary,
@@ -987,6 +1085,9 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (isDefaultDictionary != null)
+        'is_default_dictionary': isDefaultDictionary,
+      if (enabled != null) 'enabled': enabled,
       if (dictionaryType != null) 'dictionary_type': dictionaryType,
       if (currentSortingOrder != null)
         'current_sorting_order': currentSortingOrder,
@@ -1012,6 +1113,8 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
 
   IndexTableCompanion copyWith({
     Value<int>? id,
+    Value<bool>? isDefaultDictionary,
+    Value<bool>? enabled,
     Value<DictionaryTypes>? dictionaryType,
     Value<int>? currentSortingOrder,
     Value<bool>? currentFrequencyDictionary,
@@ -1033,6 +1136,8 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   }) {
     return IndexTableCompanion(
       id: id ?? this.id,
+      isDefaultDictionary: isDefaultDictionary ?? this.isDefaultDictionary,
+      enabled: enabled ?? this.enabled,
       dictionaryType: dictionaryType ?? this.dictionaryType,
       currentSortingOrder: currentSortingOrder ?? this.currentSortingOrder,
       currentFrequencyDictionary:
@@ -1060,6 +1165,12 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (isDefaultDictionary.present) {
+      map['is_default_dictionary'] = Variable<bool>(isDefaultDictionary.value);
+    }
+    if (enabled.present) {
+      map['enabled'] = Variable<bool>(enabled.value);
     }
     if (dictionaryType.present) {
       map['dictionary_type'] = Variable<String>(
@@ -1126,6 +1237,8 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   String toString() {
     return (StringBuffer('IndexTableCompanion(')
           ..write('id: $id, ')
+          ..write('isDefaultDictionary: $isDefaultDictionary, ')
+          ..write('enabled: $enabled, ')
           ..write('dictionaryType: $dictionaryType, ')
           ..write('currentSortingOrder: $currentSortingOrder, ')
           ..write('currentFrequencyDictionary: $currentFrequencyDictionary, ')
@@ -18262,6 +18375,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ).map(
       (QueryRow row) => DictionarySearchDriftFindTermBankDetailsResult(
         id: row.read<int>('id'),
+        isDefaultDictionary: row.read<bool>('is_default_dictionary'),
+        enabled: row.read<bool>('enabled'),
         dictionaryType: $IndexTableTable.$converterdictionaryType.fromSql(
           row.read<String>('dictionary_type'),
         ),
@@ -18927,6 +19042,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
 typedef $$IndexTableTableCreateCompanionBuilder =
     IndexTableCompanion Function({
       Value<int> id,
+      required bool isDefaultDictionary,
+      required bool enabled,
       required DictionaryTypes dictionaryType,
       required int currentSortingOrder,
       Value<bool> currentFrequencyDictionary,
@@ -18949,6 +19066,8 @@ typedef $$IndexTableTableCreateCompanionBuilder =
 typedef $$IndexTableTableUpdateCompanionBuilder =
     IndexTableCompanion Function({
       Value<int> id,
+      Value<bool> isDefaultDictionary,
+      Value<bool> enabled,
       Value<DictionaryTypes> dictionaryType,
       Value<int> currentSortingOrder,
       Value<bool> currentFrequencyDictionary,
@@ -19189,6 +19308,16 @@ class $$IndexTableTableFilterComposer
   });
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDefaultDictionary => $composableBuilder(
+    column: $table.isDefaultDictionary,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get enabled => $composableBuilder(
+    column: $table.enabled,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -19523,6 +19652,16 @@ class $$IndexTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get isDefaultDictionary => $composableBuilder(
+    column: $table.isDefaultDictionary,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get enabled => $composableBuilder(
+    column: $table.enabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get dictionaryType => $composableBuilder(
     column: $table.dictionaryType,
     builder: (column) => ColumnOrderings(column),
@@ -19625,6 +19764,14 @@ class $$IndexTableTableAnnotationComposer
   });
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDefaultDictionary => $composableBuilder(
+    column: $table.isDefaultDictionary,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get enabled =>
+      $composableBuilder(column: $table.enabled, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<DictionaryTypes, String>
   get dictionaryType => $composableBuilder(
@@ -19967,6 +20114,8 @@ class $$IndexTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                Value<bool> isDefaultDictionary = const Value.absent(),
+                Value<bool> enabled = const Value.absent(),
                 Value<DictionaryTypes> dictionaryType = const Value.absent(),
                 Value<int> currentSortingOrder = const Value.absent(),
                 Value<bool> currentFrequencyDictionary = const Value.absent(),
@@ -19987,6 +20136,8 @@ class $$IndexTableTableTableManager
                 Value<String?> frequencyMode = const Value.absent(),
               }) => IndexTableCompanion(
                 id: id,
+                isDefaultDictionary: isDefaultDictionary,
+                enabled: enabled,
                 dictionaryType: dictionaryType,
                 currentSortingOrder: currentSortingOrder,
                 currentFrequencyDictionary: currentFrequencyDictionary,
@@ -20009,6 +20160,8 @@ class $$IndexTableTableTableManager
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                required bool isDefaultDictionary,
+                required bool enabled,
                 required DictionaryTypes dictionaryType,
                 required int currentSortingOrder,
                 Value<bool> currentFrequencyDictionary = const Value.absent(),
@@ -20029,6 +20182,8 @@ class $$IndexTableTableTableManager
                 Value<String?> frequencyMode = const Value.absent(),
               }) => IndexTableCompanion.insert(
                 id: id,
+                isDefaultDictionary: isDefaultDictionary,
+                enabled: enabled,
                 dictionaryType: dictionaryType,
                 currentSortingOrder: currentSortingOrder,
                 currentFrequencyDictionary: currentFrequencyDictionary,
@@ -40261,6 +40416,8 @@ class DictionarySearchDriftFindTermBankSequencesResult {
 
 class DictionarySearchDriftFindTermBankDetailsResult {
   final int id;
+  final bool isDefaultDictionary;
+  final bool enabled;
   final DictionaryTypes dictionaryType;
   final int currentSortingOrder;
   final bool currentFrequencyDictionary;
@@ -40299,6 +40456,8 @@ class DictionarySearchDriftFindTermBankDetailsResult {
   final String termMetaEntries;
   DictionarySearchDriftFindTermBankDetailsResult({
     required this.id,
+    required this.isDefaultDictionary,
+    required this.enabled,
     required this.dictionaryType,
     required this.currentSortingOrder,
     required this.currentFrequencyDictionary,

@@ -20,7 +20,7 @@ class DeletionDao extends DatabaseAccessor<DaKanjiDB> with _$DeletionDaoMixin {
     var indexEntry = (await db.indexDao.getById(indexId));
     
     switch (indexEntry!.dictionaryType) {
-      case DictionaryTypes.yomitan:
+      case DictionaryTypes.yomitan || DictionaryTypes.grammar:
         await deleteyomitanDictionary(db, indexId);
         break;
       case DictionaryTypes.examples:

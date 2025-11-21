@@ -6,6 +6,8 @@ import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 
 IndexEntry testDictionaryIndexEntry = IndexEntry(
   id: 0,
+  isDefaultDictionary: false,
+  enabled: true,
   dictionaryType: DictionaryTypes.yomitan,
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
@@ -18,6 +20,8 @@ IndexEntry testDictionaryIndexEntry = IndexEntry(
 
 IndexEntry exampleSentencesIndexEntry = IndexEntry(
   id: 0,
+  isDefaultDictionary: false,
+  enabled: true,
   dictionaryType: DictionaryTypes.examples,
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
@@ -28,6 +32,8 @@ IndexEntry exampleSentencesIndexEntry = IndexEntry(
 );
 IndexEntry exampleTextsIndexEntry = IndexEntry(
   id: 0,
+  isDefaultDictionary: false,
+  enabled: true,
   dictionaryType: DictionaryTypes.examples,
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
@@ -39,6 +45,8 @@ IndexEntry exampleTextsIndexEntry = IndexEntry(
 
 IndexEntry audioFormat1ExampleDictionaryIndexEntry = IndexEntry(
   id: 1,
+  isDefaultDictionary: false,
+  enabled: true,
   dictionaryType: DictionaryTypes.audio,
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
@@ -50,6 +58,8 @@ IndexEntry audioFormat1ExampleDictionaryIndexEntry = IndexEntry(
 );
 IndexEntry audioFormat2ExampleDictionaryIndexEntry = IndexEntry(
   id: 1,
+  isDefaultDictionary: false,
+  enabled: true,
   dictionaryType: DictionaryTypes.audio,
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
@@ -61,6 +71,8 @@ IndexEntry audioFormat2ExampleDictionaryIndexEntry = IndexEntry(
 );
 IndexEntry audioFormat3ExampleDictionaryIndexEntry = IndexEntry(
   id: 1,
+  isDefaultDictionary: false,
+  enabled: true,
   dictionaryType: DictionaryTypes.audio,
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
