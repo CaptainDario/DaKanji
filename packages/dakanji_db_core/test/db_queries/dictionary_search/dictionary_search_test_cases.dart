@@ -129,6 +129,50 @@ final List<ExpectedDictionarySearchResult> searchTestCases = [
           match: '電',
         )]
       ],
+      prefixMatches: [
+        [
+          ExpectedDictionaryMatch(
+            term: '電車',
+            reading: 'でんしゃ',
+            match: '電車',
+            definitions: ["(electric) train"]
+          ),
+        ],
+        [
+          ExpectedDictionaryMatch(
+            term: '電車賃',
+            reading: 'でんしゃちん',
+            match: '電車賃',
+            definitions: ["train fare"]
+          ),
+        ],
+        [
+          ExpectedDictionaryMatch(
+            term: '電車酔い',
+            reading: 'でんしゃよい',
+            match: '電車酔い',
+            definitions: ["train sickness; motion sickness on a train"]
+          ),
+        ],
+        [
+          ExpectedDictionaryMatch(
+            term: '電車道相撲',
+            reading: 'でんしゃみちすもう',
+            match: '電車道相撲',
+            definitions: ["railroading an opponent straight out of the ring​"]
+          ),
+        ]
+      ],
+      tokenMatches: [
+        [
+          ExpectedDictionaryMatch(
+            term: '満員電車',
+            reading: 'まんいんでんしゃ',
+            match: '満員電車',
+            definitions: ["crowded train; packed train"]
+          ),
+        ]
+      ]
     ),
   ),
 ];
