@@ -12,7 +12,7 @@ _TermMetaBankV3Entry _$TermMetaBankV3EntryFromJson(
   id: (json['id'] as num).toInt(),
   indexEntry: const IndexEntryJsonConverter().fromJson(json['indexEntry']),
   term: json['term'] as String,
-  type: json['type'] as String,
+  type: $enumDecode(_$TermMetaBankEntryTypesEnumMap, json['type']),
   reading: json['reading'] as String?,
   frequency: (json['frequency'] as num?)?.toInt(),
   frequencyDisplayValue: json['frequencyDisplayValue'] as String?,
@@ -30,10 +30,16 @@ Map<String, dynamic> _$TermMetaBankV3EntryToJson(
   'id': instance.id,
   'indexEntry': const IndexEntryJsonConverter().toJson(instance.indexEntry),
   'term': instance.term,
-  'type': instance.type,
+  'type': _$TermMetaBankEntryTypesEnumMap[instance.type]!,
   'reading': instance.reading,
   'frequency': instance.frequency,
   'frequencyDisplayValue': instance.frequencyDisplayValue,
   'pitchs': instance.pitchs,
   'ipas': instance.ipas,
+};
+
+const _$TermMetaBankEntryTypesEnumMap = {
+  TermMetaBankEntryTypes.freq: 'freq',
+  TermMetaBankEntryTypes.pitch: 'pitch',
+  TermMetaBankEntryTypes.ipa: 'ipa',
 };

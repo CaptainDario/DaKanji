@@ -19,7 +19,7 @@ mixin _$TermMetaBankV3Entry {
  int get id;/// The index (dictionary) in which this entry was found
 @IndexEntryJsonConverter() IndexEntry get indexEntry;/// The term of this entry
  String get term;/// The type of this entry
- String get type;/// The reading of this entry
+ TermMetaBankEntryTypes get type;/// The reading of this entry
  String? get reading;/// the frequency of this entry as a numeric value
  int? get frequency;/// the frequency of this entry as a string for displaying
  String? get frequencyDisplayValue;/// Pitch data of this entry
@@ -57,7 +57,7 @@ abstract mixin class $TermMetaBankV3EntryCopyWith<$Res>  {
   factory $TermMetaBankV3EntryCopyWith(TermMetaBankV3Entry value, $Res Function(TermMetaBankV3Entry) _then) = _$TermMetaBankV3EntryCopyWithImpl;
 @useResult
 $Res call({
- int id,@IndexEntryJsonConverter() IndexEntry indexEntry, String term, String type, String? reading, int? frequency, String? frequencyDisplayValue, List<TermMetaBankV3PitchEntry> pitchs, List<TermMetaBankV3IpaEntry> ipas
+ int id,@IndexEntryJsonConverter() IndexEntry indexEntry, String term, TermMetaBankEntryTypes type, String? reading, int? frequency, String? frequencyDisplayValue, List<TermMetaBankV3PitchEntry> pitchs, List<TermMetaBankV3IpaEntry> ipas
 });
 
 
@@ -80,7 +80,7 @@ id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,indexEntry: null == indexEntry ? _self.indexEntry : indexEntry // ignore: cast_nullable_to_non_nullable
 as IndexEntry,term: null == term ? _self.term : term // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,reading: freezed == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
+as TermMetaBankEntryTypes,reading: freezed == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
 as String?,frequency: freezed == frequency ? _self.frequency : frequency // ignore: cast_nullable_to_non_nullable
 as int?,frequencyDisplayValue: freezed == frequencyDisplayValue ? _self.frequencyDisplayValue : frequencyDisplayValue // ignore: cast_nullable_to_non_nullable
 as String?,pitchs: null == pitchs ? _self.pitchs : pitchs // ignore: cast_nullable_to_non_nullable
@@ -179,7 +179,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @IndexEntryJsonConverter()  IndexEntry indexEntry,  String term,  String type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry> pitchs,  List<TermMetaBankV3IpaEntry> ipas)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @IndexEntryJsonConverter()  IndexEntry indexEntry,  String term,  TermMetaBankEntryTypes type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry> pitchs,  List<TermMetaBankV3IpaEntry> ipas)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TermMetaBankV3Entry() when $default != null:
 return $default(_that.id,_that.indexEntry,_that.term,_that.type,_that.reading,_that.frequency,_that.frequencyDisplayValue,_that.pitchs,_that.ipas);case _:
@@ -200,7 +200,7 @@ return $default(_that.id,_that.indexEntry,_that.term,_that.type,_that.reading,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @IndexEntryJsonConverter()  IndexEntry indexEntry,  String term,  String type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry> pitchs,  List<TermMetaBankV3IpaEntry> ipas)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @IndexEntryJsonConverter()  IndexEntry indexEntry,  String term,  TermMetaBankEntryTypes type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry> pitchs,  List<TermMetaBankV3IpaEntry> ipas)  $default,) {final _that = this;
 switch (_that) {
 case _TermMetaBankV3Entry():
 return $default(_that.id,_that.indexEntry,_that.term,_that.type,_that.reading,_that.frequency,_that.frequencyDisplayValue,_that.pitchs,_that.ipas);case _:
@@ -220,7 +220,7 @@ return $default(_that.id,_that.indexEntry,_that.term,_that.type,_that.reading,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @IndexEntryJsonConverter()  IndexEntry indexEntry,  String term,  String type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry> pitchs,  List<TermMetaBankV3IpaEntry> ipas)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @IndexEntryJsonConverter()  IndexEntry indexEntry,  String term,  TermMetaBankEntryTypes type,  String? reading,  int? frequency,  String? frequencyDisplayValue,  List<TermMetaBankV3PitchEntry> pitchs,  List<TermMetaBankV3IpaEntry> ipas)?  $default,) {final _that = this;
 switch (_that) {
 case _TermMetaBankV3Entry() when $default != null:
 return $default(_that.id,_that.indexEntry,_that.term,_that.type,_that.reading,_that.frequency,_that.frequencyDisplayValue,_that.pitchs,_that.ipas);case _:
@@ -245,7 +245,7 @@ class _TermMetaBankV3Entry implements TermMetaBankV3Entry {
 /// The term of this entry
 @override final  String term;
 /// The type of this entry
-@override final  String type;
+@override final  TermMetaBankEntryTypes type;
 /// The reading of this entry
 @override final  String? reading;
 /// the frequency of this entry as a numeric value
@@ -290,7 +290,7 @@ abstract mixin class _$TermMetaBankV3EntryCopyWith<$Res> implements $TermMetaBan
   factory _$TermMetaBankV3EntryCopyWith(_TermMetaBankV3Entry value, $Res Function(_TermMetaBankV3Entry) _then) = __$TermMetaBankV3EntryCopyWithImpl;
 @override @useResult
 $Res call({
- int id,@IndexEntryJsonConverter() IndexEntry indexEntry, String term, String type, String? reading, int? frequency, String? frequencyDisplayValue, List<TermMetaBankV3PitchEntry> pitchs, List<TermMetaBankV3IpaEntry> ipas
+ int id,@IndexEntryJsonConverter() IndexEntry indexEntry, String term, TermMetaBankEntryTypes type, String? reading, int? frequency, String? frequencyDisplayValue, List<TermMetaBankV3PitchEntry> pitchs, List<TermMetaBankV3IpaEntry> ipas
 });
 
 
@@ -313,7 +313,7 @@ id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,indexEntry: null == indexEntry ? _self.indexEntry : indexEntry // ignore: cast_nullable_to_non_nullable
 as IndexEntry,term: null == term ? _self.term : term // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,reading: freezed == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
+as TermMetaBankEntryTypes,reading: freezed == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
 as String?,frequency: freezed == frequency ? _self.frequency : frequency // ignore: cast_nullable_to_non_nullable
 as int?,frequencyDisplayValue: freezed == frequencyDisplayValue ? _self.frequencyDisplayValue : frequencyDisplayValue // ignore: cast_nullable_to_non_nullable
 as String?,pitchs: null == pitchs ? _self.pitchs : pitchs // ignore: cast_nullable_to_non_nullable
