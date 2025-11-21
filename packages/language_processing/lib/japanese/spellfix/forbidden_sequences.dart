@@ -1,4 +1,4 @@
-var forbiddenSequences = [
+const List<String> forbiddenSequences = [
   r"^っ", // forbidden begininngs
   r"$ん", // forbidden endings
   "っっ", // Double small tsu

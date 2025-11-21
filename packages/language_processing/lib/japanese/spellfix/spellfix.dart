@@ -1,5 +1,5 @@
+import 'forbidden_sequences.dart';
 import 'substitutions.dart';
-
 
 
 List<String> generateSpellingVariations({
@@ -7,10 +7,9 @@ List<String> generateSpellingVariations({
     required int n,
     required int maxCost,
     int substitutionPenalty = 0,
-    List<(String, String, int)>? rules,
-    Iterable<String> forbiddenSequences = const [],
+    List<(String, String, int)> rules = spellfixRules,
+    Iterable<String> forbiddenSequences = forbiddenSequences,
 }) {
-    final effectiveRules = rules ?? spellfixRules;
     final res = <String>[]; // Variations returned in increasing-cost order.
     final best = <String, Map<String, _Score>>{
         word: {'': const _Score(0, 0)},
@@ -59,8 +58,8 @@ List<String> generateSpellingVariations({
             if (res.length >= n) break;
         }
 
-        for (var ruleIndex = 0; ruleIndex < effectiveRules.length; ruleIndex++) {
-            final rule = effectiveRules[ruleIndex];
+        for (var ruleIndex = 0; ruleIndex < rules.length; ruleIndex++) {
+            final rule = rules[ruleIndex];
             for (var i = s.indexOf(rule.$1); i != -1; i = s.indexOf(rule.$1, i + 1)) {
                 final opKey = _encodeApplied(ruleIndex, i);
                 if (state.appliedKeys.contains(opKey)) continue; // Skip repeating the same substitution at the same position.

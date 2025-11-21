@@ -2,7 +2,7 @@
 /// This file is optimized for phonetic similarity rather than typing/orthographic
 /// errors, prioritizing variants that sound nearly identical.
 /// Rules are sorted by cost, from lowest (1) to highest (5).
-final spellfixRules = <(String, String, int)>[
+const spellfixRules = <(String, String, int)>[
   // ======================================================================
   // COST 1: PHONETICALLY IDENTICAL
   // ======================================================================
