@@ -113,7 +113,7 @@ dependencies:
   another_flushbar: ^1.12.32
   screenshot: 3.0.0
   super_clipboard: ^0.9.1
-  keyboard_actions: 4.2.0
+  keyboard_actions: 4.2.1
   meta: 1.17.0
   collection: 1.19.1
   dart_style: ^3.1.1
