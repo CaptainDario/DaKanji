@@ -465,5 +465,28 @@
         ["1) dumplings cooked in boiling water; boiled dumplings"],
         999,
         ""
+    [
+        "a",
+        "",
+        "",
+        "n",
+        10,
+        [
+            "Letter from the Latin alphabet"
+        ],
+        4,
+        ""
+    ],
+    [
+        "asd",
+        "",
+        "",
+        "n",
+        10,
+        [
+            "Random string of letters, common placeholder"
+        ],
+        4,
+        ""
     ]
 ]
