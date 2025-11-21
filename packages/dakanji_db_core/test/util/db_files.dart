@@ -9,8 +9,8 @@ import 'package:universal_io/io.dart';
 
 /// For some tests it is desirable to only import a subset of the dictionary
 /// files. This function copies the yomitan test dictionary files to a temporary
-/// location excluding the desired files (e.g. term_bank_1.json) and then
-/// initializes the database with only those files.
+/// location including only desired files (determined by shouldIncludeFile) and
+/// then initializes the database with only those files.
 Future<void> partialInit(
   DaKanjiDB db,
   bool Function(File) shouldIncludeFile,
