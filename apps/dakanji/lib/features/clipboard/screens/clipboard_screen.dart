@@ -18,7 +18,7 @@ import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 import 'package:da_kanji_mobile/core/widgets/conditional_parent_widget.dart';
 import 'package:da_kanji_mobile/features/text/widgets/text_analysis_popup.dart';
 

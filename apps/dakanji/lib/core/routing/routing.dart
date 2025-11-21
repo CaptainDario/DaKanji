@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/screens/user/user_screen.dart';
+import 'package:da_kanji_mobile/features/home/screens/user_screen.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:

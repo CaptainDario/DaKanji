@@ -12,7 +12,7 @@ import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary.dart';
-import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 
 class DictionaryScreen extends StatefulWidget {
 

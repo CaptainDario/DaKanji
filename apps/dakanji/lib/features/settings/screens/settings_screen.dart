@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/anki_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/clipboard_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/dictionary_settings.dart';

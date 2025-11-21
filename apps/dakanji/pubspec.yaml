@@ -71,6 +71,8 @@ dependencies:
   chewie: ^1.12.1
   video_player: 2.10.0
   flutter_subtitle: ^0.0.6
+  supabase_flutter: ^2.10.3
+  flutter_login: ^6.0.0
 
   flutter_widget_from_html_core: ^0.17.0
   lite_rt_for_flutter: 0.0.1
@@ -101,7 +103,7 @@ dependencies:
       url: https://github.com/captaindario/lite_rt_for_flutter_libs
       path: base/lite_rt_for_flutter_libs_web_tfjs_tflite
 
-  envied: ^1.2.0
+  envied: ^1.3.1
   envied_generator: ^1.2.0
   keyboard_detection: ^0.8.1
   async: 2.13.0

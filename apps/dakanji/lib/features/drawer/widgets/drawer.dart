@@ -2,6 +2,8 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -19,8 +21,8 @@ import 'package:da_kanji_mobile/features/drawer/controller/drawer_listener.dart'
 import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/drawer/view/drawer_app_bar.dart';
-import 'package:da_kanji_mobile/features/drawer/view/drawer_element.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer_app_bar.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer_element.dart';
 
 /// Da Kanji's drawer.
 /// 
@@ -386,26 +388,65 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                         selectedColor: Theme.of(context).colorScheme.secondary,
                         child: Column(
                           children: [
-                            GestureDetector(
-                              onLongPress: () {},
-                              // DaKanji Logo at the top
-                              child: SafeArea(
-                                top: true,
-                                bottom: false,
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                    //color: Colors.green,
-                                    padding: EdgeInsets.fromLTRB(
-                                      _drawerWidth*0.1,
-                                      0,
-                                      0,
-                                      8
-                                    ),
-                                    child: Image(
-                                      width: _drawerWidth * 0.6,
-                                      //height: (MediaQuery.of(context).size.height * 0.15).clamp(0, 60),
-                                      image: const AssetImage("assets/images/dakanji/banner.png"),
+                            // user screen
+                            SafeArea(
+                              child: Material(
+                                child: InkWell(
+                                  onTap: () {
+
+                                    String route = "/${Screens.user.name}";
+
+                                    if(ModalRoute.of(context)!.settings.name != route){
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context, route,
+                                        (Route<dynamic> route) => false,
+                                        arguments: NavigationArguments(true)
+                                      );
+                                    }
+                                    else{
+                                      _drawerController.reverse();
+                                    }
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      padding: EdgeInsets.fromLTRB(
+                                        _drawerWidth*0.05, _drawerWidth*0.05,
+                                        0, _drawerWidth*0.05),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            height: 48,
+                                            width: 48,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10000),
+                                              border: Border.all(
+                                                color: Colors.white, // Outline color
+                                                width: 2.0, // Outline width
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                "?",
+                                                style: TextStyle(
+                                                  fontFamily: "kouzan",
+                                                  fontSize: 30
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10,),
+                                          Text(
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: widget.currentScreen == Screens.user
+                                                ? g_Dakanji_red
+                                                : null
+                                            ),
+                                            "home"
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -1,13 +1,8 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/widgets/user/user.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
+import 'package:da_kanji_mobile/features/home/widgets/user.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-
-// Project imports:
-import 'package:da_kanji_mobile/entities/screens.dart';
-import 'package:da_kanji_mobile/widgets/drawer/drawer.dart';
-
 
 
 class UserScreen extends StatefulWidget {

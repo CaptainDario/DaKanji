@@ -20,7 +20,7 @@ import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 import 'package:da_kanji_mobile/features/kana_table/widgets/kana_grid.dart';
 import 'package:da_kanji_mobile/features/kana_table/widgets/kana_info_card.dart';
 import 'package:universal_io/io.dart';

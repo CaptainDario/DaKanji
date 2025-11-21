@@ -9,7 +9,7 @@ import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/dojg/widgets/dojg.dart';
 import 'package:da_kanji_mobile/features/dojg/widgets/dojg_import.dart';
-import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 
 class DoJGScreen extends StatefulWidget {
 

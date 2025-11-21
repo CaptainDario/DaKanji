@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/widgets/user/activity_chart.dart';
+import 'package:da_kanji_mobile/features/home/widgets/activity_chart.dart';
 import 'package:flutter/material.dart';
 
 

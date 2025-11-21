@@ -15,7 +15,7 @@ import 'package:da_kanji_mobile/features/drawing/controller/drawing_interpreter.
 import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_clear_button.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_drawing_canvas.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_multi_char_search.dart';

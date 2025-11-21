@@ -1,8 +1,4 @@
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/widgets/user/user_login_or_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:da_kanji_mobile/features/home/widgets/user_login_or_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

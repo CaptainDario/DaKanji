@@ -12,7 +12,7 @@ import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
-import 'package:da_kanji_mobile/features/drawer/view/drawer.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 import 'package:da_kanji_mobile/features/word_lists/widgets/word_lists.dart' as word_lists;
 
 /// The screen for all word lists related functionalities
