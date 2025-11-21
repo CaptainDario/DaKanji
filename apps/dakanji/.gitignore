@@ -1,0 +1,114 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Web related
+lib/generated_plugin_registrant.dart
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# ignore keys
+key.properties
+android/app/key.jks
+keys/**
+keys/DaKanjiRecognizer.jks
+!keys/create_msix_cert.ps1
+
+# python
+python
+.venv/**
+
+# ignore none mock tflite models
+CNN_single_char.tflite
+
+# libraries
+*.so
+
+# ignore LoC counter
+.VSCodeCounter/
+
+# ignore the dictionary files but keep the folder
+assets/dict/*
+!assets/dict/.gitkeep
+
+# ignore mecab files
+assets/ipadic
+assets/mecab_dict
+assets/__MACOSX
+assets/ipadic.zip
+assets/mecab_dict.zip
+
+# plugins to ignore
+# ignore custom tf lite flutter repo
+# plugins/tflite_flutter_plugin/
+./plugins/kagome_dart/*
+macos/libtensorflowlite_c-mac.dylib
+
+# ignore built snaps and the none template snapcraft.yaml
+*.snap
+
+# ignore ephemerals
+macos/Flutter/ephemeral/**
+linux/flutter/ephemeral/**
+
+# ios build files
+ios/build/**
+
+# android build files
+android/app/build/intermediates
+android/app/build/outputs
+android/app/.cxx/
+
+# flatpak
+build-dir
+repo
+dakanji_flatpak_repo
+.flatpak-builder
+flatpak_build
+flatpak/.flatpak-builder
+flatpak/build
+flatpak/DaKanji
+flatpak/DaKanji.zip
+flatpak/DaKanji.tar.xz
+flatpak/DaKanji.tar.gz
+flatpak/bundle.zip
+com.DaAppLab.DaKanji.flatpak
+
+# environment files
+dakanji.env
+**/env.g.dart
+
+# python environment
+.venv
+
+# ignore some files that are needed for testing
+test/text/*.dylib
+test/text/unidic/

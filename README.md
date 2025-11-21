@@ -1,4 +1,4 @@
-<img src="./assets/images/dakanji/banner.png" alt="DaKanji" style="display:block;margin-left:auto;margin-right:auto;" width="40%"/>
+<img src="./apps/dakanji/assets/images/dakanji/banner.png" alt="DaKanji" style="display:block;margin-left:auto;margin-right:auto;" width="40%"/>
 <table>
   <tr>
     <a href='https://play.google.com/store/apps/details?id=com.DaAppLab.DaKanjiRecognizer'>
