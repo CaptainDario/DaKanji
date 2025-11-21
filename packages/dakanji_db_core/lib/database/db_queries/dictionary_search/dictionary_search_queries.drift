@@ -14,7 +14,7 @@ dictionary_search_drift_find_term_bank_entries:
                 CAST(json_extract(value, '$[1]') AS INTEGER),
                 '"' || CAST(json_extract(value, '$[0]') AS TEXT) || '"' || 
                 CASE 
-                    WHEN CAST(json_extract(value, '$[1]') AS INTEGER) = 1 THEN ''--' *' 
+                    WHEN CAST(json_extract(value, '$[1]') AS INTEGER) = 1 THEN ' *' 
                     ELSE '' 
                 END
             FROM json_each(:searchInputs)
