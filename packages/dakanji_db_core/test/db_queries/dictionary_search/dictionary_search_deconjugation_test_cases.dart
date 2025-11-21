@@ -1,3 +1,7 @@
+import 'package:dakanji_db_core/data/term_meta_entry_types.dart';
+import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
+
+import '../../dictionary_test_variables.dart';
 import 'dictionary_search_test_helper_classes.dart';
 
 List<ExpectedDictionarySearchResult> deconjugationTestCases = [
@@ -29,10 +33,26 @@ List<ExpectedDictionarySearchResult> deconjugationTestCases = [
   ExpectedDictionarySearchResult(
     description: 'Deconjugation: ambiguous potential form',
     query: 'いける',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: ExpectedMatchGroup(
       exactMatches: [
         [
-          ExpectedDictionaryMatch(term: '生ける', reading: 'いける', match: 'いける', definitions: ["to arrange (flowers)"]),
+          ExpectedDictionaryMatch(
+            term: '生ける',
+            reading: 'いける',
+            match: 'いける',
+            definitions: ["to arrange (flowers)"],
+            metas: [
+              TermMetaBankV3Entry(
+                id: 0,
+                indexEntry: testDictionaryIndexEntry,
+                term: "生ける",
+                frequency: 2,
+                type: TermMetaBankEntryTypes.freq,
+                pitchs: [],
+                ipas: []
+              )
+            ]
+          ),
         ]
       ],
     ),

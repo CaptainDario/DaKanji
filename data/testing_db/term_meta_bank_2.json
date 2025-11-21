@@ -1,4 +1,9 @@
 [
     ["生餃子", "freq", 3],
-    ["生ける", "freq", 2]
+    ["生ける", "freq", 2],
+
+    ["石", "freq", 3],
+    ["石", "freq", {"value": 7, "displayValue": "seven"}],
+    ["石", "freq", {"reading": "いし", "frequency": 12}],
+    ["石", "freq", {"reading": "いし", "frequency": 18, "displayValue": "eighteen"}]
 ]

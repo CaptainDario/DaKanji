@@ -1,3 +1,7 @@
+import 'package:dakanji_db_core/data/term_meta_entry_types.dart';
+import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
+
+import '../../dictionary_test_variables.dart';
 import 'dictionary_search_test_helper_classes.dart';
 
 String descriptionPrefix = "Sorting";
@@ -18,12 +22,16 @@ List<ExpectedDictionarySearchResult> sortingTestCases = [
   // Length Difference
   ExpectedDictionarySearchResult(
     description: '$descriptionPrefix: length difference for prefix matches',
-    query: '電',
+    query: '電車',
     queryMatches: const ExpectedMatchGroup(
+      exactMatches: [
+        [ExpectedDictionaryMatch(term: '電車', reading: 'でんしゃ', match: '電車', definitions: ["(electric) train"])],
+      ],
       prefixMatches: [
         // Length of '電車' (2) is closer to query '電' (1) than '電車賃' (3)
-        [ExpectedDictionaryMatch(term: '電車', reading: 'でんしゃ', match: '電車', definitions: ["(electric) train"])],
         [ExpectedDictionaryMatch(term: '電車賃', reading: 'でんしゃちん', match: '電車賃', definitions: ["train fare"])],
+        [ExpectedDictionaryMatch(term: '電車酔い', reading: 'でんしゃよい', match: '電車酔い', definitions: ["train sickness; motion sickness on a train"])],
+        [ExpectedDictionaryMatch(term: '電車道相撲', reading: 'でんしゃみちすもう', match: '電車道相撲', definitions: ["railroading an opponent straight out of the ring​"])],
       ],
       tokenMatches: [
         [ExpectedDictionaryMatch(term: '満員電車', reading: 'まんいんでんしゃ', match: '満員電車', definitions: ["crowded train; packed train"])],
@@ -60,25 +68,58 @@ List<ExpectedDictionarySearchResult> sortingTestCases = [
     description: '''$descriptionPrefix:
      Three imported dictionaries should have their user defined sort orders applied correctly''',
     query: "生餃子",
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: ExpectedMatchGroup(
       exactMatches: [
         [ExpectedDictionaryMatch(
           term: '生餃子',
           reading: 'なまぎょうざ',
           match: '生餃子',
           definitions: ['2) raw gyoza; uncooked dumplings'],
+          metas: [
+            TermMetaBankV3Entry(
+              id: 0,
+              indexEntry: testDictionaryIndexEntry,
+              term: "生餃子",
+              frequency: 3,
+              type: TermMetaBankEntryTypes.freq,
+              pitchs: [],
+              ipas: []
+            )
+          ]
         )],
         [ExpectedDictionaryMatch(
           term: '生餃子',
           reading: 'なまぎょうざ',
           match: '生餃子',
           definitions: ['1) raw gyoza; uncooked dumplings'],
+          metas: [
+            TermMetaBankV3Entry(
+              id: 0,
+              indexEntry: testDictionaryIndexEntry,
+              term: "生餃子",
+              frequency: 3,
+              type: TermMetaBankEntryTypes.freq,
+              pitchs: [],
+              ipas: []
+            )
+          ]
         )],
         [ExpectedDictionaryMatch(
           term: '生餃子',
           reading: 'なまぎょうざ',
           match: '生餃子',
           definitions: ['3) raw gyoza; uncooked dumplings'],
+          metas: [
+            TermMetaBankV3Entry(
+              id: 0,
+              indexEntry: testDictionaryIndexEntry,
+              term: "生餃子",
+              frequency: 3,
+              type: TermMetaBankEntryTypes.freq,
+              pitchs: [],
+              ipas: []
+            )
+          ]
         )],
       ],
     ),

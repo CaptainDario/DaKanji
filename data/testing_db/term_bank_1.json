@@ -226,6 +226,30 @@
         2,
         ""
     ],
+        [
+        "電車酔い",
+        "でんしゃよい",
+        "",
+        "n",
+        0,
+        [
+            "train sickness; motion sickness on a train"
+        ],
+        4,
+        ""
+    ],
+    [
+        "電車道相撲",
+        "でんしゃみちすもう",
+        "",
+        "n",
+        0,
+        [
+            "railroading an opponent straight out of the ring​"
+        ],
+        4,
+        ""
+    ],
     [
         "満員電車",
         "まんいんでんしゃ",
@@ -465,6 +489,32 @@
         ["1) dumplings cooked in boiling water; boiled dumplings"],
         999,
         ""
+    ],
+    [
+        "石",
+        "いし",
+        "",
+        "n",
+        10,
+        [
+            "rock",
+            "stone"
+        ],
+        4,
+        ""
+    ],
+    [
+        "電",
+        "でん",
+        "",
+        "n",
+        10,
+        [
+            "electricity"
+        ],
+        4,
+        ""
+    ],
     [
         "a",
         "",

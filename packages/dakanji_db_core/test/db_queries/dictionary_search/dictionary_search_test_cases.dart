@@ -90,40 +90,44 @@ final List<ExpectedDictionarySearchResult> searchTestCases = [
       ],
     )
   ),
-
-  // --- Various match types using 電車 (でんしゃ) ---
+  // limit serach results when searching for one character
   ExpectedDictionarySearchResult(
-    description: "$descriptionPrefix: Exact, prefix and token matches",
-    query: "電車",
+    description: "$descriptionPrefix: Searching for one roman character should NOT yield prefix matches",
+    query: "a",
     // Expected results for the hiragana-converted query: 'でんしゃ'
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
         [ExpectedDictionaryMatch(
-          term: '電車',
-          reading: 'でんしゃ',
-          definitions: ['(electric) train'],
-          match: '電車',
+          term: 'a',
+          reading: '',
+          definitions: ['Letter from the Latin alphabet'],
+          match: 'a',
         )]
-      ],
-      prefixMatches: [
-        [
-          ExpectedDictionaryMatch(
-            term: '電車賃',
-            reading: 'でんしゃちん',
-            definitions: ['train fare'],
-            match: '電車賃',
-          ),
-        ]
       ],
       tokenMatches: [
         [
           ExpectedDictionaryMatch(
-            term: '満員電車',
-            reading: 'まんいんでんしゃ',
-            definitions: ['crowded train; packed train'],
-            match: '満員電車',
-          ),
-        ]
+            term: '電車酔い',
+            reading: 'でんしゃよい',
+            match: 'train sickness; motion sickness on a train',
+            definitions: ["train sickness; motion sickness on a train"]
+          )
+        ],
+      ]
+    ),
+  ),
+  ExpectedDictionarySearchResult(
+    description: "$descriptionPrefix: Searching for one kanji character SHOULD yield prefix matches",
+    query: "電",
+    // Expected results for the hiragana-converted query: 'でんしゃ'
+    queryMatches: const ExpectedMatchGroup(
+      exactMatches: [
+        [ExpectedDictionaryMatch(
+          term: '電',
+          reading: 'でん',
+          definitions: ['electricity'],
+          match: '電',
+        )]
       ],
     ),
   ),
