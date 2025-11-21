@@ -10,11 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:app_links/app_links.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:universal_io/io.dart';
+import 'package:da_kanji_mobile/core/storage/path_manager.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/entities/files/path_manager.dart';
 import 'package:da_kanji_mobile/core/releases/version.dart';
-import 'package:da_kanji_mobile/init.dart';
+import 'package:da_kanji_mobile/features/init/controller/init.dart';
 
 /// the title of the app
 const String g_AppTitle = "DaKanji";
