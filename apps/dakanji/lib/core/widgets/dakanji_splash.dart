@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/widgets/dakanji_logo_text.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -26,33 +27,7 @@ class DaKanjiSplash extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              RichText(
-                text: const TextSpan(
-                  text: '',
-                  style: TextStyle(
-                    color: g_Dakanji_red,
-                    fontFamily: "theater"
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'D', 
-                      style: TextStyle(fontSize: 80,),
-                    ),
-                    TextSpan(
-                      text: 'a',
-                      style: TextStyle(fontSize: 60,),
-                    ),
-                    TextSpan(
-                      text: 'K', 
-                      style: TextStyle(fontSize: 80,),
-                    ),
-                    TextSpan(
-                      text: 'anji',
-                      style: TextStyle(fontSize: 60,),
-                    ),
-                  ],
-                ),
-              ),
+              DaKanjiLogoText(),
               const SizedBox(height: 20, width: 1,),
               const DaKanjiLoadingIndicator(),
               if(text != null)
@@ -73,3 +48,4 @@ class DaKanjiSplash extends StatelessWidget {
     );
   }
 }
+

@@ -3,6 +3,7 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
+import 'package:da_kanji_mobile/core/widgets/dakanji_logo_widget.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -491,10 +492,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 //color: Colors.green,
                                 padding: EdgeInsets.fromLTRB(
                                   _drawerWidth*0.1, _drawerWidth*0.025, 0, _drawerWidth*0.025),
-                                child: Image(
-                                  width: _drawerWidth * 0.5,
-                                  image: const AssetImage("assets/images/dakanji/banner.png"),
-                                ),
+                                child: DakanjiLogoWidget()
                               ),
                             ),
                           ],
