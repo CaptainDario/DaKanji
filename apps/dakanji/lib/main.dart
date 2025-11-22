@@ -24,7 +24,7 @@ import 'package:da_kanji_mobile/features/feedback/model/feedback_localization.da
 import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/features/init/controller/init.dart';
-import 'package:da_kanji_mobile/core/widgets/dakanji_splash.dart';
+import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_splash.dart';
 
 Future<void> main() async {
 

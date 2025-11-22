@@ -24,7 +24,7 @@ import 'package:da_kanji_mobile/core/releases/releases.dart';
 import 'package:da_kanji_mobile/features/init/widgets/downgrade_dialog.dart';
 import 'package:da_kanji_mobile/features/init/widgets/rate_dialog.dart' as rate_popup;
 import 'package:da_kanji_mobile/features/init/widgets/whats_new_dialog.dart';
-import 'package:da_kanji_mobile/core/widgets/dakanji_splash.dart';
+import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_splash.dart';
 
 /// The "init"-screen
 /// 

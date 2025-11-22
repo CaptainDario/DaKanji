@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/core/widgets/dakanji_logo_text.dart';
+import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_logo_text.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
