@@ -394,7 +394,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 child: InkWell(
                                   onTap: () {
 
-                                    String route = "/${Screens.user.name}";
+                                    String route = "/${Screens.home.name}";
 
                                     if(ModalRoute.of(context)!.settings.name != route){
                                       Navigator.pushNamedAndRemoveUntil(
@@ -439,7 +439,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                           Text(
                                             style: TextStyle(
                                               fontSize: 20,
-                                              color: widget.currentScreen == Screens.user
+                                              color: widget.currentScreen == Screens.home
                                                 ? g_Dakanji_red
                                                 : null
                                             ),

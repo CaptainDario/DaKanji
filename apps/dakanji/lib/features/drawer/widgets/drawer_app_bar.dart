@@ -121,19 +121,15 @@ class DrawerAppBar extends StatelessWidget {
                     case Screens.manual:
                       title = LocaleKeys.ManualScreen_title.tr();
                       break;
-                    case Screens.home:
-                      throw Exception("HomeScreen should not be navigated to via drawer");
+                    case Screens.init:
+                      throw Exception("${Screens.init.name}Screen should not be navigated to via drawer");
                     case Screens.settings:
                       title = LocaleKeys.SettingsScreen_title.tr();
                       break;
                     case Screens.onboarding:
                       throw Exception("OnBoardingScreen should not be navigated to via drawer");
-                    case Screens.user:
-                      if(TimeOfDay.now().hour < 12) { title = "おはよう、"; }
-                      else if(TimeOfDay.now().hour < 18) { title = "こんにちは、"; }
-                      else { title = "こんばんは、";}
-                      // TODO use user name
-                      title += "ANONさん！";
+                    case Screens.home:
+                      title = LocaleKeys.HomeScreen_title.tr();
                       break;
                     case Screens.webviewDict:
                       title = LocaleKeys.WebviewScreen_title.tr();

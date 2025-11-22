@@ -48,7 +48,7 @@ Future<void> showRateDialog(BuildContext context, bool hasDoNotShowOption) async
                   onPressed: () {
                     Navigator.of(context).pop();
                     Navigator.pushNamedAndRemoveUntil(
-                      context, "/${Screens.home.name}", (Route<dynamic> route) => false
+                      context, "/${Screens.init.name}", (Route<dynamic> route) => false
                     );
                   },
                   child: Text(LocaleKeys.General_close.tr())
@@ -71,7 +71,7 @@ Future<void> showRateDialog(BuildContext context, bool hasDoNotShowOption) async
                       GetIt.I<UserData>().doNotShowRateAgain = true;
                       GetIt.I<UserData>().save();
                       Navigator.pushNamedAndRemoveUntil(
-                        context, "/${Screens.home.name}", (Route<dynamic> route) => false
+                        context, "/${Screens.init.name}", (Route<dynamic> route) => false
                       );
                     },
                     child: Text(LocaleKeys.InitScreen_RatePopup_dont_ask_again.tr())

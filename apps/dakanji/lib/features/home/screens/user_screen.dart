@@ -31,7 +31,7 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     return DaKanjiDrawer(
       drawerClosed: !widget.openedByDrawer,
-      currentScreen: Screens.user,
+      currentScreen: Screens.home,
       child: const User()
     );
   }

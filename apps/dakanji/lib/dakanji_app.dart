@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -151,7 +152,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: GetIt.I<Settings>().misc.selectedThemeMode(),
-          initialRoute: "/home",
+          initialRoute: "/${Screens.init.name}",
           home: const DaKanjiSplash(),
           builder: (context, child) {
             return MediaQuery(

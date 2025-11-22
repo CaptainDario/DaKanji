@@ -31,13 +31,13 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
 
   Widget newRoute;
   
-  if(name == "/${Screens.home.name}"){
+  if(name == "/${Screens.init.name}"){
     newRoute = const InitScreen();
   }
   else if(name == "/${Screens.onboarding.name}"){
     newRoute = const OnBoardingScreen();
   }
-  else if(name == "/${Screens.user.name}"){
+  else if(name == "/${Screens.home.name}"){
     newRoute = UserScreen(
       args.navigatedByDrawer,
       true);
