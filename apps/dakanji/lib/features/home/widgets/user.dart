@@ -45,7 +45,7 @@ class _UserState extends State<User> {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        UserOverviewPage(),
+                        HomeOverviewPage(),
                         Container(height: 50,),
                         UserAccountPage(Supabase.instance.client),
                       ]
