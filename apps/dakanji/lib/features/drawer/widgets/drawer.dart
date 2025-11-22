@@ -3,7 +3,8 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
-import 'package:da_kanji_mobile/core/widgets/dakanji_logo_widget.dart';
+import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_logo_widget.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer_home_element.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -389,69 +390,12 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                         selectedColor: Theme.of(context).colorScheme.secondary,
                         child: Column(
                           children: [
+                            SizedBox(height: 8,),
                             // user screen
-                            SafeArea(
-                              child: Material(
-                                child: InkWell(
-                                  onTap: () {
-
-                                    String route = "/${Screens.home.name}";
-
-                                    if(ModalRoute.of(context)!.settings.name != route){
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context, route,
-                                        (Route<dynamic> route) => false,
-                                        arguments: NavigationArguments(true)
-                                      );
-                                    }
-                                    else{
-                                      _drawerController.reverse();
-                                    }
-                                  },
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                      padding: EdgeInsets.fromLTRB(
-                                        _drawerWidth*0.05, _drawerWidth*0.05,
-                                        0, _drawerWidth*0.05),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            height: 48,
-                                            width: 48,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10000),
-                                              border: Border.all(
-                                                color: Colors.white, // Outline color
-                                                width: 2.0, // Outline width
-                                              ),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                "?",
-                                                style: TextStyle(
-                                                  fontFamily: "kouzan",
-                                                  fontSize: 30
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10,),
-                                          Text(
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: widget.currentScreen == Screens.home
-                                                ? g_Dakanji_red
-                                                : null
-                                            ),
-                                            "home"
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                            DrawerHomeElement(
+                              drawerController: _drawerController,
+                              drawerWidth: _drawerWidth,
+                              widget: widget
                             ),
                             Expanded(
                               child: ReorderableListView(
@@ -486,6 +430,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                                 ],
                               ),
                             ),
+                            // logo at the bottom
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Container(
@@ -508,4 +453,3 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
     );
   }
 }
-
