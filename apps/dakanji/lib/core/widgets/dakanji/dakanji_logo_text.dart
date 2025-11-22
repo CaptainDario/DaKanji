@@ -7,9 +7,12 @@ class DaKanjiLogoText extends StatelessWidget {
   
   final double fontSize;
 
+  final bool showVersion;
+
   const DaKanjiLogoText(
     {
       this.fontSize = 80,
+      this.showVersion = false,
       super.key,
     }
   );
@@ -43,12 +46,13 @@ class DaKanjiLogoText extends StatelessWidget {
               text: 'anji',
               style: TextStyle(fontSize: fontSize*0.75,),
             ),
-            TextSpan(
-              text: "  v$g_Version",
-              style: TextStyle(
-                fontSize: fontSize*0.3,
-                color: Colors.grey,              ),
-            )
+            if(showVersion)
+              TextSpan(
+                text: "  v$g_Version",
+                style: TextStyle(
+                  fontSize: fontSize*0.4,
+                  color: Colors.grey,              ),
+              )
           ],
         ),
       ),

@@ -8,9 +8,12 @@ class DakanjiLogoWidget extends StatelessWidget {
 
   final double size;
 
+  final bool showVersion;
+
   const DakanjiLogoWidget(
     {
       this.size = 1,
+      this.showVersion = false,
       super.key
     }
   );
@@ -25,7 +28,11 @@ class DakanjiLogoWidget extends StatelessWidget {
             "assets/images/dakanji/icon.png",
             height: 36*size,
           ),
-          DaKanjiLogoText(fontSize: 40*size,),
+          SizedBox(width: 8),
+          DaKanjiLogoText(
+            fontSize: 40*size,
+            showVersion: showVersion,
+          ),
         ],
       ),
     );

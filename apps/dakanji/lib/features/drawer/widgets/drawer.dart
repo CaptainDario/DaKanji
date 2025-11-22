@@ -436,8 +436,10 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               child: Container(
                                 //color: Colors.green,
                                 padding: EdgeInsets.fromLTRB(
-                                  _drawerWidth*0.1, _drawerWidth*0.025, 0, _drawerWidth*0.025),
-                                child: DakanjiLogoWidget()
+                                child: DakanjiLogoWidget(
+                                  size: 0.8,
+                                  showVersion: true,
+                                )
                               ),
                             ),
                           ],
