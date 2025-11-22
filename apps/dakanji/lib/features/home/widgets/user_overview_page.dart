@@ -1,6 +1,7 @@
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/features/home/model/activity_chart_mock_data.dart';
 import 'package:da_kanji_mobile/features/home/widgets/activity_chart.dart';
+import 'package:da_kanji_mobile/features/home/widgets/greeting_widget.dart';
 import 'package:da_kanji_mobile/features/home/widgets/study_card.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -26,7 +27,10 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
       padding: const EdgeInsets.all(8.0),
       child: ListView(
         children: [
-          SizedBox(height: 9,),
+          const SizedBox(height: 8,),
+          // TODO use actual user name
+          GreetingWidget("User.name"),
+          SizedBox(height: 8,),
           StudyCalendar(
             vocabStudied: mockData.vocab,
             charactersStudied: {},
