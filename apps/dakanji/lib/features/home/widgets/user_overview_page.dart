@@ -3,6 +3,8 @@ import 'package:da_kanji_mobile/features/home/model/activity_chart_mock_data.dar
 import 'package:da_kanji_mobile/features/home/widgets/activity_chart.dart';
 import 'package:da_kanji_mobile/features/home/widgets/study_card.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 
@@ -37,29 +39,29 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
           ),
           StudyCard(
             title: '単語',
-            subtitle: 'Expand your vocabulary',
+            subtitle: LocaleKeys.HomeScreen_study_card_subtitle_vocab.tr(),
             currentProgress: 20,
             dailyGoal: 20,
             color: g_Dakanji_green,
-            action: 'Study',
+            action: LocaleKeys.HomeScreen_study_card_action_vocab.tr(),
             icon: DaKanjiIcons.wordLists,
           ),
           StudyCard(
             title: '文字',
-            subtitle: 'Master the writing system',
+            subtitle: LocaleKeys.HomeScreen_study_card_subtitle_chars.tr(),
             currentProgress: 21,
             dailyGoal: 40,
             color: g_Dakanji_red,
-            action: 'Study',
+            action: LocaleKeys.HomeScreen_study_card_action_chars.tr(),
             icon: DaKanjiIcons.kanjiTrainer,
           ),
           StudyCard(
             title: '勉強',
-            subtitle: 'Put in the time to succeed',
+            subtitle: LocaleKeys.HomeScreen_study_card_subtitle_time.tr(),
             currentProgress: 5,
             dailyGoal: 67,
             color: g_Dakanji_blue,
-            action: 'Track',
+            action: LocaleKeys.HomeScreen_study_card_action_time.tr(),
             icon: DaKanjiIcons.timer,
           ),
         ]),

@@ -1,6 +1,7 @@
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:lottie/lottie.dart';
 import 'breathing_neon_wrapper.dart';
 
@@ -236,13 +237,16 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
             Text(dateStr, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
             const SizedBox(height: 4),
             if (time == null && vocab == null && chars == null)
-              const Text("No study data.", style: TextStyle(color: Colors.grey)),
-            if (time != null && time.$1 > 0) 
-              _buildStatRow("Time", time, widget.timeColor),
-            if (chars != null && chars.$1 > 0) 
-              _buildStatRow("Chars", chars, widget.charactersColor),
-            if (vocab != null && vocab.$1 > 0) 
-              _buildStatRow("Vocab", vocab, widget.vocabColor),
+              Text(
+                LocaleKeys.HomeScreen_study_calendar_no_study_data.tr(),
+                style: TextStyle(color: Colors.grey)
+              ),
+            if (time != null) 
+              _buildStatRow("時間", time, widget.timeColor),
+            if (chars != null) 
+              _buildStatRow("文字", chars, widget.charactersColor),
+            if (vocab != null) 
+              _buildStatRow("単語", vocab, widget.vocabColor),
           ],
         ),
       ),
@@ -745,7 +749,7 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
                                 const SizedBox(width: 4), // Spacing is only added if icon exists
                               ],
                               Text(
-                                "$streak Day Streak",
+                                "$streak 日連続",
                                 style: TextStyle(
                                   color: textColor, 
                                   fontWeight: textWeight, 
