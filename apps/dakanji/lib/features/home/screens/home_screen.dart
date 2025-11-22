@@ -5,7 +5,7 @@ import 'package:da_kanji_mobile/features/home/widgets/user.dart';
 import 'package:flutter/material.dart';
 
 
-class UserScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
 
   /// was this page opened by clicking on the tab in the drawer
   final bool openedByDrawer;
@@ -13,7 +13,7 @@ class UserScreen extends StatefulWidget {
   final bool includeTutorial;
 
 
-  const UserScreen(
+  const HomeScreen(
     this.openedByDrawer,
     this.includeTutorial,
     {
@@ -22,10 +22,10 @@ class UserScreen extends StatefulWidget {
   );
 
   @override
-  State<UserScreen> createState() => _UserScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _UserScreenState extends State<UserScreen> {
+class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {

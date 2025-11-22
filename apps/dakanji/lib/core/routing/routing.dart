@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/features/home/screens/user_screen.dart';
+import 'package:da_kanji_mobile/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -38,7 +38,7 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
     newRoute = const OnBoardingScreen();
   }
   else if(name == "/${Screens.home.name}"){
-    newRoute = UserScreen(
+    newRoute = HomeScreen(
       args.navigatedByDrawer,
       true);
   }
