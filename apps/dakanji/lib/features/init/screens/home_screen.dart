@@ -150,7 +150,7 @@ class _InitScreenState extends State<InitScreen> {
             children: [
               Center(
                 child: Text(
-                  "🔥 ${LocaleKeys.HomeScreen_new_version_available_heading.tr()} 🔥",
+                  "🔥 ${LocaleKeys.InitScreen_new_version_available_heading.tr()} 🔥",
                   style: const TextStyle(
                     fontSize: 24
                   ),
