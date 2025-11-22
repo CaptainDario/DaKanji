@@ -573,17 +573,6 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
                                                       isActive: isCompliant && isPartOfCurrentStreak,
                                                       glowAnimation: _glowAnimation,
                                                       glowColor: widget.timeColor,
-                                                      customGlowChild: SizedBox(
-                                                        width: _circleSize,
-                                                        height: _circleSize,
-                                                        child: CircularProgressIndicator(
-                                                          value: getPercent(timeData) * curve.value,
-                                                          strokeWidth: 2.0,
-                                                          color: widget.timeColor,
-                                                          backgroundColor: Colors.transparent,
-                                                          strokeCap: StrokeCap.round,
-                                                        ),
-                                                      ),
                                                       child: SizedBox(
                                                         width: _circleSize,
                                                         height: _circleSize,
@@ -596,25 +585,25 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
                                                         ),
                                                       ),
                                                     ),
-                                                  if (charData != null && charData.$1 > 0)
+                                                  if (vocabData != null && vocabData.$1 > 0)
                                                     SizedBox(
-                                                      width: _circleSize * 0.75, 
+                                                      width: _circleSize * 0.75,
                                                       height: _circleSize * 0.75,
                                                       child: CircularProgressIndicator(
-                                                        value: getPercent(charData) * curve.value,
-                                                        color: widget.charactersColor,
+                                                        value: getPercent(vocabData) * curve.value,
+                                                        color: widget.vocabColor,
                                                         strokeWidth: 2.0,
                                                         backgroundColor: Colors.transparent,
                                                         strokeCap: StrokeCap.round,
                                                       ),
                                                     ),
-                                                  if (vocabData != null && vocabData.$1 > 0)
+                                                  if (charData != null && charData.$1 > 0)
                                                     SizedBox(
-                                                      width: _circleSize * 0.5,
+                                                      width: _circleSize * 0.5, 
                                                       height: _circleSize * 0.5,
                                                       child: CircularProgressIndicator(
-                                                        value: getPercent(vocabData) * curve.value,
-                                                        color: widget.vocabColor,
+                                                        value: getPercent(charData) * curve.value,
+                                                        color: widget.charactersColor,
                                                         strokeWidth: 2.0,
                                                         backgroundColor: Colors.transparent,
                                                         strokeCap: StrokeCap.round,

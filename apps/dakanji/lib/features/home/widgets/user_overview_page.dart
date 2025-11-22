@@ -29,31 +29,14 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
           SizedBox(height: 9,),
           StudyCalendar(
             vocabStudied: mockData.vocab,
-            charactersStudied: mockData.characters,
+            charactersStudied: {},
+            // TODO kanji trainer charactersStudied: mockData.characters,
             timeStudied: mockData.time,
             vocabColor: g_Dakanji_green,
             charactersColor: g_Dakanji_red,
             timeColor: g_Dakanji_blue,
             streakColor: g_Dakanji_green.withAlpha(50),
             streakGlowColor: g_Dakanji_green,
-          ),
-          StudyCard(
-            title: '単語',
-            subtitle: LocaleKeys.HomeScreen_study_card_subtitle_vocab.tr(),
-            currentProgress: 20,
-            dailyGoal: 20,
-            color: g_Dakanji_green,
-            action: LocaleKeys.HomeScreen_study_card_action_vocab.tr(),
-            icon: DaKanjiIcons.wordLists,
-          ),
-          StudyCard(
-            title: '文字',
-            subtitle: LocaleKeys.HomeScreen_study_card_subtitle_chars.tr(),
-            currentProgress: 21,
-            dailyGoal: 40,
-            color: g_Dakanji_red,
-            action: LocaleKeys.HomeScreen_study_card_action_chars.tr(),
-            icon: DaKanjiIcons.kanjiTrainer,
           ),
           StudyCard(
             title: '勉強',
@@ -64,6 +47,25 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
             action: LocaleKeys.HomeScreen_study_card_action_time.tr(),
             icon: DaKanjiIcons.timer,
           ),
+          StudyCard(
+            title: '単語',
+            subtitle: LocaleKeys.HomeScreen_study_card_subtitle_vocab.tr(),
+            currentProgress: 20,
+            dailyGoal: 20,
+            color: g_Dakanji_green,
+            action: LocaleKeys.HomeScreen_study_card_action_vocab.tr(),
+            icon: DaKanjiIcons.wordLists,
+          ),
+          /* TODO KANJI TRAINER
+          StudyCard(
+            title: '文字',
+            subtitle: LocaleKeys.HomeScreen_study_card_subtitle_chars.tr(),
+            currentProgress: 21,
+            dailyGoal: 40,
+            color: g_Dakanji_red,
+            action: LocaleKeys.HomeScreen_study_card_action_chars.tr(),
+            icon: DaKanjiIcons.kanjiTrainer,
+          ),*/
         ]),
     );
   
