@@ -397,6 +397,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               drawerWidth: _drawerWidth,
                               widget: widget
                             ),
+                            SizedBox(height: 8,),
                             Expanded(
                               child: ReorderableListView(
                                 buildDefaultDragHandles: false,
@@ -436,6 +437,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                               child: Container(
                                 //color: Colors.green,
                                 padding: EdgeInsets.fromLTRB(
+                                  _drawerWidth*0.092, _drawerWidth*0.025, 0, _drawerWidth*0.025),
                                 child: DakanjiLogoWidget(
                                   size: 0.8,
                                   showVersion: true,
