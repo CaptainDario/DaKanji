@@ -46,11 +46,11 @@ Future<void> updateAvailable() async {
       if (newVersions.isNotEmpty){
         if(updates.isEmpty){
           if(newVersions.length == 1) {
-            updates.add("${LocaleKeys.HomeScreen_new_version_available_text.tr()} ");
+            updates.add("${LocaleKeys.InitScreen_new_version_available_text.tr()} ");
           } else {
-            updates.add("${LocaleKeys.HomeScreen_new_versions_available_text.tr().replaceAll("{NEW_VERSIONS}", newVersions.length.toString())} ");
+            updates.add("${LocaleKeys.InitScreen_new_versions_available_text.tr().replaceAll("{NEW_VERSIONS}", newVersions.length.toString())} ");
           }
-          updates[0] += "${LocaleKeys.HomeScreen_new_version_comparison.tr()}\n\n\n\n"
+          updates[0] += "${LocaleKeys.InitScreen_new_version_comparison.tr()}\n\n\n\n"
             .replaceAll("{NEW_VERSION_NUMBER}", versions.first.toString())
             .replaceAll("{VERSION_NUMBER}", g_Version.toString());
             

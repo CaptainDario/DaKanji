@@ -35,7 +35,7 @@ Future<void> showRateDialog(BuildContext context, bool hasDoNotShowOption) async
         children: [
           // ask for a rating text
           Text(
-            LocaleKeys.HomeScreen_RatePopup_text.tr(),
+            LocaleKeys.InitScreen_RatePopup_text.tr(),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 50,),
@@ -59,7 +59,7 @@ Future<void> showRateDialog(BuildContext context, bool hasDoNotShowOption) async
                   onPressed: () async {
                     openReview(); 
                   },
-                  child: Text(LocaleKeys.HomeScreen_rate_this_app.tr())
+                  child: Text(LocaleKeys.InitScreen_rate_this_app.tr())
                 ),
                 const SizedBox(width: 5,),
                 // do not ask again button
@@ -74,7 +74,7 @@ Future<void> showRateDialog(BuildContext context, bool hasDoNotShowOption) async
                         context, "/${Screens.home.name}", (Route<dynamic> route) => false
                       );
                     },
-                    child: Text(LocaleKeys.HomeScreen_RatePopup_dont_ask_again.tr())
+                    child: Text(LocaleKeys.InitScreen_RatePopup_dont_ask_again.tr())
                   ),
               ],
             ),

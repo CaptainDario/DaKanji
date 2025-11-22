@@ -27,7 +27,7 @@ class _DowngradeDialogState extends State<DowngradeDialog>{
         width:  MediaQuery.of(context).size.width * 4/5,
         
         child: Text(
-          LocaleKeys.HomeScreen_downgrade_warning.tr()
+          LocaleKeys.InitScreen_downgrade_warning.tr()
         )
       ),
     );

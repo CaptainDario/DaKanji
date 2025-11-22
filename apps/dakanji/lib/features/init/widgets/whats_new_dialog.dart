@@ -85,7 +85,7 @@ class _WhatsNewDialogueState extends State<WhatsNewDialogue>
                     child: FittedBox(
                       child: Center(
                         child: Text(
-                          "🎉 ${LocaleKeys.HomeScreen_whats_new.tr()} 🎉",
+                          "🎉 ${LocaleKeys.InitScreen_whats_new.tr()} 🎉",
                           textScaler: const TextScaler.linear(2),
                         ),
                       ),
@@ -130,7 +130,7 @@ class _WhatsNewDialogueState extends State<WhatsNewDialogue>
                               MaterialPageRoute(builder: (context) => const ChangelogScreen()),
                             ),
                             child: Text(
-                              LocaleKeys.HomeScreen_complete_log.tr(),
+                              LocaleKeys.InitScreen_complete_log.tr(),
                               maxLines: 1,
                               style: const TextStyle(
                                 //overflow: TextOverflow

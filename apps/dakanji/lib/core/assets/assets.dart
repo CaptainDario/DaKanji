@@ -116,8 +116,8 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
           // ignore: use_build_context_synchronously
           context: context,
           headerAnimationLoop: false,
-          desc: LocaleKeys.HomeScreen_download_failed_popup_text.tr(),
-          btnOkText: LocaleKeys.HomeScreen_download_failed_popup_retry.tr(),
+          desc: LocaleKeys.InitScreen_download_failed_popup_text.tr(),
+          btnOkText: LocaleKeys.InitScreen_download_failed_popup_retry.tr(),
           btnOkColor: g_Dakanji_green,
           dialogType: DialogType.noHeader,
           btnOkOnPress: (){}
