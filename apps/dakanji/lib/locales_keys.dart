@@ -1,5 +1,7 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
+// ignore_for_file: constant_identifier_names
+
 abstract class  LocaleKeys {
   static const AboutScreen_about_text = 'AboutScreen.about_text';
   static const AboutScreen_credits = 'AboutScreen.credits';
@@ -170,24 +172,35 @@ abstract class  LocaleKeys {
   static const General_system = 'General.system';
   static const General_web = 'General.web';
   static const General = 'General';
-  static const HomeScreen_RatePopup_dont_ask_again = 'HomeScreen.RatePopup_dont_ask_again';
-  static const HomeScreen_RatePopup_text = 'HomeScreen.RatePopup_text';
-  static const HomeScreen_complete_log = 'HomeScreen.complete_log';
-  static const HomeScreen_downgrade_warning = 'HomeScreen.downgrade_warning';
-  static const HomeScreen_download_failed_popup_retry = 'HomeScreen.download_failed_popup_retry';
-  static const HomeScreen_download_failed_popup_text = 'HomeScreen.download_failed_popup_text';
-  static const HomeScreen_download_popup_permission = 'HomeScreen.download_popup_permission';
-  static const HomeScreen_new_version_available_heading = 'HomeScreen.new_version_available_heading';
-  static const HomeScreen_new_version_available_text = 'HomeScreen.new_version_available_text';
-  static const HomeScreen_new_version_comparison = 'HomeScreen.new_version_comparison';
-  static const HomeScreen_new_versions_available_text = 'HomeScreen.new_versions_available_text';
-  static const HomeScreen_rate_this_app = 'HomeScreen.rate_this_app';
-  static const HomeScreen_whats_new = 'HomeScreen.whats_new';
+  static const HomeScreen_study_calendar_no_study_data = 'HomeScreen.study_calendar_no_study_data';
+  static const HomeScreen_study_card_action_chars = 'HomeScreen.study_card_action_chars';
+  static const HomeScreen_study_card_action_time = 'HomeScreen.study_card_action_time';
+  static const HomeScreen_study_card_action_vocab = 'HomeScreen.study_card_action_vocab';
+  static const HomeScreen_study_card_subtitle_chars = 'HomeScreen.study_card_subtitle_chars';
+  static const HomeScreen_study_card_subtitle_time = 'HomeScreen.study_card_subtitle_time';
+  static const HomeScreen_study_card_subtitle_vocab = 'HomeScreen.study_card_subtitle_vocab';
+  static const HomeScreen_title = 'HomeScreen.title';
+  static const HomeScreen_tutorial_begin_text = 'HomeScreen.tutorial_begin_text';
+  static const HomeScreen_tutorial_begin_title = 'HomeScreen.tutorial_begin_title';
   static const HomeScreen = 'HomeScreen';
   static const ImmersionScreen_title = 'ImmersionScreen.title';
   static const ImmersionScreen_tutorial_begin_text = 'ImmersionScreen.tutorial_begin_text';
   static const ImmersionScreen_tutorial_begin_title = 'ImmersionScreen.tutorial_begin_title';
   static const ImmersionScreen = 'ImmersionScreen';
+  static const InitScreen_RatePopup_dont_ask_again = 'InitScreen.RatePopup_dont_ask_again';
+  static const InitScreen_RatePopup_text = 'InitScreen.RatePopup_text';
+  static const InitScreen_complete_log = 'InitScreen.complete_log';
+  static const InitScreen_downgrade_warning = 'InitScreen.downgrade_warning';
+  static const InitScreen_download_failed_popup_retry = 'InitScreen.download_failed_popup_retry';
+  static const InitScreen_download_failed_popup_text = 'InitScreen.download_failed_popup_text';
+  static const InitScreen_download_popup_permission = 'InitScreen.download_popup_permission';
+  static const InitScreen_new_version_available_heading = 'InitScreen.new_version_available_heading';
+  static const InitScreen_new_version_available_text = 'InitScreen.new_version_available_text';
+  static const InitScreen_new_version_comparison = 'InitScreen.new_version_comparison';
+  static const InitScreen_new_versions_available_text = 'InitScreen.new_versions_available_text';
+  static const InitScreen_rate_this_app = 'InitScreen.rate_this_app';
+  static const InitScreen_whats_new = 'InitScreen.whats_new';
+  static const InitScreen = 'InitScreen';
   static const KanaTableScreen_title = 'KanaTableScreen.title';
   static const KanaTableScreen_tutorial_begin_text = 'KanaTableScreen.tutorial_begin_text';
   static const KanaTableScreen_tutorial_begin_title = 'KanaTableScreen.tutorial_begin_title';
@@ -435,10 +448,6 @@ abstract class  LocaleKeys {
   static const TextScreen_tutorial_spaces_text = 'TextScreen.tutorial_spaces_text';
   static const TextScreen_tutorial_text_input_text = 'TextScreen.tutorial_text_input_text';
   static const TextScreen = 'TextScreen';
-  static const UserScreen_title = 'UserScreen.title';
-  static const UserScreen_tutorial_begin_text = 'UserScreen.tutorial_begin_text';
-  static const UserScreen_tutorial_begin_title = 'UserScreen.tutorial_begin_title';
-  static const UserScreen = 'UserScreen';
   static const WebbrowserScreen_title = 'WebbrowserScreen.title';
   static const WebbrowserScreen_tutorial_begin_text = 'WebbrowserScreen.tutorial_begin_text';
   static const WebbrowserScreen_tutorial_begin_title = 'WebbrowserScreen.tutorial_begin_title';

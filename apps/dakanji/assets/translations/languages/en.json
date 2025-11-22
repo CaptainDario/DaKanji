@@ -177,6 +177,23 @@
     "web": "web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "No study data.",
+    "study_card_action_chars": "Study",
+    "study_card_action_time": "Track",
+    "study_card_action_vocab": "Study",
+    "study_card_subtitle_chars": "Master the writing system",
+    "study_card_subtitle_time": "Put in the time to succeed",
+    "study_card_subtitle_vocab": "Expand your vocabulary",
+    "title": "Account",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the account screen!"
+  },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the immersion screen!"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "Don't ask again",
     "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
     "complete_log": "complete log",
@@ -190,11 +207,6 @@
     "new_versions_available_text": "There are {NEW_VERSIONS} new versions of DaKanji available!",
     "rate_this_app": "Rate",
     "whats_new": "what's new"
-  },
-  "ImmersionScreen": {
-    "title": "Immersion",
-    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
-    "tutorial_begin_title": "Welcome to the immersion screen!"
   },
   "KanaTableScreen": {
     "title": "Kana Table",
@@ -453,11 +465,6 @@
     "tutorial_processed_text_triple_tap": "A triple tap will select a paragraph.",
     "tutorial_spaces_text": "With this button spaces are added to the text.",
     "tutorial_text_input_text": "Here you can write or paste any text. This text can be processed with different tools."
-  },
-  "UserScreen": {
-    "title": "Account",
-    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
-    "tutorial_begin_title": "Welcome to the account screen!"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",

@@ -177,6 +177,23 @@
     "web": "Web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "Keine Studiendaten.",
+    "study_card_action_chars": "Lernen",
+    "study_card_action_time": "Spur",
+    "study_card_action_vocab": "Lernen",
+    "study_card_subtitle_chars": "Meister das Schriftsystem",
+    "study_card_subtitle_time": "Investiere Zeit die n\u00f6tige Zeit",
+    "study_card_subtitle_vocab": "Erweitern Sie Ihren Wortschatz",
+    "title": "Account",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Konto-Bildschirm!"
+  },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Immersionsbildschirm!"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "Frag nicht nochmal",
     "RatePopup_text": "Es sieht so aus als w\u00fcrde dir DaKanji gefallen.\nFalls das stimmt w\u00fcrde eine Bewertung dem Projekt extrem weiter helfen!",
     "complete_log": "vollst\u00e4ndiges Log",
@@ -190,11 +207,6 @@
     "new_versions_available_text": "Es sind {NEW_VERSIONS} neue Versionen von DaKanji verf\u00fcgbar!",
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
-  },
-  "ImmersionScreen": {
-    "title": "Immersion",
-    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "Willkommen auf dem Immersionsbildschirm!"
   },
   "KanaTableScreen": {
     "title": "Kana Tabelle",
@@ -453,11 +465,6 @@
     "tutorial_processed_text_triple_tap": "Durch dreimaliges Antippen wird ein Absatz ausgew\u00e4hlt.",
     "tutorial_spaces_text": "Mit dieser Schaltfl\u00e4che werden dem Text Leerzeichen hinzugef\u00fcgt.",
     "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einf\u00fcgen. Dieser Text kann mit verschiedenen Tools bearbeitet."
-  },
-  "UserScreen": {
-    "title": "Konto",
-    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": ""
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",

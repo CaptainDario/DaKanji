@@ -177,6 +177,23 @@
     "web": "\u7f51\u7edc"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "\u65e0\u7814\u7a76\u6570\u636e\u3002",
+    "study_card_action_chars": "\u7814\u7a76",
+    "study_card_action_time": "\u8f68\u9053",
+    "study_card_action_vocab": "\u7814\u7a76",
+    "study_card_subtitle_chars": "\u638c\u63e1\u4e66\u5199\u7cfb\u7edf",
+    "study_card_subtitle_time": "\u82b1\u65f6\u95f4\u53d6\u5f97\u6210\u529f",
+    "study_card_subtitle_vocab": "\u6269\u5927\u8bcd\u6c47\u91cf",
+    "title": "\u8d26\u6237",
+    "tutorial_begin_text": "\u6211\u4eec\u5c06\u5411\u4f60\u5c55\u793a\u4e00\u4e2a\u5feb\u901f\u6559\u7a0b\uff0c\u8ba9\u4f60\u5f00\u59cb\u3002",
+    "tutorial_begin_title": "\u6b22\u8fce\u8fdb\u5165\u8d26\u6237\u754c\u9762\uff01"
+  },
+  "ImmersionScreen": {
+    "title": "\u6d78\u5165\u5f0f",
+    "tutorial_begin_text": "\u6211\u4eec\u5c06\u5411\u4f60\u5c55\u793a\u4e00\u4e2a\u5feb\u901f\u6559\u7a0b\uff0c\u8ba9\u4f60\u5f00\u59cb\u3002",
+    "tutorial_begin_title": "\u6b22\u8fce\u6765\u5230\u6d78\u5165\u5f0f\u5c4f\u5e55\uff01"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "\u4e0d\u8981\u518d\u95ee\u4e86",
     "RatePopup_text": "\u4f60\u559c\u6b22 \"DaKanji \"\u5417\uff1f\n\u5982\u679c\u662f\u8fd9\u6837\u7684\u8bdd\uff0c\u8bc4\u5206\u5c06\u662f\u975e\u5e38\u68d2\u7684\uff0c\u5b83\u5c06\u5bf9\u8fd9\u4e2a\u9879\u76ee\u6709\u5f88\u5927\u7684\u5e2e\u52a9!",
     "complete_log": "\u5b8c\u6574\u65e5\u5fd7",
@@ -190,11 +207,6 @@
     "new_versions_available_text": "\u6709{NEW_VERSIONS}\u65b0\u7248\u672c\u7684DaKanji\u53ef\u4ee5\u4f7f\u7528!",
     "rate_this_app": "\u901f\u7387",
     "whats_new": "\u6700\u65b0\u4fe1\u606f"
-  },
-  "ImmersionScreen": {
-    "title": "\u6d78\u5165\u5f0f",
-    "tutorial_begin_text": "\u6211\u4eec\u5c06\u5411\u4f60\u5c55\u793a\u4e00\u4e2a\u5feb\u901f\u6559\u7a0b\uff0c\u8ba9\u4f60\u5f00\u59cb\u3002",
-    "tutorial_begin_title": "\u6b22\u8fce\u6765\u5230\u6d78\u5165\u5f0f\u5c4f\u5e55\uff01"
   },
   "KanaTableScreen": {
     "title": "\u5361\u7eb3\u684c",
@@ -453,11 +465,6 @@
     "tutorial_processed_text_triple_tap": "\u70b9\u51fb\u4e09\u4e0b\u5c06\u9009\u62e9\u4e00\u4e2a\u6bb5\u843d\u3002",
     "tutorial_spaces_text": "\u6709\u4e86\u8fd9\u4e2a\u6309\u94ae\uff0c\u5c31\u53ef\u4ee5\u5728\u6587\u672c\u4e2d\u6dfb\u52a0\u7a7a\u683c\u3002",
     "tutorial_text_input_text": "\u5728\u8fd9\u91cc\uff0c\u4f60\u53ef\u4ee5\u5199\u6216\u7c98\u8d34\u4efb\u4f55\u6587\u672c\u3002\u8fd9\u4e2a\u6587\u672c\u5c06\u88ab\u4e0d\u540c\u7684\u5de5\u5177\u5904\u7406\u3002"
-  },
-  "UserScreen": {
-    "title": "\u8d26\u6237",
-    "tutorial_begin_text": "\u6211\u4eec\u5c06\u5411\u4f60\u5c55\u793a\u4e00\u4e2a\u5feb\u901f\u6559\u7a0b\uff0c\u8ba9\u4f60\u5f00\u59cb\u3002",
-    "tutorial_begin_title": ""
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",

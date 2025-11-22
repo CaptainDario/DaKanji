@@ -1732,7 +1732,7 @@
       "pl": "pobierz"
     }
   },
-  "HomeScreen": {
+  "InitScreen": {
     "RatePopup_dont_ask_again": {
       "en": "Don't ask again",
       "de": "Frag nicht nochmal",
@@ -1989,7 +1989,7 @@
       "zh": "卡纳培训师",
       "it": "Allenatore Kana",
       "fr": "Formateur Kana",
-      "es": "Entrenador Kana",
+      "es": "#ERROR!",
       "pl": "Trener Kana"
     }
   },
@@ -4487,10 +4487,10 @@
       "pl": "Aby jak najlepiej dopasować się do każdego użytkownika, DaKanji umożliwia zmianę kolejności elementów w głównym menu nawigacyjnym. Wystarczy nacisnąć dowolną pozycję menu, aby przeciągnąć ją w żądane miejsce."
     }
   },
-  "UserScreen": {
+  "HomeScreen": {
     "title": {
       "en": "Account",
-      "de": "Konto",
+      "de": "Account",
       "ru": "Счет",
       "ja": "アカウント",
       "zh": "账户",
@@ -4500,7 +4500,15 @@
       "pl": "Konto"
     },
     "tutorial_begin_title": {
-      "en": "Welcome to the account screen!"
+      "en": "Welcome to the account screen!",
+      "de": "Willkommen auf dem Konto-Bildschirm!",
+      "ru": "Добро пожаловать на экран учетной записи!",
+      "ja": "アカウント画面へようこそ！",
+      "zh": "欢迎进入账户界面！",
+      "it": "Benvenuti nella schermata dell'account!",
+      "fr": "Bienvenue sur l'écran du compte !",
+      "es": "¡Bienvenido a la pantalla de la cuenta!",
+      "pl": "Witamy na ekranie konta!"
     },
     "tutorial_begin_text": {
       "en": "We will show you a quick tutorial to get you started.",
@@ -4512,6 +4520,83 @@
       "fr": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
       "es": "Vamos a mostrarte un corto tutorial para que empieces.",
       "pl": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji"
+    },
+    "study_calendar_no_study_data": {
+      "en": "No study data.",
+      "de": "Keine Studiendaten.",
+      "ru": "Данные исследований отсутствуют.",
+      "ja": "研究データはない。",
+      "zh": "无研究数据。",
+      "it": "Nessun dato di studio.",
+      "fr": "Aucune donnée d'étude.",
+      "es": "No hay datos del estudio.",
+      "pl": "Brak danych z badań."
+    },
+    "study_card_subtitle_vocab": {
+      "en": "Expand your vocabulary",
+      "de": "Erweitern Sie Ihren Wortschatz",
+      "ru": "Расширьте свой словарный запас",
+      "ja": "語彙を増やす",
+      "zh": "扩大词汇量",
+      "it": "Ampliare il vocabolario",
+      "fr": "Élargissez votre vocabulaire",
+      "es": "Amplíe su vocabulario",
+      "pl": "Poszerz swoje słownictwo"
+    },
+    "study_card_action_vocab": {
+      "en": "Study",
+      "de": "Lernen",
+      "ru": "Исследование",
+      "ja": "研究",
+      "zh": "研究",
+      "it": "Studio",
+      "fr": "L'étude",
+      "es": "Estudiar",
+      "pl": "Badanie"
+    },
+    "study_card_subtitle_chars": {
+      "en": "Master the writing system",
+      "de": "Meister das Schriftsystem",
+      "ru": "Овладейте системой письма",
+      "ja": "ライティング・システムをマスターする",
+      "zh": "掌握书写系统",
+      "it": "Padroneggiare il sistema di scrittura",
+      "fr": "Maîtriser le système d'écriture",
+      "es": "Dominar el sistema de escritura",
+      "pl": "Opanuj system pisania"
+    },
+    "study_card_action_chars": {
+      "en": "Study",
+      "de": "Lernen",
+      "ru": "Исследование",
+      "ja": "研究",
+      "zh": "研究",
+      "it": "Studio",
+      "fr": "L'étude",
+      "es": "Estudiar",
+      "pl": "Badanie"
+    },
+    "study_card_subtitle_time": {
+      "en": "Put in the time to succeed",
+      "de": "Investiere Zeit die nötige Zeit",
+      "ru": "Уделяйте время, чтобы добиться успеха",
+      "ja": "成功のために時間を費やす",
+      "zh": "花时间取得成功",
+      "it": "Dedicare tempo al successo",
+      "fr": "Consacrer du temps à la réussite",
+      "es": "Dedicar tiempo al éxito",
+      "pl": "Poświęć czas na osiągnięcie sukcesu"
+    },
+    "study_card_action_time": {
+      "en": "Track",
+      "de": "Spur",
+      "ru": "Трек",
+      "ja": "トラック",
+      "zh": "轨道",
+      "it": "Traccia",
+      "fr": "Poursuivre",
+      "es": "Pista",
+      "pl": "Ścieżka"
     }
   },
   "KuzushijiScreen": {

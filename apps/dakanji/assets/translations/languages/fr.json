@@ -177,6 +177,23 @@
     "web": "web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "Aucune donn\u00e9e d'\u00e9tude.",
+    "study_card_action_chars": "L'\u00e9tude",
+    "study_card_action_time": "Poursuivre",
+    "study_card_action_vocab": "L'\u00e9tude",
+    "study_card_subtitle_chars": "Ma\u00eetriser le syst\u00e8me d'\u00e9criture",
+    "study_card_subtitle_time": "Consacrer du temps \u00e0 la r\u00e9ussite",
+    "study_card_subtitle_vocab": "\u00c9largissez votre vocabulaire",
+    "title": "Compte",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
+    "tutorial_begin_title": "Bienvenue sur l'\u00e9cran du compte !"
+  },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
+    "tutorial_begin_title": "Bienvenue \u00e0 l'\u00e9cran d'immersion !"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "Ne demandez pas \u00e0 nouveau",
     "RatePopup_text": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une \u00e9valuation serait g\u00e9niale et cela aiderait beaucoup ce projet !",
     "complete_log": "journal complet",
@@ -190,11 +207,6 @@
     "new_versions_available_text": "Il y a {NEW_VERSIONS} nouvelles versions de DaKanji disponibles !",
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
-  },
-  "ImmersionScreen": {
-    "title": "Immersion",
-    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
-    "tutorial_begin_title": "Bienvenue \u00e0 l'\u00e9cran d'immersion !"
   },
   "KanaTableScreen": {
     "title": "Table Kana",
@@ -453,11 +465,6 @@
     "tutorial_processed_text_triple_tap": "Une triple tape permet de s\u00e9lectionner un paragraphe.",
     "tutorial_spaces_text": "Ce bouton permet d'ajouter des espaces au texte.",
     "tutorial_text_input_text": "Ici, vous pouvez \u00e9crire ou coller n'importe quel texte. Ce texte sera trait\u00e9 avec diff\u00e9rents outils."
-  },
-  "UserScreen": {
-    "title": "Compte",
-    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider \u00e0 d\u00e9marrer.",
-    "tutorial_begin_title": ""
   },
   "WebbrowserScreen": {
     "title": "Navigateur Web",

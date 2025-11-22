@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters
+// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters, constant_identifier_names
 
 import 'dart:ui';
 
@@ -14,7 +14,7 @@ class CodegenLoader extends AssetLoader{
     return Future.value(mapLocales[locale.toString()]);
   }
 
-  static const Map<String,dynamic> zh = {
+  static const Map<String,dynamic> _zh = {
   "AboutScreen": {
     "about_text": "\"DaKanji\" 为日语学生和日语使用者提供帮助。\n\"DaKanji \"适用于[iOS]({APPSTORE_PAGE})、[Android]({PLAYSTORE_PAGE})、[MacOS]({MACSTORE_PAGE})、[Linux (Snap)]({SNAPSTORE_PAGE})、[Linux（flatpak）]({FLATPAKSTORE_PAGE})、[Linux（便携式）]({PORTABLE_DOWNLOAD})、[Windows]({MICROSOFT_STORE_PAGE})。\n您还可以在 [GitHub.]({GITHUB_RELEASES_PAGE}) 上找到所有版本。\n\n还可以查看 [我的其他应用程序]({DAAPPLAB_STORE_PAGE})\n如果您在使用本程序时遇到问题或有改进建议，请在[此处]({GITHUB_ISSUES})报告，或加入[discord 服务器]({DISCORD_SERVER})，或使用反馈菜单发送带注释的截图。\n\n隐私政策请见 [此处]({PRIVACY_POLICE})",
     "credits": "贷方",
@@ -155,6 +155,23 @@ class CodegenLoader extends AssetLoader{
     "web": "网络"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "无研究数据。",
+    "study_card_action_chars": "研究",
+    "study_card_action_time": "轨道",
+    "study_card_action_vocab": "研究",
+    "study_card_subtitle_chars": "掌握书写系统",
+    "study_card_subtitle_time": "花时间取得成功",
+    "study_card_subtitle_vocab": "扩大词汇量",
+    "title": "账户",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎进入账户界面！"
+  },
+  "ImmersionScreen": {
+    "title": "浸入式",
+    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
+    "tutorial_begin_title": "欢迎来到浸入式屏幕！"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "不要再问了",
     "RatePopup_text": "你喜欢 \"DaKanji \"吗？\n如果是这样的话，评分将是非常棒的，它将对这个项目有很大的帮助!",
     "complete_log": "完整日志",
@@ -168,11 +185,6 @@ class CodegenLoader extends AssetLoader{
     "new_versions_available_text": "有{NEW_VERSIONS}新版本的DaKanji可以使用!",
     "rate_this_app": "速率",
     "whats_new": "最新信息"
-  },
-  "ImmersionScreen": {
-    "title": "浸入式",
-    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
-    "tutorial_begin_title": "欢迎来到浸入式屏幕！"
   },
   "KanaTableScreen": {
     "title": "卡纳桌",
@@ -416,10 +428,6 @@ class CodegenLoader extends AssetLoader{
     "tutorial_spaces_text": "有了这个按钮，就可以在文本中添加空格。",
     "tutorial_text_input_text": "在这里，你可以写或粘贴任何文本。这个文本将被不同的工具处理。"
   },
-  "UserScreen": {
-    "title": "账户",
-    "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
-  },
   "WebbrowserScreen": {
     "title": "Webbrowser",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
@@ -477,7 +485,7 @@ class CodegenLoader extends AssetLoader{
     "tutorial_begin_title": "欢迎来到 YouTube 屏幕！"
   }
 };
-static const Map<String,dynamic> ja = {
+static const Map<String,dynamic> _ja = {
   "AboutScreen": {
     "about_text": "「DaKanji」は、日本語を学ぶ人、日本語を使う人を支援します。\n「DaKanji」は、[iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}) でご利用いただけます。\nすべてのリリースは[GitHub.]({GITHUB_RELEASES_PAGE})でもご覧いただけます。\n\nまた、[他のアプリ]({DAAPPLAB_STORE_PAGE})もチェックしてみてください。\nアプリの問題や改善提案があれば、[こちら]({GITHUB_ISSUES})に報告するか、[discordサーバー]({DISCORD_SERVER})に参加するか、フィードバックメニューを使って注釈付きのスクリーンショットを送ってください。\n\nプライバシーポリシーは[こちら]({PRIVACY_POLICE})をご覧ください。",
     "credits": "クレジット",
@@ -640,6 +648,23 @@ static const Map<String,dynamic> ja = {
     "web": "ウェブ"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "研究データはない。",
+    "study_card_action_chars": "研究",
+    "study_card_action_time": "トラック",
+    "study_card_action_vocab": "研究",
+    "study_card_subtitle_chars": "ライティング・システムをマスターする",
+    "study_card_subtitle_time": "成功のために時間を費やす",
+    "study_card_subtitle_vocab": "語彙を増やす",
+    "title": "アカウント",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "アカウント画面へようこそ！"
+  },
+  "ImmersionScreen": {
+    "title": "イマージョン",
+    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
+    "tutorial_begin_title": "イマージョン・スクリーンへようこそ！"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "二度と表示しない",
     "RatePopup_text": "「DaKanji」が好きですか？\n評価をいただけると大変助かります！",
     "complete_log": "全てのログ",
@@ -653,11 +678,6 @@ static const Map<String,dynamic> ja = {
     "new_versions_available_text": "Dakanjiの{NEW_VERSIONS}新バージョンを公開しました！",
     "rate_this_app": "評価",
     "whats_new": "最新情報"
-  },
-  "ImmersionScreen": {
-    "title": "イマージョン",
-    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-    "tutorial_begin_title": "イマージョン・スクリーンへようこそ！"
   },
   "KanaTableScreen": {
     "title": "かな一覧表",
@@ -911,10 +931,6 @@ static const Map<String,dynamic> ja = {
     "tutorial_spaces_text": "テキストにスペースを追加します",
     "tutorial_text_input_text": "文章を入力してください。かなを振ったり、品詞を調べたりできます"
   },
-  "UserScreen": {
-    "title": "アカウント",
-    "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-  },
   "WebbrowserScreen": {
     "title": "ウェブブラウザ",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
@@ -972,7 +988,7 @@ static const Map<String,dynamic> ja = {
     "tutorial_begin_title": "YouTubeの画面へようこそ！"
   }
 };
-static const Map<String,dynamic> de = {
+static const Map<String,dynamic> _de = {
   "AboutScreen": {
     "about_text": "\"DaKanji\" hilft Studenten der japanischen Sprache und Menschen, die sie benutzen.\n\"DaKanji\" ist verfügbar für, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nSie können auch alle Releases auf [GitHub]({GITHUB_RELEASES_PAGE}) finden.\n\nSchauen Sie sich auch [meine anderen Apps]({DAAPPLAB_STORE_PAGE}) an.\nWenn Sie Probleme bei der Verwendung dieser App oder Verbesserungsvorschläge haben, melden Sie diese bitte [hier]({GITHUB_ISSUES}), treten Sie dem [Discord-Server]({DISCORD_SERVER}) bei, oder verwenden Sie das Feedback-Menü, um einen kommentierten Screenshot zu senden.\n\nDie Datenschutzbestimmungen können [hier]({PRIVACY_POLICE}) eingesehen werden.",
     "credits": "Credits",
@@ -1151,6 +1167,23 @@ static const Map<String,dynamic> de = {
     "web": "Web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "Keine Studiendaten.",
+    "study_card_action_chars": "Lernen",
+    "study_card_action_time": "Spur",
+    "study_card_action_vocab": "Lernen",
+    "study_card_subtitle_chars": "Meister das Schriftsystem",
+    "study_card_subtitle_time": "Investiere Zeit die nötige Zeit",
+    "study_card_subtitle_vocab": "Erweitern Sie Ihren Wortschatz",
+    "title": "Account",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Konto-Bildschirm!"
+  },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
+    "tutorial_begin_title": "Willkommen auf dem Immersionsbildschirm!"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "Frag nicht nochmal",
     "RatePopup_text": "Es sieht so aus als würde dir DaKanji gefallen.\nFalls das stimmt würde eine Bewertung dem Projekt extrem weiter helfen!",
     "complete_log": "vollständiges Log",
@@ -1164,11 +1197,6 @@ static const Map<String,dynamic> de = {
     "new_versions_available_text": "Es sind {NEW_VERSIONS} neue Versionen von DaKanji verfügbar!",
     "rate_this_app": "Bewerte",
     "whats_new": "Was gibt's neues"
-  },
-  "ImmersionScreen": {
-    "title": "Immersion",
-    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "Willkommen auf dem Immersionsbildschirm!"
   },
   "KanaTableScreen": {
     "title": "Kana Tabelle",
@@ -1412,10 +1440,6 @@ static const Map<String,dynamic> de = {
     "tutorial_spaces_text": "Mit dieser Schaltfläche werden dem Text Leerzeichen hinzugefügt.",
     "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einfügen. Dieser Text kann mit verschiedenen Tools bearbeitet."
   },
-  "UserScreen": {
-    "title": "Konto",
-    "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-  },
   "WebbrowserScreen": {
     "title": "Webbrowser",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
@@ -1473,7 +1497,7 @@ static const Map<String,dynamic> de = {
     "tutorial_begin_title": "Willkommen auf dem YouTube-Bildschirm!"
   }
 };
-static const Map<String,dynamic> ru = {
+static const Map<String,dynamic> _ru = {
   "AboutScreen": {
     "about_text": "\"DaKanji\" поможет изучающим японский язык и людям, которые его используют.\n\"DaKanji\" доступен для, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nВы также можете найти все релизы на [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nТакже посмотрите [другие мои приложения]({DAAPPLAB_STORE_PAGE}).\nЕсли у вас возникли проблемы с использованием этого приложения или предложения по его улучшению, пожалуйста, сообщите о них [здесь]({GITHUB_ISSUES}), присоединяйтесь к [discord-серверу]({DISCORD_SERVER}) или используйте меню обратной связи, чтобы отправить аннотированный скриншот.\n\nС политикой конфиденциальности можно ознакомиться [здесь]({PRIVACY_POLICE})",
     "credits": "Кредиты",
@@ -1614,6 +1638,23 @@ static const Map<String,dynamic> ru = {
     "web": "веб-сайт"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "Данные исследований отсутствуют.",
+    "study_card_action_chars": "Исследование",
+    "study_card_action_time": "Трек",
+    "study_card_action_vocab": "Исследование",
+    "study_card_subtitle_chars": "Овладейте системой письма",
+    "study_card_subtitle_time": "Уделяйте время, чтобы добиться успеха",
+    "study_card_subtitle_vocab": "Расширьте свой словарный запас",
+    "title": "Счет",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран учетной записи!"
+  },
+  "ImmersionScreen": {
+    "title": "Погружение",
+    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
+    "tutorial_begin_title": "Добро пожаловать на экран погружения!"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "Не спрашивай больше",
     "RatePopup_text": "Вам нравится \"DaKanji\"?\nЕсли это так, то оценка была бы замечательной и очень помогла бы этому проекту!",
     "complete_log": "полный журнал",
@@ -1627,11 +1668,6 @@ static const Map<String,dynamic> ru = {
     "new_versions_available_text": "Доступны {NEW_VERSIONS} новые версии DaKanji!",
     "rate_this_app": "Тариф",
     "whats_new": "что нового"
-  },
-  "ImmersionScreen": {
-    "title": "Погружение",
-    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-    "tutorial_begin_title": "Добро пожаловать на экран погружения!"
   },
   "KanaTableScreen": {
     "title": "Стол Kana",
@@ -1875,10 +1911,6 @@ static const Map<String,dynamic> ru = {
     "tutorial_spaces_text": "С помощью этой кнопки в текст добавляются пробелы.",
     "tutorial_text_input_text": "Здесь вы можете написать или вставить любой текст. Этот текст будет обработан с помощью различных инструментов."
   },
-  "UserScreen": {
-    "title": "Счет",
-    "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-  },
   "WebbrowserScreen": {
     "title": "Webbrowser",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
@@ -1936,7 +1968,7 @@ static const Map<String,dynamic> ru = {
     "tutorial_begin_title": "Добро пожаловать на экран YouTube!"
   }
 };
-static const Map<String,dynamic> pl = {
+static const Map<String,dynamic> _pl = {
   "AboutScreen": {
     "about_text": "\"DaKanji\" pomaga studentom języka japońskiego i osobom, które go używają.\n\"DaKanji\" jest dostępny dla [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nWszystkie wydania można również znaleźć na [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nSprawdź również [inne moje aplikacje]({DAAPPLAB_STORE_PAGE}).\nJeśli masz problemy z korzystaniem z tej aplikacji lub sugestie, jak ją ulepszyć, zgłoś je [tutaj]({GITHUB_ISSUES}), dołącz do [serwera discord]({DISCORD_SERVER}) lub użyj menu opinii, aby wysłać zrzut ekranu z adnotacją.\n\nPolityka prywatności znajduje się [tutaj]({PRIVACY_POLICE}).",
     "credits": "Podziękowania",
@@ -2112,6 +2144,23 @@ static const Map<String,dynamic> pl = {
     "web": "web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "Brak danych z badań.",
+    "study_card_action_chars": "Badanie",
+    "study_card_action_time": "Ścieżka",
+    "study_card_action_vocab": "Badanie",
+    "study_card_subtitle_chars": "Opanuj system pisania",
+    "study_card_subtitle_time": "Poświęć czas na osiągnięcie sukcesu",
+    "study_card_subtitle_vocab": "Poszerz swoje słownictwo",
+    "title": "Konto",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie konta!"
+  },
+  "ImmersionScreen": {
+    "title": "Zanurzenie",
+    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie immersji!"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
     "RatePopup_text": "Lubisz DaKanji?\nJeżeli tak, to ocenienie aplikacji znacznie pomogłoby projektowi!",
     "complete_log": "pełny rejestr",
@@ -2125,11 +2174,6 @@ static const Map<String,dynamic> pl = {
     "new_versions_available_text": "Dostępne są {NEW_VERSIONS} nowe wersje DaKanji!",
     "rate_this_app": "Oceń",
     "whats_new": "co nowego"
-  },
-  "ImmersionScreen": {
-    "title": "Zanurzenie",
-    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
-    "tutorial_begin_title": "Witamy na ekranie immersji!"
   },
   "KanaTableScreen": {
     "title": "Stół Kana",
@@ -2382,10 +2426,6 @@ static const Map<String,dynamic> pl = {
     "tutorial_spaces_text": "Za pomocą tego przycisku do tekstu dodawane są spacje.",
     "tutorial_text_input_text": "Tutaj możesz napisać lub wkleić dowolny tekst. Ten tekst będzie przetwarzany za pomocą różnych narzędzi."
   },
-  "UserScreen": {
-    "title": "Konto",
-    "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
-  },
   "WebbrowserScreen": {
     "title": "Webbrowser",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
@@ -2443,7 +2483,7 @@ static const Map<String,dynamic> pl = {
     "tutorial_begin_title": "Witamy na ekranie YouTube!"
   }
 };
-static const Map<String,dynamic> en = {
+static const Map<String,dynamic> _en = {
   "AboutScreen": {
     "about_text": "\"DaKanji\" helps students of the Japanese language and people who use it.\n\"DaKanji\" is available for, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nYou can also find all releases on [GitHub.]({GITHUB_RELEASES_PAGE}).\n\nAlso check out [my other apps.]({DAAPPLAB_STORE_PAGE})\nIf you have problems using this app or suggestions on how to improve it please report them [here]({GITHUB_ISSUES}), join the [discord server]({DISCORD_SERVER}), or use the feedback menu to send an annotated screenshot.\n\nThe privacy policy can be found [here]({PRIVACY_POLICE})",
     "credits": "Credits",
@@ -2622,6 +2662,23 @@ static const Map<String,dynamic> en = {
     "web": "web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "No study data.",
+    "study_card_action_chars": "Study",
+    "study_card_action_time": "Track",
+    "study_card_action_vocab": "Study",
+    "study_card_subtitle_chars": "Master the writing system",
+    "study_card_subtitle_time": "Put in the time to succeed",
+    "study_card_subtitle_vocab": "Expand your vocabulary",
+    "title": "Account",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the account screen!"
+  },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
+    "tutorial_begin_title": "Welcome to the immersion screen!"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "Don't ask again",
     "RatePopup_text": "Do you like \"DaKanji\"?\nIf that is the case a rating would be awesome and it would help this project a lot!",
     "complete_log": "complete log",
@@ -2635,11 +2692,6 @@ static const Map<String,dynamic> en = {
     "new_versions_available_text": "There are {NEW_VERSIONS} new versions of DaKanji available!",
     "rate_this_app": "Rate",
     "whats_new": "what's new"
-  },
-  "ImmersionScreen": {
-    "title": "Immersion",
-    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
-    "tutorial_begin_title": "Welcome to the immersion screen!"
   },
   "KanaTableScreen": {
     "title": "Kana Table",
@@ -2893,11 +2945,6 @@ static const Map<String,dynamic> en = {
     "tutorial_spaces_text": "With this button spaces are added to the text.",
     "tutorial_text_input_text": "Here you can write or paste any text. This text can be processed with different tools."
   },
-  "UserScreen": {
-    "title": "Account",
-    "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
-    "tutorial_begin_title": "Welcome to the account screen!"
-  },
   "WebbrowserScreen": {
     "title": "Webbrowser",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
@@ -2990,7 +3037,7 @@ static const Map<String,dynamic> en = {
     "tutorial_begin_title": "Welcome to the YouTube screen!"
   }
 };
-static const Map<String,dynamic> it = {
+static const Map<String,dynamic> _it = {
   "AboutScreen": {
     "about_text": "\"DaKanji\" aiuta gli studenti della lingua giapponese e le persone che la utilizzano.\n\"DaKanji\" è disponibile per [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nTutte le versioni sono disponibili anche su [GitHub]({GITHUB_RELEASES_PAGE}).\n\nDate anche un'occhiata a [le mie altre applicazioni] ({DAAPPLAB_STORE_PAGE}).\nSe avete problemi nell'uso di questa applicazione o suggerimenti su come migliorarla, segnalateli [qui]({GITHUB_ISSUES}), unitevi al [server discord]({DISCORD_SERVER}), o usate il menu feedback per inviare uno screenshot commentato.\n\nL'informativa sulla privacy è disponibile [qui]({PRIVACY_POLICE}).",
     "credits": "Crediti",
@@ -3131,6 +3178,23 @@ static const Map<String,dynamic> it = {
     "web": "web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "Nessun dato di studio.",
+    "study_card_action_chars": "Studio",
+    "study_card_action_time": "Traccia",
+    "study_card_action_vocab": "Studio",
+    "study_card_subtitle_chars": "Padroneggiare il sistema di scrittura",
+    "study_card_subtitle_time": "Dedicare tempo al successo",
+    "study_card_subtitle_vocab": "Ampliare il vocabolario",
+    "title": "Conto",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata dell'account!"
+  },
+  "ImmersionScreen": {
+    "title": "Immersione",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata di immersione!"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "Non chiedetelo più",
     "RatePopup_text": "Ti piace \"DaKanji\"?\nSe è così, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!",
     "complete_log": "registro completo",
@@ -3144,11 +3208,6 @@ static const Map<String,dynamic> it = {
     "new_versions_available_text": "Sono disponibili {NEW_VERSIONS} nuove versioni di DaKanji!",
     "rate_this_app": "Tasso",
     "whats_new": "cosa c'è di nuovo"
-  },
-  "ImmersionScreen": {
-    "title": "Immersione",
-    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "Benvenuti nella schermata di immersione!"
   },
   "KanaTableScreen": {
     "title": "Tavolo Kana",
@@ -3392,10 +3451,6 @@ static const Map<String,dynamic> it = {
     "tutorial_spaces_text": "Con questo pulsante vengono aggiunti spazi al testo.",
     "tutorial_text_input_text": "Qui è possibile scrivere o incollare qualsiasi testo. Il testo verrà elaborato con diversi strumenti."
   },
-  "UserScreen": {
-    "title": "Conto",
-    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-  },
   "WebbrowserScreen": {
     "title": "Webbrowser",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
@@ -3453,7 +3508,7 @@ static const Map<String,dynamic> it = {
     "tutorial_begin_title": "Benvenuti sullo schermo di YouTube!"
   }
 };
-static const Map<String,dynamic> fr = {
+static const Map<String,dynamic> _fr = {
   "AboutScreen": {
     "about_text": "\"DaKanji\" aide les étudiants de la langue japonaise et les personnes qui l'utilisent.\n\"DaKanji\" est disponible pour, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nVous pouvez également trouver toutes les versions sur [GitHub]({GITHUB_RELEASES_PAGE}).\n\nConsultez également [mes autres applications]({DAAPPLAB_STORE_PAGE})\nSi vous avez des problèmes d'utilisation de cette application ou des suggestions pour l'améliorer, merci de les signaler [ici]({GITHUB_ISSUES}), de rejoindre le [serveur discord]({DISCORD_SERVER}), ou d'utiliser le menu feedback pour envoyer une capture d'écran annotée.\n\nLa politique de confidentialité peut être consultée [ici]({PRIVACY_POLICE})",
     "credits": "Crédits",
@@ -3594,6 +3649,23 @@ static const Map<String,dynamic> fr = {
     "web": "web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "Aucune donnée d'étude.",
+    "study_card_action_chars": "L'étude",
+    "study_card_action_time": "Poursuivre",
+    "study_card_action_vocab": "L'étude",
+    "study_card_subtitle_chars": "Maîtriser le système d'écriture",
+    "study_card_subtitle_time": "Consacrer du temps à la réussite",
+    "study_card_subtitle_vocab": "Élargissez votre vocabulaire",
+    "title": "Compte",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue sur l'écran du compte !"
+  },
+  "ImmersionScreen": {
+    "title": "Immersion",
+    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
+    "tutorial_begin_title": "Bienvenue à l'écran d'immersion !"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "Ne demandez pas à nouveau",
     "RatePopup_text": "Est-ce que vous aimez \"DaKanji\" ?\nSi c'est le cas, une évaluation serait géniale et cela aiderait beaucoup ce projet !",
     "complete_log": "journal complet",
@@ -3607,11 +3679,6 @@ static const Map<String,dynamic> fr = {
     "new_versions_available_text": "Il y a {NEW_VERSIONS} nouvelles versions de DaKanji disponibles !",
     "rate_this_app": "Taux",
     "whats_new": "Quoi de neuf ?"
-  },
-  "ImmersionScreen": {
-    "title": "Immersion",
-    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-    "tutorial_begin_title": "Bienvenue à l'écran d'immersion !"
   },
   "KanaTableScreen": {
     "title": "Table Kana",
@@ -3855,10 +3922,6 @@ static const Map<String,dynamic> fr = {
     "tutorial_spaces_text": "Ce bouton permet d'ajouter des espaces au texte.",
     "tutorial_text_input_text": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils."
   },
-  "UserScreen": {
-    "title": "Compte",
-    "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-  },
   "WebbrowserScreen": {
     "title": "Navigateur Web",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
@@ -3916,7 +3979,7 @@ static const Map<String,dynamic> fr = {
     "tutorial_begin_title": "Bienvenue sur l'écran YouTube !"
   }
 };
-static const Map<String,dynamic> es = {
+static const Map<String,dynamic> _es = {
   "AboutScreen": {
     "about_text": "\"DaKanji\" ayuda a los estudiantes de japonés y a las personas que lo utilizan.\n\"DaKanji\" está disponible para, [iOS]({APPSTORE_PAGE}), [Android]({PLAYSTORE_PAGE}), [MacOS]({MACSTORE_PAGE}), [Linux (Snap)]({SNAPSTORE_PAGE}), [Linux (flatpak)]({FLATPAKSTORE_PAGE}), [Linux (portable)]({PORTABLE_DOWNLOAD}), [Windows]({MICROSOFT_STORE_PAGE}).\nTambién puede encontrar todas las versiones en [GitHub]({GITHUB_RELEASES_PAGE}).\n\nTambién puedes echar un vistazo a [mis otras aplicaciones.]({DAAPPLAB_STORE_PAGE})\nSi tienes problemas usando esta aplicación o sugerencias sobre cómo mejorarla, por favor repórtalos [aquí]({GITHUB_ISSUES}), únete al [servidor discord]({DISCORD_SERVER}), o usa el menú de comentarios para enviar una captura de pantalla comentada.\n\nLa política de privacidad se puede encontrar [aquí]({PRIVACY_POLICE})",
     "credits": "Créditos",
@@ -4057,6 +4120,23 @@ static const Map<String,dynamic> es = {
     "web": "web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "No hay datos del estudio.",
+    "study_card_action_chars": "Estudiar",
+    "study_card_action_time": "Pista",
+    "study_card_action_vocab": "Estudiar",
+    "study_card_subtitle_chars": "Dominar el sistema de escritura",
+    "study_card_subtitle_time": "Dedicar tiempo al éxito",
+    "study_card_subtitle_vocab": "Amplíe su vocabulario",
+    "title": "Cuenta",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "¡Bienvenido a la pantalla de la cuenta!"
+  },
+  "ImmersionScreen": {
+    "title": "Inmersión",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "¡Bienvenido a la pantalla de inmersión!"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "No vuelvas a preguntar",
     "RatePopup_text": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificación sería genial y ayudaría mucho al proyecto!",
     "complete_log": "registro completo",
@@ -4071,11 +4151,6 @@ static const Map<String,dynamic> es = {
     "rate_this_app": "Calificar",
     "whats_new": "qué hay de nuevo"
   },
-  "ImmersionScreen": {
-    "title": "Inmersión",
-    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "¡Bienvenido a la pantalla de inmersión!"
-  },
   "KanaTableScreen": {
     "title": "Mesa Kana",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
@@ -4089,7 +4164,7 @@ static const Map<String,dynamic> es = {
     "tutorial_speed_dial_yoon_special": "Este botón activa o desactiva los personajes raros de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Entrenador Kana"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "Tabla de Kanji",
@@ -4324,10 +4399,6 @@ static const Map<String,dynamic> es = {
     "tutorial_spaces_text": "Con este botón se añaden espacios al texto.",
     "tutorial_text_input_text": "Aquí puedes escribir o pegar cualquier texto. Este texto será procesado con diferentes herramientas."
   },
-  "UserScreen": {
-    "title": "Cuenta",
-    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-  },
   "WebbrowserScreen": {
     "title": "Navegador",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
@@ -4385,5 +4456,5 @@ static const Map<String,dynamic> es = {
     "tutorial_begin_title": "Bienvenido a la pantalla de YouTube"
   }
 };
-static const Map<String, Map<String,dynamic>> mapLocales = {"zh": zh, "ja": ja, "de": de, "ru": ru, "pl": pl, "en": en, "it": it, "fr": fr, "es": es};
+static const Map<String, Map<String,dynamic>> mapLocales = {"zh": _zh, "ja": _ja, "de": _de, "ru": _ru, "pl": _pl, "en": _en, "it": _it, "fr": _fr, "es": _es};
 }

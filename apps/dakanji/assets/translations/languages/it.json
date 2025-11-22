@@ -177,6 +177,23 @@
     "web": "web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "Nessun dato di studio.",
+    "study_card_action_chars": "Studio",
+    "study_card_action_time": "Traccia",
+    "study_card_action_vocab": "Studio",
+    "study_card_subtitle_chars": "Padroneggiare il sistema di scrittura",
+    "study_card_subtitle_time": "Dedicare tempo al successo",
+    "study_card_subtitle_vocab": "Ampliare il vocabolario",
+    "title": "Conto",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata dell'account!"
+  },
+  "ImmersionScreen": {
+    "title": "Immersione",
+    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
+    "tutorial_begin_title": "Benvenuti nella schermata di immersione!"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "Non chiedetelo pi\u00f9",
     "RatePopup_text": "Ti piace \"DaKanji\"?\nSe \u00e8 cos\u00ec, una valutazione sarebbe fantastica e aiuterebbe molto questo progetto!",
     "complete_log": "registro completo",
@@ -190,11 +207,6 @@
     "new_versions_available_text": "Sono disponibili {NEW_VERSIONS} nuove versioni di DaKanji!",
     "rate_this_app": "Tasso",
     "whats_new": "cosa c'\u00e8 di nuovo"
-  },
-  "ImmersionScreen": {
-    "title": "Immersione",
-    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "Benvenuti nella schermata di immersione!"
   },
   "KanaTableScreen": {
     "title": "Tavolo Kana",
@@ -453,11 +465,6 @@
     "tutorial_processed_text_triple_tap": "Un triplo tocco selezioner\u00e0 un paragrafo.",
     "tutorial_spaces_text": "Con questo pulsante vengono aggiunti spazi al testo.",
     "tutorial_text_input_text": "Qui \u00e8 possibile scrivere o incollare qualsiasi testo. Il testo verr\u00e0 elaborato con diversi strumenti."
-  },
-  "UserScreen": {
-    "title": "Conto",
-    "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": ""
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",

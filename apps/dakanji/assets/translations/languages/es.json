@@ -177,6 +177,23 @@
     "web": "web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "No hay datos del estudio.",
+    "study_card_action_chars": "Estudiar",
+    "study_card_action_time": "Pista",
+    "study_card_action_vocab": "Estudiar",
+    "study_card_subtitle_chars": "Dominar el sistema de escritura",
+    "study_card_subtitle_time": "Dedicar tiempo al \u00e9xito",
+    "study_card_subtitle_vocab": "Ampl\u00ede su vocabulario",
+    "title": "Cuenta",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "\u00a1Bienvenido a la pantalla de la cuenta!"
+  },
+  "ImmersionScreen": {
+    "title": "Inmersi\u00f3n",
+    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
+    "tutorial_begin_title": "\u00a1Bienvenido a la pantalla de inmersi\u00f3n!"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "No vuelvas a preguntar",
     "RatePopup_text": "Te gusta DaKanji?\nSi ese es el caso, dejarnos una calificaci\u00f3n ser\u00eda genial y ayudar\u00eda mucho al proyecto!",
     "complete_log": "registro completo",
@@ -191,11 +208,6 @@
     "rate_this_app": "Calificar",
     "whats_new": "qu\u00e9 hay de nuevo"
   },
-  "ImmersionScreen": {
-    "title": "Inmersi\u00f3n",
-    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "\u00a1Bienvenido a la pantalla de inmersi\u00f3n!"
-  },
   "KanaTableScreen": {
     "title": "Mesa Kana",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
@@ -209,7 +221,7 @@
     "tutorial_speed_dial_yoon_special": "Este bot\u00f3n activa o desactiva los personajes raros de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Entrenador Kana"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "Tabla de Kanji",
@@ -453,11 +465,6 @@
     "tutorial_processed_text_triple_tap": "Un triple toque seleccionar\u00e1 un p\u00e1rrafo.",
     "tutorial_spaces_text": "Con este bot\u00f3n se a\u00f1aden espacios al texto.",
     "tutorial_text_input_text": "Aqu\u00ed puedes escribir o pegar cualquier texto. Este texto ser\u00e1 procesado con diferentes herramientas."
-  },
-  "UserScreen": {
-    "title": "Cuenta",
-    "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": ""
   },
   "WebbrowserScreen": {
     "title": "Navegador",

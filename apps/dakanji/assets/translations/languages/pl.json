@@ -177,6 +177,23 @@
     "web": "web"
   },
   "HomeScreen": {
+    "study_calendar_no_study_data": "Brak danych z bada\u0144.",
+    "study_card_action_chars": "Badanie",
+    "study_card_action_time": "\u015acie\u017cka",
+    "study_card_action_vocab": "Badanie",
+    "study_card_subtitle_chars": "Opanuj system pisania",
+    "study_card_subtitle_time": "Po\u015bwi\u0119\u0107 czas na osi\u0105gni\u0119cie sukcesu",
+    "study_card_subtitle_vocab": "Poszerz swoje s\u0142ownictwo",
+    "title": "Konto",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie konta!"
+  },
+  "ImmersionScreen": {
+    "title": "Zanurzenie",
+    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
+    "tutorial_begin_title": "Witamy na ekranie immersji!"
+  },
+  "InitScreen": {
     "RatePopup_dont_ask_again": "Nie pytaj ponownie.",
     "RatePopup_text": "Lubisz DaKanji?\nJe\u017celi tak, to ocenienie aplikacji znacznie pomog\u0142oby projektowi!",
     "complete_log": "pe\u0142ny rejestr",
@@ -190,11 +207,6 @@
     "new_versions_available_text": "Dost\u0119pne s\u0105 {NEW_VERSIONS} nowe wersje DaKanji!",
     "rate_this_app": "Oce\u0144",
     "whats_new": "co nowego"
-  },
-  "ImmersionScreen": {
-    "title": "Zanurzenie",
-    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
-    "tutorial_begin_title": "Witamy na ekranie immersji!"
   },
   "KanaTableScreen": {
     "title": "St\u00f3\u0142 Kana",
@@ -453,11 +465,6 @@
     "tutorial_processed_text_triple_tap": "Potr\u00f3jne stukni\u0119cie powoduje zaznaczenie akapitu.",
     "tutorial_spaces_text": "Za pomoc\u0105 tego przycisku do tekstu dodawane s\u0105 spacje.",
     "tutorial_text_input_text": "Tutaj mo\u017cesz napisa\u0107 lub wklei\u0107 dowolny tekst. Ten tekst b\u0119dzie przetwarzany za pomoc\u0105 r\u00f3\u017cnych narz\u0119dzi."
-  },
-  "UserScreen": {
-    "title": "Konto",
-    "tutorial_begin_text": "Poka\u017cemy Ci kr\u00f3tki poradnik jak korzysta\u0107 z aplikacji",
-    "tutorial_begin_title": ""
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
