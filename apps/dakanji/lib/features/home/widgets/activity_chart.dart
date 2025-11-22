@@ -25,9 +25,9 @@ import 'breathing_neon_wrapper.dart';
 /// * **90-180 Days:** Icon emits a "breathing" glow (Red/Yellow mix). Opacity increases 0.0 -> 1.0.
 /// * **360+ Days:** The static icon is replaced by a Lottie flame animation.
 class StudyCalendar extends StatefulWidget {
-  final Map<String, (int, int)> vocabStudied;
-  final Map<String, (int, int)> charactersStudied;
-  final Map<String, (int, int)> timeStudied;
+  final Map<String, (int, int)?>? vocabStudied;
+  final Map<String, (int, int)?>? charactersStudied;
+  final Map<String, (int, int)?>? timeStudied;
 
   final Color vocabColor;
   final Color charactersColor;
@@ -37,9 +37,9 @@ class StudyCalendar extends StatefulWidget {
 
   const StudyCalendar({
     super.key,
-    required this.vocabStudied,
-    required this.charactersStudied,
-    required this.timeStudied,
+    this.vocabStudied,
+    this.charactersStudied,
+    this.timeStudied,
     this.vocabColor = g_Dakanji_green,
     this.charactersColor = g_Dakanji_red,
     this.timeColor = g_Dakanji_blue,
@@ -129,8 +129,8 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
   void _calculateTotalPages() {
     DateTime? earliest;
     
-    void checkMap(Map<String, dynamic> map) {
-      if (map.isEmpty) return;
+    void checkMap(Map<String, dynamic>? map) {
+      if (map == null || map.isEmpty) return;
       final sortedKeys = map.keys.toList()..sort();
       final firstDate = _formatter.parse(sortedKeys.first);
       if (earliest == null || firstDate.isBefore(earliest!)) {
@@ -190,24 +190,42 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
   /// Current Rule: >50% completion in Vocab, Characters, AND Time.
   bool _isStreakCompliant(DateTime date) {
     final key = _formatter.format(date);
-    final v = widget.vocabStudied[key];
-    final c = widget.charactersStudied[key];
-    final t = widget.timeStudied[key];
 
-    double getPct((int, int)? data) {
-      if (data == null || data.$2 == 0) return 0.0;
-      return data.$1 / data.$2;
+    bool? checkCategory(Map<String, (int, int)?>? map) {
+      if (map == null) return null;
+      
+      final data = map[key];
+      if (data == null) return null;
+      
+      if (data.$2 == 0) return null;
+
+      return (data.$1 / data.$2) >= 0.5;
     }
-    return getPct(v) >= 0.5 && getPct(c) >= 0.5 && getPct(t) >= 0.5;
+
+    final v = checkCategory(widget.vocabStudied);
+    final c = checkCategory(widget.charactersStudied);
+    final t = checkCategory(widget.timeStudied);
+
+    final results = [v, c, t].whereType<bool>().toList();
+
+    if (results.isEmpty) return false;
+
+    return results.every((result) => result == true);
   }
 
   /// Checks if any study activity occurred on this date (used for showing rings).
   bool _isDayVisualActive(DateTime date) {
     final key = _formatter.format(date);
-    final v = widget.vocabStudied[key];
-    final c = widget.charactersStudied[key];
-    final t = widget.timeStudied[key];
-    return (v != null && v.$1 > 0) || (c != null && c.$1 > 0) || (t != null && t.$1 > 0);
+    
+    bool hasActivity(Map<String, (int, int)?>? map) {
+      if (map == null) return false;
+      final data = map[key];
+      return data != null && data.$1 > 0;
+    }
+
+    return hasActivity(widget.vocabStudied) || 
+           hasActivity(widget.charactersStudied) || 
+           hasActivity(widget.timeStudied);
   }
 
   /// Generates the list of 35 days (5 weeks) for a specific grid page.
@@ -497,9 +515,9 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
                                     borderRadius = BorderRadius.circular(50);
                                   }
 
-                                  final vocabData = widget.vocabStudied[dateKey];
-                                  final charData = widget.charactersStudied[dateKey];
-                                  final timeData = widget.timeStudied[dateKey];
+                                  final vocabData = widget.vocabStudied?[dateKey];
+                                  final charData = widget.charactersStudied?[dateKey];
+                                  final timeData = widget.timeStudied?[dateKey];
 
                                   double getPercent((int, int)? data) {
                                     if (data == null || data.$2 == 0) return 0.0;
@@ -568,7 +586,7 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
                                               return Stack(
                                                 alignment: Alignment.center,
                                                 children: [
-                                                  if (timeData != null && timeData.$1 > 0)
+                                                  if (widget.timeStudied != null && timeData != null && timeData.$1 > 0)
                                                     BreathingNeonWrapper(
                                                       isActive: isCompliant && isPartOfCurrentStreak,
                                                       glowAnimation: _glowAnimation,
@@ -585,7 +603,7 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
                                                         ),
                                                       ),
                                                     ),
-                                                  if (vocabData != null && vocabData.$1 > 0)
+                                                  if (widget.vocabStudied != null && vocabData != null && vocabData.$1 > 0)
                                                     SizedBox(
                                                       width: _circleSize * 0.75,
                                                       height: _circleSize * 0.75,
@@ -597,7 +615,7 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
                                                         strokeCap: StrokeCap.round,
                                                       ),
                                                     ),
-                                                  if (charData != null && charData.$1 > 0)
+                                                  if (widget.charactersStudied != null && charData != null && charData.$1 > 0)
                                                     SizedBox(
                                                       width: _circleSize * 0.5, 
                                                       height: _circleSize * 0.5,
