@@ -162,7 +162,7 @@ class CodegenLoader extends AssetLoader{
     "study_card_subtitle_chars": "掌握书写系统",
     "study_card_subtitle_time": "花时间取得成功",
     "study_card_subtitle_vocab": "扩大词汇量",
-    "title": "账户",
+    "title": "首页",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
     "tutorial_begin_title": "欢迎进入账户界面！"
   },
@@ -655,7 +655,7 @@ static const Map<String,dynamic> _ja = {
     "study_card_subtitle_chars": "ライティング・システムをマスターする",
     "study_card_subtitle_time": "成功のために時間を費やす",
     "study_card_subtitle_vocab": "語彙を増やす",
-    "title": "アカウント",
+    "title": "ホーム",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
     "tutorial_begin_title": "アカウント画面へようこそ！"
   },
@@ -1174,7 +1174,7 @@ static const Map<String,dynamic> _de = {
     "study_card_subtitle_chars": "Meister das Schriftsystem",
     "study_card_subtitle_time": "Investiere Zeit die nötige Zeit",
     "study_card_subtitle_vocab": "Erweitern Sie Ihren Wortschatz",
-    "title": "Account",
+    "title": "Startseite",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
     "tutorial_begin_title": "Willkommen auf dem Konto-Bildschirm!"
   },
@@ -1645,7 +1645,7 @@ static const Map<String,dynamic> _ru = {
     "study_card_subtitle_chars": "Овладейте системой письма",
     "study_card_subtitle_time": "Уделяйте время, чтобы добиться успеха",
     "study_card_subtitle_vocab": "Расширьте свой словарный запас",
-    "title": "Счет",
+    "title": "Главная",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
     "tutorial_begin_title": "Добро пожаловать на экран учетной записи!"
   },
@@ -2151,7 +2151,7 @@ static const Map<String,dynamic> _pl = {
     "study_card_subtitle_chars": "Opanuj system pisania",
     "study_card_subtitle_time": "Poświęć czas na osiągnięcie sukcesu",
     "study_card_subtitle_vocab": "Poszerz swoje słownictwo",
-    "title": "Konto",
+    "title": "Strona główna",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
     "tutorial_begin_title": "Witamy na ekranie konta!"
   },
@@ -2669,7 +2669,7 @@ static const Map<String,dynamic> _en = {
     "study_card_subtitle_chars": "Master the writing system",
     "study_card_subtitle_time": "Put in the time to succeed",
     "study_card_subtitle_vocab": "Expand your vocabulary",
-    "title": "Account",
+    "title": "Home",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the account screen!"
   },
@@ -3185,7 +3185,7 @@ static const Map<String,dynamic> _it = {
     "study_card_subtitle_chars": "Padroneggiare il sistema di scrittura",
     "study_card_subtitle_time": "Dedicare tempo al successo",
     "study_card_subtitle_vocab": "Ampliare il vocabolario",
-    "title": "Conto",
+    "title": "Casa",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
     "tutorial_begin_title": "Benvenuti nella schermata dell'account!"
   },
@@ -3656,7 +3656,7 @@ static const Map<String,dynamic> _fr = {
     "study_card_subtitle_chars": "Maîtriser le système d'écriture",
     "study_card_subtitle_time": "Consacrer du temps à la réussite",
     "study_card_subtitle_vocab": "Élargissez votre vocabulaire",
-    "title": "Compte",
+    "title": "Accueil",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
     "tutorial_begin_title": "Bienvenue sur l'écran du compte !"
   },
@@ -4127,7 +4127,7 @@ static const Map<String,dynamic> _es = {
     "study_card_subtitle_chars": "Dominar el sistema de escritura",
     "study_card_subtitle_time": "Dedicar tiempo al éxito",
     "study_card_subtitle_vocab": "Amplíe su vocabulario",
-    "title": "Cuenta",
+    "title": "Inicio",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": "¡Bienvenido a la pantalla de la cuenta!"
   },

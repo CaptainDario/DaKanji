@@ -4489,15 +4489,15 @@
   },
   "HomeScreen": {
     "title": {
-      "en": "Account",
-      "de": "Account",
-      "ru": "Счет",
-      "ja": "アカウント",
-      "zh": "账户",
-      "it": "Conto",
-      "fr": "Compte",
-      "es": "Cuenta",
-      "pl": "Konto"
+      "en": "Home",
+      "de": "Startseite",
+      "ru": "Главная",
+      "ja": "ホーム",
+      "zh": "首页",
+      "it": "Casa",
+      "fr": "Accueil",
+      "es": "Inicio",
+      "pl": "Strona główna"
     },
     "tutorial_begin_title": {
       "en": "Welcome to the account screen!",
