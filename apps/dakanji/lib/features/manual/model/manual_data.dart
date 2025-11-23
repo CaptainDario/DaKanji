@@ -12,7 +12,6 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_anki.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_deep_links.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_dictionary.dart';
-import 'package:da_kanji_mobile/features/manual/widgets/manual_dojg.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_kana_table.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_misc.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_text.dart';
@@ -36,7 +35,6 @@ class ManualData {
       LocaleKeys.DictionaryScreen_title.tr(),
       LocaleKeys.TextScreen_title.tr(),
       LocaleKeys.ManualScreen_anki_title.tr(),
-      LocaleKeys.DojgScreen_title.tr(),
       LocaleKeys.KanaTableScreen_title.tr(),
       LocaleKeys.ManualScreen_deep_links_title.tr(),
       LocaleKeys.ManualScreen_misc_title.tr()
@@ -46,7 +44,6 @@ class ManualData {
       DaKanjiIcons.dictionary,
       DaKanjiIcons.text,
       DaKanjiCustomIcons.anki,
-      DaKanjiCustomIcons.dojg,
       DaKanjiCustomIcons.kana_table,
       DaKanjiIcons.deepLinks,
       DaKanjiIcons.misc
@@ -56,7 +53,6 @@ class ManualData {
       const ManualDictionary(),
       const ManualTextScreen(),
       const ManualAnki(),
-      const ManualDojgPage(),
       const ManualKanaTablePage(),
       const ManualDeepLinks(),
       const ManualMisc()
@@ -66,7 +62,6 @@ class ManualData {
       ManualTypes.dictionary,
       ManualTypes.text,
       ManualTypes.anki,
-      ManualTypes.dojg,
       ManualTypes.kanaTable,
       ManualTypes.deepLinks,
       ManualTypes.misc

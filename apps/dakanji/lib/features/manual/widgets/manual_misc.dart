@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/features/manual/widgets/manual_section.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -30,25 +31,16 @@ class ManualMisc extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Search history
-            ExpansionTile(
-              title: Text(LocaleKeys.ManualScreen_misc_drawer_heading.tr(), style: heading_1,),
-              children: [
-                const SizedBox(height: 15),
-
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    LocaleKeys.ManualScreen_misc_drawer_reorder_heading.tr(), style: heading_2,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(LocaleKeys.ManualScreen_misc_drawer_reorder_text.tr()),
-                
-                const SizedBox(height: 15),
+            // Navigation drawer
+            ManualSection(
+              title: LocaleKeys.ManualScreen_misc_drawer_heading.tr(),
+              sectionHeaders: [
+                (null, LocaleKeys.ManualScreen_misc_drawer_reorder_heading.tr())
               ],
-            ),
-    
+              sectionTexts: [
+                (LocaleKeys.ManualScreen_misc_drawer_reorder_text.tr(), false)
+              ]
+            )
           ]
         ),
       ),

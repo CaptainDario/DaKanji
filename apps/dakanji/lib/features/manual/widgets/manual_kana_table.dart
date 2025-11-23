@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/features/manual/widgets/manual_section.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -32,14 +33,14 @@ class ManualKanaTablePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Kana animation controls
-          ExpansionTile(
-            title: Text(LocaleKeys.ManualScreen_dict_kanji_animation_title.tr(), style: heading_1,),
-            children: [
-              const SizedBox(height: 5),
-              Text(LocaleKeys.ManualScreen_dict_kanji_animation_text.tr()),
-
-              const SizedBox(height: 15),
+          ManualSection(
+            title: LocaleKeys.ManualScreen_dict_kanji_animation_title.tr(),
+            sectionHeaders: [
+              (null, null) 
             ],
+            sectionTexts: [
+              (LocaleKeys.ManualScreen_dict_kanji_animation_text.tr(), false)
+            ]
           ),
         ],
       ),
