@@ -1988,8 +1988,8 @@
       "ja": "カナ・トレーナー",
       "zh": "卡纳培训师",
       "it": "Allenatore Kana",
-      "fr": "Formateur Kana",
-      "es": "#ERROR!",
+      "fr": "#ERROR!",
+      "es": "Entrenador Kana",
       "pl": "Trener Kana"
     }
   },
@@ -2988,7 +2988,7 @@
     },
     "text_save_text": {
       "en": "Save text across sessions",
-      "de": "Text sitzungsübergreifend speichern",
+      "de": "#ERROR!",
       "ru": "Сохраняйте текст в разных сеансах",
       "ja": "セッションをまたいでテキストを保存",
       "zh": "跨会话保存文本",
@@ -4024,38 +4024,20 @@
       "es": "Diccionario",
       "pl": "Słownik"
     },
-    "dict_search_results_title": {
-      "en": "Search results",
-      "de": "Suchergebnisse",
-      "ru": "Результаты поиска",
-      "ja": "検索結果",
-      "zh": "搜索结果",
-      "it": "Risultati della ricerca",
-      "fr": "Résultats de la recherche",
-      "es": "Resultados de la búsqueda",
-      "pl": "Wyniki wyszukiwania"
+    "dict_search_title": {
+      "en": "Searching"
     },
-    "dict_search_results_navigate_title": {
-      "en": "Navigate",
-      "de": "Navigieren",
-      "ru": "Перейдите по ссылке",
-      "ja": "検索結果の選択",
-      "zh": "导航",
-      "it": "Navigare",
-      "fr": "Naviguer",
-      "es": "Navegue por",
-      "pl": "Nawigacja"
+    "dict_search_wildcard_search_title": {
+      "en": "Wildcards"
     },
-    "dict_search_results_navigate_text": {
-      "en": "You can navigate the search results with the arrow up and down keys. If you want to open a dictionary entry, press enter while it is highlighted.",
-      "de": "Sie können mit den hoch und runter Pfeiltasten durch die Suchergebnisse navigieren. Wenn Sie einen Wörterbucheintrag öffnen möchten, drücke Enter während er markiert ist.",
-      "ru": "Перемещаться по результатам поиска можно с помощью клавиш со стрелками вверх и вниз. Если необходимо открыть словарную статью, нажмите клавишу Enter, когда она выделена.",
-      "ja": "キーボードの上下方向キーで検索結果を選択できます。その単語の辞書エントリーを開きたい場合は、ハイライトされた状態でEnterキーを押してください。",
-      "zh": "您可以使用上下箭头键浏览搜索结果。如果您想打开某个词典条目，请在该条目突出显示时按回车键。",
-      "it": "È possibile navigare tra i risultati della ricerca con i tasti freccia su e giù. Se si desidera aprire una voce del dizionario, premere Invio mentre è evidenziata.",
-      "fr": "Vous pouvez naviguer dans les résultats de la recherche à l'aide des touches fléchées vers le haut et vers le bas. Si vous souhaitez ouvrir une entrée du dictionnaire, appuyez sur la touche Entrée lorsqu'elle est en surbrillance.",
-      "es": "Puedes navegar por los resultados de la búsqueda con las flechas arriba y abajo. Si quieres abrir una entrada del diccionario, pulsa Intro mientras esté resaltada.",
-      "pl": "Wyniki wyszukiwania można przeglądać za pomocą przycisków strzałek w górę i w dół. Aby otworzyć hasło słownikowe, naciśnij klawisz Enter, gdy jest ono podświetlone."
+    "dict_search_wildcard_search_text": {
+      "en": "DaKanji gives you the ability to search in the dictionary using more general pattern matching (UNIX wildcards), but __be aware that this can be slow, especially if you have many dictionaries imported__.\n\n**Important Limitations**\nWhen using these symbols, **Smart Search is DISABLED**.\n* **No Deconjugation:** Searching `食べ*` will not automatically find `食べた` unless the wildcard explicitly matches it.\n* **No Spell-fix:** Typing errors are not auto-corrected.\n\n### Search Symbols\n\n**`*`**\n\nMatches **any number of characters** (including zero).\n* **Example:** `食*`\n    * **Matches:** `食べる`, `食事`, `食品`\n* **Example:** `*学`\n    * **Matches:** `大学`, `科学`, `言語学`\n\n**`?`**\n\nMatches **exactly one character**.\n* **Example:** `?本`\n    * **Matches:** `日本`, `三本`\n    * **Does NOT match:** `本` (too short) or `アメリカ本` (too long)\n\n**`[ ]`**\n\nMatches **one character** from the specific list provided.\n* **Example:** `[赤青]色`\n    * **Matches:** `赤色` or `青色`\n\nThis can also specify a character range\n* **Example:** `JLPT-N[1-5]`\n    * **Matches:** `JLPT-N1` through `JLPT-N5`\n\n**`[^ ]`**\n\nMatches one character that is **NOT** in the list provided.\n* **Example:** `[^月]曜日`\n    * **Matches:** `火曜日`, `水曜日`\n    * **Excludes:** `月曜日`"
+    },
+    "dict_search_specifiying_searches_title": {
+      "en": "Specifying searches"
+    },
+    "dict_search_specifiying_searches_text": {
+      "en": "DaKanji allows you to specify what you want to match. You can prefix a search by using `?term=`, `?reading=` or `?definition=` to specify what you want to match with your search.\nFor example, `?reading=りんご` will search for any entry with a reading that matches.\nYou can also combine them by separating them using `&` like this `?term=林檎&reading=りんご`."
     },
     "dict_search_history_title": {
       "en": "Search history",
@@ -4626,13 +4608,13 @@
     },
     "tutorial_begin_title": {
       "en": "Welcome to the word lists screen!",
-      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
+      "de": "#ERROR!",
       "ru": "Добро пожаловать на экран списков слов!",
-      "ja": "単語リスト画面へようこそ！",
-      "zh": "欢迎来到单词列表屏幕！",
+      "ja": "#ERROR!",
+      "zh": "#ERROR!",
       "it": "Benvenuti nella schermata degli elenchi di parole!",
       "fr": "Bienvenue dans l'écran des listes de mots !",
-      "es": "Bienvenido a la pantalla de listas de palabras.",
+      "es": "#ERROR!",
       "pl": "Witamy na ekranie list słów!"
     },
     "tutorial_begin_text": {

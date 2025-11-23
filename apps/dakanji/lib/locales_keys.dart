@@ -263,9 +263,11 @@ abstract class  LocaleKeys {
   static const ManualScreen_dict_search_history_delete_text = 'ManualScreen.dict_search_history_delete_text';
   static const ManualScreen_dict_search_history_delete_title = 'ManualScreen.dict_search_history_delete_title';
   static const ManualScreen_dict_search_history_title = 'ManualScreen.dict_search_history_title';
-  static const ManualScreen_dict_search_results_navigate_text = 'ManualScreen.dict_search_results_navigate_text';
-  static const ManualScreen_dict_search_results_navigate_title = 'ManualScreen.dict_search_results_navigate_title';
-  static const ManualScreen_dict_search_results_title = 'ManualScreen.dict_search_results_title';
+  static const ManualScreen_dict_search_specifiying_searches_text = 'ManualScreen.dict_search_specifiying_searches_text';
+  static const ManualScreen_dict_search_specifiying_searches_title = 'ManualScreen.dict_search_specifiying_searches_title';
+  static const ManualScreen_dict_search_title = 'ManualScreen.dict_search_title';
+  static const ManualScreen_dict_search_wildcard_search_text = 'ManualScreen.dict_search_wildcard_search_text';
+  static const ManualScreen_dict_search_wildcard_search_title = 'ManualScreen.dict_search_wildcard_search_title';
   static const ManualScreen_dict_text_examples_analyze_text = 'ManualScreen.dict_text_examples_analyze_text';
   static const ManualScreen_dict_text_examples_analyze_title = 'ManualScreen.dict_text_examples_analyze_title';
   static const ManualScreen_dict_title = 'ManualScreen.dict_title';
