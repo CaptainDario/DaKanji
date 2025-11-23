@@ -5,16 +5,11 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Flutter (debug)",
+			"name": "DaKanji (debug)",
 			"request": "launch",
 			"type": "dart",
-			"flutterMode": "debug"
-		},
-		{
-			"name": "Flutter (profile)",
-			"request": "launch",
-			"type": "dart",
-			"flutterMode": "profile"
+			"flutterMode": "debug",
+			"program": "apps/dakanji/lib/main.dart"
 		},
 		{
 			"name":"Python: Current File",
