@@ -19,7 +19,7 @@ import 'package:universal_io/io.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/core/widgets/download_popup.dart';
-import 'package:da_kanji_mobile/core/widgets/dakanji/da_kanji_loading_indicator.dart';
+import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_loading_indicator.dart';
 
 /// Download the audio files from the github release matching this version
 void downloadAudio(BuildContext context) async {
