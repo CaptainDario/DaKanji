@@ -72,13 +72,16 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       final enabledIndexes = await db.indexDao.getAllEnabledIndexes();
       indexesToInclude = enabledIndexes.map((e) => e.id).toList();
     }
-
     // Get all default indexes if set
     if(useOnlyDefaultDictionaries) {
       final defaultIndexes = await db.indexDao.getAllDefaultIndexes();
       indexesToInclude = defaultIndexes.map((e) => e.id).toList();
     }
 
+    // Check for special argument syntax
+    var params = argumentParser(term);
+
+    // Preprocess input term (normalize, deconjugate, spellfix)
     var (:normalizedTerms, :termVariants) = preprocessInput(term, normalizedSearchConvertsRomajiToHiragana);
     List<String> spellingVariations = [];
     if(spellfixSearch)
@@ -86,16 +89,21 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         generateSpellingVariations(word: e, n: spellfixMaxResults, maxCost: spellfixMaxCost)
       ).toList();
     
-    bool isWildcardSearch = term.contains(RegExp(r'\*|\?'));
-
-    Stopwatch s = Stopwatch()..start();
+    bool isWildcardSearch = false;
+    if(params == null) isWildcardSearch = term.contains(RegExp(r'\*|\?'));
 
     // 1. Run the lightweight search queries in parallel (IDs only)
+    Stopwatch s = Stopwatch()..start();
     final resultsRaw = await Future.wait([
       // exact query
       _findTermBankEntries(
-        terms: [term],
+        terms: params != null
+          ? [params.$1, params.$2, params.$3].nonNulls.toList()
+          : [term],
         tags: tags,
+        termFilter: params?.$1,
+        readingFilter: params?.$2,
+        definitionFilter: params?.$3,
         useGlob: isWildcardSearch,
         searchNormalized: false,
         indexesToInclude: indexesToInclude,
@@ -103,7 +111,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         offset: offset,
       ),
       // normalized terms
-      normalizedSearch
+      normalizedSearch && params == null
         ? _findTermBankEntries(
           terms: normalizedTerms,
           tags: tags,
@@ -115,7 +123,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         )
         : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
       // term variants (deconjugated forms)
-      deconjugationSearch
+      deconjugationSearch && params == null
         ? _findTermBankEntries(
           terms: termVariants.map((e) => e.deconjugatedTerm).toList(),
           tags: tags,
@@ -127,7 +135,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         )
         : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
       // spellfix / fuzzy search
-      spellfixSearch
+      spellfixSearch && params == null
         ? _findTermBankEntries(
           terms: spellingVariations,
           tags: tags,
@@ -203,6 +211,9 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     required List<String> tags,
     required bool useGlob,
     required bool searchNormalized,
+    String? termFilter,
+    String? readingFilter,
+    String? definitionFilter,
     List<int>? indexesToInclude = const [],
     int limit = -1,
     int offset = 0,
@@ -217,17 +228,52 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       
       searchInputs.add([term, runPrefixSearch]);
     }
-    
+    print(definitionFilter);
+
     return await db.dictionary_search_drift_find_term_bank_entries(
       jsonEncode(searchInputs),
       jsonEncode(tags),
       jsonEncode(indexesToInclude ?? []),
       useGlob ? 1 : 0,
       searchNormalized ? 1 : 0,
+      termFilter,
+      readingFilter,
+      definitionFilter,
       indexesToInclude == null ? 0 : 1,
       limit,
       offset
     ).get();
   }
+
+}
+
+/// Parses special argument syntax from raw input strings.
+/// 
+/// The expected format is:
+/// `?t=termFilter&r=readingFilter&d=definitionFilter`
+/// 
+/// Returns a tuple containing the extracted filters:
+/// - termFilter: Filter for terms (nullable)
+/// - readingFilter: Filter for readings (nullable)
+/// - definitionFilter: Filter for definitions (nullable)
+/// If the input does not match the expected format, returns null.
+(String? term, String? reading, String? definition)? argumentParser(String raw) {
+
+  if(!raw.startsWith("?") || ["t=", "r=", "d="].any((e) => raw.contains(e)) == false) {
+    return null;
+  }
+
+  final uri = Uri.parse("x:$raw"); 
+  final filters = uri.queryParameters;
+
+  String? termFilter = filters['t'];    // extract term filter
+  String? readingFilter = filters['r']; // extract reading filter
+  String? defFilter = filters['d'];     // extract definition filter
+
+  return (
+    termFilter,
+    readingFilter,
+    defFilter
+  );
 
 }

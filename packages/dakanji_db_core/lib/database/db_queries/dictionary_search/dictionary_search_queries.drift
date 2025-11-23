@@ -5,14 +5,26 @@ import '/database/term/term_bank_v3_views.drift';
 import '/database/term_meta/term_meta_bank_v3_views.drift';
 
 
-dictionary_search_drift_find_term_bank_entries:
+dictionary_search_drift_find_term_bank_entries(
+    :searchInputs AS TEXT,
+    :tagFiltersJson AS TEXT,
+    :useGlob AS INT,
+    :normalizedSearch AS INT,
+    :filterTerm AS TEXT OR NULL,
+    :filterReading AS TEXT OR NULL,
+    :filterDefinition AS TEXT OR NULL,
+    :indexes_to_include AS TEXT,
+    :useIndexesToInclude AS INT,
+    :limit AS INT,
+    :offset AS INT
+):
 
     WITH
         SearchTerms(term, should_prefix, fts_query) AS (
             SELECT 
                 CAST(json_extract(value, '$[0]') AS TEXT),
                 CAST(json_extract(value, '$[1]') AS INTEGER),
-                '"' || CAST(json_extract(value, '$[0]') AS TEXT) || '"' || 
+                '"' || "REPLACE"(CAST(json_extract(value, '$[0]') AS TEXT), '"', '""') || '"' ||
                 CASE 
                     WHEN CAST(json_extract(value, '$[1]') AS INTEGER) = 1 THEN ' *' 
                     ELSE '' 
@@ -79,7 +91,7 @@ dictionary_search_drift_find_term_bank_entries:
             FROM SearchResults
         ),
         
-        -- Only take the BEST entry for each found entry (FIXED with ROW_NUMBER)
+        -- Only take the BEST entry for each found entry
         SearchResultsDeduplicated AS (
             SELECT * FROM (
                 SELECT
@@ -103,6 +115,41 @@ dictionary_search_drift_find_term_bank_entries:
             ) WHERE rn = 1
         ),
         
+        -- If user provided constraints on Term / Reading / Definition, filter accordingly
+        SearchParameterCheck AS (
+            SELECT term_bank_v3_table.id as term_bank_id
+            FROM term_bank_v3_table
+            WHERE
+                -- 1. Check Term (Only if :filterTerm is provided)
+                (:filterTerm IS NULL OR EXISTS (
+                    SELECT 1 FROM search_fts 
+                    WHERE source_id = term_bank_v3_table.term_id 
+                    AND data_type_id IN (1, 2, 3, 4)
+                    AND text_data MATCH '"' || "REPLACE"(:filterTerm, '"', '""') || '"'
+                ))
+
+                AND
+                
+                -- 2. Check Reading (Only if :filterReading is provided)
+                (:filterReading IS NULL OR EXISTS (
+                    SELECT 1 FROM search_fts 
+                    WHERE source_id = term_bank_v3_table.reading_id 
+                    AND data_type_id IN (5, 6)
+                    AND text_data MATCH '"' || "REPLACE"(:filterReading, '"', '""') || '"'
+                ))
+
+                AND
+                
+                -- 3. Check Definition (Only if :filterDefinition is provided)
+                (:filterDefinition IS NULL OR EXISTS (
+                    SELECT 1 FROM term_bank_v3_x_definition_table AS link
+                    JOIN search_fts AS def_fts ON link.definition_id = def_fts.source_id
+                    WHERE link.term_bank_id = term_bank_v3_table.id
+                    AND def_fts.data_type_id = 7
+                    AND def_fts.text_data MATCH '"' || "REPLACE"(:filterDefinition, '"', '""') || '"'
+                ))
+        ),
+
         -- Get the term bank entries
         TermBankMatches as (
             -- get all term / reading matches
@@ -170,6 +217,7 @@ dictionary_search_drift_find_term_bank_entries:
         TermBankMatchesFilteredByTag AS (
             SELECT TBM.*
             FROM TermBankMatches AS TBM
+            JOIN SearchParameterCheck ON SearchParameterCheck.term_bank_id = TBM.term_bank_id
             WHERE
                 LENGTH(:tagFiltersJson) <= 2
                 OR EXISTS (
