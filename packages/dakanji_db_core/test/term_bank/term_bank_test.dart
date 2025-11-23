@@ -47,8 +47,23 @@ void main() async {
           final result = (await db.termBankV3Dao.search(testCase))
             .map((e) => e.copyWith(
               id: 0, // ignore ids in comparison;
-              tags: e.tags.map((tag) => tag.copyWith(id: 0)).toList(),
-              definitionTags: e.definitionTags.map((tag) => tag.copyWith(id: 0)).toList()  
+              indexEntry: e.indexEntry.copyWith(id: 0, currentSortingOrder: 0),
+              tags: e.tags.map((tag) => tag.copyWith(
+                indexEntry: e.indexEntry.copyWith(
+                  id: 0,
+                  currentSortingOrder: 0
+                ),
+                id: 0
+              )).toList(),
+              definitionTags: e.definitionTags.map((tag) =>
+                tag.copyWith(
+                  id: 0,
+                  indexEntry: e.indexEntry.copyWith(
+                    id: 0,
+                    currentSortingOrder: 0
+                  )
+                )
+              ).toList()  
             )) // ignore tag ids in comparison
           .toList(); 
           print("result: $result");
