@@ -57,27 +57,26 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       int spellfixMaxResults=20,
       int limit=-1,
       int offset=0,
-      List<int> indexesToInclude = const [],
+      List<int>? indexesToInclude,
       bool useOnlyEnabledDictionaries = false,
       bool useOnlyDefaultDictionaries = false,
     }
   ) async {
 
-    assert(!([indexesToInclude.isNotEmpty, useOnlyEnabledDictionaries, useOnlyDefaultDictionaries].where((e) => e).length <= 1),
+    assert(([indexesToInclude != null, useOnlyEnabledDictionaries, useOnlyDefaultDictionaries].where((e) => e).length <= 1),
       "You can only use one of 'indexesToInclude', 'useOnlyEnabledDictionaries' or 'useOnlyDefaultDictionaries' at a time."
     );
 
     // Get all enabled indexes if set
     if(useOnlyEnabledDictionaries) {
       final enabledIndexes = await db.indexDao.getAllEnabledIndexes();
-      indexesToInclude = enabledIndexes
-        .where((e) => !e.enabled).map((e) => e.id).toList();
+      indexesToInclude = enabledIndexes.map((e) => e.id).toList();
     }
 
     // Get all default indexes if set
     if(useOnlyDefaultDictionaries) {
       final defaultIndexes = await db.indexDao.getAllDefaultIndexes();
-      indexesToInclude = defaultIndexes.where((e) => !e.enabled).map((e) => e.id).toList();
+      indexesToInclude = defaultIndexes.map((e) => e.id).toList();
     }
 
     var (:normalizedTerms, :termVariants) = preprocessInput(term, normalizedSearchConvertsRomajiToHiragana);
@@ -204,7 +203,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     required List<String> tags,
     required bool useGlob,
     required bool searchNormalized,
-    List<int> indexesToInclude = const [],
+    List<int>? indexesToInclude = const [],
     int limit = -1,
     int offset = 0,
   }) async {
@@ -218,14 +217,14 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       
       searchInputs.add([term, runPrefixSearch]);
     }
-    print(searchInputs);
-
+    
     return await db.dictionary_search_drift_find_term_bank_entries(
       jsonEncode(searchInputs),
       jsonEncode(tags),
-      jsonEncode(indexesToInclude),
+      jsonEncode(indexesToInclude ?? []),
       useGlob ? 1 : 0,
       searchNormalized ? 1 : 0,
+      indexesToInclude == null ? 0 : 1,
       limit,
       offset
     ).get();

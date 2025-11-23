@@ -17,6 +17,14 @@ class IndexDao extends DatabaseAccessor<DaKanjiDB> with _$IndexDaoMixin {
   IndexDao(super.db);
 
 
+  Future setEnabled(int indexId, bool enabled) async {
+
+    final updateQuery = update(indexTable)
+      ..where((tbl) => tbl.id.equals(indexId));
+    await updateQuery.write(IndexTableCompanion(enabled: Value(enabled),));
+
+  }
+
   /// Get all default indexes
   Future<List<IndexTableData>> getAllDefaultIndexes() async {
 

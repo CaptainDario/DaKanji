@@ -117,7 +117,11 @@ dictionary_search_drift_find_term_bank_entries:
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.term_id = source_id
                 AND data_type_id IN (1, 2, 3, 4)
-                AND term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude)
+                AND (
+                    (term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND :useIndexesToInclude = 1)
+                    OR
+                    :useIndexesToInclude = 0
+                )
             
         UNION ALL
             
@@ -133,7 +137,11 @@ dictionary_search_drift_find_term_bank_entries:
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.reading_id = source_id
                 AND data_type_id IN (5, 6)
-                AND term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude)
+                AND (
+                    (term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND :useIndexesToInclude = 1)
+                    OR
+                    :useIndexesToInclude = 0
+                )
             
         UNION ALL
             
@@ -151,7 +159,11 @@ dictionary_search_drift_find_term_bank_entries:
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id 
                 AND data_type_id  = 7
-                AND term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude)
+                AND (
+                    (term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND :useIndexesToInclude = 1)
+                    OR
+                    :useIndexesToInclude = 0
+                )
         ),
 
         -- Filter the TermBankMatches based on the TagFilters
