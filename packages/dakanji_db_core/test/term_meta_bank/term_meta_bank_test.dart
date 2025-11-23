@@ -26,16 +26,28 @@ void main() {
         Stopwatch s = Stopwatch()..start();
         final testCase = termMetaBankTestCases[i];
         final result = (await db.termMetaBankV3Dao.searchTermMetaBankV3Entries(testCase))
-          .map((e) => e.copyWith(
-            id: 0, // ignore the id in comparison
-            ipas: e.ipas.map((ipa) => ipa.copyWith(
-              tags: ipa.tags.map((tag) => tag.copyWith(id: 0)).toList() // ignore tag ids in comparison
-            )).toList(),
-            pitchs: e.pitchs.map((pitch) => pitch.copyWith(
-              tags: pitch.tags.map((tag) => tag.copyWith(id: 0)).toList() // ignore tag ids in comparison
-            )).toList()
-          )
-        ).toList();
+            .map((e) {
+              // 1. Create a standard "ignored" IndexEntry to use everywhere
+              final standardIndex = e.indexEntry.copyWith(id: 0, currentSortingOrder: 0);
+              // 2. Return the entry with all IDs and Dictionary References normalized
+              return e.copyWith(
+                id: 0, // ignore the id in comparison
+                indexEntry: standardIndex,
+                ipas: e.ipas.map((ipa) => ipa.copyWith(
+                  tags: ipa.tags.map((tag) => tag.copyWith(
+                    id: 0, // ignore tag ids
+                    indexEntry: standardIndex
+                  )).toList() 
+                )).toList(),
+                pitchs: e.pitchs.map((pitch) => pitch.copyWith(
+                  tags: pitch.tags.map((tag) => tag.copyWith(
+                    id: 0, // ignore tag ids
+                    indexEntry: standardIndex
+                  )).toList() 
+                )).toList()
+              );
+            })
+            .toList();
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
 
         print("\n\n$i: ${termMetaBankTestCases[i]}");

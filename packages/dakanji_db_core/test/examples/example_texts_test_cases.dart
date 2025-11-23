@@ -20,19 +20,19 @@ List<ExampleEntry> exampleTextTestsExpectedValues = [
   ExampleEntry(
     id: 0,
     indexEntry: exampleTextsIndexEntry,
-    example: "新しい環境に慣れるまで時間がかかる。",
+    example: "慣れない女子の身体、未知の田舎暮らしに戸惑いつつ、徐々に馴染んでいく瀧。",
     translations: []
   ),
   ExampleEntry(
     id: 0,
     indexEntry: exampleTextsIndexEntry,
-    example: "彼はその家の持ち主です。",
+    example: "身体の持ち主である三葉のことをもっと知りたいと瀧が思い始めたころ、普段と違う三葉を疑問に思った周りの人たちも彼女のことを考え出して――。",
     translations: []
   ),
   ExampleEntry(
     id: 0,
     indexEntry: exampleTextsIndexEntry,
-    example: "最新のアニメーション映画を見に行った。",
+    example: "新海誠監督長編アニメーション『君の名は。』の世界を掘り下げる、スニーカー文庫だけの特別編。",
     translations: []
   ),
 ];
