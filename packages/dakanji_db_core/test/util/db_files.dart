@@ -46,7 +46,7 @@ Future<void> partialInit(
     db: db,
     addStructuredContentJsonDefs: false,
     mecab: mecab,
-    isDefaultDictionary: isDefaultDictionary
+    isDefaultDictionary: isDefaultDictionary,
   );
   await for (final progress in parsingProgress) {
     print(progress);

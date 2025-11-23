@@ -14,6 +14,7 @@ import 'dictionary_search_deconjugation_test_cases.dart';
 import 'dictionary_search_fuzzy_test_cases.dart';
 import 'dictionary_search_grouping_by_sequence_test_cases.dart';
 import 'dictionary_search_grouping_by_term_test_cases.dart';
+import 'dictionary_search_index_on_off_test_cases.dart';
 import 'dictionary_search_input_preprocessing_test_cases.dart';
 import 'dictionary_search_meta_bank_test_cases.dart';
 import 'dictionary_search_sorting_test_cases.dart';
@@ -31,6 +32,7 @@ final List<(
   bool groupSeqeunces,
   bool groupByReadingAndTerms
   )> testCases = [
+  // (test cases, groupSequences, groupByTermAndReading)
   (searchTestCases, false, false),
   (deconjugationTestCases, false, false),
   (wildcardSearchTestCases, false, false),
@@ -41,7 +43,8 @@ final List<(
   (metaBankTestCases, false, false),
   (popularityOverrideTestCases, false, false),
   (groupBySequenceTests, true, false),
-  (groupByTermTests, false, true)
+  (groupByTermTests, false, true),
+  (indexOnOffTestCases, false, false),
 ];
 final List<String> testCaseNames = [
   "Search Test Cases",
@@ -54,7 +57,8 @@ final List<String> testCaseNames = [
   "Meta bank test cases",
   "Popularity Override",
   "Grouping Test Cases",
-  "Grouping by Term and Reading Test Cases"
+  "Grouping by Term and Reading Test Cases",
+  "Index On/Off Test Cases",
 ];
 
 String currentTestCase = "";
@@ -97,6 +101,9 @@ void main() {
               spellfixSearch: true,
               groupSequences: subTestCases.$2,
               groupByTermAndReading: subTestCases.$3,
+              indexesToInclude: testCase.indexesToInclude,
+              useOnlyEnabledDictionaries: testCase.useOnlyEnabledDictionaries,
+              useOnlyDefaultDictionaries: testCase.useOnlyDefaultDictionaries,
             ));
 
             print("Results:\n $results");
@@ -176,9 +183,9 @@ Future setupFreshDB() async {
   final mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
-  // emulate importing 3 dictionaries
+  // emulate importing 5 dictionaries
   // take all data form the yomitan sample dictionary except term banks
-  for (int i in [2, 1, 3]) {
+  for (int i in [2, 1, 3, 4, 5]) {
     bool shouldIncludeFile(File file) =>
       // take the full dictionary only once
       (i == 1 && !p.basename(file.path).contains("term_bank")) || 
@@ -190,8 +197,9 @@ Future setupFreshDB() async {
         if(i == 3)File(p.join(dataFilesPath, "testing_db", 'term_meta_bank_2.json')),
         if(i == 1) File(p.join(dataFilesPath, "testing_db", 'tag_bank_1.json')),
       ],
-      isDefaultDictionary: i>3
+      isDefaultDictionary: i==4,
     );
+    await db.indexDao.setEnabled(i, i==5);
   }
 
   return db;

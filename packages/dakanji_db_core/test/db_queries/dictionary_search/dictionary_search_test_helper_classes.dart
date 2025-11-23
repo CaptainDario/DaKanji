@@ -8,6 +8,9 @@ class ExpectedDictionarySearchResult {
   final String description;
   final String query;
   final List<String> tags;
+  final List<int>? indexesToInclude;
+  final bool useOnlyEnabledDictionaries;
+  final bool useOnlyDefaultDictionaries;
 
   /// Expected results from the original, unmodified query.
   final ExpectedMatchGroup queryMatches;
@@ -25,6 +28,9 @@ class ExpectedDictionarySearchResult {
     required this.description,
     required this.query,
     this.tags = const [],
+    this.indexesToInclude,
+    this.useOnlyEnabledDictionaries = false,
+    this.useOnlyDefaultDictionaries = false,
     this.queryMatches = const ExpectedMatchGroup(),
     this.normalizedQueryMatchGroups = const [],
     this.queryVariantMatches = const [],
