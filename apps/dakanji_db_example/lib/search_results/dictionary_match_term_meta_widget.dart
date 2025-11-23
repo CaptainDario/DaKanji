@@ -21,21 +21,26 @@ class DictionaryMatchTermMetaWidget extends StatefulWidget {
 class _DictionaryMatchTermMetaWidgetState extends State<DictionaryMatchTermMetaWidget> {
 
   /// A list that groups frequency term meta entries by their index ID.
-  late Map<TermMetaBankEntryTypes, Map<String, List<TermMetaBankV3Entry>>> groupedTermMetaEntries;
+  late Map<TermMetaBankEntryTypes, Map<int, List<TermMetaBankV3Entry>>> groupedTermMetaEntries;
 
   @override
   void initState() {
     final metaEntries = widget.termMetaEntries.expand((e) => e).toSet().toList();
+    metaEntries.sort((a, b) {
+      if (a.reading != null && b.reading == null) return -1;
+      if (a.reading == null && b.reading != null) return 1;
+      return 0;
+    });
 
     // first group by type
     final groupedByType = groupBy(
       metaEntries, (TermMetaBankV3Entry e) => e.type,
     );
 
-    /// Then nest created a nestedgroup by index ID
+    /// Then create a nested group by index ID
     groupedTermMetaEntries = groupedByType.map((typeKey, entriesForThisType) {
       final groupedByIndexId = groupBy(
-        entriesForThisType, (TermMetaBankV3Entry e) => e.indexEntry.id.toString(),
+        entriesForThisType, (TermMetaBankV3Entry e) => e.indexEntry.id,
       );
       return MapEntry(typeKey, groupedByIndexId);
     });
@@ -76,7 +81,7 @@ class _DictionaryMatchTermMetaWidgetState extends State<DictionaryMatchTermMetaW
 }
 
 class _PitchAndIpaGroup extends StatelessWidget {
-  final String indexId;
+  final int indexId;
   final List<TermMetaBankV3Entry>? pitchEntries;
   final List<TermMetaBankV3Entry>? ipaEntries;
 
