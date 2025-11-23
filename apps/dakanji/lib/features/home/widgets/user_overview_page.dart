@@ -1,6 +1,6 @@
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/features/home/model/activity_chart_mock_data.dart';
-import 'package:da_kanji_mobile/features/home/widgets/activity_chart.dart';
+import 'package:da_kanji_mobile/features/home/widgets/study_calendar.dart';
 import 'package:da_kanji_mobile/features/home/widgets/greeting_widget.dart';
 import 'package:da_kanji_mobile/features/home/widgets/study_card.dart';
 import 'package:da_kanji_mobile/globals.dart';
