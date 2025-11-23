@@ -3,6 +3,7 @@ import 'dictionary_search_test_helper_classes.dart';
 
 
 List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
+
   ExpectedDictionarySearchResult(
     description: "Filter by single tag (DE)",
     query: '人',
@@ -15,6 +16,7 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
       ],
     ),
   ),
+
   ExpectedDictionarySearchResult(
     description: "Filter by multiple tags (Japanese and Rare)",
     query: '電車',
@@ -27,11 +29,13 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
       ],
     ),
   ),
+
   ExpectedDictionarySearchResult(
     description: "No matches due to tag filtering",
     query: '人',
     tags: ['FR'],
   ),
+
   ExpectedDictionarySearchResult(
     description: "No tag filtering (empty tag list)",
     query: '人',
@@ -58,5 +62,62 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
         ]
       ],
     ),
+  ),
+
+  // ----------
+
+  ExpectedDictionarySearchResult(
+    description: "Filter by term",
+    query: '?t=会社',
+
+    queryMatches: const ExpectedMatchGroup(
+      exactMatches: [
+        [ExpectedDictionaryMatch(term: '会社', reading: '', match: '会社', definitions: ["Company (term)"])],
+        [ExpectedDictionaryMatch(term: '会社', reading: '', match: '会社', definitions: ["かいしゃ (reading in definition)"])],
+        [ExpectedDictionaryMatch(term: '会社', reading: 'かいしゃ', match: '会社', definitions: ["company (term+reading+definition)"]),]
+      ],
+    ),
+  ),
+  ExpectedDictionarySearchResult(
+    description: "Filter by term + reading",
+    query: '?t=会社&r=かいしゃ',
+
+    queryMatches: const ExpectedMatchGroup(
+      exactMatches: [
+        [
+          ExpectedDictionaryMatch(term: '会社', reading: 'かいしゃ', match: '会社', definitions: ["company (term+reading+definition)"]),
+        ]
+      ],
+    ),
+  ),
+  ExpectedDictionarySearchResult(
+    description: "Filter by term + definition",
+    query: '?t=会社&d=かいしゃ',
+
+    queryMatches: const ExpectedMatchGroup(
+      exactMatches: [
+        [
+          ExpectedDictionaryMatch(term: '会社', reading: '', match: '会社', definitions: ["かいしゃ (reading in definition)"]),
+        ]
+      ],
+    ),
+  ),
+  ExpectedDictionarySearchResult(
+    description: "Filter by term + reading + definition (1 match)",
+    query: '?t=会社&r=かいしゃ&d=company (term+reading+definition)',
+
+    queryMatches: const ExpectedMatchGroup(
+      exactMatches: [
+        [
+          ExpectedDictionaryMatch(term: '会社', reading: 'かいしゃ', match: '会社', definitions: ["company (term+reading+definition)"]),
+        ]
+      ],
+    ),
+  ),
+  ExpectedDictionarySearchResult(
+    description: "Filter by term + reading + definition (0 match, entry with this reading does not exist)",
+    query: '?t=会社&r=がいしゃ&d=かいしゃ (reading in definition)',
+
+    queryMatches: const ExpectedMatchGroup(),
   ),
 ];
