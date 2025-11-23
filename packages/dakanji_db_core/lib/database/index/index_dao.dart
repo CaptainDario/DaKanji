@@ -16,6 +16,29 @@ class IndexDao extends DatabaseAccessor<DaKanjiDB> with _$IndexDaoMixin {
   // instance of this object.
   IndexDao(super.db);
 
+
+  /// Get all default indexes
+  Future<List<IndexTableData>> getAllDefaultIndexes() async {
+
+    final query = select(db.indexTable)
+      ..where((tbl) => tbl.isDefaultDictionary.equals(true)); 
+    final results = await query.get();
+
+    return results;
+
+  }
+
+  /// Get all enabled indexes
+  Future<List<IndexTableData>> getAllEnabledIndexes() async {
+
+    final query = select(db.indexTable)
+      ..where((tbl) => tbl.enabled.equals(true)); 
+    final results = await query.get();
+
+    return results;
+
+  }
+
   /// Clears any frequency dictionary override currently set
   Future clearFrequencyOverride() async {
 

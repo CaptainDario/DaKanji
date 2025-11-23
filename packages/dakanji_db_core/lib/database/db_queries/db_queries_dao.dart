@@ -57,8 +57,28 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       int spellfixMaxResults=20,
       int limit=-1,
       int offset=0,
+      List<int> indexesToInclude = const [],
+      bool useOnlyEnabledDictionaries = false,
+      bool useOnlyDefaultDictionaries = false,
     }
   ) async {
+
+    assert(!([indexesToInclude.isNotEmpty, useOnlyEnabledDictionaries, useOnlyDefaultDictionaries].where((e) => e).length <= 1),
+      "You can only use one of 'indexesToInclude', 'useOnlyEnabledDictionaries' or 'useOnlyDefaultDictionaries' at a time."
+    );
+
+    // Get all enabled indexes if set
+    if(useOnlyEnabledDictionaries) {
+      final enabledIndexes = await db.indexDao.getAllEnabledIndexes();
+      indexesToInclude = enabledIndexes
+        .where((e) => !e.enabled).map((e) => e.id).toList();
+    }
+
+    // Get all default indexes if set
+    if(useOnlyDefaultDictionaries) {
+      final defaultIndexes = await db.indexDao.getAllDefaultIndexes();
+      indexesToInclude = defaultIndexes.where((e) => !e.enabled).map((e) => e.id).toList();
+    }
 
     var (:normalizedTerms, :termVariants) = preprocessInput(term, normalizedSearchConvertsRomajiToHiragana);
     List<String> spellingVariations = [];
@@ -79,6 +99,9 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         tags: tags,
         useGlob: isWildcardSearch,
         searchNormalized: false,
+        indexesToInclude: indexesToInclude,
+        limit: limit,
+        offset: offset,
       ),
       // normalized terms
       normalizedSearch
@@ -86,7 +109,10 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
           terms: normalizedTerms,
           tags: tags,
           useGlob: isWildcardSearch,
-          searchNormalized: true
+          searchNormalized: true,
+          indexesToInclude: indexesToInclude,
+          limit: limit,
+          offset: offset,
         )
         : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
       // term variants (deconjugated forms)
@@ -95,7 +121,10 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
           terms: termVariants.map((e) => e.deconjugatedTerm).toList(),
           tags: tags,
           useGlob: isWildcardSearch,
-          searchNormalized: true
+          searchNormalized: true,
+          indexesToInclude: indexesToInclude,
+          limit: limit,
+          offset: offset,
         )
         : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
       // spellfix / fuzzy search
@@ -104,7 +133,10 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
           terms: spellingVariations,
           tags: tags,
           useGlob: isWildcardSearch,
-          searchNormalized: true
+          searchNormalized: true,
+          indexesToInclude: indexesToInclude,
+          limit: limit,
+          offset: offset,
         )
         : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[])
     ]);
@@ -172,6 +204,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     required List<String> tags,
     required bool useGlob,
     required bool searchNormalized,
+    List<int> indexesToInclude = const [],
     int limit = -1,
     int offset = 0,
   }) async {
@@ -190,6 +223,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     return await db.dictionary_search_drift_find_term_bank_entries(
       jsonEncode(searchInputs),
       jsonEncode(tags),
+      jsonEncode(indexesToInclude),
       useGlob ? 1 : 0,
       searchNormalized ? 1 : 0,
       limit,
