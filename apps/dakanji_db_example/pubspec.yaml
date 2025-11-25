@@ -13,7 +13,8 @@ dependencies:
 
   dakanji_db_core:
   language_processing:
-
+  
+  async: ^2.13.0
   csslib: ^1.0.2
   provider: ^6.1.5+1
   path_provider: ^2.1.5

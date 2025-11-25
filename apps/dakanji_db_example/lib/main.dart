@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:async/async.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:dakanji_db_example/init.dart';
@@ -44,9 +47,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+
   late Future<bool> copyDb;
 
   late DaKanjiDB daKanjiDB;
+
+  CancelableOperation<DictionarySearchResult?>? dbSearch;
+
+  int debounceMilliseconds = 100;
+
+  Timer? searchDebounceTimer;
 
   DictionarySearchResult? lastSearchResult;
 
@@ -104,11 +114,28 @@ class _MyHomePageState extends State<MyHomePage> {
                             hintText: 'Enter a search term',
                           ),
                           onChanged: (value) async {
+                            if(searchDebounceTimer != null) {
+                              searchDebounceTimer!.cancel();
+                              searchDebounceTimer = null;
+                            }
+                            if(dbSearch != null) {
+                              await dbSearch!.cancel();
+                              dbSearch = null;
+                            }
                             setState(() {
                               lastSearchResult = null;
                             });
-                            searchController.text = value;
-                            searchDb(value);
+                            searchDebounceTimer = Timer(
+                              Duration(milliseconds: debounceMilliseconds),
+                              () {
+                                dbSearch = CancelableOperation.fromFuture(searchDb(value));
+                                dbSearch!.then((result) {
+                                  lastSearchResult = result;
+                                  searchDebounceTimer = null;
+                                  setState(() {});
+                                });
+                              }
+                            );
                           },
                         ),
                       ),
@@ -125,7 +152,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             lastSearchResult = null;
                           });
                           searchController.text = value ?? "";
-                          await searchDb(searchController.text);
+                          lastSearchResult = await searchDb(searchController.text);
+                          setState(() {});
                         },
                       )
                     ],
@@ -146,14 +174,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future searchDb(String term) async {
+  Future<DictionarySearchResult?> searchDb(String term) async {
+    DictionarySearchResult? result;
     if(term.isEmpty) {
-      lastSearchResult = null;
+      result = null;
     }
     else {
       print("Searching for: $term");
       Stopwatch stopwatch = Stopwatch()..start();
-      lastSearchResult = await daKanjiDB.dBQueriesDao.dictionarySearch(
+      result = await daKanjiDB.dBQueriesDao.dictionarySearch(
         term,
         normalizedSearch: false,
         normalizedSearchConvertsRomajiToHiragana: false,
@@ -163,6 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
       );
       print("Search completed in ${stopwatch.elapsedMilliseconds}ms.");
     }
-    setState(() {});
+    return result;
   }
+  
 }
