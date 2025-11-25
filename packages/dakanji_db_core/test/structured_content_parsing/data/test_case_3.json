@@ -1,0 +1,189 @@
+[
+    "嵩にかかる",
+    "かさにかかる",
+    "",
+    "v5",
+    0,
+    [
+        {
+            "type": "structured-content",
+            "content": [
+                {
+                    "tag": "div",
+                    "data": {
+                        "content": "sense-group"
+                    },
+                    "content": [
+                        {
+                            "tag": "span",
+                            "title": "expressions (phrases, clauses, etc.)",
+                            "data": {
+                                "class": "tag",
+                                "code": "exp",
+                                "content": "part-of-speech-info"
+                            },
+                            "content": "exp"
+                        },
+                        {
+                            "tag": "span",
+                            "title": "Godan verb with 'ru' ending",
+                            "data": {
+                                "class": "tag",
+                                "code": "v5r",
+                                "content": "part-of-speech-info"
+                            },
+                            "content": "5-dan"
+                        },
+                        {
+                            "tag": "span",
+                            "title": "word usually written using kana alone",
+                            "data": {
+                                "class": "tag",
+                                "code": "uk",
+                                "content": "misc-info"
+                            },
+                            "content": "kana"
+                        },
+                        {
+                            "tag": "div",
+                            "data": {
+                                "content": "sense"
+                            },
+                            "content": {
+                                "tag": "ul",
+                                "data": {
+                                    "content": "glossary"
+                                },
+                                "content": [
+                                    {
+                                        "tag": "li",
+                                        "content": "to be highhanded"
+                                    },
+                                    {
+                                        "tag": "li",
+                                        "content": "to be arrogant"
+                                    },
+                                    {
+                                        "tag": "li",
+                                        "content": "to be overbearing"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "tag": "div",
+                    "data": {
+                        "content": "forms"
+                    },
+                    "content": [
+                        {
+                            "tag": "span",
+                            "title": "spelling and reading variants",
+                            "data": {
+                                "class": "tag",
+                                "content": "forms-label"
+                            },
+                            "content": "forms"
+                        },
+                        {
+                            "tag": "table",
+                            "content": [
+                                {
+                                    "tag": "tr",
+                                    "data": {
+                                        "content": "forms-header-row"
+                                    },
+                                    "content": [
+                                        {
+                                            "tag": "th"
+                                        },
+                                        {
+                                            "tag": "th",
+                                            "content": "嵩にかかる"
+                                        },
+                                        {
+                                            "tag": "th",
+                                            "content": "嵩に懸かる"
+                                        },
+                                        {
+                                            "tag": "th",
+                                            "content": "笠にかかる"
+                                        },
+                                        {
+                                            "tag": "th",
+                                            "content": "笠に懸かる"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "tag": "tr",
+                                    "content": [
+                                        {
+                                            "tag": "th",
+                                            "content": "かさにかかる"
+                                        },
+                                        {
+                                            "tag": "td",
+                                            "data": {
+                                                "class": "form-valid"
+                                            },
+                                            "content": {
+                                                "tag": "span",
+                                                "title": "valid form/reading combination"
+                                            }
+                                        },
+                                        {
+                                            "tag": "td",
+                                            "data": {
+                                                "class": "form-valid"
+                                            },
+                                            "content": {
+                                                "tag": "span",
+                                                "title": "valid form/reading combination"
+                                            }
+                                        },
+                                        {
+                                            "tag": "td",
+                                            "data": {
+                                                "class": "form-irr"
+                                            },
+                                            "content": {
+                                                "tag": "span",
+                                                "title": "irregular form"
+                                            }
+                                        },
+                                        {
+                                            "tag": "td",
+                                            "data": {
+                                                "class": "form-irr"
+                                            },
+                                            "content": {
+                                                "tag": "span",
+                                                "title": "irregular form"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "tag": "div",
+                    "data": {
+                        "content": "attribution"
+                    },
+                    "content": {
+                        "tag": "a",
+                        "href": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&q=1865140",
+                        "content": "JMdict"
+                    }
+                }
+            ]
+        }
+    ],
+    1865140,
+    ""
+]

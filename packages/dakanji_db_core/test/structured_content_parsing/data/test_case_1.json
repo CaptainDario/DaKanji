@@ -1,0 +1,161 @@
+[
+    "化工",
+    "かこう",
+    "",
+    "",
+    0,
+    [
+        {
+            "type": "structured-content",
+            "content": [
+                {
+                    "tag": "div",
+                    "data": {
+                        "content": "sense-group"
+                    },
+                    "content": [
+                        {
+                            "tag": "span",
+                            "title": "noun (common) (futsuumeishi)",
+                            "data": {
+                                "class": "tag",
+                                "code": "n",
+                                "content": "part-of-speech-info"
+                            },
+                            "content": "noun"
+                        },
+                        {
+                            "tag": "span",
+                            "title": "abbreviation",
+                            "data": {
+                                "class": "tag",
+                                "code": "abbr",
+                                "content": "misc-info"
+                            },
+                            "content": "abbr."
+                        },
+                        {
+                            "tag": "div",
+                            "data": {
+                                "content": "sense"
+                            },
+                            "content": [
+                                {
+                                    "tag": "ul",
+                                    "data": {
+                                        "content": "glossary"
+                                    },
+                                    "content": {
+                                        "tag": "li",
+                                        "content": "chemical engineering"
+                                    }
+                                },
+                                {
+                                    "tag": "div",
+                                    "data": {
+                                        "content": "extra-info"
+                                    },
+                                    "content": {
+                                        "tag": "div",
+                                        "content": {
+                                            "tag": "div",
+                                            "data": {
+                                                "class": "extra-box",
+                                                "content": "xref"
+                                            },
+                                            "content": [
+                                                {
+                                                    "tag": "div",
+                                                    "data": {
+                                                        "content": "xref-content"
+                                                    },
+                                                    "content": [
+                                                        {
+                                                            "tag": "span",
+                                                            "lang": "en",
+                                                            "data": {
+                                                                "content": "reference-label"
+                                                            },
+                                                            "content": "See also"
+                                                        },
+                                                        {
+                                                            "tag": "a",
+                                                            "lang": "ja",
+                                                            "href": "?query=%E5%8C%96%E5%AD%A6%E5%B7%A5%E5%AD%A6&wildcards=off&primary_reading=%E3%81%8B%E3%81%8C%E3%81%8F%E3%81%93%E3%81%86%E3%81%8C%E3%81%8F",
+                                                            "content": [
+                                                                {
+                                                                    "tag": "ruby",
+                                                                    "content": [
+                                                                        "化",
+                                                                        {
+                                                                            "tag": "rt",
+                                                                            "content": "か"
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "tag": "ruby",
+                                                                    "content": [
+                                                                        "学",
+                                                                        {
+                                                                            "tag": "rt",
+                                                                            "content": "がく"
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "tag": "ruby",
+                                                                    "content": [
+                                                                        "工",
+                                                                        {
+                                                                            "tag": "rt",
+                                                                            "content": "こう"
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "tag": "ruby",
+                                                                    "content": [
+                                                                        "学",
+                                                                        {
+                                                                            "tag": "rt",
+                                                                            "content": "がく"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "tag": "div",
+                                                    "data": {
+                                                        "content": "xref-glossary"
+                                                    },
+                                                    "content": "chemical engineering"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "tag": "div",
+                    "data": {
+                        "content": "attribution"
+                    },
+                    "content": {
+                        "tag": "a",
+                        "href": "https://www.edrdg.org/jmwsgi/entr.py?svc=jmdict&q=1865090",
+                        "content": "JMdict"
+                    }
+                }
+            ]
+        }
+    ],
+    1865090,
+    ""
+]
