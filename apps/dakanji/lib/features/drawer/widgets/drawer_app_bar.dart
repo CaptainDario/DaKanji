@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/features/time_tracking/widgets/time_tracking_appbar_action.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -142,6 +143,9 @@ class DrawerAppBar extends StatelessWidget {
             ),
           ),
         ),
+        Spacer(), // move the tools
+        TimeTrackingAppbarAction(),
+        SizedBox(width: 8,), //spacing at the end
       ],
     );
   }

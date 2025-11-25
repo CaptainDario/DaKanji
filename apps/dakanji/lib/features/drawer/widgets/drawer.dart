@@ -2,10 +2,8 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_logo_widget.dart';
 import 'package:da_kanji_mobile/features/drawer/widgets/drawer_home_element.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
