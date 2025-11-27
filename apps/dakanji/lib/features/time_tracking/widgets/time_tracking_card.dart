@@ -89,7 +89,7 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
   void _toggleTimer() async {
     if (_startTime != null) {
       // --- STOP ---
-      await GetIt.I<UserDataDB>().timeTrackingDao.stopTimer();
+      await GetIt.I<UserDataDB>().timeTrackingDao.finishSession();
       _ticker.stop();
       _glowController.reverse();
 
@@ -107,9 +107,11 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
 
       _resetController.forward(from: 0.0);
 
-    } else {
+    }
+    else {
       // --- START ---
-      await GetIt.I<UserDataDB>().timeTrackingDao.startTimer();
+      // TODO add category + tags selection UI
+      await GetIt.I<UserDataDB>().timeTrackingDao.startNewSession("","");
       final now = DateTime.now();
       
       setState(() {
