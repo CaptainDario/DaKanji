@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,14 +18,12 @@ import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_slider_tile.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/optimize_backends_popup.dart';
 
 class AdvancedSettings extends StatefulWidget {
     
@@ -128,12 +127,12 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
             await restartApp(context);
           },
         ),
-        // delete search history
+        // delete word lists history
         ResponsiveIconButtonTile(
           text: LocaleKeys.SettingsScreen_advanced_settings_delete_word_lists.tr(),
           icon: Icons.delete_forever,
           onButtonPressed: () async {
-            await GetIt.I<WordListsSQLDatabase>().deleteEverything();
+            await GetIt.I<UserDataDB>().wordListsDao.deleteAllWordLists();
             // ignore: use_build_context_synchronously
             await restartApp(context);
           },

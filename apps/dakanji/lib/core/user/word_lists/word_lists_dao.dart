@@ -1,76 +1,31 @@
-// Dart imports:
-import 'dart:io';
-
-// Package imports:
-import 'package:drift/drift.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/core/utils/sql_utils.dart';
 import 'package:da_kanji_mobile/core/tree/tree_node.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/default_names.dart';
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/core/user/word_lists/word_lists_tables.dart';
 import 'package:da_kanji_mobile/features/word_lists/controller/default_word_lists_queries.dart';
+import 'package:da_kanji_mobile/features/word_lists/model/default_names.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_tree.dart';
+import 'package:drift/drift.dart';
 
-part 'word_lists_sql.g.dart';
-
-
-
-/// SQLite table for the wordlists (ie.: folders and word list nodes)
-/// NOT the actual word list entries
-class WordListNodesSQL extends Table {
-  
-  /// Id of this row
-  IntColumn get id => integer().autoIncrement()();
-  /// The name of this wordlist entry
-  TextColumn get name => text()();
-  /// All children IDs
-  TextColumn get childrenIDs => text().map(const ListIntConverter())();
-  /// The type of this entry
-  IntColumn get type => intEnum<WordListNodeType>()();
-  /// Is this entry currently expanded
-  BoolColumn get isExpanded => boolean().clientDefault(() => false)();
-
-}
-
-/// Table of the actual dict entries that belong to a word lists in a
-/// [WordListNodesSQL]
-class WordListEntriesSQL extends Table {
-
-  /// The id of the entry in the corresponding [WordListNodesSQL] 
-  IntColumn get wordListID => integer()();
-  /// The id of this entry in the dictionary
-  IntColumn get dictEntryID => integer()();
-  /// The date time when this was added
-  DateTimeColumn get timeAdded => dateTime().withDefault(currentDateAndTime)();
-
-  @override
-  Set<Column> get primaryKey => {wordListID, dictEntryID};
-
-}
-
-@DriftDatabase(tables: [WordListNodesSQL, WordListEntriesSQL])
-class WordListsSQLDatabase extends _$WordListsSQLDatabase {
-
-  @override
-  int get schemaVersion => 1;
-
-  List<String> get getcustomConstraints =>
-    ['FOREIGN KEY (wordListID, dictEntryID) REFERENCES (wordListID, dictEntryID)'];
+part 'word_lists_dao.g.dart';
 
 
-  WordListsSQLDatabase(
-    File databaseFile
-  ) : super(openSqlite(databaseFile));
+@DriftAccessor(
+  tables: [
+    WordListNodesTable, WordListEntriesTable
+  ]
+)
+class WordListsDao extends DatabaseAccessor<UserDataDB> with _$WordListsDaoMixin {
 
+  WordListsDao(super.db);
 
-  // --- START : GENERAL ----------
+    // --- START : GENERAL ----------
   /// Initializes this instance by checking if is empty and if so adding a 
   /// root node
   Future init () async {
 
-    int count = await wordListNodesSQL.count().getSingle();
+    int count = await wordListNodesTable.count().getSingle();
 
     // when the DB is opened for the first time add a root and the default folders
     if(count == 0){
@@ -83,23 +38,24 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
   }
 
-  /// Deletes every entry in this database
-  Future<void> deleteEverything() {
-    return transaction(() async {
-      for (final table in allTables) {
-        await delete(table).go();
-      }
+  Future deleteAllWordLists() async {
+
+    await transaction(() async {
+      await delete(wordListEntriesTable).go();
+      await delete(wordListNodesTable).go();
     });
+
   }
+
   
   // --- END : GENERAL
 
 
   // --- START : WordListsSQL
   /// Instantiates a [WordListsSQLCompanion] from a [TreeNode<WordListsData>]
-  WordListNodesSQLCompanion companionFromTreeNode(TreeNode<WordListsData> entry, bool useID){
+  WordListNodesTableCompanion companionFromTreeNode(TreeNode<WordListsData> entry, bool useID){
 
-    return WordListNodesSQLCompanion(
+    return WordListNodesTableCompanion(
         id: useID ? Value(entry.id) : const Value.absent(),
         name: Value(entry.value.name),
         childrenIDs: Value(entry.children.map((e) => e.id).toList()),
@@ -110,9 +66,9 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   }
 
   /// A stream that emits whenever a value of this database changes
-  Stream<List<WordListNodesSQLData>> watchAllWordlists(){
+  Stream<List<WordListNodesTableData>> watchAllWordlists(){
 
-    return select(wordListNodesSQL).watch();
+    return select(wordListNodesTable).watch();
 
   }
 
@@ -131,7 +87,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
             WordListsData(element.name, WordListNodeType.wordList, [], true),
           );
 
-        int id = await into(wordListNodesSQL).insert(
+        int id = await into(wordListNodesTable).insert(
           companionFromTreeNode(defaultNode, false));
         defaultNode.id = id;
 
@@ -158,7 +114,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
     // load word lists from sql
     final tree = WordListsTree.fromWordListsSQL(
-      (await select(wordListNodesSQL).get())
+      (await select(wordListNodesTable).get())
     );
     // readd the defaults
     addDefaultsToRoot(tree.root);
@@ -172,7 +128,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
     final sqlEntry = companionFromTreeNode(node, useID);
 
-    int i = await into(wordListNodesSQL).insert(sqlEntry);
+    int i = await into(wordListNodesTable).insert(sqlEntry);
 
     return i;
   }
@@ -200,7 +156,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
     return transaction(() async {
       // first, add the folder and await its ID
-      int folderId = await into(wordListNodesSQL)
+      int folderId = await into(wordListNodesTable)
         .insert(companionFromTreeNode(folder, false));
       folder.id = folderId;
 
@@ -209,7 +165,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         for (var node in (affectedNodes).nonNulls){
           var sqlNode = companionFromTreeNode(node, true);
           batch.update(
-            wordListNodesSQL, sqlNode,
+            wordListNodesTable, sqlNode,
             where: (table) => table.id.equals(node.id),
           );
         }
@@ -224,7 +180,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
 
     final sqlEntry = companionFromTreeNode(node, true);
 
-    return (update(wordListNodesSQL)
+    return (update(wordListNodesTable)
       ..where((tbl) => tbl.id.equals(node.id)))
       .write(sqlEntry);
 
@@ -237,7 +193,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
       for (var node in nodes.nonNulls){
         var sqlNode = companionFromTreeNode(node, true);
         batch.update(
-          wordListNodesSQL, sqlNode,
+          wordListNodesTable, sqlNode,
           where: (table) => table.id.equals(node.id),
         );
       }
@@ -260,12 +216,12 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
       List<int> entries = node.dfs().map((e) => e.id).toList();
       entries.add(node.id);
 
-      await (delete(wordListNodesSQL)
+      await (delete(wordListNodesTable)
         ..where((tbl) => tbl.id.isIn(entries)))
         .go();
 
       // remove all dictionary entries that belonged to a now deleted node
-      await (delete(wordListEntriesSQL)
+      await (delete(wordListEntriesTable)
         ..where((tbl) => tbl.wordListID.isIn(entries))
       ).go();
 
@@ -277,8 +233,8 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   /// Get all IDs of all nodes that the user defined
   Future<List<int>> getAllNodeIDs(){
 
-    final idColumn = wordListNodesSQL.id; 
-    final query = selectOnly(wordListNodesSQL)
+    final idColumn = wordListNodesTable.id; 
+    final query = selectOnly(wordListNodesTable)
       ..addColumns([idColumn]);
       
     return query.map(
@@ -294,7 +250,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   /// `wordListID`
   Future<List<int>> getEntryIDsOfWordList(int wordListID) async {
 
-    return (await (select(wordListEntriesSQL)
+    return (await (select(wordListEntriesTable)
       ..where((tbl) => tbl.wordListID.equals(wordListID)))
       .get())
       .map((p0) => p0.dictEntryID).toList();
@@ -302,9 +258,9 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   }
 
   /// A stream that emits whenever a value of the given word list changes
-  Stream<List<WordListEntriesSQLData>> watchWordlistEntries(int wordListID){
+  Stream<List<WordListEntriesTableData>> watchWordlistEntries(int wordListID){
 
-    return (select(wordListEntriesSQL)
+    return (select(wordListEntriesTable)
       ..where((tbl) => tbl.wordListID.equals(wordListID),))
       .watch();
 
@@ -320,8 +276,8 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
         await batch((batch) async {
           // ... all IDs
           for (int wordID in wordIDs){
-            await wordListEntriesSQL.insertOnConflictUpdate(
-              WordListEntriesSQLCompanion(
+            await wordListEntriesTable.insertOnConflictUpdate(
+              WordListEntriesTableCompanion(
                 wordListID : Value(listID),
                 dictEntryID: Value(wordID),
                 timeAdded  : Value(DateTime.now())
@@ -352,7 +308,7 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   /// ID
   Future deleteEntriesFromWordList(Iterable<int> entriesIDs, int wordListID) async {
 
-    await wordListEntriesSQL.deleteWhere((tbl) {
+    await wordListEntriesTable.deleteWhere((tbl) {
       return Expression.and([
         tbl.dictEntryID.isIn(entriesIDs),
         tbl.wordListID.equals(wordListID),
@@ -363,4 +319,3 @@ class WordListsSQLDatabase extends _$WordListsSQLDatabase {
   // --- END : WordListsNode
 
 }
-

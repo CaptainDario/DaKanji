@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +17,6 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:mecab_for_flutter/mecab_flutter.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:window_manager/window_manager.dart';
@@ -26,14 +26,13 @@ import 'package:yaml/yaml.dart';
 import 'package:da_kanji_mobile/features/anki/controller/anki.dart';
 import 'package:da_kanji_mobile/core/assets/assets.dart';
 import 'package:da_kanji_mobile/core/routing/deep_links.dart';
-import 'package:da_kanji_mobile/features/stats/model/stats.dart';
+import 'package:da_kanji_mobile/core/user/user_activity.dart';
 import 'package:da_kanji_mobile/core/releases/changelog.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
 import 'package:da_kanji_mobile/features/dojg/model/dojg_entry.dart';
 import 'package:da_kanji_mobile/features/drawer/controller/drawer_listener.dart';
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
-import 'package:da_kanji_mobile/features/drawing/controller/drawing_interpreter.dart';
 import 'package:da_kanji_mobile/features/drawing/model/drawing_lookup.dart';
 import 'package:da_kanji_mobile/features/drawing/model/kanji_buffer.dart';
 import 'package:da_kanji_mobile/features/drawing/model/strokes.dart';
@@ -42,15 +41,13 @@ import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/core/iso/iso_table.dart';
 import 'package:da_kanji_mobile/core/device/platform_dependent_variables.dart';
 import 'package:da_kanji_mobile/core/releases/version.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/search_history/search_history_sql.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/core/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/core/analytics/event_logging.dart';
+
+
 
 /// Initializes the app, by initializing all the providers, services, etc.
 Future<bool> init() async {
@@ -118,8 +115,8 @@ Future<void> initServices() async {
   GetIt.I.registerSingleton<Anki>(Anki(GetIt.I<Settings>().anki));
   await GetIt.I<Anki>().init();
 
-  GetIt.I.registerSingleton<Stats>(Stats(uD)..init());
-
+  GetIt.I.registerSingleton<UserActivity>(UserActivity(uD)..init());
+  GetIt.I.registerSingleton<UserDataDB>(UserDataDB());
 }
 
 /// Loads all services from disk that DO depend on data in the documents
@@ -160,16 +157,6 @@ Future<void> initDocumentsServices(BuildContext context) async {
         )
         : null
     )
-  );
-
-  // word lists SQL
-  final wordListsSQL = WordListsSQLDatabase(g_DakanjiPathManager.wordListsSqlFile);
-  await wordListsSQL.init();
-  GetIt.I.registerSingleton<WordListsSQLDatabase>(wordListsSQL);
-
-  // search history SQL
-  GetIt.I.registerSingleton<SearchHistorySQLDatabase>(
-    SearchHistorySQLDatabase(g_DakanjiPathManager.searchHistorySqlFile)
   );
 
   GetIt.I.registerSingleton<DictionarySearch>(

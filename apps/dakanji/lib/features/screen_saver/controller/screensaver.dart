@@ -1,11 +1,12 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
+import 'package:da_kanji_mobile/core/user/word_lists/word_lists_tables.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/features/screen_saver/screens/screen_saver_screen.dart';
 
@@ -34,7 +35,7 @@ Future<List<int>> getDictIDsForScreensaver(List<int> wordListIDs) async {
 
   for (int idx in wordListIDs) {
     entries.addAll(
-      await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(idx)
+      await GetIt.I<UserDataDB>().wordListsDao.getEntryIDsOfWordList(idx)
     );
   }
 

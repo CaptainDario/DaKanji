@@ -2,13 +2,16 @@
 import 'dart:math';
 
 // Package imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
+
+
+
 
 /// Get all `JMDict` entries from the database that are in the word list given
 /// by their IDs.
@@ -55,10 +58,10 @@ Future<List<JMdict>> wordListIdsToJMdict(List<int> wordIds, List<String>? langsT
 }
 
 /// If a user made list is shown, gets the right stream from the DB
-Stream<Iterable<Tuple2<DateTime, int>>> userListStream(listID){
+Stream<Iterable<Tuple2<DateTime, int>>> userListStream(int listID){
 
   // listen to changes of this word list
-  return GetIt.I<WordListsSQLDatabase>().watchWordlistEntries(listID)
+  return GetIt.I<UserDataDB>().wordListsDao.watchWordlistEntries(listID)
     .map((event) => event.map((e) => Tuple2(e.timeAdded, e.dictEntryID)));
     
 }

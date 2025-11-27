@@ -2,6 +2,8 @@
 
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/core/user/word_lists/word_lists_dao.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,7 +13,7 @@ import 'package:get_it/get_it.dart';
 import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
+import 'package:da_kanji_mobile/core/user/word_lists/word_lists_tables.dart';
 import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 import 'package:da_kanji_mobile/features/word_lists/widgets/word_lists.dart' as word_lists;
 
@@ -46,13 +48,13 @@ class WordListsScreen extends StatefulWidget {
 class _WordListsScreenState extends State<WordListsScreen> {
 
   /// The word lists database
-  late WordListsSQLDatabase wordLists;
+  late WordListsDao wordLists;
 
 
   @override
   void initState() {
   
-    wordLists = GetIt.I<WordListsSQLDatabase>();
+    wordLists = GetIt.I<UserDataDB>().wordListsDao;
 
     super.initState();
   }

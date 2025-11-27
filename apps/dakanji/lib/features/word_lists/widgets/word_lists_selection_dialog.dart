@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/core/user/word_lists/word_lists_dao.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -7,7 +9,6 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
 import 'package:da_kanji_mobile/features/word_lists/widgets/word_lists.dart' as word_lists_ui;
 
 // Project imports:
@@ -23,7 +24,7 @@ import 'package:da_kanji_mobile/features/word_lists/widgets/word_lists.dart' as 
 /// user's selection as arugment
 Future<List<TreeNode<WordListsData>>> showWordListSelectionDialog(BuildContext context,
   {
-    WordListsSQLDatabase? wordlists,
+    WordListsDao? wordlists,
     List<int>? selectedItems,
     Function(List<TreeNode<WordListsData>> selection)? onSelectionConfirmed,
     bool includeDefaults = false
@@ -41,7 +42,7 @@ Future<List<TreeNode<WordListsData>>> showWordListSelectionDialog(BuildContext c
       width: MediaQuery.of(context).size.width * 0.8,
       child: word_lists_ui.WordLists(
         false,
-        wordlists ?? GetIt.I<WordListsSQLDatabase>(),
+        wordlists ?? GetIt.I<UserDataDB>().wordListsDao,
         selectedItems: selectedItems,
         includeDefaults: includeDefaults,
         onSelectionConfirmed: onSelectionConfirmed,

@@ -1,10 +1,11 @@
 // Package imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
+import 'package:da_kanji_mobile/core/user/word_lists/word_lists_tables.dart';
 
 /// The tree of word lists and folders that the user has created
 ///
@@ -18,7 +19,7 @@ class WordListsTree {
   WordListsTree();
 
   /// Constructs a wordlist tree from a SQL WordList database
-  WordListsTree.fromWordListsSQL(List<WordListNodesSQLData> sqlList){
+  WordListsTree.fromWordListsSQL(List<WordListNodesTableData> sqlList){
 
     // assure that the root is in the DB and set it
     if(sqlList.isEmpty){
@@ -52,7 +53,7 @@ class WordListsTree {
   /// it.
   /// 
   /// Caution: This does NOT load the dict entries of a word list node
-  static TreeNode<WordListsData> treeNodeWordListFromSQLData(WordListNodesSQLData data){
+  static TreeNode<WordListsData> treeNodeWordListFromSQLData(WordListNodesTableData data){
 
     return TreeNode(
       WordListsData(

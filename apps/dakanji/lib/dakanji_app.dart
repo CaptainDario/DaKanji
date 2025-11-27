@@ -12,7 +12,7 @@ import 'package:window_manager/window_manager.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/routing.dart';
-import 'package:da_kanji_mobile/features/stats/model/stats.dart';
+import 'package:da_kanji_mobile/core/user/user_activity.dart';
 import 'package:da_kanji_mobile/features/tutorial/controller/tutorial_on_step.dart';
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
@@ -52,11 +52,11 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
     
     // app active again
     if(state == AppLifecycleState.resumed){
-      GetIt.I<Stats>().appActive = true;
+      GetIt.I<UserActivity>().appActive = true;
     }
     // app inactive
     else {
-      GetIt.I<Stats>().appActive = false;
+      GetIt.I<UserActivity>().appActive = false;
       GetIt.I<UserData>().save();
     }
     
@@ -110,7 +110,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
         final MediaQueryData data = MediaQuery.of(context);
     
         return MaterialApp(
-          debugShowCheckedModeBanner: true,
+          debugShowCheckedModeBanner: false,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,

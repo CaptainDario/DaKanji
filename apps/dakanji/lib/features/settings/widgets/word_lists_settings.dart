@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -20,7 +21,7 @@ import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
+import 'package:da_kanji_mobile/core/user/word_lists/word_lists_tables.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_check_box_tile.dart';
@@ -77,7 +78,7 @@ class _WordListSettingsState extends State<WordListSettings> {
             List<int> selectedItems = settings.wordLists.quickAddListIDs;
 
             await showWordListSelectionDialog(context,
-              wordlists: GetIt.I<WordListsSQLDatabase>(),
+              wordlists: GetIt.I<UserDataDB>().wordListsDao,
               selectedItems: selectedItems,
               onSelectionConfirmed: (selection) async {
                 
@@ -247,7 +248,7 @@ class _WordListSettingsState extends State<WordListSettings> {
 
   /// Readds the defaults folder to the words lists root if it has been removed
   Future readdDefaults() async {
-    await GetIt.I<WordListsSQLDatabase>().readdDefaultsToRoot();
+    await GetIt.I<UserDataDB>().wordListsDao.readdDefaultsToRoot();
   }
 
   /// Exports the current word lists
@@ -256,8 +257,8 @@ class _WordListSettingsState extends State<WordListSettings> {
 
     final exportDir = await FilePicker.platform.getDirectoryPath();
     if(exportDir != null){
-      g_DakanjiPathManager.wordListsSqlFile.copy(
-        p.join(exportDir, p.basename(g_DakanjiPathManager.wordListsSqlFile.path)));
+      g_DakanjiPathManager.userDataSqlite.copy(
+        p.join(exportDir, p.basename(g_DakanjiPathManager.userDataSqlite.path)));
     }
 
   }
@@ -291,14 +292,13 @@ class _WordListSettingsState extends State<WordListSettings> {
           // try loading the file to check that it is valid
           try {
             await GetIt.I.unregister(
-              instance: GetIt.I<WordListsSQLDatabase>(),
-              disposingFunction: (WordListsSQLDatabase p0) async {
+              instance: GetIt.I<UserDataDB>().wordListsDao,
+              disposingFunction: (UserDataDB p0) async {
                 await p0.close();
               },
             );
 
-            WordListsSQLDatabase db = WordListsSQLDatabase(dbFile);
-            await db.init();
+            UserDataDB db = UserDataDB(dbPath: dbFile.path);
             fileSeemsvalid = true;
           } 
           catch (e) {
@@ -307,8 +307,8 @@ class _WordListSettingsState extends State<WordListSettings> {
 
           // overwrite existing database
           if(fileSeemsvalid){
-            g_DakanjiPathManager.wordListsSqlFile.deleteSync();
-            dbFile.copySync(g_DakanjiPathManager.wordListsSqlFile.path);
+            g_DakanjiPathManager.userDataSqlite.deleteSync();
+            dbFile.copySync(g_DakanjiPathManager.userDataSqlite.path);
             
             // ignore: use_build_context_synchronously
             await restartApp(context);

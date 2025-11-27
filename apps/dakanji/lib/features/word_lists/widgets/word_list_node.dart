@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -23,7 +24,7 @@ import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
+import 'package:da_kanji_mobile/core/user/word_lists/word_lists_tables.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/anki/widgets/anki_not_setup_dialog.dart';
@@ -468,7 +469,7 @@ class _WordListNodeState extends State<WordListNode> {
 
     // create PDF
     pw.Document pdf = await pdfPortraitFromWordListNode(
-      await GetIt.I<WordListsSQLDatabase>().getEntryIDsOfWordList(widget.node.id),
+      await GetIt.I<UserDataDB>().wordListsDao.getEntryIDsOfWordList(widget.node.id),
       widget.node.value.name);
     Uint8List pdfBytes = await pdf.save();
 

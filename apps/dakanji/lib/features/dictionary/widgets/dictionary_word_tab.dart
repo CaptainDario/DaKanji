@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,6 @@ import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/anki/widgets/anki_dialog.dart';
@@ -287,12 +287,12 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         ).toList();
 
         // update the lists
-        GetIt.I<WordListsSQLDatabase>().addEntriesToWordLists(
+        GetIt.I<UserDataDB>().wordListsDao.addEntriesToWordLists(
           nodesToAddTo.map((e) => e.id).toList(),
           [widget.entry!.id]);
 
         // save to disk
-        GetIt.I<WordListsSQLDatabase>().updateNodes(nodesToAddTo);
+        GetIt.I<UserDataDB>().wordListsDao.updateNodes(nodesToAddTo);
 
         Navigator.of(context, rootNavigator: false).pop();
       });

@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -18,7 +19,7 @@ import 'package:da_kanji_mobile/features/word_list/model/word_list_sorting.dart'
 import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
 import 'package:da_kanji_mobile/features/word_lists/controller/word_lists_queries.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
+import 'package:da_kanji_mobile/core/user/word_lists/word_lists_tables.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/word_list/screens/word_list_view_entry_screen.dart';
@@ -322,7 +323,7 @@ class _WordListScreenState extends State<WordListScreen> {
     includeDefaults: true,
     onSelectionConfirmed: (selection) async {
 
-      await GetIt.I<WordListsSQLDatabase>().copyEntriesFromListsToList(
+      await GetIt.I<UserDataDB>().wordListsDao.copyEntriesFromListsToList(
         selection.map((e) => e.id),
         widget.node.id);
 

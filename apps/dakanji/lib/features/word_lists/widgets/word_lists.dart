@@ -2,6 +2,8 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/core/user/word_lists/word_lists_dao.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -18,12 +20,13 @@ import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_tree.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/word_list/screens/word_list_screen.dart';
 import 'package:da_kanji_mobile/features/word_lists/widgets/word_list_node.dart';
+
+
 
 /// A widget that shows the default and user defined word lists as a tree
 class WordLists extends StatefulWidget {
@@ -31,7 +34,7 @@ class WordLists extends StatefulWidget {
   /// should the focus nodes for the tutorial be included
   final bool includeTutorial;
   /// the parent of this word lists
-  final WordListsSQLDatabase wordLists;
+  final WordListsDao wordLists;
   /// should the default word lists be included
   final bool includeDefaults;
   /// Callback that is triggered when the user presses the ok button
@@ -149,7 +152,7 @@ class _WordListsState extends State<WordLists> {
   @override
   Widget build(BuildContext context) {
 
-    return StreamBuilder<List<WordListNodesSQLData>>(
+    return StreamBuilder<List<WordListNodesTableData>>(
       stream: widget.wordLists.watchAllWordlists(),
       builder: (context, snapshot) {
         

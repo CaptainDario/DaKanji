@@ -21,7 +21,7 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
   @override
   Widget build(BuildContext context) {
 
-    final mockData = generateMockStudyData(streakLength: 360, length: 900);
+    final mockData = generateMockStudyData(streakLength: 12, length: 900);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -29,12 +29,13 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
         children: [
           const SizedBox(height: 8,),
           // TODO use actual user name
-          GreetingWidget("User.name"),
+          GreetingWidget("ゆきこ"),
           SizedBox(height: 8,),
           StudyCalendar(
             vocabStudied: mockData.vocab,
             charactersStudied: {},
-            // TODO kanji trainer charactersStudied: mockData.characters,
+            // TODO kanji trainer
+            // charactersStudied: mockData.characters,
             timeStudied: mockData.time,
             vocabColor: g_Dakanji_green,
             charactersColor: g_Dakanji_red,

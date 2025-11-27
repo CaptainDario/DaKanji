@@ -23,9 +23,9 @@ import 'package:da_kanji_mobile/core/analytics/event_logging.dart';
 
 
 
-/// Tracking of statistics and communication with the local SQL Stas DB
+/// Tracking of statistics and communication with the local SQL Stats DB
 /// Also tracks daily and monthly usage
-class Stats{
+class UserActivity{
 
   /// [UserData] instance where the daily and monthly usage is tracked
   UserData userData;
@@ -54,7 +54,7 @@ class Stats{
 
 
   /// Before using this `init()` needs to be called
-  Stats(
+  UserActivity(
     this.userData
   );
 

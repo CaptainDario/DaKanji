@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -10,7 +11,6 @@ import 'package:get_it/get_it.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_sql.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/anki/widgets/anki_dialog.dart';
@@ -20,7 +20,7 @@ import 'package:da_kanji_mobile/features/anki/widgets/anki_not_setup_dialog.dart
 Future quickAddToWordList(JMdict entry, BuildContext context) async {
 
   // get all lists that currently still exist and that are selected
-  List<int> allIDsInDB  = await GetIt.I<WordListsSQLDatabase>().getAllNodeIDs();
+  List<int> allIDsInDB  = await GetIt.I<UserDataDB>().wordListsDao.getAllNodeIDs();
   List<int> selectedIDs = GetIt.I<Settings>().wordLists.quickAddListIDs
     .where((e) => allIDsInDB.contains(e))
     .toList();
@@ -42,7 +42,7 @@ Future quickAddToWordList(JMdict entry, BuildContext context) async {
     return;
   }
 
-  await GetIt.I<WordListsSQLDatabase>().addEntriesToWordLists(
+  await GetIt.I<UserDataDB>().wordListsDao.addEntriesToWordLists(
     selectedIDs, [entry.id]);
 
 }
