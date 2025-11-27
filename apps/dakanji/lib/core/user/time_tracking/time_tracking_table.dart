@@ -10,6 +10,10 @@ class TimeTrackingTable extends Table {
   TextColumn get category => text()();
 
   TextColumn get tags => text()();
+
+  // false = The session is paused/running (Resume is possible).
+  // true = The session is archived (Only "Start New" is possible).
+  BoolColumn get isCompleted => boolean().withDefault(const Constant(false))();
   
 }
 

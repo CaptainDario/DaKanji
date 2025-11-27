@@ -1115,8 +1115,23 @@ class $TimeTrackingTableTable extends TimeTrackingTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _isCompletedMeta = const VerificationMeta(
+    'isCompleted',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, category, tags];
+  late final GeneratedColumn<bool> isCompleted = GeneratedColumn<bool>(
+    'is_completed',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_completed" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, category, tags, isCompleted];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1148,6 +1163,15 @@ class $TimeTrackingTableTable extends TimeTrackingTable
     } else if (isInserting) {
       context.missing(_tagsMeta);
     }
+    if (data.containsKey('is_completed')) {
+      context.handle(
+        _isCompletedMeta,
+        isCompleted.isAcceptableOrUnknown(
+          data['is_completed']!,
+          _isCompletedMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -1169,6 +1193,10 @@ class $TimeTrackingTableTable extends TimeTrackingTable
         DriftSqlType.string,
         data['${effectivePrefix}tags'],
       )!,
+      isCompleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_completed'],
+      )!,
     );
   }
 
@@ -1183,10 +1211,12 @@ class TimeTrackingTableData extends DataClass
   final int id;
   final String category;
   final String tags;
+  final bool isCompleted;
   const TimeTrackingTableData({
     required this.id,
     required this.category,
     required this.tags,
+    required this.isCompleted,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1194,6 +1224,7 @@ class TimeTrackingTableData extends DataClass
     map['id'] = Variable<int>(id);
     map['category'] = Variable<String>(category);
     map['tags'] = Variable<String>(tags);
+    map['is_completed'] = Variable<bool>(isCompleted);
     return map;
   }
 
@@ -1202,6 +1233,7 @@ class TimeTrackingTableData extends DataClass
       id: Value(id),
       category: Value(category),
       tags: Value(tags),
+      isCompleted: Value(isCompleted),
     );
   }
 
@@ -1214,6 +1246,7 @@ class TimeTrackingTableData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       category: serializer.fromJson<String>(json['category']),
       tags: serializer.fromJson<String>(json['tags']),
+      isCompleted: serializer.fromJson<bool>(json['isCompleted']),
     );
   }
   @override
@@ -1223,20 +1256,29 @@ class TimeTrackingTableData extends DataClass
       'id': serializer.toJson<int>(id),
       'category': serializer.toJson<String>(category),
       'tags': serializer.toJson<String>(tags),
+      'isCompleted': serializer.toJson<bool>(isCompleted),
     };
   }
 
-  TimeTrackingTableData copyWith({int? id, String? category, String? tags}) =>
-      TimeTrackingTableData(
-        id: id ?? this.id,
-        category: category ?? this.category,
-        tags: tags ?? this.tags,
-      );
+  TimeTrackingTableData copyWith({
+    int? id,
+    String? category,
+    String? tags,
+    bool? isCompleted,
+  }) => TimeTrackingTableData(
+    id: id ?? this.id,
+    category: category ?? this.category,
+    tags: tags ?? this.tags,
+    isCompleted: isCompleted ?? this.isCompleted,
+  );
   TimeTrackingTableData copyWithCompanion(TimeTrackingTableCompanion data) {
     return TimeTrackingTableData(
       id: data.id.present ? data.id.value : this.id,
       category: data.category.present ? data.category.value : this.category,
       tags: data.tags.present ? data.tags.value : this.tags,
+      isCompleted: data.isCompleted.present
+          ? data.isCompleted.value
+          : this.isCompleted,
     );
   }
 
@@ -1245,20 +1287,22 @@ class TimeTrackingTableData extends DataClass
     return (StringBuffer('TimeTrackingTableData(')
           ..write('id: $id, ')
           ..write('category: $category, ')
-          ..write('tags: $tags')
+          ..write('tags: $tags, ')
+          ..write('isCompleted: $isCompleted')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, category, tags);
+  int get hashCode => Object.hash(id, category, tags, isCompleted);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TimeTrackingTableData &&
           other.id == this.id &&
           other.category == this.category &&
-          other.tags == this.tags);
+          other.tags == this.tags &&
+          other.isCompleted == this.isCompleted);
 }
 
 class TimeTrackingTableCompanion
@@ -1266,26 +1310,31 @@ class TimeTrackingTableCompanion
   final Value<int> id;
   final Value<String> category;
   final Value<String> tags;
+  final Value<bool> isCompleted;
   const TimeTrackingTableCompanion({
     this.id = const Value.absent(),
     this.category = const Value.absent(),
     this.tags = const Value.absent(),
+    this.isCompleted = const Value.absent(),
   });
   TimeTrackingTableCompanion.insert({
     this.id = const Value.absent(),
     required String category,
     required String tags,
+    this.isCompleted = const Value.absent(),
   }) : category = Value(category),
        tags = Value(tags);
   static Insertable<TimeTrackingTableData> custom({
     Expression<int>? id,
     Expression<String>? category,
     Expression<String>? tags,
+    Expression<bool>? isCompleted,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (category != null) 'category': category,
       if (tags != null) 'tags': tags,
+      if (isCompleted != null) 'is_completed': isCompleted,
     });
   }
 
@@ -1293,11 +1342,13 @@ class TimeTrackingTableCompanion
     Value<int>? id,
     Value<String>? category,
     Value<String>? tags,
+    Value<bool>? isCompleted,
   }) {
     return TimeTrackingTableCompanion(
       id: id ?? this.id,
       category: category ?? this.category,
       tags: tags ?? this.tags,
+      isCompleted: isCompleted ?? this.isCompleted,
     );
   }
 
@@ -1313,6 +1364,9 @@ class TimeTrackingTableCompanion
     if (tags.present) {
       map['tags'] = Variable<String>(tags.value);
     }
+    if (isCompleted.present) {
+      map['is_completed'] = Variable<bool>(isCompleted.value);
+    }
     return map;
   }
 
@@ -1321,7 +1375,8 @@ class TimeTrackingTableCompanion
     return (StringBuffer('TimeTrackingTableCompanion(')
           ..write('id: $id, ')
           ..write('category: $category, ')
-          ..write('tags: $tags')
+          ..write('tags: $tags, ')
+          ..write('isCompleted: $isCompleted')
           ..write(')'))
         .toString();
   }
@@ -2384,12 +2439,14 @@ typedef $$TimeTrackingTableTableCreateCompanionBuilder =
       Value<int> id,
       required String category,
       required String tags,
+      Value<bool> isCompleted,
     });
 typedef $$TimeTrackingTableTableUpdateCompanionBuilder =
     TimeTrackingTableCompanion Function({
       Value<int> id,
       Value<String> category,
       Value<String> tags,
+      Value<bool> isCompleted,
     });
 
 final class $$TimeTrackingTableTableReferences
@@ -2458,6 +2515,11 @@ class $$TimeTrackingTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<bool> get isCompleted => $composableBuilder(
+    column: $table.isCompleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
   Expression<bool> timeTrackingUnitTableRefs(
     Expression<bool> Function($$TimeTrackingUnitTableTableFilterComposer f) f,
   ) {
@@ -2508,6 +2570,11 @@ class $$TimeTrackingTableTableOrderingComposer
     column: $table.tags,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get isCompleted => $composableBuilder(
+    column: $table.isCompleted,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TimeTrackingTableTableAnnotationComposer
@@ -2527,6 +2594,11 @@ class $$TimeTrackingTableTableAnnotationComposer
 
   GeneratedColumn<String> get tags =>
       $composableBuilder(column: $table.tags, builder: (column) => column);
+
+  GeneratedColumn<bool> get isCompleted => $composableBuilder(
+    column: $table.isCompleted,
+    builder: (column) => column,
+  );
 
   Expression<T> timeTrackingUnitTableRefs<T extends Object>(
     Expression<T> Function($$TimeTrackingUnitTableTableAnnotationComposer a) f,
@@ -2591,20 +2663,24 @@ class $$TimeTrackingTableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<String> category = const Value.absent(),
                 Value<String> tags = const Value.absent(),
+                Value<bool> isCompleted = const Value.absent(),
               }) => TimeTrackingTableCompanion(
                 id: id,
                 category: category,
                 tags: tags,
+                isCompleted: isCompleted,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String category,
                 required String tags,
+                Value<bool> isCompleted = const Value.absent(),
               }) => TimeTrackingTableCompanion.insert(
                 id: id,
                 category: category,
                 tags: tags,
+                isCompleted: isCompleted,
               ),
           withReferenceMapper: (p0) => p0
               .map(
