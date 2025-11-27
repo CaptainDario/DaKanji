@@ -15,7 +15,7 @@ import 'package:universal_io/io.dart';
 import 'package:da_kanji_mobile/core/app/restart.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/search_history/search_history_sql.dart';
+import 'package:da_kanji_mobile/core/user/search_history/search_history_tables.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
@@ -122,7 +122,7 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
           text: LocaleKeys.SettingsScreen_advanced_settings_delete_history.tr(),
           icon: Icons.delete_forever,
           onButtonPressed: () async {
-            await GetIt.I<SearchHistorySQLDatabase>().deleteEverything();
+            await GetIt.I<UserDataDB>().searchHistoryDao.deleteSearchHistory();
             // ignore: use_build_context_synchronously
             await restartApp(context);
           },

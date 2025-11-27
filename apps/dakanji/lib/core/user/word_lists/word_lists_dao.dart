@@ -41,8 +41,8 @@ class WordListsDao extends DatabaseAccessor<UserDataDB> with _$WordListsDaoMixin
   Future deleteAllWordLists() async {
 
     await transaction(() async {
-      await delete(wordListEntriesTable).go();
-      await delete(wordListNodesTable).go();
+      await wordListEntriesTable.deleteAll();
+      await wordListNodesTable.deleteAll();
     });
 
   }
@@ -317,5 +317,8 @@ class WordListsDao extends DatabaseAccessor<UserDataDB> with _$WordListsDaoMixin
 
   }
   // --- END : WordListsNode
+
+  // --- START : MISC
+  // --- END : MISC
 
 }

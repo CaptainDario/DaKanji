@@ -2,6 +2,8 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data.dart';
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -23,7 +25,7 @@ import 'package:da_kanji_mobile/features/dictionary/model/filter_options.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/search_history/search_history_sql.dart';
+import 'package:da_kanji_mobile/core/user/search_history/search_history_tables.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
@@ -434,8 +436,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                             init: (controller) {},
                           )
                           // otherwise the search history
-                          : StreamBuilder<List<SearchHistorySQLData>>(
-                            stream: GetIt.I<SearchHistorySQLDatabase>().watchAllSearchHistoryIDs(),
+                          : StreamBuilder<List<SearchHistoryTableData>>(
+                            stream: GetIt.I<UserDataDB>().searchHistoryDao.watchAllSearchHistoryIDs(),
                             builder: (context, snapshot) {
               
                               if(snapshot.data == null) return const SizedBox();
@@ -460,7 +462,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                                 init: (controller) {},
                                 onSearchResultPressed: onSearchResultPressed,
                                 onDismissed: (direction, entry, idx) => 
-                                  GetIt.I<SearchHistorySQLDatabase>().deleteEntry(
+                                  GetIt.I<UserDataDB>().searchHistoryDao.deleteEntry(
                                     sqlIDs[idx]
                                   ),
                               );
@@ -507,7 +509,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// it
   Future onDismissedHistoryEntry(DismissDirection direction, JMdict entry, int idx) async {
 
-    GetIt.I<SearchHistorySQLDatabase>().deleteEntry(entry.id);
+    GetIt.I<UserDataDB>().searchHistoryDao.deleteEntry(entry.id);
 
   }
 
@@ -570,7 +572,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     context.read<DictSearch>().selectedResult = entry;
 
     // store new search in search history
-    GetIt.I<SearchHistorySQLDatabase>().addEntry(entry);
+    GetIt.I<UserDataDB>().searchHistoryDao.addEntry(entry);
 
     // collapse the search bar
     if(widget.canCollapse){

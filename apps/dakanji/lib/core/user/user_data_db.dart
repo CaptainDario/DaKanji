@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:da_kanji_mobile/core/user/search_history/search_history_dao.dart';
+import 'package:da_kanji_mobile/core/user/search_history/search_history_tables.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_dao.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_table.dart';
 import 'package:da_kanji_mobile/core/user/word_lists/word_lists_dao.dart';
@@ -24,7 +26,8 @@ part 'user_data_db.g.dart';
     // word lists
     WordListNodesTable, WordListEntriesTable,
 
-    // TODO search history
+    // search history
+    SearchHistoryTable,
 
     // stats
     DictStatsTable,
@@ -33,6 +36,8 @@ part 'user_data_db.g.dart';
   ],
   daos: [
     WordListsDao,
+    SearchHistoryDao,
+
     TimeTrackingDao
   ]
 )
