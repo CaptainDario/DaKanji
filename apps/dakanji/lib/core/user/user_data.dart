@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_activity.dart';
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
@@ -18,7 +20,7 @@ part 'user_data.g.dart';
 
 
 
-/// Class that stores preferences and information about the user
+/// Class that stores configuration, preferences, etc. about/from the user
 /// 
 /// To update the toJson code run
 /// `flutter pub run build_runner build --delete-conflicting-outputs`
