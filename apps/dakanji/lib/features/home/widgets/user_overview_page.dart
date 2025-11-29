@@ -50,7 +50,7 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
             dailyGoal: 67,
             color: g_Dakanji_blue,
             action: LocaleKeys.HomeScreen_study_card_action_time.tr(),
-            icon: DaKanjiIcons.timer,
+            icon: DaKanjiIcons.timeTracking,
           ),
           StudyCard(
             title: '単語',

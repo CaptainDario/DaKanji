@@ -27,5 +27,5 @@ class DaKanjiIcons {
   static const IconData misc = Icons.miscellaneous_services_outlined;
   static const IconData deepLinks = Icons.link;
   static const IconData feedback = Icons.feedback_outlined;
-  static const IconData timer = Icons.timer;
+  static const IconData timeTracking = Icons.timer;
 }
