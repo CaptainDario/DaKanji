@@ -8,13 +8,16 @@ part 'time_tracking_dao.g.dart';
 
 @DriftAccessor(
   tables: [
-    TimeTrackingTable, TimeTrackingUnitTable
+    TimeTrackingTable, TimeTrackingUnitTable, TimeTrackingTagsTable, TimeTrackingCategoriesTable
   ]
 )
 class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDaoMixin {
 
   TimeTrackingDao(super.db);
 
+
+  // --- START : Session Management ---
+  /// Returns the start time of the currently running timer, if any.
   Future<DateTime?> getRunningTimer() async {
     final query = select(timeTrackingUnitTable)
       ..where((tbl) => 
@@ -50,6 +53,64 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
     // 3. Nothing is happening.
     return TimerStatus.idle;
+  }
+
+  /// Retrieves data to restore an active session, if any.
+  Future<({
+    bool hasActiveSession, 
+    bool isPaused, 
+    Duration totalWorkDuration,
+    Duration totalPauseDuration,
+    DateTime? pauseStartTime
+  })> getSessionRestoreData() async {
+    final activeSession = await (select(timeTrackingTable)
+          ..where((tbl) => tbl.isCompleted.equals(false))
+          ..limit(1))
+          .getSingleOrNull();
+
+    if (activeSession == null) {
+      return (
+        hasActiveSession: false, 
+        isPaused: false, 
+        totalWorkDuration: Duration.zero, 
+        totalPauseDuration: Duration.zero, 
+        pauseStartTime: null
+      );
+    }
+
+    final units = await (select(timeTrackingUnitTable)
+          ..where((tbl) => tbl.timeTrackingId.equals(activeSession.id))
+          ..orderBy([(t) => OrderingTerm(expression: t.startTime)])) 
+          .get();
+
+    Duration totalWork = Duration.zero;
+    Duration totalPause = Duration.zero; // <--- NEW
+    bool isPaused = true; 
+    DateTime? lastEndTime;
+
+    for (final unit in units) {
+      // 1. Calculate the GAP (Pause) before this unit started
+      if (lastEndTime != null) {
+        totalPause += unit.startTime.difference(lastEndTime);
+      }
+
+      // 2. Calculate the WORK duration of this unit
+      if (unit.endTime == null) {
+        isPaused = false;
+        totalWork += DateTime.now().difference(unit.startTime);
+      } else {
+        totalWork += unit.endTime!.difference(unit.startTime);
+        lastEndTime = unit.endTime;
+      }
+    }
+
+    return (
+      hasActiveSession: true, 
+      isPaused: isPaused, 
+      totalWorkDuration: totalWork,
+      totalPauseDuration: totalPause, // <--- Return the sum of gaps
+      pauseStartTime: isPaused ? lastEndTime : null 
+    );
   }
 
   /// Creates a new row in TimeTrackingTable and starts the timer.
@@ -127,4 +188,48 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       );
     });
   }
+  // --- END : Session Management ---
+
+  // --- START : Tags and Categories Management ---
+  /// Get all tags that the user has defined
+  Future<List<String>> getAllCategories() async {
+    final query = select(timeTrackingCategoriesTable);
+    final results = await query.get();
+    return results.map((row) => row.category).toList();
+  }
+
+  /// Add a new category
+  Future<void> addCategory(String category) async {
+    await into(timeTrackingCategoriesTable).insert(
+      TimeTrackingCategoriesTableCompanion(
+        category: Value(category),
+      ),
+      onConflict: DoNothing()
+    );
+  }
+
+  /// Delete an existing category
+  Future<void> deleteCategory(String category) async {
+    final query = delete(timeTrackingCategoriesTable)
+      ..where((tbl) => tbl.category.equals(category));
+    await query.go();
+  }
+
+  /// Get all tags that the user has defined
+  Future<List<String>> getAllTags() async {
+    final query = select(timeTrackingTagsTable);
+    final results = await query.get();
+    return results.map((row) => row.tag).toList();
+  }
+
+  /// Add a new tag
+  Future<void> addTag(String tag) async {
+    await into(timeTrackingTagsTable).insert(
+      TimeTrackingTagsTableCompanion(
+        tag: Value(tag),
+      ),
+      onConflict: DoNothing()
+    );
+  }
+  // --- END   : Tags and Categories Management ---
 }

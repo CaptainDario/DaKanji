@@ -32,7 +32,7 @@ part 'user_data_db.g.dart';
     // stats
     DictStatsTable,
     // time tracking
-    TimeTrackingTable, TimeTrackingUnitTable
+    TimeTrackingTable, TimeTrackingUnitTable, TimeTrackingCategoriesTable, TimeTrackingTagsTable,
   ],
   daos: [
     WordListsDao,

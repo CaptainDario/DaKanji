@@ -8,4 +8,8 @@ mixin _$TimeTrackingDaoMixin on DatabaseAccessor<UserDataDB> {
       attachedDatabase.timeTrackingTable;
   $TimeTrackingUnitTableTable get timeTrackingUnitTable =>
       attachedDatabase.timeTrackingUnitTable;
+  $TimeTrackingTagsTableTable get timeTrackingTagsTable =>
+      attachedDatabase.timeTrackingTagsTable;
+  $TimeTrackingCategoriesTableTable get timeTrackingCategoriesTable =>
+      attachedDatabase.timeTrackingCategoriesTable;
 }
