@@ -276,7 +276,7 @@
     "dict_search_history_delete_text": "You can delete elements from the search history by swiping left on them.",
     "dict_search_history_delete_title": "Delete",
     "dict_search_history_title": "Search history",
-    "dict_search_specifiying_searches_text": "DaKanji allows you to specify what you want to match. You can prefix a search by using `?term=`, `?reading=` or `?definition=` to specify what you want to match with your search.\nFor example, `?reading=\u308a\u3093\u3054` will search for any entry with a reading that matches.\nYou can also combine them by separating them using `&` like this `?term=\u6797\u6a8e&reading=\u308a\u3093\u3054`.",
+    "dict_search_specifiying_searches_text": "DaKanji allows you to specify what you want to match. You can prefix a search by using `?t=` (term), `?r=` (reading) or `?d=` (definition) to specify what you want to match with your search.\nFor example, `?r=\u308a\u3093\u3054` will search for any entry with a reading that matches.\nYou can also combine them by separating them using `&` like this `?t=\u6797\u6a8e&r=\u308a\u3093\u3054`.",
     "dict_search_specifiying_searches_title": "Specifying searches",
     "dict_search_title": "Searching",
     "dict_search_wildcard_search_text": "DaKanji gives you the ability to search in the dictionary using more general pattern matching (UNIX wildcards), but __be aware that this can be slow, especially if you have many dictionaries imported__.\n\n**Important Limitations**\nWhen using these symbols, **Smart Search is DISABLED**.\n* **No Deconjugation:** Searching `\u98df\u3079*` will not automatically find `\u98df\u3079\u305f` unless the wildcard explicitly matches it.\n* **No Spell-fix:** Typing errors are not auto-corrected.\n\n### Search Symbols\n\n**`*`**\n\nMatches **any number of characters** (including zero).\n* **Example:** `\u98df*`\n    * **Matches:** `\u98df\u3079\u308b`, `\u98df\u4e8b`, `\u98df\u54c1`\n* **Example:** `*\u5b66`\n    * **Matches:** `\u5927\u5b66`, `\u79d1\u5b66`, `\u8a00\u8a9e\u5b66`\n\n**`?`**\n\nMatches **exactly one character**.\n* **Example:** `?\u672c`\n    * **Matches:** `\u65e5\u672c`, `\u4e09\u672c`\n    * **Does NOT match:** `\u672c` (too short) or `\u30a2\u30e1\u30ea\u30ab\u672c` (too long)\n\n**`[ ]`**\n\nMatches **one character** from the specific list provided.\n* **Example:** `[\u8d64\u9752]\u8272`\n    * **Matches:** `\u8d64\u8272` or `\u9752\u8272`\n\nThis can also specify a character range\n* **Example:** `JLPT-N[1-5]`\n    * **Matches:** `JLPT-N1` through `JLPT-N5`\n\n**`[^ ]`**\n\nMatches one character that is **NOT** in the list provided.\n* **Example:** `[^\u6708]\u66dc\u65e5`\n    * **Matches:** `\u706b\u66dc\u65e5`, `\u6c34\u66dc\u65e5`\n    * **Excludes:** `\u6708\u66dc\u65e5`",
@@ -323,6 +323,7 @@
     "Onboarding_4_title": "Study Kanji and Kana"
   },
   "SettingsScreen": {
+    "": "",
     "advanced_settings_delete_dict": "Reset dictionary files",
     "advanced_settings_delete_dojg": "Delete DoJG files",
     "advanced_settings_delete_history": "Delete search history",
@@ -413,6 +414,13 @@
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "text_save_text": "Save text across sessions",
     "text_show_selection_buttons": "Show text selection buttons",
+    "time_tracking_add_category": "Add category",
+    "time_tracking_add_tag": "Add tag",
+    "time_tracking_break_minutes": "Minutes of break per session",
+    "time_tracking_categories": "Categories",
+    "time_tracking_enabled": "Time tracking enabled",
+    "time_tracking_session_legnth": "Length of one session",
+    "time_tracking_tags": "Tags",
     "title": "Settings",
     "word_lists_export": "Export word lists database",
     "word_lists_import": "Import word lists database (@:SettingsScreen.restarts_app)",
@@ -467,6 +475,9 @@
     "tutorial_processed_text_triple_tap": "A triple tap will select a paragraph.",
     "tutorial_spaces_text": "With this button spaces are added to the text.",
     "tutorial_text_input_text": "Here you can write or paste any text. This text can be processed with different tools."
+  },
+  "TimeTrackingScreen": {
+    "title": "Time Tracking"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",

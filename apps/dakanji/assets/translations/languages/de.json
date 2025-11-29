@@ -323,6 +323,7 @@
     "Onboarding_4_title": "Kanji und Kana lernen"
   },
   "SettingsScreen": {
+    "": "",
     "advanced_settings_delete_dict": "W\u00f6rterbuchdateien zur\u00fccksetzen",
     "advanced_settings_delete_dojg": "DoJG-Dateien l\u00f6schen",
     "advanced_settings_delete_history": "Suchverlauf l\u00f6schen",
@@ -411,8 +412,15 @@
     "requires_restart": "erfordert Neustart",
     "restarts_app": "startet app neu",
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
-    "text_save_text": "#ERROR!",
+    "text_save_text": "Text sitzungs\u00fcbergreifend speichern",
     "text_show_selection_buttons": "Buttons zur Textauswahl anzeigen",
+    "time_tracking_add_category": "Kategorie hinzuf\u00fcgen",
+    "time_tracking_add_tag": "Tag hinzuf\u00fcgen",
+    "time_tracking_break_minutes": "Pausenminuten pro Sitzung",
+    "time_tracking_categories": "Kategorien",
+    "time_tracking_enabled": "Zeiterfassung aktiviert",
+    "time_tracking_session_legnth": "Dauer einer Sitzung",
+    "time_tracking_tags": "Tags",
     "title": "Einstellungen",
     "word_lists_export": "Wortlisten-Datenbank exportieren",
     "word_lists_import": "Wortlisten-Datenbank importieren (@:SettingsScreen.restarts_app)",
@@ -467,6 +475,9 @@
     "tutorial_processed_text_triple_tap": "Durch dreimaliges Antippen wird ein Absatz ausgew\u00e4hlt.",
     "tutorial_spaces_text": "Mit dieser Schaltfl\u00e4che werden dem Text Leerzeichen hinzugef\u00fcgt.",
     "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einf\u00fcgen. Dieser Text kann mit verschiedenen Tools bearbeitet."
+  },
+  "TimeTrackingScreen": {
+    "title": "Zeiterfassung"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -560,7 +571,7 @@
     "send_to_anki_progress": "Senden zu Anki, bitte warten...",
     "title": "Wortlisten",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
     "tutorial_create_folder": "Sie k\u00f6nnen einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste dr\u00fccken oder eine Wortliste auf einen anderen Ordner ziehen. Sie k\u00f6nnen Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
     "tutorial_create_list": "Mit dieser Schaltfl\u00e4che k\u00f6nnen Sie eine neue Wortliste erstellen. Mit dem Men\u00fc-Button auf der rechten Seite dieser Liste k\u00f6nnen Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie k\u00f6nnen andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enth\u00e4lt einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",

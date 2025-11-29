@@ -323,6 +323,7 @@
     "Onboarding_4_title": "Nauka kanji i kana"
   },
   "SettingsScreen": {
+    "": "",
     "advanced_settings_delete_dict": "Resetowanie plik\u00f3w s\u0142ownika",
     "advanced_settings_delete_dojg": "Usuwanie plik\u00f3w DoJG",
     "advanced_settings_delete_history": "Usuwanie historii wyszukiwania",
@@ -413,6 +414,13 @@
     "show_tutorial": "Powt\u00f3rz tutorial (@:SettingsScreen.restarts_app)",
     "text_save_text": "Zapisywanie tekstu w r\u00f3\u017cnych sesjach",
     "text_show_selection_buttons": "Poka\u017c przyciski wyboru tekstu",
+    "time_tracking_add_category": "Dodaj kategori\u0119",
+    "time_tracking_add_tag": "Dodaj tag",
+    "time_tracking_break_minutes": "Minuty przerwy na sesj\u0119",
+    "time_tracking_categories": "Kategorie",
+    "time_tracking_enabled": "\u015aledzenie czasu w\u0142\u0105czone",
+    "time_tracking_session_legnth": "D\u0142ugo\u015b\u0107 jednej sesji",
+    "time_tracking_tags": "Tagi",
     "title": "Ustawienia",
     "word_lists_export": "Eksport bazy danych list s\u0142\u00f3w",
     "word_lists_import": "Import bazy danych list s\u0142\u00f3w (@:SettingsScreen.restarts_app)",
@@ -467,6 +475,9 @@
     "tutorial_processed_text_triple_tap": "Potr\u00f3jne stukni\u0119cie powoduje zaznaczenie akapitu.",
     "tutorial_spaces_text": "Za pomoc\u0105 tego przycisku do tekstu dodawane s\u0105 spacje.",
     "tutorial_text_input_text": "Tutaj mo\u017cesz napisa\u0107 lub wklei\u0107 dowolny tekst. Ten tekst b\u0119dzie przetwarzany za pomoc\u0105 r\u00f3\u017cnych narz\u0119dzi."
+  },
+  "TimeTrackingScreen": {
+    "title": "\u015aledzenie czasu"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",

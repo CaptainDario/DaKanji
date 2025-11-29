@@ -323,6 +323,7 @@
     "Onboarding_4_title": "Studiare i kanji e i kana"
   },
   "SettingsScreen": {
+    "": "",
     "advanced_settings_delete_dict": "Reimpostare i file del dizionario",
     "advanced_settings_delete_dojg": "Eliminare i file DoJG",
     "advanced_settings_delete_history": "Cancellare la cronologia delle ricerche",
@@ -413,6 +414,13 @@
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
     "text_save_text": "Salvare il testo in tutte le sessioni",
     "text_show_selection_buttons": "Mostra i pulsanti di selezione del testo",
+    "time_tracking_add_category": "Aggiungi categoria",
+    "time_tracking_add_tag": "Aggiungi tag",
+    "time_tracking_break_minutes": "Minuti di pausa per sessione",
+    "time_tracking_categories": "Categorie",
+    "time_tracking_enabled": "Tracciamento del tempo abilitato",
+    "time_tracking_session_legnth": "Durata di una sessione",
+    "time_tracking_tags": "Tag",
     "title": "Impostazioni",
     "word_lists_export": "Esportazione del database degli elenchi di parole",
     "word_lists_import": "Importazione del database degli elenchi di parole (@:SettingsScreen.restarts_app)",
@@ -467,6 +475,9 @@
     "tutorial_processed_text_triple_tap": "Un triplo tocco selezioner\u00e0 un paragrafo.",
     "tutorial_spaces_text": "Con questo pulsante vengono aggiunti spazi al testo.",
     "tutorial_text_input_text": "Qui \u00e8 possibile scrivere o incollare qualsiasi testo. Il testo verr\u00e0 elaborato con diversi strumenti."
+  },
+  "TimeTrackingScreen": {
+    "title": "Tracciamento del tempo"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",

@@ -386,6 +386,13 @@ class CodegenLoader extends AssetLoader{
     "show_tutorial": "重新展示教程（@:SettingsScreen.restarts_app）。",
     "text_save_text": "跨会话保存文本",
     "text_show_selection_buttons": "显示文本选择按钮",
+    "time_tracking_add_category": "添加类别",
+    "time_tracking_add_tag": "添加标签",
+    "time_tracking_break_minutes": "每节课的休息时间",
+    "time_tracking_categories": "类别",
+    "time_tracking_enabled": "启用时间跟踪",
+    "time_tracking_session_legnth": "一节课的时间",
+    "time_tracking_tags": "标签",
     "title": "设置",
     "word_lists_export": "导出单词表数据库",
     "word_lists_import": "导入单词列表数据库（@:SettingsScreen.restarts_app）",
@@ -424,6 +431,9 @@ class CodegenLoader extends AssetLoader{
     "tutorial_processed_text_triple_tap": "点击三下将选择一个段落。",
     "tutorial_spaces_text": "有了这个按钮，就可以在文本中添加空格。",
     "tutorial_text_input_text": "在这里，你可以写或粘贴任何文本。这个文本将被不同的工具处理。"
+  },
+  "TimeTrackingScreen": {
+    "title": "时间跟踪"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -470,7 +480,7 @@ class CodegenLoader extends AssetLoader{
     "send_to_anki_progress": "发送至 Anki，请稍候...",
     "title": "词表",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "欢迎来到单词列表屏幕！",
     "tutorial_create_folder": "按下该按钮或将单词表拖到另一个单词表上，即可创建新的单词表文件夹。您还可以通过拖动来重新排列文件夹和列表。",
     "tutorial_create_list": "使用此按钮，您可以创建一个新的单词表。通过列表右侧的菜单按钮，您还可以将列表导出为不同格式。",
     "tutorial_folder": "这是一个词表文件夹。您可以在其中存储其他词表文件夹或词表。\n这也是默认的单词表文件夹。它包含一些基于 JLPT 和您的搜索历史等的单词表。",
@@ -876,6 +886,13 @@ static const Map<String,dynamic> _ja = {
     "show_tutorial": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
     "text_save_text": "セッションをまたいでテキストを保存",
     "text_show_selection_buttons": "テキスト選択ボタンを表示",
+    "time_tracking_add_category": "カテゴリーを追加する",
+    "time_tracking_add_tag": "タグの追加",
+    "time_tracking_break_minutes": "セッションごとの休憩時間",
+    "time_tracking_categories": "カテゴリー",
+    "time_tracking_enabled": "タイムトラッキングが可能",
+    "time_tracking_session_legnth": "1セッションの長さ",
+    "time_tracking_tags": "タグ",
     "title": "設定",
     "word_lists_export": "単語リストデータベースのエクスポート",
     "word_lists_import": "単語リストデータベースのインポート (@:SettingsScreen.restarts_app)",
@@ -925,6 +942,9 @@ static const Map<String,dynamic> _ja = {
     "tutorial_spaces_text": "テキストにスペースを追加します",
     "tutorial_text_input_text": "文章を入力してください。かなを振ったり、品詞を調べたりできます"
   },
+  "TimeTrackingScreen": {
+    "title": "タイムトラッキング"
+  },
   "WebbrowserScreen": {
     "title": "ウェブブラウザ",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
@@ -970,7 +990,7 @@ static const Map<String,dynamic> _ja = {
     "send_to_anki_progress": "Ankiに送信中...",
     "title": "単語リスト",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "単語リスト画面へようこそ！",
     "tutorial_create_folder": "このボタンを押すか、単語リストを別フォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます",
     "tutorial_create_list": "新しい単語リストを作成できます。このリストの右側のメニューボタンから、リストを異なる形式にエクスポートすることもできます",
     "tutorial_folder": "これは単語リストです。ここに単語リストやフォルダを作成することができます。\nデフォルトで日本語能力試験や検索履歴などに基づいた単語リストが入っています",
@@ -1390,8 +1410,15 @@ static const Map<String,dynamic> _de = {
     "requires_restart": "erfordert Neustart",
     "restarts_app": "startet app neu",
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
-    "text_save_text": "#ERROR!",
+    "text_save_text": "Text sitzungsübergreifend speichern",
     "text_show_selection_buttons": "Buttons zur Textauswahl anzeigen",
+    "time_tracking_add_category": "Kategorie hinzufügen",
+    "time_tracking_add_tag": "Tag hinzufügen",
+    "time_tracking_break_minutes": "Pausenminuten pro Sitzung",
+    "time_tracking_categories": "Kategorien",
+    "time_tracking_enabled": "Zeiterfassung aktiviert",
+    "time_tracking_session_legnth": "Dauer einer Sitzung",
+    "time_tracking_tags": "Tags",
     "title": "Einstellungen",
     "word_lists_export": "Wortlisten-Datenbank exportieren",
     "word_lists_import": "Wortlisten-Datenbank importieren (@:SettingsScreen.restarts_app)",
@@ -1430,6 +1457,9 @@ static const Map<String,dynamic> _de = {
     "tutorial_processed_text_triple_tap": "Durch dreimaliges Antippen wird ein Absatz ausgewählt.",
     "tutorial_spaces_text": "Mit dieser Schaltfläche werden dem Text Leerzeichen hinzugefügt.",
     "tutorial_text_input_text": "Hier kannst du einen beliebigen Text schreiben oder einfügen. Dieser Text kann mit verschiedenen Tools bearbeitet."
+  },
+  "TimeTrackingScreen": {
+    "title": "Zeiterfassung"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -1476,7 +1506,7 @@ static const Map<String,dynamic> _de = {
     "send_to_anki_progress": "Senden zu Anki, bitte warten...",
     "title": "Wortlisten",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
     "tutorial_create_folder": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
     "tutorial_create_list": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
@@ -1860,6 +1890,13 @@ static const Map<String,dynamic> _ru = {
     "show_tutorial": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
     "text_save_text": "Сохраняйте текст в разных сеансах",
     "text_show_selection_buttons": "Показать кнопки выделения текста",
+    "time_tracking_add_category": "Добавить категорию",
+    "time_tracking_add_tag": "Добавить метку",
+    "time_tracking_break_minutes": "Минуты перерыва на одно занятие",
+    "time_tracking_categories": "Категории",
+    "time_tracking_enabled": "Включен учет рабочего времени",
+    "time_tracking_session_legnth": "Продолжительность одного сеанса",
+    "time_tracking_tags": "Теги",
     "title": "Настройки",
     "word_lists_export": "Экспорт базы данных списков слов",
     "word_lists_import": "Импортируйте базу данных списков слов (@:SettingsScreen.restarts_app)",
@@ -1898,6 +1935,9 @@ static const Map<String,dynamic> _ru = {
     "tutorial_processed_text_triple_tap": "Тройное нажатие позволяет выбрать абзац.",
     "tutorial_spaces_text": "С помощью этой кнопки в текст добавляются пробелы.",
     "tutorial_text_input_text": "Здесь вы можете написать или вставить любой текст. Этот текст будет обработан с помощью различных инструментов."
+  },
+  "TimeTrackingScreen": {
+    "title": "Отслеживание времени"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -2363,6 +2403,13 @@ static const Map<String,dynamic> _pl = {
     "show_tutorial": "Powtórz tutorial (@:SettingsScreen.restarts_app)",
     "text_save_text": "Zapisywanie tekstu w różnych sesjach",
     "text_show_selection_buttons": "Pokaż przyciski wyboru tekstu",
+    "time_tracking_add_category": "Dodaj kategorię",
+    "time_tracking_add_tag": "Dodaj tag",
+    "time_tracking_break_minutes": "Minuty przerwy na sesję",
+    "time_tracking_categories": "Kategorie",
+    "time_tracking_enabled": "Śledzenie czasu włączone",
+    "time_tracking_session_legnth": "Długość jednej sesji",
+    "time_tracking_tags": "Tagi",
     "title": "Ustawienia",
     "word_lists_export": "Eksport bazy danych list słów",
     "word_lists_import": "Import bazy danych list słów (@:SettingsScreen.restarts_app)",
@@ -2410,6 +2457,9 @@ static const Map<String,dynamic> _pl = {
     "tutorial_processed_text_triple_tap": "Potrójne stuknięcie powoduje zaznaczenie akapitu.",
     "tutorial_spaces_text": "Za pomocą tego przycisku do tekstu dodawane są spacje.",
     "tutorial_text_input_text": "Tutaj możesz napisać lub wkleić dowolny tekst. Ten tekst będzie przetwarzany za pomocą różnych narzędzi."
+  },
+  "TimeTrackingScreen": {
+    "title": "Śledzenie czasu"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -2746,7 +2796,7 @@ static const Map<String,dynamic> _en = {
     "dict_search_history_delete_text": "You can delete elements from the search history by swiping left on them.",
     "dict_search_history_delete_title": "Delete",
     "dict_search_history_title": "Search history",
-    "dict_search_specifiying_searches_text": "DaKanji allows you to specify what you want to match. You can prefix a search by using `?term=`, `?reading=` or `?definition=` to specify what you want to match with your search.\nFor example, `?reading=りんご` will search for any entry with a reading that matches.\nYou can also combine them by separating them using `&` like this `?term=林檎&reading=りんご`.",
+    "dict_search_specifiying_searches_text": "DaKanji allows you to specify what you want to match. You can prefix a search by using `?t=` (term), `?r=` (reading) or `?d=` (definition) to specify what you want to match with your search.\nFor example, `?r=りんご` will search for any entry with a reading that matches.\nYou can also combine them by separating them using `&` like this `?t=林檎&r=りんご`.",
     "dict_search_specifiying_searches_title": "Specifying searches",
     "dict_search_title": "Searching",
     "dict_search_wildcard_search_text": "DaKanji gives you the ability to search in the dictionary using more general pattern matching (UNIX wildcards), but __be aware that this can be slow, especially if you have many dictionaries imported__.\n\n**Important Limitations**\nWhen using these symbols, **Smart Search is DISABLED**.\n* **No Deconjugation:** Searching `食べ*` will not automatically find `食べた` unless the wildcard explicitly matches it.\n* **No Spell-fix:** Typing errors are not auto-corrected.\n\n### Search Symbols\n\n**`*`**\n\nMatches **any number of characters** (including zero).\n* **Example:** `食*`\n    * **Matches:** `食べる`, `食事`, `食品`\n* **Example:** `*学`\n    * **Matches:** `大学`, `科学`, `言語学`\n\n**`?`**\n\nMatches **exactly one character**.\n* **Example:** `?本`\n    * **Matches:** `日本`, `三本`\n    * **Does NOT match:** `本` (too short) or `アメリカ本` (too long)\n\n**`[ ]`**\n\nMatches **one character** from the specific list provided.\n* **Example:** `[赤青]色`\n    * **Matches:** `赤色` or `青色`\n\nThis can also specify a character range\n* **Example:** `JLPT-N[1-5]`\n    * **Matches:** `JLPT-N1` through `JLPT-N5`\n\n**`[^ ]`**\n\nMatches one character that is **NOT** in the list provided.\n* **Example:** `[^月]曜日`\n    * **Matches:** `火曜日`, `水曜日`\n    * **Excludes:** `月曜日`",
@@ -2883,6 +2933,13 @@ static const Map<String,dynamic> _en = {
     "show_tutorial": "Reshow tutorials (@:SettingsScreen.restarts_app)",
     "text_save_text": "Save text across sessions",
     "text_show_selection_buttons": "Show text selection buttons",
+    "time_tracking_add_category": "Add category",
+    "time_tracking_add_tag": "Add tag",
+    "time_tracking_break_minutes": "Minutes of break per session",
+    "time_tracking_categories": "Categories",
+    "time_tracking_enabled": "Time tracking enabled",
+    "time_tracking_session_legnth": "Length of one session",
+    "time_tracking_tags": "Tags",
     "title": "Settings",
     "word_lists_export": "Export word lists database",
     "word_lists_import": "Import word lists database (@:SettingsScreen.restarts_app)",
@@ -2931,6 +2988,9 @@ static const Map<String,dynamic> _en = {
     "tutorial_processed_text_triple_tap": "A triple tap will select a paragraph.",
     "tutorial_spaces_text": "With this button spaces are added to the text.",
     "tutorial_text_input_text": "Here you can write or paste any text. This text can be processed with different tools."
+  },
+  "TimeTrackingScreen": {
+    "title": "Time Tracking"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -3396,6 +3456,13 @@ static const Map<String,dynamic> _it = {
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
     "text_save_text": "Salvare il testo in tutte le sessioni",
     "text_show_selection_buttons": "Mostra i pulsanti di selezione del testo",
+    "time_tracking_add_category": "Aggiungi categoria",
+    "time_tracking_add_tag": "Aggiungi tag",
+    "time_tracking_break_minutes": "Minuti di pausa per sessione",
+    "time_tracking_categories": "Categorie",
+    "time_tracking_enabled": "Tracciamento del tempo abilitato",
+    "time_tracking_session_legnth": "Durata di una sessione",
+    "time_tracking_tags": "Tag",
     "title": "Impostazioni",
     "word_lists_export": "Esportazione del database degli elenchi di parole",
     "word_lists_import": "Importazione del database degli elenchi di parole (@:SettingsScreen.restarts_app)",
@@ -3434,6 +3501,9 @@ static const Map<String,dynamic> _it = {
     "tutorial_processed_text_triple_tap": "Un triplo tocco selezionerà un paragrafo.",
     "tutorial_spaces_text": "Con questo pulsante vengono aggiunti spazi al testo.",
     "tutorial_text_input_text": "Qui è possibile scrivere o incollare qualsiasi testo. Il testo verrà elaborato con diversi strumenti."
+  },
+  "TimeTrackingScreen": {
+    "title": "Tracciamento del tempo"
   },
   "WebbrowserScreen": {
     "title": "Webbrowser",
@@ -3677,7 +3747,7 @@ static const Map<String,dynamic> _fr = {
     "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Formateur Kana"
   },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
@@ -3864,6 +3934,13 @@ static const Map<String,dynamic> _fr = {
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
     "text_save_text": "Sauvegarder le texte d'une session à l'autre",
     "text_show_selection_buttons": "Afficher les boutons de sélection de texte",
+    "time_tracking_add_category": "Ajouter une catégorie",
+    "time_tracking_add_tag": "Ajouter une étiquette",
+    "time_tracking_break_minutes": "Minutes de pause par session",
+    "time_tracking_categories": "Catégories",
+    "time_tracking_enabled": "Suivi du temps activé",
+    "time_tracking_session_legnth": "Durée d'une session",
+    "time_tracking_tags": "Tags",
     "title": "Paramètres",
     "word_lists_export": "Exporter la base de données des listes de mots",
     "word_lists_import": "Importer la base de données des listes de mots (@:SettingsScreen.restarts_app)",
@@ -3902,6 +3979,9 @@ static const Map<String,dynamic> _fr = {
     "tutorial_processed_text_triple_tap": "Une triple tape permet de sélectionner un paragraphe.",
     "tutorial_spaces_text": "Ce bouton permet d'ajouter des espaces au texte.",
     "tutorial_text_input_text": "Ici, vous pouvez écrire ou coller n'importe quel texte. Ce texte sera traité avec différents outils."
+  },
+  "TimeTrackingScreen": {
+    "title": "Suivi du temps"
   },
   "WebbrowserScreen": {
     "title": "Navigateur Web",
@@ -4332,6 +4412,13 @@ static const Map<String,dynamic> _es = {
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
     "text_save_text": "Guardar texto entre sesiones",
     "text_show_selection_buttons": "Mostrar botones de selección de texto",
+    "time_tracking_add_category": "Añadir categoría",
+    "time_tracking_add_tag": "Añadir etiqueta",
+    "time_tracking_break_minutes": "Minutos de pausa por sesión",
+    "time_tracking_categories": "Categorías",
+    "time_tracking_enabled": "Seguimiento horario activado",
+    "time_tracking_session_legnth": "Duración de una sesión",
+    "time_tracking_tags": "Etiquetas",
     "title": "Ajustes",
     "word_lists_export": "Exportar base de datos de listas de palabras",
     "word_lists_import": "Importar base de datos de listas de palabras (@:SettingsScreen.restarts_app)",
@@ -4376,6 +4463,9 @@ static const Map<String,dynamic> _es = {
     "tutorial_processed_text_triple_tap": "Un triple toque seleccionará un párrafo.",
     "tutorial_spaces_text": "Con este botón se añaden espacios al texto.",
     "tutorial_text_input_text": "Aquí puedes escribir o pegar cualquier texto. Este texto será procesado con diferentes herramientas."
+  },
+  "TimeTrackingScreen": {
+    "title": "Control del tiempo"
   },
   "WebbrowserScreen": {
     "title": "Navegador",
@@ -4422,7 +4512,7 @@ static const Map<String,dynamic> _es = {
     "send_to_anki_progress": "Enviando a Anki, por favor espere...",
     "title": "Listas de palabras",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
     "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
     "tutorial_create_list": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
     "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",

@@ -307,6 +307,7 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_4_text = 'OnBoarding.Onboarding_4_text';
   static const OnBoarding_Onboarding_4_title = 'OnBoarding.Onboarding_4_title';
   static const OnBoarding = 'OnBoarding';
+  static const SettingsScreen_ = 'SettingsScreen.';
   static const SettingsScreen_advanced_settings_delete_dict = 'SettingsScreen.advanced_settings_delete_dict';
   static const SettingsScreen_advanced_settings_delete_dojg = 'SettingsScreen.advanced_settings_delete_dojg';
   static const SettingsScreen_advanced_settings_delete_history = 'SettingsScreen.advanced_settings_delete_history';
@@ -397,6 +398,13 @@ abstract class  LocaleKeys {
   static const SettingsScreen_show_tutorial = 'SettingsScreen.show_tutorial';
   static const SettingsScreen_text_save_text = 'SettingsScreen.text_save_text';
   static const SettingsScreen_text_show_selection_buttons = 'SettingsScreen.text_show_selection_buttons';
+  static const SettingsScreen_time_tracking_add_category = 'SettingsScreen.time_tracking_add_category';
+  static const SettingsScreen_time_tracking_add_tag = 'SettingsScreen.time_tracking_add_tag';
+  static const SettingsScreen_time_tracking_break_minutes = 'SettingsScreen.time_tracking_break_minutes';
+  static const SettingsScreen_time_tracking_categories = 'SettingsScreen.time_tracking_categories';
+  static const SettingsScreen_time_tracking_enabled = 'SettingsScreen.time_tracking_enabled';
+  static const SettingsScreen_time_tracking_session_legnth = 'SettingsScreen.time_tracking_session_legnth';
+  static const SettingsScreen_time_tracking_tags = 'SettingsScreen.time_tracking_tags';
   static const SettingsScreen_title = 'SettingsScreen.title';
   static const SettingsScreen_word_lists_export = 'SettingsScreen.word_lists_export';
   static const SettingsScreen_word_lists_import = 'SettingsScreen.word_lists_import';
@@ -450,6 +458,8 @@ abstract class  LocaleKeys {
   static const TextScreen_tutorial_spaces_text = 'TextScreen.tutorial_spaces_text';
   static const TextScreen_tutorial_text_input_text = 'TextScreen.tutorial_text_input_text';
   static const TextScreen = 'TextScreen';
+  static const TimeTrackingScreen_title = 'TimeTrackingScreen.title';
+  static const TimeTrackingScreen = 'TimeTrackingScreen';
   static const WebbrowserScreen_title = 'WebbrowserScreen.title';
   static const WebbrowserScreen_tutorial_begin_text = 'WebbrowserScreen.tutorial_begin_text';
   static const WebbrowserScreen_tutorial_begin_title = 'WebbrowserScreen.tutorial_begin_title';

@@ -323,6 +323,7 @@
     "Onboarding_4_title": "Estudiar kanji y kana"
   },
   "SettingsScreen": {
+    "": "",
     "advanced_settings_delete_dict": "Restablecer archivos de diccionario",
     "advanced_settings_delete_dojg": "Eliminar archivos DoJG",
     "advanced_settings_delete_history": "Eliminar el historial de b\u00fasqueda",
@@ -413,6 +414,13 @@
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
     "text_save_text": "Guardar texto entre sesiones",
     "text_show_selection_buttons": "Mostrar botones de selecci\u00f3n de texto",
+    "time_tracking_add_category": "A\u00f1adir categor\u00eda",
+    "time_tracking_add_tag": "A\u00f1adir etiqueta",
+    "time_tracking_break_minutes": "Minutos de pausa por sesi\u00f3n",
+    "time_tracking_categories": "Categor\u00edas",
+    "time_tracking_enabled": "Seguimiento horario activado",
+    "time_tracking_session_legnth": "Duraci\u00f3n de una sesi\u00f3n",
+    "time_tracking_tags": "Etiquetas",
     "title": "Ajustes",
     "word_lists_export": "Exportar base de datos de listas de palabras",
     "word_lists_import": "Importar base de datos de listas de palabras (@:SettingsScreen.restarts_app)",
@@ -467,6 +475,9 @@
     "tutorial_processed_text_triple_tap": "Un triple toque seleccionar\u00e1 un p\u00e1rrafo.",
     "tutorial_spaces_text": "Con este bot\u00f3n se a\u00f1aden espacios al texto.",
     "tutorial_text_input_text": "Aqu\u00ed puedes escribir o pegar cualquier texto. Este texto ser\u00e1 procesado con diferentes herramientas."
+  },
+  "TimeTrackingScreen": {
+    "title": "Control del tiempo"
   },
   "WebbrowserScreen": {
     "title": "Navegador",
@@ -560,7 +571,7 @@
     "send_to_anki_progress": "Enviando a Anki, por favor espere...",
     "title": "Listas de palabras",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
     "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este bot\u00f3n o arrastrando una lista de palabras sobre otra. Tambi\u00e9n puede reorganizar sus carpetas y listas arrastr\u00e1ndolas.",
     "tutorial_create_list": "Con este bot\u00f3n puede crear una nueva lista de palabras. Mediante el bot\u00f3n de men\u00fa situado a la derecha de esta lista, tambi\u00e9n puede exportar su lista a diferentes formatos.",
     "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambi\u00e9n es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de b\u00fasqueda, etc..",
