@@ -3415,72 +3415,88 @@
       "es": "Iniciar automáticamente la animación Kana",
       "pl": "Automatyczne uruchamianie animacji Kana"
     },
-    "": {},
-    "misc_title": {
-      "en": "Miscellaneous",
-      "de": "Verschiedenes",
-      "ru": "Разное",
-      "ja": "その他",
-      "zh": "杂项",
-      "it": "Varie",
-      "fr": "Divers",
-      "es": "Misceláneo",
-      "pl": "Inne"
+    "time_tracking_enabled": {
+      "en": "Time tracking enabled",
+      "de": "Zeiterfassung aktiviert",
+      "ru": "Включен учет рабочего времени",
+      "ja": "タイムトラッキングが可能",
+      "zh": "启用时间跟踪",
+      "it": "Tracciamento del tempo abilitato",
+      "fr": "Suivi du temps activé",
+      "es": "Seguimiento horario activado",
+      "pl": "Śledzenie czasu włączone"
     },
-    "misc_theme": {
-      "en": "theme (@:SettingsScreen.restarts_app)",
-      "de": "Thema (@:SettingsScreen.restarts_app)",
-      "ru": "тема (@:SettingsScreen.restarts_app)",
-      "ja": "テーマ (@:SettingsScreen.restarts_app)",
-      "zh": "主题 (@:SettingsScreen.restarts_app)",
-      "it": "tema (@:SettingsScreen.restarts_app)",
-      "fr": "thème (@:SettingsScreen.restarts_app)",
-      "es": "tema (@:SettingsScreen.restarts_app)",
-      "pl": "Motyw(@:SettingsScreen.restarts_app)"
+    "time_tracking_session_length_description": {
+      "en": "Every session of",
+      "de": "Dauer einer Sitzung",
+      "ru": "Продолжительность одного сеанса",
+      "ja": "1セッションの長さ",
+      "zh": "一节课的时间",
+      "it": "Durata di una sessione",
+      "fr": "Durée d'une session",
+      "es": "Duración de una sesión",
+      "pl": "Długość jednej sesji"
     },
-    "misc_settings_window_size": {
-      "en": "Save current window size and position",
-      "de": "Aktuelle Fenstergröße und -position speichern",
-      "ru": "Сохранить текущий размер и положение окна",
-      "ja": "現在のウィンドウのサイズと位置を保存する",
-      "zh": "保存当前窗口大小和位置",
-      "it": "Salva la dimensione e la posizione della finestra corrente",
-      "fr": "Sauvegarde de la taille et de la position actuelles de la fenêtre",
-      "es": "Guardar el tamaño y la posición actuales de la ventana",
-      "pl": "Zapisywanie bieżącego rozmiaru i położenia okna"
+    "time_tracking_session_length_unit": {
+      "en": "min."
     },
-    "misc_settings_always_save_window_size": {
-      "en": "Save window size on resize",
-      "de": "Fenstergröße bei Größenänderung speichern",
-      "ru": "Сохранение размера окна при изменении размера",
-      "ja": "リサイズ時にウィンドウサイズを保存",
-      "zh": "调整大小时保存窗口大小",
-      "it": "Salvataggio delle dimensioni della finestra in caso di ridimensionamento",
-      "fr": "Sauvegarde de la taille de la fenêtre lors du redimensionnement",
-      "es": "Guardar el tamaño de la ventana al cambiar el tamaño",
-      "pl": "Zapisywanie rozmiaru okna przy zmianie rozmiaru"
+    "time_tracking_break_length_description": {
+      "en": "Earns you a break of",
+      "de": "Pausenminuten pro Sitzung",
+      "ru": "Минуты перерыва на одно занятие",
+      "ja": "セッションごとの休憩時間",
+      "zh": "每节课的休息时间",
+      "it": "Minuti di pausa per sessione",
+      "fr": "Minutes de pause par session",
+      "es": "Minutos de pausa por sesión",
+      "pl": "Minuty przerwy na sesję"
     },
-    "misc_settings_always_save_window_position": {
-      "en": "Save window position on move",
-      "de": "Fensterposition beim Verschieben speichern",
-      "ru": "Сохранение позиции окна при перемещении",
-      "ja": "移動時のウィンドウ位置の保存",
-      "zh": "移动时保存窗口位置",
-      "it": "Salva la posizione della finestra durante lo spostamento",
-      "fr": "Sauvegarde de la position de la fenêtre lors d'un déplacement",
-      "es": "Guardar la posición de la ventana al moverla",
-      "pl": "Zapisywanie pozycji okna podczas przenoszenia"
+    "time_tracking_break_length_unit": {
+      "en": "min."
     },
-    "misc_language": {
-      "en": "language",
-      "de": "Sprache (@:SettingsScreen.restarts_app)",
-      "ru": "язык (@:SettingsScreen.restarts_app)",
-      "ja": "言語 (@:SettingsScreen.restarts_app)",
-      "zh": "语言 (@:SettingsScreen.restarts_app)",
-      "it": "lingua (@:SettingsScreen.restarts_app)",
-      "fr": "langue (@:SettingsScreen.restarts_app)",
-      "es": "idioma (@:SettingsScreen.restarts_app)",
-      "pl": "język (@:SettingsScreen.restarts_app)"
+    "time_tracking_tags": {
+      "en": "Tags",
+      "de": "Tags",
+      "ru": "Теги",
+      "ja": "タグ",
+      "zh": "标签",
+      "it": "Tag",
+      "fr": "Tags",
+      "es": "Etiquetas",
+      "pl": "Tagi"
+    },
+    "time_tracking_add_tag": {
+      "en": "Add tag",
+      "de": "Tag hinzufügen",
+      "ru": "Добавить метку",
+      "ja": "タグの追加",
+      "zh": "添加标签",
+      "it": "Aggiungi tag",
+      "fr": "Ajouter une étiquette",
+      "es": "Añadir etiqueta",
+      "pl": "Dodaj tag"
+    },
+    "time_tracking_categories": {
+      "en": "Categories",
+      "de": "Kategorien",
+      "ru": "Категории",
+      "ja": "カテゴリー",
+      "zh": "类别",
+      "it": "Categorie",
+      "fr": "Catégories",
+      "es": "Categorías",
+      "pl": "Kategorie"
+    },
+    "time_tracking_add_category": {
+      "en": "Add category",
+      "de": "Kategorie hinzufügen",
+      "ru": "Добавить категорию",
+      "ja": "カテゴリーを追加する",
+      "zh": "添加类别",
+      "it": "Aggiungi categoria",
+      "fr": "Ajouter une catégorie",
+      "es": "Añadir categoría",
+      "pl": "Dodaj kategorię"
     },
     "misc_font_size_scale": {
       "en": "Font size scaling factor",
@@ -3756,83 +3772,6 @@
       "fr": "Supprimer les fichiers DoJG",
       "es": "Eliminar archivos DoJG",
       "pl": "Usuwanie plików DoJG"
-    },
-    "time_tracking_enabled": {
-      "en": "Time tracking enabled",
-      "de": "Zeiterfassung aktiviert",
-      "ru": "Включен учет рабочего времени",
-      "ja": "タイムトラッキングが可能",
-      "zh": "启用时间跟踪",
-      "it": "Tracciamento del tempo abilitato",
-      "fr": "Suivi du temps activé",
-      "es": "Seguimiento horario activado",
-      "pl": "Śledzenie czasu włączone"
-    },
-    "time_tracking_session_legnth": {
-      "en": "Length of one session",
-      "de": "Dauer einer Sitzung",
-      "ru": "Продолжительность одного сеанса",
-      "ja": "1セッションの長さ",
-      "zh": "一节课的时间",
-      "it": "Durata di una sessione",
-      "fr": "Durée d'une session",
-      "es": "Duración de una sesión",
-      "pl": "Długość jednej sesji"
-    },
-    "time_tracking_break_minutes": {
-      "en": "Minutes of break per session",
-      "de": "Pausenminuten pro Sitzung",
-      "ru": "Минуты перерыва на одно занятие",
-      "ja": "セッションごとの休憩時間",
-      "zh": "每节课的休息时间",
-      "it": "Minuti di pausa per sessione",
-      "fr": "Minutes de pause par session",
-      "es": "Minutos de pausa por sesión",
-      "pl": "Minuty przerwy na sesję"
-    },
-    "time_tracking_tags": {
-      "en": "Tags",
-      "de": "Tags",
-      "ru": "Теги",
-      "ja": "タグ",
-      "zh": "标签",
-      "it": "Tag",
-      "fr": "Tags",
-      "es": "Etiquetas",
-      "pl": "Tagi"
-    },
-    "time_tracking_add_tag": {
-      "en": "Add tag",
-      "de": "Tag hinzufügen",
-      "ru": "Добавить метку",
-      "ja": "タグの追加",
-      "zh": "添加标签",
-      "it": "Aggiungi tag",
-      "fr": "Ajouter une étiquette",
-      "es": "Añadir etiqueta",
-      "pl": "Dodaj tag"
-    },
-    "time_tracking_categories": {
-      "en": "Categories",
-      "de": "Kategorien",
-      "ru": "Категории",
-      "ja": "カテゴリー",
-      "zh": "类别",
-      "it": "Categorie",
-      "fr": "Catégories",
-      "es": "Categorías",
-      "pl": "Kategorie"
-    },
-    "time_tracking_add_category": {
-      "en": "Add category",
-      "de": "Kategorie hinzufügen",
-      "ru": "Добавить категорию",
-      "ja": "カテゴリーを追加する",
-      "zh": "添加类别",
-      "it": "Aggiungi categoria",
-      "fr": "Ajouter une catégorie",
-      "es": "Añadir categoría",
-      "pl": "Dodaj kategorię"
     }
   },
   "WebviewScreen": {

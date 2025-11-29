@@ -307,7 +307,6 @@ abstract class  LocaleKeys {
   static const OnBoarding_Onboarding_4_text = 'OnBoarding.Onboarding_4_text';
   static const OnBoarding_Onboarding_4_title = 'OnBoarding.Onboarding_4_title';
   static const OnBoarding = 'OnBoarding';
-  static const SettingsScreen_ = 'SettingsScreen.';
   static const SettingsScreen_advanced_settings_delete_dict = 'SettingsScreen.advanced_settings_delete_dict';
   static const SettingsScreen_advanced_settings_delete_dojg = 'SettingsScreen.advanced_settings_delete_dojg';
   static const SettingsScreen_advanced_settings_delete_history = 'SettingsScreen.advanced_settings_delete_history';
@@ -384,13 +383,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_kana_table_play_kana_animation_when_opened = 'SettingsScreen.kana_table_play_kana_animation_when_opened';
   static const SettingsScreen_misc_default_screen = 'SettingsScreen.misc_default_screen';
   static const SettingsScreen_misc_font_size_scale = 'SettingsScreen.misc_font_size_scale';
-  static const SettingsScreen_misc_language = 'SettingsScreen.misc_language';
-  static const SettingsScreen_misc_settings_always_save_window_position = 'SettingsScreen.misc_settings_always_save_window_position';
-  static const SettingsScreen_misc_settings_always_save_window_size = 'SettingsScreen.misc_settings_always_save_window_size';
-  static const SettingsScreen_misc_settings_window_size = 'SettingsScreen.misc_settings_window_size';
   static const SettingsScreen_misc_sharing_pattern = 'SettingsScreen.misc_sharing_pattern';
-  static const SettingsScreen_misc_theme = 'SettingsScreen.misc_theme';
-  static const SettingsScreen_misc_title = 'SettingsScreen.misc_title';
   static const SettingsScreen_misc_window_on_top = 'SettingsScreen.misc_window_on_top';
   static const SettingsScreen_misc_window_opacity = 'SettingsScreen.misc_window_opacity';
   static const SettingsScreen_requires_restart = 'SettingsScreen.requires_restart';
@@ -400,10 +393,12 @@ abstract class  LocaleKeys {
   static const SettingsScreen_text_show_selection_buttons = 'SettingsScreen.text_show_selection_buttons';
   static const SettingsScreen_time_tracking_add_category = 'SettingsScreen.time_tracking_add_category';
   static const SettingsScreen_time_tracking_add_tag = 'SettingsScreen.time_tracking_add_tag';
-  static const SettingsScreen_time_tracking_break_minutes = 'SettingsScreen.time_tracking_break_minutes';
+  static const SettingsScreen_time_tracking_break_length_description = 'SettingsScreen.time_tracking_break_length_description';
+  static const SettingsScreen_time_tracking_break_length_unit = 'SettingsScreen.time_tracking_break_length_unit';
   static const SettingsScreen_time_tracking_categories = 'SettingsScreen.time_tracking_categories';
   static const SettingsScreen_time_tracking_enabled = 'SettingsScreen.time_tracking_enabled';
-  static const SettingsScreen_time_tracking_session_legnth = 'SettingsScreen.time_tracking_session_legnth';
+  static const SettingsScreen_time_tracking_session_length_description = 'SettingsScreen.time_tracking_session_length_description';
+  static const SettingsScreen_time_tracking_session_length_unit = 'SettingsScreen.time_tracking_session_length_unit';
   static const SettingsScreen_time_tracking_tags = 'SettingsScreen.time_tracking_tags';
   static const SettingsScreen_title = 'SettingsScreen.title';
   static const SettingsScreen_word_lists_export = 'SettingsScreen.word_lists_export';

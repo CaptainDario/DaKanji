@@ -44,10 +44,10 @@ class _TimeTrackingSettingsState extends State<TimeTrackingSettings> {
       children: [
         // session length
         ResponsiveSpinboxTile(
-          text: "Every session of",
+          text: LocaleKeys.SettingsScreen_time_tracking_session_length_description.tr(),
           min: 1,
           value: 25,
-          suffix: "min.",
+          suffix: LocaleKeys.SettingsScreen_time_tracking_session_length_unit.tr(),
           onChanged: (value) {
             currentStudyToBreakRatio = value.toInt();
             setState(() {});
@@ -55,10 +55,10 @@ class _TimeTrackingSettingsState extends State<TimeTrackingSettings> {
         ),
         // break per session
         ResponsiveSpinboxTile(
-          text: "Earns you a break of",
+          text: LocaleKeys.SettingsScreen_time_tracking_break_length_description.tr(),
           min: 1,
           value: 5,
-          suffix: "min.",
+          suffix: LocaleKeys.SettingsScreen_time_tracking_break_length_unit.tr(),
           onChanged: (value) {
             currentStudyToBreakRatio = value.toInt();
             setState(() {});
