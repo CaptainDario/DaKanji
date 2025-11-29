@@ -3498,6 +3498,72 @@
       "es": "Añadir categoría",
       "pl": "Dodaj kategorię"
     },
+    "misc_title": {
+      "en": "Miscellaneous",
+      "de": "Verschiedenes",
+      "ru": "Разное",
+      "ja": "その他",
+      "zh": "杂项",
+      "it": "Varie",
+      "fr": "Divers",
+      "es": "Misceláneo",
+      "pl": "Inne"
+    },
+    "misc_theme": {
+      "en": "theme (@:SettingsScreen.restarts_app)",
+      "de": "Thema (@:SettingsScreen.restarts_app)",
+      "ru": "тема (@:SettingsScreen.restarts_app)",
+      "ja": "テーマ (@:SettingsScreen.restarts_app)",
+      "zh": "主题 (@:SettingsScreen.restarts_app)",
+      "it": "tema (@:SettingsScreen.restarts_app)",
+      "fr": "thème (@:SettingsScreen.restarts_app)",
+      "es": "tema (@:SettingsScreen.restarts_app)",
+      "pl": "Motyw(@:SettingsScreen.restarts_app)"
+    },
+    "misc_settings_window_size": {
+      "en": "Save current window size and position",
+      "de": "Aktuelle Fenstergröße und -position speichern",
+      "ru": "Сохранить текущий размер и положение окна",
+      "ja": "現在のウィンドウのサイズと位置を保存する",
+      "zh": "保存当前窗口大小和位置",
+      "it": "Salva la dimensione e la posizione della finestra corrente",
+      "fr": "Sauvegarde de la taille et de la position actuelles de la fenêtre",
+      "es": "Guardar el tamaño y la posición actuales de la ventana",
+      "pl": "Zapisywanie bieżącego rozmiaru i położenia okna"
+    },
+    "misc_settings_always_save_window_size": {
+      "en": "Save window size on resize",
+      "de": "Fenstergröße bei Größenänderung speichern",
+      "ru": "Сохранение размера окна при изменении размера",
+      "ja": "リサイズ時にウィンドウサイズを保存",
+      "zh": "调整大小时保存窗口大小",
+      "it": "Salvataggio delle dimensioni della finestra in caso di ridimensionamento",
+      "fr": "Sauvegarde de la taille de la fenêtre lors du redimensionnement",
+      "es": "Guardar el tamaño de la ventana al cambiar el tamaño",
+      "pl": "Zapisywanie rozmiaru okna przy zmianie rozmiaru"
+    },
+    "misc_settings_always_save_window_position": {
+      "en": "Save window position on move",
+      "de": "Fensterposition beim Verschieben speichern",
+      "ru": "Сохранение позиции окна при перемещении",
+      "ja": "移動時のウィンドウ位置の保存",
+      "zh": "移动时保存窗口位置",
+      "it": "Salva la posizione della finestra durante lo spostamento",
+      "fr": "Sauvegarde de la position de la fenêtre lors d'un déplacement",
+      "es": "Guardar la posición de la ventana al moverla",
+      "pl": "Zapisywanie pozycji okna podczas przenoszenia"
+    },
+    "misc_language": {
+      "en": "language",
+      "de": "Sprache (@:SettingsScreen.restarts_app)",
+      "ru": "язык (@:SettingsScreen.restarts_app)",
+      "ja": "言語 (@:SettingsScreen.restarts_app)",
+      "zh": "语言 (@:SettingsScreen.restarts_app)",
+      "it": "lingua (@:SettingsScreen.restarts_app)",
+      "fr": "langue (@:SettingsScreen.restarts_app)",
+      "es": "idioma (@:SettingsScreen.restarts_app)",
+      "pl": "język (@:SettingsScreen.restarts_app)"
+    },
     "misc_font_size_scale": {
       "en": "Font size scaling factor",
       "de": "Skalierungsfaktor für die Schriftgröße",
@@ -3772,6 +3838,28 @@
       "fr": "Supprimer les fichiers DoJG",
       "es": "Eliminar archivos DoJG",
       "pl": "Usuwanie plików DoJG"
+    },
+    "time_tracking_session_legnth": {
+      "en": "Length of one session",
+      "de": "Dauer einer Sitzung",
+      "ru": "Продолжительность одного сеанса",
+      "ja": "1セッションの長さ",
+      "zh": "一节课的时间",
+      "it": "Durata di una sessione",
+      "fr": "Durée d'une session",
+      "es": "Duración de una sesión",
+      "pl": "Długość jednej sesji"
+    },
+    "time_tracking_break_minutes": {
+      "en": "Minutes of break per session",
+      "de": "Pausenminuten pro Sitzung",
+      "ru": "Минуты перерыва на одно занятие",
+      "ja": "セッションごとの休憩時間",
+      "zh": "每节课的休息时间",
+      "it": "Minuti di pausa per sessione",
+      "fr": "Minutes de pause par session",
+      "es": "Minutos de pausa por sesión",
+      "pl": "Minuty przerwy na sesję"
     }
   },
   "WebviewScreen": {
