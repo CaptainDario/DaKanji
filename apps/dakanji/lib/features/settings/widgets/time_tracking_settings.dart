@@ -2,6 +2,7 @@
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_drop_down_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_input_field_tile.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_spinbox_tile.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -38,50 +39,99 @@ class _TimeTrackingSettingsState extends State<TimeTrackingSettings> {
     int currentStudyToBreakRatio = 0;
 
     return ResponsiveHeaderTile(
-      LocaleKeys.OcrScreen_title.tr(),
+      LocaleKeys.TimeTrackingScreen_title.tr(),
       DaKanjiIcons.timeTracking,
       children: [
-        // break / study ratio
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: [
-              Text("Minutes of break per session"),
-              SizedBox(width: 8),
-              Spacer(),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.4,
-                child: SpinBox(
-                  
-                  min: 1,
-                  decoration: InputDecoration(
-                    suffix: Text("%")
-                  ),
-                  onChanged: (value) {
-                    currentStudyToBreakRatio = value.toInt();
-                    setState(() {});
-                  },
-                ),
-              ),
-            ],
-          ),
+        // session length
+        ResponsiveSpinboxTile(
+          text: "Every session of",
+          min: 1,
+          value: 25,
+          suffix: "min.",
+          onChanged: (value) {
+            currentStudyToBreakRatio = value.toInt();
+            setState(() {});
+          },
         ),
-        // TODO categories
-        // tags
-        FutureBuilder(
-          future: GetIt.I<UserDataDB>().timeTrackingDao.getAllTags(),
+        // break per session
+        ResponsiveSpinboxTile(
+          text: "Earns you a break of",
+          min: 1,
+          value: 5,
+          suffix: "min.",
+          onChanged: (value) {
+            currentStudyToBreakRatio = value.toInt();
+            setState(() {});
+          },
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            "(Earns ~${(currentStudyToBreakRatio * 60).toStringAsFixed(0)} min break / hour)",
+            style: TextStyle(
+              color: Colors.grey
+            ),
+          )
+        ),
+        SizedBox(height: 8),
+        // categories
+        FutureBuilder<({List<String> allCategories, String selectedCategory})>(
+          future: () async {
+            return (
+              allCategories: await GetIt.I<UserDataDB>().timeTrackingDao.getAllCategories() + [""],
+              selectedCategory: await GetIt.I<UserDataDB>().timeTrackingDao.getSelectedCategory() ?? ""
+            );
+          } (),
           builder: (context, snapshot) {
             if(!snapshot.hasData) return SizedBox();
 
             return ResponsiveDropDownTile(
-              text: "Tags",
-              value: "default",
-              items: snapshot.data! + ["default"]
+              text: LocaleKeys.SettingsScreen_time_tracking_categories.tr(),
+              value: snapshot.data!.selectedCategory,
+              items: snapshot.data!.allCategories,
+              onChanged: (String? newValue) async {
+                if(newValue == null) return;
+                await GetIt.I<UserDataDB>().timeTrackingDao.setSelectedCategory(newValue);
+                setState(() {});
+              },
             );
           },
         ),
         ResponsiveInputFieldTile(
-          hintText: "Add tag",
+          hintText: LocaleKeys.SettingsScreen_time_tracking_add_category.tr(),
+          enabled: true,
+          trailingIcon: Icons.add,
+          onTrailingIconPressed: (TextEditingController controller) async {
+            await GetIt.I<UserDataDB>().timeTrackingDao.addCategory(controller.text);
+            controller.clear();
+            setState(() {});
+          },
+        ),
+        // tags
+        FutureBuilder<({List<String> allTags, String selectedTag})>(
+          future: () async {
+            return (
+              allTags: await GetIt.I<UserDataDB>().timeTrackingDao.getAllTags() + [""],
+              selectedTag: await GetIt.I<UserDataDB>().timeTrackingDao.getSelectedTag() ?? ""
+            );
+          } (),
+          builder: (context, snapshot) {
+            if(!snapshot.hasData) return SizedBox();
+
+            return ResponsiveDropDownTile(
+              text: LocaleKeys.SettingsScreen_time_tracking_tags.tr(),
+              value: snapshot.data!.selectedTag,
+              items: snapshot.data!.allTags,
+              onChanged: (String? newValue) async {
+                if(newValue == null) return;
+                await GetIt.I<UserDataDB>().timeTrackingDao.setSelectedTag(newValue);
+                setState(() {});
+              },
+            );
+          },
+        ),
+        ResponsiveInputFieldTile(
+          hintText: LocaleKeys.SettingsScreen_time_tracking_add_tag.tr(),
           enabled: true,
           trailingIcon: Icons.add,
           onTrailingIconPressed: (TextEditingController controller) async {
