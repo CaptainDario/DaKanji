@@ -1,5 +1,7 @@
-import 'package:da_kanji_mobile/features/time_tracking/widgets/stopwatch_painter.dart';
+import 'package:da_kanji_mobile/features/time_tracking/widgets/paused_clock_face.dart';
+import 'package:da_kanji_mobile/features/time_tracking/widgets/running_clock_face.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/time_tracking_card_border_glow_painter.dart';
+import 'package:da_kanji_mobile/features/time_tracking/widgets/timer_control_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get_it/get_it.dart';
@@ -8,6 +10,7 @@ import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 class TimeTrackingCard extends StatefulWidget {
   final Color accentColor;
   final Color secondaryAccentColor;
+  final Color negativeBreakColor;
   final Duration sessionLength;
   final Duration resetDuration;
   final double studyBreakRatio;
@@ -15,7 +18,8 @@ class TimeTrackingCard extends StatefulWidget {
   const TimeTrackingCard({
     super.key,
     required this.accentColor,
-    this.secondaryAccentColor = const Color(0xFFFF9800), // Amber/Orange
+    this.secondaryAccentColor = const Color(0xFFFF9800),
+    this.negativeBreakColor = const Color(0xFFEF5350),
     this.sessionLength = const Duration(seconds: 5),
     this.resetDuration = const Duration(milliseconds: 2500),
     this.studyBreakRatio = 0.2,
@@ -30,33 +34,59 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
   late final Ticker _ticker;
   late final AnimationController _resetController;
   late final AnimationController _glowController;
+  late final AnimationController _dashAnimationController;
+
+  /// The theoretical start time of the session.
+  /// When restoring from the DB, this is calculated backwards from the total work duration.
   DateTime? _startTime;
 
+  bool _isPaused = false;
+
+  /// Adjusts the calculation of "current elapsed" time to account for pauses
+  /// that occur while the app is open.
+  Duration _pauseOffset = Duration.zero;
+
+  /// The timestamp when the CURRENT active pause began.
+  DateTime? _pauseStartTime;
+
+  /// Used for the "shrinking" animation effect when stopping the timer.
   Duration _visualDurationAtStop = Duration.zero;
+
+  /// Stores the sum of all *completed* pause intervals (historical gaps).
+  /// This ensures the break timer remains accurate even after multiple resume/pause cycles.
+  Duration _accumulatedPauseDuration = Duration.zero;
 
   @override
   void initState() {
     super.initState();
     _ticker = createTicker((_) => setState(() {}));
-    
+
     _resetController = AnimationController(
       vsync: this,
       duration: widget.resetDuration,
     );
-    
+
     _glowController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
     );
 
+    _dashAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 12),
+    );
+
     _resetController.addListener(() {
       setState(() {});
     });
-    
+
     _resetController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         setState(() {
           _startTime = null;
+          _pauseOffset = Duration.zero;
+          _accumulatedPauseDuration = Duration.zero;
+          _isPaused = false;
           _visualDurationAtStop = Duration.zero;
           _resetController.reset();
         });
@@ -71,60 +101,153 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
     _ticker.dispose();
     _resetController.dispose();
     _glowController.dispose();
+    _dashAnimationController.dispose();
     super.dispose();
   }
 
+  /// Reconstructs the timer state from the database.
+  /// This handles both running and paused sessions by calculating the correct
+  /// start times relative to historical data to prevent time jumps or negative values.
   Future<void> _checkRunningTimer() async {
-    final DateTime? runningSince =
-        await GetIt.I<UserDataDB>().timeTrackingDao.getRunningTimer();
-    if (runningSince != null && mounted) {
+    final data =
+        await GetIt.I<UserDataDB>().timeTrackingDao.getSessionRestoreData();
+
+    if (data.hasActiveSession && mounted) {
       setState(() {
-        _startTime = runningSince;
-        _glowController.value = 1.0; 
+        _pauseOffset = Duration.zero;
+
+        // Retrieve the total duration of all previous gaps/breaks
+        _accumulatedPauseDuration = data.totalPauseDuration;
+
+        if (data.isPaused) {
+          // --- Restore Paused State ---
+          _isPaused = true;
+
+          // Use the actual historical timestamp for when the pause started.
+          // Fallback to Now prevents null errors, though DB should provide the time.
+          _pauseStartTime = data.pauseStartTime ?? DateTime.now();
+
+          // Construct the session start time relative to when the pause *began*.
+          // This ensures that (PauseStart - StartTime) equals the Total Work Done.
+          // Using DateTime.now() here would cause negative elapsed times for old sessions.
+          _startTime = _pauseStartTime!.subtract(data.totalWorkDuration);
+
+          // Update visuals for paused state
+          _glowController.value = 0.0;
+          _dashAnimationController.repeat();
+        } else {
+          // --- Restore Running State ---
+          _isPaused = false;
+
+          // Since the timer is running, the work duration continues up to right now.
+          _startTime = DateTime.now().subtract(data.totalWorkDuration);
+
+          // Update visuals for running state
+          _glowController.value = 1.0;
+        }
+
+        // We must start the ticker even if paused, otherwise the break timer
+        // (which runs in real-time) will not update on screen.
+        if (!_ticker.isActive) _ticker.start();
       });
-      if (!_ticker.isActive) _ticker.start();
     }
   }
 
-  void _toggleTimer() async {
-    if (_startTime != null) {
-      // --- STOP ---
-      await GetIt.I<UserDataDB>().timeTrackingDao.finishSession();
-      _ticker.stop();
-      _glowController.reverse();
+  void _startTimer() async {
+    await GetIt.I<UserDataDB>().timeTrackingDao.startNewSession("", "");
+    final now = DateTime.now();
 
-      final Duration realElapsed = DateTime.now().difference(_startTime!);
-      final int sessionSeconds = widget.sessionLength.inSeconds;
-      final int currentLapIndex = (sessionSeconds > 0) ? (realElapsed.inSeconds ~/ sessionSeconds) : 0;
-      
-      if (currentLapIndex > 2) {
-        final double currentLapProgress = (realElapsed.inMilliseconds % (sessionSeconds * 1000)) / (sessionSeconds * 1000);
-        final int compressedMicros = ((2 + currentLapProgress) * sessionSeconds * 1000000).toInt();
-        _visualDurationAtStop = Duration(microseconds: compressedMicros);
-      } else {
-        _visualDurationAtStop = realElapsed;
-      }
+    setState(() {
+      _startTime = now;
+      _pauseOffset = Duration.zero;
+      _accumulatedPauseDuration = Duration.zero;
+      _isPaused = false;
+      _resetController.reset();
+    });
 
-      _resetController.forward(from: 0.0);
-
-    }
-    else {
-      // --- START ---
-      // TODO add category + tags selection UI
-      await GetIt.I<UserDataDB>().timeTrackingDao.startNewSession("","");
-      final now = DateTime.now();
-      
-      setState(() {
-        _startTime = now;
-        _resetController.reset(); 
-      });
-      
-      _glowController.forward();
-      _ticker.start();
-    }
+    _glowController.forward();
+    _ticker.start();
   }
 
-  ({int lapIndex, double lapProgress, Duration elapsed}) _calculateState(Duration currentElapsed) {
+  void _stopTimer() async {
+    if (_startTime == null) return;
+
+    await GetIt.I<UserDataDB>().timeTrackingDao.finishSession();
+    _ticker.stop();
+    _glowController.reverse();
+    _dashAnimationController.stop();
+
+    Duration realElapsed;
+    if (_isPaused && _pauseStartTime != null) {
+      realElapsed = _pauseStartTime!.difference(_startTime!) - _pauseOffset;
+    } else {
+      realElapsed = DateTime.now().difference(_startTime!) - _pauseOffset;
+    }
+
+    final int sessionSeconds = widget.sessionLength.inSeconds;
+    final int currentLapIndex =
+        (sessionSeconds > 0) ? (realElapsed.inSeconds ~/ sessionSeconds) : 0;
+
+    // Calculate the visual compression effect for the "End Session" animation
+    if (currentLapIndex > 2) {
+      final double currentLapProgress =
+          (realElapsed.inMilliseconds % (sessionSeconds * 1000)) /
+              (sessionSeconds * 1000);
+      final int compressedMicros =
+          ((2 + currentLapProgress) * sessionSeconds * 1000000).toInt();
+      _visualDurationAtStop = Duration(microseconds: compressedMicros);
+    } else {
+      _visualDurationAtStop = realElapsed;
+    }
+
+    _resetController.forward(from: 0.0);
+
+    setState(() {
+      _isPaused = false;
+      _pauseStartTime = null;
+      _accumulatedPauseDuration = Duration.zero;
+    });
+  }
+
+  void _pauseTimer() async {
+    // Persist the pause state to the database (close current unit)
+    await GetIt.I<UserDataDB>().timeTrackingDao.pauseTimer();
+
+    _glowController.reverse();
+    _dashAnimationController.repeat();
+
+    setState(() {
+      _isPaused = true;
+      _pauseStartTime = DateTime.now();
+    });
+  }
+
+  void _resumeTimer() async {
+    // Persist the resume state to the database (start new unit)
+    await GetIt.I<UserDataDB>().timeTrackingDao.resumeTimer();
+
+    if (_pauseStartTime != null) {
+      final pauseDuration = DateTime.now().difference(_pauseStartTime!);
+
+      // Capture the duration of the pause that just ended and add it to the history.
+      // This is critical for keeping the "Break" timer correct upon subsequent pauses.
+      _accumulatedPauseDuration += pauseDuration;
+
+      _pauseOffset += pauseDuration;
+      _pauseStartTime = null;
+    }
+
+    if (!_ticker.isActive) _ticker.start();
+    _glowController.forward();
+    _dashAnimationController.stop();
+
+    setState(() {
+      _isPaused = false;
+    });
+  }
+
+  ({int lapIndex, double lapProgress, Duration elapsed}) _calculateState(
+      Duration currentElapsed) {
     final int sessionSeconds = widget.sessionLength.inSeconds;
     final int totalMilliseconds = currentElapsed.inMilliseconds;
     final int sessionMilliseconds = sessionSeconds * 1000;
@@ -135,48 +258,52 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
     final double lapProgress = sessionMilliseconds > 0
         ? (totalMilliseconds % sessionMilliseconds) / sessionMilliseconds
         : 0.0;
-    
-    return (lapIndex: lapIndex, lapProgress: lapProgress, elapsed: currentElapsed);
+
+    return (
+      lapIndex: lapIndex,
+      lapProgress: lapProgress,
+      elapsed: currentElapsed
+    );
   }
 
-  String _formatDuration(Duration d) {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    String minutes = twoDigits(d.inMinutes.remainder(60));
-    String seconds = twoDigits(d.inSeconds.remainder(60));
-    if (d.inHours > 0) return "${twoDigits(d.inHours)}:$minutes:$seconds";
-    return "$minutes:$seconds";
-  }
-
-@override
+  @override
   Widget build(BuildContext context) {
     const Color cardBackground = Color(0xFF1E1E1E);
 
     int lapIndex;
     double lapProgress;
     Duration currentElapsed;
+    Duration currentPauseDuration = Duration.zero;
     double glowOpacity;
 
-    // --- ANIMATION STATE ---
+    // Logic for transition animations and elapsed time calculation
     if (_resetController.isAnimating) {
+      // Handle the "End Session" compression animation
       if (_resetController.value > 0.85) {
-        glowOpacity = (1.0 - ((_resetController.value - 0.85) / 0.15)).clamp(0.0, 1.0);
+        glowOpacity =
+            (1.0 - ((_resetController.value - 0.85) / 0.15)).clamp(0.0, 1.0);
       } else {
         glowOpacity = 1.0;
       }
-    } else if (_startTime != null) {
-      glowOpacity = _glowController.value;
-    } else {
-      glowOpacity = 0.0;
-    }
-
-    if (_resetController.isAnimating) {
       final double t = Curves.easeInOutCubic.transform(_resetController.value);
       final int startMicros = _visualDurationAtStop.inMicroseconds;
       final int currentMicros = (startMicros * (1 - t)).toInt();
       currentElapsed = Duration(microseconds: currentMicros);
-    } else if (_startTime != null) {
-      currentElapsed = DateTime.now().difference(_startTime!);
+    } else if (_startTime != null && !_isPaused) {
+      // Normal Running State
+      glowOpacity = _glowController.value;
+      final now = DateTime.now();
+      currentElapsed = now.difference(_startTime!) - _pauseOffset;
+    } else if (_isPaused && _pauseStartTime != null) {
+      // Paused State
+      glowOpacity = 0.0;
+      final now = DateTime.now();
+      // Even though we are paused, we calculate elapsed relative to when the pause STARTED.
+      currentElapsed = _pauseStartTime!.difference(_startTime!) - _pauseOffset;
+      currentPauseDuration = now.difference(_pauseStartTime!);
     } else {
+      // Idle State
+      glowOpacity = 0.0;
       currentElapsed = Duration.zero;
     }
 
@@ -184,12 +311,21 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
     lapIndex = state.lapIndex;
     lapProgress = state.lapProgress;
 
-    final Duration earnedBreak = Duration(
-        milliseconds: (currentElapsed.inMilliseconds * widget.studyBreakRatio).toInt());
+    // 1. Calculate GROSS Earned Break (Total capacity generated by work)
+    final Duration grossEarnedBreak = Duration(
+        milliseconds:
+            (currentElapsed.inMilliseconds * widget.studyBreakRatio).toInt());
 
-    // --- COLORS ---
-    final Color activeColor = (lapIndex == 0) ? widget.accentColor : widget.secondaryAccentColor;
-    
+    // 2. Calculate NET Remaining Break for Running State
+    // RunningClockFace displays "+XX:XX", so we must subtract used breaks here.
+    final Duration netRemainingBreak = grossEarnedBreak - _accumulatedPauseDuration;
+
+    // Clamp to zero to ensure we don't show negative values in the Running state
+    final Duration displayBreakForRunning = netRemainingBreak;
+
+    final Color activeColor =
+        (lapIndex == 0) ? widget.accentColor : widget.secondaryAccentColor;
+
     Color trackColor;
     if (lapIndex == 0) {
       trackColor = widget.accentColor.withValues(alpha: 0.1);
@@ -201,252 +337,167 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
 
     final bool showBreak = (currentElapsed.inSeconds % 8) >= 4;
     final bool isRunning = (_startTime != null);
+    final bool isTicking =
+        isRunning && !_isPaused && !_resetController.isAnimating;
+
+    // 3. Calculate Total Used for Paused State
+    // PausedClockFace does its own subtraction (Earned - Used), so we pass totals.
+    final Duration totalBreakUsed =
+        _accumulatedPauseDuration + currentPauseDuration;
 
     return Material(
       color: Colors.transparent,
       child: SizedBox(
         width: 320,
-        height: 360,
+        height: 450,
         child: Stack(
+          alignment: Alignment.topCenter,
           children: [
-            // --- 1. Border Glow ---
-            Positioned.fill(
-              child: RepaintBoundary(
-                child: CustomPaint(
-                  painter: CardBorderGlowPainter(
-                    progress: lapProgress,
-                    lapIndex: lapIndex,
-                    activeColor: activeColor,
-                    trackColor: trackColor,
-                  ),
-                ),
-              ),
-            ),
-
-            // --- 2. Card Content ---
-            Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: cardBackground,
-                borderRadius: BorderRadius.circular(40),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // Layer 1: The Main Card
+            Positioned(
+              top: 0,
+              width: 320,
+              height: 360,
+              child: Stack(
                 children: [
-                  
-                  // --- CLICKABLE TIMER ---
-                  Expanded(
-                    child: GestureDetector(
-                      // TAP TO START / STOP
-                      onTap: _resetController.isAnimating ? null : _toggleTimer,
-                      behavior: HitTestBehavior.opaque, 
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          // Ambient Glow
-                          Opacity(
-                            opacity: glowOpacity,
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 500),
-                              width: 230,
-                              height: 230,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: activeColor.withValues(alpha: 0.15),
-                                    blurRadius: 40,
-                                    spreadRadius: 5,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                      
-                          // Arc + Knob
-                          SizedBox(
-                            width: 230,
-                            height: 230,
-                            child: CustomPaint(
-                              painter: NeonStopwatchPainter(
-                                progress: lapProgress,
-                                lapIndex: lapIndex,
-                                activeColor: activeColor,
-                                trackColor: trackColor,
-                                knobRadius: 8.0,
-                                glowOpacity: glowOpacity,
-                              ),
-                            ),
-                          ),
-                      
-                          // Text & Icon
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Play/Pause Icon inside the timer
-                              AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 300),
-                                child: Icon(
-                                  isRunning ? Icons.pause_circle_outline : Icons.play_arrow_rounded,
-                                  key: ValueKey(isRunning),
-                                  color: Colors.grey[600], 
-                                  size: 28
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                _formatDuration(currentElapsed),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1.5,
-                                  fontFeatures: [FontFeature.tabularFigures()],
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              // Dots
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: List.generate(4, (index) {
-                                  bool isActive = index <= lapIndex;
-                                  Color dotColor = activeColor;
-                                  return AnimatedContainer(
-                                    duration: const Duration(milliseconds: 300),
-                                    margin: const EdgeInsets.symmetric(horizontal: 3),
-                                    width: 6,
-                                    height: 6,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: isActive ? dotColor : dotColor.withValues(alpha: 0.2),
-                                    ),
-                                  );
-                                }),
-                              ),
-                              const SizedBox(height: 8),
-                      
-                              // Info Text
-                              AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 500),
-                                child: _buildInfoText(
-                                    showBreak: showBreak,
-                                    lapIndex: lapIndex,
-                                    earnedBreak: earnedBreak,
-                                    activeColor: activeColor,
-                                    isRunning: (isRunning || _resetController.isAnimating)),
-                              ),
-                            ],
-                          ),
-                        ],
+                  // Background Glow
+                  AnimatedOpacity(
+                    opacity: isTicking ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 300),
+                    child: RepaintBoundary(
+                      child: CustomPaint(
+                        painter: CardBorderGlowPainter(
+                          progress: lapProgress,
+                          lapIndex: lapIndex,
+                          activeColor: activeColor,
+                          trackColor: trackColor,
+                        ),
                       ),
                     ),
                   ),
-
-                  // --- BOTTOM CONTROLS ---
-                  // Track Button REMOVED. Pause Button APPEARS when running.
-                  SizedBox(
-                    height: 60, // Fixed height to prevent layout jumps
-                    child: Row(
+                  // Card Content
+                  Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: cardBackground,
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _buildCircularButton(icon: Icons.category_outlined, onTap: () {}),
-
-                        // Center Button Area
-                        AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 300),
-                          transitionBuilder: (child, anim) => ScaleTransition(scale: anim, child: child),
-                          child: isRunning
-                              ? ElevatedButton.icon(
-                                  key: const ValueKey("pause"),
-                                  onPressed: _toggleTimer,
-                                  icon: const Icon(Icons.pause, size: 20),
-                                  label: const Text("Pause"),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF2C2C2C),
-                                    foregroundColor: widget.secondaryAccentColor,
-                                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-                                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                                    shape: const StadiumBorder(),
-                                    side: BorderSide(
-                                      color: widget.secondaryAccentColor.withValues(alpha: 0.3),
-                                      width: 1
-                                    )
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: _resetController.isAnimating
+                                ? null
+                                : (isRunning
+                                    ? (_isPaused ? _resumeTimer : _pauseTimer)
+                                    : _startTimer),
+                            behavior: HitTestBehavior.opaque,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                // Center Glow Circle
+                                Opacity(
+                                  opacity: glowOpacity,
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 500),
+                                    width: 230,
+                                    height: 230,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: activeColor
+                                              .withValues(alpha: 0.15),
+                                          blurRadius: 40,
+                                          spreadRadius: 5,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                )
-                              : const SizedBox.shrink(), // Empty when not running
+                                ),
+                                // Clock Face Switcher
+                                AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 300),
+                                  child: _isPaused
+                                      ? PausedClockFace(
+                                          key: const ValueKey("paused"),
+                                          currentElapsed: currentElapsed,
+                                          // Paused Face needs Gross & Total Used for internal math
+                                          activePauseDuration: totalBreakUsed,
+                                          earnedBreak: grossEarnedBreak,
+                                          accentColor: widget.accentColor,
+                                          negativeBreakColor:
+                                              widget.negativeBreakColor,
+                                          dashAnimationController:
+                                              _dashAnimationController,
+                                        )
+                                      : RunningClockFace(
+                                          key: const ValueKey("running"),
+                                          lapIndex: lapIndex,
+                                          lapProgress: lapProgress,
+                                          activeColor: activeColor,
+                                          trackColor: trackColor,
+                                          glowOpacity: glowOpacity,
+                                          currentElapsed: currentElapsed,
+                                          showBreak: showBreak,
+                                          // Running Face needs pre-calculated Net Remaining Break
+                                          earnedBreak: displayBreakForRunning,
+                                          isTicking: isTicking,
+                                          isResetting:
+                                              _resetController.isAnimating,
+                                        ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-
-                        _buildCircularButton(icon: Icons.tag_outlined, onTap: () {}),
+                        // Bottom Controls
+                        SizedBox(
+                          height: 60,
+                          child: TimerControlBar(
+                            isRunning: isRunning,
+                            isPaused: _isPaused,
+                            accentColor: widget.accentColor,
+                            secondaryAccentColor: widget.secondaryAccentColor,
+                            onStart: _startTimer,
+                            onPause: _pauseTimer,
+                            onResume: _resumeTimer,
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
+
+            // Layer 2: End Session Button
+            Positioned(
+              bottom: 10,
+              child: AnimatedOpacity(
+                opacity: isRunning ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 300),
+                child: IgnorePointer(
+                  ignoring: !isRunning,
+                  child: TextButton(
+                    onPressed: _stopTimer,
+                    style: TextButton.styleFrom(
+                      backgroundColor: const Color(0xFF2C2C2C),
+                      foregroundColor: Colors.white.withValues(alpha: 0.7),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 16),
+                      shape: const StadiumBorder(),
+                    ),
+                    child: const Text("End Session",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600)),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildInfoText({
-    required bool showBreak, 
-    required int lapIndex, 
-    required Duration earnedBreak, 
-    required Color activeColor,
-    required bool isRunning,
-  }) {
-    if (!isRunning) {
-      return Text(
-        "READY",
-        key: const ValueKey("ready"),
-        style: TextStyle(
-          color: activeColor.withValues(alpha: 0.8),
-          fontSize: 12,
-          letterSpacing: 1.2,
-          fontWeight: FontWeight.w500,
-        ),
-      );
-    }
-
-    if (showBreak && earnedBreak.inSeconds > 0) {
-      return Text(
-        "BREAK: +${_formatDuration(earnedBreak)}",
-        key: const ValueKey("break"),
-        style: TextStyle(
-          color: Colors.white.withValues(alpha: 0.9),
-          fontSize: 12,
-          letterSpacing: 1.2,
-          fontWeight: FontWeight.w500,
-          fontFeatures: const [FontFeature.tabularFigures()],
-        ),
-      );
-    } else {
-      return Text(
-        "SESSION ${lapIndex + 1}",
-        key: const ValueKey("session"),
-        style: TextStyle(
-          color: activeColor.withValues(alpha: 0.8),
-          fontSize: 12,
-          letterSpacing: 1.2,
-          fontWeight: FontWeight.w500,
-        ),
-      );
-    }
-  }
-
-  Widget _buildCircularButton(
-      {required IconData icon, required VoidCallback onTap}) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
-      ),
-      child: IconButton(
-        onPressed: onTap,
-        icon: Icon(icon),
-        color: Colors.grey,
-        tooltip: "Option",
       ),
     );
   }
