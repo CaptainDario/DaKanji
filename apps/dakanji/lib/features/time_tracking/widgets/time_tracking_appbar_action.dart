@@ -1,3 +1,4 @@
+import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/time_tracking_card.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/time_tracking_popup_dialog.dart';
 import 'package:da_kanji_mobile/globals.dart';
@@ -19,7 +20,7 @@ class _TimeTrackingAppbarActionState extends State<TimeTrackingAppbarAction> {
   Widget build(BuildContext context) {
     return IconButton(
       key: _iconKey,
-      icon: const Icon(Icons.timer_outlined),
+      icon: const Icon(DaKanjiIcons.timeTracking),
       onPressed: () {
         showTimeTrackingPopup(
           context: context,
