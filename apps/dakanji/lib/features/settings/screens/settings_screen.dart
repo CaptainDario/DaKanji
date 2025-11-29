@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/features/settings/widgets/time_tracking_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -100,6 +101,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 WordListSettings(),     
                 AnkiSettings(),
                 ClipboardSettings(),
+                TimeTrackingSettings(),
                 MiscSettings(),
                 
               ],
