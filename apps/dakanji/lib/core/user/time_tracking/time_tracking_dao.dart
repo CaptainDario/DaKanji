@@ -215,6 +215,34 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     await query.go();
   }
 
+  /// Set the selected category
+  Future setSelectedCategory(String category) async {
+    return transaction(() async {
+      // 1. Deselect all categories
+      final deselectQuery = update(timeTrackingCategoriesTable)
+        ..where((tbl) => tbl.isSelected.equals(true));
+      await deselectQuery.write(
+        const TimeTrackingCategoriesTableCompanion(isSelected: Value(false)),
+      );
+      // 2. Select the desired category
+      final selectQuery = update(timeTrackingCategoriesTable)
+        ..where((tbl) => tbl.category.equals(category));
+      await selectQuery.write(
+        const TimeTrackingCategoriesTableCompanion(isSelected: Value(true)),
+      );
+    });
+  }
+
+  /// Get the selected category
+  Future<String?> getSelectedCategory() async {
+    final query = select(timeTrackingCategoriesTable)
+      ..where((tbl) => tbl.isSelected.equals(true))
+      ..limit(1);
+    final result = await query.getSingleOrNull();
+    return result?.category;
+  }
+
+
   /// Get all tags that the user has defined
   Future<List<String>> getAllTags() async {
     final query = select(timeTrackingTagsTable);
@@ -230,6 +258,39 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       ),
       onConflict: DoNothing()
     );
+  }
+
+  /// Delete an existing tag
+  Future<void> deleteTag(String tag) async {
+    final query = delete(timeTrackingTagsTable)
+      ..where((tbl) => tbl.tag.equals(tag));
+    await query.go();
+  }
+
+  Future setSelectedTag(String tag) async {
+    return transaction(() async {
+      // 1. Deselect all tags
+      final deselectQuery = update(timeTrackingTagsTable)
+        ..where((tbl) => tbl.isSelected.equals(true));
+      await deselectQuery.write(
+        const TimeTrackingTagsTableCompanion(isSelected: Value(false)),
+      );
+
+      // 2. Select the desired tag
+      final selectQuery = update(timeTrackingTagsTable)
+        ..where((tbl) => tbl.tag.equals(tag));
+      await selectQuery.write(
+        const TimeTrackingTagsTableCompanion(isSelected: Value(true)),
+      );
+    });
+  }
+
+  Future<String?> getSelectedTag() async {
+    final query = select(timeTrackingTagsTable)
+      ..where((tbl) => tbl.isSelected.equals(true))
+      ..limit(1);
+    final result = await query.getSingleOrNull();
+    return result?.tag;
   }
   // --- END   : Tags and Categories Management ---
 }

@@ -1736,9 +1736,25 @@ class $TimeTrackingCategoriesTableTable extends TimeTrackingCategoriesTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _isSelectedMeta = const VerificationMeta(
+    'isSelected',
   );
   @override
-  List<GeneratedColumn> get $columns => [id, category];
+  late final GeneratedColumn<bool> isSelected = GeneratedColumn<bool>(
+    'is_selected',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_selected" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, category, isSelected];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1762,6 +1778,12 @@ class $TimeTrackingCategoriesTableTable extends TimeTrackingCategoriesTable
     } else if (isInserting) {
       context.missing(_categoryMeta);
     }
+    if (data.containsKey('is_selected')) {
+      context.handle(
+        _isSelectedMeta,
+        isSelected.isAcceptableOrUnknown(data['is_selected']!, _isSelectedMeta),
+      );
+    }
     return context;
   }
 
@@ -1782,6 +1804,10 @@ class $TimeTrackingCategoriesTableTable extends TimeTrackingCategoriesTable
         DriftSqlType.string,
         data['${effectivePrefix}category'],
       )!,
+      isSelected: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_selected'],
+      )!,
     );
   }
 
@@ -1795,15 +1821,18 @@ class TimeTrackingCategoriesTableData extends DataClass
     implements Insertable<TimeTrackingCategoriesTableData> {
   final int id;
   final String category;
+  final bool isSelected;
   const TimeTrackingCategoriesTableData({
     required this.id,
     required this.category,
+    required this.isSelected,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['category'] = Variable<String>(category);
+    map['is_selected'] = Variable<bool>(isSelected);
     return map;
   }
 
@@ -1811,6 +1840,7 @@ class TimeTrackingCategoriesTableData extends DataClass
     return TimeTrackingCategoriesTableCompanion(
       id: Value(id),
       category: Value(category),
+      isSelected: Value(isSelected),
     );
   }
 
@@ -1822,6 +1852,7 @@ class TimeTrackingCategoriesTableData extends DataClass
     return TimeTrackingCategoriesTableData(
       id: serializer.fromJson<int>(json['id']),
       category: serializer.fromJson<String>(json['category']),
+      isSelected: serializer.fromJson<bool>(json['isSelected']),
     );
   }
   @override
@@ -1830,20 +1861,28 @@ class TimeTrackingCategoriesTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'category': serializer.toJson<String>(category),
+      'isSelected': serializer.toJson<bool>(isSelected),
     };
   }
 
-  TimeTrackingCategoriesTableData copyWith({int? id, String? category}) =>
-      TimeTrackingCategoriesTableData(
-        id: id ?? this.id,
-        category: category ?? this.category,
-      );
+  TimeTrackingCategoriesTableData copyWith({
+    int? id,
+    String? category,
+    bool? isSelected,
+  }) => TimeTrackingCategoriesTableData(
+    id: id ?? this.id,
+    category: category ?? this.category,
+    isSelected: isSelected ?? this.isSelected,
+  );
   TimeTrackingCategoriesTableData copyWithCompanion(
     TimeTrackingCategoriesTableCompanion data,
   ) {
     return TimeTrackingCategoriesTableData(
       id: data.id.present ? data.id.value : this.id,
       category: data.category.present ? data.category.value : this.category,
+      isSelected: data.isSelected.present
+          ? data.isSelected.value
+          : this.isSelected,
     );
   }
 
@@ -1851,50 +1890,59 @@ class TimeTrackingCategoriesTableData extends DataClass
   String toString() {
     return (StringBuffer('TimeTrackingCategoriesTableData(')
           ..write('id: $id, ')
-          ..write('category: $category')
+          ..write('category: $category, ')
+          ..write('isSelected: $isSelected')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, category);
+  int get hashCode => Object.hash(id, category, isSelected);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TimeTrackingCategoriesTableData &&
           other.id == this.id &&
-          other.category == this.category);
+          other.category == this.category &&
+          other.isSelected == this.isSelected);
 }
 
 class TimeTrackingCategoriesTableCompanion
     extends UpdateCompanion<TimeTrackingCategoriesTableData> {
   final Value<int> id;
   final Value<String> category;
+  final Value<bool> isSelected;
   const TimeTrackingCategoriesTableCompanion({
     this.id = const Value.absent(),
     this.category = const Value.absent(),
+    this.isSelected = const Value.absent(),
   });
   TimeTrackingCategoriesTableCompanion.insert({
     this.id = const Value.absent(),
     required String category,
+    this.isSelected = const Value.absent(),
   }) : category = Value(category);
   static Insertable<TimeTrackingCategoriesTableData> custom({
     Expression<int>? id,
     Expression<String>? category,
+    Expression<bool>? isSelected,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (category != null) 'category': category,
+      if (isSelected != null) 'is_selected': isSelected,
     });
   }
 
   TimeTrackingCategoriesTableCompanion copyWith({
     Value<int>? id,
     Value<String>? category,
+    Value<bool>? isSelected,
   }) {
     return TimeTrackingCategoriesTableCompanion(
       id: id ?? this.id,
       category: category ?? this.category,
+      isSelected: isSelected ?? this.isSelected,
     );
   }
 
@@ -1907,6 +1955,9 @@ class TimeTrackingCategoriesTableCompanion
     if (category.present) {
       map['category'] = Variable<String>(category.value);
     }
+    if (isSelected.present) {
+      map['is_selected'] = Variable<bool>(isSelected.value);
+    }
     return map;
   }
 
@@ -1914,7 +1965,8 @@ class TimeTrackingCategoriesTableCompanion
   String toString() {
     return (StringBuffer('TimeTrackingCategoriesTableCompanion(')
           ..write('id: $id, ')
-          ..write('category: $category')
+          ..write('category: $category, ')
+          ..write('isSelected: $isSelected')
           ..write(')'))
         .toString();
   }
@@ -1947,9 +1999,25 @@ class $TimeTrackingTagsTableTable extends TimeTrackingTagsTable
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _isSelectedMeta = const VerificationMeta(
+    'isSelected',
   );
   @override
-  List<GeneratedColumn> get $columns => [id, tag];
+  late final GeneratedColumn<bool> isSelected = GeneratedColumn<bool>(
+    'is_selected',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_selected" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, tag, isSelected];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1973,6 +2041,12 @@ class $TimeTrackingTagsTableTable extends TimeTrackingTagsTable
     } else if (isInserting) {
       context.missing(_tagMeta);
     }
+    if (data.containsKey('is_selected')) {
+      context.handle(
+        _isSelectedMeta,
+        isSelected.isAcceptableOrUnknown(data['is_selected']!, _isSelectedMeta),
+      );
+    }
     return context;
   }
 
@@ -1993,6 +2067,10 @@ class $TimeTrackingTagsTableTable extends TimeTrackingTagsTable
         DriftSqlType.string,
         data['${effectivePrefix}tag'],
       )!,
+      isSelected: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_selected'],
+      )!,
     );
   }
 
@@ -2006,17 +2084,27 @@ class TimeTrackingTagsTableData extends DataClass
     implements Insertable<TimeTrackingTagsTableData> {
   final int id;
   final String tag;
-  const TimeTrackingTagsTableData({required this.id, required this.tag});
+  final bool isSelected;
+  const TimeTrackingTagsTableData({
+    required this.id,
+    required this.tag,
+    required this.isSelected,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['tag'] = Variable<String>(tag);
+    map['is_selected'] = Variable<bool>(isSelected);
     return map;
   }
 
   TimeTrackingTagsTableCompanion toCompanion(bool nullToAbsent) {
-    return TimeTrackingTagsTableCompanion(id: Value(id), tag: Value(tag));
+    return TimeTrackingTagsTableCompanion(
+      id: Value(id),
+      tag: Value(tag),
+      isSelected: Value(isSelected),
+    );
   }
 
   factory TimeTrackingTagsTableData.fromJson(
@@ -2027,6 +2115,7 @@ class TimeTrackingTagsTableData extends DataClass
     return TimeTrackingTagsTableData(
       id: serializer.fromJson<int>(json['id']),
       tag: serializer.fromJson<String>(json['tag']),
+      isSelected: serializer.fromJson<bool>(json['isSelected']),
     );
   }
   @override
@@ -2035,17 +2124,28 @@ class TimeTrackingTagsTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'tag': serializer.toJson<String>(tag),
+      'isSelected': serializer.toJson<bool>(isSelected),
     };
   }
 
-  TimeTrackingTagsTableData copyWith({int? id, String? tag}) =>
-      TimeTrackingTagsTableData(id: id ?? this.id, tag: tag ?? this.tag);
+  TimeTrackingTagsTableData copyWith({
+    int? id,
+    String? tag,
+    bool? isSelected,
+  }) => TimeTrackingTagsTableData(
+    id: id ?? this.id,
+    tag: tag ?? this.tag,
+    isSelected: isSelected ?? this.isSelected,
+  );
   TimeTrackingTagsTableData copyWithCompanion(
     TimeTrackingTagsTableCompanion data,
   ) {
     return TimeTrackingTagsTableData(
       id: data.id.present ? data.id.value : this.id,
       tag: data.tag.present ? data.tag.value : this.tag,
+      isSelected: data.isSelected.present
+          ? data.isSelected.value
+          : this.isSelected,
     );
   }
 
@@ -2053,50 +2153,59 @@ class TimeTrackingTagsTableData extends DataClass
   String toString() {
     return (StringBuffer('TimeTrackingTagsTableData(')
           ..write('id: $id, ')
-          ..write('tag: $tag')
+          ..write('tag: $tag, ')
+          ..write('isSelected: $isSelected')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, tag);
+  int get hashCode => Object.hash(id, tag, isSelected);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TimeTrackingTagsTableData &&
           other.id == this.id &&
-          other.tag == this.tag);
+          other.tag == this.tag &&
+          other.isSelected == this.isSelected);
 }
 
 class TimeTrackingTagsTableCompanion
     extends UpdateCompanion<TimeTrackingTagsTableData> {
   final Value<int> id;
   final Value<String> tag;
+  final Value<bool> isSelected;
   const TimeTrackingTagsTableCompanion({
     this.id = const Value.absent(),
     this.tag = const Value.absent(),
+    this.isSelected = const Value.absent(),
   });
   TimeTrackingTagsTableCompanion.insert({
     this.id = const Value.absent(),
     required String tag,
+    this.isSelected = const Value.absent(),
   }) : tag = Value(tag);
   static Insertable<TimeTrackingTagsTableData> custom({
     Expression<int>? id,
     Expression<String>? tag,
+    Expression<bool>? isSelected,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (tag != null) 'tag': tag,
+      if (isSelected != null) 'is_selected': isSelected,
     });
   }
 
   TimeTrackingTagsTableCompanion copyWith({
     Value<int>? id,
     Value<String>? tag,
+    Value<bool>? isSelected,
   }) {
     return TimeTrackingTagsTableCompanion(
       id: id ?? this.id,
       tag: tag ?? this.tag,
+      isSelected: isSelected ?? this.isSelected,
     );
   }
 
@@ -2109,6 +2218,9 @@ class TimeTrackingTagsTableCompanion
     if (tag.present) {
       map['tag'] = Variable<String>(tag.value);
     }
+    if (isSelected.present) {
+      map['is_selected'] = Variable<bool>(isSelected.value);
+    }
     return map;
   }
 
@@ -2116,7 +2228,8 @@ class TimeTrackingTagsTableCompanion
   String toString() {
     return (StringBuffer('TimeTrackingTagsTableCompanion(')
           ..write('id: $id, ')
-          ..write('tag: $tag')
+          ..write('tag: $tag, ')
+          ..write('isSelected: $isSelected')
           ..write(')'))
         .toString();
   }
@@ -3491,11 +3604,13 @@ typedef $$TimeTrackingCategoriesTableTableCreateCompanionBuilder =
     TimeTrackingCategoriesTableCompanion Function({
       Value<int> id,
       required String category,
+      Value<bool> isSelected,
     });
 typedef $$TimeTrackingCategoriesTableTableUpdateCompanionBuilder =
     TimeTrackingCategoriesTableCompanion Function({
       Value<int> id,
       Value<String> category,
+      Value<bool> isSelected,
     });
 
 class $$TimeTrackingCategoriesTableTableFilterComposer
@@ -3514,6 +3629,11 @@ class $$TimeTrackingCategoriesTableTableFilterComposer
 
   ColumnFilters<String> get category => $composableBuilder(
     column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSelected => $composableBuilder(
+    column: $table.isSelected,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -3536,6 +3656,11 @@ class $$TimeTrackingCategoriesTableTableOrderingComposer
     column: $table.category,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get isSelected => $composableBuilder(
+    column: $table.isSelected,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TimeTrackingCategoriesTableTableAnnotationComposer
@@ -3552,6 +3677,11 @@ class $$TimeTrackingCategoriesTableTableAnnotationComposer
 
   GeneratedColumn<String> get category =>
       $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSelected => $composableBuilder(
+    column: $table.isSelected,
+    builder: (column) => column,
+  );
 }
 
 class $$TimeTrackingCategoriesTableTableTableManager
@@ -3602,17 +3732,21 @@ class $$TimeTrackingCategoriesTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> category = const Value.absent(),
+                Value<bool> isSelected = const Value.absent(),
               }) => TimeTrackingCategoriesTableCompanion(
                 id: id,
                 category: category,
+                isSelected: isSelected,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String category,
+                Value<bool> isSelected = const Value.absent(),
               }) => TimeTrackingCategoriesTableCompanion.insert(
                 id: id,
                 category: category,
+                isSelected: isSelected,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -3647,9 +3781,14 @@ typedef $$TimeTrackingTagsTableTableCreateCompanionBuilder =
     TimeTrackingTagsTableCompanion Function({
       Value<int> id,
       required String tag,
+      Value<bool> isSelected,
     });
 typedef $$TimeTrackingTagsTableTableUpdateCompanionBuilder =
-    TimeTrackingTagsTableCompanion Function({Value<int> id, Value<String> tag});
+    TimeTrackingTagsTableCompanion Function({
+      Value<int> id,
+      Value<String> tag,
+      Value<bool> isSelected,
+    });
 
 class $$TimeTrackingTagsTableTableFilterComposer
     extends Composer<_$UserDataDB, $TimeTrackingTagsTableTable> {
@@ -3667,6 +3806,11 @@ class $$TimeTrackingTagsTableTableFilterComposer
 
   ColumnFilters<String> get tag => $composableBuilder(
     column: $table.tag,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSelected => $composableBuilder(
+    column: $table.isSelected,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -3689,6 +3833,11 @@ class $$TimeTrackingTagsTableTableOrderingComposer
     column: $table.tag,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get isSelected => $composableBuilder(
+    column: $table.isSelected,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TimeTrackingTagsTableTableAnnotationComposer
@@ -3705,6 +3854,11 @@ class $$TimeTrackingTagsTableTableAnnotationComposer
 
   GeneratedColumn<String> get tag =>
       $composableBuilder(column: $table.tag, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSelected => $composableBuilder(
+    column: $table.isSelected,
+    builder: (column) => column,
+  );
 }
 
 class $$TimeTrackingTagsTableTableTableManager
@@ -3755,10 +3909,22 @@ class $$TimeTrackingTagsTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> tag = const Value.absent(),
-              }) => TimeTrackingTagsTableCompanion(id: id, tag: tag),
+                Value<bool> isSelected = const Value.absent(),
+              }) => TimeTrackingTagsTableCompanion(
+                id: id,
+                tag: tag,
+                isSelected: isSelected,
+              ),
           createCompanionCallback:
-              ({Value<int> id = const Value.absent(), required String tag}) =>
-                  TimeTrackingTagsTableCompanion.insert(id: id, tag: tag),
+              ({
+                Value<int> id = const Value.absent(),
+                required String tag,
+                Value<bool> isSelected = const Value.absent(),
+              }) => TimeTrackingTagsTableCompanion.insert(
+                id: id,
+                tag: tag,
+                isSelected: isSelected,
+              ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),
