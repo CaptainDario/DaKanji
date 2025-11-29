@@ -282,7 +282,7 @@ class _DictionarySettingsState extends State<DictionarySettings> {
           leadingIcon: Icons.info_outline,
           text: settings.dictionary.googleImageSearchQuery,
           hintText: LocaleKeys.SettingsScreen_dict_custom_query_format_title.tr(),
-          onLeadingIconPressed: () => infoPopup(
+          onLeadingIconPressed: (String value) => infoPopup(
               context,
               LocaleKeys.SettingsScreen_dict_custom_query_format_title.tr(),
               LocaleKeys.SettingsScreen_dict_custom_query_format_body.tr(

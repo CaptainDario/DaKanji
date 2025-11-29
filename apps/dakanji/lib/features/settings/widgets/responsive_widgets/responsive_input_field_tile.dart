@@ -6,9 +6,11 @@ class ResponsiveInputFieldTile extends StatefulWidget {
     {
       required this.enabled,
       this.leadingIcon,
+      this.trailingIcon,
       this.text,
       this.onChanged,
       this.onLeadingIconPressed,
+      this.onTrailingIconPressed,
       this.hintText,
       super.key
     }
@@ -18,12 +20,16 @@ class ResponsiveInputFieldTile extends StatefulWidget {
   final bool enabled;
   /// the icon for the button to press
   final IconData? leadingIcon;
+  /// the icon for the trailing side
+  final IconData? trailingIcon;
   // leading text
   final String? text;
   /// callback which will be executed at every input change
   final Function (String value)? onChanged;
   /// callback which will be execute when the icon button on the side is pressed
-  final Function? onLeadingIconPressed;
+  final Function (String value)? onLeadingIconPressed;
+  /// callback which will be execute when the icon button on the side is pressed
+  final Function (TextEditingController controller)? onTrailingIconPressed;
   /// the hint text to show when nothing was inputted
   final String? hintText;
 
@@ -63,23 +69,26 @@ class _ResponsiveInputFieldTileState extends State<ResponsiveInputFieldTile> {
           child: Row(
             children: [
               if(widget.leadingIcon != null)
-                Center(
-                  child: SizedBox(
-                    child: FittedBox(
-                      child: IconButton(
-                        splashRadius: tileHeight*0.5,
-                        onPressed: () {
-                          setState(() {
-                            if(widget.onLeadingIconPressed != null) widget.onLeadingIconPressed!();
-                          });
-                        },
-                        icon: Icon(
-                          widget.leadingIcon,
-                        )
+                ...[
+                  Center(
+                    child: SizedBox(
+                      child: FittedBox(
+                        child: IconButton(
+                          splashRadius: tileHeight*0.5,
+                          onPressed: () {
+                            setState(() {
+                              if(widget.onLeadingIconPressed != null) widget.onLeadingIconPressed!(_controller.text);
+                            });
+                          },
+                          icon: Icon(
+                            widget.leadingIcon,
+                          )
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  SizedBox(width: width*0.05,),
+                ],
               Expanded(
                 child: Container(
                   constraints: BoxConstraints(minHeight: tileHeight*0.75),
@@ -100,6 +109,24 @@ class _ResponsiveInputFieldTileState extends State<ResponsiveInputFieldTile> {
                 ),
               ),
               SizedBox(width: width*0.05,),
+              if(widget.trailingIcon != null)
+                Center(
+                  child: SizedBox(
+                    child: FittedBox(
+                      child: IconButton(
+                        splashRadius: tileHeight*0.5,
+                        onPressed: () {
+                          setState(() {
+                            if(widget.onTrailingIconPressed != null) widget.onTrailingIconPressed!(_controller);
+                          });
+                        },
+                        icon: Icon(
+                          widget.trailingIcon,
+                        )
+                      ),
+                    ),
+                  ),
+                ),
             ]
           ),
         ),

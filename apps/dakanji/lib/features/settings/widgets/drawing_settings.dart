@@ -61,7 +61,7 @@ class _DrawingSettingsState extends State<DrawingSettings> {
               settings.drawing.customURL = value;
               settings.save();
             },
-            onLeadingIconPressed: () => infoPopup(
+            onLeadingIconPressed: (String value) => infoPopup(
               context,
               LocaleKeys.SettingsScreen_draw_custom_url_format.tr(),
               LocaleKeys.SettingsScreen_custom_url_explanation.tr(
