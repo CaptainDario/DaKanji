@@ -403,6 +403,7 @@ abstract class  LocaleKeys {
   static const SettingsScreen_time_tracking_break_length_unit = 'SettingsScreen.time_tracking_break_length_unit';
   static const SettingsScreen_time_tracking_break_minutes = 'SettingsScreen.time_tracking_break_minutes';
   static const SettingsScreen_time_tracking_categories = 'SettingsScreen.time_tracking_categories';
+  static const SettingsScreen_time_tracking_current_ratio_text = 'SettingsScreen.time_tracking_current_ratio_text';
   static const SettingsScreen_time_tracking_enabled = 'SettingsScreen.time_tracking_enabled';
   static const SettingsScreen_time_tracking_session_legnth = 'SettingsScreen.time_tracking_session_legnth';
   static const SettingsScreen_time_tracking_session_length_description = 'SettingsScreen.time_tracking_session_length_description';

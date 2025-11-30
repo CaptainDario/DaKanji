@@ -419,6 +419,7 @@
     "time_tracking_break_length_unit": "",
     "time_tracking_break_minutes": "Minuti di pausa per sessione",
     "time_tracking_categories": "Categorie",
+    "time_tracking_current_ratio_text": "Guadagna ~{CURRENT_RATIO} min break / ora",
     "time_tracking_enabled": "Tracciamento del tempo abilitato",
     "time_tracking_session_legnth": "Durata di una sessione",
     "time_tracking_session_length_description": "Durata di una sessione",

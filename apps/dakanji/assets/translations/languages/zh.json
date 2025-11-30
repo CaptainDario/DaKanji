@@ -419,6 +419,7 @@
     "time_tracking_break_length_unit": "",
     "time_tracking_break_minutes": "\u6bcf\u8282\u8bfe\u7684\u4f11\u606f\u65f6\u95f4",
     "time_tracking_categories": "\u7c7b\u522b",
+    "time_tracking_current_ratio_text": "\u8d5a\u53d6 ~{CURRENT_RATIO} \u5206\u949f/\u5c0f\u65f6\u7684\u4f11\u606f\u65f6\u95f4",
     "time_tracking_enabled": "\u542f\u7528\u65f6\u95f4\u8ddf\u8e2a",
     "time_tracking_session_legnth": "\u4e00\u8282\u8bfe\u7684\u65f6\u95f4",
     "time_tracking_session_length_description": "\u4e00\u8282\u8bfe\u7684\u65f6\u95f4",

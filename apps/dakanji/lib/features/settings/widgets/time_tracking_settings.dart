@@ -66,7 +66,11 @@ class _TimeTrackingSettingsState extends State<TimeTrackingSettings> {
         Align(
           alignment: Alignment.centerRight,
           child: Text(
-            "(Earns ~${((settings.timeTracking.breakLength / settings.timeTracking.sessionLength)*60).toStringAsFixed(0)} min break / hour)",
+            LocaleKeys.SettingsScreen_time_tracking_current_ratio_text.tr(
+              namedArgs: {
+                "CURRENT_RATIO": ((settings.timeTracking.breakLength / settings.timeTracking.sessionLength)*60).toStringAsFixed(0)
+              }
+            ),
             style: TextStyle(
               color: Colors.grey
             ),

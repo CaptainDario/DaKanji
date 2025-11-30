@@ -3860,6 +3860,17 @@
       "fr": "Minutes de pause par session",
       "es": "Minutos de pausa por sesión",
       "pl": "Minuty przerwy na sesję"
+    },
+    "time_tracking_current_ratio_text": {
+      "en": "Earns ~{CURRENT_RATIO}  min break / hour",
+      "de": "Verdient ~{CURRENT_RATIO} min Pause / Stunde",
+      "ru": "Зарабатывает ~{CURRENT_RATIO} мин. перерыв / час",
+      "ja": "時給～{CURRENT_RATIO}分の休憩時間を稼ぐ",
+      "zh": "赚取 ~{CURRENT_RATIO} 分钟/小时的休息时间",
+      "it": "Guadagna ~{CURRENT_RATIO} min break / ora",
+      "fr": "Gagne ~{CURRENT_RATIO} min break / heure",
+      "es": "Gana ~{CURRENT_RATIO} min descanso / hora",
+      "pl": "Zarabia ~{CURRENT_RATIO} min przerwy / godzinę"
     }
   },
   "WebviewScreen": {

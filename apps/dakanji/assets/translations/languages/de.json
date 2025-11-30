@@ -419,6 +419,7 @@
     "time_tracking_break_length_unit": "",
     "time_tracking_break_minutes": "Pausenminuten pro Sitzung",
     "time_tracking_categories": "Kategorien",
+    "time_tracking_current_ratio_text": "Verdient ~{CURRENT_RATIO} min Pause / Stunde",
     "time_tracking_enabled": "Zeiterfassung aktiviert",
     "time_tracking_session_legnth": "Dauer einer Sitzung",
     "time_tracking_session_length_description": "Dauer einer Sitzung",

@@ -419,6 +419,7 @@
     "time_tracking_break_length_unit": "min.",
     "time_tracking_break_minutes": "Minutes of break per session",
     "time_tracking_categories": "Categories",
+    "time_tracking_current_ratio_text": "Earns ~{CURRENT_RATIO}  min break / hour",
     "time_tracking_enabled": "Time tracking enabled",
     "time_tracking_session_legnth": "Length of one session",
     "time_tracking_session_length_description": "Every session of",

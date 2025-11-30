@@ -419,6 +419,7 @@
     "time_tracking_break_length_unit": "",
     "time_tracking_break_minutes": "Minuty przerwy na sesj\u0119",
     "time_tracking_categories": "Kategorie",
+    "time_tracking_current_ratio_text": "Zarabia ~{CURRENT_RATIO} min przerwy / godzin\u0119",
     "time_tracking_enabled": "\u015aledzenie czasu w\u0142\u0105czone",
     "time_tracking_session_legnth": "D\u0142ugo\u015b\u0107 jednej sesji",
     "time_tracking_session_length_description": "D\u0142ugo\u015b\u0107 jednej sesji",
