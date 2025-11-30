@@ -17,16 +17,18 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
 
   // --- START : Session Management ---
-  /// Returns the start time of the currently running timer, if any.
-  Future<DateTime?> getRunningTimer() async {
+
+  /// Returns the the row of the currently running timer, if any.
+  Future<TimeTrackingUnitTableData?> getRunningTimer() async {
     final query = select(timeTrackingUnitTable)
-      ..where((tbl) => 
-        tbl.endTime.isNull()
-      );
-
+      ..where((tbl) => tbl.endTime.isNull());
     final result = await query.getSingleOrNull();
+    return result;
+  }
 
-    return result?.startTime;
+  /// Returns the start time of the currently running timer, if any.
+  Future<DateTime?> getRunningTimersStartTime() async {
+    return (await getRunningTimer())?.startTime;
   }
 
   /// Returns the full state of the user's tracking.
@@ -114,13 +116,13 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
   }
 
   /// Creates a new row in TimeTrackingTable and starts the timer.
-  Future<void> startNewSession(String category, String tags) async {
+  Future<void> startNewSession(String? category, String? tags) async {
     return transaction(() async {
       // A. Create the Parent (Session)
       final sessionId = await into(timeTrackingTable).insert(
         TimeTrackingTableCompanion(
           category: Value(category),
-          tags: Value(tags),
+          tag: Value(tags),
           isCompleted: const Value(false), // Set as Active
         ),
       );
@@ -224,12 +226,25 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       await deselectQuery.write(
         const TimeTrackingCategoriesTableCompanion(isSelected: Value(false)),
       );
+
       // 2. Select the desired category
       final selectQuery = update(timeTrackingCategoriesTable)
         ..where((tbl) => tbl.category.equals(category));
       await selectQuery.write(
         const TimeTrackingCategoriesTableCompanion(isSelected: Value(true)),
       );
+
+      // 3. Update the running session if any
+      final runningSessionId = (await getRunningTimer())?.timeTrackingId;
+      if (runningSessionId == null) return;
+
+      await (update(timeTrackingTable)
+        ..where((tbl) => tbl.id.equals(runningSessionId)))
+        .write(
+          TimeTrackingTableCompanion(
+            category: Value(category),
+          ),
+        );
     });
   }
 
@@ -284,6 +299,18 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       await selectQuery.write(
         const TimeTrackingTagsTableCompanion(isSelected: Value(true)),
       );
+
+      // 3. Update the running session if any
+      final runningSessionId = (await getRunningTimer())?.timeTrackingId;
+      if (runningSessionId == null) return;
+
+      await (update(timeTrackingTable)
+        ..where((tbl) => tbl.id.equals(runningSessionId)))
+        .write(
+          TimeTrackingTableCompanion(
+            tag: Value(tag),
+          ),
+        );
     });
   }
 
