@@ -14,8 +14,8 @@ class DictionarySearchPrioritySetting extends StatefulWidget {
 
   /// The setting from which this widget should draw its configuration
   /// Needs to implement
-  /// * List<String> selectedSearchResultSortPriorities
-  /// * List<String> searchResultSortPriorities
+  /// * `List<String> selectedSearchResultSortPriorities`
+  /// * `List<String> searchResultSortPriorities`
   final DictionarySearchPriorityInterface setting;
   /// Function that can be used to save `this.setting`
   final Function save;

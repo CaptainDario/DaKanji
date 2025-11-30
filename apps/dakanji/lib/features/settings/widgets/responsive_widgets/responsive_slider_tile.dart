@@ -78,7 +78,7 @@ class _ResponsiveSliderTileState extends State<ResponsiveSliderTile> {
               ),
             ),
             SliderTheme(
-              data: const SliderThemeData(showValueIndicator: ShowValueIndicator.always),
+              data: const SliderThemeData(showValueIndicator: ShowValueIndicator.onDrag),
               child: Slider(
                 value: widget.value,
                 min: widget.min,

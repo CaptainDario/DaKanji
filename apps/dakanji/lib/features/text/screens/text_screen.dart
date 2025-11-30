@@ -421,7 +421,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
   }
 
   /// Called when the text field has been initialized
-  void onTextFieldInit(controller) {
+  void onTextFieldInit(MecabTextEditingController controller) {
 
     mecabTextEditingController = controller;
     if(!kDebugMode && context.read<Settings>().text.saveTextAcrossSessions){
@@ -481,12 +481,12 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
     });
   }
 
-  onCustomSelectableTextTap(TextSelection selection) {
+  void onCustomSelectableTextTap(TextSelection selection) {
     onCustomSelectableTextChange(selection);
   }
 
   /// Callback that is executed when the use long presses on the text widget
-  onCustomSelectableTextLongPress(TextSelection selection) {
+  void onCustomSelectableTextLongPress(TextSelection selection) {
 
     setState(() {});
   }

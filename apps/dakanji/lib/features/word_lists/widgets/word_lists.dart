@@ -671,7 +671,12 @@ class _WordListsState extends State<WordLists> {
 
   /// Callback that is triggered when the drag of one node onto another is
   /// accepted
-  Future dragNodeOnNodeAccept(destinationNode, node, folder, otherAffected) async {
+  Future dragNodeOnNodeAccept(
+    TreeNode<WordListsData> destinationNode,
+    TreeNode<WordListsData> node,
+    TreeNode<WordListsData>? folder,
+    List<TreeNode<WordListsData>> otherAffected
+  ) async {
 
     // a new folder has been created
     if(folder != null) {
