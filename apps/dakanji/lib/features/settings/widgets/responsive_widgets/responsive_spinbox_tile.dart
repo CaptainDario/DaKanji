@@ -8,6 +8,8 @@ class ResponsiveSpinboxTile extends StatelessWidget {
   
   final double min;
 
+  final double max;
+
   final double value;
 
   final String? suffix;
@@ -18,7 +20,8 @@ class ResponsiveSpinboxTile extends StatelessWidget {
   const ResponsiveSpinboxTile(
     {
       required this.text,
-      required this.min,
+      this.min = 0,
+      this.max = 100,
       required this.value,
       this.suffix,
       this.onChanged,
@@ -41,6 +44,7 @@ class ResponsiveSpinboxTile extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.4,
               child: SpinBox(
                 min: min,
+                value: value,
                 decoration:  suffix != null
                   ? InputDecoration(
                     suffix: Text(suffix!),

@@ -3,6 +3,7 @@ import 'dart:io';
 
 // Flutter imports:
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_spinbox_tile.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -21,7 +22,6 @@ import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
-import 'package:da_kanji_mobile/core/user/word_lists/word_lists_tables.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_check_box_tile.dart';
@@ -97,14 +97,10 @@ class _WordListSettingsState extends State<WordListSettings> {
           },
         ),
         // PDF:  how many different translations from entries should be included
-        ResponsiveSliderTile(
+        ResponsiveSpinboxTile(
           text: LocaleKeys.SettingsScreen_word_lists_pdf_max_meanings_per_vocabulary.tr(),
           value: settings.wordLists.pdfMaxMeaningsPerVocabulary.toDouble(),
           min: 1,
-          max: 50,
-          divisions: 50,
-          showLabelAsInt: true,
-          
           onChanged: (value) {
             setState(() {
               settings.wordLists.pdfMaxMeaningsPerVocabulary = value.toInt();
@@ -113,14 +109,10 @@ class _WordListSettingsState extends State<WordListSettings> {
           },
         ),
         // PDF: how many words per meaning
-        ResponsiveSliderTile(
+        ResponsiveSpinboxTile(
           text: LocaleKeys.SettingsScreen_word_lists_pdf_max_words_per_meaning.tr(),
           value: settings.wordLists.pdfMaxWordsPerMeaning.toDouble(),
           min: 1,
-          max: 50,
-          divisions: 50,
-          showLabelAsInt: true,
-
           onChanged: (value) {
             setState(() {
               settings.wordLists.pdfMaxWordsPerMeaning = value.toInt();
@@ -129,14 +121,10 @@ class _WordListSettingsState extends State<WordListSettings> {
           },
         ),
         // PDF translations
-        ResponsiveSliderTile(
+        ResponsiveSpinboxTile(
           text: LocaleKeys.SettingsScreen_word_lists_pdf_max_lines_per_meaning.tr(),
           value: settings.wordLists.pdfMaxLinesPerMeaning.toDouble(),
           min: 1,
-          max: 50,
-          divisions: 50,
-          showLabelAsInt: true,
-
           onChanged: (value) {
             setState(() {
               settings.wordLists.pdfMaxLinesPerMeaning = value.toInt();
@@ -191,24 +179,20 @@ class _WordListSettingsState extends State<WordListSettings> {
         ),
         // Screen Saver: how long to auto start
         if(g_desktopPlatform)
-          ResponsiveSliderTile(
+          ResponsiveSpinboxTile(
             text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_start.tr(),
             value: settings.wordLists.screenSaverSecondsToStart.toDouble(),
             min: 1,
-            max: 60*10,
-            showLabelAsInt: true,
             onChanged: (value) async {
               settings.wordLists.screenSaverSecondsToStart = value.toInt();
               await settings.save();
             },
           ),
         // Screen Saver: seconds to next card
-        ResponsiveSliderTile(
+        ResponsiveSpinboxTile(
           text: LocaleKeys.SettingsScreen_word_lists_screensaver_seconds_to_next_card.tr(),
           value: settings.wordLists.screenSaverSecondsToNextCard.toDouble(),
           min: 1,
-          max: 120,
-          showLabelAsInt: true,
           onChanged: (value) async {
             settings.wordLists.screenSaverSecondsToNextCard = value.toInt();
             await settings.save();
