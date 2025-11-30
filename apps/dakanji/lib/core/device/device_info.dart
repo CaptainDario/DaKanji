@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:typed_data';
 
 // Flutter imports:
 import 'package:flutter/material.dart';

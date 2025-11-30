@@ -6,6 +6,7 @@ import 'package:archive/archive_io.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:drift/drift.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
 import 'package:tuple/tuple.dart';
@@ -44,5 +45,8 @@ Future<void> storeWordListsAsTextFilesForMigration() async {
   }
   wordListMigrationFile.writeAsBytes(
     const GZipEncoder().encode(utf8.encode(jsonEncode(allEntries))));
+
+  debugPrint("Stored word lists for migration in "
+    "'${wordListMigrationFile.path}' in ${s.elapsedMilliseconds}ms");
 
 }

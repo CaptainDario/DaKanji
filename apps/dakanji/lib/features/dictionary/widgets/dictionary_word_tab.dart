@@ -208,9 +208,11 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                     }
                     // send dakanji link
                     else if(selection == menuItems[5]){
-                      await Share.share(
-                        "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
-                        sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
+                      await SharePlus.instance.share(
+                        ShareParams(
+                          text: "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
+                          sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
+                        )
                       );
                     }
                     // send dakanji link and image
@@ -307,11 +309,11 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
       "${readingOrKanji}_${conjugationsIsExpanded ? "_conj" : ""}.png",
       conjugationsIsExpanded, Theme.of(context));
 
-    await Share.shareXFiles(
-      [XFile(f.path)],
+    await SharePlus.instance.share(ShareParams(
+      files: [XFile(f.path)],
       text: "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
       sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
-    );
+    ));
     
   }
 

@@ -76,10 +76,10 @@ class _DojgEntryPageState extends State<DojgEntryPage> {
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: () async {
-              await Share.share(
-                "${GetIt.I<Settings>().misc.sharingScheme}dojg?search=${widget.dojgEntry.grammaticalConcept}&open=true",
+              await SharePlus.instance.share(ShareParams(
+                text: "${GetIt.I<Settings>().misc.sharingScheme}dojg?search=${widget.dojgEntry.grammaticalConcept}&open=true",
                 sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
-              );
+              ));
             },
           ),
         ]

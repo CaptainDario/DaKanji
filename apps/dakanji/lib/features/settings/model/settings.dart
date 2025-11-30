@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/features/settings/model/settings_time_tracking.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -47,6 +48,9 @@ class Settings with ChangeNotifier {
   late SettingsWordLists _wordLists;
   /// All settings realted to the clipboard screen
   late SettingsClipboard _clipboard;
+  /// All settings related to time tracking
+  late SettingsTimeTracking _timeTracking;
+
 
 
   Settings({
@@ -62,6 +66,7 @@ class Settings with ChangeNotifier {
     _kanaTable  = SettingsKanaTable();
     _wordLists  = SettingsWordLists();
     _clipboard  = SettingsClipboard();
+    _timeTracking = SettingsTimeTracking();
   }
 
 
@@ -105,6 +110,10 @@ class Settings with ChangeNotifier {
     return _clipboard;
   }
 
+  SettingsTimeTracking get timeTracking {
+    return _timeTracking;
+  }
+
   /// Saves all settings to the SharedPreferences.
   Future<void> save() async {
     
@@ -125,121 +134,49 @@ class Settings with ChangeNotifier {
     prefs.setString('settingsKanaTable', json.encode(kanaTable.toJson()));
     prefs.setString('settingsWordLists', json.encode(wordLists.toJson()));
     prefs.setString('settingsClipboard', json.encode(clipboard.toJson()));
+    prefs.setString('settingsTimeTracking', json.encode(timeTracking.toJson()));
+  }
+
+  // Generic helper function to load a setting
+  T _loadSetting<T extends Listenable>({
+    required SharedPreferences prefs,
+    required String key,
+    required T Function(Map<String, dynamic>) fromJson,
+    required T Function() defaultConstructor,
+  }) {
+
+    try {
+      String? tmp = prefs.getString(key);
+      if (tmp != null && tmp.isNotEmpty) {
+        T setting = fromJson(json.decode(tmp));
+        setting.addListener(notifyListeners);
+        return setting;
+      }
+    } catch (e) {
+      // fall through
+    }
+
+    T setting = defaultConstructor();
+    setting.addListener(notifyListeners);
+    return setting;
   }
 
   /// Load all saved settings from SharedPreferences.
   Future<void> load() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     
-    // DRAWING SETTINGS
-    try{
-      String tmp = prefs.getString('settingsDrawing') ?? "";
-      if(tmp != "") {_drawing = SettingsDrawing.fromJson(json.decode(tmp));}
-      else {_drawing = SettingsDrawing();}
-    }
-    catch (e) {
-      _drawing = SettingsDrawing();
-    }
-    _drawing.addListener(() => notifyListeners());
-    
-    // MISC SETTINGS
-    try{
-      String tmp = prefs.getString('settingsMisc') ?? "";
-      if(tmp != "") {_misc = SettingsMisc.fromJson(json.decode(tmp));}
-      else {_misc = SettingsMisc();}
-    }
-    catch (e) {
-      _misc = SettingsMisc();
-    }
-    _misc.addListener(() => notifyListeners());
-
-    // ADVANCED SETTINGS
-    try{
-      String tmp = prefs.getString('settingsAdvanced') ?? "";
-      if(tmp != "") {_advanced = SettingsAdvanced.fromJson(json.decode(tmp));}
-      else {_advanced = SettingsAdvanced();}
-    }
-    catch (e) {
-      _advanced = SettingsAdvanced();
-    }
-    _advanced.addListener(() => notifyListeners());
-
-    // DICTIONARY SETTINGS
-    try{
-      String tmp = prefs.getString('settingsDictionary') ?? "";
-      if(tmp != "") {_dictionary = SettingsDictionary.fromJson(json.decode(tmp));}
-      else {_dictionary = SettingsDictionary();}
-    }
-    catch (e) {
-      _dictionary = SettingsDictionary();
-    }
-    _dictionary.addListener(() => notifyListeners());
-
-    // TEXT SETTINGS
-    try{
-      String tmp = prefs.getString('settingsText') ?? "";
-      if(tmp != "") {_text = SettingsText.fromJson(json.decode(tmp));}
-      else {_text = SettingsText();}
-    }
-    catch (e) {
-      _text = SettingsText();
-    }
-    _text.addListener(() => notifyListeners());
-
-    // ANKI SETTINGS
-    try{
-      String tmp = prefs.getString('settingsAnki') ?? "";
-      if(tmp != "") {_anki = SettingsAnki.fromJson(json.decode(tmp));}
-      else {_anki = SettingsAnki();}
-    }
-    catch (e) {
-      _anki = SettingsAnki();
-    }
-    _anki.addListener(() => notifyListeners());
-
-    // KANJI TABLE SETTINGS
-    try{
-      String tmp = prefs.getString('settingsKanjiTable') ?? "";
-      if(tmp != "") {_kanjiTable = SettingsKanjiTable.fromJson(json.decode(tmp));}
-      else {_kanjiTable = SettingsKanjiTable();}
-    }
-    catch (e) {
-      _kanjiTable = SettingsKanjiTable();
-    }
-    _kanjiTable.addListener(() => notifyListeners());
-
-    // KANA TABLE SETTINGS
-    try{
-      String tmp = prefs.getString('settingsKanaTable') ?? "";
-      if(tmp != "") {_kanaTable = SettingsKanaTable.fromJson(json.decode(tmp));}
-      else {_kanaTable = SettingsKanaTable();}
-    }
-    catch (e) {
-      _kanaTable = SettingsKanaTable();
-    }
-    _kanaTable.addListener(() => notifyListeners());
-
-    // WORD LISTS SETTINGS
-    try{
-      String tmp = prefs.getString('settingsWordLists') ?? "";
-      if(tmp != "") {_wordLists = SettingsWordLists.fromJson(json.decode(tmp));}
-      else {_wordLists = SettingsWordLists();}
-    }
-    catch (e) {
-      _wordLists = SettingsWordLists();
-    }
-    _wordLists.addListener(() => notifyListeners());
-
-    // CLIPBOARD SETTINGS
-    try{
-      String tmp = prefs.getString('settingsClipboard') ?? "";
-      if(tmp != "") {_clipboard = SettingsClipboard.fromJson(json.decode(tmp));}
-      else {_clipboard = SettingsClipboard();}
-    }
-    catch (e) {
-      _clipboard = SettingsClipboard();
-    }
-    _clipboard.addListener(() => notifyListeners());
+  _drawing      = _loadSetting(prefs: prefs, key: 'settingsDrawing',      fromJson: SettingsDrawing.fromJson,      defaultConstructor: SettingsDrawing.new);
+  _misc         = _loadSetting(prefs: prefs, key: 'settingsMisc',         fromJson: SettingsMisc.fromJson,         defaultConstructor: SettingsMisc.new);
+  _advanced     = _loadSetting(prefs: prefs, key: 'settingsAdvanced',     fromJson: SettingsAdvanced.fromJson,     defaultConstructor: SettingsAdvanced.new);
+  _dictionary   = _loadSetting(prefs: prefs, key: 'settingsDictionary',   fromJson: SettingsDictionary.fromJson,   defaultConstructor: SettingsDictionary.new);
+  _text         = _loadSetting(prefs: prefs, key: 'settingsText',         fromJson: SettingsText.fromJson,         defaultConstructor: SettingsText.new);
+  _anki         = _loadSetting(prefs: prefs, key: 'settingsAnki',         fromJson: SettingsAnki.fromJson,         defaultConstructor: SettingsAnki.new);
+  _kanjiTable   = _loadSetting(prefs: prefs, key: 'settingsKanjiTable',   fromJson: SettingsKanjiTable.fromJson,   defaultConstructor: SettingsKanjiTable.new);
+  _kanaTable    = _loadSetting(prefs: prefs, key: 'settingsKanaTable',    fromJson: SettingsKanaTable.fromJson,    defaultConstructor: SettingsKanaTable.new);
+  _wordLists    = _loadSetting(prefs: prefs, key: 'settingsWordLists',    fromJson: SettingsWordLists.fromJson,    defaultConstructor: SettingsWordLists.new);
+  _clipboard    = _loadSetting(prefs: prefs, key: 'settingsClipboard',    fromJson: SettingsClipboard.fromJson,    defaultConstructor: SettingsClipboard.new);
+  _timeTracking = _loadSetting(prefs: prefs, key: 'settingsTimeTracking', fromJson: SettingsTimeTracking.fromJson, defaultConstructor: SettingsTimeTracking.new);
+  
   }
 }
 

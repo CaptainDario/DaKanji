@@ -121,7 +121,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
           onGenerateRoute: (settings) {
             PageRouteBuilder switchScreen (Widget screen) =>
               PageRouteBuilder(
-                pageBuilder: (_, __, ___) {
+                pageBuilder: (_, _, _) {
                     // reload the tutorials
                     GetIt.I<Tutorials>().reload();
         
@@ -134,7 +134,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
                     );
                 },
                 settings: settings,
-                transitionsBuilder: (_, a, __, c) =>
+                transitionsBuilder: (_, a, _, c) =>
                   FadeTransition(opacity: a, child: c)
               );
         

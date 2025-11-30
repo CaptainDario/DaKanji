@@ -7,7 +7,6 @@ import 'package:easy_localization/easy_localization.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 /// The manual for the DictionaryScreen
 class ManualDictionary extends StatelessWidget {

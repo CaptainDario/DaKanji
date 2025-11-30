@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_spinbox/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
@@ -36,8 +35,6 @@ class _TimeTrackingSettingsState extends State<TimeTrackingSettings> {
 
     Settings settings = context.watch<Settings>();
 
-    int currentStudyToBreakRatio = 0;
-
     return ResponsiveHeaderTile(
       LocaleKeys.TimeTrackingScreen_title.tr(),
       DaKanjiIcons.timeTracking,
@@ -46,10 +43,11 @@ class _TimeTrackingSettingsState extends State<TimeTrackingSettings> {
         ResponsiveSpinboxTile(
           text: LocaleKeys.SettingsScreen_time_tracking_session_length_description.tr(),
           min: 1,
-          value: 25,
+          value: settings.timeTracking.sessionLength.toDouble(),
           suffix: LocaleKeys.SettingsScreen_time_tracking_session_length_unit.tr(),
-          onChanged: (value) {
-            currentStudyToBreakRatio = value.toInt();
+          onChanged: (value) async {
+            settings.timeTracking.sessionLength = value.toInt();
+            await settings.save();
             setState(() {});
           },
         ),
@@ -57,17 +55,18 @@ class _TimeTrackingSettingsState extends State<TimeTrackingSettings> {
         ResponsiveSpinboxTile(
           text: LocaleKeys.SettingsScreen_time_tracking_break_length_description.tr(),
           min: 1,
-          value: 5,
+          value: settings.timeTracking.breakLength.toDouble(),
           suffix: LocaleKeys.SettingsScreen_time_tracking_break_length_unit.tr(),
-          onChanged: (value) {
-            currentStudyToBreakRatio = value.toInt();
+          onChanged: (value) async {
+            settings.timeTracking.breakLength = value.toInt();
+            await settings.save();
             setState(() {});
           },
         ),
         Align(
           alignment: Alignment.centerRight,
           child: Text(
-            "(Earns ~${(currentStudyToBreakRatio * 60).toStringAsFixed(0)} min break / hour)",
+            "(Earns ~${((settings.timeTracking.breakLength / settings.timeTracking.sessionLength)*60).toStringAsFixed(0)} min break / hour)",
             style: TextStyle(
               color: Colors.grey
             ),

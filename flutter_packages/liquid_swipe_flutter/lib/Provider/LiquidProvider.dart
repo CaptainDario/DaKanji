@@ -233,7 +233,7 @@ class LiquidProvider extends ChangeNotifier {
   }
 
   ///Method to update the [slideUpdate] and it directly calls [updateData]
-  updateSlide(SlideUpdate slidUpdate) {
+  void updateSlide(SlideUpdate slidUpdate) {
     slideUpdate = slidUpdate;
     updateData(slidUpdate);
     notifyListeners();
@@ -242,7 +242,7 @@ class LiquidProvider extends ChangeNotifier {
   ///updating data using [SlideUpdate], generally we are handling and managing the Animation [UpdateType]
   ///in this methods,
   ///All callbacks and factors are also managed by this method.
-  updateData(SlideUpdate event) {
+  void updateData(SlideUpdate event) {
     if (!enableLoop) if (event.direction == SlideDirection.leftToRight &&
         activePageIndex == 0) {
       return;
@@ -375,7 +375,7 @@ class LiquidProvider extends ChangeNotifier {
 
   ///Setter for [_isAnimating]
   set isAnimating(bool newValue) {
-    this._isAnimating = newValue;
+    _isAnimating = newValue;
     notifyListeners();
   }
 

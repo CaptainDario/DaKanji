@@ -162,6 +162,8 @@ dependencies:
 #dependency_overrides:
 
 
+  intl: any
+  html: any
 msix_config:
   display_name: DaKanji
   protocol_activation: dakanji, https

@@ -10,7 +10,6 @@ import 'package:tuple/tuple.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/tf_lite/inference_backend.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/features/init/controller/init.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 
 /// Popup that asks the user if he wants to optimize the backends for the

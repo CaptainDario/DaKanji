@@ -69,9 +69,9 @@ class TreeNode<T> extends ValueNotifier<T> {
   ) : super(value) {
 
     if(children.isNotEmpty) {
-      this._children = children;
+      _children = children;
     } else {
-      this._children = [];
+      _children = [];
     }
 
   }

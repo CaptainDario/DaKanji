@@ -466,11 +466,11 @@ class _DictionaryScreenKanjiCardState extends State<DictionaryScreenKanjiCard> {
                             File f = File("${tmp.path}/${widget.kanjidic2entry.character}.png")..createSync();
                             f.writeAsBytesSync(image);
       
-                            await Share.shareXFiles(
-                              [XFile(f.path)],
+                            await SharePlus.instance.share(ShareParams(
+                              files: [XFile(f.path)],
                               text: "${GetIt.I<Settings>().misc.sharingScheme}dictionary?search=*${widget.kanjidic2entry.character}*",
                               sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
-                            );
+                            ));
                           }
                           if(url != null) {
                             launchUrlString(

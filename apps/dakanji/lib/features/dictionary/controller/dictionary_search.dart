@@ -24,7 +24,7 @@ class DictionarySearch {
   /// Has the dictionary search been initialized
   bool _initialized = false;
   /// Has the dictionary search been initialized
-  get initialized => _initialized;
+  bool get initialized => _initialized;
   /// The directory of the ISAR file of the dictionary
   String directory;
   /// The name of the ISAR file of the dictionary
@@ -32,7 +32,7 @@ class DictionarySearch {
   /// Is a search currently running
   bool _isSearching = false;
   /// The last query that was blocked by a running search
-  /// Consists of <query, kana query, deconjugated query>
+  /// Consists of `<query, kana query, deconjugated query>`
   Tuple2<List<String>, List<String>>? _lastBlockedQuery;
   /// Should the search be converted to hiragana
   bool convertToHiragana;

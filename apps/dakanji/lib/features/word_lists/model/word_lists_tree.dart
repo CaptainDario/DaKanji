@@ -5,7 +5,6 @@ import 'package:tuple/tuple.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
-import 'package:da_kanji_mobile/core/user/word_lists/word_lists_tables.dart';
 
 /// The tree of word lists and folders that the user has created
 ///

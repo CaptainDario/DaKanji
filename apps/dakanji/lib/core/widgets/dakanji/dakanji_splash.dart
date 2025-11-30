@@ -3,7 +3,6 @@ import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_logo_text.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_loading_indicator.dart';
 
 class DaKanjiSplash extends StatelessWidget {

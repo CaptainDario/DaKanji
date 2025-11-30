@@ -2,8 +2,6 @@
 import 'dart:convert';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/core/user/user_activity.dart';
-import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:

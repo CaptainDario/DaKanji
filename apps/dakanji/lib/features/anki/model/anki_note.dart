@@ -20,7 +20,7 @@ class AnkiNote{
   /// The card type of this note, always "DaKanji"
   final String _noteType = ankiDataCardModelName;
   /// The card type of this note, always "DaKanji"
-  get noteType => _noteType;
+  String get noteType => _noteType;
   List<String> tags = [];
   
   /// All translations of the note
