@@ -204,7 +204,7 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       TimeTrackingCategoriesTableCompanion(
         category: Value(category),
       ),
-      onConflict: DoNothing()
+      mode: InsertMode.insertOrIgnore
     );
   }
 
@@ -256,7 +256,7 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       TimeTrackingTagsTableCompanion(
         tag: Value(tag),
       ),
-      onConflict: DoNothing()
+      mode: InsertMode.insertOrIgnore
     );
   }
 
