@@ -1,7 +1,9 @@
 import 'package:da_kanji_mobile/features/time_tracking/widgets/paused_clock_face.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/running_clock_face.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/time_tracking_card_border_glow_painter.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/timer_control_bar.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get_it/get_it.dart';
@@ -492,9 +494,13 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
                           horizontal: 32, vertical: 16),
                       shape: const StadiumBorder(),
                     ),
-                    child: const Text("End Session",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600)),
+                    child: Text(
+                      LocaleKeys.TimeTrackingScreen_end_session.tr(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600
+                      )
+                    ),
                   ),
                 ),
               ),

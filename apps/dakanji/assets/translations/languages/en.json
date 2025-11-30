@@ -481,18 +481,21 @@
     "tutorial_text_input_text": "Here you can write or paste any text. This text can be processed with different tools."
   },
   "TimeTrackingScreen": {
-    "": "",
     "add": "Add",
     "add_category": "Add category",
     "add_category_hint": "Enter category name (e.g. Kanji)",
     "add_tag": "Add tag",
     "add_tag_hint": "Enter tag name (e.g. N2)",
+    "break_caps": "BREAK",
     "cancel": "Cancel",
     "categories": "Categories",
+    "end_session": "End Session",
     "pause": "Pause",
+    "ready_caps": "READY",
     "resume": "Resume",
     "select_category": "Select category",
     "select_tag": "Select tag",
+    "session_caps": "SESSION",
     "start": "Start",
     "tags": "Tags",
     "title": "Time Tracking"

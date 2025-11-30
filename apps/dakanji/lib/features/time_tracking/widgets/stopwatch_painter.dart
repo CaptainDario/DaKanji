@@ -40,9 +40,9 @@ class NeonStopwatchPainter extends CustomPainter {
       canvas.translate(-center.dx, -center.dy);
 
       // FADE LOGIC:
-      // We want the "Gap" (transparency) to be IN FRONT of the knob.
+      // The "Gap" (transparency) should be IN FRONT of the knob.
       // So at 0.0 (Knob), it should be Transparent (or fading to it).
-      // On Lap 3, we transition this "Gap" from Solid to Transparent smoothly.
+      // On Lap 3, transition this "Gap" from Solid to Transparent smoothly.
       
       double gapOpacity;
       if (lapIndex > 2) {

@@ -1,4 +1,3 @@
-import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/timer_status.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
@@ -29,7 +28,7 @@ class _TimeTrackingAppbarActionState extends State<TimeTrackingAppbarAction> wit
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1), 
+      duration: const Duration(seconds: 15), 
     );
     _controller.repeat();
   }

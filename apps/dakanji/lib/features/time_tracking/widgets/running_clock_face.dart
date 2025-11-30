@@ -1,3 +1,5 @@
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/stopwatch_painter.dart';
 
@@ -45,7 +47,7 @@ class RunningClockFace extends StatelessWidget {
     
     if (!isTicking && !isResetting) {
       infoWidget = Text(
-        "READY",
+        LocaleKeys.TimeTrackingScreen_ready_caps.tr(),
         key: const ValueKey("ready"),
         style: TextStyle(
           color: activeColor.withValues(alpha: 0.8),
@@ -61,7 +63,7 @@ class RunningClockFace extends StatelessWidget {
       final String timeStr = _formatDuration(earnedBreak);
 
       infoWidget = Text(
-        "BREAK: $sign$timeStr",
+        "${LocaleKeys.TimeTrackingScreen_break_caps.tr()}: $sign$timeStr",
         key: const ValueKey("break"),
         style: TextStyle(
           color: isNegative 
@@ -75,7 +77,7 @@ class RunningClockFace extends StatelessWidget {
       );
     } else {
       infoWidget = Text(
-        "SESSION ${lapIndex + 1}",
+        "${LocaleKeys.TimeTrackingScreen_session_caps.tr()} ${lapIndex + 1}",
         key: const ValueKey("session"),
         style: TextStyle(
           color: activeColor.withValues(alpha: 0.8),
@@ -87,8 +89,8 @@ class RunningClockFace extends StatelessWidget {
     }
 
     // 2. Status Icon Logic
-    // If we are ticking, show "Pause" (indicating it's running).
-    // If we are NOT ticking (Ready), show "Play" (indicating it's waiting to start).
+    // If  ticking, show "Pause" (indicating it's running).
+    // If NOT ticking (Ready), show "Play" (indicating it's waiting to start).
     final IconData statusIcon = isTicking ? Icons.pause_circle_outline : Icons.play_circle_outline;
 
     return Stack(
@@ -130,25 +132,6 @@ class RunningClockFace extends StatelessWidget {
                 letterSpacing: 1.5,
                 fontFeatures: [FontFeature.tabularFigures()],
               ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(4, (index) {
-                bool isActive = index <= lapIndex;
-                Color dotColor = activeColor;
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 3),
-                  width: 6,
-                  height: 6,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color:
-                        isActive ? dotColor : dotColor.withValues(alpha: 0.2),
-                  ),
-                );
-              }),
             ),
             const SizedBox(height: 8),
             AnimatedSwitcher(

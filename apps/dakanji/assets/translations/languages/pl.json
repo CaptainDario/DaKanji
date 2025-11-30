@@ -481,18 +481,21 @@
     "tutorial_text_input_text": "Tutaj mo\u017cesz napisa\u0107 lub wklei\u0107 dowolny tekst. Ten tekst b\u0119dzie przetwarzany za pomoc\u0105 r\u00f3\u017cnych narz\u0119dzi."
   },
   "TimeTrackingScreen": {
-    "": "",
     "add": "",
     "add_category": "",
     "add_category_hint": "",
     "add_tag": "",
     "add_tag_hint": "",
+    "break_caps": "",
     "cancel": "",
     "categories": "Kategoria",
+    "end_session": "",
     "pause": "",
+    "ready_caps": "",
     "resume": "",
     "select_category": "",
     "select_tag": "",
+    "session_caps": "",
     "start": "",
     "tags": "Tagi",
     "title": "\u015aledzenie czasu"

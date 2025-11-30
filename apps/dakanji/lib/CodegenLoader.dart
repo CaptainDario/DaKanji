@@ -384,7 +384,7 @@ class CodegenLoader extends AssetLoader{
     "requires_restart": "需要重新启动",
     "restarts_app": "重新启动应用程序",
     "show_tutorial": "重新展示教程（@:SettingsScreen.restarts_app）。",
-    "text_save_text": "#ERROR!",
+    "text_save_text": "跨会话保存文本",
     "text_show_selection_buttons": "显示文本选择按钮",
     "time_tracking_add_category": "添加类别",
     "time_tracking_add_tag": "添加标签",
@@ -1000,7 +1000,7 @@ static const Map<String,dynamic> _ja = {
     "send_to_anki_progress": "Ankiに送信中...",
     "title": "単語リスト",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "単語リスト画面へようこそ！",
     "tutorial_create_folder": "このボタンを押すか、単語リストを別フォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます",
     "tutorial_create_list": "新しい単語リストを作成できます。このリストの右側のメニューボタンから、リストを異なる形式にエクスポートすることもできます",
     "tutorial_folder": "これは単語リストです。ここに単語リストやフォルダを作成することができます。\nデフォルトで日本語能力試験や検索履歴などに基づいた単語リストが入っています",
@@ -1338,7 +1338,7 @@ static const Map<String,dynamic> _de = {
     "advanced_settings_delete_user_data": "Benutzerdaten löschen",
     "advanced_settings_delete_word_lists": "Alle Wortlisten löschen",
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
-    "advanced_settings_matrix": "#ERROR!",
+    "advanced_settings_matrix": "Ich bin in der Matrix",
     "advanced_settings_number_search_procs": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
     "advanced_settings_optimize_backend": "Backend",
@@ -1521,7 +1521,7 @@ static const Map<String,dynamic> _de = {
     "send_to_anki_progress": "Senden zu Anki, bitte warten...",
     "title": "Wortlisten",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
     "tutorial_create_folder": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
     "tutorial_create_list": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
@@ -2004,7 +2004,7 @@ static const Map<String,dynamic> _ru = {
     "send_to_anki_progress": "Отправка в Энки, пожалуйста, подождите...",
     "title": "Списки слов",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Добро пожаловать на экран списков слов!",
     "tutorial_create_folder": "Создать новую папку со списком слов можно либо нажатием этой кнопки, либо перетаскиванием списка слов на другую папку. Перетаскивая папки и списки, можно также изменять их порядок.",
     "tutorial_create_list": "С помощью этой кнопки можно создать новый список слов. С помощью меню-кнопки, расположенного справа от этого списка, можно также экспортировать список в различные форматы.",
     "tutorial_folder": "Это папка со списком слов. В ней можно хранить другие папки со списками слов или списки слов.\nЭто также папка со списком слов по умолчанию. Она содержит некоторые списки слов, основанные на JLPT, истории поиска и т.д.",
@@ -3025,12 +3025,16 @@ static const Map<String,dynamic> _en = {
     "add_category_hint": "Enter category name (e.g. Kanji)",
     "add_tag": "Add tag",
     "add_tag_hint": "Enter tag name (e.g. N2)",
+    "break_caps": "BREAK",
     "cancel": "Cancel",
     "categories": "Categories",
+    "end_session": "End Session",
     "pause": "Pause",
+    "ready_caps": "READY",
     "resume": "Resume",
     "select_category": "Select category",
     "select_tag": "Select tag",
+    "session_caps": "SESSION",
     "start": "Start",
     "tags": "Tags",
     "title": "Time Tracking"
@@ -3312,7 +3316,7 @@ static const Map<String,dynamic> _it = {
     "tutorial_speed_dial_yoon_special": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Allenatore Kana"
   },
   "KanjiTableScreen": {
     "title": "Tabella Kanji",
@@ -3598,7 +3602,7 @@ static const Map<String,dynamic> _it = {
     "send_to_anki_progress": "Invio ad Anki, attendere prego...",
     "title": "Elenchi di parole",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Benvenuti nella schermata degli elenchi di parole!",
     "tutorial_create_folder": "È possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. È anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
     "tutorial_create_list": "Con questo pulsante è possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, è anche possibile esportare l'elenco in diversi formati.",
     "tutorial_folder": "Questa è una cartella di elenchi di parole. In essa è possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta è anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",
@@ -3795,7 +3799,7 @@ static const Map<String,dynamic> _fr = {
     "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Formateur Kana"
   },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
