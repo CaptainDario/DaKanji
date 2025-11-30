@@ -7,9 +7,9 @@ class TimeTrackingTable extends Table {
   
   IntColumn get id => integer().autoIncrement()();
 
-  TextColumn get category => text()();
+  TextColumn get category => text().nullable()();
 
-  TextColumn get tags => text()();
+  TextColumn get tag => text().nullable()();
 
   // false = The session is paused/running (Resume is possible).
   // true = The session is archived (Only "Start New" is possible).
