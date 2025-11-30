@@ -112,7 +112,7 @@ class SettingsAnki with ChangeNotifier {
   // ignore: constant_identifier_names
   static const int d_noExamples = 1;
   /// When creating a new note, how many examples should be included
-  @JsonKey(defaultValue: d_noTranslations)
+  @JsonKey(defaultValue: d_noExamples)
   int _noExamples = d_noExamples;
   /// When creating a new note, how many examples should be included
   int get noExamples => _noExamples;
