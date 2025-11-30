@@ -83,83 +83,24 @@ class _TimeTrackingSettingsState extends State<TimeTrackingSettings> {
         ),
         SizedBox(height: 8),
         // categories
-        FutureBuilder<({List<String> allCategories, String selectedCategory})>(
-          future: () async {
-            return (
-              allCategories: await GetIt.I<UserDataDB>().timeTrackingDao.getAllCategories() + [""],
-              selectedCategory: await GetIt.I<UserDataDB>().timeTrackingDao.getSelectedCategory() ?? ""
-            );
-          } (),
-          builder: (context, snapshot) {
-            if(!snapshot.hasData) return SizedBox();
-
-            return ResponsiveDropDownTile(
-              text: LocaleKeys.SettingsScreen_time_tracking_categories.tr(),
-              value: snapshot.data!.selectedCategory,
-              items: snapshot.data!.allCategories,
-              onChanged: (String? newValue) async {
-                if(newValue == null) return;
-                await GetIt.I<UserDataDB>().timeTrackingDao.setSelectedCategory(newValue);
-                setState(() {});
-              },
-            );
-          },
-        ),
-        ResponsiveInputFieldTile(
-          hintText: LocaleKeys.SettingsScreen_time_tracking_add_category.tr(),
-          enabled: true,
-          trailingIcon: Icons.add,
-          onTrailingIconPressed: (TextEditingController controller) async {
-            await GetIt.I<UserDataDB>().timeTrackingDao.addCategory(controller.text);
-            controller.clear();
-            setState(() {});
-          },
-        ),
-        // tags
-        FutureBuilder<({List<String> allTags, String selectedTag})>(
-          future: () async {
-            return (
-              allTags: await GetIt.I<UserDataDB>().timeTrackingDao.getAllTags() + [""],
-              selectedTag: await GetIt.I<UserDataDB>().timeTrackingDao.getSelectedTag() ?? ""
-            );
-          } (),
-          builder: (context, snapshot) {
-            if(!snapshot.hasData) return SizedBox();
-
-            return ResponsiveDropDownTile(
-              text: LocaleKeys.SettingsScreen_time_tracking_tags.tr(),
-              value: snapshot.data!.selectedTag,
-              items: snapshot.data!.allTags,
-              onChanged: (String? newValue) async {
-                if(newValue == null) return;
-                await GetIt.I<UserDataDB>().timeTrackingDao.setSelectedTag(newValue);
-                setState(() {});
-              },
-            );
-          },
-        ),
-        ResponsiveInputFieldTile(
-          hintText: LocaleKeys.SettingsScreen_time_tracking_add_tag.tr(),
-          enabled: true,
-          trailingIcon: Icons.add,
-          onTrailingIconPressed: (TextEditingController controller) async {
-            await GetIt.I<UserDataDB>().timeTrackingDao.addTag(controller.text);
-            controller.clear();
-            setState(() {});
-          },
-        ),
-
-        // reshow tutorial
         ResponsiveIconButtonTile(
-          text: LocaleKeys.SettingsScreen_show_tutorial.tr(),
-          icon: Icons.replay_outlined,
-          onButtonPressed: () {
-            GetIt.I<UserData>().showTutorialOcr = true;
-            settings.save();
-            Phoenix.rebirth(context);
+          text: LocaleKeys.SettingsScreen_time_tracking_categories.tr(),
+          icon: Icons.remove_red_eye_outlined,
+          onButtonPressed: () async {
+            showCategorySelectionBottomSheet(context);
+          },
+        ),
+        
+        // tags
+        ResponsiveIconButtonTile(
+          text: LocaleKeys.SettingsScreen_time_tracking_tags.tr(),
+          icon: Icons.remove_red_eye_outlined,
+          onButtonPressed: () async {
+            showTagSelectionBottomSheet(context);
           },
         ),
       ],
     );
   }
 }
+
