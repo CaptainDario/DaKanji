@@ -13,6 +13,20 @@ part 'settings_time_tracking.g.dart';
 @JsonSerializable()
 class SettingsTimeTracking with ChangeNotifier {
 
+  /// The default value for `enabled`
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  // ignore: constant_identifier_names
+  static const bool d_enabled = true;
+  /// Is the time tracking enabled
+  @JsonKey(defaultValue: d_enabled)
+  bool _enabled = d_enabled;
+  /// Is the time tracking enabled
+  bool get enabled => _enabled;
+  set enabled(bool value) {
+    _enabled = value;
+    notifyListeners();
+  }
+
   /// The default value for `sessionLength`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
@@ -28,7 +42,7 @@ class SettingsTimeTracking with ChangeNotifier {
     notifyListeners();
   }
 
-    /// The default value for `breakLength`
+  /// The default value for `breakLength`
   @JsonKey(includeFromJson: false, includeToJson: false)
   // ignore: constant_identifier_names
   static const int d_breakLength = 5;
