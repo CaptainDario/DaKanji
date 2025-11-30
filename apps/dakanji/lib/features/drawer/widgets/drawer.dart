@@ -284,7 +284,7 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
                 alignment: Alignment.center,
                 transform: Matrix4.identity()
                   ..setEntry(3, 2, 0.001)
-                  ..translate(_moveDrawer.value * _screenWidth/2)
+                  ..translateByDouble(_moveDrawer.value * _screenWidth/2, 0, 0, 1)
                   ..rotateY(pi/4 * _moveDrawer.value),
                 child: Scaffold(
                   resizeToAvoidBottomInset: false,

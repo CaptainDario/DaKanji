@@ -25,7 +25,7 @@ class DrawScreenUndoButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<Strokes>(
-      builder: (context, strokes, __) {
+      builder: (context, strokes, _) {
         return Focus(
           focusNode: includeTutorial ? 
             GetIt.I<Tutorials>().drawScreenTutorial.undoButtonSteps : null,

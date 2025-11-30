@@ -648,7 +648,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
         e == queryKana || e == query || e.isEmpty);
     }
 
-    print("$query $queryKana $deconjugated");
+    debugPrint("$query $queryKana $deconjugated");
 
     // use the sort order from the settings
     List<String> searchTerms =
@@ -672,7 +672,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     widget.context.read<DictSearch>().currentKanaSearch = queryKana ?? "";
     widget.context.read<DictSearch>().currentAlternativeSearches = deconjugated;
 
-    print(queryKana);
+    debugPrint(queryKana);
     // search
     widget.context.read<DictSearch>().searchResults =
       await GetIt.I<DictionarySearch>().search(

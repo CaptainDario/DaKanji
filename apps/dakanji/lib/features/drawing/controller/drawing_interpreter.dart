@@ -43,7 +43,7 @@ class DrawingInterpreter with ChangeNotifier{
   InferenceStats? inferenceStats;
   /// The result of the last inference (predictions of the model)
   List<String> _predictions = List.filled(10, " ");
-  get predictions {
+  List<String> get predictions {
     return _predictions;
   }
 

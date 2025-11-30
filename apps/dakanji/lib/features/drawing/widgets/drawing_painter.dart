@@ -171,8 +171,8 @@ class DrawingPainter extends CustomPainter {
 
   /// Returns a transformation matrix based on the given parameters
   Float64List transformationMatrix({
-    scaleX = 1.0, scaleY = 1.0, scaleZ = 1.0,
-    transX = 0.0, transY = 0.0, transZ = 0.0,
+    double scaleX = 1.0, scaleY = 1.0, scaleZ = 1.0,
+    double transX = 0.0, transY = 0.0, transZ = 0.0,
     }){
 
     return Float64List.fromList([

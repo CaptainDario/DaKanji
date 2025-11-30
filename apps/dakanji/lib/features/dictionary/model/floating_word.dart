@@ -10,12 +10,12 @@ class FloatingWord {
   /// Dicitonary entry of this word
   JMdict entry;
   /// 
-  get entryString {
+  String get entryString {
     return entry.kanjis.isNotEmpty ? entry.kanjis.first : entry.readings.first;
   }
   /// Splits either the first kanji or reading of `entry` so that it is a vertical
   /// text
-  get entryVerticalString {
+  String get entryVerticalString {
 
     String word = (entry.kanjis.isNotEmpty ? entry.kanjis.first : entry.readings.first);
   
