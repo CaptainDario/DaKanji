@@ -13,9 +13,9 @@ void main(List<String> args) async {
   
   await build(args, (input, output) async {
 
-    String dylibExtension = getDylibExtension();
-    String platformName = getPlatformName();
-    String cpuArchitecture = getCpuArchitecture();
+    String dylibExtension = getDylibExtension(input.config.code.targetOS);
+    String platformName = getPlatformName(input.config.code.targetOS);
+    String cpuArchitecture = getCpuArchitecture(input.config.code.targetArchitecture);
 
     // Add the code asset to the build output.
     for (var extensionName in extensionNames) {
@@ -29,7 +29,7 @@ void main(List<String> args) async {
             p.join(
               input.packageRoot.toFilePath(),
               'dynamic_libraries',
-              'mac',
+              platformName,
               '${extensionName}_${platformName}_$cpuArchitecture.$dylibExtension'
             )
           )
@@ -40,29 +40,43 @@ void main(List<String> args) async {
   });
 }
 
-String getPlatformName() {
-  if (Platform.isMacOS) return "mac";
-  else if (Platform.isLinux) return "linux";
-  else if (Platform.isWindows) return "windows";
-  else if (Platform.isAndroid) return "android";
-  else if (Platform.isIOS) return "ios";
-  else throw UnsupportedError('Unsupported platform: ${Platform.operatingSystem}');
-}
+String getPlatformName(OS targetOS) {
 
-String getDylibExtension() {
-  if (Platform.isMacOS) {
-    return "dylib";
-  } else if (Platform.isLinux || Platform.isAndroid) {
-    return "so";
-  } else if (Platform.isWindows) {
-    return "dll";
-  } else {
-    throw UnsupportedError('Unsupported platform: ${Platform.operatingSystem}');
+  switch (targetOS) {
+    case OS.macOS:
+      return "mac";
+    case OS.linux:
+      return "linux";
+    case OS.windows:
+      return "windows";
+    case OS.android:
+      return "android";
+    case OS.iOS:
+      return "ios";
+    default:
+      throw UnsupportedError('Unsupported platform: $targetOS');
   }
 }
 
-String getCpuArchitecture() {
-  switch (Architecture.current) {
+String getDylibExtension(OS targetOS) {
+
+  switch (targetOS) {
+    case OS.macOS:
+    case OS.iOS:
+      return "dylib";
+    case OS.linux:
+    case OS.android:
+      return "so";
+    case OS.windows:
+      return "dll";
+    default:
+      throw UnsupportedError('Unsupported platform: $targetOS');
+  }
+
+}
+
+String getCpuArchitecture(Architecture targetArchitecture) {
+  switch (targetArchitecture) {
     case Architecture.x64:
       return "x64";
     case Architecture.arm64:
