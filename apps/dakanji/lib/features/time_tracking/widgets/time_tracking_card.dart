@@ -154,7 +154,10 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
   }
 
   void _startTimer() async {
-    await GetIt.I<UserDataDB>().timeTrackingDao.startNewSession("", "");
+    await GetIt.I<UserDataDB>().timeTrackingDao.startNewSession(
+      await GetIt.I<UserDataDB>().timeTrackingDao.getSelectedCategory(),
+      await GetIt.I<UserDataDB>().timeTrackingDao.getSelectedTag(),
+    );
     final now = DateTime.now();
 
     setState(() {
