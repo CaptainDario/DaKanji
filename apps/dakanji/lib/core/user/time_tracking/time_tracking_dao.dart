@@ -265,8 +265,10 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     final query = delete(timeTrackingTagsTable)
       ..where((tbl) => tbl.tag.equals(tag));
     await query.go();
+
   }
 
+  /// Set the selected tag
   Future setSelectedTag(String tag) async {
     return transaction(() async {
       // 1. Deselect all tags
@@ -285,6 +287,7 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     });
   }
 
+  /// Get the selected tag
   Future<String?> getSelectedTag() async {
     final query = select(timeTrackingTagsTable)
       ..where((tbl) => tbl.isSelected.equals(true))
