@@ -27,7 +27,6 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_icon_button_tile.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_slider_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/export_include_languages_chips.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/show_word_frequency_setting.dart';
 import 'package:da_kanji_mobile/features/word_lists/widgets/word_lists_selection_dialog.dart';
