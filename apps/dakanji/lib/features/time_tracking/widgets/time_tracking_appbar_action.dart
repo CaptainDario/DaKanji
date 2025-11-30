@@ -32,8 +32,8 @@ class _TimeTrackingAppbarActionState extends State<TimeTrackingAppbarAction> {
             accentColor: g_Dakanji_blue,
             secondaryAccentColor: g_Dakanji_green,
             negativeBreakColor: g_Dakanji_red,
-            //sessionLength: Duration(minutes: context.read<Settings>().timeTracking.sessionLength),
-
+            sessionLength: Duration(minutes: context.read<Settings>().timeTracking.sessionLength),
+            studyBreakRatio: context.read<Settings>().timeTracking.breakLength / context.read<Settings>().timeTracking.sessionLength,
           ),
         );
       },
