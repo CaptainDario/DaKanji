@@ -221,7 +221,7 @@
     "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de d\u00e9sactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "Formateur Kana"
+    "title": "#ERROR!"
   },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
@@ -481,6 +481,20 @@
     "tutorial_text_input_text": "Ici, vous pouvez \u00e9crire ou coller n'importe quel texte. Ce texte sera trait\u00e9 avec diff\u00e9rents outils."
   },
   "TimeTrackingScreen": {
+    "": "",
+    "add": "",
+    "add_category": "",
+    "add_category_hint": "",
+    "add_tag": "",
+    "add_tag_hint": "",
+    "cancel": "",
+    "categories": "Cat\u00e9gorie",
+    "pause": "",
+    "resume": "",
+    "select_category": "",
+    "select_tag": "",
+    "start": "",
+    "tags": "Tags",
     "title": "Suivi du temps"
   },
   "WebbrowserScreen": {

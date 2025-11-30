@@ -481,6 +481,20 @@
     "tutorial_text_input_text": "Aqu\u00ed puedes escribir o pegar cualquier texto. Este texto ser\u00e1 procesado con diferentes herramientas."
   },
   "TimeTrackingScreen": {
+    "": "",
+    "add": "",
+    "add_category": "",
+    "add_category_hint": "",
+    "add_tag": "",
+    "add_tag_hint": "",
+    "cancel": "",
+    "categories": "Categor\u00eda",
+    "pause": "",
+    "resume": "",
+    "select_category": "",
+    "select_tag": "",
+    "start": "",
+    "tags": "Etiquetas",
     "title": "Control del tiempo"
   },
   "WebbrowserScreen": {

@@ -1987,8 +1987,8 @@
       "ru": "Тренер Кана",
       "ja": "カナ・トレーナー",
       "zh": "卡纳培训师",
-      "it": "Allenatore Kana",
-      "fr": "Formateur Kana",
+      "it": "#ERROR!",
+      "fr": "#ERROR!",
       "es": "Entrenador Kana",
       "pl": "Trener Kana"
     }
@@ -2991,7 +2991,7 @@
       "de": "Text sitzungsübergreifend speichern",
       "ru": "Сохраняйте текст в разных сеансах",
       "ja": "セッションをまたいでテキストを保存",
-      "zh": "跨会话保存文本",
+      "zh": "#ERROR!",
       "it": "Salvare il testo in tutte le sessioni",
       "fr": "Sauvegarder le texte d'une session à l'autre",
       "es": "Guardar texto entre sesiones",
@@ -3654,7 +3654,7 @@
     },
     "advanced_settings_matrix": {
       "en": "I am in the matrix",
-      "de": "Ich bin in der Matrix",
+      "de": "#ERROR!",
       "ru": "Я в матрице",
       "ja": "マトリックスの中にいる",
       "zh": "我在矩阵中",
@@ -4596,6 +4596,62 @@
       "fr": "Suivi du temps",
       "es": "Control del tiempo",
       "pl": "Śledzenie czasu"
+    },
+    "start": {
+      "en": "Start"
+    },
+    "resume": {
+      "en": "Resume"
+    },
+    "pause": {
+      "en": "Pause"
+    },
+    "add": {
+      "en": "Add"
+    },
+    "cancel": {
+      "en": "Cancel"
+    },
+    "tags": {
+      "en": "Tags",
+      "de": "Tags",
+      "ru": "Теги",
+      "ja": "タグ",
+      "zh": "标签",
+      "it": "Tag",
+      "fr": "Tags",
+      "es": "Etiquetas",
+      "pl": "Tagi"
+    },
+    "select_tag": {
+      "en": "Select tag"
+    },
+    "add_tag": {
+      "en": "Add tag"
+    },
+    "add_tag_hint": {
+      "en": "Enter tag name (e.g. N2)"
+    },
+    "": {},
+    "categories": {
+      "en": "Categories",
+      "de": "Kategorie",
+      "ru": "Категория",
+      "ja": "カテゴリー",
+      "zh": "类别",
+      "it": "Categoria",
+      "fr": "Catégorie",
+      "es": "Categoría",
+      "pl": "Kategoria"
+    },
+    "select_category": {
+      "en": "Select category"
+    },
+    "add_category": {
+      "en": "Add category"
+    },
+    "add_category_hint": {
+      "en": "Enter category name (e.g. Kanji)"
     }
   },
   "HomeScreen": {
@@ -4737,11 +4793,11 @@
     },
     "tutorial_begin_title": {
       "en": "Welcome to the word lists screen!",
-      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
-      "ru": "Добро пожаловать на экран списков слов!",
-      "ja": "単語リスト画面へようこそ！",
+      "de": "#ERROR!",
+      "ru": "#ERROR!",
+      "ja": "#ERROR!",
       "zh": "欢迎来到单词列表屏幕！",
-      "it": "Benvenuti nella schermata degli elenchi di parole!",
+      "it": "#ERROR!",
       "fr": "Bienvenue dans l'écran des listes de mots !",
       "es": "Bienvenido a la pantalla de listas de palabras.",
       "pl": "Witamy na ekranie list słów!"
