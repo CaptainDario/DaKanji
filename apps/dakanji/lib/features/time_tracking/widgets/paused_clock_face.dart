@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:da_kanji_mobile/core/user/time_tracking/dashed_ring_painter.dart';
+import 'package:da_kanji_mobile/features/time_tracking/widgets/dashed_ring_painter.dart';
 
 
 
