@@ -18,9 +18,14 @@ Future<void> restartApp(BuildContext context) async {
 
   g_documentsServicesInitialized = false;
   g_initAppInfoStream = StreamController<String>.broadcast();
-  GetIt.I<UserDataDB>().close();
+  if (GetIt.I.isRegistered<UserDataDB>()) {
+    GetIt.I<UserDataDB>().close();
+  }
   await GetIt.I.reset(dispose: true);
-  g_initApp = init();
+  
+  await preRunInit();
+  g_initApp = postRunInit().then((_) => true);
+
   // ignore: use_build_context_synchronously
   Phoenix.rebirth(context);
 

@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar_community/isar.dart';
@@ -51,25 +50,8 @@ import 'package:da_kanji_mobile/core/analytics/event_logging.dart';
 
 /// Initializes the app, by initializing all the providers, services, etc.
 Future<bool> init() async {
-
-  // check webview support
-  g_webViewSupported = Platform.isAndroid || Platform.isIOS || Platform.isMacOS ||
-    (Platform.isWindows && (await WebViewEnvironment.getAvailableVersion()) != null);
-
-  // wait for localization to be ready
-  await EasyLocalization.ensureInitialized();
-
-  g_DakanjiPathManager = PathManager();
-  await g_DakanjiPathManager.init();
-
-  await initServices();
-
-  // deep links
-  await initDeepLinksStream();
-
-  // try to send cached events
-  await retryCachedEvents();
-
+  await preRunInit();
+  await postRunInit();
   return true;
 }
 
@@ -81,9 +63,15 @@ Future<void> clearPreferences() async {
  debugPrint("CLEARED PREFERENCES AT APP START.");
 }
 
-/// Loads all services from disk that DO NOT dpend on data in the documents
-/// directory.
-Future<void> initServices() async {
+/// Loads services that are needed BEFORE runApp
+Future<void> preRunInit() async {
+  // check webview support
+  g_webViewSupported = Platform.isAndroid || Platform.isIOS || Platform.isMacOS ||
+    (Platform.isWindows && (await WebViewEnvironment.getAvailableVersion()) != null);
+
+  g_DakanjiPathManager = PathManager();
+  await g_DakanjiPathManager.init();
+
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
   debugPrint("Starting DaKanji ${yaml['version']}");
   g_Version = Version.fromStringFull(yaml['version']);
@@ -100,7 +88,10 @@ Future<void> initServices() async {
   GetIt.I.registerSingleton<Settings>(Settings());
   await GetIt.I<Settings>().load();
   await GetIt.I<Settings>().save();
+}
 
+/// Loads services that can be loaded AFTER runApp
+Future<void> postRunInit() async {
   GetIt.I.registerSingleton<Tutorials>(Tutorials());
   GetIt.I<Tutorials>().reload();
 
@@ -115,8 +106,21 @@ Future<void> initServices() async {
   GetIt.I.registerSingleton<Anki>(Anki(GetIt.I<Settings>().anki));
   await GetIt.I<Anki>().init();
 
-  GetIt.I.registerSingleton<UserActivity>(UserActivity(uD)..init());
+  GetIt.I.registerSingleton<UserActivity>(UserActivity(GetIt.I<UserData>())..init());
   GetIt.I.registerSingleton<UserDataDB>(UserDataDB());
+
+  // deep links
+  await initDeepLinksStream();
+
+  // try to send cached events
+  await retryCachedEvents();
+}
+
+/// Loads all services from disk that DO NOT dpend on data in the documents
+/// directory.
+Future<void> initServices() async {
+  await preRunInit();
+  await postRunInit();
 }
 
 /// Loads all services from disk that DO depend on data in the documents

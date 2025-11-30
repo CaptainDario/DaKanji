@@ -48,7 +48,7 @@ GlobalKey g_ScreensaverKey = GlobalKey();
 // INITIALIZE APP
 /// global init function feature that needs to complete before the app can be
 /// started
-var g_initApp = init();
+late Future<bool> g_initApp;
 /// have the documents services been initialized
 bool g_documentsServicesInitialized = false;
 /// The progress of initializing the app

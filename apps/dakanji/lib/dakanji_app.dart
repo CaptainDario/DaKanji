@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -22,6 +21,7 @@ import 'package:da_kanji_mobile/core/theme/light_theme.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_splash.dart';
+import 'package:da_kanji_mobile/features/init/screens/home_screen.dart';
 
 /// The starting widget of the app
 class DaKanjiApp extends StatefulWidget {
@@ -152,15 +152,22 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: GetIt.I<Settings>().misc.selectedThemeMode(),
-          initialRoute: "/${Screens.init.name}",
-          home: const DaKanjiSplash(),
+          home: FutureBuilder(
+            future: g_initApp,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                 return const InitScreen();
+              }
+              return const DaKanjiSplash();
+            }
+          ),
           builder: (context, child) {
             return MediaQuery(
               data: data.copyWith(
                 // global font size scaling
                 textScaler: TextScaler.linear(context.watch<Settings>().misc.fontSizeScale)
               ),
-              child: child ?? const SizedBox(),
+              child: child!,
             );
           },
         );

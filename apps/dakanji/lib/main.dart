@@ -24,12 +24,12 @@ import 'package:da_kanji_mobile/features/feedback/model/feedback_localization.da
 import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/features/init/controller/init.dart';
-import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_splash.dart';
 
 Future<void> main() async {
 
   // wait for flutter to initialize
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
 
   // await desktop setup
   if(g_desktopPlatform){
@@ -57,42 +57,39 @@ Future<void> main() async {
         : "";
       options.sendDefaultPii = false;
     },
-    appRunner: () => runApp(
-      Phoenix(
-        child: FutureBuilder(
-          future: g_initApp,
-          builder: (context, snapshot) {
-            if(snapshot.hasData == false) {
-              return const DaKanjiSplash();
-            } else {
-              return EasyLocalization(
-                supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
-                path: 'assets/translations',
-                fallbackLocale: const Locale('en'),
-                useFallbackTranslations: true,
-                useOnlyLangCode: true,
-                assetLoader: const CodegenLoader(),
-                saveLocale: true,
-                startLocale: Platform.isLinux ? const Locale("en") : null,
-                child: BetterFeedback(
-                  feedbackBuilder: simpleFeedbackBuilder,
-                  theme: FeedbackThemeData(
-                    sheetIsDraggable: true,
-                    dragHandleColor: Colors.grey
-                  ),
-                  localizationsDelegates: [
-                    CustomFeedbackLocalizationsDelegate(),
-                  ],
-                  localeOverride: const Locale("en"),
-                  mode: FeedbackMode.navigate,
-                  child: const DaKanjiApp(),
-                ),
-              );
-            }
-          }
+    appRunner: () async {
+      
+      await preRunInit();
+      g_initApp = postRunInit().then((_) => true);
+
+      runApp(
+        Phoenix(
+          child: EasyLocalization(
+            supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
+            path: 'assets/translations',
+            fallbackLocale: const Locale('en'),
+            useFallbackTranslations: true,
+            useOnlyLangCode: true,
+            assetLoader: const CodegenLoader(),
+            saveLocale: true,
+            startLocale: Platform.isLinux ? const Locale("en") : null,
+            child: BetterFeedback(
+              feedbackBuilder: simpleFeedbackBuilder,
+              theme: FeedbackThemeData(
+                sheetIsDraggable: true,
+                dragHandleColor: Colors.grey
+              ),
+              localizationsDelegates: [
+                CustomFeedbackLocalizationsDelegate(),
+              ],
+              localeOverride: const Locale("en"),
+              mode: FeedbackMode.navigate,
+              child: const DaKanjiApp(),
+            ),
+          ),
         ),
-      ),
-    )
+      );
+    }
   );
 }
 

@@ -19,29 +19,27 @@ class DaKanjiSplash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DaKanjiLogoText(),
-              const SizedBox(height: 20, width: 1,),
-              const DaKanjiLoadingIndicator(),
-              if(text != null)
-                ...[
-                  const SizedBox(height: 8,),
-                  Text(
-                    text!,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey
-                    ),
+    return Scaffold(
+      body: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            DaKanjiLogoText(),
+            const SizedBox(height: 20, width: 1,),
+            const DaKanjiLoadingIndicator(),
+            if(text != null)
+              ...[
+                const SizedBox(height: 8,),
+                Text(
+                  text!,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey
                   ),
-                ]
-            ],
-          ),
+                ),
+              ]
+          ],
         ),
       ),
     );
