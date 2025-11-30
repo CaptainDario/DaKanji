@@ -145,7 +145,7 @@ class DrawerAppBar extends StatelessWidget {
         ),
         Spacer(), // move the tools
         TimeTrackingAppbarAction(),
-        SizedBox(width: 8,), //spacing at the end
+        SizedBox(width: 16,), //spacing at the end
       ],
     );
   }

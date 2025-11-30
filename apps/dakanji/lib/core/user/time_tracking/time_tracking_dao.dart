@@ -2,6 +2,7 @@ import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_table.dart
 import 'package:da_kanji_mobile/core/user/time_tracking/timer_status.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:drift/drift.dart';
+import 'package:async/async.dart';
 
 part 'time_tracking_dao.g.dart';
 
@@ -32,30 +33,31 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
   }
 
   /// Returns the full state of the user's tracking.
-  Future<TimerStatus> getCurrentStatus() async {
-    // 1. Is the timer ticking right now?
-    final runningUnit = await (select(timeTrackingUnitTable)
-        ..where((tbl) => tbl.endTime.isNull())
-        ..limit(1))
-        .getSingleOrNull();
+  Stream<TimerStatus> watchCurrentStatus() {
+    // Is the timer ticking right now?
+    final runningStream = (select(timeTrackingUnitTable)
+          ..where((tbl) => tbl.endTime.isNull())
+          ..limit(1))
+        .watchSingleOrNull();
 
-    if (runningUnit != null) {
-      return TimerStatus.running;
-    }
+    // Is there an "Active" session (Paused)?
+    final sessionStream = (select(timeTrackingTable)
+          ..where((tbl) => tbl.isCompleted.equals(false))
+          ..limit(1))
+        .watchSingleOrNull();
 
-    // 2. Is there an "Active" session (Paused)?
-    final activeSession = await (select(timeTrackingTable)
-        ..where((tbl) => tbl.isCompleted.equals(false))
-        ..limit(1))
-        .getSingleOrNull();
+    // StreamZip waits for both streams to emit, then gives you a List based on order
+    return StreamZip([runningStream, sessionStream]).map((results) {
+      final runningUnit = results[0] as TimeTrackingUnitTableData?; // Type manually if needed
+      final activeSession = results[1] as TimeTrackingTableData?;
 
-    if (activeSession != null) {
-      return TimerStatus.paused;
-    }
-
-    // 3. Nothing is happening.
-    return TimerStatus.idle;
+      if (runningUnit != null) return TimerStatus.running;
+      if (activeSession != null) return TimerStatus.paused;
+      return TimerStatus.idle;
+    });
   }
+
+  Future<TimerStatus> getCurrentStatus() => watchCurrentStatus().first;
 
   /// Retrieves data to restore an active session, if any.
   Future<({
