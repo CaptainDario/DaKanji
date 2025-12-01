@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
-import 'package:da_kanji_mobile/features/home/widgets/user.dart';
+import 'package:da_kanji_mobile/features/home/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
 
 
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return DaKanjiDrawer(
       drawerClosed: !widget.openedByDrawer,
       currentScreen: Screens.home,
-      child: const User()
+      child: const HomeWidget()
     );
   }
 

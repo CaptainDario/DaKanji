@@ -115,7 +115,12 @@ class TimerControlBar extends StatelessWidget {
               label: asyncSnapshot.data!.selectedTag,
               tooltip: LocaleKeys.TimeTrackingScreen_tags.tr(),
               onTap: () {
-                showTagSelectionBottomSheet(context);
+                showTagSelectionBottomSheet(
+                  context,
+                  onTagSelected: (tag) async {
+                    await GetIt.I<UserDataDB>().timeTrackingDao.setSelectedTag(tag);
+                  },
+                );
               },
             ),
           ],

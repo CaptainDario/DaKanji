@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_spinbox_tile.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/management_dialogs.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -87,7 +89,12 @@ class _TimeTrackingSettingsState extends State<TimeTrackingSettings> {
           text: LocaleKeys.SettingsScreen_time_tracking_categories.tr(),
           icon: Icons.remove_red_eye_outlined,
           onButtonPressed: () async {
-            showCategorySelectionBottomSheet(context);
+            await showCategorySelectionBottomSheet(
+              context,
+              onCategorySelected: (category) async {
+                await GetIt.I<UserDataDB>().timeTrackingDao.setSelectedCategory(category);
+              },
+            );
           },
         ),
         

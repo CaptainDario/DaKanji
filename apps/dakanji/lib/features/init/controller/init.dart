@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_mock_data.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -112,8 +113,22 @@ Future<void> postRunInit() async {
   // deep links
   await initDeepLinksStream();
 
-  // try to send cached events
-  await retryCachedEvents();
+  // try to send cached events (do NOT await, can bock UI otherwise)
+  retryCachedEvents();
+
+  await setupMockData();
+
+}
+
+Future setupMockData() async {
+  if(kDebugMode){
+    debugPrint("Inserting time tracking mock data...");
+    final db = GetIt.I<UserDataDB>();
+    TimeTrackingMockDataGenerator seeder = TimeTrackingMockDataGenerator(db);
+    await seeder.generateLastThreeWeeks();
+    await seeder.generateTodayComplexScenario();
+    debugPrint("Time tracking mock data inserted.");
+  }
 }
 
 /// Loads all services from disk that DO NOT dpend on data in the documents

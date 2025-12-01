@@ -1,19 +1,19 @@
 
 import 'package:da_kanji_mobile/features/home/widgets/user_overview_page.dart';
-import 'package:da_kanji_mobile/features/home/widgets/user_account_page.dart';
+import 'package:da_kanji_mobile/features/home/widgets/account/user_account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 
 
-class User extends StatefulWidget {
-  const User({super.key});
+class HomeWidget extends StatefulWidget {
+  const HomeWidget({super.key});
 
   @override
-  State<User> createState() => _UserState();
+  State<HomeWidget> createState() => _HomeWidgetState();
 }
 
-class _UserState extends State<User> {
+class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(

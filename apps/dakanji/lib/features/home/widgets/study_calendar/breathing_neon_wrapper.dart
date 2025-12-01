@@ -32,7 +32,7 @@ class BreathingNeonWrapper extends StatelessWidget {
         // Clamp Opacity as per your spec
         final double opacity = glowAnimation.value.clamp(0.0, 1.0);
         
-        // If customGlowChild is not provided, we use the child itself 
+        // If customGlowChild is not provided, use the child itself 
         // as the source mask for the blur.
         // NOTE: For Icons, you often need to pass the Icon with the GLOW COLOR explicitly
         // as the 'customGlowChild', otherwise the blur might pick up the wrong color 

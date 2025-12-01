@@ -16,8 +16,167 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
   TimeTrackingDao(super.db);
 
+  // --- START : Statistics & History ---
+  
+  /// Fetches all sessions that STARTED on a specific [date].
+  /// Returns a list of sessions with their associated units (work blocks).
+  Future<List<({TimeTrackingTableData session, List<TimeTrackingUnitTableData> units})>> 
+      getSessionsForDate(DateTime date) async {
+    
+    // 1. Define the day boundaries
+    final startOfDay = DateTime(date.year, date.month, date.day);
+    final endOfDay = startOfDay.add(const Duration(days: 1));
+
+    // 2. Query Sessions that started in this range
+    // Join with the FIRST unit to check the start time of the session
+    // (Since TimeTrackingTable doesn't have a startTime, only units do)
+    final sessionsQuery = select(timeTrackingTable).join([
+      innerJoin(
+        timeTrackingUnitTable,
+        timeTrackingUnitTable.timeTrackingId.equalsExp(timeTrackingTable.id),
+      )
+    ]);
+
+    // Filter by the start time of the unit
+    sessionsQuery.where(timeTrackingUnitTable.startTime.isBetweenValues(startOfDay, endOfDay));
+    
+    // Group by Session ID to avoid duplicates in the main result
+    sessionsQuery.groupBy([timeTrackingTable.id]);
+
+    final sessionResults = await sessionsQuery.get();
+    
+    // 3. For each session, fetch ALL its units to calculate breaks/end times
+    List<({TimeTrackingTableData session, List<TimeTrackingUnitTableData> units})> fullData = [];
+
+    for (final row in sessionResults) {
+      final session = row.readTable(timeTrackingTable);
+      
+      final units = await (select(timeTrackingUnitTable)
+        ..where((tbl) => tbl.timeTrackingId.equals(session.id))
+        ..orderBy([(t) => OrderingTerm(expression: t.startTime)]))
+        .get();
+
+      fullData.add((session: session, units: units));
+    }
+
+    // Sort by the start time of the first unit
+    fullData.sort((a, b) {
+      if (a.units.isEmpty || b.units.isEmpty) return 0;
+      return a.units.first.startTime.compareTo(b.units.first.startTime);
+    });
+
+    return fullData;
+  }
+  // --- END : Statistics & History ---
 
   // --- START : Session Management ---
+
+  /// Updates an existing session's details including time, breaks, and metadata.
+  Future<void> updateSession({
+    required int sessionId,
+    required DateTime newStartTime,
+    required DateTime newEndTime,
+    required int newBreakMinutes,
+    String? category,
+    String? tag,
+  }) async {
+    return transaction(() async {
+      // 1. Update Session Meta
+      await (update(timeTrackingTable)..where((t) => t.id.equals(sessionId))).write(
+        TimeTrackingTableCompanion(
+          category: Value(category),
+          tag: Value(tag),
+        ),
+      );
+
+      // 2. Fetch Units to get current IDs
+      var units = await (select(timeTrackingUnitTable)
+            ..where((t) => t.timeTrackingId.equals(sessionId))
+            ..orderBy([(t) => OrderingTerm(expression: t.startTime)]))
+          .get();
+
+      if (units.isEmpty) return;
+
+      // 3. Update Global Start/End Boundaries
+      // Set the very first start time
+      await (update(timeTrackingUnitTable)
+            ..where((t) => t.id.equals(units.first.id)))
+          .write(TimeTrackingUnitTableCompanion(startTime: Value(newStartTime)));
+
+      // Set the very last end time
+      await (update(timeTrackingUnitTable)
+            ..where((t) => t.id.equals(units.last.id)))
+          .write(TimeTrackingUnitTableCompanion(endTime: Value(newEndTime)));
+
+      // Refresh units to get updated boundaries/times for calculation
+      units = await (select(timeTrackingUnitTable)
+            ..where((t) => t.timeTrackingId.equals(sessionId))
+            ..orderBy([(t) => OrderingTerm(expression: t.startTime)]))
+          .get();
+
+      // 4. Calculate existing breaks (sum of gaps) excluding the last gap
+      int existingFixedBreaks = 0;
+      if (units.length > 2) {
+         for (int i = 0; i < units.length - 2; i++) {
+             // Gap is between unit[i].end and unit[i+1].start
+             final end = units[i].endTime ?? units[i].startTime;
+             final start = units[i+1].startTime;
+             existingFixedBreaks += start.difference(end).inMinutes;
+         }
+      }
+
+      // 5. Determine the required duration for the final gap
+      final int neededLastGapMinutes = (newBreakMinutes - existingFixedBreaks).clamp(0, 1440);
+      final Duration neededLastGap = Duration(minutes: neededLastGapMinutes);
+
+      if (units.length == 1) {
+        // Case: No existing breaks (1 Unit).
+        // Logic: "Add one at the end".
+        // shorten the current unit and add a 0-duration unit at newEndTime to create the gap.
+        
+        if (neededLastGapMinutes > 0) {
+          final modifiedFirstEnd = newEndTime.subtract(neededLastGap);
+          
+          // Safety: Don't let end be before start
+          final safeFirstEnd = modifiedFirstEnd.isBefore(newStartTime) 
+              ? newStartTime 
+              : modifiedFirstEnd;
+
+          // Update Unit 1 End Time
+          await (update(timeTrackingUnitTable)
+              ..where((t) => t.id.equals(units.first.id)))
+              .write(TimeTrackingUnitTableCompanion(endTime: Value(safeFirstEnd)));
+
+          // Insert Unit 2 (Marker at the end to force the timeline to stretch to newEndTime)
+          await into(timeTrackingUnitTable).insert(
+            TimeTrackingUnitTableCompanion(
+              timeTrackingId: Value(sessionId),
+              startTime: Value(newEndTime),
+              endTime: Value(newEndTime),
+            ),
+          );
+        }
+      } else {
+        // Case: Existing breaks.
+        // Logic: "Make the last one longer" (or shorter).
+        // Adjust the Start Time of the last unit to widen/shrink the gap before it.
+        final secondToLastUnit = units[units.length - 2];
+        final secondToLastEnd = secondToLastUnit.endTime ?? newStartTime; 
+        
+        // Calculate new start for the last unit based on the needed gap
+        final newLastStart = secondToLastEnd.add(neededLastGap);
+        
+        // Safety: Start cannot be after End
+        final safeLastStart = newLastStart.isAfter(newEndTime) 
+            ? newEndTime 
+            : newLastStart;
+
+        await (update(timeTrackingUnitTable)
+            ..where((t) => t.id.equals(units.last.id)))
+            .write(TimeTrackingUnitTableCompanion(startTime: Value(safeLastStart)));
+      }
+    });
+  }
 
   /// Returns the the row of the currently running timer, if any.
   Future<TimeTrackingUnitTableData?> getRunningTimer() async {
