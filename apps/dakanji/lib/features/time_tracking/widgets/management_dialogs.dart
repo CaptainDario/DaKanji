@@ -7,15 +7,20 @@ import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 
 
 /// shows a bottom sheet to select, delete or add category(s).
-Future showCategorySelectionBottomSheet(BuildContext context) async {
+Future showCategorySelectionBottomSheet(
+  BuildContext context,
+  {
+    Function(String category)? onCategorySelected
+  }
+) async {
 
-  showCategoryTagBottomSheet(
+  _showCategoryTagBottomSheet(
     context: context,
     title: LocaleKeys.TimeTrackingScreen_select_category.tr(),
     getOptions: GetIt.I<UserDataDB>().timeTrackingDao.getAllCategories,
     getSelectedOption: GetIt.I<UserDataDB>().timeTrackingDao.getSelectedCategory,
     onAddPressed: () async {
-      String? newTagName = await showAddCategoryTagDialog(
+      String? newTagName = await _showAddCategoryTagDialog(
         context,
         LocaleKeys.TimeTrackingScreen_add_category.tr(),
         LocaleKeys.TimeTrackingScreen_add_category_hint.tr(),
@@ -24,26 +29,32 @@ Future showCategorySelectionBottomSheet(BuildContext context) async {
 
       await GetIt.I<UserDataDB>().timeTrackingDao.addCategory(newTagName);
     },
-    onDeletePressed: (String tag) async {
-      await GetIt.I<UserDataDB>().timeTrackingDao.deleteCategory(tag);
+    onDeletePressed: (String category) async {
+      await GetIt.I<UserDataDB>().timeTrackingDao.deleteCategory(category);
     },
-    onOptionTapped: (String tag) async {
-      await GetIt.I<UserDataDB>().timeTrackingDao.setSelectedCategory(tag);
+    onOptionTapped: (String category) async {
+      if(onCategorySelected != null) onCategorySelected(category);
+      
     },
   );
 
 }
 
 /// shows a bottom sheet to select, delete or add tag(s).
-Future showTagSelectionBottomSheet(BuildContext context) async {
+Future showTagSelectionBottomSheet(
+  BuildContext context,
+  {
+    Function(String tag)? onTagSelected
+  }
+) async {
 
-  showCategoryTagBottomSheet(
+  _showCategoryTagBottomSheet(
     context: context,
     title: LocaleKeys.TimeTrackingScreen_select_tag.tr(),
     getOptions: GetIt.I<UserDataDB>().timeTrackingDao.getAllTags,
     getSelectedOption: GetIt.I<UserDataDB>().timeTrackingDao.getSelectedTag,
     onAddPressed: () async {
-      String? newTagName = await showAddCategoryTagDialog(
+      String? newTagName = await _showAddCategoryTagDialog(
         context,
         LocaleKeys.TimeTrackingScreen_add_tag.tr(),
         LocaleKeys.TimeTrackingScreen_add_tag_hint.tr(),
@@ -56,7 +67,7 @@ Future showTagSelectionBottomSheet(BuildContext context) async {
       await GetIt.I<UserDataDB>().timeTrackingDao.deleteTag(tag);
     },
     onOptionTapped: (String tag) async {
-      await GetIt.I<UserDataDB>().timeTrackingDao.setSelectedTag(tag);
+      if(onTagSelected != null) onTagSelected(tag);
     },
   );
 
@@ -66,7 +77,10 @@ Future showTagSelectionBottomSheet(BuildContext context) async {
 /// Also allows:
 /// * adding new categories/tags 
 /// * deleting existing categories/tags
-Future showCategoryTagBottomSheet({
+/// 
+/// Note: only for internal use, externally use
+/// [showCategorySelectionBottomSheet], [showTagSelectionBottomSheet]
+Future _showCategoryTagBottomSheet({
     required BuildContext context,
     required String title,
     required Future<List<String>> Function() getOptions,
@@ -168,7 +182,11 @@ Future showCategoryTagBottomSheet({
   );
 }
 
-Future<String?> showAddCategoryTagDialog(
+/// Base function that can be used to add categories / tags.
+/// 
+/// Note: only for internal use, externally use
+/// [showCategorySelectionBottomSheet], [showTagSelectionBottomSheet]
+Future<String?> _showAddCategoryTagDialog(
     BuildContext context,
     String title,
     String hintText
