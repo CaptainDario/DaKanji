@@ -1,7 +1,6 @@
 import 'package:code_assets/code_assets.dart';
 import 'package:hooks/hooks.dart';
 import 'package:path/path.dart' as p;
-import 'package:universal_io/io.dart';
 
 
 List<String> extensionNames = [
@@ -80,8 +79,11 @@ String getCpuArchitecture(Architecture targetArchitecture) {
     case Architecture.x64:
       return "x64";
     case Architecture.arm64:
+      return "arm64";
+    case Architecture.arm:
       return "arm";
+
     default:
-      throw UnsupportedError('Unsupported architecture: ${Platform.operatingSystem}');
+      throw UnsupportedError('Unsupported architecture: $targetArchitecture');
   }
 }
