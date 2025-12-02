@@ -34,7 +34,7 @@ class SessionEditorSheet extends StatefulWidget {
 class _SessionEditorSheetState extends State<SessionEditorSheet> {
   late DateTime _startTime;
   late DateTime _endTime;
-  late String _category;
+  late String? _category;
   String? _tag;
   late TextEditingController _breakController;
 
@@ -57,6 +57,7 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
 
   Future<void> _pickTime(bool isStart) async {
     final initial = isStart ? _startTime : _endTime;
+    
     final time = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(initial),
@@ -64,11 +65,43 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
         return Theme(
           data: ThemeData.dark().copyWith(
             colorScheme: const ColorScheme.dark(
-              primary: Colors.blueAccent,
-              surface: Color(0xFF2C323A),
-              onSurface: Colors.white,
+              primary: g_Dakanji_green, // Header background & Active dial hand
+              onPrimary: Colors.white,
+              surface: Color(0xFF2C323A), // Dialog background
+              onSurface: Colors.white, // General text
             ),
-            dialogBackgroundColor: const Color(0xFF2C323A),
+            
+            // 1. Customize the AM/PM Switch
+            timePickerTheme: TimePickerThemeData(
+              // Background color of the AM/PM container
+              dayPeriodColor: WidgetStateColor.resolveWith((states) =>
+                  states.contains(WidgetState.selected)
+                      ? g_Dakanji_green // Background when selected
+                      : Colors.white10), // Background when not selected
+              
+              // Text color inside the AM/PM container
+              dayPeriodTextColor: WidgetStateColor.resolveWith((states) =>
+                  states.contains(WidgetState.selected)
+                      ? Colors.white // Text color when selected
+                      : Colors.grey), // Text color when not selected
+
+              // 1. Style the "Cancel" button (e.g., Grey or Red)
+              cancelButtonStyle: ButtonStyle(
+                foregroundColor: WidgetStateProperty.all(Colors.grey),
+              ),
+
+              // 2. Style the "OK" button (e.g., Green)
+              confirmButtonStyle: ButtonStyle(
+                foregroundColor: WidgetStateProperty.all(
+                  Theme.brightnessOf(context) == Brightness.dark
+                      ? Colors.white
+                      : Colors.black,
+                ),
+              ),
+                      
+              // Optional: Remove or color the border
+              dayPeriodBorderSide: BorderSide.none, 
+            ),
           ),
           child: child!,
         );
@@ -77,22 +110,40 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
 
     if (time == null) return;
 
-    final newDateTime = DateTime(
-      initial.year,
-      initial.month,
-      initial.day,
-      time.hour,
-      time.minute,
-    );
-
     setState(() {
       if (isStart) {
-        _startTime = newDateTime;
+        // Simple update for start time
+        final newStart = DateTime(
+          _startTime.year,
+          _startTime.month,
+          _startTime.day,
+          time.hour,
+          time.minute,
+        );
+        _startTime = newStart;
+
+        // If pushing start time makes end time invalid, push end time forward
         if (_endTime.isBefore(_startTime)) {
           _endTime = _startTime.add(const Duration(minutes: 30));
         }
       } else {
-        _endTime = newDateTime;
+        // Smart logic for End Time:
+        // 1. Create a candidate DateTime on the SAME day as the start time
+        final candidateSameDay = DateTime(
+          _startTime.year,
+          _startTime.month,
+          _startTime.day,
+          time.hour,
+          time.minute,
+        );
+
+        // 2. If the candidate time is before the start time (e.g. Start 23:00, Picked 01:00),
+        // we assume the user means the next day.
+        if (candidateSameDay.isBefore(_startTime)) {
+          _endTime = candidateSameDay.add(const Duration(days: 1));
+        } else {
+          _endTime = candidateSameDay;
+        }
       }
     });
   }
@@ -159,6 +210,7 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
         !overlap.hasAnyOverlap;
 
     final netStudyMinutes = isValid ? totalMinutes - breakMinutes : 0;
+    final isEndNextDay = _endTime.day != _startTime.day;
 
     return Padding(
       padding: EdgeInsets.fromLTRB(
@@ -176,7 +228,7 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
             const SizedBox(height: 24),
             _SelectionTile(
               label: "カテゴリー",
-              value: _category,
+              value: _category ?? "",
               icon: Icons.category_outlined,
               valueColor: _tag == null ? Colors.grey : Colors.white,
               onTap: _openCategorySelector,
@@ -184,7 +236,7 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
             const SizedBox(height: 16),
             _SelectionTile(
               label: "タグ",
-              value: _tag ?? "なし",
+              value: _tag ?? "",
               icon: Icons.label_outline,
               valueColor: _tag == null ? Colors.grey : Colors.white,
               onTap: _openTagSelector,
@@ -212,6 +264,7 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
                     time: _endTime,
                     onTap: () => _pickTime(false),
                     isError: !isTimeValid || overlap.isEndOverlap,
+                    isNextDay: isEndNextDay,
                   ),
                 ),
               ],
@@ -225,6 +278,7 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
               controller: _breakController,
               isBreakValid: isBreakValid,
               onChanged: (_) => setState(() {}),
+              activeColor: _activeColor,
             ),
             if (!isBreakValid && isTimeValid)
               const _ErrorMessage(text: "休憩時間は合計時間より短くする必要があります"),
@@ -378,11 +432,13 @@ class _BreakDurationInput extends StatelessWidget {
   final TextEditingController controller;
   final bool isBreakValid;
   final ValueChanged<String> onChanged;
+  final Color activeColor;
 
   const _BreakDurationInput({
     required this.controller,
     required this.isBreakValid,
     required this.onChanged,
+    required this.activeColor,
   });
 
   @override
@@ -407,16 +463,13 @@ class _BreakDurationInput extends StatelessWidget {
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               filled: true,
-              fillColor: !isBreakValid
-                  ? Colors.red.withOpacity(0.2)
-                  : Colors.white10,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Colors.blueAccent),
+                borderSide: BorderSide(color: activeColor),
               ),
             ),
           ),
@@ -436,7 +489,7 @@ class _ErrorMessage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 4),
       child: Text(text,
-          style: const TextStyle(color: Colors.redAccent, fontSize: 12)),
+          style: const TextStyle(color: g_Dakanji_red, fontSize: 12)),
     );
   }
 }

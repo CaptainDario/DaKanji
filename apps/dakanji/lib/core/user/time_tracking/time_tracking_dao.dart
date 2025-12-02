@@ -351,6 +351,21 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       );
     });
   }
+
+  /// Deletes a session and all its associated time units.
+  Future<void> deleteSession(int sessionId) async {
+    return transaction(() async {
+      // 1. Delete all units associated with this session
+      await (delete(timeTrackingUnitTable)
+            ..where((t) => t.timeTrackingId.equals(sessionId)))
+          .go();
+
+      // 2. Delete the session itself
+      await (delete(timeTrackingTable)
+            ..where((t) => t.id.equals(sessionId)))
+          .go();
+    });
+  }
   // --- END : Session Management ---
 
   // --- START : Tags and Categories Management ---

@@ -53,6 +53,7 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
 
   /// Used for the "shrinking" animation effect when stopping the timer.
   Duration _visualDurationAtStop = Duration.zero;
+  Duration _realDurationAtStop = Duration.zero;
 
   /// Stores the sum of all *completed* pause intervals (historical gaps).
   /// This ensures the break timer remains accurate even after multiple resume/pause cycles.
@@ -174,26 +175,30 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
     _ticker.start();
   }
 
-  void _stopTimer() async {
+void _stopTimer() async {
     if (_startTime == null) return;
 
-    await GetIt.I<UserDataDB>().timeTrackingDao.finishSession();
-    _ticker.stop();
-    _glowController.reverse();
-    _dashAnimationController.stop();
-
+    // 1. Capture the data we need IMMEDIATELY (Synchronously)
     Duration realElapsed;
     if (_isPaused && _pauseStartTime != null) {
       realElapsed = _pauseStartTime!.difference(_startTime!) - _pauseOffset;
     } else {
       realElapsed = DateTime.now().difference(_startTime!) - _pauseOffset;
     }
+    
+    // Store the real duration for the text countdown
+    _realDurationAtStop = realElapsed;
 
+    // 2. Stop the local tickers/animations IMMEDIATELY
+    _ticker.stop();
+    _glowController.reverse();
+    _dashAnimationController.stop();
+
+    // 3. Calculate the visual compression (Ring Animation)
     final int sessionSeconds = widget.sessionLength.inSeconds;
     final int currentLapIndex =
         (sessionSeconds > 0) ? (realElapsed.inSeconds ~/ sessionSeconds) : 0;
 
-    // Calculate the visual compression effect for the "End Session" animation
     if (currentLapIndex > 2) {
       final double currentLapProgress =
           (realElapsed.inMilliseconds % (sessionSeconds * 1000)) /
@@ -205,13 +210,19 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
       _visualDurationAtStop = realElapsed;
     }
 
+    // 4. Start the Reset Animation
     _resetController.forward(from: 0.0);
 
+    // 5. Update State
     setState(() {
       _isPaused = false;
       _pauseStartTime = null;
       _accumulatedPauseDuration = Duration.zero;
     });
+
+    // 6. NOW handle the DB (Async Side Effect)
+    // await this last so it doesn't block the UI responsiveness.
+    await GetIt.I<UserDataDB>().timeTrackingDao.finishSession();
   }
 
   void _pauseTimer() async {
@@ -271,13 +282,14 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
     );
   }
 
-  @override
+@override
   Widget build(BuildContext context) {
     const Color cardBackground = Color(0xFF1E1E1E);
 
     int lapIndex;
     double lapProgress;
-    Duration currentElapsed;
+    Duration currentElapsed; // Used for TEXT and BREAK MATH
+    Duration visualElapsed;  // Used for RING ANIMATION (New)
     Duration currentPauseDuration = Duration.zero;
     double glowOpacity;
 
@@ -291,35 +303,44 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
         glowOpacity = 1.0;
       }
       final double t = Curves.easeInOutCubic.transform(_resetController.value);
-      final int startMicros = _visualDurationAtStop.inMicroseconds;
-      final int currentMicros = (startMicros * (1 - t)).toInt();
-      currentElapsed = Duration(microseconds: currentMicros);
+
+      // 1. CALCULATE TEXT DURATION (Count down from REAL time)
+      final int startRealMicros = _realDurationAtStop.inMicroseconds;
+      final int currentRealMicros = (startRealMicros * (1 - t)).toInt();
+      currentElapsed = Duration(microseconds: currentRealMicros);
+
+      // 2. CALCULATE VISUAL DURATION (Unwind from COMPRESSED time)
+      final int startVisualMicros = _visualDurationAtStop.inMicroseconds;
+      final int currentVisualMicros = (startVisualMicros * (1 - t)).toInt();
+      visualElapsed = Duration(microseconds: currentVisualMicros);
+
     } else if (_startTime != null && !_isPaused) {
       // Normal Running State
       glowOpacity = _glowController.value;
       final now = DateTime.now();
       currentElapsed = now.difference(_startTime!) - _pauseOffset;
+      visualElapsed = currentElapsed; // Visual matches Real
     } else if (_isPaused && _pauseStartTime != null) {
       // Paused State
       glowOpacity = 0.0;
       final now = DateTime.now();
-      // Even though we are paused, we calculate elapsed relative to when the pause STARTED.
       currentElapsed = _pauseStartTime!.difference(_startTime!) - _pauseOffset;
       currentPauseDuration = now.difference(_pauseStartTime!);
+      visualElapsed = currentElapsed; // Visual matches Real
     } else {
       // Idle State
       glowOpacity = 0.0;
       currentElapsed = Duration.zero;
+      visualElapsed = Duration.zero; // Visual matches Real
     }
 
-    final state = _calculateState(currentElapsed);
+    final state = _calculateState(visualElapsed); 
     lapIndex = state.lapIndex;
     lapProgress = state.lapProgress;
 
-    // 1. Calculate GROSS Earned Break (Total capacity generated by work)
-    final Duration grossEarnedBreak = Duration(
-        milliseconds:
-            (currentElapsed.inMilliseconds * widget.studyBreakRatio).toInt());
+    // This ensures break earned numbers also animate down from high values properly
+    final Duration grossEarnedBreak = Duration(milliseconds:
+      (currentElapsed.inMilliseconds * widget.studyBreakRatio).toInt());
 
     // 2. Calculate NET Remaining Break for Running State
     // RunningClockFace displays "+XX:XX", so we must subtract used breaks here.

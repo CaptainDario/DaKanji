@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/stopwatch_painter.dart';
 
-
 class RunningClockFace extends StatelessWidget {
   final int lapIndex;
   final double lapProgress;
@@ -44,11 +43,13 @@ class RunningClockFace extends StatelessWidget {
   Widget build(BuildContext context) {
     // 1. Info Text Logic (Ready, Break, or Session Number)
     Widget infoWidget;
-    
+
+    // when resetting (counting down fast), IGNORE the break toggle.
+    // This prevents the text from flickering rapidly and causing Key collisions.
     if (!isTicking && !isResetting) {
       infoWidget = Text(
         LocaleKeys.TimeTrackingScreen_ready_caps.tr(),
-        key: const ValueKey("ready"),
+        key: const ValueKey("state_ready"),
         style: TextStyle(
           color: activeColor.withValues(alpha: 0.8),
           fontSize: 12,
@@ -56,18 +57,17 @@ class RunningClockFace extends StatelessWidget {
           fontWeight: FontWeight.w500,
         ),
       );
-    } else if (showBreak) {
-      // Logic: Handle Break Debt (Negative) vs Surplus (Positive)
+    } else if (showBreak && !isResetting) {
       final bool isNegative = earnedBreak.isNegative;
       final String sign = isNegative ? "-" : "+";
       final String timeStr = _formatDuration(earnedBreak);
 
       infoWidget = Text(
         "${LocaleKeys.TimeTrackingScreen_break_caps.tr()}: $sign$timeStr",
-        key: const ValueKey("break"),
+        key: const ValueKey("state_break"),
         style: TextStyle(
-          color: isNegative 
-              ? const Color(0xFFEF5350) // Red warning color
+          color: isNegative
+              ? const Color(0xFFEF5350)
               : Colors.white.withValues(alpha: 0.9),
           fontSize: 12,
           letterSpacing: 1.2,
@@ -76,9 +76,10 @@ class RunningClockFace extends StatelessWidget {
         ),
       );
     } else {
+      // During reset, stay in this "Session" state consistently.
       infoWidget = Text(
         "${LocaleKeys.TimeTrackingScreen_session_caps.tr()} ${lapIndex + 1}",
-        key: const ValueKey("session"),
+        key: const ValueKey("state_session"),
         style: TextStyle(
           color: activeColor.withValues(alpha: 0.8),
           fontSize: 12,
@@ -87,11 +88,6 @@ class RunningClockFace extends StatelessWidget {
         ),
       );
     }
-
-    // 2. Status Icon Logic
-    // If  ticking, show "Pause" (indicating it's running).
-    // If NOT ticking (Ready), show "Play" (indicating it's waiting to start).
-    final IconData statusIcon = isTicking ? Icons.pause_circle_outline : Icons.play_circle_outline;
 
     return Stack(
       alignment: Alignment.center,
@@ -113,11 +109,18 @@ class RunningClockFace extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedSwitcher(
+            AnimatedCrossFade(
               duration: const Duration(milliseconds: 300),
-              child: Icon(
-                statusIcon, // Uses the dynamic icon defined above
-                key: ValueKey(statusIcon), // Ensures animation triggers when icon changes
+              crossFadeState: isTicking 
+                  ? CrossFadeState.showFirst 
+                  : CrossFadeState.showSecond,
+              firstChild: Icon(
+                Icons.pause_circle_outline,
+                color: Colors.grey[600],
+                size: 28,
+              ),
+              secondChild: Icon(
+                Icons.play_circle_outline,
                 color: Colors.grey[600],
                 size: 28,
               ),

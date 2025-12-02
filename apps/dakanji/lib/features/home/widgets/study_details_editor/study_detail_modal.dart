@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/home/model/stud_session_model.dart';
 import 'package:da_kanji_mobile/features/home/widgets/study_details_editor/session_editor_sheet.dart';
 import 'package:da_kanji_mobile/features/home/widgets/study_details_editor/study_stats_widgets.dart';
 import 'package:da_kanji_mobile/features/home/widgets/study_details_editor/timeline_widgets.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -33,61 +35,49 @@ class StudyDetailModal extends StatefulWidget {
 }
 
 class _StudyDetailModalState extends State<StudyDetailModal> {
+  /// Prevents UI rendering before DB fetch completes
   bool _isLoading = true;
+  
+  /// Source of truth for the timeline list
   List<StudySessionUiModel> _sessions = [];
+  
+  /// Temporarily holds a deleted item to allow for "Undo" functionality
+  StudySessionUiModel? _lastDeletedSession;
+
+  /// Timer to update the UI for running sessions
+  Timer? _refreshTimer;
 
   @override
   void initState() {
     super.initState();
     _loadData();
+
+    // Rebuild every 30 seconds to update relative times/durations for running sessions
+    _refreshTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _refreshTimer?.cancel();
+    // Ensure pending deletion is committed if user closes modal while SnackBar is active
+    if (_lastDeletedSession != null) {
+      GetIt.I<UserDataDB>().timeTrackingDao.deleteSession(_lastDeletedSession!.id);
+    }
+    super.dispose();
   }
 
   Future<void> _loadData() async {
     final dao = GetIt.I<UserDataDB>().timeTrackingDao;
     final rawData = await dao.getSessionsForDate(widget.date);
-
-    final mappedSessions = rawData.map((e) {
-      final units = e.units;
-      if (units.isEmpty) return null;
-
-      final startTime = units.first.startTime;
-      final endTime = units.last.endTime ?? DateTime.now();
-
-      Duration totalWork = Duration.zero;
-      Duration totalBreak = Duration.zero;
-
-      for (int i = 0; i < units.length; i++) {
-        final unit = units[i];
-        final unitEnd = unit.endTime ?? DateTime.now();
-        totalWork += unitEnd.difference(unit.startTime);
-
-        if (i < units.length - 1) {
-          final nextUnit = units[i + 1];
-          totalBreak += nextUnit.startTime.difference(unitEnd);
-        }
-      }
-
-      Color sessionColor = Colors.grey;
-      if (e.session.category == 'Vocab') {
-        sessionColor = widget.vocabColor;
-      } else if (e.session.category == 'Kanji') {
-        sessionColor = widget.charactersColor;
-      } else {
-        sessionColor = widget.timeColor;
-      }
-
-      return StudySessionUiModel(
-        id: e.session.id,
-        startTime: startTime,
-        endTime: endTime,
-        totalWorkDuration: totalWork,
-        totalBreakDuration: totalBreak,
-        category: e.session.category ?? "General",
-        tag: e.session.tag,
-        color: sessionColor,
-        units: units,
-      );
-    }).whereType<StudySessionUiModel>().toList();
+    
+    final mappedSessions = _mapSessionsToUiModels(
+      rawData, 
+      widget.vocabColor, 
+      widget.charactersColor, 
+      widget.timeColor
+    );
 
     if (mounted) {
       setState(() {
@@ -97,51 +87,81 @@ class _StudyDetailModalState extends State<StudyDetailModal> {
     }
   }
 
-  void _deleteSession(int index) {
+  /// Removes item from UI immediately (Optimistic Update).
+  /// DB deletion occurs only after SnackBar closes without "Undo".
+  void _deleteSession(int index, BuildContext snackContext) {
+    // Capture the specific item LOCALLY.
     final deletedItem = _sessions[index];
+    
+    // Capture the Messenger BEFORE setState removes the widget from the tree.
+    // If we wait until after setState, 'snackContext' might be unmounted.
+    final messenger = ScaffoldMessenger.of(snackContext);
+    
+    // Update the class-level tracker purely for 'dispose' safety
+    _lastDeletedSession = deletedItem;
 
     setState(() {
       _sessions.removeAt(index);
     });
 
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
+    // 4. Use the captured messenger reference
+    messenger.removeCurrentSnackBar();
+    
+    final controller = messenger.showSnackBar(
       SnackBar(
         backgroundColor: const Color(0xFF2C323A),
-        content: const Text(
-          "セッションを削除しました",
-          style: TextStyle(color: Colors.white),
+        content: Text(
+          "${deletedItem.category} (${deletedItem.totalWorkDuration.inMinutes} min.) session deleted",
+          style: const TextStyle(color: Colors.white),
         ),
         action: SnackBarAction(
-          label: "元に戻す",
-          textColor: Colors.blueAccent,
+          label: "Undo",
+          textColor: Theme.brightnessOf(context) == Brightness.dark
+              ? Colors.white
+              : Colors.black,
           onPressed: () {
             setState(() {
-              _sessions.insert(index, deletedItem);
+              // If other items were deleted while this SnackBar was active, 
+              // the original 'index' might now be out of bounds.
+              final insertionIndex = index > _sessions.length 
+                  ? _sessions.length 
+                  : index;
+
+              _sessions.insert(insertionIndex, deletedItem);
+              
+              // Only clear the global tracker if it still matches this item
+              if (_lastDeletedSession == deletedItem) {
+                _lastDeletedSession = null;
+              }
             });
           },
         ),
-        duration: const Duration(seconds: 4),
       ),
-    ).closed.then((reason) async {
+    );
+
+    controller.closed.then((reason) async {
+      // 6. If the user did NOT press undo (timeout, swipe, or replaced by next delete)
       if (reason != SnackBarClosedReason.action) {
-        final dao = GetIt.I<UserDataDB>().timeTrackingDao;
-        print("DB: Deleted session ${deletedItem.id}");
+        await GetIt.I<UserDataDB>().timeTrackingDao.deleteSession(deletedItem.id);
+      }
+      
+      // Cleanup global tracker if this specific cycle is finished
+      if (_lastDeletedSession == deletedItem) {
+        _lastDeletedSession = null;
       }
     });
   }
 
   Future<void> _openSessionSheet([StudySessionUiModel? session]) async {
     final isEditing = session != null;
-
     final defaultStart = DateTime.now().subtract(const Duration(minutes: 30));
     final defaultEnd = DateTime.now();
 
-    final otherSessions = _sessions.where((s) => s.id != session?.id);
-
-    final occupiedRanges = otherSessions.map((s) {
-      return DateTimeRange(start: s.startTime, end: s.endTime);
-    }).toList();
+    // Calculate occupied time ranges to prevent overlapping sessions in the editor
+    final occupiedRanges = _sessions
+        .where((s) => s.id != session?.id)
+        .map((s) => DateTimeRange(start: s.startTime, end: s.endTime))
+        .toList();
 
     final result = await showModalBottomSheet<Map<String, dynamic>>(
       context: context,
@@ -155,8 +175,7 @@ class _StudyDetailModalState extends State<StudyDetailModal> {
         initialEnd: isEditing ? session.endTime : defaultEnd,
         initialCategory: isEditing ? session.category : "Vocab",
         initialTag: isEditing ? session.tag : null,
-        initialBreakMinutes:
-            isEditing ? session.totalBreakDuration.inMinutes : 0,
+        initialBreakMinutes: isEditing ? session.totalBreakDuration.inMinutes : 0,
         vocabColor: widget.vocabColor,
         kanjiColor: widget.charactersColor,
         isEditing: isEditing,
@@ -196,9 +215,8 @@ class _StudyDetailModalState extends State<StudyDetailModal> {
         category: category,
         tag: tag,
       );
-      print("DB: Updated session $id");
     } else {
-      print("DB: Insert new session");
+      // Logic for insert handled by backend/DAO if not explicitly shown
     }
 
     await _loadData();
@@ -208,69 +226,89 @@ class _StudyDetailModalState extends State<StudyDetailModal> {
   Widget build(BuildContext context) {
     final dateStr = DateFormat('yyyy年MM月dd日 (E)', 'ja_JP').format(widget.date);
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF1E2329),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _openSessionSheet(null),
-        backgroundColor: Colors.blueAccent,
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            backgroundColor: const Color(0xFF1E2329),
-            elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.close, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
+    return ScaffoldMessenger(
+      child: Scaffold(
+        backgroundColor: const Color(0xFF1E2329),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _openSessionSheet(null),
+          backgroundColor: g_Dakanji_green,
+          child: const Icon(Icons.add, color: Colors.white),
+        ),
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              pinned: true,
+              backgroundColor: const Color(0xFF1E2329),
+              elevation: 0,
+              leading: IconButton(
+                icon: const Icon(Icons.close, color: Colors.white),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              title: Text(
+                dateStr,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+              centerTitle: false,
             ),
-            title: Text(
-              dateStr,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            centerTitle: false,
-          ),
-          SliverToBoxAdapter(
-            child: _StatsSummarySection(
-              timeData: widget.timeData,
-              charData: widget.charData,
-              vocabData: widget.vocabData,
-              timeColor: widget.timeColor,
-              charactersColor: widget.charactersColor,
-              vocabColor: widget.vocabColor,
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: Divider(color: Colors.white10, height: 1),
-          ),
-          const SliverToBoxAdapter(
-            child: _TimelineHeader(),
-          ),
-          if (_isLoading)
-            const SliverFillRemaining(
-              child: Center(child: CircularProgressIndicator()),
-            )
-          else if (_sessions.isEmpty)
-            const SliverToBoxAdapter(
-              child: _EmptySessionState(),
-            )
-          else
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return SessionTimelineRow(
-                    session: _sessions[index],
-                    onDelete: () => _deleteSession(index),
-                    onEdit: () => _openSessionSheet(_sessions[index]),
-                  );
-                },
-                childCount: _sessions.length,
+            SliverToBoxAdapter(
+              child: _StatsSummarySection(
+                timeData: widget.timeData,
+                charData: widget.charData,
+                vocabData: widget.vocabData,
+                timeColor: widget.timeColor,
+                charactersColor: widget.charactersColor,
+                vocabColor: widget.vocabColor,
               ),
             ),
-          const SliverToBoxAdapter(child: SizedBox(height: 100)),
-        ],
+            const SliverToBoxAdapter(child: Divider(color: Colors.white10, height: 1)),
+            
+            // Inlined Timeline Header
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+                child: Text(
+                  "タイムライン",
+                  style: TextStyle(
+                    color: Colors.grey[400],
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            
+            if (_isLoading)
+              const SliverFillRemaining(child: Center(child: CircularProgressIndicator()))
+            else if (_sessions.isEmpty)
+              // Inlined Empty State
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Center(
+                    child: Text(
+                      "No sessions recorded",
+                      style: TextStyle(color: Colors.grey[600]),
+                    ),
+                  ),
+                ),
+              )
+            else
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (itemContext, index) {
+                    return SessionTimelineRow(
+                      session: _sessions[index],
+                      onDelete: () => _deleteSession(index, itemContext),
+                      onEdit: () => _openSessionSheet(_sessions[index]),
+                    );
+                  },
+                  childCount: _sessions.length,
+                ),
+              ),
+            const SliverToBoxAdapter(child: SizedBox(height: 100)),
+          ],
+        ),
       ),
     );
   }
@@ -297,7 +335,9 @@ class _StatsSummarySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-      child: Column(
+      child: Row(
+        spacing: 8,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           if (timeData == null && vocabData == null && charData == null)
             Padding(
@@ -319,38 +359,57 @@ class _StatsSummarySection extends StatelessWidget {
   }
 }
 
-class _TimelineHeader extends StatelessWidget {
-  const _TimelineHeader();
+// -----------------------------------------------------------------------------
+// Helper Methods
+// -----------------------------------------------------------------------------
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
-      child: Text(
-        "タイムライン",
-        style: TextStyle(
-          color: Colors.grey[400],
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+List<StudySessionUiModel> _mapSessionsToUiModels(
+  List<dynamic> rawData, 
+  Color vocabColor,
+  Color charactersColor,
+  Color timeColor,
+) {
+  return rawData.map((e) {
+    final units = e.units;
+    if (units.isEmpty) return null;
+
+    final startTime = units.first.startTime;
+    final endTime = units.last.endTime ?? DateTime.now();
+
+    Duration totalWork = Duration.zero;
+    Duration totalBreak = Duration.zero;
+
+    // Iterates units to sum work duration and calculate breaks between disjoint units
+    for (int i = 0; i < units.length; i++) {
+      final unit = units[i];
+      final unitEnd = unit.endTime ?? DateTime.now();
+      totalWork += unitEnd.difference(unit.startTime);
+
+      if (i < units.length - 1) {
+        final nextUnit = units[i + 1];
+        totalBreak += nextUnit.startTime.difference(unitEnd);
+      }
+    }
+
+    Color sessionColor = Colors.grey;
+    if (e.session.category == 'Vocab') {
+      sessionColor = vocabColor;
+    } else if (e.session.category == 'Kanji') {
+      sessionColor = charactersColor;
+    } else {
+      sessionColor = timeColor;
+    }
+
+    return StudySessionUiModel(
+      id: e.session.id,
+      startTime: startTime,
+      endTime: endTime,
+      totalWorkDuration: totalWork,
+      totalBreakDuration: totalBreak,
+      category: e.session.category ?? "General",
+      tag: e.session.tag,
+      color: sessionColor,
+      units: units,
     );
-  }
-}
-
-class _EmptySessionState extends StatelessWidget {
-  const _EmptySessionState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Center(
-        child: Text(
-          "No sessions recorded",
-          style: TextStyle(color: Colors.grey[600]),
-        ),
-      ),
-    );
-  }
+  }).whereType<StudySessionUiModel>().toList();
 }

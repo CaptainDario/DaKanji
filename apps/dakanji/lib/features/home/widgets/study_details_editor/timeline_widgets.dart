@@ -16,8 +16,24 @@ class SessionTimelineRow extends StatelessWidget {
     required this.onEdit,
   });
 
+  bool get _isRunning {
+    // If the last unit has no end time, it is currently active
+    return session.units.isNotEmpty && session.units.last.endTime == null;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isRunning = _isRunning;
+    final currentTime = DateTime.now();
+
+    // Calculate real-time values for running sessions
+    final realEndTime = isRunning ? currentTime : session.endTime;
+    
+    // Add the elapsed time since load to the duration
+    final realTotalDuration = isRunning 
+        ? session.totalWorkDuration + currentTime.difference(session.endTime)
+        : session.totalWorkDuration;
+
     return InkWell(
       onTap: onEdit,
       child: IntrinsicHeight(
@@ -26,18 +42,23 @@ class SessionTimelineRow extends StatelessWidget {
           children: [
             _TimeColumn(
               startTime: session.startTime,
-              endTime: session.endTime,
+              endTime: realEndTime,
+              isRunning: isRunning,
             ),
             SizedBox(
               width: 24,
               child: TimelineConnector(
                 units: session.units,
-                totalDuration: session.endTime.difference(session.startTime),
+                totalDuration: realTotalDuration,
                 color: session.color,
+                isRunning: isRunning,
               ),
             ),
             Expanded(
-              child: _SessionInfoColumn(session: session),
+              child: _SessionInfoColumn(
+                session: session,
+                realDuration: realTotalDuration,
+              ),
             ),
             _DeleteAction(onDelete: onDelete),
           ],
@@ -51,12 +72,14 @@ class TimelineConnector extends StatelessWidget {
   final List<TimeTrackingUnitTableData> units;
   final Duration totalDuration;
   final Color color;
+  final bool isRunning;
 
   const TimelineConnector({
     super.key,
     required this.units,
     required this.totalDuration,
     required this.color,
+    this.isRunning = false,
   });
 
   @override
@@ -78,6 +101,7 @@ class TimelineConnector extends StatelessWidget {
               units: units,
               totalDuration: totalDuration,
               color: color,
+              isRunning: isRunning,
             ),
             child: Container(),
           ),
@@ -100,16 +124,18 @@ class _TimelineLinePainter extends CustomPainter {
   final List<TimeTrackingUnitTableData> units;
   final Duration totalDuration;
   final Color color;
+  final bool isRunning;
 
   _TimelineLinePainter({
     required this.units,
     required this.totalDuration,
     required this.color,
+    required this.isRunning,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (units.isEmpty || totalDuration.inSeconds == 0) return;
+    if (units.isEmpty) return;
 
     final paint = Paint()
       ..color = Colors.white24
@@ -117,12 +143,20 @@ class _TimelineLinePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     final double totalHeight = size.height;
-    final int totalSeconds = totalDuration.inSeconds;
+    final int totalSeconds = totalDuration.inSeconds > 0 
+        ? totalDuration.inSeconds 
+        : 1;
+        
     final sessionStartTime = units.first.startTime;
 
     for (var unit in units) {
       final unitStart = unit.startTime;
-      final unitEnd = unit.endTime ?? DateTime.now();
+      final isLastUnit = unit == units.last;
+      
+      // Use current time for the end of the last unit if running
+      final unitEnd = (isLastUnit && isRunning) 
+          ? DateTime.now() 
+          : (unit.endTime ?? DateTime.now());
 
       final startRatio =
           unitStart.difference(sessionStartTime).inSeconds / totalSeconds;
@@ -143,21 +177,26 @@ class _TimelineLinePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _TimelineLinePainter oldDelegate) {
     return oldDelegate.units != units ||
-        oldDelegate.totalDuration != totalDuration;
+        oldDelegate.totalDuration != totalDuration ||
+        oldDelegate.isRunning != isRunning;
   }
 }
 
 class _TimeColumn extends StatelessWidget {
   final DateTime startTime;
   final DateTime endTime;
+  final bool isRunning;
 
   const _TimeColumn({
     required this.startTime,
     required this.endTime,
+    this.isRunning = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isNextDay = endTime.day != startTime.day;
+
     return SizedBox(
       width: 80,
       child: Padding(
@@ -179,14 +218,41 @@ class _TimeColumn extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
-              child: Text(
-                DateFormat('HH:mm').format(endTime),
-                style: TextStyle(
-                  color: Colors.grey[500],
-                  fontWeight: FontWeight.normal,
-                  fontSize: 12,
-                ),
-              ),
+              child: isRunning
+                  ? const Text(
+                      "Now",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    )
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          DateFormat('HH:mm').format(endTime),
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                            fontWeight: FontWeight.normal,
+                            fontSize: 12,
+                          ),
+                        ),
+                        if (isNextDay)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 2.0),
+                            child: Text(
+                              "+1",
+                              style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
             ),
           ],
         ),
@@ -197,8 +263,12 @@ class _TimeColumn extends StatelessWidget {
 
 class _SessionInfoColumn extends StatelessWidget {
   final StudySessionUiModel session;
+  final Duration realDuration;
 
-  const _SessionInfoColumn({required this.session});
+  const _SessionInfoColumn({
+    required this.session,
+    required this.realDuration,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +294,7 @@ class _SessionInfoColumn extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           _SessionDurationInfo(
-            workMinutes: session.totalWorkDuration.inMinutes,
+            workMinutes: realDuration.inMinutes,
             breakMinutes: session.totalBreakDuration.inMinutes,
           ),
         ],
@@ -313,9 +383,8 @@ class _DeleteAction extends StatelessWidget {
         child: IconButton(
           icon: Icon(Icons.delete_outline, color: Colors.grey[600]),
           onPressed: onDelete,
-          tooltip: "セッションを削除",
         ),
       ),
     );
   }
-}
+} 

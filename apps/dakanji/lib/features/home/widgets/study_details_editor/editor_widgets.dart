@@ -47,6 +47,7 @@ class TimeDisplay extends StatelessWidget {
   final DateTime time;
   final VoidCallback onTap;
   final bool isError;
+  final bool isNextDay;
 
   const TimeDisplay({
     super.key,
@@ -54,6 +55,7 @@ class TimeDisplay extends StatelessWidget {
     required this.time,
     required this.onTap,
     this.isError = false,
+    this.isNextDay = false,
   });
 
   @override
@@ -78,13 +80,30 @@ class TimeDisplay extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  DateFormat('HH:mm').format(time),
-                  style: const TextStyle(
-                    color: Colors.white, 
-                    fontSize: 18, 
-                    fontWeight: FontWeight.w500
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      DateFormat('HH:mm').format(time),
+                      style: const TextStyle(
+                        color: Colors.white, 
+                        fontSize: 18, 
+                        fontWeight: FontWeight.w500
+                      ),
+                    ),
+                    if (isNextDay)
+                      const Padding(
+                        padding: EdgeInsets.only(left: 2.0, top: 0),
+                        child: Text(
+                          "+1",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ],
             ),
