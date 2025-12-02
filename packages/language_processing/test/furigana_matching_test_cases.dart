@@ -4,6 +4,14 @@ import 'package:language_processing/japanese/furigana_matching.dart';
 
 List<(Map<String, String>, List<FuriganaPair>)> testCases = [
   (
+    {"kanji": "言い方", "kana": "いいかた"},
+    [
+      FuriganaPair("言", "イ"),
+      FuriganaPair("", "イ"),
+      FuriganaPair("方", "カタ"),
+    ]
+  ),
+  (
     {"kanji": "思い始め", "kana": "おもいはじめ"},
     [
       FuriganaPair("思", "オモ"),
