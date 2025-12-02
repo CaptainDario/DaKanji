@@ -140,22 +140,23 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       SizedBox(width: 4.0),
-                      DropdownButton<String>(
-                        value: "",
-                        items: List.generate(exampleDictionaryTerms.length, (i) => DropdownMenuItem<String>(
-                          value: exampleDictionaryTerms[i],
-                          child: Text(exampleDictionaryTerms[i])
-                        )),
-                        onChanged: (value) async {
-                          setState(() {
-                            searchController.text = "";
-                            lastSearchResult = null;
-                          });
-                          searchController.text = value ?? "";
-                          lastSearchResult = await searchDb(searchController.text);
-                          setState(() {});
-                        },
-                      )
+                      if(!kReleaseMode)
+                        DropdownButton<String>(
+                          value: "",
+                          items: List.generate(exampleDictionaryTerms.length, (i) => DropdownMenuItem<String>(
+                            value: exampleDictionaryTerms[i],
+                            child: Text(exampleDictionaryTerms[i])
+                          )),
+                          onChanged: (value) async {
+                            setState(() {
+                              searchController.text = "";
+                              lastSearchResult = null;
+                            });
+                            searchController.text = value ?? "";
+                            lastSearchResult = await searchDb(searchController.text);
+                            setState(() {});
+                          },
+                        )
                     ],
                   ),
                 ),
