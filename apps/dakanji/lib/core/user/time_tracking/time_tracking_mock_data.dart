@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_table.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart'; // For kDebugMode
@@ -101,9 +100,24 @@ class TimeTrackingMockDataGenerator {
 
         // Generate 1 to 3 sessions per day
         final sessionCount = _rng.nextInt(3) + 1; 
+
+        // Start the day randomly between 8am and 10am
+        final startOfDay = DateTime.utc(targetDate.year, targetDate.month, targetDate.day);
+        DateTime currentCursor = startOfDay.add(Duration(hours: 8 + _rng.nextInt(2), minutes: _rng.nextInt(60)));
         
         for (int s = 0; s < sessionCount; s++) {
-          await _generateRandomSession(targetDate, i == 0 && s == sessionCount - 1);
+          final isLast = (i == 0 && s == sessionCount - 1);
+          
+          // Generate session starting exactly at currentCursor
+          // Returns the end time of that session
+          final sessionEnd = await _generateRandomSession(
+            startTime: currentCursor, 
+            isLastSessionOfToday: isLast,
+            targetDateForReference: targetDate
+          );
+
+          // Advance cursor for next session: End of previous + random break (15m to 2h)
+          currentCursor = sessionEnd.add(Duration(minutes: 15 + _rng.nextInt(105)));
         }
       }
     });
@@ -113,24 +127,29 @@ class TimeTrackingMockDataGenerator {
 
   // --- Internal Helpers ---
 
-  Future<void> _generateRandomSession(DateTime date, bool isLastSessionOfToday) async {
+  /// Returns the DateTime when this generated session ends
+  Future<DateTime> _generateRandomSession({
+    required DateTime startTime, 
+    required bool isLastSessionOfToday,
+    required DateTime targetDateForReference,
+  }) async {
     // 1. Randomize Metadata
     final category = _categories[_rng.nextInt(_categories.length)];
     final tag = _rng.nextBool() ? _tags[_rng.nextInt(_tags.length)] : null;
     
-    // 2. Determine Start Time (Spread throughout the day: 8am - 10pm)
-    final startOfDay = DateTime.utc(date.year, date.month, date.day);
-    final startHour = 8 + _rng.nextInt(14); 
-    final baseStartTime = startOfDay.add(Duration(hours: startHour, minutes: _rng.nextInt(60)));
+    // 2. Use provided startTime (This fixes the overlapping/negative value issue)
+    final baseStartTime = startTime;
 
     // 3. Determine Session Pattern
     final pattern = _rng.nextInt(100);
     List<_MockUnit> units = [];
+    DateTime lastEndTime;
 
     if (pattern < 60) {
       // 60% Chance: Standard Solid Block (20 - 90 mins)
       final duration = Duration(minutes: 20 + _rng.nextInt(70));
-      units.add(_MockUnit(baseStartTime, baseStartTime.add(duration)));
+      lastEndTime = baseStartTime.add(duration);
+      units.add(_MockUnit(baseStartTime, lastEndTime));
     
     } else if (pattern < 90) {
       // 30% Chance: Pomodoro Style (25m Work -> 5m Break -> 25m Work)
@@ -144,25 +163,26 @@ class TimeTrackingMockDataGenerator {
         // Add 5 min break gap for next unit
         time = workEnd.add(const Duration(minutes: 5)); 
       }
+      // The last "time" includes the break, but the actual work ended 5 mins ago
+      lastEndTime = time.subtract(const Duration(minutes: 5));
 
     } else {
       // 10% Chance: Micro Session (Quick Review < 10 mins)
       final duration = Duration(minutes: 2 + _rng.nextInt(8));
-      units.add(_MockUnit(baseStartTime, baseStartTime.add(duration)));
+      lastEndTime = baseStartTime.add(duration);
+      units.add(_MockUnit(baseStartTime, lastEndTime));
     }
 
     // 4. Handle "Currently Running" Case
-    // If it's the very last session of "Today", maybe leave it open to test running timers?
     bool isCompleted = true;
     
-    // Only simulate running timer if "Today" is actually today (i == 0 check from caller)
-    // Here we simplified logic, but if you want strict "Today", check date vs now.
-    final isActuallyToday = date.day == DateTime.now().day;
+    // Only simulate running timer if "Today" is actually today
+    final isActuallyToday = targetDateForReference.day == DateTime.now().day;
     
     if (isLastSessionOfToday && isActuallyToday && _rng.nextBool()) {
-       // 50% chance the user is currently studying right now
        isCompleted = false;
        final lastUnit = units.last;
+       // Running timer has no end time
        units[units.length - 1] = _MockUnit(lastUnit.start, null);
     }
 
@@ -172,6 +192,8 @@ class TimeTrackingMockDataGenerator {
       isCompleted: isCompleted, 
       units: units
     );
+
+    return lastEndTime;
   }
 
   Future<void> _insertSession({
