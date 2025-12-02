@@ -5,6 +5,9 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:dakanji_db_example/init.dart';
 import 'package:dakanji_db_example/search_results/dictionary_search_result_widget.dart';
+import 'package:dakanji_db_example/search_settings.dart';
+import 'package:dakanji_db_example/search_settings_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'globals.dart';
@@ -62,6 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   TextEditingController searchController = TextEditingController();
 
+  SearchSettings _searchSettings = SearchSettings();
+
+
+
   @override
   void initState() {
     super.initState();
@@ -80,7 +87,35 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
         actions: [
-          
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () async {
+              final result = await showGeneralDialog<SearchSettings>(
+                context: context,
+                barrierDismissible: true,
+                barrierLabel: "Settings",
+                transitionDuration: const Duration(milliseconds: 200),
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return ScaleTransition(
+                    scale: animation,
+                    child: Center(
+                      child: Material(
+                        color: Colors.transparent,
+                        child: SearchSettingsDialog(initialSettings: _searchSettings.copy()),
+                      ),
+                    ),
+                  );
+                },
+              );
+
+              // If we received data back, update the state and run the search
+              if (result != null) {
+                setState(() {
+                  _searchSettings = result;
+                });
+              }
+            },
+          ),
         ],
       ),
       body: Center(
@@ -185,11 +220,11 @@ class _MyHomePageState extends State<MyHomePage> {
       Stopwatch stopwatch = Stopwatch()..start();
       result = await daKanjiDB.dBQueriesDao.dictionarySearch(
         term,
-        normalizedSearch: false,
-        normalizedSearchConvertsRomajiToHiragana: false,
-        deconjugationSearch: false,
-        spellfixSearch: false,
-        groupByTermAndReading: true
+        normalizedSearch: _searchSettings.normalizedSearch,
+        normalizedSearchConvertsRomajiToHiragana: _searchSettings.convertRomaji,
+        deconjugationSearch: _searchSettings.deconjugation,
+        spellfixSearch: _searchSettings.spellfix,
+        groupByTermAndReading: _searchSettings.groupResults,
       );
       print("Search completed in ${stopwatch.elapsedMilliseconds}ms.");
     }
