@@ -71,6 +71,39 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
   // --- START : Session Management ---
 
+  /// Checks for any running timers that have exceeded 24 hours.
+  /// If found, it caps the unit at exactly 24 hours and closes the session.
+  Future<void> enforce24HourLimit() async {
+    // Find running units that started more than 24 hours ago
+    final limit = DateTime.now().subtract(const Duration(hours: 24));
+    
+    final staleUnits = await (select(timeTrackingUnitTable)
+      ..where((t) => t.endTime.isNull() & t.startTime.isSmallerThanValue(limit)))
+      .get();
+
+    if (staleUnits.isEmpty) return;
+
+    await transaction(() async {
+      for (final unit in staleUnits) {
+        // The forced end time is 23:59h to prevent edge-case overlaps
+        final forcedEndTime = unit.startTime.add(const Duration(hours: 23, minutes: 59));
+
+        // Close the Unit
+        await (update(timeTrackingUnitTable)..where((t) => t.id.equals(unit.id)))
+            .write(TimeTrackingUnitTableCompanion(
+              endTime: Value(forcedEndTime),
+            ));
+
+        // Close the Session (Mark as completed since it was abandoned)
+        await (update(timeTrackingTable)
+              ..where((t) => t.id.equals(unit.timeTrackingId)))
+            .write(const TimeTrackingTableCompanion(
+              isCompleted: Value(true),
+            ));
+      }
+    });
+  }
+
   /// Updates an existing session's details including time, breaks, and metadata.
   Future<void> updateSession({
     required int sessionId,
@@ -241,6 +274,10 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
   /// Returns the the row of the currently running timer, if any.
   Future<TimeTrackingUnitTableData?> getRunningTimer() async {
+
+    // ensure no timer is over 24 hours
+    await enforce24HourLimit();
+
     final query = select(timeTrackingUnitTable)
       ..where((tbl) => tbl.endTime.isNull());
     final result = await query.getSingleOrNull();
@@ -254,6 +291,7 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
   /// Returns the full state of the user's tracking.
   Stream<TimerStatus> watchCurrentStatus() {
+
     // Is the timer ticking right now?
     final runningStream = (select(timeTrackingUnitTable)
           ..where((tbl) => tbl.endTime.isNull())
@@ -277,7 +315,11 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     });
   }
 
-  Future<TimerStatus> getCurrentStatus() => watchCurrentStatus().first;
+  Future<TimerStatus> getCurrentStatus() async {
+    // ensure no timer is over 24 hours
+    await enforce24HourLimit();
+    return watchCurrentStatus().first;
+  }
 
   /// Retrieves data to restore an active session, if any.
   Future<({

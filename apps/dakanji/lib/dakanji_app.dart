@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -49,6 +50,9 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+
+    // ensure no timer is over 24 hours
+    GetIt.I<UserDataDB>().timeTrackingDao.enforce24HourLimit();
     
     // app active again
     if(state == AppLifecycleState.resumed){
