@@ -51,6 +51,12 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
 
+    // ensure daily goals exist
+    if(state == AppLifecycleState.resumed)
+      GetIt.I<UserDataDB>().timeTrackingDao.ensureDailyGoalExists(
+        GetIt.I<Settings>().timeTracking.studyGoal
+      );
+
     // ensure no timer is over 24 hours
     GetIt.I<UserDataDB>().timeTrackingDao.enforce24HourLimit();
     

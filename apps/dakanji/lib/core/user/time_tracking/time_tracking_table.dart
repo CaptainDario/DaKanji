@@ -1,6 +1,20 @@
+import 'package:da_kanji_mobile/core/utils/sql_utils.dart';
 import 'package:drift/drift.dart';
 
 
+
+/// Table to track the daily study goals of the user
+class TimeTrackingDailyGoalTable extends Table {
+  
+  IntColumn get id => integer().autoIncrement()();
+
+  // the date for which the goal is set (unique per day)
+  IntColumn get date => integer().map(const DateOnlyConverter()).unique()();
+
+  // the study goal in minutes
+  IntColumn get studyGoalMinutes => integer()();
+  
+}
 
 /// Table to track the sessions of a user
 class TimeTrackingTable extends Table {

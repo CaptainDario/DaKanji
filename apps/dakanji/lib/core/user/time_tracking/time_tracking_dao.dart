@@ -1,6 +1,7 @@
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_table.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/timer_status.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/core/utils/sql_utils.dart';
 import 'package:drift/drift.dart';
 import 'package:async/async.dart';
 
@@ -9,12 +10,43 @@ part 'time_tracking_dao.g.dart';
 
 @DriftAccessor(
   tables: [
-    TimeTrackingTable, TimeTrackingUnitTable, TimeTrackingTagsTable, TimeTrackingCategoriesTable
+    TimeTrackingTable,
+    TimeTrackingUnitTable,
+    TimeTrackingTagsTable,
+    TimeTrackingCategoriesTable,
+    TimeTrackingDailyGoalTable,
   ]
 )
 class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDaoMixin {
 
   TimeTrackingDao(super.db);
+
+  // --- START : Daily Goals Management ---
+
+  /// Ensures that there is an entry for today's date in the Daily Goals table.
+  /// If not, it inserts one with the provided [goal] in minutes.
+  Future<void> ensureDailyGoalExists(int goal) async {
+    final today = DateTime.now();
+    final todayAsSql = const DateOnlyConverter().toSql(today);
+
+    // Check if today already exists
+    final exists = await (select(timeTrackingDailyGoalTable)
+          ..where((t) => t.date.equals(todayAsSql)))
+        .getSingleOrNull();
+
+    if (exists != null) return;
+
+    // Insert today's goal
+    await into(timeTrackingDailyGoalTable).insert(
+      TimeTrackingDailyGoalTableCompanion(
+        date: Value(today),
+        studyGoalMinutes: Value(goal),
+      ),
+      mode: InsertMode.insertOrIgnore,
+    );
+  }
+
+  // --- END   : Daily Goals Management ---
 
   // --- START : Statistics & History ---
   

@@ -12,4 +12,6 @@ mixin _$TimeTrackingDaoMixin on DatabaseAccessor<UserDataDB> {
       attachedDatabase.timeTrackingTagsTable;
   $TimeTrackingCategoriesTableTable get timeTrackingCategoriesTable =>
       attachedDatabase.timeTrackingCategoriesTable;
+  $TimeTrackingDailyGoalTableTable get timeTrackingDailyGoalTable =>
+      attachedDatabase.timeTrackingDailyGoalTable;
 }

@@ -2236,6 +2236,280 @@ class TimeTrackingTagsTableCompanion
   }
 }
 
+class $TimeTrackingDailyGoalTableTable extends TimeTrackingDailyGoalTable
+    with
+        TableInfo<
+          $TimeTrackingDailyGoalTableTable,
+          TimeTrackingDailyGoalTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TimeTrackingDailyGoalTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<DateTime, int> date =
+      GeneratedColumn<int>(
+        'date',
+        aliasedName,
+        false,
+        type: DriftSqlType.int,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+      ).withConverter<DateTime>(
+        $TimeTrackingDailyGoalTableTable.$converterdate,
+      );
+  static const VerificationMeta _studyGoalMinutesMeta = const VerificationMeta(
+    'studyGoalMinutes',
+  );
+  @override
+  late final GeneratedColumn<int> studyGoalMinutes = GeneratedColumn<int>(
+    'study_goal_minutes',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, date, studyGoalMinutes];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'time_tracking_daily_goal_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TimeTrackingDailyGoalTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('study_goal_minutes')) {
+      context.handle(
+        _studyGoalMinutesMeta,
+        studyGoalMinutes.isAcceptableOrUnknown(
+          data['study_goal_minutes']!,
+          _studyGoalMinutesMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_studyGoalMinutesMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TimeTrackingDailyGoalTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TimeTrackingDailyGoalTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      date: $TimeTrackingDailyGoalTableTable.$converterdate.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}date'],
+        )!,
+      ),
+      studyGoalMinutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}study_goal_minutes'],
+      )!,
+    );
+  }
+
+  @override
+  $TimeTrackingDailyGoalTableTable createAlias(String alias) {
+    return $TimeTrackingDailyGoalTableTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<DateTime, int> $converterdate =
+      const DateOnlyConverter();
+}
+
+class TimeTrackingDailyGoalTableData extends DataClass
+    implements Insertable<TimeTrackingDailyGoalTableData> {
+  final int id;
+  final DateTime date;
+  final int studyGoalMinutes;
+  const TimeTrackingDailyGoalTableData({
+    required this.id,
+    required this.date,
+    required this.studyGoalMinutes,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    {
+      map['date'] = Variable<int>(
+        $TimeTrackingDailyGoalTableTable.$converterdate.toSql(date),
+      );
+    }
+    map['study_goal_minutes'] = Variable<int>(studyGoalMinutes);
+    return map;
+  }
+
+  TimeTrackingDailyGoalTableCompanion toCompanion(bool nullToAbsent) {
+    return TimeTrackingDailyGoalTableCompanion(
+      id: Value(id),
+      date: Value(date),
+      studyGoalMinutes: Value(studyGoalMinutes),
+    );
+  }
+
+  factory TimeTrackingDailyGoalTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TimeTrackingDailyGoalTableData(
+      id: serializer.fromJson<int>(json['id']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      studyGoalMinutes: serializer.fromJson<int>(json['studyGoalMinutes']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'date': serializer.toJson<DateTime>(date),
+      'studyGoalMinutes': serializer.toJson<int>(studyGoalMinutes),
+    };
+  }
+
+  TimeTrackingDailyGoalTableData copyWith({
+    int? id,
+    DateTime? date,
+    int? studyGoalMinutes,
+  }) => TimeTrackingDailyGoalTableData(
+    id: id ?? this.id,
+    date: date ?? this.date,
+    studyGoalMinutes: studyGoalMinutes ?? this.studyGoalMinutes,
+  );
+  TimeTrackingDailyGoalTableData copyWithCompanion(
+    TimeTrackingDailyGoalTableCompanion data,
+  ) {
+    return TimeTrackingDailyGoalTableData(
+      id: data.id.present ? data.id.value : this.id,
+      date: data.date.present ? data.date.value : this.date,
+      studyGoalMinutes: data.studyGoalMinutes.present
+          ? data.studyGoalMinutes.value
+          : this.studyGoalMinutes,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimeTrackingDailyGoalTableData(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('studyGoalMinutes: $studyGoalMinutes')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, date, studyGoalMinutes);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TimeTrackingDailyGoalTableData &&
+          other.id == this.id &&
+          other.date == this.date &&
+          other.studyGoalMinutes == this.studyGoalMinutes);
+}
+
+class TimeTrackingDailyGoalTableCompanion
+    extends UpdateCompanion<TimeTrackingDailyGoalTableData> {
+  final Value<int> id;
+  final Value<DateTime> date;
+  final Value<int> studyGoalMinutes;
+  const TimeTrackingDailyGoalTableCompanion({
+    this.id = const Value.absent(),
+    this.date = const Value.absent(),
+    this.studyGoalMinutes = const Value.absent(),
+  });
+  TimeTrackingDailyGoalTableCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime date,
+    required int studyGoalMinutes,
+  }) : date = Value(date),
+       studyGoalMinutes = Value(studyGoalMinutes);
+  static Insertable<TimeTrackingDailyGoalTableData> custom({
+    Expression<int>? id,
+    Expression<int>? date,
+    Expression<int>? studyGoalMinutes,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (date != null) 'date': date,
+      if (studyGoalMinutes != null) 'study_goal_minutes': studyGoalMinutes,
+    });
+  }
+
+  TimeTrackingDailyGoalTableCompanion copyWith({
+    Value<int>? id,
+    Value<DateTime>? date,
+    Value<int>? studyGoalMinutes,
+  }) {
+    return TimeTrackingDailyGoalTableCompanion(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      studyGoalMinutes: studyGoalMinutes ?? this.studyGoalMinutes,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<int>(
+        $TimeTrackingDailyGoalTableTable.$converterdate.toSql(date.value),
+      );
+    }
+    if (studyGoalMinutes.present) {
+      map['study_goal_minutes'] = Variable<int>(studyGoalMinutes.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimeTrackingDailyGoalTableCompanion(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('studyGoalMinutes: $studyGoalMinutes')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$UserDataDB extends GeneratedDatabase {
   _$UserDataDB(QueryExecutor e) : super(e);
   $UserDataDBManager get managers => $UserDataDBManager(this);
@@ -2254,6 +2528,8 @@ abstract class _$UserDataDB extends GeneratedDatabase {
       $TimeTrackingCategoriesTableTable(this);
   late final $TimeTrackingTagsTableTable timeTrackingTagsTable =
       $TimeTrackingTagsTableTable(this);
+  late final $TimeTrackingDailyGoalTableTable timeTrackingDailyGoalTable =
+      $TimeTrackingDailyGoalTableTable(this);
   late final Index timeTrackingIdIndex = Index(
     'timeTrackingIdIndex',
     'CREATE INDEX timeTrackingIdIndex ON time_tracking_unit_table (time_tracking_id)',
@@ -2278,6 +2554,7 @@ abstract class _$UserDataDB extends GeneratedDatabase {
     timeTrackingUnitTable,
     timeTrackingCategoriesTable,
     timeTrackingTagsTable,
+    timeTrackingDailyGoalTable,
     timeTrackingIdIndex,
   ];
   @override
@@ -3955,6 +4232,184 @@ typedef $$TimeTrackingTagsTableTableProcessedTableManager =
       TimeTrackingTagsTableData,
       PrefetchHooks Function()
     >;
+typedef $$TimeTrackingDailyGoalTableTableCreateCompanionBuilder =
+    TimeTrackingDailyGoalTableCompanion Function({
+      Value<int> id,
+      required DateTime date,
+      required int studyGoalMinutes,
+    });
+typedef $$TimeTrackingDailyGoalTableTableUpdateCompanionBuilder =
+    TimeTrackingDailyGoalTableCompanion Function({
+      Value<int> id,
+      Value<DateTime> date,
+      Value<int> studyGoalMinutes,
+    });
+
+class $$TimeTrackingDailyGoalTableTableFilterComposer
+    extends Composer<_$UserDataDB, $TimeTrackingDailyGoalTableTable> {
+  $$TimeTrackingDailyGoalTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<DateTime, DateTime, int> get date =>
+      $composableBuilder(
+        column: $table.date,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+
+  ColumnFilters<int> get studyGoalMinutes => $composableBuilder(
+    column: $table.studyGoalMinutes,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TimeTrackingDailyGoalTableTableOrderingComposer
+    extends Composer<_$UserDataDB, $TimeTrackingDailyGoalTableTable> {
+  $$TimeTrackingDailyGoalTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get studyGoalMinutes => $composableBuilder(
+    column: $table.studyGoalMinutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TimeTrackingDailyGoalTableTableAnnotationComposer
+    extends Composer<_$UserDataDB, $TimeTrackingDailyGoalTableTable> {
+  $$TimeTrackingDailyGoalTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<DateTime, int> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<int> get studyGoalMinutes => $composableBuilder(
+    column: $table.studyGoalMinutes,
+    builder: (column) => column,
+  );
+}
+
+class $$TimeTrackingDailyGoalTableTableTableManager
+    extends
+        RootTableManager<
+          _$UserDataDB,
+          $TimeTrackingDailyGoalTableTable,
+          TimeTrackingDailyGoalTableData,
+          $$TimeTrackingDailyGoalTableTableFilterComposer,
+          $$TimeTrackingDailyGoalTableTableOrderingComposer,
+          $$TimeTrackingDailyGoalTableTableAnnotationComposer,
+          $$TimeTrackingDailyGoalTableTableCreateCompanionBuilder,
+          $$TimeTrackingDailyGoalTableTableUpdateCompanionBuilder,
+          (
+            TimeTrackingDailyGoalTableData,
+            BaseReferences<
+              _$UserDataDB,
+              $TimeTrackingDailyGoalTableTable,
+              TimeTrackingDailyGoalTableData
+            >,
+          ),
+          TimeTrackingDailyGoalTableData,
+          PrefetchHooks Function()
+        > {
+  $$TimeTrackingDailyGoalTableTableTableManager(
+    _$UserDataDB db,
+    $TimeTrackingDailyGoalTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TimeTrackingDailyGoalTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$TimeTrackingDailyGoalTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$TimeTrackingDailyGoalTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<int> studyGoalMinutes = const Value.absent(),
+              }) => TimeTrackingDailyGoalTableCompanion(
+                id: id,
+                date: date,
+                studyGoalMinutes: studyGoalMinutes,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required DateTime date,
+                required int studyGoalMinutes,
+              }) => TimeTrackingDailyGoalTableCompanion.insert(
+                id: id,
+                date: date,
+                studyGoalMinutes: studyGoalMinutes,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TimeTrackingDailyGoalTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$UserDataDB,
+      $TimeTrackingDailyGoalTableTable,
+      TimeTrackingDailyGoalTableData,
+      $$TimeTrackingDailyGoalTableTableFilterComposer,
+      $$TimeTrackingDailyGoalTableTableOrderingComposer,
+      $$TimeTrackingDailyGoalTableTableAnnotationComposer,
+      $$TimeTrackingDailyGoalTableTableCreateCompanionBuilder,
+      $$TimeTrackingDailyGoalTableTableUpdateCompanionBuilder,
+      (
+        TimeTrackingDailyGoalTableData,
+        BaseReferences<
+          _$UserDataDB,
+          $TimeTrackingDailyGoalTableTable,
+          TimeTrackingDailyGoalTableData
+        >,
+      ),
+      TimeTrackingDailyGoalTableData,
+      PrefetchHooks Function()
+    >;
 
 class $UserDataDBManager {
   final _$UserDataDB _db;
@@ -3979,4 +4434,10 @@ class $UserDataDBManager {
       );
   $$TimeTrackingTagsTableTableTableManager get timeTrackingTagsTable =>
       $$TimeTrackingTagsTableTableTableManager(_db, _db.timeTrackingTagsTable);
+  $$TimeTrackingDailyGoalTableTableTableManager
+  get timeTrackingDailyGoalTable =>
+      $$TimeTrackingDailyGoalTableTableTableManager(
+        _db,
+        _db.timeTrackingDailyGoalTable,
+      );
 }
