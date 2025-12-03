@@ -1,4 +1,4 @@
-import 'package:da_kanji_mobile/features/home/widgets/study_details_editor/editor_widgets.dart';
+import 'package:da_kanji_mobile/features/home/widgets/study_details_editor/time_display.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/management_dialogs.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
@@ -53,146 +53,6 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
   void dispose() {
     _breakController.dispose();
     super.dispose();
-  }
-
-  Future<void> _pickTime(bool isStart) async {
-    final initial = isStart ? _startTime : _endTime;
-    
-    final time = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(initial),
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: const ColorScheme.dark(
-              primary: g_Dakanji_green, // Header background & Active dial hand
-              onPrimary: Colors.white,
-              surface: Color(0xFF2C323A), // Dialog background
-              onSurface: Colors.white, // General text
-            ),
-            
-            // 1. Customize the AM/PM Switch
-            timePickerTheme: TimePickerThemeData(
-              // Background color of the AM/PM container
-              dayPeriodColor: WidgetStateColor.resolveWith((states) =>
-                  states.contains(WidgetState.selected)
-                      ? g_Dakanji_green // Background when selected
-                      : Colors.white10), // Background when not selected
-              
-              // Text color inside the AM/PM container
-              dayPeriodTextColor: WidgetStateColor.resolveWith((states) =>
-                  states.contains(WidgetState.selected)
-                      ? Colors.white // Text color when selected
-                      : Colors.grey), // Text color when not selected
-
-              // 1. Style the "Cancel" button (e.g., Grey or Red)
-              cancelButtonStyle: ButtonStyle(
-                foregroundColor: WidgetStateProperty.all(Colors.grey),
-              ),
-
-              // 2. Style the "OK" button (e.g., Green)
-              confirmButtonStyle: ButtonStyle(
-                foregroundColor: WidgetStateProperty.all(
-                  Theme.brightnessOf(context) == Brightness.dark
-                      ? Colors.white
-                      : Colors.black,
-                ),
-              ),
-                      
-              // Optional: Remove or color the border
-              dayPeriodBorderSide: BorderSide.none, 
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-
-    if (time == null) return;
-
-    setState(() {
-      if (isStart) {
-        // Simple update for start time
-        final newStart = DateTime(
-          _startTime.year,
-          _startTime.month,
-          _startTime.day,
-          time.hour,
-          time.minute,
-        );
-        _startTime = newStart;
-
-        // If pushing start time makes end time invalid, push end time forward
-        if (_endTime.isBefore(_startTime)) {
-          _endTime = _startTime.add(const Duration(minutes: 30));
-        }
-      } else {
-        // Smart logic for End Time:
-        // 1. Create a candidate DateTime on the SAME day as the start time
-        final candidateSameDay = DateTime(
-          _startTime.year,
-          _startTime.month,
-          _startTime.day,
-          time.hour,
-          time.minute,
-        );
-
-        // 2. If the candidate time is before the start time (e.g. Start 23:00, Picked 01:00),
-        // we assume the user means the next day.
-        if (candidateSameDay.isBefore(_startTime)) {
-          _endTime = candidateSameDay.add(const Duration(days: 1));
-        } else {
-          _endTime = candidateSameDay;
-        }
-      }
-    });
-  }
-
-  void _openCategorySelector() {
-    showCategorySelectionBottomSheet(
-      context,
-      onCategorySelected: (val) {
-        setState(() => _category = val);
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  void _openTagSelector() {
-    showTagSelectionBottomSheet(
-      context,
-      onTagSelected: (val) {
-        setState(() => _tag = val);
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  Color get _activeColor =>
-      _category == 'Vocab' ? widget.vocabColor : widget.kanjiColor;
-
-  _OverlapResult _calculateOverlap() {
-    bool isStartOverlap = false;
-    bool isEndOverlap = false;
-    bool hasAnyOverlap = false;
-
-    for (final range in widget.occupiedRanges) {
-      if (_startTime.isBefore(range.end) && _endTime.isAfter(range.start)) {
-        hasAnyOverlap = true;
-        if (!_startTime.isBefore(range.start) &&
-            _startTime.isBefore(range.end)) {
-          isStartOverlap = true;
-        }
-        if (_endTime.isAfter(range.start) && !_endTime.isAfter(range.end)) {
-          isEndOverlap = true;
-        }
-        if (_startTime.isBefore(range.start) && _endTime.isAfter(range.end)) {
-          isStartOverlap = true;
-          isEndOverlap = true;
-        }
-      }
-    }
-    return _OverlapResult(isStartOverlap, isEndOverlap, hasAnyOverlap);
   }
 
   @override
@@ -317,6 +177,137 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
       ),
     );
   }
+
+  Future<void> _pickTime(bool isStart) async {
+    final initial = isStart ? _startTime : _endTime;
+
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(initial),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: const ColorScheme.dark(
+              primary: g_Dakanji_green, // Header background & Active dial hand
+              onPrimary: Colors.white,
+              surface: Color(0xFF2C323A), // Dialog background
+              onSurface: Colors.white, // General text
+            ),
+            timePickerTheme: TimePickerThemeData(
+              // Background color of the AM/PM container
+              dayPeriodColor: WidgetStateColor.resolveWith((states) =>
+                  states.contains(WidgetState.selected)
+                      ? g_Dakanji_green
+                      : Colors.white10),
+              // Text color inside the AM/PM container
+              dayPeriodTextColor: WidgetStateColor.resolveWith((states) =>
+                  states.contains(WidgetState.selected)
+                      ? Colors.white
+                      : Colors.grey),
+              cancelButtonStyle: ButtonStyle(
+                foregroundColor: WidgetStateProperty.all(Colors.grey),
+              ),
+              confirmButtonStyle: ButtonStyle(
+                foregroundColor: WidgetStateProperty.all(
+                  Theme.brightnessOf(context) == Brightness.dark
+                      ? Colors.white
+                      : Colors.black,
+                ),
+              ),
+              dayPeriodBorderSide: BorderSide.none,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (time == null) return;
+
+    setState(() {
+      if (isStart) {
+        // Simple update for start time
+        final newStart = DateTime(
+          _startTime.year,
+          _startTime.month,
+          _startTime.day,
+          time.hour,
+          time.minute,
+        );
+        _startTime = newStart;
+
+        // If pushing start time makes end time invalid, push end time forward
+        if (_endTime.isBefore(_startTime)) {
+          _endTime = _startTime.add(const Duration(minutes: 30));
+        }
+      } else {
+        // Smart logic for End Time:
+        // Create a candidate DateTime on the SAME day as the start time
+        final candidateSameDay = DateTime(
+          _startTime.year,
+          _startTime.month,
+          _startTime.day,
+          time.hour,
+          time.minute,
+        );
+
+        // If the candidate time is before the start time (e.g. Start 23:00, Picked 01:00),
+        // assume the user means the next day.
+        if (candidateSameDay.isBefore(_startTime)) {
+          _endTime = candidateSameDay.add(const Duration(days: 1));
+        } else {
+          _endTime = candidateSameDay;
+        }
+      }
+    });
+  }
+
+  void _openCategorySelector() {
+    showCategorySelectionBottomSheet(
+      context,
+      onCategorySelected: (val) {
+        setState(() => _category = val);
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  void _openTagSelector() {
+    showTagSelectionBottomSheet(
+      context,
+      onTagSelected: (val) {
+        setState(() => _tag = val);
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  Color get _activeColor =>
+      _category == 'Vocab' ? widget.vocabColor : widget.kanjiColor;
+
+  _OverlapResult _calculateOverlap() {
+    bool isStartOverlap = false;
+    bool isEndOverlap = false;
+    bool hasAnyOverlap = false;
+
+    for (final range in widget.occupiedRanges) {
+      if (_startTime.isBefore(range.end) && _endTime.isAfter(range.start)) {
+        hasAnyOverlap = true;
+        if (!_startTime.isBefore(range.start) &&
+            _startTime.isBefore(range.end)) {
+          isStartOverlap = true;
+        }
+        if (_endTime.isAfter(range.start) && !_endTime.isAfter(range.end)) {
+          isEndOverlap = true;
+        }
+        if (_startTime.isBefore(range.start) && _endTime.isAfter(range.end)) {
+          isStartOverlap = true;
+          isEndOverlap = true;
+        }
+      }
+    }
+    return _OverlapResult(isStartOverlap, isEndOverlap, hasAnyOverlap);
+  }
 }
 
 class _OverlapResult {
@@ -353,7 +344,7 @@ class _EditorHeader extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: successGreen.withOpacity(0.2),
+              color: successGreen.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: successGreen),
             ),

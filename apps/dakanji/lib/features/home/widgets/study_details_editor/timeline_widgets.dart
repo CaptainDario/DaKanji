@@ -3,7 +3,6 @@ import 'package:da_kanji_mobile/features/home/model/stud_session_model.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
 class SessionTimelineRow extends StatelessWidget {
   final StudySessionUiModel session;
   final VoidCallback onDelete;
@@ -17,7 +16,7 @@ class SessionTimelineRow extends StatelessWidget {
   });
 
   bool get _isRunning {
-    // If the last unit has no end time, it is currently active
+    // Active if last unit has no end time
     return session.units.isNotEmpty && session.units.last.endTime == null;
   }
 
@@ -29,7 +28,7 @@ class SessionTimelineRow extends StatelessWidget {
     // Calculate real-time values for running sessions
     final realEndTime = isRunning ? currentTime : session.endTime;
     
-    // Add the elapsed time since load to the duration
+    // Add elapsed time since load to duration
     final realTotalDuration = isRunning 
         ? session.totalWorkDuration + currentTime.difference(session.endTime)
         : session.totalWorkDuration;
@@ -153,7 +152,7 @@ class _TimelineLinePainter extends CustomPainter {
       final unitStart = unit.startTime;
       final isLastUnit = unit == units.last;
       
-      // Use current time for the end of the last unit if running
+      // Use current time for end of last unit if running
       final unitEnd = (isLastUnit && isRunning) 
           ? DateTime.now() 
           : (unit.endTime ?? DateTime.now());
@@ -387,4 +386,4 @@ class _DeleteAction extends StatelessWidget {
       ),
     );
   }
-} 
+}

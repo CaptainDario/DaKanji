@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'breathing_neon_wrapper.dart';
 import '../study_details_editor/study_detail_modal.dart'; 
 
@@ -60,35 +59,18 @@ class CalendarDayCell extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        // 1. Background Pill/Circle
         if (isCompliant)
-          AnimatedBuilder(
-            animation: glowAnimation,
-            builder: (context, child) {
-              List<BoxShadow>? shadows;
-              if (isPartOfCurrentStreak) {
-                final double opacity = glowAnimation.value * 0.5;
-                shadows = [
-                  BoxShadow(
-                    color: streakGlowColor.withValues(alpha: opacity),
-                    blurRadius: 8,
-                    spreadRadius: 1,
-                  )
-                ];
-              }
-              return Container(
-                height: circleSize,
-                margin: margin,
-                decoration: BoxDecoration(
-                  color: baseStreakFillColor,
-                  borderRadius: borderRadius,
-                  boxShadow: shadows,
-                ),
-              );
-            },
+          _BackgroundPill(
+            glowAnimation: glowAnimation,
+            isPartOfCurrentStreak: isPartOfCurrentStreak,
+            streakGlowColor: streakGlowColor,
+            circleSize: circleSize,
+            margin: margin,
+            baseStreakFillColor: baseStreakFillColor,
+            borderRadius: borderRadius,
           ),
         
-        // 2. Touch Target
+        // Touch Target
         Container(
           width: circleSize,
           height: circleSize,
@@ -117,71 +99,25 @@ class CalendarDayCell extends StatelessWidget {
           ),
         ),
         
-        // 3. Activity Rings
         if (isActive)
           IgnorePointer(
-            child: AnimatedBuilder(
-              animation: fillController,
-              builder: (context, child) {
-                final double totalItems = totalCells.toDouble();
-                final double start = (index / totalItems) * 0.5; 
-                final double end = start + 0.5;
-                final curve = CurvedAnimation(
-                  parent: fillController,
-                  curve: Interval(start, end, curve: Curves.easeOut),
-                );
-
-                return Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    if (timeData != null && timeData!.$1 > 0)
-                      BreathingNeonWrapper(
-                        isActive: isCompliant && isPartOfCurrentStreak,
-                        glowAnimation: glowAnimation,
-                        glowColor: timeColor,
-                        child: SizedBox(
-                          width: circleSize,
-                          height: circleSize,
-                          child: CircularProgressIndicator(
-                            value: _getPercent(timeData) * curve.value,
-                            color: timeColor,
-                            strokeWidth: 2.0,
-                            backgroundColor: Colors.transparent,
-                            strokeCap: StrokeCap.round,
-                          ),
-                        ),
-                      ),
-                    if (vocabData != null && vocabData!.$1 > 0)
-                      SizedBox(
-                        width: circleSize * 0.75,
-                        height: circleSize * 0.75,
-                        child: CircularProgressIndicator(
-                          value: _getPercent(vocabData) * curve.value,
-                          color: vocabColor,
-                          strokeWidth: 2.0,
-                          backgroundColor: Colors.transparent,
-                          strokeCap: StrokeCap.round,
-                        ),
-                      ),
-                    if (charData != null && charData!.$1 > 0)
-                      SizedBox(
-                        width: circleSize * 0.5, 
-                        height: circleSize * 0.5,
-                        child: CircularProgressIndicator(
-                          value: _getPercent(charData) * curve.value,
-                          color: charactersColor,
-                          strokeWidth: 2.0,
-                          backgroundColor: Colors.transparent,
-                          strokeCap: StrokeCap.round,
-                        ),
-                      ),
-                  ],
-                );
-              },
+            child: _ActivityRings(
+              fillController: fillController,
+              totalCells: totalCells,
+              index: index,
+              isCompliant: isCompliant,
+              isPartOfCurrentStreak: isPartOfCurrentStreak,
+              glowAnimation: glowAnimation,
+              timeColor: timeColor,
+              vocabColor: vocabColor,
+              charactersColor: charactersColor,
+              circleSize: circleSize,
+              timeData: timeData,
+              vocabData: vocabData,
+              charData: charData,
             ),
           ),
         
-        // 4. Date Text
         IgnorePointer(
           child: SizedBox(
             width: circleSize * 0.45, 
@@ -189,7 +125,12 @@ class CalendarDayCell extends StatelessWidget {
             child: Center(
               child: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: _buildDateText(),
+                child: _DateLabel(
+                  date: date,
+                  isToday: isToday,
+                  isActive: isActive,
+                  isCompliant: isCompliant,
+                ),
               ),
             ),
           ),
@@ -197,13 +138,172 @@ class CalendarDayCell extends StatelessWidget {
       ],
     );
   }
+}
+
+class _BackgroundPill extends StatelessWidget {
+  final Animation<double> glowAnimation;
+  final bool isPartOfCurrentStreak;
+  final Color streakGlowColor;
+  final double circleSize;
+  final EdgeInsets margin;
+  final Color baseStreakFillColor;
+  final BorderRadiusGeometry borderRadius;
+
+  const _BackgroundPill({
+    required this.glowAnimation,
+    required this.isPartOfCurrentStreak,
+    required this.streakGlowColor,
+    required this.circleSize,
+    required this.margin,
+    required this.baseStreakFillColor,
+    required this.borderRadius,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: glowAnimation,
+      builder: (context, child) {
+        List<BoxShadow>? shadows;
+        if (isPartOfCurrentStreak) {
+          final double opacity = glowAnimation.value * 0.5;
+          shadows = [
+            BoxShadow(
+              color: streakGlowColor.withValues(alpha: opacity),
+              blurRadius: 8,
+              spreadRadius: 1,
+            )
+          ];
+        }
+        return Container(
+          height: circleSize,
+          margin: margin,
+          decoration: BoxDecoration(
+            color: baseStreakFillColor,
+            borderRadius: borderRadius,
+            boxShadow: shadows,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _ActivityRings extends StatelessWidget {
+  final AnimationController fillController;
+  final int totalCells;
+  final int index;
+  final bool isCompliant;
+  final bool isPartOfCurrentStreak;
+  final Animation<double> glowAnimation;
+  final Color timeColor;
+  final Color vocabColor;
+  final Color charactersColor;
+  final double circleSize;
+  final (int, int)? timeData;
+  final (int, int)? vocabData;
+  final (int, int)? charData;
+
+  const _ActivityRings({
+    required this.fillController,
+    required this.totalCells,
+    required this.index,
+    required this.isCompliant,
+    required this.isPartOfCurrentStreak,
+    required this.glowAnimation,
+    required this.timeColor,
+    required this.vocabColor,
+    required this.charactersColor,
+    required this.circleSize,
+    required this.timeData,
+    required this.vocabData,
+    required this.charData,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: fillController,
+      builder: (context, child) {
+        final double totalItems = totalCells.toDouble();
+        final double start = (index / totalItems) * 0.5; 
+        final double end = start + 0.5;
+        final curve = CurvedAnimation(
+          parent: fillController,
+          curve: Interval(start, end, curve: Curves.easeOut),
+        );
+
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            if (timeData != null && timeData!.$1 > 0)
+              BreathingNeonWrapper(
+                isActive: isCompliant && isPartOfCurrentStreak,
+                glowAnimation: glowAnimation,
+                glowColor: timeColor,
+                child: SizedBox(
+                  width: circleSize,
+                  height: circleSize,
+                  child: CircularProgressIndicator(
+                    value: _getPercent(timeData) * curve.value,
+                    color: timeColor,
+                    strokeWidth: 2.0,
+                    backgroundColor: Colors.transparent,
+                    strokeCap: StrokeCap.round,
+                  ),
+                ),
+              ),
+            if (vocabData != null && vocabData!.$1 > 0)
+              SizedBox(
+                width: circleSize * 0.75,
+                height: circleSize * 0.75,
+                child: CircularProgressIndicator(
+                  value: _getPercent(vocabData) * curve.value,
+                  color: vocabColor,
+                  strokeWidth: 2.0,
+                  backgroundColor: Colors.transparent,
+                  strokeCap: StrokeCap.round,
+                ),
+              ),
+            if (charData != null && charData!.$1 > 0)
+              SizedBox(
+                width: circleSize * 0.5, 
+                height: circleSize * 0.5,
+                child: CircularProgressIndicator(
+                  value: _getPercent(charData) * curve.value,
+                  color: charactersColor,
+                  strokeWidth: 2.0,
+                  backgroundColor: Colors.transparent,
+                  strokeCap: StrokeCap.round,
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
 
   double _getPercent((int, int)? data) {
     if (data == null || data.$2 == 0) return 0.0;
     return (data.$1 / data.$2).clamp(0.0, 1.0);
   }
+}
 
-  Widget _buildDateText() {
+class _DateLabel extends StatelessWidget {
+  final DateTime date;
+  final bool isToday;
+  final bool isActive;
+  final bool isCompliant;
+
+  const _DateLabel({
+    required this.date,
+    required this.isToday,
+    required this.isActive,
+    required this.isCompliant,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final Color textColor = isToday 
         ? Colors.lightBlueAccent 
         : (isActive ? Colors.white : Colors.grey[400]!);
