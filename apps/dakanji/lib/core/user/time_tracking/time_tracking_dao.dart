@@ -177,6 +177,67 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       }
     });
   }
+  
+  /// Inserts a fully completed session manually (e.g., from the editor).
+  /// [breakMinutes] are subtracted from the end of the first unit to create a gap.
+  Future<void> insertPastSession({
+    required DateTime startTime,
+    required DateTime endTime,
+    required String category,
+    String? tag,
+    required int breakMinutes,
+  }) async {
+    return transaction(() async {
+      // 1. Create the session entry
+      final sessionId = await into(timeTrackingTable).insert(
+        TimeTrackingTableCompanion(
+          category: Value(category),
+          tag: Value(tag),
+          isCompleted: const Value(true),
+        ),
+      );
+
+      // 2. Calculate Unit Splits
+      // To represent a break, we create:
+      // Unit 1: Start -> (End - Break)
+      // Unit 2: End -> End (A 0-duration marker to define the gap)
+      
+      final totalDuration = endTime.difference(startTime).inMinutes;
+      final safeBreak = (breakMinutes >= totalDuration) ? 0 : breakMinutes;
+      final workDuration = totalDuration - safeBreak;
+
+      if (safeBreak > 0) {
+        final firstUnitEnd = startTime.add(Duration(minutes: workDuration));
+
+        // Work Unit
+        await into(timeTrackingUnitTable).insert(
+          TimeTrackingUnitTableCompanion(
+            timeTrackingId: Value(sessionId),
+            startTime: Value(startTime),
+            endTime: Value(firstUnitEnd),
+          ),
+        );
+
+        // End Marker Unit (creates the gap visually in timeline)
+        await into(timeTrackingUnitTable).insert(
+          TimeTrackingUnitTableCompanion(
+            timeTrackingId: Value(sessionId),
+            startTime: Value(endTime),
+            endTime: Value(endTime),
+          ),
+        );
+      } else {
+        // Continuous session with no break
+        await into(timeTrackingUnitTable).insert(
+          TimeTrackingUnitTableCompanion(
+            timeTrackingId: Value(sessionId),
+            startTime: Value(startTime),
+            endTime: Value(endTime),
+          ),
+        );
+      }
+    });
+  }
 
   /// Returns the the row of the currently running timer, if any.
   Future<TimeTrackingUnitTableData?> getRunningTimer() async {

@@ -216,7 +216,13 @@ class _StudyDetailModalState extends State<StudyDetailModal> {
         tag: tag,
       );
     } else {
-      // Logic for insert handled by backend/DAO if not explicitly shown
+      await dao.insertPastSession(
+        startTime: start,
+        endTime: end,
+        category: category,
+        tag: tag,
+        breakMinutes: breakMinutes,
+      );
     }
 
     await _loadData();
