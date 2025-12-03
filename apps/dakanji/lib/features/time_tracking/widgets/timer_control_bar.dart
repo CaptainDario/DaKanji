@@ -113,7 +113,12 @@ class TimerControlBar extends StatelessWidget {
                     ),
                     child: IconButton(
                       onPressed: () {
-                        showCategorySelectionBottomSheet(context);
+                        showCategorySelectionBottomSheet(
+                          context,
+                          onCategorySelected: (category) async {
+                            await GetIt.I<UserDataDB>().timeTrackingDao.setSelectedCategory(category);
+                          },
+                        );
                       },
                       icon: const Icon(Icons.category_outlined),
                       color: Colors.grey,
