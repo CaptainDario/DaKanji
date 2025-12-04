@@ -5,27 +5,79 @@ import 'package:easy_localization/easy_localization.dart';
 import 'calendar_day_cell.dart';
 import 'streak_footer.dart';
 
+/// Data model representing a single day's study progress
+class DailyStudyStats {
+  final (int, int)? vocab; // (current, goal)
+  final (int, int)? chars;
+  final (int, int)? time;
+
+  const DailyStudyStats({this.vocab, this.chars, this.time});
+
+  bool get isCompliant {
+    // 1. Identify valid metrics (Not null AND Goal > 0)
+    // The user specified that 0-goal days/metrics should "not count".
+    // We treat them as non-existent for the pass/fail check.
+    final validVocab = (vocab?.$2 ?? 0) > 0 ? vocab : null;
+    final validChars = (chars?.$2 ?? 0) > 0 ? chars : null;
+    final validTime  = (time?.$2 ?? 0)  > 0 ? time : null;
+
+    // 2. If NO metrics are active/valid, the day cannot be a "streak success".
+    // This prevents empty days or all-0-goal days from counting as a streak.
+    if (validVocab == null && validChars == null && validTime == null) {
+      return false;
+    }
+
+    // 3. Helper to check if a specific valid metric passed
+    bool passed((int, int) tuple) {
+      return (tuple.$1 / tuple.$2) >= 0.5;
+    }
+
+    // 4. All VALID metrics must pass.
+    // Since we established at least one exists, we just check the non-null ones.
+    if (validVocab != null && !passed(validVocab)) return false;
+    if (validChars != null && !passed(validChars)) return false;
+    if (validTime  != null && !passed(validTime))  return false;
+
+    return true;
+  }
+
+  bool get hasActivity {
+    // Activity is visual only, usually we show activity if ANY progress exists
+    // even if goal is 0. But for consistency with "hiding rings",
+    // we might want to check if there's any active ring data.
+    // However, usually activity dots (if used) show generic presence.
+    // Given the prompt "ring should not be shown", let's stick to checking raw values
+    // but usually 'isActive' drives the grey dot?
+    // Let's keep it simple: if there is any number > 0 recorded, it's active.
+    return (vocab?.$1 ?? 0) > 0 || (chars?.$1 ?? 0) > 0 || (time?.$1 ?? 0) > 0;
+  }
+}
+
+// Separate fetcher definition
+typedef FetchCategoryDataCallback = Future<Map<DateTime, (int, int)>> Function(DateTime start, DateTime end);
+
 class StudyCalendar extends StatefulWidget {
-  final Map<String, (int, int)?>? vocabStudied;
-  final Map<String, (int, int)?>? charactersStudied;
-  final Map<String, (int, int)?>? timeStudied;
+  // Individual fetchers for each category - Nullable to disable
+  final FetchCategoryDataCallback? onFetchVocab;
+  final FetchCategoryDataCallback? onFetchCharacters;
+  final FetchCategoryDataCallback? onFetchTime;
 
   final Color vocabColor;
   final Color charactersColor;
   final Color timeColor;
-  final Color streakColor; 
-  final Color streakGlowColor; 
+  final Color streakColor;
+  final Color streakGlowColor;
 
   const StudyCalendar({
     super.key,
-    this.vocabStudied,
-    this.charactersStudied,
-    this.timeStudied,
+    this.onFetchVocab,
+    this.onFetchCharacters,
+    this.onFetchTime,
     this.vocabColor = g_Dakanji_green,
     this.charactersColor = g_Dakanji_red,
     this.timeColor = g_Dakanji_blue,
     this.streakColor = g_Dakanji_green,
-    this.streakGlowColor = g_Dakanji_red, 
+    this.streakGlowColor = g_Dakanji_red,
   });
 
   @override
@@ -33,10 +85,8 @@ class StudyCalendar extends StatefulWidget {
 }
 
 class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateMixin {
-  final DateFormat _formatter = DateFormat('yyyy-MM-dd');
-
   late final Color _baseStreakFillColor;
-  final double _circleSize = 38.0; 
+  final double _circleSize = 38.0;
   final double _calendarHeight = 280;
 
   late final AnimationController _fillController;
@@ -44,28 +94,26 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
   late final Animation<double> _glowAnimation;
   late final PageController _pageController;
 
-  late DateTime _streakStartDate;
-  
-  late int _totalPages;
   late DateTime _gridAnchorDate;
+  
+  // Cache stores merged data for pages
+  final Map<int, Map<DateTime, DailyStudyStats>> _pageCache = {};
 
   @override
   void initState() {
     super.initState();
     _baseStreakFillColor = widget.streakColor.withValues(alpha: 0.15);
-    _streakStartDate = _calculateStreakStartDate();
 
+    // Align grid to the coming Saturday (End of week)
     final now = DateTime.now();
     final int daysToSaturday = 6 - (now.weekday % 7);
-    _gridAnchorDate = now.add(Duration(days: daysToSaturday));
-
-    _calculateTotalPages();
+    _gridAnchorDate = DateTime(now.year, now.month, now.day).add(Duration(days: daysToSaturday));
 
     _pageController = PageController(initialPage: 0);
 
     _fillController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500), 
+      duration: const Duration(milliseconds: 1500),
     );
     _fillController.forward();
 
@@ -80,24 +128,98 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
   }
 
   @override
-  void didUpdateWidget(StudyCalendar oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.vocabStudied != oldWidget.vocabStudied || 
-        widget.charactersStudied != oldWidget.charactersStudied ||
-        widget.timeStudied != oldWidget.timeStudied) {
-      setState(() {
-        _streakStartDate = _calculateStreakStartDate();
-        _calculateTotalPages();
-      });
-    }
-  }
-
-  @override
   void dispose() {
     _fillController.dispose();
     _glowController.dispose();
     _pageController.dispose();
     super.dispose();
+  }
+
+  // --- INTERNAL LOGIC ---
+
+  /// Fetches enabled categories in parallel and merges them
+  Future<Map<DateTime, DailyStudyStats>> _loadPageData(int pageIndex) async {
+    if (_pageCache.containsKey(pageIndex)) {
+      return _pageCache[pageIndex]!;
+    }
+
+    final endDate = _gridAnchorDate.subtract(Duration(days: pageIndex * 35));
+    final startDate = endDate.subtract(const Duration(days: 34)); 
+
+    // 1. Fetch enabled categories
+    final results = await Future.wait([
+      widget.onFetchVocab != null 
+          ? widget.onFetchVocab!(startDate, endDate) 
+          : Future.value(<DateTime, (int, int)>{}),
+      widget.onFetchCharacters != null 
+          ? widget.onFetchCharacters!(startDate, endDate) 
+          : Future.value(<DateTime, (int, int)>{}),
+      widget.onFetchTime != null 
+          ? widget.onFetchTime!(startDate, endDate) 
+          : Future.value(<DateTime, (int, int)>{}),
+    ]);
+
+    final vocabMap = results[0];
+    final charMap = results[1];
+    final timeMap = results[2];
+
+    // 2. Merge into Stats Objects
+    final Map<DateTime, DailyStudyStats> merged = {};
+    
+    for (int i = 0; i <= 35; i++) {
+      final date = startDate.add(Duration(days: i));
+      
+      // 🔥 FIX 1: Must use UTC to match the keys returned by the DAO
+      // The DAO returns DateTime.utc(2025, 5, 6).
+      // If we use DateTime(2025, 5, 6), the lookup below returns null.
+      final key = DateTime.utc(date.year, date.month, date.day);
+
+      merged[key] = DailyStudyStats(
+        vocab: vocabMap[key], // Now this will find the data!
+        chars: charMap[key],
+        time: timeMap[key],
+      );
+    }
+
+    _pageCache[pageIndex] = merged;
+    return merged;
+  }
+
+  // Helper to look up stats across pages (if loaded)
+  DailyStudyStats? _getStatsForDate(DateTime date) {
+    final diff = _gridAnchorDate.difference(date).inDays;
+    if (diff < 0) return null; // Future date
+    
+    final pageIndex = (diff / 35).floor();
+    
+    if (!_pageCache.containsKey(pageIndex)) return null;
+    
+    final key = DateTime.utc(date.year, date.month, date.day);
+    return _pageCache[pageIndex]?[key];
+  }
+
+  int get _currentStreak {
+    int streak = 0;
+    DateTime checkDate = DateTime.now();
+    
+    // Check Today
+    final todayStats = _getStatsForDate(checkDate);
+    
+    // If today is NOT compliant (e.g. not started yet), check if streak ended yesterday
+    if (todayStats == null || !todayStats.isCompliant) {
+      checkDate = checkDate.subtract(const Duration(days: 1));
+    }
+
+    // Count backwards
+    while (true) {
+      final stats = _getStatsForDate(checkDate);
+      if (stats == null || !stats.isCompliant) {
+        break;
+      }
+      streak++;
+      checkDate = checkDate.subtract(const Duration(days: 1));
+    }
+    return streak;
   }
 
   @override
@@ -117,124 +239,37 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
               children: [
                 // --- GRID SECTION ---
                 SizedBox(
-                  height: _calendarHeight, 
+                  height: _calendarHeight,
                   child: PageView.builder(
                     controller: _pageController,
                     reverse: true,
-                    itemCount: _totalPages, 
                     itemBuilder: (context, pageIndex) {
-                      final calendarDays = _generateCalendarDaysForPage(pageIndex);
-                      final int totalCells = 7 + calendarDays.length;
-                      
-                      return LayoutBuilder(
-                        builder: (context, constraints) {
-                          final double itemHeight = constraints.maxHeight / 6;
+                      return FutureBuilder<Map<DateTime, DailyStudyStats>>(
+                        future: _loadPageData(pageIndex),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const _LoadingGrid();
+                          }
 
-                          return GridView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 7,
-                              mainAxisExtent: itemHeight,
-                              crossAxisSpacing: 0, 
-                              mainAxisSpacing: 0,
-                            ),
-                            itemCount: totalCells,
-                            itemBuilder: (context, index) {
-                              // Day Headers
-                              if (index < 7) {
-                                return _DayHeader(index: index);
-                              }
-                              
-                              // Calendar Cells
-                              final int dayIndex = index - 7;
-                              if (dayIndex >= calendarDays.length) return const SizedBox();
-                              
-                              final DateTime date = calendarDays[dayIndex];
-                              if (date.isAfter(now)) return const SizedBox(); 
+                          final pageData = snapshot.data!;
+                          final calendarDays = _generateCalendarDaysForPage(pageIndex);
+                          
+                          // Recalculate streak now that data is loaded
+                          final currentStreak = _currentStreak;
 
-                              final String dateKey = _formatter.format(date);
-                              final bool isToday = _isSameDay(date, now);
-                              final bool isActive = _isDayVisualActive(date); 
-                              final bool isCompliant = _isStreakCompliant(date); 
-                              
-                              final bool isPartOfCurrentStreak = isCompliant && 
-                                  date.isAfter(_streakStartDate.subtract(const Duration(days: 1)));
-
-                              final bool isSunday = date.weekday == DateTime.sunday;
-                              final bool isSaturday = date.weekday == DateTime.saturday;
-                              
-                              // Connectivity Logic
-                              bool connectLeft = false;
-                              bool connectRight = false;
-
-                              if (isCompliant) {
-                                if (!isSunday && dayIndex > 0) {
-                                  if (_isStreakCompliant(calendarDays[dayIndex - 1])) connectLeft = true;
-                                }
-                                if (!isSaturday && dayIndex < calendarDays.length - 1) {
-                                  if (dayIndex + 1 < calendarDays.length) {
-                                    DateTime next = calendarDays[dayIndex + 1];
-                                    if (!next.isAfter(now) && _isStreakCompliant(next)) connectRight = true;
-                                  }
-                                }
-                              }
-
-                              return LayoutBuilder(
-                                builder: (context, cellConstraints) {
-                                  final double cellWidth = cellConstraints.maxWidth;
-                                  final double centerMargin = (cellWidth - _circleSize) / 2;
-
-                                  EdgeInsets margin;
-                                  BorderRadiusGeometry borderRadius;
-
-                                  if (isCompliant) {
-                                    if (connectLeft && connectRight) {
-                                      margin = EdgeInsets.zero;
-                                      borderRadius = BorderRadius.zero;
-                                    } else if (connectRight) {
-                                      margin = EdgeInsets.only(left: centerMargin);
-                                      borderRadius = const BorderRadius.horizontal(left: Radius.circular(50));
-                                    } else if (connectLeft) {
-                                      margin = EdgeInsets.only(right: centerMargin);
-                                      borderRadius = const BorderRadius.horizontal(right: Radius.circular(50));
-                                    } else {
-                                      margin = EdgeInsets.symmetric(horizontal: centerMargin);
-                                      borderRadius = BorderRadius.circular(50);
-                                    }
-                                  } else {
-                                    margin = EdgeInsets.symmetric(horizontal: centerMargin);
-                                    borderRadius = BorderRadius.circular(50);
-                                  }
-
-                                  final vocabData = widget.vocabStudied?[dateKey];
-                                  final charData = widget.charactersStudied?[dateKey];
-                                  final timeData = widget.timeStudied?[dateKey];
-
-                                  return CalendarDayCell(
-                                    date: date,
-                                    isToday: isToday,
-                                    isActive: isActive,
-                                    isCompliant: isCompliant,
-                                    isPartOfCurrentStreak: isPartOfCurrentStreak,
-                                    margin: margin,
-                                    borderRadius: borderRadius,
-                                    baseStreakFillColor: _baseStreakFillColor,
-                                    streakGlowColor: widget.streakGlowColor,
-                                    circleSize: _circleSize,
-                                    vocabData: vocabData,
-                                    charData: charData,
-                                    timeData: timeData,
-                                    vocabColor: widget.vocabColor,
-                                    charactersColor: widget.charactersColor,
-                                    timeColor: widget.timeColor,
-                                    fillController: _fillController,
-                                    glowAnimation: _glowAnimation,
-                                    index: index,
-                                    totalCells: totalCells,
-                                  );
-                                },
-                              );
-                            },
+                          return _CalendarPage(
+                            calendarDays: calendarDays,
+                            pageData: pageData,
+                            now: now,
+                            currentStreak: currentStreak,
+                            circleSize: _circleSize,
+                            baseStreakFillColor: _baseStreakFillColor,
+                            streakGlowColor: widget.streakGlowColor,
+                            vocabColor: widget.vocabColor,
+                            charactersColor: widget.charactersColor,
+                            timeColor: widget.timeColor,
+                            fillController: _fillController,
+                            glowAnimation: _glowAnimation,
                           );
                         },
                       );
@@ -242,7 +277,7 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
                   ),
                 ),
                 const SizedBox(height: 8),
-                
+
                 // --- FOOTER SECTION ---
                 StreakFooter(
                   streak: _currentStreak,
@@ -262,96 +297,6 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
     );
   }
 
-  // --- LOGIC HELPERS ---
-
-  void _calculateTotalPages() {
-    DateTime? earliest;
-    
-    void checkMap(Map<String, dynamic>? map) {
-      if (map == null || map.isEmpty) return;
-      final sortedKeys = map.keys.toList()..sort();
-      final firstDate = _formatter.parse(sortedKeys.first);
-      if (earliest == null || firstDate.isBefore(earliest!)) {
-        earliest = firstDate;
-      }
-    }
-
-    checkMap(widget.vocabStudied);
-    checkMap(widget.charactersStudied);
-    checkMap(widget.timeStudied);
-
-    if (earliest == null) {
-      _totalPages = 1; 
-    } else {
-      final diff = _gridAnchorDate.difference(earliest!).inDays;
-      _totalPages = (diff / 35).ceil();
-      if (_totalPages < 1) _totalPages = 1;
-    }
-  }
-
-  bool _isSameDay(DateTime a, DateTime b) {
-    return a.year == b.year && a.month == b.month && a.day == b.day;
-  }
-
-  DateTime _calculateStreakStartDate() {
-    DateTime checkDate = DateTime.now();
-    if (!_isStreakCompliant(checkDate)) {
-      checkDate = checkDate.subtract(const Duration(days: 1));
-      if (!_isStreakCompliant(checkDate)) {
-        return DateTime.now().add(const Duration(days: 1)); 
-      }
-    }
-    while (_isStreakCompliant(checkDate.subtract(const Duration(days: 1)))) {
-      checkDate = checkDate.subtract(const Duration(days: 1));
-    }
-    return DateTime(checkDate.year, checkDate.month, checkDate.day);
-  }
-
-  int get _currentStreak {
-    int streak = 0;
-    DateTime checkDate = DateTime.now();
-    if (!_isStreakCompliant(checkDate)) {
-      checkDate = checkDate.subtract(const Duration(days: 1));
-    }
-    while (_isStreakCompliant(checkDate)) {
-      streak++;
-      checkDate = checkDate.subtract(const Duration(days: 1));
-    }
-    return streak;
-  }
-
-  bool _isStreakCompliant(DateTime date) {
-    final key = _formatter.format(date);
-
-    bool? checkCategory(Map<String, (int, int)?>? map) {
-      if (map == null) return null;
-      final data = map[key];
-      if (data == null) return null;
-      if (data.$2 == 0) return null;
-      return (data.$1 / data.$2) >= 0.5;
-    }
-
-    final v = checkCategory(widget.vocabStudied);
-    final c = checkCategory(widget.charactersStudied);
-    final t = checkCategory(widget.timeStudied);
-
-    final results = [v, c, t].whereType<bool>().toList();
-    if (results.isEmpty) return false;
-    return results.every((result) => result == true);
-  }
-
-  bool _isDayVisualActive(DateTime date) {
-    final key = _formatter.format(date);
-    bool hasActivity(Map<String, (int, int)?>? map) {
-      if (map == null) return false;
-      final data = map[key];
-      return data != null && data.$1 > 0;
-    }
-    return hasActivity(widget.vocabStudied) || 
-           hasActivity(widget.charactersStudied) || 
-           hasActivity(widget.timeStudied);
-  }
-
   List<DateTime> _generateCalendarDaysForPage(int pageIndex) {
     final DateTime pageEndDate = _gridAnchorDate.subtract(Duration(days: pageIndex * 35));
     List<DateTime> days = [];
@@ -362,9 +307,197 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
   }
 }
 
+class _CalendarPage extends StatelessWidget {
+  final List<DateTime> calendarDays;
+  final Map<DateTime, DailyStudyStats> pageData;
+  final DateTime now;
+  final int currentStreak;
+  final double circleSize;
+  final Color baseStreakFillColor;
+  final Color streakGlowColor;
+  final Color vocabColor;
+  final Color charactersColor;
+  final Color timeColor;
+  final AnimationController fillController;
+  final Animation<double> glowAnimation;
+
+  const _CalendarPage({
+    required this.calendarDays,
+    required this.pageData,
+    required this.now,
+    required this.currentStreak,
+    required this.circleSize,
+    required this.baseStreakFillColor,
+    required this.streakGlowColor,
+    required this.vocabColor,
+    required this.charactersColor,
+    required this.timeColor,
+    required this.fillController,
+    required this.glowAnimation,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final int totalCells = 7 + calendarDays.length;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double itemHeight = constraints.maxHeight / 6;
+
+        return GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 7,
+            mainAxisExtent: itemHeight,
+            crossAxisSpacing: 0,
+            mainAxisSpacing: 0,
+          ),
+          itemCount: totalCells,
+          itemBuilder: (context, index) {
+            // Day Headers
+            if (index < 7) {
+              return _DayHeader(index: index);
+            }
+
+            // Calendar Cells
+            final int dayIndex = index - 7;
+            if (dayIndex >= calendarDays.length) return const SizedBox();
+
+            final DateTime date = calendarDays[dayIndex];
+            if (date.isAfter(now)) return const SizedBox();
+
+            final dateKey = DateTime.utc(date.year, date.month, date.day);
+            final stats = pageData[dateKey];
+
+            final bool isToday = _isSameDay(date, now);
+            final bool isActive = stats?.hasActivity ?? false;
+            final bool isCompliant = stats?.isCompliant ?? false;
+
+            final bool isPartOfCurrentStreak = isCompliant &&
+                (currentStreak > 0) &&
+                date.isAfter(now.subtract(Duration(days: currentStreak + 1)));
+
+            final bool isSunday = date.weekday == DateTime.sunday;
+            final bool isSaturday = date.weekday == DateTime.saturday;
+
+            // Connectivity Logic
+            bool connectLeft = false;
+            bool connectRight = false;
+
+            if (isCompliant) {
+              if (!isSunday && dayIndex > 0) {
+                final prevDate = calendarDays[dayIndex - 1];
+                final prevKey = DateTime(prevDate.year, prevDate.month, prevDate.day);
+                if (pageData[prevKey]?.isCompliant == true) connectLeft = true;
+              }
+              if (!isSaturday && dayIndex < calendarDays.length - 1) {
+                final nextDate = calendarDays[dayIndex + 1];
+                if (!nextDate.isAfter(now)) {
+                  final nextKey = DateTime(nextDate.year, nextDate.month, nextDate.day);
+                  if (pageData[nextKey]?.isCompliant == true) connectRight = true;
+                }
+              }
+            }
+
+            return LayoutBuilder(
+              builder: (context, cellConstraints) {
+                final double cellWidth = cellConstraints.maxWidth;
+                final double centerMargin = (cellWidth - circleSize) / 2;
+
+                EdgeInsets margin;
+                BorderRadiusGeometry borderRadius;
+
+                if (isCompliant) {
+                  if (connectLeft && connectRight) {
+                    margin = EdgeInsets.zero;
+                    borderRadius = BorderRadius.zero;
+                  } else if (connectRight) {
+                    margin = EdgeInsets.only(left: centerMargin);
+                    borderRadius = const BorderRadius.horizontal(left: Radius.circular(50));
+                  } else if (connectLeft) {
+                    margin = EdgeInsets.only(right: centerMargin);
+                    borderRadius = const BorderRadius.horizontal(right: Radius.circular(50));
+                  } else {
+                    margin = EdgeInsets.symmetric(horizontal: centerMargin);
+                    borderRadius = BorderRadius.circular(50);
+                  }
+                } else {
+                  margin = EdgeInsets.symmetric(horizontal: centerMargin);
+                  borderRadius = BorderRadius.circular(50);
+                }
+
+                // Filter data: Pass NULL if goal is 0, ensuring the ring is hidden.
+                // Note: stats.vocab is (current, goal).
+                final vocabTuple = (stats?.vocab?.$2 ?? 0) > 0 ? stats?.vocab : null;
+                final charsTuple = (stats?.chars?.$2 ?? 0) > 0 ? stats?.chars : null;
+                final timeTuple  = (stats?.time?.$2 ?? 0)  > 0 ? stats?.time  : null;
+
+                return CalendarDayCell(
+                  date: date,
+                  isToday: isToday,
+                  isActive: isActive,
+                  isCompliant: isCompliant,
+                  isPartOfCurrentStreak: isPartOfCurrentStreak,
+                  margin: margin,
+                  borderRadius: borderRadius,
+                  baseStreakFillColor: baseStreakFillColor,
+                  streakGlowColor: streakGlowColor,
+                  circleSize: circleSize,
+                  // Use filtered tuples here
+                  vocabData: vocabTuple,
+                  charData: charsTuple,
+                  timeData: timeTuple,
+                  vocabColor: vocabColor,
+                  charactersColor: charactersColor,
+                  timeColor: timeColor,
+                  fillController: fillController,
+                  glowAnimation: glowAnimation,
+                  index: index,
+                  totalCells: totalCells,
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
+  bool _isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+}
+
+class _LoadingGrid extends StatelessWidget {
+  const _LoadingGrid();
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 7,
+      ),
+      itemCount: 7 + 35,
+      itemBuilder: (context, index) {
+        if (index < 7) return _DayHeader(index: index);
+        return Center(
+          child: Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.05),
+                shape: BoxShape.circle
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 class _DayHeader extends StatelessWidget {
   final int index;
-
   const _DayHeader({required this.index});
 
   @override

@@ -129,8 +129,7 @@ Future setupMockData() async {
     debugPrint("Inserting time tracking mock data...");
     final db = GetIt.I<UserDataDB>();
     TimeTrackingMockDataGenerator seeder = TimeTrackingMockDataGenerator(db);
-    await seeder.generateLastThreeWeeks();
-    await seeder.generateYesterdayRunawayScenario();
+    await seeder.generateMockData();
     debugPrint("Time tracking mock data inserted.");
   }
 }

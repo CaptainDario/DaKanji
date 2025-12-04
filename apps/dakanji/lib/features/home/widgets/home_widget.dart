@@ -1,5 +1,5 @@
 
-import 'package:da_kanji_mobile/features/home/widgets/user_overview_page.dart';
+import 'package:da_kanji_mobile/features/home/widgets/home_overview_page.dart';
 import 'package:da_kanji_mobile/features/home/widgets/account/user_account_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

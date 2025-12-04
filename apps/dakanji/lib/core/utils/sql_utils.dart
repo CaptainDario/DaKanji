@@ -21,21 +21,46 @@ class ListIntConverter extends TypeConverter<List<int>, String> {
   }
 }
 
-
-/// This converter only stores the date part of a DateTime (year, month, day),
-/// ignoring the time part (hours, minutes, seconds).
-class DateOnlyConverter extends TypeConverter<DateTime, int> {
-  const DateOnlyConverter();
+class IsoDateConverter extends TypeConverter<DateTime, String> {
+  const IsoDateConverter();
 
   @override
-  DateTime fromSql(int fromDb) {
-    return DateTime.fromMillisecondsSinceEpoch(fromDb);
+  DateTime fromSql(String fromDb) {
+    // 1. Parse into a temporary object to easily extract Y/M/D
+    // (This creates a Local time, but the netxt step ignores the time/offset)
+    final local = DateTime.parse(fromDb); 
+
+    // 2. Reconstruct as STRICT UTC Midnight
+    // This takes the numbers "2025", "5", "6" and forces them into UTC.
+    return DateTime.utc(local.year, local.month, local.day);
   }
 
   @override
-  int toSql(DateTime value) {
-    // Strip time components to ensure uniqueness works on the Day level
-    final dateOnly = DateTime(value.year, value.month, value.day);
-    return dateOnly.millisecondsSinceEpoch;
+  String toSql(DateTime value) {
+    
+    // DateTime -> "2025-05-06"
+    // anually format to ensure 0-padding (e.g. month 5 becomes '05')
+    final year = value.year;
+    final month = value.month.toString().padLeft(2, '0');
+    final day = value.day.toString().padLeft(2, '0');
+    
+    return '$year-$month-$day';
+  }
+}
+
+
+class ForceUtcConverter extends TypeConverter<DateTime, DateTime> {
+  const ForceUtcConverter();
+
+  @override
+  DateTime fromSql(DateTime fromDb) {
+    // When reading back, ensure Dart knows it is UTC
+    return fromDb.toUtc();
+  }
+
+  @override
+  DateTime toSql(DateTime value) {
+    // Force conversion to UTC before Drift saves it
+    return value.toUtc();
   }
 }

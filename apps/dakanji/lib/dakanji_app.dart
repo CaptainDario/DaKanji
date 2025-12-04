@@ -1,5 +1,7 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_dao.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/features/home/controller/long_running_timer_watcher.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -33,7 +35,14 @@ class DaKanjiApp extends StatefulWidget {
   State<DaKanjiApp> createState() => _DaKanjiAppState();
 }
 
-class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, WindowListener{
+class _DaKanjiAppState extends State<DaKanjiApp> with
+  WidgetsBindingObserver,
+  WindowListener,
+  LongRunningTimerWatcher
+{
+
+  @override
+  TimeTrackingDao get dao => GetIt.I<UserDataDB>().timeTrackingDao;
 
   @override
   void initState() {

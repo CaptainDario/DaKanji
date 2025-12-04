@@ -10,7 +10,7 @@ class TimeTrackingDailyGoalTable extends Table {
   Set<Column> get primaryKey => {date};
 
   // the date for which the goal is set (unique per day)
-  IntColumn get date => integer().map(const DateOnlyConverter())();
+  TextColumn get date => text().map(const IsoDateConverter())();
 
   // the study goal in minutes
   IntColumn get studyGoalMinutes => integer()();
@@ -18,6 +18,7 @@ class TimeTrackingDailyGoalTable extends Table {
 }
 
 /// Table to track the sessions of a user
+@TableIndex(name: 'sessionCompletedIndex', columns: {#isCompleted})
 class TimeTrackingTable extends Table {
   
   IntColumn get id => integer().autoIncrement()();
@@ -55,6 +56,8 @@ class TimeTrackingCategoriesTable extends Table {
 /// Table that tracks the indivdual units that the user is *actually* stuyding
 /// everyhting that is outside of [start - end] is considered a break
 @TableIndex(name: 'timeTrackingIdIndex', columns: {#timeTrackingId})
+@TableIndex(name: 'unitStartTimeIndex', columns: {#startTime}) 
+@TableIndex(name: 'unitEndTimeIndex', columns: {#endTime})
 class TimeTrackingUnitTable extends Table {
   
   IntColumn get id => integer().autoIncrement()();
@@ -62,8 +65,8 @@ class TimeTrackingUnitTable extends Table {
   IntColumn get timeTrackingId => integer()
     .references(TimeTrackingTable, #id, onDelete: KeyAction.cascade)();
 
-  DateTimeColumn get startTime => dateTime()();
+  DateTimeColumn get startTime => dateTime().map(const ForceUtcConverter())();
 
-  DateTimeColumn get endTime => dateTime().nullable()();
+  DateTimeColumn get endTime => dateTime().nullable().map(const ForceUtcConverter())();
   
 }

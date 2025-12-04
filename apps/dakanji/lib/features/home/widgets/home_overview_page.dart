@@ -1,5 +1,5 @@
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/core/user/time_tracking/activity_chart_mock_data.dart';
+import 'package:da_kanji_mobile/core/user/activity_chart_mock_data.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/home/widgets/greeting_widget.dart';
 import 'package:da_kanji_mobile/features/home/widgets/study_calendar/study_calendar.dart';
@@ -34,11 +34,11 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
           GreetingWidget("ゆきこ"),
           SizedBox(height: 8,),
           StudyCalendar(
-            vocabStudied: mockData.vocab,
-            charactersStudied: {},
-            // TODO kanji trainer
-            // charactersStudied: mockData.characters,
-            timeStudied: mockData.time,
+            onFetchTime: (start, end) => 
+              GetIt.I<UserDataDB>().timeTrackingDao.getStudyHistoryRange(
+                start: start,
+                end: end
+              ),
             vocabColor: g_Dakanji_green,
             charactersColor: g_Dakanji_red,
             timeColor: g_Dakanji_blue,

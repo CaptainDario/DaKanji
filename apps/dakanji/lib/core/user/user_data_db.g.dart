@@ -1416,28 +1416,28 @@ class $TimeTrackingUnitTableTable extends TimeTrackingUnitTable
       'REFERENCES time_tracking_table (id) ON DELETE CASCADE',
     ),
   );
-  static const VerificationMeta _startTimeMeta = const VerificationMeta(
-    'startTime',
-  );
   @override
-  late final GeneratedColumn<DateTime> startTime = GeneratedColumn<DateTime>(
-    'start_time',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _endTimeMeta = const VerificationMeta(
-    'endTime',
-  );
+  late final GeneratedColumnWithTypeConverter<DateTime, DateTime> startTime =
+      GeneratedColumn<DateTime>(
+        'start_time',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: true,
+      ).withConverter<DateTime>(
+        $TimeTrackingUnitTableTable.$converterstartTime,
+      );
   @override
-  late final GeneratedColumn<DateTime> endTime = GeneratedColumn<DateTime>(
-    'end_time',
-    aliasedName,
-    true,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-  );
+  late final GeneratedColumnWithTypeConverter<DateTime?, DateTime> endTime =
+      GeneratedColumn<DateTime>(
+        'end_time',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      ).withConverter<DateTime?>(
+        $TimeTrackingUnitTableTable.$converterendTimen,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1471,20 +1471,6 @@ class $TimeTrackingUnitTableTable extends TimeTrackingUnitTable
     } else if (isInserting) {
       context.missing(_timeTrackingIdMeta);
     }
-    if (data.containsKey('start_time')) {
-      context.handle(
-        _startTimeMeta,
-        startTime.isAcceptableOrUnknown(data['start_time']!, _startTimeMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_startTimeMeta);
-    }
-    if (data.containsKey('end_time')) {
-      context.handle(
-        _endTimeMeta,
-        endTime.isAcceptableOrUnknown(data['end_time']!, _endTimeMeta),
-      );
-    }
     return context;
   }
 
@@ -1505,13 +1491,17 @@ class $TimeTrackingUnitTableTable extends TimeTrackingUnitTable
         DriftSqlType.int,
         data['${effectivePrefix}time_tracking_id'],
       )!,
-      startTime: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}start_time'],
-      )!,
-      endTime: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}end_time'],
+      startTime: $TimeTrackingUnitTableTable.$converterstartTime.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime,
+          data['${effectivePrefix}start_time'],
+        )!,
+      ),
+      endTime: $TimeTrackingUnitTableTable.$converterendTimen.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime,
+          data['${effectivePrefix}end_time'],
+        ),
       ),
     );
   }
@@ -1520,6 +1510,13 @@ class $TimeTrackingUnitTableTable extends TimeTrackingUnitTable
   $TimeTrackingUnitTableTable createAlias(String alias) {
     return $TimeTrackingUnitTableTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<DateTime, DateTime> $converterstartTime =
+      const ForceUtcConverter();
+  static TypeConverter<DateTime, DateTime> $converterendTime =
+      const ForceUtcConverter();
+  static TypeConverter<DateTime?, DateTime?> $converterendTimen =
+      NullAwareTypeConverter.wrap($converterendTime);
 }
 
 class TimeTrackingUnitTableData extends DataClass
@@ -1539,9 +1536,15 @@ class TimeTrackingUnitTableData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['time_tracking_id'] = Variable<int>(timeTrackingId);
-    map['start_time'] = Variable<DateTime>(startTime);
+    {
+      map['start_time'] = Variable<DateTime>(
+        $TimeTrackingUnitTableTable.$converterstartTime.toSql(startTime),
+      );
+    }
     if (!nullToAbsent || endTime != null) {
-      map['end_time'] = Variable<DateTime>(endTime);
+      map['end_time'] = Variable<DateTime>(
+        $TimeTrackingUnitTableTable.$converterendTimen.toSql(endTime),
+      );
     }
     return map;
   }
@@ -1684,10 +1687,14 @@ class TimeTrackingUnitTableCompanion
       map['time_tracking_id'] = Variable<int>(timeTrackingId.value);
     }
     if (startTime.present) {
-      map['start_time'] = Variable<DateTime>(startTime.value);
+      map['start_time'] = Variable<DateTime>(
+        $TimeTrackingUnitTableTable.$converterstartTime.toSql(startTime.value),
+      );
     }
     if (endTime.present) {
-      map['end_time'] = Variable<DateTime>(endTime.value);
+      map['end_time'] = Variable<DateTime>(
+        $TimeTrackingUnitTableTable.$converterendTimen.toSql(endTime.value),
+      );
     }
     return map;
   }
@@ -2247,13 +2254,13 @@ class $TimeTrackingDailyGoalTableTable extends TimeTrackingDailyGoalTable
   final String? _alias;
   $TimeTrackingDailyGoalTableTable(this.attachedDatabase, [this._alias]);
   @override
-  late final GeneratedColumnWithTypeConverter<DateTime, int> date =
-      GeneratedColumn<int>(
+  late final GeneratedColumnWithTypeConverter<DateTime, String> date =
+      GeneratedColumn<String>(
         'date',
         aliasedName,
         false,
-        type: DriftSqlType.int,
-        requiredDuringInsert: false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
       ).withConverter<DateTime>(
         $TimeTrackingDailyGoalTableTable.$converterdate,
       );
@@ -2307,7 +2314,7 @@ class $TimeTrackingDailyGoalTableTable extends TimeTrackingDailyGoalTable
     return TimeTrackingDailyGoalTableData(
       date: $TimeTrackingDailyGoalTableTable.$converterdate.fromSql(
         attachedDatabase.typeMapping.read(
-          DriftSqlType.int,
+          DriftSqlType.string,
           data['${effectivePrefix}date'],
         )!,
       ),
@@ -2323,8 +2330,8 @@ class $TimeTrackingDailyGoalTableTable extends TimeTrackingDailyGoalTable
     return $TimeTrackingDailyGoalTableTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<DateTime, int> $converterdate =
-      const DateOnlyConverter();
+  static TypeConverter<DateTime, String> $converterdate =
+      const IsoDateConverter();
 }
 
 class TimeTrackingDailyGoalTableData extends DataClass
@@ -2339,7 +2346,7 @@ class TimeTrackingDailyGoalTableData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     {
-      map['date'] = Variable<int>(
+      map['date'] = Variable<String>(
         $TimeTrackingDailyGoalTableTable.$converterdate.toSql(date),
       );
     }
@@ -2414,31 +2421,39 @@ class TimeTrackingDailyGoalTableCompanion
     extends UpdateCompanion<TimeTrackingDailyGoalTableData> {
   final Value<DateTime> date;
   final Value<int> studyGoalMinutes;
+  final Value<int> rowid;
   const TimeTrackingDailyGoalTableCompanion({
     this.date = const Value.absent(),
     this.studyGoalMinutes = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   TimeTrackingDailyGoalTableCompanion.insert({
-    this.date = const Value.absent(),
+    required DateTime date,
     required int studyGoalMinutes,
-  }) : studyGoalMinutes = Value(studyGoalMinutes);
+    this.rowid = const Value.absent(),
+  }) : date = Value(date),
+       studyGoalMinutes = Value(studyGoalMinutes);
   static Insertable<TimeTrackingDailyGoalTableData> custom({
-    Expression<int>? date,
+    Expression<String>? date,
     Expression<int>? studyGoalMinutes,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (date != null) 'date': date,
       if (studyGoalMinutes != null) 'study_goal_minutes': studyGoalMinutes,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   TimeTrackingDailyGoalTableCompanion copyWith({
     Value<DateTime>? date,
     Value<int>? studyGoalMinutes,
+    Value<int>? rowid,
   }) {
     return TimeTrackingDailyGoalTableCompanion(
       date: date ?? this.date,
       studyGoalMinutes: studyGoalMinutes ?? this.studyGoalMinutes,
+      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -2446,12 +2461,15 @@ class TimeTrackingDailyGoalTableCompanion
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (date.present) {
-      map['date'] = Variable<int>(
+      map['date'] = Variable<String>(
         $TimeTrackingDailyGoalTableTable.$converterdate.toSql(date.value),
       );
     }
     if (studyGoalMinutes.present) {
       map['study_goal_minutes'] = Variable<int>(studyGoalMinutes.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
     }
     return map;
   }
@@ -2460,7 +2478,8 @@ class TimeTrackingDailyGoalTableCompanion
   String toString() {
     return (StringBuffer('TimeTrackingDailyGoalTableCompanion(')
           ..write('date: $date, ')
-          ..write('studyGoalMinutes: $studyGoalMinutes')
+          ..write('studyGoalMinutes: $studyGoalMinutes, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -2486,9 +2505,21 @@ abstract class _$UserDataDB extends GeneratedDatabase {
       $TimeTrackingTagsTableTable(this);
   late final $TimeTrackingDailyGoalTableTable timeTrackingDailyGoalTable =
       $TimeTrackingDailyGoalTableTable(this);
+  late final Index sessionCompletedIndex = Index(
+    'sessionCompletedIndex',
+    'CREATE INDEX sessionCompletedIndex ON time_tracking_table (is_completed)',
+  );
   late final Index timeTrackingIdIndex = Index(
     'timeTrackingIdIndex',
     'CREATE INDEX timeTrackingIdIndex ON time_tracking_unit_table (time_tracking_id)',
+  );
+  late final Index unitStartTimeIndex = Index(
+    'unitStartTimeIndex',
+    'CREATE INDEX unitStartTimeIndex ON time_tracking_unit_table (start_time)',
+  );
+  late final Index unitEndTimeIndex = Index(
+    'unitEndTimeIndex',
+    'CREATE INDEX unitEndTimeIndex ON time_tracking_unit_table (end_time)',
   );
   late final WordListsDao wordListsDao = WordListsDao(this as UserDataDB);
   late final SearchHistoryDao searchHistoryDao = SearchHistoryDao(
@@ -2511,7 +2542,10 @@ abstract class _$UserDataDB extends GeneratedDatabase {
     timeTrackingCategoriesTable,
     timeTrackingTagsTable,
     timeTrackingDailyGoalTable,
+    sessionCompletedIndex,
     timeTrackingIdIndex,
+    unitStartTimeIndex,
+    unitEndTimeIndex,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -3579,15 +3613,17 @@ class $$TimeTrackingUnitTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<DateTime> get startTime => $composableBuilder(
-    column: $table.startTime,
-    builder: (column) => ColumnFilters(column),
-  );
+  ColumnWithTypeConverterFilters<DateTime, DateTime, DateTime> get startTime =>
+      $composableBuilder(
+        column: $table.startTime,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
 
-  ColumnFilters<DateTime> get endTime => $composableBuilder(
-    column: $table.endTime,
-    builder: (column) => ColumnFilters(column),
-  );
+  ColumnWithTypeConverterFilters<DateTime?, DateTime, DateTime> get endTime =>
+      $composableBuilder(
+        column: $table.endTime,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
 
   $$TimeTrackingTableTableFilterComposer get timeTrackingId {
     final $$TimeTrackingTableTableFilterComposer composer = $composerBuilder(
@@ -3673,10 +3709,10 @@ class $$TimeTrackingUnitTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<DateTime> get startTime =>
+  GeneratedColumnWithTypeConverter<DateTime, DateTime> get startTime =>
       $composableBuilder(column: $table.startTime, builder: (column) => column);
 
-  GeneratedColumn<DateTime> get endTime =>
+  GeneratedColumnWithTypeConverter<DateTime?, DateTime> get endTime =>
       $composableBuilder(column: $table.endTime, builder: (column) => column);
 
   $$TimeTrackingTableTableAnnotationComposer get timeTrackingId {
@@ -4190,13 +4226,15 @@ typedef $$TimeTrackingTagsTableTableProcessedTableManager =
     >;
 typedef $$TimeTrackingDailyGoalTableTableCreateCompanionBuilder =
     TimeTrackingDailyGoalTableCompanion Function({
-      Value<DateTime> date,
+      required DateTime date,
       required int studyGoalMinutes,
+      Value<int> rowid,
     });
 typedef $$TimeTrackingDailyGoalTableTableUpdateCompanionBuilder =
     TimeTrackingDailyGoalTableCompanion Function({
       Value<DateTime> date,
       Value<int> studyGoalMinutes,
+      Value<int> rowid,
     });
 
 class $$TimeTrackingDailyGoalTableTableFilterComposer
@@ -4208,7 +4246,7 @@ class $$TimeTrackingDailyGoalTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnWithTypeConverterFilters<DateTime, DateTime, int> get date =>
+  ColumnWithTypeConverterFilters<DateTime, DateTime, String> get date =>
       $composableBuilder(
         column: $table.date,
         builder: (column) => ColumnWithTypeConverterFilters(column),
@@ -4229,7 +4267,7 @@ class $$TimeTrackingDailyGoalTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get date => $composableBuilder(
+  ColumnOrderings<String> get date => $composableBuilder(
     column: $table.date,
     builder: (column) => ColumnOrderings(column),
   );
@@ -4249,7 +4287,7 @@ class $$TimeTrackingDailyGoalTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumnWithTypeConverter<DateTime, int> get date =>
+  GeneratedColumnWithTypeConverter<DateTime, String> get date =>
       $composableBuilder(column: $table.date, builder: (column) => column);
 
   GeneratedColumn<int> get studyGoalMinutes => $composableBuilder(
@@ -4306,17 +4344,21 @@ class $$TimeTrackingDailyGoalTableTableTableManager
               ({
                 Value<DateTime> date = const Value.absent(),
                 Value<int> studyGoalMinutes = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
               }) => TimeTrackingDailyGoalTableCompanion(
                 date: date,
                 studyGoalMinutes: studyGoalMinutes,
+                rowid: rowid,
               ),
           createCompanionCallback:
               ({
-                Value<DateTime> date = const Value.absent(),
+                required DateTime date,
                 required int studyGoalMinutes,
+                Value<int> rowid = const Value.absent(),
               }) => TimeTrackingDailyGoalTableCompanion.insert(
                 date: date,
                 studyGoalMinutes: studyGoalMinutes,
+                rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

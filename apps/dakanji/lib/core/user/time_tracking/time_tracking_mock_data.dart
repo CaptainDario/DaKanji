@@ -12,23 +12,128 @@ class TimeTrackingMockDataGenerator {
   final List<String> _categories = ['Vocab', 'Kanji', 'Grammar', 'Reading', 'Listening'];
   final List<String> _tags = ['N1', 'N2', 'Review', 'Textbook', 'Anki'];
 
-  /// Scenario: A session started yesterday (14:00) and was never stopped.
-  Future<void> generateYesterdayRunawayScenario() async {
+  /// The master method to generate all mock data scenarios.
+  /// 
+  /// [streakLength] - How many recent days (starting from valid history) should pass the goal.
+  /// [length] - Total days of history to generate.
+  /// [dailyGoalMinutes] - The goal to set for each generated day.
+  /// [overlapToday] - If true, skips generating history for Day 0/1 and instead inserts a 
+  ///                  running session starting yesterday.
+  /// [overlapNearly24h] - Only applies if [overlapToday] is true. 
+  ///                      If true, the running session starts 23h 58m ago (Testing caps).
+  ///                      If false, it starts yesterday at 14:00 (Standard forgotten session).
+  Future<void> generateMockData({
+    int streakLength = 5,
+    int length = 35,
+    int dailyGoalMinutes = 60,
+    bool overlapToday = false,
+    bool overlapNearly24h = false,
+  }) async {
     if (!kDebugMode) return;
 
     await db.transaction(() async {
-      // 1. Generate background history starting from DAY 2 (Day before yesterday).
-      // We skip Day 0 (Today) AND Day 1 (Yesterday) to ensure the runaway 
-      // session below is the ONLY thing visible for yesterday.
-      await _generateHistoryInternal(
-        clearExisting: true, 
-        startDayIndex: 2 
+      // 1. Clear DB
+      await db.delete(db.timeTrackingUnitTable).go();
+      await db.delete(db.timeTrackingTable).go();
+      await db.delete(db.timeTrackingDailyGoalTable).go();
+
+      // 2. Determine where history generation starts
+      // If we are simulating an overlap (Runaway Session), we skip Today (0) and Yesterday (1)
+      // in the history loop to prevent conflicts/noise, so the runaway session is clear.
+      final int startDayIndex = overlapToday ? 2 : 0;
+      final int effectiveLength = max(length, streakLength + 1);
+
+      // 3. Generate History (Background Data)
+      await _generateHistoryLoop(
+        startDayIndex: startDayIndex, 
+        daysToGenerate: effectiveLength, 
+        streakLength: streakLength, 
+        dailyGoalMinutes: dailyGoalMinutes
       );
 
-      final now = DateTime.now();
+      // 4. Generate Specific "Overlap/Runaway" Scenario (If requested)
+      if (overlapToday) {
+        await _generateRunawaySession(overlapNearly24h: overlapNearly24h);
+      }
+    });
+
+    print("✅ Mock Data Generated: Streak=$streakLength, Overlap=$overlapToday (Nearly24h=$overlapNearly24h)");
+  }
+
+  // ===========================================================================
+  // INTERNAL LOGIC
+  // ===========================================================================
+
+  Future<void> _generateHistoryLoop({
+    required int startDayIndex,
+    required int daysToGenerate,
+    required int streakLength,
+    required int dailyGoalMinutes,
+  }) async {
+    final now = DateTime.now();
+
+    for (int i = startDayIndex; i < daysToGenerate; i++) {
+        final targetDateLocal = now.subtract(Duration(days: i));
+        
+        // A. Insert Goal
+        await _insertDailyGoal(targetDateLocal, dailyGoalMinutes);
+
+        // B. Determine Duration based on Streak Rules
+        // Note: We adjust the index relative to startDayIndex so the "Streak" 
+        // feels correct relative to the "latest generated day".
+        final adjustedIndex = i - startDayIndex;
+        
+        int minutesToGenerate = 0;
+        bool shouldGenerate = true;
+
+        if (adjustedIndex < streakLength) {
+          // PASS (> 50%)
+          final minPass = (dailyGoalMinutes / 2).ceil() + 1;
+          final maxPass = (dailyGoalMinutes * 1.5).toInt();
+          minutesToGenerate = minPass + _rng.nextInt(maxPass - minPass);
+        } 
+        else if (adjustedIndex == streakLength) {
+          // FAIL (< 50%) - The Streak Breaker
+          final maxFail = (dailyGoalMinutes / 2).floor() - 1;
+          minutesToGenerate = maxFail <= 0 ? 0 : 1 + _rng.nextInt(maxFail);
+        } 
+        else {
+          // RANDOM HISTORY
+          if (_rng.nextDouble() < 0.4) {
+            shouldGenerate = false;
+          } else {
+             minutesToGenerate = _rng.nextInt(dailyGoalMinutes + 30);
+          }
+        }
+
+        if (shouldGenerate && minutesToGenerate > 0) {
+          await _generateDayWithTotalDuration(
+            dateLocal: targetDateLocal, 
+            totalMinutes: minutesToGenerate
+          );
+        }
+      }
+  }
+
+  Future<void> _generateRunawaySession({required bool overlapNearly24h}) async {
+    final now = DateTime.now();
+
+    if (overlapNearly24h) {
+      // --- TEST CASE: 24h Cap ---
+      // Single unit running for 23h 58m.
+      final start = now.subtract(const Duration(hours: 23, minutes: 58));
       
-      // 2. Create the specific "Yesterday" event
-      // We anchor this to Yesterday 14:00 strict.
+      await _insertSession(
+        category: "Test",
+        tag: "24h Limit",
+        isCompleted: false,
+        units: [
+           _MockUnit(start.toUtc(), null)
+        ]
+      );
+    } else {
+      // --- TEST CASE: Forgot to turn off yesterday ---
+      // Started Yesterday 14:00. Has some history, then goes runaway.
       final yesterdayStartLocal = DateTime(now.year, now.month, now.day)
           .subtract(const Duration(days: 1)) 
           .add(const Duration(hours: 14)); 
@@ -36,7 +141,7 @@ class TimeTrackingMockDataGenerator {
       await _insertSession(
         category: "Kanji",
         tag: "N1 Grind", 
-        isCompleted: false, // The only running session allowed
+        isCompleted: false, 
         units: [
           _MockUnit(
             yesterdayStartLocal.toUtc(),
@@ -46,144 +151,54 @@ class TimeTrackingMockDataGenerator {
             yesterdayStartLocal.add(const Duration(hours: 1, minutes: 15)).toUtc(),
             yesterdayStartLocal.add(const Duration(hours: 2)).toUtc(),
           ),
-          // The Runaway Segment (Yesterday 16:15 -> Now/Null)
+          // Runaway Unit starts at 16:15 Yesterday
           _MockUnit(
             yesterdayStartLocal.add(const Duration(hours: 2, minutes: 15)).toUtc(),
             null, 
           ),
         ],
       );
-    });
-    
-    print("✅ Generated: Yesterday Runaway Scenario (History starts from Day -2)");
+    }
   }
 
-  /// Standard Mock Data: Generates last 3 weeks.
-  Future<void> generateLastThreeWeeks({bool clearExisting = true}) async {
-    await db.transaction(() async {
-      await _generateHistoryInternal(
-        clearExisting: clearExisting, 
-        startDayIndex: 1 
+  /// Splits total minutes into realistic sessions for a single day
+  Future<void> _generateDayWithTotalDuration({
+    required DateTime dateLocal,
+    required int totalMinutes,
+  }) async {
+    DateTime cursor = DateTime(dateLocal.year, dateLocal.month, dateLocal.day, 9, 0);
+    int minutesLeft = totalMinutes;
+
+    while (minutesLeft > 0) {
+      int sessionDuration = minutesLeft;
+      // Split long sessions (randomly)
+      if (minutesLeft > 45 && _rng.nextBool()) {
+        sessionDuration = 20 + _rng.nextInt(minutesLeft - 20);
+      }
+
+      final startUtc = cursor.toUtc();
+      final endUtc = cursor.add(Duration(minutes: sessionDuration)).toUtc();
+
+      await _insertSession(
+        category: _categories[_rng.nextInt(_categories.length)],
+        tag: _rng.nextBool() ? _tags[_rng.nextInt(_tags.length)] : null,
+        isCompleted: true,
+        units: [_MockUnit(startUtc, endUtc)],
       );
-    });
+
+      minutesLeft -= sessionDuration;
+      cursor = cursor.add(Duration(minutes: sessionDuration + 30 + _rng.nextInt(60)));
+    }
   }
 
-  /// Internal generator
-  Future<void> _generateHistoryInternal({
-    required bool clearExisting,
-    required int startDayIndex,
-  }) async {
-    if (!kDebugMode) {
-      print("⚠️ Aborted: Debug mode only.");
-      return;
-    }
-
-    if (clearExisting) {
-      await db.delete(db.timeTrackingUnitTable).go();
-      await db.delete(db.timeTrackingTable).go();
-    }
-
-    final nowLocal = DateTime.now();
-    
-    // Loop backwards from [startDayIndex] to 21 days ago.
-    for (int i = startDayIndex; i < 21; i++) {
-      final targetDateLocal = nowLocal.subtract(Duration(days: i));
-      
-      // 20% chance to skip a day completely
-      if (_rng.nextDouble() < 0.2) continue;
-
-      final sessionCount = _rng.nextInt(3) + 1; 
-
-      // Start the day randomly between 8am-10am LOCAL time
-      final startOfDayLocal = DateTime(targetDateLocal.year, targetDateLocal.month, targetDateLocal.day);
-      DateTime currentCursorLocal = startOfDayLocal.add(Duration(hours: 8 + _rng.nextInt(2), minutes: _rng.nextInt(60)));
-      
-      for (int s = 0; s < sessionCount; s++) {
-        
-        // Safety Check: If we are past 10 PM, stop generating for this day.
-        // This prevents the session from bleeding past midnight and overlapping 
-        // with the next day's history (which is technically i-1).
-        if (currentCursorLocal.hour >= 22) break;
-
-        final sessionEndTimeUTC = await _generateRandomSession(
-          startTimeLocal: currentCursorLocal, 
-          isCompleted: true, 
-        );
-
-        // Calculate next start time: End of previous session + random gap (15-120 mins)
-        // We use the UTC end time and convert back to local to ensure continuity
-        currentCursorLocal = sessionEndTimeUTC.toLocal().add(Duration(minutes: 15 + _rng.nextInt(105)));
-      }
-    }
-    
-    print("✅ Mock Data Generated (Starts from Day -$startDayIndex)");
-  }
-
-  // --- Internal Helpers ---
-
-  /// Generates a session starting at [startTimeLocal].
-  /// Returns the [DateTime] (UTC) of when the session actually finished.
-  Future<DateTime> _generateRandomSession({
-    required DateTime startTimeLocal, 
-    required bool isCompleted,
-  }) async {
-    final category = _categories[_rng.nextInt(_categories.length)];
-    final tag = _rng.nextBool() ? _tags[_rng.nextInt(_tags.length)] : null;
-    
-    // Working with UTC internally avoids DST jumps/overlaps during calculation
-    DateTime cursorUtc = startTimeLocal.toUtc();
-    
-    final pattern = _rng.nextInt(100);
-    List<_MockUnit> units = [];
-
-    // Pattern 1: Solid Block
-    if (pattern < 60) {
-      final duration = Duration(minutes: 20 + _rng.nextInt(70));
-      final endUtc = cursorUtc.add(duration);
-      units.add(_MockUnit(cursorUtc, endUtc));
-    
-    // Pattern 2: Pomodoro (Classic 25/5)
-    } else if (pattern < 90) {
-      final loops = 2 + _rng.nextInt(2); // 2 or 3 loops
-      
-      for (int p = 0; p < loops; p++) {
-        final workEnd = cursorUtc.add(const Duration(minutes: 25));
-        units.add(_MockUnit(cursorUtc, workEnd));
-        // Advance cursor past work + break
-        cursorUtc = workEnd.add(const Duration(minutes: 5)); 
-      }
-      // Note: cursorUtc is now sitting at the START of the next potential block.
-      // But the actual LAST UNIT ended 5 minutes ago.
-      // We rely on units.last.end to return the correct time below.
-
-    // Pattern 3: Micro Session
-    } else {
-      final duration = Duration(minutes: 2 + _rng.nextInt(8));
-      final endUtc = cursorUtc.add(duration);
-      units.add(_MockUnit(cursorUtc, endUtc));
-    }
-
-    // Handle explicit "Running" override
-    if (!isCompleted && units.isNotEmpty) {
-       final lastUnit = units.last;
-       units[units.length - 1] = _MockUnit(lastUnit.start, null);
-    }
-
-    await _insertSession(
-      category: category, 
-      tag: tag, 
-      isCompleted: isCompleted, 
-      units: units
+  Future<void> _insertDailyGoal(DateTime date, int minutes) async {
+    await db.into(db.timeTrackingDailyGoalTable).insert(
+      TimeTrackingDailyGoalTableCompanion(
+        date: Value(date),
+        studyGoalMinutes: Value(minutes),
+      ),
+      mode: InsertMode.insertOrIgnore
     );
-
-    // FIX: Return the actual end of the last unit generated.
-    // This is the source of truth. Do not calculate it manually.
-    if (units.isNotEmpty && units.last.end != null) {
-      return units.last.end!;
-    } else {
-      // Fallback for running sessions or empty (shouldn't happen in history generation)
-      return cursorUtc; 
-    }
   }
 
   Future<void> _insertSession({

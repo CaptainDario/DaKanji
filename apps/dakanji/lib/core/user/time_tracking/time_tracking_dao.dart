@@ -26,8 +26,10 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
   /// Ensures that there is an entry for today's date in the Daily Goals table.
   /// If not, it inserts one with the provided [defaultGoal] in minutes.
   Future<void> ensureDailyGoalExists({int defaultGoal = 60}) async {
-    final today = DateTime.now();
-    final todaySql = DateOnlyConverter().toSql(today);
+    final now = DateTime.now();
+    // Normalize to local midnight to ensure consistent day-based lookup
+    final todayLocal = DateTime(now.year, now.month, now.day);
+    final todaySql = const IsoDateConverter().toSql(todayLocal);
 
     // Check if today already exists
     final exists = await (select(timeTrackingDailyGoalTable)
@@ -36,7 +38,7 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
     if (exists != null) return;
 
-    // Get most recent goal to maintain user preference (default: 30)
+    // Get most recent goal to maintain user preference
     final lastEntry = await (select(timeTrackingDailyGoalTable)
           ..orderBy([(t) => OrderingTerm.desc(t.date)])
           ..limit(1))
@@ -44,17 +46,17 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
     final int goalToUse = lastEntry?.studyGoalMinutes ?? defaultGoal;
 
-    // Insert today's goal
     await setTodayGoal(goalToUse);
   }
 
   // 2. GET (Future) - For one-off logic checks
   Future<int> getTodayGoal() async {
-    final today = DateTime.now();
-    final todayAsSql = const DateOnlyConverter().toSql(today);
+    final now = DateTime.now();
+    final todayLocal = DateTime(now.year, now.month, now.day);
+    final todaySql = const IsoDateConverter().toSql(todayLocal);
 
     final row = await (select(timeTrackingDailyGoalTable)
-          ..where((t) => t.date.equals(todayAsSql)))
+          ..where((t) => t.date.equals(todaySql)))
         .getSingleOrNull();
         
     return row?.studyGoalMinutes ?? 0;
@@ -62,10 +64,12 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
   // 3. SET - Call this when user changes the slider/input
   Future<void> setTodayGoal(int minutes) async {
-    final today = DateTime.now();
+    final now = DateTime.now();
+    final todayLocal = DateTime(now.year, now.month, now.day);
+    
     await into(timeTrackingDailyGoalTable).insertOnConflictUpdate(
       TimeTrackingDailyGoalTableCompanion(
-        date: Value(today),
+        date: Value(todayLocal),
         studyGoalMinutes: Value(minutes),
       ),
     );
@@ -74,19 +78,87 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
   // --- END   : Daily Goals Management ---
 
   // --- START : Statistics & History ---
+
+  /// Fetches daily study totals AND goals for a specific date range.
+  /// Returns: `Map<Date, (Minutes Studied, Daily Goal)>`
+  /// Keys are normalized to `DateTime.utc(y, m, d)` (representing the Local day) 
+  /// to ensure equality matches with UI keys.
+  Future<Map<DateTime, (int, int)>> getStudyHistoryRange({
+    required DateTime start,
+    required DateTime end,
+  }) async {
+    
+    // 1. Fetch Actual Study Time (Aggregate Units)
+    // -------------------------------------------------
+    // Query range must be in UTC because the DB stores UTC
+    final unitsQuery = select(timeTrackingUnitTable)
+      ..where((t) => t.startTime.isBetweenValues(start.toUtc(), end.toUtc()));
+
+    final units = await unitsQuery.get();
+    final Map<DateTime, int> actualMap = {};
+
+    for (final unit in units) {
+      // CRITICAL: Convert to Local Time BEFORE determining the day.
+      // A session at 23:00 Local is still "Today", even if it is 02:00 UTC "Tomorrow".
+      final localStart = unit.startTime.toLocal();
+      
+      // Create a normalized key (UTC with local values) for Map equality
+      final dateKey = DateTime.utc(localStart.year, localStart.month, localStart.day);
+      
+      final localEnd = unit.endTime?.toLocal() ?? DateTime.now();
+      final duration = localEnd.difference(localStart).inMinutes;
+
+      actualMap[dateKey] = (actualMap[dateKey] ?? 0) + duration;
+    }
+
+    // 2. Fetch Historical Goals
+    // -------------------------------------------------
+    // Goals are typically stored as ISO strings representing the day (YYYY-MM-DD).
+    final goalsQuery = select(timeTrackingDailyGoalTable)
+      ..where((t) => t.date.isBetweenValues(
+        const IsoDateConverter().toSql(start),
+        const IsoDateConverter().toSql(end)
+      ));
+      
+    final goals = await goalsQuery.get();
+    final Map<DateTime, int> goalMap = {};
+
+    for (var row in goals) {
+      // Convert the storage date to our normalized key format
+      final d = row.date;
+      final dateKey = DateTime.utc(d.year, d.month, d.day);
+      goalMap[dateKey] = row.studyGoalMinutes;
+    }
+
+    // 3. Merge Results
+    // -------------------------------------------------
+    final Map<DateTime, (int, int)> result = {};
+    final allDates = {...actualMap.keys, ...goalMap.keys};
+
+    for (final date in allDates) {
+      final studied = actualMap[date] ?? 0;
+      final goal = goalMap[date] ?? 0;
+      
+      result[date] = (studied, goal);
+    }
+
+    return result;
+  }
   
   /// Fetches all sessions that STARTED on a specific [date].
-  /// Returns a list of sessions with their associated units (work blocks).
+  /// [date] is expected to be a Local date.
   Future<List<({TimeTrackingTableData session, List<TimeTrackingUnitTableData> units})>> 
       getSessionsForDate(DateTime date) async {
     
-    // 1. Define the day boundaries
-    final startOfDay = DateTime(date.year, date.month, date.day);
-    final endOfDay = startOfDay.add(const Duration(days: 1));
+    // 1. Define the day boundaries in Local Time
+    final startOfDayLocal = DateTime(date.year, date.month, date.day);
+    final endOfDayLocal = startOfDayLocal.add(const Duration(days: 1));
 
-    // 2. Query Sessions that started in this range
-    // Join with the FIRST unit to check the start time of the session
-    // (Since TimeTrackingTable doesn't have a startTime, only units do)
+    // 2. Convert boundaries to UTC for the Database Query
+    final startUtc = startOfDayLocal.toUtc();
+    final endUtc = endOfDayLocal.toUtc();
+
+    // 3. Query Sessions
     final sessionsQuery = select(timeTrackingTable).join([
       innerJoin(
         timeTrackingUnitTable,
@@ -94,15 +166,13 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       )
     ]);
 
-    // Filter by the start time of the unit
-    sessionsQuery.where(timeTrackingUnitTable.startTime.isBetweenValues(startOfDay, endOfDay));
+    // Filter units that fall within the UTC range corresponding to the Local day
+    sessionsQuery.where(timeTrackingUnitTable.startTime.isBetweenValues(startUtc, endUtc));
     
-    // Group by Session ID to avoid duplicates in the main result
     sessionsQuery.groupBy([timeTrackingTable.id]);
 
     final sessionResults = await sessionsQuery.get();
     
-    // 3. For each session, fetch ALL its units to calculate breaks/end times
     List<({TimeTrackingTableData session, List<TimeTrackingUnitTableData> units})> fullData = [];
 
     for (final row in sessionResults) {
@@ -116,7 +186,6 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       fullData.add((session: session, units: units));
     }
 
-    // Sort by the start time of the first unit
     fullData.sort((a, b) {
       if (a.units.isEmpty || b.units.isEmpty) return 0;
       return a.units.first.startTime.compareTo(b.units.first.startTime);
@@ -128,11 +197,31 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
   // --- START : Session Management ---
 
+  /// Checks if the current timer has been running longer than [thresholdHours].
+  /// Returns the start time (UTC) if true, null otherwise.
+  /// 
+  /// [thresholdHours] defaults to 6, but can be configured based on user preference.
+  Future<DateTime?> checkLongRunningTimer({int thresholdHours = 6}) async {
+    // 1. Get the running timer
+    final running = await getRunningTimer();
+    
+    if (running == null) return null;
+
+    // 2. Check Duration (Compare UTC to UTC)
+    final nowUtc = DateTime.now().toUtc();
+    final duration = nowUtc.difference(running.startTime);
+
+    if (duration.inHours >= thresholdHours) {
+      return running.startTime;
+    }
+    
+    return null;
+  }
+
   /// Checks for any running timers that have exceeded 24 hours.
-  /// If found, it caps the unit at exactly 24 hours and closes the session.
   Future<void> enforce24HourLimit() async {
-    // Find running units that started more than 24 hours ago
-    final limit = DateTime.now().subtract(const Duration(hours: 24));
+    // Use UTC for DB comparison
+    final limit = DateTime.now().toUtc().subtract(const Duration(hours: 24));
     
     final staleUnits = await (select(timeTrackingUnitTable)
       ..where((t) => t.endTime.isNull() & t.startTime.isSmallerThanValue(limit)))
@@ -142,7 +231,6 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
     await transaction(() async {
       for (final unit in staleUnits) {
-        // The forced end time is 23:59h to prevent edge-case overlaps
         final forcedEndTime = unit.startTime.add(const Duration(hours: 23, minutes: 59));
 
         // Close the Unit
@@ -151,7 +239,7 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
               endTime: Value(forcedEndTime),
             ));
 
-        // Close the Session (Mark as completed since it was abandoned)
+        // Close the Session
         await (update(timeTrackingTable)
               ..where((t) => t.id.equals(unit.timeTrackingId)))
             .write(const TimeTrackingTableCompanion(
@@ -161,7 +249,6 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     });
   }
 
-  /// Updates an existing session's details including time, breaks, and metadata.
   Future<void> updateSession({
     required int sessionId,
     required DateTime newStartTime,
@@ -170,8 +257,11 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     String? category,
     String? tag,
   }) async {
+    // Ensure inputs are UTC for storage
+    final startUtc = newStartTime.toUtc();
+    final endUtc = newEndTime.toUtc();
+
     return transaction(() async {
-      // 1. Update Session Meta
       await (update(timeTrackingTable)..where((t) => t.id.equals(sessionId))).write(
         TimeTrackingTableCompanion(
           category: Value(category),
@@ -179,7 +269,6 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
         ),
       );
 
-      // 2. Fetch Units to get current IDs
       var units = await (select(timeTrackingUnitTable)
             ..where((t) => t.timeTrackingId.equals(sessionId))
             ..orderBy([(t) => OrderingTerm(expression: t.startTime)]))
@@ -187,78 +276,63 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
       if (units.isEmpty) return;
 
-      // 3. Update Global Start/End Boundaries
-      // Set the very first start time
+      // Update Boundaries
       await (update(timeTrackingUnitTable)
             ..where((t) => t.id.equals(units.first.id)))
-          .write(TimeTrackingUnitTableCompanion(startTime: Value(newStartTime)));
+          .write(TimeTrackingUnitTableCompanion(startTime: Value(startUtc)));
 
-      // Set the very last end time
       await (update(timeTrackingUnitTable)
             ..where((t) => t.id.equals(units.last.id)))
-          .write(TimeTrackingUnitTableCompanion(endTime: Value(newEndTime)));
+          .write(TimeTrackingUnitTableCompanion(endTime: Value(endUtc)));
 
-      // Refresh units to get updated boundaries/times for calculation
       units = await (select(timeTrackingUnitTable)
             ..where((t) => t.timeTrackingId.equals(sessionId))
             ..orderBy([(t) => OrderingTerm(expression: t.startTime)]))
           .get();
 
-      // 4. Calculate existing breaks (sum of gaps) excluding the last gap
+      // Recalculate Breaks
       int existingFixedBreaks = 0;
       if (units.length > 2) {
          for (int i = 0; i < units.length - 2; i++) {
-             // Gap is between unit[i].end and unit[i+1].start
+             // Use internal logic (UTC) for difference calculation
              final end = units[i].endTime ?? units[i].startTime;
              final start = units[i+1].startTime;
              existingFixedBreaks += start.difference(end).inMinutes;
          }
       }
 
-      // 5. Determine the required duration for the final gap
       final int neededLastGapMinutes = (newBreakMinutes - existingFixedBreaks).clamp(0, 1440);
       final Duration neededLastGap = Duration(minutes: neededLastGapMinutes);
 
       if (units.length == 1) {
-        // Case: No existing breaks (1 Unit).
-        // Logic: "Add one at the end".
-        // shorten the current unit and add a 0-duration unit at newEndTime to create the gap.
-        
         if (neededLastGapMinutes > 0) {
-          final modifiedFirstEnd = newEndTime.subtract(neededLastGap);
+          final modifiedFirstEnd = endUtc.subtract(neededLastGap);
           
-          // Safety: Don't let end be before start
-          final safeFirstEnd = modifiedFirstEnd.isBefore(newStartTime) 
-              ? newStartTime 
+          final safeFirstEnd = modifiedFirstEnd.isBefore(startUtc) 
+              ? startUtc 
               : modifiedFirstEnd;
 
-          // Update Unit 1 End Time
           await (update(timeTrackingUnitTable)
               ..where((t) => t.id.equals(units.first.id)))
               .write(TimeTrackingUnitTableCompanion(endTime: Value(safeFirstEnd)));
 
-          // Insert Unit 2 (Marker at the end to force the timeline to stretch to newEndTime)
+          // Marker unit
           await into(timeTrackingUnitTable).insert(
             TimeTrackingUnitTableCompanion(
               timeTrackingId: Value(sessionId),
-              startTime: Value(newEndTime),
-              endTime: Value(newEndTime),
+              startTime: Value(endUtc),
+              endTime: Value(endUtc),
             ),
           );
         }
       } else {
-        // Case: Existing breaks.
-        // Logic: "Make the last one longer" (or shorter).
-        // Adjust the Start Time of the last unit to widen/shrink the gap before it.
         final secondToLastUnit = units[units.length - 2];
-        final secondToLastEnd = secondToLastUnit.endTime ?? newStartTime; 
+        final secondToLastEnd = secondToLastUnit.endTime ?? startUtc; 
         
-        // Calculate new start for the last unit based on the needed gap
         final newLastStart = secondToLastEnd.add(neededLastGap);
         
-        // Safety: Start cannot be after End
-        final safeLastStart = newLastStart.isAfter(newEndTime) 
-            ? newEndTime 
+        final safeLastStart = newLastStart.isAfter(endUtc) 
+            ? endUtc 
             : newLastStart;
 
         await (update(timeTrackingUnitTable)
@@ -268,8 +342,6 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     });
   }
   
-  /// Inserts a fully completed session manually (e.g., from the editor).
-  /// [breakMinutes] are subtracted from the end of the first unit to create a gap.
   Future<void> insertPastSession({
     required DateTime startTime,
     required DateTime endTime,
@@ -277,8 +349,11 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     String? tag,
     required int breakMinutes,
   }) async {
+    // Ensure UTC
+    final startUtc = startTime.toUtc();
+    final endUtc = endTime.toUtc();
+
     return transaction(() async {
-      // 1. Create the session entry
       final sessionId = await into(timeTrackingTable).insert(
         TimeTrackingTableCompanion(
           category: Value(category),
@@ -287,80 +362,76 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
         ),
       );
 
-      // 2. Calculate Unit Splits
-      // To represent a break, we create:
-      // Unit 1: Start -> (End - Break)
-      // Unit 2: End -> End (A 0-duration marker to define the gap)
-      
-      final totalDuration = endTime.difference(startTime).inMinutes;
+      final totalDuration = endUtc.difference(startUtc).inMinutes;
       final safeBreak = (breakMinutes >= totalDuration) ? 0 : breakMinutes;
       final workDuration = totalDuration - safeBreak;
 
       if (safeBreak > 0) {
-        final firstUnitEnd = startTime.add(Duration(minutes: workDuration));
+        final firstUnitEnd = startUtc.add(Duration(minutes: workDuration));
 
-        // Work Unit
         await into(timeTrackingUnitTable).insert(
           TimeTrackingUnitTableCompanion(
             timeTrackingId: Value(sessionId),
-            startTime: Value(startTime),
+            startTime: Value(startUtc),
             endTime: Value(firstUnitEnd),
           ),
         );
 
-        // End Marker Unit (creates the gap visually in timeline)
+        // Marker Unit
         await into(timeTrackingUnitTable).insert(
           TimeTrackingUnitTableCompanion(
             timeTrackingId: Value(sessionId),
-            startTime: Value(endTime),
-            endTime: Value(endTime),
+            startTime: Value(endUtc),
+            endTime: Value(endUtc),
           ),
         );
       } else {
-        // Continuous session with no break
         await into(timeTrackingUnitTable).insert(
           TimeTrackingUnitTableCompanion(
             timeTrackingId: Value(sessionId),
-            startTime: Value(startTime),
-            endTime: Value(endTime),
+            startTime: Value(startUtc),
+            endTime: Value(endUtc),
           ),
         );
       }
     });
   }
 
-  /// Calculates the total study minutes for today.
-  /// That also includes currently running timers and overlap from previous days.
+  /// Calculates the total study minutes for today (Local Time).
   Future<int> getTodayStudyMinutes() async {
-    final now = DateTime.now();
-    final startOfToday = DateTime(now.year, now.month, now.day);
+    final nowLocal = DateTime.now();
+    final startOfTodayLocal = DateTime(nowLocal.year, nowLocal.month, nowLocal.day);
     
-    // 1. Query: Find ALL units that touch 'today' in any way.
-    // Logic: A unit overlaps if it didn't end before today started.
+    // Convert to UTC for Query Filtering
+    // We want units that ended AFTER the start of the local day (or are still running)
+    // AND started BEFORE right now.
+    final startOfTodayUtc = startOfTodayLocal.toUtc();
+    final nowUtc = nowLocal.toUtc();
+
     final units = await (select(timeTrackingUnitTable)
       ..where((t) {
-        // "endTime is NULL" (Running) OR "endTime > startOfToday"
-        return t.endTime.isNull() | t.endTime.isBiggerThanValue(startOfToday);
+        return t.endTime.isNull() | t.endTime.isBiggerThanValue(startOfTodayUtc);
       })
-      // Optimization: No need to fetch units that started in the future (tomorrow)
-      ..where((t) => t.startTime.isSmallerThanValue(now))
+      ..where((t) => t.startTime.isSmallerThanValue(nowUtc))
     ).get();
 
     int totalMinutes = 0;
 
     for (final unit in units) {
-      // 2. Math: Clamp the time range to strictly "Today"
-      
-      // A. Start Time: If it started yesterday, treat it as starting at Midnight (00:00)
-      final effectiveStart = unit.startTime.isBefore(startOfToday) 
-          ? startOfToday 
-          : unit.startTime;
+      // Convert everything to Local for the logic calculation
+      final unitStartLocal = unit.startTime.toLocal();
+      final unitEndLocal = unit.endTime?.toLocal() ?? nowLocal;
 
-      // B. End Time: If it's running (null), assume 'now'.
-      final effectiveEnd = unit.endTime ?? now;
+      // Clamp start to today's start
+      final effectiveStart = unitStartLocal.isBefore(startOfTodayLocal) 
+          ? startOfTodayLocal 
+          : unitStartLocal;
 
-      // C. Safety Check: Ensure we don't count negative time 
-      // (e.g., if effectiveEnd is somehow before effectiveStart)
+      // Clamp end to now
+      final effectiveEnd = unitEndLocal.isAfter(nowLocal) 
+          ? nowLocal 
+          : unitEndLocal;
+
       if (effectiveEnd.isAfter(effectiveStart)) {
         totalMinutes += effectiveEnd.difference(effectiveStart).inMinutes;
       }
@@ -371,39 +442,30 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
   /// Returns the the row of the currently running timer, if any.
   Future<TimeTrackingUnitTableData?> getRunningTimer() async {
-
-    // ensure no timer is over 24 hours
     await enforce24HourLimit();
 
     final query = select(timeTrackingUnitTable)
       ..where((tbl) => tbl.endTime.isNull());
-    final result = await query.getSingleOrNull();
-    return result;
+    return await query.getSingleOrNull();
   }
 
-  /// Returns the start time of the currently running timer, if any.
   Future<DateTime?> getRunningTimersStartTime() async {
-    return (await getRunningTimer())?.startTime;
+    return (await getRunningTimer())?.startTime; // already UTC from DB
   }
 
-  /// Returns the full state of the user's tracking.
   Stream<TimerStatus> watchCurrentStatus() {
-
-    // Is the timer ticking right now?
     final runningStream = (select(timeTrackingUnitTable)
           ..where((tbl) => tbl.endTime.isNull())
           ..limit(1))
         .watchSingleOrNull();
 
-    // Is there an "Active" session (Paused)?
     final sessionStream = (select(timeTrackingTable)
           ..where((tbl) => tbl.isCompleted.equals(false))
           ..limit(1))
         .watchSingleOrNull();
 
-    // StreamZip waits for both streams to emit, then gives you a List based on order
     return StreamZip([runningStream, sessionStream]).map((results) {
-      final runningUnit = results[0] as TimeTrackingUnitTableData?; // Type manually if needed
+      final runningUnit = results[0] as TimeTrackingUnitTableData?;
       final activeSession = results[1] as TimeTrackingTableData?;
 
       if (runningUnit != null) return TimerStatus.running;
@@ -413,12 +475,10 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
   }
 
   Future<TimerStatus> getCurrentStatus() async {
-    // ensure no timer is over 24 hours
     await enforce24HourLimit();
     return watchCurrentStatus().first;
   }
 
-  /// Retrieves data to restore an active session, if any.
   Future<({
     bool hasActiveSession, 
     bool isPaused, 
@@ -447,20 +507,21 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
           .get();
 
     Duration totalWork = Duration.zero;
-    Duration totalPause = Duration.zero; // <--- NEW
+    Duration totalPause = Duration.zero; 
     bool isPaused = true; 
     DateTime? lastEndTime;
 
+    // We can calculate duration math using UTC directly as Duration is absolute
+    final nowUtc = DateTime.now().toUtc();
+
     for (final unit in units) {
-      // 1. Calculate the GAP (Pause) before this unit started
       if (lastEndTime != null) {
         totalPause += unit.startTime.difference(lastEndTime);
       }
 
-      // 2. Calculate the WORK duration of this unit
       if (unit.endTime == null) {
         isPaused = false;
-        totalWork += DateTime.now().difference(unit.startTime);
+        totalWork += nowUtc.difference(unit.startTime);
       } else {
         totalWork += unit.endTime!.difference(unit.startTime);
         lastEndTime = unit.endTime;
@@ -471,50 +532,43 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       hasActiveSession: true, 
       isPaused: isPaused, 
       totalWorkDuration: totalWork,
-      totalPauseDuration: totalPause, // <--- Return the sum of gaps
+      totalPauseDuration: totalPause,
       pauseStartTime: isPaused ? lastEndTime : null 
     );
   }
 
-  /// Creates a new row in TimeTrackingTable and starts the timer.
   Future<void> startNewSession(String? category, String? tags) async {
     return transaction(() async {
-      // A. Create the Parent (Session)
       final sessionId = await into(timeTrackingTable).insert(
         TimeTrackingTableCompanion(
           category: Value(category),
           tag: Value(tags),
-          isCompleted: const Value(false), // Set as Active
+          isCompleted: const Value(false),
         ),
       );
 
-      // B. Start the first Unit
       await into(timeTrackingUnitTable).insert(
         TimeTrackingUnitTableCompanion(
           timeTrackingId: Value(sessionId),
-          startTime: Value(DateTime.now()),
+          startTime: Value(DateTime.now().toUtc()), // Store UTC
           endTime: const Value(null),
         ),
       );
     });
   }
 
-  /// Closes the current 'Unit'. The 'Session' remains active (isCompleted=false).
   Future<void> pauseTimer() async {
-    final now = DateTime.now();
+    final nowUtc = DateTime.now().toUtc();
     
-    // Find the currently running unit (where endTime is null)
     final query = update(timeTrackingUnitTable)
       ..where((tbl) => tbl.endTime.isNull());
 
     await query.write(
-      TimeTrackingUnitTableCompanion(endTime: Value(now)),
+      TimeTrackingUnitTableCompanion(endTime: Value(nowUtc)),
     );
   }
 
-  /// Does NOT create a new Session. Adds a new Unit to the EXISTING Session.
   Future<void> resumeTimer() async {
-    // A. Find the most recent 'Active' Session
     final activeSession = await (select(timeTrackingTable)
           ..where((tbl) => tbl.isCompleted.equals(false))
           ..orderBy([(t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc)])
@@ -525,24 +579,19 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
       throw Exception("No active session found to resume!");
     }
 
-    // B. Create a new Unit linked to that Session
     await into(timeTrackingUnitTable).insert(
       TimeTrackingUnitTableCompanion(
         timeTrackingId: Value(activeSession.id),
-        startTime: Value(DateTime.now()),
+        startTime: Value(DateTime.now().toUtc()), // Store UTC
         endTime: const Value(null),
       ),
     );
   }
 
-  /// Closes the current Unit AND marks the Session as completed.
   Future<void> finishSession() async {
     return transaction(() async {
-      // A. Pause the timer (Close the unit)
       await pauseTimer();
 
-      // B. Mark the Session as Complete
-      // (This hides it from the 'Resume' logic)
       final query = update(timeTrackingTable)
         ..where((tbl) => tbl.isCompleted.equals(false));
         
@@ -552,15 +601,12 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     });
   }
 
-  /// Deletes a session and all its associated time units.
   Future<void> deleteSession(int sessionId) async {
     return transaction(() async {
-      // 1. Delete all units associated with this session
       await (delete(timeTrackingUnitTable)
             ..where((t) => t.timeTrackingId.equals(sessionId)))
           .go();
 
-      // 2. Delete the session itself
       await (delete(timeTrackingTable)
             ..where((t) => t.id.equals(sessionId)))
           .go();
@@ -569,14 +615,12 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
   // --- END : Session Management ---
 
   // --- START : Tags and Categories Management ---
-  /// Get all tags that the user has defined
   Future<List<String>> getAllCategories() async {
     final query = select(timeTrackingCategoriesTable);
     final results = await query.get();
     return results.map((row) => row.category).toList();
   }
 
-  /// Add a new category
   Future<void> addCategory(String category) async {
     await into(timeTrackingCategoriesTable).insert(
       TimeTrackingCategoriesTableCompanion(
@@ -586,31 +630,26 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     );
   }
 
-  /// Delete an existing category
   Future<void> deleteCategory(String category) async {
     final query = delete(timeTrackingCategoriesTable)
       ..where((tbl) => tbl.category.equals(category));
     await query.go();
   }
 
-  /// Set the selected category
   Future setSelectedCategory(String category) async {
     return transaction(() async {
-      // 1. Deselect all categories
       final deselectQuery = update(timeTrackingCategoriesTable)
         ..where((tbl) => tbl.isSelected.equals(true));
       await deselectQuery.write(
         const TimeTrackingCategoriesTableCompanion(isSelected: Value(false)),
       );
 
-      // 2. Select the desired category
       final selectQuery = update(timeTrackingCategoriesTable)
         ..where((tbl) => tbl.category.equals(category));
       await selectQuery.write(
         const TimeTrackingCategoriesTableCompanion(isSelected: Value(true)),
       );
 
-      // 3. Update the running session if any
       final runningSessionId = (await getRunningTimer())?.timeTrackingId;
       if (runningSessionId == null) return;
 
@@ -624,7 +663,6 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     });
   }
 
-  /// Get the selected category
   Future<String?> getSelectedCategory() async {
     final query = select(timeTrackingCategoriesTable)
       ..where((tbl) => tbl.isSelected.equals(true))
@@ -634,14 +672,12 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
   }
 
 
-  /// Get all tags that the user has defined
   Future<List<String>> getAllTags() async {
     final query = select(timeTrackingTagsTable);
     final results = await query.get();
     return results.map((row) => row.tag).toList();
   }
 
-  /// Add a new tag
   Future<void> addTag(String tag) async {
     await into(timeTrackingTagsTable).insert(
       TimeTrackingTagsTableCompanion(
@@ -651,7 +687,6 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     );
   }
 
-  /// Delete an existing tag
   Future<void> deleteTag(String tag) async {
     final query = delete(timeTrackingTagsTable)
       ..where((tbl) => tbl.tag.equals(tag));
@@ -659,24 +694,20 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
 
   }
 
-  /// Set the selected tag
   Future setSelectedTag(String tag) async {
     return transaction(() async {
-      // 1. Deselect all tags
       final deselectQuery = update(timeTrackingTagsTable)
         ..where((tbl) => tbl.isSelected.equals(true));
       await deselectQuery.write(
         const TimeTrackingTagsTableCompanion(isSelected: Value(false)),
       );
 
-      // 2. Select the desired tag
       final selectQuery = update(timeTrackingTagsTable)
         ..where((tbl) => tbl.tag.equals(tag));
       await selectQuery.write(
         const TimeTrackingTagsTableCompanion(isSelected: Value(true)),
       );
 
-      // 3. Update the running session if any
       final runningSessionId = (await getRunningTimer())?.timeTrackingId;
       if (runningSessionId == null) return;
 
@@ -690,7 +721,6 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     });
   }
 
-  /// Get the selected tag
   Future<String?> getSelectedTag() async {
     final query = select(timeTrackingTagsTable)
       ..where((tbl) => tbl.isSelected.equals(true))
