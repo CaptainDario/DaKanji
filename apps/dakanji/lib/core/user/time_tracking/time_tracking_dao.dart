@@ -24,25 +24,50 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
   // --- START : Daily Goals Management ---
 
   /// Ensures that there is an entry for today's date in the Daily Goals table.
-  /// If not, it inserts one with the provided [goal] in minutes.
-  Future<void> ensureDailyGoalExists(int goal) async {
+  /// If not, it inserts one with the provided [defaultGoal] in minutes.
+  Future<void> ensureDailyGoalExists({int defaultGoal = 60}) async {
     final today = DateTime.now();
-    final todayAsSql = const DateOnlyConverter().toSql(today);
+    final todaySql = DateOnlyConverter().toSql(today);
 
     // Check if today already exists
     final exists = await (select(timeTrackingDailyGoalTable)
-          ..where((t) => t.date.equals(todayAsSql)))
+          ..where((t) => t.date.equals(todaySql)))
         .getSingleOrNull();
 
     if (exists != null) return;
 
+    // Get most recent goal to maintain user preference (default: 30)
+    final lastEntry = await (select(timeTrackingDailyGoalTable)
+          ..orderBy([(t) => OrderingTerm.desc(t.date)])
+          ..limit(1))
+        .getSingleOrNull();
+
+    final int goalToUse = lastEntry?.studyGoalMinutes ?? defaultGoal;
+
     // Insert today's goal
-    await into(timeTrackingDailyGoalTable).insert(
+    await setTodayGoal(goalToUse);
+  }
+
+  // 2. GET (Future) - For one-off logic checks
+  Future<int> getTodayGoal() async {
+    final today = DateTime.now();
+    final todayAsSql = const DateOnlyConverter().toSql(today);
+
+    final row = await (select(timeTrackingDailyGoalTable)
+          ..where((t) => t.date.equals(todayAsSql)))
+        .getSingleOrNull();
+        
+    return row?.studyGoalMinutes ?? 0;
+  }
+
+  // 3. SET - Call this when user changes the slider/input
+  Future<void> setTodayGoal(int minutes) async {
+    final today = DateTime.now();
+    await into(timeTrackingDailyGoalTable).insertOnConflictUpdate(
       TimeTrackingDailyGoalTableCompanion(
         date: Value(today),
-        studyGoalMinutes: Value(goal),
+        studyGoalMinutes: Value(minutes),
       ),
-      mode: InsertMode.insertOrIgnore,
     );
   }
 
@@ -302,6 +327,46 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
         );
       }
     });
+  }
+
+  /// Calculates the total study minutes for today.
+  /// That also includes currently running timers and overlap from previous days.
+  Future<int> getTodayStudyMinutes() async {
+    final now = DateTime.now();
+    final startOfToday = DateTime(now.year, now.month, now.day);
+    
+    // 1. Query: Find ALL units that touch 'today' in any way.
+    // Logic: A unit overlaps if it didn't end before today started.
+    final units = await (select(timeTrackingUnitTable)
+      ..where((t) {
+        // "endTime is NULL" (Running) OR "endTime > startOfToday"
+        return t.endTime.isNull() | t.endTime.isBiggerThanValue(startOfToday);
+      })
+      // Optimization: No need to fetch units that started in the future (tomorrow)
+      ..where((t) => t.startTime.isSmallerThanValue(now))
+    ).get();
+
+    int totalMinutes = 0;
+
+    for (final unit in units) {
+      // 2. Math: Clamp the time range to strictly "Today"
+      
+      // A. Start Time: If it started yesterday, treat it as starting at Midnight (00:00)
+      final effectiveStart = unit.startTime.isBefore(startOfToday) 
+          ? startOfToday 
+          : unit.startTime;
+
+      // B. End Time: If it's running (null), assume 'now'.
+      final effectiveEnd = unit.endTime ?? now;
+
+      // C. Safety Check: Ensure we don't count negative time 
+      // (e.g., if effectiveEnd is somehow before effectiveStart)
+      if (effectiveEnd.isAfter(effectiveStart)) {
+        totalMinutes += effectiveEnd.difference(effectiveStart).inMinutes;
+      }
+    }
+    
+    return totalMinutes;
   }
 
   /// Returns the the row of the currently running timer, if any.

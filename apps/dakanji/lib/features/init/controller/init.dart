@@ -108,7 +108,11 @@ Future<void> postRunInit() async {
   await GetIt.I<Anki>().init();
 
   GetIt.I.registerSingleton<UserActivity>(UserActivity(GetIt.I<UserData>())..init());
+
+  // User data database setup
   GetIt.I.registerSingleton<UserDataDB>(UserDataDB());
+  GetIt.I<UserDataDB>().timeTrackingDao.enforce24HourLimit();
+  GetIt.I<UserDataDB>().timeTrackingDao.ensureDailyGoalExists();
 
   // deep links
   await initDeepLinksStream();

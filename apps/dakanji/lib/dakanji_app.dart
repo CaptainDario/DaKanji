@@ -49,16 +49,14 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
 
     // ensure daily goals exist
     if(state == AppLifecycleState.resumed)
-      GetIt.I<UserDataDB>().timeTrackingDao.ensureDailyGoalExists(
-        GetIt.I<Settings>().timeTracking.studyGoal
-      );
+      await GetIt.I<UserDataDB>().timeTrackingDao.ensureDailyGoalExists();
 
     // ensure no timer is over 24 hours
-    GetIt.I<UserDataDB>().timeTrackingDao.enforce24HourLimit();
+    await GetIt.I<UserDataDB>().timeTrackingDao.enforce24HourLimit();
     
     // app active again
     if(state == AppLifecycleState.resumed){
@@ -67,7 +65,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> with WidgetsBindingObserver, Wi
     // app inactive
     else {
       GetIt.I<UserActivity>().appActive = false;
-      GetIt.I<UserData>().save();
+      await GetIt.I<UserData>().save();
     }
     
     super.didChangeAppLifecycleState(state);

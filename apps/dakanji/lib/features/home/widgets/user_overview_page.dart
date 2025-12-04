@@ -1,5 +1,6 @@
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/activity_chart_mock_data.dart';
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/home/widgets/greeting_widget.dart';
 import 'package:da_kanji_mobile/features/home/widgets/study_calendar/study_calendar.dart';
 import 'package:da_kanji_mobile/features/home/widgets/study_card.dart';
@@ -7,6 +8,7 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 
 
@@ -43,14 +45,28 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
             streakColor: g_Dakanji_green.withAlpha(50),
             streakGlowColor: g_Dakanji_green,
           ),
-          StudyCard(
-            title: '勉強',
-            subtitle: LocaleKeys.HomeScreen_study_card_subtitle_time.tr(),
-            currentProgress: 5,
-            dailyGoal: 67,
-            color: g_Dakanji_blue,
-            action: LocaleKeys.HomeScreen_study_card_action_time.tr(),
-            icon: DaKanjiIcons.timeTracking,
+          FutureBuilder<({int currentProgress, int todaysGoal})>(
+            future: () async {
+              return (
+                currentProgress: await GetIt.I<UserDataDB>().timeTrackingDao.getTodayStudyMinutes(),
+                todaysGoal: await GetIt.I<UserDataDB>().timeTrackingDao.getTodayGoal()
+              );
+            } (),
+            builder: (context, asyncSnapshot) {
+              return StudyCard(
+                title: '勉強',
+                subtitle: LocaleKeys.HomeScreen_study_card_subtitle_time.tr(),
+                currentProgress: asyncSnapshot.hasData
+                  ? asyncSnapshot.data!.currentProgress
+                  : 0,
+                dailyGoal: asyncSnapshot.hasData
+                  ? asyncSnapshot.data!.todaysGoal
+                  : 0,
+                color: g_Dakanji_blue,
+                action: LocaleKeys.HomeScreen_study_card_action_time.tr(),
+                icon: DaKanjiIcons.timeTracking,
+              );
+            }
           ),
           StudyCard(
             title: '単語',

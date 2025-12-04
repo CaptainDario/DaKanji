@@ -2246,19 +2246,6 @@ class $TimeTrackingDailyGoalTableTable extends TimeTrackingDailyGoalTable
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $TimeTrackingDailyGoalTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
   @override
   late final GeneratedColumnWithTypeConverter<DateTime, int> date =
       GeneratedColumn<int>(
@@ -2266,8 +2253,7 @@ class $TimeTrackingDailyGoalTableTable extends TimeTrackingDailyGoalTable
         aliasedName,
         false,
         type: DriftSqlType.int,
-        requiredDuringInsert: true,
-        defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+        requiredDuringInsert: false,
       ).withConverter<DateTime>(
         $TimeTrackingDailyGoalTableTable.$converterdate,
       );
@@ -2283,7 +2269,7 @@ class $TimeTrackingDailyGoalTableTable extends TimeTrackingDailyGoalTable
     requiredDuringInsert: true,
   );
   @override
-  List<GeneratedColumn> get $columns => [id, date, studyGoalMinutes];
+  List<GeneratedColumn> get $columns => [date, studyGoalMinutes];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2296,9 +2282,6 @@ class $TimeTrackingDailyGoalTableTable extends TimeTrackingDailyGoalTable
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
     if (data.containsKey('study_goal_minutes')) {
       context.handle(
         _studyGoalMinutesMeta,
@@ -2314,7 +2297,7 @@ class $TimeTrackingDailyGoalTableTable extends TimeTrackingDailyGoalTable
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {date};
   @override
   TimeTrackingDailyGoalTableData map(
     Map<String, dynamic> data, {
@@ -2322,10 +2305,6 @@ class $TimeTrackingDailyGoalTableTable extends TimeTrackingDailyGoalTable
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return TimeTrackingDailyGoalTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
       date: $TimeTrackingDailyGoalTableTable.$converterdate.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.int,
@@ -2350,18 +2329,15 @@ class $TimeTrackingDailyGoalTableTable extends TimeTrackingDailyGoalTable
 
 class TimeTrackingDailyGoalTableData extends DataClass
     implements Insertable<TimeTrackingDailyGoalTableData> {
-  final int id;
   final DateTime date;
   final int studyGoalMinutes;
   const TimeTrackingDailyGoalTableData({
-    required this.id,
     required this.date,
     required this.studyGoalMinutes,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
     {
       map['date'] = Variable<int>(
         $TimeTrackingDailyGoalTableTable.$converterdate.toSql(date),
@@ -2373,7 +2349,6 @@ class TimeTrackingDailyGoalTableData extends DataClass
 
   TimeTrackingDailyGoalTableCompanion toCompanion(bool nullToAbsent) {
     return TimeTrackingDailyGoalTableCompanion(
-      id: Value(id),
       date: Value(date),
       studyGoalMinutes: Value(studyGoalMinutes),
     );
@@ -2385,7 +2360,6 @@ class TimeTrackingDailyGoalTableData extends DataClass
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TimeTrackingDailyGoalTableData(
-      id: serializer.fromJson<int>(json['id']),
       date: serializer.fromJson<DateTime>(json['date']),
       studyGoalMinutes: serializer.fromJson<int>(json['studyGoalMinutes']),
     );
@@ -2394,18 +2368,15 @@ class TimeTrackingDailyGoalTableData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
       'date': serializer.toJson<DateTime>(date),
       'studyGoalMinutes': serializer.toJson<int>(studyGoalMinutes),
     };
   }
 
   TimeTrackingDailyGoalTableData copyWith({
-    int? id,
     DateTime? date,
     int? studyGoalMinutes,
   }) => TimeTrackingDailyGoalTableData(
-    id: id ?? this.id,
     date: date ?? this.date,
     studyGoalMinutes: studyGoalMinutes ?? this.studyGoalMinutes,
   );
@@ -2413,7 +2384,6 @@ class TimeTrackingDailyGoalTableData extends DataClass
     TimeTrackingDailyGoalTableCompanion data,
   ) {
     return TimeTrackingDailyGoalTableData(
-      id: data.id.present ? data.id.value : this.id,
       date: data.date.present ? data.date.value : this.date,
       studyGoalMinutes: data.studyGoalMinutes.present
           ? data.studyGoalMinutes.value
@@ -2424,7 +2394,6 @@ class TimeTrackingDailyGoalTableData extends DataClass
   @override
   String toString() {
     return (StringBuffer('TimeTrackingDailyGoalTableData(')
-          ..write('id: $id, ')
           ..write('date: $date, ')
           ..write('studyGoalMinutes: $studyGoalMinutes')
           ..write(')'))
@@ -2432,51 +2401,42 @@ class TimeTrackingDailyGoalTableData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, date, studyGoalMinutes);
+  int get hashCode => Object.hash(date, studyGoalMinutes);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TimeTrackingDailyGoalTableData &&
-          other.id == this.id &&
           other.date == this.date &&
           other.studyGoalMinutes == this.studyGoalMinutes);
 }
 
 class TimeTrackingDailyGoalTableCompanion
     extends UpdateCompanion<TimeTrackingDailyGoalTableData> {
-  final Value<int> id;
   final Value<DateTime> date;
   final Value<int> studyGoalMinutes;
   const TimeTrackingDailyGoalTableCompanion({
-    this.id = const Value.absent(),
     this.date = const Value.absent(),
     this.studyGoalMinutes = const Value.absent(),
   });
   TimeTrackingDailyGoalTableCompanion.insert({
-    this.id = const Value.absent(),
-    required DateTime date,
+    this.date = const Value.absent(),
     required int studyGoalMinutes,
-  }) : date = Value(date),
-       studyGoalMinutes = Value(studyGoalMinutes);
+  }) : studyGoalMinutes = Value(studyGoalMinutes);
   static Insertable<TimeTrackingDailyGoalTableData> custom({
-    Expression<int>? id,
     Expression<int>? date,
     Expression<int>? studyGoalMinutes,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
       if (date != null) 'date': date,
       if (studyGoalMinutes != null) 'study_goal_minutes': studyGoalMinutes,
     });
   }
 
   TimeTrackingDailyGoalTableCompanion copyWith({
-    Value<int>? id,
     Value<DateTime>? date,
     Value<int>? studyGoalMinutes,
   }) {
     return TimeTrackingDailyGoalTableCompanion(
-      id: id ?? this.id,
       date: date ?? this.date,
       studyGoalMinutes: studyGoalMinutes ?? this.studyGoalMinutes,
     );
@@ -2485,9 +2445,6 @@ class TimeTrackingDailyGoalTableCompanion
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
     if (date.present) {
       map['date'] = Variable<int>(
         $TimeTrackingDailyGoalTableTable.$converterdate.toSql(date.value),
@@ -2502,7 +2459,6 @@ class TimeTrackingDailyGoalTableCompanion
   @override
   String toString() {
     return (StringBuffer('TimeTrackingDailyGoalTableCompanion(')
-          ..write('id: $id, ')
           ..write('date: $date, ')
           ..write('studyGoalMinutes: $studyGoalMinutes')
           ..write(')'))
@@ -4234,13 +4190,11 @@ typedef $$TimeTrackingTagsTableTableProcessedTableManager =
     >;
 typedef $$TimeTrackingDailyGoalTableTableCreateCompanionBuilder =
     TimeTrackingDailyGoalTableCompanion Function({
-      Value<int> id,
-      required DateTime date,
+      Value<DateTime> date,
       required int studyGoalMinutes,
     });
 typedef $$TimeTrackingDailyGoalTableTableUpdateCompanionBuilder =
     TimeTrackingDailyGoalTableCompanion Function({
-      Value<int> id,
       Value<DateTime> date,
       Value<int> studyGoalMinutes,
     });
@@ -4254,11 +4208,6 @@ class $$TimeTrackingDailyGoalTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnWithTypeConverterFilters<DateTime, DateTime, int> get date =>
       $composableBuilder(
         column: $table.date,
@@ -4280,11 +4229,6 @@ class $$TimeTrackingDailyGoalTableTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<int> get date => $composableBuilder(
     column: $table.date,
     builder: (column) => ColumnOrderings(column),
@@ -4305,9 +4249,6 @@ class $$TimeTrackingDailyGoalTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
   GeneratedColumnWithTypeConverter<DateTime, int> get date =>
       $composableBuilder(column: $table.date, builder: (column) => column);
 
@@ -4363,21 +4304,17 @@ class $$TimeTrackingDailyGoalTableTableTableManager
               ),
           updateCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
                 Value<DateTime> date = const Value.absent(),
                 Value<int> studyGoalMinutes = const Value.absent(),
               }) => TimeTrackingDailyGoalTableCompanion(
-                id: id,
                 date: date,
                 studyGoalMinutes: studyGoalMinutes,
               ),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                required DateTime date,
+                Value<DateTime> date = const Value.absent(),
                 required int studyGoalMinutes,
               }) => TimeTrackingDailyGoalTableCompanion.insert(
-                id: id,
                 date: date,
                 studyGoalMinutes: studyGoalMinutes,
               ),
