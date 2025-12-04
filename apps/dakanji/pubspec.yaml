@@ -67,6 +67,7 @@ dependencies:
   path_parsing: ^1.1.0               # included in svg_flutter
   vector_graphics: ^1.1.19         # included in svg_flutter
   app_links: ^6.4.1                 # android, iOS, web, macos, windows (msix), linux
+  flutter_local_notifications: ^19.5.0
 
   fvp: ^0.35.0
   chewie: ^1.12.1
