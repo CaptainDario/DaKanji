@@ -1,5 +1,7 @@
+import 'package:da_kanji_mobile/features/home/controller/long_running_timer_watcher.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/paused_clock_face.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/running_clock_face.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/time_tracking_card_border_glow_painter.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/timer_control_bar.dart';
@@ -157,6 +159,9 @@ class _TimeTrackingCardState extends State<TimeTrackingCard>
   }
 
   void _startTimer() async {
+    // ask for permission to send notifications
+    await TimeTrackingNotificationService().requestPermissions();
+    
     await GetIt.I<UserDataDB>().timeTrackingDao.startNewSession(
       await GetIt.I<UserDataDB>().timeTrackingDao.getSelectedCategory(),
       await GetIt.I<UserDataDB>().timeTrackingDao.getSelectedTag(),
@@ -412,69 +417,75 @@ void _stopTimer() async {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: GestureDetector(
-                            onTap: _resetController.isAnimating
-                                ? null
-                                : (isRunning
-                                    ? (_isPaused ? _resumeTimer : _pauseTimer)
-                                    : _startTimer),
-                            behavior: HitTestBehavior.opaque,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                // Center Glow Circle
-                                Opacity(
-                                  opacity: glowOpacity,
-                                  child: AnimatedContainer(
-                                    duration: const Duration(milliseconds: 500),
-                                    width: 230,
-                                    height: 230,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: activeColor
-                                              .withValues(alpha: 0.15),
-                                          blurRadius: 40,
-                                          spreadRadius: 5,
-                                        ),
-                                      ],
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              //splashColor: g_Dakanji_green,
+                              highlightColor: g_Dakanji_green.withValues(alpha: 0.1),
+                              customBorder: const CircleBorder(),
+                              onTap: _resetController.isAnimating
+                                  ? null
+                                  : (isRunning
+                                      ? (_isPaused ? _resumeTimer : _pauseTimer)
+                                      : _startTimer),
+                              //behavior: HitTestBehavior.opaque,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  // Center Glow Circle
+                                  Opacity(
+                                    opacity: glowOpacity,
+                                    child: AnimatedContainer(
+                                      duration: const Duration(milliseconds: 500),
+                                      width: 230,
+                                      height: 230,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: activeColor
+                                                .withValues(alpha: 0.15),
+                                            blurRadius: 40,
+                                            spreadRadius: 5,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                // Clock Face Switcher
-                                AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 300),
-                                  child: _isPaused
-                                      ? PausedClockFace(
-                                          key: const ValueKey("paused"),
-                                          currentElapsed: currentElapsed,
-                                          // Paused Face needs Gross & Total Used for internal math
-                                          activePauseDuration: totalBreakUsed,
-                                          earnedBreak: grossEarnedBreak,
-                                          accentColor: widget.accentColor,
-                                          negativeBreakColor:
-                                              widget.negativeBreakColor,
-                                          dashAnimationController:
-                                              _dashAnimationController,
-                                        )
-                                      : RunningClockFace(
-                                          key: const ValueKey("running"),
-                                          lapIndex: lapIndex,
-                                          lapProgress: lapProgress,
-                                          activeColor: activeColor,
-                                          trackColor: trackColor,
-                                          glowOpacity: glowOpacity,
-                                          currentElapsed: currentElapsed,
-                                          showBreak: showBreak,
-                                          // Running Face needs pre-calculated Net Remaining Break
-                                          earnedBreak: displayBreakForRunning,
-                                          isTicking: isTicking,
-                                          isResetting:
-                                              _resetController.isAnimating,
-                                        ),
-                                ),
-                              ],
+                                  // Clock Face Switcher
+                                  AnimatedSwitcher(
+                                    duration: const Duration(milliseconds: 300),
+                                    child: _isPaused
+                                        ? PausedClockFace(
+                                            key: const ValueKey("paused"),
+                                            currentElapsed: currentElapsed,
+                                            // Paused Face needs Gross & Total Used for internal math
+                                            activePauseDuration: totalBreakUsed,
+                                            earnedBreak: grossEarnedBreak,
+                                            accentColor: widget.accentColor,
+                                            negativeBreakColor:
+                                                widget.negativeBreakColor,
+                                            dashAnimationController:
+                                                _dashAnimationController,
+                                          )
+                                        : RunningClockFace(
+                                            key: const ValueKey("running"),
+                                            lapIndex: lapIndex,
+                                            lapProgress: lapProgress,
+                                            activeColor: activeColor,
+                                            trackColor: trackColor,
+                                            glowOpacity: glowOpacity,
+                                            currentElapsed: currentElapsed,
+                                            showBreak: showBreak,
+                                            // Running Face needs pre-calculated Net Remaining Break
+                                            earnedBreak: displayBreakForRunning,
+                                            isTicking: isTicking,
+                                            isResetting:
+                                                _resetController.isAnimating,
+                                          ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
