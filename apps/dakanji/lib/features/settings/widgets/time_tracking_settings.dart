@@ -1,6 +1,6 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_dao.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_spinbox_tile.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/management_dialogs.dart';
 import 'package:flutter/material.dart';
@@ -32,19 +32,31 @@ class _TimeTrackingSettingsState extends State<TimeTrackingSettings> {
   Widget build(BuildContext context) {
 
     Settings settings = context.watch<Settings>();
+    TimeTrackingDao dao = GetIt.I<UserDataDB>().timeTrackingDao;
 
     return ResponsiveHeaderTile(
       LocaleKeys.TimeTrackingScreen_title.tr(),
       DaKanjiIcons.timeTracking,
       children: [
-        ResponsiveCheckBoxTile(
-          text: LocaleKeys.SettingsScreen_time_tracking_enabled.tr(),
-          value: settings.timeTracking.enabled,
-          onTileTapped: (bool value) async {
-            settings.timeTracking.enabled = value;
-            await settings.save();
-            setState(() {});
-          },
+        //
+        FutureBuilder<int>(
+          future: dao.getTodayGoal(),
+          builder: (context, asyncSnapshot) {
+
+            if(!asyncSnapshot.hasData) return SizedBox();
+
+            return ResponsiveSpinboxTile(
+              text: "Daily Study Goal",
+              value: asyncSnapshot.data!.toDouble(),
+              min: 0,
+              max: 60*23+59,
+              //suffix: LocaleKeys.SettingsScreen_time_tracking_study_goal_unit.tr(),
+              onChanged: (value) async {
+                await dao.setTodayGoal(value.toInt());
+                setState(() {});
+              },
+            );
+          }
         ),
         // session length
         ResponsiveSpinboxTile(
