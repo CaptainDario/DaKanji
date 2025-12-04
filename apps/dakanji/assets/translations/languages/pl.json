@@ -445,6 +445,9 @@
     "word_lists_screensaver_show": "Wygaszacz ekranu: poka\u017c",
     "word_lists_screensaver_word_lists_to_use": "Wygaszacz ekranu: Lista s\u0142\u00f3w do u\u017cycia"
   },
+  "ShopScreen": {
+    "title": "Sklep"
+  },
   "Stores": {
     "long_description": "Uczysz si\u0119 japo\u0144skiego? Musisz spr\u00f3bowa\u0107 DaKanji!\n\nCzy pr\u00f3bowa\u0142e\u015b kiedy\u015b przeczyta\u0107 tekst po japo\u0144sku ale nie wiedzia\u0142e\u015b jak przeczyta\u0107 niekt\u00f3re Kanji? DaKanji jest tutaj \u017ceby Ci z tym pom\u00f3c. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz zna\u0107 kolejno\u015bci pisania! Maluj znaki i buduj s\u0142owa kt\u00f3re mo\u017cesz p\u00f3\u017aniej t\u0142umaczy\u0107, a to wszystko kompletnie offline.\n\nFunkcjonalno\u015bci:\n* Rozpoznawanie 6500+ Kanji i ca\u0142ej Kany offline\n* U\u017cywaj s\u0142ownik\u00f3w internetowych oraz aplikacji aby t\u0142umaczy\u0107 znaki i s\u0142owa",
     "mockup_10": "",

@@ -445,6 +445,9 @@
     "word_lists_screensaver_show": "Screensaver: mostra",
     "word_lists_screensaver_word_lists_to_use": "Salvaschermo: Elenco di parole da utilizzare"
   },
+  "ShopScreen": {
+    "title": "Negozio"
+  },
   "Stores": {
     "long_description": "",
     "mockup_10": "",

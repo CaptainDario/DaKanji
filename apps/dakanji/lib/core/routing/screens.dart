@@ -53,5 +53,6 @@ enum Screens{
   onboarding,
   webviewDict,
   manual,
+  shop,
 }
 

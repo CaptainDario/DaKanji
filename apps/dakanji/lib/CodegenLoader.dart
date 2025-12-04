@@ -416,6 +416,9 @@ class CodegenLoader extends AssetLoader{
     "word_lists_screensaver_show": "屏幕保护程序：显示",
     "word_lists_screensaver_word_lists_to_use": "屏幕保护程序使用单词列表"
   },
+  "ShopScreen": {
+    "title": "商店"
+  },
   "Stores": {
   },
   "TextScreen": {
@@ -920,6 +923,9 @@ static const Map<String,dynamic> _ja = {
     "word_lists_screensaver_seconds_to_start": "スクリーンセーバー：開始までの数秒",
     "word_lists_screensaver_show": "スクリーンセーバー：表示",
     "word_lists_screensaver_word_lists_to_use": "スクリーンセーバー：使用単語リスト"
+  },
+  "ShopScreen": {
+    "title": "ショップ"
   },
   "Stores": {
     "long_description": "日本語を学習中ですか？それなら、DaKanjiを試してみてください！\n\nアプリ内の辞書を使って多言語で単語を調べたり、漢字を描いて検索したり、テキストにふりがなを追加したり、様々な機能を利用できます！\n\n機能の概要：\n* 6500以上の漢字とすべての仮名をオフラインで認識（描くだけでOK）\n* 内蔵辞書を使って単語をオフラインで調べる\n  * 多言語サポート：英語、スペイン語、ドイツ語、フランス語など\n  * 単語に関する詳細情報：アクセントの高低、関連単語など\n  * 漢字に関する詳細情報：部首、JLPTレベルなど\n  * 例文\n  * 描画または部首ベースの漢字検索\n  * 6000以上の音声\n* 自分だけの単語リストの作成\n* 音声とイラスト付きのかな表\n* Ankiとの連携機能で、調べた単語をAnkiにワンクリック送信\n* ふりがなやスペースを追加して、テキストを簡単に読解可能\n* すべてのデバイスで使用可：スマートフォン、タブレット、またはノートパソコン、どれでもOK！",
@@ -1452,6 +1458,9 @@ static const Map<String,dynamic> _de = {
     "word_lists_screensaver_show": "Bildschirmschoner: anzeigen",
     "word_lists_screensaver_word_lists_to_use": "Bildschirmschoner: Wortlisten die benutuzt werden"
   },
+  "ShopScreen": {
+    "title": "Shop"
+  },
   "Stores": {
   },
   "TextScreen": {
@@ -1934,6 +1943,9 @@ static const Map<String,dynamic> _ru = {
     "word_lists_screensaver_seconds_to_start": "Заставка: несколько секунд до запуска",
     "word_lists_screensaver_show": "Заставка: показать",
     "word_lists_screensaver_word_lists_to_use": "Заставка: Список слов для использования"
+  },
+  "ShopScreen": {
+    "title": "Магазин"
   },
   "Stores": {
   },
@@ -2452,6 +2464,9 @@ static const Map<String,dynamic> _pl = {
     "word_lists_screensaver_seconds_to_start": "Wygaszacz ekranu: sekundy do uruchomienia",
     "word_lists_screensaver_show": "Wygaszacz ekranu: pokaż",
     "word_lists_screensaver_word_lists_to_use": "Wygaszacz ekranu: Lista słów do użycia"
+  },
+  "ShopScreen": {
+    "title": "Sklep"
   },
   "Stores": {
     "long_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa",
@@ -2989,6 +3004,9 @@ static const Map<String,dynamic> _en = {
     "word_lists_screensaver_seconds_to_start": "Screensaver: seconds to start",
     "word_lists_screensaver_show": "Screensaver: show",
     "word_lists_screensaver_word_lists_to_use": "Screensaver: Word list to use"
+  },
+  "ShopScreen": {
+    "title": "Shop"
   },
   "Stores": {
     "long_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!\n\nFeature overview:\n\n* Recognize 6500+ Kanji and all Kana offline by just drawing them\n* Use the inbuilt dictionary to look up words offline\n  * Multi-language support: en, es, de, fr, ...\n  * Detailed information about words: pitch accent, related words, ...\n  * Detailed information about Kanji: radicals, JLPT, ...\n  * Example sentences\n  * Drawing or radical-based kanji lookup\n  * 6000+ audios\n* Create word lists to organize your studies\n* Kana table with audios and mnemonics\n* Anki integration to send dictionary entries to Anki\n* Read any text with ease by adding furigana, spaces, and more to texts\n* Use it on all your devices: Phone, Tablet or Laptop it doesn't matter!",
@@ -3533,6 +3551,9 @@ static const Map<String,dynamic> _it = {
     "word_lists_screensaver_show": "Screensaver: mostra",
     "word_lists_screensaver_word_lists_to_use": "Salvaschermo: Elenco di parole da utilizzare"
   },
+  "ShopScreen": {
+    "title": "Negozio"
+  },
   "Stores": {
   },
   "TextScreen": {
@@ -4016,6 +4037,9 @@ static const Map<String,dynamic> _fr = {
     "word_lists_screensaver_show": "Économiseur d'écran : montrer",
     "word_lists_screensaver_word_lists_to_use": "Économiseur d'écran : Liste de mots à utiliser"
   },
+  "ShopScreen": {
+    "title": "Boutique"
+  },
   "Stores": {
   },
   "TextScreen": {
@@ -4498,6 +4522,9 @@ static const Map<String,dynamic> _es = {
     "word_lists_screensaver_seconds_to_start": "Salvapantallas: segundos para iniciarse",
     "word_lists_screensaver_show": "Salvapantallas: mostrar",
     "word_lists_screensaver_word_lists_to_use": "Salvapantallas: Lista de palabras a utilizar"
+  },
+  "ShopScreen": {
+    "title": "Tienda"
   },
   "Stores": {
     "long_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",

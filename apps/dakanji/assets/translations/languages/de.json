@@ -445,6 +445,9 @@
     "word_lists_screensaver_show": "Bildschirmschoner: anzeigen",
     "word_lists_screensaver_word_lists_to_use": "Bildschirmschoner: Wortlisten die benutuzt werden"
   },
+  "ShopScreen": {
+    "title": "Shop"
+  },
   "Stores": {
     "long_description": "",
     "mockup_10": "",

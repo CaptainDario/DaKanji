@@ -445,6 +445,9 @@
     "word_lists_screensaver_show": "Screensaver: show",
     "word_lists_screensaver_word_lists_to_use": "Screensaver: Word list to use"
   },
+  "ShopScreen": {
+    "title": "Shop"
+  },
   "Stores": {
     "long_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!\n\nFeature overview:\n\n* Recognize 6500+ Kanji and all Kana offline by just drawing them\n* Use the inbuilt dictionary to look up words offline\n  * Multi-language support: en, es, de, fr, ...\n  * Detailed information about words: pitch accent, related words, ...\n  * Detailed information about Kanji: radicals, JLPT, ...\n  * Example sentences\n  * Drawing or radical-based kanji lookup\n  * 6000+ audios\n* Create word lists to organize your studies\n* Kana table with audios and mnemonics\n* Anki integration to send dictionary entries to Anki\n* Read any text with ease by adding furigana, spaces, and more to texts\n* Use it on all your devices: Phone, Tablet or Laptop it doesn't matter!",
     "mockup_10": "",

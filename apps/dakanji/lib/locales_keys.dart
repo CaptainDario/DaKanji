@@ -429,6 +429,8 @@ abstract class  LocaleKeys {
   static const SettingsScreen_word_lists_screensaver_show = 'SettingsScreen.word_lists_screensaver_show';
   static const SettingsScreen_word_lists_screensaver_word_lists_to_use = 'SettingsScreen.word_lists_screensaver_word_lists_to_use';
   static const SettingsScreen = 'SettingsScreen';
+  static const ShopScreen_title = 'ShopScreen.title';
+  static const ShopScreen = 'ShopScreen';
   static const Stores_long_description = 'Stores.long_description';
   static const Stores_mockup_10 = 'Stores.mockup_10';
   static const Stores_mockup_1_1 = 'Stores.mockup_1_1';

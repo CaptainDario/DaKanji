@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/features/home/screens/home_screen.dart';
+import 'package:da_kanji_mobile/features/shop/screens/shop_screen.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -132,6 +133,11 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
   }
   else if(name == "/${Screens.manual.name}"){
     newRoute = ManualScreen(
+      args.navigatedByDrawer
+    );
+  }
+  else if(name == "/${Screens.shop.name}"){
+    newRoute = ShopScreen(
       args.navigatedByDrawer
     );
   }

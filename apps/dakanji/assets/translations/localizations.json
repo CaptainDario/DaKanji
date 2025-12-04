@@ -1,4 +1,17 @@
 {
+  "ShopScreen": {
+    "title": {
+      "en": "Shop",
+      "de": "Shop",
+      "ru": "Магазин",
+      "ja": "ショップ",
+      "zh": "商店",
+      "it": "Negozio",
+      "fr": "Boutique",
+      "es": "Tienda",
+      "pl": "Sklep"
+    }
+  },
   "YoutubeScreen": {
     "title": {
       "en": "YouTube",

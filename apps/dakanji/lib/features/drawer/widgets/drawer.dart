@@ -128,13 +128,13 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       null, null,
       true, null),
     DrawerEntry(
-      DaKanjiIcons.settings, LocaleKeys.SettingsScreen_title,
-      "/${Screens.settings.name}", Screens.settings,
+      DaKanjiIcons.shop, LocaleKeys.ShopScreen_title.tr(),
+      "/${Screens.shop.name}", Screens.shop,
       null, null,
       true, null),
     DrawerEntry(
-      DaKanjiIcons.about, LocaleKeys.AboutScreen_title,
-      "/${Screens.about.name}", Screens.about,
+      DaKanjiIcons.settings, LocaleKeys.SettingsScreen_title,
+      "/${Screens.settings.name}", Screens.settings,
       null, null,
       true, null),
     DrawerEntry(
@@ -147,6 +147,11 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       null, null,
       null, null,
       true, sendFeedback),
+    DrawerEntry(
+      DaKanjiIcons.about, LocaleKeys.AboutScreen_title,
+      "/${Screens.about.name}", Screens.about,
+      null, null,
+      true, null),
     if(kDebugMode)
       DrawerEntry(
         Icons.remove_red_eye, LocaleKeys.ImmersionScreen_title,

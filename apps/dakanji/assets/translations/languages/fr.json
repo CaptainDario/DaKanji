@@ -445,6 +445,9 @@
     "word_lists_screensaver_show": "\u00c9conomiseur d'\u00e9cran : montrer",
     "word_lists_screensaver_word_lists_to_use": "\u00c9conomiseur d'\u00e9cran : Liste de mots \u00e0 utiliser"
   },
+  "ShopScreen": {
+    "title": "Boutique"
+  },
   "Stores": {
     "long_description": "",
     "mockup_10": "",

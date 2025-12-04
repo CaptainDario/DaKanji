@@ -445,6 +445,9 @@
     "word_lists_screensaver_show": "\u5c4f\u5e55\u4fdd\u62a4\u7a0b\u5e8f\uff1a\u663e\u793a",
     "word_lists_screensaver_word_lists_to_use": "\u5c4f\u5e55\u4fdd\u62a4\u7a0b\u5e8f\u4f7f\u7528\u5355\u8bcd\u5217\u8868"
   },
+  "ShopScreen": {
+    "title": "\u5546\u5e97"
+  },
   "Stores": {
     "long_description": "",
     "mockup_10": "",
