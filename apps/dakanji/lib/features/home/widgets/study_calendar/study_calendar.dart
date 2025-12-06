@@ -1,6 +1,5 @@
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import 'calendar_day_cell.dart';
 import 'streak_footer.dart';
@@ -15,14 +14,11 @@ class DailyStudyStats {
 
   bool get isCompliant {
     // 1. Identify valid metrics (Not null AND Goal > 0)
-    // The user specified that 0-goal days/metrics should "not count".
-    // We treat them as non-existent for the pass/fail check.
     final validVocab = (vocab?.$2 ?? 0) > 0 ? vocab : null;
     final validChars = (chars?.$2 ?? 0) > 0 ? chars : null;
-    final validTime  = (time?.$2 ?? 0)  > 0 ? time : null;
+    final validTime = (time?.$2 ?? 0) > 0 ? time : null;
 
     // 2. If NO metrics are active/valid, the day cannot be a "streak success".
-    // This prevents empty days or all-0-goal days from counting as a streak.
     if (validVocab == null && validChars == null && validTime == null) {
       return false;
     }
@@ -33,31 +29,23 @@ class DailyStudyStats {
     }
 
     // 4. All VALID metrics must pass.
-    // Since we established at least one exists, we just check the non-null ones.
     if (validVocab != null && !passed(validVocab)) return false;
     if (validChars != null && !passed(validChars)) return false;
-    if (validTime  != null && !passed(validTime))  return false;
+    if (validTime != null && !passed(validTime)) return false;
 
     return true;
   }
 
   bool get hasActivity {
-    // Activity is visual only, usually we show activity if ANY progress exists
-    // even if goal is 0. But for consistency with "hiding rings",
-    // we might want to check if there's any active ring data.
-    // However, usually activity dots (if used) show generic presence.
-    // Given the prompt "ring should not be shown", let's stick to checking raw values
-    // but usually 'isActive' drives the grey dot?
-    // Let's keep it simple: if there is any number > 0 recorded, it's active.
+    // Check for any raw progress > 0
     return (vocab?.$1 ?? 0) > 0 || (chars?.$1 ?? 0) > 0 || (time?.$1 ?? 0) > 0;
   }
 }
 
-// Separate fetcher definition
-typedef FetchCategoryDataCallback = Future<Map<DateTime, (int, int)>> Function(DateTime start, DateTime end);
+typedef FetchCategoryDataCallback = Future<Map<DateTime, (int, int)>> Function(
+    DateTime start, DateTime end);
 
 class StudyCalendar extends StatefulWidget {
-  // Individual fetchers for each category - Nullable to disable
   final FetchCategoryDataCallback? onFetchVocab;
   final FetchCategoryDataCallback? onFetchCharacters;
   final FetchCategoryDataCallback? onFetchTime;
@@ -84,7 +72,8 @@ class StudyCalendar extends StatefulWidget {
   State<StudyCalendar> createState() => _StudyCalendarState();
 }
 
-class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateMixin {
+class _StudyCalendarState extends State<StudyCalendar>
+    with TickerProviderStateMixin {
   late final Color _baseStreakFillColor;
   final double _circleSize = 38.0;
   final double _calendarHeight = 280;
@@ -95,7 +84,7 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
   late final PageController _pageController;
 
   late DateTime _gridAnchorDate;
-  
+
   // Cache stores merged data for pages
   final Map<int, Map<DateTime, DailyStudyStats>> _pageCache = {};
 
@@ -107,7 +96,8 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
     // Align grid to the coming Saturday (End of week)
     final now = DateTime.now();
     final int daysToSaturday = 6 - (now.weekday % 7);
-    _gridAnchorDate = DateTime(now.year, now.month, now.day).add(Duration(days: daysToSaturday));
+    _gridAnchorDate = DateTime(now.year, now.month, now.day)
+        .add(Duration(days: daysToSaturday));
 
     _pageController = PageController(initialPage: 0);
 
@@ -135,27 +125,24 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
     super.dispose();
   }
 
-  // --- INTERNAL LOGIC ---
-
-  /// Fetches enabled categories in parallel and merges them
   Future<Map<DateTime, DailyStudyStats>> _loadPageData(int pageIndex) async {
     if (_pageCache.containsKey(pageIndex)) {
       return _pageCache[pageIndex]!;
     }
 
     final endDate = _gridAnchorDate.subtract(Duration(days: pageIndex * 35));
-    final startDate = endDate.subtract(const Duration(days: 34)); 
+    final startDate = endDate.subtract(const Duration(days: 34));
 
     // 1. Fetch enabled categories
     final results = await Future.wait([
-      widget.onFetchVocab != null 
-          ? widget.onFetchVocab!(startDate, endDate) 
+      widget.onFetchVocab != null
+          ? widget.onFetchVocab!(startDate, endDate)
           : Future.value(<DateTime, (int, int)>{}),
-      widget.onFetchCharacters != null 
-          ? widget.onFetchCharacters!(startDate, endDate) 
+      widget.onFetchCharacters != null
+          ? widget.onFetchCharacters!(startDate, endDate)
           : Future.value(<DateTime, (int, int)>{}),
-      widget.onFetchTime != null 
-          ? widget.onFetchTime!(startDate, endDate) 
+      widget.onFetchTime != null
+          ? widget.onFetchTime!(startDate, endDate)
           : Future.value(<DateTime, (int, int)>{}),
     ]);
 
@@ -165,17 +152,15 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
 
     // 2. Merge into Stats Objects
     final Map<DateTime, DailyStudyStats> merged = {};
-    
+
     for (int i = 0; i <= 35; i++) {
       final date = startDate.add(Duration(days: i));
-      
-      // 🔥 FIX 1: Must use UTC to match the keys returned by the DAO
-      // The DAO returns DateTime.utc(2025, 5, 6).
-      // If we use DateTime(2025, 5, 6), the lookup below returns null.
+
+      // Must use UTC to match the keys returned by the DAO
       final key = DateTime.utc(date.year, date.month, date.day);
 
       merged[key] = DailyStudyStats(
-        vocab: vocabMap[key], // Now this will find the data!
+        vocab: vocabMap[key],
         chars: charMap[key],
         time: timeMap[key],
       );
@@ -185,15 +170,14 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
     return merged;
   }
 
-  // Helper to look up stats across pages (if loaded)
   DailyStudyStats? _getStatsForDate(DateTime date) {
     final diff = _gridAnchorDate.difference(date).inDays;
     if (diff < 0) return null; // Future date
-    
+
     final pageIndex = (diff / 35).floor();
-    
+
     if (!_pageCache.containsKey(pageIndex)) return null;
-    
+
     final key = DateTime.utc(date.year, date.month, date.day);
     return _pageCache[pageIndex]?[key];
   }
@@ -201,10 +185,10 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
   int get _currentStreak {
     int streak = 0;
     DateTime checkDate = DateTime.now();
-    
+
     // Check Today
     final todayStats = _getStatsForDate(checkDate);
-    
+
     // If today is NOT compliant (e.g. not started yet), check if streak ended yesterday
     if (todayStats == null || !todayStats.isCompliant) {
       checkDate = checkDate.subtract(const Duration(days: 1));
@@ -231,13 +215,13 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
       children: [
         Card(
           color: const Color(0xFF1E2329),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // --- GRID SECTION ---
                 SizedBox(
                   height: _calendarHeight,
                   child: PageView.builder(
@@ -252,9 +236,8 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
                           }
 
                           final pageData = snapshot.data!;
-                          final calendarDays = _generateCalendarDaysForPage(pageIndex);
-                          
-                          // Recalculate streak now that data is loaded
+                          final calendarDays =
+                              _generateCalendarDaysForPage(pageIndex);
                           final currentStreak = _currentStreak;
 
                           return _CalendarPage(
@@ -277,8 +260,6 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
                   ),
                 ),
                 const SizedBox(height: 8),
-
-                // --- FOOTER SECTION ---
                 StreakFooter(
                   streak: _currentStreak,
                   now: now,
@@ -298,7 +279,8 @@ class _StudyCalendarState extends State<StudyCalendar> with TickerProviderStateM
   }
 
   List<DateTime> _generateCalendarDaysForPage(int pageIndex) {
-    final DateTime pageEndDate = _gridAnchorDate.subtract(Duration(days: pageIndex * 35));
+    final DateTime pageEndDate =
+        _gridAnchorDate.subtract(Duration(days: pageIndex * 35));
     List<DateTime> days = [];
     for (int i = 34; i >= 0; i--) {
       days.add(pageEndDate.subtract(Duration(days: i)));
@@ -377,60 +359,27 @@ class _CalendarPage extends StatelessWidget {
                 (currentStreak > 0) &&
                 date.isAfter(now.subtract(Duration(days: currentStreak + 1)));
 
-            final bool isSunday = date.weekday == DateTime.sunday;
-            final bool isSaturday = date.weekday == DateTime.saturday;
+            // Determine Streak Connectivity
+            final (bool connectLeft, bool connectRight) =
+                _determineConnectivity(dayIndex, isCompliant, date);
 
-            // Connectivity Logic
-            bool connectLeft = false;
-            bool connectRight = false;
-
-            if (isCompliant) {
-              if (!isSunday && dayIndex > 0) {
-                final prevDate = calendarDays[dayIndex - 1];
-                final prevKey = DateTime(prevDate.year, prevDate.month, prevDate.day);
-                if (pageData[prevKey]?.isCompliant == true) connectLeft = true;
-              }
-              if (!isSaturday && dayIndex < calendarDays.length - 1) {
-                final nextDate = calendarDays[dayIndex + 1];
-                if (!nextDate.isAfter(now)) {
-                  final nextKey = DateTime(nextDate.year, nextDate.month, nextDate.day);
-                  if (pageData[nextKey]?.isCompliant == true) connectRight = true;
-                }
-              }
-            }
+            // Filter data: Pass NULL if goal is 0 to hide ring
+            final vocabTuple = (stats?.vocab?.$2 ?? 0) > 0 ? stats?.vocab : null;
+            final charsTuple = (stats?.chars?.$2 ?? 0) > 0 ? stats?.chars : null;
+            final timeTuple = (stats?.time?.$2 ?? 0) > 0 ? stats?.time : null;
 
             return LayoutBuilder(
               builder: (context, cellConstraints) {
                 final double cellWidth = cellConstraints.maxWidth;
                 final double centerMargin = (cellWidth - circleSize) / 2;
 
-                EdgeInsets margin;
-                BorderRadiusGeometry borderRadius;
-
-                if (isCompliant) {
-                  if (connectLeft && connectRight) {
-                    margin = EdgeInsets.zero;
-                    borderRadius = BorderRadius.zero;
-                  } else if (connectRight) {
-                    margin = EdgeInsets.only(left: centerMargin);
-                    borderRadius = const BorderRadius.horizontal(left: Radius.circular(50));
-                  } else if (connectLeft) {
-                    margin = EdgeInsets.only(right: centerMargin);
-                    borderRadius = const BorderRadius.horizontal(right: Radius.circular(50));
-                  } else {
-                    margin = EdgeInsets.symmetric(horizontal: centerMargin);
-                    borderRadius = BorderRadius.circular(50);
-                  }
-                } else {
-                  margin = EdgeInsets.symmetric(horizontal: centerMargin);
-                  borderRadius = BorderRadius.circular(50);
-                }
-
-                // Filter data: Pass NULL if goal is 0, ensuring the ring is hidden.
-                // Note: stats.vocab is (current, goal).
-                final vocabTuple = (stats?.vocab?.$2 ?? 0) > 0 ? stats?.vocab : null;
-                final charsTuple = (stats?.chars?.$2 ?? 0) > 0 ? stats?.chars : null;
-                final timeTuple  = (stats?.time?.$2 ?? 0)  > 0 ? stats?.time  : null;
+                final (EdgeInsets margin, BorderRadiusGeometry borderRadius) =
+                    _calculateCellLayout(
+                  connectLeft: connectLeft,
+                  connectRight: connectRight,
+                  centerMargin: centerMargin,
+                  isCompliant: isCompliant,
+                );
 
                 return CalendarDayCell(
                   date: date,
@@ -443,7 +392,6 @@ class _CalendarPage extends StatelessWidget {
                   baseStreakFillColor: baseStreakFillColor,
                   streakGlowColor: streakGlowColor,
                   circleSize: circleSize,
-                  // Use filtered tuples here
                   vocabData: vocabTuple,
                   charData: charsTuple,
                   timeData: timeTuple,
@@ -461,6 +409,76 @@ class _CalendarPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  (bool, bool) _determineConnectivity(
+    int dayIndex,
+    bool isCurrentCompliant,
+    DateTime date,
+  ) {
+    if (!isCurrentCompliant) return (false, false);
+
+    bool connectLeft = false;
+    bool connectRight = false;
+
+    final bool isSunday = date.weekday == DateTime.sunday;
+    final bool isSaturday = date.weekday == DateTime.saturday;
+
+    // Check Left (Previous Day)
+    if (!isSunday && dayIndex > 0) {
+      final prevDate = calendarDays[dayIndex - 1];
+      final prevKey = DateTime.utc(prevDate.year, prevDate.month, prevDate.day);
+      if (pageData[prevKey]?.isCompliant == true) {
+        connectLeft = true;
+      }
+    }
+
+    // Check Right (Next Day)
+    if (!isSaturday && dayIndex < calendarDays.length - 1) {
+      final nextDate = calendarDays[dayIndex + 1];
+      if (!nextDate.isAfter(now)) {
+        final nextKey =
+            DateTime.utc(nextDate.year, nextDate.month, nextDate.day);
+        if (pageData[nextKey]?.isCompliant == true) {
+          connectRight = true;
+        }
+      }
+    }
+
+    return (connectLeft, connectRight);
+  }
+
+  (EdgeInsets, BorderRadiusGeometry) _calculateCellLayout({
+    required bool connectLeft,
+    required bool connectRight,
+    required double centerMargin,
+    required bool isCompliant,
+  }) {
+    if (!isCompliant) {
+      return (
+        EdgeInsets.symmetric(horizontal: centerMargin),
+        BorderRadius.circular(50)
+      );
+    }
+
+    if (connectLeft && connectRight) {
+      return (EdgeInsets.zero, BorderRadius.zero);
+    } else if (connectRight) {
+      return (
+        EdgeInsets.only(left: centerMargin),
+        const BorderRadius.horizontal(left: Radius.circular(50))
+      );
+    } else if (connectLeft) {
+      return (
+        EdgeInsets.only(right: centerMargin),
+        const BorderRadius.horizontal(right: Radius.circular(50))
+      );
+    } else {
+      return (
+        EdgeInsets.symmetric(horizontal: centerMargin),
+        BorderRadius.circular(50)
+      );
+    }
   }
 
   bool _isSameDay(DateTime a, DateTime b) {
@@ -486,9 +504,7 @@ class _LoadingGrid extends StatelessWidget {
             width: 10,
             height: 10,
             decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
-                shape: BoxShape.circle
-            ),
+                color: Colors.white.withOpacity(0.05), shape: BoxShape.circle),
           ),
         );
       },

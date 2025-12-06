@@ -27,7 +27,6 @@ void showTimeTrackingPopup({
   showGeneralDialog(
     context: context,
     barrierDismissible: true,
-    barrierLabel: "Dismiss",
     barrierColor: Colors.transparent, 
     transitionDuration: const Duration(milliseconds: 500),
     pageBuilder: (ctx, anim1, anim2) {

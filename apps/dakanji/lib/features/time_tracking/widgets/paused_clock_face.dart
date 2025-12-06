@@ -1,3 +1,5 @@
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/dashed_ring_painter.dart';
 
@@ -76,7 +78,7 @@ class PausedClockFace extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              "SESSION: ${_formatDuration(currentElapsed)}",
+              "${LocaleKeys.TimeTrackingScreen_session_caps.tr()}: ${_formatDuration(currentElapsed)}",
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.9),
                 fontSize: 12,

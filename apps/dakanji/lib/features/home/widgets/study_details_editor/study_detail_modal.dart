@@ -145,12 +145,8 @@ class _StudyDetailModalState extends State<StudyDetailModal> {
     final dao = GetIt.I<UserDataDB>().timeTrackingDao;
     final rawData = await dao.getSessionsForDate(widget.date);
     
-    final mappedSessions = _mapSessionsToUiModels(
-      rawData, 
-      widget.vocabColor, 
-      widget.charactersColor, 
-      widget.timeColor
-    );
+    // Removed specific color arguments as they were unused and implied logic separation
+    final mappedSessions = _mapSessionsToUiModels(rawData);
 
     if (mounted) {
       setState(() {
@@ -182,11 +178,16 @@ class _StudyDetailModalState extends State<StudyDetailModal> {
       SnackBar(
         backgroundColor: const Color(0xFF2C323A),
         content: Text(
-          "${deletedItem.category} (${deletedItem.totalWorkDuration.inMinutes} min.) session deleted",
+          LocaleKeys.TimeTrackingScreen_session_editor_delete_message.tr(
+            namedArgs: {
+              "CATEGORY": deletedItem.category,
+              "TIME": deletedItem.totalWorkDuration.inMinutes.toString()
+            }
+          ),
           style: const TextStyle(color: Colors.white),
         ),
         action: SnackBarAction(
-          label: "Undo",
+          label: LocaleKeys.TimeTrackingScreen_session_editor_delete_undo.tr(),
           textColor: Theme.brightnessOf(context) == Brightness.dark
               ? Colors.white
               : Colors.black,
@@ -244,11 +245,10 @@ class _StudyDetailModalState extends State<StudyDetailModal> {
       builder: (context) => SessionEditorSheet(
         initialStart: isEditing ? session.startTime : defaultStart,
         initialEnd: isEditing ? session.endTime : defaultEnd,
-        initialCategory: isEditing ? session.category : "Vocab",
+        // CHANGED: Removed special handling for "Vocab". Now defaults to empty string.
+        initialCategory: isEditing ? session.category : "",
         initialTag: isEditing ? session.tag : null,
         initialBreakMinutes: isEditing ? session.totalBreakDuration.inMinutes : 0,
-        vocabColor: widget.vocabColor,
-        kanjiColor: widget.charactersColor,
         isEditing: isEditing,
         occupiedRanges: occupiedRanges,
       ),
@@ -308,7 +308,7 @@ class _TimelineHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
       child: Text(
-        "タイムライン",
+        LocaleKeys.TimeTrackingScreen_session_editor_timeline.tr(),
         style: TextStyle(
           color: Colors.grey[400],
           fontSize: 14,
@@ -328,7 +328,7 @@ class _EmptyState extends StatelessWidget {
       padding: const EdgeInsets.all(24.0),
       child: Center(
         child: Text(
-          "No sessions recorded",
+          LocaleKeys.TimeTrackingScreen_session_editor_no_sessions.tr(),
           style: TextStyle(color: Colors.grey[600]),
         ),
       ),
@@ -387,9 +387,6 @@ class _StatsSummarySection extends StatelessWidget {
 
 List<StudySessionUiModel> _mapSessionsToUiModels(
   List<dynamic> rawData, 
-  Color vocabColor,
-  Color charactersColor,
-  Color timeColor,
 ) {
   return rawData.map((e) {
     final units = e.units;
@@ -414,13 +411,6 @@ List<StudySessionUiModel> _mapSessionsToUiModels(
     }
 
     Color sessionColor = Colors.grey;
-    if (e.session.category == 'Vocab') {
-      sessionColor = vocabColor;
-    } else if (e.session.category == 'Kanji') {
-      sessionColor = charactersColor;
-    } else {
-      sessionColor = timeColor;
-    }
 
     return StudySessionUiModel(
       id: e.session.id,
@@ -428,7 +418,7 @@ List<StudySessionUiModel> _mapSessionsToUiModels(
       endTime: endTime,
       totalWorkDuration: totalWork,
       totalBreakDuration: totalBreak,
-      category: e.session.category ?? "General",
+      category: e.session.category,
       tag: e.session.tag,
       color: sessionColor,
       units: units,

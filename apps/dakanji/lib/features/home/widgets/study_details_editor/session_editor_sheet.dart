@@ -1,6 +1,8 @@
 import 'package:da_kanji_mobile/features/home/widgets/study_details_editor/time_display.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/management_dialogs.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SessionEditorSheet extends StatefulWidget {
@@ -9,8 +11,6 @@ class SessionEditorSheet extends StatefulWidget {
   final String initialCategory;
   final String? initialTag;
   final int initialBreakMinutes;
-  final Color vocabColor;
-  final Color kanjiColor;
   final bool isEditing;
   final List<DateTimeRange> occupiedRanges;
 
@@ -21,8 +21,6 @@ class SessionEditorSheet extends StatefulWidget {
     required this.initialCategory,
     this.initialTag,
     required this.initialBreakMinutes,
-    required this.vocabColor,
-    required this.kanjiColor,
     required this.isEditing,
     required this.occupiedRanges,
   });
@@ -81,21 +79,24 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _EditorHeader(
-              title: widget.isEditing ? "セッションの編集" : "新しいセッション",
+              title: widget.isEditing
+                ? LocaleKeys.TimeTrackingScreen_session_editor_edit_session.tr()
+                : LocaleKeys.TimeTrackingScreen_session_editor_new_session.tr(),
               isValid: isValid,
               netStudyMinutes: netStudyMinutes,
             ),
             const SizedBox(height: 24),
             _SelectionTile(
-              label: "カテゴリー",
+              label: LocaleKeys.TimeTrackingScreen_session_editor_category.tr(),
               value: _category ?? "",
               icon: Icons.category_outlined,
-              valueColor: _tag == null ? Colors.grey : Colors.white,
+              // CHANGED: Fixed logic. Color now depends on category presence, not tag presence.
+              valueColor: (_category == null || _category!.isEmpty) ? Colors.grey : Colors.white,
               onTap: _openCategorySelector,
             ),
             const SizedBox(height: 16),
             _SelectionTile(
-              label: "タグ",
+              label: LocaleKeys.TimeTrackingScreen_session_editor_tag.tr(),
               value: _tag ?? "",
               icon: Icons.label_outline,
               valueColor: _tag == null ? Colors.grey : Colors.white,
@@ -107,7 +108,7 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
               children: [
                 Expanded(
                   child: TimeDisplay(
-                    label: "Start",
+                    label: LocaleKeys.TimeTrackingScreen_session_editor_start.tr(),
                     time: _startTime,
                     onTap: () => _pickTime(true),
                     isError: overlap.isStartOverlap,
@@ -120,7 +121,7 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
                 ),
                 Expanded(
                   child: TimeDisplay(
-                    label: "End",
+                    label: LocaleKeys.TimeTrackingScreen_session_editor_end.tr(),
                     time: _endTime,
                     onTap: () => _pickTime(false),
                     isError: !isTimeValid || overlap.isEndOverlap,
@@ -130,18 +131,18 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
               ],
             ),
             if (!isTimeValid)
-              const _ErrorMessage(text: "終了時間は開始時間より後である必要があります"),
+              _ErrorMessage(text: LocaleKeys.TimeTrackingScreen_session_editor_session_start_is_after_end.tr()),
             if (overlap.hasAnyOverlap)
-              const _ErrorMessage(text: "選択した時間は他のセッションと重なっています"),
+              _ErrorMessage(text: LocaleKeys.TimeTrackingScreen_session_editor_selection_overlaps_with_session.tr()),
             const SizedBox(height: 24),
             _BreakDurationInput(
               controller: _breakController,
               isBreakValid: isBreakValid,
               onChanged: (_) => setState(() {}),
-              activeColor: _activeColor,
+              activeColor: Colors.white,
             ),
             if (!isBreakValid && isTimeValid)
-              const _ErrorMessage(text: "休憩時間は合計時間より短くする必要があります"),
+              _ErrorMessage(text: LocaleKeys.TimeTrackingScreen_session_editor_break_time_must_be_shorter_than_session.tr()),
             const SizedBox(height: 32),
             SizedBox(
               width: double.infinity,
@@ -167,9 +168,8 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
                         });
                       }
                     : null,
-                child: const Text("保存",
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                child: Text(LocaleKeys.TimeTrackingScreen_session_editor_save.tr(),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               ),
             ),
           ],
@@ -282,9 +282,6 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
     );
   }
 
-  Color get _activeColor =>
-      _category == 'Vocab' ? widget.vocabColor : widget.kanjiColor;
-
   _OverlapResult _calculateOverlap() {
     bool isStartOverlap = false;
     bool isEndOverlap = false;
@@ -349,7 +346,11 @@ class _EditorHeader extends StatelessWidget {
               border: Border.all(color: successGreen),
             ),
             child: Text(
-              "Net Study: ${netStudyMinutes}m",
+              LocaleKeys.TimeTrackingScreen_session_editor_study_time.tr(
+                namedArgs: {
+                  "STUDY_TIME": netStudyMinutes.toString()
+                }
+              ),
               style: TextStyle(
                   color: successGreen.withGreen(130),
                   fontWeight: FontWeight.bold,
@@ -438,7 +439,7 @@ class _BreakDurationInput extends StatelessWidget {
       children: [
         const Icon(Icons.coffee_outlined, color: Colors.white, size: 20),
         const SizedBox(width: 12),
-        const Text("休憩時間 (分):", style: TextStyle(color: Colors.grey)),
+        Text(LocaleKeys.TimeTrackingScreen_session_editor_break_time.tr(), style: TextStyle(color: Colors.grey)),
         const SizedBox(width: 16),
         SizedBox(
           width: 80,
@@ -454,6 +455,7 @@ class _BreakDurationInput extends StatelessWidget {
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               filled: true,
+              fillColor: Colors.white10, // CHANGED: Added to match other inputs
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,

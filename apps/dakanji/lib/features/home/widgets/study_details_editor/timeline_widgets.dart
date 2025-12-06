@@ -354,12 +354,14 @@ class _SessionDurationInfo extends StatelessWidget {
         ),
         if (breakStr != null) ...[
           const SizedBox(width: 12),
-          Icon(Icons.coffee, size: 14, color: Colors.brown[300]),
+          // CHANGED: Removed "Colors.brown[300]" to match standard grey input/text color
+          Icon(Icons.coffee, size: 14, color: Colors.grey[400]),
           const SizedBox(width: 4),
           Text(
             breakStr,
             style: TextStyle(
-              color: Colors.brown[300],
+              // CHANGED: Removed "Colors.brown[300]" to match standard grey input/text color
+              color: Colors.grey[400],
               fontSize: 14,
             ),
           ),

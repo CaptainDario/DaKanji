@@ -1,6 +1,5 @@
 import 'package:da_kanji_mobile/features/shop/widgets/features_tab.dart';
 import 'package:da_kanji_mobile/features/shop/widgets/merch_tab.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
 

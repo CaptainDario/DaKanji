@@ -4611,31 +4611,103 @@
       "pl": "Śledzenie czasu"
     },
     "start": {
-      "en": "Start"
+      "en": "Start",
+      "de": "Start",
+      "ru": "Начало",
+      "ja": "スタート",
+      "zh": "开始",
+      "it": "Inizio",
+      "fr": "Démarrage",
+      "es": "Inicio",
+      "pl": "Start"
     },
     "resume": {
-      "en": "Resume"
+      "en": "Resume",
+      "de": "Lebenslauf",
+      "ru": "Резюме",
+      "ja": "履歴書",
+      "zh": "简历",
+      "it": "Il curriculum",
+      "fr": "Curriculum vitae",
+      "es": "Currículum",
+      "pl": "Wznowienie"
     },
     "pause": {
-      "en": "Pause"
+      "en": "Pause",
+      "de": "Pause",
+      "ru": "Пауза",
+      "ja": "一時停止",
+      "zh": "暂停",
+      "it": "Pausa",
+      "fr": "Pause",
+      "es": "Pausa",
+      "pl": "Pauza"
     },
     "add": {
-      "en": "Add"
+      "en": "Add",
+      "de": "hinzufügen",
+      "ru": "Добавить",
+      "ja": "追加",
+      "zh": "添加",
+      "it": "Aggiungi",
+      "fr": "Ajouter",
+      "es": "Añadir",
+      "pl": "Dodaj"
     },
     "cancel": {
-      "en": "Cancel"
+      "en": "Cancel",
+      "de": "Abbrechen",
+      "ru": "Отмена",
+      "ja": "キャンセル",
+      "zh": "取消",
+      "it": "Annullamento",
+      "fr": "Annuler",
+      "es": "Cancelar",
+      "pl": "Anuluj"
     },
     "end_session": {
-      "en": "End Session"
+      "en": "End Session",
+      "de": "Sitzung beenden",
+      "ru": "Окончание сеанса",
+      "ja": "セッション終了",
+      "zh": "会议结束",
+      "it": "Fine sessione",
+      "fr": "Fin de la session",
+      "es": "Fin de la sesión",
+      "pl": "Koniec sesji"
     },
     "ready_caps": {
-      "en": "READY"
+      "en": "READY",
+      "de": "READY",
+      "ru": "ГОТОВО",
+      "ja": "レディ",
+      "zh": "准备就绪",
+      "it": "PRONTO",
+      "fr": "PRÊT",
+      "es": "LISTO",
+      "pl": "GOTOWY"
     },
     "break_caps": {
-      "en": "BREAK"
+      "en": "BREAK",
+      "de": "UNTERBRECHUNG",
+      "ru": "BREAK",
+      "ja": "BREAK",
+      "zh": "中断",
+      "it": "BREAK",
+      "fr": "RUPTURE",
+      "es": "DESCANSO",
+      "pl": "BREAK"
     },
     "session_caps": {
-      "en": "SESSION"
+      "en": "SESSION",
+      "de": "SESSION",
+      "ru": "СЕССИЯ",
+      "ja": "セッション",
+      "zh": "会期",
+      "it": "SESSIONE",
+      "fr": "SESSION",
+      "es": "SESIÓN",
+      "pl": "SESJA"
     },
     "tags": {
       "en": "Tags",
@@ -4649,13 +4721,37 @@
       "pl": "Tagi"
     },
     "select_tag": {
-      "en": "Select tag"
+      "en": "Select tag",
+      "de": "Tag auswählen",
+      "ru": "Выберите метку",
+      "ja": "タグを選択",
+      "zh": "选择标签",
+      "it": "Seleziona il tag",
+      "fr": "Sélectionner une étiquette",
+      "es": "Seleccionar etiqueta",
+      "pl": "Wybierz tag"
     },
     "add_tag": {
-      "en": "Add tag"
+      "en": "Add tag",
+      "de": "Tag hinzufügen",
+      "ru": "Добавить метку",
+      "ja": "タグの追加",
+      "zh": "添加标签",
+      "it": "Aggiungi tag",
+      "fr": "Ajouter une étiquette",
+      "es": "Añadir etiqueta",
+      "pl": "Dodaj tag"
     },
     "add_tag_hint": {
-      "en": "Enter tag name (e.g. N2)"
+      "en": "Enter tag name (e.g. N2)",
+      "de": "Tag-Name eingeben (z. B. N2)",
+      "ru": "Введите имя метки (например, N2).",
+      "ja": "タグ名を入力（例：N2）",
+      "zh": "输入标签名称（如 N2）",
+      "it": "Inserire il nome del tag (ad es. N2)",
+      "fr": "Saisir le nom de l'étiquette (par exemple N2)",
+      "es": "Introduzca el nombre de la etiqueta (por ejemplo, N2)",
+      "pl": "Wprowadź nazwę tagu (np. N2)"
     },
     "categories": {
       "en": "Categories",
@@ -4669,13 +4765,213 @@
       "pl": "Kategoria"
     },
     "select_category": {
-      "en": "Select category"
+      "en": "Select category",
+      "de": "Kategorie auswählen",
+      "ru": "Выберите категорию",
+      "ja": "カテゴリーを選択",
+      "zh": "选择类别",
+      "it": "Selezionare la categoria",
+      "fr": "Sélectionner une catégorie",
+      "es": "Seleccionar categoría",
+      "pl": "Wybierz kategorię"
     },
     "add_category": {
-      "en": "Add category"
+      "en": "Add category",
+      "de": "Kategorie hinzufügen",
+      "ru": "Добавить категорию",
+      "ja": "カテゴリーを追加する",
+      "zh": "添加类别",
+      "it": "Aggiungi categoria",
+      "fr": "Ajouter une catégorie",
+      "es": "Añadir categoría",
+      "pl": "Dodaj kategorię"
     },
     "add_category_hint": {
-      "en": "Enter category name (e.g. Kanji)"
+      "en": "Enter category name (e.g. Kanji)",
+      "de": "Kategoriename eingeben (z. B. Kanji)",
+      "ru": "Введите название категории (например, Kanji).",
+      "ja": "カテゴリー名を入力（例：漢字）",
+      "zh": "输入类别名称（如汉字）",
+      "it": "Inserire il nome della categoria (ad es. Kanji)",
+      "fr": "Saisir le nom de la catégorie (par exemple Kanji)",
+      "es": "Introduzca el nombre de la categoría (por ejemplo, Kanji)",
+      "pl": "Wprowadź nazwę kategorii (np. Kanji)."
+    },
+    "session_editor_edit_session": {
+      "en": "Edit Session",
+      "de": "Sitzung bearbeiten",
+      "ru": "Редактирование сессии",
+      "ja": "編集セッション",
+      "zh": "编辑会话",
+      "it": "Sessione di modifica",
+      "fr": "Modifier la session",
+      "es": "Editar sesión",
+      "pl": "Edytuj sesję"
+    },
+    "session_editor_new_session": {
+      "en": "New Session",
+      "de": "Neue Sitzung",
+      "ru": "Новая сессия",
+      "ja": "新規セッション",
+      "zh": "新一届会议",
+      "it": "Nuova sessione",
+      "fr": "Nouvelle session",
+      "es": "Nueva sesión",
+      "pl": "Nowa sesja"
+    },
+    "session_editor_tag": {
+      "en": "Tag",
+      "de": "Tag",
+      "ru": "Тег",
+      "ja": "タグ",
+      "zh": "标签",
+      "it": "Tag",
+      "fr": "Étiquette",
+      "es": "Etiqueta",
+      "pl": "Tag"
+    },
+    "session_editor_category": {
+      "en": "Category",
+      "de": "Kategorie",
+      "ru": "Категория",
+      "ja": "カテゴリー",
+      "zh": "类别",
+      "it": "Categoria",
+      "fr": "Catégorie",
+      "es": "Categoría",
+      "pl": "Kategoria"
+    },
+    "session_editor_start": {
+      "en": "Start",
+      "de": "Start",
+      "ru": "Начало",
+      "ja": "スタート",
+      "zh": "开始",
+      "it": "Inizio",
+      "fr": "Démarrage",
+      "es": "Inicio",
+      "pl": "Start"
+    },
+    "session_editor_end": {
+      "en": "End",
+      "de": "Sitzung beenden",
+      "ru": "Окончание сеанса",
+      "ja": "セッション終了",
+      "zh": "会议结束",
+      "it": "Fine sessione",
+      "fr": "Fin de la session",
+      "es": "Fin de la sesión",
+      "pl": "Koniec sesji"
+    },
+    "session_editor_session_start_is_after_end": {
+      "en": "The end of the session is before the beginning of the session!",
+      "de": "Das Ende der Sitzung liegt vor dem Beginn der Sitzung!",
+      "ru": "Конец сеанса наступает раньше его начала!",
+      "ja": "セッションの終わりはセッションの始まりの前である！",
+      "zh": "会议结束时间早于会议开始时间！",
+      "it": "La fine della sessione è prima dell'inizio della sessione!",
+      "fr": "La fin de la session est avant le début de la session !",
+      "es": "¡El final de la sesión es antes del comienzo de la sesión!",
+      "pl": "Koniec sesji jest przed jej rozpoczęciem!"
+    },
+    "session_editor_selection_overlaps_with_session": {
+      "en": "The time you set overlaps with another session!",
+      "de": "Die von Ihnen eingestellte Zeit überschneidet sich mit einer anderen Sitzung!",
+      "ru": "Установленное вами время совпадает с другим сеансом!",
+      "ja": "設定した時間が他のセッションと重なる！",
+      "zh": "您设置的时间与另一个会话重叠！",
+      "it": "L'orario impostato si sovrappone a un'altra sessione!",
+      "fr": "L'heure que vous avez choisie chevauche une autre session !",
+      "es": "La hora fijada coincide con la de otra sesión.",
+      "pl": "Ustawiony czas pokrywa się z inną sesją!"
+    },
+    "session_editor_break_time_must_be_shorter_than_session": {
+      "en": "The break time must be shorter than the session time!",
+      "de": "Die Pausenzeit muss kürzer sein als die Sitzungszeit!",
+      "ru": "Время перерыва должно быть короче времени сеанса!",
+      "ja": "休憩時間はセッション時間より短くなければならない！",
+      "zh": "休息时间必须短于会议时间！",
+      "it": "La pausa deve essere più breve della durata della sessione!",
+      "fr": "Le temps de pause doit être plus court que le temps de session !",
+      "es": "La pausa debe ser más corta que la sesión.",
+      "pl": "Czas przerwy musi być krótszy niż czas trwania sesji!"
+    },
+    "session_editor_break_time": {
+      "en": "Break (min.):",
+      "de": "Pause (min.):",
+      "ru": "Перерыв (мин.):",
+      "ja": "休憩（分）：",
+      "zh": "休息时间（分钟）：",
+      "it": "Pausa (min.):",
+      "fr": "Pause (min.) :",
+      "es": "Pausa (min.):",
+      "pl": "Przerwa (min.):"
+    },
+    "session_editor_save": {
+      "en": "Save",
+      "de": "Speichern Sie",
+      "ru": "Сохранить",
+      "ja": "セーブ",
+      "zh": "节省",
+      "it": "Risparmiare",
+      "fr": "Économiser",
+      "es": "Guardar",
+      "pl": "Zapisz"
+    },
+    "session_editor_study_time": {
+      "en": "Study Time: {STUDY_TIME}m",
+      "de": "Studienzeit: {STUDY_TIME}m",
+      "ru": "Время обучения: {STUDY_TIME}m",
+      "ja": "学習時間：{STUDY_TIME}m",
+      "zh": "学习时间：{STUDY_TIME}m",
+      "it": "Tempo di studio: {STUDY_TIME}m",
+      "fr": "Durée de l'étude : {STUDY_TIME}m",
+      "es": "Tiempo de estudio: {STUDY_TIME}m",
+      "pl": "Czas nauki: {STUDY_TIME}m"
+    },
+    "session_editor_no_sessions": {
+      "en": "No sessions",
+      "de": "Keine Sitzungen",
+      "ru": "Нет сеансов",
+      "ja": "セッションなし",
+      "zh": "没有会议",
+      "it": "Nessuna sessione",
+      "fr": "Pas de sessions",
+      "es": "Sin sesiones",
+      "pl": "Brak sesji"
+    },
+    "session_editor_timeline": {
+      "en": "Timeline",
+      "de": "Zeitleiste",
+      "ru": "Временная шкала",
+      "ja": "タイムライン",
+      "zh": "时间表",
+      "it": "Linea temporale",
+      "fr": "Chronologie",
+      "es": "Cronología",
+      "pl": "Oś czasu"
+    },
+    "session_editor_delete_message": {
+      "en": "{CATEGORY} ({TIME} min.) session deleted",
+      "de": "{CATEGORY} ({TIME} min.) Sitzung gelöscht",
+      "ru": "{КАТЕГОРИЯ} ({ВРЕМЯ} мин.) сеанс удален",
+      "ja": "{CATEGORY} ({TIME} min.) セッション削除",
+      "zh": "{CATEGORY} ({TIME} min.) 会话已删除",
+      "it": "{CATEGORIA} ({TIME} min.) sessione cancellata",
+      "fr": "{CATEGORY} ({TIME} min.) session supprimée",
+      "es": "{CATEGORY} ({TIME} min.) sesión eliminada",
+      "pl": "{CATEGORY} ({TIME} min.) sesja usunięta"
+    },
+    "session_editor_delete_undo": {
+      "en": "Undo",
+      "de": "Rückgängig machen",
+      "ru": "Отменить",
+      "ja": "元に戻す",
+      "zh": "撤消",
+      "it": "Annullamento",
+      "fr": "Annuler",
+      "es": "Deshacer",
+      "pl": "Cofnij"
     }
   },
   "HomeScreen": {
@@ -4817,7 +5113,7 @@
     },
     "tutorial_begin_title": {
       "en": "Welcome to the word lists screen!",
-      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
+      "de": "#ERROR!",
       "ru": "Добро пожаловать на экран списков слов!",
       "ja": "単語リスト画面へようこそ！",
       "zh": "欢迎来到单词列表屏幕！",
