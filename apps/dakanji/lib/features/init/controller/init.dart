@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_mock_data.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:flutter/foundation.dart';
@@ -117,8 +118,12 @@ Future<void> postRunInit() async {
   // deep links
   await initDeepLinksStream();
 
-  // try to send cached events (do NOT await, can bock UI otherwise)
+  // try to send cached events (do NOT await, can block UI otherwise)
   retryCachedEvents();
+
+  // setup the Supabase cache manager (handles routing between local cache and
+  // Supabase backend)
+  GetIt.I.registerSingleton<SupabaseCacheManager>(SupabaseCacheManager());
 
   await setupMockData();
 
