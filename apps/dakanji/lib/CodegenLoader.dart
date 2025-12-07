@@ -155,6 +155,14 @@ class CodegenLoader extends AssetLoader{
     "web": "网络"
   },
   "HomeScreen": {
+    "account_page_error_loading": "加载您的个人资料时发生错误。请检查网络连接并重试。",
+    "account_page_link_with": "链接",
+    "account_page_saving": "节约...",
+    "account_page_sign_out": "签出",
+    "account_page_update": "更新",
+    "account_page_user_name": "用户名",
+    "account_page_your_character": "您的性格",
+    "acount_page_not_linked": "无关联",
     "study_calendar_no_study_data": "无研究数据。",
     "study_card_action_chars": "研究",
     "study_card_action_time": "轨道",
@@ -694,6 +702,14 @@ static const Map<String,dynamic> _ja = {
     "web": "ウェブ"
   },
   "HomeScreen": {
+    "account_page_error_loading": "プロフィールの読み込み中にエラーが発生しました。インターネット接続をご確認の上、再度お試しください。",
+    "account_page_link_with": "リンク",
+    "account_page_saving": "節約...",
+    "account_page_sign_out": "サインアウト",
+    "account_page_update": "更新",
+    "account_page_user_name": "ユーザー名",
+    "account_page_your_character": "あなたのキャラクター",
+    "acount_page_not_linked": "リンクなし",
     "study_calendar_no_study_data": "研究データはない。",
     "study_card_action_chars": "研究",
     "study_card_action_time": "トラック",
@@ -1259,6 +1275,14 @@ static const Map<String,dynamic> _de = {
     "web": "Web"
   },
   "HomeScreen": {
+    "account_page_error_loading": "Beim Laden Ihres Profils ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+    "account_page_link_with": "Verbindung mit",
+    "account_page_saving": "Sparen...",
+    "account_page_sign_out": "Abmelden",
+    "account_page_update": "Update",
+    "account_page_user_name": "Name des Benutzers",
+    "account_page_your_character": "Ihr Charakter",
+    "acount_page_not_linked": "Nicht verknüpft",
     "study_calendar_no_study_data": "Keine Studiendaten.",
     "study_card_action_chars": "Lernen",
     "study_card_action_time": "Spur",
@@ -1623,7 +1647,7 @@ static const Map<String,dynamic> _de = {
     "send_to_anki_progress": "Senden zu Anki, bitte warten...",
     "title": "Wortlisten",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
     "tutorial_create_folder": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
     "tutorial_create_list": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
@@ -1776,6 +1800,14 @@ static const Map<String,dynamic> _ru = {
     "web": "веб-сайт"
   },
   "HomeScreen": {
+    "account_page_error_loading": "При загрузке вашего профиля произошла ошибка. Пожалуйста, проверьте подключение к Интернету и повторите попытку.",
+    "account_page_link_with": "Связь с",
+    "account_page_saving": "Экономия...",
+    "account_page_sign_out": "Выйти из игры",
+    "account_page_update": "Обновление",
+    "account_page_user_name": "Имя пользователя",
+    "account_page_your_character": "Ваш характер",
+    "acount_page_not_linked": "Не связано",
     "study_calendar_no_study_data": "Данные исследований отсутствуют.",
     "study_card_action_chars": "Исследование",
     "study_card_action_time": "Трек",
@@ -2328,6 +2360,14 @@ static const Map<String,dynamic> _pl = {
     "web": "web"
   },
   "HomeScreen": {
+    "account_page_error_loading": "Wystąpił błąd podczas ładowania profilu. Sprawdź połączenie internetowe i spróbuj ponownie.",
+    "account_page_link_with": "Połączenie z",
+    "account_page_saving": "Oszczędzanie...",
+    "account_page_sign_out": "Wyloguj się",
+    "account_page_update": "Aktualizacja",
+    "account_page_user_name": "Nazwa użytkownika",
+    "account_page_your_character": "Twoja postać",
+    "acount_page_not_linked": "Niepowiązane",
     "study_calendar_no_study_data": "Brak danych z badań.",
     "study_card_action_chars": "Badanie",
     "study_card_action_time": "Ścieżka",
@@ -2892,6 +2932,14 @@ static const Map<String,dynamic> _en = {
     "web": "web"
   },
   "HomeScreen": {
+    "account_page_error_loading": "An error occurred while loading your profile. Please check your internet connection and try again.",
+    "account_page_link_with": "Link with",
+    "account_page_saving": "Saving...",
+    "account_page_sign_out": "Sign Out",
+    "account_page_update": "Update",
+    "account_page_user_name": "User Name",
+    "account_page_your_character": "Your Character",
+    "acount_page_not_linked": "Not Linked",
     "study_calendar_no_study_data": "No study data.",
     "study_card_action_chars": "Study",
     "study_card_action_time": "Track",
@@ -3461,6 +3509,14 @@ static const Map<String,dynamic> _it = {
     "web": "web"
   },
   "HomeScreen": {
+    "account_page_error_loading": "Si è verificato un errore durante il caricamento del profilo. Controllare la connessione a Internet e riprovare.",
+    "account_page_link_with": "Collegamento con",
+    "account_page_saving": "Risparmio...",
+    "account_page_sign_out": "Esci",
+    "account_page_update": "Aggiornamento",
+    "account_page_user_name": "Nome utente",
+    "account_page_your_character": "Il vostro carattere",
+    "acount_page_not_linked": "Non collegato",
     "study_calendar_no_study_data": "Nessun dato di studio.",
     "study_card_action_chars": "Studio",
     "study_card_action_time": "Traccia",
@@ -3978,6 +4034,14 @@ static const Map<String,dynamic> _fr = {
     "web": "web"
   },
   "HomeScreen": {
+    "account_page_error_loading": "Une erreur s'est produite lors du chargement de votre profil. Veuillez vérifier votre connexion internet et réessayer.",
+    "account_page_link_with": "Lien avec",
+    "account_page_saving": "Économiser...",
+    "account_page_sign_out": "S'inscrire",
+    "account_page_update": "Mise à jour",
+    "account_page_user_name": "Nom de l'utilisateur",
+    "account_page_your_character": "Votre caractère",
+    "acount_page_not_linked": "Pas de lien",
     "study_calendar_no_study_data": "Aucune donnée d'étude.",
     "study_card_action_chars": "L'étude",
     "study_card_action_time": "Poursuivre",
@@ -4495,6 +4559,14 @@ static const Map<String,dynamic> _es = {
     "web": "web"
   },
   "HomeScreen": {
+    "account_page_error_loading": "Se ha producido un error al cargar su perfil. Compruebe su conexión a Internet e inténtelo de nuevo.",
+    "account_page_link_with": "Enlace con",
+    "account_page_saving": "Ahorrar...",
+    "account_page_sign_out": "Cerrar sesión",
+    "account_page_update": "Actualización",
+    "account_page_user_name": "Nombre de usuario",
+    "account_page_your_character": "Tu personaje",
+    "acount_page_not_linked": "No vinculado",
     "study_calendar_no_study_data": "No hay datos del estudio.",
     "study_card_action_chars": "Estudiar",
     "study_card_action_time": "Pista",

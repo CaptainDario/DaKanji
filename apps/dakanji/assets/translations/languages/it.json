@@ -177,6 +177,14 @@
     "web": "web"
   },
   "HomeScreen": {
+    "account_page_error_loading": "Si \u00e8 verificato un errore durante il caricamento del profilo. Controllare la connessione a Internet e riprovare.",
+    "account_page_link_with": "Collegamento con",
+    "account_page_saving": "Risparmio...",
+    "account_page_sign_out": "Esci",
+    "account_page_update": "Aggiornamento",
+    "account_page_user_name": "Nome utente",
+    "account_page_your_character": "Il vostro carattere",
+    "acount_page_not_linked": "Non collegato",
     "study_calendar_no_study_data": "Nessun dato di studio.",
     "study_card_action_chars": "Studio",
     "study_card_action_time": "Traccia",

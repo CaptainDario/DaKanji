@@ -172,6 +172,14 @@ abstract class  LocaleKeys {
   static const General_system = 'General.system';
   static const General_web = 'General.web';
   static const General = 'General';
+  static const HomeScreen_account_page_error_loading = 'HomeScreen.account_page_error_loading';
+  static const HomeScreen_account_page_link_with = 'HomeScreen.account_page_link_with';
+  static const HomeScreen_account_page_saving = 'HomeScreen.account_page_saving';
+  static const HomeScreen_account_page_sign_out = 'HomeScreen.account_page_sign_out';
+  static const HomeScreen_account_page_update = 'HomeScreen.account_page_update';
+  static const HomeScreen_account_page_user_name = 'HomeScreen.account_page_user_name';
+  static const HomeScreen_account_page_your_character = 'HomeScreen.account_page_your_character';
+  static const HomeScreen_acount_page_not_linked = 'HomeScreen.acount_page_not_linked';
   static const HomeScreen_study_calendar_no_study_data = 'HomeScreen.study_calendar_no_study_data';
   static const HomeScreen_study_card_action_chars = 'HomeScreen.study_card_action_chars';
   static const HomeScreen_study_card_action_time = 'HomeScreen.study_card_action_time';

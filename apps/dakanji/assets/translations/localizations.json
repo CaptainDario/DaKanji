@@ -5084,6 +5084,94 @@
       "fr": "Poursuivre",
       "es": "Pista",
       "pl": "Ścieżka"
+    },
+    "account_page_error_loading": {
+      "en": "An error occurred while loading your profile. Please check your internet connection and try again.",
+      "de": "Beim Laden Ihres Profils ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+      "ru": "При загрузке вашего профиля произошла ошибка. Пожалуйста, проверьте подключение к Интернету и повторите попытку.",
+      "ja": "プロフィールの読み込み中にエラーが発生しました。インターネット接続をご確認の上、再度お試しください。",
+      "zh": "加载您的个人资料时发生错误。请检查网络连接并重试。",
+      "it": "Si è verificato un errore durante il caricamento del profilo. Controllare la connessione a Internet e riprovare.",
+      "fr": "Une erreur s'est produite lors du chargement de votre profil. Veuillez vérifier votre connexion internet et réessayer.",
+      "es": "Se ha producido un error al cargar su perfil. Compruebe su conexión a Internet e inténtelo de nuevo.",
+      "pl": "Wystąpił błąd podczas ładowania profilu. Sprawdź połączenie internetowe i spróbuj ponownie."
+    },
+    "account_page_user_name": {
+      "en": "User Name",
+      "de": "Name des Benutzers",
+      "ru": "Имя пользователя",
+      "ja": "ユーザー名",
+      "zh": "用户名",
+      "it": "Nome utente",
+      "fr": "Nom de l'utilisateur",
+      "es": "Nombre de usuario",
+      "pl": "Nazwa użytkownika"
+    },
+    "account_page_your_character": {
+      "en": "Your Character",
+      "de": "Ihr Charakter",
+      "ru": "Ваш характер",
+      "ja": "あなたのキャラクター",
+      "zh": "您的性格",
+      "it": "Il vostro carattere",
+      "fr": "Votre caractère",
+      "es": "Tu personaje",
+      "pl": "Twoja postać"
+    },
+    "account_page_saving": {
+      "en": "Saving...",
+      "de": "Sparen...",
+      "ru": "Экономия...",
+      "ja": "節約...",
+      "zh": "节约...",
+      "it": "Risparmio...",
+      "fr": "Économiser...",
+      "es": "Ahorrar...",
+      "pl": "Oszczędzanie..."
+    },
+    "account_page_update": {
+      "en": "Update",
+      "de": "Update",
+      "ru": "Обновление",
+      "ja": "更新",
+      "zh": "更新",
+      "it": "Aggiornamento",
+      "fr": "Mise à jour",
+      "es": "Actualización",
+      "pl": "Aktualizacja"
+    },
+    "account_page_link_with": {
+      "en": "Link with",
+      "de": "Verbindung mit",
+      "ru": "Связь с",
+      "ja": "リンク",
+      "zh": "链接",
+      "it": "Collegamento con",
+      "fr": "Lien avec",
+      "es": "Enlace con",
+      "pl": "Połączenie z"
+    },
+    "acount_page_not_linked": {
+      "en": "Not Linked",
+      "de": "Nicht verknüpft",
+      "ru": "Не связано",
+      "ja": "リンクなし",
+      "zh": "无关联",
+      "it": "Non collegato",
+      "fr": "Pas de lien",
+      "es": "No vinculado",
+      "pl": "Niepowiązane"
+    },
+    "account_page_sign_out": {
+      "en": "Sign Out",
+      "de": "Abmelden",
+      "ru": "Выйти из игры",
+      "ja": "サインアウト",
+      "zh": "签出",
+      "it": "Esci",
+      "fr": "S'inscrire",
+      "es": "Cerrar sesión",
+      "pl": "Wyloguj się"
     }
   },
   "KuzushijiScreen": {
@@ -5113,7 +5201,7 @@
     },
     "tutorial_begin_title": {
       "en": "Welcome to the word lists screen!",
-      "de": "#ERROR!",
+      "de": "Willkommen auf dem Bildschirm mit den Wortlisten!",
       "ru": "Добро пожаловать на экран списков слов!",
       "ja": "単語リスト画面へようこそ！",
       "zh": "欢迎来到单词列表屏幕！",

@@ -3,11 +3,10 @@ import 'package:da_kanji_mobile/core/supabase/controller/supabase_user_profile.d
 import 'package:da_kanji_mobile/core/supabase/model/user_profile.dart';
 import 'package:da_kanji_mobile/core/widgets/color_picker_dialog.dart';
 import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_loading_indicator.dart';
-import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_splash.dart';
 import 'package:da_kanji_mobile/features/home/widgets/account/user_icon.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:da_kanji_mobile/core/utils/snackbar.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 
 
@@ -78,7 +77,7 @@ class _UserAccountPageState extends State<UserAccountPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(Icons.error, size: 48),
-              Text("An error occurred while loading your profile. Please check your internet connection and try again."),
+              Text(LocaleKeys.HomeScreen_account_page_error_loading.tr()),
             ],
           );
 
@@ -111,7 +110,9 @@ class _UserAccountPageState extends State<UserAccountPage> {
                 Expanded(
                   child: TextFormField(
                     controller: _characterController,
-                    decoration: const InputDecoration(labelText: 'Your Character'),
+                    decoration: InputDecoration(
+                      labelText: LocaleKeys.HomeScreen_account_page_your_character.tr(),
+                    ),
                   ),
                 ),
               ],
@@ -119,32 +120,45 @@ class _UserAccountPageState extends State<UserAccountPage> {
             const SizedBox(height: 16,),
             TextFormField(
               controller: _usernameController,
-              decoration: const InputDecoration(labelText: 'User Name'),
+              decoration: InputDecoration(
+                labelText: LocaleKeys.HomeScreen_account_page_user_name.tr()
+              ),
             ),
             const SizedBox(height: 18),
             
             const SizedBox(height: 18),
             ElevatedButton(
               onPressed: _loading ? null : _updateProfile,
-              child: Text(_loading ? 'Saving...' : 'Update'),
+              child: Text(_loading
+                ? LocaleKeys.HomeScreen_account_page_saving.tr()
+                : LocaleKeys.HomeScreen_account_page_update.tr()
+              ),
             ),
             Divider(),
             const SizedBox(height: 18),
-            Text('Link with', style: TextStyle(fontSize: 18),),
+            Text(
+              LocaleKeys.HomeScreen_account_page_link_with.tr(),
+              style: TextStyle(fontSize: 18),
+            ),
             SizedBox(height: 8),
             ListTile(
               leading: Icon(Icons.account_circle),
-              title: Text('GitHub: ${"Not connected"}'),
+              title: Text(
+                'GitHub: ${LocaleKeys.HomeScreen_acount_page_not_linked.tr()}'
+              ),
               trailing: IconButton(
                 onPressed: () {
-                  context.showSnackBar('Not implemented yet', isError: true);
+                  //TODO
                 },
                 icon: Icon(Icons.link),
               ),
             ),
             const SizedBox(height: 18),
             Divider(),
-            TextButton(onPressed: _signOut, child: const Text('Sign Out')),
+            TextButton(
+              onPressed: _signOut,
+              child: Text(LocaleKeys.HomeScreen_account_page_sign_out.tr())
+            ),
           ],
         );
       }
@@ -176,12 +190,6 @@ class _UserAccountPageState extends State<UserAccountPage> {
   Future<void> _signOut() async {
 
     await signOut(context);
-
-    if (mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const ()),
-      );
-    }
 
   }
 
