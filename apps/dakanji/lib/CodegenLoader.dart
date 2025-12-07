@@ -156,7 +156,9 @@ class CodegenLoader extends AssetLoader{
   },
   "HomeScreen": {
     "account_page_error_loading": "加载您的个人资料时发生错误。请检查网络连接并重试。",
+    "account_page_link_sent": "查看电子邮件中的登录链接！",
     "account_page_link_with": "链接",
+    "account_page_magc_link_error": "错误：",
     "account_page_saving": "节约...",
     "account_page_sign_out": "签出",
     "account_page_update": "更新",
@@ -703,7 +705,9 @@ static const Map<String,dynamic> _ja = {
   },
   "HomeScreen": {
     "account_page_error_loading": "プロフィールの読み込み中にエラーが発生しました。インターネット接続をご確認の上、再度お試しください。",
+    "account_page_link_sent": "メールでログインリンクをご確認ください！",
     "account_page_link_with": "リンク",
+    "account_page_magc_link_error": "エラー：",
     "account_page_saving": "節約...",
     "account_page_sign_out": "サインアウト",
     "account_page_update": "更新",
@@ -1276,7 +1280,9 @@ static const Map<String,dynamic> _de = {
   },
   "HomeScreen": {
     "account_page_error_loading": "Beim Laden Ihres Profils ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+    "account_page_link_sent": "Prüfen Sie Ihre E-Mail auf den Login-Link!",
     "account_page_link_with": "Verbindung mit",
+    "account_page_magc_link_error": "Fehler:",
     "account_page_saving": "Sparen...",
     "account_page_sign_out": "Abmelden",
     "account_page_update": "Update",
@@ -1801,7 +1807,9 @@ static const Map<String,dynamic> _ru = {
   },
   "HomeScreen": {
     "account_page_error_loading": "При загрузке вашего профиля произошла ошибка. Пожалуйста, проверьте подключение к Интернету и повторите попытку.",
+    "account_page_link_sent": "Проверьте свою электронную почту, чтобы получить ссылку для входа!",
     "account_page_link_with": "Связь с",
+    "account_page_magc_link_error": "Ошибка:",
     "account_page_saving": "Экономия...",
     "account_page_sign_out": "Выйти из игры",
     "account_page_update": "Обновление",
@@ -2361,7 +2369,9 @@ static const Map<String,dynamic> _pl = {
   },
   "HomeScreen": {
     "account_page_error_loading": "Wystąpił błąd podczas ładowania profilu. Sprawdź połączenie internetowe i spróbuj ponownie.",
+    "account_page_link_sent": "Sprawdź swój e-mail, aby uzyskać link do logowania!",
     "account_page_link_with": "Połączenie z",
+    "account_page_magc_link_error": "Błąd:",
     "account_page_saving": "Oszczędzanie...",
     "account_page_sign_out": "Wyloguj się",
     "account_page_update": "Aktualizacja",
@@ -2933,7 +2943,9 @@ static const Map<String,dynamic> _en = {
   },
   "HomeScreen": {
     "account_page_error_loading": "An error occurred while loading your profile. Please check your internet connection and try again.",
+    "account_page_link_sent": "Check your email for the login link!",
     "account_page_link_with": "Link with",
+    "account_page_magc_link_error": "Error:",
     "account_page_saving": "Saving...",
     "account_page_sign_out": "Sign Out",
     "account_page_update": "Update",
@@ -3510,7 +3522,9 @@ static const Map<String,dynamic> _it = {
   },
   "HomeScreen": {
     "account_page_error_loading": "Si è verificato un errore durante il caricamento del profilo. Controllare la connessione a Internet e riprovare.",
+    "account_page_link_sent": "Controlla la tua e-mail per il link di accesso!",
     "account_page_link_with": "Collegamento con",
+    "account_page_magc_link_error": "Errore:",
     "account_page_saving": "Risparmio...",
     "account_page_sign_out": "Esci",
     "account_page_update": "Aggiornamento",
@@ -4035,7 +4049,9 @@ static const Map<String,dynamic> _fr = {
   },
   "HomeScreen": {
     "account_page_error_loading": "Une erreur s'est produite lors du chargement de votre profil. Veuillez vérifier votre connexion internet et réessayer.",
+    "account_page_link_sent": "Vérifiez votre e-mail pour obtenir le lien de connexion !",
     "account_page_link_with": "Lien avec",
+    "account_page_magc_link_error": "Erreur :",
     "account_page_saving": "Économiser...",
     "account_page_sign_out": "S'inscrire",
     "account_page_update": "Mise à jour",
@@ -4560,7 +4576,9 @@ static const Map<String,dynamic> _es = {
   },
   "HomeScreen": {
     "account_page_error_loading": "Se ha producido un error al cargar su perfil. Compruebe su conexión a Internet e inténtelo de nuevo.",
+    "account_page_link_sent": "Consulta tu correo electrónico para ver el enlace de acceso.",
     "account_page_link_with": "Enlace con",
+    "account_page_magc_link_error": "Error:",
     "account_page_saving": "Ahorrar...",
     "account_page_sign_out": "Cerrar sesión",
     "account_page_update": "Actualización",

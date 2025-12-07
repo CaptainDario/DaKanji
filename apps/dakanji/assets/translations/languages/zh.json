@@ -178,7 +178,9 @@
   },
   "HomeScreen": {
     "account_page_error_loading": "\u52a0\u8f7d\u60a8\u7684\u4e2a\u4eba\u8d44\u6599\u65f6\u53d1\u751f\u9519\u8bef\u3002\u8bf7\u68c0\u67e5\u7f51\u7edc\u8fde\u63a5\u5e76\u91cd\u8bd5\u3002",
+    "account_page_link_sent": "\u67e5\u770b\u7535\u5b50\u90ae\u4ef6\u4e2d\u7684\u767b\u5f55\u94fe\u63a5\uff01",
     "account_page_link_with": "\u94fe\u63a5",
+    "account_page_magc_link_error": "\u9519\u8bef\uff1a",
     "account_page_saving": "\u8282\u7ea6...",
     "account_page_sign_out": "\u7b7e\u51fa",
     "account_page_update": "\u66f4\u65b0",

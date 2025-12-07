@@ -1,5 +1,7 @@
 import 'package:da_kanji_mobile/core/supabase/controller/supabase_auth.dart';
 import 'package:da_kanji_mobile/features/home/widgets/account/user_login.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -78,12 +80,17 @@ class _UserLoginOrWidgetState extends State<UserLoginOrWidget> {
       // 5. USER FEEDBACK (Do not navigate!)
       // Just tell the user to check their email.
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Check your email for the login link!')),
+        SnackBar(
+          content: Text(LocaleKeys.HomeScreen_account_page_link_sent.tr()),
+        ),
       );
     } catch (error) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $error'), backgroundColor: Colors.red),
+          SnackBar(
+            content: Text('${LocaleKeys.HomeScreen_account_page_magc_link_error.tr()} $error'),
+            backgroundColor: Colors.red
+          ),
         );
       }
     } finally {

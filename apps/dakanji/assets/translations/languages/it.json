@@ -178,7 +178,9 @@
   },
   "HomeScreen": {
     "account_page_error_loading": "Si \u00e8 verificato un errore durante il caricamento del profilo. Controllare la connessione a Internet e riprovare.",
+    "account_page_link_sent": "Controlla la tua e-mail per il link di accesso!",
     "account_page_link_with": "Collegamento con",
+    "account_page_magc_link_error": "Errore:",
     "account_page_saving": "Risparmio...",
     "account_page_sign_out": "Esci",
     "account_page_update": "Aggiornamento",

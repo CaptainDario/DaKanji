@@ -178,7 +178,9 @@
   },
   "HomeScreen": {
     "account_page_error_loading": "An error occurred while loading your profile. Please check your internet connection and try again.",
+    "account_page_link_sent": "Check your email for the login link!",
     "account_page_link_with": "Link with",
+    "account_page_magc_link_error": "Error:",
     "account_page_saving": "Saving...",
     "account_page_sign_out": "Sign Out",
     "account_page_update": "Update",

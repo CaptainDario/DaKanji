@@ -5172,6 +5172,28 @@
       "fr": "S'inscrire",
       "es": "Cerrar sesión",
       "pl": "Wyloguj się"
+    },
+    "account_page_link_sent": {
+      "en": "Check your email for the login link!",
+      "de": "Prüfen Sie Ihre E-Mail auf den Login-Link!",
+      "ru": "Проверьте свою электронную почту, чтобы получить ссылку для входа!",
+      "ja": "メールでログインリンクをご確認ください！",
+      "zh": "查看电子邮件中的登录链接！",
+      "it": "Controlla la tua e-mail per il link di accesso!",
+      "fr": "Vérifiez votre e-mail pour obtenir le lien de connexion !",
+      "es": "Consulta tu correo electrónico para ver el enlace de acceso.",
+      "pl": "Sprawdź swój e-mail, aby uzyskać link do logowania!"
+    },
+    "account_page_magc_link_error": {
+      "en": "Error:",
+      "de": "Fehler:",
+      "ru": "Ошибка:",
+      "ja": "エラー：",
+      "zh": "错误：",
+      "it": "Errore:",
+      "fr": "Erreur :",
+      "es": "Error:",
+      "pl": "Błąd:"
     }
   },
   "KuzushijiScreen": {

@@ -178,7 +178,9 @@
   },
   "HomeScreen": {
     "account_page_error_loading": "Se ha producido un error al cargar su perfil. Compruebe su conexi\u00f3n a Internet e int\u00e9ntelo de nuevo.",
+    "account_page_link_sent": "Consulta tu correo electr\u00f3nico para ver el enlace de acceso.",
     "account_page_link_with": "Enlace con",
+    "account_page_magc_link_error": "Error:",
     "account_page_saving": "Ahorrar...",
     "account_page_sign_out": "Cerrar sesi\u00f3n",
     "account_page_update": "Actualizaci\u00f3n",

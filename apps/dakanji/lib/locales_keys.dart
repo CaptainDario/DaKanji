@@ -173,7 +173,9 @@ abstract class  LocaleKeys {
   static const General_web = 'General.web';
   static const General = 'General';
   static const HomeScreen_account_page_error_loading = 'HomeScreen.account_page_error_loading';
+  static const HomeScreen_account_page_link_sent = 'HomeScreen.account_page_link_sent';
   static const HomeScreen_account_page_link_with = 'HomeScreen.account_page_link_with';
+  static const HomeScreen_account_page_magc_link_error = 'HomeScreen.account_page_magc_link_error';
   static const HomeScreen_account_page_saving = 'HomeScreen.account_page_saving';
   static const HomeScreen_account_page_sign_out = 'HomeScreen.account_page_sign_out';
   static const HomeScreen_account_page_update = 'HomeScreen.account_page_update';

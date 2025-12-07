@@ -178,7 +178,9 @@
   },
   "HomeScreen": {
     "account_page_error_loading": "Wyst\u0105pi\u0142 b\u0142\u0105d podczas \u0142adowania profilu. Sprawd\u017a po\u0142\u0105czenie internetowe i spr\u00f3buj ponownie.",
+    "account_page_link_sent": "Sprawd\u017a sw\u00f3j e-mail, aby uzyska\u0107 link do logowania!",
     "account_page_link_with": "Po\u0142\u0105czenie z",
+    "account_page_magc_link_error": "B\u0142\u0105d:",
     "account_page_saving": "Oszcz\u0119dzanie...",
     "account_page_sign_out": "Wyloguj si\u0119",
     "account_page_update": "Aktualizacja",
