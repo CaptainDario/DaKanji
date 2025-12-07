@@ -44,7 +44,7 @@ Future<void> main() async {
   // init supabase
   await Supabase.initialize(
     url: Env.SUPABASE_URL,
-    anonKey: Env.SUPABASE_ANON,
+    anonKey: Env.SUPABASE_PUBLISHABLE_KEY,
   );
 
   // delete settings for debugging

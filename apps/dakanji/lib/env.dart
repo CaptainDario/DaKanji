@@ -24,8 +24,6 @@ abstract class Env {
 
     @EnviedField(varName: 'SUPABASE_URL', defaultValue: "", obfuscate: true)
     static String SUPABASE_URL = _Env.SUPABASE_URL;
-    @EnviedField(varName: 'SUPABASE_ANON', defaultValue: "", obfuscate: true)
-    static String SUPABASE_ANON = _Env.SUPABASE_ANON;
-    @EnviedField(varName: 'SUPABASE_SERVICE_ROLE', defaultValue: "", obfuscate: true)
-    static String? SUPABASE_SERVICE_ROLE = _Env.SUPABASE_SERVICE_ROLE;
+    @EnviedField(varName: 'SUPABASE_PUBLISHABLE_KEY', defaultValue: "", obfuscate: true)
+    static String SUPABASE_PUBLISHABLE_KEY = _Env.SUPABASE_PUBLISHABLE_KEY;
 }
