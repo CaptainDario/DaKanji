@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/supabase/controller/supabase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -32,20 +33,27 @@ bool handleDeepLink(Uri uri){
   // ensure uri is correctly encoded
   uri = Uri.parse(Uri.encodeFull(uri.toString()));
 
-  // extract route ...
-  List<String> route = [];
+  // extract route and args ...
+  List<String> route = []; Map<String, String> args = {};
   // ... from dakanji:// based links
   if(g_AppLinkDaKanji.toString().startsWith(g_AppLinkDaKanji)) {
-    route = uri.toString().substring(
-      g_AppLinkDaKanji.length, uri.toString().indexOf("?")
-    ).split("/");
+    if (uri.host.isNotEmpty) route.add(uri.host);
+    route.addAll(uri.pathSegments);
+
+    // Case 1: Standard Query Params (dakanji://path?id=123)
+    if (uri.queryParameters.isNotEmpty) args.addAll(uri.queryParameters);
+
+    // Case 2: Supabase Fragments (dakanji://login-callback#access_token=xyz)
+    if (uri.fragment.isNotEmpty) {
+      final fragmentArgs = Uri.splitQueryString(uri.fragment);
+      args.addAll(fragmentArgs);
+    }
   }
   // ... from https://dakanji.app/app/ based links
   else if(uri.toString().startsWith(g_AppLinkHttps)) {
     route = uri.pathSegments.sublist(1);
   }
-  
-  Map<String, String> args = uri.queryParameters;
+
 
   debugPrint("Deeplink: ${uri.toString()} with route: $route and args: $args");
   
@@ -74,6 +82,20 @@ bool handleDeepLink(Uri uri){
   }
   else if(route[0] == Screens.settings.name){
     handleDeepLinkSettings(args);
+  }
+  else if (route[0] == "login-callback") {
+    
+    // 1. We prioritize the refresh_token
+    final refreshToken = args["refresh_token"];
+    
+    if (refreshToken != null) {
+      // 2. Pass the refresh token to Supabase
+      completeSignInWithOp(refreshToken);
+
+    } else {
+      // Handle error: Link was invalid or missing the refresh token
+      debugPrint("Login Callback Error: Missing refresh_token in URL args");
+    }
   }
   else {
     debugPrint("Unknown deep link: ${uri.toString()}");
