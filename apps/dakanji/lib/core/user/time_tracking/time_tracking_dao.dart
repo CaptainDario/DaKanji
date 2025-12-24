@@ -145,6 +145,58 @@ class TimeTrackingDao extends DatabaseAccessor<UserDataDB> with _$TimeTrackingDa
     return result;
   }
   
+  /// Calculates the current streak based *only* on Time Tracking data.
+  /// 
+  /// This solves the "Lazy Loading" issue by querying a large history range (365 days)
+  /// directly from the database, rather than relying on the UI's loaded pages.
+  /// 
+  /// Logic:
+  /// 1. A day is compliant if (Actual / Goal) >= 0.5.
+  /// 2. If Today is compliant, count it. 
+  /// 3. If Today is NOT compliant (or not started), check Yesterday.
+  /// 4. Count backwards until a non-compliant day is found.
+  Future<int> calculateTimeStreak() async {
+    final now = DateTime.now();
+    // Fetch enough history to cover most streaks (e.g., 1 year)
+    final start = now.subtract(const Duration(days: 365));
+    // getStudyHistoryRange returns Map<DateTime, (Actual, Goal)>
+    final history = await getStudyHistoryRange(start: start, end: now);
+    
+    int streak = 0;
+    // Normalize logic cursor to UTC midnight (matching history keys)
+    DateTime checkDate = DateTime.utc(now.year, now.month, now.day);
+    
+    // Helper to check compliance
+    bool isCompliant(DateTime date) {
+      if (!history.containsKey(date)) return false;
+      final (actual, goal) = history[date]!;
+      if (goal <= 0) return false; // No goal = streak break
+      return (actual / goal) >= 0.5;
+    }
+
+    // 1. Check Today
+    if (isCompliant(checkDate)) {
+      streak++;
+      checkDate = checkDate.subtract(const Duration(days: 1));
+    } else {
+      // If today is not done yet, we don't break the streak immediately;
+      // we just look at yesterday to see the "current standing".
+      checkDate = checkDate.subtract(const Duration(days: 1));
+    }
+
+    // 2. Loop Backwards
+    while (true) {
+      if (isCompliant(checkDate)) {
+        streak++;
+        checkDate = checkDate.subtract(const Duration(days: 1));
+      } else {
+        break; // Streak broken
+      }
+    }
+    
+    return streak;
+  }
+  
   /// Fetches all sessions that STARTED on a specific [date].
   /// [date] is expected to be a Local date.
   Future<List<({TimeTrackingTableData session, List<TimeTrackingUnitTableData> units})>> 

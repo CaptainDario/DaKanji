@@ -49,6 +49,10 @@ class StudyCalendar extends StatefulWidget {
   final FetchCategoryDataCallback? onFetchVocab;
   final FetchCategoryDataCallback? onFetchCharacters;
   final FetchCategoryDataCallback? onFetchTime;
+  
+  // NEW: Optional callback to fetch an externally calculated streak
+  // (e.g. from TimeTrackingDao) instead of calculating it from page data.
+  final Future<int> Function()? onComputeStreak;
 
   final Color vocabColor;
   final Color charactersColor;
@@ -61,6 +65,7 @@ class StudyCalendar extends StatefulWidget {
     this.onFetchVocab,
     this.onFetchCharacters,
     this.onFetchTime,
+    this.onComputeStreak,
     this.vocabColor = g_Dakanji_green,
     this.charactersColor = g_Dakanji_red,
     this.timeColor = g_Dakanji_blue,
@@ -87,6 +92,9 @@ class _StudyCalendarState extends State<StudyCalendar>
 
   // Cache stores merged data for pages
   final Map<int, Map<DateTime, DailyStudyStats>> _pageCache = {};
+  
+  // Store the externally fetched streak
+  int _externalStreak = 0;
 
   @override
   void initState() {
@@ -115,6 +123,27 @@ class _StudyCalendarState extends State<StudyCalendar>
     _glowAnimation = Tween<double>(begin: 0.4, end: 0.8).animate(
       CurvedAnimation(parent: _glowController, curve: Curves.easeInOut),
     );
+    
+    _fetchExternalStreak();
+  }
+  
+  @override
+  void didUpdateWidget(StudyCalendar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.onComputeStreak != oldWidget.onComputeStreak) {
+      _fetchExternalStreak();
+    }
+  }
+  
+  Future<void> _fetchExternalStreak() async {
+    if (widget.onComputeStreak != null) {
+      final val = await widget.onComputeStreak!();
+      if (mounted) {
+        setState(() {
+          _externalStreak = val;
+        });
+      }
+    }
   }
 
   @override
@@ -183,6 +212,12 @@ class _StudyCalendarState extends State<StudyCalendar>
   }
 
   int get _currentStreak {
+    // PREFER external calculation (DAO) if provided
+    if (widget.onComputeStreak != null) {
+      return _externalStreak;
+    }
+    
+    // Fallback: Calculate from currently loaded page data (susceptible to "hidden wall" bug)
     int streak = 0;
     DateTime checkDate = DateTime.now();
 
@@ -214,7 +249,7 @@ class _StudyCalendarState extends State<StudyCalendar>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Card(
-          color: const Color(0xFF1E2329),
+          //color: const Color(0xFF1E2329),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: Padding(
