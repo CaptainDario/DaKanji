@@ -1,5 +1,25 @@
 # DaKanji Beta - changelog
 
+## v4.0.0 - 心機一転 (xx.xx.2026)
+
+**A HUGE OVERHAUL OF THE WHOLE APP**
+
+- Dictionary
+  - Complete rewrite of the database
+    - Import Yomichan / tan dictionaries
+    - Improved deconjugation
+    - Spellfix of searched words
+- Flash cards
+  - Study your word lists based on sophisitcated
+- Time tracking: Track you study sessions to see your effort grow
+- Sync your progress between your devices
+- Merch: Support DaKanji while getting some fancy merch!
+
+### Fixed
+
+- A grey screen flashing when opoening the app
+- Way too many to list them all ...
+
 ## v3.5.0b7 - 改善 (09.04.2025)
 
 - Deep Links on Windows
