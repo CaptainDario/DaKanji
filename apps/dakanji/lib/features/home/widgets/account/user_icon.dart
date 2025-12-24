@@ -4,11 +4,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class UserIcon extends StatefulWidget {
 
-  final Color color;
+  final double width;
+
+  final double height;
+
+  final Color avatarColor;
+
+  final String avatarCharacter;
+
+  final Color avatarCharacterColor;
 
   const UserIcon(
-    this.color,
     {
+      this.width = 64,
+      this.height = 64,
+      required this.avatarColor,
+      required this.avatarCharacter,
+      required this.avatarCharacterColor,
       super.key
     }
   );
@@ -26,14 +38,39 @@ class _UserIconState extends State<UserIcon> {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      "assets/images/ui/user_background.svg",
-      width: 64,
-      height: 64,
-      colorFilter: ColorFilter.mode(
-        widget.color,
-        BlendMode.srcIn,
-      ),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        SvgPicture.asset(
+          "assets/images/ui/user_background.svg",
+          width: widget.width,
+          height: widget.height,
+          colorFilter: ColorFilter.mode(
+            widget.avatarColor,
+            BlendMode.srcIn,
+          ),
+        ),
+        Positioned.fill(
+          child: Center(
+            child: FractionallySizedBox(
+              widthFactor: 0.85,
+              heightFactor: 0.85,
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Text(
+                  widget.avatarCharacter,
+                  style: TextStyle(
+                    color: widget.avatarCharacterColor,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "kouzan",
+                    fontSize: 10000
+                  ),
+                )
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }

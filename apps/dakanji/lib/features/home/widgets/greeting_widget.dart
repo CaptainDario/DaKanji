@@ -19,7 +19,6 @@ class GreetingWidget extends StatelessWidget {
     if(TimeOfDay.now().hour < 12) { greeting = "おはよう、"; }
     else if(TimeOfDay.now().hour < 18) { greeting = "こんにちは、"; }
     else { greeting = "こんばんは、";}
-    // TODO use user name
     greeting += "$userNameさん！";
 
     return Padding(
@@ -61,7 +60,10 @@ class GreetingWidget extends StatelessWidget {
           return FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
-            child: Text(greeting, style: style),
+            child: Text(
+              greeting,
+              style: style
+            ),
           );
         },
       ),

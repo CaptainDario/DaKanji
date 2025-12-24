@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "85.0.0"
+  adaptive_number:
+    dependency: transitive
+    description:
+      name: adaptive_number
+      sha256: "3a567544e9b5c9c803006f51140ad544aedc79604fd4f3f2c1380003f97c1d77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   analyzer:
     dependency: transitive
     description:
@@ -434,6 +442,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0+7.7.0"
+  dart_jsonwebtoken:
+    dependency: transitive
+    description:
+      name: dart_jsonwebtoken
+      sha256: "0de65691c1d736e9459f22f654ddd6fd8368a271d4e41aa07e53e6301eff5075"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.1"
   dart_style:
     dependency: transitive
     description:
@@ -466,6 +482,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.3"
+  desktop_webview_window:
+    dependency: transitive
+    description:
+      name: desktop_webview_window
+      sha256: "57cf20d81689d5cbb1adfd0017e96b669398a669d927906073b0e42fc64111c0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.3"
   device_info_plus:
     dependency: transitive
     description:
@@ -530,6 +554,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.2"
+  ed25519_edwards:
+    dependency: transitive
+    description:
+      name: ed25519_edwards
+      sha256: "6ce0112d131327ec6d42beede1e5dfd526069b18ad45dcf654f15074ad9276cd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   envied:
     dependency: transitive
     description:
@@ -801,6 +833,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.32"
+  flutter_secure_storage:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage
+      sha256: "79d53f3393ac2b73bcba45317b6c1a29002f89c680225cdea0bd6770a1682ce0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.0.0-beta.5"
+  flutter_secure_storage_darwin:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_darwin
+      sha256: "81ef5abfb9cbeb78110d8043ba29f0b36cd7ffa989baa1b2d9482542b2200051"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
+  flutter_secure_storage_linux:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_linux
+      sha256: "9b4b73127e857cd3117d43a70fa3dddadb6e0b253be62e6a6ab85caa0742182c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
+  flutter_secure_storage_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_platform_interface
+      sha256: "8ceea1223bee3c6ac1a22dabd8feefc550e4729b3675de4b5900f55afcb435d6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
+  flutter_secure_storage_web:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_web
+      sha256: "4c3f233e739545c6cb09286eeec1cc4744138372b985113acc904f7263bef517"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
+  flutter_secure_storage_windows:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage_windows
+      sha256: ff32af20f70a8d0e59b2938fc92de35b54a74671041c814275afd80e27df9f21
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   flutter_speed_dial:
     dependency: transitive
     description:
@@ -854,6 +934,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web_auth_2:
+    dependency: transitive
+    description:
+      name: flutter_web_auth_2
+      sha256: fb584c8a285722eb98363240f0aac608cc546f8d28080cdf05edfad27ace2af0
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0-alpha.7"
+  flutter_web_auth_2_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_web_auth_2_platform_interface
+      sha256: e25eb45c50b3eef5a80d0ae73c7ecf82e291c152387da8d2008bfd607ba43087
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0-alpha.4"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -1539,6 +1635,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "92aa3841d083cc4b0f4709b5c74fd6409a3e6ba833ffc7dc6a8fee096366acf5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   pool:
     dependency: transitive
     description:
@@ -2368,6 +2472,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+  window_to_front:
+    dependency: transitive
+    description:
+      name: window_to_front
+      sha256: "7aef379752b7190c10479e12b5fd7c0b9d92adc96817d9e96c59937929512aee"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   xdg_directories:
     dependency: transitive
     description:

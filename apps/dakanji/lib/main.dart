@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_kanji_mobile/core/supabase/controller/supabase_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';

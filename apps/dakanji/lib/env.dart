@@ -26,4 +26,9 @@ abstract class Env {
     static String SUPABASE_URL = _Env.SUPABASE_URL;
     @EnviedField(varName: 'SUPABASE_PUBLISHABLE_KEY', defaultValue: "", obfuscate: true)
     static String SUPABASE_PUBLISHABLE_KEY = _Env.SUPABASE_PUBLISHABLE_KEY;
+
+    @EnviedField(varName: 'GITHUB_CLIENT_ID', defaultValue: "", obfuscate: true)
+    static String GITHUB_CLIENT_ID = _Env.GITHUB_CLIENT_ID;
+    @EnviedField(varName: 'PATREON_CLIENT_ID', defaultValue: "", obfuscate: true)
+    static String PATREON_CLIENT_ID = _Env.PATREON_CLIENT_ID;
 }

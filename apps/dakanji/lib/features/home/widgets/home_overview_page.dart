@@ -1,4 +1,5 @@
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
+import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
 import 'package:da_kanji_mobile/core/user/activity_chart_mock_data.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/home/widgets/greeting_widget.dart';
@@ -9,6 +10,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -23,15 +25,12 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
   @override
   Widget build(BuildContext context) {
 
-    final mockData = generateMockStudyData(streakLength: 12, length: 900);
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView(
         children: [
           const SizedBox(height: 8,),
-          // TODO use actual user name
-          GreetingWidget("ゆきこ"),
+          GreetingWidget(context.read<SupabaseCacheManager>().userProfile.username),
           SizedBox(height: 8,),
           StudyCalendar(
             onFetchTime: (start, end) => 
@@ -39,6 +38,12 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
                 start: start,
                 end: end
               ),
+            // TODO vocab data fetching
+            /*onFetchVocab: (start, end) => 
+              GetIt.I<UserDataDB>().vocabStudyDao.getVocabStudyHistoryRange(
+                start: start,
+                end: end
+              ),*/
             vocabColor: g_Dakanji_green,
             charactersColor: g_Dakanji_red,
             timeColor: g_Dakanji_blue,

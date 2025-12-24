@@ -38,7 +38,6 @@ class DakanjiLogoWidget extends StatelessWidget {
 
     return !useColumn  
       ? Row(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: children,
       )
       : Column(

@@ -3,6 +3,8 @@ PODS:
     - FlutterMacOS
   - clipboard_watcher (0.0.1):
     - FlutterMacOS
+  - desktop_webview_window (0.0.1):
+    - FlutterMacOS
   - device_info_plus (0.0.1):
     - FlutterMacOS
   - file_picker (0.0.1):
@@ -11,6 +13,11 @@ PODS:
     - FlutterMacOS
     - OrderedSet (~> 6.0.3)
   - flutter_local_notifications (0.0.1):
+    - FlutterMacOS
+  - flutter_secure_storage_darwin (10.0.0):
+    - Flutter
+    - FlutterMacOS
+  - flutter_web_auth_2 (5.0.0-alpha.2):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - fvp (0.35.0):
@@ -88,14 +95,19 @@ PODS:
     - FlutterMacOS
   - window_manager (0.5.0):
     - FlutterMacOS
+  - window_to_front (0.0.1):
+    - FlutterMacOS
 
 DEPENDENCIES:
   - app_links (from `Flutter/ephemeral/.symlinks/plugins/app_links/macos`)
   - clipboard_watcher (from `Flutter/ephemeral/.symlinks/plugins/clipboard_watcher/macos`)
+  - desktop_webview_window (from `Flutter/ephemeral/.symlinks/plugins/desktop_webview_window/macos`)
   - device_info_plus (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos`)
   - file_picker (from `Flutter/ephemeral/.symlinks/plugins/file_picker/macos`)
   - flutter_inappwebview_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview_macos/macos`)
   - flutter_local_notifications (from `Flutter/ephemeral/.symlinks/plugins/flutter_local_notifications/macos`)
+  - flutter_secure_storage_darwin (from `Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_darwin/darwin`)
+  - flutter_web_auth_2 (from `Flutter/ephemeral/.symlinks/plugins/flutter_web_auth_2/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - fvp (from `Flutter/ephemeral/.symlinks/plugins/fvp/darwin`)
   - in_app_review (from `Flutter/ephemeral/.symlinks/plugins/in_app_review/macos`)
@@ -118,6 +130,7 @@ DEPENDENCIES:
   - video_player_avfoundation (from `Flutter/ephemeral/.symlinks/plugins/video_player_avfoundation/darwin`)
   - wakelock_plus (from `Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
+  - window_to_front (from `Flutter/ephemeral/.symlinks/plugins/window_to_front/macos`)
 
 SPEC REPOS:
   trunk:
@@ -131,6 +144,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/app_links/macos
   clipboard_watcher:
     :path: Flutter/ephemeral/.symlinks/plugins/clipboard_watcher/macos
+  desktop_webview_window:
+    :path: Flutter/ephemeral/.symlinks/plugins/desktop_webview_window/macos
   device_info_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos
   file_picker:
@@ -139,6 +154,10 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview_macos/macos
   flutter_local_notifications:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_local_notifications/macos
+  flutter_secure_storage_darwin:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_darwin/darwin
+  flutter_web_auth_2:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_web_auth_2/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   fvp:
@@ -183,14 +202,19 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos
   window_manager:
     :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
+  window_to_front:
+    :path: Flutter/ephemeral/.symlinks/plugins/window_to_front/macos
 
 SPEC CHECKSUMS:
   app_links: c3185399a5cabc2e610ee5ad52fb7269b84ff869
   clipboard_watcher: a71da520051c24c1b969a411b3e152d4dcc93ca5
+  desktop_webview_window: d4365e71bcd4e1aa0c14cf0377aa24db0c16a7e2
   device_info_plus: 1b14eed9bf95428983aed283a8d51cce3d8c4215
   file_picker: e716a70a9fe5fd9e09ebc922d7541464289443af
   flutter_inappwebview_macos: bdf207b8f4ebd58e86ae06cd96b147de99a67c9b
   flutter_local_notifications: 4ccab5b7a22835214a6672e3f9c5e8ae207dab36
+  flutter_secure_storage_darwin: 557817588b80e60213cbecb573c45c76b788018d
+  flutter_web_auth_2: b9570e694e6f288dfec1bf37b526783e3c152e9f
   FlutterMacOS: d0db08ddef1a9af05a5ec4b724367152bb0500b1
   fvp: f4fdb89279e863eb09869bde7ba7fce9e81a16ab
   in_app_review: 866c9b17c87a7b46a395bda43f5d3ca02deb585a
@@ -217,6 +241,7 @@ SPEC CHECKSUMS:
   video_player_avfoundation: 7993f492ae0bd77edaea24d9dc051d8bb2cd7c86
   wakelock_plus: 9d63063ffb7af1c215209769067c57103bde719d
   window_manager: e25faf20d88283a0d46e7b1a759d07261ca27575
+  window_to_front: 4cdc24ddd8461ad1a55fa06286d6a79d8b29e8d8
 
 PODFILE CHECKSUM: dac0ddf03d136db544afc27b87cc6c08492e67b9
 

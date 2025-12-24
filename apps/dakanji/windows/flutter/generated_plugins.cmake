@@ -5,7 +5,9 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   clipboard_watcher
+  desktop_webview_window
   flutter_inappwebview_windows
+  flutter_secure_storage_windows
   fvp
   irondash_engine_context
   isar_community_flutter_libs
@@ -18,6 +20,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   super_native_extensions
   url_launcher_windows
   window_manager
+  window_to_front
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

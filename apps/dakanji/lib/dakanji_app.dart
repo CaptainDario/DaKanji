@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_dao.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/home/controller/long_running_timer_watcher.dart';
@@ -120,75 +121,78 @@ class _DaKanjiAppState extends State<DaKanjiApp> with
   @override
   Widget build(BuildContext context) {
 
-    return ChangeNotifierProvider<Settings>.value(
-      value: GetIt.I<Settings>(),
-      builder: (context, providerChild) {
-    
-        final MediaQueryData data = MediaQuery.of(context);
-    
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          navigatorKey: g_NavigatorKey,
-          navigatorObservers: [
-            SentryNavigatorObserver(),
-          ],
-          onGenerateRoute: (settings) {
-            PageRouteBuilder switchScreen (Widget screen) =>
-              PageRouteBuilder(
-                pageBuilder: (_, _, _) {
-                    // reload the tutorials
-                    GetIt.I<Tutorials>().reload();
-        
-                    return Onboarding(
-                      globalOnboarding: true,
-                      autoSizeTexts: true,
-                      steps: GetIt.I<Tutorials>().getSteps(),
-                      onChanged: onTutorialStep,
-                      child: screen,
-                    );
-                },
-                settings: settings,
-                transitionsBuilder: (_, a, _, c) =>
-                  FadeTransition(opacity: a, child: c)
-              );
-        
-            // check type and extract arguments
-            NavigationArguments args = NavigationArguments(false);
-        
-            if((settings.arguments is NavigationArguments)){
-              args = settings.arguments as NavigationArguments;
-            }
-        
-            return switchScreen(getWidgetFromScreen(settings.name, args));
-            
-          },
-          title: g_AppTitle,
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          themeMode: GetIt.I<Settings>().misc.selectedThemeMode(),
-          home: FutureBuilder(
-            future: g_initApp,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                 return const InitScreen();
+    return ChangeNotifierProvider<SupabaseCacheManager>.value(
+      value: GetIt.I<SupabaseCacheManager>(),
+      child: ChangeNotifierProvider<Settings>.value(
+        value: GetIt.I<Settings>(),
+        builder: (context, providerChild) {
+      
+          final MediaQueryData data = MediaQuery.of(context);
+      
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            navigatorKey: g_NavigatorKey,
+            navigatorObservers: [
+              SentryNavigatorObserver(),
+            ],
+            onGenerateRoute: (settings) {
+              PageRouteBuilder switchScreen (Widget screen) =>
+                PageRouteBuilder(
+                  pageBuilder: (_, _, _) {
+                      // reload the tutorials
+                      GetIt.I<Tutorials>().reload();
+          
+                      return Onboarding(
+                        globalOnboarding: true,
+                        autoSizeTexts: true,
+                        steps: GetIt.I<Tutorials>().getSteps(),
+                        onChanged: onTutorialStep,
+                        child: screen,
+                      );
+                  },
+                  settings: settings,
+                  transitionsBuilder: (_, a, _, c) =>
+                    FadeTransition(opacity: a, child: c)
+                );
+          
+              // check type and extract arguments
+              NavigationArguments args = NavigationArguments(false);
+          
+              if((settings.arguments is NavigationArguments)){
+                args = settings.arguments as NavigationArguments;
               }
-              return const DaKanjiSplash();
-            }
-          ),
-          builder: (context, child) {
-            return MediaQuery(
-              data: data.copyWith(
-                // global font size scaling
-                textScaler: TextScaler.linear(context.watch<Settings>().misc.fontSizeScale)
-              ),
-              child: child!,
-            );
-          },
-        );
-      }
+          
+              return switchScreen(getWidgetFromScreen(settings.name, args));
+              
+            },
+            title: g_AppTitle,
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: GetIt.I<Settings>().misc.selectedThemeMode(),
+            home: FutureBuilder(
+              future: g_initApp,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                   return const InitScreen();
+                }
+                return const DaKanjiSplash();
+              }
+            ),
+            builder: (context, child) {
+              return MediaQuery(
+                data: data.copyWith(
+                  // global font size scaling
+                  textScaler: TextScaler.linear(context.watch<Settings>().misc.fontSizeScale)
+                ),
+                child: child!,
+              );
+            },
+          );
+        }
+      ),
     );
   }
 }

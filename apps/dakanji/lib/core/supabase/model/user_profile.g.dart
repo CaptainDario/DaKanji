@@ -8,23 +8,29 @@ part of 'user_profile.dart';
 
 UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
   avatarColor: json['avatarColor'] == null
-      ? Colors.white
+      ? g_Dakanji_red
       : const ColorIntConverter().fromJson(
           (json['avatarColor'] as num).toInt(),
         ),
   avatarCharacter: json['avatarCharacter'] as String? ?? "?",
-  username: json['username'] as String? ?? "Anonymous",
-  isGithubConnected: json['isGithubConnected'] as bool? ?? false,
-  isGithubSponsor: json['isGithubSponsor'] as bool? ?? false,
-  githubSponsorTier: json['githubSponsorTier'] as String?,
+  avatarCharacterColor: json['avatarCharacterColor'] == null
+      ? Colors.white
+      : const ColorIntConverter().fromJson(
+          (json['avatarCharacterColor'] as num).toInt(),
+        ),
+  username: json['username'] as String? ?? "?",
+  sponsorships: json['sponsorships'] == null
+      ? null
+      : Sponsorships.fromJson(json['sponsorships'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
     <String, dynamic>{
       'avatarColor': const ColorIntConverter().toJson(instance.avatarColor),
       'avatarCharacter': instance.avatarCharacter,
+      'avatarCharacterColor': const ColorIntConverter().toJson(
+        instance.avatarCharacterColor,
+      ),
       'username': instance.username,
-      'isGithubConnected': instance.isGithubConnected,
-      'isGithubSponsor': instance.isGithubSponsor,
-      'githubSponsorTier': instance.githubSponsorTier,
+      'sponsorships': instance.sponsorships,
     };

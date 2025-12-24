@@ -1,8 +1,14 @@
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/core/routing/screens.dart';
+import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
+import 'package:da_kanji_mobile/features/home/widgets/account/user_icon.dart';
+import 'package:da_kanji_mobile/features/home/widgets/study_calendar/streak_reward_badge.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -46,32 +52,18 @@ class DrawerHomeElement extends StatelessWidget {
                 0, _drawerWidth*0.05),
               child: Row(
                 children: [
-                  Container(
-                    height: 48,
+                  UserIcon(
                     width: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10000),
-                      border: Border.all(
-                        color: Colors.white, // Outline color
-                        width: 2.0, // Outline width
-                      ),
-                    ),
-                    // TODO Use user favorite kanji as profile picture
-                    child: Center(
-                      child: Text(
-                        "字",
-                        style: TextStyle(
-                          fontFamily: "kouzan",
-                          fontSize: 30
-                        ),
-                      ),
-                    ),
+                    height: 48,
+                    avatarColor: context.read<SupabaseCacheManager>().userProfile.avatarColor,
+                    avatarCharacter: context.read<SupabaseCacheManager>().userProfile.avatarCharacter,
+                    avatarCharacterColor: context.read<SupabaseCacheManager>().userProfile.avatarCharacterColor,
                   ),
-                  const SizedBox(width: 10,),
-                  // TODO user name
+                  const SizedBox(width: 12,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      
                       Text(
                         style: TextStyle(
                           fontSize: 20,
@@ -79,29 +71,17 @@ class DrawerHomeElement extends StatelessWidget {
                             ? g_Dakanji_red
                             : null
                         ),
-                        "User.name"
+                        GetIt.I<SupabaseCacheManager>().userProfile.username,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.local_fire_department,
-                            size: 16,
-                            color: g_Dakanji_red,
-                          ),
-                          const SizedBox(width: 4,),
-                          // TODO actual user streak
-                          Text(
-                            "1200",
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: widget.currentScreen == Screens.home
-                                ? g_Dakanji_red
-                                : null
-                            ),
-                          ),
-                        ],
-                      )
+                      FutureBuilder(
+                        future: GetIt.I<UserDataDB>().timeTrackingDao.calculateTimeStreak(),
+                        builder: (context, asyncSnapshot) {
+                          return StreakRewardBadge(
+                            streak: asyncSnapshot.data ?? 0,
+                            scale: 0.8,
+                          );
+                        }
+                      ),
                     ],
                   )
                 ],

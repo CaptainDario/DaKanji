@@ -1,12 +1,18 @@
+import 'package:da_kanji_mobile/core/supabase/controller/sponsor_oauth.dart';
 import 'package:da_kanji_mobile/core/supabase/controller/supabase_auth.dart';
 import 'package:da_kanji_mobile/core/supabase/controller/supabase_user_profile.dart';
+import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
 import 'package:da_kanji_mobile/core/supabase/model/user_profile.dart';
 import 'package:da_kanji_mobile/core/widgets/color_picker_dialog.dart';
 import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_loading_indicator.dart';
-import 'package:da_kanji_mobile/features/home/widgets/account/user_icon.dart';
+import 'package:da_kanji_mobile/features/home/widgets/account/link_to_sponsor_card.dart';
+import 'package:da_kanji_mobile/features/home/widgets/account/user_icon_editor.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -25,14 +31,22 @@ class UserAccountPage extends StatefulWidget {
 
 class _UserAccountPageState extends State<UserAccountPage> {
 
+  /// Initialization Future (get data from Supabase)
   late Future<bool> _initAsyncFuture;
 
-  late Color currentColor;
+  /// The Key for the input form
+  final formKey = GlobalKey<FormState>();
 
+  
   final _usernameController = TextEditingController();
 
   final _characterController = TextEditingController();
 
+  /// Current selected color
+  late Color currentAvatarColor;
+  /// Current selected avatar text color
+  late Color currentAvatarCharacterColor;
+  /// Loading state
   var _loading = false;
 
   @override
@@ -44,7 +58,8 @@ class _UserAccountPageState extends State<UserAccountPage> {
   Future<bool> initAsync() async {
     final profile = await supabaseGetProfile(context);
     if (profile != null) {
-      currentColor = profile.avatarColor;
+      currentAvatarColor = profile.avatarColor;
+      currentAvatarCharacterColor = profile.avatarCharacterColor;
       _usernameController.text  = profile.username;
       _characterController.text = profile.avatarCharacter;
       return true;
@@ -72,94 +87,160 @@ class _UserAccountPageState extends State<UserAccountPage> {
 
         // no data / error
         if(asyncSnapshot.hasError || !asyncSnapshot.data!)
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(Icons.error, size: 48),
-              Text(LocaleKeys.HomeScreen_account_page_error_loading.tr()),
-            ],
-          );
-
-        return ListView(
-          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-          children: [
-            Row(
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    UserIcon(currentColor),
-        
-                    Positioned(
-                      right: -16,
-                      bottom: -16,
-                      child: IconButton(
-                        icon: Icon(Icons.colorize_outlined),
-                        onPressed: () async { 
-                          final newColor = await showColorPickerDialog(context, currentColor);
-                          if (newColor != null) {
-                            setState(() => currentColor = newColor);
-                          }
-                        },
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(width: 24),
-                Expanded(
-                  child: TextFormField(
-                    controller: _characterController,
-                    decoration: InputDecoration(
-                      labelText: LocaleKeys.HomeScreen_account_page_your_character.tr(),
-                    ),
+                Icon(Icons.error, size: 48),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    LocaleKeys.HomeScreen_account_page_error_loading.tr(),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 16,),
-            TextFormField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                labelText: LocaleKeys.HomeScreen_account_page_user_name.tr()
+          );
+
+        return Form(
+          key: formKey,
+          child: ListView(
+            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+            children: [
+              Row(
+                children: [
+                  SizedBox(width: 18,),
+                  Center(
+                    child: UserIconEditor(
+                      width: 96,
+                      height: 96,
+                      avatarColor: currentAvatarColor,
+                      avatarCharacter: _characterController.text.isNotEmpty
+                        ? _characterController.text.substring(0, 1)
+                        : "?",
+                      avatarCharacterColor: currentAvatarCharacterColor,
+                      onAvatarColorPickerPressed: () async { 
+                        final newColor = await showColorPickerDialog(context, currentAvatarColor);
+                        if (newColor != null) {
+                          setState(() => currentAvatarColor = newColor);
+                        }
+                      },
+                      onAvatarCharacterColorPickerPressed: () async { 
+                        final newColor = await showColorPickerDialog(context, currentAvatarCharacterColor);
+                        if (newColor != null) {
+                          setState(() => currentAvatarCharacterColor = newColor);
+                        }
+                      },
+                      
+                    )
+                  ),
+                  SizedBox(width: 32),
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Japanse character input
+                        TextFormField(
+                          controller: _characterController,
+                          decoration: InputDecoration(
+                            labelText: LocaleKeys.HomeScreen_account_page_your_character.tr(),
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value == null || value.isEmpty || value.runes.length != 1) {
+                              return LocaleKeys.HomeScreen_account_page_char_input_error.tr();
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            setState(() {});
+                          },
+                        ),
+                        const SizedBox(height: 12),
+                        // Username input
+                        TextFormField(
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            labelText: LocaleKeys.HomeScreen_account_page_user_name.tr()
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value == null || value.isEmpty || value.length > 10) {
+                              return LocaleKeys.HomeScreen_account_page_user_name_input_error.tr();
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
-            ),
-            const SizedBox(height: 18),
-            
-            const SizedBox(height: 18),
-            ElevatedButton(
-              onPressed: _loading ? null : _updateProfile,
-              child: Text(_loading
-                ? LocaleKeys.HomeScreen_account_page_saving.tr()
-                : LocaleKeys.HomeScreen_account_page_update.tr()
+              const SizedBox(height: 32),
+              Text(
+                LocaleKeys.HomeScreen_account_page_link_to_sponsor.tr(),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-            ),
-            Divider(),
-            const SizedBox(height: 18),
-            Text(
-              LocaleKeys.HomeScreen_account_page_link_with.tr(),
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(height: 8),
-            ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text(
-                'GitHub: ${LocaleKeys.HomeScreen_acount_page_not_linked.tr()}'
-              ),
-              trailing: IconButton(
-                onPressed: () {
-                  //TODO
+              const SizedBox(height: 18),
+              LinkToSponsorCard(
+                sponsorIcon: Icons.account_circle_outlined,
+                sponsor: "GitHub",
+                sponsorStatus: LocaleKeys.HomeScreen_acount_page_not_linked.tr() +
+                  context.read<SupabaseCacheManager>().userProfile.sponsorships.isGithubSponsor.toString(),
+                onTap: () async {
+                  final handler = OAuthLinkerService(
+                    cacheManager: context.read<SupabaseCacheManager>(),
+                  );
+
+                  try{
+                    await handler.linkProvider(OAuthProvider.github);
+                  } 
+                  on PlatformException catch (e) {
+                    if (e.code == 'CANCELED') {
+                      debugPrint('User canceled the login flow.');
+                    } else {
+                      debugPrint('Platform error during auth: ${e.message}');
+                    }
+                  }
+                  catch (e) {
+                    debugPrint('An unexpected error occurred during webauth: $e');
+                  }
                 },
-                icon: Icon(Icons.link),
               ),
-            ),
-            const SizedBox(height: 18),
-            Divider(),
-            TextButton(
-              onPressed: _signOut,
-              child: Text(LocaleKeys.HomeScreen_account_page_sign_out.tr())
-            ),
-          ],
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: WidgetStateProperty.all<Color>(
+                        Theme.of(context).colorScheme.error
+                      )
+                    ),
+                    onPressed: _signOut,
+                    child: Text(LocaleKeys.HomeScreen_account_page_sign_out.tr())
+                  ),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      foregroundColor: WidgetStateProperty.all<Color>(
+                        Colors.white
+                      ),
+                      backgroundColor: WidgetStateProperty.all<Color>(
+                        g_Dakanji_green
+                      ),
+                    ),
+                    onPressed: _loading ? null : _updateProfile,
+                    child: Text(_loading
+                      ? LocaleKeys.HomeScreen_account_page_saving.tr()
+                      : LocaleKeys.HomeScreen_account_page_update.tr()
+                    ),
+                  ),
+                ]
+              ),
+            ],
+          ),
         );
       }
     );
@@ -167,14 +248,19 @@ class _UserAccountPageState extends State<UserAccountPage> {
 
   /// Called when user taps `Update` button
   Future<void> _updateProfile() async {
+
+    // Check if the user input is valid
+    if (!formKey.currentState!.validate()) return;
+
     setState(() {
       _loading = true;
     });
 
     await supabaseUpdateProfile(
       UserProfile(
-        avatarColor: currentColor,
+        avatarColor: currentAvatarColor,
         avatarCharacter: _characterController.text,
+        avatarCharacterColor: currentAvatarCharacterColor,
         username: _usernameController.text,
       ),
       context,
