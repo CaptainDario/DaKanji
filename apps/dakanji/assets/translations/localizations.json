@@ -5194,6 +5194,61 @@
       "fr": "Erreur :",
       "es": "Error:",
       "pl": "Błąd:"
+    },
+    "account_page_char_input_error": {
+      "en": "Input exactly one Japanese character.",
+      "de": "Geben Sie genau ein japanisches Zeichen ein.",
+      "ru": "Введите ровно один японский символ.",
+      "ja": "日本語を正確に1文字入力してください。",
+      "zh": "准确输入一个日语字符。",
+      "it": "Immettere esattamente un carattere giapponese.",
+      "fr": "Saisir exactement un caractère japonais.",
+      "es": "Introduzca exactamente un carácter japonés.",
+      "pl": "Wprowadź dokładnie jeden japoński znak."
+    },
+    "account_page_user_name_input_error": {
+      "en": "Username must be between 1 and 10 characters.",
+      "de": "Der Benutzername muss zwischen 1 und 10 Zeichen lang sein.",
+      "ru": "Имя пользователя должно содержать от 1 до 10 символов.",
+      "ja": "ユーザー名は1文字以上10文字以内で入力してください。",
+      "zh": "用户名必须在 1 到 10 个字符之间。",
+      "it": "Il nome utente deve essere compreso tra 1 e 10 caratteri.",
+      "fr": "Le nom d'utilisateur doit comporter entre 1 et 10 caractères.",
+      "es": "El nombre de usuario debe tener entre 1 y 10 caracteres.",
+      "pl": "Nazwa użytkownika musi zawierać od 1 do 10 znaków."
+    },
+    "account_page_generic_error": {
+      "en": "Unexpected error occurred",
+      "de": "Unerwarteter Fehler aufgetreten",
+      "ru": "Возникла непредвиденная ошибка",
+      "ja": "予期せぬエラーが発生",
+      "zh": "发生意外错误",
+      "it": "Si è verificato un errore inatteso",
+      "fr": "Une erreur inattendue s'est produite",
+      "es": "Se ha producido un error inesperado",
+      "pl": "Wystąpił nieoczekiwany błąd"
+    },
+    "account_page_char_updated_profile": {
+      "en": "Successfully updated profile!",
+      "de": "Erfolgreich aktualisiertes Profil!",
+      "ru": "Успешно обновленный профиль!",
+      "ja": "プロフィールの更新に成功しました！",
+      "zh": "成功更新个人资料！",
+      "it": "Profilo aggiornato con successo!",
+      "fr": "Mise à jour du profil réussie !",
+      "es": "¡Perfil actualizado con éxito!",
+      "pl": "Udana aktualizacja profilu!"
+    },
+    "account_page_link_to_sponsor": {
+      "en": "Link with Sponsor account",
+      "de": "Verknüpfung mit dem Sponsorenkonto",
+      "ru": "Связь с учетной записью спонсора",
+      "ja": "スポンサーアカウントとのリンク",
+      "zh": "与赞助商账户链接",
+      "it": "Collegamento con l'account dello Sponsor",
+      "fr": "Lien avec le compte du sponsor",
+      "es": "Enlace con la cuenta del patrocinador",
+      "pl": "Połączenie z kontem sponsora"
     }
   },
   "KuzushijiScreen": {
