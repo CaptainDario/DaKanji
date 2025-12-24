@@ -17,7 +17,7 @@
 
 ### Fixed
 
-- A grey screen flashing when opoening the app
+- A grey screen flashing when opening the app
 - Way too many to list them all ...
 
 ## v3.5.0b7 - 改善 (09.04.2025)
