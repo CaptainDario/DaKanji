@@ -4,6 +4,7 @@ import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_core/parsing/example_parser.dart';
 import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
 import 'package:dakanji_db_core/parsing/radicals_parser.dart';
+import 'package:dakanji_db_core/parsing/tatoeba_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
@@ -25,8 +26,6 @@ Map<DictsToUse, String Function()> dictNameToPath = {
 
 void main(List<String> args) async {
 
-  // --- parse command line args -----------------------------------------------
-  
   // check which dictionary to use 
   DictsToUse dictToUse = DictsToUse.jmdict;
   bool useJitendexArg = args.contains('--use-jitendex');
@@ -50,10 +49,23 @@ void main(List<String> args) async {
     exampleDictPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
   }
 
+  // check whether tatoeba examples should be included
+  bool includeTatoebaExamplesArg = args.contains('--include-tatoeba-examples');
+  if(includeTatoebaExamplesArg) {
+    print("Converting Tatoeba example sentences to DaKanji format...");
+    Directory tatoebaOut = Directory(
+      p.join(dakanjiDBInputFilesPath, "tatoeba_converted"));
+    tatoebaOut.createSync();
+    await convertTatoebaDataSource(
+      File(tatoebaLinksInputPath),
+      File(tatoebaSentencesInputPath),
+      tatoebaOut
+    );
+  }
+
   // should the structured content JSON-definitions be added to the database
   bool addStructuredContentJsonDefs = args.contains('--add-structured-content-json-definitions');
   
-  // --- build database ----------------------------------------------------------
 
   // setup 
   if(File(dakanjiDbPath).existsSync()) {
@@ -82,6 +94,9 @@ void main(List<String> args) async {
       + (includeExampleDictArg ? ["yomitan example dictionary"] : []),
     addStructuredContentJsonDefs,
   );
+
+  print("Adding tatoeba example sentences...");
+  await importTatoebaExamples(db, mecab);
 
   exit(0);
 
@@ -124,10 +139,11 @@ Future downloadSources(DictsToUse dictToUse) async {
     await getSourceFromUri(
       Uri.parse('https://github.com/Kuuuube/yomitan-dictionaries/raw/main/dictionaries/JPDB_v2.2_Frequency_Kana_2024-10-13.zip'), out);
 
-  //final (tatoebaLinksDownloadInfo, tatoebaLinksFileName) =
-  //  await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/links.tar.bz2'), out);
-  //final (tatoebaSentencesDownloadInfo, tatoebaSentencesFileName) =
-  //  await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/sentences.tar.bz2'), out);
+
+  final (tatoebaLinksDownloadInfo, tatoebaLinksFileName) =
+    await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/links.tar.bz2'), out);
+  final (tatoebaSentencesDownloadInfo, tatoebaSentencesFileName) =
+    await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/sentences.tar.bz2'), out);
 
   print("All downloads completed, writing summary file.");
   File sourcesList = File(p.join(out.path, 'sources_list.txt'))..createSync();
@@ -139,15 +155,9 @@ Future downloadSources(DictsToUse dictToUse) async {
     '${jitendexDownloadInfo!=null ? 'jitendex: $jitendexDownloadInfo\n' : ''}'
     'KanjiDic2: $kanjiDic2DownloadInfo\n'
     'JPDB v2.2 Frequency Kana: $jpdb2_2FreqDownloadInfo\n'
-    //'Tatoeba Links: $tatoebaLinksDownloadInfo\n'
-    //'Tatoeba Sentences: $tatoebaSentencesDownloadInfo'
+    'Tatoeba Links: $tatoebaLinksDownloadInfo\n'
+    'Tatoeba Sentences: $tatoebaSentencesDownloadInfo'
   );
-
-  print("Converting files...");
-  print("Tatoeba data");
-  //await convertTatoebaDataSource(
-  //  File(tatoebaLinksFileName), File(tatoebaSentencesFileName), out);
-
   print("Done!");
 
 }
@@ -202,7 +212,7 @@ Future importYomitanDicts(
 }
 
 /// parses tatoeba and adds it to the given [DaKanjiDB]
-Future tatoeba(DaKanjiDB db, Mecab mecab) async {
+Future importTatoebaExamples(DaKanjiDB db, Mecab mecab) async {
 
   Stopwatch s = Stopwatch()..start();
   await parseExampleDataSource(
