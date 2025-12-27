@@ -1,18 +1,10 @@
 import 'package:dakanji_db_core/parsing/term/definition_parsing_classes.dart';
 
-
 class YomitanDefinitionParser {
   
   /// Parses the definition list (index 5 of a Yomitan entry)
   /// and extracts definitions, examples, forms, and metadata.
-  /// 
-  /// Handles:
-  /// - Plain strings
-  /// - Text/Image objects
-  /// - Structured content (recursive traversal)
-  /// - Mixed lists of the above
   static ParsedDefinitions parse(List<dynamic> definitionList) {
-
     // assure only the entry[5] part is passed
     for (var i = 0; i < definitionList.length; i++) {
       assert(
@@ -59,7 +51,25 @@ class _DefinitionWalker {
            definitions.add(desc ?? '[Image]');
         } 
         else if (type == 'structured-content') {
+           // Track count before walking to see if semantic tags (like 'glossary') added definitions
+           final int startCount = definitions.length;
+           
            _walk(item['content']);
+
+           // If _walk found no semantic definitions, the entire block is the definition
+           if (definitions.length == startCount) {
+             definitions.add(_extractText(item['content']));
+           }
+        }
+      }
+      // Handle "Deinflection" schema: [uninflected term, [inflection rules]]
+      else if (item is List) {
+        if (item.length == 2 && item[0] is String && item[1] is List) {
+           final uninflectedTerm = item[0] as String;
+           final rules = (item[1] as List).join(', ');
+           definitions.add('$uninflectedTerm → $rules');
+        } else {
+           definitions.add(_extractText(item));
         }
       }
     }
@@ -78,7 +88,7 @@ class _DefinitionWalker {
       final data = node['data'] as Map?;
       final content = node['content'];
 
-      // 1. Definitions
+      // 1. Definitions (Explicit glossary content)
       if (data != null && data['content'] == 'glossary') {
         if (content is List) {
           for (var item in content) definitions.add(_extractText(item));
