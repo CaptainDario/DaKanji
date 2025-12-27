@@ -7,7 +7,8 @@ import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 class ExpectedDictionarySearchResult {
   final String description;
   final String query;
-  final List<String> tags;
+  final List<List<String>> tags;
+  final List<List<String>> pos;
   final List<int>? indexesToInclude;
   final bool useOnlyEnabledDictionaries;
   final bool useOnlyDefaultDictionaries;
@@ -28,6 +29,7 @@ class ExpectedDictionarySearchResult {
     required this.description,
     required this.query,
     this.tags = const [],
+    this.pos = const [],
     this.indexesToInclude,
     this.useOnlyEnabledDictionaries = false,
     this.useOnlyDefaultDictionaries = false,

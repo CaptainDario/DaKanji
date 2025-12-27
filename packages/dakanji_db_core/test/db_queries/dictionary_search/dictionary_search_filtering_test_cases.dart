@@ -7,7 +7,7 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
   ExpectedDictionarySearchResult(
     description: "Filter by single tag (DE)",
     query: '人',
-    tags: ['DE'],
+    tags: [['DE']],
     queryMatches: const ExpectedMatchGroup(
       tokenMatches: [
         [
@@ -20,7 +20,7 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
   ExpectedDictionarySearchResult(
     description: "Filter by multiple tags (Japanese and Rare)",
     query: '電車',
-    tags: ['JP', 'R'],
+    tags: [['JP', 'R']],
     queryMatches: const ExpectedMatchGroup(
       tokenMatches: [
         [
@@ -33,7 +33,7 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
   ExpectedDictionarySearchResult(
     description: "No matches due to tag filtering",
     query: '人',
-    tags: ['FR'],
+    tags: [['FR']],
   ),
 
   ExpectedDictionarySearchResult(
@@ -54,7 +54,7 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
   ExpectedDictionarySearchResult(
     description: "Filter by single tag (DE) on wildcard search",
     query: '*人',
-    tags: ['DE'],
+    tags: [['DE']],
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
         [
