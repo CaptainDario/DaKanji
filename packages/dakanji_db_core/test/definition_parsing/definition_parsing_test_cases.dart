@@ -1,27 +1,21 @@
-import 'package:dakanji_db_core/parsing/term/structured_content/parsing_classes.dart';
+import 'package:dakanji_db_core/parsing/term/definition_parsing_classes.dart';
 
-final List<ParsedDictionaryEntry> testExpectations = [
+final List<ParsedDefinitions> testExpectations = [
   
   // Index 0: test_case_1.json
-  ParsedDictionaryEntry(
-    headword: "化工",
-    reading: "かこう",
+  ParsedDefinitions(
     posTags: ["noun", "abbr."], 
     definitions: ["chemical engineering"], 
   ),
 
   // Index 1: test_case_2.json
-  ParsedDictionaryEntry(
-    headword: "圍みを破る",
-    reading: "", 
+  ParsedDefinitions(
     definitions: [],
-    reference: "囲みを破る", 
+    references: ["⟶囲みを破る"], 
   ),
 
   // Index 2: test_case_3.json
-  ParsedDictionaryEntry(
-    headword: "嵩にかかる",
-    reading: "かさにかかる",
+  ParsedDefinitions(
     posTags: ["exp", "5-dan", "kana"], 
     definitions: [
       "to be highhanded",
@@ -37,9 +31,7 @@ final List<ParsedDictionaryEntry> testExpectations = [
   ),
 
   // Index 3: test_case_4.json (Spring / 発条)
-  ParsedDictionaryEntry(
-    headword: "発条",
-    reading: "ばね",
+  ParsedDefinitions(
     posTags: ["noun", "kana",], 
     definitions: [
       "spring",
@@ -85,5 +77,22 @@ final List<ParsedDictionaryEntry> testExpectations = [
       TermForm("撥条", "バネ", ""),
       TermForm("∅", "バネ", "可"),
     ],
+  ),
+
+  // Index 4: test_case_5.json (Single plain string)
+  ParsedDefinitions(
+    definitions: [
+      "word; vocabulary; (usually) single-character word"
+    ], 
+  ),
+
+  // Index 5: test_case_6.json (Multiple plain strings)
+  ParsedDefinitions(
+    definitions: [
+      "to run",
+      "to travel (movement of vehicles)",
+      "to hurry to",
+      "to retreat (from battle); to take flight"
+    ], 
   ),
 ];

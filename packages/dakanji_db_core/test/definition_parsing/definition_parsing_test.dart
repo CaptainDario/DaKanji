@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dakanji_db_core/parsing/term/structured_content/structured_content_parser.dart';
+import 'package:dakanji_db_core/parsing/term/definition_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-import 'structured_content_parsing_test_cases.dart';
+import 'definition_parsing_test_cases.dart';
 
 
 
@@ -19,7 +19,7 @@ void main() {
       
       test('Case $caseNumber: Parses $fileName correctly', () {
         // 1. Load the specific JSON file for this test case
-        final file = File(p.join(coreTestsPath, 'structured_content_parsing/data/$fileName'));
+        final file = File(p.join(coreTestsPath, 'definition_parsing/data/$fileName'));
 
         if (!file.existsSync()) {
           fail('Test file not found: ${file.path}. Make sure the file exists for expectation #$caseNumber.');
@@ -36,8 +36,14 @@ void main() {
         }
 
         // 3. Run the Parser
-        final actualResult = StructuredContentParser.parseEntry(rawEntry);
+        final actualResult = YomitanDefinitionParser.parse(rawEntry[5]);
         final expectedResult = testExpectations[i];
+
+        print("----------------------------------");
+        print("Test Case $caseNumber: $fileName");
+        print("Expected:\n$expectedResult");
+        print('');
+        print("Actual:\n$actualResult");
 
         // 4. Assertions
         expect(actualResult, isNotNull, reason: "Parser returned null for valid input in $fileName");
