@@ -7,7 +7,6 @@ import '/database/term_meta/term_meta_bank_v3_views.drift';
 
 dictionary_search_drift_find_term_bank_entries(
     :searchInputs AS TEXT,
-    :tagFiltersJson AS TEXT,
     :useGlob AS INT,
     :normalizedSearch AS INT,
     :filterTerm AS TEXT OR NULL,
@@ -20,21 +19,18 @@ dictionary_search_drift_find_term_bank_entries(
 ):
 
     WITH
-        SearchTerms(term, should_prefix, fts_query) AS (
+        SearchTerms(term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (
             SELECT 
                 CAST(json_extract(value, '$[0]') AS TEXT),
                 CAST(json_extract(value, '$[1]') AS INTEGER),
+                CAST(json_extract(value, '$[2]') AS TEXT), -- Extract Rules Array
+                CAST(json_extract(value, '$[3]') AS TEXT), -- Extract Tags Array
                 '"' || "REPLACE"(CAST(json_extract(value, '$[0]') AS TEXT), '"', '""') || '"' ||
                 CASE 
                     WHEN CAST(json_extract(value, '$[1]') AS INTEGER) = 1 THEN ' *' 
                     ELSE '' 
                 END
             FROM json_each(:searchInputs)
-        ),
-
-        TagFilters(tag_name) AS (
-            SELECT value FROM json_each(:tagFiltersJson)
-            WHERE value IS NOT NULL
         ),
 
         IndexesToInclude(index_id) AS (
@@ -44,10 +40,13 @@ dictionary_search_drift_find_term_bank_entries(
     
         -- Search
         SearchResults AS (
+        
             -- FTS Search
             SELECT
                 SearchTerms.term AS search_term,
                 SearchTerms.should_prefix AS should_prefix,
+                SearchTerms.allowed_rules AS allowed_rules, -- Pass Rules
+                SearchTerms.allowed_tags AS allowed_tags,   -- Pass Tags
                 SearchTerms.fts_query AS fts_query,
                 search_fts.*,
                 search_fts.rank
@@ -56,7 +55,7 @@ dictionary_search_drift_find_term_bank_entries(
             WHERE
                 :useGlob = 0 
                 AND (
-                    (data_type_id IN (1, 2, 5, 7) AND :normalizedSearch = 0)
+                  (data_type_id IN (1, 2, 5, 7) AND :normalizedSearch = 0)
                     OR (data_type_id IN (3, 4, 6) AND :normalizedSearch = 1)
                 )
 
@@ -66,9 +65,11 @@ dictionary_search_drift_find_term_bank_entries(
             SELECT
                 SearchTerms.term AS search_term,
                 SearchTerms.should_prefix AS should_prefix,
+                SearchTerms.allowed_rules AS allowed_rules, -- Pass Rules
+                SearchTerms.allowed_tags AS allowed_tags,   -- Pass Tags
                 SearchTerms.fts_query AS fts_query,
                 search_fts.*,
-                0 AS rank -- GLOB has no rank, so we provide 0
+                0 AS rank -- GLOB has no rank, so set it to 0
             FROM SearchTerms
             JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term
             WHERE 
@@ -150,9 +151,8 @@ dictionary_search_drift_find_term_bank_entries(
                 ))
         ),
 
-        -- Get the term bank entries
+        -- Get the term bank entries and attach the specific allowed rules/tags
         TermBankMatches as (
-            -- get all term / reading matches
             SELECT
                 SearchResultsDeduplicated.*,
                 term_bank_v3_table.id as term_bank_id,
@@ -166,11 +166,10 @@ dictionary_search_drift_find_term_bank_entries(
                 AND data_type_id IN (1, 2, 3, 4)
                 AND (
                     (term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND :useIndexesToInclude = 1)
-                    OR
-                    :useIndexesToInclude = 0
+                    OR :useIndexesToInclude = 0
                 )
             
-        UNION ALL
+            UNION ALL
             
             -- get all term / reading matches
             SELECT 
@@ -186,11 +185,10 @@ dictionary_search_drift_find_term_bank_entries(
                 AND data_type_id IN (5, 6)
                 AND (
                     (term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND :useIndexesToInclude = 1)
-                    OR
-                    :useIndexesToInclude = 0
+                    OR :useIndexesToInclude = 0
                 )
-            
-        UNION ALL
+             
+            UNION ALL
             
             -- get all definition matches
             SELECT
@@ -208,28 +206,47 @@ dictionary_search_drift_find_term_bank_entries(
                 AND data_type_id  = 7
                 AND (
                     (term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND :useIndexesToInclude = 1)
-                    OR
-                    :useIndexesToInclude = 0
+                    OR :useIndexesToInclude = 0
                 )
         ),
 
-        -- Filter the TermBankMatches based on the TagFilters
-        TermBankMatchesFilteredByTag AS (
+        -- Filter based on the specific Rules and Tags attached to each search term
+        TermBankMatchesFiltered AS (
             SELECT TBM.*
             FROM TermBankMatches AS TBM
             JOIN SearchParameterCheck ON SearchParameterCheck.term_bank_id = TBM.term_bank_id
             WHERE
-                LENGTH(:tagFiltersJson) <= 2
-                OR EXISTS (
-                    SELECT 1
-                    FROM term_bank_v3_x_tag_bank_table AS LinkTable
-                    JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id
-                    JOIN TagFilters AS TF ON TagTable.name = TF.tag_name
-                    WHERE LinkTable.term_bank_id = TBM.term_bank_id
+                -- 1. Check Per-Input Tags
+                (
+                    TBM.allowed_tags IS NULL 
+                    OR json_array_length(TBM.allowed_tags) = 0
+                    OR EXISTS (
+                        SELECT 1
+                        FROM term_bank_v3_x_tag_bank_table AS LinkTable
+                        JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id
+                        -- Join the JSON array from the search input
+                        JOIN json_each(TBM.allowed_tags) AS AllowedTag ON TagTable.name = AllowedTag.value
+                        WHERE LinkTable.term_bank_id = TBM.term_bank_id
+                    )
+                )
+
+                AND
+
+                -- 2. Check Per-Input Rules
+                (
+                    TBM.allowed_rules IS NULL 
+                    OR json_array_length(TBM.allowed_rules) = 0
+                    OR EXISTS (
+                        SELECT 1
+                        FROM term_bank_v3_x_rule_identifier_table AS RuleLink
+                        JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id
+                        -- Join the JSON array from the search input
+                        JOIN json_each(TBM.allowed_rules) AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value
+                        WHERE RuleLink.term_bank_id = TBM.term_bank_id
+                    )
                 )
         ),
         
-        -- is an popularity override present?
         IsPopulairtyOverrideActive AS (
             SELECT 1 AS is_active 
             FROM index_table 
@@ -276,15 +293,14 @@ dictionary_search_drift_find_term_bank_entries(
             ELSE TBM.text_data
         END) as matchedTextLength
     FROM 
-        TermBankMatchesFilteredByTag AS TBM
+        TermBankMatchesFiltered AS TBM
         
     JOIN index_table ON TB3T.index_id = index_table.id
     JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id
     LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
     LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id
     LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1
-    LEFT JOIN PopularityDictionary AS OP
-        ON OP.term_id = TB3T.term_id
+    LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id
         
     ORDER BY
         index_table.current_sorting_order,

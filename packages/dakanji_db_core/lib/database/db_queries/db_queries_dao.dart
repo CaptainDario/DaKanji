@@ -50,7 +50,8 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       required bool deconjugationSearch,
       required bool spellfixSearch,
 
-      List<String> tags = const [],
+      List<List<String>> tags = const [],
+      List<List<String>> pos = const [],
 
       bool groupSequences=false,
       bool groupByTermAndReading=false,
@@ -102,6 +103,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
           ? [params.$1, params.$2, params.$3].nonNulls.toList()
           : [term],
         tags: tags,
+        pos: pos,
         termFilter: params?.$1,
         readingFilter: params?.$2,
         definitionFilter: params?.$3,
@@ -116,6 +118,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         ? _findTermBankEntries(
           terms: normalizedTerms,
           tags: tags,
+          pos: pos,
           useGlob: isWildcardSearch,
           searchNormalized: true,
           indexesToInclude: indexesToInclude,
@@ -128,6 +131,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         ? _findTermBankEntries(
           terms: termVariants.map((e) => e.deconjugatedTerm).toList(),
           tags: tags,
+          pos: termVariants.map((e) => e.requiredPartsOfSpeech).toList(),
           useGlob: isWildcardSearch,
           searchNormalized: true,
           indexesToInclude: indexesToInclude,
@@ -140,6 +144,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         ? _findTermBankEntries(
           terms: spellingVariations,
           tags: tags,
+          pos: pos,
           useGlob: isWildcardSearch,
           searchNormalized: true,
           indexesToInclude: indexesToInclude,
@@ -212,9 +217,10 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
   /// Helper method to run ONLY the ID search (Query 1)
   Future<List<DictionarySearchDriftFindTermBankEntriesResult>> _findTermBankEntries({
     required List<String> terms,
-    required List<String> tags,
     required bool useGlob,
     required bool searchNormalized,
+    List<List<String>> tags = const [],
+    List<List<String>> pos = const [],
     String? termFilter,
     String? readingFilter,
     String? definitionFilter,
@@ -232,11 +238,9 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       
       searchInputs.add([term, runPrefixSearch]);
     }
-    print(definitionFilter);
 
     return await db.dictionary_search_drift_find_term_bank_entries(
-      jsonEncode(searchInputs),
-      jsonEncode(tags),
+      buildSearchInputJson(searchInputs, tags: tags, pos: pos),
       jsonEncode(indexesToInclude ?? []),
       useGlob ? 1 : 0,
       searchNormalized ? 1 : 0,
@@ -280,4 +284,33 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     defFilter
   );
 
+}
+
+/// Constructs the JSON string for dictionary search.
+/// 
+/// [searchInputs]: List of `[term, mode]`. Example: `[['eat', 0], ['eating', 0]]`
+/// [rules]: Optional list of rule (pos) lists per term. Example: `[['v1'], ['n']]`
+/// [tags]: Optional list of tag lists per term. Example: `[[], ['common']]`
+String buildSearchInputJson(
+  List<List<dynamic>> searchInputs, {
+  List<List<String>>? pos,
+  List<List<String>>? tags,
+}) {
+  final mergedList = <List<dynamic>>[];
+
+  for (int i = 0; i < searchInputs.length; i++) {
+    // 1. Get Term and Mode from your existing input
+    final term = searchInputs[i][0];
+    final mode = searchInputs[i][1];
+
+    // 2. Get corresponding Rules (POS) and Tags, or null if not provided
+    // This allows you to pass specific filters for specific terms
+    final ruleSet = (pos != null && i < pos.length) ? pos[i] : null;
+    final tagSet = (tags != null && i < tags.length) ? tags[i] : null;
+
+    // 3. Create the [Term, Mode, Rules, Tags] tuple
+    mergedList.add([term, mode, ruleSet, tagSet]);
+  }
+
+  return jsonEncode(mergedList);
 }

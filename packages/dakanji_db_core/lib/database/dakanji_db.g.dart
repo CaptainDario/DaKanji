@@ -8802,6 +8802,517 @@ class TermBankV3_X_TagBankTableCompanion
   }
 }
 
+class $TermBankV3RuleIdentifierTableTable extends TermBankV3RuleIdentifierTable
+    with
+        TableInfo<
+          $TermBankV3RuleIdentifierTableTable,
+          TermBankV3RuleIdentifierTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermBankV3RuleIdentifierTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _ruleIdentifierMeta = const VerificationMeta(
+    'ruleIdentifier',
+  );
+  @override
+  late final GeneratedColumn<String> ruleIdentifier = GeneratedColumn<String>(
+    'rule_identifier',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, ruleIdentifier];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_bank_v3_rule_identifier_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TermBankV3RuleIdentifierTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('rule_identifier')) {
+      context.handle(
+        _ruleIdentifierMeta,
+        ruleIdentifier.isAcceptableOrUnknown(
+          data['rule_identifier']!,
+          _ruleIdentifierMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_ruleIdentifierMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TermBankV3RuleIdentifierTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermBankV3RuleIdentifierTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      ruleIdentifier: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}rule_identifier'],
+      )!,
+    );
+  }
+
+  @override
+  $TermBankV3RuleIdentifierTableTable createAlias(String alias) {
+    return $TermBankV3RuleIdentifierTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermBankV3RuleIdentifierTableData extends DataClass
+    implements Insertable<TermBankV3RuleIdentifierTableData> {
+  /// id of this entry
+  final int id;
+
+  /// Rule identifiers for the definition which is used to validate
+  /// deinflection. An empty string should be used for words which aren't inflected.
+  final String ruleIdentifier;
+  const TermBankV3RuleIdentifierTableData({
+    required this.id,
+    required this.ruleIdentifier,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['rule_identifier'] = Variable<String>(ruleIdentifier);
+    return map;
+  }
+
+  TermBankV3RuleIdentifierTableCompanion toCompanion(bool nullToAbsent) {
+    return TermBankV3RuleIdentifierTableCompanion(
+      id: Value(id),
+      ruleIdentifier: Value(ruleIdentifier),
+    );
+  }
+
+  factory TermBankV3RuleIdentifierTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermBankV3RuleIdentifierTableData(
+      id: serializer.fromJson<int>(json['id']),
+      ruleIdentifier: serializer.fromJson<String>(json['ruleIdentifier']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'ruleIdentifier': serializer.toJson<String>(ruleIdentifier),
+    };
+  }
+
+  TermBankV3RuleIdentifierTableData copyWith({
+    int? id,
+    String? ruleIdentifier,
+  }) => TermBankV3RuleIdentifierTableData(
+    id: id ?? this.id,
+    ruleIdentifier: ruleIdentifier ?? this.ruleIdentifier,
+  );
+  TermBankV3RuleIdentifierTableData copyWithCompanion(
+    TermBankV3RuleIdentifierTableCompanion data,
+  ) {
+    return TermBankV3RuleIdentifierTableData(
+      id: data.id.present ? data.id.value : this.id,
+      ruleIdentifier: data.ruleIdentifier.present
+          ? data.ruleIdentifier.value
+          : this.ruleIdentifier,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermBankV3RuleIdentifierTableData(')
+          ..write('id: $id, ')
+          ..write('ruleIdentifier: $ruleIdentifier')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, ruleIdentifier);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermBankV3RuleIdentifierTableData &&
+          other.id == this.id &&
+          other.ruleIdentifier == this.ruleIdentifier);
+}
+
+class TermBankV3RuleIdentifierTableCompanion
+    extends UpdateCompanion<TermBankV3RuleIdentifierTableData> {
+  final Value<int> id;
+  final Value<String> ruleIdentifier;
+  const TermBankV3RuleIdentifierTableCompanion({
+    this.id = const Value.absent(),
+    this.ruleIdentifier = const Value.absent(),
+  });
+  TermBankV3RuleIdentifierTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String ruleIdentifier,
+  }) : ruleIdentifier = Value(ruleIdentifier);
+  static Insertable<TermBankV3RuleIdentifierTableData> custom({
+    Expression<int>? id,
+    Expression<String>? ruleIdentifier,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (ruleIdentifier != null) 'rule_identifier': ruleIdentifier,
+    });
+  }
+
+  TermBankV3RuleIdentifierTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? ruleIdentifier,
+  }) {
+    return TermBankV3RuleIdentifierTableCompanion(
+      id: id ?? this.id,
+      ruleIdentifier: ruleIdentifier ?? this.ruleIdentifier,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (ruleIdentifier.present) {
+      map['rule_identifier'] = Variable<String>(ruleIdentifier.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermBankV3RuleIdentifierTableCompanion(')
+          ..write('id: $id, ')
+          ..write('ruleIdentifier: $ruleIdentifier')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TermBankV3_X_RuleIdentifierTableTable
+    extends TermBankV3_X_RuleIdentifierTable
+    with
+        TableInfo<
+          $TermBankV3_X_RuleIdentifierTableTable,
+          TermBankV3_X_RuleIdentifierTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermBankV3_X_RuleIdentifierTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _ruleIdentifierIdMeta = const VerificationMeta(
+    'ruleIdentifierId',
+  );
+  @override
+  late final GeneratedColumn<int> ruleIdentifierId = GeneratedColumn<int>(
+    'rule_identifier_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES term_bank_v3_rule_identifier_table (id)',
+    ),
+  );
+  static const VerificationMeta _termBankIdMeta = const VerificationMeta(
+    'termBankId',
+  );
+  @override
+  late final GeneratedColumn<int> termBankId = GeneratedColumn<int>(
+    'term_bank_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES term_bank_v3_table (id) ON DELETE CASCADE',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, ruleIdentifierId, termBankId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_bank_v3_x_rule_identifier_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TermBankV3_X_RuleIdentifierTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('rule_identifier_id')) {
+      context.handle(
+        _ruleIdentifierIdMeta,
+        ruleIdentifierId.isAcceptableOrUnknown(
+          data['rule_identifier_id']!,
+          _ruleIdentifierIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_ruleIdentifierIdMeta);
+    }
+    if (data.containsKey('term_bank_id')) {
+      context.handle(
+        _termBankIdMeta,
+        termBankId.isAcceptableOrUnknown(
+          data['term_bank_id']!,
+          _termBankIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_termBankIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TermBankV3_X_RuleIdentifierTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermBankV3_X_RuleIdentifierTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      ruleIdentifierId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rule_identifier_id'],
+      )!,
+      termBankId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}term_bank_id'],
+      )!,
+    );
+  }
+
+  @override
+  $TermBankV3_X_RuleIdentifierTableTable createAlias(String alias) {
+    return $TermBankV3_X_RuleIdentifierTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermBankV3_X_RuleIdentifierTableData extends DataClass
+    implements Insertable<TermBankV3_X_RuleIdentifierTableData> {
+  /// id of this relation
+  final int id;
+
+  /// the id of the associated rule identifier reading
+  final int ruleIdentifierId;
+
+  /// the id of the associated term in the term bank
+  final int termBankId;
+  const TermBankV3_X_RuleIdentifierTableData({
+    required this.id,
+    required this.ruleIdentifierId,
+    required this.termBankId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['rule_identifier_id'] = Variable<int>(ruleIdentifierId);
+    map['term_bank_id'] = Variable<int>(termBankId);
+    return map;
+  }
+
+  TermBankV3_X_RuleIdentifierTableCompanion toCompanion(bool nullToAbsent) {
+    return TermBankV3_X_RuleIdentifierTableCompanion(
+      id: Value(id),
+      ruleIdentifierId: Value(ruleIdentifierId),
+      termBankId: Value(termBankId),
+    );
+  }
+
+  factory TermBankV3_X_RuleIdentifierTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermBankV3_X_RuleIdentifierTableData(
+      id: serializer.fromJson<int>(json['id']),
+      ruleIdentifierId: serializer.fromJson<int>(json['ruleIdentifierId']),
+      termBankId: serializer.fromJson<int>(json['termBankId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'ruleIdentifierId': serializer.toJson<int>(ruleIdentifierId),
+      'termBankId': serializer.toJson<int>(termBankId),
+    };
+  }
+
+  TermBankV3_X_RuleIdentifierTableData copyWith({
+    int? id,
+    int? ruleIdentifierId,
+    int? termBankId,
+  }) => TermBankV3_X_RuleIdentifierTableData(
+    id: id ?? this.id,
+    ruleIdentifierId: ruleIdentifierId ?? this.ruleIdentifierId,
+    termBankId: termBankId ?? this.termBankId,
+  );
+  TermBankV3_X_RuleIdentifierTableData copyWithCompanion(
+    TermBankV3_X_RuleIdentifierTableCompanion data,
+  ) {
+    return TermBankV3_X_RuleIdentifierTableData(
+      id: data.id.present ? data.id.value : this.id,
+      ruleIdentifierId: data.ruleIdentifierId.present
+          ? data.ruleIdentifierId.value
+          : this.ruleIdentifierId,
+      termBankId: data.termBankId.present
+          ? data.termBankId.value
+          : this.termBankId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermBankV3_X_RuleIdentifierTableData(')
+          ..write('id: $id, ')
+          ..write('ruleIdentifierId: $ruleIdentifierId, ')
+          ..write('termBankId: $termBankId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, ruleIdentifierId, termBankId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermBankV3_X_RuleIdentifierTableData &&
+          other.id == this.id &&
+          other.ruleIdentifierId == this.ruleIdentifierId &&
+          other.termBankId == this.termBankId);
+}
+
+class TermBankV3_X_RuleIdentifierTableCompanion
+    extends UpdateCompanion<TermBankV3_X_RuleIdentifierTableData> {
+  final Value<int> id;
+  final Value<int> ruleIdentifierId;
+  final Value<int> termBankId;
+  const TermBankV3_X_RuleIdentifierTableCompanion({
+    this.id = const Value.absent(),
+    this.ruleIdentifierId = const Value.absent(),
+    this.termBankId = const Value.absent(),
+  });
+  TermBankV3_X_RuleIdentifierTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int ruleIdentifierId,
+    required int termBankId,
+  }) : ruleIdentifierId = Value(ruleIdentifierId),
+       termBankId = Value(termBankId);
+  static Insertable<TermBankV3_X_RuleIdentifierTableData> custom({
+    Expression<int>? id,
+    Expression<int>? ruleIdentifierId,
+    Expression<int>? termBankId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (ruleIdentifierId != null) 'rule_identifier_id': ruleIdentifierId,
+      if (termBankId != null) 'term_bank_id': termBankId,
+    });
+  }
+
+  TermBankV3_X_RuleIdentifierTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? ruleIdentifierId,
+    Value<int>? termBankId,
+  }) {
+    return TermBankV3_X_RuleIdentifierTableCompanion(
+      id: id ?? this.id,
+      ruleIdentifierId: ruleIdentifierId ?? this.ruleIdentifierId,
+      termBankId: termBankId ?? this.termBankId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (ruleIdentifierId.present) {
+      map['rule_identifier_id'] = Variable<int>(ruleIdentifierId.value);
+    }
+    if (termBankId.present) {
+      map['term_bank_id'] = Variable<int>(termBankId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermBankV3_X_RuleIdentifierTableCompanion(')
+          ..write('id: $id, ')
+          ..write('ruleIdentifierId: $ruleIdentifierId, ')
+          ..write('termBankId: $termBankId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $TermMetaBankV3TypeTableTable extends TermMetaBankV3TypeTable
     with TableInfo<$TermMetaBankV3TypeTableTable, TermMetaBankV3TypeTableData> {
   @override
@@ -10032,517 +10543,6 @@ class TermBankV3DefTagsJsonView
     'tag_bank_v3_table',
     'index_table',
   };
-}
-
-class $TermBankV3RuleIdentifierTableTable extends TermBankV3RuleIdentifierTable
-    with
-        TableInfo<
-          $TermBankV3RuleIdentifierTableTable,
-          TermBankV3RuleIdentifierTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $TermBankV3RuleIdentifierTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _ruleIdentifierMeta = const VerificationMeta(
-    'ruleIdentifier',
-  );
-  @override
-  late final GeneratedColumn<String> ruleIdentifier = GeneratedColumn<String>(
-    'rule_identifier',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, ruleIdentifier];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'term_bank_v3_rule_identifier_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<TermBankV3RuleIdentifierTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('rule_identifier')) {
-      context.handle(
-        _ruleIdentifierMeta,
-        ruleIdentifier.isAcceptableOrUnknown(
-          data['rule_identifier']!,
-          _ruleIdentifierMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_ruleIdentifierMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  TermBankV3RuleIdentifierTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermBankV3RuleIdentifierTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      ruleIdentifier: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}rule_identifier'],
-      )!,
-    );
-  }
-
-  @override
-  $TermBankV3RuleIdentifierTableTable createAlias(String alias) {
-    return $TermBankV3RuleIdentifierTableTable(attachedDatabase, alias);
-  }
-}
-
-class TermBankV3RuleIdentifierTableData extends DataClass
-    implements Insertable<TermBankV3RuleIdentifierTableData> {
-  /// id of this entry
-  final int id;
-
-  /// Rule identifiers for the definition which is used to validate
-  /// deinflection. An empty string should be used for words which aren't inflected.
-  final String ruleIdentifier;
-  const TermBankV3RuleIdentifierTableData({
-    required this.id,
-    required this.ruleIdentifier,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['rule_identifier'] = Variable<String>(ruleIdentifier);
-    return map;
-  }
-
-  TermBankV3RuleIdentifierTableCompanion toCompanion(bool nullToAbsent) {
-    return TermBankV3RuleIdentifierTableCompanion(
-      id: Value(id),
-      ruleIdentifier: Value(ruleIdentifier),
-    );
-  }
-
-  factory TermBankV3RuleIdentifierTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermBankV3RuleIdentifierTableData(
-      id: serializer.fromJson<int>(json['id']),
-      ruleIdentifier: serializer.fromJson<String>(json['ruleIdentifier']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'ruleIdentifier': serializer.toJson<String>(ruleIdentifier),
-    };
-  }
-
-  TermBankV3RuleIdentifierTableData copyWith({
-    int? id,
-    String? ruleIdentifier,
-  }) => TermBankV3RuleIdentifierTableData(
-    id: id ?? this.id,
-    ruleIdentifier: ruleIdentifier ?? this.ruleIdentifier,
-  );
-  TermBankV3RuleIdentifierTableData copyWithCompanion(
-    TermBankV3RuleIdentifierTableCompanion data,
-  ) {
-    return TermBankV3RuleIdentifierTableData(
-      id: data.id.present ? data.id.value : this.id,
-      ruleIdentifier: data.ruleIdentifier.present
-          ? data.ruleIdentifier.value
-          : this.ruleIdentifier,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermBankV3RuleIdentifierTableData(')
-          ..write('id: $id, ')
-          ..write('ruleIdentifier: $ruleIdentifier')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, ruleIdentifier);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TermBankV3RuleIdentifierTableData &&
-          other.id == this.id &&
-          other.ruleIdentifier == this.ruleIdentifier);
-}
-
-class TermBankV3RuleIdentifierTableCompanion
-    extends UpdateCompanion<TermBankV3RuleIdentifierTableData> {
-  final Value<int> id;
-  final Value<String> ruleIdentifier;
-  const TermBankV3RuleIdentifierTableCompanion({
-    this.id = const Value.absent(),
-    this.ruleIdentifier = const Value.absent(),
-  });
-  TermBankV3RuleIdentifierTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String ruleIdentifier,
-  }) : ruleIdentifier = Value(ruleIdentifier);
-  static Insertable<TermBankV3RuleIdentifierTableData> custom({
-    Expression<int>? id,
-    Expression<String>? ruleIdentifier,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (ruleIdentifier != null) 'rule_identifier': ruleIdentifier,
-    });
-  }
-
-  TermBankV3RuleIdentifierTableCompanion copyWith({
-    Value<int>? id,
-    Value<String>? ruleIdentifier,
-  }) {
-    return TermBankV3RuleIdentifierTableCompanion(
-      id: id ?? this.id,
-      ruleIdentifier: ruleIdentifier ?? this.ruleIdentifier,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (ruleIdentifier.present) {
-      map['rule_identifier'] = Variable<String>(ruleIdentifier.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermBankV3RuleIdentifierTableCompanion(')
-          ..write('id: $id, ')
-          ..write('ruleIdentifier: $ruleIdentifier')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $TermBankV3_X_RuleIdentifierTableTable
-    extends TermBankV3_X_RuleIdentifierTable
-    with
-        TableInfo<
-          $TermBankV3_X_RuleIdentifierTableTable,
-          TermBankV3_X_RuleIdentifierTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $TermBankV3_X_RuleIdentifierTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _ruleIdentifierIdMeta = const VerificationMeta(
-    'ruleIdentifierId',
-  );
-  @override
-  late final GeneratedColumn<int> ruleIdentifierId = GeneratedColumn<int>(
-    'rule_identifier_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_bank_v3_rule_identifier_table (id)',
-    ),
-  );
-  static const VerificationMeta _termBankIdMeta = const VerificationMeta(
-    'termBankId',
-  );
-  @override
-  late final GeneratedColumn<int> termBankId = GeneratedColumn<int>(
-    'term_bank_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_bank_v3_table (id) ON DELETE CASCADE',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, ruleIdentifierId, termBankId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'term_bank_v3_x_rule_identifier_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<TermBankV3_X_RuleIdentifierTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('rule_identifier_id')) {
-      context.handle(
-        _ruleIdentifierIdMeta,
-        ruleIdentifierId.isAcceptableOrUnknown(
-          data['rule_identifier_id']!,
-          _ruleIdentifierIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_ruleIdentifierIdMeta);
-    }
-    if (data.containsKey('term_bank_id')) {
-      context.handle(
-        _termBankIdMeta,
-        termBankId.isAcceptableOrUnknown(
-          data['term_bank_id']!,
-          _termBankIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_termBankIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  TermBankV3_X_RuleIdentifierTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TermBankV3_X_RuleIdentifierTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      ruleIdentifierId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}rule_identifier_id'],
-      )!,
-      termBankId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}term_bank_id'],
-      )!,
-    );
-  }
-
-  @override
-  $TermBankV3_X_RuleIdentifierTableTable createAlias(String alias) {
-    return $TermBankV3_X_RuleIdentifierTableTable(attachedDatabase, alias);
-  }
-}
-
-class TermBankV3_X_RuleIdentifierTableData extends DataClass
-    implements Insertable<TermBankV3_X_RuleIdentifierTableData> {
-  /// id of this relation
-  final int id;
-
-  /// the id of the associated rule identifier reading
-  final int ruleIdentifierId;
-
-  /// the id of the associated term in the term bank
-  final int termBankId;
-  const TermBankV3_X_RuleIdentifierTableData({
-    required this.id,
-    required this.ruleIdentifierId,
-    required this.termBankId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['rule_identifier_id'] = Variable<int>(ruleIdentifierId);
-    map['term_bank_id'] = Variable<int>(termBankId);
-    return map;
-  }
-
-  TermBankV3_X_RuleIdentifierTableCompanion toCompanion(bool nullToAbsent) {
-    return TermBankV3_X_RuleIdentifierTableCompanion(
-      id: Value(id),
-      ruleIdentifierId: Value(ruleIdentifierId),
-      termBankId: Value(termBankId),
-    );
-  }
-
-  factory TermBankV3_X_RuleIdentifierTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TermBankV3_X_RuleIdentifierTableData(
-      id: serializer.fromJson<int>(json['id']),
-      ruleIdentifierId: serializer.fromJson<int>(json['ruleIdentifierId']),
-      termBankId: serializer.fromJson<int>(json['termBankId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'ruleIdentifierId': serializer.toJson<int>(ruleIdentifierId),
-      'termBankId': serializer.toJson<int>(termBankId),
-    };
-  }
-
-  TermBankV3_X_RuleIdentifierTableData copyWith({
-    int? id,
-    int? ruleIdentifierId,
-    int? termBankId,
-  }) => TermBankV3_X_RuleIdentifierTableData(
-    id: id ?? this.id,
-    ruleIdentifierId: ruleIdentifierId ?? this.ruleIdentifierId,
-    termBankId: termBankId ?? this.termBankId,
-  );
-  TermBankV3_X_RuleIdentifierTableData copyWithCompanion(
-    TermBankV3_X_RuleIdentifierTableCompanion data,
-  ) {
-    return TermBankV3_X_RuleIdentifierTableData(
-      id: data.id.present ? data.id.value : this.id,
-      ruleIdentifierId: data.ruleIdentifierId.present
-          ? data.ruleIdentifierId.value
-          : this.ruleIdentifierId,
-      termBankId: data.termBankId.present
-          ? data.termBankId.value
-          : this.termBankId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermBankV3_X_RuleIdentifierTableData(')
-          ..write('id: $id, ')
-          ..write('ruleIdentifierId: $ruleIdentifierId, ')
-          ..write('termBankId: $termBankId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, ruleIdentifierId, termBankId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TermBankV3_X_RuleIdentifierTableData &&
-          other.id == this.id &&
-          other.ruleIdentifierId == this.ruleIdentifierId &&
-          other.termBankId == this.termBankId);
-}
-
-class TermBankV3_X_RuleIdentifierTableCompanion
-    extends UpdateCompanion<TermBankV3_X_RuleIdentifierTableData> {
-  final Value<int> id;
-  final Value<int> ruleIdentifierId;
-  final Value<int> termBankId;
-  const TermBankV3_X_RuleIdentifierTableCompanion({
-    this.id = const Value.absent(),
-    this.ruleIdentifierId = const Value.absent(),
-    this.termBankId = const Value.absent(),
-  });
-  TermBankV3_X_RuleIdentifierTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int ruleIdentifierId,
-    required int termBankId,
-  }) : ruleIdentifierId = Value(ruleIdentifierId),
-       termBankId = Value(termBankId);
-  static Insertable<TermBankV3_X_RuleIdentifierTableData> custom({
-    Expression<int>? id,
-    Expression<int>? ruleIdentifierId,
-    Expression<int>? termBankId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (ruleIdentifierId != null) 'rule_identifier_id': ruleIdentifierId,
-      if (termBankId != null) 'term_bank_id': termBankId,
-    });
-  }
-
-  TermBankV3_X_RuleIdentifierTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? ruleIdentifierId,
-    Value<int>? termBankId,
-  }) {
-    return TermBankV3_X_RuleIdentifierTableCompanion(
-      id: id ?? this.id,
-      ruleIdentifierId: ruleIdentifierId ?? this.ruleIdentifierId,
-      termBankId: termBankId ?? this.termBankId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (ruleIdentifierId.present) {
-      map['rule_identifier_id'] = Variable<int>(ruleIdentifierId.value);
-    }
-    if (termBankId.present) {
-      map['term_bank_id'] = Variable<int>(termBankId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TermBankV3_X_RuleIdentifierTableCompanion(')
-          ..write('id: $id, ')
-          ..write('ruleIdentifierId: $ruleIdentifierId, ')
-          ..write('termBankId: $termBankId')
-          ..write(')'))
-        .toString();
-  }
 }
 
 class TermBankV3RulesJsonViewData extends DataClass {
@@ -17874,6 +17874,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       $TermBankV3_X_DefinitionTableTable(this);
   late final $TermBankV3_X_TagBankTableTable termBankV3XTagBankTable =
       $TermBankV3_X_TagBankTableTable(this);
+  late final $TermBankV3RuleIdentifierTableTable termBankV3RuleIdentifierTable =
+      $TermBankV3RuleIdentifierTableTable(this);
+  late final $TermBankV3_X_RuleIdentifierTableTable
+  termBankV3XRuleIdentifierTable = $TermBankV3_X_RuleIdentifierTableTable(this);
   late final $TermMetaBankV3TypeTableTable termMetaBankV3TypeTable =
       $TermMetaBankV3TypeTableTable(this);
   late final $TermMetaBankV3TableTable termMetaBankV3Table =
@@ -17884,10 +17888,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   termBankV3XDefinitionTagTable = $TermBankV3_X_DefinitionTagTableTable(this);
   late final TermBankV3DefTagsJsonView termBankV3DefTagsJsonView =
       TermBankV3DefTagsJsonView(this);
-  late final $TermBankV3RuleIdentifierTableTable termBankV3RuleIdentifierTable =
-      $TermBankV3RuleIdentifierTableTable(this);
-  late final $TermBankV3_X_RuleIdentifierTableTable
-  termBankV3XRuleIdentifierTable = $TermBankV3_X_RuleIdentifierTableTable(this);
   late final TermBankV3RulesJsonView termBankV3RulesJsonView =
       TermBankV3RulesJsonView(this);
   late final TermBankV3TagsJsonView termBankV3TagsJsonView =
@@ -18272,7 +18272,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   Selectable<DictionarySearchDriftFindTermBankEntriesResult>
   dictionary_search_drift_find_term_bank_entries(
     String searchInputs,
-    String tagFiltersJson,
     String indexesToInclude,
     int useGlob,
     int normalizedSearch,
@@ -18284,10 +18283,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     int offset,
   ) {
     return customSelect(
-      'WITH SearchTerms (term, should_prefix, fts_query) AS (SELECT CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), TagFilters (tag_name) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?3)WHERE value IS NOT NULL), SearchResults AS (SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.fts_query AS fts_query, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH fts_query WHERE ?4 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?5 = 0)OR(data_type_id IN (3, 4, 6) AND ?5 = 1))UNION ALL SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.fts_query AS fts_query, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?4 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?5 = 0)OR(data_type_id IN (3, 4, 6) AND ?5 = 1))), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, rank ASC, LENGTH(text_data) ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), SearchParameterCheck AS (SELECT term_bank_v3_table.id AS term_bank_id FROM term_bank_v3_table WHERE(?6 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM search_fts WHERE source_id = term_bank_v3_table.term_id AND data_type_id IN (1, 2, 3, 4) AND text_data MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM search_fts WHERE source_id = term_bank_v3_table.reading_id AND data_type_id IN (5, 6) AND text_data MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))AND(?8 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN search_fts AS def_fts ON link.definition_id = def_fts.source_id WHERE link.term_bank_id = term_bank_v3_table.id AND def_fts.data_type_id = 7 AND def_fts.text_data MATCH \'"\' || "REPLACE"(?8, \'"\', \'""\') || \'"\'))), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) AND((term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND ?9 = 1)OR ?9 = 0)UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) AND((term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND ?9 = 1)OR ?9 = 0)UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 AND((term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND ?9 = 1)OR ?9 = 0)), TermBankMatchesFilteredByTag AS (SELECT TBM.* FROM TermBankMatches AS TBM JOIN SearchParameterCheck ON SearchParameterCheck.term_bank_id = TBM.term_bank_id WHERE LENGTH(?2) <= 2 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN TagFilters AS TF ON TagTable.name = TF.tag_name WHERE LinkTable.term_bank_id = TBM.term_bank_id)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, index_table.current_sorting_order, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFilteredByTag AS TBM JOIN index_table ON TB3T.index_id = index_table.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY index_table.current_sorting_order, TBM.match_type, TBM.match_column, finalPopularity DESC, TBM.rank, LENGTH(matchedText) LIMIT ?10 OFFSET ?11',
+      'WITH SearchTerms (term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (SELECT CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), CAST(json_extract(value, \'\$[2]\') AS TEXT), CAST(json_extract(value, \'\$[3]\') AS TEXT), \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), SearchResults AS (SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH fts_query WHERE ?3 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))UNION ALL SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?3 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, rank ASC, LENGTH(text_data) ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), SearchParameterCheck AS (SELECT term_bank_v3_table.id AS term_bank_id FROM term_bank_v3_table WHERE(?5 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM search_fts WHERE source_id = term_bank_v3_table.term_id AND data_type_id IN (1, 2, 3, 4) AND text_data MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\'))AND(?6 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM search_fts WHERE source_id = term_bank_v3_table.reading_id AND data_type_id IN (5, 6) AND text_data MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN search_fts AS def_fts ON link.definition_id = def_fts.source_id WHERE link.term_bank_id = term_bank_v3_table.id AND def_fts.data_type_id = 7 AND def_fts.text_data MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) AND((term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND ?8 = 1)OR ?8 = 0)UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) AND((term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND ?8 = 1)OR ?8 = 0)UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 AND((term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND ?8 = 1)OR ?8 = 0)), TermBankMatchesFiltered AS (SELECT TBM.* FROM TermBankMatches AS TBM JOIN SearchParameterCheck ON SearchParameterCheck.term_bank_id = TBM.term_bank_id WHERE(TBM.allowed_tags IS NULL OR json_array_length(TBM.allowed_tags) = 0 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN json_each(TBM.allowed_tags)AS AllowedTag ON TagTable.name = AllowedTag.value WHERE LinkTable.term_bank_id = TBM.term_bank_id))AND(TBM.allowed_rules IS NULL OR json_array_length(TBM.allowed_rules) = 0 OR EXISTS (SELECT 1 AS _c4 FROM term_bank_v3_x_rule_identifier_table AS RuleLink JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id JOIN json_each(TBM.allowed_rules)AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value WHERE RuleLink.term_bank_id = TBM.term_bank_id))), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, index_table.current_sorting_order, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFiltered AS TBM JOIN index_table ON TB3T.index_id = index_table.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY index_table.current_sorting_order, TBM.match_type, TBM.match_column, finalPopularity DESC, TBM.rank, LENGTH(matchedText) LIMIT ?9 OFFSET ?10',
       variables: [
         Variable<String>(searchInputs),
-        Variable<String>(tagFiltersJson),
         Variable<String>(indexesToInclude),
         Variable<int>(useGlob),
         Variable<int>(normalizedSearch),
@@ -18304,6 +18302,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         termBankV3XDefinitionTable,
         termBankV3XTagBankTable,
         tagBankV3Table,
+        termBankV3XRuleIdentifierTable,
+        termBankV3RuleIdentifierTable,
         indexTable,
         termMetaBankV3Table,
         termMetaBankV3TypeTable,
@@ -18677,13 +18677,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termBankV3Table,
     termBankV3XDefinitionTable,
     termBankV3XTagBankTable,
+    termBankV3RuleIdentifierTable,
+    termBankV3XRuleIdentifierTable,
     termMetaBankV3TypeTable,
     termMetaBankV3Table,
     termBankV3DefinitionsJsonView,
     termBankV3XDefinitionTagTable,
     termBankV3DefTagsJsonView,
-    termBankV3RuleIdentifierTable,
-    termBankV3XRuleIdentifierTable,
     termBankV3RulesJsonView,
     termBankV3TagsJsonView,
     termMetaBankV3BaseView,
@@ -18933,6 +18933,18 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
+        'term_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'term_bank_v3_x_rule_identifier_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
         'tag_bank_v3_table',
         limitUpdateKind: UpdateKind.delete,
       ),
@@ -18951,18 +18963,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       result: [
         TableUpdate(
           'term_bank_v3_x_definition_tag_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'term_bank_v3_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'term_bank_v3_x_rule_identifier_table',
           kind: UpdateKind.delete,
         ),
       ],
@@ -29202,34 +29202,6 @@ final class $$TermBankV3TableTableReferences
   }
 
   static MultiTypedResultKey<
-    $TermBankV3_X_DefinitionTagTableTable,
-    List<TermBankV3_X_DefinitionTagTableData>
-  >
-  _termBankV3XDefinitionTagTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termBankV3XDefinitionTagTable,
-        aliasName: $_aliasNameGenerator(
-          db.termBankV3Table.id,
-          db.termBankV3XDefinitionTagTable.termBankId,
-        ),
-      );
-
-  $$TermBankV3_X_DefinitionTagTableTableProcessedTableManager
-  get termBankV3XDefinitionTagTableRefs {
-    final manager = $$TermBankV3_X_DefinitionTagTableTableTableManager(
-      $_db,
-      $_db.termBankV3XDefinitionTagTable,
-    ).filter((f) => f.termBankId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _termBankV3XDefinitionTagTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
     $TermBankV3_X_RuleIdentifierTableTable,
     List<TermBankV3_X_RuleIdentifierTableData>
   >
@@ -29251,6 +29223,34 @@ final class $$TermBankV3TableTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _termBankV3XRuleIdentifierTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $TermBankV3_X_DefinitionTagTableTable,
+    List<TermBankV3_X_DefinitionTagTableData>
+  >
+  _termBankV3XDefinitionTagTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.termBankV3XDefinitionTagTable,
+        aliasName: $_aliasNameGenerator(
+          db.termBankV3Table.id,
+          db.termBankV3XDefinitionTagTable.termBankId,
+        ),
+      );
+
+  $$TermBankV3_X_DefinitionTagTableTableProcessedTableManager
+  get termBankV3XDefinitionTagTableRefs {
+    final manager = $$TermBankV3_X_DefinitionTagTableTableTableManager(
+      $_db,
+      $_db.termBankV3XDefinitionTagTable,
+    ).filter((f) => f.termBankId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _termBankV3XDefinitionTagTableRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -29437,35 +29437,6 @@ class $$TermBankV3TableTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> termBankV3XDefinitionTagTableRefs(
-    Expression<bool> Function(
-      $$TermBankV3_X_DefinitionTagTableTableFilterComposer f,
-    )
-    f,
-  ) {
-    final $$TermBankV3_X_DefinitionTagTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3XDefinitionTagTable,
-          getReferencedColumn: (t) => t.termBankId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3_X_DefinitionTagTableTableFilterComposer(
-                $db: $db,
-                $table: $db.termBankV3XDefinitionTagTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
   Expression<bool> termBankV3XRuleIdentifierTableRefs(
     Expression<bool> Function(
       $$TermBankV3_X_RuleIdentifierTableTableFilterComposer f,
@@ -29486,6 +29457,35 @@ class $$TermBankV3TableTableFilterComposer
               }) => $$TermBankV3_X_RuleIdentifierTableTableFilterComposer(
                 $db: $db,
                 $table: $db.termBankV3XRuleIdentifierTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> termBankV3XDefinitionTagTableRefs(
+    Expression<bool> Function(
+      $$TermBankV3_X_DefinitionTagTableTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$TermBankV3_X_DefinitionTagTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.termBankV3XDefinitionTagTable,
+          getReferencedColumn: (t) => t.termBankId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3_X_DefinitionTagTableTableFilterComposer(
+                $db: $db,
+                $table: $db.termBankV3XDefinitionTagTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -29796,35 +29796,6 @@ class $$TermBankV3TableTableAnnotationComposer
     return f(composer);
   }
 
-  Expression<T> termBankV3XDefinitionTagTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3XDefinitionTagTable,
-          getReferencedColumn: (t) => t.termBankId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.termBankV3XDefinitionTagTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
   Expression<T> termBankV3XRuleIdentifierTableRefs<T extends Object>(
     Expression<T> Function(
       $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer a,
@@ -29845,6 +29816,35 @@ class $$TermBankV3TableTableAnnotationComposer
               }) => $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer(
                 $db: $db,
                 $table: $db.termBankV3XRuleIdentifierTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> termBankV3XDefinitionTagTableRefs<T extends Object>(
+    Expression<T> Function(
+      $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.termBankV3XDefinitionTagTable,
+          getReferencedColumn: (t) => t.termBankId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.termBankV3XDefinitionTagTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -29875,8 +29875,8 @@ class $$TermBankV3TableTableTableManager
             bool readingId,
             bool termBankV3XDefinitionTableRefs,
             bool termBankV3XTagBankTableRefs,
-            bool termBankV3XDefinitionTagTableRefs,
             bool termBankV3XRuleIdentifierTableRefs,
+            bool termBankV3XDefinitionTagTableRefs,
           })
         > {
   $$TermBankV3TableTableTableManager(
@@ -29948,8 +29948,8 @@ class $$TermBankV3TableTableTableManager
                 readingId = false,
                 termBankV3XDefinitionTableRefs = false,
                 termBankV3XTagBankTableRefs = false,
-                termBankV3XDefinitionTagTableRefs = false,
                 termBankV3XRuleIdentifierTableRefs = false,
+                termBankV3XDefinitionTagTableRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -29957,10 +29957,10 @@ class $$TermBankV3TableTableTableManager
                     if (termBankV3XDefinitionTableRefs)
                       db.termBankV3XDefinitionTable,
                     if (termBankV3XTagBankTableRefs) db.termBankV3XTagBankTable,
-                    if (termBankV3XDefinitionTagTableRefs)
-                      db.termBankV3XDefinitionTagTable,
                     if (termBankV3XRuleIdentifierTableRefs)
                       db.termBankV3XRuleIdentifierTable,
+                    if (termBankV3XDefinitionTagTableRefs)
+                      db.termBankV3XDefinitionTagTable,
                   ],
                   addJoins:
                       <
@@ -30085,27 +30085,6 @@ class $$TermBankV3TableTableTableManager
                               ),
                           typedResults: items,
                         ),
-                      if (termBankV3XDefinitionTagTableRefs)
-                        await $_getPrefetchedData<
-                          TermBankV3TableData,
-                          $TermBankV3TableTable,
-                          TermBankV3_X_DefinitionTagTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$TermBankV3TableTableReferences
-                              ._termBankV3XDefinitionTagTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$TermBankV3TableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).termBankV3XDefinitionTagTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.termBankId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
                       if (termBankV3XRuleIdentifierTableRefs)
                         await $_getPrefetchedData<
                           TermBankV3TableData,
@@ -30121,6 +30100,27 @@ class $$TermBankV3TableTableTableManager
                                 table,
                                 p0,
                               ).termBankV3XRuleIdentifierTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.termBankId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (termBankV3XDefinitionTagTableRefs)
+                        await $_getPrefetchedData<
+                          TermBankV3TableData,
+                          $TermBankV3TableTable,
+                          TermBankV3_X_DefinitionTagTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TermBankV3TableTableReferences
+                              ._termBankV3XDefinitionTagTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TermBankV3TableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).termBankV3XDefinitionTagTableRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.termBankId == item.id,
@@ -30154,8 +30154,8 @@ typedef $$TermBankV3TableTableProcessedTableManager =
         bool readingId,
         bool termBankV3XDefinitionTableRefs,
         bool termBankV3XTagBankTableRefs,
-        bool termBankV3XDefinitionTagTableRefs,
         bool termBankV3XRuleIdentifierTableRefs,
+        bool termBankV3XDefinitionTagTableRefs,
       })
     >;
 typedef $$TermBankV3_X_DefinitionTableTableCreateCompanionBuilder =
@@ -30955,6 +30955,705 @@ typedef $$TermBankV3_X_TagBankTableTableProcessedTableManager =
       ),
       TermBankV3_X_TagBankTableData,
       PrefetchHooks Function({bool tagBankId, bool termBankId})
+    >;
+typedef $$TermBankV3RuleIdentifierTableTableCreateCompanionBuilder =
+    TermBankV3RuleIdentifierTableCompanion Function({
+      Value<int> id,
+      required String ruleIdentifier,
+    });
+typedef $$TermBankV3RuleIdentifierTableTableUpdateCompanionBuilder =
+    TermBankV3RuleIdentifierTableCompanion Function({
+      Value<int> id,
+      Value<String> ruleIdentifier,
+    });
+
+final class $$TermBankV3RuleIdentifierTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $TermBankV3RuleIdentifierTableTable,
+          TermBankV3RuleIdentifierTableData
+        > {
+  $$TermBankV3RuleIdentifierTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $TermBankV3_X_RuleIdentifierTableTable,
+    List<TermBankV3_X_RuleIdentifierTableData>
+  >
+  _termBankV3XRuleIdentifierTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.termBankV3XRuleIdentifierTable,
+        aliasName: $_aliasNameGenerator(
+          db.termBankV3RuleIdentifierTable.id,
+          db.termBankV3XRuleIdentifierTable.ruleIdentifierId,
+        ),
+      );
+
+  $$TermBankV3_X_RuleIdentifierTableTableProcessedTableManager
+  get termBankV3XRuleIdentifierTableRefs {
+    final manager = $$TermBankV3_X_RuleIdentifierTableTableTableManager(
+      $_db,
+      $_db.termBankV3XRuleIdentifierTable,
+    ).filter((f) => f.ruleIdentifierId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _termBankV3XRuleIdentifierTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$TermBankV3RuleIdentifierTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3RuleIdentifierTableTable> {
+  $$TermBankV3RuleIdentifierTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ruleIdentifier => $composableBuilder(
+    column: $table.ruleIdentifier,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> termBankV3XRuleIdentifierTableRefs(
+    Expression<bool> Function(
+      $$TermBankV3_X_RuleIdentifierTableTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$TermBankV3_X_RuleIdentifierTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.termBankV3XRuleIdentifierTable,
+          getReferencedColumn: (t) => t.ruleIdentifierId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3_X_RuleIdentifierTableTableFilterComposer(
+                $db: $db,
+                $table: $db.termBankV3XRuleIdentifierTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$TermBankV3RuleIdentifierTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3RuleIdentifierTableTable> {
+  $$TermBankV3RuleIdentifierTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ruleIdentifier => $composableBuilder(
+    column: $table.ruleIdentifier,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TermBankV3RuleIdentifierTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3RuleIdentifierTableTable> {
+  $$TermBankV3RuleIdentifierTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get ruleIdentifier => $composableBuilder(
+    column: $table.ruleIdentifier,
+    builder: (column) => column,
+  );
+
+  Expression<T> termBankV3XRuleIdentifierTableRefs<T extends Object>(
+    Expression<T> Function(
+      $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.termBankV3XRuleIdentifierTable,
+          getReferencedColumn: (t) => t.ruleIdentifierId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.termBankV3XRuleIdentifierTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$TermBankV3RuleIdentifierTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $TermBankV3RuleIdentifierTableTable,
+          TermBankV3RuleIdentifierTableData,
+          $$TermBankV3RuleIdentifierTableTableFilterComposer,
+          $$TermBankV3RuleIdentifierTableTableOrderingComposer,
+          $$TermBankV3RuleIdentifierTableTableAnnotationComposer,
+          $$TermBankV3RuleIdentifierTableTableCreateCompanionBuilder,
+          $$TermBankV3RuleIdentifierTableTableUpdateCompanionBuilder,
+          (
+            TermBankV3RuleIdentifierTableData,
+            $$TermBankV3RuleIdentifierTableTableReferences,
+          ),
+          TermBankV3RuleIdentifierTableData,
+          PrefetchHooks Function({bool termBankV3XRuleIdentifierTableRefs})
+        > {
+  $$TermBankV3RuleIdentifierTableTableTableManager(
+    _$DaKanjiDB db,
+    $TermBankV3RuleIdentifierTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermBankV3RuleIdentifierTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$TermBankV3RuleIdentifierTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$TermBankV3RuleIdentifierTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> ruleIdentifier = const Value.absent(),
+              }) => TermBankV3RuleIdentifierTableCompanion(
+                id: id,
+                ruleIdentifier: ruleIdentifier,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String ruleIdentifier,
+              }) => TermBankV3RuleIdentifierTableCompanion.insert(
+                id: id,
+                ruleIdentifier: ruleIdentifier,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TermBankV3RuleIdentifierTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({termBankV3XRuleIdentifierTableRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (termBankV3XRuleIdentifierTableRefs)
+                      db.termBankV3XRuleIdentifierTable,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (termBankV3XRuleIdentifierTableRefs)
+                        await $_getPrefetchedData<
+                          TermBankV3RuleIdentifierTableData,
+                          $TermBankV3RuleIdentifierTableTable,
+                          TermBankV3_X_RuleIdentifierTableData
+                        >(
+                          currentTable: table,
+                          referencedTable:
+                              $$TermBankV3RuleIdentifierTableTableReferences
+                                  ._termBankV3XRuleIdentifierTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TermBankV3RuleIdentifierTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).termBankV3XRuleIdentifierTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.ruleIdentifierId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$TermBankV3RuleIdentifierTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $TermBankV3RuleIdentifierTableTable,
+      TermBankV3RuleIdentifierTableData,
+      $$TermBankV3RuleIdentifierTableTableFilterComposer,
+      $$TermBankV3RuleIdentifierTableTableOrderingComposer,
+      $$TermBankV3RuleIdentifierTableTableAnnotationComposer,
+      $$TermBankV3RuleIdentifierTableTableCreateCompanionBuilder,
+      $$TermBankV3RuleIdentifierTableTableUpdateCompanionBuilder,
+      (
+        TermBankV3RuleIdentifierTableData,
+        $$TermBankV3RuleIdentifierTableTableReferences,
+      ),
+      TermBankV3RuleIdentifierTableData,
+      PrefetchHooks Function({bool termBankV3XRuleIdentifierTableRefs})
+    >;
+typedef $$TermBankV3_X_RuleIdentifierTableTableCreateCompanionBuilder =
+    TermBankV3_X_RuleIdentifierTableCompanion Function({
+      Value<int> id,
+      required int ruleIdentifierId,
+      required int termBankId,
+    });
+typedef $$TermBankV3_X_RuleIdentifierTableTableUpdateCompanionBuilder =
+    TermBankV3_X_RuleIdentifierTableCompanion Function({
+      Value<int> id,
+      Value<int> ruleIdentifierId,
+      Value<int> termBankId,
+    });
+
+final class $$TermBankV3_X_RuleIdentifierTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $TermBankV3_X_RuleIdentifierTableTable,
+          TermBankV3_X_RuleIdentifierTableData
+        > {
+  $$TermBankV3_X_RuleIdentifierTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $TermBankV3RuleIdentifierTableTable _ruleIdentifierIdTable(
+    _$DaKanjiDB db,
+  ) => db.termBankV3RuleIdentifierTable.createAlias(
+    $_aliasNameGenerator(
+      db.termBankV3XRuleIdentifierTable.ruleIdentifierId,
+      db.termBankV3RuleIdentifierTable.id,
+    ),
+  );
+
+  $$TermBankV3RuleIdentifierTableTableProcessedTableManager
+  get ruleIdentifierId {
+    final $_column = $_itemColumn<int>('rule_identifier_id')!;
+
+    final manager = $$TermBankV3RuleIdentifierTableTableTableManager(
+      $_db,
+      $_db.termBankV3RuleIdentifierTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_ruleIdentifierIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TermBankV3TableTable _termBankIdTable(_$DaKanjiDB db) =>
+      db.termBankV3Table.createAlias(
+        $_aliasNameGenerator(
+          db.termBankV3XRuleIdentifierTable.termBankId,
+          db.termBankV3Table.id,
+        ),
+      );
+
+  $$TermBankV3TableTableProcessedTableManager get termBankId {
+    final $_column = $_itemColumn<int>('term_bank_id')!;
+
+    final manager = $$TermBankV3TableTableTableManager(
+      $_db,
+      $_db.termBankV3Table,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_termBankIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$TermBankV3_X_RuleIdentifierTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3_X_RuleIdentifierTableTable> {
+  $$TermBankV3_X_RuleIdentifierTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$TermBankV3RuleIdentifierTableTableFilterComposer get ruleIdentifierId {
+    final $$TermBankV3RuleIdentifierTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.ruleIdentifierId,
+          referencedTable: $db.termBankV3RuleIdentifierTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3RuleIdentifierTableTableFilterComposer(
+                $db: $db,
+                $table: $db.termBankV3RuleIdentifierTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$TermBankV3TableTableFilterComposer get termBankId {
+    final $$TermBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termBankId,
+      referencedTable: $db.termBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.termBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3_X_RuleIdentifierTableTable> {
+  $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$TermBankV3RuleIdentifierTableTableOrderingComposer get ruleIdentifierId {
+    final $$TermBankV3RuleIdentifierTableTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.ruleIdentifierId,
+          referencedTable: $db.termBankV3RuleIdentifierTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3RuleIdentifierTableTableOrderingComposer(
+                $db: $db,
+                $table: $db.termBankV3RuleIdentifierTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$TermBankV3TableTableOrderingComposer get termBankId {
+    final $$TermBankV3TableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termBankId,
+      referencedTable: $db.termBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3TableTableOrderingComposer(
+            $db: $db,
+            $table: $db.termBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $TermBankV3_X_RuleIdentifierTableTable> {
+  $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$TermBankV3RuleIdentifierTableTableAnnotationComposer get ruleIdentifierId {
+    final $$TermBankV3RuleIdentifierTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.ruleIdentifierId,
+          referencedTable: $db.termBankV3RuleIdentifierTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TermBankV3RuleIdentifierTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.termBankV3RuleIdentifierTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$TermBankV3TableTableAnnotationComposer get termBankId {
+    final $$TermBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termBankId,
+      referencedTable: $db.termBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.termBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TermBankV3_X_RuleIdentifierTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $TermBankV3_X_RuleIdentifierTableTable,
+          TermBankV3_X_RuleIdentifierTableData,
+          $$TermBankV3_X_RuleIdentifierTableTableFilterComposer,
+          $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer,
+          $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer,
+          $$TermBankV3_X_RuleIdentifierTableTableCreateCompanionBuilder,
+          $$TermBankV3_X_RuleIdentifierTableTableUpdateCompanionBuilder,
+          (
+            TermBankV3_X_RuleIdentifierTableData,
+            $$TermBankV3_X_RuleIdentifierTableTableReferences,
+          ),
+          TermBankV3_X_RuleIdentifierTableData,
+          PrefetchHooks Function({bool ruleIdentifierId, bool termBankId})
+        > {
+  $$TermBankV3_X_RuleIdentifierTableTableTableManager(
+    _$DaKanjiDB db,
+    $TermBankV3_X_RuleIdentifierTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermBankV3_X_RuleIdentifierTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> ruleIdentifierId = const Value.absent(),
+                Value<int> termBankId = const Value.absent(),
+              }) => TermBankV3_X_RuleIdentifierTableCompanion(
+                id: id,
+                ruleIdentifierId: ruleIdentifierId,
+                termBankId: termBankId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int ruleIdentifierId,
+                required int termBankId,
+              }) => TermBankV3_X_RuleIdentifierTableCompanion.insert(
+                id: id,
+                ruleIdentifierId: ruleIdentifierId,
+                termBankId: termBankId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TermBankV3_X_RuleIdentifierTableTableReferences(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({ruleIdentifierId = false, termBankId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (ruleIdentifierId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.ruleIdentifierId,
+                                referencedTable:
+                                    $$TermBankV3_X_RuleIdentifierTableTableReferences
+                                        ._ruleIdentifierIdTable(db),
+                                referencedColumn:
+                                    $$TermBankV3_X_RuleIdentifierTableTableReferences
+                                        ._ruleIdentifierIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (termBankId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.termBankId,
+                                referencedTable:
+                                    $$TermBankV3_X_RuleIdentifierTableTableReferences
+                                        ._termBankIdTable(db),
+                                referencedColumn:
+                                    $$TermBankV3_X_RuleIdentifierTableTableReferences
+                                        ._termBankIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TermBankV3_X_RuleIdentifierTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $TermBankV3_X_RuleIdentifierTableTable,
+      TermBankV3_X_RuleIdentifierTableData,
+      $$TermBankV3_X_RuleIdentifierTableTableFilterComposer,
+      $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer,
+      $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer,
+      $$TermBankV3_X_RuleIdentifierTableTableCreateCompanionBuilder,
+      $$TermBankV3_X_RuleIdentifierTableTableUpdateCompanionBuilder,
+      (
+        TermBankV3_X_RuleIdentifierTableData,
+        $$TermBankV3_X_RuleIdentifierTableTableReferences,
+      ),
+      TermBankV3_X_RuleIdentifierTableData,
+      PrefetchHooks Function({bool ruleIdentifierId, bool termBankId})
     >;
 typedef $$TermMetaBankV3TypeTableTableCreateCompanionBuilder =
     TermMetaBankV3TypeTableCompanion Function({
@@ -32511,705 +33210,6 @@ typedef $$TermBankV3_X_DefinitionTagTableTableProcessedTableManager =
       ),
       TermBankV3_X_DefinitionTagTableData,
       PrefetchHooks Function({bool definitionTagId, bool termBankId})
-    >;
-typedef $$TermBankV3RuleIdentifierTableTableCreateCompanionBuilder =
-    TermBankV3RuleIdentifierTableCompanion Function({
-      Value<int> id,
-      required String ruleIdentifier,
-    });
-typedef $$TermBankV3RuleIdentifierTableTableUpdateCompanionBuilder =
-    TermBankV3RuleIdentifierTableCompanion Function({
-      Value<int> id,
-      Value<String> ruleIdentifier,
-    });
-
-final class $$TermBankV3RuleIdentifierTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $TermBankV3RuleIdentifierTableTable,
-          TermBankV3RuleIdentifierTableData
-        > {
-  $$TermBankV3RuleIdentifierTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static MultiTypedResultKey<
-    $TermBankV3_X_RuleIdentifierTableTable,
-    List<TermBankV3_X_RuleIdentifierTableData>
-  >
-  _termBankV3XRuleIdentifierTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termBankV3XRuleIdentifierTable,
-        aliasName: $_aliasNameGenerator(
-          db.termBankV3RuleIdentifierTable.id,
-          db.termBankV3XRuleIdentifierTable.ruleIdentifierId,
-        ),
-      );
-
-  $$TermBankV3_X_RuleIdentifierTableTableProcessedTableManager
-  get termBankV3XRuleIdentifierTableRefs {
-    final manager = $$TermBankV3_X_RuleIdentifierTableTableTableManager(
-      $_db,
-      $_db.termBankV3XRuleIdentifierTable,
-    ).filter((f) => f.ruleIdentifierId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _termBankV3XRuleIdentifierTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$TermBankV3RuleIdentifierTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3RuleIdentifierTableTable> {
-  $$TermBankV3RuleIdentifierTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get ruleIdentifier => $composableBuilder(
-    column: $table.ruleIdentifier,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  Expression<bool> termBankV3XRuleIdentifierTableRefs(
-    Expression<bool> Function(
-      $$TermBankV3_X_RuleIdentifierTableTableFilterComposer f,
-    )
-    f,
-  ) {
-    final $$TermBankV3_X_RuleIdentifierTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3XRuleIdentifierTable,
-          getReferencedColumn: (t) => t.ruleIdentifierId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3_X_RuleIdentifierTableTableFilterComposer(
-                $db: $db,
-                $table: $db.termBankV3XRuleIdentifierTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$TermBankV3RuleIdentifierTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3RuleIdentifierTableTable> {
-  $$TermBankV3RuleIdentifierTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get ruleIdentifier => $composableBuilder(
-    column: $table.ruleIdentifier,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$TermBankV3RuleIdentifierTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3RuleIdentifierTableTable> {
-  $$TermBankV3RuleIdentifierTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get ruleIdentifier => $composableBuilder(
-    column: $table.ruleIdentifier,
-    builder: (column) => column,
-  );
-
-  Expression<T> termBankV3XRuleIdentifierTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.termBankV3XRuleIdentifierTable,
-          getReferencedColumn: (t) => t.ruleIdentifierId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.termBankV3XRuleIdentifierTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$TermBankV3RuleIdentifierTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $TermBankV3RuleIdentifierTableTable,
-          TermBankV3RuleIdentifierTableData,
-          $$TermBankV3RuleIdentifierTableTableFilterComposer,
-          $$TermBankV3RuleIdentifierTableTableOrderingComposer,
-          $$TermBankV3RuleIdentifierTableTableAnnotationComposer,
-          $$TermBankV3RuleIdentifierTableTableCreateCompanionBuilder,
-          $$TermBankV3RuleIdentifierTableTableUpdateCompanionBuilder,
-          (
-            TermBankV3RuleIdentifierTableData,
-            $$TermBankV3RuleIdentifierTableTableReferences,
-          ),
-          TermBankV3RuleIdentifierTableData,
-          PrefetchHooks Function({bool termBankV3XRuleIdentifierTableRefs})
-        > {
-  $$TermBankV3RuleIdentifierTableTableTableManager(
-    _$DaKanjiDB db,
-    $TermBankV3RuleIdentifierTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$TermBankV3RuleIdentifierTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$TermBankV3RuleIdentifierTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$TermBankV3RuleIdentifierTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> ruleIdentifier = const Value.absent(),
-              }) => TermBankV3RuleIdentifierTableCompanion(
-                id: id,
-                ruleIdentifier: ruleIdentifier,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required String ruleIdentifier,
-              }) => TermBankV3RuleIdentifierTableCompanion.insert(
-                id: id,
-                ruleIdentifier: ruleIdentifier,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$TermBankV3RuleIdentifierTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback:
-              ({termBankV3XRuleIdentifierTableRefs = false}) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [
-                    if (termBankV3XRuleIdentifierTableRefs)
-                      db.termBankV3XRuleIdentifierTable,
-                  ],
-                  addJoins: null,
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (termBankV3XRuleIdentifierTableRefs)
-                        await $_getPrefetchedData<
-                          TermBankV3RuleIdentifierTableData,
-                          $TermBankV3RuleIdentifierTableTable,
-                          TermBankV3_X_RuleIdentifierTableData
-                        >(
-                          currentTable: table,
-                          referencedTable:
-                              $$TermBankV3RuleIdentifierTableTableReferences
-                                  ._termBankV3XRuleIdentifierTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$TermBankV3RuleIdentifierTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).termBankV3XRuleIdentifierTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.ruleIdentifierId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
-                  },
-                );
-              },
-        ),
-      );
-}
-
-typedef $$TermBankV3RuleIdentifierTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $TermBankV3RuleIdentifierTableTable,
-      TermBankV3RuleIdentifierTableData,
-      $$TermBankV3RuleIdentifierTableTableFilterComposer,
-      $$TermBankV3RuleIdentifierTableTableOrderingComposer,
-      $$TermBankV3RuleIdentifierTableTableAnnotationComposer,
-      $$TermBankV3RuleIdentifierTableTableCreateCompanionBuilder,
-      $$TermBankV3RuleIdentifierTableTableUpdateCompanionBuilder,
-      (
-        TermBankV3RuleIdentifierTableData,
-        $$TermBankV3RuleIdentifierTableTableReferences,
-      ),
-      TermBankV3RuleIdentifierTableData,
-      PrefetchHooks Function({bool termBankV3XRuleIdentifierTableRefs})
-    >;
-typedef $$TermBankV3_X_RuleIdentifierTableTableCreateCompanionBuilder =
-    TermBankV3_X_RuleIdentifierTableCompanion Function({
-      Value<int> id,
-      required int ruleIdentifierId,
-      required int termBankId,
-    });
-typedef $$TermBankV3_X_RuleIdentifierTableTableUpdateCompanionBuilder =
-    TermBankV3_X_RuleIdentifierTableCompanion Function({
-      Value<int> id,
-      Value<int> ruleIdentifierId,
-      Value<int> termBankId,
-    });
-
-final class $$TermBankV3_X_RuleIdentifierTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $TermBankV3_X_RuleIdentifierTableTable,
-          TermBankV3_X_RuleIdentifierTableData
-        > {
-  $$TermBankV3_X_RuleIdentifierTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $TermBankV3RuleIdentifierTableTable _ruleIdentifierIdTable(
-    _$DaKanjiDB db,
-  ) => db.termBankV3RuleIdentifierTable.createAlias(
-    $_aliasNameGenerator(
-      db.termBankV3XRuleIdentifierTable.ruleIdentifierId,
-      db.termBankV3RuleIdentifierTable.id,
-    ),
-  );
-
-  $$TermBankV3RuleIdentifierTableTableProcessedTableManager
-  get ruleIdentifierId {
-    final $_column = $_itemColumn<int>('rule_identifier_id')!;
-
-    final manager = $$TermBankV3RuleIdentifierTableTableTableManager(
-      $_db,
-      $_db.termBankV3RuleIdentifierTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_ruleIdentifierIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $TermBankV3TableTable _termBankIdTable(_$DaKanjiDB db) =>
-      db.termBankV3Table.createAlias(
-        $_aliasNameGenerator(
-          db.termBankV3XRuleIdentifierTable.termBankId,
-          db.termBankV3Table.id,
-        ),
-      );
-
-  $$TermBankV3TableTableProcessedTableManager get termBankId {
-    final $_column = $_itemColumn<int>('term_bank_id')!;
-
-    final manager = $$TermBankV3TableTableTableManager(
-      $_db,
-      $_db.termBankV3Table,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_termBankIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$TermBankV3_X_RuleIdentifierTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_RuleIdentifierTableTable> {
-  $$TermBankV3_X_RuleIdentifierTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$TermBankV3RuleIdentifierTableTableFilterComposer get ruleIdentifierId {
-    final $$TermBankV3RuleIdentifierTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.ruleIdentifierId,
-          referencedTable: $db.termBankV3RuleIdentifierTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3RuleIdentifierTableTableFilterComposer(
-                $db: $db,
-                $table: $db.termBankV3RuleIdentifierTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  $$TermBankV3TableTableFilterComposer get termBankId {
-    final $$TermBankV3TableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termBankId,
-      referencedTable: $db.termBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermBankV3TableTableFilterComposer(
-            $db: $db,
-            $table: $db.termBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_RuleIdentifierTableTable> {
-  $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$TermBankV3RuleIdentifierTableTableOrderingComposer get ruleIdentifierId {
-    final $$TermBankV3RuleIdentifierTableTableOrderingComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.ruleIdentifierId,
-          referencedTable: $db.termBankV3RuleIdentifierTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3RuleIdentifierTableTableOrderingComposer(
-                $db: $db,
-                $table: $db.termBankV3RuleIdentifierTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  $$TermBankV3TableTableOrderingComposer get termBankId {
-    final $$TermBankV3TableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termBankId,
-      referencedTable: $db.termBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermBankV3TableTableOrderingComposer(
-            $db: $db,
-            $table: $db.termBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_RuleIdentifierTableTable> {
-  $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  $$TermBankV3RuleIdentifierTableTableAnnotationComposer get ruleIdentifierId {
-    final $$TermBankV3RuleIdentifierTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.ruleIdentifierId,
-          referencedTable: $db.termBankV3RuleIdentifierTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$TermBankV3RuleIdentifierTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.termBankV3RuleIdentifierTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  $$TermBankV3TableTableAnnotationComposer get termBankId {
-    final $$TermBankV3TableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termBankId,
-      referencedTable: $db.termBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermBankV3TableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.termBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$TermBankV3_X_RuleIdentifierTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $TermBankV3_X_RuleIdentifierTableTable,
-          TermBankV3_X_RuleIdentifierTableData,
-          $$TermBankV3_X_RuleIdentifierTableTableFilterComposer,
-          $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer,
-          $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer,
-          $$TermBankV3_X_RuleIdentifierTableTableCreateCompanionBuilder,
-          $$TermBankV3_X_RuleIdentifierTableTableUpdateCompanionBuilder,
-          (
-            TermBankV3_X_RuleIdentifierTableData,
-            $$TermBankV3_X_RuleIdentifierTableTableReferences,
-          ),
-          TermBankV3_X_RuleIdentifierTableData,
-          PrefetchHooks Function({bool ruleIdentifierId, bool termBankId})
-        > {
-  $$TermBankV3_X_RuleIdentifierTableTableTableManager(
-    _$DaKanjiDB db,
-    $TermBankV3_X_RuleIdentifierTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$TermBankV3_X_RuleIdentifierTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> ruleIdentifierId = const Value.absent(),
-                Value<int> termBankId = const Value.absent(),
-              }) => TermBankV3_X_RuleIdentifierTableCompanion(
-                id: id,
-                ruleIdentifierId: ruleIdentifierId,
-                termBankId: termBankId,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int ruleIdentifierId,
-                required int termBankId,
-              }) => TermBankV3_X_RuleIdentifierTableCompanion.insert(
-                id: id,
-                ruleIdentifierId: ruleIdentifierId,
-                termBankId: termBankId,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$TermBankV3_X_RuleIdentifierTableTableReferences(
-                    db,
-                    table,
-                    e,
-                  ),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({ruleIdentifierId = false, termBankId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (ruleIdentifierId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.ruleIdentifierId,
-                                referencedTable:
-                                    $$TermBankV3_X_RuleIdentifierTableTableReferences
-                                        ._ruleIdentifierIdTable(db),
-                                referencedColumn:
-                                    $$TermBankV3_X_RuleIdentifierTableTableReferences
-                                        ._ruleIdentifierIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (termBankId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.termBankId,
-                                referencedTable:
-                                    $$TermBankV3_X_RuleIdentifierTableTableReferences
-                                        ._termBankIdTable(db),
-                                referencedColumn:
-                                    $$TermBankV3_X_RuleIdentifierTableTableReferences
-                                        ._termBankIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$TermBankV3_X_RuleIdentifierTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $TermBankV3_X_RuleIdentifierTableTable,
-      TermBankV3_X_RuleIdentifierTableData,
-      $$TermBankV3_X_RuleIdentifierTableTableFilterComposer,
-      $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer,
-      $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer,
-      $$TermBankV3_X_RuleIdentifierTableTableCreateCompanionBuilder,
-      $$TermBankV3_X_RuleIdentifierTableTableUpdateCompanionBuilder,
-      (
-        TermBankV3_X_RuleIdentifierTableData,
-        $$TermBankV3_X_RuleIdentifierTableTableReferences,
-      ),
-      TermBankV3_X_RuleIdentifierTableData,
-      PrefetchHooks Function({bool ruleIdentifierId, bool termBankId})
     >;
 typedef $$TermMetaBankV3PitchTableTableCreateCompanionBuilder =
     TermMetaBankV3PitchTableCompanion Function({
@@ -40275,6 +40275,18 @@ class $DaKanjiDBManager {
         _db,
         _db.termBankV3XTagBankTable,
       );
+  $$TermBankV3RuleIdentifierTableTableTableManager
+  get termBankV3RuleIdentifierTable =>
+      $$TermBankV3RuleIdentifierTableTableTableManager(
+        _db,
+        _db.termBankV3RuleIdentifierTable,
+      );
+  $$TermBankV3_X_RuleIdentifierTableTableTableManager
+  get termBankV3XRuleIdentifierTable =>
+      $$TermBankV3_X_RuleIdentifierTableTableTableManager(
+        _db,
+        _db.termBankV3XRuleIdentifierTable,
+      );
   $$TermMetaBankV3TypeTableTableTableManager get termMetaBankV3TypeTable =>
       $$TermMetaBankV3TypeTableTableTableManager(
         _db,
@@ -40287,18 +40299,6 @@ class $DaKanjiDBManager {
       $$TermBankV3_X_DefinitionTagTableTableTableManager(
         _db,
         _db.termBankV3XDefinitionTagTable,
-      );
-  $$TermBankV3RuleIdentifierTableTableTableManager
-  get termBankV3RuleIdentifierTable =>
-      $$TermBankV3RuleIdentifierTableTableTableManager(
-        _db,
-        _db.termBankV3RuleIdentifierTable,
-      );
-  $$TermBankV3_X_RuleIdentifierTableTableTableManager
-  get termBankV3XRuleIdentifierTable =>
-      $$TermBankV3_X_RuleIdentifierTableTableTableManager(
-        _db,
-        _db.termBankV3XRuleIdentifierTable,
       );
   $$TermMetaBankV3PitchTableTableTableManager get termMetaBankV3PitchTable =>
       $$TermMetaBankV3PitchTableTableTableManager(
