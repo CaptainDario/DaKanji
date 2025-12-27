@@ -41,6 +41,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
 
   }
 
+
   Future<DictionarySearchResult> dictionarySearch(
     String term,
     {
@@ -191,17 +192,20 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     return DictionarySearchResult(
       queryMatches: SearchMatchGroup.fromDictionarySearch(
         (resultsRaw[0], sequenceMatches, allDetails), isWildcardSearch,
-        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading)
-        .firstOrNull ?? SearchMatchGroup.empty(),
+        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading
+      ).firstOrNull ?? SearchMatchGroup.empty(),
       normalizedQueryMatchGroups: SearchMatchGroup.fromDictionarySearch(
         (resultsRaw[1], sequenceMatches, allDetails), isWildcardSearch,
-        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading),
+        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading
+      ),
       queryVariantMatches: SearchMatchGroup.fromDictionarySearch(
         (resultsRaw[2], sequenceMatches, allDetails), isWildcardSearch,
-        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading),
+        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading
+      ),
       fuzzyMatches: SearchMatchGroup.fromDictionarySearch(
         (resultsRaw[3], sequenceMatches, allDetails), isWildcardSearch,
-        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading)
+        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading
+      )
     );
   }
 
