@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:github/github.dart';
-import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 
 
@@ -27,15 +26,10 @@ Future<(String downloadInfo, String fileName)> getSourceFromGHRelease(String own
   final response = await Dio().download(
     targetAsset.browserDownloadUrl!,
     downloadPath,
-    onReceiveProgress: (count, total) {
-      if (total != -1) {
-        final progress = (count / total * 100).toStringAsFixed(2);
-        stdout.write('\rDownloading... $progress%');
-      }
-    },
+    onReceiveProgress: printDownloadProgress,
   );
-
-  print('\n✅ Download complete! Saved to $downloadPath');
+  print("");
+  print('✅ Download complete! Saved to $downloadPath');
 
   return (
     'Downloaded ${targetAsset.name} from $owner/$repo release ${latestTag.tagName} at ${DateTime.now()}...',
@@ -50,20 +44,30 @@ Future<(String downloadInfo, String fileName)> getSourceFromUri(Uri url, Directo
 
   print('Downloading $fileName from $url...');
 
-  // Make the HTTP GET request
-  final response = await http.get(url);
-
-  if (response.statusCode == 200) {
-    // Write the response body to a local file
+  try {
+    // Make the HTTP GET request
     final file = File(p.join(outputDir.path, fileName));
-    await file.writeAsBytes(response.bodyBytes);
+    final response = await Dio().download(
+      url.toString(),
+      file.path,
+      onReceiveProgress: printDownloadProgress
+    );
+    print("");
     print('✅ Download complete! Saved to ${file.path}');
-  } else {
-    print('Error: Failed to download file. Status code: ${response.statusCode}');
+  }
+  catch (e) {
+    print('Error: Failed to download file. $e');
   }
 
   return (
     'Downloaded $fileName from $url at ${DateTime.now()}...',
     fileName
   );
+}
+
+void printDownloadProgress (count, total) {
+  if (total != -1) {
+    final progress = (count / total * 100).toStringAsFixed(2);
+    stdout.write('\rDownloading... $progress%');
+  }
 }
