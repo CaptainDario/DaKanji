@@ -22,11 +22,6 @@ List<ExpectedDictionarySearchResult> deconjugationTestCases = [
             ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: '食べる', definitions: ["to eat"]),
           ]
         ],
-        prefixMatches: [
-          [
-            ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油', definitions: ["chili oil with garlic, etc. for eating with rice"])
-          ]
-        ],
       )
     ],
   ),
@@ -81,6 +76,41 @@ List<ExpectedDictionarySearchResult> deconjugationTestCases = [
         exactMatches: [
           [
             ExpectedDictionaryMatch(term: '振る', reading: 'ぶる', match: 'ぶる', definitions: ["to wave", "to shake", "to wield"]),
+          ]
+        ],
+      )
+    ],
+  ),
+  ExpectedDictionarySearchResult(
+    description: 'Deconjugation: romaji',
+    query: 'tabero',
+    queryVariantMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          [
+            ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: 'たべる', definitions: ["to eat"]),
+          ]
+        ],
+      ),
+    ],
+    fuzzyMatches: [
+      const ExpectedMatchGroup(
+        prefixMatches: [
+          [
+            ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: 'たべるらーゆ', definitions: ["chili oil with garlic, etc. for eating with rice"])
+          ]
+        ],
+      )
+    ],
+  ),
+  ExpectedDictionarySearchResult(
+    description: 'Deconjugation: romaji and PoS matching',
+    query: 'ikanakatta',
+    queryVariantMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          [
+            ExpectedDictionaryMatch(term: '行く', reading: 'いく', match: 'いく', definitions: ["to go"]),
           ]
         ],
       )
