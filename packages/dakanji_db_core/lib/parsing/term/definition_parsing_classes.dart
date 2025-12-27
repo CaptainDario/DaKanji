@@ -1,55 +1,38 @@
-class ParsedDictionaryEntry {
-  final String headword;
-  final String reading;
+/// Holds the specific data parsed from the definition list.
+class ParsedDefinitions {
   final List<String> definitions;
   final List<String> posTags;
   final List<ExampleSentence> examples;
   final List<TermForm> forms;
-  final String? reference;
+  final List<String> references;
 
-  ParsedDictionaryEntry({
-    required this.headword,
-    required this.reading,
+  ParsedDefinitions({
     this.definitions = const [],
     this.posTags = const [],
     this.examples = const [],
     this.forms = const [],
-    this.reference,
+    this.references = const [],
   });
 
   @override
   String toString() {
-    if (reference != null) {
-      return 'Entry: $headword ($reading) ⟶ Redirect: $reference';
-    }
-    return 'Entry: $headword ($reading)\n'
-           'POS: $posTags\n'
+    return 'POS: $posTags\n'
            'Defs: $definitions\n'
+           'Examples: $examples\n'
            'Forms: $forms\n'
-           'Examples: $examples';
+           'References: $references';
   }
 
-  // Equality overrides for testing
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ParsedDictionaryEntry &&
-          runtimeType == other.runtimeType &&
-          headword == other.headword &&
-          reading == other.reading &&
-          _listEquals(definitions, other.definitions) &&
-          _listEquals(posTags, other.posTags) &&
-          _listEquals(examples, other.examples) &&
-          _listEquals(forms, other.forms) &&
-          reference == other.reference;
-
-  @override
-  int get hashCode =>
-      headword.hashCode ^
-      reading.hashCode ^
-      definitions.hashCode ^
-      reference.hashCode;
+      other is ParsedDefinitions &&
+      _listEquals(other.definitions, definitions) &&
+      _listEquals(other.posTags, posTags) &&
+      _listEquals(other.examples, examples) &&
+      _listEquals(other.forms, forms) &&
+      _listEquals(other.references, references);
 }
+
 
 class ExampleSentence {
   final String content;

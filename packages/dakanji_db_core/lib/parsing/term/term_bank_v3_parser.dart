@@ -2,8 +2,8 @@
 import 'dart:convert';
 
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
-import 'package:dakanji_db_core/parsing/term/structured_content/parsing_classes.dart';
-import 'package:dakanji_db_core/parsing/term/structured_content/structured_content_parser.dart';
+import 'package:dakanji_db_core/parsing/term/definition_parser.dart';
+import 'package:dakanji_db_core/parsing/term/definition_parsing_classes.dart';
 import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_context.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
@@ -156,9 +156,9 @@ Future parseTermBankV3(
     }
 
     // Parse definitions
-    ParsedDictionaryEntry? parsedDefinitions = StructuredContentParser.parseEntry(jsonEntry);
+    ParsedDefinitions? parsedDefinitions = YomitanDefinitionParser.parse(jsonEntry[5]);
     List<int> definitionIds = [];
-    for (String parsedDefinition in parsedDefinitions?.definitions ?? []) {
+    for (String parsedDefinition in parsedDefinitions.definitions) {
       // escape special characters
       String text = parsedDefinition.replaceAll(RegExp(r'[\s\u00A0]+'), ' ').trim();
       // check if term is already in DB
