@@ -6,9 +6,9 @@ import 'package:language_processing/iso/iso_table.dart';
 import '../dictionary_test_variables.dart';
 
 
-List<(String, List<Iso639_1>)> exampleSentencesTestQueries = [
-  ("勉強", [Iso639_1.en, Iso639_1.de]),
-  ("勉強", [Iso639_1.de]),
+List<(String, List<Iso639_3>)> exampleSentencesTestQueries = [
+  ("勉強", [Iso639_3.eng, Iso639_3.deu]),
+  ("勉強", [Iso639_3.deu]),
 ];
 
 List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
@@ -20,11 +20,11 @@ List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       translations: [
         ExampleEntryTranslation(
           translation: "Ich habe heute viel gelernt.",
-          languageCode: "de"
+          languageCode: "deu"
         ),
         ExampleEntryTranslation(
           translation: "I studied a lot today.",
-          languageCode: "en"
+          languageCode: "eng"
         )
       ]
     ),
@@ -35,11 +35,11 @@ List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       translations: [
         ExampleEntryTranslation(
           translation: "Ich habe heute viel gelernt.",
-          languageCode: "de"
+          languageCode: "deu"
         ),
         ExampleEntryTranslation(
           translation: "I studied a lot today.",
-          languageCode: "en"
+          languageCode: "eng"
         )
       ]
     )
@@ -52,7 +52,7 @@ List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       translations: [
         ExampleEntryTranslation(
           translation: "Ich habe heute viel gelernt.",
-          languageCode: "de"
+          languageCode: "deu"
         )
       ]
     ),
@@ -63,7 +63,7 @@ List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       translations: [
         ExampleEntryTranslation(
           translation: "Ich habe heute viel gelernt.",
-          languageCode: "de"
+          languageCode: "deu"
         )
       ]
     )

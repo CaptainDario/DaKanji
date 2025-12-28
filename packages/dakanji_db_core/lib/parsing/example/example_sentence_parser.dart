@@ -33,7 +33,7 @@ Future parseExampleSentences(
 
   for (final example in examples) {
 
-    String jap = example[Iso639_1.ja.name]!;
+    String jap = example[Iso639_3.jpn.name]!;
 
     // Get tokens
     String tokenized = await parseSentenceUsingMecab(jap, mecab);
@@ -50,6 +50,9 @@ Future parseExampleSentences(
     for (MapEntry entry in example.entries) {
       String locale = entry.key;
       String example = entry.value;
+
+      // do NOT add the japanese as an example translation
+      if(locale == Iso639_3.jpn.name) continue;
 
       if(context.allLanguageCodes[locale] == null){
         context.allLanguageCodes[locale] = ++context.maxLanguageCodeId;

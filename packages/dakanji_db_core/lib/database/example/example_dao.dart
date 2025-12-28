@@ -24,7 +24,7 @@ class ExampleDao extends DatabaseAccessor<DaKanjiDB> with _$ExampleDaoMixin {
 
   Future<List<ExampleEntry>> searchExamples(
     String query,
-    List<Iso639_1> languages,
+    List<Iso639_3> languages,
     {
       int limit=-1,
       int offset=0

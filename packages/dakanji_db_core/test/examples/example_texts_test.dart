@@ -32,7 +32,7 @@ void main() async {
 
         Stopwatch s = Stopwatch()..start();
         final results = (await db.exampleDao.searchExamples(
-          exampleTextsTestQueries[i], [Iso639_1.en]
+          exampleTextsTestQueries[i], [Iso639_3.eng]
         ));
         print("This are my results: $results");
         print("Looking up ${exampleTextsTestQueries[i]} took ${s.elapsedMilliseconds}ms");
