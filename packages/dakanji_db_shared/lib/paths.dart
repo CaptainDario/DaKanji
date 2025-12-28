@@ -141,6 +141,7 @@ String get tatoebaLinksInputPath => Directory(dakanjiDBInputFilesPath)
 String get tatoebaSentencesInputPath => Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(tatoebaSentencesFilePattern))
   .first.path;
+String get tatoebaInputZipPath => p.join(dakanjiDBInputFilesPath, "tatoeba_converted.zip");
 
 /// path to the tests folder
 final coreTestsPath = p.joinAll([dakanjiDbProjectRoot, "packages", "dakanji_db_core", "test"]);

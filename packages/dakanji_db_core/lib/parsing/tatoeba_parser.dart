@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:archive/archive_io.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:disjoint_set/disjoint_set.dart';
-import 'package:path/path.dart' as p; 
+import 'package:language_processing/iso/iso_table.dart'; 
 
 
 
@@ -12,36 +13,68 @@ import 'package:path/path.dart' as p;
 /// example sentence format by parsing the `sentences.csv` and `links.csv` files
 /// in the `input_directory`
 Future<void> convertTatoebaDataSource(
-  File inputLinks, File inputSentences, Directory outputDirectory) async {
+  File inputLinks,
+  File inputSentences,
+  File outputZipFile,
+  {
+    Set<Iso639_3>? langsToInclude,
+  }
+) async {
 
-  outputDirectory.createSync();
+  if(langsToInclude != null) langsToInclude.add(Iso639_3.jpn);
+  List<String>? stringLangsToInclude = langsToInclude?.map((e) => e.name).toList();
 
-  final List<Set<int>> linkedSentences = await Isolate.run(() async
-    => await loadLinks(inputLinks));
-  final Map<int, (String, String)> sentences = await Isolate.run(() async
-    => await loadSentences(inputSentences));
+  final List<Set<int>> linkedSentences =
+    await Isolate.run(() async => await loadLinks(inputLinks));
+  final Map<int, ({String lang, String sentence})> sentences =
+    await Isolate.run(() async => await loadSentences(inputSentences));
+
+  // Zip to store converted sentences
+  var encoder = ZipFileEncoder()..create(outputZipFile.path);
+
+  // add index file
+  encoder.addArchiveFile(ArchiveFile.string(
+    "yomitan_index.json", getTatoebaIndexString()));
 
   int i = 0;
-  for (var linkedSentence in linkedSentences) {
+  for (var linkedSentence in linkedSentences.sublist(1, 100)) {
 
     // get all examples from this group
-    List<(String, String)> sentenceGroup = linkedSentence.map((id) =>
-      sentences[id])
-      .nonNulls.toList();
+    List<({String lang, String sentence})> sentenceGroup = linkedSentence
+      .map((id) => sentences[id]).nonNulls
+      .where((e) =>
+        stringLangsToInclude == null ||
+        stringLangsToInclude.contains(e.lang))
+      .toList();
+
+    print(sentenceGroup);
 
     // filter out groups that do not contain Japanese examples
-    if (sentenceGroup.every((sentence) => sentence.$1 != 'jpn')) continue;
+    if (sentenceGroup.every((sentence) => sentence.lang != Iso639_3.jpn.name)) continue;
     i++;
 
-    File sentenceFile = File(p.join(outputDirectory.path, '$i.json'));
-    sentenceFile.createSync();
-    sentenceFile.writeAsStringSync(jsonEncode(
-      { for (var record in sentenceGroup) record.$1 : record.$2 }
+    encoder.addArchiveFile(ArchiveFile.string(
+      "$i.json", 
+      jsonEncode(
+        { for (var record in sentenceGroup) record.lang : record.sentence }
+      )
     ));
   }
-
+  encoder.close();
 }
 
+/// Returns the Tatoeba index file as a JSON string
+String getTatoebaIndexString(){
+
+  DateTime now = DateTime.now();
+  
+  return jsonEncode({
+    "title": "Tatoeba Example Sentences",
+    "revision": "Tatoeba.${now.year}-${now.month}-${now.day}",
+    "description": "Example created from the Tatoeba project.",
+  });
+
+}
 
 /// Creates a DisjointSet from tatoeba's `links.csv` and returns all sentence groups.
 Future<List<Set<int>>> loadLinks(File linksArchiveFile) async {
@@ -67,19 +100,19 @@ Future<List<Set<int>>> loadLinks(File linksArchiveFile) async {
 }
 
 /// Loads all example sentences from tatoeba's `sentences.csv`
-Future<Map<int, (String, String)>> loadSentences(File sentencesArchiveFile) async {
+Future<Map<int, ({String lang, String sentence})>> loadSentences(File sentencesArchiveFile) async {
 
   final sentencesLineStream = getStringStreamFromTarBz2File(sentencesArchiveFile);
 
-  Map<int, (String, String)> sentences = {};
+  Map<int, ({String lang, String sentence})> sentences = {};
 
   await for (var line in sentencesLineStream) {
     var columns = line.split('\t');
     if (columns.length == 3) {
-      var id = int.tryParse(columns[0]) ?? 0;
+      var id = int.tryParse(columns[0])!;
       var lang = columns[1];
       var text = columns[2];
-      sentences[id] = (lang, text);
+      sentences[id] = (lang: lang, sentence: text);
     }
   }
 
