@@ -38,11 +38,11 @@ Future<Stream<String>> parseExampleDataSource(
   ReceivePort receivePort = ReceivePort();
   receivePort.listen((message) {
     if(message is String) controller.add(message);
-    else if(message is Exception) controller.addError(message);
     else if(message == null) {
       receivePort.close();
       controller.close();
     }
+    else controller.addError(message);
   });
 
   await Isolate.spawn(_parseExampleDataSource, (
