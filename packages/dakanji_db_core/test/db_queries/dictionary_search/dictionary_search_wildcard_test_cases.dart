@@ -80,4 +80,35 @@ ExpectedDictionarySearchResult(
       ],
     ),
   ),
+
+  ExpectedDictionarySearchResult(
+    description: "GLOB [...]: Character Set",
+    query: '[日二]本',
+    queryMatches: const ExpectedMatchGroup(
+      wildcardMatches: [
+        [ExpectedDictionaryMatch(term: '日本', reading: 'にほん', match: '日本', definitions: ["Japan"])],
+        [ExpectedDictionaryMatch(term: '二本', reading: 'にほん', match: '二本', definitions: ["two long objects"])],
+      ],
+    ),
+  ),
+  ExpectedDictionarySearchResult(
+    description: "GLOB [^...]: Negated Character Set",
+    query: '[^日]本',
+    queryMatches: const ExpectedMatchGroup(
+      wildcardMatches: [
+        // Should match '二本' but explicitly NOT '日本'
+        [ExpectedDictionaryMatch(term: '二本', reading: 'にほん', match: '二本', definitions: ["two long objects"])],
+      ],
+    ),
+  ),
+   ExpectedDictionarySearchResult(
+    description: "GLOB [x-y]: Character Range",
+    query: '[a-c]',
+    queryMatches: const ExpectedMatchGroup(
+      wildcardMatches: [
+        // Matches 'a', but not 'asd' (length mismatch) or '石' (outside range)
+        [ExpectedDictionaryMatch(term: 'a', reading: '', match: 'a', definitions: ["Letter from the Latin alphabet"])],
+      ],
+    ),
+  ),
 ];

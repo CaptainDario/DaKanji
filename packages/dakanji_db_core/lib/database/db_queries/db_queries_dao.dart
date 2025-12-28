@@ -92,7 +92,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       ).toList();
     
     bool isWildcardSearch = false;
-    if(params == null) isWildcardSearch = term.contains(RegExp(r'\*|\?'));
+    if(params == null) isWildcardSearch = term.contains(RegExp(r'[*?\[\]]'));
 
     // 1. Run the lightweight search queries in parallel (IDs only)
     Stopwatch s = Stopwatch()..start();
