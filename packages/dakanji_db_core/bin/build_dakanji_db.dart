@@ -6,6 +6,7 @@ import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
 import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_core/parsing/tatoeba_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
+import 'package:language_processing/iso/iso_table.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
@@ -24,6 +25,15 @@ Map<DictsToUse, String Function()> dictNameToPath = {
   DictsToUse.jitendex: () => jitendexInputPath,
 };
 
+/// The main function to build the DaKanji database
+/// 
+/// Args:
+///   --use-jitendex : Use jitendex as dictionary instead of jmdict
+///   --download-sources : Redownload all source files
+///   --include-example-dict : Include the yomitan example dictionary
+///   --convert-tatoeba : Convert the tatoeba example sentences and include them
+///   --add-structured-content-json-definitions : Add structured content JSON-
+///     definitions to the database
 void main(List<String> args) async {
 
   // check which dictionary to use 
@@ -50,23 +60,23 @@ void main(List<String> args) async {
   }
 
   // check whether tatoeba examples should be included
-  bool includeTatoebaExamplesArg = args.contains('--include-tatoeba-examples');
+  bool includeTatoebaExamplesArg = args.contains('--convert-tatoeba');
   if(includeTatoebaExamplesArg) {
+    File tatoeZip = File(tatoebaInputZipPath);
+    if(tatoeZip.existsSync()) tatoeZip.deleteSync();
+
     print("Converting Tatoeba example sentences to DaKanji format...");
-    Directory tatoebaOut = Directory(
-      p.join(dakanjiDBInputFilesPath, "tatoeba_converted"));
-    tatoebaOut.createSync();
     await convertTatoebaDataSource(
       File(tatoebaLinksInputPath),
       File(tatoebaSentencesInputPath),
-      tatoebaOut
+      tatoeZip,
+      langsToInclude: {Iso639_3.eng, Iso639_3.deu}
     );
   }
 
   // should the structured content JSON-definitions be added to the database
   bool addStructuredContentJsonDefs = args.contains('--add-structured-content-json-definitions');
   
-
   // setup 
   if(File(dakanjiDbPath).existsSync()) {
     print("Deleting old database at $dakanjiDbPath");
@@ -78,6 +88,7 @@ void main(List<String> args) async {
   final mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
+  /*
   print("Adding KanjiVG...");
   await importKanjiVG(db);
 
@@ -93,7 +104,7 @@ void main(List<String> args) async {
       + [dictToUse.name]
       + (includeExampleDictArg ? ["yomitan example dictionary"] : []),
     addStructuredContentJsonDefs,
-  );
+  );*/
 
   print("Adding tatoeba example sentences...");
   await importTatoebaExamples(db, mecab);
@@ -215,12 +226,17 @@ Future importYomitanDicts(
 Future importTatoebaExamples(DaKanjiDB db, Mecab mecab) async {
 
   Stopwatch s = Stopwatch()..start();
-  await parseExampleDataSource(
-    examplesZipPath: "",
+  final progress = await parseExampleDataSource(
+    examplesZipPath: tatoebaInputZipPath,
     db: db,
     mecab: mecab,
     isDefaultDictionary: true
   );
-  print("Converting Tatoeba took: ${s.elapsedMilliseconds}ms");
+
+  await for (final progress in progress) {
+    print(progress);
+  }
+  
+  print("Import Tatoeba took: ${s.elapsedMilliseconds}ms");
 
 }
