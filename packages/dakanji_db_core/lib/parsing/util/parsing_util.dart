@@ -44,7 +44,7 @@ Stream<String> getStringStreamFromTarBz2File(File file) {
 }
 
 /// Reads a DaKanji DB compatabile data source (KanjiVG, Yomitan, ...)
-/// Can read a zip file from disk or from .
+/// Can read a zip file from disk [filePath] or an in memory zip [fileContent].
 /// 
 /// [fileOrder] can be used to define a custom order in which the files should
 /// be processed. The name can be a RegExp pattern that will be matched. If the
