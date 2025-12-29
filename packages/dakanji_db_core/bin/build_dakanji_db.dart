@@ -88,7 +88,6 @@ void main(List<String> args) async {
   final mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
-  /*
   print("Adding KanjiVG...");
   await importKanjiVG(db);
 
@@ -104,7 +103,7 @@ void main(List<String> args) async {
       + [dictToUse.name]
       + (includeExampleDictArg ? ["yomitan example dictionary"] : []),
     addStructuredContentJsonDefs,
-  );*/
+  );
 
   print("Adding tatoeba example sentences...");
   await importTatoebaExamples(db, mecab);
