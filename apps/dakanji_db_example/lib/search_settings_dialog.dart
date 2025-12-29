@@ -1,3 +1,4 @@
+import 'package:dakanji_db_core/database/db_queries/grouping_strategy.dart';
 import 'package:dakanji_db_example/search_settings.dart';
 import 'package:flutter/material.dart';
 
@@ -67,10 +68,34 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
                   onChanged: (v) => setState(() => settings.spellfix = v),
                 ),
                 _buildToggle(
-                  title: "Merge Duplicates",
-                  subtitle: "Group identical words from different dictionaries",
-                  value: settings.groupResults,
-                  onChanged: (v) => setState(() => settings.groupResults = v),
+                  title: "Group by term",
+                  subtitle: "Group identical entries (term + reading) together",
+                  value: settings.groupingStrategy == GroupingStrategy.byTerm,
+                  onChanged: (v) => setState(() { 
+                    settings.groupingStrategy = v
+                      ? GroupingStrategy.byTerm
+                      : GroupingStrategy.none;
+                  }),
+                ),
+                _buildToggle(
+                  title: "Group by term and reading",
+                  subtitle: "Group identical entries (term + reading) together",
+                  value: settings.groupingStrategy == GroupingStrategy.byTermAndReading,
+                  onChanged: (v) => setState(() { 
+                    settings.groupingStrategy = v
+                      ? GroupingStrategy.byTermAndReading
+                      : GroupingStrategy.none;
+                  }),
+                ),
+                _buildToggle(
+                  title: "Group by Sequence",
+                  subtitle: "Group results by their sequence id",
+                  value: settings.groupingStrategy == GroupingStrategy.bySequence,
+                  onChanged: (v) => setState(() { 
+                    settings.groupingStrategy = v
+                      ? GroupingStrategy.bySequence
+                      : GroupingStrategy.none;
+                  }),
                 ),
               ],
             ),

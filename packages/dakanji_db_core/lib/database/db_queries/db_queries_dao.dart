@@ -3,8 +3,10 @@ import "dart:convert";
 import "package:dakanji_db_core/database/audio/audio_entry.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
+import "package:dakanji_db_core/database/db_queries/grouping_strategy.dart";
 import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:drift/drift.dart";
+import "package:language_processing/japanese/conjugation/yomitan_deconjugate.dart";
 import "package:language_processing/japanese/japanese_string_operations.dart";
 import "package:language_processing/japanese/spellfix/spellfix.dart";
 
@@ -53,32 +55,29 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       List<List<String>> tags = const [],
       List<List<String>> pos = const [],
 
-      bool groupSequences=false,
-      bool groupByTermAndReading=false,
+      GroupingStrategy groupingStrategy = GroupingStrategy.none,
       int spellfixMaxCost=10,
       int spellfixMaxResults=20,
       int limit=-1,
       int offset=0,
       List<int>? indexesToInclude,
-      bool useOnlyEnabledDictionaries = false,
-      bool useOnlyDefaultDictionaries = false,
+      bool useOnlyEnabledIndexes = false,
+      bool useOnlyDefaultIndexes = false,
     }
   ) async {
 
-    assert(([indexesToInclude != null, useOnlyEnabledDictionaries, useOnlyDefaultDictionaries].where((e) => e).length <= 1),
+    assert(([indexesToInclude != null, useOnlyEnabledIndexes, useOnlyDefaultIndexes].where((e) => e).length <= 1),
       "You can only use one of 'indexesToInclude', 'useOnlyEnabledDictionaries' or 'useOnlyDefaultDictionaries' at a time."
     );
 
     // Get all enabled indexes if set
-    if(useOnlyEnabledDictionaries) {
-      final enabledIndexes = await db.indexDao.getAllEnabledIndexes();
-      indexesToInclude = enabledIndexes.map((e) => e.id).toList();
-    }
+    if(useOnlyEnabledIndexes) 
+      indexesToInclude = (await db.indexDao.getAllEnabledIndexes())
+        .map((e) => e.id).toList();
     // Get all default indexes if set
-    if(useOnlyDefaultDictionaries) {
-      final defaultIndexes = await db.indexDao.getAllDefaultIndexes();
-      indexesToInclude = defaultIndexes.map((e) => e.id).toList();
-    }
+    if(useOnlyDefaultIndexes) 
+      indexesToInclude = (await db.indexDao.getAllDefaultIndexes())
+        .map((e) => e.id).toList();
 
     // Check for special argument syntax
     var params = argumentParser(term);
@@ -96,63 +95,17 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
 
     // 1. Run the lightweight search queries in parallel (IDs only)
     Stopwatch s = Stopwatch()..start();
-    final resultsRaw = await Future.wait([
-      // exact query
-      _findTermBankEntries(
-        terms: params != null
-          ? [params.$1, params.$2, params.$3].nonNulls.toList()
-          : [term],
-        tags: tags,
-        pos: pos,
-        termFilter: params?.$1,
-        readingFilter: params?.$2,
-        definitionFilter: params?.$3,
-        useGlob: isWildcardSearch,
-        searchNormalized: false,
-        indexesToInclude: indexesToInclude,
-        limit: limit,
-        offset: offset,
-      ),
-      // normalized terms
-      normalizedSearch && params == null
-        ? _findTermBankEntries(
-          terms: normalizedTerms,
-          tags: tags,
-          pos: pos,
-          useGlob: isWildcardSearch,
-          searchNormalized: true,
-          indexesToInclude: indexesToInclude,
-          limit: limit,
-          offset: offset,
-        )
-        : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
-      // term variants (deconjugated forms)
-      deconjugationSearch && params == null
-        ? _findTermBankEntries(
-          terms: termVariants.map((e) => e.deconjugatedTerm).toList(),
-          tags: tags,
-          pos: termVariants.map((e) => e.requiredPartsOfSpeech).toList(),
-          useGlob: isWildcardSearch,
-          searchNormalized: true,
-          indexesToInclude: indexesToInclude,
-          limit: limit,
-          offset: offset,
-        )
-        : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
-      // spellfix / fuzzy search
-      spellfixSearch && params == null
-        ? _findTermBankEntries(
-          terms: spellingVariations,
-          tags: tags,
-          pos: pos,
-          useGlob: isWildcardSearch,
-          searchNormalized: true,
-          indexesToInclude: indexesToInclude,
-          limit: limit,
-          offset: offset,
-        )
-        : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[])
-    ]);
+    final resultsRaw = await _rawParallelSearch(
+      term, normalizedTerms, termVariants, spellingVariations,
+      normalizedSearch: normalizedSearch,
+      deconjugationSearch: deconjugationSearch,
+      spellfixSearch: spellfixSearch,
+      tags: tags, pos: pos,
+      indexesToInclude: indexesToInclude,
+      isWildcardSearch: isWildcardSearch,
+      limit: limit, offset: offset,
+      params: params,
+    );
 
     print("Phase 1 (Search IDs) completed in ${s.elapsedMilliseconds}ms.");
     s.reset();
@@ -164,7 +117,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     for (final group in resultsRaw) {
       for (final entry in group) {
         allTermBankIds.add(entry.termBankId);
-        if (groupSequences) {
+        if (groupingStrategy == GroupingStrategy.bySequence) {
           allSequenceNumbers.add(entry.sequenceNumber);
         }
       }
@@ -172,7 +125,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
 
     // 3. Find Sequences (if enabled)
     List<DictionarySearchDriftFindTermBankSequencesResult> sequenceMatches = [];
-    if (groupSequences && allSequenceNumbers.isNotEmpty) {
+    if (groupingStrategy == GroupingStrategy.bySequence && allSequenceNumbers.isNotEmpty) {
       sequenceMatches = await db.dictionary_search_drift_find_term_bank_sequences(
         jsonEncode(allSequenceNumbers.toList()), 
         jsonEncode(allTermBankIds.toList()) // Exclude IDs we already found
@@ -194,23 +147,12 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     s.stop();
     
     // 5. Assemble the result
-    return DictionarySearchResult(
-      queryMatches: SearchMatchGroup.fromDictionarySearch(
-        (resultsRaw[0], sequenceMatches, allDetails), isWildcardSearch,
-        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading
-      ).firstOrNull ?? SearchMatchGroup.empty(),
-      normalizedQueryMatchGroups: SearchMatchGroup.fromDictionarySearch(
-        (resultsRaw[1], sequenceMatches, allDetails), isWildcardSearch,
-        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading
-      ),
-      queryVariantMatches: SearchMatchGroup.fromDictionarySearch(
-        (resultsRaw[2], sequenceMatches, allDetails), isWildcardSearch,
-        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading
-      ),
-      fuzzyMatches: SearchMatchGroup.fromDictionarySearch(
-        (resultsRaw[3], sequenceMatches, allDetails), isWildcardSearch,
-        groupSequences: groupSequences, groupByTermAndReading: groupByTermAndReading
-      )
+    return DictionarySearchResult.fromSearchResults(
+      resultsRaw: resultsRaw,
+      sequenceMatches: sequenceMatches,
+      allDetails: allDetails,
+      isWildcardSearch: isWildcardSearch,
+      groupingStrategy: groupingStrategy,
     );
   }
 
@@ -251,6 +193,74 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       limit,
       offset
     ).get();
+  }
+
+  /// Helper method to run the raw parallel search (all 4 queries):
+  ///   1. Exact match
+  ///   2. Normalized match
+  ///   3. Deconjugated variants
+  ///   4. Spellfix / fuzzy match
+  /// Returns a list of 4 lists, each containing the results of one query.
+  Future<List<List<DictionarySearchDriftFindTermBankEntriesResult>>> _rawParallelSearch(
+    String term,
+    List<String> normalizedTerms,
+    List<DeconjugationResult> termVariants,
+    List<String> spellingVariations,
+    {
+      required bool normalizedSearch,
+      required bool deconjugationSearch,
+      required bool spellfixSearch,
+      List<List<String>> tags = const [],
+      List<List<String>> pos = const [],
+      List<int>? indexesToInclude,
+      bool isWildcardSearch = false,
+      int limit = -1,
+      int offset = 0,
+      (String? term, String? reading, String? definition)? params,
+    }
+  ) async {
+    return await Future.wait([
+      // exact query
+      _findTermBankEntries(
+        terms: params != null
+          ? [params.$1, params.$2, params.$3].nonNulls.toList()
+          : [term],
+        tags: tags, pos: pos,
+        termFilter: params?.$1, readingFilter: params?.$2, definitionFilter: params?.$3,
+        useGlob: isWildcardSearch, searchNormalized: false,
+        indexesToInclude: indexesToInclude,
+        limit: limit, offset: offset,
+      ),
+      // normalized terms
+      normalizedSearch && params == null
+        ? _findTermBankEntries(
+          terms: normalizedTerms, tags: tags, pos: pos,
+          useGlob: isWildcardSearch, searchNormalized: true,
+          indexesToInclude: indexesToInclude,
+          limit: limit, offset: offset,
+        )
+        : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
+      // term variants (deconjugated forms)
+      deconjugationSearch && params == null
+        ? _findTermBankEntries(
+          terms: termVariants.map((e) => e.deconjugatedTerm).toList(),
+          tags: tags,
+          pos: termVariants.map((e) => e.requiredPartsOfSpeech).toList(),
+          useGlob: isWildcardSearch, searchNormalized: true,
+          indexesToInclude: indexesToInclude,
+          limit: limit, offset: offset,
+        )
+        : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
+      // spellfix / fuzzy search
+      spellfixSearch && params == null
+        ? _findTermBankEntries(
+          terms: spellingVariations, tags: tags, pos: pos,
+          useGlob: isWildcardSearch, searchNormalized: true,
+          indexesToInclude: indexesToInclude,
+          limit: limit, offset: offset,
+        )
+        : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[])
+    ]);
   }
 
 }
@@ -314,3 +324,4 @@ String buildSearchInputJson(
 
   return jsonEncode(mergedList);
 }
+

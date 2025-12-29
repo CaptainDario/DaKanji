@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/db_queries/grouping_strategy.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
@@ -29,22 +30,20 @@ import 'dictionary_search_wildcard_test_cases.dart';
 // Lists are defined at the top level (this is fine)
 final List<(
   List<ExpectedDictionarySearchResult> expectations,
-  bool groupSeqeunces,
-  bool groupByReadingAndTerms
+  GroupingStrategy groupingStrategy
   )> testCases = [
-  // (test cases, groupSequences, groupByTermAndReading)
-  (searchTestCases, false, false),
-  (deconjugationTestCases, false, false),
-  (wildcardSearchTestCases, false, false),
-  (inputPreprocessingSearchTestCases, false, false),
-  (sortingTestCases, false, false),
-  (fuzzySearchTestCases, false, false),
-  (tagFilteringTestCases, false, false),
-  (metaBankTestCases, false, false),
-  (popularityOverrideTestCases, false, false),
-  (groupBySequenceTests, true, false),
-  (groupByTermTests, false, true),
-  (indexOnOffTestCases, false, false),
+  (searchTestCases, GroupingStrategy.none),
+  (deconjugationTestCases, GroupingStrategy.none),
+  (wildcardSearchTestCases, GroupingStrategy.none),
+  (inputPreprocessingSearchTestCases, GroupingStrategy.none),
+  (sortingTestCases, GroupingStrategy.none),
+  (fuzzySearchTestCases, GroupingStrategy.none),
+  (tagFilteringTestCases, GroupingStrategy.none),
+  (metaBankTestCases, GroupingStrategy.none),
+  (popularityOverrideTestCases, GroupingStrategy.none),
+  (groupBySequenceTests, GroupingStrategy.bySequence),
+  (groupByTermTests, GroupingStrategy.byTermAndReading),
+  (indexOnOffTestCases, GroupingStrategy.none),
 ];
 final List<String> testCaseNames = [
   "Search Test Cases",
@@ -99,11 +98,10 @@ void main() {
               normalizedSearchConvertsRomajiToHiragana: true,
               deconjugationSearch: true,
               spellfixSearch: true,
-              groupSequences: subTestCases.$2,
-              groupByTermAndReading: subTestCases.$3,
+              groupingStrategy: subTestCases.$2,
               indexesToInclude: testCase.indexesToInclude,
-              useOnlyEnabledDictionaries: testCase.useOnlyEnabledDictionaries,
-              useOnlyDefaultDictionaries: testCase.useOnlyDefaultDictionaries,
+              useOnlyEnabledIndexes: testCase.useOnlyEnabledDictionaries,
+              useOnlyDefaultIndexes: testCase.useOnlyDefaultDictionaries,
             ));
 
             print("Results:\n $results");

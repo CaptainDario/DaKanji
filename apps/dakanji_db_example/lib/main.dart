@@ -224,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
         normalizedSearchConvertsRomajiToHiragana: _searchSettings.convertRomaji,
         deconjugationSearch: _searchSettings.deconjugation,
         spellfixSearch: _searchSettings.spellfix,
-        groupByTermAndReading: _searchSettings.groupResults,
+        groupingStrategy: _searchSettings.groupingStrategy
       );
       print("Search completed in ${stopwatch.elapsedMilliseconds}ms.");
     }

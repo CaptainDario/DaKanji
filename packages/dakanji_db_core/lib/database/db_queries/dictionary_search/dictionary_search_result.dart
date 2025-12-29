@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/db_queries/grouping_strategy.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 
@@ -21,7 +22,40 @@ class DictionarySearchResult {
   /// For example: りょこお -> りょこう 
   final List<SearchMatchGroup> fuzzyMatches;
 
-  DictionarySearchResult({
+  DictionarySearchResult.empty()
+      : queryMatches = SearchMatchGroup.empty(),
+        normalizedQueryMatchGroups = [],
+        queryVariantMatches = [],
+        fuzzyMatches = [];
+
+  factory DictionarySearchResult.fromSearchResults({
+    required List<List<DictionarySearchDriftFindTermBankEntriesResult>> resultsRaw,
+    required List<DictionarySearchDriftFindTermBankSequencesResult> sequenceMatches,
+    required List<DictionarySearchDriftFindTermBankDetailsResult> allDetails,
+    required bool isWildcardSearch,
+    required GroupingStrategy groupingStrategy,
+  }){
+    return DictionarySearchResult.fromSearchMatchGroups(
+      queryMatches: SearchMatchGroup.fromDictionarySearch(
+        (resultsRaw[0], sequenceMatches, allDetails), isWildcardSearch,
+        groupingStrategy: groupingStrategy
+      ).firstOrNull ?? SearchMatchGroup.empty(),
+      normalizedQueryMatchGroups: SearchMatchGroup.fromDictionarySearch(
+        (resultsRaw[1], sequenceMatches, allDetails), isWildcardSearch,
+        groupingStrategy: groupingStrategy
+      ),
+      queryVariantMatches: SearchMatchGroup.fromDictionarySearch(
+        (resultsRaw[2], sequenceMatches, allDetails), isWildcardSearch,
+        groupingStrategy: groupingStrategy
+      ),
+      fuzzyMatches: SearchMatchGroup.fromDictionarySearch(
+        (resultsRaw[3], sequenceMatches, allDetails), isWildcardSearch,
+        groupingStrategy: groupingStrategy
+      )
+    );
+  }
+
+  DictionarySearchResult.fromSearchMatchGroups({
     required this.queryMatches,
     required this.normalizedQueryMatchGroups,
     required this.queryVariantMatches,
@@ -196,8 +230,7 @@ class SearchMatchGroup {
       List<DictionarySearchDriftFindTermBankDetailsResult>
     ) resultTuple,
     bool isWildcardSearch, {
-    bool groupSequences = false,
-    bool groupByTermAndReading = false,
+    GroupingStrategy groupingStrategy = GroupingStrategy.none,
     String? variantReason,
   }) {
     final (searchResults, additionalSequences, resultInfos) = resultTuple;
@@ -233,11 +266,15 @@ class SearchMatchGroup {
       
       // Build the grouping map (based on the grouping strategy)
       Map<String, List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)>> groups;
-      if (groupSequences) {
+      if (groupingStrategy == GroupingStrategy.bySequence) {
         groups = groupBy(matchesForThisTerm,
           (record) => '${record.$2.id}_${record.$2.sequenceNumber}');
       }
-      else if (groupByTermAndReading) {
+      else if (groupingStrategy == GroupingStrategy.byTerm) {
+        // TODO
+        throw UnimplementedError();
+      }
+      else if (groupingStrategy == GroupingStrategy.byTermAndReading) {
         groups = groupBy(
           matchesForThisTerm, (record) => '${record.$2.term}_${record.$2.reading}');
       }
