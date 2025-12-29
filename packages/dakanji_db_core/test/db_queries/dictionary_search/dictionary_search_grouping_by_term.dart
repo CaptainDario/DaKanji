@@ -29,6 +29,12 @@ List<ExpectedDictionarySearchResult> groupByTermTests = [
             definitions: ['3) dumplings cooked in boiling water; boiled dumplings'],
             match: '水餃子',
           ),
+          ExpectedDictionaryMatch(
+            term: '水餃子',
+            reading: 'みずぎょうざ',
+            definitions: ['4) common misspelling of 水餃子'],
+            match: '水餃子',
+          ),
         ],
       ],
     ),

@@ -271,8 +271,8 @@ class SearchMatchGroup {
           (record) => '${record.$2.id}_${record.$2.sequenceNumber}');
       }
       else if (groupingStrategy == GroupingStrategy.byTerm) {
-        // TODO
-        throw UnimplementedError();
+        groups = groupBy(
+          matchesForThisTerm, (record) => "${record.$2.term}");
       }
       else if (groupingStrategy == GroupingStrategy.byTermAndReading) {
         groups = groupBy(
