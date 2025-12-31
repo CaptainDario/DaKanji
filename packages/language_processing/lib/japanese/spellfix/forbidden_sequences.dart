@@ -22,4 +22,22 @@ const List<String> forbiddenSequences = [
   "ゃゃ", "ゅゅ", "ょょ", // Double small y-vowels
   "ぁぁ", "ぃぃ", "ぅぅ", "ぇぇ", "ぉぉ",// Double small kana
   "あああ", "いいい", "ううう", "えええ", "おおお" // Triplet kana
+
+  // --- TRIPLET VOWELS ---
+  // Matches any character ending in 'a' followed by 'aa'
+  // Includes: あ, か, さ, ..., が, ぱ, ゃ, etc.
+  r"[あかさたなはまやらわがざだばぱゃ]ああ",
+
+  // Matches any character ending in 'i' followed by 'ii'
+  r"[いきしちにひみりぎじぢびぴ]いい",
+
+  // Matches any character ending in 'u' followed by 'uu'
+  r"[うくすつぬふむゆるぐずづぶぷゅ]うう",
+
+  // Matches any character ending in 'e' followed by 'ee'
+  r"[えけせてねへめれげぜでべぺ]ええ",
+
+  // Matches any character ending in 'o' followed by 'oo'
+  r"[おこそとのほもよろごぞどぼぽょ]おお",
+
 ];

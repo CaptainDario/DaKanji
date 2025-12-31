@@ -8,7 +8,7 @@ List<String> generateSpellingVariations({
     required int maxCost,
     int substitutionPenalty = 0,
     List<(String, String, int)> rules = spellfixRules,
-    Iterable<String> forbiddenSequences = forbiddenSequences,
+    List<String> forbiddenSequences = forbiddenSequences,
 }) {
     final res = <String>[]; // Variations returned in increasing-cost order.
     final best = <String, Map<String, _Score>>{
@@ -26,7 +26,8 @@ List<String> generateSpellingVariations({
       String historyKey,
     ) {
 
-      if (_containsForbiddenSequence(next, forbiddenSequences)) return; // Skip words containing banned fragments.
+      // Skip words forbidden words
+      if (_containsForbiddenSequence(next, forbiddenSequences) || next == word) return; 
       final totalCost = directCost + steps * substitutionPenalty; // Combine direct cost with per-step penalty.
       if (totalCost > maxCost) return;
       final entry = best.putIfAbsent(next, () => <String, _Score>{});
