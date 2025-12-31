@@ -3,10 +3,10 @@ import 'dictionary_search_test_helper_classes.dart';
 
 
 
-List<ExpectedDictionarySearchResult> groupByTermTests = [
+List<DictionarySearchTestCase> groupByTermTests = [
 
-  ExpectedDictionarySearchResult(
-    description: "",
+  DictionarySearchTestCase(
+    description: "Group entries by term for the query 水餃子",
     query: "水餃子",
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [

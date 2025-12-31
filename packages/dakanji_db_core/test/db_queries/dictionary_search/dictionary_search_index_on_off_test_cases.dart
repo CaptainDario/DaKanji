@@ -2,9 +2,9 @@ import 'dictionary_search_test_helper_classes.dart';
 
 String descriptionPrefix = "Index On/Off";
 
-List<ExpectedDictionarySearchResult> indexOnOffTestCases = [
+List<DictionarySearchTestCase> indexOnOffTestCases = [
   // nothing off
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: '$descriptionPrefix: Nothing turned off - should return all results',
     query: '帽子',
     queryMatches: const ExpectedMatchGroup(
@@ -16,7 +16,7 @@ List<ExpectedDictionarySearchResult> indexOnOffTestCases = [
     ),
   ),
   // only dict [1, 2, 3]
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: '$descriptionPrefix: Only index 1, 2, 3 - should return all results from them',
     query: '帽子',
     indexesToInclude: [1, 2, 3],
@@ -27,7 +27,7 @@ List<ExpectedDictionarySearchResult> indexOnOffTestCases = [
     ),
   ),
   // only default dicts
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: '$descriptionPrefix: Only default dictionaries - should return dict 5',
     query: '帽子',
     useOnlyDefaultDictionaries: true,
@@ -38,7 +38,7 @@ List<ExpectedDictionarySearchResult> indexOnOffTestCases = [
     ),
   ),
   // only enabled dicts
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: '$descriptionPrefix: Only enabled dictionaries - should return dict 5',
     query: '帽子',
     useOnlyEnabledDictionaries: true,

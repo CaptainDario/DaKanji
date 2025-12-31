@@ -1,4 +1,5 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_widget.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class DictionarySearchResultWidget extends StatelessWidget {
   }
 
 
-  List<Widget> _buildSliversForMatchGroup(SearchMatchGroup matchGroup) {
+  List<Widget> _buildSliversForMatchGroup(DictionaryMatchGroup matchGroup) {
     final List<Widget> slivers = [];
 
     // Sub-Section: Exact Matches

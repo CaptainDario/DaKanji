@@ -3,7 +3,7 @@
 import 'dart:io';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/database/db_queries/grouping_strategy.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
@@ -30,22 +30,21 @@ import 'dictionary_search_wildcard_test_cases.dart';
 
 // Lists are defined at the top level (this is fine)
 final List<(
-  List<ExpectedDictionarySearchResult> expectations,
-  GroupingStrategy groupingStrategy
+  List<DictionarySearchTestCase> expectations, 
   )> testCases = [
-  (searchTestCases, GroupingStrategy.none),
-  (deconjugationTestCases, GroupingStrategy.none),
-  (wildcardSearchTestCases, GroupingStrategy.none),
-  (inputPreprocessingSearchTestCases, GroupingStrategy.none),
-  (sortingTestCases, GroupingStrategy.none),
-  (fuzzySearchTestCases, GroupingStrategy.none),
-  (tagFilteringTestCases, GroupingStrategy.none),
-  (metaBankTestCases, GroupingStrategy.none),
-  (popularityOverrideTestCases, GroupingStrategy.none),
-  (groupBySequenceTests, GroupingStrategy.bySequence),
-  (groupByTermTests, GroupingStrategy.byTerm),
-  (groupByTermAndReadingTests, GroupingStrategy.byTermAndReading),
-  (indexOnOffTestCases, GroupingStrategy.none),
+  (searchTestCases, ),
+  (deconjugationTestCases, ),
+  (wildcardSearchTestCases, ),
+  (inputPreprocessingSearchTestCases, ),
+  (sortingTestCases, ),
+  (fuzzySearchTestCases, ),
+  (tagFilteringTestCases, ),
+  (metaBankTestCases, ),
+  (popularityOverrideTestCases, ),
+  (groupBySequenceTests, ),
+  (groupByTermTests, ),
+  (groupByTermAndReadingTests, ),
+  (indexOnOffTestCases, ),
 ];
 final List<String> testCaseNames = [
   "Search Test Cases",
@@ -95,16 +94,23 @@ void main() {
               await db.indexDao.clearFrequencyOverride();
             // Perform the search
             final results = (await db.dBQueriesDao.dictionarySearch(
-              testCase.query,
-              tags: testCase.tags, 
-              normalizedSearch: true,
-              normalizedSearchConvertsRomajiToHiragana: true,
-              deconjugationSearch: true,
-              spellfixSearch: true,
-              groupingStrategy: subTestCases.$2,
-              indexesToInclude: testCase.indexesToInclude,
-              useOnlyEnabledIndexes: testCase.useOnlyEnabledDictionaries,
-              useOnlyDefaultIndexes: testCase.useOnlyDefaultDictionaries,
+              DictionarySearchParams(
+                query: testCase.query,
+                tags: testCase.tags, pos: testCase.pos,
+
+                normalizedSearch: true,
+                normalizedSearchConvertsRomajiToHiragana: true,
+                deconjugationSearch: true,
+                spellfixSearch: true,
+                
+                groupingRules: testCase.groupingRules,
+
+                indexesToInclude: testCase.indexesToInclude,
+                useOnlyEnabledIndexes: testCase.useOnlyEnabledDictionaries,
+                useOnlyDefaultIndexes: testCase.useOnlyDefaultDictionaries,
+                
+              ),
+              printDebugInfo: true
             ));
 
             print("Results:\n $results");

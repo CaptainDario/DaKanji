@@ -9,8 +9,8 @@ import '../../dictionary_test_variables.dart';
 import 'dictionary_search_test_helper_classes.dart';
 
 
-List<ExpectedDictionarySearchResult> metaBankTestCases = [
-  ExpectedDictionarySearchResult(
+List<DictionarySearchTestCase> metaBankTestCases = [
+  DictionarySearchTestCase(
     description: "Find meta bank entries",
     query: '土木工事',
     tags: [],
@@ -57,7 +57,7 @@ List<ExpectedDictionarySearchResult> metaBankTestCases = [
       ],
     ),
   ),
-    ExpectedDictionarySearchResult(
+    DictionarySearchTestCase(
     description: "Find meta bank entries that only have term (no reading)",
     query: '石',
     tags: [],

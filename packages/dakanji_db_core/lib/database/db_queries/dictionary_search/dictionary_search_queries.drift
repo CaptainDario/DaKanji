@@ -277,6 +277,7 @@ dictionary_search_drift_find_term_bank_entries(
         TBM.match_type,
         TBM.match_column,
         TBM.sequence_number,
+        index_table.id as indexId,
         index_table.current_sorting_order,
         CASE 
             WHEN ActiveCheck.is_active = 1 THEN OP.freq_value
@@ -312,20 +313,25 @@ dictionary_search_drift_find_term_bank_entries(
 
     LIMIT :limit OFFSET :offset;
 
-dictionary_search_drift_find_term_bank_sequences:
-
+dictionary_search_drift_find_term_bank_sequences_by_pairs:
     WITH
-        SequenceNumbers(seqNumber) AS (
-            SELECT value FROM json_each(:sequence_numbers)
-            WHERE value IS NOT NULL
+        -- Extract the specific (Sequence, Dictionary) pairs we need
+        RequiredLookups(seqNumber, targetDictId) AS (
+            SELECT 
+                CAST(json_extract(value, '$.s') AS INTEGER),
+                CAST(json_extract(value, '$.d') AS INTEGER)
+            FROM json_each(:lookup_pairs)
         ),
+        
+        -- IDs already fetched to exclude
         ExcludedTermBankIds(termBankId) AS (
             SELECT value FROM json_each(:excluded_term_bank_ids)
             WHERE value IS NOT NULL
         )
-        
+
     SELECT 
         term_bank_v3_table.id as term_bank_id,
+        term_bank_v3_table.index_id,
         NULL as search_term,
         NULL as fts5_rank,
         4 as match_type,
@@ -335,13 +341,19 @@ dictionary_search_drift_find_term_bank_sequences:
         NULL as matchedText,
         NULL as matchedTextLength,
         term_bank_v3_table.sequence_number
-    FROM SequenceNumbers
+    FROM RequiredLookups
+    
+    -- JOIN strictly on BOTH Sequence AND Dictionary ID
     JOIN term_bank_v3_table
-        ON term_bank_v3_table.sequence_number = SequenceNumbers.seqNumber
-    LEFT JOIN ExcludedTermBankIds AS Excluded
-        ON term_bank_v3_table.id = Excluded.termBankId
+        ON term_bank_v3_table.sequence_number = RequiredLookups.seqNumber
+        AND term_bank_v3_table.index_id = RequiredLookups.targetDictId
+
     JOIN index_table
         ON term_bank_v3_table.index_id = index_table.id
+        
+    -- Exclude entries we already have
+    LEFT JOIN ExcludedTermBankIds AS Excluded
+        ON term_bank_v3_table.id = Excluded.termBankId
     WHERE
         Excluded.termBankId IS NULL;
 

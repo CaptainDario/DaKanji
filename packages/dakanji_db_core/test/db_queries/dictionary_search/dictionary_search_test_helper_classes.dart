@@ -1,15 +1,17 @@
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 
 
 
 /// Defines a single, comprehensive test case that can assert against the different
 /// categories of results from a `DictionaryLookupResult`.
-class ExpectedDictionarySearchResult {
+class DictionarySearchTestCase {
   final String description;
   final String query;
-  final List<List<String>> tags;
-  final List<List<String>> pos;
+  final List<String> tags;
+  final List<String> pos;
   final List<int>? indexesToInclude;
+  final List<DictionaryGroupingRule> groupingRules;
   final bool useOnlyEnabledDictionaries;
   final bool useOnlyDefaultDictionaries;
 
@@ -25,12 +27,13 @@ class ExpectedDictionarySearchResult {
   /// Expected results from fuzzy matching.
   final List<ExpectedMatchGroup> fuzzyMatches;
 
-  const ExpectedDictionarySearchResult({
+  const DictionarySearchTestCase({
     required this.description,
     required this.query,
     this.tags = const [],
     this.pos = const [],
     this.indexesToInclude,
+    this.groupingRules = const [],
     this.useOnlyEnabledDictionaries = false,
     this.useOnlyDefaultDictionaries = false,
     this.queryMatches = const ExpectedMatchGroup(),
@@ -163,14 +166,9 @@ class ExpectedMatchGroup {
     final totalMatches = groups.fold<int>(0, (sum, group) => sum + group.length);
     buffer.writeln('$indent▶ $title ($totalMatches):'); // e.g., "▶ Exact Matches (3):"
 
-    // Removed the 'multipleGroups' check. We will now print
-    // the group header for every group to match the real output.
     for (var i = 0; i < groups.length; i++) {
       final group = groups[i];
-      
-      // Always print the group header, just like DictionaryMatch.toFormattedString
       buffer.writeln('$nextIndent- Group:'); 
-
       // Indent the entries *inside* the group
       final groupIndent = '$nextIndent  '; // e.g., "    "
 

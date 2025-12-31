@@ -1,10 +1,11 @@
 import 'dictionary_search_test_helper_classes.dart';
 
 
+String descriptionPrefix = "Wildcard Search";
 
-List<ExpectedDictionarySearchResult> wildcardSearchTestCases = [
-  ExpectedDictionarySearchResult(
-    description: "Wildcard '?': single character",
+List<DictionarySearchTestCase> wildcardSearchTestCases = [
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: '?' (single character)",
     query: '?本',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -13,8 +14,8 @@ List<ExpectedDictionarySearchResult> wildcardSearchTestCases = [
       ],
     ),
   ),
-  ExpectedDictionarySearchResult(
-    description: "Wildcard '?': Two wildcards",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: '??' (Two wildcards)",
     query: '?本?',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -26,8 +27,8 @@ List<ExpectedDictionarySearchResult> wildcardSearchTestCases = [
   /// 中国人 has the highest popularity (147) so it should come first
   /// 人, 日本人 and ドイツ人 all have the same popularity (99) so they are sorted
   /// by length (shorter first)
-  ExpectedDictionarySearchResult(
-    description: "Wildcard '*': zero to many characters",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: '*' (zero to many characters)",
     query: '*人',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -38,8 +39,8 @@ List<ExpectedDictionarySearchResult> wildcardSearchTestCases = [
       ],
     ),
   ),
-  ExpectedDictionarySearchResult(
-    description: "Wildcard '*': zero characters",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: '*' (zero characters)",
     query: '*日本人',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -47,8 +48,8 @@ List<ExpectedDictionarySearchResult> wildcardSearchTestCases = [
       ],
     ),
   ),
-ExpectedDictionarySearchResult(
-    description: "Wildcard '*': multiple wild cards",
+DictionarySearchTestCase(
+    description: "$descriptionPrefix: '**' (multiple wild cards)",
     query: '*本*',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -69,8 +70,8 @@ ExpectedDictionarySearchResult(
       ],
     ),
   ),
-  ExpectedDictionarySearchResult(
-    description: "Wildcard '*' and '?': using both wildcards in one query",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: '*' and '?' (using both wildcards in one query)",
     query: '*本?',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -81,8 +82,8 @@ ExpectedDictionarySearchResult(
     ),
   ),
 
-  ExpectedDictionarySearchResult(
-    description: "GLOB [...]: Character Set",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: GLOB [...] (Character Set)",
     query: '[日二]本',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -91,8 +92,8 @@ ExpectedDictionarySearchResult(
       ],
     ),
   ),
-  ExpectedDictionarySearchResult(
-    description: "GLOB [^...]: Negated Character Set",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: GLOB [^...] (Negated Character Set)",
     query: '[^日]本',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -101,8 +102,8 @@ ExpectedDictionarySearchResult(
       ],
     ),
   ),
-   ExpectedDictionarySearchResult(
-    description: "GLOB [x-y]: Character Range",
+   DictionarySearchTestCase(
+    description: "$descriptionPrefix: GLOB [x-y] (Character Range)",
     query: '[a-c]',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [

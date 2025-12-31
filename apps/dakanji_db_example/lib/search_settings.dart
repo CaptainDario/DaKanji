@@ -1,18 +1,18 @@
-import 'package:dakanji_db_core/database/db_queries/grouping_strategy.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 
 class SearchSettings {
   bool normalizedSearch;
   bool convertRomaji;
   bool deconjugation;
   bool spellfix;
-  GroupingStrategy groupingStrategy;
+  DictionaryGroupingRule groupingRule;
 
   SearchSettings({
     this.normalizedSearch = true,
     this.convertRomaji = true,
     this.deconjugation = true,
     this.spellfix = true,
-    this.groupingStrategy = GroupingStrategy.bySequence,
+    this.groupingRule = const NoGroupingRule(),
   });
 
   // Helper to clone current settings so we don't mutate state directly until saved
@@ -21,6 +21,6 @@ class SearchSettings {
     convertRomaji: convertRomaji,
     deconjugation: deconjugation,
     spellfix: spellfix,
-    groupingStrategy: groupingStrategy
+    groupingRule: groupingRule,
   );
 }

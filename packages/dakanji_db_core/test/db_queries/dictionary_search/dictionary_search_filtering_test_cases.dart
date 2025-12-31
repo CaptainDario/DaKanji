@@ -1,13 +1,14 @@
 import 'dictionary_search_test_helper_classes.dart';
 
 
+String descriptionPrefix = "Filtering";
 
-List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
+List<DictionarySearchTestCase> tagFilteringTestCases = [
 
-  ExpectedDictionarySearchResult(
-    description: "Filter by single tag (DE)",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: by single tag (DE)",
     query: '人',
-    tags: [['DE']],
+    tags: ['DE'],
     queryMatches: const ExpectedMatchGroup(
       tokenMatches: [
         [
@@ -17,10 +18,10 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
     ),
   ),
 
-  ExpectedDictionarySearchResult(
-    description: "Filter by multiple tags (Japanese and Rare)",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: multiple tags (Japanese and Rare)",
     query: '電車',
-    tags: [['JP', 'R']],
+    tags: ['JP', 'R'],
     queryMatches: const ExpectedMatchGroup(
       tokenMatches: [
         [
@@ -30,14 +31,14 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
     ),
   ),
 
-  ExpectedDictionarySearchResult(
-    description: "No matches due to tag filtering",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: No matches due to tag filtering",
     query: '人',
-    tags: [['FR']],
+    tags: ['FR'],
   ),
 
-  ExpectedDictionarySearchResult(
-    description: "No tag filtering (empty tag list)",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: No tag filtering (empty tag list)",
     query: '人',
     tags: [],
     queryMatches: const ExpectedMatchGroup(
@@ -51,10 +52,10 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
       ],
     ),
   ),
-  ExpectedDictionarySearchResult(
-    description: "Filter by single tag (DE) on wildcard search",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: Filter by single tag (DE) on wildcard search",
     query: '*人',
-    tags: [['DE']],
+    tags: ['DE'],
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
         [
@@ -64,10 +65,30 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
     ),
   ),
 
-  // ----------
+  // --- PoS -------------------------------------------------------------------
 
-  ExpectedDictionarySearchResult(
-    description: "Filter by term",
+    DictionarySearchTestCase(
+    description: "$descriptionPrefix: Only nouns should be found",
+    query: "食べる",
+    pos: ["n"],
+    queryMatches: const ExpectedMatchGroup(
+      prefixMatches: [
+        [
+          ExpectedDictionaryMatch(
+            term: '食べるラー油',
+            reading: 'たべるらーゆ',
+            definitions: ['chili oil with garlic, etc. for eating with rice'],
+            match: '食べるラー油',
+          ),
+        ]
+      ]
+    ),
+  ),
+
+  // --- Term/Reading/Definition -----------------------------------------------
+
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: Filter by term",
     query: '?t=会社',
 
     queryMatches: const ExpectedMatchGroup(
@@ -78,8 +99,8 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
       ],
     ),
   ),
-  ExpectedDictionarySearchResult(
-    description: "Filter by term + reading",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: Filter by term + reading",
     query: '?t=会社&r=かいしゃ',
 
     queryMatches: const ExpectedMatchGroup(
@@ -90,8 +111,8 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
       ],
     ),
   ),
-  ExpectedDictionarySearchResult(
-    description: "Filter by term + definition",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: Filter by term + definition",
     query: '?t=会社&d=かいしゃ',
 
     queryMatches: const ExpectedMatchGroup(
@@ -102,8 +123,8 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
       ],
     ),
   ),
-  ExpectedDictionarySearchResult(
-    description: "Filter by term + reading + definition (1 match)",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: Filter by term + reading + definition (1 match)",
     query: '?t=会社&r=かいしゃ&d=company (term+reading+definition)',
 
     queryMatches: const ExpectedMatchGroup(
@@ -114,8 +135,8 @@ List<ExpectedDictionarySearchResult> tagFilteringTestCases = [
       ],
     ),
   ),
-  ExpectedDictionarySearchResult(
-    description: "Filter by term + reading + definition (0 match, entry with this reading does not exist)",
+  DictionarySearchTestCase(
+    description: "$descriptionPrefix: Filter by term + reading + definition (0 match, entry with this reading does not exist)",
     query: '?t=会社&r=がいしゃ&d=かいしゃ (reading in definition)',
 
     queryMatches: const ExpectedMatchGroup(),

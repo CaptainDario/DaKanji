@@ -1,4 +1,5 @@
-import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_ipa_entry.dart';
@@ -119,7 +120,7 @@ Matcher matchesSearchResult(List<ExpectedDictionaryMatch> expectedGroup) {
 /// Helper function to assert that an actual `SearchMatchGroup`
 /// matches an `ExpectedMatchGroup`.
 void expectMatchGroup(
-    SearchMatchGroup actual,
+    DictionaryMatchGroup actual,
     ExpectedMatchGroup expected,
     String query,
     String groupName,
@@ -196,7 +197,7 @@ void _compareMatchBucket(
 }
 
 void expectMatchGroupList(
-  List<SearchMatchGroup> actual,
+  List<DictionaryMatchGroup> actual,
   List<ExpectedMatchGroup> expected,
   String query,
   String label,

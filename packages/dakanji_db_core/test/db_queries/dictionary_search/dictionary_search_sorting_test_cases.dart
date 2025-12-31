@@ -6,8 +6,8 @@ import 'dictionary_search_test_helper_classes.dart';
 
 String descriptionPrefix = "Sorting";
 
-List<ExpectedDictionarySearchResult> sortingTestCases = [
-  ExpectedDictionarySearchResult(
+List<DictionarySearchTestCase> sortingTestCases = [
+  DictionarySearchTestCase(
     description: '$descriptionPrefix: popularity for identical reading matches',
     query: 'はやい',
     queryMatches: const ExpectedMatchGroup(
@@ -20,7 +20,7 @@ List<ExpectedDictionarySearchResult> sortingTestCases = [
   ),
 
   // Length Difference
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: '$descriptionPrefix: length difference for prefix matches',
     query: '電車',
     queryMatches: const ExpectedMatchGroup(
@@ -40,7 +40,7 @@ List<ExpectedDictionarySearchResult> sortingTestCases = [
   ),
 
   // Test for Length Difference as a Tie-Breaker
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: '$descriptionPrefix: length difference when popularity is equal',
     query: 'にほん',
     queryMatches: const ExpectedMatchGroup(
@@ -64,7 +64,7 @@ List<ExpectedDictionarySearchResult> sortingTestCases = [
       ]
     ),
   ),
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: '''$descriptionPrefix:
      Three imported dictionaries should have their user defined sort orders applied correctly''',
     query: "生餃子",

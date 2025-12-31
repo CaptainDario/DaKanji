@@ -1,4 +1,4 @@
-import 'package:dakanji_db_core/database/db_queries/grouping_strategy.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_example/search_settings.dart';
 import 'package:flutter/material.dart';
 
@@ -69,32 +69,35 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
                 ),
                 _buildToggle(
                   title: "Group by term",
-                  subtitle: "Group identical entries (term + reading) together",
-                  value: settings.groupingStrategy == GroupingStrategy.byTerm,
+                  subtitle: "Group identical entries (term only) together",
+                  value: settings.groupingRule is TermAndReadingGroupingRule,
                   onChanged: (v) => setState(() { 
-                    settings.groupingStrategy = v
-                      ? GroupingStrategy.byTerm
-                      : GroupingStrategy.none;
+                    settings.groupingRule = v
+                      ? TermAndReadingGroupingRule({}) // TODO
+                      : NoGroupingRule();
                   }),
                 ),
                 _buildToggle(
                   title: "Group by term and reading",
                   subtitle: "Group identical entries (term + reading) together",
-                  value: settings.groupingStrategy == GroupingStrategy.byTermAndReading,
+                  value: settings.groupingRule is TermGroupingRule,
                   onChanged: (v) => setState(() { 
-                    settings.groupingStrategy = v
-                      ? GroupingStrategy.byTermAndReading
-                      : GroupingStrategy.none;
+                    settings.groupingRule = v
+                      ? TermGroupingRule({}) // TODO
+                      : NoGroupingRule();
                   }),
                 ),
                 _buildToggle(
                   title: "Group by Sequence",
                   subtitle: "Group results by their sequence id",
-                  value: settings.groupingStrategy == GroupingStrategy.bySequence,
+                  value: settings is SequenceGroupingRule,
                   onChanged: (v) => setState(() { 
-                    settings.groupingStrategy = v
-                      ? GroupingStrategy.bySequence
-                      : GroupingStrategy.none;
+                    settings.groupingRule = v
+                      ? SequenceGroupingRule(
+                        primaryDictId: 0, // TODO
+                        secondaryDictIds: {} // TODO
+                      )
+                      : NoGroupingRule();
                   }),
                 ),
               ],

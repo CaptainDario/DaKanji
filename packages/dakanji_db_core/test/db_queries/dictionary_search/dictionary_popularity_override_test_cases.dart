@@ -8,8 +8,8 @@ import 'dictionary_search_test_helper_classes.dart';
 
 String descriptionPrefix = "Popularity Override";
 
-List<ExpectedDictionarySearchResult> popularityOverrideTestCases = [
-  ExpectedDictionarySearchResult(
+List<DictionarySearchTestCase> popularityOverrideTestCases = [
+  DictionarySearchTestCase(
     description: '''$descriptionPrefix: Popularity override should rank 生餃子 -> 生ける -> 生ビール but still apply dictionary sort order
     生ビール　does not have a popularity override and should come last
     ''',

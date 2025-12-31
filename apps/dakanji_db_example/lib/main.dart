@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:async/async.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:dakanji_db_example/init.dart';
 import 'package:dakanji_db_example/search_results/dictionary_search_result_widget.dart';
@@ -219,12 +220,15 @@ class _MyHomePageState extends State<MyHomePage> {
       print("Searching for: $term");
       Stopwatch stopwatch = Stopwatch()..start();
       result = await daKanjiDB.dBQueriesDao.dictionarySearch(
-        term,
-        normalizedSearch: _searchSettings.normalizedSearch,
-        normalizedSearchConvertsRomajiToHiragana: _searchSettings.convertRomaji,
-        deconjugationSearch: _searchSettings.deconjugation,
-        spellfixSearch: _searchSettings.spellfix,
-        groupingStrategy: _searchSettings.groupingStrategy
+        DictionarySearchParams(
+          query: term,
+          normalizedSearch: _searchSettings.normalizedSearch,
+          normalizedSearchConvertsRomajiToHiragana: _searchSettings.convertRomaji,
+          deconjugationSearch: _searchSettings.deconjugation,
+          spellfixSearch: _searchSettings.spellfix,
+          groupingRules: [_searchSettings.groupingRule],
+        ),
+        printDebugInfo: !kReleaseMode,
       );
       print("Search completed in ${stopwatch.elapsedMilliseconds}ms.");
     }

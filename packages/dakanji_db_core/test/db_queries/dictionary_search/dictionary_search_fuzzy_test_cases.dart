@@ -2,14 +2,14 @@ import 'dictionary_search_test_helper_classes.dart';
 
 
 
-List<ExpectedDictionarySearchResult> fuzzySearchTestCases = [
+List<DictionarySearchTestCase> fuzzySearchTestCases = [
 
   // Test Case 2: Sorting Fuzzy Matches by Cost
   // This test ensures that fuzzy results are sorted correctly among themselves.
   // A 'ち' -> 'じ' substitution has a cost of 10.
   // A 'にほん' -> 'でんしゃ' substitution has a much higher cost (multiple default substitutions of 100).
   // Therefore, 'にほんじん' should appear first.
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: "Fuzzy (Sort Order): Lower cost errors (voiced kana, cost 10) should rank higher than higher cost errors (default substitution, cost 100+)",
     query: "ちゅうごくしん",
     fuzzyMatches: [
@@ -39,7 +39,7 @@ List<ExpectedDictionarySearchResult> fuzzySearchTestCases = [
   ),
 
   // Tests a common phonetic error defined in your cost table.
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: "Fuzzy (match): Long vowel confusion りょこお -> りょこう (Cost 25)",
     query: "りょこお",
     fuzzyMatches: [
@@ -58,7 +58,7 @@ List<ExpectedDictionarySearchResult> fuzzySearchTestCases = [
     ],
   ),
   // Tests a common phonetic error defined in your cost table.
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: "Fuzzy (match): Long vowel confusion りょこしゃ -> りょこうしゃ",
     query: "りょこしゃ",
     fuzzyMatches: [
@@ -78,7 +78,7 @@ List<ExpectedDictionarySearchResult> fuzzySearchTestCases = [
   ),
 
   // Tests a common typing mistake involving yōon characters.
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: "Fuzzy (match): Small vs large kana でんしや -> でんしゃ (Cost 20)",
     query: "でんしや",
     fuzzyMatches: [
@@ -96,7 +96,7 @@ List<ExpectedDictionarySearchResult> fuzzySearchTestCases = [
       ),
     ],
   ),
-  ExpectedDictionarySearchResult(
+  DictionarySearchTestCase(
     description: "Fuzzy (match): delete extra character",
     query: "たべものう",
     fuzzyMatches: [

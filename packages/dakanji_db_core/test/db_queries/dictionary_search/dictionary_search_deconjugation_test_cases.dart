@@ -4,9 +4,11 @@ import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 import '../../dictionary_test_variables.dart';
 import 'dictionary_search_test_helper_classes.dart';
 
-List<ExpectedDictionarySearchResult> deconjugationTestCases = [
-  ExpectedDictionarySearchResult(
-    description: 'Deconjugation: polite form',
+String descriptionPrefix = "Deconjugation";
+
+List<DictionarySearchTestCase> deconjugationTestCases = [
+  DictionarySearchTestCase(
+    description: '$descriptionPrefix: polite form',
     query: '食べます',
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -25,8 +27,8 @@ List<ExpectedDictionarySearchResult> deconjugationTestCases = [
       )
     ],
   ),
-  ExpectedDictionarySearchResult(
-    description: 'Deconjugation: ambiguous potential form',
+  DictionarySearchTestCase(
+    description: '$descriptionPrefix: ambiguous potential form',
     query: 'いける',
     queryMatches: ExpectedMatchGroup(
       exactMatches: [
@@ -61,8 +63,8 @@ List<ExpectedDictionarySearchResult> deconjugationTestCases = [
       )
     ],
   ),
-  ExpectedDictionarySearchResult(
-    description: 'Deconjugation: ambiguous negative form',
+  DictionarySearchTestCase(
+    description: '$descriptionPrefix: ambiguous negative form',
     query: 'ぶれない',
     queryVariantMatches: [
       const ExpectedMatchGroup(
@@ -81,8 +83,8 @@ List<ExpectedDictionarySearchResult> deconjugationTestCases = [
       )
     ],
   ),
-  ExpectedDictionarySearchResult(
-    description: 'Deconjugation: romaji',
+  DictionarySearchTestCase(
+    description: '$descriptionPrefix: romaji',
     query: 'tabero',
     queryVariantMatches: [
       const ExpectedMatchGroup(
@@ -103,8 +105,8 @@ List<ExpectedDictionarySearchResult> deconjugationTestCases = [
       )
     ],
   ),
-  ExpectedDictionarySearchResult(
-    description: 'Deconjugation: romaji and PoS matching',
+  DictionarySearchTestCase(
+    description: '$descriptionPrefix: romaji and PoS matching',
     query: 'ikanakatta',
     queryVariantMatches: [
       const ExpectedMatchGroup(

@@ -1,4 +1,4 @@
-import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_tag_bank_widget.dart';
 import 'package:dakanji_db_example/search_results/dictionary_match_term_bank_definitions_widget.dart';

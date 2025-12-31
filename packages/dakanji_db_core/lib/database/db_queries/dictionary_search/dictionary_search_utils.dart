@@ -1,3 +1,4 @@
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:fullwidth_halfwidth_converter/fullwidth_halfwidth_converter.dart';
 import 'package:language_processing/japanese/conjugation/yomitan_deconjugate.dart';
 import 'package:language_processing/japanese/japanese_string_operations.dart';
@@ -50,3 +51,25 @@ import 'package:language_processing/japanese/japanese_string_operations.dart';
     termVariants: termVariants
   );
 }
+
+/// Helper to print debug information
+void printDictionarySearchDebugInfo(
+  DictionarySearchParams params,
+  List<String> normalizedTerms,
+  List<DeconjugationResult> termVariants,
+  List<String> spellingVariations,
+  bool isWildcardSearch,
+) {
+    print("=== Dictionary Search Debug Info ===");
+    print("Input Term: ${params.query}");
+    print("Normalized Search: ${params.normalizedSearch}");
+    print("Deconjugation Search: ${params.deconjugationSearch}");
+    print("Spellfix Search: ${params.spellfixSearch}");
+    print("Normalized Terms: $normalizedTerms");
+    print("Term Variants (Deconjugated): ${termVariants.map((e) => e.deconjugatedTerm).toList()}");
+    print("Spelling Variations: $spellingVariations");
+    print("Is Wildcard Search: $isWildcardSearch");
+    print("Indexes to Include: ${params.indexesToInclude}");
+    print("Grouping Rules: ${params.groupingRules}");
+    print("====================================");
+  }
