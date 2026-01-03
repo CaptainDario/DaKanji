@@ -12,7 +12,10 @@ class SearchSettings {
     this.convertRomaji = true,
     this.deconjugation = true,
     this.spellfix = true,
-    this.groupingRule = const NoGroupingRule(),
+    this.groupingRule = const SequenceGroupingRule(
+      sourceDictId: 3,
+      targetDictIds: {3}
+    ),
   });
 
   // Helper to clone current settings so we don't mutate state directly until saved

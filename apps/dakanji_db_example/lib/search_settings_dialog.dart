@@ -73,7 +73,7 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
                   value: settings.groupingRule is TermAndReadingGroupingRule,
                   onChanged: (v) => setState(() { 
                     settings.groupingRule = v
-                      ? TermAndReadingGroupingRule({}) // TODO
+                      ? TermAndReadingGroupingRule({3})
                       : NoGroupingRule();
                   }),
                 ),
@@ -83,19 +83,19 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
                   value: settings.groupingRule is TermGroupingRule,
                   onChanged: (v) => setState(() { 
                     settings.groupingRule = v
-                      ? TermGroupingRule({}) // TODO
+                      ? TermGroupingRule({3})
                       : NoGroupingRule();
                   }),
                 ),
                 _buildToggle(
                   title: "Group by Sequence",
                   subtitle: "Group results by their sequence id",
-                  value: settings is SequenceGroupingRule,
+                  value: settings.groupingRule is SequenceGroupingRule,
                   onChanged: (v) => setState(() { 
                     settings.groupingRule = v
                       ? SequenceGroupingRule(
-                        primaryDictId: 0, // TODO
-                        secondaryDictIds: {} // TODO
+                        sourceDictId: 3,
+                        targetDictIds: {3}
                       )
                       : NoGroupingRule();
                   }),
