@@ -4,7 +4,7 @@ String descriptionPrefix = "Input processing";
 
 List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Search with Romaji input (taberu -> たべる)',
+    description: 'Search with Romaji input (taberu -> たべる)',
     query: 'taberu',
     normalizedQueryMatchGroups: [
       const ExpectedMatchGroup(
@@ -22,7 +22,7 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
     ]
   ),
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Search with uppercase Romaji (TABERU -> たべる)',
+    description: 'Search with uppercase Romaji (TABERU -> たべる)',
     query: 'TABERU',
     normalizedQueryMatchGroups: [
       const ExpectedMatchGroup(
@@ -40,7 +40,7 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
     ]
   ),
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Search with Romaji and kana input (カワii -> かわいい)',
+    description: 'Search with Romaji and kana input (カワii -> かわいい)',
     query: 'カワii',
     normalizedQueryMatchGroups: [
       const ExpectedMatchGroup(
@@ -53,7 +53,7 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
     ]
   ),
   DictionarySearchTestCase(
-    description: '''$descriptionPrefix: Search for こんぴゅーたー should match コンピューター (term) and こんぴゅーたー (normalized term) as exact matches,
+    description: '''Search for こんぴゅーたー should match コンピューター (term) and こんぴゅーたー (normalized term) as exact matches,
     but not コンピューター (normalized reading) as normalized match as it is already a query match
     ''',
     query: 'こんぴゅーたー',
@@ -75,8 +75,7 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
     ]
   ),
   DictionarySearchTestCase(
-    description: '''$descriptionPrefix:
-      Search for ストラップ should match ストラップ (reading) and すとらっぷ (normalized reading) as exact matches,
+    description: '''Search for ストラップ should match ストラップ (reading) and すとらっぷ (normalized reading) as exact matches,
       but not コンピューター (normalized reading) as a normalized match as it is already a query match
     ''',
     query: 'ストラップ',
@@ -98,7 +97,7 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
     ]
   ),
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Search for コンピューター (Katakana) should match こんぴゅーたー (reading)',
+    description: 'Search for コンピューター (Katakana) should match こんぴゅーたー (reading)',
     query: 'コンピューター',
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -118,7 +117,7 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
     ]
   ),
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Search for とうきょう (explicit vowel) should match トーキョー (long vowel mark) ONLY in normalized matches',
+    description: 'Search for とうきょう (explicit vowel) should match トーキョー (long vowel mark) ONLY in normalized matches',
     query: 'とうきょう',
     normalizedQueryMatchGroups: [
       const ExpectedMatchGroup(
@@ -132,7 +131,7 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
   ),
 
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Search for らーめん (long vowel mark) should match らあめん (explicit vowel)',
+    description: 'Search for らーめん (long vowel mark) should match らあめん (explicit vowel)',
     query: 'らーめん',
     normalizedQueryMatchGroups: [
       const ExpectedMatchGroup(
@@ -146,7 +145,7 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
   ),
 
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Search for びーる should match 生ビール (normalized tokens)',
+    description: 'Search for びーる should match 生ビール (normalized tokens)',
     query: 'びーる',
     normalizedQueryMatchGroups: [
       const ExpectedMatchGroup(
@@ -161,7 +160,7 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
 
   DictionarySearchTestCase(
     description:
-        '$descriptionPrefix: Romaji to Hiragana with multiple results (kani -> かんい, かに)',
+        'Romaji to Hiragana with multiple results (kani -> かんい, かに)',
     query: 'kani',
     normalizedQueryMatchGroups: [
       ExpectedMatchGroup(exactMatches: [

@@ -1,7 +1,20 @@
 import 'package:dakanji_db_core/data/dictionary_types.dart';
+import 'package:dakanji_db_core/data/term_meta_entry_types.dart';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
+import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 
+
+
+final namaGyouzaMeta = TermMetaBankV3Entry(
+  id: 0,
+  indexEntry: testDictionaryIndexEntry,
+  term: "生餃子",
+  frequency: 3,
+  type: TermMetaBankEntryTypes.freq,
+  pitchs: [],
+  ipas: []
+);
 
 
 IndexEntry testDictionaryIndexEntry = IndexEntry(

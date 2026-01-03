@@ -7,7 +7,7 @@ String descriptionPrefix = "Search";
 final List<DictionarySearchTestCase> searchTestCases = [
   // --- General Search & Sorting ---
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Exact match on term',
+    description: 'Exact match on term',
     query: "食べる",
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -29,7 +29,7 @@ final List<DictionarySearchTestCase> searchTestCases = [
     ),
   ),
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Prefix match on term',
+    description: 'Prefix match on term',
     query: '食べ',
     queryMatches: const ExpectedMatchGroup(
       prefixMatches: [
@@ -41,7 +41,7 @@ final List<DictionarySearchTestCase> searchTestCases = [
     ),
   ),
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Exact match on reading (hiragana query)',
+    description: 'Exact match on reading (hiragana query)',
     query: 'たべる',
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -58,7 +58,7 @@ final List<DictionarySearchTestCase> searchTestCases = [
   ),
   // --- Definitions ---
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Definition ordering',
+    description: 'Definition ordering',
     query: "召し上がる",
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -75,7 +75,7 @@ final List<DictionarySearchTestCase> searchTestCases = [
 
   // --- Sub matches ---
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: Definition match ("eat" should match "to eat" and "eating")',
+    description: 'Definition match ("eat" should match "to eat" and "eating")',
     query: 'eat',
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -92,7 +92,7 @@ final List<DictionarySearchTestCase> searchTestCases = [
   ),
   // limit serach results when searching for one character
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: Searching for one roman character should NOT yield prefix matches",
+    description: "Searching for one roman character should NOT yield prefix matches",
     query: "a",
     // Expected results for the hiragana-converted query: 'でんしゃ'
     queryMatches: const ExpectedMatchGroup(
@@ -117,7 +117,7 @@ final List<DictionarySearchTestCase> searchTestCases = [
     ),
   ),
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: Searching for one kanji character SHOULD yield prefix matches",
+    description: "Searching for one kanji character SHOULD yield prefix matches",
     query: "電",
     // Expected results for the hiragana-converted query: 'でんしゃ'
     queryMatches: const ExpectedMatchGroup(

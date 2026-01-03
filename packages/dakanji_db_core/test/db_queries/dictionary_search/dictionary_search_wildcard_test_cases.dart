@@ -1,11 +1,10 @@
 import 'dictionary_search_test_helper_classes.dart';
 
 
-String descriptionPrefix = "Wildcard Search";
 
 List<DictionarySearchTestCase> wildcardSearchTestCases = [
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: '?' (single character)",
+    description: "'?' (single character)",
     query: '?本',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -15,7 +14,7 @@ List<DictionarySearchTestCase> wildcardSearchTestCases = [
     ),
   ),
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: '??' (Two wildcards)",
+    description: "'??' (Two wildcards)",
     query: '?本?',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -28,7 +27,7 @@ List<DictionarySearchTestCase> wildcardSearchTestCases = [
   /// 人, 日本人 and ドイツ人 all have the same popularity (99) so they are sorted
   /// by length (shorter first)
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: '*' (zero to many characters)",
+    description: "'*' (zero to many characters)",
     query: '*人',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -40,7 +39,7 @@ List<DictionarySearchTestCase> wildcardSearchTestCases = [
     ),
   ),
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: '*' (zero characters)",
+    description: "'*' (zero characters)",
     query: '*日本人',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -49,7 +48,7 @@ List<DictionarySearchTestCase> wildcardSearchTestCases = [
     ),
   ),
 DictionarySearchTestCase(
-    description: "$descriptionPrefix: '**' (multiple wild cards)",
+    description: "'**' (multiple wild cards)",
     query: '*本*',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -71,7 +70,7 @@ DictionarySearchTestCase(
     ),
   ),
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: '*' and '?' (using both wildcards in one query)",
+    description: "'*' and '?' (using both wildcards in one query)",
     query: '*本?',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -83,7 +82,7 @@ DictionarySearchTestCase(
   ),
 
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: GLOB [...] (Character Set)",
+    description: "GLOB [...] (Character Set)",
     query: '[日二]本',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -93,7 +92,7 @@ DictionarySearchTestCase(
     ),
   ),
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: GLOB [^...] (Negated Character Set)",
+    description: "GLOB [^...] (Negated Character Set)",
     query: '[^日]本',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
@@ -103,7 +102,7 @@ DictionarySearchTestCase(
     ),
   ),
    DictionarySearchTestCase(
-    description: "$descriptionPrefix: GLOB [x-y] (Character Range)",
+    description: "GLOB [x-y] (Character Range)",
     query: '[a-c]',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [

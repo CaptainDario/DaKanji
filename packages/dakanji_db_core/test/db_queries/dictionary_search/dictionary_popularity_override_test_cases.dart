@@ -5,12 +5,9 @@ import '../../dictionary_test_variables.dart';
 import 'dictionary_search_test_helper_classes.dart';
 
 
-
-String descriptionPrefix = "Popularity Override";
-
 List<DictionarySearchTestCase> popularityOverrideTestCases = [
   DictionarySearchTestCase(
-    description: '''$descriptionPrefix: Popularity override should rank 生餃子 -> 生ける -> 生ビール but still apply dictionary sort order
+    description: '''Popularity override should rank 生餃子 -> 生ける -> 生ビール but still apply dictionary sort order
     生ビール　does not have a popularity override and should come last
     ''',
     query: "生",
@@ -22,17 +19,7 @@ List<DictionarySearchTestCase> popularityOverrideTestCases = [
           reading: 'なまぎょうざ',
           match: '生餃子',
           definitions: ['2) raw gyoza; uncooked dumplings'],
-          metas: [
-            TermMetaBankV3Entry(
-              id: 0,
-              indexEntry: testDictionaryIndexEntry,
-              term: "生餃子",
-              frequency: 3,
-              type: TermMetaBankEntryTypes.freq,
-              pitchs: [],
-              ipas: []
-            )
-          ]
+          metas: [namaGyouzaMeta]
         )],
         // --- dictionary 2 ----------------------------------------------------
         [ExpectedDictionaryMatch(
@@ -40,17 +27,7 @@ List<DictionarySearchTestCase> popularityOverrideTestCases = [
           reading: 'なまぎょうざ',
           match: '生餃子',
           definitions: ['1) raw gyoza; uncooked dumplings'],
-          metas: [
-            TermMetaBankV3Entry(
-              id: 0,
-              indexEntry: testDictionaryIndexEntry,
-              term: "生餃子",
-              frequency: 3,
-              type: TermMetaBankEntryTypes.freq,
-              pitchs: [],
-              ipas: []
-            )
-          ]
+          metas: [namaGyouzaMeta]
         )],
         [ExpectedDictionaryMatch(
           term: '生ける',
@@ -81,17 +58,7 @@ List<DictionarySearchTestCase> popularityOverrideTestCases = [
           reading: 'なまぎょうざ',
           match: '生餃子',
           definitions: ['3) raw gyoza; uncooked dumplings'],
-          metas: [
-            TermMetaBankV3Entry(
-              id: 0,
-              indexEntry: testDictionaryIndexEntry,
-              term: "生餃子",
-              frequency: 3,
-              type: TermMetaBankEntryTypes.freq,
-              pitchs: [],
-              ipas: []
-            )
-          ]
+          metas: [namaGyouzaMeta]
         )],
       ],
     ),

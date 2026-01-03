@@ -4,11 +4,11 @@ import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 import '../../dictionary_test_variables.dart';
 import 'dictionary_search_test_helper_classes.dart';
 
-String descriptionPrefix = "Deconjugation";
+
 
 List<DictionarySearchTestCase> deconjugationTestCases = [
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: polite form',
+    description: 'polite form',
     query: '食べます',
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -28,7 +28,7 @@ List<DictionarySearchTestCase> deconjugationTestCases = [
     ],
   ),
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: ambiguous potential form',
+    description: 'ambiguous potential form',
     query: 'いける',
     queryMatches: ExpectedMatchGroup(
       exactMatches: [
@@ -64,7 +64,7 @@ List<DictionarySearchTestCase> deconjugationTestCases = [
     ],
   ),
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: ambiguous negative form',
+    description: 'ambiguous negative form',
     query: 'ぶれない',
     queryVariantMatches: [
       const ExpectedMatchGroup(
@@ -84,7 +84,7 @@ List<DictionarySearchTestCase> deconjugationTestCases = [
     ],
   ),
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: romaji',
+    description: 'romaji',
     query: 'tabero',
     queryVariantMatches: [
       const ExpectedMatchGroup(
@@ -106,7 +106,7 @@ List<DictionarySearchTestCase> deconjugationTestCases = [
     ],
   ),
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: romaji and PoS matching',
+    description: 'romaji and PoS matching',
     query: 'ikanakatta',
     queryVariantMatches: [
       const ExpectedMatchGroup(

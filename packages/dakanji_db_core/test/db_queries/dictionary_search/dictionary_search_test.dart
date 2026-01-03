@@ -47,19 +47,19 @@ final List<(
   (indexOnOffTestCases, ),
 ];
 final List<String> testCaseNames = [
-  "Search Test Cases",
-  "Deconjugation Test Cases",
-  "Wildcard Search Test Cases",
-  "Input processing Test Cases",
-  "Sorting Test Cases",
-  "Fuzzy Search Test Cases",
-  "Tag Filtering Test Cases",
+  "Search",
+  "Deconjugation",
+  "Wildcard Search",
+  "Input processing",
+  "Sorting",
+  "Fuzzy Search",
+  "Tag Filtering",
   "Meta bank test cases",
   "Popularity Override",
-  "Grouping Sequences Test Cases",
-  "Grouping by Term Test Cases",
-  "Grouping by Term and Reading Test Cases",
-  "Index On/Off Test Cases",
+  "Grouping Sequences",
+  "Grouping by Term",
+  "Grouping by Term + Reading",
+  "Index On/Off",
 ];
 
 String currentTestCase = "";
@@ -82,14 +82,14 @@ void main() {
 
     // This `group` call is now correctly discovered.
     group(testCaseName, () {
-      for (int i=0; i < subTestCases.$1.length; i++) {
-        final testCase = subTestCases.$1[i];
+      for (int j=0; j < subTestCases.$1.length; j++) {
+        final testCase = subTestCases.$1[j];
         test(
-          testCase.description,
+          "$testCaseName (${j+1}): ${testCase.description}",
           () async {
             // set frequency overrides if any
             if(testCaseName == "Popularity Override")
-              await db.indexDao.updatePopularityOverride(3);
+              await db.indexDao.updateFrequencyOverride(3);
             else 
               await db.indexDao.clearFrequencyOverride();
             // Perform the search
@@ -131,12 +131,12 @@ void main() {
                   '   ACTUAL CONTENTS:\n${actualNormalized.map((g) => g.toFormattedString(indent: "    ")).join("\n")}');
             }
 
-            for (int i = 0; i < expectedNormalized.length; i++) {
+            for (int k = 0; k < expectedNormalized.length; k++) {
               expectMatchGroup(
-                actualNormalized[i], 
-                expectedNormalized[i], 
+                actualNormalized[k], 
+                expectedNormalized[k], 
                 testCase.query, 
-                'variantMatches[$i]'
+                'variantMatches[$k]'
               );
             }
 
@@ -153,12 +153,12 @@ void main() {
               );
             }
 
-            for (int i = 0; i < expectedVariants.length; i++) {
+            for (int k = 0; k < expectedVariants.length; k++) {
               expectMatchGroup(
-                actualVariants[i], 
-                expectedVariants[i], 
+                actualVariants[k], 
+                expectedVariants[k], 
                 testCase.query, 
-                'variantMatches[$i]'
+                'variantMatches[$k]'
               );
             }
 

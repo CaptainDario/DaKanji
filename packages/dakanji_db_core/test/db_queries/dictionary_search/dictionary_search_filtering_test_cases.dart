@@ -1,12 +1,11 @@
 import 'dictionary_search_test_helper_classes.dart';
 
 
-String descriptionPrefix = "Filtering";
 
 List<DictionarySearchTestCase> tagFilteringTestCases = [
 
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: by single tag (DE)",
+    description: "by single tag (DE)",
     query: '人',
     tags: ['DE'],
     queryMatches: const ExpectedMatchGroup(
@@ -19,7 +18,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
   ),
 
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: multiple tags (Japanese and Rare)",
+    description: "multiple tags (Japanese and Rare)",
     query: '電車',
     tags: ['JP', 'R'],
     queryMatches: const ExpectedMatchGroup(
@@ -32,13 +31,13 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
   ),
 
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: No matches due to tag filtering",
+    description: "No matches due to tag filtering",
     query: '人',
     tags: ['FR'],
   ),
 
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: No tag filtering (empty tag list)",
+    description: "No tag filtering (empty tag list)",
     query: '人',
     tags: [],
     queryMatches: const ExpectedMatchGroup(
@@ -53,7 +52,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
     ),
   ),
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: Filter by single tag (DE) on wildcard search",
+    description: "Filter by single tag (DE) on wildcard search",
     query: '*人',
     tags: ['DE'],
     queryMatches: const ExpectedMatchGroup(
@@ -68,7 +67,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
   // --- PoS -------------------------------------------------------------------
 
     DictionarySearchTestCase(
-    description: "$descriptionPrefix: Only nouns should be found",
+    description: "Only nouns should be found",
     query: "食べる",
     pos: ["n"],
     queryMatches: const ExpectedMatchGroup(
@@ -88,7 +87,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
   // --- Term/Reading/Definition -----------------------------------------------
 
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: Filter by term",
+    description: "Filter by term",
     query: '?t=会社',
 
     queryMatches: const ExpectedMatchGroup(
@@ -100,7 +99,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
     ),
   ),
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: Filter by term + reading",
+    description: "Filter by term + reading",
     query: '?t=会社&r=かいしゃ',
 
     queryMatches: const ExpectedMatchGroup(
@@ -112,7 +111,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
     ),
   ),
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: Filter by term + definition",
+    description: "Filter by term + definition",
     query: '?t=会社&d=かいしゃ',
 
     queryMatches: const ExpectedMatchGroup(
@@ -124,7 +123,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
     ),
   ),
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: Filter by term + reading + definition (1 match)",
+    description: "Filter by term + reading + definition (1 match)",
     query: '?t=会社&r=かいしゃ&d=company (term+reading+definition)',
 
     queryMatches: const ExpectedMatchGroup(
@@ -136,7 +135,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
     ),
   ),
   DictionarySearchTestCase(
-    description: "$descriptionPrefix: Filter by term + reading + definition (0 match, entry with this reading does not exist)",
+    description: "Filter by term + reading + definition (0 match, entry with this reading does not exist)",
     query: '?t=会社&r=がいしゃ&d=かいしゃ (reading in definition)',
 
     queryMatches: const ExpectedMatchGroup(),

@@ -1,14 +1,13 @@
-import 'package:dakanji_db_core/data/term_meta_entry_types.dart';
-import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
-
 import '../../dictionary_test_variables.dart';
 import 'dictionary_search_test_helper_classes.dart';
 
-String descriptionPrefix = "Sorting";
+
+
+
 
 List<DictionarySearchTestCase> sortingTestCases = [
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: popularity for identical reading matches',
+    description: 'popularity for identical reading matches',
     query: 'はやい',
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -21,7 +20,7 @@ List<DictionarySearchTestCase> sortingTestCases = [
 
   // Length Difference
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: length difference for prefix matches',
+    description: 'length difference for prefix matches',
     query: '電車',
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
@@ -41,8 +40,9 @@ List<DictionarySearchTestCase> sortingTestCases = [
 
   // Test for Length Difference as a Tie-Breaker
   DictionarySearchTestCase(
-    description: '$descriptionPrefix: length difference when popularity is equal',
+    description: 'length difference when popularity is equal',
     query: 'にほん',
+    groupingRules: [],
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
         // Exact matches still come first.
@@ -65,8 +65,7 @@ List<DictionarySearchTestCase> sortingTestCases = [
     ),
   ),
   DictionarySearchTestCase(
-    description: '''$descriptionPrefix:
-     Three imported dictionaries should have their user defined sort orders applied correctly''',
+    description: '''Three imported dictionaries should have their user defined sort orders applied correctly''',
     query: "生餃子",
     queryMatches: ExpectedMatchGroup(
       exactMatches: [
@@ -75,51 +74,21 @@ List<DictionarySearchTestCase> sortingTestCases = [
           reading: 'なまぎょうざ',
           match: '生餃子',
           definitions: ['2) raw gyoza; uncooked dumplings'],
-          metas: [
-            TermMetaBankV3Entry(
-              id: 0,
-              indexEntry: testDictionaryIndexEntry,
-              term: "生餃子",
-              frequency: 3,
-              type: TermMetaBankEntryTypes.freq,
-              pitchs: [],
-              ipas: []
-            )
-          ]
+          metas: [namaGyouzaMeta]
         )],
         [ExpectedDictionaryMatch(
           term: '生餃子',
           reading: 'なまぎょうざ',
           match: '生餃子',
           definitions: ['1) raw gyoza; uncooked dumplings'],
-          metas: [
-            TermMetaBankV3Entry(
-              id: 0,
-              indexEntry: testDictionaryIndexEntry,
-              term: "生餃子",
-              frequency: 3,
-              type: TermMetaBankEntryTypes.freq,
-              pitchs: [],
-              ipas: []
-            )
-          ]
+          metas: [namaGyouzaMeta]
         )],
         [ExpectedDictionaryMatch(
           term: '生餃子',
           reading: 'なまぎょうざ',
           match: '生餃子',
           definitions: ['3) raw gyoza; uncooked dumplings'],
-          metas: [
-            TermMetaBankV3Entry(
-              id: 0,
-              indexEntry: testDictionaryIndexEntry,
-              term: "生餃子",
-              frequency: 3,
-              type: TermMetaBankEntryTypes.freq,
-              pitchs: [],
-              ipas: []
-            )
-          ]
+          metas: [namaGyouzaMeta]
         )],
       ],
     ),
