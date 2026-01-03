@@ -94,6 +94,14 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
         actions: [
+          Switch(
+            value: _searchSettings.useStructuredContentDefinitions,
+            onChanged: (v) {
+              setState(() {
+                _searchSettings.useStructuredContentDefinitions = v;
+              });
+            }
+          ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () async {
@@ -207,7 +215,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 if(lastSearchResult != null)
                   Expanded(
                     child: 
-                      DictionarySearchResultWidget(lastSearchResult!, daKanjiDB),
+                      DictionarySearchResultWidget(
+                        lastSearchResult!,
+                        daKanjiDB,
+                        _searchSettings.useStructuredContentDefinitions
+                      ),
                   ),
               ],
             );
