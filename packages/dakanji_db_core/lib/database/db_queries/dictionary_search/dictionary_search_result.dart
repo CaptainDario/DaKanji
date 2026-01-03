@@ -2,25 +2,13 @@ import 'package:collection/collection.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match_group.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_match_type.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 
-/// Utility class representing the overall results from a dictionary search.
-/// It groups results based on whether they matched the search term directly,
-/// matched the hiragana form of the term (romaji converted to hiragana), or
-/// matched pre-processed variants of the search term (e.g., 食べます→食べる).
 class DictionarySearchResult {
-  /// Matches from the original search query.
   final DictionaryMatchGroup queryMatches;
-  
-  /// Matches from the hiragana-converted search queries.
   final List<DictionaryMatchGroup> normalizedQueryMatchGroups;
-  
-  /// Matches from pre-processed variants of the search term.
-  /// For example, de-conjugated forms.
   final List<DictionaryMatchGroup> queryVariantMatches;
-  
-  /// Matches from fuzzy search.
-  /// For example: りょこお -> りょこう 
   final List<DictionaryMatchGroup> fuzzyMatches;
 
   DictionarySearchResult.empty()
@@ -31,69 +19,111 @@ class DictionarySearchResult {
 
   /// Factory constructor to create a result from raw database outputs.
   /// 
-  /// [groupingRules] dictates how matches from different dictionaries are merged.
+  /// [pruningPriority] defines the order in which duplicates are claimed. 
+  /// Matches in the first category will exclude identical Term IDs from subsequent categories.
+  /// Defaults to [exact, normalized, variant, fuzzy].
   factory DictionarySearchResult.fromSearchResults({
     required List<List<DictionarySearchDriftFindTermBankEntriesResult>> resultsRaw,
-    required List<DictionarySearchDriftFindTermBankSequencesResult> sequenceMatches,
+    required List<DictionarySearchDriftFindTermBankSequencesByPairsResult> sequenceMatches,
     required List<DictionarySearchDriftFindTermBankDetailsResult> allDetails,
     required bool isWildcardSearch,
     required List<DictionaryGroupingRule> groupingRules,
+    List<DictionarySearchMatchType>? pruningPriority,
   }) {
+    // 1. Global Deduplication State
+    final seenTermBankIds = <int>{};
+
+    // Helper to filter a list while updating the global set
+    List<DictionarySearchDriftFindTermBankEntriesResult> filterDuplicates(
+      List<DictionarySearchDriftFindTermBankEntriesResult> rawList
+    ) {
+      final filtered = <DictionarySearchDriftFindTermBankEntriesResult>[];
+      for (final entry in rawList) {
+        if (!seenTermBankIds.contains(entry.termBankId)) {
+          seenTermBankIds.add(entry.termBankId);
+          filtered.add(entry);
+        }
+      }
+      return filtered;
+    }
+
+    // 2. Organize Raw Data by Type
+    final rawMap = {
+      DictionarySearchMatchType.exact: resultsRaw[0],
+      DictionarySearchMatchType.normalized: resultsRaw[1],
+      DictionarySearchMatchType.variant: resultsRaw[2],
+      DictionarySearchMatchType.fuzzy: resultsRaw[3],
+    };
+
+    // 3. Determine Processing Order
+    // Use user-provided order, or default to standard order.
+    // We append any missing types to the end to ensure no data is lost.
+    final order = pruningPriority != null ? List.of(pruningPriority) : [
+      DictionarySearchMatchType.exact,
+      DictionarySearchMatchType.normalized,
+      DictionarySearchMatchType.variant,
+      DictionarySearchMatchType.fuzzy,
+    ];
+    
+    // Add missing types if the user passed a partial list
+    for (final type in DictionarySearchMatchType.values) {
+      if (!order.contains(type)) order.add(type);
+    }
+
+    // 4. Process Lists in Order
+    final filteredMap = <DictionarySearchMatchType, List<DictionarySearchDriftFindTermBankEntriesResult>>{};
+    
+    for (final type in order) {
+      filteredMap[type] = filterDuplicates(rawMap[type] ?? []);
+    }
+
+    // 5. Build Result Objects using the Filtered Lists
     return DictionarySearchResult.fromMatchGroups(
       queryMatches: DictionaryMatchGroup.fromDictionarySearch(
-        (resultsRaw[0], sequenceMatches, allDetails), isWildcardSearch,
+        (filteredMap[DictionarySearchMatchType.exact]!, sequenceMatches, allDetails), 
+        isWildcardSearch,
         groupingRules: groupingRules,
       ).firstOrNull ?? DictionaryMatchGroup.empty(),
+      
       normalizedQueryMatchGroups: DictionaryMatchGroup.fromDictionarySearch(
-        (resultsRaw[1], sequenceMatches, allDetails), isWildcardSearch,
+        (filteredMap[DictionarySearchMatchType.normalized]!, sequenceMatches, allDetails), 
+        isWildcardSearch,
         groupingRules: groupingRules,
       ),
+      
       queryVariantMatches: DictionaryMatchGroup.fromDictionarySearch(
-        (resultsRaw[2], sequenceMatches, allDetails), isWildcardSearch,
+        (filteredMap[DictionarySearchMatchType.variant]!, sequenceMatches, allDetails), 
+        isWildcardSearch,
         groupingRules: groupingRules,
       ),
+      
       fuzzyMatches: DictionaryMatchGroup.fromDictionarySearch(
-        (resultsRaw[3], sequenceMatches, allDetails), isWildcardSearch,
+        (filteredMap[DictionarySearchMatchType.fuzzy]!, sequenceMatches, allDetails), 
+        isWildcardSearch,
         groupingRules: groupingRules,
       )
     );
   }
 
+  // ... (rest of the class constructor and methods remain unchanged) ...
   DictionarySearchResult.fromMatchGroups({
     required this.queryMatches,
     required this.normalizedQueryMatchGroups,
     required this.queryVariantMatches,
     required this.fuzzyMatches,
-  }){
-    // This set will store the unique IDs of dictionary entries that have
-    // already been included in a higher-priority result list.
+  }) {
+    // Legacy duplicate clean-up (can be kept for safety)
     final Set<String> seenEntryIds = {};
-
-    // 1. Sort by matched query (Level 1)
     _processMatchGroup(queryMatches, seenEntryIds);
+    for (final g in normalizedQueryMatchGroups) _processMatchGroup(g, seenEntryIds);
+    for (final g in queryVariantMatches) _processMatchGroup(g, seenEntryIds);
+    for (final g in fuzzyMatches) _processMatchGroup(g, seenEntryIds);
 
-    // 2. Normalized (Hiragana) search term matches
-    for (final normalizedQueryMatch in normalizedQueryMatchGroups) {
-      _processMatchGroup(normalizedQueryMatch, seenEntryIds);
-    }
-
-    // 3. Preprocessed terms matches
-    for (final variantGroup in queryVariantMatches) {
-      _processMatchGroup(variantGroup, seenEntryIds);
-    }
-
-    // 4. Fuzzy matches
-    for (final fuzzyMatch in fuzzyMatches) {
-      _processMatchGroup(fuzzyMatch, seenEntryIds);
-    }
-
-    // remove all empty groups
     normalizedQueryMatchGroups.removeWhere((group) => group.isEmpty);
     queryVariantMatches.removeWhere((group) => group.isEmpty);
     fuzzyMatches.removeWhere((group) => group.isEmpty);
   }
 
-  /// Filters duplicates from all lists within a [DictionaryMatchGroup].
   void _processMatchGroup(DictionaryMatchGroup group, Set<String> seenEntryIds) {
     _filterList(group.exactMatches, seenEntryIds);
     _filterList(group.prefixMatches, seenEntryIds);
@@ -101,26 +131,21 @@ class DictionarySearchResult {
     _filterList(group.wildcardMatches, seenEntryIds);
   }
 
-  /// Helper function to filter out all previously seen matches from a list.
   void _filterList(List<DictionaryMatch> matches, Set<String> seenEntryIds) {
     matches.removeWhere((match) {
-      // Create a unique identifier for the dictionary entry.
       final String entryId = (match.entries.map((e) => e.id)
         .toList()..sort())
         .join(", ");
 
       if (seenEntryIds.contains(entryId)) {
-        // This entry was already found in a more important list, remove it
         return true;
       } else {
-        // first time seeing this entry, keep it and mark as seen
         seenEntryIds.add(entryId);
         return false;
       }
     });
   }
 
-  /// Override for a comprehensive and readable summary of all search results.
   @override
   String toString() {
     final buffer = StringBuffer();
@@ -129,13 +154,11 @@ class DictionarySearchResult {
     buffer.writeln('\n--- 📖 Dictionary Search Results ---');
     buffer.writeln('Search Term: ${queryMatches.searchTerm}');
 
-    // 1. Original Query Matches
     if (!queryMatches.isEmpty) {
       buffer.writeln('\n▼ Matches for Original Query');
       buffer.write(queryMatches.toFormattedString(indent: sectionIndent));
     }
 
-    // 2. Hiragana Query Matches
     if (normalizedQueryMatchGroups.isNotEmpty) {
       buffer.writeln('\n▼ Matches for Normalized queries (${normalizedQueryMatchGroups.length})');
       for (var i = 0; i < normalizedQueryMatchGroups.length; i++) {
@@ -144,7 +167,6 @@ class DictionarySearchResult {
       }
     }
 
-    // 3. De-conjugated / Variant Matches
     if (queryVariantMatches.isNotEmpty) {
       buffer.writeln('\n▼ Matches for De-conjugated Variants (${queryVariantMatches.length})');
       for (var i = 0; i < queryVariantMatches.length; i++) {
@@ -153,7 +175,6 @@ class DictionarySearchResult {
       }
     }
 
-    // 4. Fuzzy Matches
     if (fuzzyMatches.isNotEmpty) {
       buffer.writeln('\n▼ Matches for fuzzy search (${fuzzyMatches.length})');
       for (var i = 0; i < fuzzyMatches.length; i++) {
@@ -164,7 +185,8 @@ class DictionarySearchResult {
 
     if (queryMatches.isEmpty &&
         normalizedQueryMatchGroups.isEmpty &&
-        queryVariantMatches.isEmpty) {
+        queryVariantMatches.isEmpty &&
+        fuzzyMatches.isEmpty) {
       buffer.writeln("\n<No matches found anywhere>");
     }
 

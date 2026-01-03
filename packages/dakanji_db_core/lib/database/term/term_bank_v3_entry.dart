@@ -104,6 +104,24 @@ class TermBankV3Entry with _$TermBankV3Entry {
     );
   }
 
+  /// Returns true if this entry is considered equal to [other] in the context
+  /// of grouping
+  bool compareToGroupEntry(TermBankV3Entry other) {
+    
+    if (definitionTags.length != other.definitionTags.length) return false;
+    for (var tag in definitionTags) {
+      if (!other.definitionTags.map((t) => t.name).contains(tag.name))
+        return false;
+    }
+
+    if (definitions.length != other.definitions.length) return false;
+    for (var def in other.definitions) {
+      if (!definitions.contains(def)) return false;
+    }
+
+    return true;
+  }
+
   factory TermBankV3Entry.fromJson(Map<String, Object?> json) 
     => _$TermBankV3EntryFromJson(json);
 
