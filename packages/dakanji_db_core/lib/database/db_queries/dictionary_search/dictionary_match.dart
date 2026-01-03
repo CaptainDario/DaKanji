@@ -5,9 +5,8 @@ import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 
 /// Utility class representing a single search result from the dictionary search.
-/// This can include multple dictionary entries if
-/// 1. Join on term + reading is used
-/// 2. The matched term has multiple entries (sequence numbers)
+/// This can include multple dictionary entries if grouping (term , term +
+/// reading, sequence) was applied.
 class DictionaryMatch {
   /// The tokens that was matched (e.g., 食べるラー油 -> 食べる).
   final List<String> matches;
@@ -69,19 +68,21 @@ class DictionaryMatch {
 
   /// Adds `other` to this match, combining them while putting `this` first.
   void addDictionaryMatch(DictionaryMatch other) {
-    // keep track of duplicates
+    // keep track of duplicates (identical entries)
     final existingDefIds = entries.map((e) => e.id).toSet();
 
     for (int i = 0; i < other.entries.length; i++) {
       
-      if (!existingDefIds.contains(other.entries[i].id)) {
-        existingDefIds.add(other.entries[i].id); 
-        
-        entries.add(other.entries[i]);
-        matches.add(other.matches[i]);
-        popularities.add(other.popularities[i]);
-        metaEntriesForEachEntry.add(other.metaEntriesForEachEntry[i]);
-      }
+      // do not include identical entries
+      if (existingDefIds.contains(other.entries[i].id)) continue;
+
+      existingDefIds.add(other.entries[i].id); 
+      
+      entries.add(other.entries[i]);
+      matches.add(other.matches[i]);
+      popularities.add(other.popularities[i]);
+      metaEntriesForEachEntry.add(other.metaEntriesForEachEntry[i]);
+      
     }
   }
 

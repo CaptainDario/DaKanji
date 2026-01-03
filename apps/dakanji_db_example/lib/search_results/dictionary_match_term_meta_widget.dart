@@ -66,7 +66,7 @@ class _DictionaryMatchTermMetaWidgetState extends State<DictionaryMatchTermMetaW
         SizedBox(height: 4),
 
         // pitch and ipa entries list
-        for (final indexId in ipaAndPitchIndexIds)
+        for (final _indexId in ipaAndPitchIndexIds)
           ...[
             for (final indexId in ipaAndPitchIndexIds)
               _PitchAndIpaGroup(

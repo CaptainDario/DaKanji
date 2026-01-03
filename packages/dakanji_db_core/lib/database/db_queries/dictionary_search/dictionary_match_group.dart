@@ -167,6 +167,7 @@ class DictionaryMatchGroup {
     Map<int, List<DictionaryMatch>> expansionMap,
     bool isWildcardSearch,
   ) {
+
     for (final matchRecord in matches) {
       final dictId = matchRecord.$1.indexId;
       final rule = rules.firstWhereOrNull((r) => r.dictionaryIds.contains(dictId));

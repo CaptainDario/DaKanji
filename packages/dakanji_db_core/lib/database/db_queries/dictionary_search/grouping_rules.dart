@@ -16,7 +16,7 @@ class SequenceGroupingRule extends DictionaryGroupingRule {
   /// numbers from [sourceDictId].
   final Set<int> targetDictIds;
 
-  SequenceGroupingRule({required this.sourceDictId, required this.targetDictIds});
+  const SequenceGroupingRule({required this.sourceDictId, required this.targetDictIds});
 
   @override
   Set<int> get dictionaryIds => {sourceDictId, ...targetDictIds};
@@ -28,7 +28,7 @@ class TermAndReadingGroupingRule extends DictionaryGroupingRule {
   /// The dictionaries in which to search for matching entries 
   final Set<int> targetDictIds;
 
-  TermAndReadingGroupingRule(this.targetDictIds);
+  const TermAndReadingGroupingRule(this.targetDictIds);
 
   @override
   Set<int> get dictionaryIds => targetDictIds;
@@ -40,7 +40,7 @@ class TermGroupingRule extends DictionaryGroupingRule {
   /// The dictionaries in which to search for matching entries
   final Set<int> targetDictIds;
 
-  TermGroupingRule(this.targetDictIds);
+  const TermGroupingRule(this.targetDictIds);
 
   @override
   Set<int> get dictionaryIds => targetDictIds;
