@@ -11,15 +11,15 @@ abstract class DictionaryGroupingRule {
 class SequenceGroupingRule extends DictionaryGroupingRule {
 
   /// The dictionary from which sequence numbers are taken.
-  final int primaryDictId;
+  final int sourceDictId;
   /// The dictionaries in which to search for entries matching the sequence
-  /// numbers from [primaryDictId].
-  final Set<int> secondaryDictIds;
+  /// numbers from [sourceDictId].
+  final Set<int> targetDictIds;
 
-  SequenceGroupingRule({required this.primaryDictId, required this.secondaryDictIds});
+  SequenceGroupingRule({required this.sourceDictId, required this.targetDictIds});
 
   @override
-  Set<int> get dictionaryIds => {primaryDictId, ...secondaryDictIds};
+  Set<int> get dictionaryIds => {sourceDictId, ...targetDictIds};
 }
 
 /// Rule for Term+Reading grouping

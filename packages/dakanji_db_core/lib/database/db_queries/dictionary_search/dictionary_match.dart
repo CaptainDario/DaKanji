@@ -29,7 +29,7 @@ class DictionaryMatch {
 
   factory DictionaryMatch.fromDictionarySequenceWithDetails(
     (
-      DictionarySearchDriftFindTermBankSequencesResult,
+      DictionarySearchDriftFindTermBankSequencesByPairsResult,
       DictionarySearchDriftFindTermBankDetailsResult
     ) record,
   ) {

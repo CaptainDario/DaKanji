@@ -135,21 +135,20 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
   ///    we fetch details for every found entry.
   /// 2. Iterates through any [SequenceGroupingRule]s. For each rule:
   ///    - Finds entries in [resultsRaw] that belong to the rule's `primaryDictId`.
-  ///    - extract their sequence numbers.
-  ///    - Queries the database for entries in the rule's `secondaryDictIds` that
-  ///      share those sequence numbers.
+  ///    - Generates specific lookup pairs (Seq # + Target Dict ID).
+  ///    - Queries the database for these precise pairs to prevent cross-dictionary contamination.
   ///
   /// Returns a tuple containing:
   /// - [allTermBankIds]: The complete set of IDs to fetch details for.
   /// - [sequenceMatches]: The list of additional entries found via sequence expansion.
-  Future<(Set<int> allTermBankIds, List<DictionarySearchDriftFindTermBankSequencesResult> sequenceMatches)>
+  Future<(Set<int> allTermBankIds, List<DictionarySearchDriftFindTermBankSequencesByPairsResult> sequenceMatches)>
     _aggregateUniqueIdsAndSequenceNumbers(
       List<List<DictionarySearchDriftFindTermBankEntriesResult>> resultsRaw,
       List<DictionaryGroupingRule> groupingRules,
   ) 
   async {
     final Set<int> allTermBankIds = {};
-    final List<DictionarySearchDriftFindTermBankSequencesResult> allSequenceMatches = [];
+    final List<DictionarySearchDriftFindTermBankSequencesByPairsResult> allSequenceMatches = [];
 
     // 1. Collect IDs from the initial text search (Phase 1)
     for (final group in resultsRaw) {
@@ -167,31 +166,43 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
       // Find sequences in the raw results that match this rule's Source Dictionary
       for (final group in resultsRaw) {
         for (final entry in group) {
-          if (entry.indexId == rule.primaryDictId) {
+          if (entry.indexId == rule.sourceDictId) {
             sourceSequenceNumbers.add(entry.sequenceNumber);
           }
         }
       }
 
-      // If we found source sequences, fetch the corresponding targets
-      if (sourceSequenceNumbers.isNotEmpty && rule.secondaryDictIds.isNotEmpty) {
-        final matches = await db.dictionary_search_drift_find_term_bank_sequences(
-          jsonEncode(sourceSequenceNumbers.toList()),
-          jsonEncode(allTermBankIds.toList()), // Exclude IDs already found
-          jsonEncode(rule.secondaryDictIds.toList()), // Only look in specific targets
-        ).get();
+      // If source sequences found, fetch the corresponding targets
+      if (sourceSequenceNumbers.isNotEmpty && rule.targetDictIds.isNotEmpty) {
+        
+        // 1. Construct the precise pairs: (Sequence + TargetDictionary)
+        // This creates a cross-product of (Found Sequences) x (Target Dictionaries)
+        final List<Map<String, int>> lookupPairs = [];
+        for (final seq in sourceSequenceNumbers) {
+          for (final targetId in rule.targetDictIds) {
+            lookupPairs.add({'s': seq, 'd': targetId});
+          }
+        }
 
-        if (matches.isNotEmpty) {
-          allSequenceMatches.addAll(matches);
-          // Add the new IDs to the set so we fetch details for them later
-          allTermBankIds.addAll(matches.map((e) => e.termBankId));
+        // 2. Pass the pairs list to the database to ensure to only get 
+        // Seq X from Dict Y, not Seq X from Dict Z.
+        if (lookupPairs.isNotEmpty) {
+          final matches = await db.dictionary_search_drift_find_term_bank_sequences_by_pairs(
+            jsonEncode(lookupPairs),             // Arg 1: The Pairs [{"s":1, "d":2}, ...]
+            jsonEncode(allTermBankIds.toList()), // Arg 2: IDs to exclude (already found)
+          ).get();
+
+          if (matches.isNotEmpty) {
+            allSequenceMatches.addAll(matches);
+            // Add the new IDs to the set to fetch details for them later
+            allTermBankIds.addAll(matches.map((e) => e.termBankId));
+          }
         }
       }
     }
 
     return (allTermBankIds, allSequenceMatches);
   }
-
   /// Helper method to run the parallel termBankId-search (all 4 queries):
   ///   1. Exact match
   ///   2. Normalized match

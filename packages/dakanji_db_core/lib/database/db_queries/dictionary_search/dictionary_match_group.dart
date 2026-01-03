@@ -63,7 +63,7 @@ class DictionaryMatchGroup {
   static List<DictionaryMatchGroup> fromDictionarySearch(
     (
       List<DictionarySearchDriftFindTermBankEntriesResult>,
-      List<DictionarySearchDriftFindTermBankSequencesResult>,
+      List<DictionarySearchDriftFindTermBankSequencesByPairsResult>,
       List<DictionarySearchDriftFindTermBankDetailsResult>
     ) resultTuple,
     bool isWildcardSearch, {
@@ -107,7 +107,7 @@ class DictionaryMatchGroup {
 
   /// Builds a map of sequence number to list of dictionary matches from Phase 3 results.
   static Map<int, List<DictionaryMatch>> _buildSequenceExpansionMap(
-    List<DictionarySearchDriftFindTermBankSequencesResult> sequences,
+    List<DictionarySearchDriftFindTermBankSequencesByPairsResult> sequences,
     Map<int, DictionarySearchDriftFindTermBankDetailsResult> detailMap,
   ) {
     final map = <int, List<DictionaryMatch>>{};
@@ -121,7 +121,6 @@ class DictionaryMatchGroup {
     return map;
   }
 
-  /// Processes all matches for a single term, partitioning them by rule and aggregating results.
   static DictionaryMatchGroup _createGroupForTerm({
     required String searchTerm,
     required List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)> matches,
@@ -130,161 +129,214 @@ class DictionaryMatchGroup {
     required bool isWildcardSearch,
     String? variantReason,
   }) {
-    final exactMatches = <DictionaryMatch>[];
-    final prefixMatches = <DictionaryMatch>[];
-    final tokenMatches = <DictionaryMatch>[];
-    final wildcardMatches = <DictionaryMatch>[];
+    final state = _GroupingState();
 
-    // Partition matches into buckets based on rules
-    final (ruleBuckets, defaultBucket) = _partitionMatchesByRule(matches, groupingRules);
-
-    // Process buckets
-    ruleBuckets.forEach((rule, bucket) {
-      _processBucket(
-        bucket: bucket,
-        rule: rule,
-        sequenceExpansionMap: sequenceExpansionMap,
-        isWildcardSearch: isWildcardSearch,
-        exactMatches: exactMatches,
-        prefixMatches: prefixMatches,
-        tokenMatches: tokenMatches,
-        wildcardMatches: wildcardMatches,
-      );
-    });
-
-    // Process leftover items (Default/NoGrouping)
-    _processBucket(
-      bucket: defaultBucket,
-      rule: null, // No rule implies raw/default behavior
-      sequenceExpansionMap: sequenceExpansionMap,
-      isWildcardSearch: isWildcardSearch,
-      exactMatches: exactMatches,
-      prefixMatches: prefixMatches,
-      tokenMatches: tokenMatches,
-      wildcardMatches: wildcardMatches,
+    // 1. Process all matches to build groups
+    _processMatches(
+      matches, 
+      state, 
+      groupingRules, 
+      sequenceExpansionMap, 
+      isWildcardSearch
     );
+
+    // 2. Attach sequence expansions to formed groups
+    _appendPendingExpansions(state);
+
+    // 3. Validate and dissolve invalid sequence groups
+    _dissolveInvalidGroups(state.exactMatches, state);
+    _dissolveInvalidGroups(state.prefixMatches, state);
+    _dissolveInvalidGroups(state.tokenMatches, state);
+    _dissolveInvalidGroups(state.wildcardMatches, state);
 
     return DictionaryMatchGroup(
       searchTerm: searchTerm,
       variantReason: variantReason,
-      exactMatches: exactMatches,
-      prefixMatches: prefixMatches,
-      tokenMatches: tokenMatches,
-      wildcardMatches: wildcardMatches,
+      exactMatches: state.exactMatches,
+      prefixMatches: state.prefixMatches,
+      tokenMatches: state.tokenMatches,
+      wildcardMatches: state.wildcardMatches,
     );
   }
 
-  /// Splits matches into buckets keyed by the rule that claims their dictionary ID.
-  static (Map<DictionaryGroupingRule, List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)>>, List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)>)
-      _partitionMatchesByRule(
+  /// Iterates through sorted matches and assigns them to groups or anchors.
+  static void _processMatches(
     List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)> matches,
+    _GroupingState state,
     List<DictionaryGroupingRule> rules,
+    Map<int, List<DictionaryMatch>> expansionMap,
+    bool isWildcardSearch,
   ) {
-    final buckets = <DictionaryGroupingRule, List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)>>{};
-    final defaults = <(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)>[];
-
-    for (final record in matches) {
-      final dictId = record.$1.indexId;
+    for (final matchRecord in matches) {
+      final dictId = matchRecord.$1.indexId;
       final rule = rules.firstWhereOrNull((r) => r.dictionaryIds.contains(dictId));
 
-      if (rule != null) {
-        buckets.putIfAbsent(rule, () => []).add(record);
+      final context = _analyzeMatchContext(matchRecord, rule);
+
+      final shouldMerge = _shouldMergeMatch(context, state);
+
+      if (shouldMerge) {
+        _mergeIntoGroup(matchRecord, context, state);
       } else {
-        defaults.add(record);
+        _createNewAnchor(matchRecord, context, state, isWildcardSearch);
       }
+
+      _queueExpansionsIfApplicable(matchRecord, context, state, expansionMap);
     }
-    return (buckets, defaults);
   }
 
-  /// Processes a single bucket of matches according to its rule strategy.
-  static void _processBucket({
-    required List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)> bucket,
-    required DictionaryGroupingRule? rule,
-    required Map<int, List<DictionaryMatch>> sequenceExpansionMap,
-    required bool isWildcardSearch,
-    required List<DictionaryMatch> exactMatches,
-    required List<DictionaryMatch> prefixMatches,
-    required List<DictionaryMatch> tokenMatches,
-    required List<DictionaryMatch> wildcardMatches,
-  }) {
-    if (bucket.isEmpty) return;
+  /// Analyzing the match to determine its role (Source/Target) and group key.
+  static _MatchContext _analyzeMatchContext(
+    (DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult) record,
+    DictionaryGroupingRule? rule,
+  ) {
+    String? key;
+    bool isSequence = false;
+    bool isSource = false;
+    bool isTarget = false;
 
-    // Determine grouping strategy based on rule type
-    String Function((DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)) keyGenerator;
-    bool checkSourceSequences = false;
-    int? sourceDictId;
+    if (rule != null) {
+      final dictId = record.$1.indexId;
+      
+      if (rule is SequenceGroupingRule) {
+        isSequence = true;
+        isSource = (dictId == rule.sourceDictId);
+        isTarget = rule.targetDictIds.contains(dictId);
+        
+        if (isSource || isTarget) {
+          key = '${rule.hashCode}_seq_${record.$1.sequenceNumber}';
+        }
+      } else if (rule is TermGroupingRule) {
+        key = '${rule.hashCode}_term_${record.$2.term}';
+      } else if (rule is TermAndReadingGroupingRule) {
+        key = '${rule.hashCode}_tr_${record.$2.term}_${record.$2.reading}';
+      }
+    }
+    return _MatchContext(key, isSequence, isSource, isTarget);
+  }
 
-    if (rule is SequenceGroupingRule) {
-      checkSourceSequences = true;
-      sourceDictId = rule.primaryDictId;
-      keyGenerator = (_) => ''; // Key handled by sequence logic
-    } else if (rule is TermAndReadingGroupingRule) {
-      keyGenerator = (m) => '${m.$2.term}_${m.$2.reading}';
-    } else if (rule is TermGroupingRule) {
-      keyGenerator = (m) => '${m.$2.term}';
-    } else {
-      keyGenerator = (m) => 'raw_${m.$1.termBankId}';
+  /// Determines if the current match should join an existing group.
+  /// Enforces Source exclusivity rules.
+  static bool _shouldMergeMatch(_MatchContext context, _GroupingState state) {
+    if (context.groupKey == null || !state.activeGroups.containsKey(context.groupKey)) {
+      return false;
     }
 
-    // Apply grouping
-    final groups = _groupMatchesInBucket(bucket, keyGenerator, checkSourceSequences, sourceDictId);
+    if (context.isSequence) {
+      if (context.isTarget) {
+        // Target dictionaries can always join an existing group.
+        return true;
+      } else if (context.isSource) {
+        // Source dictionaries can join ONLY if the group is currently "Optimistic"
+        // (started by a Target) and hasn't been claimed by another Source yet.
+        final hasSourceClaimed = state.validSequenceGroups.contains(context.groupKey);
+        return !hasSourceClaimed;
+      }
+      return false; 
+    }
 
-    // Convert grouped matches to DictionaryMatch objects
-    for (final key in groups.keys) {
-      final groupList = groups[key]!;
-      final baseMatch = _createBaseMatch(groupList);
+    // Non-sequence rules (Term/Reading) always merge if key matches.
+    return true;
+  }
 
-      // Add Sequence Expansions if applicable
-      if (checkSourceSequences && key.startsWith('seq_')) {
-        final seqNumber = groupList.first.$1.sequenceNumber;
-        final expansions = sequenceExpansionMap[seqNumber] ?? [];
+  static void _mergeIntoGroup(
+    (DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult) record,
+    _MatchContext context,
+    _GroupingState state,
+  ) {
+    final groupMatch = state.activeGroups[context.groupKey]!;
+    groupMatch.addDictionaryMatch(DictionaryMatch.fromDictionarySearchWithDetails(record));
+
+    // If a Source entry joins an Optimistic group, validate it.
+    if (context.isSequence && context.isSource) {
+      state.validSequenceGroups.add(context.groupKey!);
+    }
+  }
+
+  static void _createNewAnchor(
+    (DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult) record,
+    _MatchContext context,
+    _GroupingState state,
+    bool isWildcardSearch,
+  ) {
+    final newMatch = DictionaryMatch.fromDictionarySearchWithDetails(record);
+    
+    // Add to appropriate result list
+    final type = record.$1.matchType;
+    if (isWildcardSearch) state.wildcardMatches.add(newMatch);
+    else if (type == 1) state.exactMatches.add(newMatch);
+    else if (type == 2) state.prefixMatches.add(newMatch);
+    else if (type == 3) state.tokenMatches.add(newMatch);
+
+    // Register as active group if a key exists
+    if (context.groupKey != null) {
+      state.activeGroups[context.groupKey!] = newMatch;
+      state.matchToGroupKey[newMatch] = context.groupKey!;
+
+      // Mark valid immediately if started by Source.
+      // Optimistic groups (started by Target) remain invalid until a Source joins.
+      if (context.isSequence && context.isSource) {
+        state.validSequenceGroups.add(context.groupKey!);
+      }
+    }
+  }
+
+  static void _queueExpansionsIfApplicable(
+    (DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult) record,
+    _MatchContext context,
+    _GroupingState state,
+    Map<int, List<DictionaryMatch>> expansionMap,
+  ) {
+    // Only Source entries trigger lazy expansion lookups.
+    if (context.isSequence && context.isSource && context.groupKey != null) {
+      final seq = record.$1.sequenceNumber;
+      final expansions = expansionMap[seq] ?? [];
+      state.pendingExpansions
+          .putIfAbsent(context.groupKey!, () => [])
+          .addAll(expansions);
+    }
+  }
+
+  static void _appendPendingExpansions(_GroupingState state) {
+    state.pendingExpansions.forEach((key, expansions) {
+      final anchor = state.activeGroups[key];
+      // Only append if the group exists (it will be dissolved later if invalid)
+      if (anchor != null) {
         for (final exp in expansions) {
-          baseMatch.addDictionaryMatch(exp);
+          anchor.addDictionaryMatch(exp);
         }
       }
-
-      // Categorize
-      final type = groupList.first.$1.matchType;
-      if (isWildcardSearch) wildcardMatches.add(baseMatch);
-      else if (type == 1) exactMatches.add(baseMatch);
-      else if (type == 2) prefixMatches.add(baseMatch);
-      else if (type == 3) tokenMatches.add(baseMatch);
-    }
-  }
-
-  /// Groups matches within a bucket, identifying valid sequence groups if required.
-  static Map<String, List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)>> _groupMatchesInBucket(
-    List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)> bucket,
-    String Function((DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)) keyGen,
-    bool checkSourceSequences,
-    int? sourceDictId,
-  ) {
-    final validSourceSequences = <int>{};
-    if (checkSourceSequences && sourceDictId != null) {
-      for (final m in bucket) {
-        if (m.$1.indexId == sourceDictId) validSourceSequences.add(m.$1.sequenceNumber);
-      }
-    }
-
-    return groupBy(bucket, (m) {
-      if (checkSourceSequences) {
-        final seq = m.$1.sequenceNumber;
-        if (validSourceSequences.contains(seq)) return 'seq_$seq';
-        return 'raw_${m.$1.termBankId}';
-      }
-      return keyGen(m);
     });
   }
 
-  /// Creates a combined [DictionaryMatch] from a list of grouped records.
-  static DictionaryMatch _createBaseMatch(
-    List<(DictionarySearchDriftFindTermBankEntriesResult, DictionarySearchDriftFindTermBankDetailsResult)> groupList
-  ) {
-    final baseMatch = DictionaryMatch.fromDictionarySearchWithDetails(groupList.first);
-    for (int i = 1; i < groupList.length; i++) {
-      baseMatch.addDictionaryMatch(DictionaryMatch.fromDictionarySearchWithDetails(groupList[i]));
+  /// Checks groups against validation rules. If a Sequence Group was formed
+  /// optimistically but never met its Source Dictionary, it is dissolved
+  /// back into individual entries.
+  static void _dissolveInvalidGroups(List<DictionaryMatch> targetList, _GroupingState state) {
+    final dissolvedList = <DictionaryMatch>[];
+    
+    for (final match in targetList) {
+      final key = state.matchToGroupKey[match];
+      final isSequenceGroup = key != null && key.contains('_seq_');
+      final isValid = key != null && state.validSequenceGroups.contains(key);
+
+      if (isSequenceGroup && !isValid) {
+        // Explode the group back into individual matches
+        for (int i = 0; i < match.entries.length; i++) {
+          dissolvedList.add(DictionaryMatch(
+            entries: [match.entries[i]],
+            matches: [match.matches[i]],
+            popularities: [match.popularities[i]],
+            metaEntriesForEachEntry: [match.metaEntriesForEachEntry[i]],
+          ));
+        }
+      } else {
+        dissolvedList.add(match);
+      }
     }
-    return baseMatch;
+    
+    targetList.clear();
+    targetList.addAll(dissolvedList);
   }
 
   @override
@@ -312,4 +364,34 @@ class DictionaryMatchGroup {
 
     return buffer.toString();
   }
+}
+
+/// Helper DTO to pass context between private methods
+class _MatchContext {
+  final String? groupKey;
+  final bool isSequence;
+  final bool isSource;
+  final bool isTarget;
+
+  _MatchContext(this.groupKey, this.isSequence, this.isSource, this.isTarget);
+}
+
+/// Holds the mutable state required during the grouping process.
+class _GroupingState {
+  final List<DictionaryMatch> exactMatches = [];
+  final List<DictionaryMatch> prefixMatches = [];
+  final List<DictionaryMatch> tokenMatches = [];
+  final List<DictionaryMatch> wildcardMatches = [];
+
+  /// Maps group keys to their current active DictionaryMatch object.
+  final Map<String, DictionaryMatch> activeGroups = {};
+  
+  /// Queues sequence expansions to be added after the main loop.
+  final Map<String, List<DictionaryMatch>> pendingExpansions = {};
+  
+  /// Tracks which sequence groups have been validated by a Source entry.
+  final Set<String> validSequenceGroups = {};
+  
+  /// Maps a match object back to its group key for post-process validation.
+  final Map<DictionaryMatch, String> matchToGroupKey = {};
 }

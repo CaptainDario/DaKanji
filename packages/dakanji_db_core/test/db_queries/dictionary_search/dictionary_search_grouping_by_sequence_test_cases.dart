@@ -1,21 +1,9 @@
-import 'package:dakanji_db_core/data/term_meta_entry_types.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
-import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 
 import '../../dictionary_test_variables.dart';
 import 'dictionary_search_test_helper_classes.dart';
 
-String descriptionPrefix = "Group by Sequence";
 
-TermMetaBankV3Entry namaGyouzaMeta = TermMetaBankV3Entry(
-  id: 0,
-  indexEntry: testDictionaryIndexEntry,
-  term: "生餃子",
-  frequency: 3,
-  type: TermMetaBankEntryTypes.freq,
-  pitchs: [],
-  ipas: []
-);
 
 List<DictionarySearchTestCase> groupBySequenceTests = [
 
@@ -23,12 +11,12 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
   // TEST 1: Basic Sequence grouping (Same term found via sequence)
   // ---------------------------------------------------------------------------
   DictionarySearchTestCase(
-    description: "$descriptionPrefix 1: The entries with the same sequence number as 食べる should be found",
+    description: "The entries with the same sequence number as 食べる should be grouped together.",
     query: "食べる",
     groupingRules: [
       SequenceGroupingRule(
-        primaryDictId: 2, // Dict 1 (Index 2) is the Source
-        secondaryDictIds: {1, 2, 3, 4, 5}
+        sourceDictId: 2, // Dict 1 (Index 2) is the Source
+        targetDictIds: {1, 2, 3, 4, 5}
       ),
     ],
     queryMatches: const ExpectedMatchGroup(
@@ -71,12 +59,13 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
   // TEST 2: Basic Expansion
   // ---------------------------------------------------------------------------
   DictionarySearchTestCase(
-    description: "$descriptionPrefix 2: Expand '生餃子' from Source(1) with definitions from Target(2, 3)",
+    description: "Expand '生餃子' from Source(1) with definitions from Target(2, 3)"
+      "Direct search matches (生餃子 from Dict 1,2,3) should appear before sequence match '帽子' from Dict 4",
     query: "生餃子",
     groupingRules: [
       SequenceGroupingRule(
-        primaryDictId: 2, // Dict 1 (Index 2) - Seq 803
-        secondaryDictIds: {1, 3} // Dict 2 (Index 1), Dict 3 (Index 3) - Seq 803
+        sourceDictId: 1, // Dict 1 (Index 2) - Seq 803
+        targetDictIds: {2, 3} // Dict 2 (Index 1), Dict 3 (Index 3) - Seq 803
       ),
     ],
     queryMatches: ExpectedMatchGroup(
@@ -121,12 +110,14 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
   // TEST 3: Filter Unwanted Dictionaries (Split Behavior)
   // ---------------------------------------------------------------------------
   DictionarySearchTestCase(
-    description: "$descriptionPrefix 3: Expand '生餃子' from Source(1) using ONLY Target(2). Dict 3 appears separately as it is excluded from Targets.",
+    description: "Expand '生餃子' from Source(1) using ONLY Target(2). "
+    "Dict 3 appears separately as it is excluded from Targets. "
+    " This also checks that a target dict can 'start' a sequence group.",
     query: "生餃子",
     groupingRules: [
       SequenceGroupingRule(
-        primaryDictId: 2, // Dict 1 (Index 2)
-        secondaryDictIds: {1} // Only Dict 2 (Index 1). Dict 3 (Index 3) is excluded.
+        sourceDictId: 2, // Dict 1 (Index 2)
+        targetDictIds: {1} // Only Dict 2 (Index 1). Dict 3 (Index 3) is excluded.
       ),
     ],
     queryMatches: ExpectedMatchGroup(
@@ -168,12 +159,13 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
   // TEST 4: Sequence Mismatch (Both appear as separate groups)
   // ---------------------------------------------------------------------------
   DictionarySearchTestCase(
-    description: "$descriptionPrefix 4: Show separate groups for '水餃子' if sequences differ (Source:999 vs Target:998)",
+    description: "Show separate groups for '水餃子' if sequences differ (Source:999 vs Target:998"
+      "and dict 4 with same seq as target is not included).",
     query: "水餃子",
     groupingRules: [
       SequenceGroupingRule(
-        primaryDictId: 2, // Dict 1 (Index 2) - Seq 999
-        secondaryDictIds: {1} // Dict 2 (Index 1) - Seq 998
+        sourceDictId: 2, // Dict 1 (Index 2) - Seq 999
+        targetDictIds: {1} // Dict 2 (Index 1) - Seq 998
       ),
     ],
     queryMatches: const ExpectedMatchGroup(
@@ -183,7 +175,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
           ExpectedDictionaryMatch(
             term: '水餃子',
             reading: 'すいぎょうざ',
-            definitions: ['1) dumplings cooked in boiling water; boiled dumplings'],
+            definitions: ['2) dumplings cooked in boiling water; boiled dumplings'],
             match: '水餃子',
           ),
         ],
@@ -193,7 +185,27 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
           ExpectedDictionaryMatch(
             term: '水餃子',
             reading: 'すいぎょうざ',
-            definitions: ['2) dumplings cooked in boiling water; boiled dumplings'],
+            definitions: ['1) dumplings cooked in boiling water; boiled dumplings'],
+            match: '水餃子',
+          ),
+        ],
+        // Group 3: Target Dictionary Match (Dict 3 - Seq 997)
+        // Stays separate because Seq 997 != Seq 999
+        [
+          ExpectedDictionaryMatch(
+            term: '水餃子',
+            reading: 'すいぎょうざ',
+            definitions: ['3) dumplings cooked in boiling water; boiled dumplings'],
+            match: '水餃子',
+          ),
+        ],
+        // Group 4: Target Dictionary Match (Dict 4 - Seq 999)
+        // Stays separate because dict 4 is not included in the Target list
+        [
+          ExpectedDictionaryMatch(
+            term: '水餃子',
+            reading: 'みずぎょうざ',
+            definitions: ['4) common misspelling of 水餃子'],
             match: '水餃子',
           ),
         ],
@@ -205,12 +217,12 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
   // TEST 5: Successful Expansion via Alternate Source
   // ---------------------------------------------------------------------------
   DictionarySearchTestCase(
-    description: "$descriptionPrefix 5: Merge '水餃子' when Source(2) and Target(4) share sequence 998",
+    description: "Merge '水餃子' when Source(2) and Target(4) share sequence 998",
     query: "水餃子",
     groupingRules: [
       SequenceGroupingRule(
-        primaryDictId: 1, // Dict 2 (Index 1) - Seq 998
-        secondaryDictIds: {4} // Dict 4 (Index 4) - Seq 998
+        sourceDictId: 1, // Dict 2 (Index 1) - Seq 998
+        targetDictIds: {4} // Dict 4 (Index 4) - Seq 998
       ),
     ],
     queryMatches: const ExpectedMatchGroup(
@@ -226,7 +238,25 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
             term: '水餃子',
             reading: 'みずぎょうざ', // Reading in Dict 4 is different
             definitions: ['4) common misspelling of 水餃子'],
-            match: 'Sequence number',
+            match: '水餃子',
+          ),
+        ],
+        // Stays separate because Seq 998 != Seq 999
+        [
+          ExpectedDictionaryMatch(
+            term: '水餃子',
+            reading: 'すいぎょうざ',
+            definitions: ['1) dumplings cooked in boiling water; boiled dumplings'],
+            match: '水餃子',
+          ),
+        ],
+        // Stays separate because Seq 997 != Seq 999
+        [
+          ExpectedDictionaryMatch(
+            term: '水餃子',
+            reading: 'すいぎょうざ',
+            definitions: ['3) dumplings cooked in boiling water; boiled dumplings'],
+            match: '水餃子',
           ),
         ],
       ],
@@ -237,22 +267,32 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
   // TEST 6: Sequence Collision (Different Terms)
   // ---------------------------------------------------------------------------
   DictionarySearchTestCase(
-    description: "$descriptionPrefix 6: Merge different terms ('生餃子' and '帽子') if they share the same sequence (803)",
+    description: "Merge different terms ('生餃子' and '帽子') if they share the same sequence (803)",
     query: "生餃子",
     groupingRules: [
       SequenceGroupingRule(
-        primaryDictId: 2, // Dict 1 (Index 2) - Seq 803
-        secondaryDictIds: {4} // Dict 4 (Index 4) - Seq 803
+        sourceDictId: 2, // Dict 1 (Index 2) - Seq 803
+        targetDictIds: {4} // Dict 4 (Index 4) - Seq 803
       ),
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: ExpectedMatchGroup(
       exactMatches: [
+        [
+          ExpectedDictionaryMatch(
+            term: '生餃子',
+            reading: 'なまぎょうざ',
+            definitions: ['2) raw gyoza; uncooked dumplings'],
+            match: '生餃子',
+            metas: [namaGyouzaMeta]
+          ),
+        ],
         [
           ExpectedDictionaryMatch(
             term: '生餃子',
             reading: 'なまぎょうざ',
             definitions: ['1) raw gyoza; uncooked dumplings'],
             match: '生餃子',
+            metas: [namaGyouzaMeta]
           ),
           ExpectedDictionaryMatch(
             term: '帽子', 
@@ -261,6 +301,15 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
             match: 'Sequence number',
           ),
         ],
+        [
+          ExpectedDictionaryMatch(
+            term: '生餃子',
+            reading: 'なまぎょうざ',
+            definitions: ['3) raw gyoza; uncooked dumplings'],
+            match: '生餃子',
+            metas: [namaGyouzaMeta]
+          ),
+        ]
       ],
     ),
   ),
@@ -269,17 +318,16 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
   // TEST 7: Source Dictionary Constraint (Fallback to Raw)
   // ---------------------------------------------------------------------------
   DictionarySearchTestCase(
-    description: "$descriptionPrefix 7: Term '帽子' is not in Source(1). Targets(4, 5) appear as separate groups.",
+    description: "Term '帽子' is not in Source (2), therefore no grouping occurs.",
     query: "帽子",
     groupingRules: [
       SequenceGroupingRule(
-        primaryDictId: 2, // Dict 1 (Index 2) does NOT have '帽子'
-        secondaryDictIds: {4, 5} // Dict 4 (Index 4) & 5 (Index 5) have it
+        sourceDictId: 2, // Dict 1 (Index 2) does NOT have '帽子'
+        targetDictIds: {3, 4, 5} // Dict 4 (Index 4) & 5 (Index 5) have it
       ),
     ],
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
-        
         // Match from Dict 3 (Index 3)
         [
           ExpectedDictionaryMatch(
@@ -315,13 +363,17 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
   // TEST 8: Frequency Sorting Across Sequence Groups
   // ---------------------------------------------------------------------------
   DictionarySearchTestCase(
-    description: "$descriptionPrefix 8: Sort separate sequence groups by frequency (100 -> 90 -> 85 -> 50)",
-    // [FIX] Use a 2-char string to trigger prefix search
+    description: "Sequence grouping should not affect frequency-based sorting "
+      "ungrouped results. "
+      "This also tests that results are deduplicated correctly when grouping is "
+      "applied. "
+      "Also tests that no goruping happens when no target dicts are specified.",
+    // Use a 2-char string to trigger prefix search
     query: "食べ", 
     groupingRules: [
       SequenceGroupingRule(
-        primaryDictId: 2, 
-        secondaryDictIds: {}
+        sourceDictId: 2, 
+        targetDictIds: {}
       ),
     ],
     queryMatches: const ExpectedMatchGroup(
@@ -344,7 +396,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
             match: '食べ物',
           ),
         ],
-        // Rank 3: 食べます (Freq 85)
+        // Rank 3: 食べます (Freq 80)
         [
           ExpectedDictionaryMatch(
             term: '食べます',
@@ -364,19 +416,51 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
         ],
       ],
     ),
-    queryVariantMatches: [
-      ExpectedMatchGroup(
-        exactMatches: [
-          [
-            ExpectedDictionaryMatch(
-              term: '食べる',
-              reading: 'たべる',
-              definitions: ['to eat'],
-              match: '食べる',
-            ),
-          ],
-        ]
-      )
-    ]
+  ),
+  // ---------------------------------------------------------------------------
+  // TEST 9: Sequence Grouping Restriction (Excluded source Dictionary when not in target list)
+  // ---------------------------------------------------------------------------
+  DictionarySearchTestCase(
+    description: "Sequence Grouping Restriction: '帽子' in Dict 3 (Primary) "
+      "merges Dict 4 (Allowed Secondary), but other entries from dict 3 with "
+      "the same sequence number do not merge as they are not in the allowed "
+      "list (bank_3: 生餃子). ",
+    query: "帽子",
+    groupingRules: [
+      SequenceGroupingRule(
+        sourceDictId: 3, // Dict 3 (Index 3) starts the group
+        targetDictIds: {4} // Only Dict 4 (Index 4) is allowed to join. Dict 5 is excluded.
+      ),
+    ],
+    queryMatches: const ExpectedMatchGroup(
+      exactMatches: [
+        // GROUP 1: The Valid Sequence Group
+        // Dict 3 establishes the group. Dict 4 is on the allow-list, so it merges.
+        [
+          ExpectedDictionaryMatch(
+            term: '帽子',
+            reading: 'ぼうし',
+            definitions: ['hat; cap (dict 3)'], // Anchor [cite: 55]
+            match: '帽子',
+          ),
+          ExpectedDictionaryMatch(
+            term: '帽子',
+            reading: 'ぼうし',
+            definitions: ['hat; cap (dict 4)'], // Merged [cite: 53]
+            match: '帽子',
+          ),
+        ],
+        
+        // GROUP 2: Excluded Dictionary Match
+        [
+          ExpectedDictionaryMatch(
+            term: '帽子',
+            reading: 'ぼうし',
+            definitions: ['hat; cap (dict 5)'], // Standalone [cite: 54]
+            match: '帽子',
+          ),
+        ],
+      ],
+    ),
   ),
 ];
