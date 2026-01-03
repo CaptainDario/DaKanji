@@ -13,6 +13,9 @@ class DictionaryMatchTermMetaFreqWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    List<String> allTerms = freqTermMetaEntries.values.expand((e) => e.map((e) => e.term)).toSet().toList();
+    bool containsMultipleGroupedEntries = allTerms.length > 1;
+
     return Wrap(
       spacing: 4,
       runSpacing: 4,
@@ -21,15 +24,30 @@ class DictionaryMatchTermMetaFreqWidget extends StatelessWidget {
           DictionaryMatchTag(
             text: () {
               String text = ""; bool firstNoReading = true;
+              String lastGroupingTerm = "";
 
               for (var i = 0; i < entries.length; i++) {
                 final e = entries[i];
+
+                if(
+                  containsMultipleGroupedEntries && // this contains multiple grouped entries
+                  entries[i].term != lastGroupingTerm // and this is a new term
+                ){
+                  lastGroupingTerm = entries[i].term;
+                  if(i != 0) text += " | ";
+                  text += "$lastGroupingTerm: ";
+                }
+
                 if(firstNoReading && i != 0 && e.reading == null) {
                   text += " ◆ ";
                   firstNoReading = false;
                 }
                 text += "${e.frequencyDisplayValue ?? e.frequency}";
-                if(i != entries.length -1 && entries[i+1].reading != null) text += ", ";
+                if(i != entries.length -1 &&
+                  entries[i+1].reading != null &&
+                  (entries[i+1].term == lastGroupingTerm || lastGroupingTerm == "")) {
+                  text += ", ";
+                }
               }
 
               return text;
