@@ -20,7 +20,7 @@ class DictionaryMatchTermMetaFreqWidget extends StatelessWidget {
     for (final MapEntry(key: index, value: entries) in entries){
 
       List<String> texts = []; List<Color?> textColors = [];
-      String currentText = ""; bool firstNoReading = true;
+      String currentText = "";
       String lastGroupingTerm = "";
 
       for (var i = 0; i < entries.length; i++) {
@@ -34,18 +34,16 @@ class DictionaryMatchTermMetaFreqWidget extends StatelessWidget {
           if(i != 0) {
             texts.add(currentText);
             textColors.add(null);
+            texts.add(" | ");
+            textColors.add(Colors.grey);
             currentText = "";
           }
           texts.add(
-            "${entries[i].term}${entries[i].reading == null ? "${entries[i].reading}" : ""} "
+            "${entries[i].term}${entries[i].reading != null ? ":${entries[i].reading}" : ""} "
           );
           textColors.add(Colors.grey);
         }
 
-        if(firstNoReading && i != 0 && e.reading == null) {
-          currentText += " ◆ ";
-          firstNoReading = false;
-        }
         currentText += "${e.frequencyDisplayValue ?? e.frequency}";
         if(i != entries.length -1 &&
           entries[i+1].reading != null &&
@@ -53,6 +51,12 @@ class DictionaryMatchTermMetaFreqWidget extends StatelessWidget {
           currentText += ", ";
         }
       }
+    
+      if(currentText.isNotEmpty){
+        texts.add(currentText);
+        textColors.add(null);
+      }
+
       ret.add((texts: texts, textColors: textColors));
     }
 
