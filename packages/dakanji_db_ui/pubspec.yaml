@@ -1,0 +1,26 @@
+name: dakanji_db_ui
+description: "The UI package for dakanji_db."
+publish_to: 'none'
+resolution: workspace
+version: 1.0.0
+
+environment:
+  sdk: ^3.10.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  dakanji_db_core:
+
+  cupertino_icons: ^1.0.8
+  flutter_widget_from_html_core: ^0.17.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
