@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 /// Widget that can render a definition entry of a yomitan dictionary
 class StructuredContentDefinitionWidget extends StatefulWidget {
-  /// The content (structured content map) of the definition entry
+  /// The **raw!** content of the structured content definition entry
   final dynamic content;
 
   /// The id of the index this definition belongs to
@@ -27,13 +27,12 @@ class StructuredContentDefinitionWidget extends StatefulWidget {
 
 class _StructuredContentDefinitionWidgetState extends State<StructuredContentDefinitionWidget> {
 
-  final YomitanParser parser = YomitanParser();
+  final StructuredContentGenerator parser = StructuredContentGenerator();
 
   @override
   Widget build(BuildContext context) {
     // Convert the structured content JSON into a standard HTML string.
-    final htmlString = parser.convert(widget.content);
-    print(htmlString);
+    final htmlString = parser.render(widget.content);
     return HtmlWidget(
       htmlString,
       // Use a custom factory to handle local assets.
