@@ -74,9 +74,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     printAssetList();
-    copyDb = copyDbFromAssetsToFS().then((path) {
+    copyDb = copyDbFromAssetsToFS().then((path) async {
       localDbPath = path;
       daKanjiDB = DaKanjiDB(dbPath: localDbPath, inMemory: false);
+
+      final List<IndexTableData> enabledIndexes = await daKanjiDB.indexDao.getAllEnabledIndexes();
+      for (final index in enabledIndexes) {
+        print("Enabled index: ${index.title} (ID: ${index.id})");
+      }
+
       return true;
     });
   }
