@@ -30,7 +30,7 @@ class DictionaryMatchTermMetaPitchWidget extends StatelessWidget {
                 for (final tag in pitch.tags)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                    child: DictionaryMatchTag(text: tag.name),
+                    child: DictionaryMatchTag(texts: [tag.name]),
                   ),
                 PitchAccentWidget(
                   entry.reading ?? entry.term,

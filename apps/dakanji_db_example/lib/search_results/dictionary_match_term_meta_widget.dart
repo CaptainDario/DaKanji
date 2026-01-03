@@ -105,7 +105,7 @@ class _PitchAndIpaGroup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DictionaryMatchTag(text: title),
+        DictionaryMatchTag(texts: [title]),
         const SizedBox(height: 4),
 
         if (pitchEntries != null)

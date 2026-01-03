@@ -70,14 +70,14 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
                         children: [
                           for (final definitionTag in entriesToShow[i].definitionTags)
                             DictionaryMatchTag(
-                              text: definitionTag.name,
+                              texts: [definitionTag.name],
                               details: definitionTag.notes.nullIfEmptyOrNull
                             ),
                           // the index from which this definitions comes
                           DictionaryMatchTag(
-                            text: entriesToShow[i].indexEntry.title,
+                            texts: [entriesToShow[i].indexEntry.title],
                             details: entriesToShow[i].indexEntry.description.nullIfEmptyOrNull,
-                            textColor: Colors.grey,
+                            textColors: [Colors.grey],
                           )
                         ],
                       ),

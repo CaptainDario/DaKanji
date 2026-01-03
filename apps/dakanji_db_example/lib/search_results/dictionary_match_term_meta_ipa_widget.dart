@@ -30,7 +30,7 @@ class DictionaryMatchTermMetaIpaWidget extends StatelessWidget {
                 for (final tag in ipa.tags)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                    child: DictionaryMatchTag(text: tag.name),
+                    child: DictionaryMatchTag(texts: [tag.name]),
                   ),
                 Text(ipa.ipa),
               ]
