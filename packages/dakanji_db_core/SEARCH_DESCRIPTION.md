@@ -67,3 +67,24 @@
 
 * Tag filtering
 * Language filtering
+
+## Search Result Grouping
+
+### Term Grouping
+
+Merges based solely on the match's term.
+
+### Term + Reading Grouping
+
+Merges based on the match's term+reading.
+
+### Sequence Number Grouping
+
+First:
+
+* source dict
+* target dictionaries
+
+are defined
+Then a standard query is run.
+From the results of this query, all results that are from source dictionary are expanded by searching for entries with the same sequence id in the target dictionaries.
