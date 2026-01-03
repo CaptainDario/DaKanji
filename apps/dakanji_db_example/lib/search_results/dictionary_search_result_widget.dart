@@ -8,10 +8,19 @@ import 'package:provider/provider.dart';
 
 
 class DictionarySearchResultWidget extends StatelessWidget {
+
   final DictionarySearchResult result;
   final DaKanjiDB db;
+  final bool useStructuredContentDefinitions;
 
-  const DictionarySearchResultWidget(this.result, this.db, {super.key});
+  const DictionarySearchResultWidget(
+    this.result,
+    this.db,
+    this.useStructuredContentDefinitions,
+    {
+      super.key
+    }
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +68,10 @@ class DictionarySearchResultWidget extends StatelessWidget {
       slivers.add(SliverList.builder(
         itemCount: matchGroup.exactMatches.length,
         itemBuilder: (context, i) =>
-            DictionaryMatchWidget(matchGroup.exactMatches[i]),
+            DictionaryMatchWidget(
+              matchGroup.exactMatches[i],
+              useStructuredContentDefinitions
+            ),
       ));
     }
 
@@ -69,7 +81,10 @@ class DictionarySearchResultWidget extends StatelessWidget {
       slivers.add(SliverList.builder(
         itemCount: matchGroup.prefixMatches.length,
         itemBuilder: (context, i) =>
-            DictionaryMatchWidget(matchGroup.prefixMatches[i]),
+            DictionaryMatchWidget(
+              matchGroup.prefixMatches[i],
+              useStructuredContentDefinitions
+            ),
       ));
     }
 
@@ -79,7 +94,10 @@ class DictionarySearchResultWidget extends StatelessWidget {
       slivers.add(SliverList.builder(
         itemCount: matchGroup.tokenMatches.length,
         itemBuilder: (context, i) =>
-            DictionaryMatchWidget(matchGroup.tokenMatches[i]),
+            DictionaryMatchWidget(
+              matchGroup.tokenMatches[i],
+              useStructuredContentDefinitions
+            ),
       ));
     }
 
@@ -89,7 +107,10 @@ class DictionarySearchResultWidget extends StatelessWidget {
       slivers.add(SliverList.builder(
         itemCount: matchGroup.wildcardMatches.length,
         itemBuilder: (context, i) =>
-            DictionaryMatchWidget(matchGroup.wildcardMatches[i]),
+            DictionaryMatchWidget(
+              matchGroup.wildcardMatches[i],
+              useStructuredContentDefinitions
+            ),
       ));
     }
 
@@ -129,9 +150,9 @@ class _SubHeader extends StatelessWidget {
       child: Text(
         title,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.secondary,
-            ),
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.secondary,
+        ),
       ),
     );
   }

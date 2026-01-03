@@ -34,7 +34,11 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
 
     // filter out duplicate entries in the group list
     for (final entry in widget.entries) {
-      if (entriesToShow.any((existing) => existing.compareToGroupEntry(entry))) continue;
+      if (entriesToShow.any((existing) =>
+        existing.compareToGroupEntry(entry, widget.useStructuredContentDefinitions))
+      ) {
+        continue;
+      }
       entriesToShow.add(entry);
     }
   }
@@ -87,21 +91,15 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
               ),
               // the actual definitions (structured content or not)
               widget.useStructuredContentDefinitions
-              ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  for (int j = 0; j < widget.entries[i].structuredContentDefinitions.length; j++)
-                  StructuredContentDefinitionWidget(
-                    content: widget.entries[i].structuredContentDefinitions[j],
-                    indexId: widget.entries[i].indexEntry.id
-                  )
-                ],
-              )
+              ? StructuredContentDefinitionWidget(
+                  content: entriesToShow[i].structuredContentDefinitions,
+                  indexId: entriesToShow[i].indexEntry.id
+                )
               :  Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 2.0, 0.0, 6.0),
                   child: Column(
                     children: [
-                      for (final definition in widget.entries[i].definitions)
+                      for (final definition in entriesToShow[i].definitions)
                         Padding(
                           padding: const EdgeInsets.only(left: 4.0),
                           child: Align(

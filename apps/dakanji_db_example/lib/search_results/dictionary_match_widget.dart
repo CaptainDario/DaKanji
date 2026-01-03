@@ -15,10 +15,11 @@ class DictionaryMatchWidget extends StatelessWidget {
 
   /// Whether to use structured content display
   /// Or only the extracted definitions.
-  final bool useStructuredContentDefinitions = false;
+  final bool useStructuredContentDefinitions;
 
   const DictionaryMatchWidget(
     this.match,
+    this.useStructuredContentDefinitions,
     {
       super.key
     }
