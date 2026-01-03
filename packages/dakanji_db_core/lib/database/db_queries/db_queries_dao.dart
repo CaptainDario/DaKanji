@@ -106,6 +106,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
     // Aggregate unique IDs and perform sequence lookups if needed
     final (allTermBankIds, sequenceMatches) = await _aggregateUniqueIdsAndSequenceNumbers(
       resultsRaw, sP.groupingRules);
+    if(printDebugInfo) print("all fetched ids: $allTermBankIds");
 
     // Fetch details for ALL unique IDs found in any step
     List<DictionarySearchDriftFindTermBankDetailsResult> allDetails = [];
@@ -114,7 +115,10 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
         jsonEncode(allTermBankIds.toList())).get();
     }
 
-    if(printDebugInfo)print("Phase 2 (Details & Sequences) completed in ${s.elapsedMilliseconds}ms. Fetched details for ${allDetails.length} entries.");
+    if(printDebugInfo){
+      print("Phase 2 (Details & Sequences) completed in ${s.elapsedMilliseconds}ms. Fetched details for ${allDetails.length} entries.");
+
+    }
     s.stop();
     
     // 5. Assemble the result
@@ -203,6 +207,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
 
     return (allTermBankIds, allSequenceMatches);
   }
+
   /// Helper method to run the parallel termBankId-search (all 4 queries):
   ///   1. Exact match
   ///   2. Normalized match
