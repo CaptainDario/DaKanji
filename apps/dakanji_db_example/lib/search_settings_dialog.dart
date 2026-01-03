@@ -73,7 +73,7 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
                   value: settings.groupingRule is TermAndReadingGroupingRule,
                   onChanged: (v) => setState(() { 
                     settings.groupingRule = v
-                      ? TermAndReadingGroupingRule({3})
+                      ? TermAndReadingGroupingRule({3, 4})
                       : NoGroupingRule();
                   }),
                 ),
@@ -83,7 +83,7 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
                   value: settings.groupingRule is TermGroupingRule,
                   onChanged: (v) => setState(() { 
                     settings.groupingRule = v
-                      ? TermGroupingRule({3})
+                      ? TermGroupingRule({3, 4})
                       : NoGroupingRule();
                   }),
                 ),
@@ -95,7 +95,7 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
                     settings.groupingRule = v
                       ? SequenceGroupingRule(
                         sourceDictId: 3,
-                        targetDictIds: {3}
+                        targetDictIds: {3, 4}
                       )
                       : NoGroupingRule();
                   }),

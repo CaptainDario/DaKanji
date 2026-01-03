@@ -17,7 +17,7 @@ class SearchSettings {
     this.spellfix = true,
     this.groupingRule = const SequenceGroupingRule(
       sourceDictId: 3,
-      targetDictIds: {3}
+      targetDictIds: {3, 4}
     ),
     useStructuredContentDefinitions = false,
   });
