@@ -26,12 +26,26 @@ class DictionaryMatchTermBankDefinitionsWidget extends StatefulWidget {
 
 class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMatchTermBankDefinitionsWidget> {
 
+  List<TermBankV3Entry> entriesToShow = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    // filter out duplicate entries in the group list
+    for (final entry in widget.entries) {
+      if (entriesToShow.any((existing) => existing.compareToGroupEntry(entry))) continue;
+      entriesToShow.add(entry);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        for (int i = 0; i < widget.entries.length; i++) 
+        for (int i = 0; i < entriesToShow.length; i++) 
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -54,15 +68,15 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
                         spacing: 2,
                         runSpacing: 4,
                         children: [
-                          for (final definitionTag in widget.entries[i].definitionTags)
+                          for (final definitionTag in entriesToShow[i].definitionTags)
                             DictionaryMatchTag(
                               text: definitionTag.name,
                               details: definitionTag.notes.nullIfEmptyOrNull
                             ),
                           // the index from which this definitions comes
                           DictionaryMatchTag(
-                            text: widget.entries[i].indexEntry.title,
-                            details: widget.entries[i].indexEntry.description.nullIfEmptyOrNull,
+                            text: entriesToShow[i].indexEntry.title,
+                            details: entriesToShow[i].indexEntry.description.nullIfEmptyOrNull,
                             textColor: Colors.grey,
                           )
                         ],
