@@ -16,9 +16,6 @@ class DictionaryMatchTag extends StatelessWidget {
   /// The tag's text color.
   final List<Color?>? textColors;
 
-  /// A separator to use between the [texts]
-  final String? textsSeparator;
-
   /// The tag's notes to show in a snackbar.
   final String? details;
 
@@ -35,7 +32,6 @@ class DictionaryMatchTag extends StatelessWidget {
     {
       required this.texts,
       this.textColors,
-      this.textsSeparator,
       this.leadingTextColor,
       this.details,
       this.leadingText,
@@ -95,18 +91,10 @@ class DictionaryMatchTag extends StatelessWidget {
               child: Wrap(
                 children: [
                   for (int i = 0; i < texts.length; i++) 
-                    ...[
-                      if(i != 0) ...[
-                        Text(
-                          textsSeparator ?? " | ",
-                          style: TextStyle(fontSize: 11, color: textColors?[i]),
-                        ),
-                      ],
-                      Text(
-                        texts[i],
-                        style: TextStyle(fontSize: 11, color: textColors?[i]),
-                      ),
-                    ]
+                    Text(
+                      texts[i],
+                      style: TextStyle(fontSize: 11, color: textColors?[i]),
+                    ),
                 ],
               ),
             )
