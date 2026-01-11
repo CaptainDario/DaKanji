@@ -1,4 +1,6 @@
 
+import "dart:convert";
+
 import "package:dakanji_db_core/database/general_tables/media_tables.dart";
 import "package:drift/drift.dart";
 import 'package:path/path.dart' as p;
@@ -33,6 +35,16 @@ class MediaDao extends DatabaseAccessor<DaKanjiDB> with _$MediaDaoMixin {
     ).getSingleOrNull();
 
     return result?.data;
+
+  }
+
+  Future<String> getCssFromIndex(int indexId) async {
+
+    final Uint8List? cssData = await getMediaByPath("styles.css", indexId);
+
+    if (cssData == null) return "";
+
+    return utf8.decode(cssData);
 
   }
 
