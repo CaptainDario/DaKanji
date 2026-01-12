@@ -1,399 +1,326 @@
+import 'dart:convert';
 
+/// Main entry point: Renders a list of Yomitan definitions to a portable HTML string.
+String renderDefinitions(List<dynamic> definitions) {
+  final buffer = StringBuffer();
+  final count = definitions.length;
 
-/// A generator that converts Yomitan Structured Content (JSON/Map) into
-/// portable, renderable HTML.
-class StructuredContentGenerator {
-  final String? _baseUrl;
-  final bool _embedCss;
+  // 1. Outer Container
+  // Yomitan Logic: If there is only 1 definition, no bullets (list-style: none).
+  // Otherwise, use circle bullets.
+  String listStyle = count == 1 ? 'none' : 'circle';
+  String padding = count == 1 ? '0' : '1.4em';
 
-  /// [baseUrl] is optional. If provided, it is prepended to image paths and link hrefs.
-  /// [embedCss] if true (default), injects the standard Yomitan CSS styles at the start of the HTML.
-  StructuredContentGenerator({
-    String? baseUrl,
-    bool embedCss = true,
-  })  : _baseUrl = baseUrl,
-        _embedCss = embedCss;
+  buffer.write(
+      '<ul class="gloss-list" data-count="$count" style="list-style-type: $listStyle; padding-left: $padding; margin: 0;">');
 
-  /// Main method to convert the structured content [data] (List or Map) to HTML.
-  String render(dynamic data) {
-    final buffer = StringBuffer();
+  for (var def in definitions) {
+    // Determine if we should force-hide the bullet for this specific item.
+    // This prevents double-bullets when the content itself is a list (ul/ol).
+    bool suppressBullet = false;
 
-    if (_embedCss) {
-      buffer.write('<style>$_coreCss</style>');
-    }
-
-    buffer.write('<div class="structured-content">');
-    _processContent(buffer, data);
-    buffer.write('</div>');
-
-    return buffer.toString();
-  }
-
-  void _processContent(StringBuffer buffer, dynamic content) {
-    if (content == null) return;
-
-    if (content is String) {
-      // Escape text content to prevent XSS/rendering issues
-      buffer.write(_escapeHtml(content));
-      return;
-    }
-
-    if (content is List) {
-      for (var item in content) {
-        _processContent(buffer, item);
+    if (def is Map && def['type'] == 'structured-content') {
+      final content = def['content'];
+      if (content is Map && ['ul', 'ol', 'table', 'div'].contains(content['tag'])) {
+        suppressBullet = true;
       }
-      return;
     }
 
-    if (content is Map) {
-      // It's an element map
-      final map = content as Map<String, dynamic>;
-      _renderElement(buffer, map);
-      return;
-    }
-  }
-
-  void _renderElement(StringBuffer buffer, Map<String, dynamic> node) {
-    final String tag = node['tag'] ?? 'span';
-
-    switch (tag) {
-      case 'br':
-        buffer.write('<br>');
-        break;
-      case 'img':
-        _renderImage(buffer, node);
-        break;
-      case 'a':
-        _renderLink(buffer, node);
-        break;
-      case 'table':
-        buffer.write('<div class="gloss-sc-table-container">');
-        _renderGenericElement(buffer, node, 'table', 'gloss-sc-table');
-        buffer.write('</div>');
-        break;
-      // Table elements
-      case 'tr':
-      case 'thead':
-      case 'tbody':
-      case 'tfoot':
-        _renderGenericElement(buffer, node, tag, 'gloss-sc-$tag');
-        break;
-      case 'td':
-      case 'th':
-        _renderTableCell(buffer, node);
-        break;
-      // Standard styled elements
-      case 'div':
-      case 'span':
-      case 'ol':
-      case 'ul':
-      case 'li':
-      case 'ruby':
-      case 'rt':
-      case 'rp':
-      case 'details':
-      case 'summary':
-        _renderGenericElement(buffer, node, tag, 'gloss-sc-$tag');
-        break;
-      default:
-        // Fallback for unknown tags, treat as span
-        _renderGenericElement(buffer, node, 'span', 'gloss-sc-span');
-        break;
-    }
-  }
-
-  void _renderGenericElement(
-    StringBuffer buffer,
-    Map<String, dynamic> node,
-    String tag,
-    String className,
-  ) {
-    buffer.write('<$tag class="$className"');
-    _writeStandardAttributes(buffer, node);
-    buffer.write('>');
-
-    if (node.containsKey('content')) {
-      _processContent(buffer, node['content']);
+    String itemStyle = 'margin-bottom: 0.25em;';
+    if (suppressBullet) {
+      itemStyle += ' list-style-type: none;';
     }
 
-    buffer.write('</$tag>');
-  }
-
-  void _renderTableCell(StringBuffer buffer, Map<String, dynamic> node) {
-    final tag = node['tag'] ?? 'td';
-    buffer.write('<$tag class="gloss-sc-$tag"');
-
-    if (node.containsKey('colSpan')) {
-      buffer.write(' colspan="${node['colSpan']}"');
-    }
-    if (node.containsKey('rowSpan')) {
-      buffer.write(' rowspan="${node['rowSpan']}"');
-    }
-
-    _writeStandardAttributes(buffer, node);
-    buffer.write('>');
-
-    if (node.containsKey('content')) {
-      _processContent(buffer, node['content']);
-    }
-
-    buffer.write('</$tag>');
-  }
-
-  void _renderLink(StringBuffer buffer, Map<String, dynamic> node) {
-    // Handling hrefs
-    String href = node['href'] ?? '';
-    final bool isInternal = href.startsWith('?');
+    // 2. List Item
+    buffer.write('<li class="gloss-item" style="$itemStyle">');
     
-    // If external and base URL provided, logic can be adjusted here.
-    // Assuming standard handling for now.
-    
-    buffer.write('<a class="gloss-link" href="$href"');
-    buffer.write(isInternal ? ' data-external="false"' : ' target="_blank" rel="noreferrer noopener" data-external="true"');
-    _writeStandardAttributes(buffer, node);
-    buffer.write('>');
+    // 3. Content Wrapper
+    buffer.write('<span class="gloss-content">');
 
-    // Link text wrapper
-    buffer.write('<span class="gloss-link-text">');
-    if (node.containsKey('content')) {
-      _processContent(buffer, node['content']);
+    if (def is String) {
+      buffer.write(_escapeHtml(def));
+    } else if (def is Map) {
+      final type = def['type'];
+
+      if (type == 'structured-content') {
+        buffer.write(_renderNode(def['content']));
+      } else if (type == 'image') {
+        buffer.write(_renderRootImage(def));
+      } else if (type == 'text') {
+        buffer.write(_escapeHtml(def['text']?.toString() ?? ""));
+      }
     }
+
     buffer.write('</span>');
-
-    // External link icon
-    if (!isInternal) {
-       buffer.write('<span class="gloss-link-external-icon icon" data-icon="external-link"></span>');
-    }
-
-    buffer.write('</a>');
+    buffer.write('</li>');
   }
 
-  /// Replicates the complex image structure from JS `createDefinitionImage`
-  void _renderImage(StringBuffer buffer, Map<String, dynamic> node) {
-    final String path = node['path'] ?? '';
-    final String? resolvedPath = _baseUrl != null ? '$_baseUrl/$path' : path;
-    
-    // Extract properties
-    final num? width = node['width'];
-    final num? height = node['height'];
-    final num? preferredWidth = node['preferredWidth'];
-    final num? preferredHeight = node['preferredHeight'];
-    final String? sizeUnits = node['sizeUnits']; // 'px' or 'em'
-    final String? verticalAlign = node['verticalAlign'];
-    final bool collapsed = node['collapsed'] == true;
-    
-    // Calculate aspect ratio logic
-    final bool hasPrefW = preferredWidth != null;
-    final bool hasPrefH = preferredHeight != null;
-    
-    // Default to 100x100 if no dims provided, purely for calculation safety
-    final double safeW = (width ?? 100).toDouble();
-    final double safeH = (height ?? 100).toDouble();
+  buffer.write('</ul>');
+  return buffer.toString();
+}
 
-    final double invAspectRatio = (hasPrefW && hasPrefH)
-        ? (preferredHeight / preferredWidth)
-        : (safeH / safeW);
-        
-    final double usedWidth = hasPrefW 
-        ? preferredWidth.toDouble() 
-        : (hasPrefH ? preferredHeight.toDouble() / invAspectRatio : safeW);
+/// Recursively renders a node from the "structured-content" tree.
+String _renderNode(dynamic node) {
+  if (node == null) return '';
 
-    // Build the outer anchor
-    buffer.write('<a class="gloss-image-link" target="_blank" href="$resolvedPath"');
-    
-    if (collapsed) buffer.write(' data-collapsed="true"');
-    if (verticalAlign != null) buffer.write(' data-vertical-align="$verticalAlign"');
-    
-    // Data attributes for JS interactivity if needed later
-    buffer.write(' data-path="$path"');
-    
-    buffer.write('>'); // Open <a>
-
-    // Container
-    buffer.write('<span class="gloss-image-container" style="');
-    
-    // Container sizing
-    String widthCss = '${usedWidth}px';
-    if (sizeUnits == 'em') {
-       widthCss = '${usedWidth}em';
-    } else if (!hasPrefW && !hasPrefH && width == null) {
-       // If no specific size is requested, standard behavior is usually max-width or auto
-       // But based on JS, it sets specific width if available.
-    }
-    buffer.write('width: $widthCss;');
-    
-    if (node['border'] != null) buffer.write(' border: ${node['border']};');
-    if (node['borderRadius'] != null) buffer.write(' border-radius: ${node['borderRadius']};');
-    buffer.write('">'); // Open container
-
-    // Sizer (maintain aspect ratio)
-    buffer.write('<span class="gloss-image-sizer" style="padding-top: ${(invAspectRatio * 100).toStringAsFixed(4)}%;"></span>');
-
-    // The actual image
-    buffer.write('<img class="gloss-image" src="$resolvedPath"');
-    // Yomitan sets 100% W/H on inner image because container handles size
-    buffer.write(' style="width: 100%; height: 100%;"');
-    if (node['alt'] != null) buffer.write(' alt="${_escapeHtml(node['alt'])}"' );
-    buffer.write('>');
-
-    buffer.write('</span>'); // Close container
-    
-    // Link text fallback (usually hidden by CSS unless collapsed)
-    buffer.write('<span class="gloss-image-link-text">Image</span>');
-    
-    buffer.write('</a>'); // Close <a>
+  if (node is String) {
+    return _escapeHtml(node);
   }
 
-  void _writeStandardAttributes(StringBuffer buffer, Map<String, dynamic> node) {
-    // Lang
-    if (node.containsKey('lang')) {
-      buffer.write(' lang="${node['lang']}"');
-    }
+  if (node is List) {
+    return node.map((child) => _renderNode(child)).join('');
+  }
 
-    // Title
-    if (node.containsKey('title')) {
-      buffer.write(' title="${_escapeHtml(node['title'])}"');
-    }
+  if (node is Map) {
+    if (node.containsKey('tag')) {
+      final String tag = node['tag'];
 
-    // Open (for details)
-    if (node['open'] == true) {
-      buffer.write(' open');
-    }
-
-    // Data attributes (mapped to data-sc-*)
-    if (node.containsKey('data') && node['data'] is Map) {
-      final Map<String, dynamic> dataMap = node['data'];
-      dataMap.forEach((key, value) {
-        // Convert camelCase to PascalCase for the attribute key logic seen in JS
-        // JS: key = `sc${key[0].toUpperCase()}${key.substring(1)}`;
-        if (key.isNotEmpty) {
-           final String attrKey = 'data-sc-${key}';
-           buffer.write(' $attrKey="$value"');
-        }
-      });
-    }
-
-    // Style
-    if (node.containsKey('style') && node['style'] is Map) {
-      final styleString = _mapStyleToCss(node['style']);
-      if (styleString.isNotEmpty) {
-        buffer.write(' style="$styleString"');
+      // Dispatch to specific renderers
+      if (tag == 'ul' || tag == 'ol') return _renderList(node);
+      if (tag == 'a') return _renderLink(node);
+      if (tag == 'img') return _renderInlineImage(node);
+      if (tag == 'table') {
+        return '<div class="gloss-sc-table-container">${_renderElement(node)}</div>';
       }
+      if (tag == 'br') return '<br>';
+
+      return _renderElement(node);
     }
   }
 
-  String _mapStyleToCss(Map<String, dynamic> style) {
-    final sb = StringBuffer();
+  return '';
+}
 
-    // Helper for simple properties
-    void add(String key, String? val) {
-      if (val != null) sb.write('$key: $val; ');
-    }
-    
-    // Helper for numeric/unit properties
-    void addUnit(String key, dynamic val) {
-      if (val == null) return;
-      if (val is num) {
-        sb.write('$key: ${val}em; ');
-      } else {
-        sb.write('$key: $val; ');
-      }
-    }
+/// Renders generic elements
+String _renderElement(Map node) {
+  final tag = node['tag'];
+  final buffer = StringBuffer();
 
-    // Mapping based on StructuredContentStyle interface
-    add('font-style', style['fontStyle']);
-    add('font-weight', style['fontWeight']);
-    add('font-size', style['fontSize']);
-    add('color', style['color']);
-    add('background-color', style['backgroundColor'] ?? style['background']);
-    
-    // Text decoration
-    var textDec = style['textDecorationLine'];
-    if (textDec != null) {
-      if (textDec is List) {
-        add('text-decoration', textDec.join(' '));
-      } else {
-        add('text-decoration', textDec.toString());
-      }
-    }
-    add('text-decoration-style', style['textDecorationStyle']);
-    add('text-decoration-color', style['textDecorationColor']);
+  buffer.write('<$tag class="gloss-sc-$tag"');
+  _renderAttributes(node, buffer);
+  _renderStyles(node, buffer);
+  _renderDataAttributes(node, buffer);
 
-    add('border-color', style['borderColor']);
-    add('border-style', style['borderStyle']);
-    add('border-radius', style['borderRadius']);
-    add('border-width', style['borderWidth']);
-    
-    add('vertical-align', style['verticalAlign']);
-    add('text-align', style['textAlign']);
-    add('margin', style['margin']);
-    add('padding', style['padding']);
-    add('cursor', style['cursor']);
-    add('list-style-type', style['listStyleType']);
-    add('word-break', style['wordBreak']);
-    add('white-space', style['whiteSpace']);
-
-    // Directional margin/padding (handles numbers as ems)
-    addUnit('margin-top', style['marginTop']);
-    addUnit('margin-bottom', style['marginBottom']);
-    addUnit('margin-left', style['marginLeft']);
-    addUnit('margin-right', style['marginRight']);
-    
-    addUnit('padding-top', style['paddingTop']);
-    addUnit('padding-bottom', style['paddingBottom']);
-    addUnit('padding-left', style['paddingLeft']);
-    addUnit('padding-right', style['paddingRight']);
-
-    return sb.toString();
+  if (tag == 'details' && node['open'] == true) {
+    buffer.write(' open');
   }
 
-  String _escapeHtml(String text) {
-    return text
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#39;');
+  buffer.write('>');
+
+  if (node.containsKey('content')) {
+    buffer.write(_renderNode(node['content']));
   }
+
+  buffer.write('</$tag>');
+  return buffer.toString();
+}
+
+/// Renders lists (ul/ol) with specific padding to match Yomitan layout
+String _renderList(Map node) {
+  final tag = node['tag'];
+  final buffer = StringBuffer();
   
-  // Minimal CSS derived from structured-content.css and display.css
-  static const String _coreCss = '''
-    .structured-content { font-family: sans-serif; line-height: 1.5; }
-    .gloss-sc-ruby { display: inline-block; text-indent: 0; }
-    .gloss-sc-rt { display: ruby-text; font-size: 0.5em; }
-    .gloss-sc-rp { display: none; }
-    
-    /* Tables */
-    .gloss-sc-table-container { display: block; overflow-x: auto; }
-    .gloss-sc-table { table-layout: auto; border-collapse: collapse; border-spacing: 0; }
-    .gloss-sc-thead, .gloss-sc-tfoot, .gloss-sc-th { font-weight: bold; background-color: #eee; }
-    .gloss-sc-th, .gloss-sc-td { border: 1px solid #ccc; padding: 0.25em; vertical-align: top; }
-    
-    /* Lists */
-    .gloss-sc-ol, .gloss-sc-ul { margin: 0; padding-left: 1.5em; }
-    .gloss-sc-details { padding-left: 1.4em; }
-    .gloss-sc-summary { list-style-position: outside; cursor: pointer; }
-    
-    /* Links */
-    .gloss-link { color: #00e; text-decoration: none; cursor: pointer; }
-    .gloss-link:hover { text-decoration: underline; }
-    .gloss-link-external-icon { 
-      display: inline-block; vertical-align: middle; 
-      width: 0.8em; height: 0.8em; margin-left: 0.25em; background-color: #00e; 
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm-2 16H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z'/%3E%3C/svg%3E");
-      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm-2 16H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z'/%3E%3C/svg%3E");
-      mask-size: contain; -webkit-mask-size: contain; mask-repeat: no-repeat; -webkit-mask-repeat: no-repeat;
-    }
+  // Default padding to ensure nested lists look correct
+  String defaultStyles = 'padding-left: 1.4em;';
 
-    /* Images */
-    .gloss-image-link { display: inline-block; position: relative; max-width: 100%; vertical-align: top; }
-    .gloss-image-container { display: inline-block; position: relative; line-height: 0; overflow: hidden; max-width: 100%; }
-    .gloss-image-sizer { display: inline-block; width: 0; vertical-align: top; }
-    .gloss-image-link[data-collapsed="true"] .gloss-image-container { display: none; }
-    .gloss-image-link-text { display: none; }
-    .gloss-image-link[data-collapsed="true"] .gloss-image-link-text { display: inline; text-decoration: underline; }
-    .gloss-image-link[data-vertical-align="baseline"] { vertical-align: baseline; }
-    .gloss-image-link[data-vertical-align="middle"] { vertical-align: middle; }
-    .gloss-image-link[data-vertical-align="top"] { vertical-align: top; }
-  ''';
+  buffer.write('<$tag class="gloss-sc-$tag"');
+  _renderAttributes(node, buffer);
+  
+  // Merge default padding with any incoming styles
+  if (node.containsKey('style') && node['style'] is Map) {
+    String css = _mapToCss(node['style']);
+    buffer.write(' style="$defaultStyles $css"');
+  } else {
+    buffer.write(' style="$defaultStyles"');
+  }
+
+  _renderDataAttributes(node, buffer);
+  buffer.write('>');
+
+  if (node.containsKey('content')) {
+    buffer.write(_renderNode(node['content']));
+  }
+
+  buffer.write('</$tag>');
+  return buffer.toString();
+}
+
+/// Renders anchor tags
+String _renderLink(Map node) {
+  final buffer = StringBuffer();
+  final href = node['href']?.toString() ?? '';
+  final isInternal = href.startsWith('?');
+
+  buffer.write('<a class="gloss-link"');
+  _renderAttributes(node, buffer);
+  buffer.write(' data-external="${!isInternal}"');
+  _renderStyles(node, buffer);
+  buffer.write('>');
+
+  buffer.write('<span class="gloss-link-text">');
+  if (node.containsKey('content')) {
+    buffer.write(_renderNode(node['content']));
+  }
+  buffer.write('</span>');
+
+  if (!isInternal) {
+    // Unicode arrow for external links
+    buffer.write('<span class="gloss-link-external-icon icon" style="font-size:0.8em; margin-left:0.2em;">&#x2197;</span>');
+  }
+
+  buffer.write('</a>');
+  return buffer.toString();
+}
+
+/// Renders root-level images (with caption support)
+String _renderRootImage(Map node) {
+  final sb = StringBuffer();
+  final hasDescription = node.containsKey('description') &&
+      node['description'] != null &&
+      node['description'].toString().isNotEmpty;
+
+  // Use <figure> to keep image and caption together
+  if (hasDescription) sb.write('<figure style="margin:0; display:inline-block;">');
+
+  sb.write(_renderInlineImage(node));
+
+  if (hasDescription) {
+    sb.write('<figcaption class="gloss-image-description" style="font-size:0.9em; color:#666;">');
+    sb.write(_escapeHtml(node['description']));
+    sb.write('</figcaption>');
+  }
+
+  if (hasDescription) sb.write('</figure>');
+  return sb.toString();
+}
+
+/// Renders inline images as standard <img> tags for Flutter compatibility.
+/// 
+/// Note: This simplifies the "collapsible" structure (which uses <a> wrappers)
+/// into a standard <img> tag so it renders reliably in widgets like flutter_widget_from_html.
+String _renderInlineImage(Map node) {
+  final buffer = StringBuffer();
+  
+  final width = node['preferredWidth'] ?? node['width'];
+  final height = node['preferredHeight'] ?? node['height'];
+  final sizeUnits = node['sizeUnits'] ?? 'px';
+
+  buffer.write('<img class="gloss-image"');
+
+  if (node.containsKey('path')) {
+    buffer.write(' src="${_escapeAttribute(node['path'])}"');
+  }
+
+  // Handle Dimensions
+  if (sizeUnits == 'em') {
+    // For EM units, we use inline styles
+    String style = '';
+    if (width != null) style += 'width: ${width}em; ';
+    if (height != null) style += 'height: ${height}em; ';
+    if (style.isNotEmpty) buffer.write(' style="$style"');
+  } else {
+    // For pixels, attributes are safer for older parsers
+    if (width != null) buffer.write(' width="$width"');
+    if (height != null) buffer.write(' height="$height"');
+  }
+
+  // Fallback Alt Text
+  String altText = node['alt'] ?? node['description'] ?? '';
+  if (altText.isNotEmpty) buffer.write(' alt="${_escapeAttribute(altText)}"');
+
+  // Handle Styles
+  Map<String, dynamic> styles = {};
+  if (node.containsKey('style') && node['style'] is Map) {
+    styles.addAll(Map<String, dynamic>.from(node['style']));
+  }
+  if (node.containsKey('verticalAlign')) styles['vertical-align'] = node['verticalAlign'];
+  if (node['pixelated'] == true || node['imageRendering'] == 'pixelated') styles['image-rendering'] = 'pixelated';
+  if (node['appearance'] == 'monochrome') styles['filter'] = 'grayscale(100%)';
+
+  if (styles.isNotEmpty && sizeUnits != 'em') {
+     buffer.write(' style="${_mapToCss(styles)}"');
+  }
+
+  // Pass collapsed state as data attribute so you can handle it in Flutter if desired
+  if (node['collapsed'] == true) buffer.write(' data-collapsed="true"');
+  if (node['collapsible'] == true) buffer.write(' data-collapsible="true"');
+
+  buffer.write(' />');
+  return buffer.toString();
+}
+
+// --- Helpers ---
+
+void _renderAttributes(Map node, StringBuffer buffer) {
+  const attrMap = {
+    'href': 'href',
+    'title': 'title',
+    'lang': 'lang',
+    'rowSpan': 'rowspan',
+    'colSpan': 'colspan',
+    'cellPadding': 'cellpadding',
+    'cellSpacing': 'cellspacing',
+    'border': 'border',
+  };
+
+  attrMap.forEach((jsonKey, htmlAttr) {
+    if (node.containsKey(jsonKey)) {
+      buffer.write(' $htmlAttr="${_escapeAttribute(node[jsonKey].toString())}"');
+    }
+  });
+}
+
+void _renderStyles(Map node, StringBuffer buffer) {
+  if (node.containsKey('style') && node['style'] is Map) {
+    String css = _mapToCss(node['style']);
+    if (css.isNotEmpty) {
+      buffer.write(' style="$css"');
+    }
+  }
+}
+
+void _renderDataAttributes(Map node, StringBuffer buffer) {
+  if (node.containsKey('data') && node['data'] is Map) {
+    (node['data'] as Map).forEach((k, v) {
+      buffer.write(' data-$k="${_escapeAttribute(v.toString())}"');
+    });
+  }
+}
+
+String _mapToCss(Map styleMap) {
+  if (styleMap.isEmpty) return '';
+
+  final buffer = StringBuffer();
+  styleMap.forEach((key, value) {
+    if (value != null) {
+      final cssKey = _camelToKebab(key);
+      String cssValue = value.toString();
+
+      if (value is List) {
+        cssValue = value.join(' ');
+      }
+      else if (value is num) {
+        if (['marginTop', 'marginRight', 'marginBottom', 'marginLeft', 'fontSize'].contains(key)) {
+          cssValue = '${value}em';
+        }
+      }
+
+      buffer.write('$cssKey:$cssValue;');
+    }
+  });
+  return buffer.toString();
+}
+
+String _camelToKebab(String input) {
+  return input.replaceAllMapped(RegExp(r'[A-Z]'), (match) {
+    return '-${match.group(0)!.toLowerCase()}';
+  });
+}
+
+String _escapeHtml(String text) {
+  return const HtmlEscape(HtmlEscapeMode.element).convert(text);
+}
+
+String _escapeAttribute(String text) {
+  return const HtmlEscape(HtmlEscapeMode.attribute).convert(text);
 }
