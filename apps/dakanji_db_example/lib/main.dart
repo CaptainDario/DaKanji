@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:async/async.dart';
+import 'package:css_inline_flutter/css_inline_flutter.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
@@ -82,6 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
       for (final index in enabledIndexes) {
         print("Enabled index: ${index.title} (ID: ${index.id})");
       }
+
+      await initInlineCss();
 
       return true;
     });
