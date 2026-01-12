@@ -1,7 +1,7 @@
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db_core/helper/string_extensions.dart';
 import 'package:dakanji_db_ui/search_results/dictionary_match_tag.dart';
-import 'package:dakanji_db_ui/search_results/structured_content/structured_content_definition_widget.dart';
+import 'package:dakanji_db_ui/search_results/structured_content/dictionary_match_term_bank_definition_widget.dart';
 import 'package:flutter/material.dart';
 
 
