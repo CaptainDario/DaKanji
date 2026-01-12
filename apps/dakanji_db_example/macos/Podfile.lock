@@ -1,20 +1,26 @@
 PODS:
+  - css_inline_flutter (0.0.1):
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
 
 DEPENDENCIES:
+  - css_inline_flutter (from `Flutter/ephemeral/.symlinks/plugins/css_inline_flutter/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
 
 EXTERNAL SOURCES:
+  css_inline_flutter:
+    :path: Flutter/ephemeral/.symlinks/plugins/css_inline_flutter/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   path_provider_foundation:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
 
 SPEC CHECKSUMS:
+  css_inline_flutter: a7cafd8075baf9a2bc427d55e2089f3707433df3
   FlutterMacOS: d0db08ddef1a9af05a5ec4b724367152bb0500b1
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
 
