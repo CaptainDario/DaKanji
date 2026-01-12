@@ -39,6 +39,9 @@ def main():
     # open a new dart file to write the processed data
     with open("iso_table.dart", mode="w+", encoding="utf-8") as f:
 
+        # linter ignore for camel case types
+        f.write("// ignore_for_file: camel_case_types\n\n")
+
         # credits
         f.write("// based on iso_table.txt which was scraped from")
         f.write("// https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\n\n\n\n")
@@ -63,7 +66,7 @@ def main():
 
             # 2. Write the Map: String (Any ISO Code) -> Enum Entry (Current ISO Level)
             f.write(f"/// Map to convert ISO 639-1, 639-2, 639-3, to an enum entry of `{iso}`\n{is_warning}")
-            f.write(f"const Map<String, {iso}> isoTo{iso} = const" + " {\n")
+            f.write(f"const Map<String, {iso}> isoTo{iso} = " + " {\n")
             c = 1
             for i in content:
                 # If this language doesn't have a code for the current ISO level, skip it
@@ -85,7 +88,7 @@ def main():
             map_name_to_lang = f"{iso[0].lower() + iso[1:]}ToLanguage"
             
             f.write(f"/// Map to convert {iso} to a language string\n")
-            f.write(f"const Map<{iso}, String> {map_name_to_lang} = const" + " {\n")
+            f.write(f"const Map<{iso}, String> {map_name_to_lang} = " + " {\n")
             
             for c in content:
                 if(c[cnt+1] != ""):

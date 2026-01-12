@@ -1,10 +1,10 @@
 import "package:collection/collection.dart";
 import 'package:dakanji_db_core/data/term_meta_entry_types.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
-import 'package:dakanji_db_example/search_results/dictionary_match_tag.dart';
-import 'package:dakanji_db_example/search_results/dictionary_match_term_meta_freq_widget.dart';
-import 'package:dakanji_db_example/search_results/dictionary_match_term_meta_ipa_widget.dart';
-import 'package:dakanji_db_example/search_results/dictionary_match_term_meta_pitch_widget.dart';
+import 'package:dakanji_db_ui/search_results/dictionary_match_tag.dart';
+import 'package:dakanji_db_ui/search_results/dictionary_match_term_meta_freq_widget.dart';
+import 'package:dakanji_db_ui/search_results/dictionary_match_term_meta_ipa_widget.dart';
+import 'package:dakanji_db_ui/search_results/dictionary_match_term_meta_pitch_widget.dart';
 import 'package:flutter/material.dart';
 
 
@@ -66,7 +66,7 @@ class _DictionaryMatchTermMetaWidgetState extends State<DictionaryMatchTermMetaW
         SizedBox(height: 4),
 
         // pitch and ipa entries list
-        for (final _indexId in ipaAndPitchIndexIds)
+        for (final _ in ipaAndPitchIndexIds)
           ...[
             for (final indexId in ipaAndPitchIndexIds)
               _PitchAndIpaGroup(

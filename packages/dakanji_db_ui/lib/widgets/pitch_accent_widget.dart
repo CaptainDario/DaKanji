@@ -1,5 +1,6 @@
-import 'package:dakanji_db_example/widgets/custom_border_container.dart';
 import 'package:flutter/material.dart';
+
+import 'custom_border_container.dart';
 
 
 class PitchAccentWidget extends StatelessWidget {

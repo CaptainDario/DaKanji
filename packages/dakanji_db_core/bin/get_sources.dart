@@ -65,7 +65,7 @@ Future<(String downloadInfo, String fileName)> getSourceFromUri(Uri url, Directo
   );
 }
 
-void printDownloadProgress (count, total) {
+void printDownloadProgress (int count, int total) {
   if (total != -1) {
     final progress = (count / total * 100).toStringAsFixed(2);
     stdout.write('\rDownloading... $progress%');

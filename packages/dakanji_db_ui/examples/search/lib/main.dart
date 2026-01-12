@@ -1,18 +1,18 @@
 import 'dart:async';
 
 import 'package:async/async.dart';
-import 'package:css_inline_flutter/css_inline_flutter.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
-import 'package:dakanji_db_example/init.dart';
-import 'package:dakanji_db_example/search_results/dictionary_search_result_widget.dart';
-import 'package:dakanji_db_example/search_settings.dart';
-import 'package:dakanji_db_example/search_settings_dialog.dart';
+import 'package:dakanji_db_ui/dakanji_db_ui.dart';
+import 'package:dakanji_db_ui/search_results/dictionary_search_result_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'globals.dart';
+import 'init.dart';
+import 'search_settings.dart';
+import 'search_settings_dialog.dart';
 
 
 void main() {
@@ -81,10 +81,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
       final List<IndexTableData> enabledIndexes = await daKanjiDB.indexDao.getAllEnabledIndexes();
       for (final index in enabledIndexes) {
-        print("Enabled index: ${index.title} (ID: ${index.id})");
+        debugPrint("Enabled index: ${index.title} (ID: ${index.id})");
       }
 
-      await initInlineCss();
+      await initDaKanjiDbUi();
 
       return true;
     });
@@ -238,7 +238,7 @@ class _MyHomePageState extends State<MyHomePage> {
       result = null;
     }
     else {
-      print("Searching for: $term");
+      debugPrint("Searching for: $term");
       Stopwatch stopwatch = Stopwatch()..start();
       result = await daKanjiDB.dBQueriesDao.dictionarySearch(
         DictionarySearchParams(
@@ -251,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         printDebugInfo: !kReleaseMode,
       );
-      print("Search completed in ${stopwatch.elapsedMilliseconds}ms.");
+      debugPrint("Search completed in ${stopwatch.elapsedMilliseconds}ms.");
     }
     return result;
   }

@@ -17,8 +17,10 @@ part 'audio_entry.g.dart';
 class AudioEntry with _$AudioEntry {
 
   /// The id of this entry in the audio table
+  @override
   int id;
   /// The index (dictionary) in which this entry is defined
+  @override
   IndexEntry indexEntry;
   /// The terms associated with this audio entry
   @override

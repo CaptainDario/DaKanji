@@ -1,4 +1,4 @@
-import 'package:dakanji_db_example/widgets/custom_border_container.dart';
+import 'package:dakanji_db_ui/widgets/custom_border_container.dart';
 import 'package:flutter/material.dart';
 
 

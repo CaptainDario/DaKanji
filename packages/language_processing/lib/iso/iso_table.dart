@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 // based on iso_table.txt which was scraped from// https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
 
@@ -386,7 +388,7 @@ enum Iso639_1{
 /// `is` -> `is_` 
 /// `new` -> `new_`
 /// `for` -> `for_`
-const Map<String, Iso639_1> isoToIso639_1 = const {
+const Map<String, Iso639_1> isoToIso639_1 =  {
 	'aa' : Iso639_1.aa,
 	'aar' : Iso639_1.aa,
 	'ab' : Iso639_1.ab,
@@ -780,7 +782,7 @@ const Map<String, Iso639_1> isoToIso639_1 = const {
 
 
 /// Map to convert Iso639_1 to a language string
-const Map<Iso639_1, String> iso639_1ToLanguage = const {
+const Map<Iso639_1, String> iso639_1ToLanguage =  {
 	Iso639_1.aa : 'Afar', 
 	Iso639_1.ab : 'Abkhazian', 
 	Iso639_1.af : 'Afrikaans', 
@@ -2013,7 +2015,7 @@ enum Iso639_2T{
 /// `is` -> `is_` 
 /// `new` -> `new_`
 /// `for` -> `for_`
-const Map<String, Iso639_2T> isoToIso639_2T = const {
+const Map<String, Iso639_2T> isoToIso639_2T =  {
 	'aa' : Iso639_2T.aar,
 	'aar' : Iso639_2T.aar,
 	'ab' : Iso639_2T.abk,
@@ -2642,7 +2644,7 @@ const Map<String, Iso639_2T> isoToIso639_2T = const {
 
 
 /// Map to convert Iso639_2T to a language string
-const Map<Iso639_2T, String> iso639_2TToLanguage = const {
+const Map<Iso639_2T, String> iso639_2TToLanguage =  {
 	Iso639_2T.aar : 'Afar', 
 	Iso639_2T.abk : 'Abkhazian', 
 	Iso639_2T.ace : 'Achinese', 
@@ -4347,7 +4349,7 @@ enum Iso639_2B{
 /// `is` -> `is_` 
 /// `new` -> `new_`
 /// `for` -> `for_`
-const Map<String, Iso639_2B> isoToIso639_2B = const {
+const Map<String, Iso639_2B> isoToIso639_2B =  {
 	'aa' : Iso639_2B.aar,
 	'aar' : Iso639_2B.aar,
 	'ab' : Iso639_2B.abk,
@@ -4976,7 +4978,7 @@ const Map<String, Iso639_2B> isoToIso639_2B = const {
 
 
 /// Map to convert Iso639_2B to a language string
-const Map<Iso639_2B, String> iso639_2BToLanguage = const {
+const Map<Iso639_2B, String> iso639_2BToLanguage =  {
 	Iso639_2B.aar : 'Afar', 
 	Iso639_2B.abk : 'Abkhazian', 
 	Iso639_2B.ace : 'Achinese', 
@@ -21673,7 +21675,7 @@ enum Iso639_3{
 /// `is` -> `is_` 
 /// `new` -> `new_`
 /// `for` -> `for_`
-const Map<String, Iso639_3> isoToIso639_3 = const {
+const Map<String, Iso639_3> isoToIso639_3 =  {
 	'aaa' : Iso639_3.aaa,
 	'aab' : Iso639_3.aab,
 	'aac' : Iso639_3.aac,
@@ -29799,7 +29801,7 @@ const Map<String, Iso639_3> isoToIso639_3 = const {
 
 
 /// Map to convert Iso639_3 to a language string
-const Map<Iso639_3, String> iso639_3ToLanguage = const {
+const Map<Iso639_3, String> iso639_3ToLanguage =  {
 	Iso639_3.aaa : 'Ghotuo', 
 	Iso639_3.aab : 'Alumu-Tesu', 
 	Iso639_3.aac : 'Ari', 

@@ -1,8 +1,8 @@
 import 'package:css_inline_flutter/css_inline_flutter.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_example/search_results/structured_content/custom_html_to_widget_factory.dart';
-import 'package:dakanji_db_example/search_results/structured_content/structured_content_css.dart';
-import 'package:dakanji_db_example/search_results/structured_content/structured_content_to_html.dart';
+import 'package:dakanji_db_ui/search_results/structured_content/custom_html_to_widget_factory.dart';
+import 'package:dakanji_db_ui/search_results/structured_content/structured_content_css.dart';
+import 'package:dakanji_db_ui/search_results/structured_content/structured_content_to_html.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +71,6 @@ class _DictionaryMatchTermBankDefinitionWidgetState extends State<DictionaryMatc
         
           // Handle taps on internal dictionary links.
           onTapUrl: (url) {
-            print(url);
             // TODO URI
             if (url.startsWith('?')) {
               final uri = Uri.parse(url);

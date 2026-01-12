@@ -1,6 +1,7 @@
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
-import 'package:dakanji_db_example/search_settings.dart';
 import 'package:flutter/material.dart';
+
+import 'search_settings.dart';
 
 class SearchSettingsDialog extends StatefulWidget {
   final SearchSettings initialSettings;
@@ -26,7 +27,7 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
       width: MediaQuery.of(context).size.width * 0.9,
       constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
       decoration: BoxDecoration(
-        color: Theme.of(context).dialogBackgroundColor,
+        color: Theme.of(context).dialogTheme.backgroundColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [BoxShadow(blurRadius: 10, color: Colors.black26)],
       ),

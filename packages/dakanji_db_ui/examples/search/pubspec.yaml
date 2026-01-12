@@ -1,4 +1,4 @@
-name: dakanji_db_example
+name: dakanji_db_ui_search_example
 description: "A new Flutter project."
 publish_to: 'none' 
 version: 1.0.0+1
@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  dakanji_db_ui:
   dakanji_db_core:
   dakanji_db_shared:
-  language_processing:
   css_inline_flutter:
   
   async: ^2.13.0
@@ -23,6 +23,7 @@ dependencies:
   flutter_widget_from_html_core: ^0.17.0
   cupertino_icons: ^1.0.8
   path: ^1.9.1
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:

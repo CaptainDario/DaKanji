@@ -1,5 +1,5 @@
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
-import 'package:dakanji_db_example/search_results/dictionary_match_tag.dart';
+import 'package:dakanji_db_ui/search_results/dictionary_match_tag.dart';
 import 'package:flutter/material.dart';
 
 
