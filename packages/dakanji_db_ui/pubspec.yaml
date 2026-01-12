@@ -14,6 +14,7 @@ dependencies:
   css_inline_flutter:
   dakanji_db_shared:
   dakanji_db_core:
+  language_processing:
 
   flutter_widget_from_html_core: ^0.17.0
   provider: ^6.1.5+1

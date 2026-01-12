@@ -71,7 +71,6 @@ class _DictionaryMatchTermBankDefinitionWidgetState extends State<DictionaryMatc
         
           // Handle taps on internal dictionary links.
           onTapUrl: (url) {
-            print(url);
             // TODO URI
             if (url.startsWith('?')) {
               final uri = Uri.parse(url);

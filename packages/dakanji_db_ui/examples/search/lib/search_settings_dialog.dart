@@ -141,7 +141,7 @@ Widget _buildToggle({
       activeThumbColor: Colors.white, 
       activeTrackColor: Colors.green,
       inactiveThumbColor: Colors.grey,
-      inactiveTrackColor: Colors.grey.withOpacity(0.3),
+      inactiveTrackColor: Colors.grey.withValues(alpha: 0.3),
     );
   }
 }
