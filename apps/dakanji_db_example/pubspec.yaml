@@ -12,7 +12,9 @@ dependencies:
     sdk: flutter
 
   dakanji_db_core:
+  dakanji_db_shared:
   language_processing:
+  css_inline_flutter:
   
   async: ^2.13.0
   csslib: ^1.0.2
