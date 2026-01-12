@@ -25,12 +25,21 @@ class ParsedDefinitions {
 
   @override
   bool operator ==(Object other) =>
-      other is ParsedDefinitions &&
-      _listEquals(other.definitions, definitions) &&
-      _listEquals(other.posTags, posTags) &&
-      _listEquals(other.examples, examples) &&
-      _listEquals(other.forms, forms) &&
-      _listEquals(other.references, references);
+    other is ParsedDefinitions &&
+    _listEquals(other.definitions, definitions) &&
+    _listEquals(other.posTags, posTags) &&
+    _listEquals(other.examples, examples) &&
+    _listEquals(other.forms, forms) &&
+    _listEquals(other.references, references);
+
+  @override
+  int get hashCode => Object.hash(
+    Object.hashAll(definitions),
+    Object.hashAll(posTags),
+    Object.hashAll(examples),
+    Object.hashAll(forms),
+    Object.hashAll(references),
+  );
 }
 
 
