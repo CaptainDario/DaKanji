@@ -54,11 +54,8 @@ class _DictionaryMatchTermBankTermWidgetState extends State<DictionaryMatchTermB
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         // only show the reading if there is kanji
-                        Text(
-                          pair.kanji.isNotEmpty && pair.reading.isNotEmpty
-                            ? pair.reading
-                            : " ",
-                          style: readingTextStyle),
+                        if(pair.kanji.isNotEmpty && pair.reading.isNotEmpty)
+                          Text(pair.reading, style: readingTextStyle),
                         Text(
                           pair.kanji.isNotEmpty ? pair.kanji : pair.reading,
                           style: kanjiTextStyle
