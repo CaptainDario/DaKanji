@@ -13,9 +13,18 @@ class DictionaryMatchWidget extends StatelessWidget {
   /// The dictionary match to display.
   final DictionaryMatch match;
 
+  final bool showTags;
+
+  final bool showTermMeta;
+
+  final bool compactDefinitions;
+
   const DictionaryMatchWidget(
     this.match,
     {
+      this.showTags = true,
+      this.showTermMeta = true,
+      this.compactDefinitions = false,
       super.key
     }
   );
@@ -37,18 +46,21 @@ class DictionaryMatchWidget extends StatelessWidget {
                 DictionaryMatchTermBankTermWidget(match.entries),
                 SizedBox(height: 8.0),
 
-                if(tags.expand((e) => e).isNotEmpty)
-                  ...[
-                    DictionaryMatchTagBankWidget(tags),
-                    SizedBox(height: 4.0),
-                  ],
-                if(match.metaEntriesForEachEntry.expand((e) => e,).isNotEmpty)
-                  ...[
-                    DictionaryMatchTermMetaWidget(match.metaEntriesForEachEntry),
-                    SizedBox(height: 8.0),
-                  ],
+                if(showTags)
+                  if(tags.expand((e) => e).isNotEmpty)
+                    ...[
+                      DictionaryMatchTagBankWidget(tags),
+                      SizedBox(height: 4.0),
+                    ],
+                if(showTermMeta)
+                  if(match.metaEntriesForEachEntry.expand((e) => e,).isNotEmpty)
+                    ...[
+                      DictionaryMatchTermMetaWidget(match.metaEntriesForEachEntry),
+                      SizedBox(height: 8.0),
+                    ],
                 DictionaryMatchTermBankDefinitionsWidget(
                   match.entries,
+                  compactMode: compactDefinitions,
                 )
               ],
             ),

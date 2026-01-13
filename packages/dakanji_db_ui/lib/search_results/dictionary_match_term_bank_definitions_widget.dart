@@ -9,10 +9,13 @@ class DictionaryMatchTermBankDefinitionsWidget extends StatefulWidget {
 
   /// The term bank entries to display 
   final List<TermBankV3Entry> entries;
+  /// Whether to use compact mode for displaying definitions
+  final bool compactMode;
 
   const DictionaryMatchTermBankDefinitionsWidget(
     this.entries,
     {
+      this.compactMode = false,
       super.key
     }
   );
