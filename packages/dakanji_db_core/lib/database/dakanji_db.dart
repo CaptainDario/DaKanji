@@ -218,8 +218,6 @@ void setupDb (Database database) {
   // With write-ahead logging (WAL) enabled, a single writer and multiple
   // readers can operate on the database in parallel.
   database.execute('PRAGMA journal_mode = WAL;');
-  // TODO look at this
-  database.execute('PRAGMA mmap_size = 1000000000;');
 }
 
 Sqlite3 loadExtensions() {
