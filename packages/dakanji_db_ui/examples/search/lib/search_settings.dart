@@ -8,7 +8,7 @@ class SearchSettings {
   bool spellfix;
   DictionaryGroupingRule groupingRule;
 
-  bool useStructuredContentDefinitions = false;
+  bool compactMode = false;
 
   SearchSettings({
     this.normalizedSearch = true,
@@ -19,7 +19,7 @@ class SearchSettings {
       sourceDictId: 3,
       targetDictIds: {3, 4}
     ),
-    useStructuredContentDefinitions = false,
+    compactMode = false,
   });
 
   // Helper to clone current settings so we don't mutate state directly until saved
@@ -29,5 +29,7 @@ class SearchSettings {
     deconjugation: deconjugation,
     spellfix: spellfix,
     groupingRule: groupingRule,
+    
+    compactMode: compactMode,
   );
 }

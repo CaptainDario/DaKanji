@@ -11,13 +11,17 @@ class DictionarySearchResultWidget extends StatelessWidget {
 
   final DictionarySearchResult result;
   final DaKanjiDB db;
-  final bool useStructuredContentDefinitions;
+  final bool showTags;
+  final bool showMetaEntries;
+  final bool compactDefinitions;
 
   const DictionarySearchResultWidget(
     this.result,
     this.db,
-    this.useStructuredContentDefinitions,
     {
+      this.showTags = true,
+      this.showMetaEntries = true,
+      this.compactDefinitions = false,
       super.key
     }
   );
@@ -68,7 +72,12 @@ class DictionarySearchResultWidget extends StatelessWidget {
       slivers.add(SliverList.builder(
         itemCount: matchGroup.exactMatches.length,
         itemBuilder: (context, i) =>
-            DictionaryMatchWidget(matchGroup.exactMatches[i],),
+            DictionaryMatchWidget(
+              matchGroup.exactMatches[i],
+              showTags: showTags,
+              showMetaEntries: showMetaEntries,
+              compactDefinitions: compactDefinitions,
+            ),
       ));
     }
 
@@ -79,7 +88,10 @@ class DictionarySearchResultWidget extends StatelessWidget {
         itemCount: matchGroup.prefixMatches.length,
         itemBuilder: (context, i) =>
             DictionaryMatchWidget(
-              matchGroup.prefixMatches[i]
+              matchGroup.prefixMatches[i],
+              showTags: showTags,
+              showMetaEntries: showMetaEntries,
+              compactDefinitions: compactDefinitions,
             ),
       ));
     }
@@ -90,7 +102,12 @@ class DictionarySearchResultWidget extends StatelessWidget {
       slivers.add(SliverList.builder(
         itemCount: matchGroup.tokenMatches.length,
         itemBuilder: (context, i) =>
-            DictionaryMatchWidget(matchGroup.tokenMatches[i],),
+            DictionaryMatchWidget(
+              matchGroup.tokenMatches[i],
+              showTags: showTags,
+              showMetaEntries: showMetaEntries,
+              compactDefinitions: compactDefinitions,
+            ),
       ));
     }
 
@@ -100,7 +117,12 @@ class DictionarySearchResultWidget extends StatelessWidget {
       slivers.add(SliverList.builder(
         itemCount: matchGroup.wildcardMatches.length,
         itemBuilder: (context, i) =>
-            DictionaryMatchWidget(matchGroup.wildcardMatches[i]),
+            DictionaryMatchWidget(
+              matchGroup.wildcardMatches[i],
+              showTags: showTags,
+              showMetaEntries: showMetaEntries,
+              compactDefinitions: compactDefinitions,
+            ),
       ));
     }
 
@@ -120,9 +142,9 @@ class _Header extends StatelessWidget {
       child: Text(
         title,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
     );
   }

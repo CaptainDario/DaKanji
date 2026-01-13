@@ -2,6 +2,7 @@ import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db_core/helper/string_extensions.dart';
 import 'package:dakanji_db_ui/search_results/dictionary_match_tag.dart';
 import 'package:dakanji_db_ui/search_results/dictionary_match_term_bank_definition_widget.dart';
+import 'package:dakanji_util/widgets/cut_and_fade_long_widget_wrapper.dart';
 import 'package:flutter/material.dart';
 
 
@@ -9,13 +10,14 @@ class DictionaryMatchTermBankDefinitionsWidget extends StatefulWidget {
 
   /// The term bank entries to display 
   final List<TermBankV3Entry> entries;
-  /// Whether to use compact mode for displaying definitions
-  final bool compactMode;
+  /// Whether to use compact mode (truncate to roughly three lines) displaying
+  /// definitions
+  final bool compact;
 
   const DictionaryMatchTermBankDefinitionsWidget(
     this.entries,
     {
-      this.compactMode = false,
+      this.compact = false,
       super.key
     }
   );
@@ -46,60 +48,64 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
   @override
   Widget build(BuildContext context) {
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        for (int i = 0; i < entriesToShow.length; i++) 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: double.infinity, // make sure the wrap uses the full width
-                child: Row(
-                  spacing: 2,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // numbering for each entry (1., 2. etc)
-                    Text(
-                      '${i + 1}. ',
-                      style: const TextStyle(
-                        color: Colors.grey
+    return CutAndFadeLongWidgetWrapper(
+      maxContentHeight: 70,
+      enabled: widget.compact,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (int i = 0; i < entriesToShow.length; i++) 
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: double.infinity, // make sure the wrap uses the full width
+                  child: Row(
+                    spacing: 2,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // numbering for each entry (1., 2. etc)
+                      Text(
+                        '${i + 1}. ',
+                        style: const TextStyle(
+                          color: Colors.grey
+                        ),
                       ),
-                    ),
-                    // the rule identifiers for this definition
-                    Expanded(
-                      child: Wrap(
-                        spacing: 2,
-                        runSpacing: 4,
-                        children: [
-                          for (final definitionTag in entriesToShow[i].definitionTags)
+                      // the rule identifiers for this definition
+                      Expanded(
+                        child: Wrap(
+                          spacing: 2,
+                          runSpacing: 4,
+                          children: [
+                            for (final definitionTag in entriesToShow[i].definitionTags)
+                              DictionaryMatchTag(
+                                texts: [definitionTag.name],
+                                details: definitionTag.notes.nullIfEmptyOrNull
+                              ),
+                            // the index from which this definitions comes
                             DictionaryMatchTag(
-                              texts: [definitionTag.name],
-                              details: definitionTag.notes.nullIfEmptyOrNull
-                            ),
-                          // the index from which this definitions comes
-                          DictionaryMatchTag(
-                            texts: [entriesToShow[i].indexEntry.title],
-                            details: entriesToShow[i].indexEntry.description.nullIfEmptyOrNull,
-                            textColors: [Colors.grey],
-                          )
-                        ],
+                              texts: [entriesToShow[i].indexEntry.title],
+                              details: entriesToShow[i].indexEntry.description.nullIfEmptyOrNull,
+                              textColors: [Colors.grey],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 4,),
-              // the actual definitions (structured content or not)
-              DictionaryMatchTermBankDefinitionWidget(
-                definitions: entriesToShow[i].structuredContentDefinitions,
-                indexId: entriesToShow[i].indexEntry.id
-              ),
-              if(i != entriesToShow.length - 1)
                 const SizedBox(height: 4,),
-            ],
-          ),
-      ],
+                // the actual definitions (structured content or not)
+                DictionaryMatchTermBankDefinitionWidget(
+                  definitions: entriesToShow[i].structuredContentDefinitions,
+                  indexId: entriesToShow[i].indexEntry.id
+                ),
+                if(i != entriesToShow.length - 1)
+                  const SizedBox(height: 4,),
+              ],
+            ),
+        ],
+      ),
     );
   }
 

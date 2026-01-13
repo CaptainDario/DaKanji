@@ -98,10 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: [
           Switch(
-            value: _searchSettings.useStructuredContentDefinitions,
+            value: _searchSettings.compactMode,
             onChanged: (v) {
               setState(() {
-                _searchSettings.useStructuredContentDefinitions = v;
+                _searchSettings.compactMode = v;
               });
             }
           ),
@@ -221,7 +221,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       DictionarySearchResultWidget(
                         lastSearchResult!,
                         daKanjiDB,
-                        _searchSettings.useStructuredContentDefinitions
+                        showTags: !_searchSettings.compactMode,
+                        showMetaEntries: !_searchSettings.compactMode,
+                        compactDefinitions: _searchSettings.compactMode,
                       ),
                   ),
               ],

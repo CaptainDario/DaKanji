@@ -3,7 +3,6 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_ui/search_results/structured_content/custom_html_to_widget_factory.dart';
 import 'package:dakanji_db_ui/search_results/structured_content/structured_content_css.dart';
 import 'package:dakanji_db_ui/search_results/structured_content/structured_content_to_html.dart';
-import 'package:dakanji_util/widgets/fade_long_widget_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:provider/provider.dart';
@@ -18,14 +17,10 @@ class DictionaryMatchTermBankDefinitionWidget extends StatefulWidget {
   /// The id of the index this definition belongs to
   final int indexId;
 
-  /// Whether to use compact mode for displaying definitions
-  final bool compactMode;
-
   const DictionaryMatchTermBankDefinitionWidget({
     super.key,
     required this.definitions,
     required this.indexId,
-    this.compactMode = false,
   });
 
   @override
@@ -66,42 +61,33 @@ class _DictionaryMatchTermBankDefinitionWidgetState extends State<DictionaryMatc
       future: getCss(),
       builder: (context, asyncSnapshot) {
 
-        return FadeLongWidgetWrapper(
-          fadeStartPercentage: widget.compactMode ? 0.9 : 1.0,
-          maxContentHeight: widget.compactMode ? 70 : double.infinity,
-          child: HtmlWidget(
-            renderDefinition(),
-            textStyle: const TextStyle(
-              overflow: TextOverflow.ellipsis,
-            ),
-            // Use a custom factory to handle local assets.
-            factoryBuilder: () => CustomHtmlToWidgetFactory(
-              widget.indexId,
-              context.read<DaKanjiDB>(),
-            ),
-          
-            // Handle taps on internal dictionary links.
-            onTapUrl: (url) {
-              // TODO URI
-              if (url.startsWith('?')) {
-                final uri = Uri.parse(url);
-                final query = uri.queryParameters['query'];
-                if (query != null) {
-                  // TODO 
-                  debugPrint('Internal link tapped! Search for: "$query"');
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Search for: $query')),
-                  );
-                }
-                return true; // Mark the URL as handled.
-              }
-              return false; // Let the package handle external URLs.
-            },
-            //onTapImage: (imageMetadata) {
-            //  debugPrint('Image tapped: ${imageMetadata.sources.first.url}');
-            //  return;
-            //},
+        return HtmlWidget(
+          renderDefinition(),
+          textStyle: const TextStyle(
+            overflow: TextOverflow.ellipsis,
           ),
+          // Use a custom factory to handle local assets.
+          factoryBuilder: () => CustomHtmlToWidgetFactory(
+            widget.indexId,
+            context.read<DaKanjiDB>(),
+          ),
+          // Handle taps on internal dictionary links.
+          onTapUrl: (url) {
+            // TODO URI
+            if (url.startsWith('?')) {
+              final uri = Uri.parse(url);
+              final query = uri.queryParameters['query'];
+              if (query != null) {
+                // TODO 
+                debugPrint('Internal link tapped! Search for: "$query"');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Search for: $query')),
+                );
+              }
+              return true; // Mark the URL as handled.
+            }
+            return false; // Let the package handle external URLs.
+          },
         );
       }
     );
