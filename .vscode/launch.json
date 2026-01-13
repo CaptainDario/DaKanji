@@ -1,36 +1,18 @@
 {
     "version": "0.2.0",
     "configurations": [
-
-
         {
             "name": "dakanji_db",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "dakanji_db_example (debug)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "debug",
-            "program": "lib/main.dart", 
-            "cwd": "${workspaceFolder}/apps/dakanji_db_example"
-        },
-        {
-            "name": "dakanji_db_example (profile)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile",
-            "program": "lib/main.dart",
-            "cwd": "${workspaceFolder}/apps/dakanji_db_example"
-        },
-        {
-            "name": "dakanji_db_ui_example",
+            "name": "UI search example",
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
             "program": "lib/main.dart",
-            "cwd": "${workspaceFolder}/apps/dakanji_db_ui_example"
+            "cwd": "${workspaceFolder}/packages/dakanji_db_ui/examples/search"
         },
         {
             "name": "Attach to Dart Build",
