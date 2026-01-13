@@ -68,10 +68,7 @@ class DictionarySearchResultWidget extends StatelessWidget {
       slivers.add(SliverList.builder(
         itemCount: matchGroup.exactMatches.length,
         itemBuilder: (context, i) =>
-            DictionaryMatchWidget(
-              matchGroup.exactMatches[i],
-              useStructuredContentDefinitions
-            ),
+            DictionaryMatchWidget(matchGroup.exactMatches[i]),
       ));
     }
 
@@ -81,10 +78,7 @@ class DictionarySearchResultWidget extends StatelessWidget {
       slivers.add(SliverList.builder(
         itemCount: matchGroup.prefixMatches.length,
         itemBuilder: (context, i) =>
-            DictionaryMatchWidget(
-              matchGroup.prefixMatches[i],
-              useStructuredContentDefinitions
-            ),
+            DictionaryMatchWidget(matchGroup.prefixMatches[i],),
       ));
     }
 
@@ -94,10 +88,7 @@ class DictionarySearchResultWidget extends StatelessWidget {
       slivers.add(SliverList.builder(
         itemCount: matchGroup.tokenMatches.length,
         itemBuilder: (context, i) =>
-            DictionaryMatchWidget(
-              matchGroup.tokenMatches[i],
-              useStructuredContentDefinitions
-            ),
+            DictionaryMatchWidget(matchGroup.tokenMatches[i],),
       ));
     }
 
@@ -107,10 +98,7 @@ class DictionarySearchResultWidget extends StatelessWidget {
       slivers.add(SliverList.builder(
         itemCount: matchGroup.wildcardMatches.length,
         itemBuilder: (context, i) =>
-            DictionaryMatchWidget(
-              matchGroup.wildcardMatches[i],
-              useStructuredContentDefinitions
-            ),
+            DictionaryMatchWidget(matchGroup.wildcardMatches[i]),
       ));
     }
 

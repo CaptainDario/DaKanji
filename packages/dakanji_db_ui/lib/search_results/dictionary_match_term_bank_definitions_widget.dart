@@ -10,11 +10,8 @@ class DictionaryMatchTermBankDefinitionsWidget extends StatefulWidget {
   /// The term bank entries to display 
   final List<TermBankV3Entry> entries;
 
-  final bool useStructuredContentDefinitions;
-
   const DictionaryMatchTermBankDefinitionsWidget(
     this.entries,
-    this.useStructuredContentDefinitions,
     {
       super.key
     }
@@ -35,7 +32,7 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
     // filter out duplicate entries in the group list
     for (final entry in widget.entries) {
       if (entriesToShow.any((existing) =>
-        existing.compareToGroupEntry(entry, widget.useStructuredContentDefinitions))
+        existing.compareToGroupEntry(entry))
       ) {
         continue;
       }

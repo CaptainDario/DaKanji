@@ -13,13 +13,8 @@ class DictionaryMatchWidget extends StatelessWidget {
   /// The dictionary match to display.
   final DictionaryMatch match;
 
-  /// Whether to use structured content display
-  /// Or only the extracted definitions.
-  final bool useStructuredContentDefinitions;
-
   const DictionaryMatchWidget(
     this.match,
-    this.useStructuredContentDefinitions,
     {
       super.key
     }
@@ -54,7 +49,6 @@ class DictionaryMatchWidget extends StatelessWidget {
                   ],
                 DictionaryMatchTermBankDefinitionsWidget(
                   match.entries,
-                  useStructuredContentDefinitions
                 )
               ],
             ),

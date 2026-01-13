@@ -106,7 +106,7 @@ class TermBankV3Entry with _$TermBankV3Entry {
 
   /// Returns true if this entry is considered equal to [other] in the context
   /// of grouping
-  bool compareToGroupEntry(TermBankV3Entry other, bool compareStructuredContent) {
+  bool compareToGroupEntry(TermBankV3Entry other) {
     
     if (definitionTags.length != other.definitionTags.length) return false;
     for (var tag in definitionTags) {
@@ -119,11 +119,9 @@ class TermBankV3Entry with _$TermBankV3Entry {
       if (!definitions.contains(def)) return false;
     }
 
-    if (compareStructuredContent) {
-      const deepEq = DeepCollectionEquality();
-      if (!deepEq.equals(structuredContentDefinitions, other.structuredContentDefinitions)) {
-        return false;
-      }
+    const deepEq = DeepCollectionEquality();
+    if (!deepEq.equals(structuredContentDefinitions, other.structuredContentDefinitions)) {
+      return false;
     }
 
     return true;

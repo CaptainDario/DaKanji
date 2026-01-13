@@ -35,16 +35,16 @@ class SearchMatchGroupWidget extends StatelessWidget {
       children: [
         Text("Exact matches: ${matchGroup.exactMatches.length}"),
         for (final match in matchGroup.exactMatches)
-          DictionaryMatchWidget(match, useStructuredContentDefinitions),
+          DictionaryMatchWidget(match),
         Text("Prefix matches: ${matchGroup.prefixMatches.length}"),
         for (final match in matchGroup.prefixMatches)
-          DictionaryMatchWidget(match, useStructuredContentDefinitions),
+          DictionaryMatchWidget(match),
         Text("Sub-word matches: ${matchGroup.tokenMatches.length}"),
         for (final match in matchGroup.tokenMatches)
-          DictionaryMatchWidget(match, useStructuredContentDefinitions),
+          DictionaryMatchWidget(match),
         Text("Wildcard matches: ${matchGroup.wildcardMatches.length}"),
         for (final match in matchGroup.wildcardMatches)
-          DictionaryMatchWidget(match, useStructuredContentDefinitions),
+          DictionaryMatchWidget(match),
       ],
     );
   }
