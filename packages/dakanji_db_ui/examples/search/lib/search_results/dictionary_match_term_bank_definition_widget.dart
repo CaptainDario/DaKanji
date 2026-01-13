@@ -86,10 +86,6 @@ class _DictionaryMatchTermBankDefinitionWidgetState extends State<DictionaryMatc
             }
             return false; // Let the package handle external URLs.
           },
-          //onTapImage: (imageMetadata) {
-          //  debugPrint('Image tapped: ${imageMetadata.sources.first.url}');
-          //  return;
-          //},
         );
       }
     );
