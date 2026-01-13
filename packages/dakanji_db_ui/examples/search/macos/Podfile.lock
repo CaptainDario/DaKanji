@@ -22,7 +22,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   css_inline_flutter: a7cafd8075baf9a2bc427d55e2089f3707433df3
   FlutterMacOS: d0db08ddef1a9af05a5ec4b724367152bb0500b1
-  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  path_provider_foundation: 0b743cbb62d8e47eab856f09262bb8c1ddcfe6ba
 
 PODFILE CHECKSUM: 54d867c82ac51cbd61b565781b9fada492027009
 
