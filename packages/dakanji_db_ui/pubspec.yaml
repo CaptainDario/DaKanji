@@ -20,6 +20,8 @@ dependencies:
   flutter_widget_from_html_core: ^0.17.0
   provider: ^6.1.5+1
   collection: ^1.19.1
+  flutter_markdown_plus: ^1.0.7
+  reorderables: ^0.6.0
 
 dev_dependencies:
   flutter_test:

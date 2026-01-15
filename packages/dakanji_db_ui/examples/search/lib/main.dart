@@ -4,6 +4,8 @@ import 'package:async/async.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
+import 'package:dakanji_db_core/util/dakanji_db_search_settings.dart';
 import 'package:dakanji_db_ui/dakanji_db_ui.dart';
 import 'package:dakanji_db_ui/search_results/dictionary_search_result_widget.dart';
 import 'package:flutter/foundation.dart';
@@ -11,7 +13,6 @@ import 'package:flutter/material.dart';
 
 import 'globals.dart';
 import 'init.dart';
-import 'search_settings.dart';
 import 'search_settings_dialog.dart';
 
 
@@ -67,7 +68,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   TextEditingController searchController = TextEditingController();
 
-  SearchSettings _searchSettings = SearchSettings();
+  DaKanjiDbSearchSettings _searchSettings = DaKanjiDbSearchSettings(
+    groupingRule: [const SequenceGroupingRule(
+      sourceDictId: 3,
+      targetDictIds: {3, 4}
+    )],
+  );
 
 
 
@@ -97,18 +103,10 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
         actions: [
-          Switch(
-            value: _searchSettings.compactMode,
-            onChanged: (v) {
-              setState(() {
-                _searchSettings.compactMode = v;
-              });
-            }
-          ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () async {
-              final result = await showGeneralDialog<SearchSettings>(
+              final result = await showGeneralDialog<DaKanjiDbSearchSettings>(
                 context: context,
                 barrierDismissible: true,
                 barrierLabel: "Settings",
@@ -119,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Center(
                       child: Material(
                         color: Colors.transparent,
-                        child: SearchSettingsDialog(initialSettings: _searchSettings.copy()),
+                        child: SearchSettingsDialog(initialSettings: _searchSettings),
                       ),
                     ),
                   );
@@ -219,11 +217,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   Expanded(
                     child: 
                       DictionarySearchResultWidget(
-                        lastSearchResult!,
-                        daKanjiDB,
-                        showTags: !_searchSettings.compactMode,
-                        showMetaEntries: !_searchSettings.compactMode,
-                        compactDefinitions: _searchSettings.compactMode,
+                        result: lastSearchResult!,
+                        db: daKanjiDB,
+                        settings: _searchSettings,
                       ),
                   ),
               ],
@@ -246,10 +242,10 @@ class _MyHomePageState extends State<MyHomePage> {
         DictionarySearchParams(
           query: term,
           normalizedSearch: _searchSettings.normalizedSearch,
-          normalizedSearchConvertsRomajiToHiragana: _searchSettings.convertRomaji,
-          deconjugationSearch: _searchSettings.deconjugation,
-          spellfixSearch: _searchSettings.spellfix,
-          groupingRules: [_searchSettings.groupingRule],
+          normalizedSearchConvertsRomajiToHiragana: _searchSettings.normalizeSearchConvertsRomajiToHiragana,
+          deconjugationSearch: _searchSettings.deconjugationSearch,
+          spellfixSearch: _searchSettings.spellfixSearch,
+          groupingRules: _searchSettings.groupingRule,
         ),
         printDebugInfo: !kReleaseMode,
       );

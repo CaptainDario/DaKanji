@@ -1,10 +1,12 @@
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
+import 'package:dakanji_db_core/util/dakanji_db_search_settings.dart';
+import 'package:dakanji_db_ui/widgets/settings/dakanji_db_search_sort_order_setting_widget.dart';
+import 'package:dakanji_db_ui_search_example/locales.dart';
 import 'package:flutter/material.dart';
 
-import 'search_settings.dart';
 
 class SearchSettingsDialog extends StatefulWidget {
-  final SearchSettings initialSettings;
+  final DaKanjiDbSearchSettings initialSettings;
 
   const SearchSettingsDialog({super.key, required this.initialSettings});
 
@@ -13,7 +15,7 @@ class SearchSettingsDialog extends StatefulWidget {
 }
 
 class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
-  late SearchSettings settings;
+  late DaKanjiDbSearchSettings settings;
 
   @override
   void initState() {
@@ -25,9 +27,9 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
-      constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
+      constraints: const BoxConstraints(maxWidth: 500, maxHeight: 900),
       decoration: BoxDecoration(
-        color: Theme.of(context).dialogTheme.backgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [BoxShadow(blurRadius: 10, color: Colors.black26)],
       ),
@@ -44,38 +46,78 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
             child: ListView(
               shrinkWrap: true,
               children: [
+                Text("Display", style: Theme.of(context).textTheme.headlineSmall),
                 _buildToggle(
-                  title: "Broad Search Mode",
-                  subtitle: "Ignore minor input differences like Ａ vs A",
-                  value: settings.normalizedSearch,
-                  onChanged: (v) => setState(() => settings.normalizedSearch = v),
+                  title: "Show Search Result Separation Headers",
+                  subtitle: "Show or hide headers such as 'Exact Matches', 'Prefix Matches', etc.",
+                  value: settings.showSearchResultSeparationHeaders,
+                  onChanged: (v) => setState(() { 
+                    settings.showSearchResultSeparationHeaders = v;
+                  }),
                 ),
                 _buildToggle(
-                  title: "Auto-Convert Romaji",
-                  subtitle: "Treat 'sushi' as 'すし'",
-                  value: settings.convertRomaji,
-                  onChanged: (v) => setState(() => settings.convertRomaji = v),
+                  title: "Show Tags",
+                  subtitle: "Shows tags such as 'common' in search results",
+                  value: settings.showTags,
+                  onChanged: (v) => setState(() { 
+                    settings.showTags = v;
+                  }),
                 ),
                 _buildToggle(
-                  title: "De-conjugation",
-                  subtitle: "Find '食べる' when searching '食べます'",
-                  value: settings.deconjugation,
-                  onChanged: (v) => setState(() => settings.deconjugation = v),
+                  title: "Show Meta entries",
+                  subtitle: "Shows Meta entries such as frequency in search results",
+                  value: settings.showMetaEntries,
+                  onChanged: (v) => setState(() { 
+                    settings.showMetaEntries = v;
+                  }),
                 ),
                 _buildToggle(
-                  title: "Autocorrect",
-                  subtitle: "Fix minor spelling mistakes like: すうし → すし",
-                  value: settings.spellfix,
-                  onChanged: (v) => setState(() => settings.spellfix = v),
+                  title: "Use Compact Definitions",
+                  subtitle: "Limits the height of definitions in search results",
+                  value: settings.definitionsMaxHeight > 0,
+                  onChanged: (v) => setState(() { 
+                    settings.definitionsMaxHeight = v ? 60.0 : 0.0;
+                  }),
                 ),
+
+                Text("Sort Order", style: Theme.of(context).textTheme.headlineSmall),
+                DakanjiDbSearchSortOrderSettingWidget(
+                  settings: settings,
+                  firstSortOrder: true,
+                  
+                  title: sortByTitle,
+                  infoText: sortByText,
+                  optionNames: [
+                    sortByExactMatch,
+                    sortByFlexibleMatch,
+                    sortBySmartGrammarMatch,
+                    sortByTypoCorrectionMatch,
+                  ],
+                ),
+                DakanjiDbSearchSortOrderSettingWidget(
+                  settings: settings,
+                  secondSortOrder: true,
+                  
+                  title: thenByTitle,
+                  infoText: thenByText,
+                  optionNames: [
+                    thenByExactMatch,
+                    thenByStartsWithMatch,
+                    thenBySubwordMatch,
+                    thenByWildcardMatch,
+                  ],
+                ),
+
+                SizedBox(height: 8),
+                Text("Grouping", style: Theme.of(context).textTheme.headlineSmall),
                 _buildToggle(
                   title: "Group by term",
                   subtitle: "Group identical entries (term only) together",
                   value: settings.groupingRule is TermAndReadingGroupingRule,
                   onChanged: (v) => setState(() { 
                     settings.groupingRule = v
-                      ? TermAndReadingGroupingRule({3, 4})
-                      : NoGroupingRule();
+                      ? [TermAndReadingGroupingRule({3, 4})]
+                      : [NoGroupingRule()];
                   }),
                 ),
                 _buildToggle(
@@ -84,8 +126,8 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
                   value: settings.groupingRule is TermGroupingRule,
                   onChanged: (v) => setState(() { 
                     settings.groupingRule = v
-                      ? TermGroupingRule({3, 4})
-                      : NoGroupingRule();
+                      ? [TermGroupingRule({3, 4})]
+                      : [NoGroupingRule()];
                   }),
                 ),
                 _buildToggle(
@@ -94,11 +136,11 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
                   value: settings.groupingRule is SequenceGroupingRule,
                   onChanged: (v) => setState(() { 
                     settings.groupingRule = v
-                      ? SequenceGroupingRule(
+                      ? [SequenceGroupingRule(
                         sourceDictId: 3,
                         targetDictIds: {3, 4}
-                      )
-                      : NoGroupingRule();
+                      )]
+                      : [NoGroupingRule()];
                   }),
                 ),
               ],

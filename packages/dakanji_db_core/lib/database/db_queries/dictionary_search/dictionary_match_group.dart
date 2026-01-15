@@ -40,18 +40,18 @@ class DictionaryMatchGroup {
   });
 
   DictionaryMatchGroup.empty()
-      : searchTerm = '',
-        variantReason = null,
-        exactMatches = [],
-        prefixMatches = [],
-        tokenMatches = [],
-        wildcardMatches = [];
+    : searchTerm = '',
+      variantReason = null,
+      exactMatches = [],
+      prefixMatches = [],
+      tokenMatches = [],
+      wildcardMatches = [];
 
   bool get isEmpty =>
-      exactMatches.isEmpty &&
-      prefixMatches.isEmpty &&
-      tokenMatches.isEmpty &&
-      wildcardMatches.isEmpty;
+    exactMatches.isEmpty &&
+    prefixMatches.isEmpty &&
+    tokenMatches.isEmpty &&
+    wildcardMatches.isEmpty;
 
   /// Factory method to create [SearchMatchGroup] objects from raw
   /// database query results.

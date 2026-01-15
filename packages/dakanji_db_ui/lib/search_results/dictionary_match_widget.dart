@@ -20,10 +20,10 @@ class DictionaryMatchWidget extends StatelessWidget {
   /// Whether to show meta entries.
   final bool showMetaEntries;
 
-  /// Whether to use compact definitions.
-  final bool compactDefinitions;
+  /// Max height for definitions section. 0 = unlimited.
+  final double definitionsMaxHeight;
 
-  /// Optional tap handler for the whole widget.
+  /// Callback that is called when this widget is tapped.
   final Function(DictionaryMatch match)? onTap;
 
   const DictionaryMatchWidget(
@@ -31,7 +31,7 @@ class DictionaryMatchWidget extends StatelessWidget {
     {
       this.showTags = true,
       this.showMetaEntries = true,
-      this.compactDefinitions = false,
+      this.definitionsMaxHeight = 0,
       this.onTap,
       super.key
     }
@@ -48,9 +48,7 @@ class DictionaryMatchWidget extends StatelessWidget {
         child: Card(
           clipBehavior: Clip.hardEdge,
           child: InkWell(
-            onTap: () {
-              onTap?.call(match);
-            },
+            onTap: onTap?.call(match),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
               child: Column(
@@ -72,10 +70,10 @@ class DictionaryMatchWidget extends StatelessWidget {
                         SizedBox(height: 8.0),
                       ],
                   ConditionalParentWidget(
-                    condition: compactDefinitions,
+                    condition: definitionsMaxHeight == 0,
                     child: DictionaryMatchTermBankDefinitionsWidget(
                       match.entries,
-                      compact: compactDefinitions,
+                      definitionsMaxHeight: definitionsMaxHeight,
                     ),
                     conditionalBuilder: (child) {
                       return SelectionContainer.disabled(child: child);

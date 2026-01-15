@@ -105,7 +105,6 @@ class DictionarySearchResult {
     );
   }
 
-  // ... (rest of the class constructor and methods remain unchanged) ...
   DictionarySearchResult.fromMatchGroups({
     required this.queryMatches,
     required this.normalizedQueryMatchGroups,

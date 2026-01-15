@@ -1,171 +1,242 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:dakanji_db_core/util/dakanji_db_search_settings.dart';
 import 'package:dakanji_db_ui/search_results/dictionary_match_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+class DictionarySearchResultWidget extends StatefulWidget {
 
-
-class DictionarySearchResultWidget extends StatelessWidget {
-
+  /// The dictionary search result to display.
   final DictionarySearchResult result;
+  /// The database instance.
   final DaKanjiDB db;
-  final bool showTags;
-  final bool showMetaEntries;
-  final bool compactDefinitions;
+  /// Settings for displaying the search results.
+  final DaKanjiDbSearchSettings settings;
+
+  /// Callback that is called when this widget is tapped.
+  final Function(DictionaryMatch match)? onTap;
 
   const DictionarySearchResultWidget(
-    this.result,
-    this.db,
     {
-      this.showTags = true,
-      this.showMetaEntries = true,
-      this.compactDefinitions = false,
+      required this.result,
+      required this.db,
+      required this.settings,
+      this.onTap,
       super.key
     }
   );
 
   @override
+  State<DictionarySearchResultWidget> createState() => _DictionarySearchResultWidgetState();
+}
+
+class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWidget> {
+  final Set<String> _collapsedSections = {};
+
+  void _toggleSection(String title) {
+    setState(() {
+      if (_collapsedSections.contains(title)) {
+        _collapsedSections.remove(title);
+      } else {
+        _collapsedSections.add(title);
+      }
+    });
+  }
+
+  bool _isExpanded(String title) => !_collapsedSections.contains(title);
+
+  @override
   Widget build(BuildContext context) {
-    final normalized = result.normalizedQueryMatchGroups;
-    final variants = result.queryVariantMatches;
-    final fuzzy = result.fuzzyMatches;
+    final normalized = widget.result.normalizedQueryMatchGroups;
+    final variants = widget.result.queryVariantMatches;
+    final fuzzy = widget.result.fuzzyMatches;
 
     return Provider.value(
-      value: db,
+      value: widget.db,
       child: CustomScrollView(
         slivers: [
           // Section 1: Query Matches
-          const SliverToBoxAdapter(child: _Header("Query Matches")),
-          ..._buildSliversForMatchGroup(result.queryMatches),
+          _buildMainSection("Query Matches", widget.result.queryMatches),
 
           // Section 2: Normalized Matches
           if (normalized.isNotEmpty) ...[
-            const SliverToBoxAdapter(child: _Header("Normalized Matches")),
-            ...normalized.expand((group) => _buildSliversForMatchGroup(group)),
+             ...normalized.map((group) => _buildMainSection("Normalized Matches", group)),
           ],
 
           // Section 3: Variant Matches
           if (variants.isNotEmpty) ...[
-            const SliverToBoxAdapter(child: _Header("Variant Matches")),
-            ...variants.expand((group) => _buildSliversForMatchGroup(group)),
+            ...variants.map((group) => _buildMainSection("Variant Matches", group)),
           ],
 
           // Section 4: Fuzzy Matches
           if (fuzzy.isNotEmpty) ...[
-            const SliverToBoxAdapter(child: _Header("Fuzzy Matches")),
-            ...fuzzy.expand((group) => _buildSliversForMatchGroup(group)),
+             ...fuzzy.map((group) => _buildMainSection("Fuzzy Matches", group)),
           ],
         ],
       ),
     );
   }
 
+  Widget _buildMainSection(String title, DictionaryMatchGroup group) {
+    final expanded = _isExpanded(title);
+    
+    return SliverMainAxisGroup(
+      // Key allows Flutter to reuse the render object when rebuilding
+      key: ValueKey("MainSection_$title"), 
+      slivers: [
+        if (widget.settings.showSearchResultSeparationHeaders)
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: _StickyHeaderDelegate(
+              title: title, 
+              type: _StickyHeaderType.main,
+              isExpanded: expanded,
+              onTap: () => _toggleSection(title),
+              fontSize: 18.0, 
+            ),
+          ),
+        
+        if (expanded)
+          ..._buildSliversForMatchGroup(group),
+      ],
+    );
+  }
 
   List<Widget> _buildSliversForMatchGroup(DictionaryMatchGroup matchGroup) {
     final List<Widget> slivers = [];
 
-    // Sub-Section: Exact Matches
-    if (matchGroup.exactMatches.isNotEmpty) {
-      slivers.add(const SliverToBoxAdapter(child: _SubHeader("Exact Matches")));
-      slivers.add(SliverList.builder(
-        itemCount: matchGroup.exactMatches.length,
-        itemBuilder: (context, i) =>
-            DictionaryMatchWidget(
-              matchGroup.exactMatches[i],
-              showTags: showTags,
-              showMetaEntries: showMetaEntries,
-              compactDefinitions: compactDefinitions,
-            ),
-      ));
+    void addSection(String title, List<DictionaryMatch> matches) {
+      if (matches.isNotEmpty) {
+        final expanded = _isExpanded(title);
+        // Create a stable key for this section
+        final sectionKey = "SubSection_${matchGroup.searchTerm}_$title";
+
+        slivers.add(SliverMainAxisGroup(
+          // Helps Flutter identify this specific sub-group
+          key: ValueKey(sectionKey), 
+          slivers: [
+            if (widget.settings.showSearchResultSeparationHeaders)
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: _StickyHeaderDelegate(
+                  title: title,
+                  type: _StickyHeaderType.sub,
+                  isExpanded: expanded,
+                  onTap: () => _toggleSection(title),
+                  fontSize: 14.0, 
+                )
+              ),
+            if (expanded)
+              _buildMatchSliver(matches, sectionKey),
+          ],
+        ));
+      }
     }
 
-    // Sub-Section: Prefix Matches
-    if (matchGroup.prefixMatches.isNotEmpty) {
-      slivers.add(const SliverToBoxAdapter(child: _SubHeader("Prefix Matches")));
-      slivers.add(SliverList.builder(
-        itemCount: matchGroup.prefixMatches.length,
-        itemBuilder: (context, i) =>
-            DictionaryMatchWidget(
-              matchGroup.prefixMatches[i],
-              showTags: showTags,
-              showMetaEntries: showMetaEntries,
-              compactDefinitions: compactDefinitions,
-            ),
-      ));
-    }
-
-    // Sub-Section: Token Matches
-    if (matchGroup.tokenMatches.isNotEmpty) {
-      slivers.add(const SliverToBoxAdapter(child: _SubHeader("Sub-word Matches")));
-      slivers.add(SliverList.builder(
-        itemCount: matchGroup.tokenMatches.length,
-        itemBuilder: (context, i) =>
-            DictionaryMatchWidget(
-              matchGroup.tokenMatches[i],
-              showTags: showTags,
-              showMetaEntries: showMetaEntries,
-              compactDefinitions: compactDefinitions,
-            ),
-      ));
-    }
-
-    // Sub-Section: Wildcard Matches
-    if (matchGroup.wildcardMatches.isNotEmpty) {
-      slivers.add(const SliverToBoxAdapter(child: _SubHeader("Wildcard Matches")));
-      slivers.add(SliverList.builder(
-        itemCount: matchGroup.wildcardMatches.length,
-        itemBuilder: (context, i) =>
-            DictionaryMatchWidget(
-              matchGroup.wildcardMatches[i],
-              showTags: showTags,
-              showMetaEntries: showMetaEntries,
-              compactDefinitions: compactDefinitions,
-            ),
-      ));
-    }
+    addSection("Exact matches (${matchGroup.searchTerm}):", matchGroup.exactMatches);
+    addSection("Prefix matches (${matchGroup.searchTerm}*):", matchGroup.prefixMatches);
+    addSection("Subword matches (*${matchGroup.searchTerm}*):", matchGroup.tokenMatches);
+    addSection("Wildcard matches (${matchGroup.searchTerm})", matchGroup.wildcardMatches);
 
     return slivers;
   }
-}
 
-// Main section header
-class _Header extends StatelessWidget {
-  final String title;
-  const _Header(this.title);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.primary,
+  Widget _buildMatchSliver(List<DictionaryMatch> matches, String keyPrefix) {
+    return SliverList.builder(
+      // Helps Flutter track this specific list
+      key: ValueKey("${keyPrefix}_List"), 
+      // Don't keep off-screen items alive.
+      addAutomaticKeepAlives: false,
+      itemCount: matches.length,
+      itemBuilder: (context, i) => RepaintBoundary(
+        key: ValueKey("${keyPrefix}_List_Item_$i"), 
+        child: DictionaryMatchWidget(
+          matches[i],
+          showTags: widget.settings.showTags,
+          showMetaEntries: widget.settings.showMetaEntries,
+          definitionsMaxHeight: widget.settings.definitionsMaxHeight,
+          onTap: widget.onTap,
         ),
       ),
     );
   }
 }
 
-// Sub-section header
-class _SubHeader extends StatelessWidget {
+enum _StickyHeaderType {
+  main, 
+  sub,  
+}
+
+class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   final String title;
-  const _SubHeader(this.title);
+  final _StickyHeaderType type;
+  final bool isExpanded;
+  final VoidCallback onTap;
+  final double fontSize;
+
+  const _StickyHeaderDelegate({
+    required this.title,
+    required this.type,
+    required this.isExpanded,
+    required this.onTap,
+    this.fontSize = 14.0,
+  });
+
+  double get _headerHeight => fontSize * 1.8; 
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0, bottom: 8.0),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.secondary,
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final isMain = type == _StickyHeaderType.main;
+    final theme = Theme.of(context);
+
+    return Material(
+      color: theme.scaffoldBackgroundColor,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: fontSize, 
+                  ),
+                ),
+              ),
+              AnimatedRotation(
+                turns: isExpanded ? 0.0 : -0.25, 
+                duration: const Duration(milliseconds: 200),
+                child: Icon(
+                  Icons.expand_more,
+                  size: fontSize * 1.4, 
+                  color: isMain ? null : theme.colorScheme.secondary,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  @override
+  double get maxExtent => _headerHeight; 
+
+  @override
+  double get minExtent => _headerHeight; 
+
+  @override
+  bool shouldRebuild(covariant _StickyHeaderDelegate oldDelegate) {
+    return oldDelegate.title != title || 
+           oldDelegate.type != type ||
+           oldDelegate.fontSize != fontSize || 
+           oldDelegate.isExpanded != isExpanded;
   }
 }

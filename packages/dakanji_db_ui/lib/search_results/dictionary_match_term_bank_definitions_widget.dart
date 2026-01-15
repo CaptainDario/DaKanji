@@ -10,14 +10,13 @@ class DictionaryMatchTermBankDefinitionsWidget extends StatefulWidget {
 
   /// The term bank entries to display 
   final List<TermBankV3Entry> entries;
-  /// Whether to use compact mode (truncate to roughly three lines) displaying
-  /// definitions
-  final bool compact;
+  /// Max height for the definitions section. 0 = unlimited.
+  final double definitionsMaxHeight;
 
   const DictionaryMatchTermBankDefinitionsWidget(
     this.entries,
     {
-      this.compact = false,
+      this.definitionsMaxHeight = 0,
       super.key
     }
   );
@@ -49,8 +48,8 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
   Widget build(BuildContext context) {
 
     return CutAndFadeLongWidgetWrapper(
-      maxContentHeight: 70,
-      enabled: widget.compact,
+      maxContentHeight: widget.definitionsMaxHeight,
+      enabled: widget.definitionsMaxHeight > 0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
