@@ -1,5 +1,5 @@
+import 'package:dakanji_db_core/data/dakanji_db_search_result_sort_order.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
-import 'package:dakanji_db_core/util/dakanji_db_search_result_order.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 
@@ -19,31 +19,31 @@ class DaKanjiDbSearchSettings {
   /// - normalizedMatch
   /// - deconjugationMatch
   /// - spellfixMatch
-  List<(DakanjiDbSearch1stSortOrder, bool)> firstSortOrder = [
-    (DakanjiDbSearch1stSortOrder.queryMatch, true),
-    (DakanjiDbSearch1stSortOrder.normalizedMatch, true),
-    (DakanjiDbSearch1stSortOrder.deconjugationMatch, true),
-    (DakanjiDbSearch1stSortOrder.spellfixMatch, true),
+  List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder = [
+    (DakanjiDbSearchResult1stSortOrder.queryMatch, true),
+    (DakanjiDbSearchResult1stSortOrder.normalizedMatch, true),
+    (DakanjiDbSearchResult1stSortOrder.deconjugationMatch, true),
+    (DakanjiDbSearchResult1stSortOrder.spellfixMatch, true),
   ];
   /// Whether to enable query match searches.
   bool get queryMatch =>
-    firstSortOrder.where((e) => e.$1 == DakanjiDbSearch1stSortOrder.queryMatch)
+    firstSortOrder.where((e) => e.$1 == DakanjiDbSearchResult1stSortOrder.queryMatch)
       .first.$2;
   /// Whether to enable normalized searches.
   bool get normalizedSearch =>
-    firstSortOrder.where((e) => e.$1 == DakanjiDbSearch1stSortOrder.normalizedMatch)
+    firstSortOrder.where((e) => e.$1 == DakanjiDbSearchResult1stSortOrder.normalizedMatch)
       .first.$2;
   /// Whether to enable variation searches.
   bool get deconjugationSearch =>
-    firstSortOrder.where((e) => e.$1 == DakanjiDbSearch1stSortOrder.deconjugationMatch)
+    firstSortOrder.where((e) => e.$1 == DakanjiDbSearchResult1stSortOrder.deconjugationMatch)
       .first.$2;
   /// Whether to enable fuzzy searches.
   bool get spellfixSearch =>
-    firstSortOrder.where((e) => e.$1 == DakanjiDbSearch1stSortOrder.spellfixMatch)
+    firstSortOrder.where((e) => e.$1 == DakanjiDbSearchResult1stSortOrder.spellfixMatch)
       .first.$2;
 
   /// 2nd level sort order for search results.
-  /// If an entry of [DakanjiDbSearch2ndSortOrder] is not included here, it
+  /// If an entry of [DakanjiDbSearchReesult2ndSortOrder] is not included here, it
   /// will not be searched for.
   /// 
   /// Default is:
@@ -51,27 +51,27 @@ class DaKanjiDbSearchSettings {
   /// - prefixMatch
   /// - subwordMatch
   /// - wildcardMatch
-  List<(DakanjiDbSearch2ndSortOrder, bool)> secondSortOrder = [
-    (DakanjiDbSearch2ndSortOrder.exactMatch, true),
-    (DakanjiDbSearch2ndSortOrder.prefixMatch, true),
-    (DakanjiDbSearch2ndSortOrder.subwordMatch, true),
-    (DakanjiDbSearch2ndSortOrder.wildcardMatch, true),
+  List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder = [
+    (DakanjiDbSearchReesult2ndSortOrder.exactMatch, true),
+    (DakanjiDbSearchReesult2ndSortOrder.prefixMatch, true),
+    (DakanjiDbSearchReesult2ndSortOrder.subwordMatch, true),
+    (DakanjiDbSearchReesult2ndSortOrder.wildcardMatch, true),
   ];
   /// Whether to enable exact match searches.
   bool get exactMatch =>
-    secondSortOrder.where((e) => e.$1 == DakanjiDbSearch2ndSortOrder.exactMatch)
+    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchReesult2ndSortOrder.exactMatch)
       .first.$2;
   /// Whether to enable prefix match searches.
   bool get prefixMatch =>
-    secondSortOrder.where((e) => e.$1 == DakanjiDbSearch2ndSortOrder.prefixMatch)
+    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchReesult2ndSortOrder.prefixMatch)
       .first.$2;
   /// Whether to enable subword match searches.
   bool get subwordMatch =>
-    secondSortOrder.where((e) => e.$1 == DakanjiDbSearch2ndSortOrder.subwordMatch)
+    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchReesult2ndSortOrder.subwordMatch)
       .first.$2;
   /// Whether to enable wildcard match searches.
   bool get wildcardMatch =>
-    secondSortOrder.where((e) => e.$1 == DakanjiDbSearch2ndSortOrder.wildcardMatch)
+    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchReesult2ndSortOrder.wildcardMatch)
       .first.$2;
 
   /// The grouping rules to apply to the search.
@@ -98,8 +98,8 @@ class DaKanjiDbSearchSettings {
     this.showMetaEntries = true,
     this.definitionsMaxHeight = 60.0,
 
-    List<(DakanjiDbSearch1stSortOrder, bool)>? firstSortOrder,
-    List<(DakanjiDbSearch2ndSortOrder, bool)>? secondSortOrder,
+    List<(DakanjiDbSearchResult1stSortOrder, bool)>? firstSortOrder,
+    List<(DakanjiDbSearchReesult2ndSortOrder, bool)>? secondSortOrder,
   }){
     if(firstSortOrder != null) this.firstSortOrder = firstSortOrder;
     if (secondSortOrder != null) this.secondSortOrder = secondSortOrder;

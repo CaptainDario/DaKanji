@@ -1,8 +1,8 @@
+import 'package:dakanji_db_core/data/dakanji_db_search_result_sort_order.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
-import 'package:dakanji_db_core/util/dakanji_db_search_result_order.dart';
 import 'package:dakanji_db_core/util/dakanji_db_search_settings.dart';
 import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_widget.dart';
 import 'package:flutter/material.dart';
@@ -63,20 +63,20 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
           ...switch (matchType.$1) {
             
             // Query Matches
-            DakanjiDbSearch1stSortOrder.queryMatch when matchType.$2 => [
+            DakanjiDbSearchResult1stSortOrder.queryMatch when matchType.$2 => [
                 _buildMainSection("Query Matches", widget.result.queryMatches)
               ],
 
             // Normalized Matches
-            DakanjiDbSearch1stSortOrder.normalizedMatch when matchType.$2 =>
+            DakanjiDbSearchResult1stSortOrder.normalizedMatch when matchType.$2 =>
               normalized.map((group) => _buildMainSection("Normalized Matches", group)),
 
             // Variant Matches
-            DakanjiDbSearch1stSortOrder.deconjugationMatch when matchType.$2 =>
+            DakanjiDbSearchResult1stSortOrder.deconjugationMatch when matchType.$2 =>
               variants.map((group) => _buildMainSection("Variant Matches", group)),
 
             // Fuzzy Matches
-            DakanjiDbSearch1stSortOrder.spellfixMatch when matchType.$2 =>
+            DakanjiDbSearchResult1stSortOrder.spellfixMatch when matchType.$2 =>
               fuzzy.map((group) => _buildMainSection("Fuzzy Matches", group)),
 
             // Default case returns an empty list
@@ -146,19 +146,19 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
     // display the results in the user defined order
     for (var matchType in widget.settings.secondSortOrder) {
       switch (matchType.$1) {
-        case DakanjiDbSearch2ndSortOrder.exactMatch:
+        case DakanjiDbSearchReesult2ndSortOrder.exactMatch:
           if (matchType.$2) {
             addSection("Exact matches (${matchGroup.searchTerm}):", matchGroup.exactMatches);
           }
-        case DakanjiDbSearch2ndSortOrder.prefixMatch:
+        case DakanjiDbSearchReesult2ndSortOrder.prefixMatch:
           if (matchType.$2) {
             addSection("Prefix matches (${matchGroup.searchTerm}*):", matchGroup.prefixMatches);
           }
-        case DakanjiDbSearch2ndSortOrder.subwordMatch:
+        case DakanjiDbSearchReesult2ndSortOrder.subwordMatch:
           if (matchType.$2) {
             addSection("Subword matches (*${matchGroup.searchTerm}*):", matchGroup.tokenMatches);
           }
-        case DakanjiDbSearch2ndSortOrder.wildcardMatch:
+        case DakanjiDbSearchReesult2ndSortOrder.wildcardMatch:
           if (matchType.$2) {
             addSection("Wildcard matches (${matchGroup.searchTerm})", matchGroup.wildcardMatches);
           }
