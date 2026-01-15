@@ -7,7 +7,7 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_core/util/dakanji_db_search_settings.dart';
 import 'package:dakanji_db_ui/dakanji_db_ui.dart';
-import 'package:dakanji_db_ui/search_results/dictionary_search_result_widget.dart';
+import 'package:dakanji_db_ui/widgets/search_results/dictionary_search_result_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
