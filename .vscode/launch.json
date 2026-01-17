@@ -7,10 +7,18 @@
             "type": "dart"
         },
         {
-            "name": "UI search example",
+            "name": "UI search example (debug)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
+            "program": "lib/main.dart",
+            "cwd": "${workspaceFolder}/packages/dakanji_db_ui/examples/search"
+        },
+        {
+            "name": "UI search example (profile)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
             "program": "lib/main.dart",
             "cwd": "${workspaceFolder}/packages/dakanji_db_ui/examples/search"
         },
