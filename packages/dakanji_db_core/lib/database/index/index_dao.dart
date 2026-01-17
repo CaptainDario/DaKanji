@@ -17,12 +17,46 @@ class IndexDao extends DatabaseAccessor<DaKanjiDB> with _$IndexDaoMixin {
   IndexDao(super.db);
 
 
+  /// Set the sorting order of an index (order in which results are displayed)
+  Future setSortingOrders(List<int> indexIds, List<int> newSortingOrders) async {
+
+    assert(indexIds.length == newSortingOrders.length);
+    
+    // do this in a transaction
+    await db.transaction(() async {
+      for (int i = 0; i < indexIds.length; i++) {
+        final updateQuery = update(indexTable)
+          ..where((tbl) => tbl.id.equals(indexIds[i]));
+        await updateQuery.write(IndexTableCompanion(
+          currentSortingOrder: Value(newSortingOrders[i]),
+        ));
+      }
+    });
+
+  }
+
+  /// Enable or disable an index
   Future setEnabled(int indexId, bool enabled) async {
 
     final updateQuery = update(indexTable)
       ..where((tbl) => tbl.id.equals(indexId));
     await updateQuery.write(IndexTableCompanion(enabled: Value(enabled),));
 
+  }
+
+  /// Get all indexes
+  Future<List<IndexTableData>> getAllIndexes() async {
+    final query = select(db.indexTable);
+    final results = await query.get();
+
+    return results;
+
+  }
+
+  /// Watch all indexes
+  Stream<List<IndexTableData>> watchAllIndexes() {
+    final query = select(db.indexTable);
+    return query.watch();
   }
 
   /// Get all default indexes
@@ -59,7 +93,7 @@ class IndexDao extends DatabaseAccessor<DaKanjiDB> with _$IndexDaoMixin {
 
   /// Sets the current frequency dictionary to the entry with
   /// `newOverrideIndexId`
-  Future updatePopularityOverride(int newOverrideIndexId) async {
+  Future updateFrequencyOverride(int newOverrideIndexId) async {
 
     await clearFrequencyOverride();
 
