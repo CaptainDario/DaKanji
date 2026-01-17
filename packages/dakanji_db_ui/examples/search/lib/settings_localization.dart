@@ -24,6 +24,8 @@ DakanjiDbSettingsLocalization dakanjiDbSettingsLocalization = DakanjiDbSettingsL
   useCompactDefinitionsTitle: useCompactDefinitionsTitle,
   useCompactDefinitionsSubtitle: useCompactDefinitionsSubtitle,
 
+  useKatakanaForFuriganaTitle: useKatakanaForFuriganaTitle,
+
   // --- Sort Order ---
   sortOrderTitle: sortOrderTitle,
 
@@ -77,6 +79,8 @@ String showMetaEntriesSubtitle = "Shows Meta entries such as frequency in search
 
 String useCompactDefinitionsTitle = "Use Compact Definitions";
 String useCompactDefinitionsSubtitle = "Limits the height of definitions in search results";
+
+String useKatakanaForFuriganaTitle = "Use Katakana for Furigana";
 
 /// --- Sort Order ---
 

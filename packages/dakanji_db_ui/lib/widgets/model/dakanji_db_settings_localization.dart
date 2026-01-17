@@ -23,6 +23,8 @@ class DakanjiDbSettingsLocalization {
     required this.useCompactDefinitionsTitle,
     required this.useCompactDefinitionsSubtitle,
 
+    required this.useKatakanaForFuriganaTitle,
+
     // --- Sort Order ---
     required this.sortOrderTitle,
     required this.sortByTitle,
@@ -73,6 +75,8 @@ class DakanjiDbSettingsLocalization {
 
   String useCompactDefinitionsTitle;
   String useCompactDefinitionsSubtitle;
+
+  String useKatakanaForFuriganaTitle;
 
   /// --- Sort Order ---
   String sortOrderTitle;
