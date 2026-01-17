@@ -1,5 +1,5 @@
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
-import 'package:dakanji_db_core/util/dakanji_db_search_settings.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_search_settings.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_search_sort_order_setting_widget.dart';
 import 'package:dakanji_db_ui_search_example/locales.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:dakanji_db_core/util/dakanji_db_search_settings.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_search_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:reorderables/reorderables.dart';

@@ -1,9 +1,9 @@
-import 'package:dakanji_db_core/data/dakanji_db_search_result_sort_order.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
-import 'package:dakanji_db_core/util/dakanji_db_search_settings.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_search_settings.dart';
 import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -88,11 +88,13 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
   }
 
   Widget _buildMainSection(String title, DictionaryMatchGroup group) {
+    
+    title = "$title (${group.searchTerm})";
     final expanded = _isExpanded(title);
     
     return SliverMainAxisGroup(
       // Key allows Flutter to reuse the render object when rebuilding
-      key: ValueKey("MainSection_$title"), 
+      key: ValueKey("MainSection_${title}_${group.searchTerm}"), 
       slivers: [
         if (widget.settings.showSearchResultSeparationHeaders)
           SliverPersistentHeader(
@@ -148,19 +150,19 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       switch (matchType.$1) {
         case DakanjiDbSearchReesult2ndSortOrder.exactMatch:
           if (matchType.$2) {
-            addSection("Exact matches (${matchGroup.searchTerm}):", matchGroup.exactMatches);
+            addSection("Exact matches (${matchGroup.exactMatches.length}):", matchGroup.exactMatches);
           }
         case DakanjiDbSearchReesult2ndSortOrder.prefixMatch:
           if (matchType.$2) {
-            addSection("Prefix matches (${matchGroup.searchTerm}*):", matchGroup.prefixMatches);
+            addSection("Prefix matches (${matchGroup.prefixMatches.length}):", matchGroup.prefixMatches);
           }
         case DakanjiDbSearchReesult2ndSortOrder.subwordMatch:
           if (matchType.$2) {
-            addSection("Subword matches (*${matchGroup.searchTerm}*):", matchGroup.tokenMatches);
+            addSection("Subword matches (*${matchGroup.tokenMatches.length}):", matchGroup.tokenMatches);
           }
         case DakanjiDbSearchReesult2ndSortOrder.wildcardMatch:
           if (matchType.$2) {
-            addSection("Wildcard matches (${matchGroup.searchTerm})", matchGroup.wildcardMatches);
+            addSection("Wildcard matches (${matchGroup.wildcardMatches.length})", matchGroup.wildcardMatches);
           }
       } 
     }
