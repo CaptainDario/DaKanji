@@ -1,29 +1,32 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
+import 'package:dakanji_db_ui/widgets/model/dakanji_db_settings_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_widget.dart';
-import 'package:dakanji_db_ui_search_example/locales.dart';
 import 'package:flutter/material.dart';
 
 
-class SearchSettingsDialog extends StatefulWidget {
+class DaKanjiDbSettingsDialog extends StatefulWidget {
 
   final DaKanjiDB db;
 
   final DaKanjiDbSettings settings;
 
-  const SearchSettingsDialog(
+  final DakanjiDbSettingsLocalization localization;
+
+  const DaKanjiDbSettingsDialog(
     {
       super.key,
       required this.settings,
-      required this.db
+      required this.db,
+      required this.localization
     }
   );
 
   @override
-  State<SearchSettingsDialog> createState() => _SearchSettingsDialogState();
+  State<DaKanjiDbSettingsDialog> createState() => _DaKanjiDbSettingsDialogState();
 }
 
-class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
+class _DaKanjiDbSettingsDialogState extends State<DaKanjiDbSettingsDialog> {
 
   late DaKanjiDbSettings settings;
 
@@ -37,7 +40,9 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
-      constraints: const BoxConstraints(maxWidth: 500, maxHeight: 900),
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.75
+      ),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(16),
@@ -48,7 +53,7 @@ class _SearchSettingsDialogState extends State<SearchSettingsDialog> {
         child: DakanjiDbSettingsWidget(
           widget.db,
           settings,
-          dakanjiDbSettingsLocalization,
+          widget.localization,
         ),
       )
     );
