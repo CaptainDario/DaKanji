@@ -35,77 +35,81 @@ List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKat
   if (text.trim().isEmpty) return [FuriganaPair("", reading)];
   if (reading.trim().isEmpty) return [FuriganaPair("", text)];
 
+  const k = KanaKit();
   List<FuriganaPair> result = [];
+  final kanjiRegex = RegExp(r'[\u4e00-\u9faf\u3005]');
 
-  // Simple Regex for Kanji (approximate range)
-  final kanjiRegex = RegExp(r'[\u4e00-\u9faf]'); 
-
+  // 1. Handle conversions upfront so indices align perfectly
   if (convertToKatakana) {
-    KanaKit k = const KanaKit();
     text = k.toKatakana(text);
     reading = k.toKatakana(reading);
   }
 
   FuriganaPair currentPair = FuriganaPair("", "");
   int readingIndex = 0;
-  int i = 0; // Use manual index control
+  int i = 0;
 
   while (i < text.length) {
     String char = text[i];
 
-    // Case 1: Current character is Kanji -> Buffer it
+    // CASE 1: Kanji -> Buffer it
     if (kanjiRegex.hasMatch(char)) {
       currentPair.kanji += char;
-      i++; 
+      i++;
     } 
-    // Case 2: Current character is Kana (Okurigana or non-kanji words)
+    // CASE 2: Kana / Non-Kanji -> Match against reading
     else {
-      // Find where this kana appears in the reading
-      int kanaIdx = reading.indexOf(char, readingIndex);
+      // Normalize to Hiragana only for the search (handles Kata vs Hira mismatch)
+      String charHira = k.toHiragana(char);
+      String readingHira = k.toHiragana(reading);
       
-      // If we found the kana immediately (kanaIdx == readingIndex) 
-      // BUT we have buffered Kanji waiting for a reading, it means 
-      // we matched the *first part* of a double vowel (like I-I-Kata).
-      // We must search for the *next* occurrence to allow the Kanji to have a reading.
+      int kanaIdx = readingHira.indexOf(charHira, readingIndex);
+
+      // Edge Case: Ambiguous Double Vowel (e.g. "I-I-Kata")
       if (kanaIdx == readingIndex && currentPair.kanji.isNotEmpty) {
-         int nextIdx = reading.indexOf(char, readingIndex + 1);
-         if (nextIdx != -1) {
-           kanaIdx = nextIdx;
-         }
+         int nextIdx = readingHira.indexOf(charHira, readingIndex + 1);
+         if (nextIdx != -1) kanaIdx = nextIdx;
       }
 
       if (kanaIdx != -1) {
-        // 1. Assign the reading calculated up to this point to the buffered Kanji
+        // A. Flush the buffered Kanji (if any)
+        // Assign the reading skipped so far to the Kanji
         currentPair.reading = reading.substring(readingIndex, kanaIdx);
-        result.add(currentPair);
+        if (currentPair.kanji.isNotEmpty) {
+           result.add(currentPair);
+        }
         
-        // 2. Prepare the Okurigana pair
-        currentPair = FuriganaPair("", ""); // Reset
+        // B. Prepare the Non-Kanji Pair
+        // STRICT RULE: Kanji field must be empty
+        currentPair = FuriganaPair("", ""); 
         readingIndex = kanaIdx;
 
-        // 3. Match the continuous Kana segment (The Okurigana)
-        // Note: We do NOT increment 'i' here for the outer loop yet
+        // C. Match the continuous Kana segment
         while (i < text.length &&
             readingIndex < reading.length &&
-            text[i] == reading[readingIndex]) {
-          currentPair.reading += reading[readingIndex];
+            k.toHiragana(text[i]) == k.toHiragana(reading[readingIndex])) {
+          
+          // Add to READING field (because it is not Kanji)
+          // Use text[i] (Original) to preserve Katakana/Hiragana distinction
+          currentPair.reading += text[i];
+          
           i++; 
           readingIndex++;
         }
         
-        // 4. Add the Okurigana pair
+        // D. Add the Non-Kanji pair
         result.add(currentPair);
         currentPair = FuriganaPair("", "");
       } else {
-        // Fallback: If we can't match the kana, just treat it as part of the Kanji block 
-        // (This happens in weird edge cases or typos)
-        currentPair.kanji += char;
+        // Fallback: Non-matching char (symbols, etc)
+        // Add to reading to keep Kanji field strict
+        currentPair.reading += char;
         i++;
       }
     }
   }
 
-  // Add any leftover reading to the final buffered Kanji
+  // Final Flush
   if (currentPair.kanji.isNotEmpty || readingIndex < reading.length) {
     currentPair.reading += reading.substring(readingIndex);
     result.add(currentPair);
