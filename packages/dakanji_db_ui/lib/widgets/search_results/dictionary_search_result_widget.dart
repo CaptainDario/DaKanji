@@ -3,7 +3,7 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
-import 'package:dakanji_db_ui/model/dakanji_db_search_settings.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
