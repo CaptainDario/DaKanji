@@ -6,14 +6,16 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_core/util/dakanji_db_search_manager.dart';
 import 'package:dakanji_db_ui/dakanji_db_ui.dart';
-import 'package:dakanji_db_ui/model/dakanji_db_search_settings.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/search_results/dictionary_search_result_widget.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_settings_dialog.dart';
+import 'package:dakanji_db_ui_search_example/search_results_localizations.dart';
+import 'package:dakanji_db_ui_search_example/settings_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'globals.dart';
 import 'init.dart';
-import 'search_settings_dialog.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
   DictionarySearchResult? lastSearchResult;
   TextEditingController searchController = TextEditingController();
 
-  DaKanjiDbSearchSettings _searchSettings = DaKanjiDbSearchSettings(
+  DaKanjiDbSettings _searchSettings = DaKanjiDbSettings(
     groupingRule: [
       const SequenceGroupingRule(sourceDictId: 3, targetDictIds: {3, 4})
     ],
@@ -119,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () async {
-              final result = await showGeneralDialog<DaKanjiDbSearchSettings>(
+              final result = await showGeneralDialog<DaKanjiDbSettings>(
                 context: context,
                 barrierDismissible: true,
                 barrierLabel: "Settings",
@@ -130,7 +132,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Center(
                       child: Material(
                         color: Colors.transparent,
-                        child: SearchSettingsDialog(initialSettings: _searchSettings),
+                        child: DaKanjiDbSettingsDialog(
+                          db: daKanjiDB,
+                          settings: _searchSettings,
+                          localization: dakanjiDbSettingsLocalization,
+                        ),
                       ),
                     ),
                   );
@@ -249,6 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         result: lastSearchResult!,
                         db: daKanjiDB,
                         settings: _searchSettings,
+                        localization: dakanjiDbLocalization,
                       ),
                     ),
                 ],
