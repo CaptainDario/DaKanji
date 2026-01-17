@@ -23,6 +23,7 @@ dependencies:
   flutter_markdown_plus: ^1.0.7
   reorderables: ^0.6.0
   freezed: ^3.2.3
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -30,3 +31,5 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   test: ^1.26.3
   path: ^1.9.1
+  json_serializable: ^6.11.2
+  build_runner: ^2.10.5

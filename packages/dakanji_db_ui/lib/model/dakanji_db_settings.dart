@@ -2,9 +2,10 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_r
 import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'dakanji_db_settings.g.dart';
 
 
-@Freezed()
+@JsonSerializable()
 class DaKanjiDbSettings {
 
   /// Whether to convert romaji to hiragana in normalized searches.
@@ -113,4 +114,8 @@ class DaKanjiDbSettings {
     if (secondSortOrder != null) this.secondSortOrder = secondSortOrder;
   }
 
+  factory DaKanjiDbSettings.fromJson(Map<String, dynamic> json)
+    => _$DaKanjiDbSettingsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DaKanjiDbSettingsToJson(this);
 }
