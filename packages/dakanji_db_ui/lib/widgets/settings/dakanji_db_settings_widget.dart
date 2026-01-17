@@ -67,6 +67,11 @@ class DakanjiDbSettingsWidget extends StatelessWidget {
             value: settings.definitionsMaxHeight > 0,
             onChanged: (v) => settings.definitionsMaxHeight = v ? 60.0 : 0.0,
           ),
+          DakanjiDbSettingsToggleListTile(
+            title: loc.useKatakanaForFuriganaTitle,
+            value: settings.useKatakanaForFurigana,
+            onChanged: (v) => settings.useKatakanaForFurigana = v,
+          ),
             
           DakanjiDbSettingsCategorySeparator(),
           DakanjiDbSettingsHeading(loc.sortOrderTitle),

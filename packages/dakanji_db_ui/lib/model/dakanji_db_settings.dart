@@ -86,9 +86,11 @@ class DaKanjiDbSettings {
   bool showMetaEntries;
   /// Maximum height for compact definitions.
   double definitionsMaxHeight;
+  /// Whether to use katakana for furigana instead of hiragana.
+  bool useKatakanaForFurigana;
 
   /// Maximum number of results to return from each search.
-  int searchResultLimit = 250;
+  int searchResultLimit;
 
 
   DaKanjiDbSettings({
@@ -100,6 +102,9 @@ class DaKanjiDbSettings {
     this.showTags = true,
     this.showMetaEntries = true,
     this.definitionsMaxHeight = 60.0,
+    this.useKatakanaForFurigana = false,
+
+    this.searchResultLimit = 100,
 
     List<(DakanjiDbSearchResult1stSortOrder, bool)>? firstSortOrder,
     List<(DakanjiDbSearchReesult2ndSortOrder, bool)>? secondSortOrder,

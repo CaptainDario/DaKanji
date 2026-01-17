@@ -1,4 +1,5 @@
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
+import 'package:dakanji_util/widgets/conditional_parent_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:language_processing/japanese/furigana_matching.dart';
 
@@ -7,8 +8,16 @@ class DictionaryMatchTermBankTermWidget extends StatefulWidget {
 
   /// The terms to display.
   final List<TermBankV3Entry> entries;
+  /// Use katakana for furigana readings.
+  final bool useKatakanaForFurigana;
 
-  const DictionaryMatchTermBankTermWidget(this.entries, {super.key});
+  const DictionaryMatchTermBankTermWidget(
+    this.entries,
+    {
+      this.useKatakanaForFurigana = false,
+      super.key
+    }
+  );
 
   @override
   State<DictionaryMatchTermBankTermWidget> createState() => _DictionaryMatchTermBankTermWidgetState();
@@ -32,7 +41,8 @@ class _DictionaryMatchTermBankTermWidgetState extends State<DictionaryMatchTermB
     super.initState();
     termsAndReadings = widget.entries
       .map((e) => (e.term, e.reading)).toSet()
-      .map((e) => matchFurigana(e.$1, e.$2)).toList();
+      .map((e) => matchFurigana(e.$1, e.$2, convertToKatakana: widget.useKatakanaForFurigana))
+      .toList();
   }
 
   @override
@@ -53,9 +63,20 @@ class _DictionaryMatchTermBankTermWidgetState extends State<DictionaryMatchTermB
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        // only show the reading if there is kanji
-                        if(pair.kanji.isNotEmpty && pair.reading.isNotEmpty)
-                          Text(pair.reading, style: readingTextStyle),
+                        ConditionalParentWidget(
+                          // if there is no term ...
+                          condition: pair.kanji.isEmpty,
+                          conditionalBuilder: (child) {
+                            // ... disable selection of reading
+                            return SelectionContainer.disabled(child: child);
+                          },
+                          child: Text(
+                            pair.kanji.isNotEmpty && pair.reading.isNotEmpty
+                              ? pair.reading
+                              : "", // when there is no kanji, don't show reading 
+                            style: readingTextStyle
+                          )
+                        ),
                         Text(
                           pair.kanji.isNotEmpty ? pair.kanji : pair.reading,
                           style: kanjiTextStyle

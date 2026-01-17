@@ -23,6 +23,9 @@ class DictionaryMatchWidget extends StatelessWidget {
   /// Max height for definitions section. 0 = unlimited.
   final double definitionsMaxHeight;
 
+  /// Whether to use katakana for furigana readings.
+  final bool useKatakanaForFurigana;
+
   /// Callback that is called when this widget is tapped.
   final Function(DictionaryMatch match)? onTap;
 
@@ -32,6 +35,7 @@ class DictionaryMatchWidget extends StatelessWidget {
       this.showTags = true,
       this.showMetaEntries = true,
       this.definitionsMaxHeight = 0,
+      this.useKatakanaForFurigana = false,
       this.onTap,
       super.key
     }
@@ -54,7 +58,10 @@ class DictionaryMatchWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DictionaryMatchTermBankTermWidget(match.entries),
+                  DictionaryMatchTermBankTermWidget(
+                    match.entries,
+                    useKatakanaForFurigana: useKatakanaForFurigana,
+                  ),
                   SizedBox(height: 8.0),
           
                   if(showTags)

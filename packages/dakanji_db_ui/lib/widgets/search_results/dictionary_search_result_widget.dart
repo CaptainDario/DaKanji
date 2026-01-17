@@ -191,6 +191,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
           showTags: widget.settings.showTags,
           showMetaEntries: widget.settings.showMetaEntries,
           definitionsMaxHeight: widget.settings.definitionsMaxHeight,
+          useKatakanaForFurigana: widget.settings.useKatakanaForFurigana,
           onTap: widget.onTap,
         ),
       ),
