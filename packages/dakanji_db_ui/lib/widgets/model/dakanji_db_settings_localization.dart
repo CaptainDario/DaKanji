@@ -40,6 +40,17 @@ class DakanjiDbSettingsLocalization {
 
     // --- Grouping ---
     required this.groupingTitle,
+
+    // --- Misc ---
+    required this.miscTitle,
+
+    required this.typoCorrectionMaxResultsTitle,
+    required this.typoCorrectionMaxResultsSubtitle,
+    required this.typoCorrecctionMaxCostTitle,
+    required this.typoCorrectionMaxCostSubtitle,
+
+    required this.exportDictionariesTitle,
+    required this.importDictionariesTitle,
   });
 
   /// --- Dictionary Management ---
@@ -85,5 +96,16 @@ class DakanjiDbSettingsLocalization {
 
   /// --- Grouping ---
   String groupingTitle;
+
+  /// --- Misc ---
+  String miscTitle;
+
+  String exportDictionariesTitle;
+  String importDictionariesTitle;
+
+  String typoCorrectionMaxResultsTitle ;
+  String typoCorrectionMaxResultsSubtitle;
+  String typoCorrecctionMaxCostTitle;
+  String typoCorrectionMaxCostSubtitle;
 
 }

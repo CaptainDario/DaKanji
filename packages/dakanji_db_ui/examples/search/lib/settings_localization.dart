@@ -43,6 +43,17 @@ DakanjiDbSettingsLocalization dakanjiDbSettingsLocalization = DakanjiDbSettingsL
 
   // --- Grouping ---
   groupingTitle: groupingTitle,
+
+  // --- Misc ---
+  miscTitle: miscTitle,
+
+  typoCorrectionMaxResultsTitle: typoCorrectionMaxResultsTitle,
+  typoCorrectionMaxResultsSubtitle: typoCorrectionMaxResultsSubtitle,
+  typoCorrecctionMaxCostTitle: typoCorrecctionMaxCostTitle,
+  typoCorrectionMaxCostSubtitle: typoCorrectionMaxCostSubtitle,
+
+  exportDictionariesTitle: exportDictionariesTitle,
+  importDictionariesTitle: importDictionariesTitle,
 );
 
 /// --- Dictionary Management ---
@@ -72,11 +83,11 @@ String useCompactDefinitionsSubtitle = "Limits the height of definitions in sear
 String sortOrderTitle = "Sort Order";
 
 String sortByTitle = "Sort by";
-String sortByText = """### Customize Search Priority
+String sortByText = """### Customize Search Result Priority (first priority)
 *Drag items to change their importance. Unchecked items will be ignored.*
 
 * **Exact Match:** Matches your text exactly as typed.
-* **Flexible Match:** Ignores differences like capitalization or Hiragana/Katakana (e.g. ).
+* **Flexible Match:** Ignores differences like capitalization or Hiragana/Katakana (e.g. Ａ == A).
 * **Smart Grammar:** Finds the dictionary form of a word (e.g., finds *食べる* if you type *食べます*).
 * **Typo Correction:** Finds results even if your search has small spelling mistakes (e.g: "りょこ" finds "りょこう (旅行)").
 """;
@@ -89,7 +100,7 @@ String sortByTypoCorrectionMatch = "Typo Correction Match";
 
 String thenByTitle = "Then by";
 
-String thenByText = """### Customize Match Method
+String thenByText = """### Customize Search Result Priority (second priority)
 *Drag items to change their importance. Unchecked items will be ignored.*
 
 * **Exact Match:** The result is exactly equal to your search term.
@@ -110,3 +121,17 @@ String thenByWildcardMatch = "Wildcard Match";
 
 // --- Grouping ---
 String groupingTitle = "Grouping";
+
+// --- Misc ---
+String miscTitle = "Misc";
+
+String typoCorrectionMaxResultsTitle = "Typo Correction Max Results";
+String typoCorrectionMaxResultsSubtitle = "Sets the maximum number of results returned when using Typo Correction in search.";
+String typoCorrecctionMaxCostTitle = "Typo Correction Max Cost";
+String typoCorrectionMaxCostSubtitle = "Sets the maximum cost (unlikely typos have a higher cost to fix) when using Typo Correction in search.";
+
+String maxSearchResultsTitle = "Max Search Results";
+String maxSearchResultsSubtitle = "Sets the maximum number of results returned (applied to each search method).";
+
+String exportDictionariesTitle = "Export Dictionaries";
+String importDictionariesTitle = "Import Dictionaries";
