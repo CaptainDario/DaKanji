@@ -11,7 +11,7 @@ import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DakanjiDbSettingsWidget extends StatelessWidget {
+class DakanjiDbSettingsWidget extends StatefulWidget {
 
   final DaKanjiDB db;
 
@@ -29,54 +29,68 @@ class DakanjiDbSettingsWidget extends StatelessWidget {
   );
 
   @override
+  State<DakanjiDbSettingsWidget> createState() => _DakanjiDbSettingsWidgetState();
+}
+
+class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
+  @override
   Widget build(BuildContext context) {
-    final loc = localization;
+    final loc = widget.localization;
     return Provider<DaKanjiDbSettings>.value(
-      value: settings,
+      value: widget.settings,
       child: Column(
         mainAxisAlignment: .start,
         crossAxisAlignment: .start,
         mainAxisSize: .min,
         children: [
           DakanjiDbSettingsHeading(loc.dictionariesHeader),
-          DakanjiDbDictionaryManagementWidget(db, localization),
+          DakanjiDbDictionaryManagementWidget(widget.db, widget.localization),
       
           DakanjiDbSettingsHeading(loc.displayHeader),
           DakanjiDbSettingsToggleListTile(
             title: loc.showSeparatorsTitle,
             subtitle: loc.showSeparatorsSubtitle,
-            value: settings.showSearchResultSeparationHeaders,
-            onChanged: (v)
-              => settings.showSearchResultSeparationHeaders = v,
+            value: widget.settings.showSearchResultSeparationHeaders,
+            onChanged: (v) => setState(() {
+                widget.settings.showSearchResultSeparationHeaders = v;
+              }) 
           ),
           DakanjiDbSettingsToggleListTile(
             title: loc.showTagsTitle,
             subtitle: loc.showTagsSubtitle,
-            value: settings.showTags,
-            onChanged: (v) => settings.showTags = v,
+            value: widget.settings.showTags,
+            onChanged: (v) => setState(() {
+              widget.settings.showTags = v;
+            })
           ),
           DakanjiDbSettingsToggleListTile(
             title: loc.showMetaEntriesTitle,
             subtitle: loc.showMetaEntriesSubtitle,
-            value: settings.showMetaEntries,
-            onChanged: (v) => settings.showMetaEntries = v,
+            value: widget.settings.showMetaEntries,
+            onChanged: (v) => setState(() {
+              widget.settings.showMetaEntries = v;
+            })
           ),
           DakanjiDbSettingsToggleListTile(
             title: loc.useCompactDefinitionsTitle,
             subtitle: loc.useCompactDefinitionsSubtitle,
-            value: settings.definitionsMaxHeight > 0,
-            onChanged: (v) => settings.definitionsMaxHeight = v ? 60.0 : 0.0,
+            value: widget.settings.definitionsMaxHeight > 0,
+            onChanged: (v) => setState(() {
+              widget.settings.definitionsMaxHeight = v ? 60.0 : 0.0;
+            })
           ),
           DakanjiDbSettingsToggleListTile(
             title: loc.useKatakanaForFuriganaTitle,
-            value: settings.useKatakanaForFurigana,
-            onChanged: (v) => settings.useKatakanaForFurigana = v,
+            value: widget.settings.useKatakanaForFurigana,
+            onChanged: (v) => setState(() {
+              widget.settings.useKatakanaForFurigana = v;
+            })
           ),
             
           DakanjiDbSettingsCategorySeparator(),
           DakanjiDbSettingsHeading(loc.sortOrderTitle),
           DakanjiDbSettingsSearchResultSortOrder(
-            settings: settings,
+            settings: widget.settings,
             firstSortOrder: true,
             
             title: loc.sortByTitle,
@@ -89,7 +103,7 @@ class DakanjiDbSettingsWidget extends StatelessWidget {
             ],
           ),
           DakanjiDbSettingsSearchResultSortOrder(
-            settings: settings,
+            settings: widget.settings,
             secondSortOrder: true,
             
             title: loc.thenByTitle,
@@ -111,27 +125,27 @@ class DakanjiDbSettingsWidget extends StatelessWidget {
           DakanjiDbSettingsToggleListTile(
             title: "Group by term",
             subtitle: "Group identical entries (term only) together",
-            value: settings.groupingRule is TermAndReadingGroupingRule,
+            value: widget.settings.groupingRule is TermAndReadingGroupingRule,
             onChanged: (v) => 
-              settings.groupingRule = v
+              widget.settings.groupingRule = v
                 ? [TermAndReadingGroupingRule({3, 4})]
                 : [NoGroupingRule()],
           ),
           DakanjiDbSettingsToggleListTile(
             title: "Group by term and reading",
             subtitle: "Group identical entries (term + reading) together",
-            value: settings.groupingRule is TermGroupingRule,
+            value: widget.settings.groupingRule is TermGroupingRule,
             onChanged: (v) =>
-              settings.groupingRule = v
+              widget.settings.groupingRule = v
                 ? [TermGroupingRule({3, 4})]
                 : [NoGroupingRule()],
           ),
           DakanjiDbSettingsToggleListTile(
             title: "Group by Sequence",
             subtitle: "Group results by their sequence id",
-            value: settings.groupingRule is SequenceGroupingRule,
+            value: widget.settings.groupingRule is SequenceGroupingRule,
             onChanged: (v) =>
-              settings.groupingRule = v
+              widget.settings.groupingRule = v
                 ? [SequenceGroupingRule(
                   sourceDictId: 3,
                   targetDictIds: {3, 4}
