@@ -1,11 +1,11 @@
-import 'package:dakanji_db_core/data/dakanji_db_search_result_sort_order.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 
 
 @Freezed()
-class DaKanjiDbSearchSettings {
+class DaKanjiDbSettings {
 
   /// Whether to convert romaji to hiragana in normalized searches.
   bool normalizeSearchConvertsRomajiToHiragana;
@@ -87,8 +87,11 @@ class DaKanjiDbSearchSettings {
   /// Maximum height for compact definitions.
   double definitionsMaxHeight;
 
+  /// Maximum number of results to return from each search.
+  int searchResultLimit = 250;
 
-  DaKanjiDbSearchSettings({
+
+  DaKanjiDbSettings({
     this.normalizeSearchConvertsRomajiToHiragana = true,
 
     this.groupingRule = const [NoGroupingRule()],

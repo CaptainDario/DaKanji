@@ -1,4 +1,4 @@
-import 'package:dakanji_db_ui/model/dakanji_db_search_settings.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:reorderables/reorderables.dart';
@@ -6,7 +6,7 @@ import 'package:reorderables/reorderables.dart';
 class DakanjiDbSearchSortOrderSettingWidget extends StatefulWidget {
 
   /// The search settings to modify.
-  final DaKanjiDbSearchSettings settings;
+  final DaKanjiDbSettings settings;
   /// Whether this widget is for the 1st level sort order.
   final bool firstSortOrder;
   /// Whether this widget is for the 2nd level sort order.
@@ -127,7 +127,7 @@ Widget _buildListItem(List<dynamic> list, int index) {
 }
 
   Future<void> _showInfoDialog() async {
-    await showGeneralDialog<DaKanjiDbSearchSettings>(
+    await showGeneralDialog<DaKanjiDbSettings>(
       context: context,
       barrierDismissible: true,
       barrierLabel: "Close",

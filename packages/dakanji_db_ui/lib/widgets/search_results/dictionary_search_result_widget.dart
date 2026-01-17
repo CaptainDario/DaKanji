@@ -15,7 +15,7 @@ class DictionarySearchResultWidget extends StatefulWidget {
   /// The database instance.
   final DaKanjiDB db;
   /// Settings for displaying the search results.
-  final DaKanjiDbSearchSettings settings;
+  final DaKanjiDbSettings settings;
 
   /// Callback that is called when this widget is tapped.
   final Function(DictionaryMatch match)? onTap;
