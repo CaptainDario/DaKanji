@@ -8,13 +8,6 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart'; 
 
-/// Controls search execution using a pool of disposable, pre-warmed workers.
-/// 
-/// Strategy:
-/// 1. **Pre-warming:** Keeps a queue of idle workers ready to receive a job.
-/// 2. **Execution:** Pops a warm worker, sends the job, and lets it die via [Isolate.exit] (Zero-Copy).
-/// 3. **Replenishment:** Immediately spawns new background workers to refill the queue.
-/// 4. **Cancellation:** Kills the active worker immediately if a new search starts.
 class DaKanjiDbSearchManager {
   
   // -- Configuration --
@@ -29,45 +22,36 @@ class DaKanjiDbSearchManager {
   /// Queue of warm workers ready to take a job instantly.
   final Queue<_WorkerHandle> _idleWorkers = Queue();
   
-  /// The currently active worker processing the user's latest query.
-  /// Kept referenced so we can kill it if the user types again.
-  /// (Note: This now tracks the Job Handle to ensure we can kill it even during spawning).
+  /// The handle for the current UI request.
   _SearchJobHandle? _activeJob;
   
-  /// Tracks how many workers are currently being spawned in the background
-  /// so we don't over-spawn during rapid typing.
+  /// Tracks how many workers are currently being spawned
   int _spawningCount = 0;
 
   /// Tracks the current "generation" of the search request. 
-  /// Used to invalidate stale results from async gaps.
   int _currentSearchId = 0;
 
   DaKanjiDbSearchManager({
     required this.daKanjiDB,
-    this.debounceMilliseconds = 1000 ~/ 3,
+    this.debounceMilliseconds = 333,
     this.debug = false,
     this.targetIdleWorkers = 2,
   }) {
     _replenishQueue();
   }
 
-  /// Cancels debounce timer, kills the currently active worker, 
-  /// and invalidates any pending operations (via generation ID).
+  /// Cancels debounce timer and marks current job as cancelled.
   void cancelCurrentOperations() {
     _debounceTimer?.cancel();
-    _killActiveJob();
-    // Increment generation to ensure any pending spawns/results are ignored
+    _activeJob?.cancel(); // Logically cancel, don't kill
     _currentSearchId++;
   }
 
-  /// Schedules a search after the debounce delay.
   void search(
     DictionarySearchParams params, {
     required void Function(DictionarySearchResult?) onResult,
   }) {
     _debounceTimer?.cancel();
-    
-    // Increment generation immediately so previous pending searches become stale
     final int thisSearchId = ++_currentSearchId;
 
     _debounceTimer = Timer(Duration(milliseconds: debounceMilliseconds), () {
@@ -75,7 +59,6 @@ class DaKanjiDbSearchManager {
     });
   }
 
-  /// Immediately executes a search, bypassing the debounce delay.
   void searchImmediate(
     DictionarySearchParams params, {
     required void Function(DictionarySearchResult?) onResult,
@@ -85,104 +68,80 @@ class DaKanjiDbSearchManager {
     _executeSearch(params, onResult, thisSearchId);
   }
 
-  /// Internal method to orchestrate the search execution.
   Future<void> _executeSearch(
     DictionarySearchParams params,
     void Function(DictionarySearchResult?) onResult,
     int searchId,
   ) async {
     
-    // Pre-check: Has the user typed again since this was scheduled?
+    // 1. Check if user typed again while debounce was waiting
     if (searchId != _currentSearchId) return;
 
-    // Handle empty input immediately
     if (params.query.isEmpty) {
-      _killActiveJob();
+      _activeJob?.cancel();
       onResult(null);
       return;
     }
 
-    // Kill the previous active worker (Hard Cancellation).
-    // This frees the CPU immediately for the new job.
-    _killActiveJob();
+    // 2. Logically cancel the previous job (ignore its results)
+    // We DO NOT kill the worker. Let it finish and close DB cleanly.
+    _activeJob?.cancel();
 
-    // Create a handle for THIS specific job. 
-    // This allows us to track cancellation state even during the "Spawning Gap".
+    // 3. Create a new handle for this specific search
     final job = _SearchJobHandle();
     _activeJob = job;
 
-    // Get a warm worker from the pool
+    // 4. Get a worker (Warm or Spawn)
     _WorkerHandle worker;
     if (_idleWorkers.isNotEmpty) {
-      if (debug) print("[Controller] Using WARM worker (${_idleWorkers.length - 1} left)");
+      if (debug) print("[Controller] Using WARM worker");
       worker = _idleWorkers.removeFirst();
     } else {
-      // Fallback: Queue empty? Spawn one on demand (slower, but necessary).
       if (debug) print("[Controller] Queue empty! Spawning COLD worker...");
       try {
-        //  
-        // Note: While we await here, the user might type again!
         worker = await _spawnWorker();
-
-        // CHECK: While we were spawning, did the generation change?
-        // We check if this specific job handle was cancelled.
+        // Check if cancelled during spawn await
         if (job.isCancelled || searchId != _currentSearchId) {
-          if (debug) print("[Controller] Worker spawned too late. Storing as idle.");
-          // Don't kill it, it's fresh! Just save it for the next guy.
-          _idleWorkers.add(worker);
+          _idleWorkers.add(worker); // Save for next time
           return; 
         }
-
       } catch (e) {
         if (debug) print("[Controller] Failed to spawn cold worker: $e");
         return;
       }
     }
 
-    // Assign the worker to the job so it can be killed by _killActiveJob later
-    job.assignedWorker = worker;
-
-    // Create a dedicated port for the result of THIS specific job.
-    // The worker will exit to this port.
+    // 5. Setup result listener
     final resultPort = ReceivePort();
 
     resultPort.listen((message) {
-      // CHECK: Is this result still relevant? 
-      // If searchId != _currentSearchId, the user has already searched for something else.
+      // Only process if this specific job hasn't been cancelled/superseded
       if (!job.isCancelled && searchId == _currentSearchId) {
         if (message is DictionarySearchResult) {
           onResult(message);
-        } else if (message is _ErrorResult) {
-          if (debug) print("[Controller] Worker Error: ${message.error}");
+        } else if (message is _ErrorResult && debug) {
+          print("[Controller] Worker Error: ${message.error}");
         }
       } else {
-         if (debug) print("[Controller] Ignoring stale result (Gen: $searchId vs Current: $_currentSearchId)");
-      }
-      
-      // Cleanup: This worker is now dead (exited).
-      // We only clear _activeJob if it refers to THIS job (not replaced yet).
-      if (_activeJob == job) {
-        _activeJob = null;
+        if (debug) print("[Controller] Ignoring stale result (Gen: $searchId)");
       }
       
       resultPort.close();
-      // The worker isolate dies automatically due to Isolate.exit, 
-      // but we clear the reference just in case.
-      _killHandle(worker); 
+      // Note: Worker isolates die automatically via Isolate.exit, 
+      // so we don't need to manually kill it here.
     });
 
-    // Send Job
+    // 6. Send Job
     worker.sendPort.send(_WorkerJob(
       replyPort: resultPort.sendPort,
       params: params,
       debug: debug,
     ));
 
-    // Replenish the queue in the background to be ready for next keystroke.
+    // 7. Ensure we have workers ready for the NEXT keystroke
     _replenishQueue();
   }
 
-  /// Ensures the idle queue stays full up to [targetIdleWorkers].
   void _replenishQueue() {
     final needed = targetIdleWorkers - _idleWorkers.length - _spawningCount;
     if (needed <= 0) return;
@@ -199,24 +158,11 @@ class DaKanjiDbSearchManager {
     }
   }
 
-  /// Kills the currently active worker isolate if it exists.
-  void _killActiveJob() {
-    _activeJob?.cancel();
-    _activeJob = null;
-  }
-
-  /// Helper to kill a specific worker handle.
-  void _killHandle(_WorkerHandle handle) {
-    handle.isolate.kill(priority: Isolate.immediate);
-  }
-
-  /// Spawns a new worker isolate, connects to DB, and waits for handshake.
   Future<_WorkerHandle> _spawnWorker() async {
     final handshakePort = ReceivePort(); 
     final completer = Completer<_WorkerHandle>();
 
     try {
-      // Get thread-safe connection token (must be done on main isolate)
       final driftIsolate = await daKanjiDB.attachedDatabase.serializableConnection();
 
       final isolate = await Isolate.spawn(
@@ -229,13 +175,9 @@ class DaKanjiDbSearchManager {
         debugName: "SearchWorker",
       );
 
-      // Wait for the worker to send back its command port
       handshakePort.listen((message) {
         if (message is SendPort) {
-          completer.complete(_WorkerHandle(
-            isolate: isolate,
-            sendPort: message, // The worker's command port
-          ));
+          completer.complete(_WorkerHandle(isolate: isolate, sendPort: message));
           handshakePort.close(); 
         }
       });
@@ -248,56 +190,35 @@ class DaKanjiDbSearchManager {
     return completer.future;
   }
 
-  /// Disposes everything: timers, active worker, and idle pool.
   void dispose() {
     cancelCurrentOperations();
+    // It is safe to kill IDLE workers as they hold no active DB locks/connections
     for (final w in _idleWorkers) {
       w.isolate.kill(priority: Isolate.immediate);
     }
     _idleWorkers.clear();
   }
 
-  // ====================================================================
-  //                         STATIC WORKER LOGIC
-  // ====================================================================
+  // --- Worker Logic (Same as before) ---
 
   static void _workerEntry(_InitMessage init) async {
     final commandPort = ReceivePort();
-    
-    // Handshake: Send our command port back to main
     init.handshakeSendPort.send(commandPort.sendPort);
 
-    // Connect to DB (Drift handles pooling via the token)
     final QueryExecutor executor = await init.dbConnection.connect();
-    final DaKanjiDB db = DaKanjiDB(
-      executor: executor,
-      inMemory: init.inMemory
-    );
+    final DaKanjiDB db = DaKanjiDB(executor: executor, inMemory: init.inMemory);
 
-    // Wait for exactly ONE job
     await for (final msg in commandPort) {
       if (msg is _WorkerJob) {
         try {
-          if (msg.debug) print("[Worker] Running: '${msg.params.query}'");
-
-          // Run the heavy search
           final result = await db.dBQueriesDao.dictionarySearch(
             msg.params,
             printDebugInfo: msg.debug,
           );
-
-          // Close DB connection before exiting
-          await db.close();
-
-          // Return Result via Zero-Copy Exit
-          // Transfers memory to main thread and terminates isolate immediately.
+          await db.close(); // Crucial: Properly close connection
           Isolate.exit(msg.replyPort, result);
-
-        } catch (e, stack) {
-          if (msg.debug) print("[Worker] Crash: $e\n$stack");
-          
+        } catch (e) {
           try { await db.close(); } catch (_) {}
-          
           Isolate.exit(msg.replyPort, _ErrorResult(e.toString()));
         }
       }
@@ -305,61 +226,33 @@ class DaKanjiDbSearchManager {
   }
 }
 
-// -- Helper DTOs --
+// --- Helper DTOs ---
 
-/// Handle to track a running worker isolate.
 class _WorkerHandle {
   final Isolate isolate;
-  /// Port to send the job TO the worker.
   final SendPort sendPort;
-
-  _WorkerHandle({
-    required this.isolate,
-    required this.sendPort,
-  });
+  _WorkerHandle({required this.isolate, required this.sendPort});
 }
 
-/// Tracks the lifecycle of a specific search request.
 class _SearchJobHandle {
   bool isCancelled = false;
-  _WorkerHandle? assignedWorker;
-
-  void cancel() {
-    isCancelled = true;
-    if (assignedWorker != null) {
-      assignedWorker!.isolate.kill(priority: Isolate.immediate);
-    }
-  }
+  void cancel() => isCancelled = true;
 }
 
-/// Initial configuration passed to the worker on spawn.
 class _InitMessage {
   final SendPort handshakeSendPort;
   final DriftIsolate dbConnection;
   final bool inMemory;
-
-  _InitMessage({
-    required this.handshakeSendPort, 
-    required this.dbConnection, 
-    required this.inMemory
-  });
+  _InitMessage({required this.handshakeSendPort, required this.dbConnection, required this.inMemory});
 }
 
-/// The actual job payload sent when execution is requested.
 class _WorkerJob {
-  /// The port to return the result to (via exit).
   final SendPort replyPort;
   final DictionarySearchParams params;
   final bool debug;
-
-  _WorkerJob({
-    required this.replyPort, 
-    required this.params, 
-    required this.debug
-  });
+  _WorkerJob({required this.replyPort, required this.params, required this.debug});
 }
 
-/// Wrapper for errors occurring inside the worker.
 class _ErrorResult {
   final String error;
   _ErrorResult(this.error);
