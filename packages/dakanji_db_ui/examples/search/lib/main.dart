@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
@@ -13,6 +14,7 @@ import 'package:dakanji_db_ui_search_example/search_results_localizations.dart';
 import 'package:dakanji_db_ui_search_example/settings_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'globals.dart';
 import 'init.dart';
@@ -53,16 +55,20 @@ class _MyHomePageState extends State<MyHomePage> {
   late DaKanjiDB daKanjiDB;
   
   // The new isolate controller
-  DaKanjiDbSearchManager? _searchIsolate;
+  DaKanjiDbSearchManager? _searchManager;
 
   DictionarySearchResult? lastSearchResult;
   TextEditingController searchController = TextEditingController();
 
-  DaKanjiDbSettings _searchSettings = DaKanjiDbSettings(
-    groupingRule: [
-      const SequenceGroupingRule(sourceDictId: 3, targetDictIds: {3, 4})
-    ],
-  );
+  late SharedPreferences prefs;
+
+  late DaKanjiDbSettings settings = DaKanjiDbSettings(
+      DaKanjiDbSettingsInternal(
+        groupingRule: [
+          const SequenceGroupingRule(sourceDictId: 3, targetDictIds: {3, 4})
+        ],
+      ),
+    );
 
   @override
   void initState() {
@@ -73,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
       daKanjiDB = DaKanjiDB(dbPath: localDbPath, inMemory: false);
 
       // --- Initialize the Search Isolate ---
-      _searchIsolate = DaKanjiDbSearchManager(
+      _searchManager = DaKanjiDbSearchManager(
         daKanjiDB: daKanjiDB,
         debug: !kReleaseMode,
       );
@@ -85,14 +91,28 @@ class _MyHomePageState extends State<MyHomePage> {
       }
 
       await initDaKanjiDbUi();
+      await setupSettings();
       return true;
     });
+  }
+
+  Future<void> setupSettings() async {
+    prefs = await SharedPreferences.getInstance();
+    String? s = prefs.getString("settings");
+    if(s != null) {
+      final loadedSettings = DaKanjiDbSettingsInternal.fromJson(jsonDecode(s));
+      settings.update(loadedSettings);
+    }
+
+    settings.onSettingsChanged = () {
+      prefs.setString("settings", jsonEncode(settings.settings.toJson()));
+    };
   }
 
   @override
   void dispose() {
     // Clean up the isolate when the widget is destroyed
-    _searchIsolate?.dispose();
+    _searchManager?.dispose();
     searchController.dispose();
     super.dispose();
   }
@@ -101,13 +121,13 @@ class _MyHomePageState extends State<MyHomePage> {
   DictionarySearchParams _buildSearchParams(String term) {
     return DictionarySearchParams(
       query: term,
-      normalizedSearch: _searchSettings.normalizedSearch,
+      normalizedSearch: settings.s.normalizedSearch,
       normalizedSearchConvertsRomajiToHiragana:
-          _searchSettings.normalizeSearchConvertsRomajiToHiragana,
-      deconjugationSearch: _searchSettings.deconjugationSearch,
-      spellfixSearch: _searchSettings.spellfixSearch,
-      groupingRules: _searchSettings.groupingRule,
-      //limit: 100
+          settings.s.normalizeSearchConvertsRomajiToHiragana,
+      deconjugationSearch: settings.s.deconjugationSearch,
+      spellfixSearch: settings.s.spellfixSearch,
+      groupingRules: settings.s.groupingRule,
+      limit: settings.s.searchResultLimit
     );
   }
 
@@ -121,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () async {
-              final result = await showGeneralDialog<DaKanjiDbSettings>(
+              final result = await showGeneralDialog<DaKanjiDbSettingsInternal>(
                 context: context,
                 barrierDismissible: true,
                 barrierLabel: "Settings",
@@ -134,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Colors.transparent,
                         child: DaKanjiDbSettingsDialog(
                           db: daKanjiDB,
-                          settings: _searchSettings,
+                          settings: settings,
                           localization: dakanjiDbSettingsLocalization,
                         ),
                       ),
@@ -143,23 +163,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               );
 
-              if (result != null) {
-                setState(() {
-                  _searchSettings = result;
-                });
-                
-                // Re-run search with new settings if there is text
-                if (searchController.text.isNotEmpty && _searchIsolate != null) {
-                  // We treat this as an "immediate" update since the user just closed the dialog
-                  _searchIsolate!.searchImmediate(
-                    _buildSearchParams(searchController.text),
-                    onResult: (result) {
-                       if(mounted) setState(() => lastSearchResult = result);
-                    }
-                  );
-                }
+              // Re-run search with new settings if there is text
+              if (searchController.text.isNotEmpty && _searchManager != null) {
+                // We treat this as an "immediate" update since the user just closed the dialog
+                _searchManager!.searchImmediate(
+                  _buildSearchParams(searchController.text),
+                  onResult: (result) {
+                      if(mounted) setState(() => lastSearchResult = result);
+                  }
+                );
               }
-            },
+            }
           ),
         ],
       ),
@@ -167,6 +181,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: FutureBuilder(
             future: copyDb,
             builder: (context, asyncSnapshot) {
+              if(asyncSnapshot.hasError) {
+                print("Error initializing: ${asyncSnapshot.error}");
+                return Text("Error initializing: ${asyncSnapshot.error}");
+              }
               if (!asyncSnapshot.hasData) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -193,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               hintText: 'Enter a search term',
                             ),
                             onChanged: (value) {
-                              if (_searchIsolate == null) return;
+                              if (_searchManager == null) return;
 
                               // Clear results immediately for a cleaner feel (optional)
                               if (value.isEmpty) {
@@ -201,7 +219,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               }
 
                               // Delegate to Isolate
-                              _searchIsolate!.search(
+                              _searchManager!.search(
                                 _buildSearchParams(value),
                                 onResult: (result) {
                                   if (!mounted) return;
@@ -223,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     value: exampleDictionaryTerms[i],
                                     child: Text(exampleDictionaryTerms[i]))),
                             onChanged: (value) async {
-                              if (_searchIsolate == null) return;
+                              if (_searchManager == null) return;
                               
                               final term = value ?? "";
                               searchController.text = term;
@@ -233,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               });
 
                               // Use immediate search for dropdowns
-                              _searchIsolate!.searchImmediate(
+                              _searchManager!.searchImmediate(
                                 _buildSearchParams(term),
                                 onResult: (result) {
                                   if (!mounted) return;
@@ -254,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: DictionarySearchResultWidget(
                         result: lastSearchResult!,
                         db: daKanjiDB,
-                        settings: _searchSettings,
+                        settings: settings,
                         localization: dakanjiDbLocalization,
                       ),
                     ),
