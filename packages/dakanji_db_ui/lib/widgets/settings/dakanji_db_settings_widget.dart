@@ -35,132 +35,112 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
   @override
   Widget build(BuildContext context) {
     final loc = widget.localization;
-    return ChangeNotifierProvider<DaKanjiDbSettings>.value(
-      value: widget.settings,
+    return Provider<DaKanjiDB>.value(
+      value: widget.db,
       builder: (context, child) {
-
-        final s = context.watch<DaKanjiDbSettings>();
-        final si = s.settings;
-
-        return Column(
-          mainAxisAlignment: .start,
-          crossAxisAlignment: .start,
-          mainAxisSize: .min,
-          children: [
-            DakanjiDbSettingsHeading(loc.dictionariesHeader),
-            DakanjiDbDictionaryManagementWidget(widget.db, widget.localization),
+        return ChangeNotifierProvider<DaKanjiDbSettings>.value(
+          value: widget.settings,
+          builder: (context, child) {
         
-            DakanjiDbSettingsHeading(loc.displayHeader),
-            DakanjiDbSettingsToggleListTile(
-              title: loc.showSeparatorsTitle,
-              subtitle: loc.showSeparatorsSubtitle,
-              value: si.showSearchResultSeparationHeaders,
-              onChanged: (v) => s.update(widget.settings.s.copyWith(
-                  showSearchResultSeparationHeaders: v
-                ))
-            ),
-            DakanjiDbSettingsToggleListTile(
-              title: loc.showTagsTitle,
-              subtitle: loc.showTagsSubtitle,
-              value: si.showTags,
-              onChanged: (v) => s.update(widget.settings.s.copyWith(
-                  showTags: v
-                ))
-            ),
-            DakanjiDbSettingsToggleListTile(
-              title: loc.showMetaEntriesTitle,
-              subtitle: loc.showMetaEntriesSubtitle,
-              value: si.showMetaEntries,
-              onChanged: (v) => s.update(widget.settings.s.copyWith(
-                  showMetaEntries: v
-                ))
-            ),
-            DakanjiDbSettingsToggleListTile(
-              title: loc.useCompactDefinitionsTitle,
-              subtitle: loc.useCompactDefinitionsSubtitle,
-              value: si.definitionsMaxHeight > 0,
-              onChanged: (v) => s.update(widget.settings.s.copyWith(
-                  definitionsMaxHeight: v ? 60.0 : 0.0
-                ))
-            ),
-            DakanjiDbSettingsToggleListTile(
-              title: loc.useKatakanaForFuriganaTitle,
-              value: si.useKatakanaForFurigana,
-              onChanged: (v) => s.update(widget.settings.s.copyWith(
-                  useKatakanaForFurigana: v
-                ))
-            ),
+            final s = context.watch<DaKanjiDbSettings>();
+            final db = context.read<DaKanjiDB>();
+            final si = s.settings;
+        
+            return Column(
+              mainAxisAlignment: .start,
+              crossAxisAlignment: .start,
+              mainAxisSize: .min,
+              children: [
+                DakanjiDbSettingsHeading(loc.dictionariesHeader),
+                DakanjiDbDictionaryManagementWidget(db, widget.localization),
+            
+                DakanjiDbSettingsHeading(loc.displayHeader),
+                DakanjiDbSettingsToggleListTile(
+                  title: loc.showSeparatorsTitle,
+                  subtitle: loc.showSeparatorsSubtitle,
+                  value: si.showSearchResultSeparationHeaders,
+                  onChanged: (v) => s.update(widget.settings.s.copyWith(
+                      showSearchResultSeparationHeaders: v
+                    ))
+                ),
+                DakanjiDbSettingsToggleListTile(
+                  title: loc.showTagsTitle,
+                  subtitle: loc.showTagsSubtitle,
+                  value: si.showTags,
+                  onChanged: (v) => s.update(widget.settings.s.copyWith(
+                      showTags: v
+                    ))
+                ),
+                DakanjiDbSettingsToggleListTile(
+                  title: loc.showMetaEntriesTitle,
+                  subtitle: loc.showMetaEntriesSubtitle,
+                  value: si.showMetaEntries,
+                  onChanged: (v) => s.update(widget.settings.s.copyWith(
+                      showMetaEntries: v
+                    ))
+                ),
+                DakanjiDbSettingsToggleListTile(
+                  title: loc.useCompactDefinitionsTitle,
+                  subtitle: loc.useCompactDefinitionsSubtitle,
+                  value: si.definitionsMaxHeight > 0,
+                  onChanged: (v) => s.update(widget.settings.s.copyWith(
+                      definitionsMaxHeight: v ? 60.0 : 0.0
+                    ))
+                ),
+                DakanjiDbSettingsToggleListTile(
+                  title: loc.useKatakanaForFuriganaTitle,
+                  value: si.useKatakanaForFurigana,
+                  onChanged: (v) => s.update(widget.settings.s.copyWith(
+                      useKatakanaForFurigana: v
+                    ))
+                ),
+                  
+                DakanjiDbSettingsCategorySeparator(),
+                DakanjiDbSettingsHeading(loc.sortOrderTitle),
+                DakanjiDbSettingsSearchResultSortOrder(
+                  settings: s,
+                  firstSortOrder: true,
+                  
+                  title: loc.sortByTitle,
+                  infoText: loc.sortByText,
+                  optionNames: [
+                    loc.sortByDirectMatch,
+                    loc.sortByFlexibleMatch,
+                    loc.sortBySmartGrammarMatch,
+                    loc.sortByTypoCorrectionMatch,
+                  ],
+                ),
+                DakanjiDbSettingsSearchResultSortOrder(
+                  settings: s,
+                  secondSortOrder: true,
+                  
+                  title: loc.thenByTitle,
+                  infoText: loc.thenByText,
+                  optionNames: [
+                    loc.thenByExactMatch,
+                    loc.thenByStartsWithMatch,
+                    loc.thenBySubwordMatch,
+                    loc.thenByWildcardMatch,
+                  ],
+                ),
+                  
+                DakanjiDbSettingsCategorySeparator(),
+                DakanjiDbSettingsHeading(loc.groupingTitle),
+                DakanjiDbSettingsGroupingWidget(widget.localization),
               
-            DakanjiDbSettingsCategorySeparator(),
-            DakanjiDbSettingsHeading(loc.sortOrderTitle),
-            DakanjiDbSettingsSearchResultSortOrder(
-              settings: s,
-              firstSortOrder: true,
-              
-              title: loc.sortByTitle,
-              infoText: loc.sortByText,
-              optionNames: [
-                loc.sortByDirectMatch,
-                loc.sortByFlexibleMatch,
-                loc.sortBySmartGrammarMatch,
-                loc.sortByTypoCorrectionMatch,
+                DakanjiDbSettingsCategorySeparator(),
+                DakanjiDbSettingsHeading(loc.miscTitle),
+        
+                // TODO Search result limit
+        
+                // TODO: spellfix max results
+                // TODO: spellfix max cost
+        
+                // TODO: Export dictionaries
+                // TODO: Import dictionaries
               ],
-            ),
-            DakanjiDbSettingsSearchResultSortOrder(
-              settings: s,
-              secondSortOrder: true,
-              
-              title: loc.thenByTitle,
-              infoText: loc.thenByText,
-              optionNames: [
-                loc.thenByExactMatch,
-                loc.thenByStartsWithMatch,
-                loc.thenBySubwordMatch,
-                loc.thenByWildcardMatch,
-              ],
-            ),
-              
-            DakanjiDbSettingsCategorySeparator(),
-            DakanjiDbSettingsHeading(loc.groupingTitle),
-            DakanjiDbSettingsGroupingWidget(
-              
-            ),
-
-
-            /*DakanjiDbSettingsToggleListTile(
-              title: "Group by term",
-              subtitle: "Group identical entries (term only) together",
-              value: widget.settings.groupingRule is TermAndReadingGroupingRule,
-              onChanged: (v) => 
-                widget.settings.groupingRule = v
-                  ? [TermAndReadingGroupingRule({3, 4})]
-                  : [NoGroupingRule()],
-            ),
-            DakanjiDbSettingsToggleListTile(
-              title: "Group by term and reading",
-              subtitle: "Group identical entries (term + reading) together",
-              value: widget.settings.groupingRule is TermGroupingRule,
-              onChanged: (v) =>
-                widget.settings.groupingRule = v
-                  ? [TermGroupingRule({3, 4})]
-                  : [NoGroupingRule()],
-            ),
-            DakanjiDbSettingsToggleListTile(
-              title: "Group by Sequence",
-              subtitle: "Group results by their sequence id",
-              value: widget.settings.groupingRule is SequenceGroupingRule,
-              onChanged: (v) =>
-                widget.settings.groupingRule = v
-                  ? [SequenceGroupingRule(
-                    sourceDictId: 3,
-                    targetDictIds: {3, 4}
-                  )]
-                  : [NoGroupingRule()],
-            ),*/
-          
-            DakanjiDbSettingsCategorySeparator(),
-            DakanjiDbSettingsHeading(loc.miscTitle),
-          ],
+            );
+          },
         );
       },
     );
