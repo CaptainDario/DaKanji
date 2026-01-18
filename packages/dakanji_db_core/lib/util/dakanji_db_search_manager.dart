@@ -31,7 +31,8 @@ class DaKanjiDbSearchManager {
   
   /// The currently active worker processing the user's latest query.
   /// Kept referenced so we can kill it if the user types again.
-  _WorkerHandle? _activeWorker;
+  /// (Note: This now tracks the Job Handle to ensure we can kill it even during spawning).
+  _SearchJobHandle? _activeJob;
   
   /// Tracks how many workers are currently being spawned in the background
   /// so we don't over-spawn during rapid typing.
@@ -43,7 +44,7 @@ class DaKanjiDbSearchManager {
 
   DaKanjiDbSearchManager({
     required this.daKanjiDB,
-    this.debounceMilliseconds = 1000 ~/ 2,
+    this.debounceMilliseconds = 1000 ~/ 3,
     this.debug = false,
     this.targetIdleWorkers = 2,
   }) {
@@ -54,7 +55,7 @@ class DaKanjiDbSearchManager {
   /// and invalidates any pending operations (via generation ID).
   void cancelCurrentOperations() {
     _debounceTimer?.cancel();
-    _killActiveWorker();
+    _killActiveJob();
     // Increment generation to ensure any pending spawns/results are ignored
     _currentSearchId++;
   }
@@ -96,14 +97,19 @@ class DaKanjiDbSearchManager {
 
     // Handle empty input immediately
     if (params.query.isEmpty) {
-      _killActiveWorker();
+      _killActiveJob();
       onResult(null);
       return;
     }
 
     // Kill the previous active worker (Hard Cancellation).
     // This frees the CPU immediately for the new job.
-    _killActiveWorker();
+    _killActiveJob();
+
+    // Create a handle for THIS specific job. 
+    // This allows us to track cancellation state even during the "Spawning Gap".
+    final job = _SearchJobHandle();
+    _activeJob = job;
 
     // Get a warm worker from the pool
     _WorkerHandle worker;
@@ -119,7 +125,8 @@ class DaKanjiDbSearchManager {
         worker = await _spawnWorker();
 
         // CHECK: While we were spawning, did the generation change?
-        if (searchId != _currentSearchId) {
+        // We check if this specific job handle was cancelled.
+        if (job.isCancelled || searchId != _currentSearchId) {
           if (debug) print("[Controller] Worker spawned too late. Storing as idle.");
           // Don't kill it, it's fresh! Just save it for the next guy.
           _idleWorkers.add(worker);
@@ -132,7 +139,8 @@ class DaKanjiDbSearchManager {
       }
     }
 
-    _activeWorker = worker;
+    // Assign the worker to the job so it can be killed by _killActiveJob later
+    job.assignedWorker = worker;
 
     // Create a dedicated port for the result of THIS specific job.
     // The worker will exit to this port.
@@ -141,7 +149,7 @@ class DaKanjiDbSearchManager {
     resultPort.listen((message) {
       // CHECK: Is this result still relevant? 
       // If searchId != _currentSearchId, the user has already searched for something else.
-      if (searchId == _currentSearchId) {
+      if (!job.isCancelled && searchId == _currentSearchId) {
         if (message is DictionarySearchResult) {
           onResult(message);
         } else if (message is _ErrorResult) {
@@ -152,9 +160,9 @@ class DaKanjiDbSearchManager {
       }
       
       // Cleanup: This worker is now dead (exited).
-      // We only clear _activeWorker if it refers to THIS worker (not replaced yet).
-      if (_activeWorker == worker) {
-        _activeWorker = null;
+      // We only clear _activeJob if it refers to THIS job (not replaced yet).
+      if (_activeJob == job) {
+        _activeJob = null;
       }
       
       resultPort.close();
@@ -192,11 +200,9 @@ class DaKanjiDbSearchManager {
   }
 
   /// Kills the currently active worker isolate if it exists.
-  void _killActiveWorker() {
-    if (_activeWorker != null) {
-      _killHandle(_activeWorker!);
-      _activeWorker = null;
-    }
+  void _killActiveJob() {
+    _activeJob?.cancel();
+    _activeJob = null;
   }
 
   /// Helper to kill a specific worker handle.
@@ -311,6 +317,19 @@ class _WorkerHandle {
     required this.isolate,
     required this.sendPort,
   });
+}
+
+/// Tracks the lifecycle of a specific search request.
+class _SearchJobHandle {
+  bool isCancelled = false;
+  _WorkerHandle? assignedWorker;
+
+  void cancel() {
+    isCancelled = true;
+    if (assignedWorker != null) {
+      assignedWorker!.isolate.kill(priority: Isolate.immediate);
+    }
+  }
 }
 
 /// Initial configuration passed to the worker on spawn.
