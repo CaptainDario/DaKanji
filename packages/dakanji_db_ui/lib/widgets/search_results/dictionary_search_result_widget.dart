@@ -41,12 +41,12 @@ class DictionarySearchResultWidget extends StatefulWidget {
 class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWidget> {
   final Set<String> _collapsedSections = {};
 
-  void _toggleSection(String title) {
+  void _toggleSection(String key) {
     setState(() {
-      if (_collapsedSections.contains(title)) {
-        _collapsedSections.remove(title);
+      if (_collapsedSections.contains(key)) {
+        _collapsedSections.remove(key);
       } else {
-        _collapsedSections.add(title);
+        _collapsedSections.add(key);
       }
     });
   }
@@ -79,29 +79,29 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       value: widget.db,
       child: CustomScrollView(
         slivers: [
-        for (var matchType in widget.settings.s.firstSortOrder)
+        for (var (i, matchType) in widget.settings.s.firstSortOrder.indexed)
           ...switch (matchType.$1) {
             
             // Query Matches
             DakanjiDbSearchResult1stSortOrder.queryMatch when
               matchType.$2 && !widget.result.queryMatches.isEmpty => [
-                _buildMainSection(loc.sortByDirectMatch, widget.result.queryMatches)
+                _buildMainSection(loc.sortByDirectMatch, widget.result.queryMatches, i)
               ],
 
             // Normalized Matches
             DakanjiDbSearchResult1stSortOrder.normalizedMatch when
               matchType.$2 && normalized.any((e) => !e.isEmpty) =>
-                normalized.map((group) => _buildMainSection(loc.sortByFlexibleMatch, group)),
+                normalized.map((group) => _buildMainSection(loc.sortByFlexibleMatch, group, i)),
 
             // Variant Matches
             DakanjiDbSearchResult1stSortOrder.deconjugationMatch when
               matchType.$2 && variants.any((e) => !e.isEmpty) =>
-                variants.map((group) => _buildMainSection(loc.sortBySmartGrammarMatch, group)),
+                variants.map((group) => _buildMainSection(loc.sortBySmartGrammarMatch, group, i)),
 
             // Fuzzy Matches
             DakanjiDbSearchResult1stSortOrder.spellfixMatch when
               matchType.$2 && fuzzy.any((e) => !e.isEmpty) =>
-                fuzzy.map((group) => _buildMainSection(loc.sortByTypoCorrectionMatch, group)),
+                fuzzy.map((group) => _buildMainSection(loc.sortByTypoCorrectionMatch, group, i)),
 
             // Default case returns an empty list
             _ => [],
@@ -111,14 +111,15 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
     );
   }
 
-  Widget _buildMainSection(String title, DictionaryMatchGroup group) {
+  Widget _buildMainSection(String title, DictionaryMatchGroup group, int index) {
     
     title = "$title (${group.searchTerm})";
     final expanded = _isExpanded(title);
+    final keyValue = "MainSection_${group.searchTerm}_$index";
     
     return SliverMainAxisGroup(
       // Key allows Flutter to reuse the render object when rebuilding
-      key: ValueKey("MainSection_${title}_${group.searchTerm}"), 
+      key: ValueKey(keyValue), 
       slivers: [
         if (widget.settings.s.showSearchResultSeparationHeaders)
           SliverPersistentHeader(
@@ -127,26 +128,26 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
               title: title, 
               type: _StickyHeaderType.main,
               isExpanded: expanded,
-              onTap: () => _toggleSection(title),
+              onTap: () => _toggleSection(keyValue),
               fontSize: 18.0, 
             ),
           ),
         
         if (expanded)
-          ..._buildSliversForMatchGroup(group),
+          ..._buildSliversForMatchGroup(group, index),
       ],
     );
   }
 
-  List<Widget> _buildSliversForMatchGroup(DictionaryMatchGroup matchGroup) {
+  List<Widget> _buildSliversForMatchGroup(DictionaryMatchGroup matchGroup, int mainIndex) {
     final List<Widget> slivers = [];
     final loc = widget.localization;
 
-    void addSection(String title, List<DictionaryMatch> matches) {
+    void addSection(String title, List<DictionaryMatch> matches, int subIndex) {
       if (matches.isNotEmpty) {
         final expanded = _isExpanded(title);
         // Create a stable key for this section
-        final sectionKey = "SubSection_${matchGroup.searchTerm}_$title";
+        final sectionKey = 'SubSection_${matchGroup.searchTerm}_${mainIndex}_$subIndex';
 
         slivers.add(SliverMainAxisGroup(
           // Helps Flutter identify this specific sub-group
@@ -159,7 +160,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
                   title: title,
                   type: _StickyHeaderType.sub,
                   isExpanded: expanded,
-                  onTap: () => _toggleSection(title),
+                  onTap: () => _toggleSection(sectionKey),
                   fontSize: 14.0, 
                 )
               ),
@@ -171,23 +172,23 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
     }
 
     // display the results in the user defined order
-    for (var matchType in widget.settings.s.secondSortOrder) {
+    for (var (i, matchType) in widget.settings.s.secondSortOrder.indexed) {
       switch (matchType.$1) {
         case DakanjiDbSearchReesult2ndSortOrder.exactMatch:
           if (matchType.$2) {
-            addSection("${loc.thenByExactMatch} (${matchGroup.exactMatches.length}):", matchGroup.exactMatches);
+            addSection("${loc.thenByExactMatch} (${matchGroup.exactMatches.length}):", matchGroup.exactMatches, i);
           }
         case DakanjiDbSearchReesult2ndSortOrder.prefixMatch:
           if (matchType.$2) {
-            addSection("${loc.thenByStartsWithMatch} (${matchGroup.prefixMatches.length}):", matchGroup.prefixMatches);
+            addSection("${loc.thenByStartsWithMatch} (${matchGroup.prefixMatches.length}):", matchGroup.prefixMatches, i);
           }
         case DakanjiDbSearchReesult2ndSortOrder.subwordMatch:
           if (matchType.$2) {
-            addSection("${loc.thenBySubwordMatch} (${matchGroup.tokenMatches.length}):", matchGroup.tokenMatches);
+            addSection("${loc.thenBySubwordMatch} (${matchGroup.tokenMatches.length}):", matchGroup.tokenMatches, i);
           }
         case DakanjiDbSearchReesult2ndSortOrder.wildcardMatch:
           if (matchType.$2) {
-            addSection("${loc.thenByWildcardMatch} (${matchGroup.wildcardMatches.length})", matchGroup.wildcardMatches);
+            addSection("${loc.thenByWildcardMatch} (${matchGroup.wildcardMatches.length})", matchGroup.wildcardMatches, i);
           }
       } 
     }
