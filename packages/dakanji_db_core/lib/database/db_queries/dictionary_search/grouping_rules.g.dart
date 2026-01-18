@@ -9,7 +9,7 @@ part of 'grouping_rules.dart';
 SequenceGroupingRule _$SequenceGroupingRuleFromJson(
   Map<String, dynamic> json,
 ) => SequenceGroupingRule(
-  sourceDictId: (json['sourceDictId'] as num).toInt(),
+  sourceDictId: (json['sourceDictId'] as num?)?.toInt(),
   targetDictIds: (json['targetDictIds'] as List<dynamic>)
       .map((e) => (e as num).toInt())
       .toSet(),

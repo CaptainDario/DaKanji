@@ -42,7 +42,7 @@ mixin _$DaKanjiDbSettingsInternal {
 /// - wildcardMatch
  List<(DakanjiDbSearchReesult2ndSortOrder, bool)> get secondSortOrder;/// Whether to convert romaji to hiragana in normalized searches.
  bool get normalizeSearchConvertsRomajiToHiragana;/// The grouping rules to apply to the search.
- List<DictionaryGroupingRule> get groupingRule;/// Whether to show the separation headers such as "Exact Matches",
+ List<DictionaryGroupingRule> get groupingRules;/// Whether to show the separation headers such as "Exact Matches",
 /// "Prefix Matches", etc.
  bool get showSearchResultSeparationHeaders;/// Whether to show tags in [DictionaryMatchWidget]s.
  bool get showTags;/// Whether to show meta entries in [DictionaryMatchWidget]s.
@@ -63,16 +63,16 @@ $DaKanjiDbSettingsInternalCopyWith<DaKanjiDbSettingsInternal> get copyWith => _$
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DaKanjiDbSettingsInternal&&const DeepCollectionEquality().equals(other.firstSortOrder, firstSortOrder)&&const DeepCollectionEquality().equals(other.secondSortOrder, secondSortOrder)&&(identical(other.normalizeSearchConvertsRomajiToHiragana, normalizeSearchConvertsRomajiToHiragana) || other.normalizeSearchConvertsRomajiToHiragana == normalizeSearchConvertsRomajiToHiragana)&&const DeepCollectionEquality().equals(other.groupingRule, groupingRule)&&(identical(other.showSearchResultSeparationHeaders, showSearchResultSeparationHeaders) || other.showSearchResultSeparationHeaders == showSearchResultSeparationHeaders)&&(identical(other.showTags, showTags) || other.showTags == showTags)&&(identical(other.showMetaEntries, showMetaEntries) || other.showMetaEntries == showMetaEntries)&&(identical(other.definitionsMaxHeight, definitionsMaxHeight) || other.definitionsMaxHeight == definitionsMaxHeight)&&(identical(other.useKatakanaForFurigana, useKatakanaForFurigana) || other.useKatakanaForFurigana == useKatakanaForFurigana)&&(identical(other.searchResultLimit, searchResultLimit) || other.searchResultLimit == searchResultLimit));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DaKanjiDbSettingsInternal&&const DeepCollectionEquality().equals(other.firstSortOrder, firstSortOrder)&&const DeepCollectionEquality().equals(other.secondSortOrder, secondSortOrder)&&(identical(other.normalizeSearchConvertsRomajiToHiragana, normalizeSearchConvertsRomajiToHiragana) || other.normalizeSearchConvertsRomajiToHiragana == normalizeSearchConvertsRomajiToHiragana)&&const DeepCollectionEquality().equals(other.groupingRules, groupingRules)&&(identical(other.showSearchResultSeparationHeaders, showSearchResultSeparationHeaders) || other.showSearchResultSeparationHeaders == showSearchResultSeparationHeaders)&&(identical(other.showTags, showTags) || other.showTags == showTags)&&(identical(other.showMetaEntries, showMetaEntries) || other.showMetaEntries == showMetaEntries)&&(identical(other.definitionsMaxHeight, definitionsMaxHeight) || other.definitionsMaxHeight == definitionsMaxHeight)&&(identical(other.useKatakanaForFurigana, useKatakanaForFurigana) || other.useKatakanaForFurigana == useKatakanaForFurigana)&&(identical(other.searchResultLimit, searchResultLimit) || other.searchResultLimit == searchResultLimit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(firstSortOrder),const DeepCollectionEquality().hash(secondSortOrder),normalizeSearchConvertsRomajiToHiragana,const DeepCollectionEquality().hash(groupingRule),showSearchResultSeparationHeaders,showTags,showMetaEntries,definitionsMaxHeight,useKatakanaForFurigana,searchResultLimit);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(firstSortOrder),const DeepCollectionEquality().hash(secondSortOrder),normalizeSearchConvertsRomajiToHiragana,const DeepCollectionEquality().hash(groupingRules),showSearchResultSeparationHeaders,showTags,showMetaEntries,definitionsMaxHeight,useKatakanaForFurigana,searchResultLimit);
 
 @override
 String toString() {
-  return 'DaKanjiDbSettingsInternal(firstSortOrder: $firstSortOrder, secondSortOrder: $secondSortOrder, normalizeSearchConvertsRomajiToHiragana: $normalizeSearchConvertsRomajiToHiragana, groupingRule: $groupingRule, showSearchResultSeparationHeaders: $showSearchResultSeparationHeaders, showTags: $showTags, showMetaEntries: $showMetaEntries, definitionsMaxHeight: $definitionsMaxHeight, useKatakanaForFurigana: $useKatakanaForFurigana, searchResultLimit: $searchResultLimit)';
+  return 'DaKanjiDbSettingsInternal(firstSortOrder: $firstSortOrder, secondSortOrder: $secondSortOrder, normalizeSearchConvertsRomajiToHiragana: $normalizeSearchConvertsRomajiToHiragana, groupingRules: $groupingRules, showSearchResultSeparationHeaders: $showSearchResultSeparationHeaders, showTags: $showTags, showMetaEntries: $showMetaEntries, definitionsMaxHeight: $definitionsMaxHeight, useKatakanaForFurigana: $useKatakanaForFurigana, searchResultLimit: $searchResultLimit)';
 }
 
 
@@ -83,7 +83,7 @@ abstract mixin class $DaKanjiDbSettingsInternalCopyWith<$Res>  {
   factory $DaKanjiDbSettingsInternalCopyWith(DaKanjiDbSettingsInternal value, $Res Function(DaKanjiDbSettingsInternal) _then) = _$DaKanjiDbSettingsInternalCopyWithImpl;
 @useResult
 $Res call({
- List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder, List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder, bool normalizeSearchConvertsRomajiToHiragana, List<DictionaryGroupingRule> groupingRule, bool showSearchResultSeparationHeaders, bool showTags, bool showMetaEntries, double definitionsMaxHeight, bool useKatakanaForFurigana, int searchResultLimit
+ List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder, List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder, bool normalizeSearchConvertsRomajiToHiragana, List<DictionaryGroupingRule> groupingRules, bool showSearchResultSeparationHeaders, bool showTags, bool showMetaEntries, double definitionsMaxHeight, bool useKatakanaForFurigana, int searchResultLimit
 });
 
 
@@ -100,12 +100,12 @@ class _$DaKanjiDbSettingsInternalCopyWithImpl<$Res>
 
 /// Create a copy of DaKanjiDbSettingsInternal
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? firstSortOrder = null,Object? secondSortOrder = null,Object? normalizeSearchConvertsRomajiToHiragana = null,Object? groupingRule = null,Object? showSearchResultSeparationHeaders = null,Object? showTags = null,Object? showMetaEntries = null,Object? definitionsMaxHeight = null,Object? useKatakanaForFurigana = null,Object? searchResultLimit = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? firstSortOrder = null,Object? secondSortOrder = null,Object? normalizeSearchConvertsRomajiToHiragana = null,Object? groupingRules = null,Object? showSearchResultSeparationHeaders = null,Object? showTags = null,Object? showMetaEntries = null,Object? definitionsMaxHeight = null,Object? useKatakanaForFurigana = null,Object? searchResultLimit = null,}) {
   return _then(_self.copyWith(
 firstSortOrder: null == firstSortOrder ? _self.firstSortOrder : firstSortOrder // ignore: cast_nullable_to_non_nullable
 as List<(DakanjiDbSearchResult1stSortOrder, bool)>,secondSortOrder: null == secondSortOrder ? _self.secondSortOrder : secondSortOrder // ignore: cast_nullable_to_non_nullable
 as List<(DakanjiDbSearchReesult2ndSortOrder, bool)>,normalizeSearchConvertsRomajiToHiragana: null == normalizeSearchConvertsRomajiToHiragana ? _self.normalizeSearchConvertsRomajiToHiragana : normalizeSearchConvertsRomajiToHiragana // ignore: cast_nullable_to_non_nullable
-as bool,groupingRule: null == groupingRule ? _self.groupingRule : groupingRule // ignore: cast_nullable_to_non_nullable
+as bool,groupingRules: null == groupingRules ? _self.groupingRules : groupingRules // ignore: cast_nullable_to_non_nullable
 as List<DictionaryGroupingRule>,showSearchResultSeparationHeaders: null == showSearchResultSeparationHeaders ? _self.showSearchResultSeparationHeaders : showSearchResultSeparationHeaders // ignore: cast_nullable_to_non_nullable
 as bool,showTags: null == showTags ? _self.showTags : showTags // ignore: cast_nullable_to_non_nullable
 as bool,showMetaEntries: null == showMetaEntries ? _self.showMetaEntries : showMetaEntries // ignore: cast_nullable_to_non_nullable
@@ -197,10 +197,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRule,  bool showSearchResultSeparationHeaders,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int searchResultLimit)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRules,  bool showSearchResultSeparationHeaders,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int searchResultLimit)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DaKanjiDbSettings() when $default != null:
-return $default(_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRule,_that.showSearchResultSeparationHeaders,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.searchResultLimit);case _:
+return $default(_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRules,_that.showSearchResultSeparationHeaders,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.searchResultLimit);case _:
   return orElse();
 
 }
@@ -218,10 +218,10 @@ return $default(_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearch
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRule,  bool showSearchResultSeparationHeaders,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int searchResultLimit)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRules,  bool showSearchResultSeparationHeaders,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int searchResultLimit)  $default,) {final _that = this;
 switch (_that) {
 case _DaKanjiDbSettings():
-return $default(_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRule,_that.showSearchResultSeparationHeaders,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.searchResultLimit);case _:
+return $default(_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRules,_that.showSearchResultSeparationHeaders,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.searchResultLimit);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -238,10 +238,10 @@ return $default(_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearch
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRule,  bool showSearchResultSeparationHeaders,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int searchResultLimit)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRules,  bool showSearchResultSeparationHeaders,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int searchResultLimit)?  $default,) {final _that = this;
 switch (_that) {
 case _DaKanjiDbSettings() when $default != null:
-return $default(_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRule,_that.showSearchResultSeparationHeaders,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.searchResultLimit);case _:
+return $default(_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRules,_that.showSearchResultSeparationHeaders,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.searchResultLimit);case _:
   return null;
 
 }
@@ -253,7 +253,7 @@ return $default(_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearch
 @JsonSerializable()
 
 class _DaKanjiDbSettings extends DaKanjiDbSettingsInternal {
-  const _DaKanjiDbSettings({final  List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder = const [(DakanjiDbSearchResult1stSortOrder.queryMatch, true), (DakanjiDbSearchResult1stSortOrder.normalizedMatch, true), (DakanjiDbSearchResult1stSortOrder.deconjugationMatch, true), (DakanjiDbSearchResult1stSortOrder.spellfixMatch, true)], final  List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder = const [(DakanjiDbSearchReesult2ndSortOrder.exactMatch, true), (DakanjiDbSearchReesult2ndSortOrder.prefixMatch, true), (DakanjiDbSearchReesult2ndSortOrder.subwordMatch, true), (DakanjiDbSearchReesult2ndSortOrder.wildcardMatch, true)], this.normalizeSearchConvertsRomajiToHiragana = true, final  List<DictionaryGroupingRule> groupingRule = const [NoGroupingRule()], this.showSearchResultSeparationHeaders = true, this.showTags = true, this.showMetaEntries = true, this.definitionsMaxHeight = 60.0, this.useKatakanaForFurigana = false, this.searchResultLimit = 100}): _firstSortOrder = firstSortOrder,_secondSortOrder = secondSortOrder,_groupingRule = groupingRule,super._();
+  const _DaKanjiDbSettings({final  List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder = const [(DakanjiDbSearchResult1stSortOrder.queryMatch, true), (DakanjiDbSearchResult1stSortOrder.normalizedMatch, true), (DakanjiDbSearchResult1stSortOrder.deconjugationMatch, true), (DakanjiDbSearchResult1stSortOrder.spellfixMatch, true)], final  List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder = const [(DakanjiDbSearchReesult2ndSortOrder.exactMatch, true), (DakanjiDbSearchReesult2ndSortOrder.prefixMatch, true), (DakanjiDbSearchReesult2ndSortOrder.subwordMatch, true), (DakanjiDbSearchReesult2ndSortOrder.wildcardMatch, true)], this.normalizeSearchConvertsRomajiToHiragana = true, final  List<DictionaryGroupingRule> groupingRules = const [], this.showSearchResultSeparationHeaders = true, this.showTags = true, this.showMetaEntries = true, this.definitionsMaxHeight = 60.0, this.useKatakanaForFurigana = false, this.searchResultLimit = 100}): _firstSortOrder = firstSortOrder,_secondSortOrder = secondSortOrder,_groupingRules = groupingRules,super._();
   factory _DaKanjiDbSettings.fromJson(Map<String, dynamic> json) => _$DaKanjiDbSettingsFromJson(json);
 
 /// 1st level sort order for search results.
@@ -309,12 +309,12 @@ class _DaKanjiDbSettings extends DaKanjiDbSettingsInternal {
 /// Whether to convert romaji to hiragana in normalized searches.
 @override@JsonKey() final  bool normalizeSearchConvertsRomajiToHiragana;
 /// The grouping rules to apply to the search.
- final  List<DictionaryGroupingRule> _groupingRule;
+ final  List<DictionaryGroupingRule> _groupingRules;
 /// The grouping rules to apply to the search.
-@override@JsonKey() List<DictionaryGroupingRule> get groupingRule {
-  if (_groupingRule is EqualUnmodifiableListView) return _groupingRule;
+@override@JsonKey() List<DictionaryGroupingRule> get groupingRules {
+  if (_groupingRules is EqualUnmodifiableListView) return _groupingRules;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_groupingRule);
+  return EqualUnmodifiableListView(_groupingRules);
 }
 
 /// Whether to show the separation headers such as "Exact Matches",
@@ -345,16 +345,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DaKanjiDbSettings&&const DeepCollectionEquality().equals(other._firstSortOrder, _firstSortOrder)&&const DeepCollectionEquality().equals(other._secondSortOrder, _secondSortOrder)&&(identical(other.normalizeSearchConvertsRomajiToHiragana, normalizeSearchConvertsRomajiToHiragana) || other.normalizeSearchConvertsRomajiToHiragana == normalizeSearchConvertsRomajiToHiragana)&&const DeepCollectionEquality().equals(other._groupingRule, _groupingRule)&&(identical(other.showSearchResultSeparationHeaders, showSearchResultSeparationHeaders) || other.showSearchResultSeparationHeaders == showSearchResultSeparationHeaders)&&(identical(other.showTags, showTags) || other.showTags == showTags)&&(identical(other.showMetaEntries, showMetaEntries) || other.showMetaEntries == showMetaEntries)&&(identical(other.definitionsMaxHeight, definitionsMaxHeight) || other.definitionsMaxHeight == definitionsMaxHeight)&&(identical(other.useKatakanaForFurigana, useKatakanaForFurigana) || other.useKatakanaForFurigana == useKatakanaForFurigana)&&(identical(other.searchResultLimit, searchResultLimit) || other.searchResultLimit == searchResultLimit));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DaKanjiDbSettings&&const DeepCollectionEquality().equals(other._firstSortOrder, _firstSortOrder)&&const DeepCollectionEquality().equals(other._secondSortOrder, _secondSortOrder)&&(identical(other.normalizeSearchConvertsRomajiToHiragana, normalizeSearchConvertsRomajiToHiragana) || other.normalizeSearchConvertsRomajiToHiragana == normalizeSearchConvertsRomajiToHiragana)&&const DeepCollectionEquality().equals(other._groupingRules, _groupingRules)&&(identical(other.showSearchResultSeparationHeaders, showSearchResultSeparationHeaders) || other.showSearchResultSeparationHeaders == showSearchResultSeparationHeaders)&&(identical(other.showTags, showTags) || other.showTags == showTags)&&(identical(other.showMetaEntries, showMetaEntries) || other.showMetaEntries == showMetaEntries)&&(identical(other.definitionsMaxHeight, definitionsMaxHeight) || other.definitionsMaxHeight == definitionsMaxHeight)&&(identical(other.useKatakanaForFurigana, useKatakanaForFurigana) || other.useKatakanaForFurigana == useKatakanaForFurigana)&&(identical(other.searchResultLimit, searchResultLimit) || other.searchResultLimit == searchResultLimit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_firstSortOrder),const DeepCollectionEquality().hash(_secondSortOrder),normalizeSearchConvertsRomajiToHiragana,const DeepCollectionEquality().hash(_groupingRule),showSearchResultSeparationHeaders,showTags,showMetaEntries,definitionsMaxHeight,useKatakanaForFurigana,searchResultLimit);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_firstSortOrder),const DeepCollectionEquality().hash(_secondSortOrder),normalizeSearchConvertsRomajiToHiragana,const DeepCollectionEquality().hash(_groupingRules),showSearchResultSeparationHeaders,showTags,showMetaEntries,definitionsMaxHeight,useKatakanaForFurigana,searchResultLimit);
 
 @override
 String toString() {
-  return 'DaKanjiDbSettingsInternal(firstSortOrder: $firstSortOrder, secondSortOrder: $secondSortOrder, normalizeSearchConvertsRomajiToHiragana: $normalizeSearchConvertsRomajiToHiragana, groupingRule: $groupingRule, showSearchResultSeparationHeaders: $showSearchResultSeparationHeaders, showTags: $showTags, showMetaEntries: $showMetaEntries, definitionsMaxHeight: $definitionsMaxHeight, useKatakanaForFurigana: $useKatakanaForFurigana, searchResultLimit: $searchResultLimit)';
+  return 'DaKanjiDbSettingsInternal(firstSortOrder: $firstSortOrder, secondSortOrder: $secondSortOrder, normalizeSearchConvertsRomajiToHiragana: $normalizeSearchConvertsRomajiToHiragana, groupingRules: $groupingRules, showSearchResultSeparationHeaders: $showSearchResultSeparationHeaders, showTags: $showTags, showMetaEntries: $showMetaEntries, definitionsMaxHeight: $definitionsMaxHeight, useKatakanaForFurigana: $useKatakanaForFurigana, searchResultLimit: $searchResultLimit)';
 }
 
 
@@ -365,7 +365,7 @@ abstract mixin class _$DaKanjiDbSettingsCopyWith<$Res> implements $DaKanjiDbSett
   factory _$DaKanjiDbSettingsCopyWith(_DaKanjiDbSettings value, $Res Function(_DaKanjiDbSettings) _then) = __$DaKanjiDbSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder, List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder, bool normalizeSearchConvertsRomajiToHiragana, List<DictionaryGroupingRule> groupingRule, bool showSearchResultSeparationHeaders, bool showTags, bool showMetaEntries, double definitionsMaxHeight, bool useKatakanaForFurigana, int searchResultLimit
+ List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder, List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder, bool normalizeSearchConvertsRomajiToHiragana, List<DictionaryGroupingRule> groupingRules, bool showSearchResultSeparationHeaders, bool showTags, bool showMetaEntries, double definitionsMaxHeight, bool useKatakanaForFurigana, int searchResultLimit
 });
 
 
@@ -382,12 +382,12 @@ class __$DaKanjiDbSettingsCopyWithImpl<$Res>
 
 /// Create a copy of DaKanjiDbSettingsInternal
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? firstSortOrder = null,Object? secondSortOrder = null,Object? normalizeSearchConvertsRomajiToHiragana = null,Object? groupingRule = null,Object? showSearchResultSeparationHeaders = null,Object? showTags = null,Object? showMetaEntries = null,Object? definitionsMaxHeight = null,Object? useKatakanaForFurigana = null,Object? searchResultLimit = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? firstSortOrder = null,Object? secondSortOrder = null,Object? normalizeSearchConvertsRomajiToHiragana = null,Object? groupingRules = null,Object? showSearchResultSeparationHeaders = null,Object? showTags = null,Object? showMetaEntries = null,Object? definitionsMaxHeight = null,Object? useKatakanaForFurigana = null,Object? searchResultLimit = null,}) {
   return _then(_DaKanjiDbSettings(
 firstSortOrder: null == firstSortOrder ? _self._firstSortOrder : firstSortOrder // ignore: cast_nullable_to_non_nullable
 as List<(DakanjiDbSearchResult1stSortOrder, bool)>,secondSortOrder: null == secondSortOrder ? _self._secondSortOrder : secondSortOrder // ignore: cast_nullable_to_non_nullable
 as List<(DakanjiDbSearchReesult2ndSortOrder, bool)>,normalizeSearchConvertsRomajiToHiragana: null == normalizeSearchConvertsRomajiToHiragana ? _self.normalizeSearchConvertsRomajiToHiragana : normalizeSearchConvertsRomajiToHiragana // ignore: cast_nullable_to_non_nullable
-as bool,groupingRule: null == groupingRule ? _self._groupingRule : groupingRule // ignore: cast_nullable_to_non_nullable
+as bool,groupingRules: null == groupingRules ? _self._groupingRules : groupingRules // ignore: cast_nullable_to_non_nullable
 as List<DictionaryGroupingRule>,showSearchResultSeparationHeaders: null == showSearchResultSeparationHeaders ? _self.showSearchResultSeparationHeaders : showSearchResultSeparationHeaders // ignore: cast_nullable_to_non_nullable
 as bool,showTags: null == showTags ? _self.showTags : showTags // ignore: cast_nullable_to_non_nullable
 as bool,showMetaEntries: null == showMetaEntries ? _self.showMetaEntries : showMetaEntries // ignore: cast_nullable_to_non_nullable

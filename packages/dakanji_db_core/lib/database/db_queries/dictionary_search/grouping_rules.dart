@@ -1,13 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'grouping_rules.freezed.dart';
 part 'grouping_rules.g.dart';
+
 
 /// Base class for grouping rules
 abstract class DictionaryGroupingRule {
 
   const DictionaryGroupingRule();
 
-  /// Which dictionaries this rule applies to
+
+  Set<int> get targetDictIds;
+
   Set<int> get dictionaryIds;
 
   factory DictionaryGroupingRule.fromJson(Map<String, dynamic> json) {
@@ -33,32 +37,40 @@ abstract class DictionaryGroupingRule {
 }
 
 /// Rule for Sequence-based grouping
+@Freezed()
 @JsonSerializable()
-class SequenceGroupingRule extends DictionaryGroupingRule {
+class SequenceGroupingRule extends DictionaryGroupingRule with _$SequenceGroupingRule {
 
   /// The dictionary from which sequence numbers are taken.
-  final int sourceDictId;
+  @override
+  final int? sourceDictId;
   /// The dictionaries in which to search for entries matching the sequence
   /// numbers from [sourceDictId].
+  @override
   final Set<int> targetDictIds;
 
   const SequenceGroupingRule({required this.sourceDictId, required this.targetDictIds});
 
   @override
-  Set<int> get dictionaryIds => {sourceDictId, ...targetDictIds};
+  Set<int> get dictionaryIds => {?sourceDictId, ...targetDictIds};
 
   factory SequenceGroupingRule.fromJson(Map<String, dynamic> json)
     => _$SequenceGroupingRuleFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$SequenceGroupingRuleToJson(this);
+  Map<String, dynamic> toJson() => {
+    ..._$SequenceGroupingRuleToJson(this),
+    'runtimeType': 'sequence',
+  };
 }
 
 /// Rule for Term+Reading grouping
+@Freezed()
 @JsonSerializable()
-class TermAndReadingGroupingRule extends DictionaryGroupingRule {
+class TermAndReadingGroupingRule extends DictionaryGroupingRule with _$TermAndReadingGroupingRule {
 
   /// The dictionaries in which to search for matching entries 
+  @override
   final Set<int> targetDictIds;
 
   const TermAndReadingGroupingRule(this.targetDictIds);
@@ -70,14 +82,19 @@ class TermAndReadingGroupingRule extends DictionaryGroupingRule {
     => _$TermAndReadingGroupingRuleFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$TermAndReadingGroupingRuleToJson(this);
+  Map<String, dynamic> toJson() => {
+    ..._$TermAndReadingGroupingRuleToJson(this),
+    'runtimeType': 'termAndReading',
+  };
 }
 
 /// Rule for Term grouping
+@Freezed()
 @JsonSerializable()
-class TermGroupingRule extends DictionaryGroupingRule {
+class TermGroupingRule extends DictionaryGroupingRule with _$TermGroupingRule {
 
   /// The dictionaries in which to search for matching entries
+  @override
   final Set<int> targetDictIds;
 
   const TermGroupingRule(this.targetDictIds);
@@ -89,14 +106,21 @@ class TermGroupingRule extends DictionaryGroupingRule {
     => _$TermGroupingRuleFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$TermGroupingRuleToJson(this);
+  Map<String, dynamic> toJson() => {
+    ..._$TermGroupingRuleToJson(this),
+    'runtimeType': 'term',
+  };
 }
 
 /// Shorthand class for no grouping
+@Freezed()
 @JsonSerializable()
-class NoGroupingRule extends DictionaryGroupingRule {
+class NoGroupingRule extends DictionaryGroupingRule with _$NoGroupingRule {
 
   const NoGroupingRule();
+
+  @override
+  Set<int> get targetDictIds => {};
 
   @override
   Set<int> get dictionaryIds => {};
@@ -105,5 +129,9 @@ class NoGroupingRule extends DictionaryGroupingRule {
     => _$NoGroupingRuleFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$NoGroupingRuleToJson(this);
+  Map<String, dynamic> toJson() => {
+      ..._$NoGroupingRuleToJson(this),
+      'runtimeType': 'noGrouping',
+    };
 }
+

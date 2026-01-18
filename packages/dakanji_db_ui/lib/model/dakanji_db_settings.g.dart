@@ -52,14 +52,14 @@ _DaKanjiDbSettings _$DaKanjiDbSettingsFromJson(Map<String, dynamic> json) =>
           ],
       normalizeSearchConvertsRomajiToHiragana:
           json['normalizeSearchConvertsRomajiToHiragana'] as bool? ?? true,
-      groupingRule:
-          (json['groupingRule'] as List<dynamic>?)
+      groupingRules:
+          (json['groupingRules'] as List<dynamic>?)
               ?.map(
                 (e) =>
                     DictionaryGroupingRule.fromJson(e as Map<String, dynamic>),
               )
               .toList() ??
-          const [NoGroupingRule()],
+          const [],
       showSearchResultSeparationHeaders:
           json['showSearchResultSeparationHeaders'] as bool? ?? true,
       showTags: json['showTags'] as bool? ?? true,
@@ -90,7 +90,7 @@ Map<String, dynamic> _$DaKanjiDbSettingsToJson(_DaKanjiDbSettings instance) =>
           .toList(),
       'normalizeSearchConvertsRomajiToHiragana':
           instance.normalizeSearchConvertsRomajiToHiragana,
-      'groupingRule': instance.groupingRule,
+      'groupingRules': instance.groupingRules,
       'showSearchResultSeparationHeaders':
           instance.showSearchResultSeparationHeaders,
       'showTags': instance.showTags,

@@ -40,7 +40,7 @@ class DaKanjiDbSettings with ChangeNotifier {
 
 }
 
-@freezed
+@Freezed(toJson: true, fromJson: true, )
 abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
   const DaKanjiDbSettingsInternal._();
 
@@ -84,8 +84,8 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
     bool normalizeSearchConvertsRomajiToHiragana,
 
     /// The grouping rules to apply to the search.
-    @Default([NoGroupingRule()])
-    List<DictionaryGroupingRule> groupingRule,
+    @Default([])
+    List<DictionaryGroupingRule> groupingRules,
 
     /// Whether to show the separation headers such as "Exact Matches",
     /// "Prefix Matches", etc.
