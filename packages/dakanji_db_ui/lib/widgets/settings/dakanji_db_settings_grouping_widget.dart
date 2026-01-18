@@ -32,7 +32,8 @@ final Map<String, Function> groupingRuleStringToInstance = {
 
 enum IndexGroupingUsage {
   unused,
-  usedInThis,
+  usedInThisSource,
+  usedInthisTarget,
   usedInOther
 }
 
@@ -143,11 +144,16 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
       .map((e) => e.dictionaryIds)
       .flattened.toSet();
 
-    if (rules[widget.i].dictionaryIds.contains(indexId)) {
-      return IndexGroupingUsage.usedInThis;
-    } else if (usedIndexes.contains(indexId)) {
+    if (rules[widget.i].targetDictIds.contains(indexId)) {
+      return IndexGroupingUsage.usedInthisTarget;
+    }
+    else if (rules[widget.i].dictionaryIds.contains(indexId)) {
+      return IndexGroupingUsage.usedInThisSource;
+    }
+    else if (usedIndexes.contains(indexId)) {
       return IndexGroupingUsage.usedInOther;
-    } else {
+    } 
+    else {
       return IndexGroupingUsage.unused;
     }
   }
@@ -281,7 +287,7 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text("Select Sources"),
+              title: Text(widget.localization.targetDictSelectDialogTitle),
               content: SizedBox(
                 width: double.maxFinite,
                 child: FutureBuilder<List<({IndexTableData index, IndexGroupingUsage usage})>>(
@@ -294,15 +300,15 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
                     final data = snapshot.data!;
                     
                     if (data.isEmpty) {
-                      return const Text("No indexes found.");
+                      return Text(widget.localization.targetDictSelectDialogNoIndexes);
                     }
 
                     // 3. One-time Initialization: 
                     // Pre-fill checkboxes for items that are ALREADY used in this rule.
                     if (!isInitialized) {
                       final preSelected = data
-                          .where((e) => e.usage == IndexGroupingUsage.usedInThis)
-                          .map((e) => e.index.id);
+                        .where((e) => e.usage == IndexGroupingUsage.usedInthisTarget)
+                        .map((e) => e.index.id);
                       tempSelectedIds.addAll(preSelected);
                       isInitialized = true;
                     }
@@ -326,7 +332,10 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
                           
                           // Show explanation if disabled
                           subtitle: isDisabled 
-                              ? const Text("Used in another rule", style: TextStyle(color: Colors.grey, fontSize: 12)) 
+                              ? Text(
+                                widget.localization.targetDictSelectDialogUsedInOtherRule,
+                                style: TextStyle(color: Colors.grey, fontSize: 12)
+                              ) 
                               : null,
                           
                           // Check if it is in our local set
@@ -354,14 +363,14 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text("Cancel"),
+                  child: Text(widget.localization.targetDictSelectDialogCancel),
                 ),
                 TextButton(
                   onPressed: () {
                     onSelected(tempSelectedIds.toList());
                     Navigator.pop(context);
                   },
-                  child: const Text("OK"),
+                  child: Text(widget.localization.targetDictSelectDialogOK),
                 ),
               ],
             );

@@ -10,7 +10,6 @@ import 'package:dakanji_db_ui/dakanji_db_ui.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/search_results/dictionary_search_result_widget.dart';
 import 'package:dakanji_db_ui/widgets/settings/search_settings_dialog.dart';
-import 'package:dakanji_db_ui_search_example/search_results_localizations.dart';
 import 'package:dakanji_db_ui_search_example/settings_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -64,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   late DaKanjiDbSettings settings = DaKanjiDbSettings(
       DaKanjiDbSettingsInternal(
-        groupingRule: [
-          const SequenceGroupingRule(sourceDictId: 3, targetDictIds: {3, 4})
+        groupingRules: [
+          SequenceGroupingRule(sourceDictId: 3, targetDictIds: {3, 4})
         ],
       ),
     );
@@ -98,14 +97,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> setupSettings() async {
     prefs = await SharedPreferences.getInstance();
+    //await prefs.clear();
     String? s = prefs.getString("settings");
+    print(s);
     if(s != null) {
       final loadedSettings = DaKanjiDbSettingsInternal.fromJson(jsonDecode(s));
       settings.update(loadedSettings);
     }
 
-    settings.onSettingsChanged = () {
-      prefs.setString("settings", jsonEncode(settings.settings.toJson()));
+    settings.onSettingsChanged = () async {
+      await prefs.setString("settings", jsonEncode(settings.settings.toJson()));
     };
   }
 
@@ -126,8 +127,8 @@ class _MyHomePageState extends State<MyHomePage> {
           settings.s.normalizeSearchConvertsRomajiToHiragana,
       deconjugationSearch: settings.s.deconjugationSearch,
       spellfixSearch: settings.s.spellfixSearch,
-      groupingRules: settings.s.groupingRule,
-      limit: settings.s.searchResultLimit
+      groupingRules: settings.s.groupingRules,
+      //TODO limit: settings.s.searchResultLimit
     );
   }
 
@@ -155,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: DaKanjiDbSettingsDialog(
                           db: daKanjiDB,
                           settings: settings,
-                          localization: dakanjiDbSettingsLocalization,
+                          localization: dakanjiDbLocalization,
                         ),
                       ),
                     ),

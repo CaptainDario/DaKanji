@@ -2,7 +2,7 @@ import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 
 
 
-DakanjiDbLocalization dakanjiDbSettingsLocalization = DakanjiDbLocalization(
+DakanjiDbLocalization dakanjiDbLocalization = DakanjiDbLocalization(
 
   /// --- SEARCH UI ---
   noResultsFound: noResultsFound,
@@ -50,6 +50,18 @@ DakanjiDbLocalization dakanjiDbSettingsLocalization = DakanjiDbLocalization(
 
   // --- Grouping ---
   groupingTitle: groupingTitle,
+
+  configureGroupingTitle: configureGroupingTitle,
+  groupby: groupby,
+  source: source,
+  targets: targets,
+  select: select,
+
+  targetDictSelectDialogTitle: targetDictSelectDialogTitle,
+  targetDictSelectDialogNoIndexes: targetDictSelectDialogNoIndexes,
+  targetDictSelectDialogUsedInOtherRule: targetDictSelectDialogUsedInOtherRule,
+  targetDictSelectDialogCancel: targetDictSelectDialogCancel,
+  targetDictSelectDialogOK: targetDictSelectDialogOK,
 
   // --- Misc ---
   miscTitle: miscTitle,
@@ -135,6 +147,18 @@ String thenByWildcardMatch = "Wildcard Match";
 
 // --- Grouping ---
 String groupingTitle = "Grouping";
+
+String configureGroupingTitle = "Configure Grouping of Search Results";
+String groupby = "Group by";
+String source = "Source";
+String targets = "Targets";
+String select = "Select";
+
+String targetDictSelectDialogTitle = "Select Target Dictionaries";
+String targetDictSelectDialogNoIndexes = "No dictionaries found";
+String targetDictSelectDialogUsedInOtherRule = "Used in another rule";
+String targetDictSelectDialogCancel = "Cancel";
+String targetDictSelectDialogOK = "OK";
 
 // --- Misc ---
 String miscTitle = "Misc";

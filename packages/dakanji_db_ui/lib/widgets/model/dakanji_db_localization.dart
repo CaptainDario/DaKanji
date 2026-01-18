@@ -47,6 +47,18 @@ class DakanjiDbLocalization {
     // --- Grouping ---
     required this.groupingTitle,
 
+    required this.configureGroupingTitle,
+    required this.groupby,
+    required this.source,
+    required this.targets,
+    required this.select,
+
+    required this.targetDictSelectDialogTitle,
+    required this.targetDictSelectDialogNoIndexes,
+    required this.targetDictSelectDialogUsedInOtherRule,
+    required this.targetDictSelectDialogCancel,
+    required this.targetDictSelectDialogOK,
+
     // --- Misc ---
     required this.miscTitle,
 
@@ -109,6 +121,18 @@ class DakanjiDbLocalization {
 
   /// --- Grouping ---
   String groupingTitle;
+
+  String configureGroupingTitle;
+  String groupby;
+  String source;
+  String targets;
+  String select;
+
+  String targetDictSelectDialogTitle;
+  String targetDictSelectDialogNoIndexes;
+  String targetDictSelectDialogUsedInOtherRule;
+  String targetDictSelectDialogCancel;
+  String targetDictSelectDialogOK;
 
   /// --- Misc ---
   String miscTitle;
