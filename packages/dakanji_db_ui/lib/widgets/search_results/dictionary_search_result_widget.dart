@@ -165,7 +165,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
           }
         case DakanjiDbSearchReesult2ndSortOrder.subwordMatch:
           if (matchType.$2) {
-            addSection("${loc.thenBySubwordMatch} (*${matchGroup.tokenMatches.length}):", matchGroup.tokenMatches);
+            addSection("${loc.thenBySubwordMatch} (${matchGroup.tokenMatches.length}):", matchGroup.tokenMatches);
           }
         case DakanjiDbSearchReesult2ndSortOrder.wildcardMatch:
           if (matchType.$2) {
@@ -216,10 +216,11 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
     required this.type,
     required this.isExpanded,
     required this.onTap,
-    this.fontSize = 14.0,
+    required this.fontSize,
   });
 
-  double get _headerHeight => fontSize * 1.8; 
+  // 1. Calculate height based on font size, but round up to the nearest whole pixel
+  double get _headerHeight => (fontSize * 1.8).ceilToDouble();
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -231,6 +232,8 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
       child: InkWell(
         onTap: onTap,
         child: Container(
+          // 2. FORCE the container to fill the exact calculated height
+          height: _headerHeight, 
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Row(
@@ -240,16 +243,16 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
                   title,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: fontSize, 
+                    fontSize: fontSize,
                   ),
                 ),
               ),
               AnimatedRotation(
-                turns: isExpanded ? 0.0 : -0.25, 
+                turns: isExpanded ? 0.0 : -0.25,
                 duration: const Duration(milliseconds: 200),
                 child: Icon(
                   Icons.expand_more,
-                  size: fontSize * 1.4, 
+                  size: fontSize * 1.4,
                   color: isMain ? null : theme.colorScheme.secondary,
                 ),
               ),
@@ -261,16 +264,15 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => _headerHeight; 
+  double get maxExtent => _headerHeight;
 
   @override
-  double get minExtent => _headerHeight; 
+  double get minExtent => _headerHeight;
 
   @override
   bool shouldRebuild(covariant _StickyHeaderDelegate oldDelegate) {
-    return oldDelegate.title != title || 
-           oldDelegate.type != type ||
-           oldDelegate.fontSize != fontSize || 
-           oldDelegate.isExpanded != isExpanded;
+    return oldDelegate.title != title ||
+        oldDelegate.isExpanded != isExpanded ||
+        oldDelegate.fontSize != fontSize; // This triggers a rebuild when settings change
   }
 }
