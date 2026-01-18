@@ -69,21 +69,25 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
           ...switch (matchType.$1) {
             
             // Query Matches
-            DakanjiDbSearchResult1stSortOrder.queryMatch when matchType.$2 => [
+            DakanjiDbSearchResult1stSortOrder.queryMatch when
+              matchType.$2 && !widget.result.queryMatches.isEmpty => [
                 _buildMainSection(loc.sortByExactMatch, widget.result.queryMatches)
               ],
 
             // Normalized Matches
-            DakanjiDbSearchResult1stSortOrder.normalizedMatch when matchType.$2 =>
-              normalized.map((group) => _buildMainSection(loc.sortByFlexibleMatch, group)),
+            DakanjiDbSearchResult1stSortOrder.normalizedMatch when
+              matchType.$2 && normalized.any((e) => !e.isEmpty) =>
+                normalized.map((group) => _buildMainSection(loc.sortByFlexibleMatch, group)),
 
             // Variant Matches
-            DakanjiDbSearchResult1stSortOrder.deconjugationMatch when matchType.$2 =>
-              variants.map((group) => _buildMainSection(loc.sortBySmartGrammarMatch, group)),
+            DakanjiDbSearchResult1stSortOrder.deconjugationMatch when
+              matchType.$2 && variants.any((e) => !e.isEmpty) =>
+                variants.map((group) => _buildMainSection(loc.sortBySmartGrammarMatch, group)),
 
             // Fuzzy Matches
-            DakanjiDbSearchResult1stSortOrder.spellfixMatch when matchType.$2 =>
-              fuzzy.map((group) => _buildMainSection(loc.sortByTypoCorrectionMatch, group)),
+            DakanjiDbSearchResult1stSortOrder.spellfixMatch when
+              matchType.$2 && fuzzy.any((e) => !e.isEmpty) =>
+                fuzzy.map((group) => _buildMainSection(loc.sortByTypoCorrectionMatch, group)),
 
             // Default case returns an empty list
             _ => [],

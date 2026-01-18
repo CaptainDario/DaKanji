@@ -17,6 +17,12 @@ class DictionarySearchResult {
         queryVariantMatches = [],
         fuzzyMatches = [];
 
+  bool get isEmpty =>
+      queryMatches.isEmpty &&
+      normalizedQueryMatchGroups.any((g) => !g.isEmpty) == false &&
+      queryVariantMatches.any((g) => !g.isEmpty) == false &&
+      fuzzyMatches.any((g) => !g.isEmpty) == false;
+
   /// Factory constructor to create a result from raw database outputs.
   /// 
   /// [pruningPriority] defines the order in which duplicates are claimed. 
