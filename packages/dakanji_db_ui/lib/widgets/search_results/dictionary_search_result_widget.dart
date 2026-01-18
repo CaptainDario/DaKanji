@@ -65,7 +65,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       value: widget.db,
       child: CustomScrollView(
         slivers: [
-        for (var matchType in widget.settings.firstSortOrder)
+        for (var matchType in widget.settings.s.firstSortOrder)
           ...switch (matchType.$1) {
             
             // Query Matches
@@ -102,7 +102,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       // Key allows Flutter to reuse the render object when rebuilding
       key: ValueKey("MainSection_${title}_${group.searchTerm}"), 
       slivers: [
-        if (widget.settings.showSearchResultSeparationHeaders)
+        if (widget.settings.s.showSearchResultSeparationHeaders)
           SliverPersistentHeader(
             pinned: true,
             delegate: _StickyHeaderDelegate(
@@ -134,7 +134,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
           // Helps Flutter identify this specific sub-group
           key: ValueKey(sectionKey), 
           slivers: [
-            if (widget.settings.showSearchResultSeparationHeaders)
+            if (widget.settings.s.showSearchResultSeparationHeaders)
               SliverPersistentHeader(
                 pinned: true,
                 delegate: _StickyHeaderDelegate(
@@ -153,7 +153,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
     }
 
     // display the results in the user defined order
-    for (var matchType in widget.settings.secondSortOrder) {
+    for (var matchType in widget.settings.s.secondSortOrder) {
       switch (matchType.$1) {
         case DakanjiDbSearchReesult2ndSortOrder.exactMatch:
           if (matchType.$2) {
@@ -188,10 +188,10 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
         key: ValueKey("${keyPrefix}_List_Item_$i"), 
         child: DictionaryMatchWidget(
           matches[i],
-          showTags: widget.settings.showTags,
-          showMetaEntries: widget.settings.showMetaEntries,
-          definitionsMaxHeight: widget.settings.definitionsMaxHeight,
-          useKatakanaForFurigana: widget.settings.useKatakanaForFurigana,
+          showTags: widget.settings.s.showTags,
+          showMetaEntries: widget.settings.s.showMetaEntries,
+          definitionsMaxHeight: widget.settings.s.definitionsMaxHeight,
+          useKatakanaForFurigana: widget.settings.s.useKatakanaForFurigana,
           onTap: widget.onTap,
         ),
       ),

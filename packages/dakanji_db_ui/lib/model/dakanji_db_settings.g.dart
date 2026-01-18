@@ -6,8 +6,50 @@ part of 'dakanji_db_settings.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DaKanjiDbSettings _$DaKanjiDbSettingsFromJson(Map<String, dynamic> json) =>
-    DaKanjiDbSettings(
+_DaKanjiDbSettings _$DaKanjiDbSettingsFromJson(Map<String, dynamic> json) =>
+    _DaKanjiDbSettings(
+      firstSortOrder:
+          (json['firstSortOrder'] as List<dynamic>?)
+              ?.map(
+                (e) => _$recordConvert(
+                  e,
+                  ($jsonValue) => (
+                    $enumDecode(
+                      _$DakanjiDbSearchResult1stSortOrderEnumMap,
+                      $jsonValue[r'$1'],
+                    ),
+                    $jsonValue[r'$2'] as bool,
+                  ),
+                ),
+              )
+              .toList() ??
+          const [
+            (DakanjiDbSearchResult1stSortOrder.queryMatch, true),
+            (DakanjiDbSearchResult1stSortOrder.normalizedMatch, true),
+            (DakanjiDbSearchResult1stSortOrder.deconjugationMatch, true),
+            (DakanjiDbSearchResult1stSortOrder.spellfixMatch, true),
+          ],
+      secondSortOrder:
+          (json['secondSortOrder'] as List<dynamic>?)
+              ?.map(
+                (e) => _$recordConvert(
+                  e,
+                  ($jsonValue) => (
+                    $enumDecode(
+                      _$DakanjiDbSearchReesult2ndSortOrderEnumMap,
+                      $jsonValue[r'$1'],
+                    ),
+                    $jsonValue[r'$2'] as bool,
+                  ),
+                ),
+              )
+              .toList() ??
+          const [
+            (DakanjiDbSearchReesult2ndSortOrder.exactMatch, true),
+            (DakanjiDbSearchReesult2ndSortOrder.prefixMatch, true),
+            (DakanjiDbSearchReesult2ndSortOrder.subwordMatch, true),
+            (DakanjiDbSearchReesult2ndSortOrder.wildcardMatch, true),
+          ],
       normalizeSearchConvertsRomajiToHiragana:
           json['normalizeSearchConvertsRomajiToHiragana'] as bool? ?? true,
       groupingRule:
@@ -26,40 +68,10 @@ DaKanjiDbSettings _$DaKanjiDbSettingsFromJson(Map<String, dynamic> json) =>
           (json['definitionsMaxHeight'] as num?)?.toDouble() ?? 60.0,
       useKatakanaForFurigana: json['useKatakanaForFurigana'] as bool? ?? false,
       searchResultLimit: (json['searchResultLimit'] as num?)?.toInt() ?? 100,
-      firstSortOrder: (json['firstSortOrder'] as List<dynamic>?)
-          ?.map(
-            (e) => _$recordConvert(
-              e,
-              ($jsonValue) => (
-                $enumDecode(
-                  _$DakanjiDbSearchResult1stSortOrderEnumMap,
-                  $jsonValue[r'$1'],
-                ),
-                $jsonValue[r'$2'] as bool,
-              ),
-            ),
-          )
-          .toList(),
-      secondSortOrder: (json['secondSortOrder'] as List<dynamic>?)
-          ?.map(
-            (e) => _$recordConvert(
-              e,
-              ($jsonValue) => (
-                $enumDecode(
-                  _$DakanjiDbSearchReesult2ndSortOrderEnumMap,
-                  $jsonValue[r'$1'],
-                ),
-                $jsonValue[r'$2'] as bool,
-              ),
-            ),
-          )
-          .toList(),
     );
 
-Map<String, dynamic> _$DaKanjiDbSettingsToJson(DaKanjiDbSettings instance) =>
+Map<String, dynamic> _$DaKanjiDbSettingsToJson(_DaKanjiDbSettings instance) =>
     <String, dynamic>{
-      'normalizeSearchConvertsRomajiToHiragana':
-          instance.normalizeSearchConvertsRomajiToHiragana,
       'firstSortOrder': instance.firstSortOrder
           .map(
             (e) => <String, dynamic>{
@@ -76,6 +88,8 @@ Map<String, dynamic> _$DaKanjiDbSettingsToJson(DaKanjiDbSettings instance) =>
             },
           )
           .toList(),
+      'normalizeSearchConvertsRomajiToHiragana':
+          instance.normalizeSearchConvertsRomajiToHiragana,
       'groupingRule': instance.groupingRule,
       'showSearchResultSeparationHeaders':
           instance.showSearchResultSeparationHeaders,

@@ -48,8 +48,8 @@ class _DakanjiDbSettingsSearchResultSortOrderState extends State<DakanjiDbSettin
     // Determine which list to use from settings
     // These are List<(Enum, bool)>
     final List<dynamic> currentList = widget.firstSortOrder
-      ? widget.settings.firstSortOrder
-      : widget.settings.secondSortOrder;
+      ? widget.settings.s.firstSortOrder
+      : widget.settings.s.secondSortOrder;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -127,7 +127,7 @@ Widget _buildListItem(List<dynamic> list, int index) {
 }
 
   Future<void> _showInfoDialog() async {
-    await showGeneralDialog<DaKanjiDbSettings>(
+    await showGeneralDialog<DaKanjiDbSettingsInternal>(
       context: context,
       barrierDismissible: true,
       barrierLabel: "Close",
