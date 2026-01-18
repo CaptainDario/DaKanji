@@ -1,6 +1,6 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
-import 'package:dakanji_db_ui/widgets/model/dakanji_db_settings_localization.dart';
+import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_category_separator.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_grouping_widget.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_heading.dart';
@@ -16,7 +16,7 @@ class DakanjiDbSettingsWidget extends StatefulWidget {
 
   final DaKanjiDbSettings settings;
 
-  final DakanjiDbSettingsLocalization localization;
+  final DakanjiDbLocalization localization;
 
   const DakanjiDbSettingsWidget(
     this.db,
@@ -100,7 +100,7 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
               title: loc.sortByTitle,
               infoText: loc.sortByText,
               optionNames: [
-                loc.sortByExactMatch,
+                loc.sortByDirectMatch,
                 loc.sortByFlexibleMatch,
                 loc.sortBySmartGrammarMatch,
                 loc.sortByTypoCorrectionMatch,

@@ -61,6 +61,20 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
 
     final loc = widget.localization;
 
+    // show empty state if there are no results
+    if(widget.result.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: .center,
+          children: [
+            Icon(Icons.search_off),
+            SizedBox(height: 4),
+            Text(loc.noResultsFound),
+          ],
+        ),
+      );
+  }
+
     return Provider.value(
       value: widget.db,
       child: CustomScrollView(
@@ -71,7 +85,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
             // Query Matches
             DakanjiDbSearchResult1stSortOrder.queryMatch when
               matchType.$2 && !widget.result.queryMatches.isEmpty => [
-                _buildMainSection(loc.sortByExactMatch, widget.result.queryMatches)
+                _buildMainSection(loc.sortByDirectMatch, widget.result.queryMatches)
               ],
 
             // Normalized Matches

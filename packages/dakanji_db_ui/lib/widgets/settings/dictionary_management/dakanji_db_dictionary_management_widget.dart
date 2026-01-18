@@ -1,5 +1,5 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_ui/widgets/model/dakanji_db_settings_localization.dart';
+import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_card.dart';
 import 'package:flutter/material.dart';
 import 'package:reorderables/reorderables.dart';
@@ -8,7 +8,7 @@ class DakanjiDbDictionaryManagementWidget extends StatefulWidget {
 
   final DaKanjiDB db;
 
-  final DakanjiDbSettingsLocalization localization;
+  final DakanjiDbLocalization localization;
 
   const DakanjiDbDictionaryManagementWidget(
     this.db,

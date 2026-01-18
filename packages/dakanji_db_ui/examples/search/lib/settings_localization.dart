@@ -1,8 +1,13 @@
-import 'package:dakanji_db_ui/widgets/model/dakanji_db_settings_localization.dart';
+import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 
 
 
-DakanjiDbSettingsLocalization dakanjiDbSettingsLocalization = DakanjiDbSettingsLocalization(
+DakanjiDbLocalization dakanjiDbSettingsLocalization = DakanjiDbLocalization(
+
+  /// --- SEARCH UI ---
+  noResultsFound: noResultsFound,
+
+  // --- SETTINGS ---
   // --- Dictionary Management ---
   dictionariesHeader: dictionariesHeader,
 
@@ -31,7 +36,7 @@ DakanjiDbSettingsLocalization dakanjiDbSettingsLocalization = DakanjiDbSettingsL
 
   sortByTitle: sortByTitle,
   sortByText: sortByText,
-  sortByExactMatch: sortByExactMatch,
+  sortByDirectMatch: sortByDirectMatch,
   sortByFlexibleMatch: sortByFlexibleMatch,
   sortBySmartGrammarMatch: sortBySmartGrammarMatch,
   sortByTypoCorrectionMatch: sortByTypoCorrectionMatch,
@@ -58,6 +63,11 @@ DakanjiDbSettingsLocalization dakanjiDbSettingsLocalization = DakanjiDbSettingsL
   importDictionariesTitle: importDictionariesTitle,
 );
 
+
+/// --- SEARCH UI ---
+String noResultsFound = "No results found";
+
+/// --- SETTINGS ---
 /// --- Dictionary Management ---
 String dictionariesHeader = "Dictionaries";
 
@@ -90,16 +100,16 @@ String sortByTitle = "Sort by";
 String sortByText = """### Customize Search Result Priority (first priority)
 *Drag items to change their importance. Unchecked items will be ignored.*
 
-* **Exact Match:** Matches your text exactly as typed.
-* **Flexible Match:** Ignores differences like capitalization or Hiragana/Katakana (e.g. Ａ == A).
+* **Direct:** Matches your text exactly as typed.
+* **Flexible:** Ignores differences like capitalization or Hiragana/Katakana (e.g. Ａ = A, da = だ = ダ).
 * **Smart Grammar:** Finds the dictionary form of a word (e.g., finds *食べる* if you type *食べます*).
 * **Typo Correction:** Finds results even if your search has small spelling mistakes (e.g: "りょこ" finds "りょこう (旅行)").
 """;
 
-String sortByExactMatch = "Exact Match";
-String sortByFlexibleMatch = "Flexible Match";
-String sortBySmartGrammarMatch = "Smart Grammar Match";
-String sortByTypoCorrectionMatch = "Typo Correction Match";
+String sortByDirectMatch = "Direct";
+String sortByFlexibleMatch = "Flexible";
+String sortBySmartGrammarMatch = "Smart Grammar";
+String sortByTypoCorrectionMatch = "Typo Correction";
 
 
 String thenByTitle = "Then by";

@@ -1,6 +1,6 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
-import 'package:dakanji_db_ui/widgets/model/dakanji_db_settings_localization.dart';
+import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,7 @@ class DaKanjiDbSettingsDialog extends StatefulWidget {
 
   final DaKanjiDbSettings settings;
 
-  final DakanjiDbSettingsLocalization localization;
+  final DakanjiDbLocalization localization;
 
   const DaKanjiDbSettingsDialog(
     {
