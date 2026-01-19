@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
+import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_core/util/dakanji_db_search_manager.dart';
 import 'package:dakanji_db_ui/dakanji_db_ui.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
@@ -82,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
         debug: !kReleaseMode,
       );
 
-      final List<IndexTableData> enabledIndexes =
+      final List<IndexEntry> enabledIndexes =
           await daKanjiDB.indexDao.getAllEnabledIndexes();
       for (final index in enabledIndexes) {
         debugPrint("Enabled index: ${index.title} (ID: ${index.id})");
