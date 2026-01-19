@@ -63,7 +63,7 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
     List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,
 
     /// 2nd level sort order for search results.
-    /// If an entry of [DakanjiDbSearchReesult2ndSortOrder] is not included here, it
+    /// If an entry of [DakanjiDbSearchResult2ndSortOrder] is not included here, it
     /// will not be searched for.
     /// 
     /// Default is:
@@ -72,12 +72,12 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
     /// - subwordMatch
     /// - wildcardMatch
     @Default([
-      (DakanjiDbSearchReesult2ndSortOrder.exactMatch, true),
-      (DakanjiDbSearchReesult2ndSortOrder.prefixMatch, true),
-      (DakanjiDbSearchReesult2ndSortOrder.subwordMatch, true),
-      (DakanjiDbSearchReesult2ndSortOrder.wildcardMatch, true),
+      (DakanjiDbSearchResult2ndSortOrder.exactMatch, true),
+      (DakanjiDbSearchResult2ndSortOrder.prefixMatch, true),
+      (DakanjiDbSearchResult2ndSortOrder.subwordMatch, true),
+      (DakanjiDbSearchResult2ndSortOrder.wildcardMatch, true),
     ])
-    List<(DakanjiDbSearchReesult2ndSortOrder, bool)> secondSortOrder,
+    List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,
 
     /// Whether to convert romaji to hiragana in normalized searches.
     @Default(true)
@@ -136,18 +136,18 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
 
   /// Whether to enable exact match searches.
   bool get exactMatch =>
-    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchReesult2ndSortOrder.exactMatch)
+    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchResult2ndSortOrder.exactMatch)
       .first.$2;
   /// Whether to enable prefix match searches.
   bool get prefixMatch =>
-    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchReesult2ndSortOrder.prefixMatch)
+    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchResult2ndSortOrder.prefixMatch)
       .first.$2;
   /// Whether to enable subword match searches.
   bool get subwordMatch =>
-    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchReesult2ndSortOrder.subwordMatch)
+    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchResult2ndSortOrder.subwordMatch)
       .first.$2;
   /// Whether to enable wildcard match searches.
   bool get wildcardMatch =>
-    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchReesult2ndSortOrder.wildcardMatch)
+    secondSortOrder.where((e) => e.$1 == DakanjiDbSearchResult2ndSortOrder.wildcardMatch)
       .first.$2;
 }

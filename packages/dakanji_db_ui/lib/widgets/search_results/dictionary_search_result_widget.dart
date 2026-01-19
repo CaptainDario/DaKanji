@@ -174,19 +174,19 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
     // display the results in the user defined order
     for (var (i, matchType) in widget.settings.s.secondSortOrder.indexed) {
       switch (matchType.$1) {
-        case DakanjiDbSearchReesult2ndSortOrder.exactMatch:
+        case DakanjiDbSearchResult2ndSortOrder.exactMatch:
           if (matchType.$2) {
             addSection("${loc.thenByExactMatch} (${matchGroup.exactMatches.length}):", matchGroup.exactMatches, i);
           }
-        case DakanjiDbSearchReesult2ndSortOrder.prefixMatch:
+        case DakanjiDbSearchResult2ndSortOrder.prefixMatch:
           if (matchType.$2) {
             addSection("${loc.thenByStartsWithMatch} (${matchGroup.prefixMatches.length}):", matchGroup.prefixMatches, i);
           }
-        case DakanjiDbSearchReesult2ndSortOrder.subwordMatch:
+        case DakanjiDbSearchResult2ndSortOrder.subwordMatch:
           if (matchType.$2) {
             addSection("${loc.thenBySubwordMatch} (${matchGroup.tokenMatches.length}):", matchGroup.tokenMatches, i);
           }
-        case DakanjiDbSearchReesult2ndSortOrder.wildcardMatch:
+        case DakanjiDbSearchResult2ndSortOrder.wildcardMatch:
           if (matchType.$2) {
             addSection("${loc.thenByWildcardMatch} (${matchGroup.wildcardMatches.length})", matchGroup.wildcardMatches, i);
           }

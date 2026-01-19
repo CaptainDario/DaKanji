@@ -36,7 +36,7 @@ _DaKanjiDbSettings _$DaKanjiDbSettingsFromJson(Map<String, dynamic> json) =>
                   e,
                   ($jsonValue) => (
                     $enumDecode(
-                      _$DakanjiDbSearchReesult2ndSortOrderEnumMap,
+                      _$DakanjiDbSearchResult2ndSortOrderEnumMap,
                       $jsonValue[r'$1'],
                     ),
                     $jsonValue[r'$2'] as bool,
@@ -45,10 +45,10 @@ _DaKanjiDbSettings _$DaKanjiDbSettingsFromJson(Map<String, dynamic> json) =>
               )
               .toList() ??
           const [
-            (DakanjiDbSearchReesult2ndSortOrder.exactMatch, true),
-            (DakanjiDbSearchReesult2ndSortOrder.prefixMatch, true),
-            (DakanjiDbSearchReesult2ndSortOrder.subwordMatch, true),
-            (DakanjiDbSearchReesult2ndSortOrder.wildcardMatch, true),
+            (DakanjiDbSearchResult2ndSortOrder.exactMatch, true),
+            (DakanjiDbSearchResult2ndSortOrder.prefixMatch, true),
+            (DakanjiDbSearchResult2ndSortOrder.subwordMatch, true),
+            (DakanjiDbSearchResult2ndSortOrder.wildcardMatch, true),
           ],
       normalizeSearchConvertsRomajiToHiragana:
           json['normalizeSearchConvertsRomajiToHiragana'] as bool? ?? true,
@@ -83,7 +83,7 @@ Map<String, dynamic> _$DaKanjiDbSettingsToJson(_DaKanjiDbSettings instance) =>
       'secondSortOrder': instance.secondSortOrder
           .map(
             (e) => <String, dynamic>{
-              r'$1': _$DakanjiDbSearchReesult2ndSortOrderEnumMap[e.$1]!,
+              r'$1': _$DakanjiDbSearchResult2ndSortOrderEnumMap[e.$1]!,
               r'$2': e.$2,
             },
           )
@@ -110,9 +110,9 @@ const _$DakanjiDbSearchResult1stSortOrderEnumMap = {
 $Rec _$recordConvert<$Rec>(Object? value, $Rec Function(Map) convert) =>
     convert(value as Map<String, dynamic>);
 
-const _$DakanjiDbSearchReesult2ndSortOrderEnumMap = {
-  DakanjiDbSearchReesult2ndSortOrder.exactMatch: 'exactMatch',
-  DakanjiDbSearchReesult2ndSortOrder.prefixMatch: 'prefixMatch',
-  DakanjiDbSearchReesult2ndSortOrder.subwordMatch: 'subwordMatch',
-  DakanjiDbSearchReesult2ndSortOrder.wildcardMatch: 'wildcardMatch',
+const _$DakanjiDbSearchResult2ndSortOrderEnumMap = {
+  DakanjiDbSearchResult2ndSortOrder.exactMatch: 'exactMatch',
+  DakanjiDbSearchResult2ndSortOrder.prefixMatch: 'prefixMatch',
+  DakanjiDbSearchResult2ndSortOrder.subwordMatch: 'subwordMatch',
+  DakanjiDbSearchResult2ndSortOrder.wildcardMatch: 'wildcardMatch',
 };

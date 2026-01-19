@@ -7,7 +7,7 @@ enum DakanjiDbSearchResult1stSortOrder {
 
 }
 
-enum DakanjiDbSearchReesult2ndSortOrder {
+enum DakanjiDbSearchResult2ndSortOrder {
 
   exactMatch,
   prefixMatch,
