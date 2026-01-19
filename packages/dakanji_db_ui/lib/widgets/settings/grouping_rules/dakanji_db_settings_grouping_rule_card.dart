@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
+import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_widget.dart';
@@ -32,13 +33,14 @@ class GroupingRuleCard extends StatefulWidget {
 class _GroupingRuleCardState extends State<GroupingRuleCard> {
 
   /// Returns all indexes with a flag indicating their usage in any rule
-  Future<List<({IndexTableData index, IndexGroupingUsage usage})>> _allAvaibleIndexes() async {
+  Future<List<({IndexEntry index, IndexGroupingUsage usage})>> _allAvaibleIndexes() async {
 
-    List<IndexTableData> allIndexes =
+    List<IndexEntry> allIndexes =
       await context.read<DaKanjiDB>().indexDao.getAllIndexes();
 
     return allIndexes.nonNulls
-      .where((index) => index.dictionaryType == DictionaryTypes.yomitan)
+      .where((index) => index.dictionaryType == DictionaryTypes.yomitan
+        && index.sequenced == true)
       .map((allIndex) =>
         (
           index: allIndex,
@@ -175,7 +177,7 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
     
     // 1. Trigger the Future ONCE before opening the dialog.
     // This prevents the FutureBuilder from re-firing every time you tap a checkbox.
-    final Future<List<({IndexTableData index, IndexGroupingUsage usage})>> dataFuture = _allAvaibleIndexes();
+    final Future<List<({IndexEntry index, IndexGroupingUsage usage})>> dataFuture = _allAvaibleIndexes();
 
     // 2. Track selections locally
     final Set<int> tempSelectedIds = {};
@@ -190,7 +192,7 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
               title: Text(widget.localization.targetDictSelectDialogTitle),
               content: SizedBox(
                 width: double.maxFinite,
-                child: FutureBuilder<List<({IndexTableData index, IndexGroupingUsage usage})>>(
+                child: FutureBuilder<List<({IndexEntry index, IndexGroupingUsage usage})>>(
                   future: dataFuture,
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
@@ -305,12 +307,12 @@ class SourceSelectorRow extends TableRow {
   SourceSelectorRow({
     required SequenceGroupingRule rule,
     required DakanjiDbLocalization loc,
-    required Future<List<({IndexTableData index, IndexGroupingUsage usage})>> availableIndexesFuture,
+    required Future<List<({IndexEntry index, IndexGroupingUsage usage})>> availableIndexesFuture,
     required ValueChanged<int?> onChanged,
   }) : super(
           children: [
             Text(loc.source, style: const TextStyle(fontSize: 16)),
-            FutureBuilder<List<({IndexTableData index, IndexGroupingUsage usage})>>(
+            FutureBuilder<List<({IndexEntry index, IndexGroupingUsage usage})>>(
               future: availableIndexesFuture,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) return const SizedBox();

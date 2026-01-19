@@ -39,14 +39,7 @@ enum IndexGroupingUsage {
 
 class DakanjiDbSettingsGroupingWidget extends StatefulWidget {
 
-  final DakanjiDbLocalization localization;
-
-  const DakanjiDbSettingsGroupingWidget(
-    this.localization,
-    {
-      super.key
-    }
-  );
+  const DakanjiDbSettingsGroupingWidget({super.key});
 
   @override
   State<DakanjiDbSettingsGroupingWidget> createState() => _DakanjiDbSettingsGroupingWidgetState();
@@ -57,6 +50,7 @@ class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroup
   @override
   Widget build(BuildContext context) {
 
+    var loc = context.read<DakanjiDbLocalization>();
     var settings = context.read<DaKanjiDbSettings>();
     var rules = settings.s.groupingRules;
 
@@ -68,19 +62,18 @@ class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroup
           leading: IconButton(
             icon: Icon(Icons.info_outline),
             onPressed: () async {
-              await showSettingsInfoPopup(widget.localization.groupingExplanation, context);
+              await showSettingsInfoPopup(loc.groupingExplanation, context);
             }
           ),
-          title: Text(widget.localization.configureGroupingTitle),
+          title: Text(loc.configureGroupingTitle),
         ),
 
-        for (int i = 0; i < rules.length; i++) ...[
-          GroupingRuleCard(i, widget.localization)
-        ],
+        for (int i = 0; i < rules.length; i++) 
+          GroupingRuleCard(i, loc),
 
         // The add button
         DakanjiDbSettingsCardAddButton(
-          widget.localization.addRule,
+          loc.addRule,
           () {
             settings.update(settings.s.copyWith(
               groupingRules: [...rules, NoGroupingRule()]

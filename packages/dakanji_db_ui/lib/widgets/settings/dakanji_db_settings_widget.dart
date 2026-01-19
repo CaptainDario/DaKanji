@@ -1,4 +1,3 @@
-import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_category_separator.dart';
@@ -12,20 +11,7 @@ import 'package:provider/provider.dart';
 
 class DakanjiDbSettingsWidget extends StatefulWidget {
 
-  final DaKanjiDB db;
-
-  final DaKanjiDbSettings settings;
-
-  final DakanjiDbLocalization localization;
-
-  const DakanjiDbSettingsWidget(
-    this.db,
-    this.settings,
-    this.localization,
-    {
-      super.key
-    }
-  );
+  const DakanjiDbSettingsWidget({super.key});
 
   @override
   State<DakanjiDbSettingsWidget> createState() => _DakanjiDbSettingsWidgetState();
@@ -34,115 +20,100 @@ class DakanjiDbSettingsWidget extends StatefulWidget {
 class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
   @override
   Widget build(BuildContext context) {
-    final loc = widget.localization;
-    return Provider<DaKanjiDB>.value(
-      value: widget.db,
-      builder: (context, child) {
-        return ChangeNotifierProvider<DaKanjiDbSettings>.value(
-          value: widget.settings,
-          builder: (context, child) {
-        
-            final s = context.watch<DaKanjiDbSettings>();
-            final db = context.read<DaKanjiDB>();
-            final si = s.settings;
-        
-            return Column(
-              mainAxisAlignment: .start,
-              crossAxisAlignment: .start,
-              mainAxisSize: .min,
-              children: [
-                DakanjiDbSettingsHeading(loc.dictionariesHeader),
-                DakanjiDbDictionaryManagementWidget(db, widget.localization),
-            
-                DakanjiDbSettingsHeading(loc.displayHeader),
-                DakanjiDbSettingsToggleListTile(
-                  title: loc.showSeparatorsTitle,
-                  subtitle: loc.showSeparatorsSubtitle,
-                  value: si.showSearchResultSeparationHeaders,
-                  onChanged: (v) => s.update(widget.settings.s.copyWith(
-                      showSearchResultSeparationHeaders: v
-                    ))
-                ),
-                DakanjiDbSettingsToggleListTile(
-                  title: loc.showTagsTitle,
-                  subtitle: loc.showTagsSubtitle,
-                  value: si.showTags,
-                  onChanged: (v) => s.update(widget.settings.s.copyWith(
-                      showTags: v
-                    ))
-                ),
-                DakanjiDbSettingsToggleListTile(
-                  title: loc.showMetaEntriesTitle,
-                  subtitle: loc.showMetaEntriesSubtitle,
-                  value: si.showMetaEntries,
-                  onChanged: (v) => s.update(widget.settings.s.copyWith(
-                      showMetaEntries: v
-                    ))
-                ),
-                DakanjiDbSettingsToggleListTile(
-                  title: loc.useCompactDefinitionsTitle,
-                  subtitle: loc.useCompactDefinitionsSubtitle,
-                  value: si.definitionsMaxHeight > 0,
-                  onChanged: (v) => s.update(widget.settings.s.copyWith(
-                      definitionsMaxHeight: v ? 60.0 : 0.0
-                    ))
-                ),
-                DakanjiDbSettingsToggleListTile(
-                  title: loc.useKatakanaForFuriganaTitle,
-                  value: si.useKatakanaForFurigana,
-                  onChanged: (v) => s.update(widget.settings.s.copyWith(
-                      useKatakanaForFurigana: v
-                    ))
-                ),
-                  
-                DakanjiDbSettingsCategorySeparator(),
-                DakanjiDbSettingsHeading(loc.sortOrderTitle),
-                DakanjiDbSettingsSearchResultSortOrder(
-                  settings: s,
-                  firstSortOrder: true,
-                  
-                  title: loc.sortByTitle,
-                  infoText: loc.sortByText,
-                  optionNames: [
-                    loc.sortByDirectMatch,
-                    loc.sortByFlexibleMatch,
-                    loc.sortBySmartGrammarMatch,
-                    loc.sortByTypoCorrectionMatch,
-                  ],
-                ),
-                DakanjiDbSettingsSearchResultSortOrder(
-                  settings: s,
-                  secondSortOrder: true,
-                  
-                  title: loc.thenByTitle,
-                  infoText: loc.thenByText,
-                  optionNames: [
-                    loc.thenByExactMatch,
-                    loc.thenByStartsWithMatch,
-                    loc.thenBySubwordMatch,
-                    loc.thenByWildcardMatch,
-                  ],
-                ),
-                  
-                DakanjiDbSettingsCategorySeparator(),
-                DakanjiDbSettingsHeading(loc.groupingTitle),
-                DakanjiDbSettingsGroupingWidget(widget.localization),
-              
-                DakanjiDbSettingsCategorySeparator(),
-                DakanjiDbSettingsHeading(loc.miscTitle),
-        
-                // TODO Search result limit
-        
-                // TODO: spellfix max results
-                // TODO: spellfix max cost
-        
-                // TODO: Export dictionaries
-                // TODO: Import dictionaries
-              ],
-            );
-          },
-        );
-      },
+
+    final loc = context.read<DakanjiDbLocalization>();
+    final s = context.watch<DaKanjiDbSettings>();
+    final si = s.settings;
+
+    return Column(
+      mainAxisAlignment: .start,
+      crossAxisAlignment: .start,
+      mainAxisSize: .min,
+      children: [
+        DakanjiDbSettingsHeading(loc.dictionariesHeader),
+        DakanjiDbDictionaryManagementWidget(),
+    
+        DakanjiDbSettingsHeading(loc.displayHeader),
+        DakanjiDbSettingsToggleListTile(
+          title: loc.showSeparatorsTitle,
+          subtitle: loc.showSeparatorsSubtitle,
+          value: si.showSearchResultSeparationHeaders,
+          onChanged: (v) => s.update(si.copyWith(
+            showSearchResultSeparationHeaders: v))
+        ),
+        DakanjiDbSettingsToggleListTile(
+          title: loc.showTagsTitle,
+          subtitle: loc.showTagsSubtitle,
+          value: si.showTags,
+          onChanged: (v) => s.update(si.copyWith(showTags: v))
+        ),
+        DakanjiDbSettingsToggleListTile(
+          title: loc.showMetaEntriesTitle,
+          subtitle: loc.showMetaEntriesSubtitle,
+          value: si.showMetaEntries,
+          onChanged: (v) => s.update(si.copyWith(
+              showMetaEntries: v
+            ))
+        ),
+        DakanjiDbSettingsToggleListTile(
+          title: loc.useCompactDefinitionsTitle,
+          subtitle: loc.useCompactDefinitionsSubtitle,
+          value: si.definitionsMaxHeight > 0,
+          onChanged: (v) => s.update(si.copyWith(
+              definitionsMaxHeight: v ? 60.0 : 0.0
+            ))
+        ),
+        DakanjiDbSettingsToggleListTile(
+          title: loc.useKatakanaForFuriganaTitle,
+          value: si.useKatakanaForFurigana,
+          onChanged: (v) => s.update(si.copyWith(
+              useKatakanaForFurigana: v
+            ))
+        ),
+          
+        DakanjiDbSettingsCategorySeparator(),
+        DakanjiDbSettingsHeading(loc.sortOrderTitle),
+        DakanjiDbSettingsSearchResultSortOrder(
+          firstSortOrder: true,
+          
+          title: loc.sortByTitle,
+          infoText: loc.sortByText,
+          optionNames: [
+            loc.sortByDirectMatch,
+            loc.sortByFlexibleMatch,
+            loc.sortBySmartGrammarMatch,
+            loc.sortByTypoCorrectionMatch,
+          ],
+        ),
+        DakanjiDbSettingsSearchResultSortOrder(
+          secondSortOrder: true,
+          
+          title: loc.thenByTitle,
+          infoText: loc.thenByText,
+          optionNames: [
+            loc.thenByExactMatch,
+            loc.thenByStartsWithMatch,
+            loc.thenBySubwordMatch,
+            loc.thenByWildcardMatch,
+          ],
+        ),
+          
+        DakanjiDbSettingsCategorySeparator(),
+        DakanjiDbSettingsHeading(loc.groupingTitle),
+        DakanjiDbSettingsGroupingWidget(),
+      
+        DakanjiDbSettingsCategorySeparator(),
+        DakanjiDbSettingsHeading(loc.miscTitle),
+
+        // TODO Search result limit
+
+        // TODO: spellfix max results
+        // TODO: spellfix max cost
+
+        // TODO: Export dictionaries
+        // TODO: Import dictionaries
+      ],
     );
+  
   }
 }

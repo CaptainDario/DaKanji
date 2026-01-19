@@ -1,23 +1,15 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_card_add_button.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
 class DakanjiDbDictionaryManagementWidget extends StatefulWidget {
 
-  final DaKanjiDB db;
-
-  final DakanjiDbLocalization localization;
-
-  const DakanjiDbDictionaryManagementWidget(
-    this.db,
-    this.localization,
-      {
-        super.key
-      }
-    );
+  const DakanjiDbDictionaryManagementWidget({super.key});
 
   @override
   State<DakanjiDbDictionaryManagementWidget> createState() =>
@@ -28,8 +20,12 @@ class _DakanjiDbDictionaryManagementWidgetState
     extends State<DakanjiDbDictionaryManagementWidget> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<IndexTableData>>(
-      stream: widget.db.indexDao.watchAllIndexes(),
+
+    var db = context.read<DaKanjiDB>();
+    var loc = context.read<DakanjiDbLocalization>();
+
+    return StreamBuilder<List<IndexEntry>>(
+      stream: db.indexDao.watchAllIndexes(),
       builder: (context, asyncSnapshot) {
         if (asyncSnapshot.data == null || !asyncSnapshot.hasData) return Container();
 
@@ -48,9 +44,7 @@ class _DakanjiDbDictionaryManagementWidgetState
               children: [
                 for (int i = 0; i < dictsInOrder.length; i++) 
                   DictionaryManagementCard(
-                    db: widget.db,
                     dict: dictsInOrder[i],
-                    localization: widget.localization,
                     index: i,
                     key: ValueKey(dictsInOrder[i].id),
                   )
@@ -58,7 +52,7 @@ class _DakanjiDbDictionaryManagementWidgetState
             ),
 
             DakanjiDbSettingsCardAddButton(
-              widget.localization.importDictionary,
+              loc.importDictionary,
               () {
                 // TODO : Implement import dictionary
               }
@@ -70,7 +64,7 @@ class _DakanjiDbDictionaryManagementWidgetState
   }
 
   Future<void> reoderIndexes(
-    int oldIndex, int newIndex, List<IndexTableData> dictsInOrder
+    int oldIndex, int newIndex, List<IndexEntry> dictsInOrder
   ) async {
   
     // Get just the IDs in their current order
@@ -81,7 +75,7 @@ class _DakanjiDbDictionaryManagementWidgetState
     ids.insert(newIndex, movedId);
 
     // Update DB: The new list index becomes the sorting order
-    await widget.db.indexDao.setSortingOrders(
+    await context.read<DaKanjiDB>().indexDao.setSortingOrders(
       ids, 
       List.generate(ids.length, (i) => i + 1),
     );

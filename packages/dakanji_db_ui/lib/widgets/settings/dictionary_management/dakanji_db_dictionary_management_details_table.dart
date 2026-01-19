@@ -1,10 +1,10 @@
-import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:flutter/material.dart';
 
 
 class DictionaryManagementDetailsTable extends StatelessWidget {
 
-  final IndexTableData dict;
+  final IndexEntry dict;
 
   const DictionaryManagementDetailsTable(
     this.dict,
@@ -36,7 +36,7 @@ class DictionaryManagementDetailsTable extends StatelessWidget {
     );
   }
 
-    Iterable<(String name, String value)> dictionaryInfo(IndexTableData dict) {
+    Iterable<(String name, String value)> dictionaryInfo(IndexEntry dict) {
     return [
       ("Id", dict.id.toString()),
       ("User dictionary", dict.isDefaultDictionary ? "Yes" : "No"),

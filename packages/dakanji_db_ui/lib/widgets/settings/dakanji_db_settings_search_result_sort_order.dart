@@ -2,12 +2,11 @@ import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_popup.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
 class DakanjiDbSettingsSearchResultSortOrder extends StatefulWidget {
 
-  /// The search settings to modify.
-  final DaKanjiDbSettings settings;
   /// Whether this widget is for the 1st level sort order.
   final bool firstSortOrder;
   /// Whether this widget is for the 2nd level sort order.
@@ -22,7 +21,6 @@ class DakanjiDbSettingsSearchResultSortOrder extends StatefulWidget {
 
   DakanjiDbSettingsSearchResultSortOrder(
     {
-      required this.settings,
       this.firstSortOrder = false,
       this.secondSortOrder = false,
 
@@ -49,14 +47,14 @@ class _DakanjiDbSettingsSearchResultSortOrderState extends State<DakanjiDbSettin
     setState(() {
       if (widget.firstSortOrder) {
         // Cast the list so Freezed accepts it
-        widget.settings.update(
-          widget.settings.s.copyWith(
+        context.read<DaKanjiDbSettings>().update(
+          context.read<DaKanjiDbSettings>().s.copyWith(
             firstSortOrder: newList.cast<(DakanjiDbSearchResult1stSortOrder, bool)>().toList(),
           ),
         );
       } else {
-        widget.settings.update(
-          widget.settings.s.copyWith(
+        context.read<DaKanjiDbSettings>().update(
+          context.read<DaKanjiDbSettings>().s.copyWith(
             secondSortOrder: newList.cast<(DakanjiDbSearchResult2ndSortOrder, bool)>().toList(),
           ),
         );
@@ -69,8 +67,8 @@ class _DakanjiDbSettingsSearchResultSortOrderState extends State<DakanjiDbSettin
     // Determine which list to use from settings
     // These are List<(Enum, bool)>
     final List<(dynamic, bool)> currentList = [...widget.firstSortOrder
-      ? widget.settings.s.firstSortOrder
-      : widget.settings.s.secondSortOrder
+      ? context.read<DaKanjiDbSettings>().s.firstSortOrder
+      : context.read<DaKanjiDbSettings>().s.secondSortOrder
     ];
 
     return Column(

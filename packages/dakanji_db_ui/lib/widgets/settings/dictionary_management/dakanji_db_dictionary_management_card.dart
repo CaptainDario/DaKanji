@@ -1,23 +1,19 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_details_table.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DictionaryManagementCard extends StatefulWidget {
   
-  final DaKanjiDB db;
-
-  final IndexTableData dict;
-
-  final DakanjiDbLocalization localization;
+  final IndexEntry dict;
 
   final int index;
   
   const DictionaryManagementCard({
     super.key,
-    required this.db,
     required this.dict,
-    required this.localization,
     required this.index,
   });
 
@@ -31,6 +27,10 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
 
   @override
   Widget build(BuildContext context) {
+
+    var db = context.read<DaKanjiDB>();
+    var loc = context.read<DakanjiDbLocalization>();
+
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -68,7 +68,7 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
               value: widget.dict.enabled,
               // enable/disable dictionaries
               onChanged: (value) async {
-                await widget.db.indexDao.setEnabled(widget.dict.id, value);
+                await db.indexDao.setEnabled(widget.dict.id, value);
               },
             ),
             const SizedBox(width: 8,),
@@ -99,11 +99,15 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
             mainAxisAlignment: .spaceEvenly,
             children: [
               OutlinedButton(
-                onPressed: () {},
+                onPressed: widget.dict.dictCanBeUpdated()
+                  ? () {
+
+                  }
+                  : null,
                 child: Row(
                   children: [
                     Icon(Icons.update),
-                    Text(widget.localization.updateDictionary)
+                    Text(loc.updateDictionary)
                   ],
                 ),
               ),
@@ -112,7 +116,7 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
                 child: Row(
                   children: [
                     Icon(Icons.delete),
-                    Text(widget.localization.deleteDictionary)
+                    Text(loc.deleteDictionary)
                   ],
                 ),
               ),
