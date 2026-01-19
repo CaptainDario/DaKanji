@@ -1,4 +1,5 @@
 
+import "package:dakanji_db_core/database/index/index_table_entry.dart";
 import "package:drift/drift.dart";
 
 import "/database/index/index_tables.dart";
@@ -45,39 +46,40 @@ class IndexDao extends DatabaseAccessor<DaKanjiDB> with _$IndexDaoMixin {
   }
 
   /// Get all indexes
-  Future<List<IndexTableData>> getAllIndexes() async {
+  Future<List<IndexEntry>> getAllIndexes() async {
     final query = select(db.indexTable);
     final results = await query.get();
 
-    return results;
+    return results.map((e) => IndexEntry.fromIndexTableData(e)).toList();
 
   }
 
   /// Watch all indexes
-  Stream<List<IndexTableData>> watchAllIndexes() {
+  Stream<List<IndexEntry>> watchAllIndexes() {
     final query = select(db.indexTable);
-    return query.watch();
+    return query.watch().map((e1) => 
+      e1.map((e2) => IndexEntry.fromIndexTableData(e2)).toList());
   }
 
   /// Get all default indexes
-  Future<List<IndexTableData>> getAllDefaultIndexes() async {
+  Future<List<IndexEntry>> getAllDefaultIndexes() async {
 
     final query = select(db.indexTable)
       ..where((tbl) => tbl.isDefaultDictionary.equals(true)); 
     final results = await query.get();
 
-    return results;
+    return results.map((e) => IndexEntry.fromIndexTableData(e)).toList();
 
   }
 
   /// Get all enabled indexes
-  Future<List<IndexTableData>> getAllEnabledIndexes() async {
+  Future<List<IndexEntry>> getAllEnabledIndexes() async {
 
     final query = select(db.indexTable)
       ..where((tbl) => tbl.enabled.equals(true)); 
     final results = await query.get();
 
-    return results;
+    return results.map((e) => IndexEntry.fromIndexTableData(e)).toList();
 
   }
 
