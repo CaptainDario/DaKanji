@@ -201,8 +201,8 @@ Since their terms are the same, they will be shown as one entry.
 2. If you look up "生", DaKanji may find 生 [せい] with a definition of "living" and 生 [せい] with a definition of "existence", these two entries will be also shown together as the Terms are identical.
 
 ## 4. Sequence Grouping
-It relies on unique identification numbers (Sequence IDs) provided by dictionaries like JMdict.
-This is useful if one word can be written using multiple Terms.
+It relies on unique identification numbers (Sequence IDs) provided by dictionaries like JMdict (DaKanji's default dictionary).
+This is useful if one word can be written using multiple Terms but a dictionary needs to support it.
 This way, a dictionary can "link" entries even when the Terms are different but requires knowledge that the dictionary uses Sequence IDs.
 For this to work, DaKanji needs to know which dictionary defines the Sequence (Source) and which dictionaries use the same Sequence (Targets).
 
