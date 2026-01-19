@@ -40,8 +40,6 @@ class _DakanjiDbDictionaryManagementWidgetState
 
         return ReorderableColumn(
           onReorder: (oldIndex, newIndex) async {
-            final item = dictsInOrder.removeAt(oldIndex);
-            dictsInOrder.insert(newIndex, item);
             await reoderIndexes(oldIndex, newIndex, dictsInOrder);
           },
           children: [
