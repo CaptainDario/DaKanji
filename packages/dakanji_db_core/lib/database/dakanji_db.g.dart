@@ -147,18 +147,18 @@ class $IndexTableTable extends IndexTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _updatableMeta = const VerificationMeta(
-    'updatable',
+  static const VerificationMeta _isUpdatableMeta = const VerificationMeta(
+    'isUpdatable',
   );
   @override
-  late final GeneratedColumn<bool> updatable = GeneratedColumn<bool>(
-    'updatable',
+  late final GeneratedColumn<bool> isUpdatable = GeneratedColumn<bool>(
+    'is_updatable',
     aliasedName,
     true,
     type: DriftSqlType.bool,
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("updatable" IN (0, 1))',
+      'CHECK ("is_updatable" IN (0, 1))',
     ),
   );
   static const VerificationMeta _indexUrlMeta = const VerificationMeta(
@@ -261,7 +261,7 @@ class $IndexTableTable extends IndexTable
     format,
     version,
     author,
-    updatable,
+    isUpdatable,
     indexUrl,
     downloadUrl,
     url,
@@ -363,10 +363,13 @@ class $IndexTableTable extends IndexTable
         author.isAcceptableOrUnknown(data['author']!, _authorMeta),
       );
     }
-    if (data.containsKey('updatable')) {
+    if (data.containsKey('is_updatable')) {
       context.handle(
-        _updatableMeta,
-        updatable.isAcceptableOrUnknown(data['updatable']!, _updatableMeta),
+        _isUpdatableMeta,
+        isUpdatable.isAcceptableOrUnknown(
+          data['is_updatable']!,
+          _isUpdatableMeta,
+        ),
       );
     }
     if (data.containsKey('index_url')) {
@@ -494,9 +497,9 @@ class $IndexTableTable extends IndexTable
         DriftSqlType.string,
         data['${effectivePrefix}author'],
       ),
-      updatable: attachedDatabase.typeMapping.read(
+      isUpdatable: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
-        data['${effectivePrefix}updatable'],
+        data['${effectivePrefix}is_updatable'],
       ),
       indexUrl: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -582,7 +585,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   final String? author;
 
   /// Whether this dictionary contains links to its latest version.
-  final bool? updatable;
+  final bool? isUpdatable;
 
   /// URL for the index file of the latest revision of the dictionary, used to check for updates.
   final String? indexUrl;
@@ -621,7 +624,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     this.format,
     this.version,
     this.author,
-    this.updatable,
+    this.isUpdatable,
     this.indexUrl,
     this.downloadUrl,
     this.url,
@@ -660,8 +663,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     if (!nullToAbsent || author != null) {
       map['author'] = Variable<String>(author);
     }
-    if (!nullToAbsent || updatable != null) {
-      map['updatable'] = Variable<bool>(updatable);
+    if (!nullToAbsent || isUpdatable != null) {
+      map['is_updatable'] = Variable<bool>(isUpdatable);
     }
     if (!nullToAbsent || indexUrl != null) {
       map['index_url'] = Variable<String>(indexUrl);
@@ -712,9 +715,9 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       author: author == null && nullToAbsent
           ? const Value.absent()
           : Value(author),
-      updatable: updatable == null && nullToAbsent
+      isUpdatable: isUpdatable == null && nullToAbsent
           ? const Value.absent()
-          : Value(updatable),
+          : Value(isUpdatable),
       indexUrl: indexUrl == null && nullToAbsent
           ? const Value.absent()
           : Value(indexUrl),
@@ -766,7 +769,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       format: serializer.fromJson<int?>(json['format']),
       version: serializer.fromJson<int?>(json['version']),
       author: serializer.fromJson<String?>(json['author']),
-      updatable: serializer.fromJson<bool?>(json['updatable']),
+      isUpdatable: serializer.fromJson<bool?>(json['isUpdatable']),
       indexUrl: serializer.fromJson<String?>(json['indexUrl']),
       downloadUrl: serializer.fromJson<String?>(json['downloadUrl']),
       url: serializer.fromJson<String?>(json['url']),
@@ -797,7 +800,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       'format': serializer.toJson<int?>(format),
       'version': serializer.toJson<int?>(version),
       'author': serializer.toJson<String?>(author),
-      'updatable': serializer.toJson<bool?>(updatable),
+      'isUpdatable': serializer.toJson<bool?>(isUpdatable),
       'indexUrl': serializer.toJson<String?>(indexUrl),
       'downloadUrl': serializer.toJson<String?>(downloadUrl),
       'url': serializer.toJson<String?>(url),
@@ -822,7 +825,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     Value<int?> format = const Value.absent(),
     Value<int?> version = const Value.absent(),
     Value<String?> author = const Value.absent(),
-    Value<bool?> updatable = const Value.absent(),
+    Value<bool?> isUpdatable = const Value.absent(),
     Value<String?> indexUrl = const Value.absent(),
     Value<String?> downloadUrl = const Value.absent(),
     Value<String?> url = const Value.absent(),
@@ -845,7 +848,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     format: format.present ? format.value : this.format,
     version: version.present ? version.value : this.version,
     author: author.present ? author.value : this.author,
-    updatable: updatable.present ? updatable.value : this.updatable,
+    isUpdatable: isUpdatable.present ? isUpdatable.value : this.isUpdatable,
     indexUrl: indexUrl.present ? indexUrl.value : this.indexUrl,
     downloadUrl: downloadUrl.present ? downloadUrl.value : this.downloadUrl,
     url: url.present ? url.value : this.url,
@@ -883,7 +886,9 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       format: data.format.present ? data.format.value : this.format,
       version: data.version.present ? data.version.value : this.version,
       author: data.author.present ? data.author.value : this.author,
-      updatable: data.updatable.present ? data.updatable.value : this.updatable,
+      isUpdatable: data.isUpdatable.present
+          ? data.isUpdatable.value
+          : this.isUpdatable,
       indexUrl: data.indexUrl.present ? data.indexUrl.value : this.indexUrl,
       downloadUrl: data.downloadUrl.present
           ? data.downloadUrl.value
@@ -922,7 +927,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
           ..write('format: $format, ')
           ..write('version: $version, ')
           ..write('author: $author, ')
-          ..write('updatable: $updatable, ')
+          ..write('isUpdatable: $isUpdatable, ')
           ..write('indexUrl: $indexUrl, ')
           ..write('downloadUrl: $downloadUrl, ')
           ..write('url: $url, ')
@@ -949,7 +954,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     format,
     version,
     author,
-    updatable,
+    isUpdatable,
     indexUrl,
     downloadUrl,
     url,
@@ -975,7 +980,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
           other.format == this.format &&
           other.version == this.version &&
           other.author == this.author &&
-          other.updatable == this.updatable &&
+          other.isUpdatable == this.isUpdatable &&
           other.indexUrl == this.indexUrl &&
           other.downloadUrl == this.downloadUrl &&
           other.url == this.url &&
@@ -999,7 +1004,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   final Value<int?> format;
   final Value<int?> version;
   final Value<String?> author;
-  final Value<bool?> updatable;
+  final Value<bool?> isUpdatable;
   final Value<String?> indexUrl;
   final Value<String?> downloadUrl;
   final Value<String?> url;
@@ -1021,7 +1026,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     this.format = const Value.absent(),
     this.version = const Value.absent(),
     this.author = const Value.absent(),
-    this.updatable = const Value.absent(),
+    this.isUpdatable = const Value.absent(),
     this.indexUrl = const Value.absent(),
     this.downloadUrl = const Value.absent(),
     this.url = const Value.absent(),
@@ -1044,7 +1049,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     this.format = const Value.absent(),
     this.version = const Value.absent(),
     this.author = const Value.absent(),
-    this.updatable = const Value.absent(),
+    this.isUpdatable = const Value.absent(),
     this.indexUrl = const Value.absent(),
     this.downloadUrl = const Value.absent(),
     this.url = const Value.absent(),
@@ -1071,7 +1076,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     Expression<int>? format,
     Expression<int>? version,
     Expression<String>? author,
-    Expression<bool>? updatable,
+    Expression<bool>? isUpdatable,
     Expression<String>? indexUrl,
     Expression<String>? downloadUrl,
     Expression<String>? url,
@@ -1097,7 +1102,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
       if (format != null) 'format': format,
       if (version != null) 'version': version,
       if (author != null) 'author': author,
-      if (updatable != null) 'updatable': updatable,
+      if (isUpdatable != null) 'is_updatable': isUpdatable,
       if (indexUrl != null) 'index_url': indexUrl,
       if (downloadUrl != null) 'download_url': downloadUrl,
       if (url != null) 'url': url,
@@ -1122,7 +1127,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     Value<int?>? format,
     Value<int?>? version,
     Value<String?>? author,
-    Value<bool?>? updatable,
+    Value<bool?>? isUpdatable,
     Value<String?>? indexUrl,
     Value<String?>? downloadUrl,
     Value<String?>? url,
@@ -1146,7 +1151,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
       format: format ?? this.format,
       version: version ?? this.version,
       author: author ?? this.author,
-      updatable: updatable ?? this.updatable,
+      isUpdatable: isUpdatable ?? this.isUpdatable,
       indexUrl: indexUrl ?? this.indexUrl,
       downloadUrl: downloadUrl ?? this.downloadUrl,
       url: url ?? this.url,
@@ -1201,8 +1206,8 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     if (author.present) {
       map['author'] = Variable<String>(author.value);
     }
-    if (updatable.present) {
-      map['updatable'] = Variable<bool>(updatable.value);
+    if (isUpdatable.present) {
+      map['is_updatable'] = Variable<bool>(isUpdatable.value);
     }
     if (indexUrl.present) {
       map['index_url'] = Variable<String>(indexUrl.value);
@@ -1246,7 +1251,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
           ..write('format: $format, ')
           ..write('version: $version, ')
           ..write('author: $author, ')
-          ..write('updatable: $updatable, ')
+          ..write('isUpdatable: $isUpdatable, ')
           ..write('indexUrl: $indexUrl, ')
           ..write('downloadUrl: $downloadUrl, ')
           ..write('url: $url, ')
@@ -1969,7 +1974,7 @@ class TermMetaBankV3EntryAsJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_as_json_view AS SELECT IT.id, JSON_OBJECT(\'id\', IT.id, \'isDefaultDictionary\', IT.is_default_dictionary, \'enabled\', IT.enabled, \'dictionaryType\', IT.dictionary_type, \'currentSortingOrder\', IT.current_sorting_order, \'currentFrequencyDictionary\', IT.current_frequency_dictionary, \'title\', IT.title, \'revision\', IT.revision, \'sequenced\', IT.sequenced, \'format\', IT.format, \'version\', IT.version, \'author\', IT.author, \'updatable\', IT.updatable, \'indexUrl\', IT.index_url, \'downloadUrl\', IT.download_url, \'url\', IT.url, \'description\', IT.description, \'attribution\', IT.attribution, \'sourceLanguage\', IT.source_language, \'targetLanguage\', IT.target_language, \'frequencyMode\', IT.frequency_mode) AS index_entry FROM index_table AS IT',
+        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_as_json_view AS SELECT IT.id, JSON_OBJECT(\'id\', IT.id, \'isDefaultDictionary\', IT.is_default_dictionary, \'enabled\', IT.enabled, \'dictionaryType\', IT.dictionary_type, \'currentSortingOrder\', IT.current_sorting_order, \'currentFrequencyDictionary\', IT.current_frequency_dictionary, \'title\', IT.title, \'revision\', IT.revision, \'sequenced\', IT.sequenced, \'format\', IT.format, \'version\', IT.version, \'author\', IT.author, \'isUpdatable\', IT.is_updatable, \'indexUrl\', IT.index_url, \'downloadUrl\', IT.download_url, \'url\', IT.url, \'description\', IT.description, \'attribution\', IT.attribution, \'sourceLanguage\', IT.source_language, \'targetLanguage\', IT.target_language, \'frequencyMode\', IT.frequency_mode) AS index_entry FROM index_table AS IT',
   };
   @override
   TermMetaBankV3EntryAsJsonView get asDslTable => this;
@@ -18400,7 +18405,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         format: row.readNullable<int>('format'),
         version: row.readNullable<int>('version'),
         author: row.readNullable<String>('author'),
-        updatable: row.readNullable<bool>('updatable'),
+        isUpdatable: row.readNullable<bool>('is_updatable'),
         indexUrl: row.readNullable<String>('index_url'),
         downloadUrl: row.readNullable<String>('download_url'),
         url: row.readNullable<String>('url'),
@@ -19063,7 +19068,7 @@ typedef $$IndexTableTableCreateCompanionBuilder =
       Value<int?> format,
       Value<int?> version,
       Value<String?> author,
-      Value<bool?> updatable,
+      Value<bool?> isUpdatable,
       Value<String?> indexUrl,
       Value<String?> downloadUrl,
       Value<String?> url,
@@ -19087,7 +19092,7 @@ typedef $$IndexTableTableUpdateCompanionBuilder =
       Value<int?> format,
       Value<int?> version,
       Value<String?> author,
-      Value<bool?> updatable,
+      Value<bool?> isUpdatable,
       Value<String?> indexUrl,
       Value<String?> downloadUrl,
       Value<String?> url,
@@ -19377,8 +19382,8 @@ class $$IndexTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<bool> get updatable => $composableBuilder(
-    column: $table.updatable,
+  ColumnFilters<bool> get isUpdatable => $composableBuilder(
+    column: $table.isUpdatable,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -19717,8 +19722,8 @@ class $$IndexTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<bool> get updatable => $composableBuilder(
-    column: $table.updatable,
+  ColumnOrderings<bool> get isUpdatable => $composableBuilder(
+    column: $table.isUpdatable,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -19817,8 +19822,10 @@ class $$IndexTableTableAnnotationComposer
   GeneratedColumn<String> get author =>
       $composableBuilder(column: $table.author, builder: (column) => column);
 
-  GeneratedColumn<bool> get updatable =>
-      $composableBuilder(column: $table.updatable, builder: (column) => column);
+  GeneratedColumn<bool> get isUpdatable => $composableBuilder(
+    column: $table.isUpdatable,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get indexUrl =>
       $composableBuilder(column: $table.indexUrl, builder: (column) => column);
@@ -20135,7 +20142,7 @@ class $$IndexTableTableTableManager
                 Value<int?> format = const Value.absent(),
                 Value<int?> version = const Value.absent(),
                 Value<String?> author = const Value.absent(),
-                Value<bool?> updatable = const Value.absent(),
+                Value<bool?> isUpdatable = const Value.absent(),
                 Value<String?> indexUrl = const Value.absent(),
                 Value<String?> downloadUrl = const Value.absent(),
                 Value<String?> url = const Value.absent(),
@@ -20157,7 +20164,7 @@ class $$IndexTableTableTableManager
                 format: format,
                 version: version,
                 author: author,
-                updatable: updatable,
+                isUpdatable: isUpdatable,
                 indexUrl: indexUrl,
                 downloadUrl: downloadUrl,
                 url: url,
@@ -20181,7 +20188,7 @@ class $$IndexTableTableTableManager
                 Value<int?> format = const Value.absent(),
                 Value<int?> version = const Value.absent(),
                 Value<String?> author = const Value.absent(),
-                Value<bool?> updatable = const Value.absent(),
+                Value<bool?> isUpdatable = const Value.absent(),
                 Value<String?> indexUrl = const Value.absent(),
                 Value<String?> downloadUrl = const Value.absent(),
                 Value<String?> url = const Value.absent(),
@@ -20203,7 +20210,7 @@ class $$IndexTableTableTableManager
                 format: format,
                 version: version,
                 author: author,
-                updatable: updatable,
+                isUpdatable: isUpdatable,
                 indexUrl: indexUrl,
                 downloadUrl: downloadUrl,
                 url: url,
@@ -40441,7 +40448,7 @@ class DictionarySearchDriftFindTermBankDetailsResult {
   final int? format;
   final int? version;
   final String? author;
-  final bool? updatable;
+  final bool? isUpdatable;
   final String? indexUrl;
   final String? downloadUrl;
   final String? url;
@@ -40481,7 +40488,7 @@ class DictionarySearchDriftFindTermBankDetailsResult {
     this.format,
     this.version,
     this.author,
-    this.updatable,
+    this.isUpdatable,
     this.indexUrl,
     this.downloadUrl,
     this.url,

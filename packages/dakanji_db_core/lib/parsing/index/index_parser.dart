@@ -44,7 +44,7 @@ Future<int> parseAndInsertIndex(
     format: Value(jsonMap["format"]),
     version: Value(jsonMap["version"]),
     author: Value(jsonMap["author"]),
-    updatable: Value(jsonMap["updatable"]),
+    isUpdatable: Value(jsonMap["isUpdatable"]),
     indexUrl: Value(jsonMap["indexUrl"]),
     downloadUrl: Value(jsonMap["downloadUrl"]),
     url: Value(jsonMap["url"]),

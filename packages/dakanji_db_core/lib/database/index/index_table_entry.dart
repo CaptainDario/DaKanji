@@ -59,7 +59,7 @@ class IndexEntry with _$IndexEntry {
   final String? author;
   /// Whether this dictionary contains links to its latest version.
   @override
-  final bool? updatable;
+  final bool? isUpdatable;
   /// URL for the index file of the latest revision of the dictionary, used to check for updates.
   @override
   final String? indexUrl;
@@ -100,7 +100,7 @@ class IndexEntry with _$IndexEntry {
     this.format,
     this.version,
     this.author,
-    this.updatable,
+    this.isUpdatable,
     this.indexUrl,
     this.downloadUrl,
     this.url,
@@ -124,7 +124,7 @@ class IndexEntry with _$IndexEntry {
     format = data.format,
     version = data.version,
     author = data.author,
-    updatable = data.updatable,
+    isUpdatable = data.isUpdatable,
     indexUrl = data.indexUrl,
     downloadUrl = data.downloadUrl,
     url = data.url,
@@ -135,7 +135,7 @@ class IndexEntry with _$IndexEntry {
     frequencyMode = data.frequencyMode;
 
   bool dictCanBeUpdated()
-    => (updatable ?? false) && (indexUrl != null) && (downloadUrl != null);
+    => (isUpdatable ?? false) && (indexUrl != null) && (downloadUrl != null);
 
   /// Checks for updates for the dictonary 
   Future<bool> checkForUpdates() async {

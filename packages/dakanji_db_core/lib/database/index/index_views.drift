@@ -19,7 +19,7 @@ CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_as_json_view AS
             'format', IT.format,
             'version', IT.version,
             'author', IT.author,
-            'updatable', IT.updatable,
+            'isUpdatable', IT.is_updatable,
             'indexUrl', IT.index_url,
             'downloadUrl', IT.download_url,
             'url', IT.url,

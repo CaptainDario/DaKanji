@@ -50,7 +50,7 @@ class DictionaryManagementDetailsTable extends StatelessWidget {
       if (dict.format != null) ("Format", dict.format!.toString()),
       ("Version", dict.version.toString()),
       if (dict.author != null) ("Author", dict.author!),
-      if (dict.updatable != null) ("Updatable", dict.updatable! ? "Yes" : "No"),
+      if (dict.isUpdatable != null) ("Updatable", dict.isUpdatable! ? "Yes" : "No"),
       if(dict.indexUrl != null) ("Index URL", dict.indexUrl!),
       if(dict.downloadUrl != null) ("Download URL", dict.downloadUrl!),
       if(dict.url != null) ("URL", dict.url!),

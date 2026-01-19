@@ -33,7 +33,7 @@ class IndexTable extends Table {
   /// Creator of the dictionary.
   TextColumn get author => text().nullable()();
   /// Whether this dictionary contains links to its latest version.
-  BoolColumn get updatable => boolean().nullable()();
+  BoolColumn get isUpdatable => boolean().nullable()();
   /// URL for the index file of the latest revision of the dictionary, used to check for updates.
   TextColumn get indexUrl => text().nullable()();
   /// URL for the download of the latest revision of the dictionary.
