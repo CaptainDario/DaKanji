@@ -1,4 +1,5 @@
 import 'package:dakanji_db_core/data/dictionary_types.dart';
+import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/helper/bool_as_int_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -110,6 +111,38 @@ class IndexEntry with _$IndexEntry {
     this.frequencyMode,
   }) ;
 
+  IndexEntry.fromIndexTableData(IndexTableData data) :
+    id = data.id,
+    isDefaultDictionary = data.isDefaultDictionary,
+    enabled = data.enabled,
+    dictionaryType = data.dictionaryType,
+    currentSortingOrder = data.currentSortingOrder,
+    currentFrequencyDictionary = data.currentFrequencyDictionary,
+    title = data.title,
+    revision = data.revision,
+    sequenced = data.sequenced,
+    format = data.format,
+    version = data.version,
+    author = data.author,
+    updatable = data.updatable,
+    indexUrl = data.indexUrl,
+    downloadUrl = data.downloadUrl,
+    url = data.url,
+    description = data.description,
+    attribution = data.attribution,
+    sourceLanguage = data.sourceLanguage,
+    targetLanguage = data.targetLanguage,
+    frequencyMode = data.frequencyMode;
+
+  bool dictCanBeUpdated()
+    => (updatable ?? false) && (indexUrl != null) && (downloadUrl != null);
+
+  /// Checks for updates for the dictonary 
+  Future<bool> checkForUpdates() async {
+
+    return false;
+
+  }
 
   Map<String, Object?> toJson() => _$IndexEntryToJson(this);
 
