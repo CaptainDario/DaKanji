@@ -4,6 +4,7 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
+import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -67,7 +68,9 @@ class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroup
         ListTile(
           leading: IconButton(
             icon: Icon(Icons.info_outline),
-            onPressed: () {}
+            onPressed: () async {
+              await showSettingsInfoPopup(widget.localization.groupingExplanation, context);
+            }
           ),
           title: Text(widget.localization.configureGroupingTitle),
         ),
@@ -171,6 +174,18 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
     );
   }
 
+  void _deleteRule(int index) {
+    final currentRules = context.read<DaKanjiDbSettings>().s.groupingRules;
+    
+    // Create a new list excluding the item at the current index
+    final newRules = List<DictionaryGroupingRule>.from(currentRules)
+      ..removeAt(index);
+
+    context.read<DaKanjiDbSettings>().update(
+      context.read<DaKanjiDbSettings>().s.copyWith(groupingRules: newRules)
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -182,87 +197,100 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
     return Card(
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-        child: Table(
-          defaultVerticalAlignment: .middle,
+        child: Column(
           children: [
-            // Dropdown to select grouping rule type
-            TableRow(
+            Table(
+              defaultVerticalAlignment: .middle,
               children: [
-                Text(loc.groupby, style: TextStyle(fontSize: 16),),
-                DropdownButton<String>(
-                  value: getRuleString(rule),
-                  items: List.generate(groupingOptions.length, (int i) =>
-                    DropdownMenuItem<String>(
-                      value: groupingOptions[i],
-                      child: Text(groupingOptions[i]),
+                // Dropdown to select grouping rule type
+                TableRow(
+                  children: [
+                    Text(loc.groupby, style: TextStyle(fontSize: 16),),
+                    DropdownButton<String>(
+                      value: getRuleString(rule),
+                      items: List.generate(groupingOptions.length, (int i) =>
+                        DropdownMenuItem<String>(
+                          value: groupingOptions[i],
+                          child: Text(groupingOptions[i]),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        if (value != null) {
+                          _updateRuleAt(i, groupingRuleStringToInstance[value]!());
+                        }
+                      },
                     ),
-                  ),
-                  onChanged: (value) {
-                    if (value != null) {
-                      _updateRuleAt(i, groupingRuleStringToInstance[value]!());
-                    }
-                  },
+                  ],
                 ),
+                
+                // Only SequenceGroupingRule: sequence source selector
+                if (rule is SequenceGroupingRule) ...[
+                  TableRow(
+                    children: [
+                      Text(loc.source, style: TextStyle(fontSize: 16),),
+                      FutureBuilder(
+                        future: _allAvaibleIndexes(),
+                        builder: (context, asyncSnapshot) {
+            
+                          if(!asyncSnapshot.hasData && asyncSnapshot.data != null) return SizedBox();
+            
+                          return DropdownButton<int?>(
+                            isExpanded: true,
+                            value: rule.sourceDictId,
+                            items: asyncSnapshot.data?.map((e) =>
+                              DropdownMenuItem<int?>(
+                                value: e.index.id,
+                                child: Text(e.index.title, overflow: .ellipsis,),
+                              )
+                            ).toList(),
+                            onChanged: (value) {
+                              _updateRuleAt(
+                                i, (rule.copyWith(sourceDictId: value)));
+                            }
+                          );
+                        }
+                      ),
+                    ]
+                  )
+                ],
+            
+                // target dictionaries
+                if(rule is! NoGroupingRule)
+                  TableRow(
+                    children: [
+                      Text(
+                        "${loc.targets} (${rule.targetDictIds.length})",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextButton(
+                          onPressed: () async {
+                            await showAvailableIndexesDialog(
+                              onSelected:(List<int> result) {
+                                _updateRuleAt(
+                                  i, 
+                                  (rule as dynamic).copyWith(
+                                    targetDictIds: result.toSet()
+                                  )
+                                );
+                              }
+                            );
+                          },
+                          child: Text(loc.select)
+                        ),
+                      )
+                    ]
+                  ),
               ],
             ),
-            
-            // Only SequenceGroupingRule: sequence source selector
-            if (rule is SequenceGroupingRule) ...[
-              TableRow(
-                children: [
-                  Text(loc.source, style: TextStyle(fontSize: 16),),
-                  FutureBuilder(
-                    future: _allAvaibleIndexes(),
-                    builder: (context, asyncSnapshot) {
+          
+            Divider(),
 
-                      if(!asyncSnapshot.hasData && asyncSnapshot.data != null) return SizedBox();
-
-                      return DropdownButton<int?>(
-                        isExpanded: true,
-                        value: rule.sourceDictId,
-                        items: asyncSnapshot.data?.map((e) =>
-                          DropdownMenuItem<int?>(
-                            value: e.index.id,
-                            child: Text(e.index.title, overflow: .ellipsis,),
-                          )
-                        ).toList(),
-                        onChanged: (value) {
-                          _updateRuleAt(
-                            i, (rule.copyWith(sourceDictId: value)));
-                        }
-                      );
-                    }
-                  ),
-                ]
-              )
-            ],
-
-            // target dictionaries
-            if(rule is! NoGroupingRule)
-              TableRow(
-                children: [
-                  Text(
-                    "${loc.targets} (${rule.targetDictIds.length})",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextButton(
-                      onPressed: () async {
-                        await showAvailableIndexesDialog(
-                          onSelected:(List<int> result) {
-                            _updateRuleAt(
-                              i, 
-                              (rule as dynamic).copyWith(targetDictIds: result.toSet())
-                            );
-                          }
-                        );
-                      },
-                      child: Text(loc.select)
-                    ),
-                  )
-                ]
-              ),
+            IconButton(
+              onPressed: () => _deleteRule(i),
+              icon: Icon(Icons.delete)
+            )
           ],
         ),
       ),

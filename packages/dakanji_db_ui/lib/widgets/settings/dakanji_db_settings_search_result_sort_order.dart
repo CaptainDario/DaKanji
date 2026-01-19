@@ -1,6 +1,6 @@
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
+import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_popup.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:reorderables/reorderables.dart';
 
 class DakanjiDbSettingsSearchResultSortOrder extends StatefulWidget {
@@ -58,7 +58,9 @@ class _DakanjiDbSettingsSearchResultSortOrderState extends State<DakanjiDbSettin
         Row(
           children: [
             IconButton(
-              onPressed: _showInfoDialog,
+              onPressed: () async {
+                await showSettingsInfoPopup(widget.infoText, context);
+              },
               icon: Icon(Icons.info_outline)
             ),
             Text(
@@ -126,36 +128,5 @@ Widget _buildListItem(List<dynamic> list, int index) {
   );
 }
 
-  Future<void> _showInfoDialog() async {
-    await showGeneralDialog<DaKanjiDbSettingsInternal>(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: "Close",
-      transitionDuration: const Duration(milliseconds: 200),
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return ScaleTransition(
-          scale: animation,
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.6,
-                maxWidth: MediaQuery.of(context).size.width * 0.9,
-              ),
-              child: Card(
-                elevation: 8,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Markdown(
-                    data: widget.infoText,
-                    shrinkWrap: true, 
-                    padding: const EdgeInsets.all(8.0), 
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
+
 }

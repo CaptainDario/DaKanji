@@ -50,6 +50,7 @@ DakanjiDbLocalization dakanjiDbLocalization = DakanjiDbLocalization(
 
   // --- Grouping ---
   groupingTitle: groupingTitle,
+  groupingExplanation: groupingExplanation,
 
   configureGroupingTitle: configureGroupingTitle,
   groupby: groupby,
@@ -147,6 +148,58 @@ String thenByWildcardMatch = "Wildcard Match";
 
 // --- Grouping ---
 String groupingTitle = "Grouping";
+
+String groupingExplanation = """
+# How Grouping Works in DaKanji
+
+DaKanji can group entries from your different dictionaries to make your search results more organized.
+To simplify things, one dictionary entry consists of three main things
+
+* Term (The written word): 漢字
+* Reading (how to read the word in kana): かんじ
+* Definitions (what this entry means): Japanese characters
+
+There are four main strategies for this.
+
+## Quick Comparison
+
+| Strategy | Logic | Result |
+| :--- | :--- | :--- |
+| **No Grouping** | Show everything | Very long list, maximum detail. |
+| **Term + Reading** | Match Term AND Reading | Balanced, keeps different words separate. |
+| **Term** | Match Term only | Short list, groups all sounds together. |
+| **Sequence** | Match the "Core Concept" | Smartest grouping, merges spelling variations, but requires a dictionary to support it. |
+
+---
+
+## 1. No Grouping
+This means that every entry from every dictionary is shown separately, even if they are the same.
+
+## 2. Term + Reading Grouping
+DaKanji groups entries together only if they have **both** the same Term and the same Reading.
+
+### Example
+1. If you look up "生", DaKanji may find 生 [せい] and 生 [しょう].
+Since their readings are different, they will be shown as separate entries.
+2. If you look up "生", DaKanji may find 生 [せい] with a definition of "living" and 生 [せい] with a definition of "existence", these two entries will be shown together as both the Term and Reading are identical.
+
+## 3. Term Grouping
+This refers to grouping based solely on the Term, if two entries have the same Term they will be shown together.
+
+### Example
+1. If you look up "生", DaKanji may find 生 [せい] and 生 [しょう].
+Since their terms are the same, they will be shown as one entry.
+2. If you look up "生", DaKanji may find 生 [せい] with a definition of "living" and 生 [せい] with a definition of "existence", these two entries will be also shown together as the Terms are identical.
+
+## 4. Sequence Grouping
+It relies on unique identification numbers (Sequence IDs) provided by dictionaries like JMdict.
+This is useful if one word can be written using multiple Terms.
+This way, a dictionary can "link" entries even when the Terms are different but requires knowledge that the dictionary uses Sequence IDs.
+For this to work, DaKanji needs to know which dictionary defines the Sequence (Source) and which dictionaries use the same Sequence (Targets).
+
+### Example
+Searching for "taberu" may find "食べる辣油" and "食べるラー油". Even though their Terms are different, JMDict uses the same Sequence ID for them, so they will be shown together.
+""";
 
 String configureGroupingTitle = "Configure Grouping of Search Results";
 String groupby = "Group by";

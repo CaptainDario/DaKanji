@@ -46,6 +46,7 @@ class DakanjiDbLocalization {
 
     // --- Grouping ---
     required this.groupingTitle,
+    required this.groupingExplanation,
 
     required this.configureGroupingTitle,
     required this.groupby,
@@ -121,6 +122,7 @@ class DakanjiDbLocalization {
 
   /// --- Grouping ---
   String groupingTitle;
+  String groupingExplanation;
 
   String configureGroupingTitle;
   String groupby;
