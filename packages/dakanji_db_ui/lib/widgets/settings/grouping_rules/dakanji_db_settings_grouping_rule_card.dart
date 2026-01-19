@@ -4,100 +4,9 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_popup.dart';
+import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-
-final List<String> groupingOptions = [
-  "No Grouping",
-  "Term",
-  "Term + Reading",
-  "Sequence Number",
-];
-
-String getRuleString(DictionaryGroupingRule rule) {
-  if (rule is NoGroupingRule) return groupingOptions[0];
-  if (rule is TermGroupingRule) return groupingOptions[1];
-  if (rule is TermAndReadingGroupingRule) return groupingOptions[2];
-  if (rule is SequenceGroupingRule) return groupingOptions[3];
-  return groupingOptions[0];
-}
-
-final Map<String, Function> groupingRuleStringToInstance = {
-  groupingOptions[0] : () => NoGroupingRule(),
-  groupingOptions[1] : () => TermGroupingRule({}),
-  groupingOptions[2] : () => TermAndReadingGroupingRule({}),
-  groupingOptions[3] : () => SequenceGroupingRule(sourceDictId: null, targetDictIds: {}),
-};
-
-enum IndexGroupingUsage {
-  unused,
-  usedInThisSource,
-  usedInthisTarget,
-  usedInOther
-}
-
-class DakanjiDbSettingsGroupingWidget extends StatefulWidget {
-
-  final DakanjiDbLocalization localization;
-
-  const DakanjiDbSettingsGroupingWidget(
-    this.localization,
-    {
-      super.key
-    }
-  );
-
-  @override
-  State<DakanjiDbSettingsGroupingWidget> createState() => _DakanjiDbSettingsGroupingWidgetState();
-}
-
-class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroupingWidget> {
-
-  @override
-  Widget build(BuildContext context) {
-
-    var settings = context.read<DaKanjiDbSettings>();
-    var rules = settings.s.groupingRules;
-
-    return Column(
-      crossAxisAlignment: .stretch,
-      children: [
-
-        ListTile(
-          leading: IconButton(
-            icon: Icon(Icons.info_outline),
-            onPressed: () async {
-              await showSettingsInfoPopup(widget.localization.groupingExplanation, context);
-            }
-          ),
-          title: Text(widget.localization.configureGroupingTitle),
-        ),
-
-        for (int i = 0; i < rules.length; i++) ...[
-          GroupingRuleCard(i, widget.localization)
-        ],
-
-        // The add button
-        Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: Align(
-            alignment: .centerRight,
-            child: IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                settings.update(settings.s.copyWith(
-                  groupingRules: [...rules, NoGroupingRule()]
-                ));
-              }
-            ),
-          ),
-        )
-      ]
-    );
-  }
-}
 
 /// A card representing a single grouping rule
 /// 
@@ -203,94 +112,57 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
               defaultVerticalAlignment: .middle,
               children: [
                 // Dropdown to select grouping rule type
-                TableRow(
-                  children: [
-                    Text(loc.groupby, style: TextStyle(fontSize: 16),),
-                    DropdownButton<String>(
-                      value: getRuleString(rule),
-                      items: List.generate(groupingOptions.length, (int i) =>
-                        DropdownMenuItem<String>(
-                          value: groupingOptions[i],
-                          child: Text(groupingOptions[i]),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        if (value != null) {
-                          _updateRuleAt(i, groupingRuleStringToInstance[value]!());
-                        }
-                      },
-                    ),
-                  ],
+                RuleTypeRow(
+                  rule: rule,
+                  loc: loc,
+                  onChanged: (value) {
+                    if (value != null) {
+                      _updateRuleAt(i, groupingRuleStringToInstance[value]!());
+                    }
+                  },
                 ),
                 
                 // Only SequenceGroupingRule: sequence source selector
                 if (rule is SequenceGroupingRule) ...[
-                  TableRow(
-                    children: [
-                      Text(loc.source, style: TextStyle(fontSize: 16),),
-                      FutureBuilder(
-                        future: _allAvaibleIndexes(),
-                        builder: (context, asyncSnapshot) {
-            
-                          if(!asyncSnapshot.hasData && asyncSnapshot.data != null) return SizedBox();
-            
-                          return DropdownButton<int?>(
-                            isExpanded: true,
-                            value: rule.sourceDictId,
-                            items: asyncSnapshot.data?.map((e) =>
-                              DropdownMenuItem<int?>(
-                                value: e.index.id,
-                                child: Text(e.index.title, overflow: .ellipsis,),
-                              )
-                            ).toList(),
-                            onChanged: (value) {
-                              _updateRuleAt(
-                                i, (rule.copyWith(sourceDictId: value)));
-                            }
-                          );
-                        }
-                      ),
-                    ]
+                  SourceSelectorRow(
+                    rule: rule,
+                    loc: loc,
+                    availableIndexesFuture: _allAvaibleIndexes(),
+                    onChanged: (value) => _updateRuleAt(i, (rule.copyWith(sourceDictId: value)))
                   )
                 ],
             
                 // target dictionaries
                 if(rule is! NoGroupingRule)
-                  TableRow(
-                    children: [
-                      Text(
-                        "${loc.targets} (${rule.targetDictIds.length})",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextButton(
-                          onPressed: () async {
-                            await showAvailableIndexesDialog(
-                              onSelected:(List<int> result) {
-                                _updateRuleAt(
-                                  i, 
-                                  (rule as dynamic).copyWith(
-                                    targetDictIds: result.toSet()
-                                  )
-                                );
-                              }
-                            );
-                          },
-                          child: Text(loc.select)
-                        ),
-                      )
-                    ]
-                  ),
+                  TargetSelectorRow(
+                    rule: rule,
+                    loc: loc,
+                    onSelectPressed: () async {
+                      await showAvailableIndexesDialog(
+                        onSelected:(List<int> result) {
+                          _updateRuleAt(i, (rule as dynamic).copyWith(targetDictIds: result.toSet()));
+                        }
+                      );
+                    },
+                  )
               ],
             ),
           
             Divider(),
 
-            IconButton(
+            // Delete button
+            OutlinedButton(
               onPressed: () => _deleteRule(i),
-              icon: Icon(Icons.delete)
-            )
+              child: Row(
+                mainAxisSize: .min,
+                children: [
+                  Icon(Icons.delete),
+                  SizedBox(width: 4,),
+                  Text(widget.localization.delteRule),
+                ],
+              ),
+            ),
+            SizedBox(height: 8),
           ],
         ),
       ),
@@ -408,4 +280,73 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
     );
   }
 
+}
+
+class RuleTypeRow extends TableRow {
+  RuleTypeRow({
+    required DictionaryGroupingRule rule,
+    required DakanjiDbLocalization loc,
+    required ValueChanged<String?> onChanged,
+  }) : super(
+          children: [
+            Text(loc.groupby, style: const TextStyle(fontSize: 16)),
+            DropdownButton<String>(
+              value: getRuleString(rule),
+              items: groupingOptions.map((opt) => 
+                DropdownMenuItem(value: opt, child: Text(opt))
+              ).toList(),
+              onChanged: onChanged,
+            ),
+          ],
+        );
+}
+
+class SourceSelectorRow extends TableRow {
+  SourceSelectorRow({
+    required SequenceGroupingRule rule,
+    required DakanjiDbLocalization loc,
+    required Future<List<({IndexTableData index, IndexGroupingUsage usage})>> availableIndexesFuture,
+    required ValueChanged<int?> onChanged,
+  }) : super(
+          children: [
+            Text(loc.source, style: const TextStyle(fontSize: 16)),
+            FutureBuilder<List<({IndexTableData index, IndexGroupingUsage usage})>>(
+              future: availableIndexesFuture,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return const SizedBox();
+                return DropdownButton<int?>(
+                  isExpanded: true,
+                  value: rule.sourceDictId,
+                  items: snapshot.data!.map((e) => DropdownMenuItem(
+                    value: e.index.id,
+                    child: Text(e.index.title, overflow: TextOverflow.ellipsis),
+                  )).toList(),
+                  onChanged: onChanged,
+                );
+              },
+            ),
+          ],
+        );
+}
+
+class TargetSelectorRow extends TableRow {
+  TargetSelectorRow({
+    required DictionaryGroupingRule rule,
+    required DakanjiDbLocalization loc,
+    required VoidCallback onSelectPressed,
+  }) : super(
+          children: [
+            Text(
+              "${loc.targets} (${rule.targetDictIds.length})",
+              style: const TextStyle(fontSize: 16),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextButton(
+                onPressed: onSelectPressed,
+                child: Text(loc.select),
+              ),
+            ),
+          ],
+        );
 }
