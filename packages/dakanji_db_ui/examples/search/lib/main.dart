@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_core/util/dakanji_db_search_manager.dart';
@@ -118,20 +117,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  /// Helper to map UI settings + term to DB Search Params
-  DictionarySearchParams _buildSearchParams(String term) {
-    return DictionarySearchParams(
-      query: term,
-      normalizedSearch: settings.s.normalizedSearch,
-      normalizedSearchConvertsRomajiToHiragana:
-          settings.s.normalizeSearchConvertsRomajiToHiragana,
-      deconjugationSearch: settings.s.deconjugationSearch,
-      spellfixSearch: settings.s.spellfixSearch,
-      groupingRules: settings.s.groupingRules,
-      //TODO limit: settings.s.searchResultLimit
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
               if (searchController.text.isNotEmpty && _searchManager != null) {
                 // We treat this as an "immediate" update since the user just closed the dialog
                 _searchManager!.searchImmediate(
-                  _buildSearchParams(searchController.text),
+                  settings.s.toDictionarySearchParams(query: searchController.text),
                   onResult: (result) {
                       if(mounted) setState(() => lastSearchResult = result);
                   }
@@ -221,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                               // Delegate to Isolate
                               _searchManager!.search(
-                                _buildSearchParams(value),
+                                settings.s.toDictionarySearchParams(query: value),
                                 onResult: (result) {
                                   if (!mounted) return;
                                   setState(() {
@@ -253,7 +238,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                               // Use immediate search for dropdowns
                               _searchManager!.searchImmediate(
-                                _buildSearchParams(term),
+                                settings.s.toDictionarySearchParams(query: term),
                                 onResult: (result) {
                                   if (!mounted) return;
                                   setState(() {

@@ -67,6 +67,8 @@ _DaKanjiDbSettings _$DaKanjiDbSettingsFromJson(Map<String, dynamic> json) =>
       definitionsMaxHeight:
           (json['definitionsMaxHeight'] as num?)?.toDouble() ?? 60.0,
       useKatakanaForFurigana: json['useKatakanaForFurigana'] as bool? ?? false,
+      spellfixMaxResults: (json['spellfixMaxResults'] as num?)?.toInt() ?? 20,
+      spellfixMaxCost: (json['spellfixMaxCost'] as num?)?.toInt() ?? 10,
       searchResultLimit: (json['searchResultLimit'] as num?)?.toInt() ?? 100,
     );
 
@@ -97,6 +99,8 @@ Map<String, dynamic> _$DaKanjiDbSettingsToJson(_DaKanjiDbSettings instance) =>
       'showMetaEntries': instance.showMetaEntries,
       'definitionsMaxHeight': instance.definitionsMaxHeight,
       'useKatakanaForFurigana': instance.useKatakanaForFurigana,
+      'spellfixMaxResults': instance.spellfixMaxResults,
+      'spellfixMaxCost': instance.spellfixMaxCost,
       'searchResultLimit': instance.searchResultLimit,
     };
 

@@ -1,3 +1,4 @@
+import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
 import 'package:flutter/material.dart';
@@ -108,6 +109,14 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
     @Default(false)
     bool useKatakanaForFurigana,
 
+    /// The maximum number of typo corrections to consider.
+    @Default(20)
+    int spellfixMaxResults,
+
+    /// The maximum cost for typo correction searches.
+    @Default(10)
+    int spellfixMaxCost,
+
     /// Maximum number of results to return when search (does apply to each 
     /// of the four independent searches **separately**).
     @Default(100)
@@ -150,4 +159,32 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
   bool get wildcardMatch =>
     secondSortOrder.where((e) => e.$1 == DakanjiDbSearchResult2ndSortOrder.wildcardMatch)
       .first.$2;
+
+  DictionarySearchParams toDictionarySearchParams({
+    required String query,
+    List<String> tags = const [],
+    List<String> pos = const [],
+    List<int>? indexesToInclude,
+    bool useOnlyEnabledIndexes = false,
+    bool useOnlyDefaultIndexes = false,
+    int offset = 0,
+  }) {
+    return DictionarySearchParams(
+      query: query,
+      normalizedSearch: normalizedSearch,
+      normalizedSearchConvertsRomajiToHiragana: normalizeSearchConvertsRomajiToHiragana,
+      deconjugationSearch: deconjugationSearch,
+      spellfixSearch: spellfixSearch,
+      tags: tags,
+      pos: pos,
+      groupingRules: groupingRules,
+      indexesToInclude: indexesToInclude,
+      useOnlyEnabledIndexes: useOnlyEnabledIndexes,
+      useOnlyDefaultIndexes: useOnlyDefaultIndexes,
+      spellfixMaxCost: spellfixMaxCost,
+      spellfixMaxResults: spellfixMaxResults,
+      limit: searchResultLimit,
+      offset: offset
+    );
+  }
 }
