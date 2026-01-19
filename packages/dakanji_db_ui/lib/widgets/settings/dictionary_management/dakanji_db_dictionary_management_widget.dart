@@ -1,5 +1,6 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
+import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_card_add_button.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_card.dart';
 import 'package:flutter/material.dart';
 import 'package:reorderables/reorderables.dart';
@@ -38,19 +39,31 @@ class _DakanjiDbDictionaryManagementWidgetState
             .where((e) => e.currentSortingOrder == index+1).first,
         );
 
-        return ReorderableColumn(
-          onReorder: (oldIndex, newIndex) async {
-            await reoderIndexes(oldIndex, newIndex, dictsInOrder);
-          },
+        return Column(
           children: [
-            for (int i = 0; i < dictsInOrder.length; i++) 
-              DictionaryManagementCard(
-                db: widget.db,
-                dict: dictsInOrder[i],
-                index: i,
-                key: ValueKey(dictsInOrder[i].id),
-              )
-          ]
+            ReorderableColumn(
+              onReorder: (oldIndex, newIndex) async {
+                await reoderIndexes(oldIndex, newIndex, dictsInOrder);
+              },
+              children: [
+                for (int i = 0; i < dictsInOrder.length; i++) 
+                  DictionaryManagementCard(
+                    db: widget.db,
+                    dict: dictsInOrder[i],
+                    localization: widget.localization,
+                    index: i,
+                    key: ValueKey(dictsInOrder[i].id),
+                  )
+              ]
+            ),
+
+            DakanjiDbSettingsCardAddButton(
+              widget.localization.importDictionary,
+              () {
+                // TODO : Implement import dictionary
+              }
+            )
+          ],
         );
       },
     );

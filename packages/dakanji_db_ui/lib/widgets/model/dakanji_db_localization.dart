@@ -12,6 +12,10 @@ class DakanjiDbLocalization {
     required this.defaultDictionary,
     required this.userDictionary,
 
+    required this.importDictionary,
+    required this.updateDictionary,
+    required this.deleteDictionary,
+
     // --- Display ---
     required this.displayHeader,
 
@@ -53,6 +57,8 @@ class DakanjiDbLocalization {
     required this.source,
     required this.targets,
     required this.select,
+    required this.delteRule,
+    required this.addRule,
 
     required this.targetDictSelectDialogTitle,
     required this.targetDictSelectDialogNoIndexes,
@@ -82,6 +88,10 @@ class DakanjiDbLocalization {
 
   String defaultDictionary;
   String userDictionary;
+
+  String importDictionary;
+  String updateDictionary;
+  String deleteDictionary;
 
   /// --- Display ---
   String displayHeader;
@@ -129,6 +139,8 @@ class DakanjiDbLocalization {
   String source;
   String targets;
   String select;
+  String delteRule;
+  String addRule;
 
   String targetDictSelectDialogTitle;
   String targetDictSelectDialogNoIndexes;

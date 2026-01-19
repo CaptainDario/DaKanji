@@ -1,6 +1,7 @@
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
+import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_card_add_button.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_popup.dart';
 import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_rule_card.dart';
 import 'package:flutter/material.dart';
@@ -78,25 +79,13 @@ class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroup
         ],
 
         // The add button
-        Card(
-          clipBehavior: Clip.antiAlias, 
-          child: OutlinedButton.icon(
-            onPressed: () {
-              settings.update(settings.s.copyWith(
-                groupingRules: [...rules, NoGroupingRule()]
-              ));
-            },
-            icon: const Icon(Icons.add),
-            label: Text(widget.localization.addRule),
-            style: OutlinedButton.styleFrom(
-              side: BorderSide.none, 
-              minimumSize: const Size.fromHeight(52),
-              alignment: Alignment.center,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-            ),
-          ),
+        DakanjiDbSettingsCardAddButton(
+          widget.localization.addRule,
+          () {
+            settings.update(settings.s.copyWith(
+              groupingRules: [...rules, NoGroupingRule()]
+            ));
+          }
         )
       ]
     );

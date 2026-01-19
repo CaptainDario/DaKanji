@@ -1,4 +1,5 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_details_table.dart';
 import 'package:flutter/material.dart';
 
@@ -8,12 +9,15 @@ class DictionaryManagementCard extends StatefulWidget {
 
   final IndexTableData dict;
 
+  final DakanjiDbLocalization localization;
+
   final int index;
   
   const DictionaryManagementCard({
     super.key,
     required this.db,
     required this.dict,
+    required this.localization,
     required this.index,
   });
 
@@ -79,28 +83,42 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
           ],
         ),
         children: [
-          TextButton(
-            onPressed: () {
-              // TODO check for updates
-            },
-            child: Text("Check for updates"),
-          ),
-          // TODO DELETE
+          SizedBox(height: 8),
           // ALL the info about the dictionary
-          ExpansionTile(
-            title: Text("Details"),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: 200,
+            ),
+            child: SingleChildScrollView(
+              primary: false,
+              child: DictionaryManagementDetailsTable(widget.dict,),
+            ),
+          ),
+          SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: .spaceEvenly,
             children: [
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.3,
-                ),
-                child: SingleChildScrollView(
-                  primary: false,
-                  child: DictionaryManagementDetailsTable(widget.dict,),
+              OutlinedButton(
+                onPressed: () {},
+                child: Row(
+                  children: [
+                    Icon(Icons.update),
+                    Text(widget.localization.updateDictionary)
+                  ],
                 ),
               ),
-            ]
+              OutlinedButton(
+                onPressed: () {},
+                child: Row(
+                  children: [
+                    Icon(Icons.delete),
+                    Text(widget.localization.deleteDictionary)
+                  ],
+                ),
+              ),
+            ],
           ),
+          SizedBox(height: 8),
         ],
       ),
     );

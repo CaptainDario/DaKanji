@@ -2,11 +2,11 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_category_separator.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_grouping_widget.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_heading.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_search_result_sort_order.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_toggle_list_tile.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_widget.dart';
+import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

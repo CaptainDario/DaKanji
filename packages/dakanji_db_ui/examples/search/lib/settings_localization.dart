@@ -13,6 +13,10 @@ DakanjiDbLocalization dakanjiDbLocalization = DakanjiDbLocalization(
 
   defaultDictionary: defaultDictionary,
   userDictionary: userDictionary,
+
+  importDictionary: importDictionary,
+  updateDictionary: updateDictionary,
+  deleteDictionary: deleteDictionary,
   
   // --- Display ---
   displayHeader: displayHeader,
@@ -57,6 +61,8 @@ DakanjiDbLocalization dakanjiDbLocalization = DakanjiDbLocalization(
   source: source,
   targets: targets,
   select: select,
+  delteRule: delteRule,
+  addRule: addRule,
 
   targetDictSelectDialogTitle: targetDictSelectDialogTitle,
   targetDictSelectDialogNoIndexes: targetDictSelectDialogNoIndexes,
@@ -87,6 +93,9 @@ String dictionariesHeader = "Dictionaries";
 String defaultDictionary = "Default Dictionary";
 String userDictionary = "User Dictionary";
 
+String importDictionary = "Import Dictionary";
+String updateDictionary = "Update";
+String deleteDictionary = "Delete";
 
 /// --- Display ---
 String displayHeader = "Display";
@@ -206,6 +215,8 @@ String groupby = "Group by";
 String source = "Source";
 String targets = "Targets";
 String select = "Select";
+String delteRule = "Delete Rule";
+String addRule = "Add Rule";
 
 String targetDictSelectDialogTitle = "Select Target Dictionaries";
 String targetDictSelectDialogNoIndexes = "No dictionaries found";

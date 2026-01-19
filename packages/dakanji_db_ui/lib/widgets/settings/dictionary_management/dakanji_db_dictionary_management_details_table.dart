@@ -15,22 +15,24 @@ class DictionaryManagementDetailsTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Table(
-      children: [
-        for (var (String name, String value) in dictionaryInfo(dict))
-          TableRow(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(name),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(value),
-              ),
-            ]
-          )
-      ],
+    return SelectionArea(
+      child: Table(
+        children: [
+          for (var (String name, String value) in dictionaryInfo(dict))
+            TableRow(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(name),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(value),
+                ),
+              ]
+            )
+        ],
+      ),
     );
   }
 
