@@ -1,3 +1,4 @@
+import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_popup.dart';
 import 'package:flutter/material.dart';
@@ -43,13 +44,34 @@ class DakanjiDbSettingsSearchResultSortOrder extends StatefulWidget {
 
 class _DakanjiDbSettingsSearchResultSortOrderState extends State<DakanjiDbSettingsSearchResultSortOrder> {
   
+
+  void _updateSettingsList(List<(dynamic, bool)> newList) {
+    setState(() {
+      if (widget.firstSortOrder) {
+        // Cast the list so Freezed accepts it
+        widget.settings.update(
+          widget.settings.s.copyWith(
+            firstSortOrder: newList.cast<(DakanjiDbSearchResult1stSortOrder, bool)>().toList(),
+          ),
+        );
+      } else {
+        widget.settings.update(
+          widget.settings.s.copyWith(
+            secondSortOrder: newList.cast<(DakanjiDbSearchResult2ndSortOrder, bool)>().toList(),
+          ),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Determine which list to use from settings
     // These are List<(Enum, bool)>
-    final List<dynamic> currentList = widget.firstSortOrder
+    final List<(dynamic, bool)> currentList = [...widget.firstSortOrder
       ? widget.settings.s.firstSortOrder
-      : widget.settings.s.secondSortOrder;
+      : widget.settings.s.secondSortOrder
+    ];
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -75,58 +97,62 @@ class _DakanjiDbSettingsSearchResultSortOrderState extends State<DakanjiDbSettin
             setState(() {
               final item = currentList.removeAt(oldIndex);
               currentList.insert(newIndex, item);
+              _updateSettingsList(currentList);
             });
           },
           children: [
             for (int i = 0; i < currentList.length; i++) 
-              _buildListItem(currentList, i),
+              SortOrderTile(
+                key: ValueKey(currentList[i].$1), // Use the Enum as key
+                index: i,
+                label: widget.optionNames[currentList[i].$1.index],
+                isSelected: currentList[i].$2,
+                onToggle: (bool newValue) {
+                  currentList[i] = (currentList[i].$1, newValue);
+                  _updateSettingsList(currentList);
+                },
+              ),
           ],
         ),
       ],
     );
   }
-  
-Widget _buildListItem(List<dynamic> list, int index) {
-  // Access the record: $1 is the Enum, $2 is the boolean
-  final record = list[index];
-  final Enum option = record.$1;
-  final bool isSelected = record.$2;
-
-  // We wrap in a Card to give it a distinct "box" feel similar to a Chip,
-  // but simpler (just ListTile) works too.
-  return Card(
-    key: ValueKey(option),
-    margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0),
-    elevation: 2,
-    child: ListTile(
-      leading: const Icon(Icons.drag_handle, color: Colors.grey),
-
-      title: Text(
-        "${index + 1}. ${widget.optionNames[option.index]}",
-        style: TextStyle(
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-          color: isSelected ? null : Colors.grey, // Dim text if disabled
-        ),
-      ),
-
-      trailing: Switch(
-        value: isSelected,
-        onChanged: (bool value) {
-          setState(() {
-            list[index] = (option, value);
-          });
-        },
-      ),
-      
-      // Allow tapping the whole row to toggle
-      onTap: () {
-        setState(() {
-          list[index] = (option, !isSelected);
-        });
-      },
-    ),
-  );
 }
 
+class SortOrderTile extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final int index;
+  final ValueChanged<bool> onToggle;
 
+  const SortOrderTile({
+    super.key,
+    required this.label,
+    required this.isSelected,
+    required this.index,
+    required this.onToggle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 0),
+      elevation: 2,
+      child: ListTile(
+        leading: const Icon(Icons.drag_handle, color: Colors.grey),
+        title: Text(
+          "${index + 1}. $label",
+          style: TextStyle(
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            color: isSelected ? null : Colors.grey,
+          ),
+        ),
+        trailing: Switch(
+          value: isSelected,
+          onChanged: onToggle,
+        ),
+        onTap: () => onToggle(!isSelected),
+      ),
+    );
+  }
 }
