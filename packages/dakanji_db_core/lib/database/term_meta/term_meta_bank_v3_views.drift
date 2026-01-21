@@ -23,7 +23,7 @@ FROM term_meta_bank_v3_table AS tmb
 JOIN term_table AS t ON tmb.term_id = t.id
 JOIN term_meta_bank_v3_type_table AS type ON tmb.type_id = type.id
 JOIN index_table AS IT ON tmb.index_id = IT.id
-JOIN term_meta_bank_v3_entry_as_json_view AS index_json_view ON tmb.index_id = index_json_view.id
+JOIN index_entry_as_json_view AS index_json_view ON tmb.index_id = index_json_view.id
 LEFT JOIN reading_table AS r ON tmb.reading_id = r.id;
 
 ---

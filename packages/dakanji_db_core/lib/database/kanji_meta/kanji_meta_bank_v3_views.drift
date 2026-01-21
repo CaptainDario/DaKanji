@@ -13,7 +13,7 @@ CREATE VIEW kanji_meta_bank_v3_entry_view AS
     FROM
         kanji_meta_bank_v3_table AS KMBV3T
     JOIN
-        term_meta_bank_v3_entry_as_json_view AS IV ON KMBV3T.index_id = IV.id
+        index_entry_as_json_view AS IV ON KMBV3T.index_id = IV.id
     INNER JOIN
         kanji_meta_bank_v3_type_table AS KMBV3TT ON KMBV3TT.id = KMBV3T.type_id
     INNER JOIN

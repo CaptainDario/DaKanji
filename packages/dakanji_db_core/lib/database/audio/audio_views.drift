@@ -18,7 +18,7 @@ CREATE VIEW IF NOT EXISTS audio_entry_view AS
         MT.data
     FROM audio_table AS AT
     -- get index
-    JOIN term_meta_bank_v3_entry_as_json_view AS ITV ON ITV.id = AT.index_id
+    JOIN index_entry_as_json_view AS ITV ON ITV.id = AT.index_id
     -- get terms
     LEFT JOIN audio_table_x_term_table as ATXTT ON ATXTT.audio_id = AT.id
     LEFT JOIN term_table AS TT ON TT.id = ATXTT.term_id

@@ -140,7 +140,7 @@ CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
         COALESCE(TA.tags, '[]') AS tags
     FROM
         term_bank_v3_table AS TB3T
-    JOIN term_meta_bank_v3_entry_as_json_view AS IV ON TB3T.index_id = IV.id
+    JOIN index_entry_as_json_view AS IV ON TB3T.index_id = IV.id
     -- 1-to-1 Joins
     LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
     LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id

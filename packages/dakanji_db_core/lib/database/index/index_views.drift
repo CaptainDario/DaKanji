@@ -1,7 +1,7 @@
 import 'index_tables.dart';
 
 
-CREATE VIEW IF NOT EXISTS term_meta_bank_v3_entry_as_json_view AS
+CREATE VIEW IF NOT EXISTS index_entry_as_json_view AS
     SELECT
         IT.id,
         JSON_OBJECT(

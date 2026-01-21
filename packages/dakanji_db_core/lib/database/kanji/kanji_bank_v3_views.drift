@@ -52,7 +52,7 @@ CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
 
     INNER JOIN kanji_table AS KT ON KT.id = KB3T.kanji_id
 
-    JOIN term_meta_bank_v3_entry_as_json_view AS IV ON KB3T.index_id = IV.id
+    JOIN index_entry_as_json_view AS IV ON KB3T.index_id = IV.id
 
     LEFT JOIN kanji_bank_v3_x_onyomi_reading_table AS KB3ORRT ON KB3ORRT.kanji_id = KB3T.id
     LEFT JOIN reading_table AS onyomi ON KB3ORRT.onyomi_reading_id = onyomi.id

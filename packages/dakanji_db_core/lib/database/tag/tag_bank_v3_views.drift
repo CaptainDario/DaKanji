@@ -17,5 +17,5 @@ SELECT
 FROM
     tag_bank_v3_table AS TagB3T
 JOIN
-    term_meta_bank_v3_entry_as_json_view AS index_json_view 
+    index_entry_as_json_view AS index_json_view 
     ON TagB3T.index_id = index_json_view.id;
