@@ -78,12 +78,14 @@ class _MyHomePageState extends State<MyHomePage> {
     copyDb = copyDbFromAssetsToFS().then((path) async {
       localDbPath = path;
       daKanjiDB = DaKanjiDB(dbPath: localDbPath, inMemory: false);
+      GetIt.I.registerSingleton<DaKanjiDB>(daKanjiDB);
 
       // --- Initialize the Search Isolate ---
-      GetIt.I.registerSingleton<DaKanjiDbSearchManager>(DaKanjiDbSearchManager(
+      _searchManager = DaKanjiDbSearchManager(
         daKanjiDB: daKanjiDB,
         debug: !kReleaseMode,
-      ));
+      );
+      GetIt.I.registerSingleton<DaKanjiDbSearchManager>(_searchManager!);
       GetIt.I.registerSingleton<DakanjiDbLocalization>(dakanjiDbLocalization);
 
       final List<IndexEntry> enabledIndexes =

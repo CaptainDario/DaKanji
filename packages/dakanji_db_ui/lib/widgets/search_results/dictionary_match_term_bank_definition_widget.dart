@@ -5,7 +5,7 @@ import 'package:dakanji_db_ui/widgets/search_results/structured_content/structur
 import 'package:dakanji_db_ui/widgets/search_results/structured_content/structured_content_to_html.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 
 
 
@@ -33,7 +33,7 @@ class _DictionaryMatchTermBankDefinitionWidgetState extends State<DictionaryMatc
 
   Future<bool> getCss() async {
     
-    indexCss = await context.read<DaKanjiDB>().mediaDao
+    indexCss = await GetIt.I<DaKanjiDB>().mediaDao
       .getCssFromIndex(widget.indexId);
 
     return true;
@@ -69,7 +69,7 @@ class _DictionaryMatchTermBankDefinitionWidgetState extends State<DictionaryMatc
           // Use a custom factory to handle local assets.
           factoryBuilder: () => CustomHtmlToWidgetFactory(
             widget.indexId,
-            context.read<DaKanjiDB>(),
+            GetIt.I<DaKanjiDB>(),
           ),
           // Handle taps on internal dictionary links.
           onTapUrl: (url) {

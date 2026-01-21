@@ -4,7 +4,7 @@ import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_details_table.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 
 class DictionaryManagementCard extends StatefulWidget {
   
@@ -29,8 +29,8 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
   @override
   Widget build(BuildContext context) {
 
-    var db = context.read<DaKanjiDB>();
-    var loc = context.read<DakanjiDbLocalization>();
+    var db = GetIt.I<DaKanjiDB>();
+    var loc = GetIt.I<DakanjiDbLocalization>();
 
     return Card(
       elevation: 2,

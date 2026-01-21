@@ -7,6 +7,7 @@ import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 /// A card representing a single grouping rule
@@ -36,7 +37,7 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
   Future<List<({IndexEntry index, IndexGroupingUsage usage})>> _allAvaibleIndexes() async {
 
     List<IndexEntry> allIndexes =
-      await context.read<DaKanjiDB>().indexDao.getAllIndexes();
+      await GetIt.I<DaKanjiDB>().indexDao.getAllIndexes();
 
     return allIndexes.nonNulls
       .where((index) => index.dictionaryType == DictionaryTypes.yomitan

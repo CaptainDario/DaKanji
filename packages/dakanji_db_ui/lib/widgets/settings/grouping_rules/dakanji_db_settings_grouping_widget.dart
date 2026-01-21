@@ -5,6 +5,7 @@ import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_card_add_butt
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
 import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_rule_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 
@@ -50,7 +51,7 @@ class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroup
   @override
   Widget build(BuildContext context) {
 
-    var loc = context.read<DakanjiDbLocalization>();
+    var loc = GetIt.I<DakanjiDbLocalization>();
     var settings = context.read<DaKanjiDbSettings>();
     var rules = settings.s.groupingRules;
 
