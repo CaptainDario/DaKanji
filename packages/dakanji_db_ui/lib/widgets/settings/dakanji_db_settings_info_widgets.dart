@@ -4,6 +4,16 @@ import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
 
 
+/// Shows an info snackbar
+void showInfoSnackbar(String message, BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 2),
+    ),
+  );
+}
+
 Future<void> showSettingsInfoPopup(String infoText, BuildContext context) async {
     await showGeneralDialog<DaKanjiDbSettingsInternal>(
       context: context,

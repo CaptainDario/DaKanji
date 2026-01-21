@@ -18,6 +18,7 @@ dependencies:
   css_inline_flutter:
   language_processing:
   
+  get_it: ^9.2.0
   shared_preferences: ^2.5.4
   async: ^2.13.0
   csslib: ^1.0.2

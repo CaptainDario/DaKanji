@@ -1,3 +1,4 @@
+import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
 import 'package:flutter/material.dart';
 
 
@@ -6,12 +7,15 @@ class DakanjiDbSettingsCardAddButton extends StatelessWidget {
 
   final String text;
 
+  final String? disabledReason;
+
   final VoidCallback? onPressed;
 
   const DakanjiDbSettingsCardAddButton(
     this.text,
-    this.onPressed,
     {
+      this.disabledReason,
+      this.onPressed,
       super.key
     }
   );
@@ -20,16 +24,21 @@ class DakanjiDbSettingsCardAddButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias, 
-      child: OutlinedButton.icon(
-        onPressed: onPressed,
-        icon: const Icon(Icons.add),
-        label: Text(text),
-        style: OutlinedButton.styleFrom(
-          side: BorderSide.none, 
-          minimumSize: const Size.fromHeight(52),
-          alignment: Alignment.center,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+      child: GestureDetector(
+        onTap: onPressed == null && disabledReason != null
+          ? () => showInfoSnackbar(disabledReason!, context)
+          : null, // Ignore tap if button is enabled or no reason given
+        child: OutlinedButton.icon(
+          onPressed: onPressed,
+          icon: const Icon(Icons.add),
+          label: Text(text),
+          style: OutlinedButton.styleFrom(
+            side: BorderSide.none, 
+            minimumSize: const Size.fromHeight(52),
+            alignment: Alignment.center,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
           ),
         ),
       ),

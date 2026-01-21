@@ -53,9 +53,11 @@ class _DakanjiDbDictionaryManagementWidgetState
 
             DakanjiDbSettingsCardAddButton(
               loc.importDictionary,
-              () {
-                // TODO : Implement import dictionary
-              }
+              // TODO add user import logic here
+              disabledReason: "User import of dictionaries is currently disabled.",
+              onPressed: true
+                ? null
+                : () {}
             )
           ],
         );

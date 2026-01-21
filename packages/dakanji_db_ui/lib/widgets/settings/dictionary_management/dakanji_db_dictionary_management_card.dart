@@ -1,6 +1,7 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
+import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_details_table.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -98,26 +99,42 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
           Row(
             mainAxisAlignment: .spaceEvenly,
             children: [
-              OutlinedButton(
-                onPressed: widget.dict.dictCanBeUpdated()
-                  ? () {
-
-                  }
-                  : null,
-                child: Row(
-                  children: [
-                    Icon(Icons.update),
-                    Text(loc.updateDictionary)
-                  ],
+              GestureDetector(
+                onTap: widget.dict.dictCanBeUpdated
+                  ? null
+                  // TODO localization
+                  : () => showInfoSnackbar("This dictionary does not provide updates.", context),
+                child: OutlinedButton(
+                  onPressed: widget.dict.dictCanBeUpdated
+                    ? () {
+                      // TODO update dictionary
+                    }
+                    : null,
+                  child: Row(
+                    children: [
+                      Icon(Icons.update),
+                      Text(loc.updateDictionary)
+                    ],
+                  ),
                 ),
               ),
-              OutlinedButton(
-                onPressed: () {},
-                child: Row(
-                  children: [
-                    Icon(Icons.delete),
-                    Text(loc.deleteDictionary)
-                  ],
+              GestureDetector(
+                onTap: widget.dict.isDefaultDictionary
+                  // TODO localization
+                  ? () => showInfoSnackbar("Default dictionaries cannot be deleted.", context)
+                  : null,
+                child: OutlinedButton(
+                  onPressed: widget.dict.isDefaultDictionary
+                    ? null
+                    : () {
+                      // TODO delete dictionary
+                    },
+                  child: Row(
+                    children: [
+                      Icon(Icons.delete),
+                      Text(loc.deleteDictionary)
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -127,6 +144,5 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
       ),
     );
   }
-
 
 }

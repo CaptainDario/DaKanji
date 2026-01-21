@@ -1,6 +1,4 @@
-import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
-import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,18 +6,13 @@ import 'package:provider/provider.dart';
 
 class DaKanjiDbSettingsDialog extends StatefulWidget {
 
-  final DaKanjiDB db;
-
+  /// The settings to edit
   final DaKanjiDbSettings settings;
-
-  final DakanjiDbLocalization localization;
 
   const DaKanjiDbSettingsDialog(
     {
       super.key,
       required this.settings,
-      required this.db,
-      required this.localization
     }
   );
 
@@ -51,20 +44,10 @@ class _DaKanjiDbSettingsDialogState extends State<DaKanjiDbSettingsDialog> {
       ),
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: SingleChildScrollView(
-        child: Provider<DaKanjiDB>.value(
-          value: widget.db,
-          builder: (cocontext, child) {
-            return ChangeNotifierProvider<DaKanjiDbSettings>.value(
-              value: widget.settings,
-              builder: (context, builder) {
-                return Provider<DakanjiDbLocalization>.value(
-                  value: widget.localization,
-                  builder: (context, child) {
-                    return DakanjiDbSettingsWidget();
-                  }
-                );
-              }
-            );
+        child: ChangeNotifierProvider<DaKanjiDbSettings>.value(
+          value: widget.settings,
+          builder: (context, builder) {
+            return DakanjiDbSettingsWidget();
           }
         ),
       )

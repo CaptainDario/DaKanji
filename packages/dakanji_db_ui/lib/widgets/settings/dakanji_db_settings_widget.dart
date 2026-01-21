@@ -7,6 +7,7 @@ import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_toggle_list_t
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_widget.dart';
 import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class DakanjiDbSettingsWidget extends StatefulWidget {
@@ -21,7 +22,7 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
   @override
   Widget build(BuildContext context) {
 
-    final loc = context.read<DakanjiDbLocalization>();
+    final loc = GetIt.I<DakanjiDbLocalization>();
     final s = context.watch<DaKanjiDbSettings>();
     final si = s.settings;
 

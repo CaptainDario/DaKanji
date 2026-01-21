@@ -8,11 +8,13 @@ import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_core/util/dakanji_db_search_manager.dart';
 import 'package:dakanji_db_ui/dakanji_db_ui.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
+import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/search_results/dictionary_search_result_widget.dart';
 import 'package:dakanji_db_ui/widgets/settings/search_settings_dialog.dart';
 import 'package:dakanji_db_ui_search_example/settings_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'globals.dart';
@@ -78,10 +80,11 @@ class _MyHomePageState extends State<MyHomePage> {
       daKanjiDB = DaKanjiDB(dbPath: localDbPath, inMemory: false);
 
       // --- Initialize the Search Isolate ---
-      _searchManager = DaKanjiDbSearchManager(
+      GetIt.I.registerSingleton<DaKanjiDbSearchManager>(DaKanjiDbSearchManager(
         daKanjiDB: daKanjiDB,
         debug: !kReleaseMode,
-      );
+      ));
+      GetIt.I.registerSingleton<DakanjiDbLocalization>(dakanjiDbLocalization);
 
       final List<IndexEntry> enabledIndexes =
           await daKanjiDB.indexDao.getAllEnabledIndexes();
@@ -139,11 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Center(
                       child: Material(
                         color: Colors.transparent,
-                        child: DaKanjiDbSettingsDialog(
-                          db: daKanjiDB,
-                          settings: settings,
-                          localization: dakanjiDbLocalization,
-                        ),
+                        child: DaKanjiDbSettingsDialog(settings: settings,),
                       ),
                     ),
                   );

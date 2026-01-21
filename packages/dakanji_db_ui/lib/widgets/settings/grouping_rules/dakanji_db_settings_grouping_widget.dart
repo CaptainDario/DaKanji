@@ -2,7 +2,7 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_r
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_card_add_button.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_popup.dart';
+import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
 import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_rule_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +74,7 @@ class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroup
         // The add button
         DakanjiDbSettingsCardAddButton(
           loc.addRule,
-          () {
+          onPressed: () {
             settings.update(settings.s.copyWith(
               groupingRules: [...rules, NoGroupingRule()]
             ));

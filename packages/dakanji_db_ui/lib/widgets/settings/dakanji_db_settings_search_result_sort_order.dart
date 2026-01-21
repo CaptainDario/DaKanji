@@ -1,6 +1,6 @@
 import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_popup.dart';
+import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';

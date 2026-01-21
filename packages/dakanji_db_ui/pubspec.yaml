@@ -24,6 +24,7 @@ dependencies:
   flutter_markdown_plus: ^1.0.7
   reorderables: ^0.6.0
   json_annotation: ^4.9.0
+  get_it: ^9.2.0
 
 dev_dependencies:
   flutter_test:
