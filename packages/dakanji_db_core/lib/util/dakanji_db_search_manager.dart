@@ -127,8 +127,6 @@ class DaKanjiDbSearchManager {
       }
       
       resultPort.close();
-      // Note: Worker isolates die automatically via Isolate.exit, 
-      // so we don't need to manually kill it here.
     });
 
     // 6. Send Job
