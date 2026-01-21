@@ -134,7 +134,7 @@ class IndexEntry with _$IndexEntry {
     targetLanguage = data.targetLanguage,
     frequencyMode = data.frequencyMode;
 
-  bool dictCanBeUpdated()
+  bool get dictCanBeUpdated
     => (isUpdatable ?? false) && (indexUrl != null) && (downloadUrl != null);
 
   /// Checks for updates for the dictonary 
