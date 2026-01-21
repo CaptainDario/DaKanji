@@ -34,14 +34,15 @@ class GroupingRuleCard extends StatefulWidget {
 class _GroupingRuleCardState extends State<GroupingRuleCard> {
 
   /// Returns all indexes with a flag indicating their usage in any rule
-  Future<List<({IndexEntry index, IndexGroupingUsage usage})>> _allAvaibleIndexes() async {
+  Future<List<({IndexEntry index, IndexGroupingUsage usage,})>>
+    _allAvaibleIndexes(bool onlySequenced) async {
 
     List<IndexEntry> allIndexes =
       await GetIt.I<DaKanjiDB>().indexDao.getAllIndexes();
 
     return allIndexes.nonNulls
       .where((index) => index.dictionaryType == DictionaryTypes.yomitan
-        && index.sequenced == true)
+        && (!onlySequenced || (onlySequenced && index.sequenced == true)))
       .map((allIndex) =>
         (
           index: allIndex,
@@ -130,7 +131,7 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
                   SourceSelectorRow(
                     rule: rule,
                     loc: loc,
-                    availableIndexesFuture: _allAvaibleIndexes(),
+                    availableIndexesFuture: _allAvaibleIndexes(true),
                     onChanged: (value) => _updateRuleAt(i, (rule.copyWith(sourceDictId: value)))
                   )
                 ],
@@ -178,7 +179,8 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
     
     // 1. Trigger the Future ONCE before opening the dialog.
     // This prevents the FutureBuilder from re-firing every time you tap a checkbox.
-    final Future<List<({IndexEntry index, IndexGroupingUsage usage})>> dataFuture = _allAvaibleIndexes();
+    Future<List<({IndexEntry index, IndexGroupingUsage usage})>> dataFuture
+      = _allAvaibleIndexes(false);
 
     // 2. Track selections locally
     final Set<int> tempSelectedIds = {};
