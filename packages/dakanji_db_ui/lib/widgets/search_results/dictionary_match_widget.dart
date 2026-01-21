@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_tag_bank_widget.dart';
@@ -29,6 +31,10 @@ class DictionaryMatchWidget extends StatelessWidget {
   /// Callback that is called when this widget is tapped.
   final Function(DictionaryMatch match)? onTap;
 
+  /// Callback that is called when a URL is tapped.
+  /// Should return true if the URL was handled.
+  final FutureOr<bool> Function(String url)? onUrlTap;
+
   const DictionaryMatchWidget(
     this.match,
     {
@@ -37,6 +43,7 @@ class DictionaryMatchWidget extends StatelessWidget {
       this.definitionsMaxHeight = 0,
       this.useKatakanaForFurigana = false,
       this.onTap,
+      this.onUrlTap,
       super.key
     }
   );
@@ -81,6 +88,7 @@ class DictionaryMatchWidget extends StatelessWidget {
                     child: DictionaryMatchTermBankDefinitionsWidget(
                       match.entries,
                       definitionsMaxHeight: definitionsMaxHeight,
+                      onTapUrl: onUrlTap,
                     ),
                     conditionalBuilder: (child) {
                       return SelectionContainer.disabled(child: child);

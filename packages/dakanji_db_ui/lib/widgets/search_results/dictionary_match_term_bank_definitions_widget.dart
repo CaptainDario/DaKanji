@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db_core/helper/string_extensions.dart';
 import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_tag.dart';
@@ -13,10 +15,15 @@ class DictionaryMatchTermBankDefinitionsWidget extends StatefulWidget {
   /// Max height for the definitions section. 0 = unlimited.
   final double definitionsMaxHeight;
 
+  /// Callback that is called when a URL is tapped.
+  /// Should return true if the URL was handled.
+  final FutureOr<bool> Function(String url)? onTapUrl;
+
   const DictionaryMatchTermBankDefinitionsWidget(
     this.entries,
     {
       this.definitionsMaxHeight = 0,
+      this.onTapUrl,
       super.key
     }
   );
@@ -97,7 +104,8 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
                 // the actual definitions (structured content or not)
                 DictionaryMatchTermBankDefinitionWidget(
                   definitions: entriesToShow[i].structuredContentDefinitions,
-                  indexId: entriesToShow[i].indexEntry.id
+                  indexId: entriesToShow[i].indexEntry.id,
+                  onTapUrl: widget.onTapUrl,
                 ),
                 if(i != entriesToShow.length - 1)
                   const SizedBox(height: 4,),

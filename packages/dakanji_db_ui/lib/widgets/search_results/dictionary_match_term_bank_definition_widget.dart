@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:css_inline_flutter/css_inline_flutter.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_ui/widgets/search_results/structured_content/custom_html_to_widget_factory.dart';
@@ -17,10 +19,15 @@ class DictionaryMatchTermBankDefinitionWidget extends StatefulWidget {
   /// The id of the index this definition belongs to
   final int indexId;
 
+  /// Callback that is called when a URL is tapped.
+  /// Should return true if the URL was handled.
+  final FutureOr<bool> Function(String url)? onTapUrl;
+
   const DictionaryMatchTermBankDefinitionWidget({
     super.key,
     required this.definitions,
     required this.indexId,
+    this.onTapUrl,
   });
 
   @override
@@ -72,22 +79,7 @@ class _DictionaryMatchTermBankDefinitionWidgetState extends State<DictionaryMatc
             GetIt.I<DaKanjiDB>(),
           ),
           // Handle taps on internal dictionary links.
-          onTapUrl: (url) {
-            // TODO URI
-            if (url.startsWith('?')) {
-              final uri = Uri.parse(url);
-              final query = uri.queryParameters['query'];
-              if (query != null) {
-                // TODO 
-                debugPrint('Internal link tapped! Search for: "$query"');
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Search for: $query')),
-                );
-              }
-              return true; // Mark the URL as handled.
-            }
-            return false; // Let the package handle external URLs.
-          },
+          onTapUrl: widget.onTapUrl,
         );
       }
     );
