@@ -36,7 +36,8 @@ class DictionaryManagementDetailsTable extends StatelessWidget {
     );
   }
 
-    Iterable<(String name, String value)> dictionaryInfo(IndexEntry dict) {
+  Iterable<(String name, String value)> dictionaryInfo(IndexEntry dict) {
+    // TODO add localization
     return [
       ("Id", dict.id.toString()),
       ("User dictionary", dict.isDefaultDictionary ? "Yes" : "No"),
