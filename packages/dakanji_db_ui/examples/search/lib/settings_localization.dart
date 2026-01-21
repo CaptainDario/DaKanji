@@ -177,7 +177,7 @@ There are four main strategies for this.
 | **No Grouping** | Show everything | Very long list, maximum detail. |
 | **Term + Reading** | Match Term AND Reading | Balanced, keeps different words separate. |
 | **Term** | Match Term only | Short list, groups all sounds together. |
-| **Sequence** | Match the "Core Concept" | Smartest grouping, merges spelling variations, but requires a dictionary to support it. |
+| **Related Term** | Match the "Core Concept" | Smartest grouping, merges spelling variations, but requires a dictionary to support it. |
 
 ---
 
@@ -200,14 +200,13 @@ This refers to grouping based solely on the Term, if two entries have the same T
 Since their terms are the same, they will be shown as one entry.
 2. If you look up "生", DaKanji may find 生 [せい] with a definition of "living" and 生 [せい] with a definition of "existence", these two entries will be also shown together as the Terms are identical.
 
-## 4. Sequence Grouping
-It relies on unique identification numbers (Sequence IDs) provided by dictionaries like JMdict (DaKanji's default dictionary).
-This is useful if one word can be written using multiple Terms but a dictionary needs to support it.
-This way, a dictionary can "link" entries even when the Terms are different but requires knowledge that the dictionary uses Sequence IDs.
-For this to work, DaKanji needs to know which dictionary defines the Sequence (Source) and which dictionaries use the same Sequence (Targets).
+## 4. Related Term Grouping
+It relies on unique identification numbers provided by dictionaries like JMdict (DaKanji's default dictionary) to group entries that are conceptually the same, even if their Terms or Readings differ.
+This is useful for example if one word can be written using multiple Terms.
+For this to work, DaKanji needs to know which dictionary defines the Sequence (Source) and which dictionaries use the same Sequence (Targets) which needs to be selected in the UI.
 
 ### Example
-Searching for "taberu" may find "食べる辣油" and "食べるラー油". Even though their Terms are different, JMDict uses the same Sequence ID for them, so they will be shown together.
+Searching for "taberu" may find "食べる辣油" and "食べるラー油". Even though their Terms are different, JMDict uses the same ID for them, so they will be shown together.
 """;
 
 String configureGroupingTitle = "Configure Grouping of Search Results";
