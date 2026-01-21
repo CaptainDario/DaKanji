@@ -27,7 +27,9 @@ IndexEntry _$IndexEntryFromJson(Map<String, dynamic> json) => IndexEntry(
   format: (json['format'] as num?)?.toInt(),
   version: (json['version'] as num?)?.toInt(),
   author: json['author'] as String?,
-  isUpdatable: json['isUpdatable'] as bool?,
+  isUpdatable: const NullableBoolAsIntConverter().fromJson(
+    (json['isUpdatable'] as num?)?.toInt(),
+  ),
   indexUrl: json['indexUrl'] as String?,
   downloadUrl: json['downloadUrl'] as String?,
   url: json['url'] as String?,
@@ -57,7 +59,9 @@ Map<String, dynamic> _$IndexEntryToJson(
   'format': instance.format,
   'version': instance.version,
   'author': instance.author,
-  'isUpdatable': instance.isUpdatable,
+  'isUpdatable': const NullableBoolAsIntConverter().toJson(
+    instance.isUpdatable,
+  ),
   'indexUrl': instance.indexUrl,
   'downloadUrl': instance.downloadUrl,
   'url': instance.url,

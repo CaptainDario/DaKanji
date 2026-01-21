@@ -59,6 +59,7 @@ class IndexEntry with _$IndexEntry {
   final String? author;
   /// Whether this dictionary contains links to its latest version.
   @override
+  @NullableBoolAsIntConverter()
   final bool? isUpdatable;
   /// URL for the index file of the latest revision of the dictionary, used to check for updates.
   @override
