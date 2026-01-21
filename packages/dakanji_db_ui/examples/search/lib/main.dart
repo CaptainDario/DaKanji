@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
     prefs = await SharedPreferences.getInstance();
     //await prefs.clear();
     String? s = prefs.getString("settings");
-    print(s);
+    debugPrint(s);
     if(s != null) {
       final loadedSettings = DaKanjiDbSettingsInternal.fromJson(jsonDecode(s));
       settings.update(loadedSettings);
