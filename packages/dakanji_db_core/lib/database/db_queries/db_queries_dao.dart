@@ -21,7 +21,7 @@ class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin 
   
   DBQueriesDao(super.db);
   
-    Future<List<AudioEntry>> audioSearch(String term) async {
+  Future<List<AudioEntry>> audioSearch(String term) async {
 
     final results = (await db.audio_search_drift(term).get())
       .map((e) => AudioEntry.fromAudioEntryViewData(e))
