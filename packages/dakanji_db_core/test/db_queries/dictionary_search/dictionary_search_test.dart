@@ -9,7 +9,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-import '../../util/db_files.dart';
+import '../../test_utils/db_files.dart';
 import 'dictionary_popularity_override_test_cases.dart';
 import 'dictionary_search_deconjugation_test_cases.dart';
 import 'dictionary_search_filtering_test_cases.dart';

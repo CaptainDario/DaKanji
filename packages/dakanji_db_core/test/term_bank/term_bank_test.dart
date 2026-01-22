@@ -8,7 +8,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-import '../util/db_files.dart';
+import '../test_utils/db_files.dart';
 import 'term_bank_test_cases_1.dart';
 import 'term_bank_test_cases_2.dart';
 import 'term_bank_v3_entry_matcher.dart';

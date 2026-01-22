@@ -8,7 +8,7 @@ import 'package:language_processing/iso/iso_table.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 
-import '../util/db_files.dart';
+import '../test_utils/db_files.dart';
 import 'example_texts_test_cases.dart';
 
 

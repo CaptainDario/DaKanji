@@ -11,7 +11,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
-import '../test/util/db_files.dart';
+import '../test/test_utils/db_files.dart';
 import 'get_sources.dart';
 
 

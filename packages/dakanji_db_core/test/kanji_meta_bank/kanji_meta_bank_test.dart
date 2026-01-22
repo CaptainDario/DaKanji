@@ -6,7 +6,7 @@ import 'package:dakanji_db_shared/paths.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 
-import '../util/db_files.dart';
+import '../test_utils/db_files.dart';
 import 'kanji_meta_bank_test_cases.dart';
 
 void main() {

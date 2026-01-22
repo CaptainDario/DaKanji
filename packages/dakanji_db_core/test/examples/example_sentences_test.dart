@@ -7,7 +7,7 @@ import 'package:dakanji_db_shared/paths.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 
-import '../util/db_files.dart';
+import '../test_utils/db_files.dart';
 import 'example_sentences_test_cases.dart';
 
 
