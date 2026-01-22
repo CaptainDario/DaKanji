@@ -49,7 +49,8 @@ The official (base dictionary that is shipped with DaKanji) consists of the foll
     * [Kanji Network](https://github.com/acoomans/kanjinetworks)
       * Database of etymologies for kanjis
   * Audio
-    * [Yomitan Audio](https://github.com/yomidevs/local-audio-yomichan)
+    * [Kanjialive](https://github.com/kanjialive/kanji-data-media/tree/master/examples-audio)
+    * [WaniKanji]()
   * Examples
     * Tatoeba (based on DaKanji example format)
 
