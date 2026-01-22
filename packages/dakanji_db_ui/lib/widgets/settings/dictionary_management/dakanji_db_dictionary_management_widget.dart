@@ -44,7 +44,7 @@ class _DakanjiDbDictionaryManagementWidgetState
               children: [
                 for (int i = 0; i < dictsInOrder.length; i++) 
                   DictionaryManagementCard(
-                    dict: dictsInOrder[i],
+                    entry: dictsInOrder[i],
                     index: i,
                     key: ValueKey(dictsInOrder[i].id),
                   )

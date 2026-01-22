@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 /// if the given dictionary has update information, check if there are updates
 /// available.
 /// Returns true if updates are available, false otherwise.
-Future<bool> checkDictionaryUpdates(IndexEntry entry) async {
+Future<bool> checkIfDictionaryHasUpdates(IndexEntry entry) async {
 
   // all necessary fields must NOT be null
   if (entry.indexUrl == null || entry.isUpdatable == null || entry.downloadUrl == null) {

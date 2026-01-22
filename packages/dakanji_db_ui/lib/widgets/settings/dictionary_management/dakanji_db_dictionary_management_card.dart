@@ -3,18 +3,19 @@ import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_details_table.dart';
+import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_update_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class DictionaryManagementCard extends StatefulWidget {
   
-  final IndexEntry dict;
+  final IndexEntry entry;
 
   final int index;
   
   const DictionaryManagementCard({
     super.key,
-    required this.dict,
+    required this.entry,
     required this.index,
   });
 
@@ -56,7 +57,7 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
           
         // Title in the Middle
         title: Text(
-          "${widget.dict.currentSortingOrder}: ${widget.dict.title}",
+          "${widget.entry.currentSortingOrder}: ${widget.entry.title}",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -66,10 +67,10 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Switch(
-              value: widget.dict.enabled,
+              value: widget.entry.enabled,
               // enable/disable dictionaries
               onChanged: (value) async {
-                await db.indexDao.setEnabled(widget.dict.id, value);
+                await db.indexDao.setEnabled(widget.entry.id, value);
               },
             ),
             const SizedBox(width: 8,),
@@ -92,7 +93,7 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
             ),
             child: SingleChildScrollView(
               primary: false,
-              child: DictionaryManagementDetailsTable(widget.dict,),
+              child: DictionaryManagementDetailsTable(widget.entry,),
             ),
           ),
           SizedBox(height: 8),
@@ -100,14 +101,28 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
             mainAxisAlignment: .spaceEvenly,
             children: [
               GestureDetector(
-                onTap: widget.dict.dictCanBeUpdated
+                onTap: widget.entry.dictCanBeUpdated
                   ? null
                   // TODO localization
                   : () => showInfoSnackbar("This dictionary does not provide updates.", context),
                 child: OutlinedButton(
-                  onPressed: widget.dict.dictCanBeUpdated
-                    ? () {
-                      // TODO update dictionary
+                  onPressed: widget.entry.dictCanBeUpdated
+                    ? () async {
+                      await showGeneralDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                        return ScaleTransition(
+                          scale: animation,
+                          child: Center(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: DaKanjiDbDictionaryUpdatePopup(widget.entry),
+                            ),
+                          ),
+                        );
+                      });
                     }
                     : null,
                   child: Row(
@@ -119,12 +134,12 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
                 ),
               ),
               GestureDetector(
-                onTap: widget.dict.isDefaultDictionary
+                onTap: widget.entry.isDefaultDictionary
                   // TODO localization
                   ? () => showInfoSnackbar("Default dictionaries cannot be deleted.", context)
                   : null,
                 child: OutlinedButton(
-                  onPressed: widget.dict.isDefaultDictionary
+                  onPressed: widget.entry.isDefaultDictionary
                     ? null
                     : () {
                       // TODO delete dictionary

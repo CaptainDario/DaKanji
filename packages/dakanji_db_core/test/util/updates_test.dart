@@ -21,7 +21,7 @@ void main() async {
     isUpdatable: true,
   );
 
-  bool hasUpdates = await checkDictionaryUpdates(entry);
+  bool hasUpdates = await checkIfDictionaryHasUpdates(entry);
 
   print(hasUpdates);
 
