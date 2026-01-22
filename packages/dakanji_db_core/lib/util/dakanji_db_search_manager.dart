@@ -209,7 +209,7 @@ class DaKanjiDbSearchManager {
     await for (final msg in commandPort) {
       if (msg is _WorkerJob) {
         try {
-          final result = await db.dBQueriesDao.dictionarySearch(
+          final result = await db.dictionarySearchDao.dictionarySearch(
             msg.params,
             printDebugInfo: msg.debug,
           );

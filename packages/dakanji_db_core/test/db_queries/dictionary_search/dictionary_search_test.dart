@@ -93,7 +93,7 @@ void main() {
             else 
               await db.indexDao.clearFrequencyOverride();
             // Perform the search
-            final results = (await db.dBQueriesDao.dictionarySearch(
+            final results = (await db.dictionarySearchDao.dictionarySearch(
               DictionarySearchParams(
                 query: testCase.query,
                 tags: testCase.tags, pos: testCase.pos,

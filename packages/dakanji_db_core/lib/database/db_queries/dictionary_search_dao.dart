@@ -1,12 +1,10 @@
 import "dart:convert";
 
-import "package:dakanji_db_core/database/audio/audio_entry.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_util.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart";
-import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:drift/drift.dart";
 import "package:language_processing/japanese/conjugation/yomitan_deconjugate.dart";
 import "package:language_processing/japanese/japanese_string_operations.dart";
@@ -14,36 +12,12 @@ import "package:language_processing/japanese/spellfix/spellfix.dart";
 
 import "../dakanji_db.dart";
 
-part "db_queries_dao.g.dart";
+part "dictionary_search_dao.g.dart";
 
 @DriftAccessor()
-class DBQueriesDao extends DatabaseAccessor<DaKanjiDB> with _$DBQueriesDaoMixin {
+class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionarySearchDaoMixin {
   
-  DBQueriesDao(super.db);
-  
-  Future<List<AudioEntry>> audioSearch(String term) async {
-
-    final results = (await db.audio_search_drift(term).get())
-      .map((e) => AudioEntry.fromAudioEntryViewData(e))
-      .toList();
-    
-    return results;
-
-  }
-
-  Future<List<KanjiDictionarySearchResult>> kanjiDictionarySearch(List<String> kanjis) async {
-
-    if(kanjis.isEmpty) return [];
-
-    // run the query
-    final searchResults = await db.kanji_dictionary_search_drift(kanjis).get();
-    final convertedResults = searchResults.map((result) =>
-      KanjiDictionarySearchResult.fromKanjiDictionarySearchViewData(result)
-    ).toList();
-
-    return convertedResults;
-
-  }
+  DictionarySearchDao(super.db);
 
   /// Searches the dictionary for the given [term] with various options.
   /// Read the documentation of [DictionarySearchParams] for details on each
