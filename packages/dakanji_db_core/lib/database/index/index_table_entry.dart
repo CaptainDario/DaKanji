@@ -145,6 +145,32 @@ class IndexEntry with _$IndexEntry {
 
   }
 
+  bool compareRevision (String other) {
+    final simpleVersionTest = RegExp(r'^(\d+\.)*\d+$');
+
+    // 1. If strict format check fails, fall back to string comparison
+    if (!simpleVersionTest.hasMatch(revision) || !simpleVersionTest.hasMatch(other)) {
+      return revision.compareTo(other) < 0;
+    }
+
+    final currentParts = revision.split('.').map(int.parse).toList();
+    final latestParts = other.split('.').map(int.parse).toList();
+
+    // 2. If length mismatch, fall back to string comparison
+    if (currentParts.length != latestParts.length) {
+      return revision.compareTo(other) < 0;
+    }
+
+    // 3. Compare parts numerically
+    for (var i = 0; i < currentParts.length; i++) {
+      if (currentParts[i] != latestParts[i]) {
+        return currentParts[i] < latestParts[i];
+      }
+    }
+
+    return false;
+  }
+
   Map<String, Object?> toJson() => _$IndexEntryToJson(this);
 
   factory IndexEntry.fromJson(Map<String, Object?> json) 
