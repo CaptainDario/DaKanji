@@ -111,9 +111,18 @@ List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKat
 
   // Final Flush
   if (currentPair.kanji.isNotEmpty || readingIndex < reading.length) {
+    
+    // If readings are left over, but NO Kanji to attach it to,
+    // it means the input is mismatched
+    // --> Return the entire original text and reading as one block.
+    if (currentPair.kanji.isEmpty && readingIndex < reading.length) {
+      return [FuriganaPair(text, reading)];
+    }
+
     currentPair.reading += reading.substring(readingIndex);
     result.add(currentPair);
   }
 
   return result;
+
 }

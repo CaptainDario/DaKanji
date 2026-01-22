@@ -82,4 +82,30 @@ List<(
     ],
     true
   ),
+  (
+    {"kanji": "食べる辣油", "kana": "たべるラーゆ"},
+    [
+      FuriganaPair("食", "タ"),
+      FuriganaPair("", "ベル"),
+      FuriganaPair("辣油", "ラーユ"),
+    ],
+    true
+  ),
+  (
+    {"kanji": "食べる辣油", "kana": "たべるラーゆ"},
+    [
+      FuriganaPair("食", "た"),
+      FuriganaPair("", "べる"),
+      FuriganaPair("辣油", "ラーゆ"),
+    ],
+    false 
+  ),
+  // if the algorithm can't perfectly match, it should not break the output
+  (
+    {"kanji": "食べる", "kana": "たべるべる"},
+    [
+      FuriganaPair("食べる", "たべるべる"),
+    ],
+    false
+  ),
 ];
