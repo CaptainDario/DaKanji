@@ -125,7 +125,8 @@ class DictionarySearchResult {
     required this.queryVariantMatches,
     required this.fuzzyMatches,
   }) {
-    // Legacy duplicate clean-up (can be kept for safety)
+
+    // clean-up duplicates
     final Set<String> seenEntryIds = {};
     _processMatchGroup(queryMatches, seenEntryIds);
     for (final g in normalizedQueryMatchGroups) _processMatchGroup(g, seenEntryIds);
