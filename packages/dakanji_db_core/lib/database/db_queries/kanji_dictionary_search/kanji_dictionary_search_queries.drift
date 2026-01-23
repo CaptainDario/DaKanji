@@ -1,6 +1,21 @@
 import 'kanji_dictionary_search_views.drift';
+import '/database/kanji/kanji_bank_v3_tables.dart';
+import '/database/general_tables/kanji_tables.dart';
 
 
 
-kanji_dictionary_search_drift:
-    SELECT * FROM kanji_dictionary_search_view WHERE kanji IN :kanjis;
+kanji_dictionary_find_kanji_bank_entries_drift:
+
+    SELECT
+        KBV3T.id AS id
+    FROM
+        kanji_table AS KDT
+    JOIN
+        kanji_bank_v3_table AS KBV3T ON KBV3T.kanji_id = KDT.id
+    WHERE
+        KDT.kanji IN :kanjis;
+
+
+kanji_dictionary_find_kanji_details_drift:
+    SELECT * FROM kanji_dictionary_search_view 
+    WHERE id IN :ids;

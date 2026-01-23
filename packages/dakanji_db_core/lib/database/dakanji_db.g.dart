@@ -5330,7 +5330,7 @@ class KanjiBankV3EntryView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS SELECT KB3T.id AS id, IV.index_entry AS indexEntry, KB3T.index_id AS indexId, KT.kanji, COALESCE(JSON_GROUP_ARRAY(DISTINCT onyomi.reading ORDER BY OOJ."key"), JSON(\'[]\')) AS onyomis, COALESCE(JSON_GROUP_ARRAY(DISTINCT kunyomi.reading ORDER BY KOJ."key"), JSON(\'[]\')) AS kunyomis, COALESCE(JSON_GROUP_ARRAY(DISTINCT JSON(TagJSON.tag_json)), JSON(\'[]\')) AS tags, COALESCE(JSON_GROUP_ARRAY(DISTINCT DT.definition ORDER BY DOJ."key"), JSON(\'[]\')) AS definitions, COALESCE(JSON_GROUP_ARRAY(DISTINCT JSON_OBJECT(\'name\', KB3SNT.stat_name, \'value\', KB3SVT.stat_value)), JSON(\'[]\')) AS stats FROM kanji_bank_v3_table AS KB3T INNER JOIN kanji_table AS KT ON KT.id = KB3T.kanji_id JOIN index_entry_as_json_view AS IV ON KB3T.index_id = IV.id LEFT JOIN kanji_bank_v3_x_onyomi_reading_table AS KB3ORRT ON KB3ORRT.kanji_id = KB3T.id LEFT JOIN reading_table AS onyomi ON KB3ORRT.onyomi_reading_id = onyomi.id LEFT JOIN json_each(KB3T.onyomi_order)AS OOJ ON OOJ.value = KB3ORRT.onyomi_reading_id LEFT JOIN kanji_bank_v3_x_kunyomi_reading_table AS KB3KRRT ON KB3KRRT.kanji_id = KB3T.id LEFT JOIN reading_table AS kunyomi ON KB3KRRT.kunyomi_reading_id = kunyomi.id LEFT JOIN json_each(KB3T.kunyomi_order)AS KOJ ON KOJ.value = KB3KRRT.kunyomi_reading_id LEFT JOIN kanji_bank_v3_x_tag_bank_v3_table AS KB3TKRT ON KB3TKRT.kanji_id = KB3T.id LEFT JOIN tag_bank_v3_as_json_view AS TagJSON ON KB3TKRT.tag_id = TagJSON.tag_id LEFT JOIN kanji_bank_v3_x_definition_table AS KB3DKRT ON KB3DKRT.kanji_id = KB3T.id LEFT JOIN definition_table AS DT ON KB3DKRT.definition_id = DT.id LEFT JOIN json_each(KB3T.definition_order)AS DOJ ON DOJ.value = KB3DKRT.definition_id LEFT JOIN kanji_bank_v3_x_kanji_bank_v3_stats_table AS KB3SKRT ON KB3SKRT.kanji_id = KB3T.id LEFT JOIN kanji_bank_v3_stats_table AS KB3ST ON KB3SKRT.stat_id = KB3ST.id LEFT JOIN kanji_bank_v3_stat_names_table AS KB3SNT ON KB3SNT.id = KB3ST.stat_name_id LEFT JOIN kanji_bank_v3_stat_values_table AS KB3SVT ON KB3SVT.id = KB3ST.stat_value_id GROUP BY KT.id',
+        'CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS SELECT KB3T.id AS id, IV.index_entry AS indexEntry, KB3T.index_id AS indexId, KT.kanji, COALESCE(JSON_GROUP_ARRAY(DISTINCT onyomi.reading ORDER BY OOJ."key"), JSON(\'[]\')) AS onyomis, COALESCE(JSON_GROUP_ARRAY(DISTINCT kunyomi.reading ORDER BY KOJ."key"), JSON(\'[]\')) AS kunyomis, COALESCE(JSON_GROUP_ARRAY(DISTINCT JSON(TagJSON.tag_json)), JSON(\'[]\')) AS tags, COALESCE(JSON_GROUP_ARRAY(DISTINCT DT.definition ORDER BY DOJ."key"), JSON(\'[]\')) AS definitions, COALESCE(JSON_GROUP_ARRAY(DISTINCT JSON_OBJECT(\'name\', KB3SNT.stat_name, \'value\', KB3SVT.stat_value)), JSON(\'[]\')) AS stats FROM kanji_bank_v3_table AS KB3T INNER JOIN kanji_table AS KT ON KT.id = KB3T.kanji_id JOIN index_entry_as_json_view AS IV ON KB3T.index_id = IV.id LEFT JOIN kanji_bank_v3_x_onyomi_reading_table AS KB3ORRT ON KB3ORRT.kanji_id = KB3T.id LEFT JOIN reading_table AS onyomi ON KB3ORRT.onyomi_reading_id = onyomi.id LEFT JOIN json_each(KB3T.onyomi_order)AS OOJ ON OOJ.value = KB3ORRT.onyomi_reading_id LEFT JOIN kanji_bank_v3_x_kunyomi_reading_table AS KB3KRRT ON KB3KRRT.kanji_id = KB3T.id LEFT JOIN reading_table AS kunyomi ON KB3KRRT.kunyomi_reading_id = kunyomi.id LEFT JOIN json_each(KB3T.kunyomi_order)AS KOJ ON KOJ.value = KB3KRRT.kunyomi_reading_id LEFT JOIN kanji_bank_v3_x_tag_bank_v3_table AS KB3TKRT ON KB3TKRT.kanji_id = KB3T.id LEFT JOIN tag_bank_v3_as_json_view AS TagJSON ON KB3TKRT.tag_id = TagJSON.tag_id LEFT JOIN kanji_bank_v3_x_definition_table AS KB3DKRT ON KB3DKRT.kanji_id = KB3T.id LEFT JOIN definition_table AS DT ON KB3DKRT.definition_id = DT.id LEFT JOIN json_each(KB3T.definition_order)AS DOJ ON DOJ.value = KB3DKRT.definition_id LEFT JOIN kanji_bank_v3_x_kanji_bank_v3_stats_table AS KB3SKRT ON KB3SKRT.kanji_id = KB3T.id LEFT JOIN kanji_bank_v3_stats_table AS KB3ST ON KB3SKRT.stat_id = KB3ST.id LEFT JOIN kanji_bank_v3_stat_names_table AS KB3SNT ON KB3SNT.id = KB3ST.stat_name_id LEFT JOIN kanji_bank_v3_stat_values_table AS KB3SVT ON KB3SVT.id = KB3ST.stat_value_id GROUP BY KB3T.id',
   };
   @override
   KanjiBankV3EntryView get asDslTable => this;
@@ -6461,7 +6461,7 @@ class KanjiDictionarySearchView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS kanji_dictionary_search_view AS SELECT k.*, (SELECT json_group_array(json_object(\'kanji\', km.kanji, \'indexEntry\', km.indexEntry, \'type\', km.type, \'freqValue\',(km.freq_value), \'freqDisplayValue\', km.freq_display_value)) FROM kanji_meta_bank_v3_entry_view AS km WHERE km.kanji = k.kanji) AS kanjiMetaBankV3Entries FROM kanji_bank_v3_entry_view AS k',
+        'CREATE VIEW IF NOT EXISTS kanji_dictionary_search_view AS SELECT k.*, (SELECT json_group_array(json_object(\'id\', km.id, \'kanji\', km.kanji, \'indexEntry\', km.indexEntry, \'type\', km.type, \'freqValue\',(km.freq_value), \'freqDisplayValue\', km.freq_display_value)) FROM kanji_meta_bank_v3_entry_view AS km WHERE km.kanji = k.kanji) AS kanjiMetaBankV3Entries FROM kanji_bank_v3_entry_view AS k',
   };
   @override
   KanjiDictionarySearchView get asDslTable => this;
@@ -17825,6 +17825,26 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       KanjiMetaBankV3EntryView(this);
   late final KanjiDictionarySearchView kanjiDictionarySearchView =
       KanjiDictionarySearchView(this);
+  late final Index kanjiTableKanjiIndex = Index(
+    'KanjiTable_kanjiIndex',
+    'CREATE INDEX KanjiTable_kanjiIndex ON kanji_table (kanji)',
+  );
+  late final Index kanjiBankV3TableIndexIdIndex = Index(
+    'KanjiBankV3Table_indexIdIndex',
+    'CREATE INDEX KanjiBankV3Table_indexIdIndex ON kanji_bank_v3_table (index_id)',
+  );
+  late final Index kanjiBankV3TableKanjiIdIndex = Index(
+    'KanjiBankV3Table_KanjiIdIndex',
+    'CREATE INDEX KanjiBankV3Table_KanjiIdIndex ON kanji_bank_v3_table (kanji_id)',
+  );
+  late final Index kanjiBankV3StatsTableStatNameIdIndex = Index(
+    'KanjiBankV3StatsTable_statNameIdIndex',
+    'CREATE INDEX KanjiBankV3StatsTable_statNameIdIndex ON kanji_bank_v3_stats_table (stat_name_id)',
+  );
+  late final Index kanjiBankV3StatsTableStatValueIdIndex = Index(
+    'KanjiBankV3StatsTable_statValueIdIndex',
+    'CREATE INDEX KanjiBankV3StatsTable_statValueIdIndex ON kanji_bank_v3_stats_table (stat_value_id)',
+  );
   late final SearchFts searchFts = SearchFts(this);
   late final FtsDataTypes ftsDataTypes = FtsDataTypes(this);
   late final $TermTableTable termTable = $TermTableTable(this);
@@ -18036,10 +18056,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'KanjiMetaBankV3Table_typeIdIndex',
     'CREATE INDEX KanjiMetaBankV3Table_typeIdIndex ON kanji_meta_bank_v3_table (type_id)',
   );
-  late final Index kanjiTableKanjiIndex = Index(
-    'KanjiTable_kanjiIndex',
-    'CREATE INDEX KanjiTable_kanjiIndex ON kanji_table (kanji)',
-  );
   late final Index kanjiBankV3XOnyomiReadingTableOnyomiReadingIdIndex = Index(
     'KanjiBankV3_X_OnyomiReadingTable_onyomiReadingIdIndex',
     'CREATE INDEX KanjiBankV3_X_OnyomiReadingTable_onyomiReadingIdIndex ON kanji_bank_v3_x_onyomi_reading_table (onyomi_reading_id)',
@@ -18079,22 +18095,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final Index kanjiBankV3XKanjiBankV3StatsTableKanjiIdIndex = Index(
     'KanjiBankV3_X_KanjiBankV3StatsTable_kanjiIdIndex',
     'CREATE INDEX KanjiBankV3_X_KanjiBankV3StatsTable_kanjiIdIndex ON kanji_bank_v3_x_kanji_bank_v3_stats_table (kanji_id)',
-  );
-  late final Index kanjiBankV3TableIndexIdIndex = Index(
-    'KanjiBankV3Table_indexIdIndex',
-    'CREATE INDEX KanjiBankV3Table_indexIdIndex ON kanji_bank_v3_table (index_id)',
-  );
-  late final Index kanjiBankV3TableKanjiIdIndex = Index(
-    'KanjiBankV3Table_KanjiIdIndex',
-    'CREATE INDEX KanjiBankV3Table_KanjiIdIndex ON kanji_bank_v3_table (kanji_id)',
-  );
-  late final Index kanjiBankV3StatsTableStatNameIdIndex = Index(
-    'KanjiBankV3StatsTable_statNameIdIndex',
-    'CREATE INDEX KanjiBankV3StatsTable_statNameIdIndex ON kanji_bank_v3_stats_table (stat_name_id)',
-  );
-  late final Index kanjiBankV3StatsTableStatValueIdIndex = Index(
-    'KanjiBankV3StatsTable_statValueIdIndex',
-    'CREATE INDEX KanjiBankV3StatsTable_statValueIdIndex ON kanji_bank_v3_stats_table (stat_value_id)',
   );
   late final $MediaTableTable mediaTable = $MediaTableTable(this);
   late final $AudioTableTable audioTable = $AudioTableTable(this);
@@ -18233,15 +18233,27 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   );
   late final KanjiSearchDao kanjiSearchDao = KanjiSearchDao(this as DaKanjiDB);
   late final DeletionDao deletionDao = DeletionDao(this as DaKanjiDB);
-  Selectable<KanjiDictionarySearchViewData> kanji_dictionary_search_drift(
+  Selectable<int> kanji_dictionary_find_kanji_bank_entries_drift(
     List<String> kanjis,
   ) {
     var $arrayStartIndex = 1;
     final expandedkanjis = $expandVar($arrayStartIndex, kanjis.length);
     $arrayStartIndex += kanjis.length;
     return customSelect(
-      'SELECT * FROM kanji_dictionary_search_view WHERE kanji IN ($expandedkanjis)',
+      'SELECT KBV3T.id AS id FROM kanji_table AS KDT JOIN kanji_bank_v3_table AS KBV3T ON KBV3T.kanji_id = KDT.id WHERE KDT.kanji IN ($expandedkanjis)',
       variables: [for (var $ in kanjis) Variable<String>($)],
+      readsFrom: {kanjiBankV3Table, kanjiTable},
+    ).map((QueryRow row) => row.read<int>('id'));
+  }
+
+  Selectable<KanjiDictionarySearchViewData>
+  kanji_dictionary_find_kanji_details_drift(List<int> ids) {
+    var $arrayStartIndex = 1;
+    final expandedids = $expandVar($arrayStartIndex, ids.length);
+    $arrayStartIndex += ids.length;
+    return customSelect(
+      'SELECT * FROM kanji_dictionary_search_view WHERE id IN ($expandedids)',
+      variables: [for (var $ in ids) Variable<int>($)],
       readsFrom: {
         kanjiBankV3Table,
         kanjiTable,
@@ -18665,6 +18677,11 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     kanjiMetaBankV3Table,
     kanjiMetaBankV3EntryView,
     kanjiDictionarySearchView,
+    kanjiTableKanjiIndex,
+    kanjiBankV3TableIndexIdIndex,
+    kanjiBankV3TableKanjiIdIndex,
+    kanjiBankV3StatsTableStatNameIdIndex,
+    kanjiBankV3StatsTableStatValueIdIndex,
     searchFts,
     ftsDataTypes,
     termTable,
@@ -18731,7 +18748,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     kanjiMetaBankV3TableIndexIdIndex,
     kanjiMetaBankV3TableKanjiIdIndex,
     kanjiMetaBankV3TableTypeIdIndex,
-    kanjiTableKanjiIndex,
     kanjiBankV3XOnyomiReadingTableOnyomiReadingIdIndex,
     kanjiBankV3XOnyomiReadingTableKanjiIdIndex,
     kanjiBankV3XKunyomiReadingTableKunyomiReadingIdIndex,
@@ -18742,10 +18758,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     kanjiBankV3XDefinitionTableKanjiIdIndex,
     kanjiBankV3XKanjiBankV3StatsTableStatIdIndex,
     kanjiBankV3XKanjiBankV3StatsTableKanjiIdIndex,
-    kanjiBankV3TableIndexIdIndex,
-    kanjiBankV3TableKanjiIdIndex,
-    kanjiBankV3StatsTableStatNameIdIndex,
-    kanjiBankV3StatsTableStatValueIdIndex,
     mediaTable,
     audioTable,
     audioTableXTermTable,

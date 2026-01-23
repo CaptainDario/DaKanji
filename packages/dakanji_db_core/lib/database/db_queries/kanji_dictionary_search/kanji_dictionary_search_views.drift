@@ -9,6 +9,7 @@ CREATE VIEW IF NOT EXISTS kanji_dictionary_search_view AS
         SELECT
             json_group_array(
                 json_object(
+                    'id', km.id,
                     'kanji', km.kanji,
                     'indexEntry', km.indexEntry,
                     'type', km.type,

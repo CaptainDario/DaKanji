@@ -73,15 +73,16 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
       id: r.id,
       kanji: r.kanji,
       indexEntry: IndexEntry.fromJson(jsonDecode(r.indexEntry)),
-      onyomis: List<String>.from(jsonDecode(r.onyomis)),
-      kunyomis: List<String>.from(jsonDecode(r.kunyomis)),
+      onyomis: List<String?>.from(jsonDecode(r.onyomis)).nonNulls.toList(),
+      kunyomis: List<String?>.from(jsonDecode(r.kunyomis)).nonNulls.toList(),
       tags: List.from(jsonDecode(r.tags))
         .map((e) => TagBankV3Entry.fromJson(e))
-        .toList(),
-      definitions: List<String>.from(jsonDecode(r.definitions)),
+        .nonNulls.toList(),
+      definitions: List<String>.from(jsonDecode(r.definitions))
+        .nonNulls.toList(),
       stats: List.from(jsonDecode(r.stats))
         .map((e) => KanjiBankV3EntryStat.fromJson(e))
-        .toList(),
+        .nonNulls.toList(),
     );
   }
 

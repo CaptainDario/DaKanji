@@ -74,5 +74,4 @@ CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
     LEFT JOIN kanji_bank_v3_stat_names_table AS KB3SNT ON KB3SNT.id = KB3ST.stat_name_id
     LEFT JOIN kanji_bank_v3_stat_values_table AS KB3SVT ON KB3SVT.id = KB3ST.stat_value_id
 
-    GROUP BY
-        KT.id;
+    GROUP BY KB3T.id;

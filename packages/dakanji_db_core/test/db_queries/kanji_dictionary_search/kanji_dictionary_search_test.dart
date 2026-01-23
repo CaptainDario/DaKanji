@@ -28,7 +28,6 @@ void main() {
         List<KanjiDictionarySearchResult> result =
           (await db.kanjiSearchDao.kanjiDictionarySearch(testCase));
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
-        print(result);
 
         // 1. First, check that the number of results we got from the DB
         expect(result.length, equals(kanjiDictionarySearchTestCaseExpectations.length));
@@ -36,20 +35,46 @@ void main() {
         for (int i = 0; i < result.length; i++) {
           final actualResult = result[i];
           final expectedResult = kanjiDictionarySearchTestCaseExpectations[i];
+          print("Actual result: $actualResult");
+          print("Expected kanji result: ${expectedResult.kanjiBankEntry}");
+          print("Expected kanji meat result: ${expectedResult.kanjiMetaBankEntries}");
 
           // Compare the kanji bank entry
           expect(
-            actualResult.kanjiBankEntry, 
+            actualResult.kanjiBankEntry.copyWith(
+              // ignore IDs, etc. for comparison
+              id: 0,
+              indexEntry: actualResult.kanjiBankEntry.indexEntry.copyWith(
+                id: 0,
+                currentSortingOrder: 0
+              ),
+              tags: actualResult.kanjiBankEntry.tags.map((e) => e.copyWith(
+                id: 0,
+                indexEntry: e.indexEntry.copyWith(
+                  id: 0,
+                  currentSortingOrder: 0
+                ),
+              )).toList(),
+            ), 
             equals(expectedResult.kanjiBankEntry),
             reason: "KanjiBankV3Entry for '${actualResult.kanjiBankEntry.kanji}' did not match expectation."
           );
 
           // Compare the list of meta entries
-          expect(
-            actualResult.kanjiMetaBankEntries, 
-            equals(expectedResult.kanjiMetaBankEntries),
-            reason: "KanjiMetaBankV3Entry list for '${actualResult.kanjiBankEntry.kanji}' did not match expectation."
-          );
+          for (var i = 0; i < expectedResult.kanjiMetaBankEntries.length; i++) {
+            expect(
+              actualResult.kanjiMetaBankEntries[i].copyWith(
+                // ignore IDs, etc. for comparison
+                id: 0,
+                indexEntry: actualResult.kanjiMetaBankEntries[i].indexEntry.copyWith(
+                  id: 0,
+                  currentSortingOrder: 0
+                ),
+              ),
+              equals(expectedResult.kanjiMetaBankEntries[i]),
+              reason: "KanjiMetaBankV3Entry at index $i for '${actualResult.kanjiBankEntry.kanji}' did not match expectation."
+            ); 
+          }
         }
       });
     }

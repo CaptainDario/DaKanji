@@ -16,8 +16,12 @@ class KanjiSearchDao extends DatabaseAccessor<DaKanjiDB> with _$KanjiSearchDaoMi
     if(kanjis.isEmpty) return [];
 
     // run the query
-    final searchResults = await db.kanji_dictionary_search_drift(kanjis).get();
-    final convertedResults = searchResults.map((result) =>
+    final ids =
+      await db.kanji_dictionary_find_kanji_bank_entries_drift(kanjis)
+      .get();
+    final details = 
+      await db.kanji_dictionary_find_kanji_details_drift(ids).get();
+    final convertedResults = details.map((result) =>
       KanjiDictionarySearchResult.fromKanjiDictionarySearchViewData(result)
     ).toList();
 
