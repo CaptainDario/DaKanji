@@ -62,6 +62,8 @@ _DaKanjiDbSettings _$DaKanjiDbSettingsFromJson(Map<String, dynamic> json) =>
           const [],
       showSearchResultSeparationHeaders:
           json['showSearchResultSeparationHeaders'] as bool? ?? true,
+      showKanjiEntriesInSearchResults:
+          json['showKanjiEntriesInSearchResults'] as bool? ?? true,
       showTags: json['showTags'] as bool? ?? true,
       showMetaEntries: json['showMetaEntries'] as bool? ?? true,
       definitionsMaxHeight:
@@ -72,37 +74,39 @@ _DaKanjiDbSettings _$DaKanjiDbSettingsFromJson(Map<String, dynamic> json) =>
       searchResultLimit: (json['searchResultLimit'] as num?)?.toInt() ?? 100,
     );
 
-Map<String, dynamic> _$DaKanjiDbSettingsToJson(_DaKanjiDbSettings instance) =>
-    <String, dynamic>{
-      'firstSortOrder': instance.firstSortOrder
-          .map(
-            (e) => <String, dynamic>{
-              r'$1': _$DakanjiDbSearchResult1stSortOrderEnumMap[e.$1]!,
-              r'$2': e.$2,
-            },
-          )
-          .toList(),
-      'secondSortOrder': instance.secondSortOrder
-          .map(
-            (e) => <String, dynamic>{
-              r'$1': _$DakanjiDbSearchResult2ndSortOrderEnumMap[e.$1]!,
-              r'$2': e.$2,
-            },
-          )
-          .toList(),
-      'normalizeSearchConvertsRomajiToHiragana':
-          instance.normalizeSearchConvertsRomajiToHiragana,
-      'groupingRules': instance.groupingRules,
-      'showSearchResultSeparationHeaders':
-          instance.showSearchResultSeparationHeaders,
-      'showTags': instance.showTags,
-      'showMetaEntries': instance.showMetaEntries,
-      'definitionsMaxHeight': instance.definitionsMaxHeight,
-      'useKatakanaForFurigana': instance.useKatakanaForFurigana,
-      'spellfixMaxResults': instance.spellfixMaxResults,
-      'spellfixMaxCost': instance.spellfixMaxCost,
-      'searchResultLimit': instance.searchResultLimit,
-    };
+Map<String, dynamic> _$DaKanjiDbSettingsToJson(
+  _DaKanjiDbSettings instance,
+) => <String, dynamic>{
+  'firstSortOrder': instance.firstSortOrder
+      .map(
+        (e) => <String, dynamic>{
+          r'$1': _$DakanjiDbSearchResult1stSortOrderEnumMap[e.$1]!,
+          r'$2': e.$2,
+        },
+      )
+      .toList(),
+  'secondSortOrder': instance.secondSortOrder
+      .map(
+        (e) => <String, dynamic>{
+          r'$1': _$DakanjiDbSearchResult2ndSortOrderEnumMap[e.$1]!,
+          r'$2': e.$2,
+        },
+      )
+      .toList(),
+  'normalizeSearchConvertsRomajiToHiragana':
+      instance.normalizeSearchConvertsRomajiToHiragana,
+  'groupingRules': instance.groupingRules,
+  'showSearchResultSeparationHeaders':
+      instance.showSearchResultSeparationHeaders,
+  'showKanjiEntriesInSearchResults': instance.showKanjiEntriesInSearchResults,
+  'showTags': instance.showTags,
+  'showMetaEntries': instance.showMetaEntries,
+  'definitionsMaxHeight': instance.definitionsMaxHeight,
+  'useKatakanaForFurigana': instance.useKatakanaForFurigana,
+  'spellfixMaxResults': instance.spellfixMaxResults,
+  'spellfixMaxCost': instance.spellfixMaxCost,
+  'searchResultLimit': instance.searchResultLimit,
+};
 
 const _$DakanjiDbSearchResult1stSortOrderEnumMap = {
   DakanjiDbSearchResult1stSortOrder.queryMatch: 'queryMatch',

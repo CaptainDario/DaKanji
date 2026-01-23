@@ -1,5 +1,5 @@
+import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
-import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_category_separator.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_heading.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_search_result_sort_order.dart';
@@ -43,6 +43,13 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
             showSearchResultSeparationHeaders: v))
         ),
         DakanjiDbSettingsToggleListTile(
+          title: "Show Kanji entries",
+          subtitle: "Should Kanji entries be shown in search results when searching for single characters",
+          value: si.showKanjiEntriesInSearchResults,
+          onChanged: (v) => s.update(si.copyWith(
+            showKanjiEntriesInSearchResults: v))
+        ),
+        DakanjiDbSettingsToggleListTile(
           title: loc.showTagsTitle,
           subtitle: loc.showTagsSubtitle,
           value: si.showTags,
@@ -66,6 +73,7 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
         ),
         DakanjiDbSettingsToggleListTile(
           title: loc.useKatakanaForFuriganaTitle,
+          subtitle: "Should katakana be used for furigana readings regardless of the defined reading",
           value: si.useKatakanaForFurigana,
           onChanged: (v) => s.update(si.copyWith(
               useKatakanaForFurigana: v

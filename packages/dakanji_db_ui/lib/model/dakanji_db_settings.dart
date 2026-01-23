@@ -93,6 +93,11 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
     @Default(true)
     bool showSearchResultSeparationHeaders,
 
+    /// Whether to show Kanji entries at the top search results when searching
+    /// for single characters
+    @Default(true)
+    bool showKanjiEntriesInSearchResults,
+
     /// Whether to show tags in [DictionaryMatchWidget]s.
     @Default(true)
     bool showTags,
