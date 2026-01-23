@@ -7,8 +7,8 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_r
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_core/util/dakanji_db_search_manager.dart';
 import 'package:dakanji_db_ui/dakanji_db_ui.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
-import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/search_results/dictionary_search_result_widget.dart';
 import 'package:dakanji_db_ui/widgets/settings/search_settings_dialog.dart';
 import 'package:dakanji_db_ui_search_example/settings_localization.dart';
@@ -259,7 +259,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: DictionarySearchResultWidget(
                         result: lastSearchResult!,
-                        db: daKanjiDB,
                         settings: settings,
                         localization: dakanjiDbLocalization,
                       ),

@@ -1,4 +1,4 @@
-import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
 
 
 

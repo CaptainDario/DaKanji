@@ -1,6 +1,6 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
-import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_card_add_button.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_card.dart';
 import 'package:flutter/material.dart';

@@ -10,11 +10,14 @@ class DictionaryMatchTermBankTermWidget extends StatefulWidget {
   final List<TermBankV3Entry> entries;
   /// Use katakana for furigana readings.
   final bool useKatakanaForFurigana;
+  /// Should the audio playback button be shown (queries them from db).
+  final bool showAudioPlaybackButton;
 
   const DictionaryMatchTermBankTermWidget(
     this.entries,
     {
       this.useKatakanaForFurigana = false,
+      this.showAudioPlaybackButton = false,
       super.key
     }
   );
@@ -45,6 +48,13 @@ class _DictionaryMatchTermBankTermWidgetState extends State<DictionaryMatchTermB
       .toList();
   }
 
+  Future getAudiosForTerms(List<TermBankV3Entry> entries) async {
+  
+    // TODO audios
+    //GetIt.I<DaKanjiDB>().audioDao.;
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -55,8 +65,8 @@ class _DictionaryMatchTermBankTermWidgetState extends State<DictionaryMatchTermB
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: Wrap(
-                alignment: WrapAlignment.start,
-                crossAxisAlignment: WrapCrossAlignment.end,
+                alignment: .start,
+                crossAxisAlignment: .end,
                 children: [
                   for (final pair in termAndReading)
                     Column(
@@ -83,6 +93,24 @@ class _DictionaryMatchTermBankTermWidgetState extends State<DictionaryMatchTermB
                         ),
                       ],
                     ),
+                  // audio playback button
+                  Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          print("Playing audio for term: ${termAndReading.map((e) => e.kanji.isNotEmpty ? e.kanji : e.reading).join()}");
+                        },
+                        borderRadius: BorderRadius.circular(40),
+                        child: Icon(
+                          Icons.volume_up_rounded,
+                          size: 20,
+                          color: Colors.grey
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                    ],
+                  ),
+                  // separator
                   if(termAndReading != termsAndReadings.last) Text("、")
                 ],
               )

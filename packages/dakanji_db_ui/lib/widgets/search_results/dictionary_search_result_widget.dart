@@ -1,10 +1,10 @@
-import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
-import 'package:dakanji_db_ui/widgets/model/dakanji_db_localization.dart';
+import 'package:dakanji_db_ui/widgets/kanji_search/kanji_dictionary_search_result_widget.dart';
 import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +13,7 @@ class DictionarySearchResultWidget extends StatefulWidget {
 
   /// The dictionary search result to display.
   final DictionarySearchResult result;
-  /// The database instance.
-  final DaKanjiDB db;
-  /// Settings for displaying the search results.
+  /// The settings for displaying the search results.
   final DaKanjiDbSettings settings;
   /// Localization for the search results UI
   final DakanjiDbLocalization localization;
@@ -26,7 +24,6 @@ class DictionarySearchResultWidget extends StatefulWidget {
   const DictionarySearchResultWidget(
     {
       required this.result,
-      required this.db,
       required this.settings,
       required this.localization,
       this.onTap,
@@ -75,43 +72,65 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       );
   }
 
-    return Provider.value(
-      value: widget.db,
-      child: CustomScrollView(
-        slivers: [
-        for (var (i, matchType) in widget.settings.s.firstSortOrder.indexed)
-          ...switch (matchType.$1) {
-            
-            // Query Matches
-            DakanjiDbSearchResult1stSortOrder.queryMatch when
-              matchType.$2 && !widget.result.queryMatches.isEmpty => [
-                _buildMainSection(loc.sortByDirectMatch, widget.result.queryMatches, i)
-              ],
-
-            // Normalized Matches
-            DakanjiDbSearchResult1stSortOrder.normalizedMatch when
-              matchType.$2 && normalized.any((e) => !e.isEmpty) =>
-                normalized.map((group) => _buildMainSection(loc.sortByFlexibleMatch, group, i)),
-
-            // Variant Matches
-            DakanjiDbSearchResult1stSortOrder.deconjugationMatch when
-              matchType.$2 && variants.any((e) => !e.isEmpty) =>
-                variants.map((group) => _buildMainSection(loc.sortBySmartGrammarMatch, group, i)),
-
-            // Fuzzy Matches
-            DakanjiDbSearchResult1stSortOrder.spellfixMatch when
-              matchType.$2 && fuzzy.any((e) => !e.isEmpty) =>
-                fuzzy.map((group) => _buildMainSection(loc.sortByTypoCorrectionMatch, group, i)),
-
-            // Default case returns an empty list
-            _ => [],
-          },
-        ],
-      ),
+    return ChangeNotifierProvider<DaKanjiDbSettings>.value(
+      value: widget.settings,
+      builder: (context, child) {
+        return CustomScrollView(
+          slivers: [
+            if(widget.result.kanjiResults.isNotEmpty)
+              SliverPersistentHeader(
+                delegate: _StickyHeaderDelegate(
+                  title: "Kanji (${widget.result.kanjiResults.first.kanjiBankEntry.kanji})",
+                  type: _StickyHeaderType.main,
+                  isExpanded: true,//_isExpanded("KanjiSection_$i"),
+                  onTap: () {},// _toggleSection("KanjiSection_$i"),
+                  fontSize: 18.0,
+                ),
+              ),
+              for (var (i, kanjiMatchGroup) in widget.result.kanjiResults.indexed)
+                SliverToBoxAdapter(
+                  child: KanjiDictionarySearchResultWidget(kanjiMatchGroup),
+                ),
+        
+            /*for (var (i, matchType) in context.read<DaKanjiDbSettings>().s.firstSortOrder.indexed)
+              ...switch (matchType.$1) {
+                
+                // Query Matches
+                DakanjiDbSearchResult1stSortOrder.queryMatch when
+                  matchType.$2 && !widget.result.queryMatches.isEmpty => [
+                    _buildMainSection(
+                      context, loc.sortByDirectMatch, widget.result.queryMatches, i)
+                  ],
+          
+                // Normalized Matches
+                DakanjiDbSearchResult1stSortOrder.normalizedMatch when
+                  matchType.$2 && normalized.any((e) => !e.isEmpty) =>
+                    normalized.map((group) => _buildMainSection(
+                      context, loc.sortByFlexibleMatch, group, i)),
+          
+                // Variant Matches
+                DakanjiDbSearchResult1stSortOrder.deconjugationMatch when
+                  matchType.$2 && variants.any((e) => !e.isEmpty) =>
+                    variants.map((group) => _buildMainSection(
+                      context, loc.sortBySmartGrammarMatch, group, i)),
+          
+                // Fuzzy Matches
+                DakanjiDbSearchResult1stSortOrder.spellfixMatch when
+                  matchType.$2 && fuzzy.any((e) => !e.isEmpty) =>
+                    fuzzy.map((group) => _buildMainSection(
+                      context, loc.sortByTypoCorrectionMatch, group, i)),
+          
+                // Default case returns an empty list
+                _ => [],
+              },
+            */
+          ],
+        );
+      }
     );
   }
 
-  Widget _buildMainSection(String title, DictionaryMatchGroup group, int index) {
+  Widget _buildMainSection(BuildContext context, String title, DictionaryMatchGroup group, int index) {
     
     title = "$title (${group.searchTerm})";
     final expanded = _isExpanded(title);
@@ -121,7 +140,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       // Key allows Flutter to reuse the render object when rebuilding
       key: ValueKey(keyValue), 
       slivers: [
-        if (widget.settings.s.showSearchResultSeparationHeaders)
+        if (context.read<DaKanjiDbSettings>().s.showSearchResultSeparationHeaders)
           SliverPersistentHeader(
             pinned: true,
             delegate: _StickyHeaderDelegate(
@@ -134,12 +153,12 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
           ),
         
         if (expanded)
-          ..._buildSliversForMatchGroup(group, index),
+          ..._buildSliversForMatchGroup(context, group, index),
       ],
     );
   }
 
-  List<Widget> _buildSliversForMatchGroup(DictionaryMatchGroup matchGroup, int mainIndex) {
+  List<Widget> _buildSliversForMatchGroup(BuildContext context, DictionaryMatchGroup matchGroup, int mainIndex) {
     final List<Widget> slivers = [];
     final loc = widget.localization;
 
@@ -165,14 +184,14 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
                 )
               ),
             if (expanded)
-              _buildMatchSliver(matches, sectionKey),
+              _buildMatchSliver(context, matches, sectionKey),
           ],
         ));
       }
     }
 
     // display the results in the user defined order
-    for (var (i, matchType) in widget.settings.s.secondSortOrder.indexed) {
+    for (var (i, matchType) in context.read<DaKanjiDbSettings>().s.secondSortOrder.indexed) {
       switch (matchType.$1) {
         case DakanjiDbSearchResult2ndSortOrder.exactMatch:
           if (matchType.$2) {
@@ -196,7 +215,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
     return slivers;
   }
 
-  Widget _buildMatchSliver(List<DictionaryMatch> matches, String keyPrefix) {
+  Widget _buildMatchSliver(BuildContext context, List<DictionaryMatch> matches, String keyPrefix) {
     return SliverList.builder(
       // Helps Flutter track this specific list
       key: ValueKey("${keyPrefix}_List"), 
@@ -207,10 +226,10 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
         key: ValueKey("${keyPrefix}_List_Item_$i"), 
         child: DictionaryMatchWidget(
           matches[i],
-          showTags: widget.settings.s.showTags,
-          showMetaEntries: widget.settings.s.showMetaEntries,
-          definitionsMaxHeight: widget.settings.s.definitionsMaxHeight,
-          useKatakanaForFurigana: widget.settings.s.useKatakanaForFurigana,
+          showTags: context.read<DaKanjiDbSettings>().s.showTags,
+          showMetaEntries: context.read<DaKanjiDbSettings>().s.showMetaEntries,
+          definitionsMaxHeight: context.read<DaKanjiDbSettings>().s.definitionsMaxHeight,
+          useKatakanaForFurigana: context.read<DaKanjiDbSettings>().s.useKatakanaForFurigana,
           onTap: widget.onTap,
         ),
       ),

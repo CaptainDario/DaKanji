@@ -40,8 +40,7 @@ class _DictionaryMatchTermBankDefinitionWidgetState extends State<DictionaryMatc
 
   Future<bool> getCss() async {
     
-    indexCss = await GetIt.I<DaKanjiDB>().mediaDao
-      .getCssFromIndex(widget.indexId);
+    indexCss = await GetIt.I<DaKanjiDB>().mediaDao.getCssFromIndex(widget.indexId);
 
     return true;
 
