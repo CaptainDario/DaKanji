@@ -4,20 +4,24 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_match_type.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
+import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 
 class DictionarySearchResult {
+  final List<KanjiDictionarySearchResult> kanjiResults;
   final DictionaryMatchGroup queryMatches;
   final List<DictionaryMatchGroup> normalizedQueryMatchGroups;
   final List<DictionaryMatchGroup> queryVariantMatches;
   final List<DictionaryMatchGroup> fuzzyMatches;
 
   DictionarySearchResult.empty()
-      : queryMatches = DictionaryMatchGroup.empty(),
+      : kanjiResults = [],
+        queryMatches = DictionaryMatchGroup.empty(),
         normalizedQueryMatchGroups = [],
         queryVariantMatches = [],
         fuzzyMatches = [];
 
   bool get isEmpty =>
+      kanjiResults.isEmpty &&
       queryMatches.isEmpty &&
       normalizedQueryMatchGroups.any((g) => !g.isEmpty) == false &&
       queryVariantMatches.any((g) => !g.isEmpty) == false &&
@@ -29,6 +33,7 @@ class DictionarySearchResult {
   /// Matches in the first category will exclude identical Term IDs from subsequent categories.
   /// Defaults to [exact, normalized, variant, fuzzy].
   factory DictionarySearchResult.fromSearchResults({
+    required List<KanjiDictionarySearchResult> kanjiResults,
     required List<List<DictionarySearchDriftFindTermBankEntriesResult>> resultsRaw,
     required List<DictionarySearchDriftFindTermBankSequencesByPairsResult> sequenceMatches,
     required List<DictionarySearchDriftFindTermBankDetailsResult> allDetails,
@@ -36,6 +41,7 @@ class DictionarySearchResult {
     required List<DictionaryGroupingRule> groupingRules,
     List<DictionarySearchMatchType>? pruningPriority,
   }) {
+
     // 1. Global Deduplication State
     final seenTermBankIds = <int>{};
 
@@ -85,6 +91,7 @@ class DictionarySearchResult {
 
     // 5. Build Result Objects using the Filtered Lists
     return DictionarySearchResult.fromMatchGroups(
+      kanjiResults: kanjiResults,
       queryMatches: DictionaryMatchGroup.fromDictionarySearch(
         (filteredMap[DictionarySearchMatchType.exact]!, sequenceMatches, allDetails), 
         isWildcardSearch,
@@ -112,6 +119,7 @@ class DictionarySearchResult {
   }
 
   DictionarySearchResult.fromMatchGroups({
+    required this.kanjiResults,
     required this.queryMatches,
     required this.normalizedQueryMatchGroups,
     required this.queryVariantMatches,

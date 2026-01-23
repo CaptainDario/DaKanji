@@ -59,6 +59,7 @@ void printDictionarySearchDebugInfo(
   List<DeconjugationResult> termVariants,
   List<String> spellingVariations,
   bool isWildcardSearch,
+  Stopwatch s
 ) {
     print("=== Dictionary Search Debug Info ===");
     print("Input Term: ${params.query}");
@@ -71,5 +72,6 @@ void printDictionarySearchDebugInfo(
     print("Is Wildcard Search: $isWildcardSearch");
     print("Indexes to Include: ${params.indexesToInclude}");
     print("Grouping Rules: ${params.groupingRules}");
+    print("Search setup complete in ${s.elapsedMilliseconds}ms");
     print("====================================");
   }

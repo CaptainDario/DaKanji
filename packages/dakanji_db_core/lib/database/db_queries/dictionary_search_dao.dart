@@ -5,6 +5,7 @@ import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_util.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart";
+import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:drift/drift.dart";
 import "package:language_processing/japanese/conjugation/yomitan_deconjugate.dart";
 import "package:language_processing/japanese/japanese_string_operations.dart";
@@ -29,6 +30,8 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
     {
       bool printDebugInfo = false,
     }) async {
+
+    Stopwatch endToEndStopwatch = Stopwatch()..start();
 
     DictionarySearchParams sP = dictionarySearchParams;
 
@@ -64,39 +67,48 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
     bool isWildcardSearch = false;
     if(filterParams == null) isWildcardSearch = sP.query.contains(RegExp(r'[*?\[\]]'));
 
-    if(printDebugInfo) printDictionarySearchDebugInfo(sP, normalizedTerms, termVariants, spellingVariations, isWildcardSearch);
+    if(printDebugInfo) printDictionarySearchDebugInfo(
+      sP, normalizedTerms, termVariants, spellingVariations, isWildcardSearch, endToEndStopwatch);
+    
+    Stopwatch s = Stopwatch()..start();
+    // Kanji lookup for single-character searches
+    List<KanjiDictionarySearchResult> kanjiResults = [];
+    if(sP.query.length == 1 && kanjiRegex.hasMatch(sP.query)) {
+      kanjiResults = await db.kanjiSearchDao.kanjiDictionarySearch([sP.query]);
+      print("Kanji lookup took ${s.elapsedMilliseconds}ms, found ${kanjiResults.length} entries.");
+    }
 
     // 1. Run the lightweight search queries in parallel (IDs only)
-    Stopwatch s = Stopwatch()..start();
+    (s..reset()).start();
     final resultsRaw = await _runAllFindTermbankEntries(
       sP, filterParams: filterParams,
       normalizedTerms, termVariants, spellingVariations,
       isWildcardSearch: isWildcardSearch,
     );
-
     if(printDebugInfo)print("Phase 1 (Search IDs) completed in ${s.elapsedMilliseconds}ms.");
-    s.reset();
 
-    // Aggregate unique IDs and perform sequence lookups if needed
+    // 2. Aggregate unique IDs and perform sequence lookups if needed
+    (s..reset()).start();
     final (allTermBankIds, sequenceMatches) = await _aggregateUniqueIdsAndSequenceNumbers(
       resultsRaw, sP.groupingRules);
-    if(printDebugInfo) print("fetched ids: ${allTermBankIds.length}");
+    if(printDebugInfo) print("Phase 2 (sequence lookup) conpleted in ${allTermBankIds.length}");
 
-    // Fetch details for ALL unique IDs found in any step
+    // 3. Fetch details for ALL unique IDs found in any step
+    (s..reset()).start();
     List<DictionarySearchDriftFindTermBankDetailsResult> allDetails = [];
     if (allTermBankIds.isNotEmpty) {
       allDetails = await db.dictionary_search_drift_find_term_bank_details(
         jsonEncode(allTermBankIds.toList())).get();
     }
-
     if(printDebugInfo){
-      print("Phase 2 (Details & Sequences) completed in ${s.elapsedMilliseconds}ms. Fetched details for ${allDetails.length} entries.");
+      print("Phase 3 (Detail fetching) completed in ${s.elapsedMilliseconds}ms. Fetched details for ${allDetails.length} entries.");
 
     }
     s.stop();
     
     // 5. Assemble the result
     return DictionarySearchResult.fromSearchResults(
+      kanjiResults: kanjiResults,
       resultsRaw: resultsRaw,
       sequenceMatches: sequenceMatches,
       allDetails: allDetails,
