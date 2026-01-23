@@ -77,7 +77,8 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       builder: (context, child) {
         return CustomScrollView(
           slivers: [
-            if(widget.result.kanjiResults.isNotEmpty)
+            if(widget.result.kanjiResults.isNotEmpty &&
+              context.read<DaKanjiDbSettings>().s.showKanjiEntriesInSearchResults)
               SliverPersistentHeader(
                 delegate: _StickyHeaderDelegate(
                   title: "Kanji (${widget.result.kanjiResults.first.kanjiBankEntry.kanji})",
