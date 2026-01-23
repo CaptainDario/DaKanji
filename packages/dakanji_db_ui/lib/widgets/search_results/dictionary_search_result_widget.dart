@@ -79,19 +79,21 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
           slivers: [
             if(widget.result.kanjiResults.isNotEmpty &&
               context.read<DaKanjiDbSettings>().s.showKanjiEntriesInSearchResults)
-              SliverPersistentHeader(
-                delegate: _StickyHeaderDelegate(
-                  title: "Kanji (${widget.result.kanjiResults.first.kanjiBankEntry.kanji})",
-                  type: _StickyHeaderType.main,
-                  isExpanded: true,//_isExpanded("KanjiSection_$i"),
-                  onTap: () {},// _toggleSection("KanjiSection_$i"),
-                  fontSize: 18.0,
+              ...[
+                SliverPersistentHeader(
+                  delegate: _StickyHeaderDelegate(
+                    title: "Kanji (${widget.result.kanjiResults.first.kanjiBankEntry.kanji})",
+                    type: _StickyHeaderType.main,
+                    isExpanded: true,//_isExpanded("KanjiSection_$i"),
+                    onTap: () {},// _toggleSection("KanjiSection_$i"),
+                    fontSize: 18.0,
+                  ),
                 ),
-              ),
-              for (var (i, kanjiMatchGroup) in widget.result.kanjiResults.indexed)
-                SliverToBoxAdapter(
-                  child: KanjiDictionarySearchResultWidget(kanjiMatchGroup),
-                ),
+                for (var (i, kanjiMatchGroup) in widget.result.kanjiResults.indexed)
+                  SliverToBoxAdapter(
+                    child: KanjiDictionarySearchResultWidget(kanjiMatchGroup),
+                  ),
+              ],
         
             /*for (var (i, matchType) in context.read<DaKanjiDbSettings>().s.firstSortOrder.indexed)
               ...switch (matchType.$1) {
