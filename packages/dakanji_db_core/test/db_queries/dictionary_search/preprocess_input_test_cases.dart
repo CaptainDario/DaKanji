@@ -34,6 +34,7 @@ List<(
   // --- Mixed Input ---
   // Mixed Kanji and Romaji + romaji conversion ON. 'hiraganaTerm' is converted.
   ("食べru", true, ["食べる"],  ['食ぶ']),
+  ("食beru", true, ["食べる"],  ['食ぶ']),
   // Mixed Kanji and Romaji, conversion OFF.
   ("食べru", false, ["食べru"], []),
   // Mixed full-width, katakana, and romaji, conversion ON.
