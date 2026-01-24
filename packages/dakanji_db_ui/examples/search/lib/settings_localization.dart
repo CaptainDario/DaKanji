@@ -106,7 +106,7 @@ String showSeparatorsSubtitle = "Show or hide headers such as 'Exact Matches', '
 String showTagsTitle = "Show Tags";
 String showTagsSubtitle = "Shows tags such as 'common' in search results";
 
-String showMetaEntriesTitle = "Show Meta entries";
+String showMetaEntriesTitle = "Show Meta Entries";
 String showMetaEntriesSubtitle = "Shows Meta entries such as frequency in search results";
 
 String useCompactDefinitionsTitle = "Use Compact Definitions";

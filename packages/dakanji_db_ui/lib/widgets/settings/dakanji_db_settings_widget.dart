@@ -43,7 +43,7 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
             showSearchResultSeparationHeaders: v))
         ),
         DakanjiDbSettingsToggleListTile(
-          title: "Show Kanji entries",
+          title: "Show Kanji Entries",
           subtitle: "Should Kanji entries be shown in search results when searching for single characters",
           value: si.showKanjiEntriesInSearchResults,
           onChanged: (v) => s.update(si.copyWith(
@@ -77,6 +77,14 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
           value: si.useKatakanaForFurigana,
           onChanged: (v) => s.update(si.copyWith(
               useKatakanaForFurigana: v
+            ))
+        ),
+        DakanjiDbSettingsToggleListTile(
+          title: "Flexible Search Converts Romaji",
+          subtitle: "Should romaji input also be converted to hiragana for flexible search matching",
+          value: si.normalizeSearchConvertsRomajiToHiragana,
+          onChanged: (v) => s.update(si.copyWith(
+              normalizeSearchConvertsRomajiToHiragana: v
             ))
         ),
           
