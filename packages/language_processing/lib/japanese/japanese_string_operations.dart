@@ -93,7 +93,7 @@ List<String> katakanaToHiragana(String text, bool convertRomaji) {
 
   ));
   List<String> converted = romajiConversionVariants.toSet()
-    .map((e) => kanaKit.toHiragana(kanaKit.toKatakana(kanaKit.toKana(e))))
+    .map((e) => kanaKit.toHiragana(kanaKit.toKatakana(e)))
     .where((e) => (kanaKit.isJapanese(e) && convertRomaji) || !convertRomaji)
   .toList();
 
