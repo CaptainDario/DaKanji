@@ -17,6 +17,7 @@ import 'dictionary_search_fuzzy_test_cases.dart';
 import 'dictionary_search_grouping_by_sequence_test_cases.dart';
 import 'dictionary_search_grouping_by_term.dart';
 import 'dictionary_search_grouping_by_term_and_reading_test_cases.dart';
+import 'dictionary_search_grouping_multiple_types_test_cases.dart';
 import 'dictionary_search_index_on_off_test_cases.dart';
 import 'dictionary_search_input_preprocessing_test_cases.dart';
 import 'dictionary_search_meta_bank_test_cases.dart';
@@ -44,6 +45,7 @@ final List<(
   (groupBySequenceTests, ),
   (groupByTermTests, ),
   (groupByTermAndReadingTests, ),
+  (groupByMultipleTypesTests, ),
   (indexOnOffTestCases, ),
 ];
 final List<String> testCaseNames = [
@@ -59,6 +61,7 @@ final List<String> testCaseNames = [
   "Grouping Sequences",
   "Grouping by Term",
   "Grouping by Term + Reading",
+  "Multi Grouping Types",
   "Index On/Off",
 ];
 
