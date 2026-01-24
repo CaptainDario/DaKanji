@@ -77,25 +77,28 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       builder: (context, child) {
         return CustomScrollView(
           slivers: [
-            if(widget.result.kanjiResults.isNotEmpty &&
-              context.read<DaKanjiDbSettings>().s.showKanjiEntriesInSearchResults)
+            if (widget.result.kanjiResults.isNotEmpty &&
+                context.read<DaKanjiDbSettings>().s.showKanjiEntriesInSearchResults)
               ...[
                 SliverPersistentHeader(
                   delegate: _StickyHeaderDelegate(
                     title: "Kanji (${widget.result.kanjiResults.first.kanjiBankEntry.kanji})",
                     type: _StickyHeaderType.main,
-                    isExpanded: true,//_isExpanded("KanjiSection_$i"),
-                    onTap: () {},// _toggleSection("KanjiSection_$i"),
+                    isExpanded: _isExpanded("KanjiSection"),
+                    onTap: () => _toggleSection("KanjiSection"),
                     fontSize: 18.0,
                   ),
                 ),
-                for (var (i, kanjiMatchGroup) in widget.result.kanjiResults.indexed)
-                  SliverToBoxAdapter(
-                    child: KanjiDictionarySearchResultWidget(kanjiMatchGroup),
-                  ),
+                
+                // Only render the list items if the section is expanded
+                if (_isExpanded("KanjiSection"))
+                  for (var (i, kanjiMatchGroup) in widget.result.kanjiResults.indexed)
+                    SliverToBoxAdapter(
+                      child: KanjiDictionarySearchResultWidget(kanjiMatchGroup),
+                    ),
               ],
         
-            /*for (var (i, matchType) in context.read<DaKanjiDbSettings>().s.firstSortOrder.indexed)
+            for (var (i, matchType) in context.read<DaKanjiDbSettings>().s.firstSortOrder.indexed)
               ...switch (matchType.$1) {
                 
                 // Query Matches
@@ -126,7 +129,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
                 // Default case returns an empty list
                 _ => [],
               },
-            */
+            
           ],
         );
       }
@@ -136,8 +139,8 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
   Widget _buildMainSection(BuildContext context, String title, DictionaryMatchGroup group, int index) {
     
     title = "$title (${group.searchTerm})";
-    final expanded = _isExpanded(title);
     final keyValue = "MainSection_${group.searchTerm}_$index";
+    final expanded = _isExpanded(keyValue);
     
     return SliverMainAxisGroup(
       // Key allows Flutter to reuse the render object when rebuilding
@@ -167,9 +170,9 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
 
     void addSection(String title, List<DictionaryMatch> matches, int subIndex) {
       if (matches.isNotEmpty) {
-        final expanded = _isExpanded(title);
         // Create a stable key for this section
         final sectionKey = 'SubSection_${matchGroup.searchTerm}_${mainIndex}_$subIndex';
+        final expanded = _isExpanded(sectionKey);
 
         slivers.add(SliverMainAxisGroup(
           // Helps Flutter identify this specific sub-group
