@@ -2,40 +2,20 @@ import 'package:language_processing/japanese/spellfix/forbidden_sequences.dart';
 import 'package:language_processing/japanese/spellfix/spellfix.dart';
 import 'package:test/test.dart';
 
+import 'spellfix_test_cases.dart';
+
 void main() {
   group('generateSpellingVariations', () {
     
-    test('generates valid variations using real rules (General Sanity Check)', () {
-      // Input: 'あ'
-      // Rules allow: 'あ' -> 'ああ' (Category 8, Cost 2)
-      final variations = generateSpellingVariations(
-        word: 'あ',
-        n: 10,
-        maxCost: 5,
-        forbiddenSequences: forbiddenSequences,
-      );
-      print(variations);
+    test(spellfixTestCases[0].description, () {
+
+      final variations = generateSpellingVariationsForTest(spellfixTestCases[0]);
 
       expect(variations, contains('ああ')); 
     });
 
-    test('penalizes high-step paths via substitutionPenalty', () {
-      // Changed input from 'な' to 'た' so valid voicing rules exist.
-      //
-      // Path 1 (Direct): 'た' -> 'だ' (Cost 4). 
-      //    Steps: 1. Total: 4 + (1 * 5) = 9. (<= 10, KEEP)
-      //
-      // Path 2 (2 Steps): 'た' -> 'たあ' (Cost 2) -> 'たああ' (Cost +2 = 4).
-      //    (Using rule 'あ'->'ああ' on the suffix).
-      //    Steps: 2. Total: 4 + (2 * 5) = 14. (> 10, PRUNE)
-      
-      final variations = generateSpellingVariations(
-        word: 'た',
-        n: 50,
-        maxCost: 10, 
-        substitutionPenalty: 5,
-        forbiddenSequences: forbiddenSequences,
-      );
+    test(spellfixTestCases[1].description, () {
+      final variations = generateSpellingVariationsForTest(spellfixTestCases[1]);
 
       // 'だ' is a direct neighbor (Cost 4), so it survives the penalty.
       expect(variations, contains('だ'));
@@ -44,18 +24,8 @@ void main() {
       expect(variations, isNot(contains('たああ')));
     });
 
-    test('prunes outputs containing forbidden sequences (e.g. ^ん)', () {
-      // Input: 'な'
-      // Rule: ('な', 'んあ', 3) exists in Category 11.
-      // Output 'んあ' starts with 'ん', which matches forbidden pattern r"^ん".
-      
-      final variations = generateSpellingVariations(
-        word: 'な',
-        n: 50,
-        maxCost: 5,
-        forbiddenSequences: forbiddenSequences,
-      );
-      print(variations);
+    test(spellfixTestCases[2].description, () {
+      final variations = generateSpellingVariationsForTest(spellfixTestCases[2]);
 
       // Should contain valid variations like 'なあ' (Cost 2) OR 'だ' (Cost 4)
       expect(variations, anyOf([contains('なあ'), contains('だ')]));
@@ -64,18 +34,8 @@ void main() {
       expect(variations, isNot(contains('んあ')));
     });
 
-    test('excludes the original word from results (Cycle Pruning)', () {
-      // Input: 'じ'
-      // Rules: ('じ', 'ぢ', 1) AND ('ぢ', 'じ', 1) exist.
-      // This creates a cycle: じ -> ぢ -> じ.
-      
-      final variations = generateSpellingVariations(
-        word: 'じ',
-        n: 50,
-        maxCost: 5,
-        forbiddenSequences: forbiddenSequences,
-      );
-      print(variations);
+    test(spellfixTestCases[3].description, () {
+      final variations = generateSpellingVariationsForTest(spellfixTestCases[3]);
 
       // Should find the variation
       expect(variations, contains('ぢ'));
@@ -84,18 +44,8 @@ void main() {
       expect(variations, isNot(contains('じ')));
     });
 
-    test('prunes regex-based forbidden sequences (e.g. triplet vowels)', () {
-      // Input: 'こお'
-      // Rule: 'お' -> 'おお' (Cost 2)
-      // Result: 'こ' + 'おお' = 'こおお' (Matches triplet regex)
-      
-      final variations = generateSpellingVariations(
-        word: 'こお', 
-        n: 50,
-        maxCost: 5,
-        forbiddenSequences: forbiddenSequences,
-      );
-      print(variations);
+    test(spellfixTestCases[4].description, () {
+      final variations = generateSpellingVariationsForTest(spellfixTestCases[4]);
 
       // Valid correction should exist (e.g. 'こお' -> 'こう' from Category 4)
       expect(variations, contains('こう'));
@@ -103,5 +53,28 @@ void main() {
       // Forbidden triplet should be removed
       expect(variations, isNot(contains('こおお')));
     });
+
+    test(spellfixTestCases[5].description, () {
+      final variations = generateSpellingVariationsForTest(spellfixTestCases[5]);
+
+      // Ensure the forbidden variation is NOT generated
+      expect(variations, isNot(contains('食べるらああゆ')));
+    });
   });
+}
+
+List<String> generateSpellingVariationsForTest(({
+    String description,
+    String word,
+    int n,
+    int maxCost,
+    int? substitutionPenalty,
+}) args) {
+  return generateSpellingVariations(
+    word: args.word,
+    n: args.n,
+    maxCost: args.maxCost,
+    substitutionPenalty: args.substitutionPenalty ?? 0,
+    forbiddenSequences: forbiddenSequences,
+  );
 }

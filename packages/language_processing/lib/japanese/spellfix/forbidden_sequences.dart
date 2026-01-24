@@ -21,7 +21,7 @@ const List<String> forbiddenSequences = [
   "っっ", // Double small tsu
   "ゃゃ", "ゅゅ", "ょょ", // Double small y-vowels
   "ぁぁ", "ぃぃ", "ぅぅ", "ぇぇ", "ぉぉ",// Double small kana
-  "あああ", "いいい", "ううう", "えええ", "おおお" // Triplet kana
+  "あああ", "いいい", "ううう", "えええ", "おおお", // Triplet kana
 
   // --- TRIPLET VOWELS ---
   // Matches any character ending in 'a' followed by 'aa'
