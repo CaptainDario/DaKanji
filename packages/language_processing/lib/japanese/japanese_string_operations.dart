@@ -87,13 +87,17 @@ List<String> katakanaToHiragana(String text, bool convertRomaji) {
   }
   KanaKit kanaKit = KanaKit(config: KanaKitConfig(
     passRomaji: !convertRomaji,
-    passKanji: true,
-    upcaseKatakana: false
+    // needs to be set to false to convert words that only contain [kanji + romaji]
+    passKanji: false,
+    upcaseKatakana: false,
+
   ));
-  return romajiConversionVariants.toSet()
-    .map((e) => kanaKit.toHiragana(kanaKit.toKatakana(e)))
+  List<String> converted = romajiConversionVariants.toSet()
+    .map((e) => kanaKit.toHiragana(kanaKit.toKatakana(kanaKit.toKana(e))))
     .where((e) => (kanaKit.isJapanese(e) && convertRomaji) || !convertRomaji)
   .toList();
+
+  return converted;
 }
 
 /// Generates all possible variants of `romaji` that will have different results

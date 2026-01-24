@@ -175,4 +175,44 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
       ]),
     ],
   ),
+  DictionarySearchTestCase(
+    description: "All scripts mixed 食beまス (食べます)",
+    query: '食beまス',
+    normalizedQueryMatchGroups: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          [
+            ExpectedDictionaryMatch(term: '食べます', reading: 'たべます', match: '食べます', definitions: ["to eat (polite)"]),
+          ]
+        ],
+      ),
+    ],
+    queryVariantMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          [
+            ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: '食べる', definitions: ["to eat"]),
+          ]
+        ],
+      ),
+    ]
+  ),
+  DictionarySearchTestCase(
+    description: "Mixed scripts 食beru (食べる)",
+    query: '食beru',
+    normalizedQueryMatchGroups: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          [
+            ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: '食べる', definitions: ["to eat"]),
+          ]
+        ],
+        prefixMatches: [
+          [
+            ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油', definitions: ["chili oil with garlic, etc. for eating with rice"])
+          ]
+        ]
+      ),
+    ],
+  )
 ];
