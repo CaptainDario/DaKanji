@@ -96,7 +96,6 @@ void main() {
             final results = (await db.dictionarySearchDao.dictionarySearch(
               DictionarySearchParams(
                 query: testCase.query,
-                tags: testCase.tags, pos: testCase.pos,
 
                 normalizedSearch: true,
                 normalizedSearchConvertsRomajiToHiragana: true,

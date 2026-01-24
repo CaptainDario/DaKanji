@@ -16,11 +16,6 @@ class DictionarySearchParams {
   /// Whether to perform spellfix / fuzzy search.
   bool spellfixSearch;
 
-  /// List of tag-filters to apply to all search results
-  List<String> tags;
-  /// List of part-of-speech filters to apply to all search results
-  List<String> pos;
-
   /// Specifies how the results should be grouped.
   /// Look at [SequenceGroupingRule], [TermAndReadingGroupingRule] and
   /// [TermGroupingRule] for more information.
@@ -52,8 +47,6 @@ class DictionarySearchParams {
     this.normalizedSearchConvertsRomajiToHiragana = false,
     this.deconjugationSearch = false,
     this.spellfixSearch = false,
-    this.tags = const [],
-    this.pos = const [],
     this.groupingRules = const [],
     this.indexesToInclude,
     this.useOnlyEnabledIndexes = false,

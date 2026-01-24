@@ -8,8 +8,6 @@ import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 class DictionarySearchTestCase {
   final String description;
   final String query;
-  final List<String> tags;
-  final List<String> pos;
   final List<int>? indexesToInclude;
   final List<DictionaryGroupingRule> groupingRules;
   final bool useOnlyEnabledDictionaries;
@@ -30,8 +28,6 @@ class DictionarySearchTestCase {
   const DictionarySearchTestCase({
     required this.description,
     required this.query,
-    this.tags = const [],
-    this.pos = const [],
     this.indexesToInclude,
     this.groupingRules = const [],
     this.useOnlyEnabledDictionaries = false,
@@ -105,11 +101,6 @@ class DictionarySearchTestCase {
         nonEmptyNormalized.isEmpty &&
         nonEmptyVariants.isEmpty) {
       buffer.writeln("\n<No matches found anywhere>");
-    }
-    
-    // --- Tags (from original implementation, if desired) ---
-    if (tags.isNotEmpty) {
-      buffer.writeln('\nTags: $tags');
     }
 
     // --- Footer ---

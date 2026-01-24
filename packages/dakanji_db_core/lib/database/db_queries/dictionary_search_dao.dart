@@ -1,13 +1,12 @@
 import "dart:convert";
 
+import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_context.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart";
-import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_util.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
 import "package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart";
 import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:drift/drift.dart";
-import "package:language_processing/japanese/conjugation/yomitan_deconjugate.dart";
 import "package:language_processing/japanese/japanese_string_operations.dart";
 import "package:language_processing/japanese/spellfix/spellfix.dart";
 
@@ -34,6 +33,7 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
     Stopwatch endToEndStopwatch = Stopwatch()..start();
 
     DictionarySearchParams sP = dictionarySearchParams;
+    DictionarySearchContext ctx = DictionarySearchContext();
 
     assert(([
       sP.indexesToInclude != null,
@@ -53,45 +53,42 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
         .map((e) => e.id).toList();
 
     // Check for special argument syntax
-    var filterParams = argumentParser(sP.query);
+    ctx.applyExtractTagsAndPosResult(extractTagsAndPos(sP.query));
+    ctx.applyArgumentParserResult(argumentParser(ctx.cleanedQuery));
 
     // Preprocess input term (normalize, deconjugate, spellfix)
-    var (:normalizedTerms, :termVariants) = preprocessInput(
-      sP.query, sP.normalizedSearchConvertsRomajiToHiragana);
-    List<String> spellingVariations = [];
+    ctx.applyPreprocessInputResult(preprocessInput(
+      ctx.cleanedQuery, sP.normalizedSearchConvertsRomajiToHiragana));
+    
     if(sP.spellfixSearch)
-      spellingVariations = normalizedTerms.expand((e) => 
+      ctx.spellingVariations = ctx.normalizedTerms.expand((e) => 
         generateSpellingVariations(word: e, n: sP.spellfixMaxResults, maxCost: sP.spellfixMaxCost)
       ).toList();
     
-    bool isWildcardSearch = false;
-    if(filterParams == null) isWildcardSearch = sP.query.contains(RegExp(r'[*?\[\]]'));
 
-    if(printDebugInfo) printDictionarySearchDebugInfo(
-      sP, normalizedTerms, termVariants, spellingVariations, isWildcardSearch, endToEndStopwatch);
+    if(ctx.filterParams == null)
+      ctx.isWildcardSearch = ctx.cleanedQuery.contains(RegExp(r'[*?\[\]]'));
+
+    if(printDebugInfo) printDictionarySearchDebugInfo(sP, ctx, endToEndStopwatch);
     
     Stopwatch s = Stopwatch()..start();
     // Kanji lookup for single-character searches
     List<KanjiDictionarySearchResult> kanjiResults = [];
-    if(sP.query.length == 1 && kanjiRegex.hasMatch(sP.query)) {
-      kanjiResults = await db.kanjiSearchDao.kanjiDictionarySearch([sP.query]);
+    if(ctx.cleanedQuery.length == 1 && kanjiRegex.hasMatch(ctx.cleanedQuery)) {
+      kanjiResults = await db.kanjiSearchDao.kanjiDictionarySearch([ctx.cleanedQuery]);
       print("Kanji lookup took ${s.elapsedMilliseconds}ms, found ${kanjiResults.length} entries.");
     }
 
     // 1. Run the lightweight search queries in parallel (IDs only)
     (s..reset()).start();
-    final resultsRaw = await _runAllFindTermbankEntries(
-      sP, filterParams: filterParams,
-      normalizedTerms, termVariants, spellingVariations,
-      isWildcardSearch: isWildcardSearch,
-    );
+    final resultsRaw = await _runAllFindTermbankEntries(sP, ctx);
     if(printDebugInfo)print("Phase 1 (Search IDs) completed in ${s.elapsedMilliseconds}ms.");
 
     // 2. Aggregate unique IDs and perform sequence lookups if needed
     (s..reset()).start();
     final (allTermBankIds, sequenceMatches) = await _aggregateUniqueIdsAndSequenceNumbers(
       resultsRaw, sP.groupingRules);
-    if(printDebugInfo) print("Phase 2 (sequence lookup) conpleted in ${allTermBankIds.length}");
+    if(printDebugInfo) print("Phase 2 (sequence lookup) completed in ${allTermBankIds.length}");
 
     // 3. Fetch details for ALL unique IDs found in any step
     (s..reset()).start();
@@ -112,7 +109,7 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
       resultsRaw: resultsRaw,
       sequenceMatches: sequenceMatches,
       allDetails: allDetails,
-      isWildcardSearch: isWildcardSearch,
+      isWildcardSearch: ctx.isWildcardSearch,
       groupingRules: sP.groupingRules,
     );
   }
@@ -201,62 +198,52 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
   ///   4. Spellfix / fuzzy match
   /// Returns a list of 4 lists, each containing the results of one query.
   Future<List<List<DictionarySearchDriftFindTermBankEntriesResult>>> _runAllFindTermbankEntries(
-    DictionarySearchParams dictionarySearchParams,
-    List<String> normalizedTerms,
-    List<DeconjugationResult> termVariants,
-    List<String> spellingVariations,
-    {
-      required bool isWildcardSearch,
-      ({String? term, String? reading, String? definition})? filterParams,
-    }
-  ) async {
+    DictionarySearchParams dictionarySearchParams, DictionarySearchContext ctx,) async {
 
     DictionarySearchParams sP = dictionarySearchParams;
 
-    final exactTerms = filterParams != null
-      ? [filterParams.term, filterParams.reading, filterParams.definition].nonNulls.toList()
-      : [sP.query];
+    
 
     return await Future.wait([
       // exact query
       _findTermBankEntries(
-        terms: exactTerms,
-        tags: List.filled(exactTerms.length, sP.tags),
-        pos: List.filled(exactTerms.length, sP.pos),
-        filterParams: filterParams,
-        useGlob: isWildcardSearch, searchNormalized: false,
+        terms: ctx.lookupTerms,
+        tags: List.filled(ctx.lookupTerms.length, ctx.tags),
+        pos: List.filled(ctx.lookupTerms.length, ctx.pos),
+        filterParams: ctx.filterParams,
+        useGlob: ctx.isWildcardSearch, searchNormalized: false,
         indexesToInclude: sP.indexesToInclude,
         limit: sP.limit, offset: sP.offset,
       ),
       // normalized terms
-      sP.normalizedSearch && filterParams == null
+      sP.normalizedSearch && ctx.filterParams == null
         ? _findTermBankEntries(
-          terms: normalizedTerms,
-          tags: List.filled(normalizedTerms.length, sP.tags),
-          pos: List.filled(normalizedTerms.length, sP.pos),
-          useGlob: isWildcardSearch, searchNormalized: true,
+          terms: ctx.normalizedTerms,
+          tags: List.filled(ctx.normalizedTerms.length, ctx.tags),
+          pos: List.filled(ctx.normalizedTerms.length, ctx.pos),
+          useGlob: ctx.isWildcardSearch, searchNormalized: true,
           indexesToInclude: sP.indexesToInclude,
           limit: sP.limit, offset: sP.offset,
         )
         : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
       // term variants (deconjugated forms)
-      sP.deconjugationSearch && filterParams == null
+      sP.deconjugationSearch && ctx.filterParams == null
         ? _findTermBankEntries(
-          terms: termVariants.map((e) => e.deconjugatedTerm).toList(),
-          tags: List.filled(termVariants.length, sP.tags),
-          pos: termVariants.map((e) => sP.pos+e.requiredPartsOfSpeech).toList(),
-          useGlob: isWildcardSearch, searchNormalized: true,
+          terms: ctx.termVariants.map((e) => e.deconjugatedTerm).toList(),
+          tags: List.filled(ctx.termVariants.length, ctx.tags),
+          pos: ctx.termVariants.map((e) => ctx.pos+e.requiredPartsOfSpeech).toList(),
+          useGlob: ctx.isWildcardSearch, searchNormalized: true,
           indexesToInclude: sP.indexesToInclude,
           limit: sP.limit, offset: sP.offset,
         )
         : Future.value(<DictionarySearchDriftFindTermBankEntriesResult>[]),
       // spellfix / fuzzy search
-      sP.spellfixSearch && filterParams == null
+      sP.spellfixSearch && ctx.filterParams == null
         ? _findTermBankEntries(
-          terms: spellingVariations,
-          tags: List.filled(spellingVariations.length, sP.tags),
-          pos: List.filled(spellingVariations.length, sP.pos),
-          useGlob: isWildcardSearch, searchNormalized: true,
+          terms: ctx.spellingVariations,
+          tags: List.filled(ctx.spellingVariations.length, ctx.tags),
+          pos: List.filled(ctx.spellingVariations.length, ctx.pos),
+          useGlob: ctx.isWildcardSearch, searchNormalized: true,
           indexesToInclude: sP.indexesToInclude,
           limit: sP.limit, offset: sP.offset,
         )
@@ -297,8 +284,6 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
       limit, offset
     ).get();
   }
-
-
 }
 
 

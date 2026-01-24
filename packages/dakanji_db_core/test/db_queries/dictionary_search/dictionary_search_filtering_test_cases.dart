@@ -6,8 +6,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
 
   DictionarySearchTestCase(
     description: "by single tag (DE)",
-    query: '人',
-    tags: ['DE'],
+    query: '人 #DE',
     queryMatches: const ExpectedMatchGroup(
       tokenMatches: [
         [
@@ -19,8 +18,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
 
   DictionarySearchTestCase(
     description: "multiple tags (Japanese and Rare)",
-    query: '電車',
-    tags: ['JP', 'R'],
+    query: '電車 #JP #R',
     queryMatches: const ExpectedMatchGroup(
       tokenMatches: [
         [
@@ -32,14 +30,12 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
 
   DictionarySearchTestCase(
     description: "No matches due to tag filtering",
-    query: '人',
-    tags: ['FR'],
+    query: '人 #FR',
   ),
 
   DictionarySearchTestCase(
     description: "No tag filtering (empty tag list)",
     query: '人',
-    tags: [],
     queryMatches: const ExpectedMatchGroup(
       exactMatches: [
         [ExpectedDictionaryMatch(term: '人', reading: 'じん', match: '人', definitions: ["Person"])]
@@ -53,8 +49,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
   ),
   DictionarySearchTestCase(
     description: "Filter by single tag (DE) on wildcard search",
-    query: '*人',
-    tags: ['DE'],
+    query: '*人 #DE',
     queryMatches: const ExpectedMatchGroup(
       wildcardMatches: [
         [
@@ -68,8 +63,7 @@ List<DictionarySearchTestCase> tagFilteringTestCases = [
 
     DictionarySearchTestCase(
     description: "Only nouns should be found",
-    query: "食べる",
-    pos: ["n"],
+    query: "食べる \$n",
     queryMatches: const ExpectedMatchGroup(
       prefixMatches: [
         [

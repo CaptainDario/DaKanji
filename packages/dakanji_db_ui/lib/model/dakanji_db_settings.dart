@@ -180,8 +180,6 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
       normalizedSearchConvertsRomajiToHiragana: normalizeSearchConvertsRomajiToHiragana,
       deconjugationSearch: deconjugationSearch,
       spellfixSearch: spellfixSearch,
-      tags: tags,
-      pos: pos,
       groupingRules: groupingRules,
       indexesToInclude: indexesToInclude,
       useOnlyEnabledIndexes: useOnlyEnabledIndexes,
