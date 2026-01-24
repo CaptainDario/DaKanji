@@ -35,7 +35,7 @@ class TermBankV3Table extends Table {
   TextColumn get definitionOrder => text().map(const JsonConverter())();
 
   /// The ID of the JSON representation of the definition
-  IntColumn get definitionJsonId => integer().references(TermBankV3DefinitionJsonTable, #id)();
+  IntColumn get definitionJsonId => integer().nullable().references(TermBankV3DefinitionJsonTable, #id)();
 
   /// ID reading of the term, or an empty string if the reading is the same as
   /// the term.

@@ -7739,9 +7739,9 @@ class $TermBankV3TableTable extends TermBankV3Table
   late final GeneratedColumn<int> definitionJsonId = GeneratedColumn<int>(
     'definition_json_id',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.int,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
       'REFERENCES term_bank_v3_definition_json_table (id)',
     ),
@@ -7832,8 +7832,6 @@ class $TermBankV3TableTable extends TermBankV3Table
           _definitionJsonIdMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_definitionJsonIdMeta);
     }
     if (data.containsKey('reading_id')) {
       context.handle(
@@ -7892,7 +7890,7 @@ class $TermBankV3TableTable extends TermBankV3Table
       definitionJsonId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}definition_json_id'],
-      )!,
+      ),
       readingId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}reading_id'],
@@ -7934,7 +7932,7 @@ class TermBankV3TableData extends DataClass
   final Object? definitionOrder;
 
   /// The ID of the JSON representation of the definition
-  final int definitionJsonId;
+  final int? definitionJsonId;
 
   /// ID reading of the term, or an empty string if the reading is the same as
   /// the term.
@@ -7953,7 +7951,7 @@ class TermBankV3TableData extends DataClass
     required this.indexId,
     required this.termId,
     this.definitionOrder,
-    required this.definitionJsonId,
+    this.definitionJsonId,
     required this.readingId,
     required this.popularity,
     required this.sequenceNumber,
@@ -7969,7 +7967,9 @@ class TermBankV3TableData extends DataClass
         $TermBankV3TableTable.$converterdefinitionOrder.toSql(definitionOrder),
       );
     }
-    map['definition_json_id'] = Variable<int>(definitionJsonId);
+    if (!nullToAbsent || definitionJsonId != null) {
+      map['definition_json_id'] = Variable<int>(definitionJsonId);
+    }
     map['reading_id'] = Variable<int>(readingId);
     map['popularity'] = Variable<int>(popularity);
     map['sequence_number'] = Variable<int>(sequenceNumber);
@@ -7984,7 +7984,9 @@ class TermBankV3TableData extends DataClass
       definitionOrder: definitionOrder == null && nullToAbsent
           ? const Value.absent()
           : Value(definitionOrder),
-      definitionJsonId: Value(definitionJsonId),
+      definitionJsonId: definitionJsonId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(definitionJsonId),
       readingId: Value(readingId),
       popularity: Value(popularity),
       sequenceNumber: Value(sequenceNumber),
@@ -8001,7 +8003,7 @@ class TermBankV3TableData extends DataClass
       indexId: serializer.fromJson<int>(json['indexId']),
       termId: serializer.fromJson<int>(json['termId']),
       definitionOrder: serializer.fromJson<Object?>(json['definitionOrder']),
-      definitionJsonId: serializer.fromJson<int>(json['definitionJsonId']),
+      definitionJsonId: serializer.fromJson<int?>(json['definitionJsonId']),
       readingId: serializer.fromJson<int>(json['readingId']),
       popularity: serializer.fromJson<int>(json['popularity']),
       sequenceNumber: serializer.fromJson<int>(json['sequenceNumber']),
@@ -8015,7 +8017,7 @@ class TermBankV3TableData extends DataClass
       'indexId': serializer.toJson<int>(indexId),
       'termId': serializer.toJson<int>(termId),
       'definitionOrder': serializer.toJson<Object?>(definitionOrder),
-      'definitionJsonId': serializer.toJson<int>(definitionJsonId),
+      'definitionJsonId': serializer.toJson<int?>(definitionJsonId),
       'readingId': serializer.toJson<int>(readingId),
       'popularity': serializer.toJson<int>(popularity),
       'sequenceNumber': serializer.toJson<int>(sequenceNumber),
@@ -8027,7 +8029,7 @@ class TermBankV3TableData extends DataClass
     int? indexId,
     int? termId,
     Value<Object?> definitionOrder = const Value.absent(),
-    int? definitionJsonId,
+    Value<int?> definitionJsonId = const Value.absent(),
     int? readingId,
     int? popularity,
     int? sequenceNumber,
@@ -8038,7 +8040,9 @@ class TermBankV3TableData extends DataClass
     definitionOrder: definitionOrder.present
         ? definitionOrder.value
         : this.definitionOrder,
-    definitionJsonId: definitionJsonId ?? this.definitionJsonId,
+    definitionJsonId: definitionJsonId.present
+        ? definitionJsonId.value
+        : this.definitionJsonId,
     readingId: readingId ?? this.readingId,
     popularity: popularity ?? this.popularity,
     sequenceNumber: sequenceNumber ?? this.sequenceNumber,
@@ -8109,7 +8113,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
   final Value<int> indexId;
   final Value<int> termId;
   final Value<Object?> definitionOrder;
-  final Value<int> definitionJsonId;
+  final Value<int?> definitionJsonId;
   final Value<int> readingId;
   final Value<int> popularity;
   final Value<int> sequenceNumber;
@@ -8128,14 +8132,13 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     required int indexId,
     required int termId,
     required Object? definitionOrder,
-    required int definitionJsonId,
+    this.definitionJsonId = const Value.absent(),
     required int readingId,
     required int popularity,
     required int sequenceNumber,
   }) : indexId = Value(indexId),
        termId = Value(termId),
        definitionOrder = Value(definitionOrder),
-       definitionJsonId = Value(definitionJsonId),
        readingId = Value(readingId),
        popularity = Value(popularity),
        sequenceNumber = Value(sequenceNumber);
@@ -8166,7 +8169,7 @@ class TermBankV3TableCompanion extends UpdateCompanion<TermBankV3TableData> {
     Value<int>? indexId,
     Value<int>? termId,
     Value<Object?>? definitionOrder,
-    Value<int>? definitionJsonId,
+    Value<int?>? definitionJsonId,
     Value<int>? readingId,
     Value<int>? popularity,
     Value<int>? sequenceNumber,
@@ -29052,7 +29055,7 @@ typedef $$TermBankV3TableTableCreateCompanionBuilder =
       required int indexId,
       required int termId,
       required Object? definitionOrder,
-      required int definitionJsonId,
+      Value<int?> definitionJsonId,
       required int readingId,
       required int popularity,
       required int sequenceNumber,
@@ -29063,7 +29066,7 @@ typedef $$TermBankV3TableTableUpdateCompanionBuilder =
       Value<int> indexId,
       Value<int> termId,
       Value<Object?> definitionOrder,
-      Value<int> definitionJsonId,
+      Value<int?> definitionJsonId,
       Value<int> readingId,
       Value<int> popularity,
       Value<int> sequenceNumber,
@@ -29129,10 +29132,10 @@ final class $$TermBankV3TableTableReferences
     ),
   );
 
-  $$TermBankV3DefinitionJsonTableTableProcessedTableManager
+  $$TermBankV3DefinitionJsonTableTableProcessedTableManager?
   get definitionJsonId {
-    final $_column = $_itemColumn<int>('definition_json_id')!;
-
+    final $_column = $_itemColumn<int>('definition_json_id');
+    if ($_column == null) return null;
     final manager = $$TermBankV3DefinitionJsonTableTableTableManager(
       $_db,
       $_db.termBankV3DefinitionJsonTable,
@@ -29916,7 +29919,7 @@ class $$TermBankV3TableTableTableManager
                 Value<int> indexId = const Value.absent(),
                 Value<int> termId = const Value.absent(),
                 Value<Object?> definitionOrder = const Value.absent(),
-                Value<int> definitionJsonId = const Value.absent(),
+                Value<int?> definitionJsonId = const Value.absent(),
                 Value<int> readingId = const Value.absent(),
                 Value<int> popularity = const Value.absent(),
                 Value<int> sequenceNumber = const Value.absent(),
@@ -29936,7 +29939,7 @@ class $$TermBankV3TableTableTableManager
                 required int indexId,
                 required int termId,
                 required Object? definitionOrder,
-                required int definitionJsonId,
+                Value<int?> definitionJsonId = const Value.absent(),
                 required int readingId,
                 required int popularity,
                 required int sequenceNumber,

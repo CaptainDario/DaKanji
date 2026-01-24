@@ -108,7 +108,7 @@ Future deleteTermBankV3(DaKanjiDB db, int indexId) async {
     // A) Definition JSON IDs (from the parent table)
     final defJsonIdsToDelete = termEntries
         .map((row) => row.definitionJsonId)
-        .toSet(); // Use Set for automatic deduplication
+        .nonNulls.toSet(); // Use Set for automatic deduplication
 
     // B) Rule Identifier IDs (from the link table)
     final ruleIdsQuery = db.select(db.termBankV3XRuleIdentifierTable, distinct: true)
@@ -119,8 +119,8 @@ Future deleteTermBankV3(DaKanjiDB db, int indexId) async {
     // A) Delete Definition JSON
     if (defJsonIdsToDelete.isNotEmpty) {
       await (db.delete(db.termBankV3DefinitionJsonTable)
-            ..where((tbl) => tbl.id.isIn(defJsonIdsToDelete)))
-            .go();
+        ..where((tbl) => tbl.id.isIn(defJsonIdsToDelete)))
+        .go();
     }
     // B) Delete Rule Identifiers
     if (ruleIdsToDelete.isNotEmpty) {
