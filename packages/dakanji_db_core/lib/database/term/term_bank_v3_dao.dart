@@ -40,6 +40,11 @@ class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixi
     return await select(termBankV3RuleIdentifierTable).get();
   }
 
+  /// Get all definition jsons and their ids
+  Future<List<TermBankV3DefinitionJsonTableData>> getAllTermBankV3DefinitionJsons() async {
+    return await select(termBankV3DefinitionJsonTable).get();
+  }
+
   // ---------------------------------------------------------------------------
   /// Get the maximum definition tag id 
   Future<int> maxTermBankV3Id() async {

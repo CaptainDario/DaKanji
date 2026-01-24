@@ -25,6 +25,8 @@ class TermBankV3ParserContext extends ParserContext{
 
   /// Current max id for definition jsons
   int currentMaxDefinitionJsonId;
+  /// Map of all definition jsons to their ids
+  Map<String, int> allDefinitionJsons;
 
   /// Current max id for definitions
   int currentMaxdefinitionId;
@@ -46,6 +48,7 @@ class TermBankV3ParserContext extends ParserContext{
     required this.currentMaxRuleIdentifiersId,
     required this.allRuleIdentifiers,
     required this.currentMaxDefinitionJsonId,
+    required this.allDefinitionJsons,
     required this.currentMaxdefinitionId,
     required this.allDefinitions,
     required this.currentMaxTagId,
@@ -58,6 +61,7 @@ class TermBankV3ParserContext extends ParserContext{
       allTerms: { for (var e in await db.termDao.getAllTerms()) e.term : e.id },
       allReadings: { for (var e in await db.readingDao.getAllReadings()) e.reading : e.id },
       allRuleIdentifiers: { for (var e in await db.termBankV3Dao.getAllRuleIdentifiers()) e.ruleIdentifier : e.id },
+      allDefinitionJsons: { for (var e in await db.termBankV3Dao.getAllTermBankV3DefinitionJsons()) e.definitionJson : e.id },
       allDefinitions: { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id },
       allTags: { for (var e in await db.tagBankV3Dao.getAllTags(indexId)) e.name : e.id },
 

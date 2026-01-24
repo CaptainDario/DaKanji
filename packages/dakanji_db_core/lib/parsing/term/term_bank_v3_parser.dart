@@ -179,12 +179,23 @@ Future parseTermBankV3(
     }
 
     // Optionally: add full definition json to DB
+    int? jsonDefInsertId;
     if(addFullJsonDefinitions) {
-      pC.currentMaxDefinitionJsonId += 1;
-      termBankDefJsonComps.add(TermBankV3DefinitionJsonTableCompanion(
-        id: Value(pC.currentMaxDefinitionJsonId),
-        definitionJson: Value(jsonEncode(jsonEntry[5]))
-      ));
+      String jsonString = jsonEncode(jsonEntry[5]);
+      
+      // Check if we already have this JSON in our new cache
+      if (pC.allDefinitionJsons.containsKey(jsonString)) {
+        jsonDefInsertId = pC.allDefinitionJsons[jsonString]!;
+      } else {
+        // Increment max ID, add to cache, and add to insert list
+        jsonDefInsertId = ++pC.currentMaxDefinitionJsonId;
+        pC.allDefinitionJsons[jsonString] = jsonDefInsertId;
+        
+        termBankDefJsonComps.add(TermBankV3DefinitionJsonTableCompanion(
+          id: Value(jsonDefInsertId),
+          definitionJson: Value(jsonString)
+        ));
+      }
     }
 
     // create tag relations
@@ -204,7 +215,7 @@ Future parseTermBankV3(
       indexId: Value(indexId),
       termId: Value(termInsertId),
       definitionOrder: Value(definitionIds),
-      definitionJsonId: Value(pC.currentMaxDefinitionJsonId),
+      definitionJsonId: jsonDefInsertId == null ? Value.absent() : Value(jsonDefInsertId),
       readingId: Value(readingInsertId),
       popularity: Value(jsonEntry[4]),
       sequenceNumber: Value(jsonEntry[6])
