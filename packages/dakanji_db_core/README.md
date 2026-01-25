@@ -20,26 +20,31 @@ To generate schemas graphviz is required.
 Install it like this
 
 * Macos: `brew install graphviz`
-* Linux:
-* Windows:
+* Linux: `?`
+* Windows: `?`
 
 ## Running
 
 ### Official DaKanji dictionary
 
-The official (base dictionary that is shipped with DaKanji) consists of the following dictionaries
+The official (base dictionary that is shipped with DaKanji) consists of the following data
 
 * Yomitan format
   * [Jitendex](https://github.com/yomidevs/jmdict-yomitan)
     * Base dictionary
   * [JLPT](https://github.com/stephenmk/yomitan-jlpt-vocab)
     * Word level JLPT annotations
-  * JPDB frquency
+  * [JPDB frequency](https://github.com/Kuuuube/yomitan-dictionaries)
     * Word frequencies
   * [KANJIDIC](https://github.com/yomidevs/jmdict-yomitan)
     * Kanji definitions
   * [Kanjium](https://learnjapanese.moe/yomichan/)
     * Pitch accents
+* DaKanji format
+  * Audio
+    * [WaniKanji](https://github.com/tofugu/japanese-vocabulary-pronunciation-audio)
+  * Examples
+    * Tatoeba (based on DaKanji example format)
 * Custom parsed
   * Kanji
     * [RADK / KRAD](https://github.com/scriptin/jmdict-simplified)
@@ -48,15 +53,8 @@ The official (base dictionary that is shipped with DaKanji) consists of the foll
       * Project contains detailed stroke order diagrams of many kanji.
     * [Kanji Network](https://github.com/acoomans/kanjinetworks)
       * Database of etymologies for kanjis
-  * Audio
-    * [Kanjialive](https://github.com/kanjialive/kanji-data-media/tree/master/examples-audio)
-    * [WaniKanji]()
-  * Examples
-    * Tatoeba (based on DaKanji example format)
 
-To build DaKanji DB first download each of the aforementioned database and place them in `./input_files`
-
-Now the DB can be build by running
+The DB can be built by running the below command (it downloads the necessary files at runtime)
 
 ``` bash
 dart run ./bin/build_dakanji_db.dart
@@ -86,7 +84,7 @@ Make sure that
 
 ### Supported databases
 
-The main idea of this rewrite is to allow users to import their own yomitan json dictionaries.
+The main idea of this rewrite is to allow users to import their own dictionaries.
 Additionally, some other databases are included in DaKanji
 
 #### Yomitan json schema
@@ -111,7 +109,7 @@ Additionally, some other databases are included in DaKanji
   * Meaning: Defines tags for kanji and term dictionaries, like parts of speech or kanken level.
   * File name pattern: `tag_bank_${number}.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-tag-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js)
-* [dictionary-term-bank-v3-schema.json](../../yomitan_schema/dictionary-term-bank-v3-schema.json) - 🚧
+* [dictionary-term-bank-v3-schema.json](../../yomitan_schema/dictionary-term-bank-v3-schema.json) - ✅
   * Meaning: Stores dictionary readings, definitions, etc.
   * File name pattern: `term_bank_${number}.json`
   * [Inspector](https://json-schema-viewer.vercel.app/view?url=https%3A%2F%2Fraw.githubusercontent.com%2Fyomidevs%2Fyomitan%2Frefs%2Fheads%2Fmaster%2Fext%2Fdata%2Fschemas%2Fdictionary-term-bank-v3-schema.json&description_is_markdown=on&expand_buttons=on&show_breadcrumbs=on&with_footer=on&template_name=js#items_items_i5_items_oneOf_i0)
@@ -132,3 +130,19 @@ DaKanji can import custom examples and their translation for this, the format in
 ##### Extract examples from Japanese text
 
 DaKanji can also extract sample sentences from a longer text file. This file should contain a full Japanese text like in [this sample](./data/example_sentences/example_text_1.txt).
+
+#### Audio database
+
+DaKanji can import three different formats of audio databases
+
+##### 1. 
+
+TODO
+
+##### 2. 
+
+TODO
+
+##### 3. 
+
+TODO
