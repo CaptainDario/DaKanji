@@ -71,16 +71,20 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
 
     if(printDebugInfo) printDictionarySearchDebugInfo(sP, ctx, endToEndStopwatch);
     
-    Stopwatch s = Stopwatch()..start();
+    
     // Kanji lookup for single-character searches
-    List<KanjiDictionarySearchResult> kanjiResults = [];
+    Stopwatch kS = Stopwatch()..start();
+    Future<List<KanjiDictionarySearchResult>>? kanjiResults;
     if(ctx.cleanedQuery.length == 1 && kanjiRegex.hasMatch(ctx.cleanedQuery)) {
-      kanjiResults = await db.kanjiSearchDao.kanjiDictionarySearch([ctx.cleanedQuery]);
-      print("Kanji lookup took ${s.elapsedMilliseconds}ms, found ${kanjiResults.length} entries.");
+      kanjiResults = db.kanjiSearchDao.kanjiDictionarySearch([ctx.cleanedQuery]).then((value) {
+        print("Kanji lookup took ${kS.elapsedMilliseconds}ms, found ${value.length} entries.");
+        return value;
+      });
+      
     }
 
     // 1. Run the lightweight search queries in parallel (IDs only)
-    (s..reset()).start();
+    Stopwatch s = Stopwatch()..start();
     final resultsRaw = await _runAllFindTermbankEntries(sP, ctx);
     if(printDebugInfo)print("Phase 1 (Search IDs) completed in ${s.elapsedMilliseconds}ms.");
 
@@ -105,7 +109,7 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
     
     // 5. Assemble the result
     return DictionarySearchResult.fromSearchResults(
-      kanjiResults: kanjiResults,
+      kanjiResults: kanjiResults != null ? await kanjiResults : [],
       resultsRaw: resultsRaw,
       sequenceMatches: sequenceMatches,
       allDetails: allDetails,
