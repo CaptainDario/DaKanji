@@ -95,6 +95,10 @@ Iterable<({String filePath, Uint8List fileContent})> _archiveIteratorStreamed(
   }
 ) sync* {
 
+  // add files that should be excluded that are sometimes automatically added by
+  // the OS/...
+  filesToExclude = List.from(filesToExclude)..addAll([".DS_Store"]);
+
   List processedFiles = [];
   for (var f in fileOrder) {
 
@@ -116,7 +120,8 @@ Iterable<({String filePath, Uint8List fileContent})> _archiveIteratorStreamed(
 
   // iterate over the remaining files
   for (final entity in archive.files.sorted((a, b) => a.name.compareTo(b.name))) {
-    if (entity.isFile && !processedFiles.contains(entity.name)) {
+    if (entity.isFile && !processedFiles.contains(entity.name)
+      && !filesToExclude.contains(p.basename(entity.name))) {
       // get the file's content
       final content = entity.readBytes()!;
       yield (filePath: entity.name, fileContent: content);
