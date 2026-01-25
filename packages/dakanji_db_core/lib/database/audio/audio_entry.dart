@@ -37,11 +37,12 @@ class AudioEntry with _$AudioEntry {
   /// The name of the audio file
   @override
   final String fileName;
+  
   /// The actual audio data
   @override
   @JsonKey(toJson: base64Encode, fromJson: base64Decode)
   final Uint8List fileData;
-    
+  
   AudioEntry({
     required this.id,
     required this.indexEntry,
@@ -51,7 +52,9 @@ class AudioEntry with _$AudioEntry {
     required this.filePath,
     required this.fileName,
     required this.fileData,
-  });
+  }) {
+    terms.sort();
+  }
     
   factory AudioEntry.fromAudioEntryViewData(AudioEntryViewData data) {
     return AudioEntry(

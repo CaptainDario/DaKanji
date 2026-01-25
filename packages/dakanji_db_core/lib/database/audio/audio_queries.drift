@@ -3,10 +3,43 @@ import 'audio_views.drift';
 
 
 audio_search_drift:
-    SELECT * FROM audio_entry_view
-    WHERE id IN (
-        SELECT ATXTT.audio_id
-        FROM term_table AS TT
-        JOIN audio_table_x_term_table AS ATXTT ON TT.id = ATXTT.term_id
-        WHERE TT.term = :term
-    );
+    WITH request_values AS (
+        SELECT 
+            CAST(json_extract(value, '$.term') AS TEXT) AS term,
+            CAST(json_extract(value, '$.reading') AS TEXT) AS reading,
+            -- Cast to INT to ensure strict number matching
+            CAST(json_extract(value, '$.pitch') AS INT) AS pitch
+        FROM json_each(:queryJson)
+    )
+    SELECT DISTINCT AEV.*
+    FROM request_values AS REQ
+    -- 1. Match Term
+    INNER JOIN term_table AS TT 
+        ON TT.term = REQ.term OR TT.term_normalized = REQ.term
+    INNER JOIN audio_table_x_term_table AS ATXTT 
+        ON ATXTT.term_id = TT.id
+    INNER JOIN audio_entry_view AS AEV 
+        ON AEV.id = ATXTT.audio_id
+    LEFT JOIN reading_table AS RT 
+        ON RT.id = AEV.reading_id
+    WHERE 
+        -- 2. Match Reading (if REQ.reading is not null)
+        (
+            REQ.reading IS NULL
+            OR AEV.reading = REQ.reading
+            OR RT.reading_normalized = REQ.reading
+        )
+        AND
+        -- 3. Match Pitch (if REQ.pitch is not null)
+        (REQ.pitch IS NULL OR AEV.pitch_accent_pattern = REQ.pitch)
+    ORDER BY
+        (AEV.reading IS NOT NULL) DESC,
+        AEV.reading ASC,
+
+        (AEV.pitch_accent_pattern IS NOT NULL) DESC,
+        AEV.pitch_accent_pattern ASC,
+
+        TT.term ASC,
+        
+        AEV.path ASC;
+        

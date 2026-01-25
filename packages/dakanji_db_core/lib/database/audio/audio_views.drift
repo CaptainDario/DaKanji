@@ -9,6 +9,7 @@ import '/database/index/index_views.drift';
 CREATE VIEW IF NOT EXISTS audio_entry_view AS
     SELECT 
         AT.id,
+        AT.reading_id,
         ITV.index_entry as indexEntry,
         AT.pitch_accent_pattern,
         JSON_GROUP_ARRAY(TT.term) AS terms_json_list,

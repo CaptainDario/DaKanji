@@ -13718,7 +13718,7 @@ class MediaTableData extends DataClass implements Insertable<MediaTableData> {
   /// the path of this data file as found in the original data source
   final String path;
 
-  /// A the name for this file
+  /// The name of this file
   final String name;
 
   /// The actual data of the file
@@ -14563,6 +14563,7 @@ class AudioTable_X_TermTableCompanion
 
 class AudioEntryViewData extends DataClass {
   final int id;
+  final int? readingId;
   final String indexEntry;
   final int? pitchAccentPattern;
   final String termsJsonList;
@@ -14572,6 +14573,7 @@ class AudioEntryViewData extends DataClass {
   final Uint8List? data;
   const AudioEntryViewData({
     required this.id,
+    this.readingId,
     required this.indexEntry,
     this.pitchAccentPattern,
     required this.termsJsonList,
@@ -14587,6 +14589,7 @@ class AudioEntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return AudioEntryViewData(
       id: serializer.fromJson<int>(json['id']),
+      readingId: serializer.fromJson<int?>(json['reading_id']),
       indexEntry: serializer.fromJson<String>(json['indexEntry']),
       pitchAccentPattern: serializer.fromJson<int?>(
         json['pitch_accent_pattern'],
@@ -14603,6 +14606,7 @@ class AudioEntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'reading_id': serializer.toJson<int?>(readingId),
       'indexEntry': serializer.toJson<String>(indexEntry),
       'pitch_accent_pattern': serializer.toJson<int?>(pitchAccentPattern),
       'terms_json_list': serializer.toJson<String>(termsJsonList),
@@ -14615,6 +14619,7 @@ class AudioEntryViewData extends DataClass {
 
   AudioEntryViewData copyWith({
     int? id,
+    Value<int?> readingId = const Value.absent(),
     String? indexEntry,
     Value<int?> pitchAccentPattern = const Value.absent(),
     String? termsJsonList,
@@ -14624,6 +14629,7 @@ class AudioEntryViewData extends DataClass {
     Value<Uint8List?> data = const Value.absent(),
   }) => AudioEntryViewData(
     id: id ?? this.id,
+    readingId: readingId.present ? readingId.value : this.readingId,
     indexEntry: indexEntry ?? this.indexEntry,
     pitchAccentPattern: pitchAccentPattern.present
         ? pitchAccentPattern.value
@@ -14638,6 +14644,7 @@ class AudioEntryViewData extends DataClass {
   String toString() {
     return (StringBuffer('AudioEntryViewData(')
           ..write('id: $id, ')
+          ..write('readingId: $readingId, ')
           ..write('indexEntry: $indexEntry, ')
           ..write('pitchAccentPattern: $pitchAccentPattern, ')
           ..write('termsJsonList: $termsJsonList, ')
@@ -14652,6 +14659,7 @@ class AudioEntryViewData extends DataClass {
   @override
   int get hashCode => Object.hash(
     id,
+    readingId,
     indexEntry,
     pitchAccentPattern,
     termsJsonList,
@@ -14665,6 +14673,7 @@ class AudioEntryViewData extends DataClass {
       identical(this, other) ||
       (other is AudioEntryViewData &&
           other.id == this.id &&
+          other.readingId == this.readingId &&
           other.indexEntry == this.indexEntry &&
           other.pitchAccentPattern == this.pitchAccentPattern &&
           other.termsJsonList == this.termsJsonList &&
@@ -14683,6 +14692,7 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    readingId,
     indexEntry,
     pitchAccentPattern,
     termsJsonList,
@@ -14698,7 +14708,7 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS audio_entry_view AS SELECT AT.id, ITV.index_entry AS indexEntry, AT.pitch_accent_pattern, JSON_GROUP_ARRAY(TT.term) AS terms_json_list, RT.reading, MT.path, MT.name, MT.data FROM audio_table AS AT JOIN index_entry_as_json_view AS ITV ON ITV.id = AT.index_id LEFT JOIN audio_table_x_term_table AS ATXTT ON ATXTT.audio_id = AT.id LEFT JOIN term_table AS TT ON TT.id = ATXTT.term_id LEFT JOIN reading_table AS RT ON RT.id = AT.reading_id LEFT JOIN media_table AS MT ON AT.media_id = MT.id GROUP BY AT.id',
+        'CREATE VIEW IF NOT EXISTS audio_entry_view AS SELECT AT.id, AT.reading_id, ITV.index_entry AS indexEntry, AT.pitch_accent_pattern, JSON_GROUP_ARRAY(TT.term) AS terms_json_list, RT.reading, MT.path, MT.name, MT.data FROM audio_table AS AT JOIN index_entry_as_json_view AS ITV ON ITV.id = AT.index_id LEFT JOIN audio_table_x_term_table AS ATXTT ON ATXTT.audio_id = AT.id LEFT JOIN term_table AS TT ON TT.id = ATXTT.term_id LEFT JOIN reading_table AS RT ON RT.id = AT.reading_id LEFT JOIN media_table AS MT ON AT.media_id = MT.id GROUP BY AT.id',
   };
   @override
   AudioEntryView get asDslTable => this;
@@ -14710,6 +14720,10 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
+      readingId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}reading_id'],
+      ),
       indexEntry: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}indexEntry'],
@@ -14745,6 +14759,12 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
     'id',
     aliasedName,
     false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> readingId = GeneratedColumn<int>(
+    'reading_id',
+    aliasedName,
+    true,
     type: DriftSqlType.int,
   );
   late final GeneratedColumn<String> indexEntry = GeneratedColumn<String>(
@@ -18584,16 +18604,16 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ).asyncMap(kanjiBankV3EntryView.mapFromRow);
   }
 
-  Selectable<AudioEntryViewData> audio_search_drift(String term) {
+  Selectable<AudioEntryViewData> audio_search_drift(String queryJson) {
     return customSelect(
-      'SELECT * FROM audio_entry_view WHERE id IN (SELECT ATXTT.audio_id FROM term_table AS TT JOIN audio_table_x_term_table AS ATXTT ON TT.id = ATXTT.term_id WHERE TT.term = ?1)',
-      variables: [Variable<String>(term)],
+      'WITH request_values AS (SELECT CAST(json_extract(value, \'\$.term\') AS TEXT) AS term, CAST(json_extract(value, \'\$.reading\') AS TEXT) AS reading, CAST(json_extract(value, \'\$.pitch\') AS INT) AS pitch FROM json_each(?1)) SELECT DISTINCT AEV.* FROM request_values AS REQ INNER JOIN term_table AS TT ON TT.term = REQ.term OR TT.term_normalized = REQ.term INNER JOIN audio_table_x_term_table AS ATXTT ON ATXTT.term_id = TT.id INNER JOIN audio_entry_view AS AEV ON AEV.id = ATXTT.audio_id LEFT JOIN reading_table AS RT ON RT.id = AEV.reading_id WHERE(REQ.reading IS NULL OR AEV.reading = REQ.reading OR RT.reading_normalized = REQ.reading)AND(REQ.pitch IS NULL OR AEV.pitch_accent_pattern = REQ.pitch)ORDER BY(AEV.reading IS NOT NULL)DESC, AEV.reading ASC,(AEV.pitch_accent_pattern IS NOT NULL)DESC, AEV.pitch_accent_pattern ASC, TT.term ASC, AEV.path ASC',
+      variables: [Variable<String>(queryJson)],
       readsFrom: {
-        audioTableXTermTable,
         termTable,
+        audioTableXTermTable,
+        readingTable,
         audioTable,
         indexTable,
-        readingTable,
         mediaTable,
       },
     ).asyncMap(audioEntryView.mapFromRow);
