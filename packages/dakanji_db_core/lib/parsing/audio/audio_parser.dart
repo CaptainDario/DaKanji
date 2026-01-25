@@ -117,17 +117,17 @@ Future _parseAudioDataSource(({
     // parse according to the format
     switch (format) {
       case AudioDataSourceFormats.filesNames:
-        await parseAudioDataSourceFormat1(
+        await parseAudioDataSourceFileNameFormat(
           dataSources, db, indexId, aC, mecab, params.mainIsolateSendPort);
         break;
       case AudioDataSourceFormats.indexJson:
         String jsonString = utf8.decode(dataSources.first.fileContent);
-        await parseAudioDataSourceFormat2(
+        await parseAudioDataSourceIndexFormat(
           dataSources.skip(1), db, indexId, jsonString, aC, mecab, params.mainIsolateSendPort);
         break;
       case AudioDataSourceFormats.entriesJson:
         String jsonString = utf8.decode(dataSources.first.fileContent);
-        await parseAudioDataSourceFormat3(
+        await parseAudioDataSourceEntriesFormat(
           dataSources.skip(1), db, indexId, jsonString, aC, mecab, params.mainIsolateSendPort);
         break;
     }
@@ -223,7 +223,7 @@ Future parseAudioDataSourceEntry(
 }
 
 /// Parses audio data source in format 1 (file names)
-Future parseAudioDataSourceFormat1(
+Future parseAudioDataSourceFileNameFormat(
   Iterable<({String filePath, Uint8List fileContent})> dataSources,
   DaKanjiDB db,
   int indexId,
@@ -267,7 +267,7 @@ Future parseAudioDataSourceFormat1(
 }
 
 /// Parses audio data source in format 2 (index.json)
-Future parseAudioDataSourceFormat2(
+Future parseAudioDataSourceIndexFormat(
   Iterable<({String filePath, Uint8List fileContent})> dataSources,
   DaKanjiDB db,
   int indexId,
@@ -319,7 +319,7 @@ Future parseAudioDataSourceFormat2(
 }
 
 /// Parses audio data source in format 3 (entries.json)
-Future parseAudioDataSourceFormat3(
+Future parseAudioDataSourceEntriesFormat(
   Iterable<({String filePath, Uint8List fileContent})> dataSources,
   DaKanjiDB db,
   int indexId,
@@ -332,6 +332,7 @@ Future parseAudioDataSourceFormat3(
   // parse the original data into a more usable format
   final List jsonList = jsonDecode(jsonString);
   Map<String, ({List<String> term, String reading, int? pitchPattern})> fileData = {};
+
   mainIsolate.send("Parsing index data of ${jsonList.length} files");
   for (final entry in jsonList){
     List<String> kanjis = List<String>.from(entry["kanji"]);
@@ -341,7 +342,7 @@ Future parseAudioDataSourceFormat3(
 
       fileData[accent["soundFile"]] = (
         term: kanjis,
-        reading: accent["accent"][0]["pronunciation"] as String,
+        reading: (accent["accent"][0]["pronunciation"] as String),
         pitchPattern: accent["accent"][0]["pitchAccent"],
       );
     }

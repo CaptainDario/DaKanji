@@ -9,56 +9,68 @@ import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
 import '../test_utils/db_files.dart';
-import 'audio_format_1_test_cases.dart';
-import 'audio_format_2_test_cases.dart';
-import 'audio_format_3_test_cases.dart';
+import 'audio_entries_format_test_cases.dart';
+import 'audio_file_name_format_test_cases.dart';
+import 'audio_index_format_test_cases.dart';
 
 
 
-List<String> dataSources = [
-  devExampleAudio1Path, 
-  devExampleAudio2Path,
-  devExampleAudio3Path,
-];
-
-List<List<String>> searchTerms = [
-  audioFormat1TestCaseSearchTerms,
-  audioFormat2TestCaseSearchTerms,
-  audioFormat3TestCaseSearchTerms,
-];
-
-List<List<List<AudioEntry>>> testCases = [
-  audioFormat1TestCases,
-  audioFormat2TestCases,
-  audioFormat3TestCases,
+List<({
+  String format,
+  String dataSource,
+  List<(String, String?, int?)> searchTerms,
+  List<List<AudioEntry>> testCases
+})> tests = [
+  (
+    format: "file name format",
+    dataSource: devExampleAudioFileNameFormatPath,
+    searchTerms: audioFileNameFormatTestCaseSearchTerms,
+    testCases: audioFileNameFormatTestCases,
+  ),
+  (
+    format: "index format",
+    dataSource: devExampleAudioIndexFormatPath,
+    searchTerms: audioIndexFormatTestCaseSearchTerms,
+    testCases: audioIndexFormatTestCases,
+  ),
+  (
+    format: "entries format",
+    dataSource: devExampleAudioEntriesFormatPath,
+    searchTerms: audioEntriesFormatTestCaseSearchTerms,
+    testCases: audioEntriesFormatTestCases,
+  )
 ];
 
 void main() async {
 
-  print(devExampleAudio1Path);
+  print(devExampleAudioFileNameFormatPath);
   
-  for (int l=0; l < dataSources.length; l++) {
-    group("Test importing audios from Audio Format ${l+1}", () {
+  for (int l=0; l < tests.length; l++) {
+    group("Test importing audios from Audio Format: ${tests[l].format}", () {
 
       late DaKanjiDB db;
       setUpAll(() async{
-        db = await setupFreshDB(dataSources[l], false);
+        db = await setupFreshDB(tests[l].dataSource, false);
       },);
       tearDownAll(() async {
         await db.close();
       },);
 
       // Check some kanji bank queries
-      for (int i = 0; i < testCases[l].length; i++) {
-        test('Searching: ${searchTerms[l][i]}', () async {
+      for (int i = 0; i < tests[l].testCases.length; i++) {
+        test('Searching: ${tests[l].searchTerms[i]}', () async {
 
           Stopwatch s = Stopwatch()..start();
-          final results = await db.audioDao.audioSearch(searchTerms[l][i]);
+          final results = await db.audioDao.audioSearch([(
+            term: tests[l].searchTerms[i].$1,
+            reading: tests[l].searchTerms[i].$2,
+            pitchAccentPattern: tests[l].searchTerms[i].$3,
+          )]);
           print("Lookup took ${s.elapsedMilliseconds}ms");
 
-          expect(results.length, testCases[l][i].length, reason: "Number of results mismatch");
+          expect(results.length, tests[l].testCases[i].length, reason: "Number of results mismatch");
           for (var j = 0; j < results.length; j++) {
-            final r = results[j]; final e = testCases[l][i][j];
+            final r = results[j]; final e = tests[l].testCases[i][j];
             expect(r.terms, e.terms, reason: "Terms mismatch");
             expect(r.reading, e.reading, reason: "Reading mismatch");
             expect(r.pitchAccentPattern, e.pitchAccentPattern, reason: "Pitch accent pattern mismatch");

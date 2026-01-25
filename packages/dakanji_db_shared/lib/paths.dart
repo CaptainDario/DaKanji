@@ -71,11 +71,11 @@ final devExampleAudioListPath = p.joinAll([dataFilesPath, "example_audio_sources
 /// - format 3: entries format
 final devExampleAudioPath = p.joinAll([dataFilesPath, "example_audio_files", ]);
 /// Path to the folder that contains audio examples (format 1) for development
-final devExampleAudio1Path = p.joinAll([devExampleAudioPath, "file_name_format"]);
+final devExampleAudioFileNameFormatPath = p.joinAll([devExampleAudioPath, "file_name_format"]);
 /// Path to the folder that contains audio examples (format 2) for development
-final devExampleAudio2Path = p.joinAll([devExampleAudioPath, "index_format"]);
+final devExampleAudioIndexFormatPath = p.joinAll([devExampleAudioPath, "index_format"]);
 /// Path to the folder that contains audio examples (format 3) for development
-final devExampleAudio3Path = p.joinAll([devExampleAudioPath, "entries_format"]);
+final devExampleAudioEntriesFormatPath = p.joinAll([devExampleAudioPath, "entries_format"]);
 
 
 // --- DAKANJI DB FILES -------------------------------------------------------

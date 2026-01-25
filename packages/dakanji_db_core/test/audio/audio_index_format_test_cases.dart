@@ -8,15 +8,16 @@ import '../dictionary_test_variables.dart';
 
 final placeholderAudioData = Uint8List.fromList([1, 2, 3]);
 
-List<String> audioFormat2TestCaseSearchTerms = [
-  'お手前',
-  '強み',
-  '所業',
-  '打ち込む',
-  '日本人',
+List<(String, String?, int?)> audioIndexFormatTestCaseSearchTerms = [
+  ('お手前', null, null),
+  ('強み', null, null),
+  ('所業', null, null),
+  ('打ち込む', null, null),
+  ('日本人', null, null),
+  ('日本人', 'にほんじん', null),
 ];
 
-List<List<AudioEntry>> audioFormat2TestCases = [
+List<List<AudioEntry>> audioIndexFormatTestCases = [
   // Results for 'お手前'
   [
     AudioEntry(
@@ -62,24 +63,47 @@ List<List<AudioEntry>> audioFormat2TestCases = [
       id: 0,
       indexEntry: audioFormat2ExampleDictionaryIndexEntry,
       terms: ['打ち込む'],
-      reading: 'ぶちこむ',
-      pitchAccentPattern: null,
-      filePath: 'media',
-      fileName: 'b44ccb3694f0b1b408c193dc87576760.opus',
-      fileData: placeholderAudioData,
-    ),
-    AudioEntry(
-      id: 0,
-      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
-      terms: ['打ち込む'],
       reading: 'うちこむ',
       pitchAccentPattern: null,
       filePath: 'media',
       fileName: 'c8388ad9826d29df1cbfe654412f2020.opus',
       fileData: placeholderAudioData,
     ),
+    AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
+      terms: ['打ち込む'],
+      reading: 'ぶちこむ',
+      pitchAccentPattern: null,
+      filePath: 'media',
+      fileName: 'b44ccb3694f0b1b408c193dc87576760.opus',
+      fileData: placeholderAudioData,
+    ),
   ],
   // Results for '日本人'
+  [
+    AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
+      terms: ['日本人'],
+      reading: 'にっぽんじん',
+      pitchAccentPattern: null,
+      filePath: 'media',
+      fileName: 'fe7402f538a9c882806395c6e5a6330c.opus',
+      fileData: placeholderAudioData,
+    ),
+    AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
+      terms: ['日本人'],
+      reading: 'にほんじん',
+      pitchAccentPattern: null,
+      filePath: 'media',
+      fileName: '4531b4a6ccd1ed9074977599be4d7d0f.opus',
+      fileData: placeholderAudioData,
+    ),
+  ],
+  // Results for '日本人 (にっぽんじん)'
   [
     AudioEntry(
       id: 0,
@@ -91,15 +115,6 @@ List<List<AudioEntry>> audioFormat2TestCases = [
       fileName: '4531b4a6ccd1ed9074977599be4d7d0f.opus',
       fileData: placeholderAudioData,
     ),
-    AudioEntry(
-      id: 0,
-      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
-      terms: ['日本人'],
-      reading: 'にっぽんじん',
-      pitchAccentPattern: null,
-      filePath: 'media',
-      fileName: 'fe7402f538a9c882806395c6e5a6330c.opus',
-      fileData: placeholderAudioData,
-    ),
   ],
+
 ];

@@ -8,15 +8,19 @@ import '../dictionary_test_variables.dart';
 
 final placeholderAudioData = Uint8List.fromList([1, 2, 3]);
 
-List<String> audioFormat3TestCaseSearchTerms = [
-  '画像',
-  '日本人',
-  '打つ',
-  '番号',
-  '詠む',
+List<(String, String?, int?)> audioEntriesFormatTestCaseSearchTerms = [
+  ('画像', null, null),
+  ('日本人', null, null),
+  ('打つ', null, null),
+  ('番号', null, null),
+  ('詠む', null, null),
+  ('討つ', 'うつ', null),
+  ('撃つ', 'うつ', 1),
+  ('撃つ', 'うつ', 10),
 ];
 
-List<List<AudioEntry>> audioFormat3TestCases = [
+List<List<AudioEntry>> audioEntriesFormatTestCases = [
+  //
   [
     AudioEntry(
       id: 0,
@@ -29,6 +33,7 @@ List<List<AudioEntry>> audioFormat3TestCases = [
       fileData: placeholderAudioData,
     ),
   ],
+  //
   [
     AudioEntry(
       id: 0,
@@ -51,6 +56,7 @@ List<List<AudioEntry>> audioFormat3TestCases = [
       fileData: placeholderAudioData,
     ),
   ],
+  //
   [
     AudioEntry(
       id: 0,
@@ -63,6 +69,7 @@ List<List<AudioEntry>> audioFormat3TestCases = [
       fileData: placeholderAudioData,
     ),
   ],
+  //
   [
     AudioEntry(
       id: 0,
@@ -75,6 +82,7 @@ List<List<AudioEntry>> audioFormat3TestCases = [
       fileData: placeholderAudioData,
     ),
   ],
+  //
   [
     AudioEntry(
       id: 0,
@@ -86,5 +94,31 @@ List<List<AudioEntry>> audioFormat3TestCases = [
       fileName: '20180221161451.opus',
       fileData: placeholderAudioData,
     ),
-  ]
+  ],
+  // Check support for kanji variations: '打つ'
+  [
+    AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
+      terms: ['打つ', '撃つ', '討つ'],
+      reading: 'ウツ',
+      pitchAccentPattern: 1,
+      filePath: 'media',
+      fileName: '20170928151250.opus',
+      fileData: placeholderAudioData,
+    ),
+  ],
+  [
+    AudioEntry(
+      id: 0,
+      indexEntry: audioFormat2ExampleDictionaryIndexEntry,
+      terms: ['打つ', '撃つ', '討つ'],
+      reading: 'ウツ',
+      pitchAccentPattern: 1,
+      filePath: 'media',
+      fileName: '20170928151250.opus',
+      fileData: placeholderAudioData,
+    ),
+  ],
+  []
 ];
