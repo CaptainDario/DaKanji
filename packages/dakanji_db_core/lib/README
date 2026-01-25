@@ -2,7 +2,8 @@
 
 ## `./conversion/`
 
-Parsing of data sources that ARE NOT native yomitan dictionaries
+Conversion of data sources that ARE NOT native yomitan dictionaries to DaKanji DB format.
+This includes conversion to DaKanji directly, or first to a DaKanji DB supported format.
 
 ## `./database`
 
