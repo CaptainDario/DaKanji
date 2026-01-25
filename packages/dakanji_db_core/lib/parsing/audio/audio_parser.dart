@@ -233,13 +233,36 @@ Future parseAudioDataSourceFormat1(
 ) async {
   final int noEntries = dataSources.length;
   int i = 0;
+
+  // pattern to extract term, reading and pitch from file name
+  final RegExp pattern = RegExp(r'^(.+?)(?:\s*[\[【](.+?)[\]】])?(?:\s*[\(（](\d+)[\)）])?$');
+
   for (final dataSource in dataSources) {
     mainIsolate.send("Processing audio source file: ${dataSource.filePath} ${++i}/$noEntries");
     await importMediaFile(
       dataSource.filePath, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
 
-    String term = p.basenameWithoutExtension(dataSource.filePath);
-    await parseAudioDataSourceEntry([term], null, null, indexId, db, aC, mecab);
+    String fileName = p.basenameWithoutExtension(dataSource.filePath);
+
+    String term = fileName;
+    String? reading;
+    int? pitch;
+
+    final Match? match = pattern.firstMatch(fileName);
+    if (match != null) {
+      // 1. Term (Trim whitespace in case user put "Word [Read]")
+      term = match.group(1)!.trim();
+
+      // 2. Reading (Exists only if [] or 【】 were found)
+      if (match.group(2) != null) reading = match.group(2)!.trim();
+
+      // 3. Pitch (Exists only if () or （） were found)
+      if (match.group(3) != null) pitch = int.tryParse(match.group(3)!);
+    }
+
+    // Pass extracted data to the entry parser
+    await parseAudioDataSourceEntry(
+      [term], reading, pitch, indexId, db, aC, mecab);
   }
 }
 
