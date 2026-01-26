@@ -14,6 +14,7 @@ import 'package:universal_io/io.dart';
 import '/database/dakanji_db.dart';
 
 
+bool d = false;
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
 Future parseTermBankV3File(
@@ -221,7 +222,7 @@ Future parseTermBankV3(
       sequenceNumber: Value(jsonEntry[6])
     ));
   }
-  //print("Parsed ${jsonList.length} entries in ${s.elapsedMilliseconds}ms");
+  if(d) print("Parsed ${jsonList.length} entries in ${s.elapsedMilliseconds}ms");
 
   // bulk insert all data
   s..reset()..start();
@@ -244,5 +245,5 @@ Future parseTermBankV3(
     batch.insertAll(db.tagBankV3Table, tagComps);
     batch.insertAll(db.termBankV3XTagBankTable, tagRelComps);
   },);
-  //print("Inserted all entries in ${s.elapsedMilliseconds}ms");
+  if(d) print("Inserted all entries in ${s.elapsedMilliseconds}ms");
 }
