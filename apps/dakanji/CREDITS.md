@@ -29,9 +29,8 @@ The biggest thanks goes to my mom and dad for always being there for me no matte
   * [Kanjidic 2](http://www.edrdg.org/wiki/index.php/KANJIDIC_Project): for kanji definitions
   * [JMDict](https://www.edrdg.org/enamdict/enamdict_doc.html): for dictionary files
   * [ENAMDICT](https://www.edrdg.org/enamdict/enamdict_doc.html): for Japanese names
-  * IPADIC: for PoS tagging
+  * [IPADIC](https://clrd.ninjal.ac.jp/unidic/en/): for PoS tagging
   * [Tatoeba](https://tatoeba.org/en/): for example sentences
-  * [Wordnet](https://bond-lab.github.io/wnja/eng/index.html)
   * [Jconj](https://github.com/yamagoya/jconj): for conjugation data
   * [Kanjijium](https://github.com/mifunetoshiro/kanjium): for pitch accent data
   * [jlpt-vocab](https://github.com/stephenmk/yomichan-jlpt-vocab) and [Jonathan Waller](http://www.tanos.co.uk/jlpt/)
@@ -43,6 +42,7 @@ The biggest thanks goes to my mom and dad for always being there for me no matte
   * [flag-icons](https://github.com/lipis/flag-icons)
   * Thank you LeafPiece for the [kana mnemonics](https://commons.wikimedia.org/wiki/File:Japanese_Kana_Mnemonic_Chart.png#filelinks)
 * Audio
+  * Thank you [WaniKani](https://github.com/tofugu/japanese-vocabulary-pronunciation-audio) for open sourcing your vocab audios
   * Thank you so much ゆうか 田村村 for recording the kana sounds, and helping with the mnemonics
   
 ## Testing
