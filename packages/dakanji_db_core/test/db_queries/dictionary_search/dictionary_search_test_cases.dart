@@ -92,7 +92,7 @@ final List<DictionarySearchTestCase> searchTestCases = [
   ),
   // limit serach results when searching for one character
   DictionarySearchTestCase(
-    description: "Searching for one roman character should NOT yield prefix matches",
+    description: "Searching for one roman character should NOT yield matches not at the start of the term",
     query: "a",
     // Expected results for the hiragana-converted query: 'でんしゃ'
     queryMatches: const ExpectedMatchGroup(
@@ -104,20 +104,36 @@ final List<DictionarySearchTestCase> searchTestCases = [
           match: 'a',
         )]
       ],
-      tokenMatches: [
+      prefixMatches: [
         [
           ExpectedDictionaryMatch(
-            term: '電車酔い',
-            reading: 'でんしゃよい',
-            match: 'train sickness; motion sickness on a train',
-            definitions: ["train sickness; motion sickness on a train"]
-          )
+            term: 'asd',
+            reading: '',
+            match: 'asd',
+            definitions: ['Random string of letters, common placeholder']
+          ),
         ],
+        [
+          ExpectedDictionaryMatch(
+            term: '全日本',
+            reading: 'ぜんにほん',
+            match: 'all Japan',
+            definitions: ['all Japan']
+          ),
+        ],
+        [
+          ExpectedDictionaryMatch(
+            term: '一日中',
+            reading: 'いちにちじゅう',
+            match: 'all day long',
+            definitions: ['all day long']
+          ),
+        ]
       ]
     ),
   ),
   DictionarySearchTestCase(
-    description: "Searching for one kanji character SHOULD yield prefix matches",
+    description: "Searching for one kanji character SHOULD yield prefix matches ANYWHERE in the term",
     query: "電",
     // Expected results for the hiragana-converted query: 'でんしゃ'
     queryMatches: const ExpectedMatchGroup(
