@@ -17,6 +17,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 
 
+int noFilesToBatchInsert = 200;
 
 Future parseAudioDataSource({
   String? audioDataSourceFile,
@@ -237,10 +238,11 @@ Future parseAudioDataSourceFileNameFormat(
   // pattern to extract term, reading and pitch from file name
   final RegExp pattern = RegExp(r'^(.+?)(?:\s*[\[【](.+?)[\]】])?(?:\s*[\(（](\d+)[\)）])?$');
 
+  List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> filesToInsert = [];
   for (final dataSource in dataSources) {
     mainIsolate.send("Processing audio source file: ${dataSource.filePath} ${++i}/$noEntries");
-    await importMediaFile(
-      dataSource.filePath, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
+    filesToInsert.add((filePath: dataSource.filePath, mediaContent: dataSource.fileContent,
+      indexId: indexId, insertId: ++aC.currentMaxMediaId));
 
     String fileName = p.basenameWithoutExtension(dataSource.filePath);
 
@@ -263,6 +265,12 @@ Future parseAudioDataSourceFileNameFormat(
     // Pass extracted data to the entry parser
     await parseAudioDataSourceEntry(
       [term], reading, pitch, indexId, db, aC, mecab);
+
+    // if enough audios have been processed, import them into the DB
+    if(i % noFilesToBatchInsert == 0 || i == noEntries) {
+      await importMediaFiles(db, filesToInsert);
+      filesToInsert.clear();
+    }
   }
 }
 
@@ -304,17 +312,25 @@ Future parseAudioDataSourceIndexFormat(
 
   // import the files into the DB
   int noEntries = dataSources.length; int i = 0;
+  List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> filesToInsert = [];
   for (final dataSource in dataSources) {
     mainIsolate.send("Processing audio source file: ${dataSource.filePath} ${++i}/$noEntries");
-    await importMediaFile(
-      dataSource.filePath, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
+    filesToInsert.add((filePath: dataSource.filePath, mediaContent: dataSource.fileContent,
+      indexId: indexId, insertId: ++aC.currentMaxMediaId));
 
     String filePath = p.basename(dataSource.filePath);
+    if (!fileData.containsKey(filePath)) continue;
     ({String term, String reading, int? pitchPattern}) entry = fileData[filePath]!;
     String term = entry.term;
     String? reading = entry.reading;
     int? pitchPattern = entry.pitchPattern;
     await parseAudioDataSourceEntry([term], reading, pitchPattern, indexId, db, aC, mecab);
+
+    // if enough audios have been processed, import them into the DB
+    if(i % noFilesToBatchInsert == 0 || i == noEntries) {
+      await importMediaFiles(db, filesToInsert);
+      filesToInsert.clear();
+    }
   }
 }
 
@@ -332,8 +348,8 @@ Future parseAudioDataSourceEntriesFormat(
   // parse the original data into a more usable format
   final List jsonList = jsonDecode(jsonString);
   Map<String, ({List<String> term, String reading, int? pitchPattern})> fileData = {};
-
   mainIsolate.send("Parsing index data of ${jsonList.length} files");
+  
   for (final entry in jsonList){
     List<String> kanjis = List<String>.from(entry["kanji"]);
     for (final accent in entry["accents"]) {
@@ -350,22 +366,23 @@ Future parseAudioDataSourceEntriesFormat(
 
   // import the files into the DB
   int noEntries = dataSources.length; int i = 0;
+  List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> filesToInsert = [];
   for (final dataSource in dataSources) {
     mainIsolate.send("Processing audio source file: ${dataSource.filePath} ${++i}/$noEntries");
-    await importMediaFile(
-      dataSource.filePath, dataSource.fileContent, indexId, db, ++aC.currentMaxMediaId);
+    filesToInsert.add((filePath: dataSource.filePath, mediaContent: dataSource.fileContent,
+      indexId: indexId, insertId: ++aC.currentMaxMediaId));
 
     String filePath = p.basename(dataSource.filePath);
+    if (!fileData.containsKey(filePath)) continue;
     final entry = fileData[filePath]!;
 
     await parseAudioDataSourceEntry(
-      entry.term,
-      entry.reading,
-      entry.pitchPattern,
-      indexId,
-      db,
-      aC,
-      mecab
-    );
+      entry.term, entry.reading, entry.pitchPattern, indexId, db, aC, mecab);
+
+    // if enough audios have been processed, import them into the DB
+    if(i % noFilesToBatchInsert == 0 || i == noEntries) {
+      await importMediaFiles(db, filesToInsert);
+      filesToInsert.clear();
+    }
   }
 }

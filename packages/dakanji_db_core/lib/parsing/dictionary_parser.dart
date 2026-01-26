@@ -140,6 +140,7 @@ Future _parseDictionaryDataSource(({
     // parse the rest of the files (first tag bank, then the rest in sorted order)
     int progressCounter = 0;
     final int noEntries = dataSources.length;
+    List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> filesToInsert = [];
     for (final ({String filePath, Uint8List fileContent}) data in dataSources) {
 
       progressCounter++;
@@ -148,30 +149,39 @@ Future _parseDictionaryDataSource(({
       if(p.basename(data.filePath).contains(indexFileNamingScheme)) continue; // skip index file (already parsed)
       if(!validDictionaryFiles.any((scheme) => p.basename(data.filePath).contains(scheme))){
         params.mainIsolateSendPort.send("Copying ${data.filePath} to DB ...");
-        await importMediaFile(data.filePath, data.fileContent, indexId, db, null);
-        continue;
+        filesToInsert.add((filePath: data.filePath, mediaContent: data.fileContent,
+          indexId: indexId, insertId: null));
       }
-
-      // manage import contexts
-      termImportContext = await manageImportContext(termImportContext, data.filePath, termBankFileNamingScheme,
-        () => TermBankV3ParserContext.create(db, indexId));
-      termMetaImportContext = await manageImportContext(termMetaImportContext, data.filePath, termMetaBankFileNamingScheme,
-        () => TermMetaBankV3ParserContext.create(db, indexId));
-      kanjiImportContext = await manageImportContext(kanjiImportContext, data.filePath, kanjiBankFileNamingScheme,
-        () => KanjiBankV3ParserContext.create(db, indexId));
-      kanjiMetaImportContext = await manageImportContext(kanjiMetaImportContext, data.filePath, kanjiMetaBankFileNamingScheme,
-        () => KanjiMetaBankV3ParserContext.create(db));
-        
-      await parseDictionaryFile(
-        filePath: data.filePath,
-        fileContent: utf8.decode(data.fileContent),
-        importContext: [termImportContext, termMetaImportContext, kanjiImportContext, kanjiMetaImportContext]
-          .nonNulls.firstOrNull,
-        db: db,
-        ind: indexEntry,
-        addFullJsonDefinitions: params.addFullJsonDefinitions,
-        mecab: mecab
-      );
+      else {
+        // manage import contexts
+        termImportContext = await manageImportContext(
+          termImportContext, data.filePath, termBankFileNamingScheme,
+          () => TermBankV3ParserContext.create(db, indexId));
+        termMetaImportContext = await manageImportContext(
+          termMetaImportContext, data.filePath, termMetaBankFileNamingScheme,
+          () => TermMetaBankV3ParserContext.create(db, indexId));
+        kanjiImportContext = await manageImportContext(
+          kanjiImportContext, data.filePath, kanjiBankFileNamingScheme,
+          () => KanjiBankV3ParserContext.create(db, indexId));
+        kanjiMetaImportContext = await manageImportContext(
+          kanjiMetaImportContext, data.filePath, kanjiMetaBankFileNamingScheme,
+          () => KanjiMetaBankV3ParserContext.create(db));
+          
+        await parseDictionaryFile(
+          filePath: data.filePath,
+          fileContent: utf8.decode(data.fileContent),
+          importContext: [termImportContext, termMetaImportContext, kanjiImportContext, kanjiMetaImportContext]
+            .nonNulls.firstOrNull,
+          db: db,
+          ind: indexEntry,
+          addFullJsonDefinitions: params.addFullJsonDefinitions,
+          mecab: mecab
+        );
+      }
+      if(filesToInsert.length >= 50 || (progressCounter == noEntries && filesToInsert.isNotEmpty)) {
+        await importMediaFiles(db, filesToInsert);
+        filesToInsert.clear();
+      }
     }
 
     await optimizeDbAfterImport(db);

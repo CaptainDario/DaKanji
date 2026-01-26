@@ -5,24 +5,34 @@ import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 
 
-Future<int> importMediaFile(
-  String filePath, Uint8List mediaContent, int indexId, DaKanjiDB db, int? insertId
+Future importMediaFiles(
+  DaKanjiDB db,
+  List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> files
 ) async {
 
-  // get raw paths
-  String name = p.basename(filePath);
-  String path = p.dirname(filePath);
-  
-  // Normalize path and name to NFC
-  String cleanName = unorm.nfc(name); 
-  String cleanPath = unorm.nfc(path);
+  List<MediaTableCompanion> companions = [];
 
-  return await db.into(db.mediaTable).insert(MediaTableCompanion(
-    id: insertId != null ? Value(insertId) : Value.absent(),
-    indexId: Value(indexId),
-    path: Value(cleanPath),
-    name: Value(cleanName),
-    data: Value(mediaContent),
-  ));
+  for (var file in files) {
+    // get raw paths
+    String name = p.basename(file.filePath);
+    String path = p.dirname(file.filePath);
+    
+    // Normalize path and name to NFC
+    String cleanName = unorm.nfc(name); 
+    String cleanPath = unorm.nfc(path);
+
+    companions.add(MediaTableCompanion(
+      id: file.insertId != null ? Value(file.insertId!) : Value.absent(),
+      indexId: Value(file.indexId),
+      path: Value(cleanPath),
+      name: Value(cleanName),
+      data: Value(file.mediaContent),
+    ));
+  }
+
+  // bulk insert all media files
+  return await db.batch((batch) {
+    batch.insertAll(db.mediaTable, companions);
+  },);
 
 }
