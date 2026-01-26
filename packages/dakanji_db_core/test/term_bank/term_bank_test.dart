@@ -9,6 +9,7 @@ import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
 import '../test_utils/db_files.dart';
+import '../test_utils/ignore_database_generated_data.dart';
 import 'term_bank_test_cases_1.dart';
 import 'term_bank_test_cases_2.dart';
 import 'term_bank_v3_entry_matcher.dart';
@@ -45,27 +46,7 @@ void main() async {
         test('Search for "$testCase" should return correct entries', () async {
           // Perform the database search
           final result = (await db.termBankV3Dao.search(testCase))
-            .map((e) => e.copyWith(
-              id: 0, // ignore ids in comparison;
-              indexEntry: e.indexEntry.copyWith(id: 0, currentSortingOrder: 0),
-              tags: e.tags.map((tag) => tag.copyWith(
-                indexEntry: e.indexEntry.copyWith(
-                  id: 0,
-                  currentSortingOrder: 0
-                ),
-                id: 0
-              )).toList(),
-              definitionTags: e.definitionTags.map((tag) =>
-                tag.copyWith(
-                  id: 0,
-                  indexEntry: e.indexEntry.copyWith(
-                    id: 0,
-                    currentSortingOrder: 0
-                  )
-                )
-              ).toList()  
-            )) // ignore tag ids in comparison
-          .toList(); 
+            .map((e) => termBankV3EntryIgnoreDatabaseGeneratedData(e)).toList(); 
           print("result: $result");
           print("expectation: $expected");
 

@@ -8,6 +8,7 @@ import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
 import '../test_utils/db_files.dart';
+import '../test_utils/ignore_database_generated_data.dart';
 import 'kanji_bank_test_cases.dart';
 
 void main() {
@@ -26,12 +27,10 @@ void main() {
       test('Looking up $testCase', () async {
         Stopwatch s = Stopwatch()..start();
         List<KanjiBankV3Entry> result = (await db.kanjiBankV3Dao.search(testCase))
-          .map((e) => e.copyWith(
-            id: 0,
-            tags: e.tags.map((t) => t.copyWith(id: 0)).toList(),
-          )).toList();
+          .map((e) => kanjiBankEntryIgnoreDatabaseGeneratedData(e)).toList();
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
-        print(result);
+        print("Actual: $result");
+        print("Expected: $kanjiBankTestCaseExpectations");
 
         expect(result.isNotEmpty, true);
         for (var entry in result) {

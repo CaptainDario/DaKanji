@@ -7,6 +7,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 
 import '../test_utils/db_files.dart';
+import '../test_utils/ignore_database_generated_data.dart';
 import 'kanji_meta_bank_test_cases.dart';
 
 void main() {
@@ -25,9 +26,7 @@ void main() {
       test('Looking up $testCase', () async {
         Stopwatch s = Stopwatch()..start();
         List result = (await db.kanjiMetaBankV3Dao.search(testCase))
-          .map((e) => e.copyWith(
-            id: 0,
-          )).toList();
+          .map((e) => kanjiMetaBankEntryIgnoreDatabaseGeneratedData(e)).toList();
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
         print("result $result");
         print("Expectation $kanjiMetaBankTetsCaseExpectations");
