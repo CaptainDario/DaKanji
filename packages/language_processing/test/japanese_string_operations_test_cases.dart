@@ -62,42 +62,50 @@ final List<(String, String)> toHalfWidthTestCases = [
   ('！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？＠［＼］＾＿｀｛｜｝～', '!"#\$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'),
 ];
 
-final List<(String, String)> katakanaToHiraganaTestCases = [
-  ('カタカナ', 'かたかな'),
-  ('コンニチハ', 'こんにちは'),
-  ('サヨウナラ', 'さようなら'),
-  ('アイウエオ', 'あいうえお'),
-  ('カンジ', 'かんじ'),
-  ('パーティー', 'ぱあてぃい'),
-  ('こんぴゅーたー', 'こんぴゅうたあ'),
-  ('ミュージック', 'みゅうじっく'),
-  ('トウキョウ', 'とうきょう'),
-  ('スーパー', 'すうぱあ'),
-  ('バスケットボール', 'ばすけっとぼうる'),
+final List<(String, String, bool)> katakanaToHiraganaTestCases = [
+  ('カタカナ', 'かたかな', false),
+  ('コンニチハ', 'こんにちは', false),
+  ('サヨウナラ', 'さようなら', false),
+  ('アイウエオ', 'あいうえお', false),
+  ('カンジ', 'かんじ', false),
+  ('パーティー', 'ぱあてぃい', false),
+  ('こんぴゅーたー', 'こんぴゅうたあ', false),
+  ('ミュージック', 'みゅうじっく', false),
+  ('トウキョウ', 'とうきょう', false),
+  ('スーパー', 'すうぱあ', false),
+  ('バスケットボール', 'ばすけっとぼうる', false),
   // All Katakana
-  ('カタカナ', 'かたかな'),
+  ('カタカナ', 'かたかな', false),
   // Mixed Katakana and Hiragana
-  ('カタカナとひらがな', 'かたかなとひらがな'),
+  ('カタカナとひらがな', 'かたかなとひらがな', false),
   // Mixed Katakana and Kanji
-  ('日本語とカタカナ', '日本語とかたかな'),
+  ('日本語とカタカナ', '日本語とかたかな', false),
   // Mixed Katakana and Romaji
-  ('カタカナ and Romaji', 'かたかな and Romaji'),
+  ('カタカナ and Romaji', 'かたかな and Romaji', false),
   // Mixed everything
-  ('これはテストです。This is a TEST.', 'これはてすとです。This is a TEST.'),
+  ('これはテストです。This is a TEST.', 'これはてすとです。This is a TEST.', false),
   // Empty string
-  ('', ''),
+  ('', '', false),
+  ('', '', true),
   // Only Hiragana
-  ('ひらがな', 'ひらがな'),
+  ('ひらがな', 'ひらがな', false),
   // Only Kanji
-  ('漢字', '漢字'),
+  ('漢字', '漢字', false),
   // Only Romaji
-  ('romaji', 'romaji'),
+  ('romaji', 'romaji', false),
+  ('romaji', 'ろまじ', true),
   // With punctuation
-  ('コンニチハ、セカイ！', 'こんにちは、せかい！'),
+  ('コンニチハ、セカイ！', 'こんにちは、せかい！', false),
   // Small Katakana characters
-  ('ァィゥェォッャュョヮ', 'ぁぃぅぇぉっゃゅょゎ'),
+  ('ァィゥェォッャュョヮ', 'ぁぃぅぇぉっゃゅょゎ', false),
   // Voiced and semi-voiced Katakana
-  ('ガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ', 'がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ'),
+  ('ガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ', 'がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ', false),
   // String with numbers and symbols
-  ('テスト123！＠＃', 'てすと123！＠＃'),
+  ('テスト123！＠＃', 'てすと123！＠＃', false),
+  // Long vowel marks
+  ('スーパー', 'すうぱあ', false),
+  // Kanji and romaji WITHOUT kana
+  ('日本語 and romaji', '日本語 and romaji', false),
+  ('食beru', '食beru', false),
+  ('食beru', '食べる', true),
 ];
