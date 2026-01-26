@@ -23,7 +23,6 @@ Future<bool> checkIfDictionaryHasUpdates(IndexEntry entry) async {
   // fetch the latest index data from the url the dict provides
   final latest = await d.get(entry.indexUrl!);
   final latestJson = jsonDecode(latest.data);
-  print(latestJson);
 
   // check if the revision is newer than the current one
   if (latestJson['revision'] != null) {

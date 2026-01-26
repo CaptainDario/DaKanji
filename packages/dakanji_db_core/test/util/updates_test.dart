@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_core/util/check_dict_updates.dart';
+import 'package:dio/dio.dart';
 import 'package:test/test.dart';
 
 
@@ -21,10 +24,27 @@ void main() async {
     isUpdatable: true,
   );
 
-  bool hasUpdates = await checkIfDictionaryHasUpdates(entry);
+  test("Test old dict shows update available", () async {
 
-  print(hasUpdates);
+    bool hasUpdates = await checkIfDictionaryHasUpdates(entry);
 
-  expect(hasUpdates, true);
+    // check that old dict shows updates available
+    expect(hasUpdates, true);
 
+  });
+
+  test("Test newest dict shows no updates available", () async {
+
+    // set revision to latest known
+    Dio d = Dio();
+    final latest = await d.get(entry.indexUrl!);
+    final latestJson = jsonDecode(latest.data);
+    entry = entry.copyWith(revision: latestJson['revision']);
+
+    bool hasUpdates = await checkIfDictionaryHasUpdates(entry);
+
+    // check that newest dict shows no updates available
+    expect(hasUpdates, false);
+
+  });
 }
