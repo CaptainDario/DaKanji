@@ -85,25 +85,25 @@ import 'package:language_processing/japanese/japanese_string_operations.dart';
 /// [searchInputs]: List of `[term, mode]`. Example: `[['eat', 0], ['eating', 0]]`
 /// [rules]: Optional list of rule (pos) lists per term. Example: `[['v1'], ['n']]`
 /// [tags]: Optional list of tag lists per term. Example: `[[], ['common']]`
-String buildSearchInputJson(
-  List<List<dynamic>> searchInputs, {
+String buildSearchInputJson({
+  required List<String> terms,
   List<List<String>>? pos,
   List<List<String>>? tags,
 }) {
   final mergedList = <List<dynamic>>[];
 
-  for (int i = 0; i < searchInputs.length; i++) {
-    // 1. Get Term and Mode from your existing input
-    final term = searchInputs[i][0];
-    final mode = searchInputs[i][1];
+  // assert all input lists have the same length
+  assert({terms.length, ?pos?.length, ?tags?.length}.length == 1,
+    "All input lists must have the same length.");
 
-    // 2. Get corresponding Rules (POS) and Tags, or null if not provided
-    // This allows you to pass specific filters for specific terms
-    final ruleSet = (pos != null && i < pos.length) ? pos[i] : null;
-    final tagSet = (tags != null && i < tags.length) ? tags[i] : null;
+  for (int i = 0; i < terms.length; i++) {
 
-    // 3. Create the [Term, Mode, Rules, Tags] tuple
-    mergedList.add([term, mode, ruleSet, tagSet]);
+    int runPrefixSearch = 1; // currently not used, but may be useful later
+    int onlyFirstTokenMatch =
+      (terms[i].length > 1 || kanjiRegex.hasMatch(terms[i])) ? 0 : 1;
+
+    mergedList.add(
+      [terms[i], runPrefixSearch, onlyFirstTokenMatch, pos?[i], tags?[i]]);
   }
 
   return jsonEncode(mergedList);

@@ -21,12 +21,20 @@ dictionary_search_drift_find_term_bank_entries(
     WITH
         SearchTerms(term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (
             SELECT 
-                CAST(json_extract(value, '$[0]') AS TEXT),
-                CAST(json_extract(value, '$[1]') AS INTEGER),
-                CAST(json_extract(value, '$[2]') AS TEXT), -- Extract Rules Array
-                CAST(json_extract(value, '$[3]') AS TEXT), -- Extract Tags Array
-                '"' || "REPLACE"(CAST(json_extract(value, '$[0]') AS TEXT), '"', '""') || '"' ||
+                CAST(json_extract(value, '$[0]') AS TEXT),    -- Extract term
+                CAST(json_extract(value, '$[1]') AS INTEGER), -- Extract prefix search flag
+                CAST(json_extract(value, '$[3]') AS TEXT),    -- Extract Rules (PoS) Array
+                CAST(json_extract(value, '$[4]') AS TEXT),    -- Extract Tags Array
+
+                -- 
                 CASE 
+                    WHEN CAST(json_extract(value, '$[2]') AS INTEGER) = 1 THEN '^' 
+                    ELSE '' 
+                END ||
+                -- the search term
+                '"' || "REPLACE"(CAST(json_extract(value, '$[0]') AS TEXT), '"', '""') || '"' ||
+                -- prefix search
+                CASE
                     WHEN CAST(json_extract(value, '$[1]') AS INTEGER) = 1 THEN ' *' 
                     ELSE '' 
                 END

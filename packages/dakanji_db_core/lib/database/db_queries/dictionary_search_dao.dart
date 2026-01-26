@@ -255,7 +255,7 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
     ]);
   }
 
-    /// Helper method to run ONLY the ID search (Query 1)
+  /// Helper method to run ONLY the ID search (Query 1)
   Future<List<DictionarySearchDriftFindTermBankEntriesResult>> _findTermBankEntries(
     {
     required List<String> terms,
@@ -271,15 +271,8 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
 
     if (terms.isEmpty) return [];
 
-    // only run prefix search for terms longer than 2 characters or containing kanji
-    List<List<dynamic>> searchInputs = [];
-    for (final term in terms) {
-      int runPrefixSearch = term.length > 1 || kanjiRegex.hasMatch(term) ? 1 : 0;
-      searchInputs.add([term, runPrefixSearch]);
-    }
-
     return await db.dictionary_search_drift_find_term_bank_entries(
-      buildSearchInputJson(searchInputs, tags: tags, pos: pos),
+      buildSearchInputJson(terms: terms, tags: tags, pos: pos),
       jsonEncode(indexesToInclude ?? []),
       useGlob ? 1 : 0,
       searchNormalized ? 1 : 0,
