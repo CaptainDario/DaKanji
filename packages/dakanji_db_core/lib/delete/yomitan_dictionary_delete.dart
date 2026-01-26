@@ -1,21 +1,17 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/delete/index_delete.dart';
 
 
 Future deleteyomitanDictionary(DaKanjiDB db, int indexId) async {
 
-  await deleteIndexEntry(db, indexId);
-  await deleteKanjiBankV3(db, indexId);
-  await deleteKanjiMetaBankV3(db, indexId);
-  await deleteTagBankV3(db, indexId);
-  await deleteTermBankV3(db, indexId);
-  await deleteTermMetaBankV3(db, indexId);
-
-}
-
-Future deleteIndexEntry(DaKanjiDB db, int indexId) async {
-  
-  await (db.delete(db.indexTable)
-        ..where((tbl) => tbl.id.equals(indexId))).go();
+  await db.transaction(() async {
+    await deleteKanjiBankV3(db, indexId);
+    await deleteKanjiMetaBankV3(db, indexId);
+    await deleteTagBankV3(db, indexId);
+    await deleteTermBankV3(db, indexId);
+    await deleteTermMetaBankV3(db, indexId);
+    await deleteIndex(db, indexId);
+  });
 
 }
 
