@@ -30,13 +30,17 @@
   * Exact match: 食べる→食べる
   * At the beginning: 食べ→食べる
   * Sub matches
-    * 日→一日中 (not TRUE sub matches, ONLY sub-token matches)
+    * 日 → 一日中 (not TRUE sub matches, ONLY sub-token matches)
     * eat → to eat
 * Wildcard search
   * ‘?‘ - matches one character
   * ‘*‘ - matches zero to many characters
 * Fuzzy match (also consider misspellings): りょこ→りょこう
 * Filter by languages
+
+### Edge case: 1 char search
+
+Only prefix and NO sub-token matches are searched.
 
 ## Search Result Sorting
 
