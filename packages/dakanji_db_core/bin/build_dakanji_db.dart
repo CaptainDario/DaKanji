@@ -90,20 +90,26 @@ void main(List<String> args) async {
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   print("Importing pronunciation audio data...");
-  await importPronunciationData(db, mecab);
+  //await importPronunciationData(db, mecab);
 
   print("Adding KanjiVG...");
-  await importKanjiVG(db);
+  //await importKanjiVG(db);
 
   print("Adding radicals data...");
-  await importRadicals(db);
+  //await importRadicals(db);
 
   print("Importing yomitan dicts...");
   await importYomitanDicts(db, mecab,
-    [kanjidic2InputPath, jpdb2_2InputPath]
+    [
+      kanjidic2InputPath,
+      jpdb2_2InputPath
+    ]
       + ([dictNameToPath[dictToUse]!()])
       + (includeExampleDictArg ? [exampleDictPath!] : []),
-    ["KanjiDic2", "JPDB 2.2"]
+    [
+      "KanjiDic2",
+      "JPDB 2.2"
+    ]
       + [dictToUse.name]
       + (includeExampleDictArg ? ["yomitan example dictionary"] : []),
     addStructuredContentJsonDefs,
