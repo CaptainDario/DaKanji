@@ -7,8 +7,6 @@ import '/database/kanji/kanji_bank_v3_tables.dart';
 import '/database/kanji/kanji_bank_v3_relation_tables.dart';
 import '/database/kanji_meta/kanji_meta_bank_v3_views.drift';
 
-
-
 CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
     SELECT
         KB3T.id AS id,
@@ -42,8 +40,8 @@ CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
         ) AS definitions,
         COALESCE(
             JSON_GROUP_ARRAY(DISTINCT JSON_OBJECT(
-                'name', KB3SNT.stat_name,
-                'value', KB3SVT.stat_value
+                'value', KB3ST.stat_value,
+                'tag', JSON(StatTagJSON.tag_json)
             )),
             JSON('[]')
         ) AS stats
@@ -69,9 +67,7 @@ CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS
     LEFT JOIN definition_table AS DT ON KB3DKRT.definition_id = DT.id
     LEFT JOIN json_each(KB3T.definition_order) AS DOJ ON DOJ.value = KB3DKRT.definition_id
 
-    LEFT JOIN kanji_bank_v3_x_kanji_bank_v3_stats_table AS KB3SKRT ON KB3SKRT.kanji_id = KB3T.id
-    LEFT JOIN kanji_bank_v3_stats_table AS KB3ST ON KB3SKRT.stat_id = KB3ST.id
-    LEFT JOIN kanji_bank_v3_stat_names_table AS KB3SNT ON KB3SNT.id = KB3ST.stat_name_id
-    LEFT JOIN kanji_bank_v3_stat_values_table AS KB3SVT ON KB3SVT.id = KB3ST.stat_value_id
+    LEFT JOIN kanji_bank_v3_stats_table AS KB3ST ON KB3ST.kanji_bank_entry_id = KB3T.id
+    LEFT JOIN tag_bank_v3_as_json_view AS StatTagJSON ON KB3ST.stat_tag_id = StatTagJSON.tag_id
 
     GROUP BY KB3T.id;

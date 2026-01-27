@@ -1,4 +1,5 @@
 
+import 'package:dakanji_db_core/database/tag/tag_bank_v3_tables.dart';
 import 'package:dakanji_db_core/helper/sql_json_converter.dart';
 import 'package:drift/drift.dart';
 
@@ -39,41 +40,23 @@ class KanjiBankV3Table extends Table {
 
 }
 
-/// Contains all kanji stat's. Each entry links to a
-/// [KanjiBankV3StatValuesTable] and a [KanjiBankV3StatNamesTable]
-@TableIndex(name: 'KanjiBankV3StatsTable_statNameIdIndex', columns: {#statNameId})
-@TableIndex(name: 'KanjiBankV3StatsTable_statValueIdIndex', columns: {#statValueId})
+/// Contains all kanji stat's. Each entry links to a [KanjiBankV3StatNamesTable]
+/// row
+@TableIndex(name: 'KanjiBankV3StatsTable_kanjiBankEntryIdIndex', columns: {#kanjiBankEntryId})
+@TableIndex(name: 'KanjiBankV3StatsTable_statTagIdIndex', columns: {#statTagId})
 class KanjiBankV3StatsTable extends Table {
 
   /// id of this stat
   IntColumn get id => integer().autoIncrement()();
 
-  /// `KanjiBankV3StatsName` entry that belongs to this entry
-  IntColumn get statNameId => integer().references(KanjiBankV3StatNamesTable, #id)();
-
-  /// The value of this entrie's stat
-  IntColumn get statValueId => integer().references(KanjiBankV3StatValuesTable, #id)();
-
-}
-
-/// Contains all kanji stat's values, links to a [KanjiBankV3StatsTable]
-class KanjiBankV3StatValuesTable extends Table {
-
-  /// id of this stat value
-  IntColumn get id => integer().autoIncrement()();
+  /// The id of the associated kanji bank v3 entry
+  IntColumn get kanjiBankEntryId => integer()
+    .references(KanjiBankV3Table, #id, onDelete: KeyAction.cascade)();
 
   /// The value of this entrie's stat
   TextColumn get statValue => text()();
 
-}
-
-/// Contains all kanji stat's names, links to a [KanjiBankV3StatsTable]
-class KanjiBankV3StatNamesTable extends Table {
-
-  /// id of this stat name
-  IntColumn get id => integer().autoIncrement()();
-
-  /// The name of this entrie's stat
-  TextColumn get statName => text()();
+  /// `TagBankV3Table` entry that belongs to this entry
+  IntColumn get statTagId => integer().references(TagBankV3Table, #id)();
 
 }

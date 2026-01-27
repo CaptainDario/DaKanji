@@ -72,8 +72,6 @@ Future parseKanjiBankV3(String kanjiBankV3Json, KanjiBankV3ParserContext pC, DaK
     batch.insertAll(db.kanjiBankV3XDefinitionTable, pC.definitionRelCompanions,);
     
     batch.insertAll(db.kanjiBankV3StatsTable, pC.statCompanions,);
-    batch.insertAll(db.kanjiBankV3StatValuesTable, pC.statValuesCompanions,);
-    batch.insertAll(db.kanjiBankV3StatNamesTable, pC.statNamesCompanions,);
     batch.insertAll(db.kanjiBankV3XKanjiBankV3StatsTable, pC.statValueRelCompanions,);
 
   });
@@ -227,38 +225,17 @@ Future<void> parseStats(Map<String, String> stats, KanjiBankV3ParserContext pC, 
 
     for (MapEntry<String, String> stat in stats.entries) {
 
+      // skip stats that do not have a tag
+      final tag = pC.tagsInDB[stat.key];
+      if(tag == null) continue;
+
       pC.maxStatsId += 1;
-      
-      int? statValueInsertId = pC.statValuesInDB[stat.value];
-      if(statValueInsertId == null){
-        statValueInsertId = ++pC.maxStatValuesId;
-        pC.statValuesInDB[stat.value] = statValueInsertId;
-
-        pC.statValuesCompanions.add(KanjiBankV3StatValuesTableCompanion(
-          id: Value(statValueInsertId),
-          statValue: Value(stat.value)
-        ));
-      }
-      
-      int? statNameInsertId = pC.statNamesInDB[stat.key];
-      if(statNameInsertId == null){
-        statNameInsertId = ++pC.maxStatNamesId;
-        pC.statNamesInDB[stat.key] = statNameInsertId;
-
-        pC.statNamesCompanions.add(KanjiBankV3StatNamesTableCompanion(
-          id: Value(statNameInsertId),
-          statName: Value(stat.key)
-        ));
-      }
-
+            
       pC.statCompanions.add(KanjiBankV3StatsTableCompanion(
         id: Value(pC.maxStatsId),
-        statNameId: Value(statNameInsertId),
-        statValueId: Value(statValueInsertId),
-      ));
-      pC.statValueRelCompanions.add(KanjiBankV3_X_KanjiBankV3StatsTableCompanion(
-        kanjiId: Value(pC.maxKanjiBankId),
-        statId: Value(pC.maxStatsId),
+        kanjiBankEntryId: Value(pC.maxKanjiBankId),
+        statValue: Value(stat.value),
+        statTagId: Value(tag)
       ));
     
     }

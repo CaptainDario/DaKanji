@@ -19,10 +19,6 @@ mixin _$KanjiBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $DefinitionTableTable get definitionTable => attachedDatabase.definitionTable;
   $KanjiBankV3_X_DefinitionTableTable get kanjiBankV3XDefinitionTable =>
       attachedDatabase.kanjiBankV3XDefinitionTable;
-  $KanjiBankV3StatNamesTableTable get kanjiBankV3StatNamesTable =>
-      attachedDatabase.kanjiBankV3StatNamesTable;
-  $KanjiBankV3StatValuesTableTable get kanjiBankV3StatValuesTable =>
-      attachedDatabase.kanjiBankV3StatValuesTable;
   $KanjiBankV3StatsTableTable get kanjiBankV3StatsTable =>
       attachedDatabase.kanjiBankV3StatsTable;
   $KanjiBankV3_X_KanjiBankV3StatsTableTable

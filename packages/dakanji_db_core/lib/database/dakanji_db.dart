@@ -76,7 +76,6 @@ part 'dakanji_db.g.dart';
     KanjiBankV3_X_TagBankV3Table,
     KanjiBankV3_X_DefinitionTable,
     KanjiBankV3StatsTable, KanjiBankV3_X_KanjiBankV3StatsTable,
-    KanjiBankV3StatNamesTable, KanjiBankV3StatValuesTable,
 
     KanjiMetaBankV3Table, KanjiMetaBankV3TypeTable,
     

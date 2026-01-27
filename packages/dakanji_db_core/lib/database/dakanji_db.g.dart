@@ -4186,446 +4186,6 @@ class KanjiBankV3_X_DefinitionTableCompanion
   }
 }
 
-class $KanjiBankV3StatNamesTableTable extends KanjiBankV3StatNamesTable
-    with
-        TableInfo<
-          $KanjiBankV3StatNamesTableTable,
-          KanjiBankV3StatNamesTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $KanjiBankV3StatNamesTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _statNameMeta = const VerificationMeta(
-    'statName',
-  );
-  @override
-  late final GeneratedColumn<String> statName = GeneratedColumn<String>(
-    'stat_name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, statName];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'kanji_bank_v3_stat_names_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<KanjiBankV3StatNamesTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('stat_name')) {
-      context.handle(
-        _statNameMeta,
-        statName.isAcceptableOrUnknown(data['stat_name']!, _statNameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_statNameMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  KanjiBankV3StatNamesTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiBankV3StatNamesTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      statName: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}stat_name'],
-      )!,
-    );
-  }
-
-  @override
-  $KanjiBankV3StatNamesTableTable createAlias(String alias) {
-    return $KanjiBankV3StatNamesTableTable(attachedDatabase, alias);
-  }
-}
-
-class KanjiBankV3StatNamesTableData extends DataClass
-    implements Insertable<KanjiBankV3StatNamesTableData> {
-  /// id of this stat name
-  final int id;
-
-  /// The name of this entrie's stat
-  final String statName;
-  const KanjiBankV3StatNamesTableData({
-    required this.id,
-    required this.statName,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['stat_name'] = Variable<String>(statName);
-    return map;
-  }
-
-  KanjiBankV3StatNamesTableCompanion toCompanion(bool nullToAbsent) {
-    return KanjiBankV3StatNamesTableCompanion(
-      id: Value(id),
-      statName: Value(statName),
-    );
-  }
-
-  factory KanjiBankV3StatNamesTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiBankV3StatNamesTableData(
-      id: serializer.fromJson<int>(json['id']),
-      statName: serializer.fromJson<String>(json['statName']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'statName': serializer.toJson<String>(statName),
-    };
-  }
-
-  KanjiBankV3StatNamesTableData copyWith({int? id, String? statName}) =>
-      KanjiBankV3StatNamesTableData(
-        id: id ?? this.id,
-        statName: statName ?? this.statName,
-      );
-  KanjiBankV3StatNamesTableData copyWithCompanion(
-    KanjiBankV3StatNamesTableCompanion data,
-  ) {
-    return KanjiBankV3StatNamesTableData(
-      id: data.id.present ? data.id.value : this.id,
-      statName: data.statName.present ? data.statName.value : this.statName,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiBankV3StatNamesTableData(')
-          ..write('id: $id, ')
-          ..write('statName: $statName')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, statName);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is KanjiBankV3StatNamesTableData &&
-          other.id == this.id &&
-          other.statName == this.statName);
-}
-
-class KanjiBankV3StatNamesTableCompanion
-    extends UpdateCompanion<KanjiBankV3StatNamesTableData> {
-  final Value<int> id;
-  final Value<String> statName;
-  const KanjiBankV3StatNamesTableCompanion({
-    this.id = const Value.absent(),
-    this.statName = const Value.absent(),
-  });
-  KanjiBankV3StatNamesTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String statName,
-  }) : statName = Value(statName);
-  static Insertable<KanjiBankV3StatNamesTableData> custom({
-    Expression<int>? id,
-    Expression<String>? statName,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (statName != null) 'stat_name': statName,
-    });
-  }
-
-  KanjiBankV3StatNamesTableCompanion copyWith({
-    Value<int>? id,
-    Value<String>? statName,
-  }) {
-    return KanjiBankV3StatNamesTableCompanion(
-      id: id ?? this.id,
-      statName: statName ?? this.statName,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (statName.present) {
-      map['stat_name'] = Variable<String>(statName.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiBankV3StatNamesTableCompanion(')
-          ..write('id: $id, ')
-          ..write('statName: $statName')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $KanjiBankV3StatValuesTableTable extends KanjiBankV3StatValuesTable
-    with
-        TableInfo<
-          $KanjiBankV3StatValuesTableTable,
-          KanjiBankV3StatValuesTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $KanjiBankV3StatValuesTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _statValueMeta = const VerificationMeta(
-    'statValue',
-  );
-  @override
-  late final GeneratedColumn<String> statValue = GeneratedColumn<String>(
-    'stat_value',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, statValue];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'kanji_bank_v3_stat_values_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<KanjiBankV3StatValuesTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('stat_value')) {
-      context.handle(
-        _statValueMeta,
-        statValue.isAcceptableOrUnknown(data['stat_value']!, _statValueMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_statValueMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  KanjiBankV3StatValuesTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiBankV3StatValuesTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      statValue: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}stat_value'],
-      )!,
-    );
-  }
-
-  @override
-  $KanjiBankV3StatValuesTableTable createAlias(String alias) {
-    return $KanjiBankV3StatValuesTableTable(attachedDatabase, alias);
-  }
-}
-
-class KanjiBankV3StatValuesTableData extends DataClass
-    implements Insertable<KanjiBankV3StatValuesTableData> {
-  /// id of this stat value
-  final int id;
-
-  /// The value of this entrie's stat
-  final String statValue;
-  const KanjiBankV3StatValuesTableData({
-    required this.id,
-    required this.statValue,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['stat_value'] = Variable<String>(statValue);
-    return map;
-  }
-
-  KanjiBankV3StatValuesTableCompanion toCompanion(bool nullToAbsent) {
-    return KanjiBankV3StatValuesTableCompanion(
-      id: Value(id),
-      statValue: Value(statValue),
-    );
-  }
-
-  factory KanjiBankV3StatValuesTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiBankV3StatValuesTableData(
-      id: serializer.fromJson<int>(json['id']),
-      statValue: serializer.fromJson<String>(json['statValue']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'statValue': serializer.toJson<String>(statValue),
-    };
-  }
-
-  KanjiBankV3StatValuesTableData copyWith({int? id, String? statValue}) =>
-      KanjiBankV3StatValuesTableData(
-        id: id ?? this.id,
-        statValue: statValue ?? this.statValue,
-      );
-  KanjiBankV3StatValuesTableData copyWithCompanion(
-    KanjiBankV3StatValuesTableCompanion data,
-  ) {
-    return KanjiBankV3StatValuesTableData(
-      id: data.id.present ? data.id.value : this.id,
-      statValue: data.statValue.present ? data.statValue.value : this.statValue,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiBankV3StatValuesTableData(')
-          ..write('id: $id, ')
-          ..write('statValue: $statValue')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, statValue);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is KanjiBankV3StatValuesTableData &&
-          other.id == this.id &&
-          other.statValue == this.statValue);
-}
-
-class KanjiBankV3StatValuesTableCompanion
-    extends UpdateCompanion<KanjiBankV3StatValuesTableData> {
-  final Value<int> id;
-  final Value<String> statValue;
-  const KanjiBankV3StatValuesTableCompanion({
-    this.id = const Value.absent(),
-    this.statValue = const Value.absent(),
-  });
-  KanjiBankV3StatValuesTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String statValue,
-  }) : statValue = Value(statValue);
-  static Insertable<KanjiBankV3StatValuesTableData> custom({
-    Expression<int>? id,
-    Expression<String>? statValue,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (statValue != null) 'stat_value': statValue,
-    });
-  }
-
-  KanjiBankV3StatValuesTableCompanion copyWith({
-    Value<int>? id,
-    Value<String>? statValue,
-  }) {
-    return KanjiBankV3StatValuesTableCompanion(
-      id: id ?? this.id,
-      statValue: statValue ?? this.statValue,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (statValue.present) {
-      map['stat_value'] = Variable<String>(statValue.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiBankV3StatValuesTableCompanion(')
-          ..write('id: $id, ')
-          ..write('statValue: $statValue')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $KanjiBankV3StatsTableTable extends KanjiBankV3StatsTable
     with TableInfo<$KanjiBankV3StatsTableTable, KanjiBankV3StatsTableData> {
   @override
@@ -4645,36 +4205,52 @@ class $KanjiBankV3StatsTableTable extends KanjiBankV3StatsTable
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _statNameIdMeta = const VerificationMeta(
-    'statNameId',
+  static const VerificationMeta _kanjiBankEntryIdMeta = const VerificationMeta(
+    'kanjiBankEntryId',
   );
   @override
-  late final GeneratedColumn<int> statNameId = GeneratedColumn<int>(
-    'stat_name_id',
+  late final GeneratedColumn<int> kanjiBankEntryId = GeneratedColumn<int>(
+    'kanji_bank_entry_id',
     aliasedName,
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_bank_v3_stat_names_table (id)',
+      'REFERENCES kanji_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
-  static const VerificationMeta _statValueIdMeta = const VerificationMeta(
-    'statValueId',
+  static const VerificationMeta _statValueMeta = const VerificationMeta(
+    'statValue',
   );
   @override
-  late final GeneratedColumn<int> statValueId = GeneratedColumn<int>(
-    'stat_value_id',
+  late final GeneratedColumn<String> statValue = GeneratedColumn<String>(
+    'stat_value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statTagIdMeta = const VerificationMeta(
+    'statTagId',
+  );
+  @override
+  late final GeneratedColumn<int> statTagId = GeneratedColumn<int>(
+    'stat_tag_id',
     aliasedName,
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_bank_v3_stat_values_table (id)',
+      'REFERENCES tag_bank_v3_table (id)',
     ),
   );
   @override
-  List<GeneratedColumn> get $columns => [id, statNameId, statValueId];
+  List<GeneratedColumn> get $columns => [
+    id,
+    kanjiBankEntryId,
+    statValue,
+    statTagId,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -4690,27 +4266,32 @@ class $KanjiBankV3StatsTableTable extends KanjiBankV3StatsTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('stat_name_id')) {
+    if (data.containsKey('kanji_bank_entry_id')) {
       context.handle(
-        _statNameIdMeta,
-        statNameId.isAcceptableOrUnknown(
-          data['stat_name_id']!,
-          _statNameIdMeta,
+        _kanjiBankEntryIdMeta,
+        kanjiBankEntryId.isAcceptableOrUnknown(
+          data['kanji_bank_entry_id']!,
+          _kanjiBankEntryIdMeta,
         ),
       );
     } else if (isInserting) {
-      context.missing(_statNameIdMeta);
+      context.missing(_kanjiBankEntryIdMeta);
     }
-    if (data.containsKey('stat_value_id')) {
+    if (data.containsKey('stat_value')) {
       context.handle(
-        _statValueIdMeta,
-        statValueId.isAcceptableOrUnknown(
-          data['stat_value_id']!,
-          _statValueIdMeta,
-        ),
+        _statValueMeta,
+        statValue.isAcceptableOrUnknown(data['stat_value']!, _statValueMeta),
       );
     } else if (isInserting) {
-      context.missing(_statValueIdMeta);
+      context.missing(_statValueMeta);
+    }
+    if (data.containsKey('stat_tag_id')) {
+      context.handle(
+        _statTagIdMeta,
+        statTagId.isAcceptableOrUnknown(data['stat_tag_id']!, _statTagIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_statTagIdMeta);
     }
     return context;
   }
@@ -4728,13 +4309,17 @@ class $KanjiBankV3StatsTableTable extends KanjiBankV3StatsTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      statNameId: attachedDatabase.typeMapping.read(
+      kanjiBankEntryId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}stat_name_id'],
+        data['${effectivePrefix}kanji_bank_entry_id'],
       )!,
-      statValueId: attachedDatabase.typeMapping.read(
+      statValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}stat_value'],
+      )!,
+      statTagId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}stat_value_id'],
+        data['${effectivePrefix}stat_tag_id'],
       )!,
     );
   }
@@ -4750,30 +4335,36 @@ class KanjiBankV3StatsTableData extends DataClass
   /// id of this stat
   final int id;
 
-  /// `KanjiBankV3StatsName` entry that belongs to this entry
-  final int statNameId;
+  /// The id of the associated kanji bank v3 entry
+  final int kanjiBankEntryId;
 
   /// The value of this entrie's stat
-  final int statValueId;
+  final String statValue;
+
+  /// `TagBankV3Table` entry that belongs to this entry
+  final int statTagId;
   const KanjiBankV3StatsTableData({
     required this.id,
-    required this.statNameId,
-    required this.statValueId,
+    required this.kanjiBankEntryId,
+    required this.statValue,
+    required this.statTagId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['stat_name_id'] = Variable<int>(statNameId);
-    map['stat_value_id'] = Variable<int>(statValueId);
+    map['kanji_bank_entry_id'] = Variable<int>(kanjiBankEntryId);
+    map['stat_value'] = Variable<String>(statValue);
+    map['stat_tag_id'] = Variable<int>(statTagId);
     return map;
   }
 
   KanjiBankV3StatsTableCompanion toCompanion(bool nullToAbsent) {
     return KanjiBankV3StatsTableCompanion(
       id: Value(id),
-      statNameId: Value(statNameId),
-      statValueId: Value(statValueId),
+      kanjiBankEntryId: Value(kanjiBankEntryId),
+      statValue: Value(statValue),
+      statTagId: Value(statTagId),
     );
   }
 
@@ -4784,8 +4375,9 @@ class KanjiBankV3StatsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return KanjiBankV3StatsTableData(
       id: serializer.fromJson<int>(json['id']),
-      statNameId: serializer.fromJson<int>(json['statNameId']),
-      statValueId: serializer.fromJson<int>(json['statValueId']),
+      kanjiBankEntryId: serializer.fromJson<int>(json['kanjiBankEntryId']),
+      statValue: serializer.fromJson<String>(json['statValue']),
+      statTagId: serializer.fromJson<int>(json['statTagId']),
     );
   }
   @override
@@ -4793,31 +4385,33 @@ class KanjiBankV3StatsTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'statNameId': serializer.toJson<int>(statNameId),
-      'statValueId': serializer.toJson<int>(statValueId),
+      'kanjiBankEntryId': serializer.toJson<int>(kanjiBankEntryId),
+      'statValue': serializer.toJson<String>(statValue),
+      'statTagId': serializer.toJson<int>(statTagId),
     };
   }
 
   KanjiBankV3StatsTableData copyWith({
     int? id,
-    int? statNameId,
-    int? statValueId,
+    int? kanjiBankEntryId,
+    String? statValue,
+    int? statTagId,
   }) => KanjiBankV3StatsTableData(
     id: id ?? this.id,
-    statNameId: statNameId ?? this.statNameId,
-    statValueId: statValueId ?? this.statValueId,
+    kanjiBankEntryId: kanjiBankEntryId ?? this.kanjiBankEntryId,
+    statValue: statValue ?? this.statValue,
+    statTagId: statTagId ?? this.statTagId,
   );
   KanjiBankV3StatsTableData copyWithCompanion(
     KanjiBankV3StatsTableCompanion data,
   ) {
     return KanjiBankV3StatsTableData(
       id: data.id.present ? data.id.value : this.id,
-      statNameId: data.statNameId.present
-          ? data.statNameId.value
-          : this.statNameId,
-      statValueId: data.statValueId.present
-          ? data.statValueId.value
-          : this.statValueId,
+      kanjiBankEntryId: data.kanjiBankEntryId.present
+          ? data.kanjiBankEntryId.value
+          : this.kanjiBankEntryId,
+      statValue: data.statValue.present ? data.statValue.value : this.statValue,
+      statTagId: data.statTagId.present ? data.statTagId.value : this.statTagId,
     );
   }
 
@@ -4825,60 +4419,70 @@ class KanjiBankV3StatsTableData extends DataClass
   String toString() {
     return (StringBuffer('KanjiBankV3StatsTableData(')
           ..write('id: $id, ')
-          ..write('statNameId: $statNameId, ')
-          ..write('statValueId: $statValueId')
+          ..write('kanjiBankEntryId: $kanjiBankEntryId, ')
+          ..write('statValue: $statValue, ')
+          ..write('statTagId: $statTagId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, statNameId, statValueId);
+  int get hashCode => Object.hash(id, kanjiBankEntryId, statValue, statTagId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiBankV3StatsTableData &&
           other.id == this.id &&
-          other.statNameId == this.statNameId &&
-          other.statValueId == this.statValueId);
+          other.kanjiBankEntryId == this.kanjiBankEntryId &&
+          other.statValue == this.statValue &&
+          other.statTagId == this.statTagId);
 }
 
 class KanjiBankV3StatsTableCompanion
     extends UpdateCompanion<KanjiBankV3StatsTableData> {
   final Value<int> id;
-  final Value<int> statNameId;
-  final Value<int> statValueId;
+  final Value<int> kanjiBankEntryId;
+  final Value<String> statValue;
+  final Value<int> statTagId;
   const KanjiBankV3StatsTableCompanion({
     this.id = const Value.absent(),
-    this.statNameId = const Value.absent(),
-    this.statValueId = const Value.absent(),
+    this.kanjiBankEntryId = const Value.absent(),
+    this.statValue = const Value.absent(),
+    this.statTagId = const Value.absent(),
   });
   KanjiBankV3StatsTableCompanion.insert({
     this.id = const Value.absent(),
-    required int statNameId,
-    required int statValueId,
-  }) : statNameId = Value(statNameId),
-       statValueId = Value(statValueId);
+    required int kanjiBankEntryId,
+    required String statValue,
+    required int statTagId,
+  }) : kanjiBankEntryId = Value(kanjiBankEntryId),
+       statValue = Value(statValue),
+       statTagId = Value(statTagId);
   static Insertable<KanjiBankV3StatsTableData> custom({
     Expression<int>? id,
-    Expression<int>? statNameId,
-    Expression<int>? statValueId,
+    Expression<int>? kanjiBankEntryId,
+    Expression<String>? statValue,
+    Expression<int>? statTagId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (statNameId != null) 'stat_name_id': statNameId,
-      if (statValueId != null) 'stat_value_id': statValueId,
+      if (kanjiBankEntryId != null) 'kanji_bank_entry_id': kanjiBankEntryId,
+      if (statValue != null) 'stat_value': statValue,
+      if (statTagId != null) 'stat_tag_id': statTagId,
     });
   }
 
   KanjiBankV3StatsTableCompanion copyWith({
     Value<int>? id,
-    Value<int>? statNameId,
-    Value<int>? statValueId,
+    Value<int>? kanjiBankEntryId,
+    Value<String>? statValue,
+    Value<int>? statTagId,
   }) {
     return KanjiBankV3StatsTableCompanion(
       id: id ?? this.id,
-      statNameId: statNameId ?? this.statNameId,
-      statValueId: statValueId ?? this.statValueId,
+      kanjiBankEntryId: kanjiBankEntryId ?? this.kanjiBankEntryId,
+      statValue: statValue ?? this.statValue,
+      statTagId: statTagId ?? this.statTagId,
     );
   }
 
@@ -4888,11 +4492,14 @@ class KanjiBankV3StatsTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (statNameId.present) {
-      map['stat_name_id'] = Variable<int>(statNameId.value);
+    if (kanjiBankEntryId.present) {
+      map['kanji_bank_entry_id'] = Variable<int>(kanjiBankEntryId.value);
     }
-    if (statValueId.present) {
-      map['stat_value_id'] = Variable<int>(statValueId.value);
+    if (statValue.present) {
+      map['stat_value'] = Variable<String>(statValue.value);
+    }
+    if (statTagId.present) {
+      map['stat_tag_id'] = Variable<int>(statTagId.value);
     }
     return map;
   }
@@ -4901,286 +4508,9 @@ class KanjiBankV3StatsTableCompanion
   String toString() {
     return (StringBuffer('KanjiBankV3StatsTableCompanion(')
           ..write('id: $id, ')
-          ..write('statNameId: $statNameId, ')
-          ..write('statValueId: $statValueId')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $KanjiBankV3_X_KanjiBankV3StatsTableTable
-    extends KanjiBankV3_X_KanjiBankV3StatsTable
-    with
-        TableInfo<
-          $KanjiBankV3_X_KanjiBankV3StatsTableTable,
-          KanjiBankV3_X_KanjiBankV3StatsTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $KanjiBankV3_X_KanjiBankV3StatsTableTable(
-    this.attachedDatabase, [
-    this._alias,
-  ]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _statIdMeta = const VerificationMeta('statId');
-  @override
-  late final GeneratedColumn<int> statId = GeneratedColumn<int>(
-    'stat_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_bank_v3_stats_table (id)',
-    ),
-  );
-  static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
-    'kanjiId',
-  );
-  @override
-  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
-    'kanji_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_bank_v3_table (id) ON DELETE CASCADE',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, statId, kanjiId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'kanji_bank_v3_x_kanji_bank_v3_stats_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<KanjiBankV3_X_KanjiBankV3StatsTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('stat_id')) {
-      context.handle(
-        _statIdMeta,
-        statId.isAcceptableOrUnknown(data['stat_id']!, _statIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_statIdMeta);
-    }
-    if (data.containsKey('kanji_id')) {
-      context.handle(
-        _kanjiIdMeta,
-        kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_kanjiIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  KanjiBankV3_X_KanjiBankV3StatsTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiBankV3_X_KanjiBankV3StatsTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      statId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}stat_id'],
-      )!,
-      kanjiId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}kanji_id'],
-      )!,
-    );
-  }
-
-  @override
-  $KanjiBankV3_X_KanjiBankV3StatsTableTable createAlias(String alias) {
-    return $KanjiBankV3_X_KanjiBankV3StatsTableTable(attachedDatabase, alias);
-  }
-}
-
-class KanjiBankV3_X_KanjiBankV3StatsTableData extends DataClass
-    implements Insertable<KanjiBankV3_X_KanjiBankV3StatsTableData> {
-  /// id of this relation
-  final int id;
-
-  /// the id of the associated stats element
-  final int statId;
-
-  /// the id of the associated kanji
-  final int kanjiId;
-  const KanjiBankV3_X_KanjiBankV3StatsTableData({
-    required this.id,
-    required this.statId,
-    required this.kanjiId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['stat_id'] = Variable<int>(statId);
-    map['kanji_id'] = Variable<int>(kanjiId);
-    return map;
-  }
-
-  KanjiBankV3_X_KanjiBankV3StatsTableCompanion toCompanion(bool nullToAbsent) {
-    return KanjiBankV3_X_KanjiBankV3StatsTableCompanion(
-      id: Value(id),
-      statId: Value(statId),
-      kanjiId: Value(kanjiId),
-    );
-  }
-
-  factory KanjiBankV3_X_KanjiBankV3StatsTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiBankV3_X_KanjiBankV3StatsTableData(
-      id: serializer.fromJson<int>(json['id']),
-      statId: serializer.fromJson<int>(json['statId']),
-      kanjiId: serializer.fromJson<int>(json['kanjiId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'statId': serializer.toJson<int>(statId),
-      'kanjiId': serializer.toJson<int>(kanjiId),
-    };
-  }
-
-  KanjiBankV3_X_KanjiBankV3StatsTableData copyWith({
-    int? id,
-    int? statId,
-    int? kanjiId,
-  }) => KanjiBankV3_X_KanjiBankV3StatsTableData(
-    id: id ?? this.id,
-    statId: statId ?? this.statId,
-    kanjiId: kanjiId ?? this.kanjiId,
-  );
-  KanjiBankV3_X_KanjiBankV3StatsTableData copyWithCompanion(
-    KanjiBankV3_X_KanjiBankV3StatsTableCompanion data,
-  ) {
-    return KanjiBankV3_X_KanjiBankV3StatsTableData(
-      id: data.id.present ? data.id.value : this.id,
-      statId: data.statId.present ? data.statId.value : this.statId,
-      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiBankV3_X_KanjiBankV3StatsTableData(')
-          ..write('id: $id, ')
-          ..write('statId: $statId, ')
-          ..write('kanjiId: $kanjiId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, statId, kanjiId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is KanjiBankV3_X_KanjiBankV3StatsTableData &&
-          other.id == this.id &&
-          other.statId == this.statId &&
-          other.kanjiId == this.kanjiId);
-}
-
-class KanjiBankV3_X_KanjiBankV3StatsTableCompanion
-    extends UpdateCompanion<KanjiBankV3_X_KanjiBankV3StatsTableData> {
-  final Value<int> id;
-  final Value<int> statId;
-  final Value<int> kanjiId;
-  const KanjiBankV3_X_KanjiBankV3StatsTableCompanion({
-    this.id = const Value.absent(),
-    this.statId = const Value.absent(),
-    this.kanjiId = const Value.absent(),
-  });
-  KanjiBankV3_X_KanjiBankV3StatsTableCompanion.insert({
-    this.id = const Value.absent(),
-    required int statId,
-    required int kanjiId,
-  }) : statId = Value(statId),
-       kanjiId = Value(kanjiId);
-  static Insertable<KanjiBankV3_X_KanjiBankV3StatsTableData> custom({
-    Expression<int>? id,
-    Expression<int>? statId,
-    Expression<int>? kanjiId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (statId != null) 'stat_id': statId,
-      if (kanjiId != null) 'kanji_id': kanjiId,
-    });
-  }
-
-  KanjiBankV3_X_KanjiBankV3StatsTableCompanion copyWith({
-    Value<int>? id,
-    Value<int>? statId,
-    Value<int>? kanjiId,
-  }) {
-    return KanjiBankV3_X_KanjiBankV3StatsTableCompanion(
-      id: id ?? this.id,
-      statId: statId ?? this.statId,
-      kanjiId: kanjiId ?? this.kanjiId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (statId.present) {
-      map['stat_id'] = Variable<int>(statId.value);
-    }
-    if (kanjiId.present) {
-      map['kanji_id'] = Variable<int>(kanjiId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiBankV3_X_KanjiBankV3StatsTableCompanion(')
-          ..write('id: $id, ')
-          ..write('statId: $statId, ')
-          ..write('kanjiId: $kanjiId')
+          ..write('kanjiBankEntryId: $kanjiBankEntryId, ')
+          ..write('statValue: $statValue, ')
+          ..write('statTagId: $statTagId')
           ..write(')'))
         .toString();
   }
@@ -5330,7 +4660,7 @@ class KanjiBankV3EntryView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS SELECT KB3T.id AS id, IV.index_entry AS indexEntry, KB3T.index_id AS indexId, KT.kanji, COALESCE(JSON_GROUP_ARRAY(DISTINCT onyomi.reading ORDER BY OOJ."key"), JSON(\'[]\')) AS onyomis, COALESCE(JSON_GROUP_ARRAY(DISTINCT kunyomi.reading ORDER BY KOJ."key"), JSON(\'[]\')) AS kunyomis, COALESCE(JSON_GROUP_ARRAY(DISTINCT JSON(TagJSON.tag_json)), JSON(\'[]\')) AS tags, COALESCE(JSON_GROUP_ARRAY(DISTINCT DT.definition ORDER BY DOJ."key"), JSON(\'[]\')) AS definitions, COALESCE(JSON_GROUP_ARRAY(DISTINCT JSON_OBJECT(\'name\', KB3SNT.stat_name, \'value\', KB3SVT.stat_value)), JSON(\'[]\')) AS stats FROM kanji_bank_v3_table AS KB3T INNER JOIN kanji_table AS KT ON KT.id = KB3T.kanji_id JOIN index_entry_as_json_view AS IV ON KB3T.index_id = IV.id LEFT JOIN kanji_bank_v3_x_onyomi_reading_table AS KB3ORRT ON KB3ORRT.kanji_id = KB3T.id LEFT JOIN reading_table AS onyomi ON KB3ORRT.onyomi_reading_id = onyomi.id LEFT JOIN json_each(KB3T.onyomi_order)AS OOJ ON OOJ.value = KB3ORRT.onyomi_reading_id LEFT JOIN kanji_bank_v3_x_kunyomi_reading_table AS KB3KRRT ON KB3KRRT.kanji_id = KB3T.id LEFT JOIN reading_table AS kunyomi ON KB3KRRT.kunyomi_reading_id = kunyomi.id LEFT JOIN json_each(KB3T.kunyomi_order)AS KOJ ON KOJ.value = KB3KRRT.kunyomi_reading_id LEFT JOIN kanji_bank_v3_x_tag_bank_v3_table AS KB3TKRT ON KB3TKRT.kanji_id = KB3T.id LEFT JOIN tag_bank_v3_as_json_view AS TagJSON ON KB3TKRT.tag_id = TagJSON.tag_id LEFT JOIN kanji_bank_v3_x_definition_table AS KB3DKRT ON KB3DKRT.kanji_id = KB3T.id LEFT JOIN definition_table AS DT ON KB3DKRT.definition_id = DT.id LEFT JOIN json_each(KB3T.definition_order)AS DOJ ON DOJ.value = KB3DKRT.definition_id LEFT JOIN kanji_bank_v3_x_kanji_bank_v3_stats_table AS KB3SKRT ON KB3SKRT.kanji_id = KB3T.id LEFT JOIN kanji_bank_v3_stats_table AS KB3ST ON KB3SKRT.stat_id = KB3ST.id LEFT JOIN kanji_bank_v3_stat_names_table AS KB3SNT ON KB3SNT.id = KB3ST.stat_name_id LEFT JOIN kanji_bank_v3_stat_values_table AS KB3SVT ON KB3SVT.id = KB3ST.stat_value_id GROUP BY KB3T.id',
+        'CREATE VIEW IF NOT EXISTS kanji_bank_v3_entry_view AS SELECT KB3T.id AS id, IV.index_entry AS indexEntry, KB3T.index_id AS indexId, KT.kanji, COALESCE(JSON_GROUP_ARRAY(DISTINCT onyomi.reading ORDER BY OOJ."key"), JSON(\'[]\')) AS onyomis, COALESCE(JSON_GROUP_ARRAY(DISTINCT kunyomi.reading ORDER BY KOJ."key"), JSON(\'[]\')) AS kunyomis, COALESCE(JSON_GROUP_ARRAY(DISTINCT JSON(TagJSON.tag_json)), JSON(\'[]\')) AS tags, COALESCE(JSON_GROUP_ARRAY(DISTINCT DT.definition ORDER BY DOJ."key"), JSON(\'[]\')) AS definitions, COALESCE(JSON_GROUP_ARRAY(DISTINCT JSON_OBJECT(\'value\', KB3ST.stat_value, \'tag\', JSON(StatTagJSON.tag_json))), JSON(\'[]\')) AS stats FROM kanji_bank_v3_table AS KB3T INNER JOIN kanji_table AS KT ON KT.id = KB3T.kanji_id JOIN index_entry_as_json_view AS IV ON KB3T.index_id = IV.id LEFT JOIN kanji_bank_v3_x_onyomi_reading_table AS KB3ORRT ON KB3ORRT.kanji_id = KB3T.id LEFT JOIN reading_table AS onyomi ON KB3ORRT.onyomi_reading_id = onyomi.id LEFT JOIN json_each(KB3T.onyomi_order)AS OOJ ON OOJ.value = KB3ORRT.onyomi_reading_id LEFT JOIN kanji_bank_v3_x_kunyomi_reading_table AS KB3KRRT ON KB3KRRT.kanji_id = KB3T.id LEFT JOIN reading_table AS kunyomi ON KB3KRRT.kunyomi_reading_id = kunyomi.id LEFT JOIN json_each(KB3T.kunyomi_order)AS KOJ ON KOJ.value = KB3KRRT.kunyomi_reading_id LEFT JOIN kanji_bank_v3_x_tag_bank_v3_table AS KB3TKRT ON KB3TKRT.kanji_id = KB3T.id LEFT JOIN tag_bank_v3_as_json_view AS TagJSON ON KB3TKRT.tag_id = TagJSON.tag_id LEFT JOIN kanji_bank_v3_x_definition_table AS KB3DKRT ON KB3DKRT.kanji_id = KB3T.id LEFT JOIN definition_table AS DT ON KB3DKRT.definition_id = DT.id LEFT JOIN json_each(KB3T.definition_order)AS DOJ ON DOJ.value = KB3DKRT.definition_id LEFT JOIN kanji_bank_v3_stats_table AS KB3ST ON KB3ST.kanji_bank_entry_id = KB3T.id LEFT JOIN tag_bank_v3_as_json_view AS StatTagJSON ON KB3ST.stat_tag_id = StatTagJSON.tag_id GROUP BY KB3T.id',
   };
   @override
   KanjiBankV3EntryView get asDslTable => this;
@@ -5453,10 +4783,7 @@ class KanjiBankV3EntryView
     'tag_bank_v3_table',
     'kanji_bank_v3_x_definition_table',
     'definition_table',
-    'kanji_bank_v3_x_kanji_bank_v3_stats_table',
     'kanji_bank_v3_stats_table',
-    'kanji_bank_v3_stat_names_table',
-    'kanji_bank_v3_stat_values_table',
   };
 }
 
@@ -6595,10 +5922,7 @@ class KanjiDictionarySearchView
     'tag_bank_v3_table',
     'kanji_bank_v3_x_definition_table',
     'definition_table',
-    'kanji_bank_v3_x_kanji_bank_v3_stats_table',
     'kanji_bank_v3_stats_table',
-    'kanji_bank_v3_stat_names_table',
-    'kanji_bank_v3_stat_values_table',
     'kanji_meta_bank_v3_table',
     'kanji_meta_bank_v3_type_table',
   };
@@ -13560,6 +12884,284 @@ class TermMetaBankV3EntryView
   };
 }
 
+class $KanjiBankV3_X_KanjiBankV3StatsTableTable
+    extends KanjiBankV3_X_KanjiBankV3StatsTable
+    with
+        TableInfo<
+          $KanjiBankV3_X_KanjiBankV3StatsTableTable,
+          KanjiBankV3_X_KanjiBankV3StatsTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiBankV3_X_KanjiBankV3StatsTableTable(
+    this.attachedDatabase, [
+    this._alias,
+  ]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _statIdMeta = const VerificationMeta('statId');
+  @override
+  late final GeneratedColumn<int> statId = GeneratedColumn<int>(
+    'stat_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES kanji_bank_v3_stats_table (id)',
+    ),
+  );
+  static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
+    'kanjiId',
+  );
+  @override
+  late final GeneratedColumn<int> kanjiId = GeneratedColumn<int>(
+    'kanji_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES kanji_bank_v3_table (id) ON DELETE CASCADE',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, statId, kanjiId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_bank_v3_x_kanji_bank_v3_stats_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<KanjiBankV3_X_KanjiBankV3StatsTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('stat_id')) {
+      context.handle(
+        _statIdMeta,
+        statId.isAcceptableOrUnknown(data['stat_id']!, _statIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_statIdMeta);
+    }
+    if (data.containsKey('kanji_id')) {
+      context.handle(
+        _kanjiIdMeta,
+        kanjiId.isAcceptableOrUnknown(data['kanji_id']!, _kanjiIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  KanjiBankV3_X_KanjiBankV3StatsTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiBankV3_X_KanjiBankV3StatsTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      statId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}stat_id'],
+      )!,
+      kanjiId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kanji_id'],
+      )!,
+    );
+  }
+
+  @override
+  $KanjiBankV3_X_KanjiBankV3StatsTableTable createAlias(String alias) {
+    return $KanjiBankV3_X_KanjiBankV3StatsTableTable(attachedDatabase, alias);
+  }
+}
+
+class KanjiBankV3_X_KanjiBankV3StatsTableData extends DataClass
+    implements Insertable<KanjiBankV3_X_KanjiBankV3StatsTableData> {
+  /// id of this relation
+  final int id;
+
+  /// the id of the associated stats element
+  final int statId;
+
+  /// the id of the associated kanji
+  final int kanjiId;
+  const KanjiBankV3_X_KanjiBankV3StatsTableData({
+    required this.id,
+    required this.statId,
+    required this.kanjiId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['stat_id'] = Variable<int>(statId);
+    map['kanji_id'] = Variable<int>(kanjiId);
+    return map;
+  }
+
+  KanjiBankV3_X_KanjiBankV3StatsTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiBankV3_X_KanjiBankV3StatsTableCompanion(
+      id: Value(id),
+      statId: Value(statId),
+      kanjiId: Value(kanjiId),
+    );
+  }
+
+  factory KanjiBankV3_X_KanjiBankV3StatsTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiBankV3_X_KanjiBankV3StatsTableData(
+      id: serializer.fromJson<int>(json['id']),
+      statId: serializer.fromJson<int>(json['statId']),
+      kanjiId: serializer.fromJson<int>(json['kanjiId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'statId': serializer.toJson<int>(statId),
+      'kanjiId': serializer.toJson<int>(kanjiId),
+    };
+  }
+
+  KanjiBankV3_X_KanjiBankV3StatsTableData copyWith({
+    int? id,
+    int? statId,
+    int? kanjiId,
+  }) => KanjiBankV3_X_KanjiBankV3StatsTableData(
+    id: id ?? this.id,
+    statId: statId ?? this.statId,
+    kanjiId: kanjiId ?? this.kanjiId,
+  );
+  KanjiBankV3_X_KanjiBankV3StatsTableData copyWithCompanion(
+    KanjiBankV3_X_KanjiBankV3StatsTableCompanion data,
+  ) {
+    return KanjiBankV3_X_KanjiBankV3StatsTableData(
+      id: data.id.present ? data.id.value : this.id,
+      statId: data.statId.present ? data.statId.value : this.statId,
+      kanjiId: data.kanjiId.present ? data.kanjiId.value : this.kanjiId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiBankV3_X_KanjiBankV3StatsTableData(')
+          ..write('id: $id, ')
+          ..write('statId: $statId, ')
+          ..write('kanjiId: $kanjiId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, statId, kanjiId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiBankV3_X_KanjiBankV3StatsTableData &&
+          other.id == this.id &&
+          other.statId == this.statId &&
+          other.kanjiId == this.kanjiId);
+}
+
+class KanjiBankV3_X_KanjiBankV3StatsTableCompanion
+    extends UpdateCompanion<KanjiBankV3_X_KanjiBankV3StatsTableData> {
+  final Value<int> id;
+  final Value<int> statId;
+  final Value<int> kanjiId;
+  const KanjiBankV3_X_KanjiBankV3StatsTableCompanion({
+    this.id = const Value.absent(),
+    this.statId = const Value.absent(),
+    this.kanjiId = const Value.absent(),
+  });
+  KanjiBankV3_X_KanjiBankV3StatsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required int statId,
+    required int kanjiId,
+  }) : statId = Value(statId),
+       kanjiId = Value(kanjiId);
+  static Insertable<KanjiBankV3_X_KanjiBankV3StatsTableData> custom({
+    Expression<int>? id,
+    Expression<int>? statId,
+    Expression<int>? kanjiId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (statId != null) 'stat_id': statId,
+      if (kanjiId != null) 'kanji_id': kanjiId,
+    });
+  }
+
+  KanjiBankV3_X_KanjiBankV3StatsTableCompanion copyWith({
+    Value<int>? id,
+    Value<int>? statId,
+    Value<int>? kanjiId,
+  }) {
+    return KanjiBankV3_X_KanjiBankV3StatsTableCompanion(
+      id: id ?? this.id,
+      statId: statId ?? this.statId,
+      kanjiId: kanjiId ?? this.kanjiId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (statId.present) {
+      map['stat_id'] = Variable<int>(statId.value);
+    }
+    if (kanjiId.present) {
+      map['kanji_id'] = Variable<int>(kanjiId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiBankV3_X_KanjiBankV3StatsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('statId: $statId, ')
+          ..write('kanjiId: $kanjiId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $MediaTableTable extends MediaTable
     with TableInfo<$MediaTableTable, MediaTableData> {
   @override
@@ -17827,16 +17429,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   );
   late final $KanjiBankV3_X_DefinitionTableTable kanjiBankV3XDefinitionTable =
       $KanjiBankV3_X_DefinitionTableTable(this);
-  late final $KanjiBankV3StatNamesTableTable kanjiBankV3StatNamesTable =
-      $KanjiBankV3StatNamesTableTable(this);
-  late final $KanjiBankV3StatValuesTableTable kanjiBankV3StatValuesTable =
-      $KanjiBankV3StatValuesTableTable(this);
   late final $KanjiBankV3StatsTableTable kanjiBankV3StatsTable =
       $KanjiBankV3StatsTableTable(this);
-  late final $KanjiBankV3_X_KanjiBankV3StatsTableTable
-  kanjiBankV3XKanjiBankV3StatsTable = $KanjiBankV3_X_KanjiBankV3StatsTableTable(
-    this,
-  );
   late final KanjiBankV3EntryView kanjiBankV3EntryView = KanjiBankV3EntryView(
     this,
   );
@@ -17860,13 +17454,21 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'KanjiBankV3Table_KanjiIdIndex',
     'CREATE INDEX KanjiBankV3Table_KanjiIdIndex ON kanji_bank_v3_table (kanji_id)',
   );
-  late final Index kanjiBankV3StatsTableStatNameIdIndex = Index(
-    'KanjiBankV3StatsTable_statNameIdIndex',
-    'CREATE INDEX KanjiBankV3StatsTable_statNameIdIndex ON kanji_bank_v3_stats_table (stat_name_id)',
+  late final Index kanjiBankV3StatsTableKanjiBankEntryIdIndex = Index(
+    'KanjiBankV3StatsTable_kanjiBankEntryIdIndex',
+    'CREATE INDEX KanjiBankV3StatsTable_kanjiBankEntryIdIndex ON kanji_bank_v3_stats_table (kanji_bank_entry_id)',
   );
-  late final Index kanjiBankV3StatsTableStatValueIdIndex = Index(
-    'KanjiBankV3StatsTable_statValueIdIndex',
-    'CREATE INDEX KanjiBankV3StatsTable_statValueIdIndex ON kanji_bank_v3_stats_table (stat_value_id)',
+  late final Index kanjiBankV3StatsTableStatTagIdIndex = Index(
+    'KanjiBankV3StatsTable_statTagIdIndex',
+    'CREATE INDEX KanjiBankV3StatsTable_statTagIdIndex ON kanji_bank_v3_stats_table (stat_tag_id)',
+  );
+  late final Index tagBankV3TableIndexIdIndex = Index(
+    'TagBankV3Table_indexIdIndex',
+    'CREATE INDEX TagBankV3Table_indexIdIndex ON tag_bank_v3_table (index_id)',
+  );
+  late final Index tagBankV3TableName = Index(
+    'TagBankV3Table_name',
+    'CREATE INDEX TagBankV3Table_name ON tag_bank_v3_table (name)',
   );
   late final SearchFts searchFts = SearchFts(this);
   late final FtsDataTypes ftsDataTypes = FtsDataTypes(this);
@@ -17956,14 +17558,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       TermMetaBankV3IpasJsonView(this);
   late final TermBankV3EntryView termBankV3EntryView = TermBankV3EntryView(
     this,
-  );
-  late final Index tagBankV3TableIndexIdIndex = Index(
-    'TagBankV3Table_indexIdIndex',
-    'CREATE INDEX TagBankV3Table_indexIdIndex ON tag_bank_v3_table (index_id)',
-  );
-  late final Index tagBankV3TableName = Index(
-    'TagBankV3Table_name',
-    'CREATE INDEX TagBankV3Table_name ON tag_bank_v3_table (name)',
   );
   late final Index termBankV3XDefinitionTagTableDefinitionTagIdIndex = Index(
     'TermBankV3_X_DefinitionTagTable_definitionTagIdIndex',
@@ -18078,6 +17672,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final Index kanjiMetaBankV3TableTypeIdIndex = Index(
     'KanjiMetaBankV3Table_typeIdIndex',
     'CREATE INDEX KanjiMetaBankV3Table_typeIdIndex ON kanji_meta_bank_v3_table (type_id)',
+  );
+  late final $KanjiBankV3_X_KanjiBankV3StatsTableTable
+  kanjiBankV3XKanjiBankV3StatsTable = $KanjiBankV3_X_KanjiBankV3StatsTableTable(
+    this,
   );
   late final Index kanjiBankV3XOnyomiReadingTableOnyomiReadingIdIndex = Index(
     'KanjiBankV3_X_OnyomiReadingTable_onyomiReadingIdIndex',
@@ -18288,10 +17886,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         tagBankV3Table,
         kanjiBankV3XDefinitionTable,
         definitionTable,
-        kanjiBankV3XKanjiBankV3StatsTable,
         kanjiBankV3StatsTable,
-        kanjiBankV3StatNamesTable,
-        kanjiBankV3StatValuesTable,
         kanjiMetaBankV3Table,
         kanjiMetaBankV3TypeTable,
       },
@@ -18596,10 +18191,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         tagBankV3Table,
         kanjiBankV3XDefinitionTable,
         definitionTable,
-        kanjiBankV3XKanjiBankV3StatsTable,
         kanjiBankV3StatsTable,
-        kanjiBankV3StatNamesTable,
-        kanjiBankV3StatValuesTable,
       },
     ).asyncMap(kanjiBankV3EntryView.mapFromRow);
   }
@@ -18691,10 +18283,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     tagBankV3AsJsonView,
     definitionTable,
     kanjiBankV3XDefinitionTable,
-    kanjiBankV3StatNamesTable,
-    kanjiBankV3StatValuesTable,
     kanjiBankV3StatsTable,
-    kanjiBankV3XKanjiBankV3StatsTable,
     kanjiBankV3EntryView,
     kanjiMetaBankV3TypeTable,
     kanjiMetaBankV3Table,
@@ -18703,8 +18292,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     kanjiTableKanjiIndex,
     kanjiBankV3TableIndexIdIndex,
     kanjiBankV3TableKanjiIdIndex,
-    kanjiBankV3StatsTableStatNameIdIndex,
-    kanjiBankV3StatsTableStatValueIdIndex,
+    kanjiBankV3StatsTableKanjiBankEntryIdIndex,
+    kanjiBankV3StatsTableStatTagIdIndex,
+    tagBankV3TableIndexIdIndex,
+    tagBankV3TableName,
     searchFts,
     ftsDataTypes,
     termTable,
@@ -18740,8 +18331,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termMetaBankV3IpaTableXTagBankV3Table,
     termMetaBankV3IpasJsonView,
     termBankV3EntryView,
-    tagBankV3TableIndexIdIndex,
-    tagBankV3TableName,
     termBankV3XDefinitionTagTableDefinitionTagIdIndex,
     termBankV3XDefinitionTagTableTermBankIdIndex,
     termBankV3XRuleIdentifierTableRuleIdentifierIdIndex,
@@ -18771,6 +18360,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     kanjiMetaBankV3TableIndexIdIndex,
     kanjiMetaBankV3TableKanjiIdIndex,
     kanjiMetaBankV3TableTypeIdIndex,
+    kanjiBankV3XKanjiBankV3StatsTable,
     kanjiBankV3XOnyomiReadingTableOnyomiReadingIdIndex,
     kanjiBankV3XOnyomiReadingTableKanjiIdIndex,
     kanjiBankV3XKunyomiReadingTableKunyomiReadingIdIndex,
@@ -18874,10 +18464,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [
-        TableUpdate(
-          'kanji_bank_v3_x_kanji_bank_v3_stats_table',
-          kind: UpdateKind.delete,
-        ),
+        TableUpdate('kanji_bank_v3_stats_table', kind: UpdateKind.delete),
       ],
     ),
     WritePropagation(
@@ -19044,6 +18631,18 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       result: [
         TableUpdate(
           'term_meta_bank_v3_ipa_table_x_tag_bank_v3_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'kanji_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'kanji_bank_v3_x_kanji_bank_v3_stats_table',
           kind: UpdateKind.delete,
         ),
       ],
@@ -21241,6 +20840,34 @@ final class $$KanjiBankV3TableTableReferences
   }
 
   static MultiTypedResultKey<
+    $KanjiBankV3StatsTableTable,
+    List<KanjiBankV3StatsTableData>
+  >
+  _kanjiBankV3StatsTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.kanjiBankV3StatsTable,
+        aliasName: $_aliasNameGenerator(
+          db.kanjiBankV3Table.id,
+          db.kanjiBankV3StatsTable.kanjiBankEntryId,
+        ),
+      );
+
+  $$KanjiBankV3StatsTableTableProcessedTableManager
+  get kanjiBankV3StatsTableRefs {
+    final manager = $$KanjiBankV3StatsTableTableTableManager(
+      $_db,
+      $_db.kanjiBankV3StatsTable,
+    ).filter((f) => f.kanjiBankEntryId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _kanjiBankV3StatsTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
     $KanjiBankV3_X_KanjiBankV3StatsTableTable,
     List<KanjiBankV3_X_KanjiBankV3StatsTableData>
   >
@@ -21454,6 +21081,32 @@ class $$KanjiBankV3TableTableFilterComposer
               }) => $$KanjiBankV3_X_DefinitionTableTableFilterComposer(
                 $db: $db,
                 $table: $db.kanjiBankV3XDefinitionTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> kanjiBankV3StatsTableRefs(
+    Expression<bool> Function($$KanjiBankV3StatsTableTableFilterComposer f) f,
+  ) {
+    final $$KanjiBankV3StatsTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.kanjiBankV3StatsTable,
+          getReferencedColumn: (t) => t.kanjiBankEntryId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$KanjiBankV3StatsTableTableFilterComposer(
+                $db: $db,
+                $table: $db.kanjiBankV3StatsTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -21761,6 +21414,32 @@ class $$KanjiBankV3TableTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> kanjiBankV3StatsTableRefs<T extends Object>(
+    Expression<T> Function($$KanjiBankV3StatsTableTableAnnotationComposer a) f,
+  ) {
+    final $$KanjiBankV3StatsTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.kanjiBankV3StatsTable,
+          getReferencedColumn: (t) => t.kanjiBankEntryId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$KanjiBankV3StatsTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.kanjiBankV3StatsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
   Expression<T> kanjiBankV3XKanjiBankV3StatsTableRefs<T extends Object>(
     Expression<T> Function(
       $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer a,
@@ -21811,6 +21490,7 @@ class $$KanjiBankV3TableTableTableManager
             bool kanjiBankV3XKunyomiReadingTableRefs,
             bool kanjiBankV3XTagBankV3TableRefs,
             bool kanjiBankV3XDefinitionTableRefs,
+            bool kanjiBankV3StatsTableRefs,
             bool kanjiBankV3XKanjiBankV3StatsTableRefs,
           })
         > {
@@ -21875,6 +21555,7 @@ class $$KanjiBankV3TableTableTableManager
                 kanjiBankV3XKunyomiReadingTableRefs = false,
                 kanjiBankV3XTagBankV3TableRefs = false,
                 kanjiBankV3XDefinitionTableRefs = false,
+                kanjiBankV3StatsTableRefs = false,
                 kanjiBankV3XKanjiBankV3StatsTableRefs = false,
               }) {
                 return PrefetchHooks(
@@ -21888,6 +21569,7 @@ class $$KanjiBankV3TableTableTableManager
                       db.kanjiBankV3XTagBankV3Table,
                     if (kanjiBankV3XDefinitionTableRefs)
                       db.kanjiBankV3XDefinitionTable,
+                    if (kanjiBankV3StatsTableRefs) db.kanjiBankV3StatsTable,
                     if (kanjiBankV3XKanjiBankV3StatsTableRefs)
                       db.kanjiBankV3XKanjiBankV3StatsTable,
                   ],
@@ -22026,6 +21708,27 @@ class $$KanjiBankV3TableTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (kanjiBankV3StatsTableRefs)
+                        await $_getPrefetchedData<
+                          KanjiBankV3TableData,
+                          $KanjiBankV3TableTable,
+                          KanjiBankV3StatsTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$KanjiBankV3TableTableReferences
+                              ._kanjiBankV3StatsTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$KanjiBankV3TableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).kanjiBankV3StatsTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.kanjiBankEntryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                       if (kanjiBankV3XKanjiBankV3StatsTableRefs)
                         await $_getPrefetchedData<
                           KanjiBankV3TableData,
@@ -22074,6 +21777,7 @@ typedef $$KanjiBankV3TableTableProcessedTableManager =
         bool kanjiBankV3XKunyomiReadingTableRefs,
         bool kanjiBankV3XTagBankV3TableRefs,
         bool kanjiBankV3XDefinitionTableRefs,
+        bool kanjiBankV3StatsTableRefs,
         bool kanjiBankV3XKanjiBankV3StatsTableRefs,
       })
     >;
@@ -23659,6 +23363,34 @@ final class $$TagBankV3TableTableReferences
   }
 
   static MultiTypedResultKey<
+    $KanjiBankV3StatsTableTable,
+    List<KanjiBankV3StatsTableData>
+  >
+  _kanjiBankV3StatsTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.kanjiBankV3StatsTable,
+        aliasName: $_aliasNameGenerator(
+          db.tagBankV3Table.id,
+          db.kanjiBankV3StatsTable.statTagId,
+        ),
+      );
+
+  $$KanjiBankV3StatsTableTableProcessedTableManager
+  get kanjiBankV3StatsTableRefs {
+    final manager = $$KanjiBankV3StatsTableTableTableManager(
+      $_db,
+      $_db.kanjiBankV3StatsTable,
+    ).filter((f) => f.statTagId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _kanjiBankV3StatsTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
     $TermBankV3_X_TagBankTableTable,
     List<TermBankV3_X_TagBankTableData>
   >
@@ -23854,6 +23586,32 @@ class $$TagBankV3TableTableFilterComposer
               }) => $$KanjiBankV3_X_TagBankV3TableTableFilterComposer(
                 $db: $db,
                 $table: $db.kanjiBankV3XTagBankV3Table,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> kanjiBankV3StatsTableRefs(
+    Expression<bool> Function($$KanjiBankV3StatsTableTableFilterComposer f) f,
+  ) {
+    final $$KanjiBankV3StatsTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.kanjiBankV3StatsTable,
+          getReferencedColumn: (t) => t.statTagId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$KanjiBankV3StatsTableTableFilterComposer(
+                $db: $db,
+                $table: $db.kanjiBankV3StatsTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -24122,6 +23880,32 @@ class $$TagBankV3TableTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> kanjiBankV3StatsTableRefs<T extends Object>(
+    Expression<T> Function($$KanjiBankV3StatsTableTableAnnotationComposer a) f,
+  ) {
+    final $$KanjiBankV3StatsTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.kanjiBankV3StatsTable,
+          getReferencedColumn: (t) => t.statTagId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$KanjiBankV3StatsTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.kanjiBankV3StatsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
   Expression<T> termBankV3XTagBankTableRefs<T extends Object>(
     Expression<T> Function($$TermBankV3_X_TagBankTableTableAnnotationComposer a)
     f,
@@ -24255,6 +24039,7 @@ class $$TagBankV3TableTableTableManager
           PrefetchHooks Function({
             bool indexId,
             bool kanjiBankV3XTagBankV3TableRefs,
+            bool kanjiBankV3StatsTableRefs,
             bool termBankV3XTagBankTableRefs,
             bool termBankV3XDefinitionTagTableRefs,
             bool termMetaBankV3PitchTableXTagBankV3TableRefs,
@@ -24320,6 +24105,7 @@ class $$TagBankV3TableTableTableManager
               ({
                 indexId = false,
                 kanjiBankV3XTagBankV3TableRefs = false,
+                kanjiBankV3StatsTableRefs = false,
                 termBankV3XTagBankTableRefs = false,
                 termBankV3XDefinitionTagTableRefs = false,
                 termMetaBankV3PitchTableXTagBankV3TableRefs = false,
@@ -24330,6 +24116,7 @@ class $$TagBankV3TableTableTableManager
                   explicitlyWatchedTables: [
                     if (kanjiBankV3XTagBankV3TableRefs)
                       db.kanjiBankV3XTagBankV3Table,
+                    if (kanjiBankV3StatsTableRefs) db.kanjiBankV3StatsTable,
                     if (termBankV3XTagBankTableRefs) db.termBankV3XTagBankTable,
                     if (termBankV3XDefinitionTagTableRefs)
                       db.termBankV3XDefinitionTagTable,
@@ -24392,6 +24179,27 @@ class $$TagBankV3TableTableTableManager
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.tagId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (kanjiBankV3StatsTableRefs)
+                        await $_getPrefetchedData<
+                          TagBankV3TableData,
+                          $TagBankV3TableTable,
+                          KanjiBankV3StatsTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TagBankV3TableTableReferences
+                              ._kanjiBankV3StatsTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TagBankV3TableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).kanjiBankV3StatsTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.statTagId == item.id,
                               ),
                           typedResults: items,
                         ),
@@ -24506,6 +24314,7 @@ typedef $$TagBankV3TableTableProcessedTableManager =
       PrefetchHooks Function({
         bool indexId,
         bool kanjiBankV3XTagBankV3TableRefs,
+        bool kanjiBankV3StatsTableRefs,
         bool termBankV3XTagBankTableRefs,
         bool termBankV3XDefinitionTagTableRefs,
         bool termMetaBankV3PitchTableXTagBankV3TableRefs,
@@ -25700,577 +25509,19 @@ typedef $$KanjiBankV3_X_DefinitionTableTableProcessedTableManager =
       KanjiBankV3_X_DefinitionTableData,
       PrefetchHooks Function({bool definitionId, bool kanjiId})
     >;
-typedef $$KanjiBankV3StatNamesTableTableCreateCompanionBuilder =
-    KanjiBankV3StatNamesTableCompanion Function({
-      Value<int> id,
-      required String statName,
-    });
-typedef $$KanjiBankV3StatNamesTableTableUpdateCompanionBuilder =
-    KanjiBankV3StatNamesTableCompanion Function({
-      Value<int> id,
-      Value<String> statName,
-    });
-
-final class $$KanjiBankV3StatNamesTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $KanjiBankV3StatNamesTableTable,
-          KanjiBankV3StatNamesTableData
-        > {
-  $$KanjiBankV3StatNamesTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static MultiTypedResultKey<
-    $KanjiBankV3StatsTableTable,
-    List<KanjiBankV3StatsTableData>
-  >
-  _kanjiBankV3StatsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.kanjiBankV3StatsTable,
-        aliasName: $_aliasNameGenerator(
-          db.kanjiBankV3StatNamesTable.id,
-          db.kanjiBankV3StatsTable.statNameId,
-        ),
-      );
-
-  $$KanjiBankV3StatsTableTableProcessedTableManager
-  get kanjiBankV3StatsTableRefs {
-    final manager = $$KanjiBankV3StatsTableTableTableManager(
-      $_db,
-      $_db.kanjiBankV3StatsTable,
-    ).filter((f) => f.statNameId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _kanjiBankV3StatsTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$KanjiBankV3StatNamesTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3StatNamesTableTable> {
-  $$KanjiBankV3StatNamesTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get statName => $composableBuilder(
-    column: $table.statName,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  Expression<bool> kanjiBankV3StatsTableRefs(
-    Expression<bool> Function($$KanjiBankV3StatsTableTableFilterComposer f) f,
-  ) {
-    final $$KanjiBankV3StatsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.kanjiBankV3StatsTable,
-          getReferencedColumn: (t) => t.statNameId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$KanjiBankV3StatNamesTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3StatNamesTableTable> {
-  $$KanjiBankV3StatNamesTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get statName => $composableBuilder(
-    column: $table.statName,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$KanjiBankV3StatNamesTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3StatNamesTableTable> {
-  $$KanjiBankV3StatNamesTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get statName =>
-      $composableBuilder(column: $table.statName, builder: (column) => column);
-
-  Expression<T> kanjiBankV3StatsTableRefs<T extends Object>(
-    Expression<T> Function($$KanjiBankV3StatsTableTableAnnotationComposer a) f,
-  ) {
-    final $$KanjiBankV3StatsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.kanjiBankV3StatsTable,
-          getReferencedColumn: (t) => t.statNameId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$KanjiBankV3StatNamesTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $KanjiBankV3StatNamesTableTable,
-          KanjiBankV3StatNamesTableData,
-          $$KanjiBankV3StatNamesTableTableFilterComposer,
-          $$KanjiBankV3StatNamesTableTableOrderingComposer,
-          $$KanjiBankV3StatNamesTableTableAnnotationComposer,
-          $$KanjiBankV3StatNamesTableTableCreateCompanionBuilder,
-          $$KanjiBankV3StatNamesTableTableUpdateCompanionBuilder,
-          (
-            KanjiBankV3StatNamesTableData,
-            $$KanjiBankV3StatNamesTableTableReferences,
-          ),
-          KanjiBankV3StatNamesTableData,
-          PrefetchHooks Function({bool kanjiBankV3StatsTableRefs})
-        > {
-  $$KanjiBankV3StatNamesTableTableTableManager(
-    _$DaKanjiDB db,
-    $KanjiBankV3StatNamesTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$KanjiBankV3StatNamesTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$KanjiBankV3StatNamesTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$KanjiBankV3StatNamesTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> statName = const Value.absent(),
-              }) => KanjiBankV3StatNamesTableCompanion(
-                id: id,
-                statName: statName,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required String statName,
-              }) => KanjiBankV3StatNamesTableCompanion.insert(
-                id: id,
-                statName: statName,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$KanjiBankV3StatNamesTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({kanjiBankV3StatsTableRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (kanjiBankV3StatsTableRefs) db.kanjiBankV3StatsTable,
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (kanjiBankV3StatsTableRefs)
-                    await $_getPrefetchedData<
-                      KanjiBankV3StatNamesTableData,
-                      $KanjiBankV3StatNamesTableTable,
-                      KanjiBankV3StatsTableData
-                    >(
-                      currentTable: table,
-                      referencedTable:
-                          $$KanjiBankV3StatNamesTableTableReferences
-                              ._kanjiBankV3StatsTableRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$KanjiBankV3StatNamesTableTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).kanjiBankV3StatsTableRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.statNameId == item.id),
-                      typedResults: items,
-                    ),
-                ];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$KanjiBankV3StatNamesTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $KanjiBankV3StatNamesTableTable,
-      KanjiBankV3StatNamesTableData,
-      $$KanjiBankV3StatNamesTableTableFilterComposer,
-      $$KanjiBankV3StatNamesTableTableOrderingComposer,
-      $$KanjiBankV3StatNamesTableTableAnnotationComposer,
-      $$KanjiBankV3StatNamesTableTableCreateCompanionBuilder,
-      $$KanjiBankV3StatNamesTableTableUpdateCompanionBuilder,
-      (
-        KanjiBankV3StatNamesTableData,
-        $$KanjiBankV3StatNamesTableTableReferences,
-      ),
-      KanjiBankV3StatNamesTableData,
-      PrefetchHooks Function({bool kanjiBankV3StatsTableRefs})
-    >;
-typedef $$KanjiBankV3StatValuesTableTableCreateCompanionBuilder =
-    KanjiBankV3StatValuesTableCompanion Function({
-      Value<int> id,
-      required String statValue,
-    });
-typedef $$KanjiBankV3StatValuesTableTableUpdateCompanionBuilder =
-    KanjiBankV3StatValuesTableCompanion Function({
-      Value<int> id,
-      Value<String> statValue,
-    });
-
-final class $$KanjiBankV3StatValuesTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $KanjiBankV3StatValuesTableTable,
-          KanjiBankV3StatValuesTableData
-        > {
-  $$KanjiBankV3StatValuesTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static MultiTypedResultKey<
-    $KanjiBankV3StatsTableTable,
-    List<KanjiBankV3StatsTableData>
-  >
-  _kanjiBankV3StatsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.kanjiBankV3StatsTable,
-        aliasName: $_aliasNameGenerator(
-          db.kanjiBankV3StatValuesTable.id,
-          db.kanjiBankV3StatsTable.statValueId,
-        ),
-      );
-
-  $$KanjiBankV3StatsTableTableProcessedTableManager
-  get kanjiBankV3StatsTableRefs {
-    final manager = $$KanjiBankV3StatsTableTableTableManager(
-      $_db,
-      $_db.kanjiBankV3StatsTable,
-    ).filter((f) => f.statValueId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _kanjiBankV3StatsTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$KanjiBankV3StatValuesTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3StatValuesTableTable> {
-  $$KanjiBankV3StatValuesTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get statValue => $composableBuilder(
-    column: $table.statValue,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  Expression<bool> kanjiBankV3StatsTableRefs(
-    Expression<bool> Function($$KanjiBankV3StatsTableTableFilterComposer f) f,
-  ) {
-    final $$KanjiBankV3StatsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.kanjiBankV3StatsTable,
-          getReferencedColumn: (t) => t.statValueId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$KanjiBankV3StatValuesTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3StatValuesTableTable> {
-  $$KanjiBankV3StatValuesTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get statValue => $composableBuilder(
-    column: $table.statValue,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$KanjiBankV3StatValuesTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3StatValuesTableTable> {
-  $$KanjiBankV3StatValuesTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get statValue =>
-      $composableBuilder(column: $table.statValue, builder: (column) => column);
-
-  Expression<T> kanjiBankV3StatsTableRefs<T extends Object>(
-    Expression<T> Function($$KanjiBankV3StatsTableTableAnnotationComposer a) f,
-  ) {
-    final $$KanjiBankV3StatsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.kanjiBankV3StatsTable,
-          getReferencedColumn: (t) => t.statValueId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$KanjiBankV3StatValuesTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $KanjiBankV3StatValuesTableTable,
-          KanjiBankV3StatValuesTableData,
-          $$KanjiBankV3StatValuesTableTableFilterComposer,
-          $$KanjiBankV3StatValuesTableTableOrderingComposer,
-          $$KanjiBankV3StatValuesTableTableAnnotationComposer,
-          $$KanjiBankV3StatValuesTableTableCreateCompanionBuilder,
-          $$KanjiBankV3StatValuesTableTableUpdateCompanionBuilder,
-          (
-            KanjiBankV3StatValuesTableData,
-            $$KanjiBankV3StatValuesTableTableReferences,
-          ),
-          KanjiBankV3StatValuesTableData,
-          PrefetchHooks Function({bool kanjiBankV3StatsTableRefs})
-        > {
-  $$KanjiBankV3StatValuesTableTableTableManager(
-    _$DaKanjiDB db,
-    $KanjiBankV3StatValuesTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$KanjiBankV3StatValuesTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$KanjiBankV3StatValuesTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$KanjiBankV3StatValuesTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> statValue = const Value.absent(),
-              }) => KanjiBankV3StatValuesTableCompanion(
-                id: id,
-                statValue: statValue,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required String statValue,
-              }) => KanjiBankV3StatValuesTableCompanion.insert(
-                id: id,
-                statValue: statValue,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$KanjiBankV3StatValuesTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({kanjiBankV3StatsTableRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (kanjiBankV3StatsTableRefs) db.kanjiBankV3StatsTable,
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (kanjiBankV3StatsTableRefs)
-                    await $_getPrefetchedData<
-                      KanjiBankV3StatValuesTableData,
-                      $KanjiBankV3StatValuesTableTable,
-                      KanjiBankV3StatsTableData
-                    >(
-                      currentTable: table,
-                      referencedTable:
-                          $$KanjiBankV3StatValuesTableTableReferences
-                              ._kanjiBankV3StatsTableRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$KanjiBankV3StatValuesTableTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).kanjiBankV3StatsTableRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where(
-                            (e) => e.statValueId == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                ];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$KanjiBankV3StatValuesTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $KanjiBankV3StatValuesTableTable,
-      KanjiBankV3StatValuesTableData,
-      $$KanjiBankV3StatValuesTableTableFilterComposer,
-      $$KanjiBankV3StatValuesTableTableOrderingComposer,
-      $$KanjiBankV3StatValuesTableTableAnnotationComposer,
-      $$KanjiBankV3StatValuesTableTableCreateCompanionBuilder,
-      $$KanjiBankV3StatValuesTableTableUpdateCompanionBuilder,
-      (
-        KanjiBankV3StatValuesTableData,
-        $$KanjiBankV3StatValuesTableTableReferences,
-      ),
-      KanjiBankV3StatValuesTableData,
-      PrefetchHooks Function({bool kanjiBankV3StatsTableRefs})
-    >;
 typedef $$KanjiBankV3StatsTableTableCreateCompanionBuilder =
     KanjiBankV3StatsTableCompanion Function({
       Value<int> id,
-      required int statNameId,
-      required int statValueId,
+      required int kanjiBankEntryId,
+      required String statValue,
+      required int statTagId,
     });
 typedef $$KanjiBankV3StatsTableTableUpdateCompanionBuilder =
     KanjiBankV3StatsTableCompanion Function({
       Value<int> id,
-      Value<int> statNameId,
-      Value<int> statValueId,
+      Value<int> kanjiBankEntryId,
+      Value<String> statValue,
+      Value<int> statTagId,
     });
 
 final class $$KanjiBankV3StatsTableTableReferences
@@ -26286,44 +25537,44 @@ final class $$KanjiBankV3StatsTableTableReferences
     super.$_typedResult,
   );
 
-  static $KanjiBankV3StatNamesTableTable _statNameIdTable(_$DaKanjiDB db) =>
-      db.kanjiBankV3StatNamesTable.createAlias(
+  static $KanjiBankV3TableTable _kanjiBankEntryIdTable(_$DaKanjiDB db) =>
+      db.kanjiBankV3Table.createAlias(
         $_aliasNameGenerator(
-          db.kanjiBankV3StatsTable.statNameId,
-          db.kanjiBankV3StatNamesTable.id,
+          db.kanjiBankV3StatsTable.kanjiBankEntryId,
+          db.kanjiBankV3Table.id,
         ),
       );
 
-  $$KanjiBankV3StatNamesTableTableProcessedTableManager get statNameId {
-    final $_column = $_itemColumn<int>('stat_name_id')!;
+  $$KanjiBankV3TableTableProcessedTableManager get kanjiBankEntryId {
+    final $_column = $_itemColumn<int>('kanji_bank_entry_id')!;
 
-    final manager = $$KanjiBankV3StatNamesTableTableTableManager(
+    final manager = $$KanjiBankV3TableTableTableManager(
       $_db,
-      $_db.kanjiBankV3StatNamesTable,
+      $_db.kanjiBankV3Table,
     ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_statNameIdTable($_db));
+    final item = $_typedResult.readTableOrNull(_kanjiBankEntryIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
     );
   }
 
-  static $KanjiBankV3StatValuesTableTable _statValueIdTable(_$DaKanjiDB db) =>
-      db.kanjiBankV3StatValuesTable.createAlias(
+  static $TagBankV3TableTable _statTagIdTable(_$DaKanjiDB db) =>
+      db.tagBankV3Table.createAlias(
         $_aliasNameGenerator(
-          db.kanjiBankV3StatsTable.statValueId,
-          db.kanjiBankV3StatValuesTable.id,
+          db.kanjiBankV3StatsTable.statTagId,
+          db.tagBankV3Table.id,
         ),
       );
 
-  $$KanjiBankV3StatValuesTableTableProcessedTableManager get statValueId {
-    final $_column = $_itemColumn<int>('stat_value_id')!;
+  $$TagBankV3TableTableProcessedTableManager get statTagId {
+    final $_column = $_itemColumn<int>('stat_tag_id')!;
 
-    final manager = $$KanjiBankV3StatValuesTableTableTableManager(
+    final manager = $$TagBankV3TableTableTableManager(
       $_db,
-      $_db.kanjiBankV3StatValuesTable,
+      $_db.tagBankV3Table,
     ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_statValueIdTable($_db));
+    final item = $_typedResult.readTableOrNull(_statTagIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -26373,51 +25624,54 @@ class $$KanjiBankV3StatsTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  $$KanjiBankV3StatNamesTableTableFilterComposer get statNameId {
-    final $$KanjiBankV3StatNamesTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.statNameId,
-          referencedTable: $db.kanjiBankV3StatNamesTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+  ColumnFilters<String> get statValue => $composableBuilder(
+    column: $table.statValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$KanjiBankV3TableTableFilterComposer get kanjiBankEntryId {
+    final $$KanjiBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiBankEntryId,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatNamesTableTableFilterComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatNamesTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return composer;
   }
 
-  $$KanjiBankV3StatValuesTableTableFilterComposer get statValueId {
-    final $$KanjiBankV3StatValuesTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.statValueId,
-          referencedTable: $db.kanjiBankV3StatValuesTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+  $$TagBankV3TableTableFilterComposer get statTagId {
+    final $$TagBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.statTagId,
+      referencedTable: $db.tagBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.tagBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatValuesTableTableFilterComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatValuesTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return composer;
   }
 
@@ -26465,51 +25719,54 @@ class $$KanjiBankV3StatsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  $$KanjiBankV3StatNamesTableTableOrderingComposer get statNameId {
-    final $$KanjiBankV3StatNamesTableTableOrderingComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.statNameId,
-          referencedTable: $db.kanjiBankV3StatNamesTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+  ColumnOrderings<String> get statValue => $composableBuilder(
+    column: $table.statValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$KanjiBankV3TableTableOrderingComposer get kanjiBankEntryId {
+    final $$KanjiBankV3TableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiBankEntryId,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableOrderingComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatNamesTableTableOrderingComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatNamesTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return composer;
   }
 
-  $$KanjiBankV3StatValuesTableTableOrderingComposer get statValueId {
-    final $$KanjiBankV3StatValuesTableTableOrderingComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.statValueId,
-          referencedTable: $db.kanjiBankV3StatValuesTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+  $$TagBankV3TableTableOrderingComposer get statTagId {
+    final $$TagBankV3TableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.statTagId,
+      referencedTable: $db.tagBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagBankV3TableTableOrderingComposer(
+            $db: $db,
+            $table: $db.tagBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatValuesTableTableOrderingComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatValuesTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return composer;
   }
 }
@@ -26526,51 +25783,52 @@ class $$KanjiBankV3StatsTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  $$KanjiBankV3StatNamesTableTableAnnotationComposer get statNameId {
-    final $$KanjiBankV3StatNamesTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.statNameId,
-          referencedTable: $db.kanjiBankV3StatNamesTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+  GeneratedColumn<String> get statValue =>
+      $composableBuilder(column: $table.statValue, builder: (column) => column);
+
+  $$KanjiBankV3TableTableAnnotationComposer get kanjiBankEntryId {
+    final $$KanjiBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiBankEntryId,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatNamesTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatNamesTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return composer;
   }
 
-  $$KanjiBankV3StatValuesTableTableAnnotationComposer get statValueId {
-    final $$KanjiBankV3StatValuesTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.statValueId,
-          referencedTable: $db.kanjiBankV3StatValuesTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+  $$TagBankV3TableTableAnnotationComposer get statTagId {
+    final $$TagBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.statTagId,
+      referencedTable: $db.tagBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TagBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tagBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatValuesTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatValuesTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return composer;
   }
 
@@ -26618,8 +25876,8 @@ class $$KanjiBankV3StatsTableTableTableManager
           (KanjiBankV3StatsTableData, $$KanjiBankV3StatsTableTableReferences),
           KanjiBankV3StatsTableData,
           PrefetchHooks Function({
-            bool statNameId,
-            bool statValueId,
+            bool kanjiBankEntryId,
+            bool statTagId,
             bool kanjiBankV3XKanjiBankV3StatsTableRefs,
           })
         > {
@@ -26648,22 +25906,26 @@ class $$KanjiBankV3StatsTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int> statNameId = const Value.absent(),
-                Value<int> statValueId = const Value.absent(),
+                Value<int> kanjiBankEntryId = const Value.absent(),
+                Value<String> statValue = const Value.absent(),
+                Value<int> statTagId = const Value.absent(),
               }) => KanjiBankV3StatsTableCompanion(
                 id: id,
-                statNameId: statNameId,
-                statValueId: statValueId,
+                kanjiBankEntryId: kanjiBankEntryId,
+                statValue: statValue,
+                statTagId: statTagId,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                required int statNameId,
-                required int statValueId,
+                required int kanjiBankEntryId,
+                required String statValue,
+                required int statTagId,
               }) => KanjiBankV3StatsTableCompanion.insert(
                 id: id,
-                statNameId: statNameId,
-                statValueId: statValueId,
+                kanjiBankEntryId: kanjiBankEntryId,
+                statValue: statValue,
+                statTagId: statTagId,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -26675,8 +25937,8 @@ class $$KanjiBankV3StatsTableTableTableManager
               .toList(),
           prefetchHooksCallback:
               ({
-                statNameId = false,
-                statValueId = false,
+                kanjiBankEntryId = false,
+                statTagId = false,
                 kanjiBankV3XKanjiBankV3StatsTableRefs = false,
               }) {
                 return PrefetchHooks(
@@ -26701,32 +25963,32 @@ class $$KanjiBankV3StatsTableTableTableManager
                           dynamic
                         >
                       >(state) {
-                        if (statNameId) {
+                        if (kanjiBankEntryId) {
                           state =
                               state.withJoin(
                                     currentTable: table,
-                                    currentColumn: table.statNameId,
+                                    currentColumn: table.kanjiBankEntryId,
                                     referencedTable:
                                         $$KanjiBankV3StatsTableTableReferences
-                                            ._statNameIdTable(db),
+                                            ._kanjiBankEntryIdTable(db),
                                     referencedColumn:
                                         $$KanjiBankV3StatsTableTableReferences
-                                            ._statNameIdTable(db)
+                                            ._kanjiBankEntryIdTable(db)
                                             .id,
                                   )
                                   as T;
                         }
-                        if (statValueId) {
+                        if (statTagId) {
                           state =
                               state.withJoin(
                                     currentTable: table,
-                                    currentColumn: table.statValueId,
+                                    currentColumn: table.statTagId,
                                     referencedTable:
                                         $$KanjiBankV3StatsTableTableReferences
-                                            ._statValueIdTable(db),
+                                            ._statTagIdTable(db),
                                     referencedColumn:
                                         $$KanjiBankV3StatsTableTableReferences
-                                            ._statValueIdTable(db)
+                                            ._statTagIdTable(db)
                                             .id,
                                   )
                                   as T;
@@ -26781,416 +26043,10 @@ typedef $$KanjiBankV3StatsTableTableProcessedTableManager =
       (KanjiBankV3StatsTableData, $$KanjiBankV3StatsTableTableReferences),
       KanjiBankV3StatsTableData,
       PrefetchHooks Function({
-        bool statNameId,
-        bool statValueId,
+        bool kanjiBankEntryId,
+        bool statTagId,
         bool kanjiBankV3XKanjiBankV3StatsTableRefs,
       })
-    >;
-typedef $$KanjiBankV3_X_KanjiBankV3StatsTableTableCreateCompanionBuilder =
-    KanjiBankV3_X_KanjiBankV3StatsTableCompanion Function({
-      Value<int> id,
-      required int statId,
-      required int kanjiId,
-    });
-typedef $$KanjiBankV3_X_KanjiBankV3StatsTableTableUpdateCompanionBuilder =
-    KanjiBankV3_X_KanjiBankV3StatsTableCompanion Function({
-      Value<int> id,
-      Value<int> statId,
-      Value<int> kanjiId,
-    });
-
-final class $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $KanjiBankV3_X_KanjiBankV3StatsTableTable,
-          KanjiBankV3_X_KanjiBankV3StatsTableData
-        > {
-  $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $KanjiBankV3StatsTableTable _statIdTable(_$DaKanjiDB db) =>
-      db.kanjiBankV3StatsTable.createAlias(
-        $_aliasNameGenerator(
-          db.kanjiBankV3XKanjiBankV3StatsTable.statId,
-          db.kanjiBankV3StatsTable.id,
-        ),
-      );
-
-  $$KanjiBankV3StatsTableTableProcessedTableManager get statId {
-    final $_column = $_itemColumn<int>('stat_id')!;
-
-    final manager = $$KanjiBankV3StatsTableTableTableManager(
-      $_db,
-      $_db.kanjiBankV3StatsTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_statIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $KanjiBankV3TableTable _kanjiIdTable(_$DaKanjiDB db) =>
-      db.kanjiBankV3Table.createAlias(
-        $_aliasNameGenerator(
-          db.kanjiBankV3XKanjiBankV3StatsTable.kanjiId,
-          db.kanjiBankV3Table.id,
-        ),
-      );
-
-  $$KanjiBankV3TableTableProcessedTableManager get kanjiId {
-    final $_column = $_itemColumn<int>('kanji_id')!;
-
-    final manager = $$KanjiBankV3TableTableTableManager(
-      $_db,
-      $_db.kanjiBankV3Table,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
-  $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$KanjiBankV3StatsTableTableFilterComposer get statId {
-    final $$KanjiBankV3StatsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.statId,
-          referencedTable: $db.kanjiBankV3StatsTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  $$KanjiBankV3TableTableFilterComposer get kanjiId {
-    final $$KanjiBankV3TableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3TableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
-  $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$KanjiBankV3StatsTableTableOrderingComposer get statId {
-    final $$KanjiBankV3StatsTableTableOrderingComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.statId,
-          referencedTable: $db.kanjiBankV3StatsTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatsTableTableOrderingComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  $$KanjiBankV3TableTableOrderingComposer get kanjiId {
-    final $$KanjiBankV3TableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3TableTableOrderingComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
-  $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  $$KanjiBankV3StatsTableTableAnnotationComposer get statId {
-    final $$KanjiBankV3StatsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.statId,
-          referencedTable: $db.kanjiBankV3StatsTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiBankV3StatsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.kanjiBankV3StatsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  $$KanjiBankV3TableTableAnnotationComposer get kanjiId {
-    final $$KanjiBankV3TableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.kanjiId,
-      referencedTable: $db.kanjiBankV3Table,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3TableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $KanjiBankV3_X_KanjiBankV3StatsTableTable,
-          KanjiBankV3_X_KanjiBankV3StatsTableData,
-          $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer,
-          $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer,
-          $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer,
-          $$KanjiBankV3_X_KanjiBankV3StatsTableTableCreateCompanionBuilder,
-          $$KanjiBankV3_X_KanjiBankV3StatsTableTableUpdateCompanionBuilder,
-          (
-            KanjiBankV3_X_KanjiBankV3StatsTableData,
-            $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences,
-          ),
-          KanjiBankV3_X_KanjiBankV3StatsTableData,
-          PrefetchHooks Function({bool statId, bool kanjiId})
-        > {
-  $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager(
-    _$DaKanjiDB db,
-    $KanjiBankV3_X_KanjiBankV3StatsTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<int> statId = const Value.absent(),
-                Value<int> kanjiId = const Value.absent(),
-              }) => KanjiBankV3_X_KanjiBankV3StatsTableCompanion(
-                id: id,
-                statId: statId,
-                kanjiId: kanjiId,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required int statId,
-                required int kanjiId,
-              }) => KanjiBankV3_X_KanjiBankV3StatsTableCompanion.insert(
-                id: id,
-                statId: statId,
-                kanjiId: kanjiId,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences(
-                    db,
-                    table,
-                    e,
-                  ),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({statId = false, kanjiId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (statId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.statId,
-                                referencedTable:
-                                    $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
-                                        ._statIdTable(db),
-                                referencedColumn:
-                                    $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
-                                        ._statIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (kanjiId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.kanjiId,
-                                referencedTable:
-                                    $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
-                                        ._kanjiIdTable(db),
-                                referencedColumn:
-                                    $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
-                                        ._kanjiIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$KanjiBankV3_X_KanjiBankV3StatsTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $KanjiBankV3_X_KanjiBankV3StatsTableTable,
-      KanjiBankV3_X_KanjiBankV3StatsTableData,
-      $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer,
-      $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer,
-      $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer,
-      $$KanjiBankV3_X_KanjiBankV3StatsTableTableCreateCompanionBuilder,
-      $$KanjiBankV3_X_KanjiBankV3StatsTableTableUpdateCompanionBuilder,
-      (
-        KanjiBankV3_X_KanjiBankV3StatsTableData,
-        $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences,
-      ),
-      KanjiBankV3_X_KanjiBankV3StatsTableData,
-      PrefetchHooks Function({bool statId, bool kanjiId})
     >;
 typedef $$KanjiMetaBankV3TypeTableTableCreateCompanionBuilder =
     KanjiMetaBankV3TypeTableCompanion Function({
@@ -35715,6 +34571,412 @@ typedef $$TermMetaBankV3IpaTable_X_TagBankV3TableTableProcessedTableManager =
       TermMetaBankV3IpaTable_X_TagBankV3TableData,
       PrefetchHooks Function({bool ipaId, bool tagId})
     >;
+typedef $$KanjiBankV3_X_KanjiBankV3StatsTableTableCreateCompanionBuilder =
+    KanjiBankV3_X_KanjiBankV3StatsTableCompanion Function({
+      Value<int> id,
+      required int statId,
+      required int kanjiId,
+    });
+typedef $$KanjiBankV3_X_KanjiBankV3StatsTableTableUpdateCompanionBuilder =
+    KanjiBankV3_X_KanjiBankV3StatsTableCompanion Function({
+      Value<int> id,
+      Value<int> statId,
+      Value<int> kanjiId,
+    });
+
+final class $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
+    extends
+        BaseReferences<
+          _$DaKanjiDB,
+          $KanjiBankV3_X_KanjiBankV3StatsTableTable,
+          KanjiBankV3_X_KanjiBankV3StatsTableData
+        > {
+  $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $KanjiBankV3StatsTableTable _statIdTable(_$DaKanjiDB db) =>
+      db.kanjiBankV3StatsTable.createAlias(
+        $_aliasNameGenerator(
+          db.kanjiBankV3XKanjiBankV3StatsTable.statId,
+          db.kanjiBankV3StatsTable.id,
+        ),
+      );
+
+  $$KanjiBankV3StatsTableTableProcessedTableManager get statId {
+    final $_column = $_itemColumn<int>('stat_id')!;
+
+    final manager = $$KanjiBankV3StatsTableTableTableManager(
+      $_db,
+      $_db.kanjiBankV3StatsTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_statIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $KanjiBankV3TableTable _kanjiIdTable(_$DaKanjiDB db) =>
+      db.kanjiBankV3Table.createAlias(
+        $_aliasNameGenerator(
+          db.kanjiBankV3XKanjiBankV3StatsTable.kanjiId,
+          db.kanjiBankV3Table.id,
+        ),
+      );
+
+  $$KanjiBankV3TableTableProcessedTableManager get kanjiId {
+    final $_column = $_itemColumn<int>('kanji_id')!;
+
+    final manager = $$KanjiBankV3TableTableTableManager(
+      $_db,
+      $_db.kanjiBankV3Table,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_kanjiIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
+  $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$KanjiBankV3StatsTableTableFilterComposer get statId {
+    final $$KanjiBankV3StatsTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.statId,
+          referencedTable: $db.kanjiBankV3StatsTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$KanjiBankV3StatsTableTableFilterComposer(
+                $db: $db,
+                $table: $db.kanjiBankV3StatsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$KanjiBankV3TableTableFilterComposer get kanjiId {
+    final $$KanjiBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
+  $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$KanjiBankV3StatsTableTableOrderingComposer get statId {
+    final $$KanjiBankV3StatsTableTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.statId,
+          referencedTable: $db.kanjiBankV3StatsTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$KanjiBankV3StatsTableTableOrderingComposer(
+                $db: $db,
+                $table: $db.kanjiBankV3StatsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$KanjiBankV3TableTableOrderingComposer get kanjiId {
+    final $$KanjiBankV3TableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableOrderingComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
+  $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  $$KanjiBankV3StatsTableTableAnnotationComposer get statId {
+    final $$KanjiBankV3StatsTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.statId,
+          referencedTable: $db.kanjiBankV3StatsTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$KanjiBankV3StatsTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.kanjiBankV3StatsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$KanjiBankV3TableTableAnnotationComposer get kanjiId {
+    final $$KanjiBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.kanjiId,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $KanjiBankV3_X_KanjiBankV3StatsTableTable,
+          KanjiBankV3_X_KanjiBankV3StatsTableData,
+          $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer,
+          $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer,
+          $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer,
+          $$KanjiBankV3_X_KanjiBankV3StatsTableTableCreateCompanionBuilder,
+          $$KanjiBankV3_X_KanjiBankV3StatsTableTableUpdateCompanionBuilder,
+          (
+            KanjiBankV3_X_KanjiBankV3StatsTableData,
+            $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences,
+          ),
+          KanjiBankV3_X_KanjiBankV3StatsTableData,
+          PrefetchHooks Function({bool statId, bool kanjiId})
+        > {
+  $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager(
+    _$DaKanjiDB db,
+    $KanjiBankV3_X_KanjiBankV3StatsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> statId = const Value.absent(),
+                Value<int> kanjiId = const Value.absent(),
+              }) => KanjiBankV3_X_KanjiBankV3StatsTableCompanion(
+                id: id,
+                statId: statId,
+                kanjiId: kanjiId,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int statId,
+                required int kanjiId,
+              }) => KanjiBankV3_X_KanjiBankV3StatsTableCompanion.insert(
+                id: id,
+                statId: statId,
+                kanjiId: kanjiId,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({statId = false, kanjiId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (statId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.statId,
+                                referencedTable:
+                                    $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
+                                        ._statIdTable(db),
+                                referencedColumn:
+                                    $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
+                                        ._statIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (kanjiId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.kanjiId,
+                                referencedTable:
+                                    $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
+                                        ._kanjiIdTable(db),
+                                referencedColumn:
+                                    $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
+                                        ._kanjiIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$KanjiBankV3_X_KanjiBankV3StatsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $KanjiBankV3_X_KanjiBankV3StatsTableTable,
+      KanjiBankV3_X_KanjiBankV3StatsTableData,
+      $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer,
+      $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer,
+      $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer,
+      $$KanjiBankV3_X_KanjiBankV3StatsTableTableCreateCompanionBuilder,
+      $$KanjiBankV3_X_KanjiBankV3StatsTableTableUpdateCompanionBuilder,
+      (
+        KanjiBankV3_X_KanjiBankV3StatsTableData,
+        $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences,
+      ),
+      KanjiBankV3_X_KanjiBankV3StatsTableData,
+      PrefetchHooks Function({bool statId, bool kanjiId})
+    >;
 typedef $$MediaTableTableCreateCompanionBuilder =
     MediaTableCompanion Function({
       Value<int> id,
@@ -40265,25 +39527,8 @@ class $DaKanjiDBManager {
         _db,
         _db.kanjiBankV3XDefinitionTable,
       );
-  $$KanjiBankV3StatNamesTableTableTableManager get kanjiBankV3StatNamesTable =>
-      $$KanjiBankV3StatNamesTableTableTableManager(
-        _db,
-        _db.kanjiBankV3StatNamesTable,
-      );
-  $$KanjiBankV3StatValuesTableTableTableManager
-  get kanjiBankV3StatValuesTable =>
-      $$KanjiBankV3StatValuesTableTableTableManager(
-        _db,
-        _db.kanjiBankV3StatValuesTable,
-      );
   $$KanjiBankV3StatsTableTableTableManager get kanjiBankV3StatsTable =>
       $$KanjiBankV3StatsTableTableTableManager(_db, _db.kanjiBankV3StatsTable);
-  $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager
-  get kanjiBankV3XKanjiBankV3StatsTable =>
-      $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager(
-        _db,
-        _db.kanjiBankV3XKanjiBankV3StatsTable,
-      );
   $$KanjiMetaBankV3TypeTableTableTableManager get kanjiMetaBankV3TypeTable =>
       $$KanjiMetaBankV3TypeTableTableTableManager(
         _db,
@@ -40373,6 +39618,12 @@ class $DaKanjiDBManager {
       $$TermMetaBankV3IpaTable_X_TagBankV3TableTableTableManager(
         _db,
         _db.termMetaBankV3IpaTableXTagBankV3Table,
+      );
+  $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager
+  get kanjiBankV3XKanjiBankV3StatsTable =>
+      $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager(
+        _db,
+        _db.kanjiBankV3XKanjiBankV3StatsTable,
       );
   $$MediaTableTableTableManager get mediaTable =>
       $$MediaTableTableTableManager(_db, _db.mediaTable);

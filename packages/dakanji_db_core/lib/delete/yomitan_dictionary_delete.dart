@@ -35,31 +35,11 @@ Future deleteKanjiBankV3(DaKanjiDB db, int indexId) async {
     final statIdsToDelete = await statIdsQuery.map((row) => row.statId).get();
 
     if (statIdsToDelete.isNotEmpty) {
-      // B) Find the Name and Value IDs from the StatsTable
-      final statsQuery = db.select(db.kanjiBankV3StatsTable)
-        ..where((tbl) => tbl.id.isIn(statIdsToDelete));
-      final statsEntries = await statsQuery.get();
-
-      final statNameIdsToDelete = statsEntries.map((row) => row.statNameId).toSet();
-      final statValueIdsToDelete = statsEntries.map((row) => row.statValueId).toSet();
-
       // STEP 3: Delete the owned stats tables
       // A) Delete from KanjiBankV3StatsTable
       await (db.delete(db.kanjiBankV3StatsTable)
             ..where((tbl) => tbl.id.isIn(statIdsToDelete)))
             .go();
-      // B) Delete from KanjiBankV3StatNamesTable
-      if (statNameIdsToDelete.isNotEmpty) {
-        await (db.delete(db.kanjiBankV3StatNamesTable)
-              ..where((tbl) => tbl.id.isIn(statNameIdsToDelete)))
-              .go();
-      }
-      // C) Delete from KanjiBankV3StatValuesTable
-      if (statValueIdsToDelete.isNotEmpty) {
-        await (db.delete(db.kanjiBankV3StatValuesTable)
-              ..where((tbl) => tbl.id.isIn(statValueIdsToDelete)))
-              .go();
-      }
     }
 
     // STEP 4: Delete the parent KanjiBankV3Table entries

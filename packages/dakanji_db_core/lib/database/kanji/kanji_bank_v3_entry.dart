@@ -55,7 +55,7 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
     }){
       tags.sort((a, b) => a.compareTo(b));
       stats.sort((a, b) {
-        if (a.name != b.name) return a.name.compareTo(b.name);
+        if (a.tag.name != b.tag.name) return a.tag.name.compareTo(b.tag.name);
         else return a.value.compareTo(b.value);
       });
     }

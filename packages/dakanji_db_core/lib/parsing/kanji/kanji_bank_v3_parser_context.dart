@@ -59,24 +59,11 @@ class KanjiBankV3ParserContext extends ParserContext {
 
   /// List of [KanjiBankV3StatsTableCompanion] that should be batch inserted
   List<KanjiBankV3StatsTableCompanion> statCompanions = [];
-  /// List of [KanjiBankV3StatNamesTableCompanion] that should be batch inserted
-  List<KanjiBankV3StatNamesTableCompanion> statNamesCompanions  = [];
-  /// List of [KanjiBankV3StatValuesTableCompanion] that should be batch inserted
-  List<KanjiBankV3StatValuesTableCompanion> statValuesCompanions  = [];
   /// The currently highest id in the [KanjiBankV3StatsTable]
   int maxStatsId = 0;
-  /// The currently highest id in the [KanjiBankV3StatValuesTable]
-  int maxStatNamesId = 0;
-  /// The currently highest id in the [KanjiBankV3StatNamesTable]
-  int maxStatValuesId = 0;
   /// List of [KanjiBankV3_X_KanjiBankV3StatsTableCompanion] that should be batch inserted
   List<KanjiBankV3_X_KanjiBankV3StatsTableCompanion> statValueRelCompanions = [];
-  /// A local cache for stat names. Every stat name should only be looked up
-  /// once in the database
-  Map<String, int> statNamesInDB = {};
-  /// A local cache for stat values. Every stat value should only be looked up
-  /// once in the database
-  Map<String, int> statValuesInDB = {};
+
 
   KanjiBankV3ParserContext._({
     required this.maxKanjiId,
@@ -88,10 +75,6 @@ class KanjiBankV3ParserContext extends ParserContext {
     required this.maxDefinitionId,
     required this.definitionsInDB,
     required this.maxStatsId,
-    required this.maxStatNamesId,
-    required this.maxStatValuesId,
-    required this.statNamesInDB,
-    required this.statValuesInDB,
   });
 
   static Future<KanjiBankV3ParserContext> create(DaKanjiDB db, int indexId) async {
@@ -103,8 +86,6 @@ class KanjiBankV3ParserContext extends ParserContext {
       readingsInDB: { for (var e in await db.kanjiBankV3Dao.getAllReadings()) e.reading : e.id },
       definitionsInDB: { for (var e in await db.definitionDao.getAllDefinitions()) e.definition : e.id },
       tagsInDB: { for (var e in await db.tagBankV3Dao.getAllTags(indexId)) e.name : e.id },
-      statNamesInDB: { for (var e in await db.kanjiBankV3Dao.getAllStatNames()) e.statName : e.id },
-      statValuesInDB: { for (var e in await db.kanjiBankV3Dao.getAllStatValues()) e.statValue : e.id },
 
       // get current maximum values
       maxKanjiId:       await db.kanjiDao.maxKanjiId(),
@@ -112,8 +93,6 @@ class KanjiBankV3ParserContext extends ParserContext {
       maxReadingId:     await db.readingDao.maxReadingId(),
       maxDefinitionId:  await db.kanjiBankV3Dao.maxDefinitionId(),
       maxStatsId:       await db.kanjiBankV3Dao.maxStatsId(),
-      maxStatValuesId:  await db.kanjiBankV3Dao.maxStatsValueId(),
-      maxStatNamesId:   await db.kanjiBankV3Dao.maxStatsNameId()
     );
   }
 
@@ -127,8 +106,6 @@ class KanjiBankV3ParserContext extends ParserContext {
     definitionsCompanions.clear();
     definitionRelCompanions.clear();
     statCompanions.clear();
-    statNamesCompanions.clear();
-    statValuesCompanions.clear();
     statValueRelCompanions.clear();
   }
 

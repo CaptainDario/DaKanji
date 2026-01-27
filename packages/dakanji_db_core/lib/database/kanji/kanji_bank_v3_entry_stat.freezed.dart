@@ -15,9 +15,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$KanjiBankV3EntryStat {
 
-/// The name of this stat
- String get name;/// The value of this stat
- String get value;
+/// The value of this stat
+ String get value;/// The tag associated with this stat
+ TagBankV3Entry get tag;
 /// Create a copy of KanjiBankV3EntryStat
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,16 +30,16 @@ $KanjiBankV3EntryStatCopyWith<KanjiBankV3EntryStat> get copyWith => _$KanjiBankV
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is KanjiBankV3EntryStat&&(identical(other.name, name) || other.name == name)&&(identical(other.value, value) || other.value == value));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is KanjiBankV3EntryStat&&(identical(other.value, value) || other.value == value)&&(identical(other.tag, tag) || other.tag == tag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,value);
+int get hashCode => Object.hash(runtimeType,value,tag);
 
 @override
 String toString() {
-  return 'KanjiBankV3EntryStat(name: $name, value: $value)';
+  return 'KanjiBankV3EntryStat(value: $value, tag: $tag)';
 }
 
 
@@ -50,11 +50,11 @@ abstract mixin class $KanjiBankV3EntryStatCopyWith<$Res>  {
   factory $KanjiBankV3EntryStatCopyWith(KanjiBankV3EntryStat value, $Res Function(KanjiBankV3EntryStat) _then) = _$KanjiBankV3EntryStatCopyWithImpl;
 @useResult
 $Res call({
- String name, String value
+ String value, TagBankV3Entry tag
 });
 
 
-
+$TagBankV3EntryCopyWith<$Res> get tag;
 
 }
 /// @nodoc
@@ -67,14 +67,23 @@ class _$KanjiBankV3EntryStatCopyWithImpl<$Res>
 
 /// Create a copy of KanjiBankV3EntryStat
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? value = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? value = null,Object? tag = null,}) {
   return _then(_self.copyWith(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
-as String,
+value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
+as String,tag: null == tag ? _self.tag : tag // ignore: cast_nullable_to_non_nullable
+as TagBankV3Entry,
   ));
 }
-
+/// Create a copy of KanjiBankV3EntryStat
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TagBankV3EntryCopyWith<$Res> get tag {
+  
+  return $TagBankV3EntryCopyWith<$Res>(_self.tag, (value) {
+    return _then(_self.copyWith(tag: value));
+  });
+}
 }
 
 
@@ -156,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String value)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String value,  TagBankV3Entry tag)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _KanjiBankV3EntryStat() when $default != null:
-return $default(_that.name,_that.value);case _:
+return $default(_that.value,_that.tag);case _:
   return orElse();
 
 }
@@ -177,10 +186,10 @@ return $default(_that.name,_that.value);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String value)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String value,  TagBankV3Entry tag)  $default,) {final _that = this;
 switch (_that) {
 case _KanjiBankV3EntryStat():
-return $default(_that.name,_that.value);case _:
+return $default(_that.value,_that.tag);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +206,10 @@ return $default(_that.name,_that.value);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String value)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String value,  TagBankV3Entry tag)?  $default,) {final _that = this;
 switch (_that) {
 case _KanjiBankV3EntryStat() when $default != null:
-return $default(_that.name,_that.value);case _:
+return $default(_that.value,_that.tag);case _:
   return null;
 
 }
@@ -212,13 +221,13 @@ return $default(_that.name,_that.value);case _:
 @JsonSerializable()
 
 class _KanjiBankV3EntryStat implements KanjiBankV3EntryStat {
-  const _KanjiBankV3EntryStat({required this.name, required this.value});
+  const _KanjiBankV3EntryStat({required this.value, required this.tag});
   factory _KanjiBankV3EntryStat.fromJson(Map<String, dynamic> json) => _$KanjiBankV3EntryStatFromJson(json);
 
-/// The name of this stat
-@override final  String name;
 /// The value of this stat
 @override final  String value;
+/// The tag associated with this stat
+@override final  TagBankV3Entry tag;
 
 /// Create a copy of KanjiBankV3EntryStat
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +242,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _KanjiBankV3EntryStat&&(identical(other.name, name) || other.name == name)&&(identical(other.value, value) || other.value == value));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _KanjiBankV3EntryStat&&(identical(other.value, value) || other.value == value)&&(identical(other.tag, tag) || other.tag == tag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,value);
+int get hashCode => Object.hash(runtimeType,value,tag);
 
 @override
 String toString() {
-  return 'KanjiBankV3EntryStat(name: $name, value: $value)';
+  return 'KanjiBankV3EntryStat(value: $value, tag: $tag)';
 }
 
 
@@ -253,11 +262,11 @@ abstract mixin class _$KanjiBankV3EntryStatCopyWith<$Res> implements $KanjiBankV
   factory _$KanjiBankV3EntryStatCopyWith(_KanjiBankV3EntryStat value, $Res Function(_KanjiBankV3EntryStat) _then) = __$KanjiBankV3EntryStatCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String value
+ String value, TagBankV3Entry tag
 });
 
 
-
+@override $TagBankV3EntryCopyWith<$Res> get tag;
 
 }
 /// @nodoc
@@ -270,15 +279,24 @@ class __$KanjiBankV3EntryStatCopyWithImpl<$Res>
 
 /// Create a copy of KanjiBankV3EntryStat
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? value = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? value = null,Object? tag = null,}) {
   return _then(_KanjiBankV3EntryStat(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
-as String,
+value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
+as String,tag: null == tag ? _self.tag : tag // ignore: cast_nullable_to_non_nullable
+as TagBankV3Entry,
   ));
 }
 
-
+/// Create a copy of KanjiBankV3EntryStat
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TagBankV3EntryCopyWith<$Res> get tag {
+  
+  return $TagBankV3EntryCopyWith<$Res>(_self.tag, (value) {
+    return _then(_self.copyWith(tag: value));
+  });
+}
 }
 
 // dart format on

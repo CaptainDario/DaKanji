@@ -1,4 +1,5 @@
 
+import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'kanji_bank_v3_entry_stat.freezed.dart';
@@ -13,10 +14,10 @@ abstract class KanjiBankV3EntryStat with _$KanjiBankV3EntryStat {
   const factory KanjiBankV3EntryStat(
     {
 
-      /// The name of this stat
-      required String name,
       /// The value of this stat
       required String value,
+      /// The tag associated with this stat
+      required TagBankV3Entry tag,
 
     }) = _KanjiBankV3EntryStat;
 
