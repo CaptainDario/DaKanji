@@ -45,27 +45,27 @@ final kanjiBankTestCaseExpectations = [
       "utsu meaning 5"
     ],
     stats: [
-      KanjiBankV3EntryStat(
-        name: "kstat1",
-        value: "kanji stat 1 value"
-      ), 
-      KanjiBankV3EntryStat(
-        name: "kstat2",
-        value: "kanji stat 2 value"
-      ),
-      KanjiBankV3EntryStat(
-        name: "kstat3",
-        value: "kanji stat 3 value"
-      ),
-      KanjiBankV3EntryStat(
-        name: "kstat4",
-        value: "kanji stat 4 value"
-      ),
-      KanjiBankV3EntryStat(
-        name: "kstat5",
-        value: "kanji stat 5 value"
-      )
-    ]
+        KanjiBankV3EntryStat(
+          value: "kanji stat 1 value",
+          tag: kstat1Tag
+        ), 
+        KanjiBankV3EntryStat(
+          value: "kanji stat 2 value",
+          tag: kstat2Tag,
+        ),
+        KanjiBankV3EntryStat(
+          value: "kanji stat 3 value",
+          tag: kstat3Tag,
+        ),
+        KanjiBankV3EntryStat(
+          value: "kanji stat 4 value",
+          tag: kstat4Tag,
+        ),
+        KanjiBankV3EntryStat(
+          value: "kanji stat 5 value",
+          tag: kstat5Tag
+        )
+      ]
   )
 
 ];

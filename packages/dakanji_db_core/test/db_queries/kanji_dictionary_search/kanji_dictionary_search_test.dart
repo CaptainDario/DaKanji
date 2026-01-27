@@ -8,6 +8,7 @@ import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
 import '../../test_utils/db_files.dart';
+import '../../test_utils/ignore_database_generated_data.dart';
 import 'kanji_dictionary_search_test_cases.dart';
 
 void main() {
@@ -26,7 +27,9 @@ void main() {
       test('Looking up $testCase', () async {
         Stopwatch s = Stopwatch()..start();
         List<KanjiDictionarySearchResult> result =
-          (await db.kanjiSearchDao.kanjiDictionarySearch(testCase));
+          (await db.kanjiSearchDao.kanjiDictionarySearch(testCase))
+          .map((e) => kanjiDictionarySearchResultIgnoreDatabaseGeneratedData(e))
+          .toList();
         print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
 
         // 1. First, check that the number of results we got from the DB
@@ -41,21 +44,7 @@ void main() {
 
           // Compare the kanji bank entry
           expect(
-            actualResult.kanjiBankEntry.copyWith(
-              // ignore IDs, etc. for comparison
-              id: 0,
-              indexEntry: actualResult.kanjiBankEntry.indexEntry.copyWith(
-                id: 0,
-                currentSortingOrder: 0
-              ),
-              tags: actualResult.kanjiBankEntry.tags.map((e) => e.copyWith(
-                id: 0,
-                indexEntry: e.indexEntry.copyWith(
-                  id: 0,
-                  currentSortingOrder: 0
-                ),
-              )).toList(),
-            ), 
+            actualResult.kanjiBankEntry, 
             equals(expectedResult.kanjiBankEntry),
             reason: "KanjiBankV3Entry for '${actualResult.kanjiBankEntry.kanji}' did not match expectation."
           );
@@ -63,14 +52,7 @@ void main() {
           // Compare the list of meta entries
           for (var i = 0; i < expectedResult.kanjiMetaBankEntries.length; i++) {
             expect(
-              actualResult.kanjiMetaBankEntries[i].copyWith(
-                // ignore IDs, etc. for comparison
-                id: 0,
-                indexEntry: actualResult.kanjiMetaBankEntries[i].indexEntry.copyWith(
-                  id: 0,
-                  currentSortingOrder: 0
-                ),
-              ),
+              actualResult.kanjiMetaBankEntries[i],
               equals(expectedResult.kanjiMetaBankEntries[i]),
               reason: "KanjiMetaBankV3Entry at index $i for '${actualResult.kanjiBankEntry.kanji}' did not match expectation."
             ); 

@@ -1,3 +1,4 @@
+import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
@@ -13,6 +14,12 @@ KanjiBankV3Entry kanjiBankEntryIgnoreDatabaseGeneratedData(KanjiBankV3Entry entr
       id: 0,
       indexEntry: t.indexEntry.copyWith(id: 0, currentSortingOrder: 0)
     )).toList(),
+    stats: entry.stats.map((s) => s.copyWith(
+      tag: s.tag.copyWith(
+        id: 0,
+        indexEntry: s.tag.indexEntry.copyWith(id: 0, currentSortingOrder: 0)
+      )
+    )).toList()
   );
 }
 
@@ -66,4 +73,13 @@ TermMetaBankV3Entry termMetaBankV3EntryIgnoreDatabaseGeneratedData(TermMetaBankV
         )).toList() 
       )).toList()
     );
+}
+
+KanjiDictionarySearchResult kanjiDictionarySearchResultIgnoreDatabaseGeneratedData(KanjiDictionarySearchResult result) {
+  return result.copyWith(
+    kanjiBankEntry: kanjiBankEntryIgnoreDatabaseGeneratedData(result.kanjiBankEntry),
+    kanjiMetaBankEntries: result.kanjiMetaBankEntries.map(
+      (e) => kanjiMetaBankEntryIgnoreDatabaseGeneratedData(e)
+    ).toList()
+  );
 }
