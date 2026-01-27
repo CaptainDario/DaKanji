@@ -14,7 +14,8 @@ import 'package:universal_io/io.dart';
 import '/database/dakanji_db.dart';
 
 
-bool d = false;
+/// Debug printing
+bool d = true;
 
 /// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
 Future parseTermBankV3File(
