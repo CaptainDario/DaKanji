@@ -142,6 +142,8 @@ String get tatoebaSentencesInputPath => Directory(dakanjiDBInputFilesPath)
   .listSync().where((e) => p.basename(e.path).contains(tatoebaSentencesFilePattern))
   .first.path;
 String get tatoebaInputZipPath => p.join(dakanjiDBInputFilesPath, "tatoeba_converted.zip");
+/// path to the audio input files that should be parsed
+String get audioInputZipPath => p.join(dakanjiDBInputFilesPath, "japanese-vocabulary-pronunciation-audio-master-mp3.zip");
 
 /// path to the tests folder
 final coreTestsPath = p.joinAll([dakanjiDbProjectRoot, "packages", "dakanji_db_core", "test"]);

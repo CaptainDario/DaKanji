@@ -4,7 +4,6 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
-import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
@@ -101,7 +100,6 @@ Future<DaKanjiDB> setupFreshDB(
   Stream importProgress = await parseAudioDataSource(
     audioDataSourceFile: dataSourceZipPath,
     db: db,
-    audioSourceName: p.basenameWithoutExtension(dataSourcePath),
     mecab: mecab,
     isDefaultDictionary: isDefaultDictionary
   );

@@ -23,7 +23,6 @@ Future parseAudioDataSource({
   String? audioDataSourceFile,
   Uint8List? audioDataSourceBytes,
   required bool isDefaultDictionary,
-  required String audioSourceName,
   required DaKanjiDB db,
   required Mecab mecab
   }) async {
@@ -52,7 +51,6 @@ Future parseAudioDataSource({
   await Isolate.spawn(_parseAudioDataSource, (
     audioDataSourceFile: audioDataSourceFile,
     audioDataSourceBytes: audioDataSourceBytes,
-    audioSourceName: audioSourceName,
     dbConnection: connection,
     libmecabPath: libmecabPath,
     mecabDictDir: mecabDicPath,
@@ -70,7 +68,6 @@ Future parseAudioDataSource({
 Future _parseAudioDataSource(({
   String? audioDataSourceFile,
   Uint8List? audioDataSourceBytes,
-  String audioSourceName,
   DriftIsolate dbConnection,
   String libmecabPath,
   String mecabDictDir,
@@ -97,14 +94,18 @@ Future _parseAudioDataSource(({
       fileOrder: ["yomitan_index.json", r"^index.json", "entries.json"]
   );
 
-  // add an index for the audio entries
-  final indexFile = dataSources.first;
-  int indexId = await parseAndInsertIndex(
-    utf8.decode(indexFile.fileContent), db, DictionaryTypes.audio, params.isDefaultDictionary);
-  final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
-  dataSources = dataSources.skip(1);
-
   try {
+
+    // add an index for the audio entries
+    final indexFile = dataSources.first;
+    if(p.basename(indexFile.filePath) != "yomitan_index.json")
+      throw Exception("First file in audio dict must be `/yomitan_index.json`");
+
+    int indexId = await parseAndInsertIndex(
+      utf8.decode(indexFile.fileContent), db, DictionaryTypes.audio, params.isDefaultDictionary);
+    final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
+    dataSources = dataSources.skip(1);
+
     // find the format
     late AudioDataSourceFormats format;
     if(dataSources.first.filePath == "index.json") {

@@ -1,5 +1,6 @@
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_core/parsing/example_parser.dart';
 import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
@@ -36,23 +37,27 @@ Map<DictsToUse, String Function()> dictNameToPath = {
 ///     definitions to the database
 void main(List<String> args) async {
 
+  // extract arguments
+  bool useJitendexArg = args.contains('--use-jitendex');
+  bool downloadSourcesArg = args.contains('--download-sources');
+  bool includeExampleDictArg = args.contains('--include-example-dict');
+  bool includeTatoebaExamplesArg = args.contains('--convert-tatoeba');
+  bool addStructuredContentJsonDefs = args.contains('--add-structured-content-json-definitions');
+
   // check which dictionary to use 
   DictsToUse dictToUse = DictsToUse.jmdict;
-  bool useJitendexArg = args.contains('--use-jitendex');
   if(useJitendexArg) {
     print("Using jitendex as dictionary...");
     dictToUse = DictsToUse.jitendex;
   }
 
   // clear old sources and redownload
-  bool downloadSourcesArg = args.contains('--download-sources');
   if(downloadSourcesArg) {
     print("Redownloading source files...");
-    await downloadSources(dictToUse);
+    await downloadSources(dictToUse, includeTatoebaExamplesArg);
   }
 
   // include yomitan example dictionary
-  bool includeExampleDictArg = args.contains('--include-example-dict');
   String? exampleDictPath;
   if(includeExampleDictArg) {
     print("Including example dictionary...");
@@ -60,7 +65,6 @@ void main(List<String> args) async {
   }
 
   // check whether tatoeba examples should be included
-  bool includeTatoebaExamplesArg = args.contains('--convert-tatoeba');
   if(includeTatoebaExamplesArg) {
     File tatoeZip = File(tatoebaInputZipPath);
     if(tatoeZip.existsSync()) tatoeZip.deleteSync();
@@ -73,9 +77,6 @@ void main(List<String> args) async {
       langsToInclude: {Iso639_3.eng, Iso639_3.deu}
     );
   }
-
-  // should the structured content JSON-definitions be added to the database
-  bool addStructuredContentJsonDefs = args.contains('--add-structured-content-json-definitions');
   
   // setup 
   if(File(dakanjiDbPath).existsSync()) {
@@ -87,6 +88,9 @@ void main(List<String> args) async {
   // init mecab
   final mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+
+  print("Importing pronunciation audio data...");
+  await importPronunciationData(db, mecab);
 
   print("Adding KanjiVG...");
   await importKanjiVG(db);
@@ -105,15 +109,17 @@ void main(List<String> args) async {
     addStructuredContentJsonDefs,
   );
 
-  print("Adding tatoeba example sentences...");
-  await importTatoebaExamples(db, mecab);
+  if(includeTatoebaExamplesArg){
+    print("Adding tatoeba example sentences...");
+    await importTatoebaExamples(db, mecab);
+  }
 
   exit(0);
 
 }
 
 /// Downloads all source files into the input files directory
-Future downloadSources(DictsToUse dictToUse) async {
+Future downloadSources(DictsToUse dictToUse, bool downloadTatoeba) async {
 
   print("Cleaning up old source files...");
   Directory out = Directory(dakanjiDBInputFilesPath);
@@ -149,11 +155,16 @@ Future downloadSources(DictsToUse dictToUse) async {
     await getSourceFromUri(
       Uri.parse('https://github.com/Kuuuube/yomitan-dictionaries/raw/main/dictionaries/JPDB_v2.2_Frequency_Kana_2024-10-13.zip'), out);
 
-
-  final (tatoebaLinksDownloadInfo, tatoebaLinksFileName) =
+  
+  String? tatoebaLinksDownloadInfo, tatoebaLinksFileName;
+  String? tatoebaSentencesDownloadInfo, tatoebaSentencesFileName;
+  if(downloadTatoeba){
     await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/links.tar.bz2'), out);
-  final (tatoebaSentencesDownloadInfo, tatoebaSentencesFileName) =
     await getSourceFromUri(Uri.parse('https://downloads.tatoeba.org/exports/sentences.tar.bz2'), out);
+  }
+
+  final (pronounciationDataDownloadInfo, pronunciationDataFileName) =
+    await getSourceFromUri(Uri.parse("https://github.com/CaptainDario/DaKanji-Data/releases/download/v4.0.0/japanese-vocabulary-pronunciation-audio-master-mp3.zip"), out);
 
   print("All downloads completed, writing summary file.");
   File sourcesList = File(p.join(out.path, 'sources_list.txt'))..createSync();
@@ -167,6 +178,7 @@ Future downloadSources(DictsToUse dictToUse) async {
     'JPDB v2.2 Frequency Kana: $jpdb2_2FreqDownloadInfo\n'
     'Tatoeba Links: $tatoebaLinksDownloadInfo\n'
     'Tatoeba Sentences: $tatoebaSentencesDownloadInfo'
+    'Pronunciation Data: $pronounciationDataDownloadInfo\n'
   );
   print("Done!");
 
@@ -237,5 +249,23 @@ Future importTatoebaExamples(DaKanjiDB db, Mecab mecab) async {
   }
   
   print("Import Tatoeba took: ${s.elapsedMilliseconds}ms");
+
+}
+
+/// Import the audio data into the given [DaKanjiDB]
+Future importPronunciationData(DaKanjiDB db, Mecab mecab) async {
+
+  Stopwatch s = Stopwatch()..start();
+  final progress = await parseAudioDataSource(
+    audioDataSourceFile: audioInputZipPath,
+    db: db,
+    mecab: mecab,
+    isDefaultDictionary: true
+  );
+
+  await for (final progress in progress) {
+    print(progress);
+  }
+  print("Importing pronunciation data took: ${s.elapsedMilliseconds}ms");
 
 }
