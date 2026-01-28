@@ -1,17 +1,17 @@
 import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry_stat.dart';
-import 'package:dakanji_db_ui/widgets/kanji_search/kanji_match_stats_widget.dart';
-import 'package:dakanji_db_ui/widgets/kanji_search/kanji_meta_bank_widget.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_tag_bank_widget.dart';
+import 'package:dakanji_db_ui/widgets/kanji/kanji_match_stats_widget.dart';
+import 'package:dakanji_db_ui/widgets/kanji_meta/kanji_meta_bank_widget.dart';
+import 'package:dakanji_db_ui/widgets/tag/tag_bank_widget.dart';
 import 'package:flutter/material.dart';
 
 
 
-class KanjiDictionarySearchResultWidget extends StatefulWidget {
+class KanjiEntryWidget extends StatefulWidget {
 
   final KanjiDictionarySearchResult result;
 
-  const KanjiDictionarySearchResultWidget(
+  const KanjiEntryWidget(
     this.result,
     {
       super.key
@@ -19,10 +19,10 @@ class KanjiDictionarySearchResultWidget extends StatefulWidget {
   );
 
   @override
-  State<KanjiDictionarySearchResultWidget> createState() => _KanjiDictionarySearchResultWidgetState();
+  State<KanjiEntryWidget> createState() => _KanjiEntryWidgetState();
 }
 
-class _KanjiDictionarySearchResultWidgetState extends State<KanjiDictionarySearchResultWidget> {
+class _KanjiEntryWidgetState extends State<KanjiEntryWidget> {
 
   List<KanjiBankV3EntryStat> statistics = [];
 
@@ -90,7 +90,7 @@ class _KanjiDictionarySearchResultWidgetState extends State<KanjiDictionarySearc
                   Expanded(child: KanjiMatchStatsWidget(statistics))
                 ],
               ),
-              DictionaryMatchTagBankWidget([kanjiEntry.tags]),
+              TagBankWidget([kanjiEntry.tags]),
 
               SizedBox(height: 8),
 

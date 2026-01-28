@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:language_processing/japanese/furigana_matching.dart';
 
 
-class DictionaryMatchTermBankTermWidget extends StatefulWidget {
+class TermBankTermWidget extends StatefulWidget {
 
   /// The terms to display.
   final List<TermBankV3Entry> entries;
@@ -13,7 +13,7 @@ class DictionaryMatchTermBankTermWidget extends StatefulWidget {
   /// Should the audio playback button be shown (queries them from db).
   final bool showAudioPlaybackButton;
 
-  const DictionaryMatchTermBankTermWidget(
+  const TermBankTermWidget(
     this.entries,
     {
       this.useKatakanaForFurigana = false,
@@ -23,10 +23,10 @@ class DictionaryMatchTermBankTermWidget extends StatefulWidget {
   );
 
   @override
-  State<DictionaryMatchTermBankTermWidget> createState() => _DictionaryMatchTermBankTermWidgetState();
+  State<TermBankTermWidget> createState() => _TermBankTermWidgetState();
 }
 
-class _DictionaryMatchTermBankTermWidgetState extends State<DictionaryMatchTermBankTermWidget> {
+class _TermBankTermWidgetState extends State<TermBankTermWidget> {
 
   /// The terms and readings bundled as furigana pairs.
   List<List<FuriganaPair>> termsAndReadings = [];

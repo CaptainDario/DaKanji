@@ -1,24 +1,24 @@
 import "package:collection/collection.dart";
 import 'package:dakanji_db_core/data/term_meta_entry_types.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_tag.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_term_meta_freq_widget.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_term_meta_ipa_widget.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_term_meta_pitch_widget.dart';
+import 'package:dakanji_db_ui/widgets/tag/tag_widget.dart';
+import 'package:dakanji_db_ui/widgets/term_meta/term_meta_freq_widget.dart';
+import 'package:dakanji_db_ui/widgets/term_meta/term_meta_ipa_widget.dart';
+import 'package:dakanji_db_ui/widgets/term_meta/term_meta_pitch_widget.dart';
 import 'package:flutter/material.dart';
 
 
-class DictionaryMatchTermMetaWidget extends StatefulWidget {
+class TermMetaWidget extends StatefulWidget {
 
   final List<List<TermMetaBankV3Entry>> termMetaEntries;
 
-  const DictionaryMatchTermMetaWidget(this.termMetaEntries, {super.key});
+  const TermMetaWidget(this.termMetaEntries, {super.key});
 
   @override
-  State<DictionaryMatchTermMetaWidget> createState() => _DictionaryMatchTermMetaWidgetState();
+  State<TermMetaWidget> createState() => _TermMetaWidgetState();
 }
 
-class _DictionaryMatchTermMetaWidgetState extends State<DictionaryMatchTermMetaWidget> {
+class _TermMetaWidgetState extends State<TermMetaWidget> {
 
   /// A list that groups frequency term meta entries by their index ID.
   late Map<TermMetaBankEntryTypes, Map<int, List<TermMetaBankV3Entry>>> groupedTermMetaEntries;
@@ -62,7 +62,7 @@ class _DictionaryMatchTermMetaWidgetState extends State<DictionaryMatchTermMetaW
       children: [
         // frequency entries
         if(freqMap.isNotEmpty)
-          DictionaryMatchTermMetaFreqWidget(freqMap),
+          TermMetaFreqWidget(freqMap),
         SizedBox(height: 4),
 
         // pitch and ipa entries list
@@ -111,12 +111,12 @@ class _PitchAndIpaGroup extends StatelessWidget {
         if (pitchEntries != null)
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-            child: DictionaryMatchTermMetaPitchWidget(pitchEntries!),
+            child: TermMetaPitchWidget(pitchEntries!),
           ),
         if (ipaEntries != null)
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-            child: DictionaryMatchTermMetaIpaWidget(ipaEntries!),
+            child: TermMetaIpaWidget(ipaEntries!),
           ),
 
       ],

@@ -4,8 +4,8 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
-import 'package:dakanji_db_ui/widgets/kanji_search/kanji_dictionary_search_result_widget.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_widget.dart';
+import 'package:dakanji_db_ui/widgets/kanji/kanji_entry_widget.dart';
+import 'package:dakanji_db_ui/widgets/term/term_entry_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -94,7 +94,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
                 if (_isExpanded("KanjiSection"))
                   for (var (i, kanjiMatchGroup) in widget.result.kanjiResults.indexed)
                     SliverToBoxAdapter(
-                      child: KanjiDictionarySearchResultWidget(kanjiMatchGroup),
+                      child: KanjiEntryWidget(kanjiMatchGroup),
                     ),
               ],
         
@@ -230,7 +230,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       itemCount: matches.length,
       itemBuilder: (context, i) => RepaintBoundary(
         key: ValueKey("${keyPrefix}_List_Item_$i"), 
-        child: DictionaryMatchWidget(
+        child: TermEntryWidget(
           matches[i],
           showTags: context.read<DaKanjiDbSettings>().s.showTags,
           showMetaEntries: context.read<DaKanjiDbSettings>().s.showMetaEntries,

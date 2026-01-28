@@ -1,14 +1,14 @@
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_tag.dart';
+import 'package:dakanji_db_ui/widgets/tag/tag_widget.dart';
 import 'package:flutter/material.dart';
 
 
 
-class DictionaryMatchTermMetaFreqWidget extends StatelessWidget {
+class TermMetaFreqWidget extends StatelessWidget {
 
   final Map<int, List<TermMetaBankV3Entry>> freqTermMetaEntries;
 
-  const DictionaryMatchTermMetaFreqWidget(this.freqTermMetaEntries, {super.key});
+  const TermMetaFreqWidget(this.freqTermMetaEntries, {super.key});
 
   List<({List<String> texts, List<Color?> textColors})> prepareTags(
     Iterable<MapEntry<int, List<TermMetaBankV3Entry>>> entries,

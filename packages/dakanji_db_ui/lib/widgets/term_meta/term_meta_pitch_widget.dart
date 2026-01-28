@@ -1,15 +1,15 @@
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_tag.dart';
+import 'package:dakanji_db_ui/widgets/tag/tag_widget.dart';
 import 'package:dakanji_db_ui/widgets/util/pitch_accent_widget.dart';
 import 'package:flutter/material.dart';
 
 
 
-class DictionaryMatchTermMetaPitchWidget extends StatelessWidget {
+class TermMetaPitchWidget extends StatelessWidget {
 
   final List<TermMetaBankV3Entry> pitchTermMetaEntries;
 
-  const DictionaryMatchTermMetaPitchWidget(this.pitchTermMetaEntries, {super.key});
+  const TermMetaPitchWidget(this.pitchTermMetaEntries, {super.key});
 
   @override
   Widget build(BuildContext context) {

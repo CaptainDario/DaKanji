@@ -1,5 +1,5 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_ui/widgets/search_results/structured_content/html_help_attribute_to_widget_factory.dart';
+import 'package:dakanji_db_ui/widgets/term/structured_content/html_help_attribute_to_widget_factory.dart';
 import 'package:dakanji_util/widget_utils/future_image_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';

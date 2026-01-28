@@ -1,13 +1,13 @@
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_tag.dart';
+import 'package:dakanji_db_ui/widgets/tag/tag_widget.dart';
 import 'package:flutter/material.dart';
 
 
-class DictionaryMatchTermMetaIpaWidget extends StatelessWidget {
+class TermMetaIpaWidget extends StatelessWidget {
 
   final List<TermMetaBankV3Entry> ipaTermMetaEntries;
 
-  const DictionaryMatchTermMetaIpaWidget(
+  const TermMetaIpaWidget(
     this.ipaTermMetaEntries,
     {
       super.key

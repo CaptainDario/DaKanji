@@ -1,22 +1,22 @@
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_tag.dart';
+import 'package:dakanji_db_ui/widgets/tag/tag_widget.dart';
 import 'package:flutter/material.dart';
 
 
 
 /// A widget that displays a list of tags associated with a dictionary match.
-class DictionaryMatchTagBankWidget extends StatefulWidget {
+class TagBankWidget extends StatefulWidget {
 
   /// The tags to display.
   final List<List<TagBankV3Entry>> tags;
 
-  const DictionaryMatchTagBankWidget(this.tags, {super.key});
+  const TagBankWidget(this.tags, {super.key});
 
   @override
-  State<DictionaryMatchTagBankWidget> createState() => _DictionaryMatchTagBankWidgetState();
+  State<TagBankWidget> createState() => _TagBankWidgetState();
 }
 
-class _DictionaryMatchTagBankWidgetState extends State<DictionaryMatchTagBankWidget> {
+class _TagBankWidgetState extends State<TagBankWidget> {
 
   List<TagBankV3Entry> uniqueTags = [];
 

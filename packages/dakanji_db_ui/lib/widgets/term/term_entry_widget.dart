@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_tag_bank_widget.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_term_bank_definitions_widget.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_term_bank_term_widget.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_term_meta_widget.dart';
+import 'package:dakanji_db_ui/widgets/tag/tag_bank_widget.dart';
+import 'package:dakanji_db_ui/widgets/term/term_bank_definitions_widget.dart';
+import 'package:dakanji_db_ui/widgets/term/term_bank_term_widget.dart';
+import 'package:dakanji_db_ui/widgets/term_meta/term_meta_widget.dart';
 import 'package:dakanji_util/widgets/conditional_parent_widget.dart';
 import 'package:flutter/material.dart';
 
 
 
-class DictionaryMatchWidget extends StatelessWidget {
+class TermEntryWidget extends StatelessWidget {
   
   /// The dictionary match to display.
   final DictionaryMatch match;
@@ -35,7 +35,7 @@ class DictionaryMatchWidget extends StatelessWidget {
   /// Should return true if the URL was handled.
   final FutureOr<bool> Function(String url)? onUrlTap;
 
-  const DictionaryMatchWidget(
+  const TermEntryWidget(
     this.match,
     {
       this.showTags = true,
@@ -65,7 +65,7 @@ class DictionaryMatchWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DictionaryMatchTermBankTermWidget(
+                  TermBankTermWidget(
                     match.entries,
                     useKatakanaForFurigana: useKatakanaForFurigana,
                   ),
@@ -74,18 +74,18 @@ class DictionaryMatchWidget extends StatelessWidget {
                   if(showTags)
                     if(tags.expand((e) => e).isNotEmpty)
                       ...[
-                        DictionaryMatchTagBankWidget(tags),
+                        TagBankWidget(tags),
                         SizedBox(height: 4.0),
                       ],
                   if(showMetaEntries)
                     if(match.metaEntriesForEachEntry.expand((e) => e,).isNotEmpty)
                       ...[
-                        DictionaryMatchTermMetaWidget(match.metaEntriesForEachEntry),
+                        TermMetaWidget(match.metaEntriesForEachEntry),
                         SizedBox(height: 8.0),
                       ],
                   ConditionalParentWidget(
                     condition: definitionsMaxHeight == 0,
-                    child: DictionaryMatchTermBankDefinitionsWidget(
+                    child: TermBankDefinitionsWidget(
                       match.entries,
                       definitionsMaxHeight: definitionsMaxHeight,
                       onTapUrl: onUrlTap,

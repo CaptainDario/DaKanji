@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db_core/helper/string_extensions.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_tag.dart';
-import 'package:dakanji_db_ui/widgets/search_results/dictionary_match_term_bank_definition_widget.dart';
+import 'package:dakanji_db_ui/widgets/tag/tag_widget.dart';
+import 'package:dakanji_db_ui/widgets/term/term_bank_definition_widget.dart';
 import 'package:dakanji_util/widgets/cut_and_fade_long_widget_wrapper.dart';
 import 'package:flutter/material.dart';
 
 
-class DictionaryMatchTermBankDefinitionsWidget extends StatefulWidget {
+class TermBankDefinitionsWidget extends StatefulWidget {
 
   /// The term bank entries to display 
   final List<TermBankV3Entry> entries;
@@ -19,7 +19,7 @@ class DictionaryMatchTermBankDefinitionsWidget extends StatefulWidget {
   /// Should return true if the URL was handled.
   final FutureOr<bool> Function(String url)? onTapUrl;
 
-  const DictionaryMatchTermBankDefinitionsWidget(
+  const TermBankDefinitionsWidget(
     this.entries,
     {
       this.definitionsMaxHeight = 0,
@@ -29,10 +29,10 @@ class DictionaryMatchTermBankDefinitionsWidget extends StatefulWidget {
   );
 
   @override
-  State<DictionaryMatchTermBankDefinitionsWidget> createState() => _DictionaryMatchTermBankDefinitionsWidgetState();
+  State<TermBankDefinitionsWidget> createState() => _TermBankDefinitionsWidgetState();
 }
 
-class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMatchTermBankDefinitionsWidget> {
+class _TermBankDefinitionsWidgetState extends State<TermBankDefinitionsWidget> {
 
   List<TermBankV3Entry> entriesToShow = [];
 
@@ -102,7 +102,7 @@ class _DictionaryMatchTermBankDefinitionsWidgetState extends State<DictionaryMat
                 ),
                 const SizedBox(height: 4,),
                 // the actual definitions (structured content or not)
-                DictionaryMatchTermBankDefinitionWidget(
+                TermBankDefinitionWidget(
                   definitions: entriesToShow[i].structuredContentDefinitions,
                   indexId: entriesToShow[i].indexEntry.id,
                   onTapUrl: widget.onTapUrl,
