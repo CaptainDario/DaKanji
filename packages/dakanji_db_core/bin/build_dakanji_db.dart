@@ -58,7 +58,7 @@ void main(List<String> args) async {
   }
 
   // include yomitan example dictionary
-  String? exampleDictPath;
+  late String exampleDictPath;
   if(includeExampleDictArg) {
     print("Including example dictionary...");
     exampleDictPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
@@ -101,17 +101,11 @@ void main(List<String> args) async {
   print("Importing yomitan dicts...");
   await importYomitanDicts(db, mecab,
     [
-      kanjidic2InputPath,
-      jpdb2_2InputPath
-    ]
-      + ([dictNameToPath[dictToUse]!()])
-      + (includeExampleDictArg ? [exampleDictPath!] : []),
-    [
-      "KanjiDic2",
-      "JPDB 2.2"
-    ]
-      + [dictToUse.name]
-      + (includeExampleDictArg ? ["yomitan example dictionary"] : []),
+      //(kanjidic2InputPath, "KanjiDic2"),
+      //(jpdb2_2InputPath, "JPDB 2.2"),
+      //(dictNameToPath[dictToUse]!(), dictToUse.name),
+      ?(includeExampleDictArg ? (exampleDictPath, "yomitan example dictionary"): null),
+    ],
     addStructuredContentJsonDefs,
   );
 
@@ -212,18 +206,17 @@ Future importRadicals(DaKanjiDB db) async {
 Future importYomitanDicts(
   DaKanjiDB db,
   Mecab mecab,
-  List<String> inputPaths,
-  List<String> inputNames,
+  List<(String path, String name)> inputs,
   bool addStructuredContentJsonDefs,
 ) async {
 
-  for (var i = 0; i < inputPaths.length; i++) {
+  for (var i = 0; i < inputs.length; i++) {
 
-    print(" --- Importing ${inputNames[i]}... ---");
+    print(" --- Importing ${inputs[i]}... ---");
     
     Stopwatch s = Stopwatch()..start();
     Stream<String> progress = await parseDictionaryDataSource(
-      dataSourcePath:  inputPaths[i],
+      dataSourcePath:  inputs[i].$1,
       db: db,
       addStructuredContentJsonDefs: addStructuredContentJsonDefs,
       mecab: mecab,
@@ -234,7 +227,7 @@ Future importYomitanDicts(
       print(progress);
     }
     
-    print("Imported ${inputNames[i]} in: ${s.elapsedMilliseconds}ms"); 
+    print("Imported ${inputs[i].$2} in: ${s.elapsedMilliseconds}ms"); 
   }
 
 }

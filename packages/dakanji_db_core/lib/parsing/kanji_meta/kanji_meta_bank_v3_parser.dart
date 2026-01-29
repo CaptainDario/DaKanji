@@ -77,8 +77,9 @@ Future parseKanjiMetaBankV3(String kanjiMetaBankJson, KanjiMetaBankV3ParserConte
 
   // bulk insert all data
   await db.batch((batch) {
-    batch.insertAll(db.kanjiMetaBankV3Table, kanjiMetaBankComps);
+    batch.insertAll(db.kanjiTable, kanjiComps);
     batch.insertAll(db.kanjiMetaBankV3TypeTable, kanjiMetaBankTypeComps);
+    batch.insertAll(db.kanjiMetaBankV3Table, kanjiMetaBankComps);
   },);
 
 }

@@ -22,10 +22,10 @@ class KanjiMetaBankV3ParserContext extends ParserContext {
 
   static Future<KanjiMetaBankV3ParserContext> create(DaKanjiDB db) async {
     return KanjiMetaBankV3ParserContext._(
-      typesInDB: { for (var e in await db.termMetaBankV3Dao.getAllTypes()) e.type : e.id },
+      typesInDB: { for (var e in await db.kanjiMetaBankV3Dao.getAllTypes()) e.type : e.id },
       kanjisInDB: { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id },
 
-      maxTypeId: await db.termMetaBankV3Dao.maxTermMetaBankV3TypeId(),
+      maxTypeId: await db.kanjiMetaBankV3Dao.maxKanjiMetaBankV3TypeId(),
       maxKanjiId: await db.kanjiDao.maxKanjiId()
     );
   }
