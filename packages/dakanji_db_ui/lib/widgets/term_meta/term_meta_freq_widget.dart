@@ -19,39 +19,62 @@ class TermMetaFreqWidget extends StatelessWidget {
 
     for (final MapEntry(key: index, value: entries) in entries){
 
-      List<String> texts = []; List<Color?> textColors = [];
+      List<String> texts = []; 
+      List<Color?> textColors = [];
       String currentText = "";
       String lastGroupingTerm = "";
 
       for (var i = 0; i < entries.length; i++) {
-        final e = entries[i];
+        final entry = entries[i];
 
-        if(
-          containsMultipleGroupedEntries && // this contains multiple grouped entries
-          entries[i].term != lastGroupingTerm // and this is a new term
-        ){
-          lastGroupingTerm = entries[i].term;
+        // Handle Group Switching (New Term)
+        // If showing groups, and this term is different from the last one
+        if(containsMultipleGroupedEntries && entry.term != lastGroupingTerm){
+          
+          // If there is text from the previous group, push it now
+          if(currentText.isNotEmpty) {
+             texts.add(currentText);
+             textColors.add(null);
+             currentText = "";
+          }
+
+          // If this isn't the very first item, add the separator pipe
           if(i != 0) {
-            texts.add(currentText);
-            textColors.add(null);
             texts.add(" | ");
             textColors.add(Colors.grey);
-            currentText = "";
           }
+
+          // Update the group tracker
+          lastGroupingTerm = entry.term;
+
+          // Add the Group Header (e.g., "term" or "term:reading")
           texts.add(
-            "${entries[i].term}${entries[i].reading != null ? ":${entries[i].reading}" : ""} "
+            "${entry.term}${entry.reading != null ? ":${entry.reading}" : ""} "
           );
           textColors.add(Colors.grey);
         }
 
-        currentText += "${e.frequencyDisplayValue ?? e.frequency}";
-        if(i != entries.length -1 &&
-          entries[i+1].reading != null &&
-          (entries[i+1].term == lastGroupingTerm || lastGroupingTerm == "")) {
-          currentText += ", ";
+        // Add the value
+        currentText += "${entry.frequencyDisplayValue ?? entry.frequency}";
+
+        // We add a comma if:
+        //  - It is NOT the last item in the list
+        //  - AND the NEXT item belongs to the same group (so we don't put a comma before a pipe '|')
+        bool isNotLast = i < entries.length - 1;
+        
+        if (isNotLast) {
+          final nextEntry = entries[i+1];
+          // Check if the next entry is part of the same grouping
+          // (If grouping is disabled, lastGroupingTerm is "", so it always matches)
+          bool nextIsSameGroup = !containsMultipleGroupedEntries || nextEntry.term == lastGroupingTerm;
+
+          if (nextIsSameGroup) {
+            currentText += ", ";
+          }
         }
       }
     
+      // Flush any remaining text at the end of the list
       if(currentText.isNotEmpty){
         texts.add(currentText);
         textColors.add(null);
