@@ -5,6 +5,7 @@ import '/database/index/index_views.drift';
 CREATE VIEW kanji_meta_bank_v3_entry_view AS
     SELECT
         KMBV3T.id AS id,
+        KMBV3T.index_id,
         KT.kanji,
         IV.index_entry AS indexEntry,
         KMBV3TT.type,

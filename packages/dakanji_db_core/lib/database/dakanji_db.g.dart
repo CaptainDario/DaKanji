@@ -3,6 +3,200 @@
 part of 'dakanji_db.dart';
 
 // ignore_for_file: type=lint
+class $KanjiTableTable extends KanjiTable
+    with TableInfo<$KanjiTableTable, KanjiTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _kanjiMeta = const VerificationMeta('kanji');
+  @override
+  late final GeneratedColumn<String> kanji = GeneratedColumn<String>(
+    'kanji',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, kanji];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<KanjiTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('kanji')) {
+      context.handle(
+        _kanjiMeta,
+        kanji.isAcceptableOrUnknown(data['kanji']!, _kanjiMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  KanjiTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      kanji: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kanji'],
+      )!,
+    );
+  }
+
+  @override
+  $KanjiTableTable createAlias(String alias) {
+    return $KanjiTableTable(attachedDatabase, alias);
+  }
+}
+
+class KanjiTableData extends DataClass implements Insertable<KanjiTableData> {
+  /// id of this entry
+  final int id;
+
+  /// the kanji character of this entry
+  final String kanji;
+  const KanjiTableData({required this.id, required this.kanji});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['kanji'] = Variable<String>(kanji);
+    return map;
+  }
+
+  KanjiTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiTableCompanion(id: Value(id), kanji: Value(kanji));
+  }
+
+  factory KanjiTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiTableData(
+      id: serializer.fromJson<int>(json['id']),
+      kanji: serializer.fromJson<String>(json['kanji']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'kanji': serializer.toJson<String>(kanji),
+    };
+  }
+
+  KanjiTableData copyWith({int? id, String? kanji}) =>
+      KanjiTableData(id: id ?? this.id, kanji: kanji ?? this.kanji);
+  KanjiTableData copyWithCompanion(KanjiTableCompanion data) {
+    return KanjiTableData(
+      id: data.id.present ? data.id.value : this.id,
+      kanji: data.kanji.present ? data.kanji.value : this.kanji,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiTableData(')
+          ..write('id: $id, ')
+          ..write('kanji: $kanji')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, kanji);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiTableData &&
+          other.id == this.id &&
+          other.kanji == this.kanji);
+}
+
+class KanjiTableCompanion extends UpdateCompanion<KanjiTableData> {
+  final Value<int> id;
+  final Value<String> kanji;
+  const KanjiTableCompanion({
+    this.id = const Value.absent(),
+    this.kanji = const Value.absent(),
+  });
+  KanjiTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String kanji,
+  }) : kanji = Value(kanji);
+  static Insertable<KanjiTableData> custom({
+    Expression<int>? id,
+    Expression<String>? kanji,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (kanji != null) 'kanji': kanji,
+    });
+  }
+
+  KanjiTableCompanion copyWith({Value<int>? id, Value<String>? kanji}) {
+    return KanjiTableCompanion(id: id ?? this.id, kanji: kanji ?? this.kanji);
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (kanji.present) {
+      map['kanji'] = Variable<String>(kanji.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiTableCompanion(')
+          ..write('id: $id, ')
+          ..write('kanji: $kanji')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $IndexTableTable extends IndexTable
     with TableInfo<$IndexTableTable, IndexTableData> {
   @override
@@ -1260,200 +1454,6 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
           ..write('sourceLanguage: $sourceLanguage, ')
           ..write('targetLanguage: $targetLanguage, ')
           ..write('frequencyMode: $frequencyMode')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $KanjiTableTable extends KanjiTable
-    with TableInfo<$KanjiTableTable, KanjiTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $KanjiTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _kanjiMeta = const VerificationMeta('kanji');
-  @override
-  late final GeneratedColumn<String> kanji = GeneratedColumn<String>(
-    'kanji',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(minTextLength: 1),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, kanji];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'kanji_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<KanjiTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('kanji')) {
-      context.handle(
-        _kanjiMeta,
-        kanji.isAcceptableOrUnknown(data['kanji']!, _kanjiMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_kanjiMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  KanjiTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      kanji: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}kanji'],
-      )!,
-    );
-  }
-
-  @override
-  $KanjiTableTable createAlias(String alias) {
-    return $KanjiTableTable(attachedDatabase, alias);
-  }
-}
-
-class KanjiTableData extends DataClass implements Insertable<KanjiTableData> {
-  /// id of this entry
-  final int id;
-
-  /// the kanji character of this entry
-  final String kanji;
-  const KanjiTableData({required this.id, required this.kanji});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['kanji'] = Variable<String>(kanji);
-    return map;
-  }
-
-  KanjiTableCompanion toCompanion(bool nullToAbsent) {
-    return KanjiTableCompanion(id: Value(id), kanji: Value(kanji));
-  }
-
-  factory KanjiTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiTableData(
-      id: serializer.fromJson<int>(json['id']),
-      kanji: serializer.fromJson<String>(json['kanji']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'kanji': serializer.toJson<String>(kanji),
-    };
-  }
-
-  KanjiTableData copyWith({int? id, String? kanji}) =>
-      KanjiTableData(id: id ?? this.id, kanji: kanji ?? this.kanji);
-  KanjiTableData copyWithCompanion(KanjiTableCompanion data) {
-    return KanjiTableData(
-      id: data.id.present ? data.id.value : this.id,
-      kanji: data.kanji.present ? data.kanji.value : this.kanji,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiTableData(')
-          ..write('id: $id, ')
-          ..write('kanji: $kanji')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, kanji);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is KanjiTableData &&
-          other.id == this.id &&
-          other.kanji == this.kanji);
-}
-
-class KanjiTableCompanion extends UpdateCompanion<KanjiTableData> {
-  final Value<int> id;
-  final Value<String> kanji;
-  const KanjiTableCompanion({
-    this.id = const Value.absent(),
-    this.kanji = const Value.absent(),
-  });
-  KanjiTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String kanji,
-  }) : kanji = Value(kanji);
-  static Insertable<KanjiTableData> custom({
-    Expression<int>? id,
-    Expression<String>? kanji,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (kanji != null) 'kanji': kanji,
-    });
-  }
-
-  KanjiTableCompanion copyWith({Value<int>? id, Value<String>? kanji}) {
-    return KanjiTableCompanion(id: id ?? this.id, kanji: kanji ?? this.kanji);
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (kanji.present) {
-      map['kanji'] = Variable<String>(kanji.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('KanjiTableCompanion(')
-          ..write('id: $id, ')
-          ..write('kanji: $kanji')
           ..write(')'))
         .toString();
   }
@@ -5429,6 +5429,7 @@ class KanjiMetaBankV3TableCompanion
 
 class KanjiMetaBankV3EntryViewData extends DataClass {
   final int id;
+  final int indexId;
   final String kanji;
   final String indexEntry;
   final String type;
@@ -5436,6 +5437,7 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
   final String? freqDisplayValue;
   const KanjiMetaBankV3EntryViewData({
     required this.id,
+    required this.indexId,
     required this.kanji,
     required this.indexEntry,
     required this.type,
@@ -5449,6 +5451,7 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return KanjiMetaBankV3EntryViewData(
       id: serializer.fromJson<int>(json['id']),
+      indexId: serializer.fromJson<int>(json['index_id']),
       kanji: serializer.fromJson<String>(json['kanji']),
       indexEntry: serializer.fromJson<String>(json['indexEntry']),
       type: serializer.fromJson<String>(json['type']),
@@ -5463,6 +5466,7 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'index_id': serializer.toJson<int>(indexId),
       'kanji': serializer.toJson<String>(kanji),
       'indexEntry': serializer.toJson<String>(indexEntry),
       'type': serializer.toJson<String>(type),
@@ -5473,6 +5477,7 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
 
   KanjiMetaBankV3EntryViewData copyWith({
     int? id,
+    int? indexId,
     String? kanji,
     String? indexEntry,
     String? type,
@@ -5480,6 +5485,7 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
     Value<String?> freqDisplayValue = const Value.absent(),
   }) => KanjiMetaBankV3EntryViewData(
     id: id ?? this.id,
+    indexId: indexId ?? this.indexId,
     kanji: kanji ?? this.kanji,
     indexEntry: indexEntry ?? this.indexEntry,
     type: type ?? this.type,
@@ -5492,6 +5498,7 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
   String toString() {
     return (StringBuffer('KanjiMetaBankV3EntryViewData(')
           ..write('id: $id, ')
+          ..write('indexId: $indexId, ')
           ..write('kanji: $kanji, ')
           ..write('indexEntry: $indexEntry, ')
           ..write('type: $type, ')
@@ -5502,13 +5509,21 @@ class KanjiMetaBankV3EntryViewData extends DataClass {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, kanji, indexEntry, type, freqValue, freqDisplayValue);
+  int get hashCode => Object.hash(
+    id,
+    indexId,
+    kanji,
+    indexEntry,
+    type,
+    freqValue,
+    freqDisplayValue,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is KanjiMetaBankV3EntryViewData &&
           other.id == this.id &&
+          other.indexId == this.indexId &&
           other.kanji == this.kanji &&
           other.indexEntry == this.indexEntry &&
           other.type == this.type &&
@@ -5526,6 +5541,7 @@ class KanjiMetaBankV3EntryView
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    indexId,
     kanji,
     indexEntry,
     type,
@@ -5539,7 +5555,7 @@ class KanjiMetaBankV3EntryView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW kanji_meta_bank_v3_entry_view AS SELECT KMBV3T.id AS id, KT.kanji, IV.index_entry AS indexEntry, KMBV3TT.type, KMBV3T.freq_value, KMBV3T.freq_display_value FROM kanji_meta_bank_v3_table AS KMBV3T JOIN index_entry_as_json_view AS IV ON KMBV3T.index_id = IV.id INNER JOIN kanji_meta_bank_v3_type_table AS KMBV3TT ON KMBV3TT.id = KMBV3T.type_id INNER JOIN kanji_table AS KT ON KT.id = KMBV3T.kanji_id',
+        'CREATE VIEW kanji_meta_bank_v3_entry_view AS SELECT KMBV3T.id AS id, KMBV3T.index_id, KT.kanji, IV.index_entry AS indexEntry, KMBV3TT.type, KMBV3T.freq_value, KMBV3T.freq_display_value FROM kanji_meta_bank_v3_table AS KMBV3T JOIN index_entry_as_json_view AS IV ON KMBV3T.index_id = IV.id INNER JOIN kanji_meta_bank_v3_type_table AS KMBV3TT ON KMBV3TT.id = KMBV3T.type_id INNER JOIN kanji_table AS KT ON KT.id = KMBV3T.kanji_id',
   };
   @override
   KanjiMetaBankV3EntryView get asDslTable => this;
@@ -5553,6 +5569,10 @@ class KanjiMetaBankV3EntryView
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
+      )!,
+      indexId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}index_id'],
       )!,
       kanji: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -5579,6 +5599,12 @@ class KanjiMetaBankV3EntryView
 
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
     'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
+    'index_id',
     aliasedName,
     false,
     type: DriftSqlType.int,
@@ -5626,305 +5652,6 @@ class KanjiMetaBankV3EntryView
     'index_table',
     'kanji_meta_bank_v3_type_table',
     'kanji_table',
-  };
-}
-
-class KanjiDictionarySearchViewData extends DataClass {
-  final int id;
-  final String indexEntry;
-  final int indexId;
-  final String kanji;
-  final String onyomis;
-  final String kunyomis;
-  final String tags;
-  final String definitions;
-  final String stats;
-  final String kanjiMetaBankV3Entries;
-  const KanjiDictionarySearchViewData({
-    required this.id,
-    required this.indexEntry,
-    required this.indexId,
-    required this.kanji,
-    required this.onyomis,
-    required this.kunyomis,
-    required this.tags,
-    required this.definitions,
-    required this.stats,
-    required this.kanjiMetaBankV3Entries,
-  });
-  factory KanjiDictionarySearchViewData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return KanjiDictionarySearchViewData(
-      id: serializer.fromJson<int>(json['id']),
-      indexEntry: serializer.fromJson<String>(json['indexEntry']),
-      indexId: serializer.fromJson<int>(json['indexId']),
-      kanji: serializer.fromJson<String>(json['kanji']),
-      onyomis: serializer.fromJson<String>(json['onyomis']),
-      kunyomis: serializer.fromJson<String>(json['kunyomis']),
-      tags: serializer.fromJson<String>(json['tags']),
-      definitions: serializer.fromJson<String>(json['definitions']),
-      stats: serializer.fromJson<String>(json['stats']),
-      kanjiMetaBankV3Entries: serializer.fromJson<String>(
-        json['kanjiMetaBankV3Entries'],
-      ),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'indexEntry': serializer.toJson<String>(indexEntry),
-      'indexId': serializer.toJson<int>(indexId),
-      'kanji': serializer.toJson<String>(kanji),
-      'onyomis': serializer.toJson<String>(onyomis),
-      'kunyomis': serializer.toJson<String>(kunyomis),
-      'tags': serializer.toJson<String>(tags),
-      'definitions': serializer.toJson<String>(definitions),
-      'stats': serializer.toJson<String>(stats),
-      'kanjiMetaBankV3Entries': serializer.toJson<String>(
-        kanjiMetaBankV3Entries,
-      ),
-    };
-  }
-
-  KanjiDictionarySearchViewData copyWith({
-    int? id,
-    String? indexEntry,
-    int? indexId,
-    String? kanji,
-    String? onyomis,
-    String? kunyomis,
-    String? tags,
-    String? definitions,
-    String? stats,
-    String? kanjiMetaBankV3Entries,
-  }) => KanjiDictionarySearchViewData(
-    id: id ?? this.id,
-    indexEntry: indexEntry ?? this.indexEntry,
-    indexId: indexId ?? this.indexId,
-    kanji: kanji ?? this.kanji,
-    onyomis: onyomis ?? this.onyomis,
-    kunyomis: kunyomis ?? this.kunyomis,
-    tags: tags ?? this.tags,
-    definitions: definitions ?? this.definitions,
-    stats: stats ?? this.stats,
-    kanjiMetaBankV3Entries:
-        kanjiMetaBankV3Entries ?? this.kanjiMetaBankV3Entries,
-  );
-  @override
-  String toString() {
-    return (StringBuffer('KanjiDictionarySearchViewData(')
-          ..write('id: $id, ')
-          ..write('indexEntry: $indexEntry, ')
-          ..write('indexId: $indexId, ')
-          ..write('kanji: $kanji, ')
-          ..write('onyomis: $onyomis, ')
-          ..write('kunyomis: $kunyomis, ')
-          ..write('tags: $tags, ')
-          ..write('definitions: $definitions, ')
-          ..write('stats: $stats, ')
-          ..write('kanjiMetaBankV3Entries: $kanjiMetaBankV3Entries')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    indexEntry,
-    indexId,
-    kanji,
-    onyomis,
-    kunyomis,
-    tags,
-    definitions,
-    stats,
-    kanjiMetaBankV3Entries,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is KanjiDictionarySearchViewData &&
-          other.id == this.id &&
-          other.indexEntry == this.indexEntry &&
-          other.indexId == this.indexId &&
-          other.kanji == this.kanji &&
-          other.onyomis == this.onyomis &&
-          other.kunyomis == this.kunyomis &&
-          other.tags == this.tags &&
-          other.definitions == this.definitions &&
-          other.stats == this.stats &&
-          other.kanjiMetaBankV3Entries == this.kanjiMetaBankV3Entries);
-}
-
-class KanjiDictionarySearchView
-    extends ViewInfo<KanjiDictionarySearchView, KanjiDictionarySearchViewData>
-    implements HasResultSet {
-  final String? _alias;
-  @override
-  final _$DaKanjiDB attachedDatabase;
-  KanjiDictionarySearchView(this.attachedDatabase, [this._alias]);
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    indexEntry,
-    indexId,
-    kanji,
-    onyomis,
-    kunyomis,
-    tags,
-    definitions,
-    stats,
-    kanjiMetaBankV3Entries,
-  ];
-  @override
-  String get aliasedName => _alias ?? entityName;
-  @override
-  String get entityName => 'kanji_dictionary_search_view';
-  @override
-  Map<SqlDialect, String> get createViewStatements => {
-    SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS kanji_dictionary_search_view AS SELECT k.*, (SELECT json_group_array(json_object(\'id\', km.id, \'kanji\', km.kanji, \'indexEntry\', km.indexEntry, \'type\', km.type, \'freqValue\',(km.freq_value), \'freqDisplayValue\', km.freq_display_value)) FROM kanji_meta_bank_v3_entry_view AS km WHERE km.kanji = k.kanji) AS kanjiMetaBankV3Entries FROM kanji_bank_v3_entry_view AS k',
-  };
-  @override
-  KanjiDictionarySearchView get asDslTable => this;
-  @override
-  KanjiDictionarySearchViewData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return KanjiDictionarySearchViewData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      indexEntry: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}indexEntry'],
-      )!,
-      indexId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}indexId'],
-      )!,
-      kanji: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}kanji'],
-      )!,
-      onyomis: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}onyomis'],
-      )!,
-      kunyomis: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}kunyomis'],
-      )!,
-      tags: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}tags'],
-      )!,
-      definitions: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}definitions'],
-      )!,
-      stats: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}stats'],
-      )!,
-      kanjiMetaBankV3Entries: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}kanjiMetaBankV3Entries'],
-      )!,
-    );
-  }
-
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<String> indexEntry = GeneratedColumn<String>(
-    'indexEntry',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<int> indexId = GeneratedColumn<int>(
-    'indexId',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-  );
-  late final GeneratedColumn<String> kanji = GeneratedColumn<String>(
-    'kanji',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> onyomis = GeneratedColumn<String>(
-    'onyomis',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> kunyomis = GeneratedColumn<String>(
-    'kunyomis',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> tags = GeneratedColumn<String>(
-    'tags',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> definitions = GeneratedColumn<String>(
-    'definitions',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> stats = GeneratedColumn<String>(
-    'stats',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
-  late final GeneratedColumn<String> kanjiMetaBankV3Entries =
-      GeneratedColumn<String>(
-        'kanjiMetaBankV3Entries',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-      );
-  @override
-  KanjiDictionarySearchView createAlias(String alias) {
-    return KanjiDictionarySearchView(attachedDatabase, alias);
-  }
-
-  @override
-  Query? get query => null;
-  @override
-  Set<String> get readTables => const {
-    'kanji_bank_v3_table',
-    'kanji_table',
-    'index_table',
-    'kanji_bank_v3_x_onyomi_reading_table',
-    'reading_table',
-    'kanji_bank_v3_x_kunyomi_reading_table',
-    'kanji_bank_v3_x_tag_bank_v3_table',
-    'tag_bank_v3_table',
-    'kanji_bank_v3_x_definition_table',
-    'definition_table',
-    'kanji_bank_v3_stats_table',
-    'kanji_meta_bank_v3_table',
-    'kanji_meta_bank_v3_type_table',
   };
 }
 
@@ -17403,8 +17130,8 @@ class Radical_X_KanjiRelationsTableCompanion
 abstract class _$DaKanjiDB extends GeneratedDatabase {
   _$DaKanjiDB(QueryExecutor e) : super(e);
   $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
-  late final $IndexTableTable indexTable = $IndexTableTable(this);
   late final $KanjiTableTable kanjiTable = $KanjiTableTable(this);
+  late final $IndexTableTable indexTable = $IndexTableTable(this);
   late final $KanjiBankV3TableTable kanjiBankV3Table = $KanjiBankV3TableTable(
     this,
   );
@@ -17440,8 +17167,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       $KanjiMetaBankV3TableTable(this);
   late final KanjiMetaBankV3EntryView kanjiMetaBankV3EntryView =
       KanjiMetaBankV3EntryView(this);
-  late final KanjiDictionarySearchView kanjiDictionarySearchView =
-      KanjiDictionarySearchView(this);
   late final Index kanjiTableKanjiIndex = Index(
     'KanjiTable_kanjiIndex',
     'CREATE INDEX KanjiTable_kanjiIndex ON kanji_table (kanji)',
@@ -17855,30 +17580,42 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final KanjiSearchDao kanjiSearchDao = KanjiSearchDao(this as DaKanjiDB);
   late final DeletionDao deletionDao = DeletionDao(this as DaKanjiDB);
   Selectable<int> kanji_dictionary_find_kanji_bank_entries_drift(
+    String? indexesToInclude,
     List<String> kanjis,
   ) {
-    var $arrayStartIndex = 1;
+    var $arrayStartIndex = 2;
     final expandedkanjis = $expandVar($arrayStartIndex, kanjis.length);
     $arrayStartIndex += kanjis.length;
     return customSelect(
-      'SELECT KBV3T.id AS id FROM kanji_table AS KDT JOIN kanji_bank_v3_table AS KBV3T ON KBV3T.kanji_id = KDT.id WHERE KDT.kanji IN ($expandedkanjis)',
-      variables: [for (var $ in kanjis) Variable<String>($)],
-      readsFrom: {kanjiBankV3Table, kanjiTable},
+      'WITH IndexesToInclude (index_id) AS (SELECT value FROM json_each(?1)) SELECT KBV3T.id AS id FROM kanji_table AS KDT JOIN kanji_bank_v3_table AS KBV3T ON KBV3T.kanji_id = KDT.id JOIN index_table AS IT ON KBV3T.index_id = IT.id WHERE KDT.kanji IN ($expandedkanjis) AND((?1 IS NOT NULL AND IT.id IN (SELECT index_id FROM IndexesToInclude))OR(?1 IS NULL AND IT.enabled = 1))ORDER BY IT.current_sorting_order ASC, KDT.kanji ASC',
+      variables: [
+        Variable<String>(indexesToInclude),
+        for (var $ in kanjis) Variable<String>($),
+      ],
+      readsFrom: {kanjiBankV3Table, kanjiTable, indexTable},
     ).map((QueryRow row) => row.read<int>('id'));
   }
 
-  Selectable<KanjiDictionarySearchViewData>
-  kanji_dictionary_find_kanji_details_drift(List<int> ids) {
-    var $arrayStartIndex = 1;
+  Selectable<KanjiDictionaryFindKanjiDetailsDriftResult>
+  kanji_dictionary_find_kanji_details_drift(
+    String? indexesToInclude,
+    List<int> ids,
+  ) {
+    var $arrayStartIndex = 2;
     final expandedids = $expandVar($arrayStartIndex, ids.length);
     $arrayStartIndex += ids.length;
     return customSelect(
-      'SELECT * FROM kanji_dictionary_search_view WHERE id IN ($expandedids)',
-      variables: [for (var $ in ids) Variable<int>($)],
+      'WITH IndexesToInclude (index_id) AS (SELECT value FROM json_each(?1)), ActiveIndexes (id) AS (SELECT id FROM index_table WHERE(?1 IS NOT NULL AND id IN (SELECT index_id FROM IndexesToInclude))OR(?1 IS NULL AND enabled = 1)) SELECT k.*, (SELECT json_group_array(json_object(\'id\', km.id, \'kanji\', km.kanji, \'indexEntry\', km.indexEntry, \'type\', km.type, \'freqValue\',(km.freq_value), \'freqDisplayValue\', km.freq_display_value)) FROM kanji_meta_bank_v3_entry_view AS km JOIN ActiveIndexes ON km.index_id = ActiveIndexes.id WHERE km.kanji = k.kanji) AS kanjiMetaBankV3Entries FROM kanji_bank_v3_entry_view AS k LEFT JOIN index_table AS it ON k.indexId = it.id WHERE k.id IN ($expandedids) ORDER BY it.current_sorting_order ASC, k.kanji ASC',
+      variables: [
+        Variable<String>(indexesToInclude),
+        for (var $ in ids) Variable<int>($),
+      ],
       readsFrom: {
-        kanjiBankV3Table,
-        kanjiTable,
         indexTable,
+        kanjiMetaBankV3Table,
+        kanjiMetaBankV3TypeTable,
+        kanjiTable,
+        kanjiBankV3Table,
         kanjiBankV3XOnyomiReadingTable,
         readingTable,
         kanjiBankV3XKunyomiReadingTable,
@@ -17887,10 +17624,21 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         kanjiBankV3XDefinitionTable,
         definitionTable,
         kanjiBankV3StatsTable,
-        kanjiMetaBankV3Table,
-        kanjiMetaBankV3TypeTable,
       },
-    ).asyncMap(kanjiDictionarySearchView.mapFromRow);
+    ).map(
+      (QueryRow row) => KanjiDictionaryFindKanjiDetailsDriftResult(
+        id: row.read<int>('id'),
+        indexEntry: row.read<String>('indexEntry'),
+        indexId: row.read<int>('indexId'),
+        kanji: row.read<String>('kanji'),
+        onyomis: row.read<String>('onyomis'),
+        kunyomis: row.read<String>('kunyomis'),
+        tags: row.read<String>('tags'),
+        definitions: row.read<String>('definitions'),
+        stats: row.read<String>('stats'),
+        kanjiMetaBankV3Entries: row.read<String>('kanjiMetaBankV3Entries'),
+      ),
+    );
   }
 
   Future<int> populdate_fts_data_types() {
@@ -17904,18 +17652,17 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   Selectable<DictionarySearchDriftFindTermBankEntriesResult>
   dictionary_search_drift_find_term_bank_entries(
     String searchInputs,
-    String indexesToInclude,
+    String? indexesToInclude,
     int useGlob,
     int normalizedSearch,
     String? filterTerm,
     String? filterReading,
     String? filterDefinition,
-    int useIndexesToInclude,
     int limit,
     int offset,
   ) {
     return customSelect(
-      'WITH SearchTerms (term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (SELECT CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), CAST(json_extract(value, \'\$[3]\') AS TEXT), CAST(json_extract(value, \'\$[4]\') AS TEXT), CASE WHEN CAST(json_extract(value, \'\$[2]\') AS INTEGER) = 1 THEN \'^\' ELSE \'\' END || \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), SearchResults AS (SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH fts_query WHERE ?3 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))UNION ALL SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?3 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, rank ASC, LENGTH(text_data) ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), SearchParameterCheck AS (SELECT term_bank_v3_table.id AS term_bank_id FROM term_bank_v3_table WHERE(?5 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM search_fts WHERE source_id = term_bank_v3_table.term_id AND data_type_id IN (1, 2, 3, 4) AND text_data MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\'))AND(?6 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM search_fts WHERE source_id = term_bank_v3_table.reading_id AND data_type_id IN (5, 6) AND text_data MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN search_fts AS def_fts ON link.definition_id = def_fts.source_id WHERE link.term_bank_id = term_bank_v3_table.id AND def_fts.data_type_id = 7 AND def_fts.text_data MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) AND((term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND ?8 = 1)OR ?8 = 0)UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) AND((term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND ?8 = 1)OR ?8 = 0)UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 AND((term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND ?8 = 1)OR ?8 = 0)), TermBankMatchesFiltered AS (SELECT TBM.* FROM TermBankMatches AS TBM JOIN SearchParameterCheck ON SearchParameterCheck.term_bank_id = TBM.term_bank_id WHERE(TBM.allowed_tags IS NULL OR json_array_length(TBM.allowed_tags) = 0 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN json_each(TBM.allowed_tags)AS AllowedTag ON TagTable.name = AllowedTag.value WHERE LinkTable.term_bank_id = TBM.term_bank_id))AND(TBM.allowed_rules IS NULL OR json_array_length(TBM.allowed_rules) = 0 OR EXISTS (SELECT 1 AS _c4 FROM term_bank_v3_x_rule_identifier_table AS RuleLink JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id JOIN json_each(TBM.allowed_rules)AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value WHERE RuleLink.term_bank_id = TBM.term_bank_id))), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, index_table.id AS indexId, index_table.current_sorting_order, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFiltered AS TBM JOIN index_table ON TB3T.index_id = index_table.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY index_table.current_sorting_order, TBM.match_type, TBM.match_column, finalPopularity DESC, TBM.rank, LENGTH(matchedText) LIMIT ?9 OFFSET ?10',
+      'WITH SearchTerms (term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (SELECT CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), CAST(json_extract(value, \'\$[3]\') AS TEXT), CAST(json_extract(value, \'\$[4]\') AS TEXT), CASE WHEN CAST(json_extract(value, \'\$[2]\') AS INTEGER) = 1 THEN \'^\' ELSE \'\' END || \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), ActiveIndexes (id, current_sorting_order, enabled) AS (SELECT id, current_sorting_order, enabled FROM index_table WHERE(?2 IS NOT NULL AND id IN (SELECT index_id FROM IndexesToInclude))OR(?2 IS NULL AND enabled = 1)), SearchResults AS (SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH fts_query WHERE ?3 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))UNION ALL SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?3 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, rank ASC, LENGTH(text_data) ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), SearchParameterCheck AS (SELECT term_bank_v3_table.id AS term_bank_id FROM term_bank_v3_table WHERE(?5 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM search_fts WHERE source_id = term_bank_v3_table.term_id AND data_type_id IN (1, 2, 3, 4) AND text_data MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\'))AND(?6 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM search_fts WHERE source_id = term_bank_v3_table.reading_id AND data_type_id IN (5, 6) AND text_data MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN search_fts AS def_fts ON link.definition_id = def_fts.source_id WHERE link.term_bank_id = term_bank_v3_table.id AND def_fts.data_type_id = 7 AND def_fts.text_data MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id), TermBankMatchesFiltered AS (SELECT TBM.* FROM TermBankMatches AS TBM JOIN SearchParameterCheck ON SearchParameterCheck.term_bank_id = TBM.term_bank_id WHERE(TBM.allowed_tags IS NULL OR json_array_length(TBM.allowed_tags) = 0 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN json_each(TBM.allowed_tags)AS AllowedTag ON TagTable.name = AllowedTag.value WHERE LinkTable.term_bank_id = TBM.term_bank_id))AND(TBM.allowed_rules IS NULL OR json_array_length(TBM.allowed_rules) = 0 OR EXISTS (SELECT 1 AS _c4 FROM term_bank_v3_x_rule_identifier_table AS RuleLink JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id JOIN json_each(TBM.allowed_rules)AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value WHERE RuleLink.term_bank_id = TBM.term_bank_id))), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, ActiveIndexes.id AS indexId, ActiveIndexes.current_sorting_order, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFiltered AS TBM JOIN ActiveIndexes ON TB3T.index_id = ActiveIndexes.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY ActiveIndexes.current_sorting_order, TBM.match_type, TBM.match_column, finalPopularity DESC, TBM.rank, LENGTH(matchedText) LIMIT ?8 OFFSET ?9',
       variables: [
         Variable<String>(searchInputs),
         Variable<String>(indexesToInclude),
@@ -17924,11 +17671,11 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         Variable<String>(filterTerm),
         Variable<String>(filterReading),
         Variable<String>(filterDefinition),
-        Variable<int>(useIndexesToInclude),
         Variable<int>(limit),
         Variable<int>(offset),
       ],
       readsFrom: {
+        indexTable,
         searchFts,
         termBankV3Table,
         termBankV3XDefinitionTable,
@@ -17936,7 +17683,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         tagBankV3Table,
         termBankV3XRuleIdentifierTable,
         termBankV3RuleIdentifierTable,
-        indexTable,
         termMetaBankV3Table,
         termMetaBankV3TypeTable,
         termTable,
@@ -18271,8 +18017,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
-    indexTable,
     kanjiTable,
+    indexTable,
     kanjiBankV3Table,
     indexEntryAsJsonView,
     readingTable,
@@ -18288,7 +18034,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     kanjiMetaBankV3TypeTable,
     kanjiMetaBankV3Table,
     kanjiMetaBankV3EntryView,
-    kanjiDictionarySearchView,
     kanjiTableKanjiIndex,
     kanjiBankV3TableIndexIdIndex,
     kanjiBankV3TableKanjiIdIndex,
@@ -18685,6 +18430,555 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   ]);
 }
 
+typedef $$KanjiTableTableCreateCompanionBuilder =
+    KanjiTableCompanion Function({Value<int> id, required String kanji});
+typedef $$KanjiTableTableUpdateCompanionBuilder =
+    KanjiTableCompanion Function({Value<int> id, Value<String> kanji});
+
+final class $$KanjiTableTableReferences
+    extends BaseReferences<_$DaKanjiDB, $KanjiTableTable, KanjiTableData> {
+  $$KanjiTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$KanjiBankV3TableTable, List<KanjiBankV3TableData>>
+  _kanjiBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+    db.kanjiBankV3Table,
+    aliasName: $_aliasNameGenerator(
+      db.kanjiTable.id,
+      db.kanjiBankV3Table.kanjiId,
+    ),
+  );
+
+  $$KanjiBankV3TableTableProcessedTableManager get kanjiBankV3TableRefs {
+    final manager = $$KanjiBankV3TableTableTableManager(
+      $_db,
+      $_db.kanjiBankV3Table,
+    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _kanjiBankV3TableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $KanjiMetaBankV3TableTable,
+    List<KanjiMetaBankV3TableData>
+  >
+  _kanjiMetaBankV3TableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.kanjiMetaBankV3Table,
+        aliasName: $_aliasNameGenerator(
+          db.kanjiTable.id,
+          db.kanjiMetaBankV3Table.kanjiId,
+        ),
+      );
+
+  $$KanjiMetaBankV3TableTableProcessedTableManager
+  get kanjiMetaBankV3TableRefs {
+    final manager = $$KanjiMetaBankV3TableTableTableManager(
+      $_db,
+      $_db.kanjiMetaBankV3Table,
+    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _kanjiMetaBankV3TableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$KanjiVGTableTable, List<KanjiVGTableData>>
+  _kanjiVGTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+    db.kanjiVGTable,
+    aliasName: $_aliasNameGenerator(db.kanjiTable.id, db.kanjiVGTable.kanjiId),
+  );
+
+  $$KanjiVGTableTableProcessedTableManager get kanjiVGTableRefs {
+    final manager = $$KanjiVGTableTableTableManager(
+      $_db,
+      $_db.kanjiVGTable,
+    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_kanjiVGTableRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $Radical_X_KanjiRelationsTableTable,
+    List<Radical_X_KanjiRelationsTableData>
+  >
+  _radicalXKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
+      MultiTypedResultKey.fromTable(
+        db.radicalXKanjiRelationsTable,
+        aliasName: $_aliasNameGenerator(
+          db.kanjiTable.id,
+          db.radicalXKanjiRelationsTable.kanjiId,
+        ),
+      );
+
+  $$Radical_X_KanjiRelationsTableTableProcessedTableManager
+  get radicalXKanjiRelationsTableRefs {
+    final manager = $$Radical_X_KanjiRelationsTableTableTableManager(
+      $_db,
+      $_db.radicalXKanjiRelationsTable,
+    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _radicalXKanjiRelationsTableRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$KanjiTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $KanjiTableTable> {
+  $$KanjiTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kanji => $composableBuilder(
+    column: $table.kanji,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> kanjiBankV3TableRefs(
+    Expression<bool> Function($$KanjiBankV3TableTableFilterComposer f) f,
+  ) {
+    final $$KanjiBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> kanjiMetaBankV3TableRefs(
+    Expression<bool> Function($$KanjiMetaBankV3TableTableFilterComposer f) f,
+  ) {
+    final $$KanjiMetaBankV3TableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiMetaBankV3Table,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiMetaBankV3TableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiMetaBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> kanjiVGTableRefs(
+    Expression<bool> Function($$KanjiVGTableTableFilterComposer f) f,
+  ) {
+    final $$KanjiVGTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiVGTable,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiVGTableTableFilterComposer(
+            $db: $db,
+            $table: $db.kanjiVGTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> radicalXKanjiRelationsTableRefs(
+    Expression<bool> Function(
+      $$Radical_X_KanjiRelationsTableTableFilterComposer f,
+    )
+    f,
+  ) {
+    final $$Radical_X_KanjiRelationsTableTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.radicalXKanjiRelationsTable,
+          getReferencedColumn: (t) => t.kanjiId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$Radical_X_KanjiRelationsTableTableFilterComposer(
+                $db: $db,
+                $table: $db.radicalXKanjiRelationsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$KanjiTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $KanjiTableTable> {
+  $$KanjiTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kanji => $composableBuilder(
+    column: $table.kanji,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$KanjiTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $KanjiTableTable> {
+  $$KanjiTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get kanji =>
+      $composableBuilder(column: $table.kanji, builder: (column) => column);
+
+  Expression<T> kanjiBankV3TableRefs<T extends Object>(
+    Expression<T> Function($$KanjiBankV3TableTableAnnotationComposer a) f,
+  ) {
+    final $$KanjiBankV3TableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiBankV3Table,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiBankV3TableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiBankV3Table,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> kanjiMetaBankV3TableRefs<T extends Object>(
+    Expression<T> Function($$KanjiMetaBankV3TableTableAnnotationComposer a) f,
+  ) {
+    final $$KanjiMetaBankV3TableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.kanjiMetaBankV3Table,
+          getReferencedColumn: (t) => t.kanjiId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$KanjiMetaBankV3TableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.kanjiMetaBankV3Table,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> kanjiVGTableRefs<T extends Object>(
+    Expression<T> Function($$KanjiVGTableTableAnnotationComposer a) f,
+  ) {
+    final $$KanjiVGTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.kanjiVGTable,
+      getReferencedColumn: (t) => t.kanjiId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$KanjiVGTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.kanjiVGTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> radicalXKanjiRelationsTableRefs<T extends Object>(
+    Expression<T> Function(
+      $$Radical_X_KanjiRelationsTableTableAnnotationComposer a,
+    )
+    f,
+  ) {
+    final $$Radical_X_KanjiRelationsTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.radicalXKanjiRelationsTable,
+          getReferencedColumn: (t) => t.kanjiId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$Radical_X_KanjiRelationsTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.radicalXKanjiRelationsTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$KanjiTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $KanjiTableTable,
+          KanjiTableData,
+          $$KanjiTableTableFilterComposer,
+          $$KanjiTableTableOrderingComposer,
+          $$KanjiTableTableAnnotationComposer,
+          $$KanjiTableTableCreateCompanionBuilder,
+          $$KanjiTableTableUpdateCompanionBuilder,
+          (KanjiTableData, $$KanjiTableTableReferences),
+          KanjiTableData,
+          PrefetchHooks Function({
+            bool kanjiBankV3TableRefs,
+            bool kanjiMetaBankV3TableRefs,
+            bool kanjiVGTableRefs,
+            bool radicalXKanjiRelationsTableRefs,
+          })
+        > {
+  $$KanjiTableTableTableManager(_$DaKanjiDB db, $KanjiTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$KanjiTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$KanjiTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> kanji = const Value.absent(),
+              }) => KanjiTableCompanion(id: id, kanji: kanji),
+          createCompanionCallback:
+              ({Value<int> id = const Value.absent(), required String kanji}) =>
+                  KanjiTableCompanion.insert(id: id, kanji: kanji),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$KanjiTableTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                kanjiBankV3TableRefs = false,
+                kanjiMetaBankV3TableRefs = false,
+                kanjiVGTableRefs = false,
+                radicalXKanjiRelationsTableRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (kanjiBankV3TableRefs) db.kanjiBankV3Table,
+                    if (kanjiMetaBankV3TableRefs) db.kanjiMetaBankV3Table,
+                    if (kanjiVGTableRefs) db.kanjiVGTable,
+                    if (radicalXKanjiRelationsTableRefs)
+                      db.radicalXKanjiRelationsTable,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (kanjiBankV3TableRefs)
+                        await $_getPrefetchedData<
+                          KanjiTableData,
+                          $KanjiTableTable,
+                          KanjiBankV3TableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$KanjiTableTableReferences
+                              ._kanjiBankV3TableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$KanjiTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).kanjiBankV3TableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.kanjiId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (kanjiMetaBankV3TableRefs)
+                        await $_getPrefetchedData<
+                          KanjiTableData,
+                          $KanjiTableTable,
+                          KanjiMetaBankV3TableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$KanjiTableTableReferences
+                              ._kanjiMetaBankV3TableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$KanjiTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).kanjiMetaBankV3TableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.kanjiId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (kanjiVGTableRefs)
+                        await $_getPrefetchedData<
+                          KanjiTableData,
+                          $KanjiTableTable,
+                          KanjiVGTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$KanjiTableTableReferences
+                              ._kanjiVGTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$KanjiTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).kanjiVGTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.kanjiId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (radicalXKanjiRelationsTableRefs)
+                        await $_getPrefetchedData<
+                          KanjiTableData,
+                          $KanjiTableTable,
+                          Radical_X_KanjiRelationsTableData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$KanjiTableTableReferences
+                              ._radicalXKanjiRelationsTableRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$KanjiTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).radicalXKanjiRelationsTableRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.kanjiId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$KanjiTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $KanjiTableTable,
+      KanjiTableData,
+      $$KanjiTableTableFilterComposer,
+      $$KanjiTableTableOrderingComposer,
+      $$KanjiTableTableAnnotationComposer,
+      $$KanjiTableTableCreateCompanionBuilder,
+      $$KanjiTableTableUpdateCompanionBuilder,
+      (KanjiTableData, $$KanjiTableTableReferences),
+      KanjiTableData,
+      PrefetchHooks Function({
+        bool kanjiBankV3TableRefs,
+        bool kanjiMetaBankV3TableRefs,
+        bool kanjiVGTableRefs,
+        bool radicalXKanjiRelationsTableRefs,
+      })
+    >;
 typedef $$IndexTableTableCreateCompanionBuilder =
     IndexTableCompanion Function({
       Value<int> id,
@@ -20106,555 +20400,6 @@ typedef $$IndexTableTableProcessedTableManager =
         bool audioTableRefs,
         bool exampleTableRefs,
         bool audioSourceListTableRefs,
-      })
-    >;
-typedef $$KanjiTableTableCreateCompanionBuilder =
-    KanjiTableCompanion Function({Value<int> id, required String kanji});
-typedef $$KanjiTableTableUpdateCompanionBuilder =
-    KanjiTableCompanion Function({Value<int> id, Value<String> kanji});
-
-final class $$KanjiTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $KanjiTableTable, KanjiTableData> {
-  $$KanjiTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static MultiTypedResultKey<$KanjiBankV3TableTable, List<KanjiBankV3TableData>>
-  _kanjiBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
-    db.kanjiBankV3Table,
-    aliasName: $_aliasNameGenerator(
-      db.kanjiTable.id,
-      db.kanjiBankV3Table.kanjiId,
-    ),
-  );
-
-  $$KanjiBankV3TableTableProcessedTableManager get kanjiBankV3TableRefs {
-    final manager = $$KanjiBankV3TableTableTableManager(
-      $_db,
-      $_db.kanjiBankV3Table,
-    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _kanjiBankV3TableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
-    $KanjiMetaBankV3TableTable,
-    List<KanjiMetaBankV3TableData>
-  >
-  _kanjiMetaBankV3TableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.kanjiMetaBankV3Table,
-        aliasName: $_aliasNameGenerator(
-          db.kanjiTable.id,
-          db.kanjiMetaBankV3Table.kanjiId,
-        ),
-      );
-
-  $$KanjiMetaBankV3TableTableProcessedTableManager
-  get kanjiMetaBankV3TableRefs {
-    final manager = $$KanjiMetaBankV3TableTableTableManager(
-      $_db,
-      $_db.kanjiMetaBankV3Table,
-    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _kanjiMetaBankV3TableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<$KanjiVGTableTable, List<KanjiVGTableData>>
-  _kanjiVGTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
-    db.kanjiVGTable,
-    aliasName: $_aliasNameGenerator(db.kanjiTable.id, db.kanjiVGTable.kanjiId),
-  );
-
-  $$KanjiVGTableTableProcessedTableManager get kanjiVGTableRefs {
-    final manager = $$KanjiVGTableTableTableManager(
-      $_db,
-      $_db.kanjiVGTable,
-    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_kanjiVGTableRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
-    $Radical_X_KanjiRelationsTableTable,
-    List<Radical_X_KanjiRelationsTableData>
-  >
-  _radicalXKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.radicalXKanjiRelationsTable,
-        aliasName: $_aliasNameGenerator(
-          db.kanjiTable.id,
-          db.radicalXKanjiRelationsTable.kanjiId,
-        ),
-      );
-
-  $$Radical_X_KanjiRelationsTableTableProcessedTableManager
-  get radicalXKanjiRelationsTableRefs {
-    final manager = $$Radical_X_KanjiRelationsTableTableTableManager(
-      $_db,
-      $_db.radicalXKanjiRelationsTable,
-    ).filter((f) => f.kanjiId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _radicalXKanjiRelationsTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$KanjiTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiTableTable> {
-  $$KanjiTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get kanji => $composableBuilder(
-    column: $table.kanji,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  Expression<bool> kanjiBankV3TableRefs(
-    Expression<bool> Function($$KanjiBankV3TableTableFilterComposer f) f,
-  ) {
-    final $$KanjiBankV3TableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiBankV3Table,
-      getReferencedColumn: (t) => t.kanjiId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3TableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<bool> kanjiMetaBankV3TableRefs(
-    Expression<bool> Function($$KanjiMetaBankV3TableTableFilterComposer f) f,
-  ) {
-    final $$KanjiMetaBankV3TableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiMetaBankV3Table,
-      getReferencedColumn: (t) => t.kanjiId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiMetaBankV3TableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiMetaBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<bool> kanjiVGTableRefs(
-    Expression<bool> Function($$KanjiVGTableTableFilterComposer f) f,
-  ) {
-    final $$KanjiVGTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiVGTable,
-      getReferencedColumn: (t) => t.kanjiId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiVGTableTableFilterComposer(
-            $db: $db,
-            $table: $db.kanjiVGTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<bool> radicalXKanjiRelationsTableRefs(
-    Expression<bool> Function(
-      $$Radical_X_KanjiRelationsTableTableFilterComposer f,
-    )
-    f,
-  ) {
-    final $$Radical_X_KanjiRelationsTableTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.radicalXKanjiRelationsTable,
-          getReferencedColumn: (t) => t.kanjiId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$Radical_X_KanjiRelationsTableTableFilterComposer(
-                $db: $db,
-                $table: $db.radicalXKanjiRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$KanjiTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiTableTable> {
-  $$KanjiTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get kanji => $composableBuilder(
-    column: $table.kanji,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$KanjiTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiTableTable> {
-  $$KanjiTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get kanji =>
-      $composableBuilder(column: $table.kanji, builder: (column) => column);
-
-  Expression<T> kanjiBankV3TableRefs<T extends Object>(
-    Expression<T> Function($$KanjiBankV3TableTableAnnotationComposer a) f,
-  ) {
-    final $$KanjiBankV3TableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiBankV3Table,
-      getReferencedColumn: (t) => t.kanjiId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiBankV3TableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiBankV3Table,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<T> kanjiMetaBankV3TableRefs<T extends Object>(
-    Expression<T> Function($$KanjiMetaBankV3TableTableAnnotationComposer a) f,
-  ) {
-    final $$KanjiMetaBankV3TableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.kanjiMetaBankV3Table,
-          getReferencedColumn: (t) => t.kanjiId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$KanjiMetaBankV3TableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.kanjiMetaBankV3Table,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
-  Expression<T> kanjiVGTableRefs<T extends Object>(
-    Expression<T> Function($$KanjiVGTableTableAnnotationComposer a) f,
-  ) {
-    final $$KanjiVGTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.kanjiVGTable,
-      getReferencedColumn: (t) => t.kanjiId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$KanjiVGTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.kanjiVGTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<T> radicalXKanjiRelationsTableRefs<T extends Object>(
-    Expression<T> Function(
-      $$Radical_X_KanjiRelationsTableTableAnnotationComposer a,
-    )
-    f,
-  ) {
-    final $$Radical_X_KanjiRelationsTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.radicalXKanjiRelationsTable,
-          getReferencedColumn: (t) => t.kanjiId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$Radical_X_KanjiRelationsTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.radicalXKanjiRelationsTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$KanjiTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          $KanjiTableTable,
-          KanjiTableData,
-          $$KanjiTableTableFilterComposer,
-          $$KanjiTableTableOrderingComposer,
-          $$KanjiTableTableAnnotationComposer,
-          $$KanjiTableTableCreateCompanionBuilder,
-          $$KanjiTableTableUpdateCompanionBuilder,
-          (KanjiTableData, $$KanjiTableTableReferences),
-          KanjiTableData,
-          PrefetchHooks Function({
-            bool kanjiBankV3TableRefs,
-            bool kanjiMetaBankV3TableRefs,
-            bool kanjiVGTableRefs,
-            bool radicalXKanjiRelationsTableRefs,
-          })
-        > {
-  $$KanjiTableTableTableManager(_$DaKanjiDB db, $KanjiTableTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$KanjiTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$KanjiTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$KanjiTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> kanji = const Value.absent(),
-              }) => KanjiTableCompanion(id: id, kanji: kanji),
-          createCompanionCallback:
-              ({Value<int> id = const Value.absent(), required String kanji}) =>
-                  KanjiTableCompanion.insert(id: id, kanji: kanji),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$KanjiTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback:
-              ({
-                kanjiBankV3TableRefs = false,
-                kanjiMetaBankV3TableRefs = false,
-                kanjiVGTableRefs = false,
-                radicalXKanjiRelationsTableRefs = false,
-              }) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [
-                    if (kanjiBankV3TableRefs) db.kanjiBankV3Table,
-                    if (kanjiMetaBankV3TableRefs) db.kanjiMetaBankV3Table,
-                    if (kanjiVGTableRefs) db.kanjiVGTable,
-                    if (radicalXKanjiRelationsTableRefs)
-                      db.radicalXKanjiRelationsTable,
-                  ],
-                  addJoins: null,
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (kanjiBankV3TableRefs)
-                        await $_getPrefetchedData<
-                          KanjiTableData,
-                          $KanjiTableTable,
-                          KanjiBankV3TableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$KanjiTableTableReferences
-                              ._kanjiBankV3TableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$KanjiTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).kanjiBankV3TableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.kanjiId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (kanjiMetaBankV3TableRefs)
-                        await $_getPrefetchedData<
-                          KanjiTableData,
-                          $KanjiTableTable,
-                          KanjiMetaBankV3TableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$KanjiTableTableReferences
-                              ._kanjiMetaBankV3TableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$KanjiTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).kanjiMetaBankV3TableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.kanjiId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (kanjiVGTableRefs)
-                        await $_getPrefetchedData<
-                          KanjiTableData,
-                          $KanjiTableTable,
-                          KanjiVGTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$KanjiTableTableReferences
-                              ._kanjiVGTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$KanjiTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).kanjiVGTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.kanjiId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (radicalXKanjiRelationsTableRefs)
-                        await $_getPrefetchedData<
-                          KanjiTableData,
-                          $KanjiTableTable,
-                          Radical_X_KanjiRelationsTableData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$KanjiTableTableReferences
-                              ._radicalXKanjiRelationsTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$KanjiTableTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).radicalXKanjiRelationsTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.kanjiId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
-                  },
-                );
-              },
-        ),
-      );
-}
-
-typedef $$KanjiTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      $KanjiTableTable,
-      KanjiTableData,
-      $$KanjiTableTableFilterComposer,
-      $$KanjiTableTableOrderingComposer,
-      $$KanjiTableTableAnnotationComposer,
-      $$KanjiTableTableCreateCompanionBuilder,
-      $$KanjiTableTableUpdateCompanionBuilder,
-      (KanjiTableData, $$KanjiTableTableReferences),
-      KanjiTableData,
-      PrefetchHooks Function({
-        bool kanjiBankV3TableRefs,
-        bool kanjiMetaBankV3TableRefs,
-        bool kanjiVGTableRefs,
-        bool radicalXKanjiRelationsTableRefs,
       })
     >;
 typedef $$KanjiBankV3TableTableCreateCompanionBuilder =
@@ -39491,10 +39236,10 @@ typedef $$Radical_X_KanjiRelationsTableTableProcessedTableManager =
 class $DaKanjiDBManager {
   final _$DaKanjiDB _db;
   $DaKanjiDBManager(this._db);
-  $$IndexTableTableTableManager get indexTable =>
-      $$IndexTableTableTableManager(_db, _db.indexTable);
   $$KanjiTableTableTableManager get kanjiTable =>
       $$KanjiTableTableTableManager(_db, _db.kanjiTable);
+  $$IndexTableTableTableManager get indexTable =>
+      $$IndexTableTableTableManager(_db, _db.indexTable);
   $$KanjiBankV3TableTableTableManager get kanjiBankV3Table =>
       $$KanjiBankV3TableTableTableManager(_db, _db.kanjiBankV3Table);
   $$ReadingTableTableTableManager get readingTable =>
@@ -39662,6 +39407,31 @@ class $DaKanjiDBManager {
         _db,
         _db.radicalXKanjiRelationsTable,
       );
+}
+
+class KanjiDictionaryFindKanjiDetailsDriftResult {
+  final int id;
+  final String indexEntry;
+  final int indexId;
+  final String kanji;
+  final String onyomis;
+  final String kunyomis;
+  final String tags;
+  final String definitions;
+  final String stats;
+  final String kanjiMetaBankV3Entries;
+  KanjiDictionaryFindKanjiDetailsDriftResult({
+    required this.id,
+    required this.indexEntry,
+    required this.indexId,
+    required this.kanji,
+    required this.onyomis,
+    required this.kunyomis,
+    required this.tags,
+    required this.definitions,
+    required this.stats,
+    required this.kanjiMetaBankV3Entries,
+  });
 }
 
 class DictionarySearchDriftFindTermBankEntriesResult {

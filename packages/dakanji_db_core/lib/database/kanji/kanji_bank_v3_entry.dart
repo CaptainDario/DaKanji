@@ -60,7 +60,7 @@ class KanjiBankV3Entry with _$KanjiBankV3Entry {
       });
     }
 
-  factory KanjiBankV3Entry.fromKanjiDictionarySearchViewData(KanjiDictionarySearchViewData r){
+  factory KanjiBankV3Entry.fromKanjiDictionarySearchViewData(KanjiDictionaryFindKanjiDetailsDriftResult r){
     return KanjiBankV3Entry._fromData(r);
   }
 

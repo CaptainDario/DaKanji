@@ -29,7 +29,7 @@ class KanjiDictionarySearchResult with _$KanjiDictionarySearchResult {
     required this.kanjiMetaBankEntries,
   });
 
-  factory KanjiDictionarySearchResult.fromKanjiDictionarySearchViewData(KanjiDictionarySearchViewData data){
+  factory KanjiDictionarySearchResult.fromKanjiDictionarySearchViewData(KanjiDictionaryFindKanjiDetailsDriftResult data){
     
     return KanjiDictionarySearchResult(
       kanjiBankEntry: KanjiBankV3Entry.fromKanjiDictionarySearchViewData(data),
