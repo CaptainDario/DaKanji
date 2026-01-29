@@ -4,6 +4,7 @@ import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanj
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
@@ -23,24 +24,32 @@ void main() {
 
   group('KanjiBankV3 Tests', () {
     // Check some kanji bank queries
-    for (var testCase in kanjiDictionaryTestCases) {
+    for (int i = 0; i < kanjiDictionaryTestCases.length; i++) {
+      final testCase = kanjiDictionaryTestCases[i];
       test('Looking up $testCase', () async {
         Stopwatch s = Stopwatch()..start();
+
+        // setup the indexes
+        for (var indexId in [1, 2])
+          await db.indexDao.setEnabled(indexId, testCase.enabledIndexes.contains(indexId));
+        await db.indexDao.setSortingOrders([1, 2], testCase.indexOrder);
+
+        // run the actual search
         List<KanjiDictionarySearchResult> result =
-          (await db.kanjiSearchDao.kanjiDictionarySearch(testCase))
+          (await db.kanjiSearchDao.kanjiDictionarySearch(kanjis: testCase.query))
           .map((e) => kanjiDictionarySearchResultIgnoreDatabaseGeneratedData(e))
           .toList();
-        print("Looking up $testCase took ${s.elapsedMilliseconds}ms");
+        print("Looking up $i took ${s.elapsedMilliseconds}ms");
 
         // 1. First, check that the number of results we got from the DB
-        expect(result.length, equals(kanjiDictionarySearchTestCaseExpectations.length));
+        expect(result.length, equals(kanjiDictionarySearchTestCaseExpectations[i].length));
 
-        for (int i = 0; i < result.length; i++) {
-          final actualResult = result[i];
-          final expectedResult = kanjiDictionarySearchTestCaseExpectations[i];
+        for (int j = 0; j < result.length; j++) {
+          final actualResult = result[j];
+          final expectedResult = kanjiDictionarySearchTestCaseExpectations[i][j];
           print("Actual result: $actualResult");
           print("Expected kanji result: ${expectedResult.kanjiBankEntry}");
-          print("Expected kanji meat result: ${expectedResult.kanjiMetaBankEntries}");
+          print("Expected kanji meta result: ${expectedResult.kanjiMetaBankEntries}");
 
           // Compare the kanji bank entry
           expect(
@@ -50,11 +59,11 @@ void main() {
           );
 
           // Compare the list of meta entries
-          for (var i = 0; i < expectedResult.kanjiMetaBankEntries.length; i++) {
+          for (var l = 0; l < expectedResult.kanjiMetaBankEntries.length; l++) {
             expect(
-              actualResult.kanjiMetaBankEntries[i],
-              equals(expectedResult.kanjiMetaBankEntries[i]),
-              reason: "KanjiMetaBankV3Entry at index $i for '${actualResult.kanjiBankEntry.kanji}' did not match expectation."
+              actualResult.kanjiMetaBankEntries[l],
+              equals(expectedResult.kanjiMetaBankEntries[l]),
+              reason: "KanjiMetaBankV3Entry at index $l for '${actualResult.kanjiBankEntry.kanji}' did not match expectation."
             ); 
           }
         }
@@ -73,7 +82,7 @@ Future<DaKanjiDB> setupFreshDB() async {
   final mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
-  // convert the test files
+  // import the yomitan test files
   Stopwatch s = Stopwatch()..start();
   String dataSourceZipPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
   Stream<String> progress = await parseDictionaryDataSource(
@@ -87,6 +96,16 @@ Future<DaKanjiDB> setupFreshDB() async {
     print(line);
   }
   print("Conversion took ${s.elapsedMilliseconds} ms");
+
+  // import the custom database
+  s = Stopwatch()..start();
+  await partialInit(db, (File f) => true, "term_search_test", mecab, 
+    otherFilesToCopy: [
+      File(p.join(dataFilesPath, "testing_db", "kanji_bank_1.json")),
+      File(p.join(dataFilesPath, "testing_db", "kanji_meta_bank_1.json")),
+    ],
+    isDefaultDictionary: true
+  );
 
   return db;
 

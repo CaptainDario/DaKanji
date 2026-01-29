@@ -1,0 +1,26 @@
+[
+    [
+        "打",
+        "ダ ダアス",
+        "う.つ う.ち- ぶ.つ",
+        "K1 K2",
+        [
+            "utsu meaning 1 (testing db)"
+        ],
+        {
+            "kstat1": "kanji stat 1 value"
+        }
+    ],
+    [
+        "込",
+        "",
+        "-こ.む こ.む こ.み -こ.み こ.める",
+        "K1 K2",
+        [
+            "komu meaning 1 (testing db)"
+        ],
+        {
+            "kstat1": "kanji stat 1 value"
+        }
+    ]
+]
