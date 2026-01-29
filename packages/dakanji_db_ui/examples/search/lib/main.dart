@@ -208,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                               // Delegate to Isolate
                               _searchManager!.search(
-                                settings.s.toDictionarySearchParams(query: value),
+                                settings.s.toDictionarySearchParams(query: value,),
                                 onResult: (result) {
                                   if (!mounted) return;
                                   setState(() {

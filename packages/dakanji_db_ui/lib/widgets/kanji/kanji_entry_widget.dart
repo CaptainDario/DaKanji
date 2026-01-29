@@ -11,9 +11,20 @@ class KanjiEntryWidget extends StatefulWidget {
 
   final KanjiDictionarySearchResult result;
 
+  final bool showTags;
+
+  final bool showMeta;
+
+  /// Whether to include all stats or only the most important (non-collapsible)
+  /// ones
+  final bool includeAllStats;
+
   const KanjiEntryWidget(
-    this.result,
     {
+      required this.result,
+      required this.showTags,
+      required this.showMeta,
+      required this.includeAllStats,
       super.key
     }
   );
@@ -90,12 +101,14 @@ class _KanjiEntryWidgetState extends State<KanjiEntryWidget> {
                   Expanded(child: KanjiMatchStatsWidget(statistics))
                 ],
               ),
-              TagBankWidget([kanjiEntry.tags]),
+              if (widget.showMeta)
+                TagBankWidget([kanjiEntry.tags]),
 
-              SizedBox(height: 8),
+              SizedBox(height: 4),
 
               // meta entries
-              KanjiMetaBankWidget(kanjiMetaEntries),
+              if (widget.showMeta)
+                KanjiMetaBankWidget(kanjiMetaEntries),
         
               SizedBox(height: 8),
 

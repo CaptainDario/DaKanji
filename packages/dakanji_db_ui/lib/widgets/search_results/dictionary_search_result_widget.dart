@@ -94,7 +94,12 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
                 if (_isExpanded("KanjiSection"))
                   for (var (i, kanjiMatchGroup) in widget.result.kanjiResults.indexed)
                     SliverToBoxAdapter(
-                      child: KanjiEntryWidget(kanjiMatchGroup),
+                      child: KanjiEntryWidget(
+                        result: kanjiMatchGroup,
+                        showTags: context.read<DaKanjiDbSettings>().s.showTags,
+                        showMeta: context.read<DaKanjiDbSettings>().s.showMetaEntries,
+                        includeAllStats: false
+                      ),
                     ),
               ],
         
