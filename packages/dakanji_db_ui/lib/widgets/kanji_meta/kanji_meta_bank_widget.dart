@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
 import 'package:dakanji_db_ui/widgets/tag/tag_widget.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,17 @@ class _KanjiMetaBankWidgetState extends State<KanjiMetaBankWidget> {
 
   @override
   Widget build(BuildContext context) {
+    
+    if(widget.entries.isEmpty) return SizedBox();
+    
     return DictionaryMatchTag(
-      texts: widget.entries.map((e) => e.freqDisplayValue).nonNulls.toList(),
+      // for kanji there are no grouping options so the first entry is fine
+      leadingText: widget.entries.first.indexEntry.title,
+      texts: widget.entries
+        .map((e) => (e.freqValue?.toString()) ?? e.freqDisplayValue)
+        .nonNulls
+        .mapIndexed((index, e) => e + (index < widget.entries.length - 1 ? ", " : ""))
+        .toList(),
     );
   }
 }
