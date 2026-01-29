@@ -170,8 +170,6 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
     List<String> tags = const [],
     List<String> pos = const [],
     List<int>? indexesToInclude,
-    bool useOnlyEnabledIndexes = false,
-    bool useOnlyDefaultIndexes = false,
     int offset = 0,
   }) {
     return DictionarySearchParams(
@@ -182,8 +180,6 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
       spellfixSearch: spellfixSearch,
       groupingRules: groupingRules,
       indexesToInclude: indexesToInclude,
-      useOnlyEnabledIndexes: useOnlyEnabledIndexes,
-      useOnlyDefaultIndexes: useOnlyDefaultIndexes,
       spellfixMaxCost: spellfixMaxCost,
       spellfixMaxResults: spellfixMaxResults,
       limit: searchResultLimit,

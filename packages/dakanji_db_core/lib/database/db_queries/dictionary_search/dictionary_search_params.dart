@@ -22,15 +22,13 @@ class DictionarySearchParams {
   List<DictionaryGroupingRule> groupingRules;
 
   /// List of dictionary index IDs to include in the search.
-  ///   If `null`, all indexes are included.
-  ///   If `[]`, no indexes are included.
+  ///   - If `null`, all enabled indexes are included.
+  ///   - If `[]`, no indexes are included.
+  /// 
+  /// Note: Use 
+  ///   - `IndexDao.getAllEnabledIndexes` to get all enabled indexes.
+  ///   - `IndexDao.getAllDefaultIndexes` to get all default indexes.
   List<int>? indexesToInclude;
-  /// Weather to search only in enabled indexes.
-  /// Note: if `True`, this overrides `indexesToInclude`.
-  bool useOnlyEnabledIndexes;
-  /// Weather to search only in default indexes.
-  /// Note: if `True`, this overrides `indexesToInclude`.
-  bool useOnlyDefaultIndexes;
 
   /// Maximum edit distance for spellfix search.
   int spellfixMaxCost;
@@ -49,8 +47,6 @@ class DictionarySearchParams {
     this.spellfixSearch = false,
     this.groupingRules = const [],
     this.indexesToInclude,
-    this.useOnlyEnabledIndexes = false,
-    this.useOnlyDefaultIndexes = false,
     this.spellfixMaxCost = 10,
     this.spellfixMaxResults = 20,
     this.limit = -1,

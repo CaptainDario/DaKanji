@@ -35,23 +35,6 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
     DictionarySearchParams sP = dictionarySearchParams;
     DictionarySearchContext ctx = DictionarySearchContext();
 
-    assert(([
-      sP.indexesToInclude != null,
-      sP.useOnlyEnabledIndexes,
-      sP.useOnlyDefaultIndexes
-    ].where((e) => e).length <= 1),
-      "You can only use one of 'indexesToInclude', 'useOnlyEnabledDictionaries' or 'useOnlyDefaultDictionaries' at a time."
-    );
-
-    // Get all enabled indexes if set
-    if(sP.useOnlyEnabledIndexes) 
-      sP.indexesToInclude = (await db.indexDao.getAllEnabledIndexes())
-        .map((e) => e.id).toList();
-    // Get all default indexes if set
-    if(sP.useOnlyDefaultIndexes) 
-      sP.indexesToInclude = (await db.indexDao.getAllDefaultIndexes())
-        .map((e) => e.id).toList();
-
     // Check for special argument syntax
     ctx.applyExtractTagsAndPosResult(extractTagsAndPos(sP.query));
     ctx.applyArgumentParserResult(argumentParser(ctx.cleanedQuery));
@@ -71,15 +54,15 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
 
     if(printDebugInfo) printDictionarySearchDebugInfo(sP, ctx, endToEndStopwatch);
     
-    
     // Kanji lookup for single-character searches
     Stopwatch kS = Stopwatch()..start();
     Future<List<KanjiDictionarySearchResult>>? kanjiResults;
     if(ctx.cleanedQuery.length == 1 && kanjiRegex.hasMatch(ctx.cleanedQuery)) {
-      kanjiResults = db.kanjiSearchDao.kanjiDictionarySearch([ctx.cleanedQuery]).then((value) {
-        print("Kanji lookup took ${kS.elapsedMilliseconds}ms, found ${value.length} entries.");
-        return value;
-      });
+      kanjiResults = db.kanjiSearchDao.kanjiDictionarySearch(kanjis: [ctx.cleanedQuery])
+        .then((value) {
+          print("Kanji lookup took ${kS.elapsedMilliseconds}ms, found ${value.length} entries.");
+          return value;
+        });
       
     }
 
@@ -206,8 +189,6 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
 
     DictionarySearchParams sP = dictionarySearchParams;
 
-    
-
     return await Future.wait([
       // exact query
       _findTermBankEntries(
@@ -264,7 +245,7 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
     List<List<String>> tags = const [],
     List<List<String>> pos = const [],
     ({String? term, String? reading, String? definition})? filterParams,
-    List<int>? indexesToInclude = const [],
+    List<int>? indexesToInclude,
     int limit = -1,
     int offset = 0,
   }) async {
@@ -273,11 +254,10 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
 
     return await db.dictionary_search_drift_find_term_bank_entries(
       buildSearchInputJson(terms: terms, tags: tags, pos: pos),
-      jsonEncode(indexesToInclude ?? []),
+      indexesToInclude == null ? null : jsonEncode(indexesToInclude),
       useGlob ? 1 : 0,
       searchNormalized ? 1 : 0,
       filterParams?.term, filterParams?.reading, filterParams?.definition,
-      indexesToInclude == null ? 0 : 1,
       limit, offset
     ).get();
   }

@@ -12,8 +12,7 @@ dictionary_search_drift_find_term_bank_entries(
     :filterTerm AS TEXT OR NULL,
     :filterReading AS TEXT OR NULL,
     :filterDefinition AS TEXT OR NULL,
-    :indexes_to_include AS TEXT,
-    :useIndexesToInclude AS INT,
+    :indexes_to_include AS TEXT OR NULL,
     :limit AS INT,
     :offset AS INT
 ):
@@ -44,6 +43,21 @@ dictionary_search_drift_find_term_bank_entries(
         IndexesToInclude(index_id) AS (
             SELECT value FROM json_each(:indexes_to_include)
             WHERE value IS NOT NULL
+        ),
+        -- Get the active indexes based on the input
+        ActiveIndexes(id, current_sorting_order, enabled) AS (
+            SELECT id, current_sorting_order, enabled 
+            FROM index_table
+            WHERE
+                (
+                    :indexes_to_include IS NOT NULL
+                    AND id IN (SELECT index_id FROM IndexesToInclude)
+                )
+                OR 
+                (
+                    :indexes_to_include IS NULL
+                    AND enabled = 1
+                )
         ),
     
         -- Search
@@ -166,16 +180,14 @@ dictionary_search_drift_find_term_bank_entries(
                 term_bank_v3_table.id as term_bank_id,
                 term_bank_v3_table.term_id as term_id,
                 term_bank_v3_table.reading_id as reading_id,
+                term_bank_v3_table.index_id,
                 1 as match_column,
                 term_bank_v3_table.sequence_number
             FROM SearchResultsDeduplicated 
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.term_id = source_id
                 AND data_type_id IN (1, 2, 3, 4)
-                AND (
-                    (term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND :useIndexesToInclude = 1)
-                    OR :useIndexesToInclude = 0
-                )
+            JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id
             
             UNION ALL
             
@@ -185,16 +197,14 @@ dictionary_search_drift_find_term_bank_entries(
                 term_bank_v3_table.id as term_bank_id,
                 term_bank_v3_table.term_id as term_id,
                 term_bank_v3_table.reading_id as reading_id,
+                term_bank_v3_table.index_id,
                 2 as match_column,
                 term_bank_v3_table.sequence_number
             FROM SearchResultsDeduplicated
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.reading_id = source_id
                 AND data_type_id IN (5, 6)
-                AND (
-                    (term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND :useIndexesToInclude = 1)
-                    OR :useIndexesToInclude = 0
-                )
+            JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id
              
             UNION ALL
             
@@ -204,6 +214,7 @@ dictionary_search_drift_find_term_bank_entries(
                 term_bank_v3_x_definition_table.term_bank_id as term_bank_id,
                 term_bank_v3_table.term_id as term_id,
                 term_bank_v3_table.reading_id as reading_id,
+                term_bank_v3_table.index_id,
                 3 as match_column,
                 term_bank_v3_table.sequence_number
             FROM SearchResultsDeduplicated
@@ -212,10 +223,7 @@ dictionary_search_drift_find_term_bank_entries(
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id 
                 AND data_type_id  = 7
-                AND (
-                    (term_bank_v3_table.index_id IN (SELECT index_id FROM IndexesToInclude) AND :useIndexesToInclude = 1)
-                    OR :useIndexesToInclude = 0
-                )
+            JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id
         ),
 
         -- Filter based on the specific Rules and Tags attached to each search term
@@ -285,8 +293,8 @@ dictionary_search_drift_find_term_bank_entries(
         TBM.match_type,
         TBM.match_column,
         TBM.sequence_number,
-        index_table.id as indexId,
-        index_table.current_sorting_order,
+        ActiveIndexes.id as indexId,
+        ActiveIndexes.current_sorting_order,
         CASE 
             WHEN ActiveCheck.is_active = 1 THEN OP.freq_value
             ELSE TB3T.popularity
@@ -304,7 +312,7 @@ dictionary_search_drift_find_term_bank_entries(
     FROM 
         TermBankMatchesFiltered AS TBM
         
-    JOIN index_table ON TB3T.index_id = index_table.id
+    JOIN ActiveIndexes ON TB3T.index_id = ActiveIndexes.id
     JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id
     LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
     LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id
@@ -312,7 +320,7 @@ dictionary_search_drift_find_term_bank_entries(
     LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id
         
     ORDER BY
-        index_table.current_sorting_order,
+        ActiveIndexes.current_sorting_order,
         TBM.match_type,
         TBM.match_column,
         finalPopularity DESC,
