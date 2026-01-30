@@ -76,19 +76,9 @@ class _DakanjiDbSettingsSearchResultSortOrderState extends State<DakanjiDbSettin
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            IconButton(
-              onPressed: () async {
-                await showSettingsInfoPopup(widget.infoText, context);
-              },
-              icon: Icon(Icons.info_outline)
-            ),
-            Text(
-              widget.title,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ],
+        InfoPopupButton(
+          title: widget.title,
+          infoText: widget.infoText,
         ),
         ReorderableColumn(
           scrollController: ScrollController(),

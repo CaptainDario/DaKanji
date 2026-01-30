@@ -60,14 +60,9 @@ class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroup
       crossAxisAlignment: .stretch,
       children: [
 
-        ListTile(
-          leading: IconButton(
-            icon: Icon(Icons.info_outline),
-            onPressed: () async {
-              await showSettingsInfoPopup(loc.groupingExplanation, context);
-            }
-          ),
-          title: Text(loc.configureGroupingTitle),
+        InfoPopupButton(
+          title: loc.configureGroupingTitle,
+          infoText: loc.groupingExplanation
         ),
 
         for (int i = 0; i < rules.length; i++) 

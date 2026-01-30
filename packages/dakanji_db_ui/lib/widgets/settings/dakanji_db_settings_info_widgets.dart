@@ -4,6 +4,38 @@ import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
 
 
+class InfoPopupButton extends StatelessWidget {
+  
+  /// The title next to the info button.
+  final String title;
+  /// The info text to show in the info dialog (shown when pressing the i-btn).
+  final String infoText;
+
+  const InfoPopupButton(
+    {
+      required this.title,
+      required this.infoText,
+      super.key
+    }
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: IconButton(
+        onPressed: () async {
+          await showSettingsInfoPopup(infoText, context);
+        },
+        icon: Icon(Icons.info_outline)
+      ),
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
+    );
+  }
+}
+
 /// Shows an info snackbar
 void showInfoSnackbar(String message, BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
@@ -34,8 +66,9 @@ Future<void> showSettingsInfoPopup(String infoText, BuildContext context) async 
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
+                    mainAxisSize: .min,
                     children: [
-                      Expanded(
+                      Flexible(
                         child: Markdown(
                           data: infoText,
                           shrinkWrap: true, 
