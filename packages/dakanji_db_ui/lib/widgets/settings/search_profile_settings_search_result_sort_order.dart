@@ -1,13 +1,13 @@
 import 'package:dakanji_db_core/data/dakanji_db_search_result_sort_order.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_info_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
-class DakanjiDbSettingsSearchResultSortOrder extends StatefulWidget {
+class SearchProfileSettingsSearchResultSortOrder extends StatefulWidget {
 
   /// Whether this widget is for the 1st level sort order.
   final bool firstSortOrder;
@@ -21,7 +21,7 @@ class DakanjiDbSettingsSearchResultSortOrder extends StatefulWidget {
   final List<String> optionNames;
 
 
-  DakanjiDbSettingsSearchResultSortOrder(
+  SearchProfileSettingsSearchResultSortOrder(
     {
       this.firstSortOrder = false,
       this.secondSortOrder = false,
@@ -39,10 +39,10 @@ class DakanjiDbSettingsSearchResultSortOrder extends StatefulWidget {
   }
 
   @override
-  State<DakanjiDbSettingsSearchResultSortOrder> createState() => _DakanjiDbSettingsSearchResultSortOrderState();
+  State<SearchProfileSettingsSearchResultSortOrder> createState() => _SearchProfileSettingsSearchResultSortOrderState();
 }
 
-class _DakanjiDbSettingsSearchResultSortOrderState extends State<DakanjiDbSettingsSearchResultSortOrder> {
+class _SearchProfileSettingsSearchResultSortOrderState extends State<SearchProfileSettingsSearchResultSortOrder> {
   
 
   void _updateSettingsList(List<(dynamic, bool)> newList) {

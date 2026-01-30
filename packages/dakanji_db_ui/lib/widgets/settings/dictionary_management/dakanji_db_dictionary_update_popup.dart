@@ -21,7 +21,7 @@ class DaKanjiDbDictionaryUpdatePopup extends StatefulWidget {
 
 class _DaKanjiDbDictionaryUpdatePopupState extends State<DaKanjiDbDictionaryUpdatePopup> {
 
-  late final checkForUpdatesFuture;
+  late final Future<bool> checkForUpdatesFuture;
 
   @override
   void initState() {

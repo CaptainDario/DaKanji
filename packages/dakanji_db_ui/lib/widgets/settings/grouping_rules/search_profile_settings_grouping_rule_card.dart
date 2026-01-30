@@ -5,7 +5,7 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_r
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
-import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_widget.dart';
+import 'package:dakanji_db_ui/widgets/settings/grouping_rules/search_profile_settings_grouping_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -13,13 +13,13 @@ import 'package:provider/provider.dart';
 /// A card representing a single grouping rule
 /// 
 /// Note: This REQUIRES a [DaKanjiDbSettings] provider in the widget tree.
-class GroupingRuleCard extends StatefulWidget {
+class SearchProfileSettingsGroupingRuleCard extends StatefulWidget {
 
   final int i;
 
   final DakanjiDbLocalization localization;
 
-  const GroupingRuleCard(
+  const SearchProfileSettingsGroupingRuleCard(
     this.i,
     this.localization,
     {
@@ -28,10 +28,10 @@ class GroupingRuleCard extends StatefulWidget {
   );
 
   @override
-  State<GroupingRuleCard> createState() => _GroupingRuleCardState();
+  State<SearchProfileSettingsGroupingRuleCard> createState() => _SearchProfileSettingsGroupingRuleCardState();
 }
 
-class _GroupingRuleCardState extends State<GroupingRuleCard> {
+class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSettingsGroupingRuleCard> {
 
   /// Returns all indexes with a flag indicating their usage in any rule
   Future<List<({IndexEntry index, IndexGroupingUsage usage,})>>

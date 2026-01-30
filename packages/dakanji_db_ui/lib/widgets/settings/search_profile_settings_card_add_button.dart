@@ -1,9 +1,9 @@
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_info_widgets.dart';
 import 'package:flutter/material.dart';
 
 
 
-class DakanjiDbSettingsCardAddButton extends StatelessWidget {
+class SearchProfileSearchProfileCardAddButton extends StatelessWidget {
 
   final String text;
 
@@ -11,7 +11,7 @@ class DakanjiDbSettingsCardAddButton extends StatelessWidget {
 
   final VoidCallback? onPressed;
 
-  const DakanjiDbSettingsCardAddButton(
+  const SearchProfileSearchProfileCardAddButton(
     this.text,
     {
       this.disabledReason,

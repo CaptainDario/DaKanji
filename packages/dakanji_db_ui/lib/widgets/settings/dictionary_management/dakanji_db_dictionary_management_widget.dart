@@ -1,23 +1,23 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_card_add_button.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_card.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_card_add_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:reorderables/reorderables.dart';
 
-class DakanjiDbDictionaryManagementWidget extends StatefulWidget {
+class DaKanjiDbDictionaryManagementWidget extends StatefulWidget {
 
-  const DakanjiDbDictionaryManagementWidget({super.key});
+  const DaKanjiDbDictionaryManagementWidget({super.key});
 
   @override
-  State<DakanjiDbDictionaryManagementWidget> createState() =>
-      _DakanjiDbDictionaryManagementWidgetState();
+  State<DaKanjiDbDictionaryManagementWidget> createState() =>
+      _DaKanjiDbDictionaryManagementWidgetState();
 }
 
-class _DakanjiDbDictionaryManagementWidgetState
-    extends State<DakanjiDbDictionaryManagementWidget> {
+class _DaKanjiDbDictionaryManagementWidgetState
+    extends State<DaKanjiDbDictionaryManagementWidget> {
   @override
   Widget build(BuildContext context) {
 
@@ -43,7 +43,7 @@ class _DakanjiDbDictionaryManagementWidgetState
               },
               children: [
                 for (int i = 0; i < dictsInOrder.length; i++) 
-                  DictionaryManagementCard(
+                  DaKanjiDbDictionaryManagementCard(
                     entry: dictsInOrder[i],
                     index: i,
                     key: ValueKey(dictsInOrder[i].id),
@@ -51,7 +51,7 @@ class _DakanjiDbDictionaryManagementWidgetState
               ]
             ),
 
-            DakanjiDbSettingsCardAddButton(
+            SearchProfileSearchProfileCardAddButton(
               loc.importDictionary,
               // TODO add user import logic here
               disabledReason: "User import of dictionaries is currently disabled.",

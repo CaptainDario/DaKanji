@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 
 
-class DakanjiDbSettingsToggleListTile extends StatelessWidget {
+class SearchProfileSettingsToggleListTile extends StatelessWidget {
   final String title;
   final String? subtitle;
   final bool value;
   final ValueChanged<bool> onChanged;
 
-  const DakanjiDbSettingsToggleListTile({
+  const SearchProfileSettingsToggleListTile({
     super.key,
     required this.title,
     this.subtitle,

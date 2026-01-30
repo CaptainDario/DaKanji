@@ -1,20 +1,20 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_widget.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 
-class DaKanjiDbSettingsDialog extends StatefulWidget {
+class SearchProfileSettingsDialog extends StatefulWidget {
 
 
-  const DaKanjiDbSettingsDialog({super.key,});
+  const SearchProfileSettingsDialog({super.key,});
 
   @override
-  State<DaKanjiDbSettingsDialog> createState() => _DaKanjiDbSettingsDialogState();
+  State<SearchProfileSettingsDialog> createState() => _SearchProfileSettingsDialogState();
 }
 
-class _DaKanjiDbSettingsDialogState extends State<DaKanjiDbSettingsDialog> {
+class _SearchProfileSettingsDialogState extends State<SearchProfileSettingsDialog> {
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _DaKanjiDbSettingsDialogState extends State<DaKanjiDbSettingsDialog> {
         child: StreamBuilder<SearchProfilesEntry>(
           stream: GetIt.I<DaKanjiDB>().searchProfilesDao.watchActiveProfile(),
           builder: (context, builder) {
-            return DakanjiDbSettingsWidget();
+            return SearchProfileSettingsWidget();
           }
         ),
       )

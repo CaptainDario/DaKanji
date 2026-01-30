@@ -1,26 +1,26 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_category_separator.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_heading.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_search_result_sort_order.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_toggle_list_tile.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_widget.dart';
-import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_widget.dart';
+import 'package:dakanji_db_ui/widgets/settings/grouping_rules/search_profile_settings_grouping_widget.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_category_separator.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_heading.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_info_widgets.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_search_result_sort_order.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_toggle_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
-class DakanjiDbSettingsWidget extends StatefulWidget {
+class SearchProfileSettingsWidget extends StatefulWidget {
 
-  const DakanjiDbSettingsWidget({super.key});
+  const SearchProfileSettingsWidget({super.key});
 
   @override
-  State<DakanjiDbSettingsWidget> createState() => _DakanjiDbSettingsWidgetState();
+  State<SearchProfileSettingsWidget> createState() => _SearchProfileSettingsWidgetState();
 }
 
-class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
+class _SearchProfileSettingsWidgetState extends State<SearchProfileSettingsWidget> {
   @override
   Widget build(BuildContext context) {
 
@@ -31,7 +31,7 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
       crossAxisAlignment: .start,
       mainAxisSize: .min,
       children: [
-        DakanjiDbSettingsHeading(loc.dictionariesHeader),
+        SearchProfileSettingsHeading(loc.dictionariesHeader),
         InfoPopupButton(
           title: "Global frequency dictionary",
           infoText:
@@ -60,10 +60,10 @@ You can also toggle specific dictionaries off to hide them without deleting them
 Custom dictionaries can be imported to further expand your library.
 """
         ),
-        DakanjiDbDictionaryManagementWidget(),
+        DaKanjiDbDictionaryManagementWidget(),
     
-        DakanjiDbSettingsHeading(loc.displayHeader),
-        DakanjiDbSettingsToggleListTile(
+        SearchProfileSettingsHeading(loc.displayHeader),
+        SearchProfileSettingsToggleListTile(
           title: loc.showSeparatorsTitle,
           subtitle: loc.showSeparatorsSubtitle,
           value: context.watch<SearchProfilesEntry>().showSearchResultSeparationHeaders,
@@ -71,7 +71,7 @@ Custom dictionaries can be imported to further expand your library.
             context.read<SearchProfilesEntry>().copyWith(showSearchResultSeparationHeaders: v)
           )
         ),
-        DakanjiDbSettingsToggleListTile(
+        SearchProfileSettingsToggleListTile(
           // TODO localization
           title: "Show Kanji Entries",
           subtitle: "Should Kanji entries be shown in search results when searching for single characters",
@@ -80,7 +80,7 @@ Custom dictionaries can be imported to further expand your library.
             context.read<SearchProfilesEntry>().copyWith(showKanjiEntriesInSearchResults: v)
           )
         ),
-        DakanjiDbSettingsToggleListTile(
+        SearchProfileSettingsToggleListTile(
           title: loc.showTagsTitle,
           subtitle: loc.showTagsSubtitle,
           value: context.watch<SearchProfilesEntry>().showTags,
@@ -88,7 +88,7 @@ Custom dictionaries can be imported to further expand your library.
             context.read<SearchProfilesEntry>().copyWith(showTags: v)
           )
         ),
-        DakanjiDbSettingsToggleListTile(
+        SearchProfileSettingsToggleListTile(
           title: loc.showMetaEntriesTitle,
           subtitle: loc.showMetaEntriesSubtitle,
           value: context.watch<SearchProfilesEntry>().showMetaEntries,
@@ -98,7 +98,7 @@ Custom dictionaries can be imported to further expand your library.
         ),
 
         // TODO: switch to spinningbox and use the set value directly
-        DakanjiDbSettingsToggleListTile(
+        SearchProfileSettingsToggleListTile(
           title: loc.useCompactDefinitionsTitle,
           subtitle: loc.useCompactDefinitionsSubtitle,
           value: context.watch<SearchProfilesEntry>().definitionsMaxHeight > 0,
@@ -106,7 +106,7 @@ Custom dictionaries can be imported to further expand your library.
             context.read<SearchProfilesEntry>().copyWith(definitionsMaxHeight: v ? 60.0 : 0.0)
           )
         ),
-        DakanjiDbSettingsToggleListTile(
+        SearchProfileSettingsToggleListTile(
           // TODO localization
           title: loc.useKatakanaForFuriganaTitle,
           subtitle: "Should katakana be used for furigana readings regardless of the defined reading",
@@ -115,7 +115,7 @@ Custom dictionaries can be imported to further expand your library.
             context.read<SearchProfilesEntry>().copyWith(useKatakanaForFurigana: v)
           )
         ),
-        DakanjiDbSettingsToggleListTile(
+        SearchProfileSettingsToggleListTile(
           // TODO localization
           title: "Flexible Search Converts Romaji",
           subtitle: "Should romaji input also be converted to hiragana for flexible search matching",
@@ -125,9 +125,9 @@ Custom dictionaries can be imported to further expand your library.
           )
         ),
           
-        DakanjiDbSettingsCategorySeparator(),
-        DakanjiDbSettingsHeading(loc.sortOrderTitle),
-        DakanjiDbSettingsSearchResultSortOrder(
+        SearchProfileSettingsCategorySeparator(),
+        SearchProfileSettingsHeading(loc.sortOrderTitle),
+        SearchProfileSettingsSearchResultSortOrder(
           firstSortOrder: true,
           
           title: loc.sortByTitle,
@@ -139,7 +139,7 @@ Custom dictionaries can be imported to further expand your library.
             loc.sortByTypoCorrectionMatch,
           ],
         ),
-        DakanjiDbSettingsSearchResultSortOrder(
+        SearchProfileSettingsSearchResultSortOrder(
           secondSortOrder: true,
           
           title: loc.thenByTitle,
@@ -152,12 +152,12 @@ Custom dictionaries can be imported to further expand your library.
           ],
         ),
           
-        DakanjiDbSettingsCategorySeparator(),
-        DakanjiDbSettingsHeading(loc.groupingTitle),
-        DakanjiDbSettingsGroupingWidget(),
+        SearchProfileSettingsCategorySeparator(),
+        SearchProfileSettingsHeading(loc.groupingTitle),
+        SearchProfileSettingsGroupingWidget(),
       
-        DakanjiDbSettingsCategorySeparator(),
-        DakanjiDbSettingsHeading(loc.miscTitle),
+        SearchProfileSettingsCategorySeparator(),
+        SearchProfileSettingsHeading(loc.miscTitle),
 
         // TODO Search result limit
 

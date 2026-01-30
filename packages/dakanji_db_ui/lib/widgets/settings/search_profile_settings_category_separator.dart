@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 
 
-class DakanjiDbSettingsCategorySeparator extends StatelessWidget {
-  const DakanjiDbSettingsCategorySeparator({super.key});
+class SearchProfileSettingsCategorySeparator extends StatelessWidget {
+  const SearchProfileSettingsCategorySeparator({super.key});
 
   @override
   Widget build(BuildContext context) {

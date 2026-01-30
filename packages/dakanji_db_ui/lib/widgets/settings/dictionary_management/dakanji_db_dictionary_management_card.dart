@@ -1,29 +1,29 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_details_table.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_update_popup.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_info_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class DictionaryManagementCard extends StatefulWidget {
+class DaKanjiDbDictionaryManagementCard extends StatefulWidget {
   
   final IndexEntry entry;
 
   final int index;
   
-  const DictionaryManagementCard({
+  const DaKanjiDbDictionaryManagementCard({
     super.key,
     required this.entry,
     required this.index,
   });
 
   @override
-  State<DictionaryManagementCard> createState() => _DictionaryManagementCardState();
+  State<DaKanjiDbDictionaryManagementCard> createState() => _DaKanjiDbDictionaryManagementCardState();
 }
 
-class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
+class _DaKanjiDbDictionaryManagementCardState extends State<DaKanjiDbDictionaryManagementCard> {
 
   bool isExpanded = false;
 
@@ -93,7 +93,7 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
             ),
             child: SingleChildScrollView(
               primary: false,
-              child: DictionaryManagementDetailsTable(widget.entry,),
+              child: DaKanjiDbDictionaryManagementDetailsTable(widget.entry,),
             ),
           ),
           SizedBox(height: 8),

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 
 
-class DakanjiDbSettingsHeading extends StatelessWidget {
+class SearchProfileSettingsHeading extends StatelessWidget {
   
   final String title;
   
-  const DakanjiDbSettingsHeading(
+  const SearchProfileSettingsHeading(
     this.title,
     {
       super.key

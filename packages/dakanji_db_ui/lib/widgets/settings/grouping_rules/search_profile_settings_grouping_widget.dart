@@ -2,9 +2,9 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_card_add_button.dart';
-import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
-import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_rule_card.dart';
+import 'package:dakanji_db_ui/widgets/settings/grouping_rules/search_profile_settings_grouping_rule_card.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_card_add_button.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_info_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -39,15 +39,15 @@ enum IndexGroupingUsage {
   usedInOther
 }
 
-class DakanjiDbSettingsGroupingWidget extends StatefulWidget {
+class SearchProfileSettingsGroupingWidget extends StatefulWidget {
 
-  const DakanjiDbSettingsGroupingWidget({super.key});
+  const SearchProfileSettingsGroupingWidget({super.key});
 
   @override
-  State<DakanjiDbSettingsGroupingWidget> createState() => _DakanjiDbSettingsGroupingWidgetState();
+  State<SearchProfileSettingsGroupingWidget> createState() => _SearchProfileSettingsGroupingWidgetState();
 }
 
-class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroupingWidget> {
+class _SearchProfileSettingsGroupingWidgetState extends State<SearchProfileSettingsGroupingWidget> {
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +66,10 @@ class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroup
         ),
 
         for (int i = 0; i < rules.length; i++) 
-          GroupingRuleCard(i, loc),
+          SearchProfileSettingsGroupingRuleCard(i, loc),
 
         // The add button
-        DakanjiDbSettingsCardAddButton(
+        SearchProfileSearchProfileCardAddButton(
           loc.addRule,
           onPressed: () {
             GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
