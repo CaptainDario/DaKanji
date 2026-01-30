@@ -97,7 +97,7 @@ void main() {
               await db.indexDao.clearFrequencyOverride();
             
             // setup indexes to include
-            List<int> indexesToInclude = testCase.indexesToInclude ?? [];
+            List<int>? indexesToInclude = testCase.indexesToInclude;
             if (testCase.useOnlyDefaultDictionaries){
               indexesToInclude = await db.indexDao.getAllDefaultIndexes()
                 .then((value) => value.map((e) => e.id).toList());
@@ -106,6 +106,9 @@ void main() {
               indexesToInclude = await db.indexDao.getAllEnabledIndexes()
                 .then((value) => value.map((e) => e.id).toList());
             }
+            // search in all indexes if none specified 
+            indexesToInclude ??= indexesToInclude = await db.indexDao.getAllIndexes()
+              .then((value) => value.map((e) => e.id).toList());
 
             // Perform the search  
             final results = (await db.dictionarySearchDao.dictionarySearch(
