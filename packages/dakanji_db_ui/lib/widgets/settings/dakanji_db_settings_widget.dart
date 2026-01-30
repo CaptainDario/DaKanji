@@ -3,6 +3,7 @@ import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.d
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_category_separator.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_heading.dart';
+import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_search_result_sort_order.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_toggle_list_tile.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_widget.dart';
@@ -31,6 +32,34 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
       mainAxisSize: .min,
       children: [
         DakanjiDbSettingsHeading(loc.dictionariesHeader),
+        InfoPopupButton(
+          title: "Global frequency dictionary",
+          infoText:
+"""
+**Global Frequency Sorting**
+
+Uses this dictionary to sort all search results by popularity. 
+
+This merges your dictionaries together, showing the most common words first regardless of which dictionary they come from.
+"""
+        ),
+        InfoPopupButton(
+          // TODO localization
+          title: "Dictionary Management",
+          infoText:
+"""
+**How to configure your dictionaries**
+
+The order of this list determines which definitions you see first.
+Drag and drop your favorite dictionaries to the top so their results appear before others.
+
+**Note on Frequency:** If you have set a "Frequency Sort Source" above, results will be sorted by popularity instead.
+This manual list order is then used only when words are equally popular.
+
+You can also toggle specific dictionaries off to hide them without deleting them.
+Custom dictionaries can be imported to further expand your library.
+"""
+        ),
         DakanjiDbDictionaryManagementWidget(),
     
         DakanjiDbSettingsHeading(loc.displayHeader),
@@ -43,6 +72,7 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
           )
         ),
         DakanjiDbSettingsToggleListTile(
+          // TODO localization
           title: "Show Kanji Entries",
           subtitle: "Should Kanji entries be shown in search results when searching for single characters",
           value: context.watch<SearchProfilesEntry>().showKanjiEntriesInSearchResults,
@@ -77,6 +107,7 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
           )
         ),
         DakanjiDbSettingsToggleListTile(
+          // TODO localization
           title: loc.useKatakanaForFuriganaTitle,
           subtitle: "Should katakana be used for furigana readings regardless of the defined reading",
           value: context.watch<SearchProfilesEntry>().useKatakanaForFurigana,
@@ -85,6 +116,7 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
           )
         ),
         DakanjiDbSettingsToggleListTile(
+          // TODO localization
           title: "Flexible Search Converts Romaji",
           subtitle: "Should romaji input also be converted to hiragana for flexible search matching",
           value: context.watch<SearchProfilesEntry>().normalizeSearchConvertsRomajiToHiragana,
