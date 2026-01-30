@@ -44,7 +44,7 @@ class DaKanjiDbDictionaryManagementDetailsTable extends StatelessWidget {
       ("Enabled", dict.enabled ? "Yes" : "No"),
       ("Dictionary Type", dict.dictionaryType.name.toString()),
       ("Current Sort Order", "${dict.currentSortingOrder}"),
-      ("Is frequency dictionary", dict.currentFrequencyDictionary ? "Yes" : "No"),
+      ("Is global frequency dictionary", dict.currentFrequencyDictionary ? "Yes" : "No"),
       ("Title", dict.title),
       ("Revision", dict.revision.toString()),
       if (dict.sequenced != null) ("Sequenced", dict.sequenced! ? "Yes" : "No"),

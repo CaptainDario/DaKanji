@@ -4,6 +4,7 @@ import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_widget.dart';
 import 'package:dakanji_db_ui/widgets/settings/grouping_rules/search_profile_settings_grouping_widget.dart';
 import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_category_separator.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_frequency_dictionary_dropdown.dart';
 import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_heading.dart';
 import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_info_widgets.dart';
 import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_search_result_sort_order.dart';
@@ -43,6 +44,8 @@ Uses this dictionary to sort all search results by popularity.
 This merges your dictionaries together, showing the most common words first regardless of which dictionary they come from.
 """
         ),
+        SearchProfileSettingsFrequencyDictionaryDropdown(),
+
         InfoPopupButton(
           // TODO localization
           title: "Dictionary Management",
