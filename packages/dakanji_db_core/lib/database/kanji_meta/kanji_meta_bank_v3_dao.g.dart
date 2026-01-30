@@ -10,4 +10,24 @@ mixin _$KanjiMetaBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
       attachedDatabase.kanjiMetaBankV3TypeTable;
   $KanjiMetaBankV3TableTable get kanjiMetaBankV3Table =>
       attachedDatabase.kanjiMetaBankV3Table;
+  KanjiMetaBankV3DaoManager get managers => KanjiMetaBankV3DaoManager(this);
+}
+
+class KanjiMetaBankV3DaoManager {
+  final _$KanjiMetaBankV3DaoMixin _db;
+  KanjiMetaBankV3DaoManager(this._db);
+  $$IndexTableTableTableManager get indexTable =>
+      $$IndexTableTableTableManager(_db.attachedDatabase, _db.indexTable);
+  $$KanjiTableTableTableManager get kanjiTable =>
+      $$KanjiTableTableTableManager(_db.attachedDatabase, _db.kanjiTable);
+  $$KanjiMetaBankV3TypeTableTableTableManager get kanjiMetaBankV3TypeTable =>
+      $$KanjiMetaBankV3TypeTableTableTableManager(
+        _db.attachedDatabase,
+        _db.kanjiMetaBankV3TypeTable,
+      );
+  $$KanjiMetaBankV3TableTableTableManager get kanjiMetaBankV3Table =>
+      $$KanjiMetaBankV3TableTableTableManager(
+        _db.attachedDatabase,
+        _db.kanjiMetaBankV3Table,
+      );
 }

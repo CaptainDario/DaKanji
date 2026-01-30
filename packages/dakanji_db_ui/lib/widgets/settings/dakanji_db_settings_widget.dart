@@ -1,5 +1,6 @@
+import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
-import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_category_separator.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_heading.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_search_result_sort_order.dart';
@@ -23,8 +24,6 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
   Widget build(BuildContext context) {
 
     final loc = GetIt.I<DakanjiDbLocalization>();
-    final s = context.watch<DaKanjiDbSettings>();
-    final si = s.settings;
 
     return Column(
       mainAxisAlignment: .start,
@@ -38,54 +37,60 @@ class _DakanjiDbSettingsWidgetState extends State<DakanjiDbSettingsWidget> {
         DakanjiDbSettingsToggleListTile(
           title: loc.showSeparatorsTitle,
           subtitle: loc.showSeparatorsSubtitle,
-          value: si.showSearchResultSeparationHeaders,
-          onChanged: (v) => s.update(si.copyWith(
-            showSearchResultSeparationHeaders: v))
+          value: context.watch<SearchProfilesEntry>().showSearchResultSeparationHeaders,
+          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+            context.read<SearchProfilesEntry>().copyWith(showSearchResultSeparationHeaders: v)
+          )
         ),
         DakanjiDbSettingsToggleListTile(
           title: "Show Kanji Entries",
           subtitle: "Should Kanji entries be shown in search results when searching for single characters",
-          value: si.showKanjiEntriesInSearchResults,
-          onChanged: (v) => s.update(si.copyWith(
-            showKanjiEntriesInSearchResults: v))
+          value: context.watch<SearchProfilesEntry>().showKanjiEntriesInSearchResults,
+          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+            context.read<SearchProfilesEntry>().copyWith(showKanjiEntriesInSearchResults: v)
+          )
         ),
         DakanjiDbSettingsToggleListTile(
           title: loc.showTagsTitle,
           subtitle: loc.showTagsSubtitle,
-          value: si.showTags,
-          onChanged: (v) => s.update(si.copyWith(showTags: v))
+          value: context.watch<SearchProfilesEntry>().showTags,
+          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+            context.read<SearchProfilesEntry>().copyWith(showTags: v)
+          )
         ),
         DakanjiDbSettingsToggleListTile(
           title: loc.showMetaEntriesTitle,
           subtitle: loc.showMetaEntriesSubtitle,
-          value: si.showMetaEntries,
-          onChanged: (v) => s.update(si.copyWith(
-              showMetaEntries: v
-            ))
+          value: context.watch<SearchProfilesEntry>().showMetaEntries,
+          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+            context.read<SearchProfilesEntry>().copyWith(showMetaEntries: v)
+          )
         ),
+
+        // TODO: switch to spinningbox and use the set value directly
         DakanjiDbSettingsToggleListTile(
           title: loc.useCompactDefinitionsTitle,
           subtitle: loc.useCompactDefinitionsSubtitle,
-          value: si.definitionsMaxHeight > 0,
-          onChanged: (v) => s.update(si.copyWith(
-              definitionsMaxHeight: v ? 60.0 : 0.0
-            ))
+          value: context.watch<SearchProfilesEntry>().definitionsMaxHeight > 0,
+          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+            context.read<SearchProfilesEntry>().copyWith(definitionsMaxHeight: v ? 60.0 : 0.0)
+          )
         ),
         DakanjiDbSettingsToggleListTile(
           title: loc.useKatakanaForFuriganaTitle,
           subtitle: "Should katakana be used for furigana readings regardless of the defined reading",
-          value: si.useKatakanaForFurigana,
-          onChanged: (v) => s.update(si.copyWith(
-              useKatakanaForFurigana: v
-            ))
+          value: context.watch<SearchProfilesEntry>().useKatakanaForFurigana,
+          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+            context.read<SearchProfilesEntry>().copyWith(useKatakanaForFurigana: v)
+          )
         ),
         DakanjiDbSettingsToggleListTile(
           title: "Flexible Search Converts Romaji",
           subtitle: "Should romaji input also be converted to hiragana for flexible search matching",
-          value: si.normalizeSearchConvertsRomajiToHiragana,
-          onChanged: (v) => s.update(si.copyWith(
-              normalizeSearchConvertsRomajiToHiragana: v
-            ))
+          value: context.watch<SearchProfilesEntry>().normalizeSearchConvertsRomajiToHiragana,
+          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+            context.read<SearchProfilesEntry>().copyWith(normalizeSearchConvertsRomajiToHiragana: v)
+          )
         ),
           
         DakanjiDbSettingsCategorySeparator(),

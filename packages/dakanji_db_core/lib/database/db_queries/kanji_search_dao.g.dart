@@ -3,4 +3,11 @@
 part of 'kanji_search_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$KanjiSearchDaoMixin on DatabaseAccessor<DaKanjiDB> {}
+mixin _$KanjiSearchDaoMixin on DatabaseAccessor<DaKanjiDB> {
+  KanjiSearchDaoManager get managers => KanjiSearchDaoManager(this);
+}
+
+class KanjiSearchDaoManager {
+  final _$KanjiSearchDaoMixin _db;
+  KanjiSearchDaoManager(this._db);
+}

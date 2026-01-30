@@ -7,6 +7,8 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search_dao.dart';
 import 'package:dakanji_db_core/database/db_queries/kanji_search_dao.dart';
 import 'package:dakanji_db_core/database/general_tables/media_dao.dart';
 import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
+import 'package:dakanji_db_core/database/search_profiles/search_profile_tables.dart';
+import 'package:dakanji_db_core/database/search_profiles/search_profiles_dao.dart';
 import 'package:dakanji_db_core/delete/deletion_dao.dart';
 import 'package:dakanji_sqlite_extensions/dakanji_sqlite_extensions.dart';
 import 'package:drift/drift.dart';
@@ -49,9 +51,10 @@ import '/database/term/term_bank_v3_tables.dart';
 import '/database/term_meta/term_meta_bank_relation_tables.dart';
 import '/database/term_meta/term_meta_bank_v3_dao.dart';
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
-import '/helper/zlib_text_converter_io.dart';   // neccessary for drift generator
-// ignore: unused_import
-import '../helper/sql_json_converter.dart'; // neccessary for drift generator
+import '/helper/zlib_text_converter_io.dart'; // neccessary for drift generator
+import '../data/dakanji_db_search_result_sort_order.dart'; // neccessary for drift generator
+import '../helper/sort_order_converter.dart'; // neccessary for drift generator
+import '../helper/sql_json_converter.dart';   // neccessary for drift generator
 import 'audio_source_list/audio_source_list_tables.dart';
 
 part 'dakanji_db.g.dart';
@@ -69,7 +72,7 @@ part 'dakanji_db.g.dart';
 
     IndexTable,
 
-    TagBankV3Table,
+    SearchProfilesTable,
 
     KanjiBankV3Table,
     KanjiBankV3_X_KunyomiReadingTable, KanjiBankV3_X_OnyomiReadingTable,
@@ -102,6 +105,7 @@ part 'dakanji_db.g.dart';
     AudioDao, MediaDao,
     RadicalDao, KanjiVGDao,
     IndexDao, TagBankV3Dao,
+    SearchProfilesDao,
     KanjiBankV3Dao, KanjiMetaBankV3Dao,
     TermBankV3Dao,
     TermMetaBankV3Dao,

@@ -17127,6 +17127,1098 @@ class Radical_X_KanjiRelationsTableCompanion
   }
 }
 
+class $SearchProfilesTableTable extends SearchProfilesTable
+    with TableInfo<$SearchProfilesTableTable, SearchProfilesTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SearchProfilesTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('Standard'),
+  );
+  static const VerificationMeta _isActiveProfileMeta = const VerificationMeta(
+    'isActiveProfile',
+  );
+  @override
+  late final GeneratedColumn<bool> isActiveProfile = GeneratedColumn<bool>(
+    'is_active_profile',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_active_profile" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<
+    List<(DakanjiDbSearchResult1stSortOrder, bool)>,
+    String
+  >
+  firstSortOrder =
+      GeneratedColumn<String>(
+        'first_sort_order',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<List<(DakanjiDbSearchResult1stSortOrder, bool)>>(
+        $SearchProfilesTableTable.$converterfirstSortOrder,
+      );
+  @override
+  late final GeneratedColumnWithTypeConverter<
+    List<(DakanjiDbSearchResult2ndSortOrder, bool)>,
+    String
+  >
+  secondSortOrder =
+      GeneratedColumn<String>(
+        'second_sort_order',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<List<(DakanjiDbSearchResult2ndSortOrder, bool)>>(
+        $SearchProfilesTableTable.$convertersecondSortOrder,
+      );
+  static const VerificationMeta _normalizeSearchConvertsRomajiToHiraganaMeta =
+      const VerificationMeta('normalizeSearchConvertsRomajiToHiragana');
+  @override
+  late final GeneratedColumn<bool> normalizeSearchConvertsRomajiToHiragana =
+      GeneratedColumn<bool>(
+        'normalize_search_converts_romaji_to_hiragana',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("normalize_search_converts_romaji_to_hiragana" IN (0, 1))',
+        ),
+        defaultValue: const Constant(true),
+      );
+  @override
+  late final GeneratedColumnWithTypeConverter<Object?, String> groupingRules =
+      GeneratedColumn<String>(
+        'grouping_rules',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<Object?>(
+        $SearchProfilesTableTable.$convertergroupingRules,
+      );
+  static const VerificationMeta _showSearchResultSeparationHeadersMeta =
+      const VerificationMeta('showSearchResultSeparationHeaders');
+  @override
+  late final GeneratedColumn<bool> showSearchResultSeparationHeaders =
+      GeneratedColumn<bool>(
+        'show_search_result_separation_headers',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("show_search_result_separation_headers" IN (0, 1))',
+        ),
+        defaultValue: const Constant(true),
+      );
+  static const VerificationMeta _showKanjiEntriesInSearchResultsMeta =
+      const VerificationMeta('showKanjiEntriesInSearchResults');
+  @override
+  late final GeneratedColumn<bool> showKanjiEntriesInSearchResults =
+      GeneratedColumn<bool>(
+        'show_kanji_entries_in_search_results',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("show_kanji_entries_in_search_results" IN (0, 1))',
+        ),
+        defaultValue: const Constant(true),
+      );
+  static const VerificationMeta _showTagsMeta = const VerificationMeta(
+    'showTags',
+  );
+  @override
+  late final GeneratedColumn<bool> showTags = GeneratedColumn<bool>(
+    'show_tags',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("show_tags" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _showMetaEntriesMeta = const VerificationMeta(
+    'showMetaEntries',
+  );
+  @override
+  late final GeneratedColumn<bool> showMetaEntries = GeneratedColumn<bool>(
+    'show_meta_entries',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("show_meta_entries" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _definitionsMaxHeightMeta =
+      const VerificationMeta('definitionsMaxHeight');
+  @override
+  late final GeneratedColumn<double> definitionsMaxHeight =
+      GeneratedColumn<double>(
+        'definitions_max_height',
+        aliasedName,
+        false,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+        defaultValue: const Constant(60.0),
+      );
+  static const VerificationMeta _useKatakanaForFuriganaMeta =
+      const VerificationMeta('useKatakanaForFurigana');
+  @override
+  late final GeneratedColumn<bool> useKatakanaForFurigana =
+      GeneratedColumn<bool>(
+        'use_katakana_for_furigana',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("use_katakana_for_furigana" IN (0, 1))',
+        ),
+        defaultValue: const Constant(false),
+      );
+  static const VerificationMeta _spellfixMaxResultsMeta =
+      const VerificationMeta('spellfixMaxResults');
+  @override
+  late final GeneratedColumn<int> spellfixMaxResults = GeneratedColumn<int>(
+    'spellfix_max_results',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(20),
+  );
+  static const VerificationMeta _spellfixMaxCostMeta = const VerificationMeta(
+    'spellfixMaxCost',
+  );
+  @override
+  late final GeneratedColumn<int> spellfixMaxCost = GeneratedColumn<int>(
+    'spellfix_max_cost',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(10),
+  );
+  static const VerificationMeta _searchResultLimitMeta = const VerificationMeta(
+    'searchResultLimit',
+  );
+  @override
+  late final GeneratedColumn<int> searchResultLimit = GeneratedColumn<int>(
+    'search_result_limit',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(100),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    isActiveProfile,
+    firstSortOrder,
+    secondSortOrder,
+    normalizeSearchConvertsRomajiToHiragana,
+    groupingRules,
+    showSearchResultSeparationHeaders,
+    showKanjiEntriesInSearchResults,
+    showTags,
+    showMetaEntries,
+    definitionsMaxHeight,
+    useKatakanaForFurigana,
+    spellfixMaxResults,
+    spellfixMaxCost,
+    searchResultLimit,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'search_profiles_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SearchProfilesTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    }
+    if (data.containsKey('is_active_profile')) {
+      context.handle(
+        _isActiveProfileMeta,
+        isActiveProfile.isAcceptableOrUnknown(
+          data['is_active_profile']!,
+          _isActiveProfileMeta,
+        ),
+      );
+    }
+    if (data.containsKey('normalize_search_converts_romaji_to_hiragana')) {
+      context.handle(
+        _normalizeSearchConvertsRomajiToHiraganaMeta,
+        normalizeSearchConvertsRomajiToHiragana.isAcceptableOrUnknown(
+          data['normalize_search_converts_romaji_to_hiragana']!,
+          _normalizeSearchConvertsRomajiToHiraganaMeta,
+        ),
+      );
+    }
+    if (data.containsKey('show_search_result_separation_headers')) {
+      context.handle(
+        _showSearchResultSeparationHeadersMeta,
+        showSearchResultSeparationHeaders.isAcceptableOrUnknown(
+          data['show_search_result_separation_headers']!,
+          _showSearchResultSeparationHeadersMeta,
+        ),
+      );
+    }
+    if (data.containsKey('show_kanji_entries_in_search_results')) {
+      context.handle(
+        _showKanjiEntriesInSearchResultsMeta,
+        showKanjiEntriesInSearchResults.isAcceptableOrUnknown(
+          data['show_kanji_entries_in_search_results']!,
+          _showKanjiEntriesInSearchResultsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('show_tags')) {
+      context.handle(
+        _showTagsMeta,
+        showTags.isAcceptableOrUnknown(data['show_tags']!, _showTagsMeta),
+      );
+    }
+    if (data.containsKey('show_meta_entries')) {
+      context.handle(
+        _showMetaEntriesMeta,
+        showMetaEntries.isAcceptableOrUnknown(
+          data['show_meta_entries']!,
+          _showMetaEntriesMeta,
+        ),
+      );
+    }
+    if (data.containsKey('definitions_max_height')) {
+      context.handle(
+        _definitionsMaxHeightMeta,
+        definitionsMaxHeight.isAcceptableOrUnknown(
+          data['definitions_max_height']!,
+          _definitionsMaxHeightMeta,
+        ),
+      );
+    }
+    if (data.containsKey('use_katakana_for_furigana')) {
+      context.handle(
+        _useKatakanaForFuriganaMeta,
+        useKatakanaForFurigana.isAcceptableOrUnknown(
+          data['use_katakana_for_furigana']!,
+          _useKatakanaForFuriganaMeta,
+        ),
+      );
+    }
+    if (data.containsKey('spellfix_max_results')) {
+      context.handle(
+        _spellfixMaxResultsMeta,
+        spellfixMaxResults.isAcceptableOrUnknown(
+          data['spellfix_max_results']!,
+          _spellfixMaxResultsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('spellfix_max_cost')) {
+      context.handle(
+        _spellfixMaxCostMeta,
+        spellfixMaxCost.isAcceptableOrUnknown(
+          data['spellfix_max_cost']!,
+          _spellfixMaxCostMeta,
+        ),
+      );
+    }
+    if (data.containsKey('search_result_limit')) {
+      context.handle(
+        _searchResultLimitMeta,
+        searchResultLimit.isAcceptableOrUnknown(
+          data['search_result_limit']!,
+          _searchResultLimitMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SearchProfilesTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SearchProfilesTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      isActiveProfile: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_active_profile'],
+      )!,
+      firstSortOrder: $SearchProfilesTableTable.$converterfirstSortOrder
+          .fromSql(
+            attachedDatabase.typeMapping.read(
+              DriftSqlType.string,
+              data['${effectivePrefix}first_sort_order'],
+            )!,
+          ),
+      secondSortOrder: $SearchProfilesTableTable.$convertersecondSortOrder
+          .fromSql(
+            attachedDatabase.typeMapping.read(
+              DriftSqlType.string,
+              data['${effectivePrefix}second_sort_order'],
+            )!,
+          ),
+      normalizeSearchConvertsRomajiToHiragana: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}normalize_search_converts_romaji_to_hiragana'],
+      )!,
+      groupingRules: $SearchProfilesTableTable.$convertergroupingRules.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}grouping_rules'],
+        )!,
+      ),
+      showSearchResultSeparationHeaders: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}show_search_result_separation_headers'],
+      )!,
+      showKanjiEntriesInSearchResults: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}show_kanji_entries_in_search_results'],
+      )!,
+      showTags: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}show_tags'],
+      )!,
+      showMetaEntries: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}show_meta_entries'],
+      )!,
+      definitionsMaxHeight: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}definitions_max_height'],
+      )!,
+      useKatakanaForFurigana: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}use_katakana_for_furigana'],
+      )!,
+      spellfixMaxResults: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}spellfix_max_results'],
+      )!,
+      spellfixMaxCost: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}spellfix_max_cost'],
+      )!,
+      searchResultLimit: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}search_result_limit'],
+      )!,
+    );
+  }
+
+  @override
+  $SearchProfilesTableTable createAlias(String alias) {
+    return $SearchProfilesTableTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<List<(DakanjiDbSearchResult1stSortOrder, bool)>, String>
+  $converterfirstSortOrder = const FirstSortOrderConverter();
+  static TypeConverter<List<(DakanjiDbSearchResult2ndSortOrder, bool)>, String>
+  $convertersecondSortOrder = const SecondSortOrderConverter();
+  static TypeConverter<Object?, String> $convertergroupingRules =
+      const JsonConverter();
+}
+
+class SearchProfilesTableData extends DataClass
+    implements Insertable<SearchProfilesTableData> {
+  final int id;
+  final String name;
+  final bool isActiveProfile;
+
+  /// 1st level sort order for search results.
+  /// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
+  /// will not be searched for.
+  final List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder;
+
+  /// 2nd level sort order for search results.
+  /// If an entry of [DakanjiDbSearchResult2ndSortOrder] is not included here, it
+  /// will not be searched for.
+  final List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder;
+
+  /// Whether to convert romaji to hiragana in normalized searches.
+  final bool normalizeSearchConvertsRomajiToHiragana;
+
+  /// The grouping rules to apply to the search.
+  final Object? groupingRules;
+
+  /// Whether to show the separation headers such as "Exact Matches",
+  /// "Prefix Matches", etc.
+  final bool showSearchResultSeparationHeaders;
+
+  /// Whether to show Kanji entries at the top search results when searching
+  /// for single characters
+  final bool showKanjiEntriesInSearchResults;
+
+  /// Whether to show tags in [DictionaryMatchWidget]s.
+  final bool showTags;
+
+  /// Whether to show meta entries in [DictionaryMatchWidget]s.
+  final bool showMetaEntries;
+
+  /// Maximum height for compact definitions.
+  final double definitionsMaxHeight;
+
+  /// Whether to use katakana for furigana instead of hiragana.
+  final bool useKatakanaForFurigana;
+
+  /// The maximum number of typo corrections to consider.
+  final int spellfixMaxResults;
+
+  /// The maximum cost for typo correction searches.
+  final int spellfixMaxCost;
+
+  /// Maximum number of results to return when search (does apply to each
+  /// of the four independent searches **separately**).
+  final int searchResultLimit;
+  const SearchProfilesTableData({
+    required this.id,
+    required this.name,
+    required this.isActiveProfile,
+    required this.firstSortOrder,
+    required this.secondSortOrder,
+    required this.normalizeSearchConvertsRomajiToHiragana,
+    this.groupingRules,
+    required this.showSearchResultSeparationHeaders,
+    required this.showKanjiEntriesInSearchResults,
+    required this.showTags,
+    required this.showMetaEntries,
+    required this.definitionsMaxHeight,
+    required this.useKatakanaForFurigana,
+    required this.spellfixMaxResults,
+    required this.spellfixMaxCost,
+    required this.searchResultLimit,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['is_active_profile'] = Variable<bool>(isActiveProfile);
+    {
+      map['first_sort_order'] = Variable<String>(
+        $SearchProfilesTableTable.$converterfirstSortOrder.toSql(
+          firstSortOrder,
+        ),
+      );
+    }
+    {
+      map['second_sort_order'] = Variable<String>(
+        $SearchProfilesTableTable.$convertersecondSortOrder.toSql(
+          secondSortOrder,
+        ),
+      );
+    }
+    map['normalize_search_converts_romaji_to_hiragana'] = Variable<bool>(
+      normalizeSearchConvertsRomajiToHiragana,
+    );
+    if (!nullToAbsent || groupingRules != null) {
+      map['grouping_rules'] = Variable<String>(
+        $SearchProfilesTableTable.$convertergroupingRules.toSql(groupingRules),
+      );
+    }
+    map['show_search_result_separation_headers'] = Variable<bool>(
+      showSearchResultSeparationHeaders,
+    );
+    map['show_kanji_entries_in_search_results'] = Variable<bool>(
+      showKanjiEntriesInSearchResults,
+    );
+    map['show_tags'] = Variable<bool>(showTags);
+    map['show_meta_entries'] = Variable<bool>(showMetaEntries);
+    map['definitions_max_height'] = Variable<double>(definitionsMaxHeight);
+    map['use_katakana_for_furigana'] = Variable<bool>(useKatakanaForFurigana);
+    map['spellfix_max_results'] = Variable<int>(spellfixMaxResults);
+    map['spellfix_max_cost'] = Variable<int>(spellfixMaxCost);
+    map['search_result_limit'] = Variable<int>(searchResultLimit);
+    return map;
+  }
+
+  SearchProfilesTableCompanion toCompanion(bool nullToAbsent) {
+    return SearchProfilesTableCompanion(
+      id: Value(id),
+      name: Value(name),
+      isActiveProfile: Value(isActiveProfile),
+      firstSortOrder: Value(firstSortOrder),
+      secondSortOrder: Value(secondSortOrder),
+      normalizeSearchConvertsRomajiToHiragana: Value(
+        normalizeSearchConvertsRomajiToHiragana,
+      ),
+      groupingRules: groupingRules == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupingRules),
+      showSearchResultSeparationHeaders: Value(
+        showSearchResultSeparationHeaders,
+      ),
+      showKanjiEntriesInSearchResults: Value(showKanjiEntriesInSearchResults),
+      showTags: Value(showTags),
+      showMetaEntries: Value(showMetaEntries),
+      definitionsMaxHeight: Value(definitionsMaxHeight),
+      useKatakanaForFurigana: Value(useKatakanaForFurigana),
+      spellfixMaxResults: Value(spellfixMaxResults),
+      spellfixMaxCost: Value(spellfixMaxCost),
+      searchResultLimit: Value(searchResultLimit),
+    );
+  }
+
+  factory SearchProfilesTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SearchProfilesTableData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      isActiveProfile: serializer.fromJson<bool>(json['isActiveProfile']),
+      firstSortOrder: serializer
+          .fromJson<List<(DakanjiDbSearchResult1stSortOrder, bool)>>(
+            json['firstSortOrder'],
+          ),
+      secondSortOrder: serializer
+          .fromJson<List<(DakanjiDbSearchResult2ndSortOrder, bool)>>(
+            json['secondSortOrder'],
+          ),
+      normalizeSearchConvertsRomajiToHiragana: serializer.fromJson<bool>(
+        json['normalizeSearchConvertsRomajiToHiragana'],
+      ),
+      groupingRules: serializer.fromJson<Object?>(json['groupingRules']),
+      showSearchResultSeparationHeaders: serializer.fromJson<bool>(
+        json['showSearchResultSeparationHeaders'],
+      ),
+      showKanjiEntriesInSearchResults: serializer.fromJson<bool>(
+        json['showKanjiEntriesInSearchResults'],
+      ),
+      showTags: serializer.fromJson<bool>(json['showTags']),
+      showMetaEntries: serializer.fromJson<bool>(json['showMetaEntries']),
+      definitionsMaxHeight: serializer.fromJson<double>(
+        json['definitionsMaxHeight'],
+      ),
+      useKatakanaForFurigana: serializer.fromJson<bool>(
+        json['useKatakanaForFurigana'],
+      ),
+      spellfixMaxResults: serializer.fromJson<int>(json['spellfixMaxResults']),
+      spellfixMaxCost: serializer.fromJson<int>(json['spellfixMaxCost']),
+      searchResultLimit: serializer.fromJson<int>(json['searchResultLimit']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'isActiveProfile': serializer.toJson<bool>(isActiveProfile),
+      'firstSortOrder': serializer
+          .toJson<List<(DakanjiDbSearchResult1stSortOrder, bool)>>(
+            firstSortOrder,
+          ),
+      'secondSortOrder': serializer
+          .toJson<List<(DakanjiDbSearchResult2ndSortOrder, bool)>>(
+            secondSortOrder,
+          ),
+      'normalizeSearchConvertsRomajiToHiragana': serializer.toJson<bool>(
+        normalizeSearchConvertsRomajiToHiragana,
+      ),
+      'groupingRules': serializer.toJson<Object?>(groupingRules),
+      'showSearchResultSeparationHeaders': serializer.toJson<bool>(
+        showSearchResultSeparationHeaders,
+      ),
+      'showKanjiEntriesInSearchResults': serializer.toJson<bool>(
+        showKanjiEntriesInSearchResults,
+      ),
+      'showTags': serializer.toJson<bool>(showTags),
+      'showMetaEntries': serializer.toJson<bool>(showMetaEntries),
+      'definitionsMaxHeight': serializer.toJson<double>(definitionsMaxHeight),
+      'useKatakanaForFurigana': serializer.toJson<bool>(useKatakanaForFurigana),
+      'spellfixMaxResults': serializer.toJson<int>(spellfixMaxResults),
+      'spellfixMaxCost': serializer.toJson<int>(spellfixMaxCost),
+      'searchResultLimit': serializer.toJson<int>(searchResultLimit),
+    };
+  }
+
+  SearchProfilesTableData copyWith({
+    int? id,
+    String? name,
+    bool? isActiveProfile,
+    List<(DakanjiDbSearchResult1stSortOrder, bool)>? firstSortOrder,
+    List<(DakanjiDbSearchResult2ndSortOrder, bool)>? secondSortOrder,
+    bool? normalizeSearchConvertsRomajiToHiragana,
+    Value<Object?> groupingRules = const Value.absent(),
+    bool? showSearchResultSeparationHeaders,
+    bool? showKanjiEntriesInSearchResults,
+    bool? showTags,
+    bool? showMetaEntries,
+    double? definitionsMaxHeight,
+    bool? useKatakanaForFurigana,
+    int? spellfixMaxResults,
+    int? spellfixMaxCost,
+    int? searchResultLimit,
+  }) => SearchProfilesTableData(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    isActiveProfile: isActiveProfile ?? this.isActiveProfile,
+    firstSortOrder: firstSortOrder ?? this.firstSortOrder,
+    secondSortOrder: secondSortOrder ?? this.secondSortOrder,
+    normalizeSearchConvertsRomajiToHiragana:
+        normalizeSearchConvertsRomajiToHiragana ??
+        this.normalizeSearchConvertsRomajiToHiragana,
+    groupingRules: groupingRules.present
+        ? groupingRules.value
+        : this.groupingRules,
+    showSearchResultSeparationHeaders:
+        showSearchResultSeparationHeaders ??
+        this.showSearchResultSeparationHeaders,
+    showKanjiEntriesInSearchResults:
+        showKanjiEntriesInSearchResults ?? this.showKanjiEntriesInSearchResults,
+    showTags: showTags ?? this.showTags,
+    showMetaEntries: showMetaEntries ?? this.showMetaEntries,
+    definitionsMaxHeight: definitionsMaxHeight ?? this.definitionsMaxHeight,
+    useKatakanaForFurigana:
+        useKatakanaForFurigana ?? this.useKatakanaForFurigana,
+    spellfixMaxResults: spellfixMaxResults ?? this.spellfixMaxResults,
+    spellfixMaxCost: spellfixMaxCost ?? this.spellfixMaxCost,
+    searchResultLimit: searchResultLimit ?? this.searchResultLimit,
+  );
+  SearchProfilesTableData copyWithCompanion(SearchProfilesTableCompanion data) {
+    return SearchProfilesTableData(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      isActiveProfile: data.isActiveProfile.present
+          ? data.isActiveProfile.value
+          : this.isActiveProfile,
+      firstSortOrder: data.firstSortOrder.present
+          ? data.firstSortOrder.value
+          : this.firstSortOrder,
+      secondSortOrder: data.secondSortOrder.present
+          ? data.secondSortOrder.value
+          : this.secondSortOrder,
+      normalizeSearchConvertsRomajiToHiragana:
+          data.normalizeSearchConvertsRomajiToHiragana.present
+          ? data.normalizeSearchConvertsRomajiToHiragana.value
+          : this.normalizeSearchConvertsRomajiToHiragana,
+      groupingRules: data.groupingRules.present
+          ? data.groupingRules.value
+          : this.groupingRules,
+      showSearchResultSeparationHeaders:
+          data.showSearchResultSeparationHeaders.present
+          ? data.showSearchResultSeparationHeaders.value
+          : this.showSearchResultSeparationHeaders,
+      showKanjiEntriesInSearchResults:
+          data.showKanjiEntriesInSearchResults.present
+          ? data.showKanjiEntriesInSearchResults.value
+          : this.showKanjiEntriesInSearchResults,
+      showTags: data.showTags.present ? data.showTags.value : this.showTags,
+      showMetaEntries: data.showMetaEntries.present
+          ? data.showMetaEntries.value
+          : this.showMetaEntries,
+      definitionsMaxHeight: data.definitionsMaxHeight.present
+          ? data.definitionsMaxHeight.value
+          : this.definitionsMaxHeight,
+      useKatakanaForFurigana: data.useKatakanaForFurigana.present
+          ? data.useKatakanaForFurigana.value
+          : this.useKatakanaForFurigana,
+      spellfixMaxResults: data.spellfixMaxResults.present
+          ? data.spellfixMaxResults.value
+          : this.spellfixMaxResults,
+      spellfixMaxCost: data.spellfixMaxCost.present
+          ? data.spellfixMaxCost.value
+          : this.spellfixMaxCost,
+      searchResultLimit: data.searchResultLimit.present
+          ? data.searchResultLimit.value
+          : this.searchResultLimit,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SearchProfilesTableData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('isActiveProfile: $isActiveProfile, ')
+          ..write('firstSortOrder: $firstSortOrder, ')
+          ..write('secondSortOrder: $secondSortOrder, ')
+          ..write(
+            'normalizeSearchConvertsRomajiToHiragana: $normalizeSearchConvertsRomajiToHiragana, ',
+          )
+          ..write('groupingRules: $groupingRules, ')
+          ..write(
+            'showSearchResultSeparationHeaders: $showSearchResultSeparationHeaders, ',
+          )
+          ..write(
+            'showKanjiEntriesInSearchResults: $showKanjiEntriesInSearchResults, ',
+          )
+          ..write('showTags: $showTags, ')
+          ..write('showMetaEntries: $showMetaEntries, ')
+          ..write('definitionsMaxHeight: $definitionsMaxHeight, ')
+          ..write('useKatakanaForFurigana: $useKatakanaForFurigana, ')
+          ..write('spellfixMaxResults: $spellfixMaxResults, ')
+          ..write('spellfixMaxCost: $spellfixMaxCost, ')
+          ..write('searchResultLimit: $searchResultLimit')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    isActiveProfile,
+    firstSortOrder,
+    secondSortOrder,
+    normalizeSearchConvertsRomajiToHiragana,
+    groupingRules,
+    showSearchResultSeparationHeaders,
+    showKanjiEntriesInSearchResults,
+    showTags,
+    showMetaEntries,
+    definitionsMaxHeight,
+    useKatakanaForFurigana,
+    spellfixMaxResults,
+    spellfixMaxCost,
+    searchResultLimit,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SearchProfilesTableData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.isActiveProfile == this.isActiveProfile &&
+          other.firstSortOrder == this.firstSortOrder &&
+          other.secondSortOrder == this.secondSortOrder &&
+          other.normalizeSearchConvertsRomajiToHiragana ==
+              this.normalizeSearchConvertsRomajiToHiragana &&
+          other.groupingRules == this.groupingRules &&
+          other.showSearchResultSeparationHeaders ==
+              this.showSearchResultSeparationHeaders &&
+          other.showKanjiEntriesInSearchResults ==
+              this.showKanjiEntriesInSearchResults &&
+          other.showTags == this.showTags &&
+          other.showMetaEntries == this.showMetaEntries &&
+          other.definitionsMaxHeight == this.definitionsMaxHeight &&
+          other.useKatakanaForFurigana == this.useKatakanaForFurigana &&
+          other.spellfixMaxResults == this.spellfixMaxResults &&
+          other.spellfixMaxCost == this.spellfixMaxCost &&
+          other.searchResultLimit == this.searchResultLimit);
+}
+
+class SearchProfilesTableCompanion
+    extends UpdateCompanion<SearchProfilesTableData> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<bool> isActiveProfile;
+  final Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>> firstSortOrder;
+  final Value<List<(DakanjiDbSearchResult2ndSortOrder, bool)>> secondSortOrder;
+  final Value<bool> normalizeSearchConvertsRomajiToHiragana;
+  final Value<Object?> groupingRules;
+  final Value<bool> showSearchResultSeparationHeaders;
+  final Value<bool> showKanjiEntriesInSearchResults;
+  final Value<bool> showTags;
+  final Value<bool> showMetaEntries;
+  final Value<double> definitionsMaxHeight;
+  final Value<bool> useKatakanaForFurigana;
+  final Value<int> spellfixMaxResults;
+  final Value<int> spellfixMaxCost;
+  final Value<int> searchResultLimit;
+  const SearchProfilesTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.isActiveProfile = const Value.absent(),
+    this.firstSortOrder = const Value.absent(),
+    this.secondSortOrder = const Value.absent(),
+    this.normalizeSearchConvertsRomajiToHiragana = const Value.absent(),
+    this.groupingRules = const Value.absent(),
+    this.showSearchResultSeparationHeaders = const Value.absent(),
+    this.showKanjiEntriesInSearchResults = const Value.absent(),
+    this.showTags = const Value.absent(),
+    this.showMetaEntries = const Value.absent(),
+    this.definitionsMaxHeight = const Value.absent(),
+    this.useKatakanaForFurigana = const Value.absent(),
+    this.spellfixMaxResults = const Value.absent(),
+    this.spellfixMaxCost = const Value.absent(),
+    this.searchResultLimit = const Value.absent(),
+  });
+  SearchProfilesTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.isActiveProfile = const Value.absent(),
+    required List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,
+    required List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,
+    this.normalizeSearchConvertsRomajiToHiragana = const Value.absent(),
+    required Object? groupingRules,
+    this.showSearchResultSeparationHeaders = const Value.absent(),
+    this.showKanjiEntriesInSearchResults = const Value.absent(),
+    this.showTags = const Value.absent(),
+    this.showMetaEntries = const Value.absent(),
+    this.definitionsMaxHeight = const Value.absent(),
+    this.useKatakanaForFurigana = const Value.absent(),
+    this.spellfixMaxResults = const Value.absent(),
+    this.spellfixMaxCost = const Value.absent(),
+    this.searchResultLimit = const Value.absent(),
+  }) : firstSortOrder = Value(firstSortOrder),
+       secondSortOrder = Value(secondSortOrder),
+       groupingRules = Value(groupingRules);
+  static Insertable<SearchProfilesTableData> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<bool>? isActiveProfile,
+    Expression<String>? firstSortOrder,
+    Expression<String>? secondSortOrder,
+    Expression<bool>? normalizeSearchConvertsRomajiToHiragana,
+    Expression<String>? groupingRules,
+    Expression<bool>? showSearchResultSeparationHeaders,
+    Expression<bool>? showKanjiEntriesInSearchResults,
+    Expression<bool>? showTags,
+    Expression<bool>? showMetaEntries,
+    Expression<double>? definitionsMaxHeight,
+    Expression<bool>? useKatakanaForFurigana,
+    Expression<int>? spellfixMaxResults,
+    Expression<int>? spellfixMaxCost,
+    Expression<int>? searchResultLimit,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (isActiveProfile != null) 'is_active_profile': isActiveProfile,
+      if (firstSortOrder != null) 'first_sort_order': firstSortOrder,
+      if (secondSortOrder != null) 'second_sort_order': secondSortOrder,
+      if (normalizeSearchConvertsRomajiToHiragana != null)
+        'normalize_search_converts_romaji_to_hiragana':
+            normalizeSearchConvertsRomajiToHiragana,
+      if (groupingRules != null) 'grouping_rules': groupingRules,
+      if (showSearchResultSeparationHeaders != null)
+        'show_search_result_separation_headers':
+            showSearchResultSeparationHeaders,
+      if (showKanjiEntriesInSearchResults != null)
+        'show_kanji_entries_in_search_results': showKanjiEntriesInSearchResults,
+      if (showTags != null) 'show_tags': showTags,
+      if (showMetaEntries != null) 'show_meta_entries': showMetaEntries,
+      if (definitionsMaxHeight != null)
+        'definitions_max_height': definitionsMaxHeight,
+      if (useKatakanaForFurigana != null)
+        'use_katakana_for_furigana': useKatakanaForFurigana,
+      if (spellfixMaxResults != null)
+        'spellfix_max_results': spellfixMaxResults,
+      if (spellfixMaxCost != null) 'spellfix_max_cost': spellfixMaxCost,
+      if (searchResultLimit != null) 'search_result_limit': searchResultLimit,
+    });
+  }
+
+  SearchProfilesTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<bool>? isActiveProfile,
+    Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>>? firstSortOrder,
+    Value<List<(DakanjiDbSearchResult2ndSortOrder, bool)>>? secondSortOrder,
+    Value<bool>? normalizeSearchConvertsRomajiToHiragana,
+    Value<Object?>? groupingRules,
+    Value<bool>? showSearchResultSeparationHeaders,
+    Value<bool>? showKanjiEntriesInSearchResults,
+    Value<bool>? showTags,
+    Value<bool>? showMetaEntries,
+    Value<double>? definitionsMaxHeight,
+    Value<bool>? useKatakanaForFurigana,
+    Value<int>? spellfixMaxResults,
+    Value<int>? spellfixMaxCost,
+    Value<int>? searchResultLimit,
+  }) {
+    return SearchProfilesTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      isActiveProfile: isActiveProfile ?? this.isActiveProfile,
+      firstSortOrder: firstSortOrder ?? this.firstSortOrder,
+      secondSortOrder: secondSortOrder ?? this.secondSortOrder,
+      normalizeSearchConvertsRomajiToHiragana:
+          normalizeSearchConvertsRomajiToHiragana ??
+          this.normalizeSearchConvertsRomajiToHiragana,
+      groupingRules: groupingRules ?? this.groupingRules,
+      showSearchResultSeparationHeaders:
+          showSearchResultSeparationHeaders ??
+          this.showSearchResultSeparationHeaders,
+      showKanjiEntriesInSearchResults:
+          showKanjiEntriesInSearchResults ??
+          this.showKanjiEntriesInSearchResults,
+      showTags: showTags ?? this.showTags,
+      showMetaEntries: showMetaEntries ?? this.showMetaEntries,
+      definitionsMaxHeight: definitionsMaxHeight ?? this.definitionsMaxHeight,
+      useKatakanaForFurigana:
+          useKatakanaForFurigana ?? this.useKatakanaForFurigana,
+      spellfixMaxResults: spellfixMaxResults ?? this.spellfixMaxResults,
+      spellfixMaxCost: spellfixMaxCost ?? this.spellfixMaxCost,
+      searchResultLimit: searchResultLimit ?? this.searchResultLimit,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (isActiveProfile.present) {
+      map['is_active_profile'] = Variable<bool>(isActiveProfile.value);
+    }
+    if (firstSortOrder.present) {
+      map['first_sort_order'] = Variable<String>(
+        $SearchProfilesTableTable.$converterfirstSortOrder.toSql(
+          firstSortOrder.value,
+        ),
+      );
+    }
+    if (secondSortOrder.present) {
+      map['second_sort_order'] = Variable<String>(
+        $SearchProfilesTableTable.$convertersecondSortOrder.toSql(
+          secondSortOrder.value,
+        ),
+      );
+    }
+    if (normalizeSearchConvertsRomajiToHiragana.present) {
+      map['normalize_search_converts_romaji_to_hiragana'] = Variable<bool>(
+        normalizeSearchConvertsRomajiToHiragana.value,
+      );
+    }
+    if (groupingRules.present) {
+      map['grouping_rules'] = Variable<String>(
+        $SearchProfilesTableTable.$convertergroupingRules.toSql(
+          groupingRules.value,
+        ),
+      );
+    }
+    if (showSearchResultSeparationHeaders.present) {
+      map['show_search_result_separation_headers'] = Variable<bool>(
+        showSearchResultSeparationHeaders.value,
+      );
+    }
+    if (showKanjiEntriesInSearchResults.present) {
+      map['show_kanji_entries_in_search_results'] = Variable<bool>(
+        showKanjiEntriesInSearchResults.value,
+      );
+    }
+    if (showTags.present) {
+      map['show_tags'] = Variable<bool>(showTags.value);
+    }
+    if (showMetaEntries.present) {
+      map['show_meta_entries'] = Variable<bool>(showMetaEntries.value);
+    }
+    if (definitionsMaxHeight.present) {
+      map['definitions_max_height'] = Variable<double>(
+        definitionsMaxHeight.value,
+      );
+    }
+    if (useKatakanaForFurigana.present) {
+      map['use_katakana_for_furigana'] = Variable<bool>(
+        useKatakanaForFurigana.value,
+      );
+    }
+    if (spellfixMaxResults.present) {
+      map['spellfix_max_results'] = Variable<int>(spellfixMaxResults.value);
+    }
+    if (spellfixMaxCost.present) {
+      map['spellfix_max_cost'] = Variable<int>(spellfixMaxCost.value);
+    }
+    if (searchResultLimit.present) {
+      map['search_result_limit'] = Variable<int>(searchResultLimit.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SearchProfilesTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('isActiveProfile: $isActiveProfile, ')
+          ..write('firstSortOrder: $firstSortOrder, ')
+          ..write('secondSortOrder: $secondSortOrder, ')
+          ..write(
+            'normalizeSearchConvertsRomajiToHiragana: $normalizeSearchConvertsRomajiToHiragana, ',
+          )
+          ..write('groupingRules: $groupingRules, ')
+          ..write(
+            'showSearchResultSeparationHeaders: $showSearchResultSeparationHeaders, ',
+          )
+          ..write(
+            'showKanjiEntriesInSearchResults: $showKanjiEntriesInSearchResults, ',
+          )
+          ..write('showTags: $showTags, ')
+          ..write('showMetaEntries: $showMetaEntries, ')
+          ..write('definitionsMaxHeight: $definitionsMaxHeight, ')
+          ..write('useKatakanaForFurigana: $useKatakanaForFurigana, ')
+          ..write('spellfixMaxResults: $spellfixMaxResults, ')
+          ..write('spellfixMaxCost: $spellfixMaxCost, ')
+          ..write('searchResultLimit: $searchResultLimit')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$DaKanjiDB extends GeneratedDatabase {
   _$DaKanjiDB(QueryExecutor e) : super(e);
   $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
@@ -17531,6 +18623,8 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final $RadicalsTableTable radicalsTable = $RadicalsTableTable(this);
   late final $Radical_X_KanjiRelationsTableTable radicalXKanjiRelationsTable =
       $Radical_X_KanjiRelationsTableTable(this);
+  late final $SearchProfilesTableTable searchProfilesTable =
+      $SearchProfilesTableTable(this);
   late final Index audioSourceListTableIndexIdIndex = Index(
     'AudioSourceListTable_indexIdIndex',
     'CREATE INDEX AudioSourceListTable_indexIdIndex ON audio_source_list_table (index_id)',
@@ -17565,6 +18659,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final KanjiVGDao kanjiVGDao = KanjiVGDao(this as DaKanjiDB);
   late final IndexDao indexDao = IndexDao(this as DaKanjiDB);
   late final TagBankV3Dao tagBankV3Dao = TagBankV3Dao(this as DaKanjiDB);
+  late final SearchProfilesDao searchProfilesDao = SearchProfilesDao(
+    this as DaKanjiDB,
+  );
   late final KanjiBankV3Dao kanjiBankV3Dao = KanjiBankV3Dao(this as DaKanjiDB);
   late final KanjiMetaBankV3Dao kanjiMetaBankV3Dao = KanjiMetaBankV3Dao(
     this as DaKanjiDB,
@@ -17587,7 +18684,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     final expandedkanjis = $expandVar($arrayStartIndex, kanjis.length);
     $arrayStartIndex += kanjis.length;
     return customSelect(
-      'WITH IndexesToInclude (index_id) AS (SELECT value FROM json_each(?1)) SELECT KBV3T.id AS id FROM kanji_table AS KDT JOIN kanji_bank_v3_table AS KBV3T ON KBV3T.kanji_id = KDT.id JOIN index_table AS IT ON KBV3T.index_id = IT.id WHERE KDT.kanji IN ($expandedkanjis) AND((?1 IS NOT NULL AND IT.id IN (SELECT index_id FROM IndexesToInclude))OR(?1 IS NULL AND IT.enabled = 1))ORDER BY IT.current_sorting_order ASC, KDT.kanji ASC',
+      'WITH IndexesToInclude (index_id) AS (SELECT value FROM json_each(?1)) SELECT KBV3T.id AS id FROM kanji_table AS KDT JOIN kanji_bank_v3_table AS KBV3T ON KBV3T.kanji_id = KDT.id JOIN index_table AS IT ON KBV3T.index_id = IT.id WHERE KDT.kanji IN ($expandedkanjis) AND((?1 IS NOT NULL AND IT.id IN (SELECT index_id FROM IndexesToInclude))OR(?1 IS NULL AND IT.enabled = 1))',
       variables: [
         Variable<String>(indexesToInclude),
         for (var $ in kanjis) Variable<String>($),
@@ -18147,6 +19244,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     audioSourceListTable,
     radicalsTable,
     radicalXKanjiRelationsTable,
+    searchProfilesTable,
     audioSourceListTableIndexIdIndex,
     radicalsTableRadical,
     radicalsTableStrokeCount,
@@ -39232,6 +40330,497 @@ typedef $$Radical_X_KanjiRelationsTableTableProcessedTableManager =
       Radical_X_KanjiRelationsTableData,
       PrefetchHooks Function({bool kanjiId, bool radicalId})
     >;
+typedef $$SearchProfilesTableTableCreateCompanionBuilder =
+    SearchProfilesTableCompanion Function({
+      Value<int> id,
+      Value<String> name,
+      Value<bool> isActiveProfile,
+      required List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,
+      required List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,
+      Value<bool> normalizeSearchConvertsRomajiToHiragana,
+      required Object? groupingRules,
+      Value<bool> showSearchResultSeparationHeaders,
+      Value<bool> showKanjiEntriesInSearchResults,
+      Value<bool> showTags,
+      Value<bool> showMetaEntries,
+      Value<double> definitionsMaxHeight,
+      Value<bool> useKatakanaForFurigana,
+      Value<int> spellfixMaxResults,
+      Value<int> spellfixMaxCost,
+      Value<int> searchResultLimit,
+    });
+typedef $$SearchProfilesTableTableUpdateCompanionBuilder =
+    SearchProfilesTableCompanion Function({
+      Value<int> id,
+      Value<String> name,
+      Value<bool> isActiveProfile,
+      Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>> firstSortOrder,
+      Value<List<(DakanjiDbSearchResult2ndSortOrder, bool)>> secondSortOrder,
+      Value<bool> normalizeSearchConvertsRomajiToHiragana,
+      Value<Object?> groupingRules,
+      Value<bool> showSearchResultSeparationHeaders,
+      Value<bool> showKanjiEntriesInSearchResults,
+      Value<bool> showTags,
+      Value<bool> showMetaEntries,
+      Value<double> definitionsMaxHeight,
+      Value<bool> useKatakanaForFurigana,
+      Value<int> spellfixMaxResults,
+      Value<int> spellfixMaxCost,
+      Value<int> searchResultLimit,
+    });
+
+class $$SearchProfilesTableTableFilterComposer
+    extends Composer<_$DaKanjiDB, $SearchProfilesTableTable> {
+  $$SearchProfilesTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isActiveProfile => $composableBuilder(
+    column: $table.isActiveProfile,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    List<(DakanjiDbSearchResult1stSortOrder, bool)>,
+    List<(DakanjiDbSearchResult1stSortOrder, bool)>,
+    String
+  >
+  get firstSortOrder => $composableBuilder(
+    column: $table.firstSortOrder,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    List<(DakanjiDbSearchResult2ndSortOrder, bool)>,
+    List<(DakanjiDbSearchResult2ndSortOrder, bool)>,
+    String
+  >
+  get secondSortOrder => $composableBuilder(
+    column: $table.secondSortOrder,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<bool> get normalizeSearchConvertsRomajiToHiragana =>
+      $composableBuilder(
+        column: $table.normalizeSearchConvertsRomajiToHiragana,
+        builder: (column) => ColumnFilters(column),
+      );
+
+  ColumnWithTypeConverterFilters<Object?, Object, String> get groupingRules =>
+      $composableBuilder(
+        column: $table.groupingRules,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+
+  ColumnFilters<bool> get showSearchResultSeparationHeaders =>
+      $composableBuilder(
+        column: $table.showSearchResultSeparationHeaders,
+        builder: (column) => ColumnFilters(column),
+      );
+
+  ColumnFilters<bool> get showKanjiEntriesInSearchResults => $composableBuilder(
+    column: $table.showKanjiEntriesInSearchResults,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get showTags => $composableBuilder(
+    column: $table.showTags,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get showMetaEntries => $composableBuilder(
+    column: $table.showMetaEntries,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get definitionsMaxHeight => $composableBuilder(
+    column: $table.definitionsMaxHeight,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get useKatakanaForFurigana => $composableBuilder(
+    column: $table.useKatakanaForFurigana,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get spellfixMaxResults => $composableBuilder(
+    column: $table.spellfixMaxResults,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get spellfixMaxCost => $composableBuilder(
+    column: $table.spellfixMaxCost,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get searchResultLimit => $composableBuilder(
+    column: $table.searchResultLimit,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SearchProfilesTableTableOrderingComposer
+    extends Composer<_$DaKanjiDB, $SearchProfilesTableTable> {
+  $$SearchProfilesTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isActiveProfile => $composableBuilder(
+    column: $table.isActiveProfile,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get firstSortOrder => $composableBuilder(
+    column: $table.firstSortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get secondSortOrder => $composableBuilder(
+    column: $table.secondSortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get normalizeSearchConvertsRomajiToHiragana =>
+      $composableBuilder(
+        column: $table.normalizeSearchConvertsRomajiToHiragana,
+        builder: (column) => ColumnOrderings(column),
+      );
+
+  ColumnOrderings<String> get groupingRules => $composableBuilder(
+    column: $table.groupingRules,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get showSearchResultSeparationHeaders =>
+      $composableBuilder(
+        column: $table.showSearchResultSeparationHeaders,
+        builder: (column) => ColumnOrderings(column),
+      );
+
+  ColumnOrderings<bool> get showKanjiEntriesInSearchResults =>
+      $composableBuilder(
+        column: $table.showKanjiEntriesInSearchResults,
+        builder: (column) => ColumnOrderings(column),
+      );
+
+  ColumnOrderings<bool> get showTags => $composableBuilder(
+    column: $table.showTags,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get showMetaEntries => $composableBuilder(
+    column: $table.showMetaEntries,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get definitionsMaxHeight => $composableBuilder(
+    column: $table.definitionsMaxHeight,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get useKatakanaForFurigana => $composableBuilder(
+    column: $table.useKatakanaForFurigana,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get spellfixMaxResults => $composableBuilder(
+    column: $table.spellfixMaxResults,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get spellfixMaxCost => $composableBuilder(
+    column: $table.spellfixMaxCost,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get searchResultLimit => $composableBuilder(
+    column: $table.searchResultLimit,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SearchProfilesTableTableAnnotationComposer
+    extends Composer<_$DaKanjiDB, $SearchProfilesTableTable> {
+  $$SearchProfilesTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<bool> get isActiveProfile => $composableBuilder(
+    column: $table.isActiveProfile,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<
+    List<(DakanjiDbSearchResult1stSortOrder, bool)>,
+    String
+  >
+  get firstSortOrder => $composableBuilder(
+    column: $table.firstSortOrder,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<
+    List<(DakanjiDbSearchResult2ndSortOrder, bool)>,
+    String
+  >
+  get secondSortOrder => $composableBuilder(
+    column: $table.secondSortOrder,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get normalizeSearchConvertsRomajiToHiragana =>
+      $composableBuilder(
+        column: $table.normalizeSearchConvertsRomajiToHiragana,
+        builder: (column) => column,
+      );
+
+  GeneratedColumnWithTypeConverter<Object?, String> get groupingRules =>
+      $composableBuilder(
+        column: $table.groupingRules,
+        builder: (column) => column,
+      );
+
+  GeneratedColumn<bool> get showSearchResultSeparationHeaders =>
+      $composableBuilder(
+        column: $table.showSearchResultSeparationHeaders,
+        builder: (column) => column,
+      );
+
+  GeneratedColumn<bool> get showKanjiEntriesInSearchResults =>
+      $composableBuilder(
+        column: $table.showKanjiEntriesInSearchResults,
+        builder: (column) => column,
+      );
+
+  GeneratedColumn<bool> get showTags =>
+      $composableBuilder(column: $table.showTags, builder: (column) => column);
+
+  GeneratedColumn<bool> get showMetaEntries => $composableBuilder(
+    column: $table.showMetaEntries,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get definitionsMaxHeight => $composableBuilder(
+    column: $table.definitionsMaxHeight,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get useKatakanaForFurigana => $composableBuilder(
+    column: $table.useKatakanaForFurigana,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get spellfixMaxResults => $composableBuilder(
+    column: $table.spellfixMaxResults,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get spellfixMaxCost => $composableBuilder(
+    column: $table.spellfixMaxCost,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get searchResultLimit => $composableBuilder(
+    column: $table.searchResultLimit,
+    builder: (column) => column,
+  );
+}
+
+class $$SearchProfilesTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          $SearchProfilesTableTable,
+          SearchProfilesTableData,
+          $$SearchProfilesTableTableFilterComposer,
+          $$SearchProfilesTableTableOrderingComposer,
+          $$SearchProfilesTableTableAnnotationComposer,
+          $$SearchProfilesTableTableCreateCompanionBuilder,
+          $$SearchProfilesTableTableUpdateCompanionBuilder,
+          (
+            SearchProfilesTableData,
+            BaseReferences<
+              _$DaKanjiDB,
+              $SearchProfilesTableTable,
+              SearchProfilesTableData
+            >,
+          ),
+          SearchProfilesTableData,
+          PrefetchHooks Function()
+        > {
+  $$SearchProfilesTableTableTableManager(
+    _$DaKanjiDB db,
+    $SearchProfilesTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SearchProfilesTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SearchProfilesTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$SearchProfilesTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<bool> isActiveProfile = const Value.absent(),
+                Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>>
+                    firstSortOrder =
+                    const Value.absent(),
+                Value<List<(DakanjiDbSearchResult2ndSortOrder, bool)>>
+                    secondSortOrder =
+                    const Value.absent(),
+                Value<bool> normalizeSearchConvertsRomajiToHiragana =
+                    const Value.absent(),
+                Value<Object?> groupingRules = const Value.absent(),
+                Value<bool> showSearchResultSeparationHeaders =
+                    const Value.absent(),
+                Value<bool> showKanjiEntriesInSearchResults =
+                    const Value.absent(),
+                Value<bool> showTags = const Value.absent(),
+                Value<bool> showMetaEntries = const Value.absent(),
+                Value<double> definitionsMaxHeight = const Value.absent(),
+                Value<bool> useKatakanaForFurigana = const Value.absent(),
+                Value<int> spellfixMaxResults = const Value.absent(),
+                Value<int> spellfixMaxCost = const Value.absent(),
+                Value<int> searchResultLimit = const Value.absent(),
+              }) => SearchProfilesTableCompanion(
+                id: id,
+                name: name,
+                isActiveProfile: isActiveProfile,
+                firstSortOrder: firstSortOrder,
+                secondSortOrder: secondSortOrder,
+                normalizeSearchConvertsRomajiToHiragana:
+                    normalizeSearchConvertsRomajiToHiragana,
+                groupingRules: groupingRules,
+                showSearchResultSeparationHeaders:
+                    showSearchResultSeparationHeaders,
+                showKanjiEntriesInSearchResults:
+                    showKanjiEntriesInSearchResults,
+                showTags: showTags,
+                showMetaEntries: showMetaEntries,
+                definitionsMaxHeight: definitionsMaxHeight,
+                useKatakanaForFurigana: useKatakanaForFurigana,
+                spellfixMaxResults: spellfixMaxResults,
+                spellfixMaxCost: spellfixMaxCost,
+                searchResultLimit: searchResultLimit,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<bool> isActiveProfile = const Value.absent(),
+                required List<(DakanjiDbSearchResult1stSortOrder, bool)>
+                firstSortOrder,
+                required List<(DakanjiDbSearchResult2ndSortOrder, bool)>
+                secondSortOrder,
+                Value<bool> normalizeSearchConvertsRomajiToHiragana =
+                    const Value.absent(),
+                required Object? groupingRules,
+                Value<bool> showSearchResultSeparationHeaders =
+                    const Value.absent(),
+                Value<bool> showKanjiEntriesInSearchResults =
+                    const Value.absent(),
+                Value<bool> showTags = const Value.absent(),
+                Value<bool> showMetaEntries = const Value.absent(),
+                Value<double> definitionsMaxHeight = const Value.absent(),
+                Value<bool> useKatakanaForFurigana = const Value.absent(),
+                Value<int> spellfixMaxResults = const Value.absent(),
+                Value<int> spellfixMaxCost = const Value.absent(),
+                Value<int> searchResultLimit = const Value.absent(),
+              }) => SearchProfilesTableCompanion.insert(
+                id: id,
+                name: name,
+                isActiveProfile: isActiveProfile,
+                firstSortOrder: firstSortOrder,
+                secondSortOrder: secondSortOrder,
+                normalizeSearchConvertsRomajiToHiragana:
+                    normalizeSearchConvertsRomajiToHiragana,
+                groupingRules: groupingRules,
+                showSearchResultSeparationHeaders:
+                    showSearchResultSeparationHeaders,
+                showKanjiEntriesInSearchResults:
+                    showKanjiEntriesInSearchResults,
+                showTags: showTags,
+                showMetaEntries: showMetaEntries,
+                definitionsMaxHeight: definitionsMaxHeight,
+                useKatakanaForFurigana: useKatakanaForFurigana,
+                spellfixMaxResults: spellfixMaxResults,
+                spellfixMaxCost: spellfixMaxCost,
+                searchResultLimit: searchResultLimit,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SearchProfilesTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      $SearchProfilesTableTable,
+      SearchProfilesTableData,
+      $$SearchProfilesTableTableFilterComposer,
+      $$SearchProfilesTableTableOrderingComposer,
+      $$SearchProfilesTableTableAnnotationComposer,
+      $$SearchProfilesTableTableCreateCompanionBuilder,
+      $$SearchProfilesTableTableUpdateCompanionBuilder,
+      (
+        SearchProfilesTableData,
+        BaseReferences<
+          _$DaKanjiDB,
+          $SearchProfilesTableTable,
+          SearchProfilesTableData
+        >,
+      ),
+      SearchProfilesTableData,
+      PrefetchHooks Function()
+    >;
 
 class $DaKanjiDBManager {
   final _$DaKanjiDB _db;
@@ -39407,6 +40996,8 @@ class $DaKanjiDBManager {
         _db,
         _db.radicalXKanjiRelationsTable,
       );
+  $$SearchProfilesTableTableTableManager get searchProfilesTable =>
+      $$SearchProfilesTableTableTableManager(_db, _db.searchProfilesTable);
 }
 
 class KanjiDictionaryFindKanjiDetailsDriftResult {

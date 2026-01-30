@@ -1,6 +1,7 @@
+import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
+import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
-import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_card_add_button.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
 import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_rule_card.dart';
@@ -52,8 +53,8 @@ class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroup
   Widget build(BuildContext context) {
 
     var loc = GetIt.I<DakanjiDbLocalization>();
-    var settings = context.read<DaKanjiDbSettings>();
-    var rules = settings.s.groupingRules;
+    var settings = context.watch<SearchProfilesEntry>();
+    var rules = settings.groupingRules;
 
     return Column(
       crossAxisAlignment: .stretch,
@@ -76,9 +77,11 @@ class _DakanjiDbSettingsGroupingWidgetState extends State<DakanjiDbSettingsGroup
         DakanjiDbSettingsCardAddButton(
           loc.addRule,
           onPressed: () {
-            settings.update(settings.s.copyWith(
-              groupingRules: [...rules, NoGroupingRule()]
-            ));
+            GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+              settings.copyWith(
+                groupingRules: [...rules, NoGroupingRule()]
+              )
+            );
           }
         )
       ]

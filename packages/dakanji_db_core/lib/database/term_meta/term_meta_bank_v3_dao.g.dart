@@ -26,4 +26,64 @@ mixin _$TermMetaBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
   $TermMetaBankV3PitchTable_X_TagBankV3TableTable
   get termMetaBankV3PitchTableXTagBankV3Table =>
       attachedDatabase.termMetaBankV3PitchTableXTagBankV3Table;
+  TermMetaBankV3DaoManager get managers => TermMetaBankV3DaoManager(this);
+}
+
+class TermMetaBankV3DaoManager {
+  final _$TermMetaBankV3DaoMixin _db;
+  TermMetaBankV3DaoManager(this._db);
+  $$TermTableTableTableManager get termTable =>
+      $$TermTableTableTableManager(_db.attachedDatabase, _db.termTable);
+  $$ReadingTableTableTableManager get readingTable =>
+      $$ReadingTableTableTableManager(_db.attachedDatabase, _db.readingTable);
+  $$IndexTableTableTableManager get indexTable =>
+      $$IndexTableTableTableManager(_db.attachedDatabase, _db.indexTable);
+  $$TagBankV3TableTableTableManager get tagBankV3Table =>
+      $$TagBankV3TableTableTableManager(
+        _db.attachedDatabase,
+        _db.tagBankV3Table,
+      );
+  $$TermMetaBankV3TypeTableTableTableManager get termMetaBankV3TypeTable =>
+      $$TermMetaBankV3TypeTableTableTableManager(
+        _db.attachedDatabase,
+        _db.termMetaBankV3TypeTable,
+      );
+  $$TermMetaBankV3TableTableTableManager get termMetaBankV3Table =>
+      $$TermMetaBankV3TableTableTableManager(
+        _db.attachedDatabase,
+        _db.termMetaBankV3Table,
+      );
+  $$TermMetaBankV3PitchTableTableTableManager get termMetaBankV3PitchTable =>
+      $$TermMetaBankV3PitchTableTableTableManager(
+        _db.attachedDatabase,
+        _db.termMetaBankV3PitchTable,
+      );
+  $$TermMetaBankV3_X_PitchTableTableTableManager
+  get termMetaBankV3XPitchTable =>
+      $$TermMetaBankV3_X_PitchTableTableTableManager(
+        _db.attachedDatabase,
+        _db.termMetaBankV3XPitchTable,
+      );
+  $$TermMetaBankV3IpaTableTableTableManager get termMetaBankV3IpaTable =>
+      $$TermMetaBankV3IpaTableTableTableManager(
+        _db.attachedDatabase,
+        _db.termMetaBankV3IpaTable,
+      );
+  $$TermMetaBankV3IpaTable_X_TagBankV3TableTableTableManager
+  get termMetaBankV3IpaTableXTagBankV3Table =>
+      $$TermMetaBankV3IpaTable_X_TagBankV3TableTableTableManager(
+        _db.attachedDatabase,
+        _db.termMetaBankV3IpaTableXTagBankV3Table,
+      );
+  $$TermMetaBankV3_X_IpaTableTableTableManager get termMetaBankV3XIpaTable =>
+      $$TermMetaBankV3_X_IpaTableTableTableManager(
+        _db.attachedDatabase,
+        _db.termMetaBankV3XIpaTable,
+      );
+  $$TermMetaBankV3PitchTable_X_TagBankV3TableTableTableManager
+  get termMetaBankV3PitchTableXTagBankV3Table =>
+      $$TermMetaBankV3PitchTable_X_TagBankV3TableTableTableManager(
+        _db.attachedDatabase,
+        _db.termMetaBankV3PitchTableXTagBankV3Table,
+      );
 }

@@ -1,7 +1,9 @@
-import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
-import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
+import 'package:dakanji_db_core/data/dakanji_db_search_result_sort_order.dart';
+import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_info_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 
@@ -44,22 +46,21 @@ class _DakanjiDbSettingsSearchResultSortOrderState extends State<DakanjiDbSettin
   
 
   void _updateSettingsList(List<(dynamic, bool)> newList) {
-    setState(() {
-      if (widget.firstSortOrder) {
-        // Cast the list so Freezed accepts it
-        context.read<DaKanjiDbSettings>().update(
-          context.read<DaKanjiDbSettings>().s.copyWith(
-            firstSortOrder: newList.cast<(DakanjiDbSearchResult1stSortOrder, bool)>().toList(),
-          ),
-        );
-      } else {
-        context.read<DaKanjiDbSettings>().update(
-          context.read<DaKanjiDbSettings>().s.copyWith(
-            secondSortOrder: newList.cast<(DakanjiDbSearchResult2ndSortOrder, bool)>().toList(),
-          ),
-        );
-      }
-    });
+    if (widget.firstSortOrder) {
+      // Cast the list so Freezed accepts it
+      GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+        context.read<SearchProfilesEntry>().copyWith(
+          firstSortOrder: newList.cast<(DakanjiDbSearchResult1stSortOrder, bool)>().toList(),
+        ),
+      );
+    }
+    else {
+      GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+        context.read<SearchProfilesEntry>().copyWith(
+          secondSortOrder: newList.cast<(DakanjiDbSearchResult2ndSortOrder, bool)>().toList(),
+        ),
+      );
+    }
   }
 
   @override
@@ -67,8 +68,8 @@ class _DakanjiDbSettingsSearchResultSortOrderState extends State<DakanjiDbSettin
     // Determine which list to use from settings
     // These are List<(Enum, bool)>
     final List<(dynamic, bool)> currentList = [...widget.firstSortOrder
-      ? context.read<DaKanjiDbSettings>().s.firstSortOrder
-      : context.read<DaKanjiDbSettings>().s.secondSortOrder
+      ? context.read<SearchProfilesEntry>().firstSortOrder
+      : context.read<SearchProfilesEntry>().secondSortOrder
     ];
 
     return Column(

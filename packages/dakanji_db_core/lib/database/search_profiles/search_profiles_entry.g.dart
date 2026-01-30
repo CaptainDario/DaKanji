@@ -1,13 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'dakanji_db_settings.dart';
+part of 'search_profiles_entry.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_DaKanjiDbSettings _$DaKanjiDbSettingsFromJson(Map<String, dynamic> json) =>
-    _DaKanjiDbSettings(
+_SearchProfilesEntry _$SearchProfilesEntryFromJson(Map<String, dynamic> json) =>
+    _SearchProfilesEntry(
+      id: (json['id'] as num?)?.toInt() ?? 0,
+      name: json['name'] as String? ?? '',
+      isActiveProfile: json['isActiveProfile'] as bool? ?? false,
       firstSortOrder:
           (json['firstSortOrder'] as List<dynamic>?)
               ?.map(
@@ -74,9 +77,12 @@ _DaKanjiDbSettings _$DaKanjiDbSettingsFromJson(Map<String, dynamic> json) =>
       searchResultLimit: (json['searchResultLimit'] as num?)?.toInt() ?? 100,
     );
 
-Map<String, dynamic> _$DaKanjiDbSettingsToJson(
-  _DaKanjiDbSettings instance,
+Map<String, dynamic> _$SearchProfilesEntryToJson(
+  _SearchProfilesEntry instance,
 ) => <String, dynamic>{
+  'id': instance.id,
+  'name': instance.name,
+  'isActiveProfile': instance.isActiveProfile,
   'firstSortOrder': instance.firstSortOrder
       .map(
         (e) => <String, dynamic>{

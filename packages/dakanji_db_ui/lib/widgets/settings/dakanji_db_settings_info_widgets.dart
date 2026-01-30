@@ -1,4 +1,4 @@
-import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
+import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
@@ -15,7 +15,7 @@ void showInfoSnackbar(String message, BuildContext context) {
 }
 
 Future<void> showSettingsInfoPopup(String infoText, BuildContext context) async {
-    await showGeneralDialog<DaKanjiDbSettingsInternal>(
+    await showGeneralDialog<SearchProfilesEntry>(
       context: context,
       barrierDismissible: true,
       barrierLabel: "Close",

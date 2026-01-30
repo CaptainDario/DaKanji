@@ -3,8 +3,8 @@ import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
+import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
-import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/settings/grouping_rules/dakanji_db_settings_grouping_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -54,7 +54,7 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
 
   /// Determines how an index is used across grouping rules
   IndexGroupingUsage _indexUsage(int indexId) {
-    var rules = context.read<DaKanjiDbSettings>().s.groupingRules;
+    var rules = context.read<SearchProfilesEntry>().groupingRules;
 
     Set<int> usedIndexes = rules
       .map((e) => e.dictionaryIds)
@@ -77,32 +77,32 @@ class _GroupingRuleCardState extends State<GroupingRuleCard> {
   void _updateRuleAt(int index, DictionaryGroupingRule newRule) {
     // 1. Create a modified copy of the list
     final newRules = List<DictionaryGroupingRule>.from(
-      context.read<DaKanjiDbSettings>().s.groupingRules
+      context.read<SearchProfilesEntry>().groupingRules
     );
     newRules[index] = newRule;
 
     // 2. Update global settings
-    context.read<DaKanjiDbSettings>().update(
-      context.read<DaKanjiDbSettings>().s.copyWith(groupingRules: newRules)
+    GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+      context.read<SearchProfilesEntry>().copyWith(groupingRules: newRules)
     );
   }
 
   void _deleteRule(int index) {
-    final currentRules = context.read<DaKanjiDbSettings>().s.groupingRules;
+    final currentRules = context.read<SearchProfilesEntry>().groupingRules;
     
     // Create a new list excluding the item at the current index
     final newRules = List<DictionaryGroupingRule>.from(currentRules)
       ..removeAt(index);
 
-    context.read<DaKanjiDbSettings>().update(
-      context.read<DaKanjiDbSettings>().s.copyWith(groupingRules: newRules)
+    GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+      context.read<SearchProfilesEntry>().copyWith(groupingRules: newRules)
     );
   }
 
   @override
   Widget build(BuildContext context) {
 
-    var rules = context.read<DaKanjiDbSettings>().s.groupingRules;
+    var rules = context.read<SearchProfilesEntry>().groupingRules;
     int i = widget.i;
     var rule = rules[i];
     DakanjiDbLocalization loc = widget.localization;

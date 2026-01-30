@@ -95,7 +95,19 @@ void main() {
               await db.indexDao.updateFrequencyOverride(3);
             else 
               await db.indexDao.clearFrequencyOverride();
-            // Perform the search
+            
+            // setup indexes to include
+            List<int> indexesToInclude = testCase.indexesToInclude ?? [];
+            if (testCase.useOnlyDefaultDictionaries){
+              indexesToInclude = await db.indexDao.getAllDefaultIndexes()
+                .then((value) => value.map((e) => e.id).toList());
+            }
+            if (testCase.useOnlyEnabledDictionaries){
+              indexesToInclude = await db.indexDao.getAllEnabledIndexes()
+                .then((value) => value.map((e) => e.id).toList());
+            }
+
+            // Perform the search  
             final results = (await db.dictionarySearchDao.dictionarySearch(
               DictionarySearchParams(
                 query: testCase.query,
@@ -107,10 +119,7 @@ void main() {
                 
                 groupingRules: testCase.groupingRules,
 
-                indexesToInclude: testCase.indexesToInclude,
-                useOnlyEnabledIndexes: testCase.useOnlyEnabledDictionaries,
-                useOnlyDefaultIndexes: testCase.useOnlyDefaultDictionaries,
-                
+                indexesToInclude: indexesToInclude,
               ),
               printDebugInfo: true
             ));

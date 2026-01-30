@@ -1,5 +1,6 @@
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_core/parsing/example_parser.dart';
@@ -50,7 +51,7 @@ void main(List<String> args) async {
     print("Using jitendex as dictionary...");
     dictToUse = DictsToUse.jitendex;
   }
-
+  
   // clear old sources and redownload
   if(downloadSourcesArg) {
     print("Redownloading source files...");
@@ -88,6 +89,11 @@ void main(List<String> args) async {
   // init mecab
   final mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+
+  // add the default search profile
+  await db.searchProfilesDao.createProfile(SearchProfilesEntry(
+    isActiveProfile: true
+  ));
 
   print("Importing pronunciation audio data...");
   //await importPronunciationData(db, mecab);

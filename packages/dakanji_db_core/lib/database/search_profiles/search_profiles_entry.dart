@@ -1,51 +1,32 @@
+import 'package:dakanji_db_core/data/dakanji_db_search_result_sort_order.dart';
+import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
-import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'dakanji_db_settings.freezed.dart';
-part 'dakanji_db_settings.g.dart';
+part 'search_profiles_entry.freezed.dart';
+part 'search_profiles_entry.g.dart';
 
 
-
-class DaKanjiDbSettings with ChangeNotifier {
-
-  DaKanjiDbSettingsInternal _settings;
-
-  Function? onSettingsChanged;
-
-  DaKanjiDbSettings(
-      DaKanjiDbSettingsInternal settings,
-      {
-        this.onSettingsChanged
-      }
-    )
-    : _settings = settings;
-
-  /// Access the current settings.
-  DaKanjiDbSettingsInternal get settings => _settings;
-
-  /// Shortcut to access the internal settings.
-  DaKanjiDbSettingsInternal get s => _settings;
-
-  /// Update the settings and notify listeners.
-  /// 
-  /// Note: Use `this.s.copyWith(...)` to create a modified copy of the
-  /// current settings and pass it to this method.
-  void update(DaKanjiDbSettingsInternal newSettings) {
-    _settings = newSettings;
-    notifyListeners();
-    onSettingsChanged?.call();
-  }
-
-}
 
 @Freezed(toJson: true, fromJson: true, )
-abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
-  const DaKanjiDbSettingsInternal._();
+abstract class SearchProfilesEntry with _$SearchProfilesEntry {
+  const SearchProfilesEntry._();
 
-  const factory DaKanjiDbSettingsInternal({
+  const factory SearchProfilesEntry({
+
+    /// The unique ID of the profile.
+    @Default(0)
+    int id,
+
+    /// The name of the profile.
+    @Default('')
+    String name,
+
+    /// Whether this profile is the active profile.
+    @Default(false)
+    bool isActiveProfile,
+
     /// 1st level sort order for search results.
     /// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
     /// will not be searched for.
@@ -126,10 +107,10 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
     /// of the four independent searches **separately**).
     @Default(100)
     int searchResultLimit,
-  }) = _DaKanjiDbSettings;
+  }) = _SearchProfilesEntry;
 
-  factory DaKanjiDbSettingsInternal.fromJson(Map<String, dynamic> json) => 
-      _$DaKanjiDbSettingsFromJson(json);
+  factory SearchProfilesEntry.fromJson(Map<String, dynamic> json) => 
+    _$SearchProfilesEntryFromJson(json);
 
   /// Whether to enable query match searches.
   bool get queryMatch =>
@@ -186,4 +167,51 @@ abstract class DaKanjiDbSettingsInternal with _$DaKanjiDbSettingsInternal {
       offset: offset
     );
   }
+
+  SearchProfilesTableData toSearchProfilesTableData() {
+    return SearchProfilesTableData(
+      id: id,
+      name: name,
+      isActiveProfile: isActiveProfile,
+      firstSortOrder: firstSortOrder,
+      secondSortOrder: secondSortOrder,
+      normalizeSearchConvertsRomajiToHiragana: normalizeSearchConvertsRomajiToHiragana,
+      groupingRules: groupingRules,
+      showSearchResultSeparationHeaders: showSearchResultSeparationHeaders,
+      showKanjiEntriesInSearchResults: showKanjiEntriesInSearchResults,
+      showTags: showTags,
+      showMetaEntries: showMetaEntries,
+      definitionsMaxHeight: definitionsMaxHeight,
+      useKatakanaForFurigana: useKatakanaForFurigana,
+      spellfixMaxResults: spellfixMaxResults,
+      spellfixMaxCost: spellfixMaxCost,
+      searchResultLimit: searchResultLimit,
+    );
+  }
+
+  factory SearchProfilesEntry.fromSearchProfilesTableData(SearchProfilesTableData data) {
+    
+    return SearchProfilesEntry(
+      id: data.id,
+      name: data.name,
+      isActiveProfile: data.isActiveProfile,
+      firstSortOrder: data.firstSortOrder,
+      secondSortOrder: data.secondSortOrder,
+      normalizeSearchConvertsRomajiToHiragana: data.normalizeSearchConvertsRomajiToHiragana,
+      groupingRules: (data.groupingRules as List<dynamic>?)
+        ?.map((e) => DictionaryGroupingRule.fromJson(e as Map<String, dynamic>))
+        .toList() ?? [],
+      showSearchResultSeparationHeaders: data.showSearchResultSeparationHeaders,
+      showKanjiEntriesInSearchResults: data.showKanjiEntriesInSearchResults,
+      showTags: data.showTags,
+      showMetaEntries: data.showMetaEntries,
+      definitionsMaxHeight: data.definitionsMaxHeight,
+      useKatakanaForFurigana: data.useKatakanaForFurigana,
+      spellfixMaxResults: data.spellfixMaxResults,
+      spellfixMaxCost: data.spellfixMaxCost,
+      searchResultLimit: data.searchResultLimit,
+    );
+
+  }
+
 }

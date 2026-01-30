@@ -1,34 +1,20 @@
-import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
+import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:dakanji_db_ui/widgets/settings/dakanji_db_settings_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 
 
 class DaKanjiDbSettingsDialog extends StatefulWidget {
 
-  /// The settings to edit
-  final DaKanjiDbSettings settings;
 
-  const DaKanjiDbSettingsDialog(
-    {
-      super.key,
-      required this.settings,
-    }
-  );
+  const DaKanjiDbSettingsDialog({super.key,});
 
   @override
   State<DaKanjiDbSettingsDialog> createState() => _DaKanjiDbSettingsDialogState();
 }
 
 class _DaKanjiDbSettingsDialogState extends State<DaKanjiDbSettingsDialog> {
-
-  late DaKanjiDbSettings settings;
-
-  @override
-  void initState() {
-    super.initState();
-    settings = widget.settings;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +30,8 @@ class _DaKanjiDbSettingsDialogState extends State<DaKanjiDbSettingsDialog> {
       ),
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: SingleChildScrollView(
-        child: ChangeNotifierProvider<DaKanjiDbSettings>.value(
-          value: widget.settings,
+        child: StreamBuilder<SearchProfilesEntry>(
+          stream: GetIt.I<DaKanjiDB>().searchProfilesDao.watchActiveProfile(),
           builder: (context, builder) {
             return DakanjiDbSettingsWidget();
           }

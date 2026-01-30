@@ -10,4 +10,24 @@ mixin _$ExampleDaoMixin on DatabaseAccessor<DaKanjiDB> {
       attachedDatabase.languageCodeTable;
   $ExampleTranslationTableTable get exampleTranslationTable =>
       attachedDatabase.exampleTranslationTable;
+  ExampleDaoManager get managers => ExampleDaoManager(this);
+}
+
+class ExampleDaoManager {
+  final _$ExampleDaoMixin _db;
+  ExampleDaoManager(this._db);
+  $$IndexTableTableTableManager get indexTable =>
+      $$IndexTableTableTableManager(_db.attachedDatabase, _db.indexTable);
+  $$ExampleTableTableTableManager get exampleTable =>
+      $$ExampleTableTableTableManager(_db.attachedDatabase, _db.exampleTable);
+  $$LanguageCodeTableTableTableManager get languageCodeTable =>
+      $$LanguageCodeTableTableTableManager(
+        _db.attachedDatabase,
+        _db.languageCodeTable,
+      );
+  $$ExampleTranslationTableTableTableManager get exampleTranslationTable =>
+      $$ExampleTranslationTableTableTableManager(
+        _db.attachedDatabase,
+        _db.exampleTranslationTable,
+      );
 }

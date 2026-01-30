@@ -1,20 +1,20 @@
+import 'package:dakanji_db_core/data/dakanji_db_search_result_sort_order.dart';
+import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
-import 'package:dakanji_db_ui/model/dakanji_db_search_result_sort_order.dart';
-import 'package:dakanji_db_ui/model/dakanji_db_settings.dart';
 import 'package:dakanji_db_ui/widgets/kanji/kanji_entry_widget.dart';
 import 'package:dakanji_db_ui/widgets/term/term_entry_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class DictionarySearchResultWidget extends StatefulWidget {
 
   /// The dictionary search result to display.
   final DictionarySearchResult result;
-  /// The settings for displaying the search results.
-  final DaKanjiDbSettings settings;
   /// Localization for the search results UI
   final DakanjiDbLocalization localization;
 
@@ -24,7 +24,6 @@ class DictionarySearchResultWidget extends StatefulWidget {
   const DictionarySearchResultWidget(
     {
       required this.result,
-      required this.settings,
       required this.localization,
       this.onTap,
       super.key
@@ -36,19 +35,19 @@ class DictionarySearchResultWidget extends StatefulWidget {
 }
 
 class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWidget> {
+
   final Set<String> _collapsedSections = {};
 
-  void _toggleSection(String key) {
-    setState(() {
-      if (_collapsedSections.contains(key)) {
-        _collapsedSections.remove(key);
-      } else {
-        _collapsedSections.add(key);
-      }
-    });
-  }
+  late final Stream<SearchProfilesEntry> profilesStream;
 
   bool _isExpanded(String title) => !_collapsedSections.contains(title);
+
+
+  @override
+  void initState() {
+    super.initState();
+    profilesStream = GetIt.I<DaKanjiDB>().searchProfilesDao.watchActiveProfile();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,70 +71,85 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       );
   }
 
-    return ChangeNotifierProvider<DaKanjiDbSettings>.value(
-      value: widget.settings,
-      builder: (context, child) {
-        return CustomScrollView(
-          slivers: [
-            if (widget.result.kanjiResults.isNotEmpty &&
-                context.read<DaKanjiDbSettings>().s.showKanjiEntriesInSearchResults)
-              ...[
-                SliverPersistentHeader(
-                  delegate: _StickyHeaderDelegate(
-                    title: "Kanji (${widget.result.kanjiResults.first.kanjiBankEntry.kanji})",
-                    type: _StickyHeaderType.main,
-                    isExpanded: _isExpanded("KanjiSection"),
-                    onTap: () => _toggleSection("KanjiSection"),
-                    fontSize: 18.0,
-                  ),
-                ),
-                
-                // Only render the list items if the section is expanded
-                if (_isExpanded("KanjiSection"))
-                  for (var (i, kanjiMatchGroup) in widget.result.kanjiResults.indexed)
-                    SliverToBoxAdapter(
-                      child: KanjiEntryWidget(
-                        result: kanjiMatchGroup,
-                        showTags: context.read<DaKanjiDbSettings>().s.showTags,
-                        showMeta: context.read<DaKanjiDbSettings>().s.showMetaEntries,
-                        includeAllStats: false
+    return StreamBuilder(
+      stream: profilesStream,
+      builder: (context, asyncSnapshot) {
+
+        if(!asyncSnapshot.hasData || asyncSnapshot.data == null) return SizedBox();
+        if(asyncSnapshot.hasError) {
+          return Center(
+            child: Text("Error loading search profile: ${asyncSnapshot.error}"),
+          );
+        }
+
+        return Provider<SearchProfilesEntry>.value(
+          value: asyncSnapshot.data!,
+          builder: (context, child) {
+            if(context.watch<SearchProfilesEntry?>() == null) return SizedBox();
+        
+            return CustomScrollView(
+              slivers: [
+                if (widget.result.kanjiResults.isNotEmpty &&
+                    context.watch<SearchProfilesEntry>().showKanjiEntriesInSearchResults)
+                  ...[
+                    SliverPersistentHeader(
+                      delegate: _StickyHeaderDelegate(
+                        title: "Kanji (${widget.result.kanjiResults.first.kanjiBankEntry.kanji})",
+                        type: _StickyHeaderType.main,
+                        isExpanded: _isExpanded("KanjiSection"),
+                        onTap: () => _toggleSection("KanjiSection"),
+                        fontSize: 18.0,
                       ),
                     ),
-              ],
-        
-            for (var (i, matchType) in context.read<DaKanjiDbSettings>().s.firstSortOrder.indexed)
-              ...switch (matchType.$1) {
-                
-                // Query Matches
-                DakanjiDbSearchResult1stSortOrder.queryMatch when
-                  matchType.$2 && !widget.result.queryMatches.isEmpty => [
-                    _buildMainSection(
-                      context, loc.sortByDirectMatch, widget.result.queryMatches, i)
+                    
+                    // Only render the list items if the section is expanded
+                    if (_isExpanded("KanjiSection"))
+                      for (var (i, kanjiMatchGroup) in widget.result.kanjiResults.indexed)
+                        SliverToBoxAdapter(
+                          child: KanjiEntryWidget(
+                            result: kanjiMatchGroup,
+                            showTags: context.watch<SearchProfilesEntry>().showTags,
+                            showMeta: context.watch<SearchProfilesEntry>().showMetaEntries,
+                            includeAllStats: false
+                          ),
+                        ),
                   ],
-          
-                // Normalized Matches
-                DakanjiDbSearchResult1stSortOrder.normalizedMatch when
-                  matchType.$2 && normalized.any((e) => !e.isEmpty) =>
-                    normalized.map((group) => _buildMainSection(
-                      context, loc.sortByFlexibleMatch, group, i)),
-          
-                // Variant Matches
-                DakanjiDbSearchResult1stSortOrder.deconjugationMatch when
-                  matchType.$2 && variants.any((e) => !e.isEmpty) =>
-                    variants.map((group) => _buildMainSection(
-                      context, loc.sortBySmartGrammarMatch, group, i)),
-          
-                // Fuzzy Matches
-                DakanjiDbSearchResult1stSortOrder.spellfixMatch when
-                  matchType.$2 && fuzzy.any((e) => !e.isEmpty) =>
-                    fuzzy.map((group) => _buildMainSection(
-                      context, loc.sortByTypoCorrectionMatch, group, i)),
-          
-                // Default case returns an empty list
-                _ => [],
-              },
             
-          ],
+                for (var (i, matchType) in context.watch<SearchProfilesEntry>().firstSortOrder.indexed)
+                  ...switch (matchType.$1) {
+                    
+                    // Query Matches
+                    DakanjiDbSearchResult1stSortOrder.queryMatch when
+                      matchType.$2 && !widget.result.queryMatches.isEmpty => [
+                        _buildMainSection(
+                          context, loc.sortByDirectMatch, widget.result.queryMatches, i)
+                      ],
+              
+                    // Normalized Matches
+                    DakanjiDbSearchResult1stSortOrder.normalizedMatch when
+                      matchType.$2 && normalized.any((e) => !e.isEmpty) =>
+                        normalized.map((group) => _buildMainSection(
+                          context, loc.sortByFlexibleMatch, group, i)),
+              
+                    // Variant Matches
+                    DakanjiDbSearchResult1stSortOrder.deconjugationMatch when
+                      matchType.$2 && variants.any((e) => !e.isEmpty) =>
+                        variants.map((group) => _buildMainSection(
+                          context, loc.sortBySmartGrammarMatch, group, i)),
+              
+                    // Fuzzy Matches
+                    DakanjiDbSearchResult1stSortOrder.spellfixMatch when
+                      matchType.$2 && fuzzy.any((e) => !e.isEmpty) =>
+                        fuzzy.map((group) => _buildMainSection(
+                          context, loc.sortByTypoCorrectionMatch, group, i)),
+              
+                    // Default case returns an empty list
+                    _ => [],
+                  },
+                
+              ],
+            );
+          }
         );
       }
     );
@@ -151,7 +165,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       // Key allows Flutter to reuse the render object when rebuilding
       key: ValueKey(keyValue), 
       slivers: [
-        if (context.read<DaKanjiDbSettings>().s.showSearchResultSeparationHeaders)
+        if (context.watch<SearchProfilesEntry>().showSearchResultSeparationHeaders)
           SliverPersistentHeader(
             pinned: true,
             delegate: _StickyHeaderDelegate(
@@ -183,7 +197,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
           // Helps Flutter identify this specific sub-group
           key: ValueKey(sectionKey), 
           slivers: [
-            if (widget.settings.s.showSearchResultSeparationHeaders)
+            if (context.watch<SearchProfilesEntry>().showSearchResultSeparationHeaders)
               SliverPersistentHeader(
                 pinned: true,
                 delegate: _StickyHeaderDelegate(
@@ -202,7 +216,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
     }
 
     // display the results in the user defined order
-    for (var (i, matchType) in context.read<DaKanjiDbSettings>().s.secondSortOrder.indexed) {
+    for (var (i, matchType) in context.watch<SearchProfilesEntry>().secondSortOrder.indexed) {
       switch (matchType.$1) {
         case DakanjiDbSearchResult2ndSortOrder.exactMatch:
           if (matchType.$2) {
@@ -237,15 +251,26 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
         key: ValueKey("${keyPrefix}_List_Item_$i"), 
         child: TermEntryWidget(
           matches[i],
-          showTags: context.read<DaKanjiDbSettings>().s.showTags,
-          showMetaEntries: context.read<DaKanjiDbSettings>().s.showMetaEntries,
-          definitionsMaxHeight: context.read<DaKanjiDbSettings>().s.definitionsMaxHeight,
-          useKatakanaForFurigana: context.read<DaKanjiDbSettings>().s.useKatakanaForFurigana,
+          showTags: context.watch<SearchProfilesEntry>().showTags,
+          showMetaEntries: context.watch<SearchProfilesEntry>().showMetaEntries,
+          definitionsMaxHeight: context.watch<SearchProfilesEntry>().definitionsMaxHeight,
+          useKatakanaForFurigana: context.watch<SearchProfilesEntry>().useKatakanaForFurigana,
           onTap: widget.onTap,
         ),
       ),
     );
   }
+
+  void _toggleSection(String key) {
+    setState(() {
+      if (_collapsedSections.contains(key)) {
+        _collapsedSections.remove(key);
+      } else {
+        _collapsedSections.add(key);
+      }
+    });
+  }
+
 }
 
 enum _StickyHeaderType {
