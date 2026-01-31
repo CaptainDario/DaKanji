@@ -1,4 +1,5 @@
 import 'package:dakanji_db_core/data/dictionary_types.dart';
+import 'package:dakanji_db_core/data/frequency_mode.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/util/data_converters/bool_as_int_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -85,7 +86,7 @@ class IndexEntry with _$IndexEntry {
   /// The mode of the frequency in this dictionary, one of
   /// "occurrence-based", "rank-based"
   @override
-  final String? frequencyMode;
+  final FrequencyMode? frequencyMode;
 
     
   IndexEntry({

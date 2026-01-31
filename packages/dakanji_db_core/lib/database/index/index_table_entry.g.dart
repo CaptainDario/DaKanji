@@ -37,7 +37,10 @@ IndexEntry _$IndexEntryFromJson(Map<String, dynamic> json) => IndexEntry(
   attribution: json['attribution'] as String?,
   sourceLanguage: json['sourceLanguage'] as String?,
   targetLanguage: json['targetLanguage'] as String?,
-  frequencyMode: json['frequencyMode'] as String?,
+  frequencyMode: $enumDecodeNullable(
+    _$FrequencyModeEnumMap,
+    json['frequencyMode'],
+  ),
 );
 
 Map<String, dynamic> _$IndexEntryToJson(
@@ -69,11 +72,16 @@ Map<String, dynamic> _$IndexEntryToJson(
   'attribution': instance.attribution,
   'sourceLanguage': instance.sourceLanguage,
   'targetLanguage': instance.targetLanguage,
-  'frequencyMode': instance.frequencyMode,
+  'frequencyMode': _$FrequencyModeEnumMap[instance.frequencyMode],
 };
 
 const _$DictionaryTypesEnumMap = {
   DictionaryTypes.yomitan: 'yomitan',
   DictionaryTypes.examples: 'examples',
   DictionaryTypes.audio: 'audio',
+};
+
+const _$FrequencyModeEnumMap = {
+  FrequencyMode.occurrenceBased: 'occurrenceBased',
+  FrequencyMode.rankBased: 'rankBased',
 };

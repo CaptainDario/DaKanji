@@ -1,6 +1,7 @@
 
 import 'package:dakanji_db_core/data/dakanji_db_search_result_sort_order.dart'; // neccessary for drift generator
 import 'package:dakanji_db_core/data/dictionary_types.dart';
+import 'package:dakanji_db_core/data/frequency_mode.dart'; // neccessary for drift generator
 import 'package:dakanji_db_core/database/audio/audio_dao.dart';
 import 'package:dakanji_db_core/database/audio/audio_relation_tables.dart';
 import 'package:dakanji_db_core/database/audio/audio_tables.dart';

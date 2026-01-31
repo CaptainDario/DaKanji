@@ -431,15 +431,14 @@ class $IndexTableTable extends IndexTable
     requiredDuringInsert: false,
   );
   @override
-  late final GeneratedColumnWithTypeConverter<FrequencyMode, String>
+  late final GeneratedColumnWithTypeConverter<FrequencyMode?, String>
   frequencyMode = GeneratedColumn<String>(
     'frequency_mode',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-    defaultValue: Constant(FrequencyMode.occurrenceBased.name),
-  ).withConverter<FrequencyMode>($IndexTableTable.$converterfrequencyMode);
+  ).withConverter<FrequencyMode?>($IndexTableTable.$converterfrequencyModen);
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -713,11 +712,11 @@ class $IndexTableTable extends IndexTable
         DriftSqlType.string,
         data['${effectivePrefix}target_language'],
       ),
-      frequencyMode: $IndexTableTable.$converterfrequencyMode.fromSql(
+      frequencyMode: $IndexTableTable.$converterfrequencyModen.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
           data['${effectivePrefix}frequency_mode'],
-        )!,
+        ),
       ),
     );
   }
@@ -734,6 +733,10 @@ class $IndexTableTable extends IndexTable
   static JsonTypeConverter2<FrequencyMode, String, String>
   $converterfrequencyMode = const EnumNameConverter<FrequencyMode>(
     FrequencyMode.values,
+  );
+  static JsonTypeConverter2<FrequencyMode?, String?, String?>
+  $converterfrequencyModen = JsonTypeConverter2.asNullable(
+    $converterfrequencyMode,
   );
 }
 
@@ -800,7 +803,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
 
   /// The mode of the frequency in this dictionary, one of
   /// "occurrence-based", "rank-based"
-  final FrequencyMode frequencyMode;
+  final FrequencyMode? frequencyMode;
   const IndexTableData({
     required this.id,
     required this.isDefaultDictionary,
@@ -822,7 +825,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     this.attribution,
     this.sourceLanguage,
     this.targetLanguage,
-    required this.frequencyMode,
+    this.frequencyMode,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -877,9 +880,9 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     if (!nullToAbsent || targetLanguage != null) {
       map['target_language'] = Variable<String>(targetLanguage);
     }
-    {
+    if (!nullToAbsent || frequencyMode != null) {
       map['frequency_mode'] = Variable<String>(
-        $IndexTableTable.$converterfrequencyMode.toSql(frequencyMode),
+        $IndexTableTable.$converterfrequencyModen.toSql(frequencyMode),
       );
     }
     return map;
@@ -929,7 +932,9 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       targetLanguage: targetLanguage == null && nullToAbsent
           ? const Value.absent()
           : Value(targetLanguage),
-      frequencyMode: Value(frequencyMode),
+      frequencyMode: frequencyMode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(frequencyMode),
     );
   }
 
@@ -967,8 +972,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       attribution: serializer.fromJson<String?>(json['attribution']),
       sourceLanguage: serializer.fromJson<String?>(json['sourceLanguage']),
       targetLanguage: serializer.fromJson<String?>(json['targetLanguage']),
-      frequencyMode: $IndexTableTable.$converterfrequencyMode.fromJson(
-        serializer.fromJson<String>(json['frequencyMode']),
+      frequencyMode: $IndexTableTable.$converterfrequencyModen.fromJson(
+        serializer.fromJson<String?>(json['frequencyMode']),
       ),
     );
   }
@@ -1000,8 +1005,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       'attribution': serializer.toJson<String?>(attribution),
       'sourceLanguage': serializer.toJson<String?>(sourceLanguage),
       'targetLanguage': serializer.toJson<String?>(targetLanguage),
-      'frequencyMode': serializer.toJson<String>(
-        $IndexTableTable.$converterfrequencyMode.toJson(frequencyMode),
+      'frequencyMode': serializer.toJson<String?>(
+        $IndexTableTable.$converterfrequencyModen.toJson(frequencyMode),
       ),
     };
   }
@@ -1027,7 +1032,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     Value<String?> attribution = const Value.absent(),
     Value<String?> sourceLanguage = const Value.absent(),
     Value<String?> targetLanguage = const Value.absent(),
-    FrequencyMode? frequencyMode,
+    Value<FrequencyMode?> frequencyMode = const Value.absent(),
   }) => IndexTableData(
     id: id ?? this.id,
     isDefaultDictionary: isDefaultDictionary ?? this.isDefaultDictionary,
@@ -1054,7 +1059,9 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     targetLanguage: targetLanguage.present
         ? targetLanguage.value
         : this.targetLanguage,
-    frequencyMode: frequencyMode ?? this.frequencyMode,
+    frequencyMode: frequencyMode.present
+        ? frequencyMode.value
+        : this.frequencyMode,
   );
   IndexTableData copyWithCompanion(IndexTableCompanion data) {
     return IndexTableData(
@@ -1204,7 +1211,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   final Value<String?> attribution;
   final Value<String?> sourceLanguage;
   final Value<String?> targetLanguage;
-  final Value<FrequencyMode> frequencyMode;
+  final Value<FrequencyMode?> frequencyMode;
   const IndexTableCompanion({
     this.id = const Value.absent(),
     this.isDefaultDictionary = const Value.absent(),
@@ -1327,7 +1334,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     Value<String?>? attribution,
     Value<String?>? sourceLanguage,
     Value<String?>? targetLanguage,
-    Value<FrequencyMode>? frequencyMode,
+    Value<FrequencyMode?>? frequencyMode,
   }) {
     return IndexTableCompanion(
       id: id ?? this.id,
@@ -1424,7 +1431,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     }
     if (frequencyMode.present) {
       map['frequency_mode'] = Variable<String>(
-        $IndexTableTable.$converterfrequencyMode.toSql(frequencyMode.value),
+        $IndexTableTable.$converterfrequencyModen.toSql(frequencyMode.value),
       );
     }
     return map;
@@ -18883,8 +18890,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         attribution: row.readNullable<String>('attribution'),
         sourceLanguage: row.readNullable<String>('source_language'),
         targetLanguage: row.readNullable<String>('target_language'),
-        frequencyMode: $IndexTableTable.$converterfrequencyMode.fromSql(
-          row.read<String>('frequency_mode'),
+        frequencyMode: NullAwareTypeConverter.wrapFromSql(
+          $IndexTableTable.$converterfrequencyMode,
+          row.readNullable<String>('frequency_mode'),
         ),
         hasPopularityOverride: row.read<int>('hasPopularityOverride'),
         overriddenPopularityValue: row.readNullable<int>(
@@ -20101,7 +20109,7 @@ typedef $$IndexTableTableCreateCompanionBuilder =
       Value<String?> attribution,
       Value<String?> sourceLanguage,
       Value<String?> targetLanguage,
-      Value<FrequencyMode> frequencyMode,
+      Value<FrequencyMode?> frequencyMode,
     });
 typedef $$IndexTableTableUpdateCompanionBuilder =
     IndexTableCompanion Function({
@@ -20125,7 +20133,7 @@ typedef $$IndexTableTableUpdateCompanionBuilder =
       Value<String?> attribution,
       Value<String?> sourceLanguage,
       Value<String?> targetLanguage,
-      Value<FrequencyMode> frequencyMode,
+      Value<FrequencyMode?> frequencyMode,
     });
 
 final class $$IndexTableTableReferences
@@ -20447,7 +20455,7 @@ class $$IndexTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<FrequencyMode, FrequencyMode, String>
+  ColumnWithTypeConverterFilters<FrequencyMode?, FrequencyMode, String>
   get frequencyMode => $composableBuilder(
     column: $table.frequencyMode,
     builder: (column) => ColumnWithTypeConverterFilters(column),
@@ -20884,7 +20892,7 @@ class $$IndexTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumnWithTypeConverter<FrequencyMode, String> get frequencyMode =>
+  GeneratedColumnWithTypeConverter<FrequencyMode?, String> get frequencyMode =>
       $composableBuilder(
         column: $table.frequencyMode,
         builder: (column) => column,
@@ -21177,7 +21185,7 @@ class $$IndexTableTableTableManager
                 Value<String?> attribution = const Value.absent(),
                 Value<String?> sourceLanguage = const Value.absent(),
                 Value<String?> targetLanguage = const Value.absent(),
-                Value<FrequencyMode> frequencyMode = const Value.absent(),
+                Value<FrequencyMode?> frequencyMode = const Value.absent(),
               }) => IndexTableCompanion(
                 id: id,
                 isDefaultDictionary: isDefaultDictionary,
@@ -21223,7 +21231,7 @@ class $$IndexTableTableTableManager
                 Value<String?> attribution = const Value.absent(),
                 Value<String?> sourceLanguage = const Value.absent(),
                 Value<String?> targetLanguage = const Value.absent(),
-                Value<FrequencyMode> frequencyMode = const Value.absent(),
+                Value<FrequencyMode?> frequencyMode = const Value.absent(),
               }) => IndexTableCompanion.insert(
                 id: id,
                 isDefaultDictionary: isDefaultDictionary,
@@ -41104,7 +41112,7 @@ class DictionarySearchDriftFindTermBankDetailsResult {
   final String? attribution;
   final String? sourceLanguage;
   final String? targetLanguage;
-  final FrequencyMode frequencyMode;
+  final FrequencyMode? frequencyMode;
   final int hasPopularityOverride;
   final int? overriddenPopularityValue;
   final int originalPopularity;
@@ -41144,7 +41152,7 @@ class DictionarySearchDriftFindTermBankDetailsResult {
     this.attribution,
     this.sourceLanguage,
     this.targetLanguage,
-    required this.frequencyMode,
+    this.frequencyMode,
     required this.hasPopularityOverride,
     this.overriddenPopularityValue,
     required this.originalPopularity,

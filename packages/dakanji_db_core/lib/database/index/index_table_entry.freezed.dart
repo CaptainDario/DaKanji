@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$IndexEntry {
 
- int get id; bool get isDefaultDictionary; bool get enabled; DictionaryTypes get dictionaryType; int get currentSortingOrder; bool get currentFrequencyDictionary; String get title; String get revision; bool? get sequenced; int? get format; int? get version; String? get author; bool? get isUpdatable; String? get indexUrl; String? get downloadUrl; String? get url; String? get description; String? get attribution; String? get sourceLanguage; String? get targetLanguage; String? get frequencyMode;
+ int get id; bool get isDefaultDictionary; bool get enabled; DictionaryTypes get dictionaryType; int get currentSortingOrder; bool get currentFrequencyDictionary; String get title; String get revision; bool? get sequenced; int? get format; int? get version; String? get author; bool? get isUpdatable; String? get indexUrl; String? get downloadUrl; String? get url; String? get description; String? get attribution; String? get sourceLanguage; String? get targetLanguage; FrequencyMode? get frequencyMode;
 /// Create a copy of IndexEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +46,7 @@ abstract mixin class $IndexEntryCopyWith<$Res>  {
   factory $IndexEntryCopyWith(IndexEntry value, $Res Function(IndexEntry) _then) = _$IndexEntryCopyWithImpl;
 @useResult
 $Res call({
- int id, bool isDefaultDictionary, bool enabled, DictionaryTypes dictionaryType, int currentSortingOrder, bool currentFrequencyDictionary, String title, String revision, bool? sequenced, int? format, int? version, String? author, bool? isUpdatable, String? indexUrl, String? downloadUrl, String? url, String? description, String? attribution, String? sourceLanguage, String? targetLanguage, String? frequencyMode
+ int id, bool isDefaultDictionary, bool enabled, DictionaryTypes dictionaryType, int currentSortingOrder, bool currentFrequencyDictionary, String title, String revision, bool? sequenced, int? format, int? version, String? author, bool? isUpdatable, String? indexUrl, String? downloadUrl, String? url, String? description, String? attribution, String? sourceLanguage, String? targetLanguage, FrequencyMode? frequencyMode
 });
 
 
@@ -86,7 +86,7 @@ as String?,attribution: freezed == attribution ? _self.attribution : attribution
 as String?,sourceLanguage: freezed == sourceLanguage ? _self.sourceLanguage : sourceLanguage // ignore: cast_nullable_to_non_nullable
 as String?,targetLanguage: freezed == targetLanguage ? _self.targetLanguage : targetLanguage // ignore: cast_nullable_to_non_nullable
 as String?,frequencyMode: freezed == frequencyMode ? _self.frequencyMode : frequencyMode // ignore: cast_nullable_to_non_nullable
-as String?,
+as FrequencyMode?,
   ));
 }
 

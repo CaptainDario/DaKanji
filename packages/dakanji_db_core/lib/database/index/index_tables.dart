@@ -51,7 +51,6 @@ class IndexTable extends Table {
   TextColumn get targetLanguage => text().nullable()();
   /// The mode of the frequency in this dictionary, one of
   /// "occurrence-based", "rank-based"
-  TextColumn get frequencyMode => textEnum<FrequencyMode>()
-    .withDefault(Constant(FrequencyMode.occurrenceBased.name))();
+  TextColumn get frequencyMode => textEnum<FrequencyMode>().nullable()();
 
 }
