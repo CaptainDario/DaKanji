@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
+import 'package:drift/drift.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -91,8 +92,14 @@ void main() {
           "$testCaseName (${j+1}): ${testCase.description}",
           () async {
             // set frequency overrides if any
-            if(testCaseName == "Popularity Override")
+            if(testCaseName == "Popularity Override"){
               await db.indexDao.updateFrequencyOverride(3);
+              await (db.update(db.indexTable)..where((t) => t.id.equals(3))).write(
+                IndexTableCompanion(
+                  frequencyMode: Value(testCase.frequencyModeOverride),
+                ),
+              );
+            }
             else 
               await db.indexDao.clearFrequencyOverride();
             

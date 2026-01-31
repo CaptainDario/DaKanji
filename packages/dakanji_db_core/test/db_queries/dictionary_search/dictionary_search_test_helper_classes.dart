@@ -1,3 +1,4 @@
+import 'package:dakanji_db_core/data/frequency_mode.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 
@@ -12,6 +13,7 @@ class DictionarySearchTestCase {
   final List<DictionaryGroupingRule> groupingRules;
   final bool useOnlyEnabledDictionaries;
   final bool useOnlyDefaultDictionaries;
+  final FrequencyMode? frequencyModeOverride;
 
   /// Expected results from the original, unmodified query.
   final ExpectedMatchGroup queryMatches;
@@ -32,6 +34,7 @@ class DictionarySearchTestCase {
     this.groupingRules = const [],
     this.useOnlyEnabledDictionaries = false,
     this.useOnlyDefaultDictionaries = false,
+    this.frequencyModeOverride,
     this.queryMatches = const ExpectedMatchGroup(),
     this.normalizedQueryMatchGroups = const [],
     this.queryVariantMatches = const [],
