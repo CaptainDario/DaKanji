@@ -1,15 +1,53 @@
 
+import 'package:dakanji_db_core/data/dakanji_db_search_result_sort_order.dart'; // neccessary for drift generator
 import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/audio/audio_dao.dart';
 import 'package:dakanji_db_core/database/audio/audio_relation_tables.dart';
 import 'package:dakanji_db_core/database/audio/audio_tables.dart';
+import 'package:dakanji_db_core/database/dakanji_db_dao.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search_dao.dart';
 import 'package:dakanji_db_core/database/db_queries/kanji_search_dao.dart';
+import 'package:dakanji_db_core/database/example/example_dao.dart';
+import 'package:dakanji_db_core/database/example/example_relation_tables.dart';
+import 'package:dakanji_db_core/database/example/example_tables.dart';
+import 'package:dakanji_db_core/database/general_tables/definition_dao.dart';
+import 'package:dakanji_db_core/database/general_tables/definition_tables.dart';
+import 'package:dakanji_db_core/database/general_tables/kanji_dao.dart';
+import 'package:dakanji_db_core/database/general_tables/kanji_tables.dart';
+import 'package:dakanji_db_core/database/general_tables/language_code_dao.dart';
+import 'package:dakanji_db_core/database/general_tables/language_code_table.dart';
 import 'package:dakanji_db_core/database/general_tables/media_dao.dart';
 import 'package:dakanji_db_core/database/general_tables/media_tables.dart';
+import 'package:dakanji_db_core/database/general_tables/reading_dao.dart';
+import 'package:dakanji_db_core/database/general_tables/reading_tables.dart';
+import 'package:dakanji_db_core/database/general_tables/term_dao.dart';
+import 'package:dakanji_db_core/database/general_tables/term_tables.dart';
+import 'package:dakanji_db_core/database/index/index_dao.dart';
+import 'package:dakanji_db_core/database/index/index_tables.dart';
+import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_dao.dart';
+import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_relation_tables.dart';
+import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_tables.dart';
+import 'package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_dao.dart';
+import 'package:dakanji_db_core/database/kanji_meta/kanji_meta_bank_v3_tables.dart';
+import 'package:dakanji_db_core/database/kanji_vg/kanji_vg_dao.dart';
+import 'package:dakanji_db_core/database/kanji_vg/kanji_vg_tables.dart';
+import 'package:dakanji_db_core/database/radicals/radical_dao.dart';
+import 'package:dakanji_db_core/database/radicals/radical_relation_tables.dart';
+import 'package:dakanji_db_core/database/radicals/radical_tables.dart';
 import 'package:dakanji_db_core/database/search_profiles/search_profile_tables.dart';
 import 'package:dakanji_db_core/database/search_profiles/search_profiles_dao.dart';
+import 'package:dakanji_db_core/database/tag/tag_bank_v3_dao.dart';
+import 'package:dakanji_db_core/database/tag/tag_bank_v3_tables.dart';
+import 'package:dakanji_db_core/database/term/term_bank_v3_dao.dart';
+import 'package:dakanji_db_core/database/term/term_bank_v3_relation_tables.dart';
+import 'package:dakanji_db_core/database/term/term_bank_v3_tables.dart';
+import 'package:dakanji_db_core/database/term_meta/term_meta_bank_relation_tables.dart';
+import 'package:dakanji_db_core/database/term_meta/term_meta_bank_v3_dao.dart';
+import 'package:dakanji_db_core/database/term_meta/term_meta_bank_v3_tables.dart';
 import 'package:dakanji_db_core/delete/deletion_dao.dart';
+import 'package:dakanji_db_core/util/data_converters/sort_order_converter.dart'; // neccessary for drift generator
+import 'package:dakanji_db_core/util/data_converters/sql_json_converter.dart';   // neccessary for drift generator
+import 'package:dakanji_db_core/util/data_converters/zlib_text_converter_io.dart'; // neccessary for drift generator
 import 'package:dakanji_sqlite_extensions/dakanji_sqlite_extensions.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -17,44 +55,6 @@ import 'package:sqlite3/native_assets.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:universal_io/io.dart';
 
-import '/database/dakanji_db_dao.dart';
-import '/database/example/example_dao.dart';
-import '/database/example/example_relation_tables.dart';
-import '/database/example/example_tables.dart';
-import '/database/general_tables/definition_dao.dart';
-import '/database/general_tables/definition_tables.dart';
-import '/database/general_tables/kanji_dao.dart';
-import '/database/general_tables/kanji_tables.dart';
-import '/database/general_tables/language_code_dao.dart';
-import '/database/general_tables/language_code_table.dart';
-import '/database/general_tables/reading_dao.dart';
-import '/database/general_tables/reading_tables.dart';
-import '/database/general_tables/term_dao.dart';
-import '/database/general_tables/term_tables.dart';
-import '/database/index/index_dao.dart';
-import '/database/index/index_tables.dart';
-import '/database/kanji/kanji_bank_v3_dao.dart';
-import '/database/kanji/kanji_bank_v3_relation_tables.dart';
-import '/database/kanji/kanji_bank_v3_tables.dart';
-import '/database/kanji_meta/kanji_meta_bank_v3_dao.dart';
-import '/database/kanji_meta/kanji_meta_bank_v3_tables.dart';
-import '/database/kanji_vg/kanji_vg_dao.dart';
-import '/database/kanji_vg/kanji_vg_tables.dart';
-import '/database/radicals/radical_dao.dart';
-import '/database/radicals/radical_relation_tables.dart';
-import '/database/radicals/radical_tables.dart';
-import '/database/tag/tag_bank_v3_dao.dart';
-import '/database/tag/tag_bank_v3_tables.dart';
-import '/database/term/term_bank_v3_dao.dart';
-import '/database/term/term_bank_v3_relation_tables.dart';
-import '/database/term/term_bank_v3_tables.dart';
-import '/database/term_meta/term_meta_bank_relation_tables.dart';
-import '/database/term_meta/term_meta_bank_v3_dao.dart';
-import '/database/term_meta/term_meta_bank_v3_tables.dart';
-import '../data/dakanji_db_search_result_sort_order.dart'; // neccessary for drift generator
-import '../data_converters/sort_order_converter.dart'; // neccessary for drift generator
-import '../data_converters/sql_json_converter.dart';   // neccessary for drift generator
-import '../data_converters/zlib_text_converter_io.dart'; // neccessary for drift generator
 import 'audio_source_list/audio_source_list_tables.dart';
 
 part 'dakanji_db.g.dart';
