@@ -430,17 +430,16 @@ class $IndexTableTable extends IndexTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _frequencyModeMeta = const VerificationMeta(
-    'frequencyMode',
-  );
   @override
-  late final GeneratedColumn<String> frequencyMode = GeneratedColumn<String>(
+  late final GeneratedColumnWithTypeConverter<FrequencyMode, String>
+  frequencyMode = GeneratedColumn<String>(
     'frequency_mode',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-  );
+    defaultValue: Constant(FrequencyMode.occurrenceBased.name),
+  ).withConverter<FrequencyMode>($IndexTableTable.$converterfrequencyMode);
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -623,15 +622,6 @@ class $IndexTableTable extends IndexTable
         ),
       );
     }
-    if (data.containsKey('frequency_mode')) {
-      context.handle(
-        _frequencyModeMeta,
-        frequencyMode.isAcceptableOrUnknown(
-          data['frequency_mode']!,
-          _frequencyModeMeta,
-        ),
-      );
-    }
     return context;
   }
 
@@ -723,9 +713,11 @@ class $IndexTableTable extends IndexTable
         DriftSqlType.string,
         data['${effectivePrefix}target_language'],
       ),
-      frequencyMode: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}frequency_mode'],
+      frequencyMode: $IndexTableTable.$converterfrequencyMode.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}frequency_mode'],
+        )!,
       ),
     );
   }
@@ -738,6 +730,10 @@ class $IndexTableTable extends IndexTable
   static JsonTypeConverter2<DictionaryTypes, String, String>
   $converterdictionaryType = const EnumNameConverter<DictionaryTypes>(
     DictionaryTypes.values,
+  );
+  static JsonTypeConverter2<FrequencyMode, String, String>
+  $converterfrequencyMode = const EnumNameConverter<FrequencyMode>(
+    FrequencyMode.values,
   );
 }
 
@@ -804,7 +800,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
 
   /// The mode of the frequency in this dictionary, one of
   /// "occurrence-based", "rank-based"
-  final String? frequencyMode;
+  final FrequencyMode frequencyMode;
   const IndexTableData({
     required this.id,
     required this.isDefaultDictionary,
@@ -826,7 +822,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     this.attribution,
     this.sourceLanguage,
     this.targetLanguage,
-    this.frequencyMode,
+    required this.frequencyMode,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -881,8 +877,10 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     if (!nullToAbsent || targetLanguage != null) {
       map['target_language'] = Variable<String>(targetLanguage);
     }
-    if (!nullToAbsent || frequencyMode != null) {
-      map['frequency_mode'] = Variable<String>(frequencyMode);
+    {
+      map['frequency_mode'] = Variable<String>(
+        $IndexTableTable.$converterfrequencyMode.toSql(frequencyMode),
+      );
     }
     return map;
   }
@@ -931,9 +929,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       targetLanguage: targetLanguage == null && nullToAbsent
           ? const Value.absent()
           : Value(targetLanguage),
-      frequencyMode: frequencyMode == null && nullToAbsent
-          ? const Value.absent()
-          : Value(frequencyMode),
+      frequencyMode: Value(frequencyMode),
     );
   }
 
@@ -971,7 +967,9 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       attribution: serializer.fromJson<String?>(json['attribution']),
       sourceLanguage: serializer.fromJson<String?>(json['sourceLanguage']),
       targetLanguage: serializer.fromJson<String?>(json['targetLanguage']),
-      frequencyMode: serializer.fromJson<String?>(json['frequencyMode']),
+      frequencyMode: $IndexTableTable.$converterfrequencyMode.fromJson(
+        serializer.fromJson<String>(json['frequencyMode']),
+      ),
     );
   }
   @override
@@ -1002,7 +1000,9 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       'attribution': serializer.toJson<String?>(attribution),
       'sourceLanguage': serializer.toJson<String?>(sourceLanguage),
       'targetLanguage': serializer.toJson<String?>(targetLanguage),
-      'frequencyMode': serializer.toJson<String?>(frequencyMode),
+      'frequencyMode': serializer.toJson<String>(
+        $IndexTableTable.$converterfrequencyMode.toJson(frequencyMode),
+      ),
     };
   }
 
@@ -1027,7 +1027,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     Value<String?> attribution = const Value.absent(),
     Value<String?> sourceLanguage = const Value.absent(),
     Value<String?> targetLanguage = const Value.absent(),
-    Value<String?> frequencyMode = const Value.absent(),
+    FrequencyMode? frequencyMode,
   }) => IndexTableData(
     id: id ?? this.id,
     isDefaultDictionary: isDefaultDictionary ?? this.isDefaultDictionary,
@@ -1054,9 +1054,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     targetLanguage: targetLanguage.present
         ? targetLanguage.value
         : this.targetLanguage,
-    frequencyMode: frequencyMode.present
-        ? frequencyMode.value
-        : this.frequencyMode,
+    frequencyMode: frequencyMode ?? this.frequencyMode,
   );
   IndexTableData copyWithCompanion(IndexTableCompanion data) {
     return IndexTableData(
@@ -1206,7 +1204,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   final Value<String?> attribution;
   final Value<String?> sourceLanguage;
   final Value<String?> targetLanguage;
-  final Value<String?> frequencyMode;
+  final Value<FrequencyMode> frequencyMode;
   const IndexTableCompanion({
     this.id = const Value.absent(),
     this.isDefaultDictionary = const Value.absent(),
@@ -1329,7 +1327,7 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     Value<String?>? attribution,
     Value<String?>? sourceLanguage,
     Value<String?>? targetLanguage,
-    Value<String?>? frequencyMode,
+    Value<FrequencyMode>? frequencyMode,
   }) {
     return IndexTableCompanion(
       id: id ?? this.id,
@@ -1425,7 +1423,9 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
       map['target_language'] = Variable<String>(targetLanguage.value);
     }
     if (frequencyMode.present) {
-      map['frequency_mode'] = Variable<String>(frequencyMode.value);
+      map['frequency_mode'] = Variable<String>(
+        $IndexTableTable.$converterfrequencyMode.toSql(frequencyMode.value),
+      );
     }
     return map;
   }
@@ -18759,7 +18759,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     int offset,
   ) {
     return customSelect(
-      'WITH SearchTerms (term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (SELECT CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), CAST(json_extract(value, \'\$[3]\') AS TEXT), CAST(json_extract(value, \'\$[4]\') AS TEXT), CASE WHEN CAST(json_extract(value, \'\$[2]\') AS INTEGER) = 1 THEN \'^\' ELSE \'\' END || \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), ActiveIndexes (id, current_sorting_order, enabled) AS (SELECT id, current_sorting_order, enabled FROM index_table WHERE(?2 IS NOT NULL AND id IN (SELECT index_id FROM IndexesToInclude))OR(?2 IS NULL AND enabled = 1)), SearchResults AS (SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH fts_query WHERE ?3 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))UNION ALL SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?3 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, rank ASC, LENGTH(text_data) ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), SearchParameterCheck AS (SELECT term_bank_v3_table.id AS term_bank_id FROM term_bank_v3_table WHERE(?5 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM search_fts WHERE source_id = term_bank_v3_table.term_id AND data_type_id IN (1, 2, 3, 4) AND text_data MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\'))AND(?6 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM search_fts WHERE source_id = term_bank_v3_table.reading_id AND data_type_id IN (5, 6) AND text_data MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN search_fts AS def_fts ON link.definition_id = def_fts.source_id WHERE link.term_bank_id = term_bank_v3_table.id AND def_fts.data_type_id = 7 AND def_fts.text_data MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id), TermBankMatchesFiltered AS (SELECT TBM.* FROM TermBankMatches AS TBM JOIN SearchParameterCheck ON SearchParameterCheck.term_bank_id = TBM.term_bank_id WHERE(TBM.allowed_tags IS NULL OR json_array_length(TBM.allowed_tags) = 0 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN json_each(TBM.allowed_tags)AS AllowedTag ON TagTable.name = AllowedTag.value WHERE LinkTable.term_bank_id = TBM.term_bank_id))AND(TBM.allowed_rules IS NULL OR json_array_length(TBM.allowed_rules) = 0 OR EXISTS (SELECT 1 AS _c4 FROM term_bank_v3_x_rule_identifier_table AS RuleLink JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id JOIN json_each(TBM.allowed_rules)AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value WHERE RuleLink.term_bank_id = TBM.term_bank_id))), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, ActiveIndexes.id AS indexId, ActiveIndexes.current_sorting_order, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFiltered AS TBM JOIN ActiveIndexes ON TB3T.index_id = ActiveIndexes.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY ActiveIndexes.current_sorting_order, TBM.match_type, TBM.match_column, finalPopularity DESC, TBM.rank, LENGTH(matchedText) LIMIT ?8 OFFSET ?9',
+      'WITH SearchTerms (term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (SELECT CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), CAST(json_extract(value, \'\$[3]\') AS TEXT), CAST(json_extract(value, \'\$[4]\') AS TEXT), CASE WHEN CAST(json_extract(value, \'\$[2]\') AS INTEGER) = 1 THEN \'^\' ELSE \'\' END || \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), ActiveIndexes (id, current_sorting_order, enabled, frequency_mode) AS (SELECT id, current_sorting_order, enabled, frequency_mode FROM index_table WHERE(?2 IS NOT NULL AND id IN (SELECT index_id FROM IndexesToInclude))OR(?2 IS NULL AND enabled = 1)), SearchResults AS (SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH fts_query WHERE ?3 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))UNION ALL SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?3 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, rank ASC, LENGTH(text_data) ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), SearchParameterCheck AS (SELECT term_bank_v3_table.id AS term_bank_id FROM term_bank_v3_table WHERE(?5 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM search_fts WHERE source_id = term_bank_v3_table.term_id AND data_type_id IN (1, 2, 3, 4) AND text_data MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\'))AND(?6 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM search_fts WHERE source_id = term_bank_v3_table.reading_id AND data_type_id IN (5, 6) AND text_data MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN search_fts AS def_fts ON link.definition_id = def_fts.source_id WHERE link.term_bank_id = term_bank_v3_table.id AND def_fts.data_type_id = 7 AND def_fts.text_data MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id), TermBankMatchesFiltered AS (SELECT TBM.* FROM TermBankMatches AS TBM JOIN SearchParameterCheck ON SearchParameterCheck.term_bank_id = TBM.term_bank_id WHERE(TBM.allowed_tags IS NULL OR json_array_length(TBM.allowed_tags) = 0 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN json_each(TBM.allowed_tags)AS AllowedTag ON TagTable.name = AllowedTag.value WHERE LinkTable.term_bank_id = TBM.term_bank_id))AND(TBM.allowed_rules IS NULL OR json_array_length(TBM.allowed_rules) = 0 OR EXISTS (SELECT 1 AS _c4 FROM term_bank_v3_x_rule_identifier_table AS RuleLink JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id JOIN json_each(TBM.allowed_rules)AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value WHERE RuleLink.term_bank_id = TBM.term_bank_id))), FrequencyOverrideIsActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.*, IT.frequency_mode AS op_frequency_mode FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, ActiveIndexes.id AS indexId, ActiveIndexes.current_sorting_order, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN CASE WHEN OP.op_frequency_mode = \'rankBased\' THEN(OP.freq_value * -1)ELSE OP.freq_value END ELSE CASE WHEN ActiveIndexes.frequency_mode = \'rankBased\' THEN(TB3T.popularity * -1)ELSE TB3T.popularity END END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFiltered AS TBM JOIN ActiveIndexes ON TB3T.index_id = ActiveIndexes.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN FrequencyOverrideIsActive ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN 0 ELSE ActiveIndexes.current_sorting_order END, TBM.match_type, TBM.match_column, finalPopularity DESC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN ActiveIndexes.current_sorting_order ELSE 0 END, TBM.rank, LENGTH(matchedText) LIMIT ?8 OFFSET ?9',
       variables: [
         Variable<String>(searchInputs),
         Variable<String>(indexesToInclude),
@@ -18834,7 +18834,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   Selectable<DictionarySearchDriftFindTermBankDetailsResult>
   dictionary_search_drift_find_term_bank_details(String termBankIdJson) {
     return customSelect(
-      'WITH TargetIds (term_bank_id) AS (SELECT CAST(value AS INTEGER) FROM json_each(?1)), IsPopulairtyOverrideActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.* FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\'), definitions_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(definition ORDER BY sort_key)AS definitions FROM term_bank_v3_definitions_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds) GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_def_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(rule_identifier) AS rule_identifiers FROM (SELECT DISTINCT term_bank_id, rule_identifier FROM term_bank_v3_rules_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctRules GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), FilteredMetaBank AS (SELECT Base.*, TBM.term_bank_id FROM term_meta_bank_v3_base_view AS Base JOIN (SELECT DISTINCT id AS term_bank_id, term_id, reading_id FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM ON Base.term_id = TBM.term_id AND(Base.reading_id = TBM.reading_id OR Base.reading_id IS NULL)), term_meta_agg AS (SELECT FMB.term_bank_id, COALESCE(JSON_GROUP_ARRAY(JSON_OBJECT(\'id\', FMB.term_meta_id, \'indexEntry\', FMB.index_entry, \'term\', FMB.term, \'reading\', FMB.reading, \'type\', FMB.type, \'frequency\', FMB.frequency, \'frequencyDisplayValue\', FMB.frequencyDisplayValue, \'pitchs\', CASE WHEN FMB.type = \'pitch\' THEN JSON(COALESCE(ap.pitches, \'[]\')) ELSE JSON(\'[]\') END, \'ipas\', CASE WHEN FMB.type = \'ipa\' THEN JSON(COALESCE(ai.ipas, \'[]\')) ELSE JSON(\'[]\') END))FILTER (WHERE FMB.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM FilteredMetaBank AS FMB LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id WHERE((FMB.type = \'pitch\' AND ap.pitches IS NOT NULL)OR(FMB.type = \'ipa\' AND ai.ipas IS NOT NULL)OR(FMB.type = \'freq\'))GROUP BY FMB.term_bank_id) SELECT index_table.*, COALESCE(ActiveCheck.is_active, 0) AS hasPopularityOverride, OP.freq_value AS overriddenPopularityValue, TB3T.popularity AS originalPopularity, CASE WHEN ActiveCheck.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, TB3T.id AS term_bank_v3_id, IV.id AS indexId, IV.index_entry AS indexEntry, TT.term, RT.reading, TB3T.popularity, TB3T.definition_order, TB3T.sequence_number, TDJT.definition_json AS structuredContentDefinitions, COALESCE(DA.definitions, \'[]\') AS definitions, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, COALESCE(TA.tags, \'[]\') AS tags, COALESCE(TMA.termMetaEntries, \'[]\') AS termMetaEntries FROM term_bank_v3_table AS TB3T JOIN index_table ON TB3T.index_id = index_table.id JOIN index_entry_as_json_view AS IV ON TB3T.index_id = IV.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id WHERE TB3T.id IN (SELECT term_bank_id FROM TargetIds)',
+      'WITH TargetIds (term_bank_id) AS (SELECT CAST(value AS INTEGER) FROM json_each(?1)), FrequencyOverrideIsActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.*, IT.frequency_mode AS op_frequency_mode FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\'), definitions_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(definition ORDER BY sort_key)AS definitions FROM term_bank_v3_definitions_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds) GROUP BY term_bank_id), def_tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_def_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), rules_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(rule_identifier) AS rule_identifiers FROM (SELECT DISTINCT term_bank_id, rule_identifier FROM term_bank_v3_rules_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctRules GROUP BY term_bank_id), tags_agg AS (SELECT term_bank_id, JSON_GROUP_ARRAY(JSON(tag_json)) AS tags FROM (SELECT DISTINCT term_bank_id, tag_json FROM term_bank_v3_tags_json_view WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)) AS DistinctTags GROUP BY term_bank_id), FilteredMetaBank AS (SELECT Base.*, TBM.term_bank_id FROM term_meta_bank_v3_base_view AS Base JOIN (SELECT DISTINCT id AS term_bank_id, term_id, reading_id FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM ON Base.term_id = TBM.term_id AND(Base.reading_id = TBM.reading_id OR Base.reading_id IS NULL)), term_meta_agg AS (SELECT FMB.term_bank_id, COALESCE(JSON_GROUP_ARRAY(JSON_OBJECT(\'id\', FMB.term_meta_id, \'indexEntry\', FMB.index_entry, \'term\', FMB.term, \'reading\', FMB.reading, \'type\', FMB.type, \'frequency\', FMB.frequency, \'frequencyDisplayValue\', FMB.frequencyDisplayValue, \'pitchs\', CASE WHEN FMB.type = \'pitch\' THEN JSON(COALESCE(ap.pitches, \'[]\')) ELSE JSON(\'[]\') END, \'ipas\', CASE WHEN FMB.type = \'ipa\' THEN JSON(COALESCE(ai.ipas, \'[]\')) ELSE JSON(\'[]\') END))FILTER (WHERE FMB.type IS NOT NULL), JSON(\'[]\')) AS termMetaEntries FROM FilteredMetaBank AS FMB LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id WHERE((FMB.type = \'pitch\' AND ap.pitches IS NOT NULL)OR(FMB.type = \'ipa\' AND ai.ipas IS NOT NULL)OR(FMB.type = \'freq\'))GROUP BY FMB.term_bank_id) SELECT index_table.*, COALESCE(FrequencyOverrideIsActive.is_active, 0) AS hasPopularityOverride, OP.freq_value AS overriddenPopularityValue, TB3T.popularity AS originalPopularity, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN OP.freq_value ELSE TB3T.popularity END AS finalPopularity, TB3T.id AS term_bank_v3_id, IV.id AS indexId, IV.index_entry AS indexEntry, TT.term, RT.reading, TB3T.popularity, TB3T.definition_order, TB3T.sequence_number, TDJT.definition_json AS structuredContentDefinitions, COALESCE(DA.definitions, \'[]\') AS definitions, COALESCE(DTA.definition_tags, \'[]\') AS definition_tags, COALESCE(RA.rule_identifiers, \'[]\') AS rule_identifiers, COALESCE(TA.tags, \'[]\') AS tags, COALESCE(TMA.termMetaEntries, \'[]\') AS termMetaEntries FROM term_bank_v3_table AS TB3T JOIN index_table ON TB3T.index_id = index_table.id JOIN index_entry_as_json_view AS IV ON TB3T.index_id = IV.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id LEFT JOIN FrequencyOverrideIsActive ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id WHERE TB3T.id IN (SELECT term_bank_id FROM TargetIds)',
       variables: [Variable<String>(termBankIdJson)],
       readsFrom: {
         indexTable,
@@ -18883,7 +18883,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         attribution: row.readNullable<String>('attribution'),
         sourceLanguage: row.readNullable<String>('source_language'),
         targetLanguage: row.readNullable<String>('target_language'),
-        frequencyMode: row.readNullable<String>('frequency_mode'),
+        frequencyMode: $IndexTableTable.$converterfrequencyMode.fromSql(
+          row.read<String>('frequency_mode'),
+        ),
         hasPopularityOverride: row.read<int>('hasPopularityOverride'),
         overriddenPopularityValue: row.readNullable<int>(
           'overriddenPopularityValue',
@@ -20099,7 +20101,7 @@ typedef $$IndexTableTableCreateCompanionBuilder =
       Value<String?> attribution,
       Value<String?> sourceLanguage,
       Value<String?> targetLanguage,
-      Value<String?> frequencyMode,
+      Value<FrequencyMode> frequencyMode,
     });
 typedef $$IndexTableTableUpdateCompanionBuilder =
     IndexTableCompanion Function({
@@ -20123,7 +20125,7 @@ typedef $$IndexTableTableUpdateCompanionBuilder =
       Value<String?> attribution,
       Value<String?> sourceLanguage,
       Value<String?> targetLanguage,
-      Value<String?> frequencyMode,
+      Value<FrequencyMode> frequencyMode,
     });
 
 final class $$IndexTableTableReferences
@@ -20445,9 +20447,10 @@ class $$IndexTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get frequencyMode => $composableBuilder(
+  ColumnWithTypeConverterFilters<FrequencyMode, FrequencyMode, String>
+  get frequencyMode => $composableBuilder(
     column: $table.frequencyMode,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   Expression<bool> kanjiBankV3TableRefs(
@@ -20881,10 +20884,11 @@ class $$IndexTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get frequencyMode => $composableBuilder(
-    column: $table.frequencyMode,
-    builder: (column) => column,
-  );
+  GeneratedColumnWithTypeConverter<FrequencyMode, String> get frequencyMode =>
+      $composableBuilder(
+        column: $table.frequencyMode,
+        builder: (column) => column,
+      );
 
   Expression<T> kanjiBankV3TableRefs<T extends Object>(
     Expression<T> Function($$KanjiBankV3TableTableAnnotationComposer a) f,
@@ -21173,7 +21177,7 @@ class $$IndexTableTableTableManager
                 Value<String?> attribution = const Value.absent(),
                 Value<String?> sourceLanguage = const Value.absent(),
                 Value<String?> targetLanguage = const Value.absent(),
-                Value<String?> frequencyMode = const Value.absent(),
+                Value<FrequencyMode> frequencyMode = const Value.absent(),
               }) => IndexTableCompanion(
                 id: id,
                 isDefaultDictionary: isDefaultDictionary,
@@ -21219,7 +21223,7 @@ class $$IndexTableTableTableManager
                 Value<String?> attribution = const Value.absent(),
                 Value<String?> sourceLanguage = const Value.absent(),
                 Value<String?> targetLanguage = const Value.absent(),
-                Value<String?> frequencyMode = const Value.absent(),
+                Value<FrequencyMode> frequencyMode = const Value.absent(),
               }) => IndexTableCompanion.insert(
                 id: id,
                 isDefaultDictionary: isDefaultDictionary,
@@ -41100,7 +41104,7 @@ class DictionarySearchDriftFindTermBankDetailsResult {
   final String? attribution;
   final String? sourceLanguage;
   final String? targetLanguage;
-  final String? frequencyMode;
+  final FrequencyMode frequencyMode;
   final int hasPopularityOverride;
   final int? overriddenPopularityValue;
   final int originalPopularity;
@@ -41140,7 +41144,7 @@ class DictionarySearchDriftFindTermBankDetailsResult {
     this.attribution,
     this.sourceLanguage,
     this.targetLanguage,
-    this.frequencyMode,
+    required this.frequencyMode,
     required this.hasPopularityOverride,
     this.overriddenPopularityValue,
     required this.originalPopularity,

@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:dakanji_db_core/data/dictionary_types.dart';
+import 'package:dakanji_db_core/util/data_converters/frequency_mode_conerter.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 
@@ -52,7 +53,7 @@ Future<int> parseAndInsertIndex(
     attribution: Value(jsonMap["attribution"]),
     sourceLanguage: Value(jsonMap["sourceLanguage"]),
     targetLanguage: Value(jsonMap["targetLanguage"]),
-    frequencyMode: Value(jsonMap["frequencyMode"]),
+    frequencyMode: Value(mapFrequencyMode(jsonMap["frequencyMode"])),
   );
 
   // insert into the db

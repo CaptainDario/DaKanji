@@ -76,5 +76,4 @@ const _$DictionaryTypesEnumMap = {
   DictionaryTypes.yomitan: 'yomitan',
   DictionaryTypes.examples: 'examples',
   DictionaryTypes.audio: 'audio',
-  DictionaryTypes.grammar: 'grammar',
 };

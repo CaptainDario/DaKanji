@@ -1,5 +1,6 @@
 
 import 'package:dakanji_db_core/data/dictionary_types.dart';
+import 'package:dakanji_db_core/data/frequency_mode.dart';
 import 'package:drift/drift.dart';
 
 /// Contains the main Kanji entries to which the other tables link
@@ -50,6 +51,7 @@ class IndexTable extends Table {
   TextColumn get targetLanguage => text().nullable()();
   /// The mode of the frequency in this dictionary, one of
   /// "occurrence-based", "rank-based"
-  TextColumn get frequencyMode => text().nullable()();
+  TextColumn get frequencyMode => textEnum<FrequencyMode>()
+    .withDefault(Constant(FrequencyMode.occurrenceBased.name))();
 
 }

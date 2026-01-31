@@ -21,7 +21,7 @@ class DeletionDao extends DatabaseAccessor<DaKanjiDB> with _$DeletionDaoMixin {
     if (indexEntry == null) return;
     
     switch (indexEntry.dictionaryType) {
-      case DictionaryTypes.yomitan || DictionaryTypes.grammar:
+      case DictionaryTypes.yomitan:
         await deleteyomitanDictionary(db, indexId);
         break;
       case DictionaryTypes.examples:

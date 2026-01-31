@@ -45,8 +45,8 @@ dictionary_search_drift_find_term_bank_entries(
             WHERE value IS NOT NULL
         ),
         -- Get the active indexes based on the input
-        ActiveIndexes(id, current_sorting_order, enabled) AS (
-            SELECT id, current_sorting_order, enabled 
+        ActiveIndexes(id, current_sorting_order, enabled, frequency_mode) AS (
+            SELECT id, current_sorting_order, enabled, frequency_mode
             FROM index_table
             WHERE
                 (
@@ -263,7 +263,7 @@ dictionary_search_drift_find_term_bank_entries(
                 )
         ),
         
-        IsPopulairtyOverrideActive AS (
+        FrequencyOverrideIsActive AS (
             SELECT 1 AS is_active 
             FROM index_table 
             WHERE current_frequency_dictionary = TRUE 
@@ -273,7 +273,8 @@ dictionary_search_drift_find_term_bank_entries(
         -- Get the popularity override dictionary
         PopularityDictionary AS (
             SELECT
-                term_meta_bank_v3_table.*
+                term_meta_bank_v3_table.*,
+                IT.frequency_mode AS op_frequency_mode
             FROM
                 index_table AS IT
             JOIN term_meta_bank_v3_table ON
@@ -296,8 +297,18 @@ dictionary_search_drift_find_term_bank_entries(
         ActiveIndexes.id as indexId,
         ActiveIndexes.current_sorting_order,
         CASE 
-            WHEN ActiveCheck.is_active = 1 THEN OP.freq_value
-            ELSE TB3T.popularity
+            WHEN FrequencyOverrideIsActive.is_active = 1 THEN 
+                -- Override Mode Logic
+                CASE 
+                    WHEN OP.op_frequency_mode = 'rankBased' THEN (OP.freq_value * -1)
+                    ELSE OP.freq_value 
+                END
+            ELSE 
+                -- Normal Mode Logic
+                CASE 
+                    WHEN ActiveIndexes.frequency_mode = 'rankBased' THEN (TB3T.popularity * -1)
+                    ELSE TB3T.popularity 
+                END
         END as finalPopularity,
         CASE
             WHEN TBM.match_column = 1 THEN TT.term 
@@ -316,14 +327,25 @@ dictionary_search_drift_find_term_bank_entries(
     JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id
     LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
     LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id
-    LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1
+    LEFT JOIN FrequencyOverrideIsActive ON 1 = 1
     LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id
         
     ORDER BY
-        ActiveIndexes.current_sorting_order,
+        -- only apply dictionary sorting if no popularity override is active
+        CASE
+            WHEN FrequencyOverrideIsActive.is_active = 1
+            THEN 0 
+            ELSE ActiveIndexes.current_sorting_order 
+        END,
         TBM.match_type,
         TBM.match_column,
         finalPopularity DESC,
+        -- if frequency override is set, use user dictionary sort order
+        CASE
+            WHEN FrequencyOverrideIsActive.is_active = 1
+            THEN ActiveIndexes.current_sorting_order
+            ELSE 0
+        END,
         TBM.rank,
         LENGTH(matchedText)
 
@@ -381,7 +403,7 @@ dictionary_search_drift_find_term_bank_details:
         ),
     
         -- is an popularity override present?
-        IsPopulairtyOverrideActive AS (
+        FrequencyOverrideIsActive AS (
             SELECT 1 AS is_active 
             FROM index_table 
             WHERE current_frequency_dictionary = TRUE 
@@ -391,7 +413,8 @@ dictionary_search_drift_find_term_bank_details:
         -- Get the popularity override dictionary
         PopularityDictionary AS (
             SELECT
-                term_meta_bank_v3_table.*
+                term_meta_bank_v3_table.*,
+                IT.frequency_mode AS op_frequency_mode
             FROM
                 index_table AS IT
             JOIN term_meta_bank_v3_table ON
@@ -509,11 +532,11 @@ dictionary_search_drift_find_term_bank_details:
         index_table.*,
 
         -- popularity override
-        COALESCE(ActiveCheck.is_active, 0) as hasPopularityOverride,
+        COALESCE(FrequencyOverrideIsActive.is_active, 0) as hasPopularityOverride,
         OP.freq_value AS overriddenPopularityValue,
         TB3T.popularity AS originalPopularity,
         CASE 
-            WHEN ActiveCheck.is_active = 1 THEN OP.freq_value
+            WHEN FrequencyOverrideIsActive.is_active = 1 THEN OP.freq_value
             ELSE TB3T.popularity
         END as finalPopularity,
         
@@ -548,7 +571,7 @@ dictionary_search_drift_find_term_bank_details:
     LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id
     LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id
     LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id
-    LEFT JOIN IsPopulairtyOverrideActive AS ActiveCheck ON 1 = 1
+    LEFT JOIN FrequencyOverrideIsActive ON 1 = 1
     LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id
     LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id
 

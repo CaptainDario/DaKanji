@@ -5,6 +5,5 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 enum DictionaryTypes {
   yomitan,
   examples,
-  audio,
-  grammar
+  audio
 }
