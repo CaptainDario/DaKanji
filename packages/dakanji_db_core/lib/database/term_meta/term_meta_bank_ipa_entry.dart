@@ -1,6 +1,6 @@
 
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
-import 'package:dakanji_db_core/helper/json_tag_bank_converter.dart';
+import 'package:dakanji_db_core/util/data_converters/json_tag_bank_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'term_meta_bank_ipa_entry.freezed.dart';

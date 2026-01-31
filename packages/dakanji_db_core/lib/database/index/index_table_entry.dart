@@ -1,6 +1,6 @@
 import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/helper/bool_as_int_converter.dart';
+import 'package:dakanji_db_core/util/data_converters/bool_as_int_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'index_table_entry.freezed.dart';

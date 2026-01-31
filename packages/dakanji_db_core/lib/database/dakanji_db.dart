@@ -51,10 +51,10 @@ import '/database/term/term_bank_v3_tables.dart';
 import '/database/term_meta/term_meta_bank_relation_tables.dart';
 import '/database/term_meta/term_meta_bank_v3_dao.dart';
 import '/database/term_meta/term_meta_bank_v3_tables.dart';
-import '/helper/zlib_text_converter_io.dart'; // neccessary for drift generator
 import '../data/dakanji_db_search_result_sort_order.dart'; // neccessary for drift generator
-import '../helper/sort_order_converter.dart'; // neccessary for drift generator
-import '../helper/sql_json_converter.dart';   // neccessary for drift generator
+import '../data_converters/sort_order_converter.dart'; // neccessary for drift generator
+import '../data_converters/sql_json_converter.dart';   // neccessary for drift generator
+import '../data_converters/zlib_text_converter_io.dart'; // neccessary for drift generator
 import 'audio_source_list/audio_source_list_tables.dart';
 
 part 'dakanji_db.g.dart';

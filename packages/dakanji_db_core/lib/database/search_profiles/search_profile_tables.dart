@@ -1,5 +1,5 @@
-import 'package:dakanji_db_core/helper/sort_order_converter.dart';
-import 'package:dakanji_db_core/helper/sql_json_converter.dart';
+import 'package:dakanji_db_core/util/data_converters/sort_order_converter.dart';
+import 'package:dakanji_db_core/util/data_converters/sql_json_converter.dart';
 import 'package:drift/drift.dart';
 
 

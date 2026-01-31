@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
-import 'package:dakanji_db_core/helper/string_extensions.dart';
+import 'package:dakanji_db_core/util/data_converters/string_extensions.dart';
 import 'package:dakanji_db_ui/widgets/tag/tag_widget.dart';
 import 'package:dakanji_db_ui/widgets/term/term_bank_definition_widget.dart';
 import 'package:dakanji_util/widgets/cut_and_fade_long_widget_wrapper.dart';

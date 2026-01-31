@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
-import 'package:dakanji_db_core/helper/json_index_converter.dart';
+import 'package:dakanji_db_core/util/data_converters/json_index_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'kanji_meta_bank_v3_entry.freezed.dart';
