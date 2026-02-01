@@ -1,9 +1,17 @@
-import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
+import 'package:language_processing/language_processing.dart';
+import 'package:language_processing/language_processor_options.dart';
 import 'package:test/test.dart';
 
 import 'preprocess_input_test_cases.dart';
 
-void main() {
+void main() { 
+
+  JapaneseProcessor jp = JapaneseProcessor(
+    dicMecabPath: "",
+    libMecabPath: "",
+    mecabIncludeFeatures: true,
+  );
+
   group('preprocessInput', () {
     for (var i = 0; i < preprocessInputTestCases.length; i++) {
       final testCase = preprocessInputTestCases[i];
@@ -13,10 +21,13 @@ void main() {
       final expectedTermVariants = testCase.$4;
 
       test('Test Case $input', () {
-        final result = preprocessInput(input, convertRomajiToHiragana);
-        expect(result.normalizedTerms, equals(expectedNormalizedTerm));
+        final normalized = jp.normalize(input, ProcessorOptions(
+          japaneseNormalizationConvertsRomajiToHiragana: convertRomajiToHiragana
+        ));
+        expect(normalized, equals(expectedNormalizedTerm));
+        final deconjugated = jp.deconjugateAll(normalized);
         expect(
-          result.termVariants.map((e) => e.deconjugatedTerm).toList(),
+          deconjugated.map((e) => e.deconjugatedTerm).toList(),
           equals(expectedTermVariants)
         );
       });

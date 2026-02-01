@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 // Your library imports
 
 import 'package:language_processing/japanese/conjugation/yomitan_conjugation_data/japanese_transforms.dart';
-import 'package:language_processing/japanese/conjugation/yomitan_conjugation_data/language_transformer.dart';
+import 'package:language_processing/util/language_transformer.dart';
 import 'package:test/test.dart';
 
 // Import the externally defined test cases

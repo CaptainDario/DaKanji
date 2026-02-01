@@ -9,6 +9,8 @@ import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_core/parsing/tatoeba_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:language_processing/iso/iso_table.dart';
+import 'package:language_processing/language_processing.dart';
+import 'package:language_processing/language_processor.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
@@ -84,7 +86,13 @@ void main(List<String> args) async {
     print("Deleting old database at $dakanjiDbPath");
     File(dakanjiDbPath).deleteSync();
   }
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: false);
+  LanguageProcessor languageProcessor = JapaneseProcessor(
+    libMecabPath: mecabDynamicLibPath,
+    dicMecabPath: mecabDicPath,
+    mecabIncludeFeatures: true
+  );
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: false, languageProcessor: languageProcessor);
 
   // init mecab
   final mecab = Mecab();
@@ -117,7 +125,7 @@ void main(List<String> args) async {
 
   if(includeTatoebaExamplesArg){
     print("Adding tatoeba example sentences...");
-    await importTatoebaExamples(db, mecab);
+    await importTatoebaExamples(db);
   }
 
   exit(0);
@@ -225,7 +233,6 @@ Future importYomitanDicts(
       dataSourcePath:  inputs[i].$1,
       db: db,
       addStructuredContentJsonDefs: addStructuredContentJsonDefs,
-      mecab: mecab,
       isDefaultDictionary: true
     );
 
@@ -239,13 +246,12 @@ Future importYomitanDicts(
 }
 
 /// parses tatoeba and adds it to the given [DaKanjiDB]
-Future importTatoebaExamples(DaKanjiDB db, Mecab mecab) async {
+Future importTatoebaExamples(DaKanjiDB db) async {
 
   Stopwatch s = Stopwatch()..start();
   final progress = await parseExampleDataSource(
     examplesZipPath: tatoebaInputZipPath,
     db: db,
-    mecab: mecab,
     isDefaultDictionary: true
   );
 
@@ -258,13 +264,12 @@ Future importTatoebaExamples(DaKanjiDB db, Mecab mecab) async {
 }
 
 /// Import the audio data into the given [DaKanjiDB]
-Future importPronunciationData(DaKanjiDB db, Mecab mecab) async {
+Future importPronunciationData(DaKanjiDB db) async {
 
   Stopwatch s = Stopwatch()..start();
   final progress = await parseAudioDataSource(
     audioDataSourceFile: audioInputZipPath,
     db: db,
-    mecab: mecab,
     isDefaultDictionary: true
   );
 

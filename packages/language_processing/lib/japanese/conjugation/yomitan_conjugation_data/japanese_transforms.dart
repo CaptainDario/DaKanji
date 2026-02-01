@@ -1,4 +1,4 @@
-import 'language_transforms.dart';
+import '../../../util/language_transforms.dart';
 
 // Helper classes to structure the transform data
 class I18nInfo {

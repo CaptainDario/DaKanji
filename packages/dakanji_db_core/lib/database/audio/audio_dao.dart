@@ -3,10 +3,10 @@ import "dart:convert";
 
 import "package:dakanji_db_core/database/audio/audio_entry.dart";
 import "package:dakanji_db_core/database/audio/audio_tables.dart";
-import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart";
 import "package:dakanji_db_core/database/term/term_bank_v3_entry.dart";
 import "package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart";
 import "package:drift/drift.dart";
+import "package:language_processing/language_processor_options.dart";
 
 import "../dakanji_db.dart";
 
@@ -35,10 +35,11 @@ class AudioDao extends DatabaseAccessor<DaKanjiDB> with _$AudioDaoMixin {
     if (entries.isEmpty) return [];
 
     // 1. Convert the rich objects to a simple List of Maps
+    ProcessorOptions opts = ProcessorOptions();
     final List<Map<String, dynamic>> jsonList = entries.map((e) => {
-      'term': preprocessInput(e.term, false).normalizedTerms.first,
+      'term': db.languageProcessor.normalize(e.term, opts).first,
       'reading': e.reading != null
-        ? preprocessInput(e.reading!, false).normalizedTerms.first
+        ? db.languageProcessor.normalize(e.reading!, opts).first
         : null,
       'pitch': e.pitchAccentPattern,
     }).toList();
@@ -63,8 +64,6 @@ class AudioDao extends DatabaseAccessor<DaKanjiDB> with _$AudioDaoMixin {
       final termEntry = entries[i];
       final termMetaEntry = termMetaEntries[i];
 
-      // TODO correctly handle multiple pitch accent patterns
-      // TODO think about how to handle null values for reading and pitch accent pattern
       searchEntries.add((
         term: termEntry.term,
         reading: termMetaEntry?.reading,

@@ -52,6 +52,7 @@ import 'package:dakanji_db_core/util/data_converters/zlib_text_converter_io.dart
 import 'package:dakanji_sqlite_extensions/dakanji_sqlite_extensions.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:language_processing/language_processor.dart';
 import 'package:sqlite3/native_assets.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:universal_io/io.dart';
@@ -146,10 +147,13 @@ class DaKanjiDB extends _$DaKanjiDB {
 
   bool inMemory;
 
+  LanguageProcessor languageProcessor;
+
   DaKanjiDB({
     this.dbPath,
     QueryExecutor? executor,
     required this.inMemory,
+    required this.languageProcessor,
   }) : super(executor ?? _openConnection(dbPath!, inMemory));
 
   @override

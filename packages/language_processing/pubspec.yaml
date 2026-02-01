@@ -12,6 +12,7 @@ dependencies:
   mecab_for_dart: ^1.1.5
   kana_kit: ^2.1.1
   collection: ^1.19.1
+  fullwidth_halfwidth_converter: ^1.2.0
 
 dev_dependencies:
   lints: ^6.0.0
