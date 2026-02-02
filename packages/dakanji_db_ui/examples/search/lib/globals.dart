@@ -8,6 +8,8 @@ String localDbPath = "";
 
 List<String> exampleDictionaryTerms = [
   "",
+  "?q=発条&q=打つ",
+  "?q=打つ&q=発条",
   "English",
   "language",
   "お手前",
