@@ -10,6 +10,7 @@ class SearchProfilesTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text().withDefault(const Constant('Standard'))();
   BoolColumn get isActiveProfile => boolean().withDefault(const Constant(false))();
+  IntColumn get sortOrder => integer()();
 
   // --- Settings Columns ---
 

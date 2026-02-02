@@ -11,6 +11,7 @@ _SearchProfilesEntry _$SearchProfilesEntryFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
       isActiveProfile: json['isActiveProfile'] as bool? ?? false,
+      sortOrder: (json['sortOrder'] as num?)?.toInt() ?? 1,
       firstSortOrder:
           (json['firstSortOrder'] as List<dynamic>?)
               ?.map(
@@ -83,6 +84,7 @@ Map<String, dynamic> _$SearchProfilesEntryToJson(
   'id': instance.id,
   'name': instance.name,
   'isActiveProfile': instance.isActiveProfile,
+  'sortOrder': instance.sortOrder,
   'firstSortOrder': instance.firstSortOrder
       .map(
         (e) => <String, dynamic>{

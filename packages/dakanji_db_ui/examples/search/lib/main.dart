@@ -160,7 +160,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     // Watch settings from the global provider
-    final settings = context.watch<SearchProfilesEntry>();
     final searchManager = GetIt.I<DaKanjiDbSearchManager>();
 
     return Scaffold(
@@ -168,6 +167,8 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
         actions: [
+          SearchProfileSelector(),
+
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () async {

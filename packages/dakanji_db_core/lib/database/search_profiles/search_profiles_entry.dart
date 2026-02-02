@@ -3,6 +3,7 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:language_processing/language_processor_options.dart';
 
 part 'search_profiles_entry.freezed.dart';
 part 'search_profiles_entry.g.dart';
@@ -26,6 +27,9 @@ abstract class SearchProfilesEntry with _$SearchProfilesEntry {
     /// Whether this profile is the active profile.
     @Default(false)
     bool isActiveProfile,
+
+    @Default(1)
+    int sortOrder,
 
     /// 1st level sort order for search results.
     /// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
@@ -147,16 +151,16 @@ abstract class SearchProfilesEntry with _$SearchProfilesEntry {
       .first.$2;
 
   DictionarySearchParams toDictionarySearchParams({
-    required String query,
+    required String searchInput,
     List<String> tags = const [],
     List<String> pos = const [],
     List<int>? indexesToInclude,
     int offset = 0,
+    ProcessorOptions? options,
   }) {
     return DictionarySearchParams(
-      query: query,
+      searchInput: searchInput,
       normalizedSearch: normalizedSearch,
-      normalizedSearchConvertsRomajiToHiragana: normalizeSearchConvertsRomajiToHiragana,
       deconjugationSearch: deconjugationSearch,
       spellfixSearch: spellfixSearch,
       groupingRules: groupingRules,
@@ -164,7 +168,10 @@ abstract class SearchProfilesEntry with _$SearchProfilesEntry {
       spellfixMaxCost: spellfixMaxCost,
       spellfixMaxResults: spellfixMaxResults,
       limit: searchResultLimit,
-      offset: offset
+      offset: offset,
+      options: ProcessorOptions(
+        japaneseNormalizationConvertsRomajiToHiragana: normalizeSearchConvertsRomajiToHiragana,
+      )
     );
   }
 
@@ -173,6 +180,7 @@ abstract class SearchProfilesEntry with _$SearchProfilesEntry {
       id: id,
       name: name,
       isActiveProfile: isActiveProfile,
+      sortOrder: sortOrder,
       firstSortOrder: firstSortOrder,
       secondSortOrder: secondSortOrder,
       normalizeSearchConvertsRomajiToHiragana: normalizeSearchConvertsRomajiToHiragana,
@@ -195,6 +203,7 @@ abstract class SearchProfilesEntry with _$SearchProfilesEntry {
       id: data.id,
       name: data.name,
       isActiveProfile: data.isActiveProfile,
+      sortOrder: data.sortOrder,
       firstSortOrder: data.firstSortOrder,
       secondSortOrder: data.secondSortOrder,
       normalizeSearchConvertsRomajiToHiragana: data.normalizeSearchConvertsRomajiToHiragana,

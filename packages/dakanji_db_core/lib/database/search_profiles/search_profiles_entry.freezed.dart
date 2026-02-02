@@ -18,7 +18,7 @@ mixin _$SearchProfilesEntry {
 /// The unique ID of the profile.
  int get id;/// The name of the profile.
  String get name;/// Whether this profile is the active profile.
- bool get isActiveProfile;/// 1st level sort order for search results.
+ bool get isActiveProfile; int get sortOrder;/// 1st level sort order for search results.
 /// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
 /// will not be searched for.
 /// 
@@ -63,16 +63,16 @@ $SearchProfilesEntryCopyWith<SearchProfilesEntry> get copyWith => _$SearchProfil
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SearchProfilesEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.isActiveProfile, isActiveProfile) || other.isActiveProfile == isActiveProfile)&&const DeepCollectionEquality().equals(other.firstSortOrder, firstSortOrder)&&const DeepCollectionEquality().equals(other.secondSortOrder, secondSortOrder)&&(identical(other.normalizeSearchConvertsRomajiToHiragana, normalizeSearchConvertsRomajiToHiragana) || other.normalizeSearchConvertsRomajiToHiragana == normalizeSearchConvertsRomajiToHiragana)&&const DeepCollectionEquality().equals(other.groupingRules, groupingRules)&&(identical(other.showSearchResultSeparationHeaders, showSearchResultSeparationHeaders) || other.showSearchResultSeparationHeaders == showSearchResultSeparationHeaders)&&(identical(other.showKanjiEntriesInSearchResults, showKanjiEntriesInSearchResults) || other.showKanjiEntriesInSearchResults == showKanjiEntriesInSearchResults)&&(identical(other.showTags, showTags) || other.showTags == showTags)&&(identical(other.showMetaEntries, showMetaEntries) || other.showMetaEntries == showMetaEntries)&&(identical(other.definitionsMaxHeight, definitionsMaxHeight) || other.definitionsMaxHeight == definitionsMaxHeight)&&(identical(other.useKatakanaForFurigana, useKatakanaForFurigana) || other.useKatakanaForFurigana == useKatakanaForFurigana)&&(identical(other.spellfixMaxResults, spellfixMaxResults) || other.spellfixMaxResults == spellfixMaxResults)&&(identical(other.spellfixMaxCost, spellfixMaxCost) || other.spellfixMaxCost == spellfixMaxCost)&&(identical(other.searchResultLimit, searchResultLimit) || other.searchResultLimit == searchResultLimit));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SearchProfilesEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.isActiveProfile, isActiveProfile) || other.isActiveProfile == isActiveProfile)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&const DeepCollectionEquality().equals(other.firstSortOrder, firstSortOrder)&&const DeepCollectionEquality().equals(other.secondSortOrder, secondSortOrder)&&(identical(other.normalizeSearchConvertsRomajiToHiragana, normalizeSearchConvertsRomajiToHiragana) || other.normalizeSearchConvertsRomajiToHiragana == normalizeSearchConvertsRomajiToHiragana)&&const DeepCollectionEquality().equals(other.groupingRules, groupingRules)&&(identical(other.showSearchResultSeparationHeaders, showSearchResultSeparationHeaders) || other.showSearchResultSeparationHeaders == showSearchResultSeparationHeaders)&&(identical(other.showKanjiEntriesInSearchResults, showKanjiEntriesInSearchResults) || other.showKanjiEntriesInSearchResults == showKanjiEntriesInSearchResults)&&(identical(other.showTags, showTags) || other.showTags == showTags)&&(identical(other.showMetaEntries, showMetaEntries) || other.showMetaEntries == showMetaEntries)&&(identical(other.definitionsMaxHeight, definitionsMaxHeight) || other.definitionsMaxHeight == definitionsMaxHeight)&&(identical(other.useKatakanaForFurigana, useKatakanaForFurigana) || other.useKatakanaForFurigana == useKatakanaForFurigana)&&(identical(other.spellfixMaxResults, spellfixMaxResults) || other.spellfixMaxResults == spellfixMaxResults)&&(identical(other.spellfixMaxCost, spellfixMaxCost) || other.spellfixMaxCost == spellfixMaxCost)&&(identical(other.searchResultLimit, searchResultLimit) || other.searchResultLimit == searchResultLimit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,isActiveProfile,const DeepCollectionEquality().hash(firstSortOrder),const DeepCollectionEquality().hash(secondSortOrder),normalizeSearchConvertsRomajiToHiragana,const DeepCollectionEquality().hash(groupingRules),showSearchResultSeparationHeaders,showKanjiEntriesInSearchResults,showTags,showMetaEntries,definitionsMaxHeight,useKatakanaForFurigana,spellfixMaxResults,spellfixMaxCost,searchResultLimit);
+int get hashCode => Object.hash(runtimeType,id,name,isActiveProfile,sortOrder,const DeepCollectionEquality().hash(firstSortOrder),const DeepCollectionEquality().hash(secondSortOrder),normalizeSearchConvertsRomajiToHiragana,const DeepCollectionEquality().hash(groupingRules),showSearchResultSeparationHeaders,showKanjiEntriesInSearchResults,showTags,showMetaEntries,definitionsMaxHeight,useKatakanaForFurigana,spellfixMaxResults,spellfixMaxCost,searchResultLimit);
 
 @override
 String toString() {
-  return 'SearchProfilesEntry(id: $id, name: $name, isActiveProfile: $isActiveProfile, firstSortOrder: $firstSortOrder, secondSortOrder: $secondSortOrder, normalizeSearchConvertsRomajiToHiragana: $normalizeSearchConvertsRomajiToHiragana, groupingRules: $groupingRules, showSearchResultSeparationHeaders: $showSearchResultSeparationHeaders, showKanjiEntriesInSearchResults: $showKanjiEntriesInSearchResults, showTags: $showTags, showMetaEntries: $showMetaEntries, definitionsMaxHeight: $definitionsMaxHeight, useKatakanaForFurigana: $useKatakanaForFurigana, spellfixMaxResults: $spellfixMaxResults, spellfixMaxCost: $spellfixMaxCost, searchResultLimit: $searchResultLimit)';
+  return 'SearchProfilesEntry(id: $id, name: $name, isActiveProfile: $isActiveProfile, sortOrder: $sortOrder, firstSortOrder: $firstSortOrder, secondSortOrder: $secondSortOrder, normalizeSearchConvertsRomajiToHiragana: $normalizeSearchConvertsRomajiToHiragana, groupingRules: $groupingRules, showSearchResultSeparationHeaders: $showSearchResultSeparationHeaders, showKanjiEntriesInSearchResults: $showKanjiEntriesInSearchResults, showTags: $showTags, showMetaEntries: $showMetaEntries, definitionsMaxHeight: $definitionsMaxHeight, useKatakanaForFurigana: $useKatakanaForFurigana, spellfixMaxResults: $spellfixMaxResults, spellfixMaxCost: $spellfixMaxCost, searchResultLimit: $searchResultLimit)';
 }
 
 
@@ -83,7 +83,7 @@ abstract mixin class $SearchProfilesEntryCopyWith<$Res>  {
   factory $SearchProfilesEntryCopyWith(SearchProfilesEntry value, $Res Function(SearchProfilesEntry) _then) = _$SearchProfilesEntryCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, bool isActiveProfile, List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder, List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder, bool normalizeSearchConvertsRomajiToHiragana, List<DictionaryGroupingRule> groupingRules, bool showSearchResultSeparationHeaders, bool showKanjiEntriesInSearchResults, bool showTags, bool showMetaEntries, double definitionsMaxHeight, bool useKatakanaForFurigana, int spellfixMaxResults, int spellfixMaxCost, int searchResultLimit
+ int id, String name, bool isActiveProfile, int sortOrder, List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder, List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder, bool normalizeSearchConvertsRomajiToHiragana, List<DictionaryGroupingRule> groupingRules, bool showSearchResultSeparationHeaders, bool showKanjiEntriesInSearchResults, bool showTags, bool showMetaEntries, double definitionsMaxHeight, bool useKatakanaForFurigana, int spellfixMaxResults, int spellfixMaxCost, int searchResultLimit
 });
 
 
@@ -100,12 +100,13 @@ class _$SearchProfilesEntryCopyWithImpl<$Res>
 
 /// Create a copy of SearchProfilesEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? isActiveProfile = null,Object? firstSortOrder = null,Object? secondSortOrder = null,Object? normalizeSearchConvertsRomajiToHiragana = null,Object? groupingRules = null,Object? showSearchResultSeparationHeaders = null,Object? showKanjiEntriesInSearchResults = null,Object? showTags = null,Object? showMetaEntries = null,Object? definitionsMaxHeight = null,Object? useKatakanaForFurigana = null,Object? spellfixMaxResults = null,Object? spellfixMaxCost = null,Object? searchResultLimit = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? isActiveProfile = null,Object? sortOrder = null,Object? firstSortOrder = null,Object? secondSortOrder = null,Object? normalizeSearchConvertsRomajiToHiragana = null,Object? groupingRules = null,Object? showSearchResultSeparationHeaders = null,Object? showKanjiEntriesInSearchResults = null,Object? showTags = null,Object? showMetaEntries = null,Object? definitionsMaxHeight = null,Object? useKatakanaForFurigana = null,Object? spellfixMaxResults = null,Object? spellfixMaxCost = null,Object? searchResultLimit = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,isActiveProfile: null == isActiveProfile ? _self.isActiveProfile : isActiveProfile // ignore: cast_nullable_to_non_nullable
-as bool,firstSortOrder: null == firstSortOrder ? _self.firstSortOrder : firstSortOrder // ignore: cast_nullable_to_non_nullable
+as bool,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
+as int,firstSortOrder: null == firstSortOrder ? _self.firstSortOrder : firstSortOrder // ignore: cast_nullable_to_non_nullable
 as List<(DakanjiDbSearchResult1stSortOrder, bool)>,secondSortOrder: null == secondSortOrder ? _self.secondSortOrder : secondSortOrder // ignore: cast_nullable_to_non_nullable
 as List<(DakanjiDbSearchResult2ndSortOrder, bool)>,normalizeSearchConvertsRomajiToHiragana: null == normalizeSearchConvertsRomajiToHiragana ? _self.normalizeSearchConvertsRomajiToHiragana : normalizeSearchConvertsRomajiToHiragana // ignore: cast_nullable_to_non_nullable
 as bool,groupingRules: null == groupingRules ? _self.groupingRules : groupingRules // ignore: cast_nullable_to_non_nullable
@@ -203,10 +204,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  bool isActiveProfile,  List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRules,  bool showSearchResultSeparationHeaders,  bool showKanjiEntriesInSearchResults,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int spellfixMaxResults,  int spellfixMaxCost,  int searchResultLimit)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  bool isActiveProfile,  int sortOrder,  List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRules,  bool showSearchResultSeparationHeaders,  bool showKanjiEntriesInSearchResults,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int spellfixMaxResults,  int spellfixMaxCost,  int searchResultLimit)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SearchProfilesEntry() when $default != null:
-return $default(_that.id,_that.name,_that.isActiveProfile,_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRules,_that.showSearchResultSeparationHeaders,_that.showKanjiEntriesInSearchResults,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.spellfixMaxResults,_that.spellfixMaxCost,_that.searchResultLimit);case _:
+return $default(_that.id,_that.name,_that.isActiveProfile,_that.sortOrder,_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRules,_that.showSearchResultSeparationHeaders,_that.showKanjiEntriesInSearchResults,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.spellfixMaxResults,_that.spellfixMaxCost,_that.searchResultLimit);case _:
   return orElse();
 
 }
@@ -224,10 +225,10 @@ return $default(_that.id,_that.name,_that.isActiveProfile,_that.firstSortOrder,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  bool isActiveProfile,  List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRules,  bool showSearchResultSeparationHeaders,  bool showKanjiEntriesInSearchResults,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int spellfixMaxResults,  int spellfixMaxCost,  int searchResultLimit)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  bool isActiveProfile,  int sortOrder,  List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRules,  bool showSearchResultSeparationHeaders,  bool showKanjiEntriesInSearchResults,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int spellfixMaxResults,  int spellfixMaxCost,  int searchResultLimit)  $default,) {final _that = this;
 switch (_that) {
 case _SearchProfilesEntry():
-return $default(_that.id,_that.name,_that.isActiveProfile,_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRules,_that.showSearchResultSeparationHeaders,_that.showKanjiEntriesInSearchResults,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.spellfixMaxResults,_that.spellfixMaxCost,_that.searchResultLimit);case _:
+return $default(_that.id,_that.name,_that.isActiveProfile,_that.sortOrder,_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRules,_that.showSearchResultSeparationHeaders,_that.showKanjiEntriesInSearchResults,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.spellfixMaxResults,_that.spellfixMaxCost,_that.searchResultLimit);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -244,10 +245,10 @@ return $default(_that.id,_that.name,_that.isActiveProfile,_that.firstSortOrder,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  bool isActiveProfile,  List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRules,  bool showSearchResultSeparationHeaders,  bool showKanjiEntriesInSearchResults,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int spellfixMaxResults,  int spellfixMaxCost,  int searchResultLimit)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  bool isActiveProfile,  int sortOrder,  List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,  List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,  bool normalizeSearchConvertsRomajiToHiragana,  List<DictionaryGroupingRule> groupingRules,  bool showSearchResultSeparationHeaders,  bool showKanjiEntriesInSearchResults,  bool showTags,  bool showMetaEntries,  double definitionsMaxHeight,  bool useKatakanaForFurigana,  int spellfixMaxResults,  int spellfixMaxCost,  int searchResultLimit)?  $default,) {final _that = this;
 switch (_that) {
 case _SearchProfilesEntry() when $default != null:
-return $default(_that.id,_that.name,_that.isActiveProfile,_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRules,_that.showSearchResultSeparationHeaders,_that.showKanjiEntriesInSearchResults,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.spellfixMaxResults,_that.spellfixMaxCost,_that.searchResultLimit);case _:
+return $default(_that.id,_that.name,_that.isActiveProfile,_that.sortOrder,_that.firstSortOrder,_that.secondSortOrder,_that.normalizeSearchConvertsRomajiToHiragana,_that.groupingRules,_that.showSearchResultSeparationHeaders,_that.showKanjiEntriesInSearchResults,_that.showTags,_that.showMetaEntries,_that.definitionsMaxHeight,_that.useKatakanaForFurigana,_that.spellfixMaxResults,_that.spellfixMaxCost,_that.searchResultLimit);case _:
   return null;
 
 }
@@ -259,7 +260,7 @@ return $default(_that.id,_that.name,_that.isActiveProfile,_that.firstSortOrder,_
 @JsonSerializable()
 
 class _SearchProfilesEntry extends SearchProfilesEntry {
-  const _SearchProfilesEntry({this.id = 0, this.name = '', this.isActiveProfile = false, final  List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder = const [(DakanjiDbSearchResult1stSortOrder.queryMatch, true), (DakanjiDbSearchResult1stSortOrder.normalizedMatch, true), (DakanjiDbSearchResult1stSortOrder.deconjugationMatch, true), (DakanjiDbSearchResult1stSortOrder.spellfixMatch, true)], final  List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder = const [(DakanjiDbSearchResult2ndSortOrder.exactMatch, true), (DakanjiDbSearchResult2ndSortOrder.prefixMatch, true), (DakanjiDbSearchResult2ndSortOrder.subwordMatch, true), (DakanjiDbSearchResult2ndSortOrder.wildcardMatch, true)], this.normalizeSearchConvertsRomajiToHiragana = true, final  List<DictionaryGroupingRule> groupingRules = const [], this.showSearchResultSeparationHeaders = true, this.showKanjiEntriesInSearchResults = true, this.showTags = true, this.showMetaEntries = true, this.definitionsMaxHeight = 60.0, this.useKatakanaForFurigana = false, this.spellfixMaxResults = 20, this.spellfixMaxCost = 10, this.searchResultLimit = 100}): _firstSortOrder = firstSortOrder,_secondSortOrder = secondSortOrder,_groupingRules = groupingRules,super._();
+  const _SearchProfilesEntry({this.id = 0, this.name = '', this.isActiveProfile = false, this.sortOrder = 1, final  List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder = const [(DakanjiDbSearchResult1stSortOrder.queryMatch, true), (DakanjiDbSearchResult1stSortOrder.normalizedMatch, true), (DakanjiDbSearchResult1stSortOrder.deconjugationMatch, true), (DakanjiDbSearchResult1stSortOrder.spellfixMatch, true)], final  List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder = const [(DakanjiDbSearchResult2ndSortOrder.exactMatch, true), (DakanjiDbSearchResult2ndSortOrder.prefixMatch, true), (DakanjiDbSearchResult2ndSortOrder.subwordMatch, true), (DakanjiDbSearchResult2ndSortOrder.wildcardMatch, true)], this.normalizeSearchConvertsRomajiToHiragana = true, final  List<DictionaryGroupingRule> groupingRules = const [], this.showSearchResultSeparationHeaders = true, this.showKanjiEntriesInSearchResults = true, this.showTags = true, this.showMetaEntries = true, this.definitionsMaxHeight = 60.0, this.useKatakanaForFurigana = false, this.spellfixMaxResults = 20, this.spellfixMaxCost = 10, this.searchResultLimit = 100}): _firstSortOrder = firstSortOrder,_secondSortOrder = secondSortOrder,_groupingRules = groupingRules,super._();
   factory _SearchProfilesEntry.fromJson(Map<String, dynamic> json) => _$SearchProfilesEntryFromJson(json);
 
 /// The unique ID of the profile.
@@ -268,6 +269,7 @@ class _SearchProfilesEntry extends SearchProfilesEntry {
 @override@JsonKey() final  String name;
 /// Whether this profile is the active profile.
 @override@JsonKey() final  bool isActiveProfile;
+@override@JsonKey() final  int sortOrder;
 /// 1st level sort order for search results.
 /// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
 /// will not be searched for.
@@ -364,16 +366,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SearchProfilesEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.isActiveProfile, isActiveProfile) || other.isActiveProfile == isActiveProfile)&&const DeepCollectionEquality().equals(other._firstSortOrder, _firstSortOrder)&&const DeepCollectionEquality().equals(other._secondSortOrder, _secondSortOrder)&&(identical(other.normalizeSearchConvertsRomajiToHiragana, normalizeSearchConvertsRomajiToHiragana) || other.normalizeSearchConvertsRomajiToHiragana == normalizeSearchConvertsRomajiToHiragana)&&const DeepCollectionEquality().equals(other._groupingRules, _groupingRules)&&(identical(other.showSearchResultSeparationHeaders, showSearchResultSeparationHeaders) || other.showSearchResultSeparationHeaders == showSearchResultSeparationHeaders)&&(identical(other.showKanjiEntriesInSearchResults, showKanjiEntriesInSearchResults) || other.showKanjiEntriesInSearchResults == showKanjiEntriesInSearchResults)&&(identical(other.showTags, showTags) || other.showTags == showTags)&&(identical(other.showMetaEntries, showMetaEntries) || other.showMetaEntries == showMetaEntries)&&(identical(other.definitionsMaxHeight, definitionsMaxHeight) || other.definitionsMaxHeight == definitionsMaxHeight)&&(identical(other.useKatakanaForFurigana, useKatakanaForFurigana) || other.useKatakanaForFurigana == useKatakanaForFurigana)&&(identical(other.spellfixMaxResults, spellfixMaxResults) || other.spellfixMaxResults == spellfixMaxResults)&&(identical(other.spellfixMaxCost, spellfixMaxCost) || other.spellfixMaxCost == spellfixMaxCost)&&(identical(other.searchResultLimit, searchResultLimit) || other.searchResultLimit == searchResultLimit));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SearchProfilesEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.isActiveProfile, isActiveProfile) || other.isActiveProfile == isActiveProfile)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder)&&const DeepCollectionEquality().equals(other._firstSortOrder, _firstSortOrder)&&const DeepCollectionEquality().equals(other._secondSortOrder, _secondSortOrder)&&(identical(other.normalizeSearchConvertsRomajiToHiragana, normalizeSearchConvertsRomajiToHiragana) || other.normalizeSearchConvertsRomajiToHiragana == normalizeSearchConvertsRomajiToHiragana)&&const DeepCollectionEquality().equals(other._groupingRules, _groupingRules)&&(identical(other.showSearchResultSeparationHeaders, showSearchResultSeparationHeaders) || other.showSearchResultSeparationHeaders == showSearchResultSeparationHeaders)&&(identical(other.showKanjiEntriesInSearchResults, showKanjiEntriesInSearchResults) || other.showKanjiEntriesInSearchResults == showKanjiEntriesInSearchResults)&&(identical(other.showTags, showTags) || other.showTags == showTags)&&(identical(other.showMetaEntries, showMetaEntries) || other.showMetaEntries == showMetaEntries)&&(identical(other.definitionsMaxHeight, definitionsMaxHeight) || other.definitionsMaxHeight == definitionsMaxHeight)&&(identical(other.useKatakanaForFurigana, useKatakanaForFurigana) || other.useKatakanaForFurigana == useKatakanaForFurigana)&&(identical(other.spellfixMaxResults, spellfixMaxResults) || other.spellfixMaxResults == spellfixMaxResults)&&(identical(other.spellfixMaxCost, spellfixMaxCost) || other.spellfixMaxCost == spellfixMaxCost)&&(identical(other.searchResultLimit, searchResultLimit) || other.searchResultLimit == searchResultLimit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,isActiveProfile,const DeepCollectionEquality().hash(_firstSortOrder),const DeepCollectionEquality().hash(_secondSortOrder),normalizeSearchConvertsRomajiToHiragana,const DeepCollectionEquality().hash(_groupingRules),showSearchResultSeparationHeaders,showKanjiEntriesInSearchResults,showTags,showMetaEntries,definitionsMaxHeight,useKatakanaForFurigana,spellfixMaxResults,spellfixMaxCost,searchResultLimit);
+int get hashCode => Object.hash(runtimeType,id,name,isActiveProfile,sortOrder,const DeepCollectionEquality().hash(_firstSortOrder),const DeepCollectionEquality().hash(_secondSortOrder),normalizeSearchConvertsRomajiToHiragana,const DeepCollectionEquality().hash(_groupingRules),showSearchResultSeparationHeaders,showKanjiEntriesInSearchResults,showTags,showMetaEntries,definitionsMaxHeight,useKatakanaForFurigana,spellfixMaxResults,spellfixMaxCost,searchResultLimit);
 
 @override
 String toString() {
-  return 'SearchProfilesEntry(id: $id, name: $name, isActiveProfile: $isActiveProfile, firstSortOrder: $firstSortOrder, secondSortOrder: $secondSortOrder, normalizeSearchConvertsRomajiToHiragana: $normalizeSearchConvertsRomajiToHiragana, groupingRules: $groupingRules, showSearchResultSeparationHeaders: $showSearchResultSeparationHeaders, showKanjiEntriesInSearchResults: $showKanjiEntriesInSearchResults, showTags: $showTags, showMetaEntries: $showMetaEntries, definitionsMaxHeight: $definitionsMaxHeight, useKatakanaForFurigana: $useKatakanaForFurigana, spellfixMaxResults: $spellfixMaxResults, spellfixMaxCost: $spellfixMaxCost, searchResultLimit: $searchResultLimit)';
+  return 'SearchProfilesEntry(id: $id, name: $name, isActiveProfile: $isActiveProfile, sortOrder: $sortOrder, firstSortOrder: $firstSortOrder, secondSortOrder: $secondSortOrder, normalizeSearchConvertsRomajiToHiragana: $normalizeSearchConvertsRomajiToHiragana, groupingRules: $groupingRules, showSearchResultSeparationHeaders: $showSearchResultSeparationHeaders, showKanjiEntriesInSearchResults: $showKanjiEntriesInSearchResults, showTags: $showTags, showMetaEntries: $showMetaEntries, definitionsMaxHeight: $definitionsMaxHeight, useKatakanaForFurigana: $useKatakanaForFurigana, spellfixMaxResults: $spellfixMaxResults, spellfixMaxCost: $spellfixMaxCost, searchResultLimit: $searchResultLimit)';
 }
 
 
@@ -384,7 +386,7 @@ abstract mixin class _$SearchProfilesEntryCopyWith<$Res> implements $SearchProfi
   factory _$SearchProfilesEntryCopyWith(_SearchProfilesEntry value, $Res Function(_SearchProfilesEntry) _then) = __$SearchProfilesEntryCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, bool isActiveProfile, List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder, List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder, bool normalizeSearchConvertsRomajiToHiragana, List<DictionaryGroupingRule> groupingRules, bool showSearchResultSeparationHeaders, bool showKanjiEntriesInSearchResults, bool showTags, bool showMetaEntries, double definitionsMaxHeight, bool useKatakanaForFurigana, int spellfixMaxResults, int spellfixMaxCost, int searchResultLimit
+ int id, String name, bool isActiveProfile, int sortOrder, List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder, List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder, bool normalizeSearchConvertsRomajiToHiragana, List<DictionaryGroupingRule> groupingRules, bool showSearchResultSeparationHeaders, bool showKanjiEntriesInSearchResults, bool showTags, bool showMetaEntries, double definitionsMaxHeight, bool useKatakanaForFurigana, int spellfixMaxResults, int spellfixMaxCost, int searchResultLimit
 });
 
 
@@ -401,12 +403,13 @@ class __$SearchProfilesEntryCopyWithImpl<$Res>
 
 /// Create a copy of SearchProfilesEntry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? isActiveProfile = null,Object? firstSortOrder = null,Object? secondSortOrder = null,Object? normalizeSearchConvertsRomajiToHiragana = null,Object? groupingRules = null,Object? showSearchResultSeparationHeaders = null,Object? showKanjiEntriesInSearchResults = null,Object? showTags = null,Object? showMetaEntries = null,Object? definitionsMaxHeight = null,Object? useKatakanaForFurigana = null,Object? spellfixMaxResults = null,Object? spellfixMaxCost = null,Object? searchResultLimit = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? isActiveProfile = null,Object? sortOrder = null,Object? firstSortOrder = null,Object? secondSortOrder = null,Object? normalizeSearchConvertsRomajiToHiragana = null,Object? groupingRules = null,Object? showSearchResultSeparationHeaders = null,Object? showKanjiEntriesInSearchResults = null,Object? showTags = null,Object? showMetaEntries = null,Object? definitionsMaxHeight = null,Object? useKatakanaForFurigana = null,Object? spellfixMaxResults = null,Object? spellfixMaxCost = null,Object? searchResultLimit = null,}) {
   return _then(_SearchProfilesEntry(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,isActiveProfile: null == isActiveProfile ? _self.isActiveProfile : isActiveProfile // ignore: cast_nullable_to_non_nullable
-as bool,firstSortOrder: null == firstSortOrder ? _self._firstSortOrder : firstSortOrder // ignore: cast_nullable_to_non_nullable
+as bool,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
+as int,firstSortOrder: null == firstSortOrder ? _self._firstSortOrder : firstSortOrder // ignore: cast_nullable_to_non_nullable
 as List<(DakanjiDbSearchResult1stSortOrder, bool)>,secondSortOrder: null == secondSortOrder ? _self._secondSortOrder : secondSortOrder // ignore: cast_nullable_to_non_nullable
 as List<(DakanjiDbSearchResult2ndSortOrder, bool)>,normalizeSearchConvertsRomajiToHiragana: null == normalizeSearchConvertsRomajiToHiragana ? _self.normalizeSearchConvertsRomajiToHiragana : normalizeSearchConvertsRomajiToHiragana // ignore: cast_nullable_to_non_nullable
 as bool,groupingRules: null == groupingRules ? _self._groupingRules : groupingRules // ignore: cast_nullable_to_non_nullable

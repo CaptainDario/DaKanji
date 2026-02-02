@@ -3,6 +3,7 @@ import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.d
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/settings/dictionary_management/dakanji_db_dictionary_management_widget.dart';
 import 'package:dakanji_db_ui/widgets/settings/grouping_rules/search_profile_settings_grouping_widget.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_management_widget.dart';
 import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_category_separator.dart';
 import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_frequency_dictionary_dropdown.dart';
 import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_heading.dart';
@@ -32,6 +33,22 @@ class _SearchProfileSettingsWidgetState extends State<SearchProfileSettingsWidge
       crossAxisAlignment: .start,
       mainAxisSize: .min,
       children: [
+        // TODO localization
+        SearchProfileSettingsHeading("Search Profiles"),
+        InfoPopupButton(
+          title: "Search Profiles",
+          infoText:
+"""
+**What are search profiles?**
+
+Search profiles allow you to customize how searches are performed.
+You can create multiple profiles for different use cases, such as reading, or listening.
+For example, you might want the spellfix disabled when reading, but enabled when listening to catch misheard words.
+Once you have setup your profiles, you can switch between them using the dropdown menu in the app bar of each screen that uses the dictionary.
+""",
+        ),
+        SearchProfileManagementWidget(),
+
         SearchProfileSettingsHeading(loc.dictionariesHeader),
         InfoPopupButton(
           title: "Global frequency dictionary",

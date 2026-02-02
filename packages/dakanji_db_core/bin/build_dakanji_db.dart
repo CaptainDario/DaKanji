@@ -1,6 +1,5 @@
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/database/search_profiles/search_profiles_entry.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_core/parsing/example_parser.dart';
@@ -99,9 +98,7 @@ void main(List<String> args) async {
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   // add the default search profile
-  await db.searchProfilesDao.createProfile(SearchProfilesEntry(
-    isActiveProfile: true
-  ));
+  await db.searchProfilesDao.createNewProfile(true);
 
   print("Importing pronunciation audio data...");
   //await importPronunciationData(db, mecab);
