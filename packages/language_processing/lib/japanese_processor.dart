@@ -1,5 +1,8 @@
 import 'package:language_processing/japanese/deconjugation/yomitan_deconjugate.dart' as jp_dec;
 import 'package:language_processing/japanese/normalize/normalize.dart' as jp_norm;
+import 'package:language_processing/japanese/spellfix/forbidden_sequences.dart';
+import 'package:language_processing/japanese/spellfix/spellfix.dart' as jp_spell;
+import 'package:language_processing/japanese/spellfix/substitutions.dart';
 import 'package:language_processing/language_processor.dart';
 import 'package:language_processing/language_processor_options.dart';
 import 'package:language_processing/util/deconjugation_result.dart';
@@ -144,5 +147,24 @@ class JapaneseProcessor extends LanguageProcessor{
 
     return tokenized;
 
+  }
+
+  @override
+  List<String> generateSpellingVariations({
+    required String word,
+    required int n,
+    required int maxCost,
+    int substitutionPenalty = 0,
+    List<(String, String, int)> rules = spellfixRules,
+    List<String> forbiddenSequences = forbiddenSequences,
+  }) {
+    return jp_spell.generateSpellingVariations(
+      word: word,
+      n: n,
+      maxCost: maxCost,
+      substitutionPenalty: substitutionPenalty,
+      rules: rules,
+      forbiddenSequences: forbiddenSequences
+    );
   }
 }

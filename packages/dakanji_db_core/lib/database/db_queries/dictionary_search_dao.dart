@@ -8,7 +8,6 @@ import "package:dakanji_db_core/database/db_queries/dictionary_search/grouping_r
 import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:drift/drift.dart";
 import "package:language_processing/japanese/japanese_string_operations.dart";
-import "package:language_processing/japanese/spellfix/spellfix.dart";
 
 import "../dakanji_db.dart";
 
@@ -62,7 +61,8 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
     
     if(sP.spellfixSearch)
       ctx.spellingVariations = ctx.normalizedTerms.expand((e) => 
-        generateSpellingVariations(word: e, n: sP.spellfixMaxResults, maxCost: sP.spellfixMaxCost)
+        db.languageProcessor.generateSpellingVariations(
+          word: e, n: sP.spellfixMaxResults, maxCost: sP.spellfixMaxCost)
     ).toList();
 
     if(ctx.filterParams == null)

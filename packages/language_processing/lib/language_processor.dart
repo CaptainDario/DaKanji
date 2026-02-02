@@ -51,4 +51,14 @@ abstract class LanguageProcessor {
   /// Returns the readings for the given text
   String getReadings(String text);
 
+  /// Generates possible misspelling variants from a given string
+  List<String> generateSpellingVariations({
+    required String word,
+    required int n,
+    required int maxCost,
+    int substitutionPenalty = 0,
+    List<(String, String, int)> rules,
+    List<String> forbiddenSequences
+  });
+
 }
