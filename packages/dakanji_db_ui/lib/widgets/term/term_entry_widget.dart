@@ -27,6 +27,9 @@ class TermEntryWidget extends StatelessWidget {
   /// Whether to use katakana for furigana readings.
   final bool useKatakanaForFurigana;
 
+  /// Whether to show audio playback buttons.
+  final bool showAudioPlaybackButtons;
+
   /// Callback that is called when this widget is tapped.
   final Function(DictionaryMatch match)? onTap;
 
@@ -41,6 +44,7 @@ class TermEntryWidget extends StatelessWidget {
       this.showMetaEntries = true,
       this.definitionsMaxHeight = 0,
       this.useKatakanaForFurigana = false,
+      this.showAudioPlaybackButtons = false,
       this.onTap,
       this.onUrlTap,
       super.key
@@ -67,6 +71,7 @@ class TermEntryWidget extends StatelessWidget {
                   TermBankTermWidget(
                     match.entries,
                     useKatakanaForFurigana: useKatakanaForFurigana,
+                    showAudioPlaybackButtons: showAudioPlaybackButtons,
                   ),
                   SizedBox(height: 8.0),
           

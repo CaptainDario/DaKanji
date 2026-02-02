@@ -315,6 +315,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
           showMetaEntries: profile.showMetaEntries,
           definitionsMaxHeight: profile.definitionsMaxHeight,
           useKatakanaForFurigana: profile.useKatakanaForFurigana,
+          showAudioPlaybackButtons: false,
           onTap: widget.onTap,
         ),
       ),

@@ -11,13 +11,13 @@ class TermBankTermWidget extends StatefulWidget {
   /// Use katakana for furigana readings.
   final bool useKatakanaForFurigana;
   /// Should the audio playback button be shown (queries them from db).
-  final bool showAudioPlaybackButton;
+  final bool showAudioPlaybackButtons;
 
   const TermBankTermWidget(
     this.entries,
     {
       this.useKatakanaForFurigana = false,
-      this.showAudioPlaybackButton = false,
+      this.showAudioPlaybackButtons = false,
       super.key
     }
   );
