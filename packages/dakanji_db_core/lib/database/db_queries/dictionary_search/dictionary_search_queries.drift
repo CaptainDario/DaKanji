@@ -18,15 +18,16 @@ dictionary_search_drift_find_term_bank_entries(
 ):
 
     WITH
-        SearchTerms(term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (
+        SearchTerms(input_index, term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (
             SELECT 
+                "key" as input_index, -- used for sorting by input order
                 CAST(json_extract(value, '$[0]') AS TEXT),    -- Extract term
                 CAST(json_extract(value, '$[1]') AS INTEGER), -- Extract prefix search flag
                 CAST(json_extract(value, '$[3]') AS TEXT),    -- Extract Rules (PoS) Array
                 CAST(json_extract(value, '$[4]') AS TEXT),    -- Extract Tags Array
 
                 -- 
-                CASE 
+                CASE
                     WHEN CAST(json_extract(value, '$[2]') AS INTEGER) = 1 THEN '^' 
                     ELSE '' 
                 END ||
@@ -65,6 +66,7 @@ dictionary_search_drift_find_term_bank_entries(
         
             -- FTS Search
             SELECT
+                SearchTerms.input_index AS input_index, -- used for sorting by input order
                 SearchTerms.term AS search_term,
                 SearchTerms.should_prefix AS should_prefix,
                 SearchTerms.allowed_rules AS allowed_rules, -- Pass Rules
@@ -85,6 +87,7 @@ dictionary_search_drift_find_term_bank_entries(
 
             -- GLOB Search
             SELECT
+                SearchTerms.input_index AS input_index, -- used for sorting by input order
                 SearchTerms.term AS search_term,
                 SearchTerms.should_prefix AS should_prefix,
                 SearchTerms.allowed_rules AS allowed_rules, -- Pass Rules
@@ -140,7 +143,8 @@ dictionary_search_drift_find_term_bank_entries(
         
         -- If user provided constraints on Term / Reading / Definition, filter accordingly
         SearchParameterCheck AS (
-            SELECT term_bank_v3_table.id as term_bank_id
+            SELECT
+                term_bank_v3_table.id AS term_bank_id
             FROM term_bank_v3_table
             WHERE
                 -- 1. Check Term (Only if :filterTerm is provided)
@@ -176,7 +180,7 @@ dictionary_search_drift_find_term_bank_entries(
         -- Get the term bank entries and attach the specific allowed rules/tags
         TermBankMatches as (
             SELECT
-                SearchResultsDeduplicated.*,
+                SearchResultsDeduplicated.*, -- used for sorting by input order
                 term_bank_v3_table.id as term_bank_id,
                 term_bank_v3_table.term_id as term_id,
                 term_bank_v3_table.reading_id as reading_id,
@@ -331,6 +335,8 @@ dictionary_search_drift_find_term_bank_entries(
     LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id
         
     ORDER BY
+        -- maintain input order
+        TBM.input_index ASC,
         -- only apply dictionary sorting if no popularity override is active
         CASE
             WHEN FrequencyOverrideIsActive.is_active = 1

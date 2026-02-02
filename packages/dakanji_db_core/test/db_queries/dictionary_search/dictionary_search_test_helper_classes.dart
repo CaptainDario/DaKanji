@@ -16,7 +16,7 @@ class DictionarySearchTestCase {
   final FrequencyMode? frequencyModeOverride;
 
   /// Expected results from the original, unmodified query.
-  final ExpectedMatchGroup queryMatches;
+  final List<ExpectedMatchGroup> queryMatches;
 
   /// Expected results from the Romaji-to-Hiragana converted query.
   final List<ExpectedMatchGroup> normalizedQueryMatchGroups;
@@ -35,7 +35,7 @@ class DictionarySearchTestCase {
     this.useOnlyEnabledDictionaries = false,
     this.useOnlyDefaultDictionaries = false,
     this.frequencyModeOverride,
-    this.queryMatches = const ExpectedMatchGroup(),
+    this.queryMatches = const [],
     this.normalizedQueryMatchGroups = const [],
     this.queryVariantMatches = const [],
     this.fuzzyMatches = const [],
@@ -51,10 +51,14 @@ class DictionarySearchTestCase {
     buffer.writeln('Search Term: $query');
 
     // --- 1. Original Query Matches ---
-    if (!queryMatches.isEmpty) {
+    if (queryMatches.isNotEmpty) {
       buffer.writeln('\n▼ Matches for Original Query');
-      // Use write(), as toFormattedString() includes its own trailing newline
-      buffer.write(queryMatches.toFormattedString(indent: sectionIndent));
+      for (var i = 0; i < queryMatches.length; i++) {
+        buffer.writeln('$sectionIndent- Variant ${i + 1}:');
+        // Add extra indentation for the content of each variant
+        buffer.write(
+            queryMatches[i].toFormattedString(indent: '$sectionIndent  '));
+      }
     }
 
     // --- 2. Hiragana Query Matches ---

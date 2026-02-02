@@ -6,11 +6,14 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:drift/drift.dart';
+import 'package:language_processing/language_processor_options.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
+import '../../dictionary_test_variables.dart';
 import '../../test_utils/db_files.dart';
+import 'dictionary_multi_search_test_cases.dart';
 import 'dictionary_popularity_override_test_cases.dart';
 import 'dictionary_search_deconjugation_test_cases.dart';
 import 'dictionary_search_filtering_test_cases.dart';
@@ -48,6 +51,7 @@ final List<(
   (groupByTermAndReadingTests, ),
   (groupByMultipleTypesTests, ),
   (indexOnOffTestCases, ),
+  (multiSearchTestCases, ),
 ];
 final List<String> testCaseNames = [
   "Search",
@@ -64,6 +68,7 @@ final List<String> testCaseNames = [
   "Grouping by Term + Reading",
   "Multi Grouping Types",
   "Index On/Off",
+  "Multi Search",
 ];
 
 String currentTestCase = "";
@@ -120,16 +125,18 @@ void main() {
             // Perform the search  
             final results = (await db.dictionarySearchDao.dictionarySearch(
               DictionarySearchParams(
-                query: testCase.query,
+                searchInput: testCase.query,
 
                 normalizedSearch: true,
-                normalizedSearchConvertsRomajiToHiragana: true,
+
                 deconjugationSearch: true,
                 spellfixSearch: true,
                 
                 groupingRules: testCase.groupingRules,
 
                 indexesToInclude: indexesToInclude,
+
+                options: ProcessorOptions(japaneseNormalizationConvertsRomajiToHiragana: true),
               ),
               printDebugInfo: true
             ));
@@ -137,8 +144,27 @@ void main() {
             print("Results:\n $results");
             print("Expected:\n $testCase");
 
-            // --- direct matches ---            
-            expectMatchGroup(results.queryMatches, testCase.queryMatches, testCase.query, 'termMatches');
+            // --- direct matches ---
+            // FIX START: Check length FIRST to avoid passing empty results
+            if (results.queryMatches.length != testCase.queryMatches.length) {
+              fail(
+                'Unexpected number of query match groups.\n'
+                'Query: "${testCase.query}"\n'
+                'Expected Groups: ${testCase.queryMatches.length}\n'
+                'Actual Groups: ${results.queryMatches.length}\n'
+                'Actual Terms Found: ${results.queryMatches.map((g) => g.searchTerm).toList()}'
+              );
+            }
+
+            for (int k = 0; k < testCase.queryMatches.length; k++) {
+              expectMatchGroup(
+                results.queryMatches[k], 
+                testCase.queryMatches[k], 
+                testCase.query, 
+                'queryMatches[$k] (Term: ${results.queryMatches[k].searchTerm})'
+              );
+            }
+            // FIX END
 
             // --- normalized matches ---
             final actualNormalized = results.normalizedQueryMatchGroups;
@@ -205,7 +231,8 @@ void main() {
 Future setupFreshDB() async {
 
   //if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
 
   // init mecab
   final mecab = Mecab();

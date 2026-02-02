@@ -1,16 +1,18 @@
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
+import 'package:language_processing/language_processor_options.dart';
 
 class DictionarySearchParams {
 
 
-  /// The search query/term.
-  String query;
+  /// The search input (can be a query, parameterized string, etc.)
+  String searchInput;
 
   /// Whether to perform normalized search (ignoring small kana, prolonged sound
   /// marks, etc.)
   bool normalizedSearch;
-  /// Whether to convert romaji to hiragana during normalization.
-  bool normalizedSearchConvertsRomajiToHiragana;
+
+  /// Options to apply to the language
+  ProcessorOptions options;
   /// Whether to perform deconjugation search.
   bool deconjugationSearch;
   /// Whether to perform spellfix / fuzzy search.
@@ -40,9 +42,8 @@ class DictionarySearchParams {
   int offset;
 
   DictionarySearchParams({
-    required this.query,
+    required this.searchInput,
     this.normalizedSearch = false,
-    this.normalizedSearchConvertsRomajiToHiragana = false,
     this.deconjugationSearch = false,
     this.spellfixSearch = false,
     this.groupingRules = const [],
@@ -51,6 +52,7 @@ class DictionarySearchParams {
     this.spellfixMaxResults = 20,
     this.limit = -1,
     this.offset = 0,
+    required this.options
   });
 
 }

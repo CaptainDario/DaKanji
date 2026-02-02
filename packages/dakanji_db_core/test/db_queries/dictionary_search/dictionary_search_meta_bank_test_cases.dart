@@ -13,7 +13,7 @@ List<DictionarySearchTestCase> metaBankTestCases = [
   DictionarySearchTestCase(
     description: "Find meta bank entries",
     query: '土木工事',
-    queryMatches: ExpectedMatchGroup(
+    queryMatches: [ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(
@@ -54,12 +54,12 @@ List<DictionarySearchTestCase> metaBankTestCases = [
           ),
         ]
       ],
-    ),
+    )],
   ),
     DictionarySearchTestCase(
     description: "Find meta bank entries that only have term (no reading)",
     query: '石',
-    queryMatches: ExpectedMatchGroup(
+    queryMatches: [ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(
@@ -112,6 +112,6 @@ List<DictionarySearchTestCase> metaBankTestCases = [
           ),
         ]
       ],
-    ),
+    )],
   )
 ];

@@ -10,13 +10,13 @@ List<DictionarySearchTestCase> deconjugationTestCases = [
   DictionarySearchTestCase(
     description: 'polite form',
     query: '食べます',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(term: '食べます', reading: 'たべます', match: '食べます', definitions: ["to eat (polite)"]),
         ]
       ],
-    ),
+    )],
     queryVariantMatches: [
       const ExpectedMatchGroup(
         exactMatches: [
@@ -30,7 +30,7 @@ List<DictionarySearchTestCase> deconjugationTestCases = [
   DictionarySearchTestCase(
     description: 'ambiguous potential form',
     query: 'いける',
-    queryMatches: ExpectedMatchGroup(
+    queryMatches: [ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(
@@ -52,7 +52,7 @@ List<DictionarySearchTestCase> deconjugationTestCases = [
           ),
         ]
       ],
-    ),
+    ),],
     queryVariantMatches: [
       const ExpectedMatchGroup(
         exactMatches: [

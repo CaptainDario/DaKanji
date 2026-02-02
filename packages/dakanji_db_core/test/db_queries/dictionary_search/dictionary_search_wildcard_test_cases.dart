@@ -6,22 +6,22 @@ List<DictionarySearchTestCase> wildcardSearchTestCases = [
   DictionarySearchTestCase(
     description: "'?' (single character)",
     query: '?本',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       wildcardMatches: [
         [ExpectedDictionaryMatch(term: '日本', reading: 'にほん', match: '日本', definitions: ["Japan"])],
         [ExpectedDictionaryMatch(term: '二本', reading: 'にほん', match: '二本', definitions: ["two long objects"])],
       ],
-    ),
+    )],
   ),
   DictionarySearchTestCase(
     description: "'??' (Two wildcards)",
     query: '?本?',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       wildcardMatches: [
         [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"])],
         [ExpectedDictionaryMatch(term: '日本酒', reading: 'にほんしゅ', match: '日本酒', definitions: ["sake; Japanese rice wine"])],
       ],
-    ),
+    )],
   ),
   /// 中国人 has the highest popularity (147) so it should come first
   /// 人, 日本人 and ドイツ人 all have the same popularity (99) so they are sorted
@@ -29,28 +29,28 @@ List<DictionarySearchTestCase> wildcardSearchTestCases = [
   DictionarySearchTestCase(
     description: "'*' (zero to many characters)",
     query: '*人',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       wildcardMatches: [
         [ExpectedDictionaryMatch(term: '中国人', reading: 'ちゅうごくじん', match: '中国人', definitions: ["Chinese person"])],
         [ExpectedDictionaryMatch(term: '人', reading: 'じん', match: '人', definitions: ["Person"])],
         [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"])],
         [ExpectedDictionaryMatch(term: 'ドイツ人', reading: 'どいつじん', match: 'ドイツ人', definitions: ["Eine deutsche Person"])],
       ],
-    ),
+    )],
   ),
   DictionarySearchTestCase(
     description: "'*' (zero characters)",
     query: '*日本人',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       wildcardMatches: [
         [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"]),]
       ],
-    ),
+    )],
   ),
 DictionarySearchTestCase(
     description: "'**' (multiple wild cards)",
     query: '*本*',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       wildcardMatches: [
           // Rule 4: Sorted by frequency (99 > 95 > 90 > 80).
           [ExpectedDictionaryMatch(term: '日本', reading: 'にほん', match: '日本', definitions: ["Japan"])],
@@ -67,48 +67,48 @@ DictionarySearchTestCase(
           [ExpectedDictionaryMatch(term: '二本', reading: 'にほん', match: '二本', definitions: ["two long objects"])],
           [ExpectedDictionaryMatch(term: '全日本', reading: 'ぜんにほん', match: '全日本', definitions: ["all Japan"])],
       ],
-    ),
+    )],
   ),
   DictionarySearchTestCase(
     description: "'*' and '?' (using both wildcards in one query)",
     query: '*本?',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       wildcardMatches: [
         [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: '日本人', definitions: ["Japanese person"])],
         [ExpectedDictionaryMatch(term: '日本酒', reading: 'にほんしゅ', match: '日本酒', definitions: ["sake; Japanese rice wine"])],
         [ExpectedDictionaryMatch(term: '本日', reading: 'ほんじつ', match: '本日', definitions: ["today"])],
       ],
-    ),
+    )],
   ),
 
   DictionarySearchTestCase(
     description: "GLOB [...] (Character Set)",
     query: '[日二]本',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       wildcardMatches: [
         [ExpectedDictionaryMatch(term: '日本', reading: 'にほん', match: '日本', definitions: ["Japan"])],
         [ExpectedDictionaryMatch(term: '二本', reading: 'にほん', match: '二本', definitions: ["two long objects"])],
       ],
-    ),
+    )],
   ),
   DictionarySearchTestCase(
     description: "GLOB [^...] (Negated Character Set)",
     query: '[^日]本',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       wildcardMatches: [
         // Should match '二本' but explicitly NOT '日本'
         [ExpectedDictionaryMatch(term: '二本', reading: 'にほん', match: '二本', definitions: ["two long objects"])],
       ],
-    ),
+    )],
   ),
    DictionarySearchTestCase(
     description: "GLOB [x-y] (Character Range)",
     query: '[a-c]',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       wildcardMatches: [
         // Matches 'a', but not 'asd' (length mismatch) or '石' (outside range)
         [ExpectedDictionaryMatch(term: 'a', reading: '', match: 'a', definitions: ["Letter from the Latin alphabet"])],
       ],
-    ),
+    )],
   ),
 ];

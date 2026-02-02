@@ -12,7 +12,7 @@ List<DictionarySearchTestCase> groupByTermTests = [
     groupingRules: [
       TermGroupingRule({1, 2, 3, 4, 5})
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(
@@ -41,7 +41,7 @@ List<DictionarySearchTestCase> groupByTermTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
 
   DictionarySearchTestCase(
@@ -51,7 +51,7 @@ List<DictionarySearchTestCase> groupByTermTests = [
       TermGroupingRule({1, 2}),
       TermGroupingRule({3, 4, 5})
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(
@@ -82,7 +82,7 @@ List<DictionarySearchTestCase> groupByTermTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
 
   DictionarySearchTestCase(
@@ -91,7 +91,7 @@ List<DictionarySearchTestCase> groupByTermTests = [
     groupingRules: [
       TermGroupingRule({1}), // Both are in Dict 1
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         // Group 1: Fast (速い)
         [
@@ -112,7 +112,7 @@ List<DictionarySearchTestCase> groupByTermTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
 
   DictionarySearchTestCase(
@@ -123,7 +123,7 @@ List<DictionarySearchTestCase> groupByTermTests = [
     // Dict 3 is intentionally left out to see if it maintains its rank.
     TermGroupingRule({4, 5}),
   ],
-  queryMatches: const ExpectedMatchGroup(
+  queryMatches: [const ExpectedMatchGroup(
     exactMatches: [
       // Rank 1: Dict 3 (Stays at top because ID 3 < ID 4)
       [
@@ -151,7 +151,7 @@ List<DictionarySearchTestCase> groupByTermTests = [
         ),
       ],
     ],
-  ),
+  )],
 ),
 
 ];

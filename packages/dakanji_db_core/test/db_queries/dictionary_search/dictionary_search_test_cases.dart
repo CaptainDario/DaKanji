@@ -9,187 +9,201 @@ final List<DictionarySearchTestCase> searchTestCases = [
   DictionarySearchTestCase(
     description: 'Exact match on term',
     query: "食べる",
-    queryMatches: const ExpectedMatchGroup(
-      exactMatches: [
-        [
-          ExpectedDictionaryMatch(
-            term: '食べる', reading: 'たべる', match: '食べる',
-            definitions: ["to eat"]
-          ),
-        ]
-      ],
-      prefixMatches: [
-        [
-          ExpectedDictionaryMatch(
-            term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油',
-            definitions: ["chili oil with garlic, etc. for eating with rice"]
-          )
-        ]
-      ],
-    ),
+    queryMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          [
+            ExpectedDictionaryMatch(
+              term: '食べる', reading: 'たべる', match: '食べる',
+              definitions: ["to eat"]
+            ),
+          ]
+        ],
+        prefixMatches: [
+          [
+            ExpectedDictionaryMatch(
+              term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油',
+              definitions: ["chili oil with garlic, etc. for eating with rice"]
+            )
+          ]
+        ],
+      ),
+    ]
   ),
   DictionarySearchTestCase(
     description: 'Prefix match on term',
     query: '食べ',
-    queryMatches: const ExpectedMatchGroup(
-      prefixMatches: [
-        [ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: '食べる', definitions: ["to eat"])],
-        [ExpectedDictionaryMatch(term: '食べ物', reading: 'たべもの', match: '食べ物', definitions: ["food"])],
-        [ExpectedDictionaryMatch(term: '食べます', reading: 'たべます', match: '食べます', definitions: ["to eat (polite)"])],
-        [ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油', definitions: ["chili oil with garlic, etc. for eating with rice"])],
-      ],
-    ),
+    queryMatches: [
+      const ExpectedMatchGroup(
+        prefixMatches: [
+          [ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: '食べる', definitions: ["to eat"])],
+          [ExpectedDictionaryMatch(term: '食べ物', reading: 'たべもの', match: '食べ物', definitions: ["food"])],
+          [ExpectedDictionaryMatch(term: '食べます', reading: 'たべます', match: '食べます', definitions: ["to eat (polite)"])],
+          [ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: '食べるラー油', definitions: ["chili oil with garlic, etc. for eating with rice"])],
+        ],
+      ),
+    ]
   ),
   DictionarySearchTestCase(
     description: 'Exact match on reading (hiragana query)',
     query: 'たべる',
-    queryMatches: const ExpectedMatchGroup(
-      exactMatches: [
-        [
-          ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: 'たべる', definitions: ["to eat"]),
-        ]
-      ],
-      prefixMatches: [
-        [
-          ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: 'たべるらーゆ', definitions: ["chili oil with garlic, etc. for eating with rice"])
-        ]
-      ],
-    ),
+    queryMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          [
+            ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: 'たべる', definitions: ["to eat"]),
+          ]
+        ],
+        prefixMatches: [
+          [
+            ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: 'たべるらーゆ', definitions: ["chili oil with garlic, etc. for eating with rice"])
+          ]
+        ],
+      ),
+    ]
   ),
   // --- Definitions ---
   DictionarySearchTestCase(
     description: 'Definition ordering',
     query: "召し上がる",
-    queryMatches: const ExpectedMatchGroup(
-      exactMatches: [
-        [
-          ExpectedDictionaryMatch(
-            term: '召し上がる', reading: 'めしあがる',
-            definitions: ["to eat (honorific)", "to eat"],
-            match: '召し上がる'
-          ),
-        ]
-      ],
-    ),
+    queryMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          [
+            ExpectedDictionaryMatch(
+              term: '召し上がる', reading: 'めしあがる',
+              definitions: ["to eat (honorific)", "to eat"],
+              match: '召し上がる'
+            ),
+          ]
+        ],
+      ),
+    ]
   ),
 
   // --- Sub matches ---
   DictionarySearchTestCase(
     description: 'Definition match ("eat" should match "to eat" and "eating")',
     query: 'eat',
-    queryMatches: const ExpectedMatchGroup(
-      exactMatches: [
-        [ExpectedDictionaryMatch(term: 'イート', reading: 'いーと', match: 'eat', definitions: ["eat"]),]
-      ],
-    tokenMatches: [
-        [ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: 'to eat', definitions: ["to eat"])],
-        [ExpectedDictionaryMatch(term: '召し上がる', reading: 'めしあがる', match: 'to eat', definitions: ["to eat (honorific)", "to eat"])],
-        [ExpectedDictionaryMatch(term: '食べます', reading: 'たべます', match: 'to eat (polite)', definitions: ["to eat (polite)"])],
-        [ExpectedDictionaryMatch(term: 'イート', reading: 'いーと', match: "the act of eating", definitions: ["the act of eating"])],
-        [ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: 'chili oil with garlic, etc. for eating with rice', definitions: ["chili oil with garlic, etc. for eating with rice"])],
-      ],
-    )
+    queryMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          [ExpectedDictionaryMatch(term: 'イート', reading: 'いーと', match: 'eat', definitions: ["eat"]),]
+        ],
+      tokenMatches: [
+          [ExpectedDictionaryMatch(term: '食べる', reading: 'たべる', match: 'to eat', definitions: ["to eat"])],
+          [ExpectedDictionaryMatch(term: '召し上がる', reading: 'めしあがる', match: 'to eat', definitions: ["to eat (honorific)", "to eat"])],
+          [ExpectedDictionaryMatch(term: '食べます', reading: 'たべます', match: 'to eat (polite)', definitions: ["to eat (polite)"])],
+          [ExpectedDictionaryMatch(term: 'イート', reading: 'いーと', match: "the act of eating", definitions: ["the act of eating"])],
+          [ExpectedDictionaryMatch(term: '食べるラー油', reading: 'たべるらーゆ', match: 'chili oil with garlic, etc. for eating with rice', definitions: ["chili oil with garlic, etc. for eating with rice"])],
+        ],
+      )
+    ]
   ),
   // limit serach results when searching for one character
   DictionarySearchTestCase(
     description: "Searching for one roman character should NOT yield matches not at the start of the term",
     query: "a",
     // Expected results for the hiragana-converted query: 'でんしゃ'
-    queryMatches: const ExpectedMatchGroup(
-      exactMatches: [
-        [ExpectedDictionaryMatch(
-          term: 'a',
-          reading: '',
-          definitions: ['Letter from the Latin alphabet'],
-          match: 'a',
-        )]
-      ],
-      prefixMatches: [
-        [
-          ExpectedDictionaryMatch(
-            term: 'asd',
+    queryMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          [ExpectedDictionaryMatch(
+            term: 'a',
             reading: '',
-            match: 'asd',
-            definitions: ['Random string of letters, common placeholder']
-          ),
+            definitions: ['Letter from the Latin alphabet'],
+            match: 'a',
+          )]
         ],
-        [
-          ExpectedDictionaryMatch(
-            term: '全日本',
-            reading: 'ぜんにほん',
-            match: 'all Japan',
-            definitions: ['all Japan']
-          ),
-        ],
-        [
-          ExpectedDictionaryMatch(
-            term: '一日中',
-            reading: 'いちにちじゅう',
-            match: 'all day long',
-            definitions: ['all day long']
-          ),
+        prefixMatches: [
+          [
+            ExpectedDictionaryMatch(
+              term: 'asd',
+              reading: '',
+              match: 'asd',
+              definitions: ['Random string of letters, common placeholder']
+            ),
+          ],
+          [
+            ExpectedDictionaryMatch(
+              term: '全日本',
+              reading: 'ぜんにほん',
+              match: 'all Japan',
+              definitions: ['all Japan']
+            ),
+          ],
+          [
+            ExpectedDictionaryMatch(
+              term: '一日中',
+              reading: 'いちにちじゅう',
+              match: 'all day long',
+              definitions: ['all day long']
+            ),
+          ]
         ]
-      ]
-    ),
+      ),
+    ]
   ),
   DictionarySearchTestCase(
     description: "Searching for one kanji character SHOULD yield prefix matches ANYWHERE in the term",
     query: "電",
     // Expected results for the hiragana-converted query: 'でんしゃ'
-    queryMatches: const ExpectedMatchGroup(
-      exactMatches: [
-        [ExpectedDictionaryMatch(
-          term: '電',
-          reading: 'でん',
-          definitions: ['electricity'],
-          match: '電',
-        )]
-      ],
-      prefixMatches: [
-        [
-          ExpectedDictionaryMatch(
-            term: '電車',
-            reading: 'でんしゃ',
-            match: '電車',
-            definitions: ["(electric) train"]
-          ),
+    queryMatches: [
+      const ExpectedMatchGroup(
+        exactMatches: [
+          [ExpectedDictionaryMatch(
+            term: '電',
+            reading: 'でん',
+            definitions: ['electricity'],
+            match: '電',
+          )]
         ],
-        [
-          ExpectedDictionaryMatch(
-            term: '電車賃',
-            reading: 'でんしゃちん',
-            match: '電車賃',
-            definitions: ["train fare"]
-          ),
+        prefixMatches: [
+          [
+            ExpectedDictionaryMatch(
+              term: '電車',
+              reading: 'でんしゃ',
+              match: '電車',
+              definitions: ["(electric) train"]
+            ),
+          ],
+          [
+            ExpectedDictionaryMatch(
+              term: '電車賃',
+              reading: 'でんしゃちん',
+              match: '電車賃',
+              definitions: ["train fare"]
+            ),
+          ],
+          [
+            ExpectedDictionaryMatch(
+              term: '電車酔い',
+              reading: 'でんしゃよい',
+              match: '電車酔い',
+              definitions: ["train sickness; motion sickness on a train"]
+            ),
+          ],
+          [
+            ExpectedDictionaryMatch(
+              term: '電車道相撲',
+              reading: 'でんしゃみちすもう',
+              match: '電車道相撲',
+              definitions: ["railroading an opponent straight out of the ring​"]
+            ),
+          ]
         ],
-        [
-          ExpectedDictionaryMatch(
-            term: '電車酔い',
-            reading: 'でんしゃよい',
-            match: '電車酔い',
-            definitions: ["train sickness; motion sickness on a train"]
-          ),
-        ],
-        [
-          ExpectedDictionaryMatch(
-            term: '電車道相撲',
-            reading: 'でんしゃみちすもう',
-            match: '電車道相撲',
-            definitions: ["railroading an opponent straight out of the ring​"]
-          ),
+        tokenMatches: [
+          [
+            ExpectedDictionaryMatch(
+              term: '満員電車',
+              reading: 'まんいんでんしゃ',
+              match: '満員電車',
+              definitions: ["crowded train; packed train"]
+            ),
+          ]
         ]
-      ],
-      tokenMatches: [
-        [
-          ExpectedDictionaryMatch(
-            term: '満員電車',
-            reading: 'まんいんでんしゃ',
-            match: '満員電車',
-            definitions: ["crowded train; packed train"]
-          ),
-        ]
-      ]
-    ),
+      ),
+    ]
   ),
 ];
 

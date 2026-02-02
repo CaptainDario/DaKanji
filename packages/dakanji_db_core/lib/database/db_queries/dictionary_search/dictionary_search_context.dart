@@ -1,13 +1,16 @@
-import 'package:language_processing/japanese/conjugation/yomitan_deconjugate.dart';
+import 'package:language_processing/util/deconjugation_result.dart';
 
 
 
 class DictionarySearchContext {
 
-  /// The cleaned query
+  /// The cleaned search input
   ///   - tags have been removed
-  String cleanedQuery = "";
+  ///   - pos filters have been removed
+  String cleanedSearchInput = "";
 
+  /// List of terms to search for extracted from the query
+  List<String> searchTerms = [];
   /// List of tag-filters to apply to all search results extracted from the
   /// query
   List<String> tags = [];
@@ -33,16 +36,11 @@ class DictionarySearchContext {
   }
 
   List<String> get nonNullFilterParams {
-    return [termFilter, readingFilter, definitionFilter]
-      .whereType<String>().toList();
+    return [termFilter, readingFilter, definitionFilter].nonNulls.toList();
   }
 
-  /// Returns the prioritized list of terms to search for.
-  List<String> get lookupTerms => filterParams != null
-    ? nonNullFilterParams
-    : [cleanedQuery];
-
   List<String> normalizedTerms = [];
+
   List<DeconjugationResult> termVariants = [];
 
   /// All spelling variations generated for spellfix search
@@ -58,22 +56,41 @@ class DictionarySearchContext {
     ({List<String> tags, List<String> pos, String cleanedQuery}) extracted) {
     tags = extracted.tags;
     pos = extracted.pos;
-    cleanedQuery = extracted.cleanedQuery;
+    cleanedSearchInput = extracted.cleanedQuery;
   }
 
-  void applyArgumentParserResult(({String? term, String? reading, String? definition})? filterParams) {
-    if (filterParams == null) return;
-    termFilter = filterParams.term;
-    readingFilter = filterParams.reading;
-    definitionFilter = filterParams.definition;
+  void applyArgumentParserResult(({
+    List<String>? searchQueries,
+    ({
+      String? termFilter,
+      String? readingFilter,
+      String? definitionFilter,
+    })? filters
+  }) parsed) {
+    
+    // Handle Filters (if they exist)
+    if (parsed.filters != null) {
+      termFilter = parsed.filters!.termFilter;
+      readingFilter = parsed.filters!.readingFilter;
+      definitionFilter = parsed.filters!.definitionFilter;
+    }
+
+    // Handle Queries (if they exist)
+    if (parsed.searchQueries != null) {
+      searchTerms = parsed.searchQueries!;
+    }
   }
 
-  void applyPreprocessInputResult(({
+  void applyPreprocessInputResult(List<({
     List<String> normalizedTerms,
     List<DeconjugationResult> termVariants
-  }) result) {
-    normalizedTerms = result.normalizedTerms;
-    termVariants = result.termVariants;
+  })> result) {
+
+    for (final r in result) {
+      normalizedTerms.addAll(r.normalizedTerms);
+      termVariants.addAll(r.termVariants);
+    }
+
   }
 
 }

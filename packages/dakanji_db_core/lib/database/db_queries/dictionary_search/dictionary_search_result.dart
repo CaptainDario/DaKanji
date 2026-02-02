@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_match_group.dart';
@@ -8,14 +7,14 @@ import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanj
 
 class DictionarySearchResult {
   final List<KanjiDictionarySearchResult> kanjiResults;
-  final DictionaryMatchGroup queryMatches;
+  final List<DictionaryMatchGroup> queryMatches;
   final List<DictionaryMatchGroup> normalizedQueryMatchGroups;
   final List<DictionaryMatchGroup> queryVariantMatches;
   final List<DictionaryMatchGroup> fuzzyMatches;
 
   DictionarySearchResult.empty()
       : kanjiResults = [],
-        queryMatches = DictionaryMatchGroup.empty(),
+        queryMatches = [],
         normalizedQueryMatchGroups = [],
         queryVariantMatches = [],
         fuzzyMatches = [];
@@ -96,7 +95,7 @@ class DictionarySearchResult {
         (filteredMap[DictionarySearchMatchType.exact]!, sequenceMatches, allDetails), 
         isWildcardSearch,
         groupingRules: groupingRules,
-      ).firstOrNull ?? DictionaryMatchGroup.empty(),
+      ),
       
       normalizedQueryMatchGroups: DictionaryMatchGroup.fromDictionarySearch(
         (filteredMap[DictionarySearchMatchType.normalized]!, sequenceMatches, allDetails), 
@@ -128,7 +127,7 @@ class DictionarySearchResult {
 
     // clean-up duplicates
     final Set<String> seenEntryIds = {};
-    _processMatchGroup(queryMatches, seenEntryIds);
+    for (final group in queryMatches) _processMatchGroup(group, seenEntryIds);
     for (final g in normalizedQueryMatchGroups) _processMatchGroup(g, seenEntryIds);
     for (final g in queryVariantMatches) _processMatchGroup(g, seenEntryIds);
     for (final g in fuzzyMatches) _processMatchGroup(g, seenEntryIds);
@@ -166,11 +165,15 @@ class DictionarySearchResult {
     const sectionIndent = '  ';
 
     buffer.writeln('\n--- 📖 Dictionary Search Results ---');
-    buffer.writeln('Search Term: ${queryMatches.searchTerm}');
-
-    if (!queryMatches.isEmpty) {
+    
+    // CHANGED: Handle List of query matches
+    if (queryMatches.isNotEmpty) {
       buffer.writeln('\n▼ Matches for Original Query');
-      buffer.write(queryMatches.toFormattedString(indent: sectionIndent));
+      for (var i = 0; i < queryMatches.length; i++) {
+        final group = queryMatches[i];
+        buffer.writeln('$sectionIndent- Term: ${group.searchTerm}');
+        buffer.write(group.toFormattedString(indent: '$sectionIndent  '));
+      }
     }
 
     if (normalizedQueryMatchGroups.isNotEmpty) {

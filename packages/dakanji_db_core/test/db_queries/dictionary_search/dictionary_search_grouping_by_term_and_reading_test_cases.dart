@@ -13,7 +13,7 @@ List<DictionarySearchTestCase> groupByTermAndReadingTests = [
     groupingRules: [
       TermAndReadingGroupingRule({1, 2, 3, 4, 5})
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(
@@ -44,7 +44,7 @@ List<DictionarySearchTestCase> groupByTermAndReadingTests = [
           ),
         ]
       ],
-    ),
+    )],
   ),
 
   DictionarySearchTestCase(
@@ -53,7 +53,7 @@ List<DictionarySearchTestCase> groupByTermAndReadingTests = [
     groupingRules: [
       TermAndReadingGroupingRule({1}), // Both are in Dict 1
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         // Group 1: Fast (速い)
         [
@@ -74,7 +74,7 @@ List<DictionarySearchTestCase> groupByTermAndReadingTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
 
   DictionarySearchTestCase(
@@ -84,7 +84,7 @@ List<DictionarySearchTestCase> groupByTermAndReadingTests = [
       // Only Dict 1 and 2 are in the rule. Dict 3 is excluded.
       TermAndReadingGroupingRule({1, 2}), 
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         // Group 1: Merged (Dict 1 & 2)
         [
@@ -121,7 +121,7 @@ List<DictionarySearchTestCase> groupByTermAndReadingTests = [
           ),
         ]
       ],
-    ),
+    )],
   ),
 
   DictionarySearchTestCase(
@@ -132,7 +132,7 @@ List<DictionarySearchTestCase> groupByTermAndReadingTests = [
       // Dict 3 is excluded.
       TermAndReadingGroupingRule({4, 5}),
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         // Rank 1: Dict 3
         [
@@ -159,6 +159,6 @@ List<DictionarySearchTestCase> groupByTermAndReadingTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
 ];

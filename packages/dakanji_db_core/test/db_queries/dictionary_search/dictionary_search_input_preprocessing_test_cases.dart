@@ -57,13 +57,13 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
     but not コンピューター (normalized reading) as normalized match as it is already a query match
     ''',
     query: 'こんぴゅーたー',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(term: 'こんぴゅーたー', reading: '', match: 'こんぴゅーたー', definitions: ["Computer"]),
         ]
       ],
-    ),
+    )],
     normalizedQueryMatchGroups: [
       const ExpectedMatchGroup(
         exactMatches: [
@@ -79,13 +79,13 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
       but not コンピューター (normalized reading) as a normalized match as it is already a query match
     ''',
     query: 'ストラップ',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(term: '', reading: 'ストラップ', match: 'ストラップ', definitions: ["Computer"]),
         ]
       ],
-    ),
+    )],
     normalizedQueryMatchGroups: [
       const ExpectedMatchGroup(
         exactMatches: [
@@ -99,13 +99,13 @@ List<DictionarySearchTestCase> inputPreprocessingSearchTestCases = [
   DictionarySearchTestCase(
     description: 'Search for コンピューター (Katakana) should match こんぴゅーたー (reading)',
     query: 'コンピューター',
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(term: 'コンピューター', reading: '', match: 'コンピューター', definitions: ["Computer"]),
         ]
       ],
-    ),
+    )],
     normalizedQueryMatchGroups: [
       const ExpectedMatchGroup(
         exactMatches: [

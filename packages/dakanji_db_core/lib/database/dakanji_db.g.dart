@@ -17178,6 +17178,17 @@ class $SearchProfilesTableTable extends SearchProfilesTable
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
   @override
   late final GeneratedColumnWithTypeConverter<
     List<(DakanjiDbSearchResult1stSortOrder, bool)>,
@@ -17361,6 +17372,7 @@ class $SearchProfilesTableTable extends SearchProfilesTable
     id,
     name,
     isActiveProfile,
+    sortOrder,
     firstSortOrder,
     secondSortOrder,
     normalizeSearchConvertsRomajiToHiragana,
@@ -17404,6 +17416,14 @@ class $SearchProfilesTableTable extends SearchProfilesTable
           _isActiveProfileMeta,
         ),
       );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sortOrderMeta);
     }
     if (data.containsKey('normalize_search_converts_romaji_to_hiragana')) {
       context.handle(
@@ -17516,6 +17536,10 @@ class $SearchProfilesTableTable extends SearchProfilesTable
         DriftSqlType.bool,
         data['${effectivePrefix}is_active_profile'],
       )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
       firstSortOrder: $SearchProfilesTableTable.$converterfirstSortOrder
           .fromSql(
             attachedDatabase.typeMapping.read(
@@ -17597,6 +17621,7 @@ class SearchProfilesTableData extends DataClass
   final int id;
   final String name;
   final bool isActiveProfile;
+  final int sortOrder;
 
   /// 1st level sort order for search results.
   /// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
@@ -17647,6 +17672,7 @@ class SearchProfilesTableData extends DataClass
     required this.id,
     required this.name,
     required this.isActiveProfile,
+    required this.sortOrder,
     required this.firstSortOrder,
     required this.secondSortOrder,
     required this.normalizeSearchConvertsRomajiToHiragana,
@@ -17667,6 +17693,7 @@ class SearchProfilesTableData extends DataClass
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     map['is_active_profile'] = Variable<bool>(isActiveProfile);
+    map['sort_order'] = Variable<int>(sortOrder);
     {
       map['first_sort_order'] = Variable<String>(
         $SearchProfilesTableTable.$converterfirstSortOrder.toSql(
@@ -17710,6 +17737,7 @@ class SearchProfilesTableData extends DataClass
       id: Value(id),
       name: Value(name),
       isActiveProfile: Value(isActiveProfile),
+      sortOrder: Value(sortOrder),
       firstSortOrder: Value(firstSortOrder),
       secondSortOrder: Value(secondSortOrder),
       normalizeSearchConvertsRomajiToHiragana: Value(
@@ -17741,6 +17769,7 @@ class SearchProfilesTableData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       isActiveProfile: serializer.fromJson<bool>(json['isActiveProfile']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
       firstSortOrder: serializer
           .fromJson<List<(DakanjiDbSearchResult1stSortOrder, bool)>>(
             json['firstSortOrder'],
@@ -17779,6 +17808,7 @@ class SearchProfilesTableData extends DataClass
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'isActiveProfile': serializer.toJson<bool>(isActiveProfile),
+      'sortOrder': serializer.toJson<int>(sortOrder),
       'firstSortOrder': serializer
           .toJson<List<(DakanjiDbSearchResult1stSortOrder, bool)>>(
             firstSortOrder,
@@ -17811,6 +17841,7 @@ class SearchProfilesTableData extends DataClass
     int? id,
     String? name,
     bool? isActiveProfile,
+    int? sortOrder,
     List<(DakanjiDbSearchResult1stSortOrder, bool)>? firstSortOrder,
     List<(DakanjiDbSearchResult2ndSortOrder, bool)>? secondSortOrder,
     bool? normalizeSearchConvertsRomajiToHiragana,
@@ -17828,6 +17859,7 @@ class SearchProfilesTableData extends DataClass
     id: id ?? this.id,
     name: name ?? this.name,
     isActiveProfile: isActiveProfile ?? this.isActiveProfile,
+    sortOrder: sortOrder ?? this.sortOrder,
     firstSortOrder: firstSortOrder ?? this.firstSortOrder,
     secondSortOrder: secondSortOrder ?? this.secondSortOrder,
     normalizeSearchConvertsRomajiToHiragana:
@@ -17857,6 +17889,7 @@ class SearchProfilesTableData extends DataClass
       isActiveProfile: data.isActiveProfile.present
           ? data.isActiveProfile.value
           : this.isActiveProfile,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
       firstSortOrder: data.firstSortOrder.present
           ? data.firstSortOrder.value
           : this.firstSortOrder,
@@ -17906,6 +17939,7 @@ class SearchProfilesTableData extends DataClass
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('isActiveProfile: $isActiveProfile, ')
+          ..write('sortOrder: $sortOrder, ')
           ..write('firstSortOrder: $firstSortOrder, ')
           ..write('secondSortOrder: $secondSortOrder, ')
           ..write(
@@ -17934,6 +17968,7 @@ class SearchProfilesTableData extends DataClass
     id,
     name,
     isActiveProfile,
+    sortOrder,
     firstSortOrder,
     secondSortOrder,
     normalizeSearchConvertsRomajiToHiragana,
@@ -17955,6 +17990,7 @@ class SearchProfilesTableData extends DataClass
           other.id == this.id &&
           other.name == this.name &&
           other.isActiveProfile == this.isActiveProfile &&
+          other.sortOrder == this.sortOrder &&
           other.firstSortOrder == this.firstSortOrder &&
           other.secondSortOrder == this.secondSortOrder &&
           other.normalizeSearchConvertsRomajiToHiragana ==
@@ -17978,6 +18014,7 @@ class SearchProfilesTableCompanion
   final Value<int> id;
   final Value<String> name;
   final Value<bool> isActiveProfile;
+  final Value<int> sortOrder;
   final Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>> firstSortOrder;
   final Value<List<(DakanjiDbSearchResult2ndSortOrder, bool)>> secondSortOrder;
   final Value<bool> normalizeSearchConvertsRomajiToHiragana;
@@ -17995,6 +18032,7 @@ class SearchProfilesTableCompanion
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.isActiveProfile = const Value.absent(),
+    this.sortOrder = const Value.absent(),
     this.firstSortOrder = const Value.absent(),
     this.secondSortOrder = const Value.absent(),
     this.normalizeSearchConvertsRomajiToHiragana = const Value.absent(),
@@ -18013,6 +18051,7 @@ class SearchProfilesTableCompanion
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.isActiveProfile = const Value.absent(),
+    required int sortOrder,
     required List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,
     required List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,
     this.normalizeSearchConvertsRomajiToHiragana = const Value.absent(),
@@ -18026,13 +18065,15 @@ class SearchProfilesTableCompanion
     this.spellfixMaxResults = const Value.absent(),
     this.spellfixMaxCost = const Value.absent(),
     this.searchResultLimit = const Value.absent(),
-  }) : firstSortOrder = Value(firstSortOrder),
+  }) : sortOrder = Value(sortOrder),
+       firstSortOrder = Value(firstSortOrder),
        secondSortOrder = Value(secondSortOrder),
        groupingRules = Value(groupingRules);
   static Insertable<SearchProfilesTableData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<bool>? isActiveProfile,
+    Expression<int>? sortOrder,
     Expression<String>? firstSortOrder,
     Expression<String>? secondSortOrder,
     Expression<bool>? normalizeSearchConvertsRomajiToHiragana,
@@ -18051,6 +18092,7 @@ class SearchProfilesTableCompanion
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (isActiveProfile != null) 'is_active_profile': isActiveProfile,
+      if (sortOrder != null) 'sort_order': sortOrder,
       if (firstSortOrder != null) 'first_sort_order': firstSortOrder,
       if (secondSortOrder != null) 'second_sort_order': secondSortOrder,
       if (normalizeSearchConvertsRomajiToHiragana != null)
@@ -18079,6 +18121,7 @@ class SearchProfilesTableCompanion
     Value<int>? id,
     Value<String>? name,
     Value<bool>? isActiveProfile,
+    Value<int>? sortOrder,
     Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>>? firstSortOrder,
     Value<List<(DakanjiDbSearchResult2ndSortOrder, bool)>>? secondSortOrder,
     Value<bool>? normalizeSearchConvertsRomajiToHiragana,
@@ -18097,6 +18140,7 @@ class SearchProfilesTableCompanion
       id: id ?? this.id,
       name: name ?? this.name,
       isActiveProfile: isActiveProfile ?? this.isActiveProfile,
+      sortOrder: sortOrder ?? this.sortOrder,
       firstSortOrder: firstSortOrder ?? this.firstSortOrder,
       secondSortOrder: secondSortOrder ?? this.secondSortOrder,
       normalizeSearchConvertsRomajiToHiragana:
@@ -18131,6 +18175,9 @@ class SearchProfilesTableCompanion
     }
     if (isActiveProfile.present) {
       map['is_active_profile'] = Variable<bool>(isActiveProfile.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
     }
     if (firstSortOrder.present) {
       map['first_sort_order'] = Variable<String>(
@@ -18202,6 +18249,7 @@ class SearchProfilesTableCompanion
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('isActiveProfile: $isActiveProfile, ')
+          ..write('sortOrder: $sortOrder, ')
           ..write('firstSortOrder: $firstSortOrder, ')
           ..write('secondSortOrder: $secondSortOrder, ')
           ..write(
@@ -18766,7 +18814,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     int offset,
   ) {
     return customSelect(
-      'WITH SearchTerms (term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (SELECT CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), CAST(json_extract(value, \'\$[3]\') AS TEXT), CAST(json_extract(value, \'\$[4]\') AS TEXT), CASE WHEN CAST(json_extract(value, \'\$[2]\') AS INTEGER) = 1 THEN \'^\' ELSE \'\' END || \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), ActiveIndexes (id, current_sorting_order, enabled, frequency_mode) AS (SELECT id, current_sorting_order, enabled, frequency_mode FROM index_table WHERE(?2 IS NOT NULL AND id IN (SELECT index_id FROM IndexesToInclude))OR(?2 IS NULL AND enabled = 1)), SearchResults AS (SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH fts_query WHERE ?3 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))UNION ALL SELECT SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?3 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, rank ASC, LENGTH(text_data) ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), SearchParameterCheck AS (SELECT term_bank_v3_table.id AS term_bank_id FROM term_bank_v3_table WHERE(?5 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM search_fts WHERE source_id = term_bank_v3_table.term_id AND data_type_id IN (1, 2, 3, 4) AND text_data MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\'))AND(?6 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM search_fts WHERE source_id = term_bank_v3_table.reading_id AND data_type_id IN (5, 6) AND text_data MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN search_fts AS def_fts ON link.definition_id = def_fts.source_id WHERE link.term_bank_id = term_bank_v3_table.id AND def_fts.data_type_id = 7 AND def_fts.text_data MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id), TermBankMatchesFiltered AS (SELECT TBM.* FROM TermBankMatches AS TBM JOIN SearchParameterCheck ON SearchParameterCheck.term_bank_id = TBM.term_bank_id WHERE(TBM.allowed_tags IS NULL OR json_array_length(TBM.allowed_tags) = 0 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN json_each(TBM.allowed_tags)AS AllowedTag ON TagTable.name = AllowedTag.value WHERE LinkTable.term_bank_id = TBM.term_bank_id))AND(TBM.allowed_rules IS NULL OR json_array_length(TBM.allowed_rules) = 0 OR EXISTS (SELECT 1 AS _c4 FROM term_bank_v3_x_rule_identifier_table AS RuleLink JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id JOIN json_each(TBM.allowed_rules)AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value WHERE RuleLink.term_bank_id = TBM.term_bank_id))), FrequencyOverrideIsActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.*, IT.frequency_mode AS op_frequency_mode FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, ActiveIndexes.id AS indexId, ActiveIndexes.current_sorting_order, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN CASE WHEN OP.op_frequency_mode = \'rankBased\' THEN(OP.freq_value * -1)ELSE OP.freq_value END ELSE CASE WHEN ActiveIndexes.frequency_mode = \'rankBased\' THEN(TB3T.popularity * -1)ELSE TB3T.popularity END END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFiltered AS TBM JOIN ActiveIndexes ON TB3T.index_id = ActiveIndexes.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN FrequencyOverrideIsActive ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN 0 ELSE ActiveIndexes.current_sorting_order END, TBM.match_type, TBM.match_column, finalPopularity DESC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN ActiveIndexes.current_sorting_order ELSE 0 END, TBM.rank, LENGTH(matchedText) LIMIT ?8 OFFSET ?9',
+      'WITH SearchTerms (input_index, term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (SELECT "key" AS input_index, CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), CAST(json_extract(value, \'\$[3]\') AS TEXT), CAST(json_extract(value, \'\$[4]\') AS TEXT), CASE WHEN CAST(json_extract(value, \'\$[2]\') AS INTEGER) = 1 THEN \'^\' ELSE \'\' END || \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), ActiveIndexes (id, current_sorting_order, enabled, frequency_mode) AS (SELECT id, current_sorting_order, enabled, frequency_mode FROM index_table WHERE(?2 IS NOT NULL AND id IN (SELECT index_id FROM IndexesToInclude))OR(?2 IS NULL AND enabled = 1)), SearchResults AS (SELECT SearchTerms.input_index AS input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH fts_query WHERE ?3 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))UNION ALL SELECT SearchTerms.input_index AS input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?3 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, rank ASC, LENGTH(text_data) ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), SearchParameterCheck AS (SELECT term_bank_v3_table.id AS term_bank_id FROM term_bank_v3_table WHERE(?5 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM search_fts WHERE source_id = term_bank_v3_table.term_id AND data_type_id IN (1, 2, 3, 4) AND text_data MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\'))AND(?6 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM search_fts WHERE source_id = term_bank_v3_table.reading_id AND data_type_id IN (5, 6) AND text_data MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN search_fts AS def_fts ON link.definition_id = def_fts.source_id WHERE link.term_bank_id = term_bank_v3_table.id AND def_fts.data_type_id = 7 AND def_fts.text_data MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id), TermBankMatchesFiltered AS (SELECT TBM.* FROM TermBankMatches AS TBM JOIN SearchParameterCheck ON SearchParameterCheck.term_bank_id = TBM.term_bank_id WHERE(TBM.allowed_tags IS NULL OR json_array_length(TBM.allowed_tags) = 0 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN json_each(TBM.allowed_tags)AS AllowedTag ON TagTable.name = AllowedTag.value WHERE LinkTable.term_bank_id = TBM.term_bank_id))AND(TBM.allowed_rules IS NULL OR json_array_length(TBM.allowed_rules) = 0 OR EXISTS (SELECT 1 AS _c4 FROM term_bank_v3_x_rule_identifier_table AS RuleLink JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id JOIN json_each(TBM.allowed_rules)AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value WHERE RuleLink.term_bank_id = TBM.term_bank_id))), FrequencyOverrideIsActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.*, IT.frequency_mode AS op_frequency_mode FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, ActiveIndexes.id AS indexId, ActiveIndexes.current_sorting_order, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN CASE WHEN OP.op_frequency_mode = \'rankBased\' THEN(OP.freq_value * -1)ELSE OP.freq_value END ELSE CASE WHEN ActiveIndexes.frequency_mode = \'rankBased\' THEN(TB3T.popularity * -1)ELSE TB3T.popularity END END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFiltered AS TBM JOIN ActiveIndexes ON TB3T.index_id = ActiveIndexes.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN FrequencyOverrideIsActive ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY TBM.input_index ASC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN 0 ELSE ActiveIndexes.current_sorting_order END, TBM.match_type, TBM.match_column, finalPopularity DESC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN ActiveIndexes.current_sorting_order ELSE 0 END, TBM.rank, LENGTH(matchedText) LIMIT ?8 OFFSET ?9',
       variables: [
         Variable<String>(searchInputs),
         Variable<String>(indexesToInclude),
@@ -40347,6 +40395,7 @@ typedef $$SearchProfilesTableTableCreateCompanionBuilder =
       Value<int> id,
       Value<String> name,
       Value<bool> isActiveProfile,
+      required int sortOrder,
       required List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,
       required List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,
       Value<bool> normalizeSearchConvertsRomajiToHiragana,
@@ -40366,6 +40415,7 @@ typedef $$SearchProfilesTableTableUpdateCompanionBuilder =
       Value<int> id,
       Value<String> name,
       Value<bool> isActiveProfile,
+      Value<int> sortOrder,
       Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>> firstSortOrder,
       Value<List<(DakanjiDbSearchResult2ndSortOrder, bool)>> secondSortOrder,
       Value<bool> normalizeSearchConvertsRomajiToHiragana,
@@ -40402,6 +40452,11 @@ class $$SearchProfilesTableTableFilterComposer
 
   ColumnFilters<bool> get isActiveProfile => $composableBuilder(
     column: $table.isActiveProfile,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -40508,6 +40563,11 @@ class $$SearchProfilesTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get firstSortOrder => $composableBuilder(
     column: $table.firstSortOrder,
     builder: (column) => ColumnOrderings(column),
@@ -40596,6 +40656,9 @@ class $$SearchProfilesTableTableAnnotationComposer
     column: $table.isActiveProfile,
     builder: (column) => column,
   );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<
     List<(DakanjiDbSearchResult1stSortOrder, bool)>,
@@ -40719,6 +40782,7 @@ class $$SearchProfilesTableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<bool> isActiveProfile = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
                 Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>>
                     firstSortOrder =
                     const Value.absent(),
@@ -40743,6 +40807,7 @@ class $$SearchProfilesTableTableTableManager
                 id: id,
                 name: name,
                 isActiveProfile: isActiveProfile,
+                sortOrder: sortOrder,
                 firstSortOrder: firstSortOrder,
                 secondSortOrder: secondSortOrder,
                 normalizeSearchConvertsRomajiToHiragana:
@@ -40765,6 +40830,7 @@ class $$SearchProfilesTableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<bool> isActiveProfile = const Value.absent(),
+                required int sortOrder,
                 required List<(DakanjiDbSearchResult1stSortOrder, bool)>
                 firstSortOrder,
                 required List<(DakanjiDbSearchResult2ndSortOrder, bool)>
@@ -40787,6 +40853,7 @@ class $$SearchProfilesTableTableTableManager
                 id: id,
                 name: name,
                 isActiveProfile: isActiveProfile,
+                sortOrder: sortOrder,
                 firstSortOrder: firstSortOrder,
                 secondSortOrder: secondSortOrder,
                 normalizeSearchConvertsRomajiToHiragana:

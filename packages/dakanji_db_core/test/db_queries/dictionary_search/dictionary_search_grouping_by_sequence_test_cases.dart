@@ -19,7 +19,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
         targetDictIds: {1, 2, 3, 4, 5}
       ),
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(
@@ -52,7 +52,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
           ),
         ]
       ]
-    ),
+    )],
   ),
 
   // ---------------------------------------------------------------------------
@@ -68,7 +68,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
         targetDictIds: {2, 3} // Dict 2 (Index 1), Dict 3 (Index 3) - Seq 803
       ),
     ],
-    queryMatches: ExpectedMatchGroup(
+    queryMatches: [ExpectedMatchGroup(
       exactMatches: [
         [
           // 1. The Source Match (Root) from Dict 1 (Index 2)
@@ -103,7 +103,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
           )
         ],
       ],
-    ),
+    )],
   ),
 
   // ---------------------------------------------------------------------------
@@ -120,7 +120,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
         targetDictIds: {1} // Only Dict 2 (Index 1). Dict 3 (Index 3) is excluded.
       ),
     ],
-    queryMatches: ExpectedMatchGroup(
+    queryMatches: [ExpectedMatchGroup(
       exactMatches: [
         // GROUP 1: The Merged Sequence Group (Source + Allowed Target)
         [
@@ -152,7 +152,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
           ),
         ]
       ],
-    ),
+    )],
   ),
 
   // ---------------------------------------------------------------------------
@@ -168,7 +168,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
         targetDictIds: {1} // Dict 2 (Index 1) - Seq 998
       ),
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         // Group 1: Source Dictionary Match (Dict 1 - Seq 999)
         [
@@ -210,7 +210,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
 
   // ---------------------------------------------------------------------------
@@ -225,7 +225,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
         targetDictIds: {4} // Dict 4 (Index 4) - Seq 998
       ),
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(
@@ -260,7 +260,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
 
   // ---------------------------------------------------------------------------
@@ -275,7 +275,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
         targetDictIds: {4} // Dict 4 (Index 4) - Seq 803
       ),
     ],
-    queryMatches: ExpectedMatchGroup(
+    queryMatches: [ExpectedMatchGroup(
       exactMatches: [
         [
           ExpectedDictionaryMatch(
@@ -311,7 +311,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
           ),
         ]
       ],
-    ),
+    )],
   ),
 
   // ---------------------------------------------------------------------------
@@ -326,7 +326,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
         targetDictIds: {3, 4, 5} // Dict 4 (Index 4) & 5 (Index 5) have it
       ),
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         // Match from Dict 3 (Index 3)
         [
@@ -356,7 +356,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
           ),
         ],
       ], 
-    ),
+    ),]
   ),
 
   // ---------------------------------------------------------------------------
@@ -376,7 +376,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
         targetDictIds: {}
       ),
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       prefixMatches: [
         // Rank 1: 食べる (Freq 100)
         [
@@ -415,7 +415,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
   // ---------------------------------------------------------------------------
   // TEST 9: Sequence Grouping Restriction (Excluded source Dictionary when not in target list)
@@ -432,7 +432,7 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
         targetDictIds: {4} // Only Dict 4 (Index 4) is allowed to join. Dict 5 is excluded.
       ),
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         // GROUP 1: The Valid Sequence Group
         // Dict 3 establishes the group. Dict 4 is on the allow-list, so it merges.
@@ -461,6 +461,6 @@ List<DictionarySearchTestCase> groupBySequenceTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
 ];

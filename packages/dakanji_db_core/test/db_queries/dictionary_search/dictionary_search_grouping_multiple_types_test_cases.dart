@@ -18,7 +18,7 @@ List<DictionarySearchTestCase> groupByMultipleTypesTests = [
       TermGroupingRule({2, 4}), // ID 2 (Bank 1: suigyouza) + ID 4 (Bank 4: mizugyouza)
       TermAndReadingGroupingRule({1, 3}), // ID 1 (Bank 2: suigyouza) + ID 3 (Bank 3: suigyouza)
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         // Group 1: Term+Reading Rule (ID 1 & 3) - Merged strictly
         [
@@ -51,7 +51,7 @@ List<DictionarySearchTestCase> groupByMultipleTypesTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
 
   // ---------------------------------------------------------------------------
@@ -70,7 +70,7 @@ List<DictionarySearchTestCase> groupByMultipleTypesTests = [
         targetDictIds: {2} // ID 2 (Bank 1) '生餃子' (Seq 803)
       )
     ],
-    queryMatches: ExpectedMatchGroup(
+    queryMatches: [ExpectedMatchGroup(
       exactMatches: [
         // Group 1: Sequence Group (ID 3 + ID 2)
         // ID 3 is the query match, ID 2 is the sequence match
@@ -105,7 +105,7 @@ List<DictionarySearchTestCase> groupByMultipleTypesTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
 
   // ---------------------------------------------------------------------------
@@ -124,7 +124,7 @@ List<DictionarySearchTestCase> groupByMultipleTypesTests = [
         targetDictIds: {4} // ID 4 (Bank 4) Seq 998
       )
     ],
-    queryMatches: const ExpectedMatchGroup(
+    queryMatches: [const ExpectedMatchGroup(
       exactMatches: [
         // Group 1: Sequence Group (ID 1 + ID 4)
         // Merges despite ID 4 having a different reading ('mizugyouza') 
@@ -159,6 +159,6 @@ List<DictionarySearchTestCase> groupByMultipleTypesTests = [
           ),
         ],
       ],
-    ),
+    )],
   ),
 ];

@@ -2,43 +2,52 @@ import 'dart:convert';
 
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_context.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
-import 'package:fullwidth_halfwidth_converter/fullwidth_halfwidth_converter.dart';
-import 'package:language_processing/japanese/conjugation/yomitan_deconjugate.dart';
 import 'package:language_processing/japanese/japanese_string_operations.dart';
+import 'package:language_processing/language_processor.dart';
+import 'package:language_processing/language_processor_options.dart';
+import 'package:language_processing/util/deconjugation_result.dart';
 
 /// Parses special argument syntax from raw input strings.
 /// 
 /// The expected format is:
 /// `?t=termFilter&r=readingFilter&d=definitionFilter #tag1 #tag2`
+/// OR
+/// `?q=query1&q=query2`
 /// 
-/// Returns a tuple containing the extracted filters:
-/// - termFilter: Filter for terms (nullable)
-/// - readingFilter: Filter for readings (nullable)
-/// - definitionFilter: Filter for definitions (nullable)
-/// 
-/// If the input does not match the expected format, returns null.
+/// Returns:
+/// - searchQueries: List of terms to search for (from 'q')
+/// - termFilter: Filter for terms (from 't') - DOES NOT SEARCH, ONLY FILTERS
+/// - readingFilter: Filter for readings (from 'r')
+/// - definitionFilter: Filter for definitions (from 'd')
 ({
-  String? term,
-  String? reading,
-  String? definition,
-})? argumentParser(String raw) {
+  List<String>? searchQueries,
+  ({
+    String? termFilter,
+    String? readingFilter,
+    String? definitionFilter,
+  })? filters
+})
+argumentParser(String raw) {
   
-  // Structured command mode (e.g. "?t=word")
   if (raw.startsWith("?")) {
+    // We prepend "x:" to make it a valid URI so we can parse the query part.
+    // Dart's Uri parser handles decoding (e.g. %20 -> space) automatically.
     final uri = Uri.tryParse("x:$raw");
-    if (uri != null) {
+    
+    if (uri != null && uri.queryParameters.isNotEmpty) {
       return (
-        term: uri.queryParameters['t'],
-        reading: uri.queryParameters['r'],
-        definition: uri.queryParameters['d'],
+        searchQueries: uri.queryParametersAll['q'],
+        filters: (
+          termFilter: uri.queryParameters['t'],
+          readingFilter: uri.queryParameters['r'],
+          definitionFilter: uri.queryParameters['d'],
+        )
       );
     }
   }
 
-  // Return empty structure if nothing found
-  return (term: null, reading: null, definition: null);
+  return (searchQueries: null, filters: null);
 }
-
 /// Extracts #tags and $pos using Regex and returns the list of tags and the cleaned
 /// string.
 ({List<String> tags, List<String> pos, String cleanedQuery}) extractTagsAndPos(String raw) {
@@ -80,6 +89,40 @@ import 'package:language_processing/japanese/japanese_string_operations.dart';
 }
 
 
+/// Preprocesses the input terms for searching.
+/// Standardize full-width / half-width
+///   * For kana everything is converted to full-width
+///   * For romaji everything is converted to half-width
+/// and optionally converts romaji to hiragana (if `convertRomajiToHiragana` is
+/// true).
+/// 
+/// Returns
+/// - `normalizedTerms`: All possible normalized terms
+/// - `deconjugatedTerms`: A list of found deconjugations of the input term
+List<({List<String> normalizedTerms, List<DeconjugationResult> termVariants})> 
+  normalizeAndDeconjugate(
+    List<String> searchTerms,
+    LanguageProcessor processor,
+    ProcessorOptions options
+  ) {
+
+  // Get Normalized Terms
+  final normalized = processor.normalizeAll(searchTerms, options);
+
+  // Prepare Targets for Deconjugation
+  final targets = {...searchTerms, ...normalized}.toList();
+
+  // Get Deconjugated Variants
+  final variants = processor.deconjugateAll(targets);
+
+  return [
+    (
+      normalizedTerms: normalized,
+      termVariants: variants
+    )
+  ];
+}
+
 /// Constructs the JSON string for dictionary search.
 /// 
 /// [searchInputs]: List of `[term, mode]`. Example: `[['eat', 0], ['eating', 0]]`
@@ -109,53 +152,6 @@ String buildSearchInputJson({
   return jsonEncode(mergedList);
 }
 
-/// Preprocesses the input term for searching.
-/// Standardize full-width / half-width
-///   * For kana everything is converted to full-width
-///   * For romaji everything is converted to half-width
-/// and optionally converts romaji to hiragana (if `convertRomajiToHiragana` is
-/// true).
-/// 
-/// Returns
-/// - `normalizedTerms`: All possible normalized terms
-/// - `deconjugatedTerms`: A list of found deconjugations of the input term
-({List<String> normalizedTerms, List<DeconjugationResult> termVariants}) 
-  preprocessInput(String searchTerm, bool convertRomajiToHiragana) {
-
-  if(searchTerm == "") return (normalizedTerms: [], termVariants: []);
-
-  // convert full-width romaji to half-width and half-width kana to full-width
-  String widthNormalizedTerm = searchTerm.toFullwidth(convertKana: true);
-  widthNormalizedTerm = widthNormalizedTerm.toHalfwidth(
-    convertAlphabet: true, convertNumber: true, convertSymbol: true);
-
-  // convert all kana to hiragana
-  // optionally: convet romaji to hiragana if romaji are converted multiple
-  //             hiragana terms may be returned
-  List<String> normalizedTerms = katakanaToHiragana(widthNormalizedTerm, convertRomajiToHiragana);
-
-  // find all possible deconjugations of the terms
-  Iterable<String>? deconjugate = {searchTerm, ...normalizedTerms}.toList();
-  
-  List<DeconjugationResult> termVariants = [];
-  for (String d in deconjugate) {
-    JapaneseDeconjugator deconjugator = JapaneseDeconjugator();
-    termVariants.addAll(
-      deconjugator.deconjugate(d)
-        .where((e) =>
-          e.deconjugatedTerm != d // filter out the input term itself
-          && e.deconjugatedTerm != widthNormalizedTerm // filter out the hiragana term if applicable
-          && e.deconjugatedTerm != searchTerm // filter out the original search term
-        )
-    );
-  }
-
-  return (
-    normalizedTerms: normalizedTerms,
-    termVariants: termVariants
-  );
-}
-
 /// Helper to print debug information
 void printDictionarySearchDebugInfo(
   DictionarySearchParams params,
@@ -163,7 +159,9 @@ void printDictionarySearchDebugInfo(
   Stopwatch s,
 ) {
     print("=== Dictionary Search Debug Info ===");
-    print("Input Term: ${params.query}");
+    print("Input: ${params.searchInput}");
+    print("Search Terms: ${ctx.searchTerms}");
+    print("Filter Params: ${ctx.filterParams}");
     print("Normalized Search: ${params.normalizedSearch}");
     print("Deconjugation Search: ${params.deconjugationSearch}");
     print("Spellfix Search: ${params.spellfixSearch}");
@@ -174,7 +172,6 @@ void printDictionarySearchDebugInfo(
     print("Indexes to Include: ${params.indexesToInclude}");
     print("Grouping Rules: ${params.groupingRules}");
     print("Tag Filters: ${ctx.tags}");
-    print("Filters: ${ctx.filterParams}");
     print("Search setup complete in ${s.elapsedMilliseconds}ms");
     print("====================================");
   }

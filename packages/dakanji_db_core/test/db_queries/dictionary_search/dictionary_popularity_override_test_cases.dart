@@ -49,7 +49,7 @@ List<DictionarySearchTestCase> popularityOverrideTestCases = [
     ''',
     query: "生",
     frequencyModeOverride: FrequencyMode.rankBased,
-    queryMatches: ExpectedMatchGroup(
+    queryMatches: [ExpectedMatchGroup(
       prefixMatches: [
         
         // --- 1. RANK 2 (Best Match) ------------------------------------------
@@ -99,7 +99,7 @@ List<DictionarySearchTestCase> popularityOverrideTestCases = [
           definitions: ['draft beer; draught beer'],
         )],
       ],
-    ),
+    ),]
   ),
 
   // ---------------------------------------------------------------------------
@@ -122,7 +122,7 @@ List<DictionarySearchTestCase> popularityOverrideTestCases = [
     ''',
     query: "生",
     frequencyModeOverride: FrequencyMode.occurrenceBased,
-    queryMatches: ExpectedMatchGroup(
+    queryMatches: [ExpectedMatchGroup(
       prefixMatches: [
         
         // --- 1. FREQ 3 (Best Match) ------------------------------------------
@@ -172,6 +172,6 @@ List<DictionarySearchTestCase> popularityOverrideTestCases = [
           definitions: ['draft beer; draught beer'],
         )],
       ],
-    ),
+    ),]
   ),
 ];
