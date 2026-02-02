@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
+import '../../dictionary_test_variables.dart';
 import '../../test_utils/db_files.dart';
 import '../../test_utils/ignore_database_generated_data.dart';
 import 'kanji_dictionary_search_test_cases.dart';
@@ -77,7 +78,8 @@ Future<DaKanjiDB> setupFreshDB() async {
 
   // create the testing database (delete any existing database)
   if (File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
 
   final mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
@@ -89,7 +91,6 @@ Future<DaKanjiDB> setupFreshDB() async {
     dataSourcePath: dataSourceZipPath,
     db: db,
     addStructuredContentJsonDefs: false,
-    mecab: mecab,
     isDefaultDictionary: false
   );
   await for (var line in progress) {

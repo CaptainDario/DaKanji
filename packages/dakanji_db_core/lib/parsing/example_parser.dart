@@ -11,7 +11,7 @@ import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:language_processing/language_processor.dart';
 
 import '/database/dakanji_db.dart';
 import '/parsing/example/example_sentence_parser.dart';
@@ -21,7 +21,6 @@ Future<Stream<String>> parseExampleDataSource(
   {
     required String examplesZipPath,
     required  DaKanjiDB db,
-    required Mecab mecab,
     required bool isDefaultDictionary
   }
 ) async {
@@ -31,8 +30,6 @@ Future<Stream<String>> parseExampleDataSource(
 
   /// get parameters for isolate and spawn it
   final connection = await db.attachedDatabase.serializableConnection();
-  String libmecabPath = mecab.libmecabPath!;
-  String mecabDicPath = mecab.mecabDictDirPath!;
 
   // setup isolate communication
   ReceivePort receivePort = ReceivePort();
@@ -48,8 +45,7 @@ Future<Stream<String>> parseExampleDataSource(
   await Isolate.spawn(_parseExampleDataSource, (
     examplesZipPath: examplesZipPath,
     dbConnection: connection,
-    libmecabPath: libmecabPath,
-    mecabDictDir: mecabDicPath,
+    languageProcessorJson: db.languageProcessor.toJsonString(),
     mainIsolateSendPort: receivePort.sendPort,
     inMemory: db.inMemory,
     isDefaultDictionary: isDefaultDictionary
@@ -63,8 +59,7 @@ Future<Stream<String>> parseExampleDataSource(
 Future _parseExampleDataSource(({
   String examplesZipPath,
   DriftIsolate dbConnection,
-  String libmecabPath,
-  String mecabDictDir,
+  String languageProcessorJson,
   SendPort mainIsolateSendPort,
   bool inMemory,
   bool isDefaultDictionary
@@ -72,10 +67,9 @@ Future _parseExampleDataSource(({
 
   final db = DaKanjiDB(
     executor: await params.dbConnection.connect(),
-    inMemory: params.inMemory
+    inMemory: params.inMemory,
+    languageProcessor: LanguageProcessor.fromJsonString(params.languageProcessorJson)
   );
-  final mecab = Mecab();
-  await mecab.init(params.libmecabPath, params.mecabDictDir, true);
 
   try {
     Iterable<({String filePath, Uint8List fileContent})> dataSources =
@@ -99,13 +93,13 @@ Future _parseExampleDataSource(({
       params.mainIsolateSendPort.send("Parsing ${data.filePath} ($progressCounter/${dataSources.length}) ...");
 
       if(data.filePath.endsWith(".txt")) {
-        await parseExampleText(utf8.decode(data.fileContent), db, mecab, indexId);
+        await parseExampleText(utf8.decode(data.fileContent), db, indexId);
       }
       else if(data.filePath.endsWith(".json")) {
         currentSentencesBuffer.add(utf8.decode(data.fileContent));
         if(currentSentencesBuffer.length >= exampleSentenceChunkSize ||
           progressCounter == dataSources.length) {
-          await parseExampleSentences(currentSentencesBuffer, db, mecab, indexId, context);
+          await parseExampleSentences(currentSentencesBuffer, db, indexId, context);
           currentSentencesBuffer = [];
         }
       }
@@ -120,7 +114,7 @@ Future _parseExampleDataSource(({
     params.mainIsolateSendPort.send(e);
   }
 
-  mecab.destroy();
+  db.languageProcessor.close();
 
   // close isolate communication
   params.mainIsolateSendPort.send(null);

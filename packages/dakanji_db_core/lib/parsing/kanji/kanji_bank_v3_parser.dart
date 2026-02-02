@@ -1,8 +1,8 @@
 // Dart imports:
 import 'dart:convert';
 
-import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
 import 'package:drift/drift.dart';
+import 'package:language_processing/language_processor_options.dart';
 import 'package:universal_io/io.dart';
 
 import '/database/dakanji_db.dart';
@@ -115,7 +115,7 @@ Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserContext pC, DaKanji
         onyomiInsertId = ++pC.maxReadingId;
         pC.readingsInDB[onyomi] = onyomiInsertId;
 
-        String? onyomiNormalized = preprocessInput(onyomi, false).normalizedTerms.firstOrNull;
+        String? onyomiNormalized = db.languageProcessor.normalize(onyomi, ProcessorOptions()).firstOrNull;
         pC.readingCompanions.add(ReadingTableCompanion(
           id: Value(onyomiInsertId),
           reading: Value(onyomi),
@@ -151,7 +151,7 @@ Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserContext pC, DaKan
         kunyomiInsertId = ++pC.maxReadingId;
         pC.readingsInDB[kunyomi] = kunyomiInsertId;
 
-        String? kunyomiNormalized = preprocessInput(kunyomi, false).normalizedTerms.firstOrNull;
+        String? kunyomiNormalized = db.languageProcessor.normalize(kunyomi, ProcessorOptions()).firstOrNull;
         pC.readingCompanions.add(ReadingTableCompanion(
           id: Value(kunyomiInsertId),
           reading: Value(kunyomi),

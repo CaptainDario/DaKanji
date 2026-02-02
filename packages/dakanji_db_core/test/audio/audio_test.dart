@@ -7,6 +7,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
+import '../dictionary_test_variables.dart';
 import '../test_utils/db_files.dart';
 import 'audio_entries_format_test_cases.dart';
 import 'audio_file_name_format_test_cases.dart';
@@ -88,7 +89,8 @@ Future<DaKanjiDB> setupFreshDB(
 
   // create the testing database (delete any existing database)
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
 
   Mecab mecab = Mecab();
   await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
@@ -100,7 +102,6 @@ Future<DaKanjiDB> setupFreshDB(
   Stream importProgress = await parseAudioDataSource(
     audioDataSourceFile: dataSourceZipPath,
     db: db,
-    mecab: mecab,
     isDefaultDictionary: isDefaultDictionary
   );
   await for (final event in importProgress) {

@@ -1,14 +1,12 @@
 // Dart imports:
 import 'dart:convert';
 
-import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
 import 'package:dakanji_db_core/parsing/term/definition_parser.dart';
 import 'package:dakanji_db_core/parsing/term/definition_parsing_classes.dart';
 import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_context.dart';
-import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:language_processing/language_processor_options.dart';
 import 'package:universal_io/io.dart';
 
 import '/database/dakanji_db.dart';
@@ -23,11 +21,10 @@ Future parseTermBankV3File(
   TermBankV3ParserContext pC,
   DaKanjiDB db,
   int dictId,
-  bool addFullJsonDefinitions,
-  Mecab mecab) async {
+  bool addFullJsonDefinitions) async {
 
   String termMetaBankJson = termMetaBankFile.readAsStringSync();
-  await parseTermBankV3(termMetaBankJson, pC, db, dictId, addFullJsonDefinitions, mecab);
+  await parseTermBankV3(termMetaBankJson, pC, db, dictId, addFullJsonDefinitions);
 
 }
 
@@ -37,8 +34,7 @@ Future parseTermBankV3(
   TermBankV3ParserContext pC,
   DaKanjiDB db,
   int indexId,
-  bool addFullJsonDefinitions,
-  Mecab mecab) async {
+  bool addFullJsonDefinitions) async {
 
   // decode json
   Stopwatch s = Stopwatch()..start();
@@ -72,13 +68,13 @@ Future parseTermBankV3(
     if(pC.allTerms[term] == null){
       pC.allTerms[term] = termInsertId;
 
-      String? termNormalized = preprocessInput(term, false).normalizedTerms.firstOrNull;
+      String? termNormalized = db.languageProcessor.normalize(term, ProcessorOptions()).firstOrNull;
       String? termTokens = term.isNotEmpty && k.isJapanese(term)
-        ? getMecabSurfacesOrNull(mecab, term)
+        ? db.languageProcessor.segment(term)
         : null;
       String? termTokensNormalized = termTokens==null
         ? null
-        : preprocessInput(termTokens, false).normalizedTerms.firstOrNull;
+        : db.languageProcessor.normalize(termTokens, ProcessorOptions()).firstOrNull;
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
         term: Value(term),
@@ -99,7 +95,7 @@ Future parseTermBankV3(
     if(pC.allReadings[jsonEntry[1]] == null){
       pC.allReadings[jsonEntry[1]] = readingInsertId;
 
-      String? readingNormalized = preprocessInput(jsonEntry[1], false).normalizedTerms.firstOrNull;
+      String? readingNormalized = db.languageProcessor.normalize(jsonEntry[1], ProcessorOptions()).firstOrNull;
       readingComps.add(ReadingTableCompanion(
         id: Value(readingInsertId),
         reading: Value(jsonEntry[1]),

@@ -1,15 +1,17 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:universal_io/io.dart';
+
+import '../dictionary_test_variables.dart';
 
 
 
 void main() async {
 
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: false);
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
 
   Stopwatch s = Stopwatch()..start();
 
@@ -17,7 +19,6 @@ void main() async {
     dataSourcePath: jmdictInputPath,
     db: db,
     addStructuredContentJsonDefs: false,
-    mecab: Mecab()..init(mecabDynamicLibPath, mecabDicPath, true),
     isDefaultDictionary: false,
   );
   await for (final String progressMessage in progressStream) {

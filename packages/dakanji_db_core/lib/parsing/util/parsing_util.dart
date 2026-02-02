@@ -3,22 +3,10 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
 
-
-/// Parses the given `term` using `mecab` and returns the mecab surfaces
-/// separated by a space if the `surfaces != tokens` else null
-String? getMecabSurfacesOrNull(Mecab mecab, String term) {
-
-  List<String> tokens = mecab.parse(term).map((e) => e.surface).toList();
-  tokens = tokens.sublist(0, tokens.length-1);
-  String joinedTokens = tokens.join(" ");
-  return joinedTokens == term ? null : joinedTokens;
-
-}
 
 /// Read a .tar.bz2 file and **streams** the content of the first file line by
 /// line

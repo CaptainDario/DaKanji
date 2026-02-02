@@ -15,7 +15,7 @@ import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/import_context.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/isolate.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:language_processing/language_processor.dart';
 import 'package:path/path.dart' as p;
 
 import '/database/dakanji_db.dart';
@@ -57,7 +57,6 @@ Future<Stream<String>> parseDictionaryDataSource({
   required bool isDefaultDictionary,
   required DaKanjiDB db,
   required bool addStructuredContentJsonDefs,
-  required Mecab mecab,
 }) async {
 
   assert(dataSourcePath != null);
@@ -67,8 +66,6 @@ Future<Stream<String>> parseDictionaryDataSource({
 
   /// get parameters for isolate and spawn it
   final connection = await db.attachedDatabase.serializableConnection();
-  String libmecabPath = mecab.libmecabPath!;
-  String mecabDicPath = mecab.mecabDictDirPath!;
 
   // setup isolate communication
   ReceivePort receivePort = ReceivePort();
@@ -87,8 +84,7 @@ Future<Stream<String>> parseDictionaryDataSource({
     archiveBytes: archiveBytes,
     dbConnection: connection,
     addFullJsonDefinitions: addStructuredContentJsonDefs,
-    libmecabPath: libmecabPath,
-    mecabDictDir: mecabDicPath,
+    languageProcessorJson: db.languageProcessor.toJsonString(),
     mainIsolateSendPort: receivePort.sendPort,
     inMemory: inMemory,
     isDefaultDictionary: isDefaultDictionary
@@ -105,8 +101,7 @@ Future _parseDictionaryDataSource(({
   Uint8List? archiveBytes,
   DriftIsolate dbConnection,
   bool addFullJsonDefinitions,
-  String libmecabPath,
-  String mecabDictDir,
+  String languageProcessorJson,
   SendPort mainIsolateSendPort,
   bool inMemory,
   bool isDefaultDictionary
@@ -114,10 +109,10 @@ Future _parseDictionaryDataSource(({
 
   final db = DaKanjiDB(
     executor: await params.dbConnection.connect(),
-    inMemory: params.inMemory
+    inMemory: params.inMemory,
+    languageProcessor: LanguageProcessor.fromJsonString(params.languageProcessorJson)
   );
-  final mecab = Mecab();
-  await mecab.init(params.libmecabPath, params.mecabDictDir, true);
+  await db.languageProcessor.init();
 
   try {
     Iterable<({String filePath, Uint8List fileContent})> dataSources = dakanjiDBDataSourceIterator(
@@ -175,7 +170,6 @@ Future _parseDictionaryDataSource(({
           db: db,
           ind: indexEntry,
           addFullJsonDefinitions: params.addFullJsonDefinitions,
-          mecab: mecab
         );
       }
       if(filesToInsert.length >= 50 || (progressCounter == noEntries && filesToInsert.isNotEmpty)) {
@@ -191,8 +185,7 @@ Future _parseDictionaryDataSource(({
     params.mainIsolateSendPort.send(null);
   }
 
-  // close mecab
-  mecab.destroy();
+  db.languageProcessor.close();
 
   // close isolate communication
   params.mainIsolateSendPort.send(null);
@@ -234,7 +227,6 @@ Future parseDictionaryFile({
   required DaKanjiDB db,
   required IndexTableData ind,
   required bool addFullJsonDefinitions,
-  required Mecab mecab
 }) async {
   
   // create config to pass the different arguments to the functions
@@ -243,8 +235,8 @@ Future parseDictionaryFile({
     kanjiMetaBankFileNamingScheme: () => parseKanjiMetaBankV3(fileContent, importContext as KanjiMetaBankV3ParserContext, db, ind.id),
     kanjiBankFileNamingScheme: () => parseKanjiBankV3(fileContent, importContext as KanjiBankV3ParserContext, db, ind.id),
     tagBankFileNamingScheme: () => parseTagBankv3(fileContent, db, ind.id),
-    termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, importContext as TermMetaBankV3ParserContext, db, ind.id, mecab),
-    termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext as TermBankV3ParserContext, db, ind.id, addFullJsonDefinitions, mecab),
+    termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, importContext as TermMetaBankV3ParserContext, db, ind.id),
+    termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext as TermBankV3ParserContext, db, ind.id, addFullJsonDefinitions),
   };
 
   final baseName = p.basename(filePath);

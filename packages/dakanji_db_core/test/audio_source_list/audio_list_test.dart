@@ -6,12 +6,14 @@ import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
+import '../dictionary_test_variables.dart';
 import 'audio_list_test_cases.dart';
 
 void main() async {
   
   // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
   db.clearDB();
 
   // convert the test files

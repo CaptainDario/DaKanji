@@ -4,7 +4,6 @@ import 'dart:isolate';
 
 import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_data_source_formats.dart';
 import 'package:dakanji_db_core/parsing/audio/audio_parser_context.dart';
 import 'package:dakanji_db_core/parsing/index/index_parser.dart';
@@ -13,7 +12,8 @@ import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:language_processing/language_processor.dart';
+import 'package:language_processing/language_processor_options.dart';
 import 'package:path/path.dart' as p;
 
 
@@ -24,7 +24,6 @@ Future parseAudioDataSource({
   Uint8List? audioDataSourceBytes,
   required bool isDefaultDictionary,
   required DaKanjiDB db,
-  required Mecab mecab
   }) async {
 
   assert((audioDataSourceFile != null) ^ (audioDataSourceBytes != null));
@@ -34,8 +33,6 @@ Future parseAudioDataSource({
 
   /// get parameters for isolate and spawn it
   final connection = await db.attachedDatabase.serializableConnection();
-  String libmecabPath = mecab.libmecabPath!;
-  String mecabDicPath = mecab.mecabDictDirPath!;
 
   // setup isolate communication
   ReceivePort receivePort = ReceivePort();
@@ -52,8 +49,7 @@ Future parseAudioDataSource({
     audioDataSourceFile: audioDataSourceFile,
     audioDataSourceBytes: audioDataSourceBytes,
     dbConnection: connection,
-    libmecabPath: libmecabPath,
-    mecabDictDir: mecabDicPath,
+    processor: db.languageProcessor,
     mainIsolateSendPort: receivePort.sendPort,
     isDefaultDictionary: isDefaultDictionary,
     inMemory: db.inMemory,
@@ -69,8 +65,7 @@ Future _parseAudioDataSource(({
   String? audioDataSourceFile,
   Uint8List? audioDataSourceBytes,
   DriftIsolate dbConnection,
-  String libmecabPath,
-  String mecabDictDir,
+  LanguageProcessor processor,
   SendPort mainIsolateSendPort,
   bool isDefaultDictionary,
   bool inMemory
@@ -78,10 +73,10 @@ Future _parseAudioDataSource(({
 
   final db = DaKanjiDB(
     executor: await params.dbConnection.connect(),
-    inMemory: params.inMemory
+    inMemory: params.inMemory,
+    languageProcessor: params.processor,
   );
-  final mecab = Mecab();
-  await mecab.init(params.libmecabPath, params.mecabDictDir, true);
+  await params.processor.init();
 
   // Read the neccessary data from the DB
   AudioParserContext aC = await AudioParserContext.create(db);
@@ -120,17 +115,17 @@ Future _parseAudioDataSource(({
     switch (format) {
       case AudioDataSourceFormats.filesNames:
         await parseAudioDataSourceFileNameFormat(
-          dataSources, db, indexId, aC, mecab, params.mainIsolateSendPort);
+          dataSources, db, indexId, aC, params.processor, params.mainIsolateSendPort);
         break;
       case AudioDataSourceFormats.indexJson:
         String jsonString = utf8.decode(dataSources.first.fileContent);
         await parseAudioDataSourceIndexFormat(
-          dataSources.skip(1), db, indexId, jsonString, aC, mecab, params.mainIsolateSendPort);
+          dataSources.skip(1), db, indexId, jsonString, aC, params.processor, params.mainIsolateSendPort);
         break;
       case AudioDataSourceFormats.entriesJson:
         String jsonString = utf8.decode(dataSources.first.fileContent);
         await parseAudioDataSourceEntriesFormat(
-          dataSources.skip(1), db, indexId, jsonString, aC, mecab, params.mainIsolateSendPort);
+          dataSources.skip(1), db, indexId, jsonString, aC, params.processor, params.mainIsolateSendPort);
         break;
     }
 
@@ -148,7 +143,7 @@ Future _parseAudioDataSource(({
     params.mainIsolateSendPort.send(e);
   }
   
-  mecab.destroy();
+  params.processor.close();
   params.mainIsolateSendPort.send(null);
 
 }
@@ -160,7 +155,7 @@ Future parseAudioDataSourceEntry(
   int indexId,
   DaKanjiDB db,
   AudioParserContext aC,
-  Mecab mecab
+  LanguageProcessor processor
 ) async {
 
   aC.currentMaxAudioId++;
@@ -170,11 +165,11 @@ Future parseAudioDataSourceEntry(
     if(termId == null){
       termId = ++aC.currentMaxTermId;
 
-      String? termNormalized = preprocessInput(term, false).normalizedTerms.firstOrNull;
-      String? termTokens = getMecabSurfacesOrNull(mecab, term);
+      String? termNormalized = processor.normalize(term, ProcessorOptions()).firstOrNull;
+      String? termTokens = processor.segment(term);
       String? termTokensNormalized = termTokens==null
         ? null
-        : preprocessInput(termTokens, false).normalizedTerms.firstOrNull;
+        :  processor.normalize(termTokens, ProcessorOptions()).firstOrNull;
       aC.termComps.add(TermTableCompanion(
         id: Value(termId),
         term: Value(term),
@@ -202,7 +197,7 @@ Future parseAudioDataSourceEntry(
     if(readingId == null) {
       readingId = ++aC.currentMaxReadingId;
 
-      String? readingNormalized = preprocessInput(reading, false).normalizedTerms.firstOrNull;
+      String? readingNormalized =  processor.normalize(reading, ProcessorOptions()).firstOrNull;
       aC.readingComps.add(ReadingTableCompanion(
         id: Value(readingId),
         reading: Value(reading),
@@ -230,7 +225,7 @@ Future parseAudioDataSourceFileNameFormat(
   DaKanjiDB db,
   int indexId,
   AudioParserContext aC,
-  Mecab mecab,
+  LanguageProcessor processor,
   SendPort mainIsolate
 ) async {
   final int noEntries = dataSources.length;
@@ -265,7 +260,7 @@ Future parseAudioDataSourceFileNameFormat(
 
     // Pass extracted data to the entry parser
     await parseAudioDataSourceEntry(
-      [term], reading, pitch, indexId, db, aC, mecab);
+      [term], reading, pitch, indexId, db, aC, processor);
 
     // if enough audios have been processed, import them into the DB
     if(i % noFilesToBatchInsert == 0 || i == noEntries) {
@@ -282,7 +277,7 @@ Future parseAudioDataSourceIndexFormat(
   int indexId,
   String jsonString,
   AudioParserContext aC,
-  Mecab mecab,
+  LanguageProcessor processor,
   SendPort mainIsolate
 ) async {
 
@@ -325,7 +320,7 @@ Future parseAudioDataSourceIndexFormat(
     String term = entry.term;
     String? reading = entry.reading;
     int? pitchPattern = entry.pitchPattern;
-    await parseAudioDataSourceEntry([term], reading, pitchPattern, indexId, db, aC, mecab);
+    await parseAudioDataSourceEntry([term], reading, pitchPattern, indexId, db, aC, processor);
 
     // if enough audios have been processed, import them into the DB
     if(i % noFilesToBatchInsert == 0 || i == noEntries) {
@@ -342,7 +337,7 @@ Future parseAudioDataSourceEntriesFormat(
   int indexId,
   String jsonString,
   AudioParserContext aC,
-  Mecab mecab,
+  LanguageProcessor processor,
   SendPort mainIsolate
 ) async {
 
@@ -378,7 +373,7 @@ Future parseAudioDataSourceEntriesFormat(
     final entry = fileData[filePath]!;
 
     await parseAudioDataSourceEntry(
-      entry.term, entry.reading, entry.pitchPattern, indexId, db, aC, mecab);
+      entry.term, entry.reading, entry.pitchPattern, indexId, db, aC, processor);
 
     // if enough audios have been processed, import them into the DB
     if(i % noFilesToBatchInsert == 0 || i == noEntries) {

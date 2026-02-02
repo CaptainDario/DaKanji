@@ -1,11 +1,9 @@
 // Dart imports:
 import 'dart:convert';
 
-import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_utils.dart';
 import 'package:dakanji_db_core/parsing/term_meta/term_meta_bank_v3_parser_context.dart';
-import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
+import 'package:language_processing/language_processor_options.dart';
 import 'package:universal_io/io.dart';
 
 import '/database/dakanji_db.dart';
@@ -16,11 +14,10 @@ Future parseTermMetaBankV3File(
   TermMetaBankV3ParserContext pC,
   DaKanjiDB db,
   int indexId,
-  Mecab mecab
 ) async {
 
   String termMetaBankJson = termMetaBankFile.readAsStringSync();
-  await parseTermMetaBankV3(termMetaBankJson, pC, db, indexId, mecab);
+  await parseTermMetaBankV3(termMetaBankJson, pC, db, indexId);
 
 }
 
@@ -30,7 +27,6 @@ Future parseTermMetaBankV3(
   TermMetaBankV3ParserContext pC,
   DaKanjiDB db,
   int indexId,
-  Mecab mecab
 ) async {
 
   // decode json
@@ -62,11 +58,11 @@ Future parseTermMetaBankV3(
     if(pC.allTerms[term] == null){
       pC.allTerms[term] = termInsertId;
 
-      String? termNormalized = preprocessInput(term, false).normalizedTerms.firstOrNull;
-      String? termTokens = getMecabSurfacesOrNull(mecab, term);
+      String? termNormalized = db.languageProcessor.normalize(term, ProcessorOptions()).firstOrNull;
+      String? termTokens = db.languageProcessor.segment(term);
       String? termTokensNormalized = termTokens==null
         ? null
-        : preprocessInput(termTokens, false).normalizedTerms.firstOrNull;
+        : db.languageProcessor.normalize(termTokens, ProcessorOptions()).firstOrNull;
       termComps.add(TermTableCompanion(
         id: Value(termInsertId),
         term: Value(term),
@@ -109,7 +105,7 @@ Future parseTermMetaBankV3(
         if(pC.allReadings[reading] == null){
           pC.allReadings[reading] = readingInsertId;
 
-          String? normalizedReading = preprocessInput(reading, false).normalizedTerms.firstOrNull;
+          String? normalizedReading = db.languageProcessor.normalize(reading, ProcessorOptions()).firstOrNull;
           readingComps.add(ReadingTableCompanion(
             id: Value(readingInsertId!),
             reading: Value(reading),

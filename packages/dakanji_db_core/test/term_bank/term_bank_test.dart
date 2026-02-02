@@ -8,6 +8,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
+import '../dictionary_test_variables.dart';
 import '../test_utils/db_files.dart';
 import '../test_utils/ignore_database_generated_data.dart';
 import 'term_bank_test_cases_1.dart';
@@ -74,7 +75,8 @@ void main() async {
 
 Future<DaKanjiDB> setupFreshDB(int testCaseIndex) async {
 
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
   db.clearDB();
 
   Mecab mecab = Mecab();

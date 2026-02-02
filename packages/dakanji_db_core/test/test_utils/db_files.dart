@@ -45,7 +45,6 @@ Future<void> partialInit(
     dataSourcePath: "${d.path}.zip",
     db: db,
     addStructuredContentJsonDefs: false,
-    mecab: mecab,
     isDefaultDictionary: isDefaultDictionary,
   );
   await for (final progress in parsingProgress) {

@@ -3,8 +3,16 @@ import 'package:dakanji_db_core/data/term_meta_entry_types.dart';
 import 'package:dakanji_db_core/database/index/index_table_entry.dart';
 import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
+import 'package:dakanji_db_shared/dakanji_db_shared.dart';
+import 'package:language_processing/japanese_processor.dart';
 
 
+
+JapaneseProcessor japaneseProcessor = JapaneseProcessor(
+    libMecabPath: mecabDynamicLibPath,
+    dicMecabPath: mecabDicPath,
+    mecabIncludeFeatures: true
+  );
 
 final namaGyouzaMeta = TermMetaBankV3Entry(
   id: 0,

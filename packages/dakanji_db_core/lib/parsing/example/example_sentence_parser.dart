@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:dakanji_db_core/parsing/example/example_parser_context.dart';
 import 'package:drift/drift.dart';
 import 'package:language_processing/iso/iso_table.dart';
-import 'package:language_processing/japanese/sentence_parsing.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
 
 import '/database/dakanji_db.dart';
 
@@ -13,8 +11,7 @@ import '/database/dakanji_db.dart';
 
 Future parseExampleSentences(
   List<String> exampleSentenceJsonString,
-  DaKanjiDB db, 
-  Mecab mecab,
+  DaKanjiDB db,
   int indexId,
   ExampleParserContext context
 ) async {
@@ -36,7 +33,7 @@ Future parseExampleSentences(
     String jap = example[Iso639_3.jpn.name]!;
 
     // Get tokens
-    String tokenized = await parseSentenceUsingMecab(jap, mecab);
+    String tokenized = db.languageProcessor.getReadings(jap);
 
     // create japanese
     exampleComps.add(ExampleTableCompanion(

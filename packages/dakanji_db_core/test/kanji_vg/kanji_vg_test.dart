@@ -5,6 +5,7 @@ import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:test/test.dart';
 
+import '../dictionary_test_variables.dart';
 import 'kanji_vg_test_cases.dart';
 
 void main() {
@@ -45,7 +46,8 @@ Future<DaKanjiDB> setupFreshDB() async {
   if (File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
 
   // setup 
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
 
   // convert kanjivg database
   Stopwatch s = Stopwatch()..start();

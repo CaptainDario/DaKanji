@@ -8,11 +8,13 @@ import 'package:dakanji_db_core/util/dakanji_db_search_manager.dart';
 import 'package:dakanji_db_ui/dakanji_db_ui.dart';
 import 'package:dakanji_db_ui/model/dakanji_db_localization.dart';
 import 'package:dakanji_db_ui/widgets/search_results/dictionary_search_result_widget.dart';
+import 'package:dakanji_db_ui/widgets/settings/search_profile_selector.dart';
 import 'package:dakanji_db_ui/widgets/settings/search_profile_settings_dialog.dart';
 import 'package:dakanji_db_ui_search_example/settings_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:language_processing/japanese_processor.dart';
 import 'package:provider/provider.dart';
 
 import 'globals.dart';
@@ -44,7 +46,11 @@ class _MyAppState extends State<MyApp> {
     final path = await copyDbFromAssetsToFS();
     
     localDbPath = path;
-    final daKanjiDB = DaKanjiDB(dbPath: localDbPath, inMemory: false);
+    final daKanjiDB = DaKanjiDB(
+      dbPath: localDbPath,
+      inMemory: false,
+      languageProcessor: JapaneseProcessor()
+    );
     GetIt.I.registerSingleton<DaKanjiDB>(daKanjiDB);
 
     // --- Initialize the Search Isolate ---
@@ -188,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
               if (searchController.text.isNotEmpty) {
                 searchManager.searchImmediate(
                   (await GetIt.I<DaKanjiDB>().searchProfilesDao.getActiveProfile())
-                    .toDictionarySearchParams(query: searchController.text),
+                    .toDictionarySearchParams(searchInput: searchController.text),
                   onResult: (result) {
                       if(mounted) setState(() => lastSearchResult = result);
                   }
@@ -222,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         // Delegate to Isolate
                         searchManager.search(
                           (await GetIt.I<DaKanjiDB>().searchProfilesDao.getActiveProfile())
-                            .toDictionarySearchParams(query: value,),
+                            .toDictionarySearchParams(searchInput: value,),
                           onResult: (result) {
                             if (!mounted) return;
                             setState(() {
@@ -253,7 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         // Use immediate search for dropdowns
                         searchManager.searchImmediate(
                           (await GetIt.I<DaKanjiDB>().searchProfilesDao.getActiveProfile())
-                            .toDictionarySearchParams(query: term),
+                            .toDictionarySearchParams(searchInput: term),
                           onResult: (result) {
                             if (!mounted) return;
                             setState(() {

@@ -5,6 +5,7 @@ import 'package:dakanji_db_shared/paths.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
+import '../dictionary_test_variables.dart';
 import 'radicals_test_cases.dart';
 
 void main() async {
@@ -57,7 +58,8 @@ Future<DaKanjiDB> setupFreshDB() async {
 
   // setup 
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
 
   // convert krad / radk file
   Stopwatch s = Stopwatch()..start();

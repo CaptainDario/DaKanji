@@ -6,6 +6,7 @@ import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
+import 'package:language_processing/language_processor.dart';
 
 import '/database/dakanji_db.dart';
 
@@ -73,7 +74,7 @@ Future addRadicalsToDB(String radkPath, String kradPath, DaKanjiDB db) async {
   // spawn isolate
   bool inMemory = db.inMemory;
   await Isolate.run(() async {
-    await _addRadicalsToDB(radkPath, kradPath, connection, inMemory);
+    await _addRadicalsToDB(radkPath, kradPath, connection, inMemory, db.languageProcessor.toJsonString());
   });
 
   await optimizeDbAfterImport(db);
@@ -82,13 +83,18 @@ Future addRadicalsToDB(String radkPath, String kradPath, DaKanjiDB db) async {
 
 /// Actual implementation of the [_addRadicalsToDB] that runs in an isolate
 Future _addRadicalsToDB(
-  String radkPath, String kradPath, DriftIsolate dbConnection, bool inMemory
+  String radkPath,
+  String kradPath,
+  DriftIsolate dbConnection,
+  bool inMemory,
+  String languageProcessorJson
 ) async {
 
   // reconnect to the database
   final db = DaKanjiDB(
     executor: await dbConnection.connect(),
-    inMemory: inMemory
+    inMemory: inMemory,
+    languageProcessor: LanguageProcessor.fromJsonString(languageProcessorJson)
   );
 
   // load radical files

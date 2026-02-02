@@ -7,6 +7,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
+import '../dictionary_test_variables.dart';
 import '../test_utils/db_files.dart';
 import '../test_utils/ignore_database_generated_data.dart';
 import 'kanji_bank_test_cases.dart';
@@ -45,7 +46,8 @@ void main() {
 Future setupFreshDB() async {
 
   // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
   await db.clearDB();
 
   final mecab = Mecab();
@@ -58,7 +60,6 @@ Future setupFreshDB() async {
     dataSourcePath: dataSourceZipPath,
     db: db,
     addStructuredContentJsonDefs: false,
-    mecab: mecab,
     isDefaultDictionary: false
   );
   await for (var line in progress) {

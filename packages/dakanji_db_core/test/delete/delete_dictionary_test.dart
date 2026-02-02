@@ -6,6 +6,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
+import '../dictionary_test_variables.dart';
 import '../test_utils/db_files.dart';
 
 void main() {
@@ -15,7 +16,8 @@ void main() {
 
   // Set up the DB, Mecab, and Zipped Dictionary Path ONCE for all tests
   setUpAll(() async {
-    db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+    db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
 
     mecab = Mecab();
     await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
@@ -152,7 +154,6 @@ Future importDictionary(
       dataSourcePath: dataSourceZipPath,
       db: db,
       addStructuredContentJsonDefs: false,
-      mecab: mecab,
       isDefaultDictionary: false
     );
 

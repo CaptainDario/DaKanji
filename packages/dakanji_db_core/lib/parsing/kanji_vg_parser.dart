@@ -6,6 +6,7 @@ import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
+import 'package:language_processing/japanese_processor.dart';
 
 import '/database/dakanji_db.dart';
 
@@ -36,7 +37,13 @@ Future<void> _addKanjiVGToDB(
   // reconnect to the database
   final db = DaKanjiDB(
     executor: await dbConnection.connect(),
-    inMemory: inMemory
+    inMemory: inMemory,
+    // is not used in this context
+    languageProcessor: JapaneseProcessor(
+      dicMecabPath: "",
+      libMecabPath: "",
+      mecabIncludeFeatures: true,
+    )
   );
 
   // convert kanji vg to map

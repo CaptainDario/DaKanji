@@ -7,6 +7,7 @@ import 'package:dakanji_db_shared/paths.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 
+import '../dictionary_test_variables.dart';
 import '../test_utils/db_files.dart';
 import 'example_sentences_test_cases.dart';
 
@@ -53,7 +54,8 @@ void main() {
 Future<DaKanjiDB> setupFreshDB() async {
 
   // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(dbPath: dakanjiDbPath, inMemory: true);
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
   db.clearDB();
 
   // init mecab
@@ -66,7 +68,6 @@ Future<DaKanjiDB> setupFreshDB() async {
   Stream<String> stream = await parseExampleDataSource(
     examplesZipPath: dataSourceZipPath,
     db: db,
-    mecab: mecab,
     isDefaultDictionary: false
   );
   await for (final event in stream) {
