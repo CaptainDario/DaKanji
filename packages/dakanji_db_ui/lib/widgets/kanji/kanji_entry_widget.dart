@@ -140,7 +140,10 @@ class _KanjiEntryWidgetState extends State<KanjiEntryWidget> {
                 ExpansionTile(
                   title: Text(category.key),
                   children: [
-                    KanjiMatchStatsWidget(category.value)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                      child: KanjiMatchStatsWidget(category.value),
+                    )
                   ],
                 ),
             ],
