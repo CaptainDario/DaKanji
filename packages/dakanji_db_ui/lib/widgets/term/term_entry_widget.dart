@@ -6,7 +6,6 @@ import 'package:dakanji_db_ui/widgets/tag/tag_bank_widget.dart';
 import 'package:dakanji_db_ui/widgets/term/term_bank_definitions_widget.dart';
 import 'package:dakanji_db_ui/widgets/term/term_bank_term_widget.dart';
 import 'package:dakanji_db_ui/widgets/term_meta/term_meta_widget.dart';
-import 'package:dakanji_util/widgets/conditional_parent_widget.dart';
 import 'package:flutter/material.dart';
 
 
@@ -83,16 +82,10 @@ class TermEntryWidget extends StatelessWidget {
                         TermMetaWidget(match.metaEntriesForEachEntry),
                         SizedBox(height: 8.0),
                       ],
-                  ConditionalParentWidget(
-                    condition: definitionsMaxHeight == 0,
-                    child: TermBankDefinitionsWidget(
-                      match.entries,
-                      definitionsMaxHeight: definitionsMaxHeight,
-                      onTapUrl: onUrlTap,
-                    ),
-                    conditionalBuilder: (child) {
-                      return SelectionContainer.disabled(child: child);
-                    },
+                  TermBankDefinitionsWidget(
+                    match.entries,
+                    definitionsMaxHeight: definitionsMaxHeight,
+                    onTapUrl: onUrlTap,
                   ),
                 ],
               ),

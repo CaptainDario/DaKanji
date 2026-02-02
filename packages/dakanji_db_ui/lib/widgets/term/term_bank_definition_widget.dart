@@ -5,6 +5,7 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_ui/widgets/term/structured_content/custom_html_to_widget_factory.dart';
 import 'package:dakanji_db_ui/widgets/term/structured_content/structured_content_css.dart';
 import 'package:dakanji_db_ui/widgets/term/structured_content/structured_content_to_html.dart';
+import 'package:dakanji_db_ui/widgets/util/smart_html_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get_it/get_it.dart';
@@ -52,8 +53,12 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
   String renderDefinition() {
     
     String structuredContentHtmlString = renderDefinitions(widget.definitions);
-    structuredContentHtmlString = inlineFragmentSync(html: structuredContentHtmlString, css: indexCss);
-    structuredContentHtmlString = inlineFragmentSync(html: structuredContentHtmlString, css: getStructuredContentCss(darkMode: true));
+    structuredContentHtmlString = inlineFragmentSync(
+      html: structuredContentHtmlString,
+      css: indexCss);
+    structuredContentHtmlString = inlineFragmentSync(
+      html: structuredContentHtmlString,
+      css: getStructuredContentCss(darkMode: true));
     structuredContentHtmlString = structuredContentHtmlString.replaceAll("\n", "<br/>");
 
     return structuredContentHtmlString;
@@ -67,18 +72,21 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
       future: getCss(),
       builder: (context, asyncSnapshot) {
 
-        return HtmlWidget(
-          renderDefinition(),
-          textStyle: const TextStyle(
-            overflow: TextOverflow.ellipsis,
+        return SmartHtmlSelection(
+          onTextSelected: (text) => print(text),
+          child: HtmlWidget(
+            renderDefinition(),
+            textStyle: const TextStyle(
+              overflow: TextOverflow.ellipsis,
+            ),
+            // Use a custom factory to handle local assets.
+            factoryBuilder: () => CustomHtmlToWidgetFactory(
+              widget.indexId,
+              GetIt.I<DaKanjiDB>(),
+            ),
+            // Handle taps on internal dictionary links.
+            onTapUrl: widget.onTapUrl,
           ),
-          // Use a custom factory to handle local assets.
-          factoryBuilder: () => CustomHtmlToWidgetFactory(
-            widget.indexId,
-            GetIt.I<DaKanjiDB>(),
-          ),
-          // Handle taps on internal dictionary links.
-          onTapUrl: widget.onTapUrl,
         );
       }
     );
